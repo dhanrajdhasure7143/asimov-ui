@@ -61,8 +61,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   tenantName:any;
   ProfileuserId:any;
   newAccessToken:any;
-  tenantsList: any;
-  navigationAccessToken: any;
+  tenantsList: any=[];
+  nvaigationTenantName:any;
 
   constructor(
     private router: Router,
@@ -138,9 +138,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     this.getTenantLists();
-
+ 
   }
-
+ngAfterViewInit(){
+ 
+}
   loopTrackBy(index, term) {
     return index;
   }
@@ -342,15 +344,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;
+    this.nvaigationTenantName = localStorage.getItem("tenantSwitchName")
   })
 }
 
-onChangeTenant(tenantid:any){
-  this.rest_api.getNewAccessTokenByTenantId(tenantid).subscribe(async (data:any) => {
+onChangeTenant(value:any){
+  this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
     console.log(data.accessToken)
     await localStorage.setItem("accessToken", data.accessToken);
-    await localStorage.setItem("tenantName",tenantid);
+    await localStorage.setItem("tenantName",value.tenant_id);
     await localStorage.setItem("tenantSwitch","true");
+    await localStorage.setItem("tenantSwitchName", value.tenant_name);
     setTimeout(()=>{
     var queryParams = new URLSearchParams(window.location.search);
     let date:any=new Date()
@@ -361,4 +365,20 @@ onChangeTenant(tenantid:any){
     
   });
 }
+// onChangeTenant(tenantid:any){
+//   this.rest_api.getNewAccessTokenByTenantId(tenantid).subscribe(async (data:any) => {
+//     console.log(data.accessToken)
+//     await localStorage.setItem("accessToken", data.accessToken);
+//     await localStorage.setItem("tenantName",tenantid);
+//     await localStorage.setItem("tenantSwitch","true");
+//     setTimeout(()=>{
+//     var queryParams = new URLSearchParams(window.location.search);
+//     let date:any=new Date()
+//     queryParams.set("lr", date.getTime());        
+//     var query = queryParams.toString();                
+//     window.location.search = query; 
+//   }, 1000)
+    
+//   });
+// }
 }

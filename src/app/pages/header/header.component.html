@@ -82,11 +82,12 @@
   <!-- <span class="txt-wh header-seperator">|</span> -->
   <div class="space">
     <div class="">
-      <select class="form-control data" (change)="onChangeTenant($event.target.value)">
+      <!-- <select class="form-control data" (change)="onChangeTenant($event)">
         <option value="" hidden disabled>Select Tenant</option>
-        <option *ngFor="let tenant of tenantsList" [value]="tenant.tenant_id">{{tenant.tenant_name | titlecase}}
+        <option *ngFor="let tenant of tenantsList">{{tenant.tenant_name | titlecase}}
         </option>
-      </select>
+      </select> -->
+      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event.value)" [(ngModel)]="nvaigationTenantName" placeholder="Select a Tenant" optionLabel="tenant_name" name="tenant_name"></p-dropdown>
     </div>
   </div>
 
