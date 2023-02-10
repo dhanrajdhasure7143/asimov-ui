@@ -94,28 +94,28 @@ span.highimp {
     border-radius: 6px 6px 0px 0px;
     height: 440px;
 }
-.row.lftusermsg {
+.lftusermsg {
     background: #EDF6FD;
     border-radius: 0px 15px 15px 15px !important;
     padding: 15px 6px 10px 30px !important;
-    margin: 10px 0px !important;
+    margin: 10px 10px !important;
     position: relative;
 }
-.row.lftusermsg p {
+.lftusermsg p {
   width: 100%;
 }
-.row.rgtusermsg {
+.rgtusermsg {
   background: #42A7EB;
   border-radius: 15px 0px 15px 15px;
   padding: 15px 10px !important;
   margin: 10px 0px 20px 0px !important;
   color: #fff;
 }
-.lftuserimg img {
+.lftuserimg .user_keys {
   position: absolute;
   top: -4px;
 }
-.row.lftusermsg>img {
+.lftusermsg .user_keys {
   position: absolute;
   top: -8px;
   left: -8px;
@@ -134,7 +134,7 @@ span.highimp {
 .collab p {
   margin-bottom: 10px;
 }
-.row.lftusermsg p.userinfo {
+.lftusermsg p.userinfo {
     color: #7D7D7D;
     font-size: 12px;
     margin-bottom: 0px;
@@ -238,4 +238,8 @@ span.userstabbtns {
 }
 .userstabbtns button.btn:nth-child(2) {
   padding-right: 0px !important;
+}
+#message-body{
+    height: 500px;
+    overflow: auto;
 }

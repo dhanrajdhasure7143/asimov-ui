@@ -275,21 +275,29 @@
                     <div class="activecollaboration">
                         <div class="row collab">
                             <h4 class="colheads">Collaborations</h4>
-                            <div class="row lftusermsg">
-                                <img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg" />
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <p class="userinfo">Rachel M | 09th Jan, 12 pm</p>
+                            <div id="message-body">
+                            <div *ngFor="let each of messages_list">
+                            <div class="lftusermsg" *ngIf="logged_userId != each.userId">
+                                <!-- <img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg" /> -->
+                                <div class="user_keys">{{userFirstValues(each.firstName,each.lastName)}}</div>
+                                <div>
+                                    <p>{{each.message}}</p>
+                                </div>
+                                <p class="userinfo">{{each.firstName}} {{each.lastName}} | {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
                             </div>
-                            <div class="row rgtusermsg">
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <p class="rttime">09th Jan, 12 pm</p>
+                            <div class="rgtusermsg" *ngIf="logged_userId == each.userId">
+                                <div>
+                                    <p>{{each.message}}</p>
+                                </div>
+                                <p class="userinfo">{{each.firstName}} {{each.lastName}} | {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
                             </div>
-                            <div class="row lftusermsg">
+                        </div>
+                             </div>
+                            <!-- <div class="row lftusermsg">
                                 <img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg" />
                                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <!-- <p><a href="#">Lorem ipsum.pdf</a></p> -->
                                 <p class="userinfo">Rick Johnson | 09th Jan, 12 pm</p>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row collabottom">
                             <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
