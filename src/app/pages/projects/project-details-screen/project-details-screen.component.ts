@@ -218,6 +218,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   params_data:any;
   logged_userId:any='';
   userDetails:any;
+  replay_msg_id:any
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -1994,4 +1995,8 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   userFirstValues(firstName,lastName){
     return firstName.charAt(0)+lastName.charAt(0);
   }
+
+    replyMessage(messageId){
+    this.replay_msg_id=messageId;
+   }
 }
