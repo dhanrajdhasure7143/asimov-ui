@@ -2681,7 +2681,7 @@ button.btn:focus {
 }
 
 input.p-inputtext {
-  /* height: 34px; */
+  height: 34px;
   border: 1px solid var(--main-bordercolor) !important;
   font-size: var(--main-fontsize) !important;
 }
@@ -2747,6 +2747,7 @@ span.tabscount {
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
+  border: unset !important;
   border: none !important;
   border-width: unset !important;
   padding: 0 !important;
@@ -2804,6 +2805,10 @@ tr.p-element.p-selectable-row.p-highlight > td:first-child {
 tr.p-element.p-selectable-row.p-highlight > td:last-child {
   border-bottom-right-radius: 8px; /*highlight of row*/
 }
+tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
+  border-bottom: 1.5px solid #4AB0F5 !important; 
+  background-color: #fff !important;
+}
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
@@ -2832,7 +2837,8 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
   background: transparent !important;
 }
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus,
+.p-menu .p-menuitem-link:focus {
   box-shadow: none !important;
 }
 .p-checkbox .p-checkbox-box.p-highlight,
@@ -2845,10 +2851,12 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 }
 .p-dropdown {
   border: 1px solid var(--main-bordercolor) !important;
-  width: 200px;
 }
 .listdropdown .p-dropdown{
   margin-right: 15px;
+}
+.p-inplace .p-inplace-display {
+  display: contents !important;
 }
 /* primeNg components Styles End */
 
@@ -2861,11 +2869,18 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
   padding: 10px 20px 0px;
   height: 100%;
 }
-.splitoverlaydiv .p-tabview.p-component {
+.splitoverlaydiv .p-tabview.p-component,
+.commentBox .p-tabview.p-component {
   height: 100%;
 }
 .splitoverlaycontent {
   height: calc(100% - 160px);
+}
+.splitoverlaycontent .p-dropdown {
+  width: 200px;
+}
+.splitoverlaycontent input.p-inputtext {
+  height: auto;
 }
 .splitoverlaydiv h4 {
   font-size: 16px;
@@ -2874,7 +2889,8 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 .splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 0px 15px !important;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav {
+.splitoverlaydiv .p-tabview .p-tabview-nav,
+.commentBox .p-tabview .p-tabview-nav {
   height: 45px;
   border-bottom: 1px solid #e0e0e0 !important;
 }
@@ -2882,6 +2898,9 @@ button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 30px;
+}
+.commentBox .p-tabview-panels {
+  height: calc(100% - 45px) !important;
 }
 
 /* Overlay  Screen Styles End */
@@ -3013,9 +3032,7 @@ button.custom-popupbtn.mat-button {
   width: auto !important;
 } */
 
-.task-details-tabs .p-tabview-nav-container{
-  border-bottom: 1px solid !important;
-}
+
 .p-card .p-card-body{
   height: 160px !important;
 }
