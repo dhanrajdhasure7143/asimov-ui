@@ -1,6 +1,6 @@
 
 import { formatDate } from '@angular/common';
-import { Component, Input, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -218,11 +218,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   params_data:any;
   logged_userId:any='';
   userDetails:any;
-  replay_msg_id:any;
+  replay_msg:any;
   isCreate= false;
+  selectedItem: any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rest_api: RestApiService,
-    private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
+    private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router, private el: ElementRef,
     private spinner: LoaderService) {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
@@ -1954,13 +1955,14 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
       userId:this.logged_userId,
       message:this.typedMessage,
       projectId:this.project_id,
-      rmId:753,
+      rmId:this.replay_msg.id?this.replay_msg.id:0,
       firstName:this.userDetails.firstName,
       lastName:this.userDetails.lastName,
     }
-    console.log("calling logout api via web socket");
+    console.log("calling logout api via web socket",message);
     // console.log(message)
     this.typedMessage='';
+    this.replay_msg = null;
     this.stompClient.send("/app/send", {}, JSON.stringify(message));
 }
 
@@ -1999,13 +2001,29 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   userFirstValues(firstName,lastName){
     return firstName.charAt(0)+lastName.charAt(0);
   }
+ 
+    replyMessage(message){
+    this.replay_msg=message;
+    // this.el.nativeElement;
+    // var element = document.querySelector('.selected-order');
+    // element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
+   }
 
-    replyMessage(messageId){
-    this.replay_msg_id=messageId;
+   scrollTomain(message){
+    this.selectedItem = message.rmId
+    setTimeout(()=>{
+      this.selectedItem =''
+    },200)
+   }
+
+   onClearReply(){
+    this.replay_msg = null;
    }
 
    navigateToCreateDocument(){
     this.router.navigate(['pages/projects/document-editor'],
     { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
   }
+  
+
 }

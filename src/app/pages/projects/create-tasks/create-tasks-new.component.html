@@ -62,8 +62,8 @@
                   <label class="label-control" for="resources">Assigned To<span class="star">*</span></label>
 
                   <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
-                      filterBy="user_email,fullName" required [autoDisplayFirst]="false" placeholder="Select Assignee"
-                      formControlName="resources" optionValue="user_email" optionLabel="fullName">
+                      filterBy="user_email,fullName" [autoDisplayFirst]="false" placeholder="Select Assignee"
+                      formControlName="resources" optionValue="user_email" optionLabel="fullName" (onChange)="onAssigneeChange($event)">
                   </p-dropdown>
                   <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
                       class="errspan required">Assigned To Required*</span>
@@ -145,7 +145,7 @@
           </div>
           <div class="row">
               <div class="form-fields col-lg-12">
-                  <label class="label-control">Task Description</label>
+                  <label class="label-control">Task Description</label><span class="star">*</span>
                   <!-- <textarea rows="4" maxlength="151" class="form-control enteredfield-color" formControlName="description"
                   placeholder="Enter Task Description..." (keyup)="taskDescriptionMaxLength($event.target.value)"
                   style=" resize: none;">
@@ -168,3 +168,7 @@
           class="btn btn-primary btn-update">Save</button>
   </div>
 </div>
+
+<!-- <p-confirmPopup></p-confirmPopup> -->
+
+<p-confirmDialog [style]="{width: '20vw'}" key="positionDialog" position="right" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
