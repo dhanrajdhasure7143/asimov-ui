@@ -8,7 +8,8 @@
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
-                      <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span class="sub_title_text"> {{projectDetails.projectName}}</span>
+                        <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span
+                            class="sub_title_text"> {{projectDetails.projectName}}</span>
                     </span>
                 </h3>
             </div>
@@ -25,8 +26,8 @@
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
                     <span>Actions</span>
                 </button> -->
-                <button class="btn" type="button"  (click)="menu.toggle($event)">
-                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                <button class="btn" type="button" (click)="menu.toggle($event)">
+                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                 </button>
                 <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
 
@@ -63,9 +64,12 @@
                         <div class="row project-ninfo">
                             <div class="row align-items-center">
                                 <span class="project-name">{{projectDetails.projectName}}</span>
-                                <img src="./../../../../assets/images-n/projects/low_priority.svg" *ngIf="projectDetails.priority == 'Low'" alt="importance">
-                                <img src="./../../../../assets/images-n/projects/medium_priority.svg" alt="importance" *ngIf="projectDetails.priority == 'Medium'">
-                                <img src="./../../../../assets/images-n/projects/high_priority.svg" alt="importance"  *ngIf="projectDetails.priority == 'High'">
+                                <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                    *ngIf="projectDetails.priority == 'Low'" alt="importance">
+                                <img src="./../../../../assets/images-n/projects/medium_priority.svg" alt="importance"
+                                    *ngIf="projectDetails.priority == 'Medium'">
+                                <img src="./../../../../assets/images-n/projects/high_priority.svg" alt="importance"
+                                    *ngIf="projectDetails.priority == 'High'">
                                 <span class="highimp">{{projectDetails.priority}}</span>
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
@@ -103,9 +107,11 @@
                 </div>
                 <div class="row project-description">
                     <label>Description</label>
-                    <p *ngIf="isReadmoreShow">{{project_desc}} <span class="readmore icon-color" (click)="onReadMoreHide()" >Hide</span></p>
+                    <p *ngIf="isReadmoreShow">{{project_desc}} <span class="readmore icon-color"
+                            (click)="onReadMoreHide()">Hide</span></p>
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
-                    <p *ngIf="!isReadmoreShow">{{truncateDesc(project_desc)}} <span class="readmore icon-color" (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p>
+                    <p *ngIf="!isReadmoreShow">{{truncateDesc(project_desc)}} <span class="readmore icon-color"
+                            (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p>
                 </div>
             </div>
             <div class="row">
@@ -219,14 +225,14 @@
                         <button class="btn blue-btntext">
                             <a><span>Create Folder</span></a>
                         </button>
-                        <button class="btn blue-btntext">
+                        <button class="btn blue-btntext" (click)="navigateToCreateDocument()">
                             <a><span>Create Documents</span></a>
                         </button>
                         <button class="btn blue-btntext">
                             <a><span>View BPMN</span></a>
                         </button>
                     </div>
-                    <div class="row acresources">
+                    <div class="row acresources" *ngIf="!isCreate">
                         <h4 class="colheads">Recent Activities</h4>
                         <button class="btn blue-btntext"><a href="#">View All</a></button>
                         <table class="table imgInFirstCol">
@@ -266,32 +272,116 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="row acresources" *ngIf="isCreate">
+                        <div class="row ">
+                            <div class="col-sm-4">
+                                <div class="qcard-infoimg " style="margin-left: 2px;text-align: center;"> <img
+                                        src="./../../../../assets/images-n/projects/AutomationRate.svg"
+                                        alt="AutomationRate" class="qcard-img"> </div>
+                                <p class="text">Start onboarding users,who will be responsible forthe project.</p> <a
+                                    class="link-primary linkss" style="padding-left: 26px;"
+                                    (click)='openUsersOverlay()'>Users</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="vertical-line"
+                                    style="height: 213px; border-left: 1px solid rgb(164, 160, 160);"></div>
+                                <div class="qcard-infoimg" style="margin-left: 2px;text-align: center;"> <img
+                                        src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
+                                        class="qcard-img"> </div>
+                                <p class="text"> Start creating and assigning tasks to get the work started.</p> <a
+                                    class="link-primary linkss" (click)="onCreateTask()">Create Tasks</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="vertical-line"
+                                    style="height: 213px; border-left: 1px solid rgb(164, 160, 160);"></div>
+                                <div class="qcard-infoimg" style="margin-left: 2px;text-align: center;"> <img
+                                        src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
+                                        class="qcard-img"> </div>
+                                <p class="text"> You can start upload document related to the process</p> <a
+                                    class="link-primary linkss" style="text-align: center;">Upload document</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4 pr-0 ">
                     <div class="activecollaboration">
                         <div class="row collab">
                             <h4 class="colheads">Collaborations</h4>
-                            <div class="row lftusermsg">
-                                <img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg" />
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <p class="userinfo">Rachel M | 09th Jan, 12 pm</p>
+                            <div id="message-body" *ngIf="messages_list.length != 0">
+                                <div *ngFor="let each of messages_list" [class.selected]="each.id === selectedItem"
+                                    [appScrollIntoView]="each.id === selectedItem">
+
+                                    <div *ngIf="each.rmId != 0"
+                                        [ngClass]="logged_userId == each.userId ?'rgtusermsg': 'lftusermsg'" class="">
+                                        <div class="rply-msg" (click)="scrollTomain(each)">
+                                            <p><b>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum
+                                                    dolor</b></p>
+                                        </div>
+
+                                        <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
+                                            {{userFirstValues(each.firstName,each.lastName)}}</div>
+                                        <div class="user_keys res-reply">
+                                            <i class="pi pi-tag"></i>
+                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i>
+                                        </div>
+                                        <p>{{each.message}}</p>
+                                    </div>
+                                    <!-- <p class="userinfo">{{each.firstName}} {{each.lastName}} |
+                                            {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p> -->
+
+
+                                    <div *ngIf="each.rmId == 0"
+                                        [ngClass]="logged_userId == each.userId ?'rgtusermsg': 'lftusermsg'" class="">
+                                        <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
+                                            {{userFirstValues(each.firstName,each.lastName)}}</div>
+                                        <div class="user_keys res-reply">
+                                            <i class="pi pi-tag"></i>
+                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i>
+                                        </div>
+                                        <div>
+                                            <p>{{each.message}}</p>
+                                        </div>
+                                        <p class="userinfo">{{each.firstName}} {{each.lastName}} |
+                                            {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
+                                    </div>
+                                    <!-- <div class="rgtusermsg" *ngIf="logged_userId == each.userId">
+                                        <div class="user_keys res-reply"><i class="pi pi-replay" (click)="replyMessage(each)"></i></div>
+                                        <div>
+                                            <p>{{each.message}}</p>
+                                        </div>
+                                        <p class="userinfo">{{each.firstName}} {{each.lastName}} |
+                                            {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
+                                    </div> -->
+                                </div>
                             </div>
-                            <div class="row rgtusermsg">
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <p class="rttime">09th Jan, 12 pm</p>
+                            <div *ngIf="replay_msg" class="rply-msg">
+                                {{replay_msg.message}} <i class="pi pi-times" (click)="onClearReply()"></i>
                             </div>
-                            <div class="row lftusermsg">
-                                <img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg" />
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <!-- <p><a href="#">Lorem ipsum.pdf</a></p> -->
-                                <p class="userinfo">Rick Johnson | 09th Jan, 12 pm</p>
+                            <div *ngIf="messages_list.length == 0" class="emptychat text-center">
+                                <img alt="user-img" src="./../../../../assets/images-n/projects/chat_img.png" />
+                                <p>Start Conversation</p>
                             </div>
                         </div>
                         <div class="row collabottom">
-                            <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
-                                value="Lorem ipsum dolor sit amet, consec" />
+                            <!-- <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
+                                value="Lorem ipsum dolor sit amet, consec" /> -->
+                        <div class="col-lg-11">
+                            <!-- <p-editor [(ngModel)]="typedMessage" [style]="{'height':'100px'}">
+                                <ng-template pTemplate="header">
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-bold" aria-label="Bold"></button>
+                                        <button type="button" class="ql-italic" aria-label="Italic"></button>
+                                        <button type="button" class="ql-underline" aria-label="Underline"></button>
+                                    </span>
+                                </ng-template>
+                            </p-editor> -->
+                            <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea  [(ngModel)]="typedMessage"
+                          [autoResize]="false"></textarea>
+                        </div>
+
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn" (click)="sendMessage()"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
+                            <button class="btn" (click)="sendMessage()"><img alt="send"
+                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
                         </div>
                     </div>
 
@@ -311,7 +401,7 @@
                 <p-tabPanel>
                     <ng-template pTemplate="header">
                         <h4>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
-                                        Users selected) </span></h4>
+                                Users selected) </span></h4>
                     </ng-template>
                 </p-tabPanel>
                 <p-tabPanel>
@@ -319,19 +409,20 @@
                         <h4>Existing Users</h4>
                     </ng-template>
                 </p-tabPanel>
-            
+
                 <div class="splitoverlaycontent">
                     <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
                         [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
                         responsiveLayout="scroll" dataKey="id">
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
-                                <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list"
-                                    class="listdropdown" [(ngModel)]="selectedRole"
-                                    (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
+                                <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list" class="listdropdown"
+                                    [(ngModel)]="selectedRole" (onChange)="onChangeRole($event)"
+                                    optionLabel="name"></p-dropdown>
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
-                                    <input type="text" pInputText placeholder="Search" (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                    <input type="text" pInputText placeholder="Search"
+                                        (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                 </span>
                                 <span *ngIf="users_tabIndex == 1" class="userstabbtns">
                                     <button class="btn">
@@ -354,17 +445,17 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr>
-                                <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox
-                                        [value]="rowData"></p-tableCheckbox></td>
+                                <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                </td>
                                 <td *ngFor="let col of columns">
                                     <span>{{rowData[col.ColumnName]}}</span>
                                     <span *ngIf="col.ColumnName == 'action'">
                                         <div class="newinntalx">
                                             <a (click)="deleteuserById(rowData)">
-                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                                    alt="" class="default-img">
-                                                <img src="../../../../../assets/images/Projects/delete-red.svg"
-                                                    alt="" class="hover-img">
+                                                <img src="../../../../../assets/images/Projects/delete-black.svg" alt=""
+                                                    class="default-img">
+                                                <img src="../../../../../assets/images/Projects/delete-red.svg" alt=""
+                                                    class="hover-img">
                                             </a>
                                         </div>
                                     </span>
@@ -383,7 +474,7 @@
                     <button class="btn bluebg-button" (click)="addresources()">Onboard Users</button>
                 </div>
             </p-tabView>
-            
+
         </div>
     </app-split-overlay>
 </div>
@@ -392,13 +483,14 @@
     <app-split-overlay (closeOverlay)="closeCreateTaskOverlay($event)">
         <div class="">
             <div class="rpa-modal-header">
-              <h3>Create Task</h3>
+                <h3>Create Task</h3>
             </div>
             <div class="modal-body actions-mbody actionsoverlay-mbody">
-            <div>
-              <app-create-tasks [users_list]="users_list" [params_data]="params_data" [hiddenPopUp]="createTaskOverlay"></app-create-tasks>
-          </div>
+                <div>
+                    <app-create-tasks [users_list]="users_list" [params_data]="params_data"
+                        [hiddenPopUp]="createTaskOverlay" [existingUsersList]="existingUsersList" [project_name]="projectDetails.projectName"></app-create-tasks>
+                </div>
             </div>
         </div>
     </app-split-overlay>
-  </div>
+</div>

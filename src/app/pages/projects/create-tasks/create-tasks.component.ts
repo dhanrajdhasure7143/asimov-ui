@@ -5,6 +5,7 @@ import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
@@ -18,6 +19,8 @@ export class CreateTasksComponent implements OnInit {
   @Input('users_list') public users_list: any[];
   @Input('params_data') public params_data: any;
   @Input('hiddenPopUp') public hiddenPopUp: boolean;
+  @Input('existingUsersList') public existingUsersList: any[];
+  @Input('project_name') public project_name: any;
   createtaskForm:FormGroup;
   mindate= moment().format("YYYY-MM-DD");
   maxdate= moment().format("YYYY-MM-DD");
@@ -34,9 +37,14 @@ export class CreateTasksComponent implements OnInit {
   _priority:any[]=["High","Medium","Low"];
   optionValue:any;
   emptyList:any[]=[];
+  isExist_user:boolean= false;
+  position: string;
 
   constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
-    private router: Router, private route:ActivatedRoute) { }
+    private router: Router, private route:ActivatedRoute,
+    private confirmationService: ConfirmationService
+    
+    ) { }
 
   ngOnInit() {
 
@@ -48,8 +56,8 @@ export class CreateTasksComponent implements OnInit {
       startDate: ["", Validators.compose([Validators.required])],
       endDate: ["",Validators.compose([Validators.required])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      approvers: ["",Validators.compose([Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(250)])],
+      approvers: ["",Validators.compose([Validators.required,Validators.maxLength(50)])],
+      description: ["", Validators.compose([Validators.required,Validators.maxLength(250)])],
 
 
       // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -132,7 +140,7 @@ export class CreateTasksComponent implements OnInit {
         this.router.navigate(["/pages/projects/taskDetails"], {
           queryParams: {
             project_id: this.params_data.project_id,
-            project_name: this.params_data.project_name,
+            project_name: this.project_name,
             task_id: response.taskId,
           },
         });
@@ -180,8 +188,7 @@ export class CreateTasksComponent implements OnInit {
     // })
   }
 
-  getallusers()
-  {
+  getallusers(){
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
@@ -236,6 +243,23 @@ taskDescriptionMaxLength(value){
    getTaskCategoriesByProject(){
     this.api.getTaskCategoriesByProject(this.project_id).subscribe(res=>{this.task_categoriesList = res
     })
-
+   }
+  
+   onAssigneeChange(event){
+    console.log(event)
+    console.log(this.existingUsersList,this.existingUsersList.find(data=>data.user_email == event.value))
+    // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
+    if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
+    this.confirmationService.confirm({
+      message: 'This user not in this project, Are you sure that you want to Invite him to this project?',
+      header: 'Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+      },
+      reject: (type) => {
+        this.createtaskForm.get("resources").setValue("");
+      },
+      key: "positionDialog"
+  });
    }
 }
