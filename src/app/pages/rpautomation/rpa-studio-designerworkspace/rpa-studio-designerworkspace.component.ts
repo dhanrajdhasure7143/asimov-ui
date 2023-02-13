@@ -1538,7 +1538,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
 
-  private validateNode(tMetaId, node): boolean {
+  private async validateNode(tMetaId, node): Promise<boolean> {
     let flag = true;
     const formMeta = this.formAttributes.get(tMetaId);
     if(formMeta) {
@@ -1677,27 +1677,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     );
   }
 
-  private async validateBotNodes(): Promise<boolean> {
+  private async validateBotNodes() {
     for(let node of  this.finaldataobjects) {
       const formMetaAtts = this.formAttributes.get(node["tMetaId"]);
       const formAtts = this.finaldataobjects.find(i => node["tMetaId"] === i["tMetaId"]);
        if(formAtts) {
         const attributes = formAtts["attributes"];
         if(formMetaAtts) {
-          this.isBotCompiled = this.validateNode(node["tMetaId"], attributes);
+          this.validateNode(node["tMetaId"], attributes).then(flag => 
+            this.isBotCompiled = flag
+            );
         } else {
           await this.rest.attribute(node["tMetaId"]).subscribe( (response: any) => {
             this.formAttributes.set(node["tMetaId"], response);
-            this.isBotCompiled = this.validateNode(node["tMetaId"], attributes);
+            this.validateNode(node["tMetaId"], attributes).then(flag => 
+              this.isBotCompiled = flag
+              );
           });
-        }
-        if(!this.isBotCompiled) {
-          break;
         }
        }
     }
-    
-    return this.isBotCompiled;
   }
 
   async updateBotFun(version_type, comments) {
