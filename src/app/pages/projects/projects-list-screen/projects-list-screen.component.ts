@@ -92,11 +92,11 @@ export class ProjectsListScreenComponent implements OnInit {
       localStorage.getItem("firstName") +
       " " +
       localStorage.getItem("lastName");
+    this.getallprocesses();
     this.email = localStorage.getItem("ProfileuserId");
     this.getallProjects(this.userRoles, this.name, this.email);
     // this.getallusers();
     this.getUsersList()
-    this.getallprocesses();
     this.freetrail = localStorage.getItem("freetrail");
   }
 
