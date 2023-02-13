@@ -12,6 +12,8 @@ import {
   Pipe,
   PipeTransform,
   TemplateRef,
+  OnChanges,
+  SimpleChanges,
 } from "@angular/core";
 import { DndDropEvent } from "ngx-drag-drop";
 import { fromEvent } from "rxjs";
@@ -157,10 +159,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   botNameCheck: boolean = false;
   @ViewChild("splitEl") splitEl: SplitComponent;
   area_splitSize: any = {};
-
+  private formAttributes: Map<Number, any> = new Map<Number, any>();
   isBotUpdated: boolean = false;
   isShowExpand_icon : boolean = false;
-
+  isBotCompiled: boolean = false;
+  @Input() isBotValidated: boolean = false;
+  
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -252,6 +256,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
     //this.getCategories();
+    this.validateBotNodes();
   }
 
   getSelectedEnvironments() {
@@ -678,6 +683,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
     } else {
       const node = event.data;
+      node.isCompiled = false;
       node.id = this.idGenerator();
       // node.selectedNodeTask = "";
       // node.selectedNodeId = "";
@@ -721,6 +727,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }, 240);
       }
     }
+    this.validateBotNodes();
   }
 
   autoSaveLoopEnd(node) {
@@ -863,6 +870,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
     });
+    this.validateBotNodes();
   }
 
   onRightClick(n: any, e: { target: { id: string } }, i: string | number) {
@@ -904,10 +912,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.nodedata = node;
     this.form_change = false;
     this.enableMultiForm.check = false;
+    const selectedNodeId: Number =  node.selectedNodeId;
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
-        id: node.selectedNodeId,
+        id: selectedNodeId,
       };
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
@@ -915,10 +924,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         (data) => data.nodeId == node.name + "__" + node.id
       );
       if (taskdata != undefined) {
-        if (taskdata.tMetaId == node.selectedNodeId) {
+        if (taskdata.tMetaId == selectedNodeId) {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data;
+            this.formAttributes.set(Number(selectedNodeId), data);
             //if(finalattributes.length==1 && finalattributes[0].type=="multiform")
             if (finalattributes[0].type == "multiform") {
               this.multiformdata = finalattributes;
@@ -1358,7 +1368,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   //Normal Task Form Submit
-  onFormSubmit(event: any, notifierflag: boolean) {
+  async onFormSubmit(event: any, notifierflag: boolean) {
     this.fieldValues = event;
     this.isBotUpdated = true;
     if (this.fieldValues["file1"]) {
@@ -1466,6 +1476,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       tMetaId: parseInt(this.selectedTask.id),
       inSeqId: 1,
       taskSubCategoryId: "1",
+      isCompiled: await this.validateNode(parseInt(this.selectedTask.id), obj),
       outSeqId: 2,
       nodeId: this.selectedNode.name + "__" + this.selectedNode.id,
       x: this.selectedNode.x,
@@ -1525,6 +1536,29 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //       return  await  this.rest.saveBot(this.saveBotdata)
   //     }
   // }
+
+
+  private validateNode(tMetaId, node): boolean {
+    let flag = true;
+    const formMeta = this.formAttributes.get(tMetaId);
+    if(formMeta) {
+      var filteredArray = formMeta.filter(function(itm){
+        return itm["required"] == true;
+      });
+  
+      for(let att of filteredArray){
+        const value =  node.find(i => att["id"] === i["metaAttrId"]);
+        if (!value["attrValue"])  {
+          flag = false;
+          break;
+        }
+      }
+    } else {
+      flag = false;
+    }
+   
+    return flag;
+  }
 
   async uploadfile(envids, tasks) {
     console.log(this.files_data)
@@ -1642,6 +1676,30 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     );
   }
+
+  private async validateBotNodes(): Promise<boolean> {
+    for(let node of  this.finaldataobjects) {
+      const formMetaAtts = this.formAttributes.get(node["tMetaId"]);
+      const formAtts = this.finaldataobjects.find(i => node["tMetaId"] === i["tMetaId"]);
+       if(formAtts) {
+        const attributes = formAtts["attributes"];
+        if(formMetaAtts) {
+          this.isBotCompiled = this.validateNode(node["tMetaId"], attributes);
+        } else {
+          await this.rest.attribute(node["tMetaId"]).subscribe( (response: any) => {
+            this.formAttributes.set(node["tMetaId"], response);
+            this.isBotCompiled = this.validateNode(node["tMetaId"], attributes);
+          });
+        }
+        if(!this.isBotCompiled) {
+          break;
+        }
+       }
+    }
+    
+    return this.isBotCompiled;
+  }
+
   async updateBotFun(version_type, comments) {
     let env = [
       ...this.filteredEnvironments
@@ -1657,6 +1715,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.get_coordinates();
     await this.getsvg();
     this.rpaAuditLogs(env);
+    await this.validateBotNodes();
     this.saveBotdata = {
       versionType: version_type,
       comments: comments,
@@ -1676,6 +1735,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       scheduler: null,
       svg: this.svg,
       sequences: this.getsequences(),
+      isBotCompiled: this.isBotCompiled
     };
 
     if (this.checkorderflag == false) {
@@ -2490,20 +2550,29 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     ];
   }
 
-  executeBot() {
-    this.spinner.show();
-    this.rest.execution(this.finalbot.botId).subscribe(
-      (response: any) => {
-        this.spinner.hide();
-        if (response.errorMessage == undefined)
-          Swal.fire("Success", response.status, "success");
-        else Swal.fire("Error", response.errorMessage, "error");
-      },
-      (err) => {
-        this.spinner.hide();
-        Swal.fire("Error", "Unable to execute bot", "error");
-      }
-    );
+  async executeBot() {
+    if (this.checkorderflag == false) {
+      this.spinner.hide();
+      Swal.fire("Warning", "Please check connections", "warning");
+      return;
+    }
+    if(this.isBotCompiled) {
+      this.spinner.show();
+      this.rest.execution(this.finalbot.botId).subscribe(
+        (response: any) => {
+          this.spinner.hide();
+          if (response.errorMessage == undefined)
+            Swal.fire("Success", response.status, "success");
+          else Swal.fire("Error", response.errorMessage, "error");
+        },
+        (err) => {
+          this.spinner.hide();
+          Swal.fire("Error", "Unable to execute bot", "error");
+        }
+      );
+    } else {
+      Swal.fire("Error", "Unable to execute bot", "error");
+    }
   }
 
   getAllVersions() {
