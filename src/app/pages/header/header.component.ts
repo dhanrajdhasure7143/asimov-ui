@@ -138,11 +138,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     this.getTenantLists();
- 
+    this.nvaigationTenantName = localStorage.getItem("tenantSwitchName")
   }
-ngAfterViewInit(){
- 
-}
+
   loopTrackBy(index, term) {
     return index;
   }
@@ -344,16 +342,17 @@ ngAfterViewInit(){
 getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;
-    this.nvaigationTenantName = localStorage.getItem("tenantSwitchName")
   })
 }
 
-onChangeTenant(value:any){
+onChangeTenant(event:any){
+  let value = this.tenantsList.find(data=>data.tenant_name == event.value);
   this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
-    console.log(data.accessToken)
+    localStorage.removeItem("accessToken")
     await localStorage.setItem("accessToken", data.accessToken);
+    localStorage.removeItem("tenantName")
     await localStorage.setItem("tenantName",value.tenant_id);
-    await localStorage.setItem("tenantSwitch","true");
+    localStorage.removeItem("tenantSwitchName")
     await localStorage.setItem("tenantSwitchName", value.tenant_name);
     setTimeout(()=>{
     var queryParams = new URLSearchParams(window.location.search);
@@ -361,24 +360,7 @@ onChangeTenant(value:any){
     queryParams.set("lr", date.getTime());        
     var query = queryParams.toString();                
     window.location.search = query; 
-  }, 1000)
-    
+  }, 1000)  
   });
 }
-// onChangeTenant(tenantid:any){
-//   this.rest_api.getNewAccessTokenByTenantId(tenantid).subscribe(async (data:any) => {
-//     console.log(data.accessToken)
-//     await localStorage.setItem("accessToken", data.accessToken);
-//     await localStorage.setItem("tenantName",tenantid);
-//     await localStorage.setItem("tenantSwitch","true");
-//     setTimeout(()=>{
-//     var queryParams = new URLSearchParams(window.location.search);
-//     let date:any=new Date()
-//     queryParams.set("lr", date.getTime());        
-//     var query = queryParams.toString();                
-//     window.location.search = query; 
-//   }, 1000)
-    
-//   });
-// }
 }

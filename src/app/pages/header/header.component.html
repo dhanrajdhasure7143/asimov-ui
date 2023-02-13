@@ -87,7 +87,7 @@
         <option *ngFor="let tenant of tenantsList">{{tenant.tenant_name | titlecase}}
         </option>
       </select> -->
-      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event.value)" [(ngModel)]="nvaigationTenantName" placeholder="Select a Tenant" optionLabel="tenant_name" name="tenant_name"></p-dropdown>
+      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="nvaigationTenantName" placeholder="Select a Environment" optionLabel="tenant_name"  optionValue="tenant_name"></p-dropdown>
     </div>
   </div>
 
