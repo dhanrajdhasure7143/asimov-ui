@@ -25,6 +25,7 @@ import { SplitComponent } from "angular-split";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from 'primeng/inplace';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -32,6 +33,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./project-details-new.css']
 })
 export class ProjectDetailsScreenComponent implements OnInit {
+  @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild("inplace1") inplace1!: Inplace;
+  @ViewChild("inplace2") inplace2!: Inplace;
   projects_toggle: Boolean = false;
   projectData: any;
   projectDetails: any={};
@@ -221,7 +225,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
   replay_msg:any;
   isCreate= false;
   selectedItem: any;
-
+  priority:any;
+  projectName:any;
+  resource:any;
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router, private el: ElementRef,
     private spinner: LoaderService) {
@@ -2025,5 +2031,17 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
   }
   
+  onUpdateDetails(priority){
 
+  }
+  onDeactivate(){
+    console.log("TestDeactivate",this.projectDetails)
+    this.inplace.deactivate();
+    this.inplace1.deactivate();
+    this.inplace2.deactivate();
+
+  }
+  inplaceActivate(projectName){
+
+  }
 }
