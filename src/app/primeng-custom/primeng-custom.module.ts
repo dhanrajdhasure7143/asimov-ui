@@ -31,6 +31,8 @@ import { RadioButtonModule } from "primeng/radiobutton";
 import { ImageModule } from "primeng/image";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @NgModule({
   declarations: [],
@@ -67,6 +69,7 @@ import { ChipsModule } from "primeng/chips";
     InputTextareaModule,
     AutoCompleteModule,
     ChipsModule,
+    ConfirmPopupModule,
   ],
   exports: [
     CommonModule,
@@ -102,6 +105,8 @@ import { ChipsModule } from "primeng/chips";
     ImageModule,
     AutoCompleteModule,
     ChipsModule,
+    ConfirmPopupModule
   ],
+  providers: [ConfirmationService, MessageService]
 })
 export class PrimengCustomModule {}
