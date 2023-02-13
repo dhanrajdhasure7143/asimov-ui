@@ -50,6 +50,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   added_comments_list: any = [];
   percentageComplete: any;
   priority:any;
+  priority_list: any;
   isFile_upload_dialog:boolean = false;
   selected_folder:any;
   folder_files:any;
@@ -67,6 +68,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
       { name: "In Progress" },
       { name: "In Review" },
       { name: "Done" },
+    ];
+    this.priority_list = [
+      { name: "High" },
+      { name: "Medium" },
+      { name: "Low" },
     ];
   }
 

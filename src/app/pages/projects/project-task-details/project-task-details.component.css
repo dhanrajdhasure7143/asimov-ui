@@ -38,7 +38,7 @@ span.highimp {
   margin: 3px 0px 0px 5px;
 }
 span.mediumimp {
-  color: #E58600;;
+  color: #E58600;
   margin: 3px 0px 0px 5px;
 }
 span.lowimp {
@@ -119,35 +119,27 @@ ul.historydiv li {
 ul.historydiv li:first-child {
   padding-top: 0px;
 }
+ul.historydiv li:last-child {
+  border-bottom: 1px solid transparent !important;
+}
 .colheads {
   font-weight: 600;
   font-size: 20px !important;
-  /* margin-bottom: 15px; */
 }
 .commentBox .content {
-  height: calc(100vh - 430px);
+  height: calc(100vh - 435px);
   overflow: auto;
+}
+.commentBox .addcomment {
+  border-top: 1px solid #dbdbdb;
+  padding-top: 5px; 
 }
 .historyContent {
   height: calc(100vh - 300px);
   overflow: auto;
-  margin-bottom: 10px;
 }
 
 
-
-
-
-
-  textarea.md-textarea-scroll{
-    overflow-y: auto;
-  }
-  textarea.md-textarea {
-    padding: 0;
-    resize: none;
-    min-height: 3rem;
-    width: 100%;
-  }
 
 
   .fileupsec {
@@ -171,5 +163,3 @@ ul.historydiv li:first-child {
     cursor: pointer;
     z-index: 0;
   }
-
-  

@@ -2683,7 +2683,6 @@ button.btn:focus {
 input.p-inputtext {
   height: 34px;
   border: 1px solid var(--main-bordercolor) !important;
-  font-size: var(--main-fontsize) !important;
 }
 
 /* Tabs NEW Styles Start */
@@ -2861,6 +2860,9 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .project-ninfo .p-inplace .p-inplace-content {
   display: flex;
+}
+.p-inputtext {
+  font-size: var(--main-fontsize) !important;
 }
 /* primeNg components Styles End */
 
