@@ -39,6 +39,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   botFormVisibility:boolean=false;
   updateBotDetails:any={};
   unsaved:boolean=false;
+  isBotValidated:boolean = true;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -348,6 +349,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   SaveBot(){
+    this.isBotValidated = false;
     if(this.current_instance.finalbot.botId==undefined){
       this.versionControlPopup.hide();
       this.botFormVisibility=true;
