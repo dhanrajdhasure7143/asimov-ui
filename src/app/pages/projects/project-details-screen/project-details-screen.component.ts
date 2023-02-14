@@ -236,6 +236,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   categories_list:any[]=[];
   mapValueChain:any;
   active_inplace:any;
+  project_desc_edit:any;
+  isEditDesc:boolean=false;
 
 
 
@@ -246,6 +248,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.params_data=data
         this.project_id = this.params_data.project_id
         if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
+        this.spinner.show();
         this.getallusers();
       });
 
@@ -327,15 +330,15 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
     this.getallprocesses();
-    setTimeout(() => {
-      this.getImage();
-      this.profileName();
-    }, 2000);
-    this.getFileCategoriesList();
-    this.getProcessUnderstandingDetails();
-    this.getQuestionnaire();
+    // setTimeout(() => {
+    //   this.getImage();
+    //   this.profileName();
+    // }, 2000);
+    // this.getFileCategoriesList();
+    // this.getProcessUnderstandingDetails();
+    // this.getQuestionnaire();
     //  this.getallusers();
-    this.getInitiatives();
+    // this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
   }
@@ -709,7 +712,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
     this.dt.tenantBased_UsersList.subscribe(response => {
-      console.log("test",response)
       let usersDatausers_list:any[] = [];
       if(response)
         usersDatausers_list = response;
@@ -1133,14 +1135,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   updateprojectDetails() {
-    this.spinner.show()
+    // this.spinner.show()
     this.projectDetails["type"] = "Project";
     // this.projectDetails.processOwner = this.processownername
     // this.projectDetails.endDate = this.projectenddate;
     // this.projectDetails.startDate = this.projectStartDate;
-    // this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
+    this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
     this.rest_api.update_project(this.projectDetails).subscribe(res => {
-      this.spinner.hide()
+      // this.spinner.hide()
       let response: any = res;
       if (response.errorMessage == undefined)
         Swal.fire("Success", "Project Updated Successfully !!", "success")
@@ -1980,6 +1982,7 @@ taskListView(){
   }
 
   onReadMoreHide(){
+    console.log("testing")
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
@@ -2016,24 +2019,23 @@ taskListView(){
   
   onDeactivate(field){
     this[field].deactivate();
-    // this.inplace1.deactivate();
-    // this.inplace2.deactivate();
-
   }
 
   inplaceActivate(field,activeField) {
+    if(activeField != this.active_inplace)
     if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
     this.active_inplace = activeField
-    // this[activeField].activate();
+      // this[activeField].activate();
     this[field] = this.projectDetails[field];
-    console.log(this.resources);
-    // e.deactivate();
+    this.isEditDesc = false;
   }
 
   onUpdateDetails(field) {
       this.projectDetails[field] = this[field];
       this.updateprojectDetails();
-      this.onDeactivate(field);
+      // this.onDeactivate(field);
+      this[this.active_inplace].deactivate();
   }
 
   getAllCategories() {    // get all categories list for dropdown
@@ -2041,5 +2043,22 @@ taskListView(){
     let categoryList:any = res;
     this.categories_list=categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     })
+  }
+
+  onUpdateDesc() {
+    this.projectDetails.projectPurpose = this.project_desc_edit.toString();
+    this.updateprojectDetails();
+    this.project_desc = this.project_desc_edit;
+    this.isEditDesc = false;
+  }
+
+  onClickToEditDesc(){
+    this.isEditDesc = true;
+    this.project_desc_edit = this.project_desc
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+  }
+
+  onDeactivateEdit(){
+    this.isEditDesc = false;
   }
 }
