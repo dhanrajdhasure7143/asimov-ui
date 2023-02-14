@@ -26,8 +26,9 @@
           [table_data]="screenlist"
           [screenTable]="'common'"
           [columns_list]="columns_list"
-          (onEdit)="editScreen($event)"
+          (editRowById)="editScreen($event)"
           (deleteItem)="deleteScreen($event)"
+          [show_delete_btn]="true"
         ></app-dynamic-table>
     </div>
   </mat-card>

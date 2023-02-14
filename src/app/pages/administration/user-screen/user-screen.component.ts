@@ -33,7 +33,7 @@ export class UserScreenComponent implements OnInit {
       localStorage.setItem("screenId", res.Screen_ID);
       this.getUserScreen_List(res.Screen_ID);
     });
-    this.getDashboardScreens();
+  //  this.getDashboardScreens();
   }
 
   getUserScreen_List(screen_id: any) {
@@ -97,6 +97,7 @@ export class UserScreenComponent implements OnInit {
         (response: any) => {
           Swal.fire("Success", "Record deleted successfully", "success");
           this.getUserScreenData();
+          window.location.reload();
         },
         (err: any) => {
           Swal.fire("Error", "Unable to delete record", "error");
@@ -119,7 +120,7 @@ export class UserScreenComponent implements OnInit {
           .createKPIserscreenData(selectedDashboardId, payload)
           .subscribe((data) => {
             Swal.fire("Success", "Record saved successfully", "success");
-            this.getUserScreenData();
+            this.getUserScreenData();      
             this.spinner.hide();
             this.displayFlag = DisplayEnum.DISPLAYTABLE;
           });
@@ -148,8 +149,22 @@ export class UserScreenComponent implements OnInit {
             (val = { objects: [values] })
           )
           .subscribe((data) => {
-            Swal.fire("Success", "Record saved successfully", "success");
-            this.getUserScreenData();
+            Swal.fire({
+              title: "Success",
+              text: "Record Saved successfully !!",
+              position: "center",
+              icon: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#007bff",
+              cancelButtonColor: "#d33",
+              heightAuto: false,
+              confirmButtonText: "Ok",
+            }).then(()=>{
+              setTimeout(() => {
+                this.getUserScreenData();
+                window.location.reload();
+              }, 600);
+            })  
             this.displayFlag = DisplayEnum.DISPLAYTABLE;
           });
       } else {
@@ -205,11 +220,11 @@ export class UserScreenComponent implements OnInit {
     });
   }
 
-  getDashboardScreens() {
-    this.rest.getDashBoardScreens().subscribe((data: any) => {
-      this.dash_board_list = data;
-    });
-  }
+  // getDashboardScreens() {
+  //   this.rest.getDashBoardScreens().subscribe((data: any) => {
+  //     this.dash_board_list = data;
+  //   });
+  // }
 }
 enum DisplayEnum {
   DISPLAYTABLE = "DisplayTable",

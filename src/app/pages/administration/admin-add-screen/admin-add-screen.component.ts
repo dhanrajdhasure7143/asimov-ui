@@ -274,13 +274,26 @@ export class AdminAddScreenComponent implements OnInit {
     payload["fields"] = "";
     this.loading = true;
     this.rest.updateScreenData(payload, this.screen_id).subscribe((data) => {
-      Swal.fire("Success", "Screen Updated Successfully", "success");
-      this.backToScreenList();
+      Swal.fire({
+        title: "Success",
+        text: "Screen Updated successfully !!",
+        position: "center",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#007bff",
+        cancelButtonColor: "#d33",
+        heightAuto: false,
+        confirmButtonText: "Ok",
+      }).then(()=>{
+        this.backToScreenList();
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      })  
       this.loading = false;
-    }),
-      (err: any) => {
-        Swal.fire("Error", "Unable to Update Screen Details", "error");
-      };
+    },(err: any) => {
+      Swal.fire("Error", "Unable to Update Screen Details", "error");
+    })  
   }
 
   saveScreen() {
