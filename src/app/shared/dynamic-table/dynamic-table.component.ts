@@ -18,12 +18,22 @@ export class DynamicTableComponent implements OnInit {
   @Output() deleteItem = new EventEmitter<any[]>();
   @Output() openTaskWorkSpace = new EventEmitter<any[]>();
   @Output("editRowById") editRowById:any= new EventEmitter<any>();
-  @Input()selectedScreen:any;
   @Output() selectedData = new EventEmitter<any[]>();
   @Input("show_delete_btn") public show_delete_btn:boolean;
   @Input("dataKeyId") public dataKeyId:any
   @Input("search_fields") public search_fields:any;
   @Input("selectionMode") public selectionMode:any;
+  @Input("show_edit_btn") public show_edit_btn:boolean;
+  @Input("show_view_btn") public show_view_btn:boolean;
+  @Input("show_retry_btn") public show_retry_btn:boolean;
+  @Output("retryById") retryById:any= new EventEmitter<any>();
+  @Input("categories_list") public categories_list: any[] = [];
+  @Input("isdisabled_edit") public isdisabled_edit:boolean;
+  @Input("isdisabled_delete") public isdisabled_delete:boolean;
+  @Input("show_search_field") public show_search_field:boolean;
+  @Input("show_column_filter") public show_column_filter:boolean;
+  @Input("show_clear_filter") public show_clear_filter:boolean;
+
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -88,5 +98,13 @@ export class DynamicTableComponent implements OnInit {
 
   openWorkSpace(row){
     this.openTaskWorkSpace.emit(row)
+  }
+
+  onRetryGraphGenerate(row){
+    this.retryById.emit(row)
+  }
+
+  filter1(e){
+    console.log(e)
   }
 }

@@ -46,6 +46,7 @@ import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     NgxMaterialTimepickerModule,
     MatTabsModule,
     MatMenuModule,
-    PopoverModule.forRoot()
+    PopoverModule.forRoot(),
+    PrimengCustomModule
   ],
   providers:[PiHints, 
     {

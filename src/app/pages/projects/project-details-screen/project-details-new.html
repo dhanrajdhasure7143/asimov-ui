@@ -175,8 +175,9 @@
                                                     <p>{{projectDetails.projectPercentage}} %</p>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="projectPercentage" />
+                                                    <!-- <input type="text" [style]="{'width':'30%'}" pInputText
+                                                        [(ngModel)]="projectPercentage" /> -->
+                                                        <p-knob [(ngModel)]="projectPercentage"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check"
                                                             *ngIf="projectPercentage >=0"
