@@ -59,6 +59,8 @@ export class ProjectsListScreenComponent implements OnInit {
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
   isprojectCreateForm: boolean =false;
+  categoryList:any;
+  categories_list:any[]=[]
 
 
   constructor(
@@ -92,11 +94,11 @@ export class ProjectsListScreenComponent implements OnInit {
       localStorage.getItem("firstName") +
       " " +
       localStorage.getItem("lastName");
+    this.getallprocesses();
     this.email = localStorage.getItem("ProfileuserId");
     this.getallProjects(this.userRoles, this.name, this.email);
     // this.getallusers();
     this.getUsersList()
-    this.getallprocesses();
     this.freetrail = localStorage.getItem("freetrail");
   }
 
@@ -215,6 +217,7 @@ export class ProjectsListScreenComponent implements OnInit {
         }
       });
     });
+    this.getAllCategories();
 
 
     this.columns_list = [
@@ -254,7 +257,7 @@ export class ProjectsListScreenComponent implements OnInit {
         DisplayName: "Department",
         ShowGrid: true,
         ShowFilter: true,
-        filterWidget: "normal",
+        filterWidget: "dropdown",
         filterType: "text",
         sort: true,
         multi: false,
@@ -492,5 +495,13 @@ export class ProjectsListScreenComponent implements OnInit {
     if(event) return event
     else return "Project"
   }
+
+  getAllCategories() {    // get all categories list for dropdown
+    this.api.getCategoriesList().subscribe(res => {
+    this.categoryList = res
+    this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    })
+  }
+    
 
 }

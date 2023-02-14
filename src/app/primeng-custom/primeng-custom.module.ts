@@ -33,6 +33,7 @@ import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import { ConfirmationService, MessageService } from "primeng/api";
+import {KnobModule} from 'primeng/knob';
 
 @NgModule({
   declarations: [],
@@ -70,6 +71,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
     AutoCompleteModule,
     ChipsModule,
     ConfirmPopupModule,
+    KnobModule
   ],
   exports: [
     CommonModule,
@@ -105,7 +107,8 @@ import { ConfirmationService, MessageService } from "primeng/api";
     ImageModule,
     AutoCompleteModule,
     ChipsModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    KnobModule
   ],
   providers: [ConfirmationService, MessageService]
 })

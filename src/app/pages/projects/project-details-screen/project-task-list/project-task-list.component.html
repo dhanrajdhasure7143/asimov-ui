@@ -42,10 +42,21 @@
                           </ng-template>
                       </p-tabPanel>
                       <div class="">
-                          <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
-                              (viewDetails)="viewDetails($event)" (deleteItem)="deletetask($event)"
-                              [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
-                              [selectionMode]="'single'" (openTaskWorkSpace)="openTaskWorkSpace($event)">
+                          <app-dynamic-table 
+                            [columns_list]="columns_list" 
+                            [table_data]="tasks_list"
+                            (viewDetails)="viewDetails($event)" 
+                            (deleteItem)="deletetask($event)"
+                            [representatives]="representatives" 
+                            [screenTable]="'taskList'" 
+                            [dataKeyId]="'id'" 
+                            [search_fields]="table_searchFields"
+                            [selectionMode]="'single'" 
+                            (openTaskWorkSpace)="openTaskWorkSpace($event)"
+                            [show_search_field]="true"
+                            [show_column_filter]="true"
+                            [show_clear_filter]="true"
+                            >
                           </app-dynamic-table>
                       </div>
                   </p-tabView>

@@ -83,6 +83,8 @@ export class UploadComponent implements OnInit {
   @ViewChild('database') mytemplateForm : NgForm;
   modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
   noDataMessage: boolean;
+  columns_list:any[];
+  table_searchFields:any[]=[];
 
 
   constructor(private router: Router,
@@ -128,6 +130,67 @@ export class UploadComponent implements OnInit {
         }
       }
     })
+
+    this.columns_list = [
+      {
+        ColumnName: "piId",
+        DisplayName: "Process ID",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+      },
+      {
+        ColumnName: "convertedTime_new",
+        DisplayName: "Created Date",
+        ShowFilter: true,
+        ShowGrid: true,
+        filterWidget: "normal",
+        filterType: "date",
+        sort: true,
+      },
+      {
+        ColumnName: "piName",
+        DisplayName: "Process Name",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "categoryName",
+        DisplayName: "Category",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "dropdown",
+        filterType: "text",
+        sort: true,
+        multi: false,
+        dropDownList:[]
+      },
+      {
+        ColumnName: "status",
+        DisplayName: "Status",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "date",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "action",
+        DisplayName: "Action",
+        ShowGrid: true,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
+    ];
+    this.table_searchFields=["piId","convertedTime_new","piName","categoryName","status"]
    
   }
 
@@ -925,9 +988,9 @@ getDBTables(){      //get DB tables list
 
   }
 
-  onDeleteSelectedProcess(id,ele){   
+  onDeleteSelectedProcess(ele){   
     let req_body={
-      "piId":id
+      "piId":ele.piId
     }
     Swal.fire({
       title: 'Are you sure?',
