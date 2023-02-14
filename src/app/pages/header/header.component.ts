@@ -62,7 +62,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ProfileuserId:any;
   newAccessToken:any;
   tenantsList: any=[];
-  nvaigationTenantName:any;
+  navigationTenantName:any;
+  tenant: any;
 
   constructor(
     private router: Router,
@@ -104,12 +105,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     if(!(localStorage.getItem("tenantSwitch")))
-      this.rest_api.getNewAccessToken().subscribe(resp => {
-        this.newAccessToken = resp;
-        localStorage.setItem('accessToken', this.newAccessToken.accessToken);
-      });
-    else
-      localStorage.removeItem("tenantSwitch");
+    this.rest_api.getNewAccessToken().subscribe(resp => {
+      this.newAccessToken = resp;
+      localStorage.setItem('accessToken', this.newAccessToken.accessToken);
+    });
+  else
+    localStorage.removeItem("tenantSwitch");
+  
   }
 
   ngOnInit() {
@@ -138,7 +140,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     this.getTenantLists();
-    this.nvaigationTenantName = localStorage.getItem("tenantSwitchName")
+    this.navigationTenantName = localStorage.getItem("tenantSwitchName")
   }
 
   loopTrackBy(index, term) {
@@ -347,19 +349,14 @@ getTenantLists(){
 
 onChangeTenant(event:any){
   let value = this.tenantsList.find(data=>data.tenant_name == event.value);
+   this.tenant =value.tenant_id
   this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
-    localStorage.removeItem("accessToken")
-    await localStorage.setItem("accessToken", data.accessToken);
-    localStorage.removeItem("tenantName")
-    await localStorage.setItem("tenantName",value.tenant_id);
-    localStorage.removeItem("tenantSwitchName")
-    await localStorage.setItem("tenantSwitchName", value.tenant_name);
+   await localStorage.setItem("accessToken", data.accessToken);
+   await localStorage.setItem("tenantName",value.tenant_id);
+   await localStorage.setItem("tenantSwitchName", value.tenant_name);
+   await localStorage.setItem("tenantSwitch","true");
     setTimeout(()=>{
-    var queryParams = new URLSearchParams(window.location.search);
-    let date:any=new Date()
-    queryParams.set("lr", date.getTime());        
-    var query = queryParams.toString();                
-    window.location.search = query; 
+    window.location.reload();
   }, 1000)  
   });
 }

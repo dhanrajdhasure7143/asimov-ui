@@ -41,7 +41,7 @@
                     [screenTable]="'common'"
                     [columns_list]="columns_list"
                     [selectedScreen]="selectedScreen"
-                    (onEdit)="editForm($event)"
+                    (editRowById)="editForm($event)"
                     (deleteItem)="deleteRecord($event)"
                   ></app-dynamic-table>
                 </div>
