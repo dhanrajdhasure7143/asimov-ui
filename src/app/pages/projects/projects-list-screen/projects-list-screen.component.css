@@ -1,3 +1,6 @@
+.main-content-head .btn {
+  min-width: auto;
+}
 .status-tabs {
   display: flex;
 }
@@ -17,12 +20,9 @@ padding-top: 10px;
 .prjoverlay
 {
     /* width: 100%; */
-    min-height: 74vh;;
-
+    min-height: 74vh;
     width: 160px;
     height: 160px;
-
-
     display: flex;
     justify-content: center;
     align-items: center;
