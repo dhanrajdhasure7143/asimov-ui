@@ -29,12 +29,12 @@ export class AppComponent {
     this.userIdle.startWatching();
     this.userIdle.ping$.subscribe(() => {
       if(localStorage.getItem("accessToken") != null){
-        this.apiservice.getNewAccessToken().subscribe(resp=>{
+        let tenantId=localStorage.getItem('tenantName')
+        this.apiservice.getNewAccessTokenByTenantId(tenantId).subscribe(resp=>{
           this.newAccessToken=resp;
           localStorage.setItem('accessToken', this.newAccessToken.accessToken);
-      });
-      }
-    });
+      })}
+    })
     // Start watching when user idle is starting.
     this.userIdle.onTimerStart().subscribe(count => console.log(count));
     
