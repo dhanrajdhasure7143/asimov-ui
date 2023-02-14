@@ -370,3 +370,9 @@ div.vertical-line {
 }
 
 .collabottom textarea { resize: none; }
+.project-description_truncate{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
