@@ -1486,9 +1486,9 @@ getprocessnamesByLatestVersion()
 {
   return this.http.get("/rpa-service/latest-version/process-name");
 }
-// getConnectionslist(){
-//   return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
-// }
+getConnectionslist(){
+  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
+}
 getTenantnameslist() {
   return this.http.get("/platform-service/screenGenerator/get-allorgtenent-data");
 }
@@ -1621,3 +1621,4 @@ getMessagesByProjectId(projectId){
   return this.http.get('http://localhost:8098/getChatData/'+projectId)
 }
 }
+``

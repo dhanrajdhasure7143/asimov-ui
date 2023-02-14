@@ -34,8 +34,8 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   getAllConnections() {
-    // this.rest_api.getConnectionslist().subscribe((data: any) => {
-      // this.connectorTable = data;
+    this.rest_api.getConnectionslist().subscribe((data: any) => {
+      this.connectorTable = data;
       this.spinner.hide();
       this.columns_list = [
         {
@@ -50,54 +50,54 @@ export class RpaConnectionManagerComponent implements OnInit {
         },
         {
           ColumnName: "httpMethodType",
-          DisplayName: "Connection Name",
-          ShowFilter: true,
-          ShowGrid: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "actionType",
-          DisplayName: "Action Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "authorization_Type",
           DisplayName: "Authentication Type",
-          ShowGrid: true,
           ShowFilter: true,
+          ShowGrid: true,
           filterWidget: "normal",
           filterType: "text",
           sort: true,
           multi: false,
         },
-        {
-          ColumnName: "createdDate",
-          DisplayName: "Created Date",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "date",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "lastModifiedBy",
-          DisplayName: "Created By",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
+        // {
+        //   ColumnName: "actionType",
+        //   DisplayName: "Action Type",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
+        // {
+        //   ColumnName: "authorization_Type",
+        //   DisplayName: "Authentication Type",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
+        // {
+        //   ColumnName: "createdDate",
+        //   DisplayName: "Created Date",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "date",
+        //   sort: true,
+        //   multi: false,
+        // },
+        // {
+        //   ColumnName: "lastModifiedBy",
+        //   DisplayName: "Created By",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
         // {
         //   ColumnName: "action",
         //   DisplayName: "Action",
@@ -107,7 +107,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         //   multi: false,
         // },
       ];
-    // });
+    });
   }
 
   viewDetails(event) {}
