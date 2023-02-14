@@ -48,6 +48,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
+    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
     

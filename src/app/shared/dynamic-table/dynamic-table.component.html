@@ -131,12 +131,17 @@
                             </span> -->
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'">
-                        <div class="newinntalx">
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <span class="" (click)="viewDetailsbyId(rowData)">
+                                <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img" >
+                                <img src="../../../../assets/images/PI/eye-show-blue.svg" alt="" class="testplus hover-img" >
+                            </span>
+                            <span (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
                             || (this.userRoles.includes('System Admin'))">
-                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                            </a>
+                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                        </span>
+                            
                         </div>
                     </span>
                     

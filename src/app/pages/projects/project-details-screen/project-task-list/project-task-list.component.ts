@@ -125,7 +125,7 @@ export class ProjectTaskListComponent implements OnInit {
       },
       {
         ColumnName: "action",
-        //DisplayName: "Action",
+        DisplayName: "",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
@@ -259,14 +259,13 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   openTaskWorkSpace(data) {
-    console.log(data);
-
     localStorage.setItem("project_id", this.project_id.id);
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(["/pages/rpautomation/designer"], {
         queryParams: {
-          projectId: this.project_id.id,
           botId: data.correlationID,
+          projectId: this.project_id,
+          projectName:this.project_name
         },
       });
     }
@@ -280,11 +279,13 @@ export class ProjectTaskListComponent implements OnInit {
           bpsId: data.correlationID.split(":")[0],
           ver: data.correlationID.split(":")[1],
           ntype: "bpmn",
+          projectId:this.project_id,
+          projectName:this.project_name
         },
       });
     }
     if (data.taskCategory == "RPA Design") {
-      // this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
+      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id}})
     }
 
     if (data.taskCategory == "Process Mining") {
