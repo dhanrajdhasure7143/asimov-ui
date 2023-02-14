@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 
@@ -192,7 +189,6 @@ export class UserScreenComponent implements OnInit {
   }
 
   getUserScreenData() {
-    this.tableData = [];
     this.rest
       .getUserScreenData(
         this.selectedScreen.Table_Name,
@@ -205,6 +201,7 @@ export class UserScreenComponent implements OnInit {
         } else {
           this.primaryKey = "";
         }
+        this.tableData = [];
         let res_data = data;
         this.tableData = res_data;
         this.spinner.hide();

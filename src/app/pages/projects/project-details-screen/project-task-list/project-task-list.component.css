@@ -13,42 +13,29 @@ td.lowpriority,
 td p.lowpriority {
     color: #27AD74;
 }
+.main-content-head .btn {
+  min-width: auto;
+}
 
   .status-tabs {
     display: flex;
     padding: 0px;
   }
 
-  .status-img>img {
+.status-img>img {
     height: 40px !important;
-  }
-  .newstatu .status-img img {
+}
+.newstatu .status-img img {
     padding: 0px;
     display: inline-flex;
     align-items: center;
-  }
+}
   
-  .newstatu .status-data {
+.newstatu .status-data {
     text-align: left;
-  }
+}
   
-  .status-data {
+.status-data {
     vertical-align: middle;
     color: black !important;
-  }
-  
-  span.tab-text {
-    /* display: block; */
-    font-weight: 400;
-    font-size: 12px;
-    line-height: normal;
-    color: #535353;
-  }
-  
-  .d-flex{
-    display: flex;
-  }
-  
-  .py-5{
-    padding:5px;
-  }
+}

@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row no-gutter">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="header">
         <div class="header-inner nav-item">
           <span class="h6 text-title"> {{ selectedScreen.Screen_Name }} </span>
@@ -40,10 +40,14 @@
                     [table_data]="tableData"
                     [screenTable]="'common'"
                     [columns_list]="columns_list"
-                    [selectedScreen]="selectedScreen"
                     (editRowById)="editForm($event)"
                     (deleteItem)="deleteRecord($event)"
-                  ></app-dynamic-table>
+                    [show_edit_btn]="true"
+                    [show_delete_btn]="true"
+                    [isdisabled_edit]="!selectedScreen.Allow_Edit"
+                    [isdisabled_delete]="!selectedScreen.Allow_Delete"
+                  >
+                  </app-dynamic-table>
                 </div>
               </div>
               <div *ngIf="displayFlag == 'EditForm'">

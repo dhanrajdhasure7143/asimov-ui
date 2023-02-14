@@ -31,6 +31,7 @@ export class ProjectTaskListComponent implements OnInit {
   table_searchFields: any;
   hiddenPopUp: boolean = false;
   project_name: any;
+  params_data:any;
 
   constructor(
     private rest_api: RestApiService,
@@ -40,6 +41,7 @@ export class ProjectTaskListComponent implements OnInit {
     private spinner: LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
+      this.params_data = data
       this.project_id = data.project_id;
       this.project_name = data.project_name;
     });
@@ -123,7 +125,7 @@ export class ProjectTaskListComponent implements OnInit {
       },
       {
         ColumnName: "action",
-        DisplayName: "Action",
+        //DisplayName: "Action",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,

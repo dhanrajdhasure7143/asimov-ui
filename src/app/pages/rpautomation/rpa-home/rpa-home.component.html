@@ -1,6 +1,6 @@
 <div class="main-content ">
     <div class="row content-area">
-        <div class="module-heading title">
+        <div class="row module-heading title">
            <span class="module-header-title">Robotic Process Automation</span>
         </div>
         <div class="row rpa-content-home">
@@ -40,7 +40,7 @@
                             <h4 class="gridHeader">My Workspace</h4>
                         </div>
                         
-                        <div class="col-md-6 p-0">
+                        <div class="row col-md-6 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
                                 <select class="form-control" (change)="searchByCategory(categoryName)" [disabled]="categaoriesList.length == 1"
                                 #category="ngModel" [(ngModel)]="categoryName">

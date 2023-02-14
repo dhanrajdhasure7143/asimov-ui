@@ -1,6 +1,6 @@
 
 import { formatDate } from '@angular/common';
-import { Component, Input, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,20 +11,16 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
-import { verifyHostBindings } from '@angular/compiler';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
-import { SplitComponent } from "angular-split";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from 'primeng/inplace';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -32,6 +28,12 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./project-details-new.css']
 })
 export class ProjectDetailsScreenComponent implements OnInit {
+  @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild("inplace1") inplace1!: Inplace;
+  @ViewChild("inplace2") inplace2!: Inplace;
+  @ViewChild("inplace3") inplace3!: Inplace;
+  @ViewChild("inplace4") inplace4!: Inplace;
+  @ViewChild("inplace5") inplace5!: Inplace;
   projects_toggle: Boolean = false;
   projectData: any;
   projectDetails: any={};
@@ -100,7 +102,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedtaskfileupload: any;
   editdata: Boolean = false;
   resources: any = [];
-  processOwner: boolean = false;
+  // processOwner: boolean = false;
   userid: any;
   rolelist: any = [];
   userrole: any = [];
@@ -186,14 +188,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnModeler1;
   items: MenuItem[];
   actionsitems: MenuItem[];
-  public areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
-  isShowExpand: boolean = false;
-  splitAreamin_size = "500";
-  area_splitSize: any = {};
-  @ViewChild("splitEl") splitEl: SplitComponent;
   public hiddenPopUp: boolean = false;
   columns_list:any;
   existingUsersList:any[]=[];
@@ -213,24 +207,55 @@ export class ProjectDetailsScreenComponent implements OnInit {
   isReadmoreShow: boolean = false;
   non_existUsers:any[]=[];
   stompClient;
-  messages:any[];
+  messages_list:any[]=[];
   project_desc:any='';
+  params_data:any;
+  logged_userId:any='';
+  userDetails:any;
+  replay_msg:any;
+  isCreate= false;
+  selectedItem: any;
+  priority:any;
+  projectName:any;
+  resource:any;
+  processOwner:any;
+  status:any;
+  projectPercentage:any;
+  status_list = [
+    { name: "New" },
+    { name: "In Progress" },
+    { name: "In Review" },
+    { name: "Done" },
+  ];
 
-  constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
+  priority_list = [
+    { name: "High" },
+    { name: "Medium" },
+    { name: "Low" },
+  ];
+  categories_list:any[]=[];
+  mapValueChain:any;
+  active_inplace:any;
+  project_desc_edit:any;
+  isEditDesc:boolean=false;
+
+
+
+  constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
-      this.route.queryParams.subscribe(data=>{​​​​​​
-        let paramsdata:any=data
-        this.project_id = paramsdata.project_id
-        console.log(this.project_id)
-        this.connectToWebSocket();
+      this.route.queryParams.subscribe((data:any)=>{​​​​​​
+        this.params_data=data
+        this.project_id = this.params_data.project_id
+        if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
+        this.spinner.show();
+        this.getallusers();
       });
 
      }
      
 
   ngOnInit() {
-    this.getallusers();
     this.actionsitems = [
       {
         label: 'Tasks',
@@ -246,7 +271,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       },
       {label: 'Documents', command: () => {this.openDocumentScreen();}}
     ];
-    this.processOwner = false;
+    // this.processOwner = false;
     localStorage.setItem('project_id', null);
     localStorage.setItem('bot_id', null);
     $('.link').removeClass('active');
@@ -286,7 +311,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     // || this.userRole.includes('Process Architect') || this.userRole.includes('System Admin') 
     // || this.userRole.includes('Process Analyst')|| this.userRole.includes('RPA Developer');
 
-    this.rpa.getCustomUserRole(2).subscribe(role => {
+    this.rest_api.getCustomUserRole(2).subscribe(role => {
       this.customUserRole = role;
       let element = []
       for (let index = 0; index < this.customUserRole.message.length; index++) {
@@ -305,15 +330,15 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
     this.getallprocesses();
-    setTimeout(() => {
-      this.getImage();
-      this.profileName();
-    }, 2000);
-    this.getFileCategoriesList();
-    this.getProcessUnderstandingDetails();
-    this.getQuestionnaire();
+    // setTimeout(() => {
+    //   this.getImage();
+    //   this.profileName();
+    // }, 2000);
+    // this.getFileCategoriesList();
+    // this.getProcessUnderstandingDetails();
+    // this.getQuestionnaire();
     //  this.getallusers();
-    this.getInitiatives();
+    // this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
   }
@@ -354,7 +379,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     fileData.append("projectId", this.project_id)
 
 
-    this.rpa.uploadProjectFile(fileData).subscribe(res => {
+    this.rest_api.uploadProjectFile(fileData).subscribe(res => {
       //message: "Resource Added Successfully
 
       this.uploadFileFormDetails.get("fileCategory").setValue("");
@@ -427,7 +452,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getFileDetails() {
-    this.rpa.getFileDetails(this.projectid).subscribe(data => {
+    this.rest_api.getFileDetails(this.projectid).subscribe(data => {
       this.uploadedFiledata = data.uploadedFiles.reverse();
       this.dataSource3 = new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort = this.sort11;
@@ -457,7 +482,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   downloadExcel() {
     this.spinner.show();
-    this.rpa.exportproject(this.project_id).subscribe(data => {
+    this.rest_api.exportproject(this.project_id).subscribe(data => {
       let response: any = data;
       if (response.errorMessage == undefined) {
         var link = document.createElement('a');
@@ -510,7 +535,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getTaskandCommentsData() {
-    this.rpa.gettaskandComments(this.project_id).subscribe(data => {
+    this.rest_api.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
       this.tasks.map(item=>{item["timeStamp_converted"] = moment(item.lastModifiedTimestamp).valueOf();
         return item;
@@ -526,13 +551,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getTaskAttachments() {
-    this.rpa.getTaskAttachments(this.selectedtaskdata.projectId, this.selectedtaskdata.id).subscribe(data => {
+    this.rest_api.getTaskAttachments(this.selectedtaskdata.projectId, this.selectedtaskdata.id).subscribe(data => {
       this.taskattacments = data
     })
   }
 
   getLatestFiveAttachments(projectid) {
-    this.rpa.getLatestfiveAttachments(projectid, "UTC").subscribe(data => {
+    this.rest_api.getLatestfiveAttachments(projectid, "UTC").subscribe(data => {
       this.latestFiveDocs = data;
       this.dataSource9 = new MatTableDataSource(this.latestFiveDocs);
       this.dataSource9.sort = this.sort16;
@@ -543,7 +568,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getUserRole() {
     let user = this.users_list.find(item => item.userId.userId == this.selectedtaskdata.resources);
     this.userid = user.userId.userId
-    this.rpa.getRole(this.userid).subscribe(data => {
+    this.rest_api.getRole(this.userid).subscribe(data => {
       this.userrole = data
       for (let index = 0; index <= this.userrole.message.length; index++) {
         this.rolename = this.userrole.message[index];
@@ -575,7 +600,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.spinner.show();
   this.existingUsersList = [];
   this.non_existUsers = [];
-  this.rpa.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
+  this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
   this.projectDetails=res
   console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
@@ -633,7 +658,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getImage() {
     const userid = localStorage.getItem('ProfileuserId');
-    this.rpa.getUserDetails(userid).subscribe(res => {
+    this.rest_api.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
       setTimeout(() => {
         this.resourcetablefirstname = this.retrieveResonse.firstName
@@ -679,13 +704,22 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getallusers() {
     this.spinner.show();
+    this.dt.logged_userData.subscribe(res=>{
+      console.log(res)
+      if(res){
+        this.userDetails = res;
+      this.logged_userId=res.userId
+      }
+    })
     this.dt.tenantBased_UsersList.subscribe(response => {
-      console.log("test",response)
       let usersDatausers_list:any[] = [];
       if(response)
         usersDatausers_list = response;
       if(usersDatausers_list.length>0){
       this.getProjectdetails();
+      this.connectToWebSocket();
+      this.getMessagesList();
+      this.getAllCategories();
       this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
       }
       // this.users_list.forEach(item2 => {
@@ -723,7 +757,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getallprocesses() {
-    this.rpa.getprocessnames().subscribe(processnames => {
+    this.rest_api.getprocessnames().subscribe(processnames => {
       let resp: any = []
       resp = processnames
       let approved_processes = resp.filter(item => item.status == "APPROVED");
@@ -836,7 +870,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       taskupdatFormValue["percentageComplete"] = this.slider
       taskupdatFormValue["comments"] = this.taskcomments
       taskupdatFormValue["history"] = this.taskhistory
-      this.rpa.updateTask(taskupdatFormValue).subscribe(res => {
+      this.rest_api.updateTask(taskupdatFormValue).subscribe(res => {
         let status: any = res;
         if (status.errorMessage == undefined) {
           Swal.fire("Success", "Task Updated Successfully !!", "success");
@@ -869,7 +903,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.rpa.deleteTask(deletetask).subscribe(res => {
+        this.rest_api.deleteTask(deletetask).subscribe(res => {
           let status: any = res;
           this.spinner.hide()
           Swal.fire({
@@ -910,11 +944,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
     this.spinner.show();
     // this.addresourcemodalref.hide();
-    this.rpa.addresourcebyid(item_data).subscribe(data => {
+    this.rest_api.addresourcebyid(item_data).subscribe(data => {
       let response: any = data;
       if (response.errorMessage == undefined) {
         this.getProjectdetails();
         this.checktodelete();
+        // this.isCreate = false;
+        // this.router.navigate([],{ relativeTo:this.route, queryParams:{project_id: this.params_data.project.id} });
         Swal.fire("Success", response.status, "success");
         this.checkBoxselected =[];
         this.onUsersTab(0);
@@ -923,7 +959,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         Swal.fire("Error", response.errorMessage, "error");
       }
     })
-    //   this.rpa.addresourcesbyprogramid(item_data).subscribe(data=>{
+    //   this.rest_api.addresourcesbyprogramid(item_data).subscribe(data=>{
     //    let response:any=data;
     //    if(response.errorMessage==undefined)
     //    {
@@ -978,7 +1014,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.rpa.deleteResource(selectedresource).subscribe(res => {
+        this.rest_api.deleteResource(selectedresource).subscribe(res => {
           Swal.fire({
             title: 'Success',
             text: "Resource Deleted Successfully !",
@@ -1056,7 +1092,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getFileCategories() {
-    this.rpa.getFileCategories().subscribe(data => {
+    this.rest_api.getFileCategories().subscribe(data => {
       this.filecategories = data;
     })
   }
@@ -1074,7 +1110,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     fileData.append("projectId", this.selectedtaskfileupload.projectId)
     fileData.append("taskId", this.selectedtaskfileupload.id)
     fileData.append("description", this.uploadtaskFileForm.get("description").value)
-    this.rpa.uploadProjectFile(fileData).subscribe(res => {
+    this.rest_api.uploadProjectFile(fileData).subscribe(res => {
       let message: any = res;
       this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.selectedtaskfileupload.projectId)
@@ -1099,27 +1135,27 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   updateprojectDetails() {
-    this.spinner.show()
+    // this.spinner.show()
     this.projectDetails["type"] = "Project";
-    this.projectDetails.processOwner = this.processownername
-    this.projectDetails.endDate = this.projectenddate;
-    this.projectDetails.startDate = this.projectStartDate;
+    // this.projectDetails.processOwner = this.processownername
+    // this.projectDetails.endDate = this.projectenddate;
+    // this.projectDetails.startDate = this.projectStartDate;
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
-    this.rpa.update_project(this.projectDetails).subscribe(res => {
-      this.spinner.hide()
+    this.rest_api.update_project(this.projectDetails).subscribe(res => {
+      // this.spinner.hide()
       let response: any = res;
       if (response.errorMessage == undefined)
         Swal.fire("Success", "Project Updated Successfully !!", "success")
       else
         Swal.fire("Error", response.errorMessage, "error");
       this.getProjectdetails()
-      this.editdata = false;
+      // this.editdata = false;
     });
   }
 
   downloadTaskAttachment(attachment) {
     let data = [attachment.fileName]
-    this.rpa.downloadTaskAttachment(data).subscribe(data => {
+    this.rest_api.downloadTaskAttachment(data).subscribe(data => {
       let response: any = data
       var link = document.createElement('a');
       let extension = ((((attachment.fileName.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
@@ -1153,7 +1189,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getInitiatives() {
-    this.rpa.getProjectIntitiatives().subscribe(res => {
+    this.rest_api.getProjectIntitiatives().subscribe(res => {
       let response: any = res;
       this.initiatives = response;
     })
@@ -1211,7 +1247,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "answeredBy": "",
       "answeredByUserId": ""
     }
-    this.rpa.processQuestionSave(req_body).subscribe(res => {
+    this.rest_api.processQuestionSave(req_body).subscribe(res => {
       this.spinner.hide();
       this.haveQuestion='';
       Swal.fire({
@@ -1245,7 +1281,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       "createdUserId": localStorage.getItem("ProfileuserId")
     }
-    this.rpa.businessDetailsSave(req_body).subscribe(res => {
+    this.rest_api.businessDetailsSave(req_body).subscribe(res => {
       this.spinner.hide();
       Swal.fire({
         icon: 'success',
@@ -1275,7 +1311,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "purpose": this.businessPurpose,
       "benefits": this.business_benefits
     }
-    this.rpa.businessDetailsUpdate(req_body).subscribe(res => {
+    this.rest_api.businessDetailsUpdate(req_body).subscribe(res => {
       this.spinner.hide();
       Swal.fire({
         icon: 'success',
@@ -1328,7 +1364,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
   }
 
-    this.rpa.answerUpdate(req_body).subscribe(res => {
+    this.rest_api.answerUpdate(req_body).subscribe(res => {
       this.spinner.hide();
       Swal.fire({
         icon: 'success',
@@ -1367,7 +1403,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.rpa.answerDelete(req_body).subscribe(res => {
+        this.rest_api.answerDelete(req_body).subscribe(res => {
           Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -1420,7 +1456,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getProcessUnderstandingDetails() {
     this.isProcessEdit = false;
     let res_data: any;
-    this.rpa.getProcessUderstandingDetails(this.project_id).subscribe(res => {
+    this.rest_api.getProcessUderstandingDetails(this.project_id).subscribe(res => {
       res_data = res
       if (res_data.data) {
         this.spinner.hide()
@@ -1437,7 +1473,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getQuestionnaire() {
     let res_data: any;
-    this.rpa.getQuestionnaires(this.project_id).subscribe(res => {
+    this.rest_api.getQuestionnaires(this.project_id).subscribe(res => {
       res_data = res
       // System Admin
       this.processQuestions = res_data.data
@@ -1491,7 +1527,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.asIsProcessBpmn ={};
     this.toBeProcessBpmn ={};
     if (filter_data.length > 0) {
-      this.rpa.getBPMNbyProcessId(filter_data).subscribe((res: any) => {
+      this.rest_api.getBPMNbyProcessId(filter_data).subscribe((res: any) => {
         res_data = res;
         this.bpmnList = res_data;
         if (res_data.length > 0) {
@@ -1767,7 +1803,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         "asisprocessName": null
       }
     }
-    this.rpa.processDocumentDownload(res_body).subscribe(res => {
+    this.rest_api.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
       this.downloadFile();
     });
@@ -1783,7 +1819,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "tobeprocessName": this.toBeProcessBpmn.bpmnProcessName,
       "tobeprocessversion": this.toBeProcessBpmn.version,
     }
-    this.rpa.processDocumentDownload(res_body).subscribe(res => {
+    this.rest_api.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
       this.downloadFile()
     });
@@ -1830,7 +1866,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getFileCategoriesList(){
-    this.rpa.getFileCategoriesList(this.project_id).subscribe((res:any)=>{
+    this.rest_api.getFileCategoriesList(this.project_id).subscribe((res:any)=>{
       this.filecategoriesList = res
     })
   }
@@ -1848,35 +1884,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
 taskListView(){
   this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
-}
-
-minimizeFullScreen() {
-  this.isShowExpand = false;
-  // this.splitAreamin_size = "200";
-  // this.areas = [
-  //   { size: 50, order: 1 },
-  //   { size: 50, order: 2 },
-  // ];
-}
-
-expandFullScreen() {
-  this.isShowExpand = true;
-  // this.splitAreamin_size = "null";
-  // this.areas = [
-  //   { size: 0, order: 1 },
-  //   { size: 100, order: 2 },
-  // ];
-}
-
-onDragEnd(e: { gutterNum: number; sizes: number[] }) {
-
-  this.areas[0].size = e.sizes[0];
-  this.areas[1].size = e.sizes[1];
-  if (e.sizes[1] < 50) {
-    this.splitAreamin_size = "500";
-  } else {
-    this.splitAreamin_size = "null";
-  }
 }
 
   closeOverlay(event) {
@@ -1913,34 +1920,52 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
 
   connectToWebSocket() {
     console.log("Initialize WebSocket Connection");
-    let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
+    // let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
+    let ws = new SockJS("http://localhost:8098/projectChat");
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({}, function (frame) {
         _this.stompClient.subscribe("/topic/messages", function (sdkEvent) {
-            console.log(sdkEvent)
-          
+            // console.log(JSON.parse(sdkEvent.body));
+            _this.messages_list = JSON.parse(sdkEvent.body)
+            console.log(_this.messages_list)
+            setTimeout(()=>{
+              var objDiv = document.getElementById("message-body");
+              objDiv.scrollTop = objDiv.scrollHeight;
+            },100)
         });
         _this.stompClient.reconnect_delay = 2000;
     },(err)=>{
-      console.log(err)
+      // console.log(err)
     });
 };
 
 
   sendMessage() {
     let message={
-      userId:localStorage.getItem("ProfileuserId"),
+      userId:this.logged_userId,
       message:this.typedMessage,
       projectId:this.project_id,
-      rmid:0,
-      firstName:localStorage.getItem("firstName"),
-      lastName:localStorage.getItem("lastName"),
+      rmId:this.replay_msg.id?this.replay_msg.id:0,
+      firstName:this.userDetails.firstName,
+      lastName:this.userDetails.lastName,
     }
-    console.log("calling logout api via web socket");
-    console.log(message)
+    console.log("calling logout api via web socket",message);
+    // console.log(message)
+    this.typedMessage='';
+    this.replay_msg = null;
     this.stompClient.send("/app/send", {}, JSON.stringify(message));
 }
+
+  getMessagesList(){
+    this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
+      this.messages_list = res;
+      setTimeout(()=>{
+          var objDiv = document.getElementById("message-body");
+          objDiv.scrollTop = objDiv.scrollHeight;
+        },100)
+    })
+  }
 
   onCreateTask() {
     this.createTaskOverlay = true;
@@ -1957,11 +1982,83 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 
   onReadMoreHide(){
+    console.log("testing")
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
   openDocumentScreen(){
-    // this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
     this.router.navigate(['/pages/projects/document'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
+  }
+
+  userFirstValues(firstName,lastName){
+    return firstName.charAt(0)+lastName.charAt(0);
+  }
+ 
+    replyMessage(message){
+    this.replay_msg=message;
+    // this.el.nativeElement;
+    // var element = document.querySelector('.selected-order');
+    // element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
+   }
+
+   scrollTomain(message){
+    this.selectedItem = message.rmId
+    setTimeout(()=>{
+      this.selectedItem =''
+    },200)
+   }
+
+   onClearReply(){
+    this.replay_msg = null;
+   }
+
+   navigateToCreateDocument(){
+    this.router.navigate(['pages/projects/document-editor'],
+    { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
+  }
+  
+  onDeactivate(field){
+    this[field].deactivate();
+  }
+
+  inplaceActivate(field,activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
+    this.active_inplace = activeField
+      // this[activeField].activate();
+    this[field] = this.projectDetails[field];
+    this.isEditDesc = false;
+  }
+
+  onUpdateDetails(field) {
+      this.projectDetails[field] = this[field];
+      this.updateprojectDetails();
+      // this.onDeactivate(field);
+      this[this.active_inplace].deactivate();
+  }
+
+  getAllCategories() {    // get all categories list for dropdown
+    this.rest_api.getCategoriesList().subscribe(res => {
+    let categoryList:any = res;
+    this.categories_list=categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    })
+  }
+
+  onUpdateDesc() {
+    this.projectDetails.projectPurpose = this.project_desc_edit.toString();
+    this.updateprojectDetails();
+    this.project_desc = this.project_desc_edit;
+    this.isEditDesc = false;
+  }
+
+  onClickToEditDesc(){
+    this.isEditDesc = true;
+    this.project_desc_edit = this.project_desc
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+  }
+
+  onDeactivateEdit(){
+    this.isEditDesc = false;
   }
 }

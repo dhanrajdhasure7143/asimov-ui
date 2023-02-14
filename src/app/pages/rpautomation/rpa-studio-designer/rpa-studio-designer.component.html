@@ -268,7 +268,7 @@
                           <div class="row h-100">
                           <div class="col-md-12 check p-0 h-100">
                             <div *ngIf="loadedBotsList.length!=0" class="check">  
-                              <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances></app-rpa-studio-designerworkspace>
+                              <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                             </div>
                           </div>
                         
