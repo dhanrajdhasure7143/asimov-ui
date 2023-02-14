@@ -11,20 +11,16 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
-import { verifyHostBindings } from '@angular/compiler';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
-import { SplitComponent } from "angular-split";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from 'primeng/inplace';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -32,6 +28,12 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./project-details-new.css']
 })
 export class ProjectDetailsScreenComponent implements OnInit {
+  @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild("inplace1") inplace1!: Inplace;
+  @ViewChild("inplace2") inplace2!: Inplace;
+  @ViewChild("inplace3") inplace3!: Inplace;
+  @ViewChild("inplace4") inplace4!: Inplace;
+  @ViewChild("inplace5") inplace5!: Inplace;
   projects_toggle: Boolean = false;
   projectData: any;
   projectDetails: any={};
@@ -100,7 +102,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedtaskfileupload: any;
   editdata: Boolean = false;
   resources: any = [];
-  processOwner: boolean = false;
+  // processOwner: boolean = false;
   userid: any;
   rolelist: any = [];
   userrole: any = [];
@@ -186,14 +188,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnModeler1;
   items: MenuItem[];
   actionsitems: MenuItem[];
-  public areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
-  isShowExpand: boolean = false;
-  splitAreamin_size = "500";
-  area_splitSize: any = {};
-  @ViewChild("splitEl") splitEl: SplitComponent;
   public hiddenPopUp: boolean = false;
   columns_list:any;
   existingUsersList:any[]=[];
@@ -221,14 +215,40 @@ export class ProjectDetailsScreenComponent implements OnInit {
   replay_msg:any;
   isCreate= false;
   selectedItem: any;
+  priority:any;
+  projectName:any;
+  resource:any;
+  processOwner:any;
+  status:any;
+  projectPercentage:any;
+  status_list = [
+    { name: "New" },
+    { name: "In Progress" },
+    { name: "In Review" },
+    { name: "Done" },
+  ];
 
-  constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rest_api: RestApiService,
-    private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router, private el: ElementRef,
+  priority_list = [
+    { name: "High" },
+    { name: "Medium" },
+    { name: "Low" },
+  ];
+  categories_list:any[]=[];
+  mapValueChain:any;
+  active_inplace:any;
+  project_desc_edit:any;
+  isEditDesc:boolean=false;
+
+
+
+  constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
+    private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
         if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
+        this.spinner.show();
         this.getallusers();
       });
 
@@ -251,7 +271,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       },
       {label: 'Documents', command: () => {this.openDocumentScreen();}}
     ];
-    this.processOwner = false;
+    // this.processOwner = false;
     localStorage.setItem('project_id', null);
     localStorage.setItem('bot_id', null);
     $('.link').removeClass('active');
@@ -310,15 +330,15 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
     this.getallprocesses();
-    setTimeout(() => {
-      this.getImage();
-      this.profileName();
-    }, 2000);
-    this.getFileCategoriesList();
-    this.getProcessUnderstandingDetails();
-    this.getQuestionnaire();
+    // setTimeout(() => {
+    //   this.getImage();
+    //   this.profileName();
+    // }, 2000);
+    // this.getFileCategoriesList();
+    // this.getProcessUnderstandingDetails();
+    // this.getQuestionnaire();
     //  this.getallusers();
-    this.getInitiatives();
+    // this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
   }
@@ -692,7 +712,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
     this.dt.tenantBased_UsersList.subscribe(response => {
-      console.log("test",response)
       let usersDatausers_list:any[] = [];
       if(response)
         usersDatausers_list = response;
@@ -700,6 +719,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.getProjectdetails();
       this.connectToWebSocket();
       this.getMessagesList();
+      this.getAllCategories();
       this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
       }
       // this.users_list.forEach(item2 => {
@@ -1115,21 +1135,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   updateprojectDetails() {
-    this.spinner.show()
+    // this.spinner.show()
     this.projectDetails["type"] = "Project";
-    this.projectDetails.processOwner = this.processownername
-    this.projectDetails.endDate = this.projectenddate;
-    this.projectDetails.startDate = this.projectStartDate;
+    // this.projectDetails.processOwner = this.processownername
+    // this.projectDetails.endDate = this.projectenddate;
+    // this.projectDetails.startDate = this.projectStartDate;
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
     this.rest_api.update_project(this.projectDetails).subscribe(res => {
-      this.spinner.hide()
+      // this.spinner.hide()
       let response: any = res;
       if (response.errorMessage == undefined)
         Swal.fire("Success", "Project Updated Successfully !!", "success")
       else
         Swal.fire("Error", response.errorMessage, "error");
       this.getProjectdetails()
-      this.editdata = false;
+      // this.editdata = false;
     });
   }
 
@@ -1866,35 +1886,6 @@ taskListView(){
   this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
 }
 
-minimizeFullScreen() {
-  this.isShowExpand = false;
-  // this.splitAreamin_size = "200";
-  // this.areas = [
-  //   { size: 50, order: 1 },
-  //   { size: 50, order: 2 },
-  // ];
-}
-
-expandFullScreen() {
-  this.isShowExpand = true;
-  // this.splitAreamin_size = "null";
-  // this.areas = [
-  //   { size: 0, order: 1 },
-  //   { size: 100, order: 2 },
-  // ];
-}
-
-onDragEnd(e: { gutterNum: number; sizes: number[] }) {
-
-  this.areas[0].size = e.sizes[0];
-  this.areas[1].size = e.sizes[1];
-  if (e.sizes[1] < 50) {
-    this.splitAreamin_size = "500";
-  } else {
-    this.splitAreamin_size = "null";
-  }
-}
-
   closeOverlay(event) {
     this.hiddenPopUp = event;
   }
@@ -1991,6 +1982,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 
   onReadMoreHide(){
+    console.log("testing")
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
@@ -2025,5 +2017,48 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
   }
   
+  onDeactivate(field){
+    this[field].deactivate();
+  }
 
+  inplaceActivate(field,activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
+    this.active_inplace = activeField
+      // this[activeField].activate();
+    this[field] = this.projectDetails[field];
+    this.isEditDesc = false;
+  }
+
+  onUpdateDetails(field) {
+      this.projectDetails[field] = this[field];
+      this.updateprojectDetails();
+      // this.onDeactivate(field);
+      this[this.active_inplace].deactivate();
+  }
+
+  getAllCategories() {    // get all categories list for dropdown
+    this.rest_api.getCategoriesList().subscribe(res => {
+    let categoryList:any = res;
+    this.categories_list=categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    })
+  }
+
+  onUpdateDesc() {
+    this.projectDetails.projectPurpose = this.project_desc_edit.toString();
+    this.updateprojectDetails();
+    this.project_desc = this.project_desc_edit;
+    this.isEditDesc = false;
+  }
+
+  onClickToEditDesc(){
+    this.isEditDesc = true;
+    this.project_desc_edit = this.project_desc
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+  }
+
+  onDeactivateEdit(){
+    this.isEditDesc = false;
+  }
 }

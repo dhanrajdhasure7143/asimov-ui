@@ -53,15 +53,15 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
           );
       });
     }
-    this.getChartType();
+   // this.getChartType();
     this.getPortalNames();
   }
 
-  getChartType() {
-    this.rest.getChartType().subscribe((data) => {
-      this.chartType = data;
-    });
-  }
+  // getChartType() {
+  //   this.rest.getChartType().subscribe((data) => {
+  //     this.chartType = data;
+  //   });
+  // }
 
   emitFormValue() {
     this.outputEmitter.emit(this.generatedForm.value);

@@ -29,10 +29,21 @@
     </div>
     <div class="col-md-12 con-envr">
         <div class="credential-tablegrid">
-            <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
-                [table_data]="connectorTable" (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
-                [screenTable]="'common'" [checkBoxShow]="checkBoxShow" (selectedData)="readSelectedData($event)"
-                [dataKeyId]="'connectorId'"></app-dynamic-table>
+            <app-dynamic-table 
+                [representatives]="representatives" 
+                [columns_list]="columns_list"
+                [table_data]="connectorTable" 
+                (viewDetails)="viewDetails($event)" 
+                (deleteItem)="deleteById($event)"
+                [screenTable]="'common'" 
+                [checkBoxShow]="checkBoxShow" 
+                (selectedData)="readSelectedData($event)" 
+                [dataKeyId]="'connectorId'"
+                [show_search_field]="true"
+                [show_column_filter]="true"
+                [show_clear_filter]="true"
+                >
+            </app-dynamic-table>
         </div>
     </div>
     <!-- <app-rpa-connection-manager-form [isConnectorForm]="isConnectorForm"> </app-rpa-connection-manager-form> -->

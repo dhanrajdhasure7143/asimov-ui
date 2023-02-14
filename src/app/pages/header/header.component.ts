@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TitleCasePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -60,7 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   tenantName:any;
   ProfileuserId:any;
   newAccessToken:any;
-  tenantsList: any;
+  tenantsList: any=[];
+  navigationTenantName:any;
+  tenant: any;
 
   constructor(
     private router: Router,
@@ -101,10 +104,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
+    if(!(localStorage.getItem("tenantSwitch")))
     this.rest_api.getNewAccessToken().subscribe(resp => {
       this.newAccessToken = resp;
       localStorage.setItem('accessToken', this.newAccessToken.accessToken);
     });
+  else
+    localStorage.removeItem("tenantSwitch");
+  
   }
 
   ngOnInit() {
@@ -133,6 +140,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
     this.getTenantLists();
+    this.navigationTenantName = localStorage.getItem("tenantSwitchName")
   }
 
   loopTrackBy(index, term) {
@@ -337,5 +345,19 @@ getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;
   })
+}
+
+onChangeTenant(event:any){
+  let value = this.tenantsList.find(data=>data.tenant_name == event.value);
+   this.tenant =value.tenant_id
+  this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
+   await localStorage.setItem("accessToken", data.accessToken);
+   await localStorage.setItem("tenantName",value.tenant_id);
+   await localStorage.setItem("tenantSwitchName", value.tenant_name);
+   await localStorage.setItem("tenantSwitch","true");
+    setTimeout(()=>{
+    window.location.reload();
+  }, 1000)  
+  });
 }
 }

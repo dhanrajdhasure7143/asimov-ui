@@ -29,55 +29,45 @@
 .project-ninfo {
     padding: 20px !important;
 }
-
 .project-ninfo .col-md-10.pl-0,
 .project-ninfo .col-md-10.pl-0 .row {
     align-items: center;
     display: flex;
 }
-
 span.project-name {
     font-size: 32px;
     font-weight: 600;
     margin-right: 10px;
 }
-
 span.highimp {
     color: #EA3D3D;
     margin: 3px 0px 0px 5px;
 }
-
 span.mediumimp {
     color: #E58600;
     margin: 3px 0px 0px 5px;
 }
-
 span.lowimp {
     color: #27AD74;
     margin: 3px 0px 0px 5px;
 }
-
 .pinf p {
     margin-bottom: 5px;
     font-weight: 500;
     font-size: 16px !important;
 }
-
 .pinf label {
     color: #535353;
 }
-
 .kpipercent {
     border-left: 1px solid #e0e0e0;
     padding-left: 15px !important;
 }
-
 .kpipercent p {
     font-size: 44px !important;
     margin-bottom: 2px;
     line-height: 1;
 }
-
 .row.project-description {
     background-color: #fff;
     border-top: 1px solid #e0e0ee;
@@ -85,19 +75,16 @@ span.lowimp {
     border-radius: 0px 0px 6px 6px;
     width: 100%;
 }
-
 .project-description label {
     margin: 0px 10px 0px 0px !important;
     border-right: 1px solid #dbdbdb;
     padding-right: 10px;
 }
-
 .project-description p {
     margin: 0px;
     width: 75%;
     font-size: 16px;
 }
-
 .project-description span.readmore {
     color: #098de6;
     cursor: pointer;
@@ -273,6 +260,7 @@ p.qcard-name {
 
 .quick-actions {
     margin-bottom: 25px !important;
+    align-items: center;
 }
 
 .quick-actions h6 {
@@ -282,8 +270,8 @@ p.qcard-name {
 }
 
 .quick-actions button.btn.blue-btntext {
-    padding: 0px 0px 0px 10px !important;
-    width: auto;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 /* quicksnapshot styles */
@@ -382,3 +370,9 @@ div.vertical-line {
 }
 
 .collabottom textarea { resize: none; }
+.project-description_truncate{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
