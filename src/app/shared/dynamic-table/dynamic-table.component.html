@@ -1,6 +1,6 @@
 <div class="">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields"
-        [reorderableColumns]="true" [(selection)]="selectedItem"
+        [reorderableColumns]="true" [(selection)]="selectedItem" [scrollable]="true"
         [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -200,7 +200,7 @@
         </ng-template> -->
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td style="text-align: center;" colspan="7">No records found</td>
+                <td style="justify-content: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>
@@ -301,7 +301,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td  style="text-align: center;" colspan="7">No records found</td>
+                <td  style="justify-content: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>
