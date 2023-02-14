@@ -66,11 +66,13 @@
                                 <span class="project-name">{{projectDetails.projectName}}</span>
                                 <img src="./../../../../assets/images-n/projects/low_priority.svg"
                                     *ngIf="projectDetails.priority == 'Low'" alt="importance">
+                                    <span class="lowimp" *ngIf="projectDetails.priority == 'Low'">{{projectDetails.priority}}</span>
                                 <img src="./../../../../assets/images-n/projects/medium_priority.svg" alt="importance"
                                     *ngIf="projectDetails.priority == 'Medium'">
+                                    <span class="mediumimp" *ngIf="projectDetails.priority == 'Medium'">{{projectDetails.priority}}</span>
                                 <img src="./../../../../assets/images-n/projects/high_priority.svg" alt="importance"
                                     *ngIf="projectDetails.priority == 'High'">
-                                <span class="highimp">{{projectDetails.priority}}</span>
+                                <span class="highimp" *ngIf="projectDetails.priority == 'High'">{{projectDetails.priority}}</span>
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
                                 <div class="pinf">
@@ -464,7 +466,7 @@
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td style="text-align: center;" colspan="7">No Users found</td>
+                                <td style="justify-content: center;" colspan="7">No Users found</td>
                             </tr>
                         </ng-template>
                     </p-table>

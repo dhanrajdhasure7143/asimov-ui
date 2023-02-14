@@ -2683,7 +2683,6 @@ button.btn:focus {
 input.p-inputtext {
   height: 34px;
   border: 1px solid var(--main-bordercolor) !important;
-  font-size: var(--main-fontsize) !important;
 }
 
 /* Tabs NEW Styles Start */
@@ -2800,13 +2799,14 @@ tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
   outline: none;
 }
 tr.p-element.p-selectable-row.p-highlight > td:first-child { 
-  border-bottom-left-radius: 8px; /*highlight of row*/
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px; /*highlight of row*/
 }
 tr.p-element.p-selectable-row.p-highlight > td:last-child {
-  border-bottom-right-radius: 8px; /*highlight of row*/
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px; /*highlight of row*/
 }
 tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
-  border-bottom: 1.5px solid #4AB0F5 !important; 
   background-color: #fff !important;
 }
 /* grid-filter Overlay Styles Start */
@@ -2858,6 +2858,12 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inplace .p-inplace-display {
   display: contents !important;
 }
+.project-ninfo .p-inplace .p-inplace-content {
+  display: flex;
+}
+.p-inputtext {
+  font-size: var(--main-fontsize) !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -2882,11 +2888,13 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .splitoverlaycontent input.p-inputtext {
   height: auto;
 }
-.splitoverlaydiv h4 {
+.splitoverlaydiv h4,
+.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
   font-size: 16px;
   margin: 0px !important;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+.splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 0px 15px !important;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav,
