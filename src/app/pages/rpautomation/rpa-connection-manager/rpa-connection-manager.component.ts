@@ -20,6 +20,10 @@ export class RpaConnectionManagerComponent implements OnInit {
   addflag: boolean = true;
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
+  isConnectorForm: boolean = true;
+  isFormOverlay: boolean = false;
+  authorizationType: any = [];
+  isAuthOverlay: boolean = false;
 
   constructor(
     private rest_api: RestApiService,
@@ -31,82 +35,83 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getAllConnections();
+    this.authTypes();
   }
 
   getAllConnections() {
     // this.rest_api.getConnectionslist().subscribe((data: any) => {
-      // this.connectorTable = data;
-      this.spinner.hide();
-      this.columns_list = [
-        {
-          ColumnName: "connectionName",
-          DisplayName: "Connector Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "httpMethodType",
-          DisplayName: "Connection Name",
-          ShowFilter: true,
-          ShowGrid: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "actionType",
-          DisplayName: "Action Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "authorization_Type",
-          DisplayName: "Authentication Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "createdDate",
-          DisplayName: "Created Date",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "date",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "lastModifiedBy",
-          DisplayName: "Created By",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        // {
-        //   ColumnName: "action",
-        //   DisplayName: "Action",
-        //   ShowGrid: true,
-        //   ShowFilter: false,
-        //   sort: false,
-        //   multi: false,
-        // },
-      ];
+    // this.connectorTable = data;
+    this.spinner.hide();
+    this.columns_list = [
+      {
+        ColumnName: "connectionName",
+        DisplayName: "Connector Name",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "httpMethodType",
+        DisplayName: "Connection Name",
+        ShowFilter: true,
+        ShowGrid: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "actionType",
+        DisplayName: "Action Type",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "authorization_Type",
+        DisplayName: "Authentication Type",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "createdDate",
+        DisplayName: "Created Date",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "date",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "lastModifiedBy",
+        DisplayName: "Created By",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      // {
+      //   ColumnName: "action",
+      //   DisplayName: "Action",
+      //   ShowGrid: true,
+      //   ShowFilter: false,
+      //   sort: false,
+      //   multi: false,
+      // },
+    ];
     // });
   }
 
@@ -114,7 +119,37 @@ export class RpaConnectionManagerComponent implements OnInit {
   deleteById(event) {}
   deleteConnection() {}
   readSelectedData(data) {
-    data.length > 0 ?this.addflag =false :this.addflag =true
-    data.length > 0 ?this.delete_flag =true :this.delete_flag =false
+    data.length > 0 ? (this.addflag = false) : (this.addflag = true);
+    data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+  }
+
+  openConnectorForm() {
+    this.isFormOverlay = true;
+    this.isConnectorForm = true;
+    // document.getElementById("createconnector").style.display='block';
+  }
+
+  authTypes() {
+    this.rest_api.getAuthTypes().subscribe((res: any) => {
+      this.authorizationType = res;
+    });
+  }
+
+  closeFormOverlay(event) {
+    this.isFormOverlay = event;
+  }
+
+  changeAuth(event) {
+    this.isAuthOverlay = true;
+  }
+
+  closeAuthOverlay(event) {
+    this.isAuthOverlay = event;
+    this.isFormOverlay = true;
+  }
+
+  saveConfigurations() {
+    this.isAuthOverlay = false;
+    this.isFormOverlay = true;
   }
 }
