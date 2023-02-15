@@ -238,6 +238,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   active_inplace:any;
   project_desc_edit:any;
   isEditDesc:boolean=false;
+  snapshotDatails:any={};
 
 
 
@@ -247,6 +248,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
+        this.role=this.params_data.role
         if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
         this.spinner.show();
         this.getallusers();
@@ -645,6 +647,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 })
   this.getTaskandCommentsData();
   this.getLatestFiveAttachments(this.project_id)
+  this.snapShotDetails();
   }
   profileName() {
     setTimeout(() => {
@@ -2061,4 +2064,22 @@ taskListView(){
   onDeactivateEdit(){
     this.isEditDesc = false;
   }
+  snapShotDetails(){
+    this.snapshotDatails={
+      "DelayedTask":0,
+      "UsersOnboarded":1,
+      "ActiveTask":0,
+      "Documents":0,
+      "PendingApprovals":2,
+      "CompletedTask":1
+      };
+      
+    this.userRole = localStorage.getItem("userRole");
+    this.rest_api.getSnapshotd(this.project_id,this.userRole).subscribe(data=>{
+
+      let result:any =data;
+      console.log('this is snapshot data',data)
+    })
+  }
+
 }
