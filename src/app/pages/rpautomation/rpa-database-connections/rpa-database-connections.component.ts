@@ -1,15 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
+import { Component, OnInit,ViewChild } from '@angular/core';
+import { FormGroup} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { Router } from "@angular/router";
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -18,19 +16,11 @@ import * as moment from 'moment';
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
   public databaselist: any;
-  displayedColumns1: string[] = ["check", "connectiontName", "categoryName", "dataBaseType", "hostAddress", "portNumber", "username", "password", "databasename", "schemaName", "activeStatus", "createdTimeStamp", "createdBy"];
   public toggle: boolean;
-  dataSource2: MatTableDataSource<any>;
   public dbupdateflag: boolean = false;
   public submitted: Boolean;
-  public DBcheckflag: boolean = false;
-  public dbupdateid: any;
-  @ViewChild("paginator4") paginator4: MatPaginator;
-  @ViewChild("sort2") sort2: MatSort;
   public button: string;
   public dbconnections: any = []
-  public checkeddisabled: boolean = false;
-  public DBcheckeddisabled: boolean = false;
   public dbupdatedata: any;
   public insertdbForm: FormGroup;
   public updatedbForm: FormGroup;
@@ -49,12 +39,14 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   isDatabase: boolean = false;
   h2flag: boolean = false;
   noDataMessage: boolean;
+  columns_list:any =[]
+  selectedData: any;
 
   constructor(private api: RestApiService,
     private router: Router,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
-    private spinner: NgxSpinnerService
+    private spinner: LoaderService
   ) {
     const ipPattern =
       "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -96,42 +88,139 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     await this.api.listDBConnection().subscribe(data1 => {
       if (Array.isArray(data1)) {
         this.dbconnections = data1;
-        if (this.dbconnections.length > 0) {
-          this.DBcheckeddisabled = false;
-        } else {
-          this.DBcheckeddisabled = true;
-        }
         this.dbconnections.sort((a, b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dbconnections = this.dbconnections.map(item => {
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
           item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
           return item;
         })
-        this.dataSource2 = new MatTableDataSource(this.dbconnections);
-        setTimeout(() => {
-          this.sortmethod();
-        }, 80);
-      }
+      }      
+      this.columns_list = [
+        {
+          ColumnName: "connectiontName",
+          DisplayName: "Connection Name",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "categoryName",
+          DisplayName: "Category",
+          ShowFilter: true,
+          ShowGrid: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "password",
+          DisplayName: "Password",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "dataBaseType",
+          DisplayName: "Database Type",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "databasename",
+          DisplayName: "Database Name",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "date",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "hostAddress",
+          DisplayName: "IP Address / Host",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "portNumber",
+          DisplayName: "Port",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "username",
+          DisplayName: "Username",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "schemaName",
+          DisplayName: "Schema",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "createdBy",
+          DisplayName: "Created By",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "activeStatus",
+          DisplayName: "Status",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "createdTimeStamp_converted",
+          DisplayName: "Created Date",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+      ]
       this.spinner.hide();
     });
   }
 
-  sortmethod() {
-    this.dataSource2.sort = this.sort2;
-    this.dataSource2.paginator = this.paginator4;
-  }
-
-  DBcheckAllCheckBox(ev) {
-    this.dbconnections.forEach(x =>
-      x.checked = ev.target.checked);
-    if (this.dbconnections.filter(data => data.checked == true).length == this.dbconnections.length) {
-      this.DBcheckflag = true;
-    } else {
-      this.DBcheckflag = false;
-    }
-    this.DBchecktoupdate();
-    this.checktodelete();
-  }
 
   opencreatedbconnection() {
     this.isDatabase = true;
@@ -196,17 +285,12 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   updatedbdata() {
     document.getElementById('createdbconnection').style.display = 'block';
-    let data: any;
     this.isDatabase = false;
-    for (data of this.dbconnections) {
-      if (data.connectionId == this.dbupdateid) {
-        this.dbupdatedata = data;
-      }
-    }
+    this.dbupdatedata = this.selectedData[0];
   }
 
   deletedbconnection() {
-    const selecteddbconnection = this.dbconnections.filter(product => product.checked == true).map(p => p.connectionId);
+    const selecteddbconnection = this.selectedData.map(p => p.connectionId);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -223,10 +307,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           this.spinner.hide();
           if (status.errorMessage == undefined) {
             Swal.fire("Success", status.status, "success")
-            this.removeallchecks();
             this.getallDBConnection();
-            this.DBchecktoupdate();
-            this.checktodelete();
           }
           else
             Swal.fire("Error", status.errorMessage, "error")
@@ -240,62 +321,21 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   }
 
-  DBchecktoupdate() {
-    const selectedbdconnections = this.dbconnections.filter(product => product.checked == true);
-    if (selectedbdconnections.length > 0) {
-      this.addflag = true;
-    } else {
-      this.addflag = false;
-    }
-    if (selectedbdconnections.length == 1) {
-      this.DBupdateflag = true;
-      this.dbupdateid = selectedbdconnections[0].connectionId;
-    } else {
-      this.DBupdateflag = false;
-    }
-  }
-
-  DBcheckEnableDisableBtn(id, event) {
-    this.dbconnections.find(data => data.connectionId == id).checked = event.target.checked;
-    if (this.dbconnections.filter(data => data.checked == true).length == this.dbconnections.length) {
-      this.DBcheckflag = true;
-    } else {
-      this.DBcheckflag = false;
-    }
-    this.DBchecktoupdate();
-    this.checktodelete();
-  }
-
-  checktodelete() {
-    const selecteddbconnection = this.dbconnections.filter(product => product.checked).map(p => p.connectionId);
-    if (selecteddbconnection.length > 0) {
-      this.DBdeleteflag = true;
-    } else {
-      this.DBdeleteflag = false;
-    }
-  }
+ 
 
   applyFilter1(filterValue: string) {
 
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource2.filter = filterValue;
-    console.log(this.dataSource2.filteredData.length);
-    if (this.dataSource2.filteredData.length === 0) {
-      this.noDataMessage = true;
-    }
-    else {
-      this.noDataMessage = false;
-    }
+    // this.dataSource2.filter = filterValue;
+    // console.log(this.dataSource2.filteredData.length);
+    // if (this.dataSource2.filteredData.length === 0) {
+    //   this.noDataMessage = true;
+    // }
+    // else {
+    //   this.noDataMessage = false;
+    // }
   }
-
-  removeallchecks() {
-    for (let i = 0; i < this.dbconnections.length; i++) {
-      this.dbconnections[i].checked = false;
-    }
-    this.DBcheckflag = false;
-  }
-
 
   getCategories() {
     this.api.getCategoriesList().subscribe(data => {
@@ -317,4 +357,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     return index;
   }
 
+  readSelectedData(data) {
+    this.selectedData =data;
+    this.selectedData.length > 0 ?this.addflag =true :this.addflag =false
+    this.selectedData.length > 0 ?this.DBdeleteflag =true :this.DBdeleteflag =false
+    this.selectedData.length == 1 ?this.DBupdateflag =true :this.DBupdateflag =false
+  }
 }
