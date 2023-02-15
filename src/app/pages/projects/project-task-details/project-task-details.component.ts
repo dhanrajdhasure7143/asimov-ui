@@ -55,6 +55,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   selected_folder:any;
   folder_files:any;
   files:any;
+  active_inplace:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -140,53 +141,50 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // this.getUserRole();
   }
 
-  onDeactivate() {
-    console.log(this.task_details);
-    // this.ip.activate();
-    this.inplace.deactivate();
-    this.inplace1.deactivate();
-    this.inplace2.deactivate();
-    this.inplace3.deactivate();
-    this.inplace4.deactivate();
-    this.inplace5.deactivate();
-    this.inplace6.deactivate();
+  onDeactivate(field){
+    this[field].deactivate();
   }
 
-  inplaceActivate(field) {
+  inplaceActivate(field, activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
+    this.active_inplace = activeField
     if (field == "endDate") {
       this.endDate = moment(this.task_details.endDate).format("YYYY-MM-DD");
       return;
     }
     this[field] = this.task_details[field];
-    console.log(this.resources);
     // e.deactivate();
   }
 
   onUpdateDetails(field) {
-    if (field == "percentageComplete") {
-      if (this.percentageComplete > 100) {
-        this.percentageComplete = 100;
-      } else {
-        this.task_details[field] = String(this[field]);
-        this.updatetask();
-        this.onDeactivate();
-        console.log();
-      }
-    } else {
+    // if (field == "percentageComplete") {
+    //   if (this.percentageComplete > 100) {
+    //     this.percentageComplete = 100;
+    //   } else {
+    //     this.task_details[field] = String(this[field]);
+    //     this.updatetask();
+    //     this[this.active_inplace].deactivate();
+    //   }
+    // } else {
       this.task_details[field] = this[field];
       this.updatetask();
-      this.onDeactivate();
-    }
+      this[this.active_inplace].deactivate();
+    // }
   }
 
-  inplaceActivateDesc() {
+  inplaceActivateDesc(activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    this.active_inplace = activeField
     this.task_desc = this.task_details.description;
   }
 
   onUpdateDesc() {
     this.task_details.description = this.task_desc.toString();
     this.updatetask();
-    this.inplace3.deactivate();
+    this[this.active_inplace].deactivate();
   }
 
   closeOverlay(event) {

@@ -40,6 +40,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   updateBotDetails:any={};
   unsaved:boolean=false;
   isBotValidated:boolean = true;
+  params:any={}
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -108,7 +109,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
             {
               let botId=params.botId;
               if(!isNaN(botId))
+              {
+                if(params.projectId)
+                {
+                  localStorage.setItem("projectId", params.projectId);
+                  localStorage.setItem("projectName", params.projectName);
+                }
                 this.loadBotByBotId(botId,"INIT");
+              }
               else
               {
                 let botDetails=JSON.parse(Base64.decode(botId));
@@ -313,10 +321,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   removenodes()
   {
     localStorage.removeItem("bot_id")
-    if(localStorage.getItem('project_id')!="null"){
-      this.router.navigate(["/pages/projects/projectdetails"], 
-     {queryParams:{"id":localStorage.getItem('project_id')}})
-    
+    if(localStorage.getItem("projectId")){
+      let projectId=localStorage.getItem("projectId");
+      let projectName=localStorage.getItem("projectName");
+      localStorage.removeItem("projectId");
+      localStorage.removeItem("projectName");
+      this.router.navigate(["/pages/projects/tasks"], {queryParams:{"project_id":projectId, "project_name":projectName}})
     }else{
       $(".bot-close").click();
     }

@@ -8,6 +8,9 @@ import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { DataTransferService } from '../../services/data-transfer.service';
+import { UserPipePipe } from './../pipes/user-pipe.pipe';
+// import { UserPipePipe } from './pipes/user-pipe.pipe';
 
 @Component({
   selector: 'app-departments',
@@ -21,43 +24,55 @@ export class DepartmentsComponent implements OnInit {
   dataSource2:MatTableDataSource<any>;
   displayedColumns: string[] = ["check","categoryName","owner","createdBy","createdAt","action"];
   public departments:any=[];
-  public Departmentcheckeddisabled:boolean =false;
   public Departmentcheckflag:boolean = false;
   departments_list: any=[];
   public Departmentdeleteflag:Boolean;
   departmentName: any;
   department: string;
   users_list:any=[];
-  noDataMessage: boolean;
-  constructor(private api: RestApiService,private loader: LoaderService,private router: Router ) {
-  
-  }
+  columns_list:any[]=[];
+  table_searchFields:any[]=[];
+  selected_list:any[]=[];
+
+  constructor(private rest_api: RestApiService,
+    private loader: LoaderService,
+    private router: Router,
+    private dataTransfer: DataTransferService) 
+    { 
+      this.getUsersList();
+    }
 
   ngOnInit(): void {
     this.loader.show();
-    this.getAllDepartments();
     this.Departmentdeleteflag=false;
-    this.getallusers();
+    this.columns_list = [
+      {ColumnName: "categoryName",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "created_user",DisplayName: "Owner",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "createdBy",DisplayName: "Created By",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "createdTimeStamp_converted",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
+      {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
+    ];
+    this.table_searchFields=["department","owner","createdBy","createdTimeStamp_converted"]
   }
 
   getAllDepartments(){
-    this.api.getDepartmentsList().subscribe(resp => {
+    this.rest_api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
       this.departments.data.map(item=>{
         item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('lll')
+        const userPipe = new UserPipePipe();
+        item["created_user"] = userPipe.transform(item.owner,this.users_list);
         return item
       })
-      this.dataSource2 = new MatTableDataSource(this.departments.data);
-      this.dataSource2.paginator=this.paginator;
-      this.dataSource2.sort = this.sort;    
+      this.departments_list = this.departments.data  
+      this.loader.hide(); 
       let selected_department=localStorage.getItem("department_search");
       this.department=selected_department?selected_department:'alldepartments';
-      this.searchByCategory(this.department);
     })
    }
 
   deleteDepartment() {
-    const delbody = this.departments.data.filter(p => p.checked==true).map(p=>{
+    const delbody = this.selected_list.map(p=>{
       return{
         "categoryId": p.categoryId
       }
@@ -73,7 +88,7 @@ export class DepartmentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-      this.api.deleteDepartments(delbody).subscribe(resp => {
+      this.rest_api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         if (value.message === "Successfully deleted the category") {
           Swal.fire({
@@ -88,117 +103,30 @@ export class DepartmentsComponent implements OnInit {
             confirmButtonText: 'Ok'
         })
           this.getAllDepartments();
-          this.removeallchecks();
-          this.checktodelete();
-        }
-        else {
+        } else {
           Swal.fire("Error", value.message, "error");
         }
       })
     }
     })
-
   }
 
   editdepartment(element) {
     this.router.navigate(['/pages/admin/edit-department'], { queryParams: {id:element.categoryId } });
   }
 
-  DepartmentscheckAllCheckBox(ev) {
-    this.departments.data.forEach(x =>
-       x.checked = ev.target.checked);
-      if(this.departments.data.filter(data=>data.checked==true).length == this.departments.data.length){
-        this.Departmentcheckflag = true;
-      } 
-      else{
-        this.Departmentcheckflag = false;
+  getUsersList() {
+    this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        console.log(res)
+        this.getAllDepartments();
       }
-    this.checktodelete();
+    });
   }
 
-  DepartmentscheckEnableDisableBtn(id, event)
-  {
-    this.departments.data.find(data=>data.categoryId==id).checked=event.target.checked;
-      if(this.departments.data.filter(data=>data.checked==true).length==this.departments.data.length){
-        this.Departmentcheckflag = true;
-      }
-      else{
-        this.Departmentcheckflag = false;
-      }
-    this.checktodelete();
+  readSelectedData(data) {
+    this.selected_list = data
+    this.selected_list.length > 0 ? this.Departmentdeleteflag =true :this.Departmentdeleteflag =false;
   }
-
-  checktodelete()
-  {
-    const selecteddepartmentdata = this.departments.data.filter(product => product.checked).map(p => p.categoryId);
-    if(selecteddepartmentdata.length>0)
-    {
-      this.Departmentdeleteflag=true;
-    }else
-    {
-      this.Departmentdeleteflag=false;
-    }
-  }
-
-  removeallchecks()
-  {
-    for(let i=0;i<this.departments.data.length;i++)
-    {
-      this.departments.data[i].checked= false;
-    }
-    this.Departmentcheckflag=false;
-  }
-
-  searchByCategory(department) {      // Filter table data based on selected categories
-    localStorage.setItem("department_search",department)
-    if (department == "alldepartments") {
-      var fulldata='';
-      this.dataSource2.filter = fulldata;
-      this.dataSource2.paginator.firstPage();
-    }else{  
-      this.dataSource2.filterPredicate = (data: any, filter: string) => {
-        return data.categoryName === department;
-       };
-       this.dataSource2.filter = department;
-       this.dataSource2.paginator=this.paginator;
-       this.dataSource2.paginator.firstPage();
-    }
-
-  }
-
-  resetSearch(department){
-    if (department == "alldepartments") {
-      var fulldata='';
-      this.dataSource2.filter = fulldata;
-      this.dataSource2.paginator.firstPage();
-    }
-    this.dataSource2.filter = department;
-    this.dataSource2.paginator=this.paginator;
-    this.dataSource2.paginator.firstPage();
-    this.departmentName=""
-  }
-
-  getallusers()
-  {
-    let tenantid=localStorage.getItem("tenantName")
-    this.api.getuserslist(tenantid).subscribe(item=>{
-      let users:any=item
-      this.users_list=users;
-      this.loader.hide();
-    })
-  }
-  
-  applyFilter(filterValue: string) {
-    this.dataSource2.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource2.paginator) {
-      this.dataSource2.paginator.firstPage();
-      if(this.dataSource2.filteredData.length == 0){
-        this.noDataMessage = true;
-      }
-      else{
-        this.noDataMessage=false;
-      }
-    }
-  }
-  
 }
