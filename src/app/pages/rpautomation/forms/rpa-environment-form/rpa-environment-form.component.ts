@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-rpa-environment-form',
   templateUrl: './rpa-environment-form.component.html',
@@ -26,7 +27,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   constructor(private api: RestApiService,
     private formBuilder: FormBuilder,
-    private spinner: NgxSpinnerService
+    private spinner: LoaderService
   ) {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],

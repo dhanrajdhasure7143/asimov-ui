@@ -2,10 +2,6 @@ import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/cor
 import { environmentobservable } from '../model/environmentobservable';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
@@ -15,10 +11,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./rpa-environments.component.css']
 })
 export class RpaenvironmentsComponent implements OnInit {
-  displayedColumns: string[] = ["check", "environmentName", "environmentType", "agentPath", "categoryName", "hostAddress", "portNumber", "username", "password", "activeStatus", "deployStatus", "createdTimeStamp", "createdBy"]; //,"connectionType"
-  dataSource: MatTableDataSource<any>;
-  @ViewChild("paginator1") paginator1: MatPaginator;
-  @ViewChild("sort1") sort1: MatSort;
   @Output()
   title: EventEmitter<string> = new EventEmitter<string>();
   public environments: any = [];
@@ -26,7 +18,6 @@ export class RpaenvironmentsComponent implements OnInit {
   public updateenvdata: any;
   public updateflag: Boolean;
   public deleteflag: Boolean;
-  private updateid: number;
   public checkflag: Boolean = false;
   customUserRole: any;
   enableEnvironment: boolean = false;
@@ -38,7 +29,6 @@ export class RpaenvironmentsComponent implements OnInit {
   public keyValueFile: File;
   addflag: boolean = false;
   isCreate: boolean = true;
-  noDataMessage: boolean = false;
   filterValue: number;
   variableforapplyfilter:any;
   filteredData: number;
@@ -48,6 +38,7 @@ export class RpaenvironmentsComponent implements OnInit {
   loading:boolean=false;
   selected_list:any[]=[];
   categories_list:any[]=[];
+  isOpenSideOverlay:boolean=false;
 
   constructor(private rest_api: RestApiService,
     private spinner: LoaderService) {
@@ -70,7 +61,6 @@ export class RpaenvironmentsComponent implements OnInit {
         }
       }
       );
-      
     })
     this.columns_list = [
       {ColumnName: "environmentName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
@@ -91,16 +81,14 @@ export class RpaenvironmentsComponent implements OnInit {
 
   async getallData() {
     this.spinner.show();
-    this.environments = [];
     await this.rest_api.listEnvironments().subscribe(
       data => {
-        console.log(data);
+        this.environments = [];
         let response: any = data;
         this.variableforapplyfilter=data;
         if (response.length > 0) {
           this.checkeddisabled = false;
         } else {
-          this.noDataMessage=true
           this.checkeddisabled = true;
         }
        
@@ -128,22 +116,15 @@ export class RpaenvironmentsComponent implements OnInit {
           b = new Date(b.activeTimeStamp);
           return a > b ? -1 : a < b ? 1 : 0;
         });
-        // this.dataSource = new MatTableDataSource(this.environments);
-        // this.dataSource.sort = this.sort1;
-        // this.dataSource.paginator = this.paginator1;
         this.spinner.hide();
       });
-
   }
-
-  // length(){
-    
-  // }
 
   openCreateEnvOverlay() {
     this.isCreate = true;
-    document.getElementById("createenvironment").style.display = 'block';
+    // document.getElementById("createenvironment").style.display = 'block';
     // document.getElementById("update-popup").style.display = 'none';
+    this.isOpenSideOverlay=true;
   }
 
   downloadOption(environmentName, fileData) {
@@ -161,10 +142,10 @@ export class RpaenvironmentsComponent implements OnInit {
 
   openUpdateEnvOverlay() {
     this.isCreate = false;
-    document.getElementById("createenvironment").style.display = 'block';
+    // document.getElementById("createenvironment").style.display = 'block';
     // document.getElementById('update-popup').style.display = 'block';
-    for (let data of this.environments) {
-      if (data.environmentId == this.updateid) {
+        this.isOpenSideOverlay = true;
+    for (let data of this.selected_list) {
         if (data.password.password == undefined) {
           this.isKeyValuePair = true
           this.password = ""
@@ -178,7 +159,7 @@ export class RpaenvironmentsComponent implements OnInit {
           this.keyValueFile = undefined
         }
         this.updateenvdata = data
-      }
+      
     }
   }
 
@@ -208,7 +189,8 @@ export class RpaenvironmentsComponent implements OnInit {
   }
 
   async deleteEnvironments() {
-    const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
+    // const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
+    const selectedEnvironments = this.selected_list.map(p => p.environmentId);
     if (selectedEnvironments.length != 0) {
       Swal.fire({
         title: 'Are you sure?',
@@ -226,8 +208,6 @@ export class RpaenvironmentsComponent implements OnInit {
             if (res.errorMessage == undefined) {
               Swal.fire("Success", res.status, "success")
               this.getallData();
-              this.checktoupdate();
-              this.checktodelete();
             } else {
               Swal.fire("Error", res.errorMessage, "error")
             }
@@ -238,41 +218,6 @@ export class RpaenvironmentsComponent implements OnInit {
         }
       })
     }
-  }
-
-  checktoupdate() {
-    const selectedEnvironments = this.environments.filter(product => product.checked == true);
-    if (selectedEnvironments.length > 0) {
-      this.addflag = true;
-    } else {
-      this.addflag = false;
-    }
-    if (selectedEnvironments.length == 1) {
-      this.updateflag = true;
-      this.updateid = selectedEnvironments[0].environmentId;
-    } else {
-      this.updateflag = false;
-    }
-  }
-
-  checktodelete() {
-    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
-    if (selectedEnvironments.length > 0) {
-      this.deleteflag = true;
-    } else {
-      this.deleteflag = false;
-    }
-  }
-
-  checkEnableDisableBtn(id, event) {
-    this.environments.find(data => data.environmentId == id).checked = event.target.checked;
-    if (this.environments.filter(data => data.checked == true).length == this.environments.length) {
-      this.checkflag = true;
-    } else {
-      this.checkflag = false;
-    }
-    this.checktoupdate();
-    this.checktodelete();
   }
 
   deploybotenvironment() {
@@ -288,13 +233,9 @@ export class RpaenvironmentsComponent implements OnInit {
           Swal.fire("Error", data[0].errorMessage, "error")
         }
         this.getallData();
-        this.checktoupdate();
-        this.checktodelete();
       }, err => {
         Swal.fire("Success", "Agent Deployed Successfully !!", "success");
         this.getallData();
-        this.checktoupdate();
-        this.checktodelete();
         this.spinner.hide();
       })
     }
@@ -316,6 +257,7 @@ export class RpaenvironmentsComponent implements OnInit {
 
   refreshEnvironmentList(event){
     if(event)
+    this.isOpenSideOverlay = false;
     this.getallData();
   }
 
@@ -325,5 +267,9 @@ export class RpaenvironmentsComponent implements OnInit {
     this.selected_list.length > 0 ?this.addflag =true :this.addflag =false
     this.selected_list.length > 0 ?this.deleteflag =true :this.deleteflag =false
     this.selected_list.length == 1 ?this.updateflag =true :this.updateflag =false
+  }
+
+  closeSideOverlay(event){
+    this.isOpenSideOverlay=event
   }
 }

@@ -1,12 +1,12 @@
-<div id="createenvironment" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeOverlay()"><img
-                    src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+<div style="display: block">
+    <div class="row">
+        <div class="col rpa-modal-header">
+            <!-- <span class="rpa-modal-close" (click)="closeOverlay()"><img
+                    src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
             <h4 *ngIf="isCreate">Create Environment</h4>
             <h4 *ngIf="!isCreate">Update Environment</h4>
         </div>
-        <div class="modal-body">
+        <div class="col modal-body">
             <div class="container m-contanier form-body">
                 <form [formGroup]="environmentForm" (ngSubmit)="submitEnvironmentForm()">
                     <div class="col-md-12 p-0 form-group">
@@ -149,7 +149,7 @@
                         <input type="checkbox" formControlName="activeStatus"> Active
                     </div>
                 </form>
-                <div class="form-footer">
+                <div class="form-footer col">
                     <button class="btn btn-default" (click)="resetEnvForm()">Reset</button>
                     <button class="btn btn-primary btn-test"
                         [disabled]="environmentForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
