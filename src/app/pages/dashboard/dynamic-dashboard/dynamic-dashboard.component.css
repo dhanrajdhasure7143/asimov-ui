@@ -1,0 +1,10 @@
+.dashboard-main{padding-top:7%;}
+.dashboard-img{display: block;
+                margin: auto;}
+.btn-strt{padding:10px 50px !important;
+            margin:auto;
+            display:block;
+            border-radius:4px;
+             font-size: 16px;}
+.dashboard-header{text-align:center;
+                  padding: 30px 0px}

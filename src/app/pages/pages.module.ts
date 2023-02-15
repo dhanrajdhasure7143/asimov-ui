@@ -43,6 +43,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 
+
 export function jwtTokenGetter() {
   return localStorage.getItem("accesstoken");
 }
@@ -60,6 +61,7 @@ export function jwtTokenGetter() {
     ProcessArchitectComponent,
     ProcessOwnerComponent,
     ProcessAnalystComponent,
+   
     
   ],
   imports: [

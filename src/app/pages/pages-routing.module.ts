@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { HomeComponent } from './home/home.component';
 import { PagesComponent } from './pages.component';
+
 
 const routes: Routes = [
   {path:'', component:PagesComponent, children:[
     {path:'home', component:HomeComponent}, 
+    
+    {path:'dashboard', loadChildren: () => import('././dashboard/dashboard.module').then(m => m.DashboardModule)},
     {path:'businessProcess', loadChildren: () => import('./business-process/business-process.module').then(m => m.BusinessProcessModule)},
     {path:'processIntelligence', loadChildren: () => import('./process-intelligence/process-intelligence.module').then(m => m.ProcessIntelligenceModule)},
     {path:'approvalWorkflow', loadChildren: () => import('./approval-workflow/approval-workflow.module').then(m => m.ApprovalWorkflowModule)},
