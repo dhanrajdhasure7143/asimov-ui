@@ -140,26 +140,6 @@ export class RpaenvironmentsComponent implements OnInit {
     
   // }
 
-  checkAllCheckBox(ev) {
-    this.environments.forEach(x => x.checked = ev.target.checked)
-    if (this.environments.filter(data => data.checked == true).length == this.environments.length) {
-      this.checkflag = true;
-    } else {
-      this.checkflag = false;
-    }
-    this.checktoupdate();
-    this.checktodelete();
-  }
-
-  isAllCheckBoxChecked() {
-    this.environments.forEach(data => {
-      if (data.checked == false) {
-        return false;
-      }
-    })
-    return true;
-  }
-
   openCreateEnvOverlay() {
     this.isCreate = true;
     document.getElementById("createenvironment").style.display = 'block';
@@ -245,7 +225,6 @@ export class RpaenvironmentsComponent implements OnInit {
             this.spinner.hide();
             if (res.errorMessage == undefined) {
               Swal.fire("Success", res.status, "success")
-              this.removeallchecks();
               this.getallData();
               this.checktoupdate();
               this.checktodelete();
@@ -308,38 +287,17 @@ export class RpaenvironmentsComponent implements OnInit {
         } else {
           Swal.fire("Error", data[0].errorMessage, "error")
         }
-        this.removeallchecks();
         this.getallData();
         this.checktoupdate();
         this.checktodelete();
       }, err => {
         Swal.fire("Success", "Agent Deployed Successfully !!", "success");
-        this.removeallchecks();
         this.getallData();
         this.checktoupdate();
         this.checktodelete();
         this.spinner.hide();
       })
     }
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-    if(this.dataSource.filteredData.length == 0){
-      this.noDataMessage = true;
-    }
-    else{
-      this.noDataMessage=false;
-    }
-  }
-
-  removeallchecks() {
-    for (let i = 0; i < this.environments.length; i++) {
-      this.environments[i].checked = false;
-    }
-    this.checkflag = false;
   }
 
   getCategories() {
@@ -359,11 +317,13 @@ export class RpaenvironmentsComponent implements OnInit {
   refreshEnvironmentList(event){
     if(event)
     this.getallData();
-    console.log(this.environments) 
   }
 
   readSelectedData(data) {
     this.selected_list = data
     // this.selected_list.length > 0 ? this.Departmentdeleteflag =true :this.Departmentdeleteflag =false;
+    this.selected_list.length > 0 ?this.addflag =true :this.addflag =false
+    this.selected_list.length > 0 ?this.deleteflag =true :this.deleteflag =false
+    this.selected_list.length == 1 ?this.updateflag =true :this.updateflag =false
   }
 }
