@@ -1,5 +1,5 @@
 .prj-crt-form {
-    margin : 0 -15px 0 -15px !important;
+    margin: 0 -15px 0 -15px !important;
 }
 
 label.label-control {
@@ -16,47 +16,79 @@ label.label-control {
     text-overflow: ellipsis;
 }
 
-.response{
-    margin : 15px 0 0 0;
+.response {
+    margin: 15px 0 0 0;
     width: 97%;
 }
-    
-.raw{
-    margin : 5px 0 0 0;
+
+.raw {
+    margin: 5px 0 0 0;
 }
 
-.textresponse{
+.textresponse {
     margin: 10px 0 0 0;
 }
 
-.text-right{
+.text-right {
     margin: 20px;
     width: 95%;
 }
 
-.api{
+.api {
     width: 98.2%;
 }
 
 .maindivfoprm input,
 .maindivfoprm select,
 .maindivfoprm textarea {
-  background-color: #f6f6f6 !important;
-  border: 1px solid #D1D1D1;
-  box-shadow: unset !important;
-  color: #7B8694 !important;
-  border-radius: 2px;  
-  padding: 6px 10px !important;
- }
+    background-color: #f6f6f6 !important;
+    border: 1px solid #D1D1D1;
+    box-shadow: unset !important;
+    color: #7B8694 !important;
+    border-radius: 2px;
+    padding: 6px 10px !important;
+}
 
 .maindivfoprm input:focus,
 .maindivfoprm select:focus,
 .maindivfoprm textarea:focus {
-  border-color: #00a0e3 !important;
-  color: #001c47 !important;
-  background-color: #fff !important;
+    border-color: #00a0e3 !important;
+    color: #001c47 !important;
+    background-color: #fff !important;
 }
 
-.check{
+.check {
     margin: 10px 5px;
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+
+span.testtooltip {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 999;
+}
+
+span.testtooltip:before {
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top: -5px;
+    background: #001c47;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
 }

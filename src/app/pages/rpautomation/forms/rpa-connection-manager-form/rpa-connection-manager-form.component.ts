@@ -13,6 +13,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   methodItems: any = [];
   authorizationType: any = ["O Auth 2.0"];
   encoded: FormArray;
+  connectorTable: any = [];
+  representatives: any = [];
+  columns_list: any = [];
+  addflag: boolean = true;
+  delete_flag: boolean = false;
+  checkBoxShow: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +45,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
     this.methodTypes();
     this.authTypes();
+    this.getAlltoolsets();
   }
 
   createItem() {
@@ -113,4 +120,88 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   addHeader() {}
+
+  getAlltoolsets() {
+    // this.rest_api.getConnectionslist().subscribe((data: any) => {
+      // this.connectorTable = data;
+      this.columns_list = [
+        {
+          ColumnName: "actionType",
+          DisplayName: "Action Type",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "url",
+          DisplayName: "URL/Root Domain",
+          ShowFilter: true,
+          ShowGrid: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "httpMethodType",
+          DisplayName: "Method Type",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "authorization_Type",
+          DisplayName: "Attributes",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "createdDate",
+          DisplayName: "Purpose",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "date",
+          sort: true,
+          multi: false,
+        }
+        // {
+        //   ColumnName: "lastModifiedBy",
+        //   DisplayName: "Created By",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
+        // {
+        //   ColumnName: "action",
+        //   DisplayName: "Action",
+        //   ShowGrid: true,
+        //   ShowFilter: false,
+        //   sort: false,
+        //   multi: false,
+        // },
+      ];
+    // });
+  }
+
+  viewDetails(event) {}
+  deleteById(event) {}
+  deleteConnection() {}
+  readSelectedData(data) {
+    data.length > 0 ?this.addflag =false :this.addflag =true
+    data.length > 0 ?this.delete_flag =true :this.delete_flag =false
+  }
 }
