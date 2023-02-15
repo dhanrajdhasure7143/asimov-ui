@@ -83,7 +83,7 @@ button span {
   border-radius: 6px;
   background-color: #fff;
   padding: 0px 15px 10px;
-  height: 100%;
+  height: 105%;
 } 
 .commentBox button {
   margin: 5px 0px 10px;
@@ -163,3 +163,10 @@ ul.historydiv li:last-child {
     cursor: pointer;
     z-index: 0;
   }
+  .defaultchart{
+    height: 169px;
+    margin-left: 126px;
+    margin-top: 10px;
+
+  }
+
