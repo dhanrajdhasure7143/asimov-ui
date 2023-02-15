@@ -1625,4 +1625,9 @@ getProjectTaskDetailsById(projectId,taskId){
 getMessagesByProjectId(projectId){
   return this.http.get('http://localhost:8098/getChatData/'+projectId)
 }
+//get the list of existing uisers in project
+getusersListByProjectId(projectId){
+  return this.http.get('/platform-service/task/resourceTasksCount?projectId='+projectId)
+}
+
 }

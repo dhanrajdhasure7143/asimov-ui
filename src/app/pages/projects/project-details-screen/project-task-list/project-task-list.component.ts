@@ -32,6 +32,7 @@ export class ProjectTaskListComponent implements OnInit {
   hiddenPopUp: boolean = false;
   project_name: any;
   params_data:any;
+  existingUsersList:any[]=[];
 
   constructor(
     private rest_api: RestApiService,
@@ -132,6 +133,7 @@ export class ProjectTaskListComponent implements OnInit {
         multi: false,
       },
     ];
+    this.getTheExistingUsersList();
     this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
       this.all_tasks_list = data;
       console.log("tasks Data", data);
@@ -293,5 +295,12 @@ export class ProjectTaskListComponent implements OnInit {
         queryParams: { wpiId: data.correlationID },
       });
     }
+  }
+
+  getTheExistingUsersList(){
+    this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
+      console.log("existingUsersList",res)
+      this.existingUsersList = res
+    })
   }
 }

@@ -43,6 +43,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(this.updateenvdata)
     if (!this.isCreate && this.updateenvdata) {
       this.environmentForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
       this.environmentForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
@@ -83,7 +84,6 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     this.passwordtype1 = false;
     this.passwordtype2 = false;
   }

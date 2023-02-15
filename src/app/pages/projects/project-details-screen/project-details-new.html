@@ -531,15 +531,15 @@
                         responsiveLayout="scroll" dataKey="id">
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
-                                <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list" class="listdropdown"
-                                    [(ngModel)]="selectedRole" (onChange)="onChangeRole($event)"
+                                <p-dropdown [options]="roles_list" class="listdropdown"
+                                    [(ngModel)]="selectedRole" (onChange)="onChangeRole($event,users_tabIndex)"
                                     optionLabel="name"></p-dropdown>
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input type="text" pInputText placeholder="Search"
                                         (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                 </span>
-                                <span *ngIf="users_tabIndex == 1" class="userstabbtns">
+                                <!-- <span *ngIf="users_tabIndex == 1" class="userstabbtns">
                                     <button class="btn">
                                         <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                                         <span>Open</span>
@@ -549,7 +549,7 @@
                                             alt="Create">
                                         <span>Create</span>
                                     </button>
-                                </span>
+                                </span> -->
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
