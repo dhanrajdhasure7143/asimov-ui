@@ -13,6 +13,30 @@
                     <span class="testtooltip">New</span>
                 </button>
             </div>
+            <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()">
+                    <img src='../../../../assets/images-n/projects/eye-show-blue.svg'>
+                    <span class="testtooltip"> View</span>
+                </button>
+            </div>
+            <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
+                <button id="updateenvbtn" disabled>
+                    <img src='../../../../assets/images-n/projects/eye-show dis.svg'>
+                    <span class="testtooltip"> View</span>
+                </button>
+            </div>
+            <div *ngIf="updateflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
+                    <span class="testtooltip"> Edit</span>
+                </button>
+            </div>
+            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                <button id="updateenvbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
+                    <span class="testtooltip"> Edit</span>
+                </button>
+            </div>
             <div class="env-btn credential-btntool" *ngIf="delete_flag">
                 <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteConnection()">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
@@ -28,7 +52,7 @@
         </div>
     </div>
     <div class="col-md-12 con-envr">
-        <div class="credential-tablegrid">
+        <div>
             <app-dynamic-table 
                 [representatives]="representatives" 
                 [columns_list]="columns_list"
@@ -51,8 +75,7 @@
         <app-split-overlay (closeOverlay)="closeFormOverlay($event)">
             <!-- <h3> Creation Connection </h3> -->
             <h5 class="create-title"> Create Connection</h5>
-            <hr>
-            <div class="container">
+            <div class="container col-lg-12">
                 <form>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="userName"> Connector Name <span class="star">*</span></label>
@@ -90,12 +113,18 @@
         <app-split-overlay (closeOverlay)="closeAuthOverlay($event)">
 
             <h5 class="create-title"> Configuration Options </h5>
-            <hr>
-            <div class="container">
+            <div class="container modal-body col-lg-12">
                 <form>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="userName"> Grant Type <span class="star">*</span></label>
-                        <input type="text" class="form-control" formControlName="" placeholder="Enter Grant Type">
+                        <!-- <input type="text" class="form-control" formControlName="" placeholder="Enter Grant Type"> -->
+                        <select name="" id="" class="form-control" formControlName="authorization_Type"
+                            (change)="changeAuth($event)">
+                            <option value="" hidden disabled>Select Grant Type</option>
+                            <option value="null" hidden disabled>Select Grant Type</option>
+                            <option value="undefined" hidden disabled>Select Grant Type</option>
+                            <option *ngFor="let grant of grantType"> {{grant}} </option>
+                        </select>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="userName"> Access Token <span class="star">*</span></label>
@@ -123,7 +152,7 @@
                     </div>
                     <div class="form-footer">
                         <button class="btn btn-default btn-test">Reset</button> &nbsp;
-                        <button class="btn btn-primary" (click)="saveConfigurations()"> Next </button>
+                        <button class="btn btn-primary" (click)="saveConfigurations()"> Submit </button>
                     </div>
                 </form>
             </div>

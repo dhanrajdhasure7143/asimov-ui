@@ -62,4 +62,9 @@ span.testtooltip:before {
 
 .create-title{
   padding: 19px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal-body {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
 }

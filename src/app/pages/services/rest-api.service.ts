@@ -1491,9 +1491,6 @@ getprocessnamesByLatestVersion()
 {
   return this.http.get("/rpa-service/latest-version/process-name");
 }
-getConnectionslist(){
-  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
-}
 getTenantnameslist() {
   return this.http.get("/platform-service/screenGenerator/get-allorgtenent-data");
 }
@@ -1628,6 +1625,14 @@ getMessagesByProjectId(projectId){
 
 getConnectionTable(){
   return this.http.get('/rpa-service/getConnectionTableData')
+}
+
+getConnectionslist(){
+  return this.http.get(`/rpa-service/get-all-connections`);
+}
+
+getGrantTypes(){
+  return this.http.get('/rpa-service/get-grant-type/{grantType}')
 }
 }
 ``
