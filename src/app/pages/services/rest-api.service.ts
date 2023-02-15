@@ -1625,8 +1625,8 @@ getProjectTaskDetailsById(projectId,taskId){
 getMessagesByProjectId(projectId){
   return this.http.get('http://localhost:8098/getChatData/'+projectId)
 }
-getSnapshotd(projectId,role){
-  return this.http.get('/platform-service/project/getQuickSnapshots?projectId='+projectId+'&roles='+role)
+getSnapshotd(projectId){
+  return this.http.get('/platform-service/project/getQuickSnapshots?projectId='+projectId);
 }
 
 }

@@ -96,6 +96,7 @@ export class RpaHomeComponent implements OnInit {
   categoryName: any;
   public sortkey: any;
   noDataMessage: boolean;
+  hiddenPopUp:boolean = false;
   // noDataMessage: boolean;
   constructor(
     private rest: RestApiService,
@@ -488,6 +489,7 @@ export class RpaHomeComponent implements OnInit {
 
   openEditBotOverlay(botDetails: any) {
     this.isCreateForm = false;
+    this.hiddenPopUp = true;
     this.botDetails = botDetails;
     this.botFormVisibility=true;
     document.getElementById('bot-form').style.display = 'block';
@@ -496,6 +498,7 @@ export class RpaHomeComponent implements OnInit {
 
   openCreateBotOverlay() {
     this.isCreateForm = true;
+    this.hiddenPopUp = true;
     this.botDetails = undefined;
     this.botFormVisibility=true;
     document.getElementById('bot-form').style.display = 'block';
@@ -560,6 +563,9 @@ export class RpaHomeComponent implements OnInit {
 
   loopTrackBy(index, term) {
     return index;
+  }
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
   }
 
 }

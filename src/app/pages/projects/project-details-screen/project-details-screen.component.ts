@@ -238,7 +238,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   active_inplace:any;
   project_desc_edit:any;
   isEditDesc:boolean=false;
-  snapshotDatails:any={};
+  snapshotDatails:any=[];
 
 
 
@@ -2065,20 +2065,11 @@ taskListView(){
     this.isEditDesc = false;
   }
   snapShotDetails(){
-    this.snapshotDatails={
-      "DelayedTask":0,
-      "UsersOnboarded":1,
-      "ActiveTask":0,
-      "Documents":0,
-      "PendingApprovals":2,
-      "CompletedTask":1
-      };
-      
-    this.userRole = localStorage.getItem("userRole");
-    this.rest_api.getSnapshotd(this.project_id,this.userRole).subscribe(data=>{
-
-      let result:any =data;
-      console.log('this is snapshot data',data)
+    let res_data=[]
+    this.rest_api.getSnapshotd(this.project_id).subscribe((data:any)=>{
+      res_data = data
+     if(res_data.length>0)
+      this.snapshotDatails=data[0]
     })
   }
 
