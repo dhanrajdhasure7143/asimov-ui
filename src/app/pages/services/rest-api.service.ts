@@ -1627,7 +1627,11 @@ getMessagesByProjectId(projectId){
 }
 //get the list of existing uisers in project
 getusersListByProjectId(projectId){
-  return this.http.get('/platform-service/task/resourceTasksCount?projectId='+projectId)
+  return this.http.get('/platform-service/task/resourceTasksCount?projectId='+projectId);
+}
+
+getSnapshotd(projectId){
+  return this.http.get('/platform-service/project/getQuickSnapshots?projectId='+projectId);
 }
 
 }

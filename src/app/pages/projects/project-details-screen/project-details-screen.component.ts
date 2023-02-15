@@ -239,6 +239,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   active_inplace:any;
   project_desc_edit:any;
   isEditDesc:boolean=false;
+  snapshotDatails:any=[];
 
 
 
@@ -248,6 +249,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
+        this.role=this.params_data.role
         if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
         this.spinner.show();
         this.getallusers();
@@ -615,7 +617,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.spinner.hide();
 })
   this.getTaskandCommentsData();
-  // this.getLatestFiveAttachments(this.project_id)
+  this.getLatestFiveAttachments(this.project_id)
+  this.snapShotDetails();
   }
   profileName() {
     setTimeout(() => {
@@ -2059,6 +2062,14 @@ taskListView(){
             ele["taskCount"]=element.taskCount
         })
       });
+    })
+  }
+  snapShotDetails(){
+    let res_data=[]
+    this.rest_api.getSnapshotd(this.project_id).subscribe((data:any)=>{
+      res_data = data
+     if(res_data.length>0)
+      this.snapshotDatails=data[0]
     })
   }
 
