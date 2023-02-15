@@ -3054,3 +3054,7 @@ button.custom-popupbtn.mat-button {
 .document-tree .pi-folder-open, .document-tree .pi-folder{
   color:var(--main-bluecolor) !important;
 }
+
+.btn-p-align button.p-ripple{
+  padding: 10px 40px !important;
+}  

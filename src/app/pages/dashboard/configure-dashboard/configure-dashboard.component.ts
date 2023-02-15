@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-configure-dashboard',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigureDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activeRoute:ActivatedRoute) { }
 
   public metrics:any=[
     {
@@ -25,7 +26,12 @@ export class ConfigureDashboardComponent implements OnInit {
       sampleData:[],
     }
   ]
+
+  dashboardName:String="";
   ngOnInit(): void {
+    this.activeRoute.queryParams.subscribe((params:any)=>{
+      this.dashboardName=params.dashboardName
+    })
   }
 
 }
