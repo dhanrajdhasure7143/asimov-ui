@@ -1,9 +1,9 @@
 <div class="rpa-content-div" *ngIf="this.isButtonVisible || enableDbconnection">
     <div class="row credential-search-tools">
-        <div class="rpa-env-search credential-search">
+        <!-- <div class="rpa-env-search credential-search">
             <input class="form-control toolbar-search" placeholder="Search" (keyup)="applyFilter1($event.target.value)">
             <img src="../../../../assets/images/search.svg" matSuffix class="testplus1">
-        </div>
+        </div> -->
         <div class="env-data-tool credential-tools">
             <div *ngIf="!addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()">

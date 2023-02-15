@@ -35,6 +35,8 @@ export class RpaCredentialsComponent implements OnInit {
     isLoading:boolean=true;
     columns_list:any =[];
     selectedData: any;
+    categories_list: any =[];
+    table_searchFields: any[]=[];
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -138,6 +140,7 @@ inputNumberOnly(event){
             filterType: "text",
             sort: true,
             multi: false,
+            "dropdownList":this.categories_list
           },
           {
             ColumnName: "createdBy",
@@ -160,6 +163,7 @@ inputNumberOnly(event){
             multi: false,
           },
         ];
+        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted"]
         this.spinner.hide();
       });
   }
@@ -226,6 +230,10 @@ inputNumberOnly(event){
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
         this.categoryList=response.data;
+        let sortedList=this.categoryList.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    sortedList.forEach(element => {
+      this.categories_list.push(element.categoryName)
+    });
       this.getallCredentials();
     })
   }

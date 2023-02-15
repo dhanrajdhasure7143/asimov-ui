@@ -41,6 +41,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   noDataMessage: boolean;
   columns_list:any =[]
   selectedData: any;
+  categories_list: any=[];
+  table_searchFields: any[]=[];
 
   constructor(private api: RestApiService,
     private router: Router,
@@ -111,10 +113,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           DisplayName: "Category",
           ShowFilter: true,
           ShowGrid: true,
-          filterWidget: "normal",
+          filterWidget: "dropdown",
           filterType: "text",
           sort: true,
           multi: false,
+        "dropdownList":this.categories_list
         },
         {
           ColumnName: "password",
@@ -217,6 +220,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           multi: false,
         },
       ]
+      this.table_searchFields=["connectiontName","dataBaseType","databasename","hostAddress","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted"]
+
       this.spinner.hide();
     });
   }
@@ -342,6 +347,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       let response: any = data;
       if (response.errorMessage == undefined) {
         this.categoryList = response.data;
+        let sortedList=this.categoryList.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    sortedList.forEach(element => {
+      this.categories_list.push(element.categoryName)
+    });
         this.getallDBConnection();
       }
     })
