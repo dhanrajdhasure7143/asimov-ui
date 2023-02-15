@@ -1625,6 +1625,16 @@ getMessagesByProjectId(projectId){
 
 getConnectionTable(){
   return this.http.get('/rpa-service/getConnectionTableData')
+}
+
+getConnectionslist(){
+  return this.http.get(`/rpa-service/get-all-connections`);
+}
+
+getGrantTypes(){
+  return this.http.get('/rpa-service/get-grant-type/{grantType}')
+}
+
 //get the list of existing uisers in project
 getusersListByProjectId(projectId){
   return this.http.get('/platform-service/task/resourceTasksCount?projectId='+projectId);
@@ -1635,13 +1645,3 @@ getSnapshotd(projectId){
 }
 
 }
-
-getConnectionslist(){
-  return this.http.get(`/rpa-service/get-all-connections`);
-}
-
-getGrantTypes(){
-  return this.http.get('/rpa-service/get-grant-type/{grantType}')
-}
-}
-``
