@@ -39,12 +39,13 @@ export class DynamicTableComponent implements OnInit {
   userName: any;
   selectedItem: any;
   loading: boolean = true;
+  loggedInUser:String;
   
 
   constructor() {}
 
   ngOnInit(): void {
-   
+   this.loggedInUser= localStorage.getItem("ProfileuserId")
   }
 
   ngOnChanges() {
