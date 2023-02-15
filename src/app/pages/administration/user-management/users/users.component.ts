@@ -1,9 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
-import { element } from "protractor";
 import { APP_CONFIG } from "src/app/app.config";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
@@ -16,27 +12,16 @@ import { LoaderService } from "src/app/services/loader/loader.service";
   styleUrls: ["./users.component.css"],
 })
 export class UsersComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild("paginator") paginator: MatPaginator;
+
   users: any;
   userslist = [];
-  dataSource2: MatTableDataSource<any>;
-  displayedColumns: string[] = [
-    "firstName",
-    "email",
-    "designation",
-    "department",
-    "roles",
-    "created_at",
-    "status",
-    "action",
-  ];
   loggedinUser: string;
   freetrail: string;
-  noDataMessage: boolean;
+  columns_list:any[]=[];
+  table_searchFields:any[]=[];
 
   constructor(
-    private api: RestApiService,
+    private rest_api: RestApiService,
     private router: Router,
     @Inject(APP_CONFIG) private config,
     private loader: LoaderService
@@ -45,11 +30,22 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.freetrail = localStorage.getItem("freetrail");
+    this.columns_list = [
+      {ColumnName: "firstName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "email",DisplayName: "Email",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "designation",DisplayName: "Designation",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "department",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "roles",DisplayName: "Roles",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "created_at_modified",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
+      {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
+    ];
+    this.table_searchFields=["firstName","email","designation","department","roles","created_at_modified","status"]
   }
   getUsers() {
     this.loader.show();
     this.loggedinUser = localStorage.getItem("ProfileuserId");
-    this.api
+    this.rest_api
       .getuserslist(localStorage.getItem("tenantName"))
       .subscribe((resp) => {
         this.users = resp;
@@ -81,9 +77,6 @@ export class UsersComponent implements OnInit {
           };
           this.userslist.push(userdata);
         });
-        this.dataSource2 = new MatTableDataSource(this.userslist);
-        this.dataSource2.paginator = this.paginator;
-        this.dataSource2.sort = this.sort;
       });
   }
 
@@ -100,7 +93,7 @@ export class UsersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.loader.show();
-        this.api.deleteSelectedUser(data.email).subscribe(
+        this.rest_api.deleteSelectedUser(data.email).subscribe(
           (resp) => {
             let value: any = resp;
             if (value.message === "User Deleted Successfully") {
@@ -160,19 +153,6 @@ export class UsersComponent implements OnInit {
     this.router.navigate(["/pages/admin/modify-user"], {
       queryParams: { id: data.email, role: userroles, dept: depts },
     });
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource2.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource2.paginator) {
-      this.dataSource2.paginator.firstPage();
-      if(this.dataSource2.filteredData.length == 0){
-        this.noDataMessage = true;
-      }
-      else{
-        this.noDataMessage=false;
-      }
-    }
   }
 
   getreducedValue(value) {

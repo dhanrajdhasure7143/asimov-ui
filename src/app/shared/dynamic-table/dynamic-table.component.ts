@@ -39,15 +39,17 @@ export class DynamicTableComponent implements OnInit {
   userName: any;
   selectedItem: any;
   loading: boolean = true;
+  loggedInUser:String;
   
 
   constructor() {}
 
   ngOnInit(): void {
-   
+   this.loggedInUser= localStorage.getItem("ProfileuserId")
   }
 
   ngOnChanges() {
+    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
     

@@ -189,7 +189,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
       if(params['vcmId']){
         this.vcmId=params['vcmId'];
       }
-
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
 
