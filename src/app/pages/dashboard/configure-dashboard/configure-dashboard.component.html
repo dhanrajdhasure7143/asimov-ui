@@ -1,0 +1,51 @@
+
+<p-splitter [style]="{'height': 'calc(100vh - 64px)'}" [panelSizes]="[70,30]" layout="horizontal">
+    <ng-template pTemplate>
+        <div class="container-fluid">
+            <div class="py-2 px-2">
+                <div class="row">
+                    <div class="col-md-4 border">
+                        <div class="py-2 px-2 ">
+                            Add Metrics
+                        </div>
+                    </div>
+                    <div class="col-md-4 border">
+                        <div class="py-2 px-2 ">
+                            Add Metrics
+                        </div>
+                    </div>
+                    <div class="col-md-4 border">
+                        <div class="py-2 px-2 ">
+                            Add Metrics
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 px-2">
+                <div class="row">
+                    <div class="col-md-6 border">
+                        <div class="py-2 px-2 ">
+                            Add Metrics
+                        </div>
+                    </div>
+                    <div class="col-md-6 border">
+                        <div class="py-2 px-2 ">
+                            Add Metrics
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate>
+        <p-tabView>
+            <p-tabPanel header="Metrics">
+              <p>Metrics</p>
+            </p-tabPanel>
+            <p-tabPanel header="Widgets">
+              <p>Widgets</p>
+            </p-tabPanel>
+        </p-tabView> 
+    </ng-template>
+</p-splitter>
