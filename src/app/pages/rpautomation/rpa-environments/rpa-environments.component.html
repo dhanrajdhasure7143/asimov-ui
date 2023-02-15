@@ -1,66 +1,100 @@
-<div class="rpa-content-div" *ngIf="this.isButtonVisible || enableEnvironment">
-    <div class="row environment-search-tools">
-        <div class="rpa-env-search environment-search">
+<div class="rpa-content-div row" *ngIf="this.isButtonVisible || enableEnvironment">
+  <div class="col-12 environment-search-tools">
+    <!-- <div class="rpa-env-search environment-search">
             <input class="form-control toolbar-search" placeholder="Search"
                 (keyup)="applyFilter($event.target.value)">
 
             <img src="../../../../assets/images/search.svg" matSuffix class="testplus1">
-        </div>
-        <div class="env-data-tool environment-tools">
-            <div [hidden]="addflag" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" id="addenvbtn" (click)="openCreateEnvOverlay()">
-                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
-                    <span class="testtooltip">New</span>
-                </button>
-            </div>
-            
-            <div [hidden]="!addflag" class="env-btn environment-btntool">
-                <button class="deleteenvbtn" id="addenvbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
-                    <span class="testtooltip">New</span>
-                </button>
-            </div>
-            <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deleteEnvironments()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
-                    <span class="testtooltip">Delete</span>
-                </button>
-            </div>
-            <div [hidden]="deleteflag" class="env-btn environment-btntool">
-                <button id="deleteenvbtn" title="Delete Environment" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'>
-                    <span class="testtooltip">Delete</span>
-                </button>
-            </div>
-            <div [hidden]="!updateflag" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
-                    <span class="testtooltip"> Edit</span>
-                </button>
-            </div>
-            <div [hidden]="updateflag" class="env-btn environment-btntool">
-                <button id="updateenvbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
-                    <span class="testtooltip"> Edit</span>
-                </button>
-            </div>
-            <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deploybotenvironment()">
-                    <img src='../../../../assets/images/RPA/icon_latest/deploy-blue.svg'>
-                    <span class="testtooltip">Deploy</span>
-                </button>
-            </div>
-            <div [hidden]="deleteflag" class="env-btn environment-btntool">
-                <button id="deployenvbtn" [disabled]="!(deleteflag==true)" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/deploy-dis.svg'>
-                    <span class="testtooltip">Deploy</span>
-                </button>
-            </div>
-        </div>
+        </div> -->
+    <div class="env-data-tool environment-tools">
+      <div [hidden]="addflag" class="env-btn environment-btntool">
+        <button
+          class="tsttooltipbtn"
+          id="addenvbtn"
+          (click)="openCreateEnvOverlay()"
+        >
+          <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" />
+          <span class="testtooltip">New</span>
+        </button>
+      </div>
+
+      <div [hidden]="!addflag" class="env-btn environment-btntool">
+        <button class="deleteenvbtn" id="addenvbtn" disabled>
+          <img src="../../../../assets/images/RPA/icon_latest/plus dis.svg" />
+          <span class="testtooltip">New</span>
+        </button>
+      </div>
+      <div [hidden]="!deleteflag" class="env-btn environment-btntool">
+        <button
+          class="tsttooltipbtn"
+          id="deleteenvbtn"
+          (click)="deleteEnvironments()"
+        >
+          <img
+            src="../../../../assets/images/RPA/icon_latest/delete-blue.svg"
+          />
+          <span class="testtooltip">Delete</span>
+        </button>
+      </div>
+      <div [hidden]="deleteflag" class="env-btn environment-btntool">
+        <button id="deleteenvbtn" title="Delete Environment" disabled>
+          <img src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" />
+          <span class="testtooltip">Delete</span>
+        </button>
+      </div>
+      <div [hidden]="!updateflag" class="env-btn environment-btntool">
+        <button
+          class="tsttooltipbtn"
+          id="updateenvbtn"
+          (click)="openUpdateEnvOverlay()"
+        >
+          <img src="../../../../assets/images/RPA/icon_latest/edit-blue.svg" />
+          <span class="testtooltip"> Edit</span>
+        </button>
+      </div>
+      <div [hidden]="updateflag" class="env-btn environment-btntool">
+        <button id="updateenvbtn" disabled>
+          <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" />
+          <span class="testtooltip"> Edit</span>
+        </button>
+      </div>
+      <div [hidden]="!deleteflag" class="env-btn environment-btntool">
+        <button
+          class="tsttooltipbtn"
+          id="deleteenvbtn"
+          (click)="deploybotenvironment()"
+        >
+          <img
+            src="../../../../assets/images/RPA/icon_latest/deploy-blue.svg"
+          />
+          <span class="testtooltip">Deploy</span>
+        </button>
+      </div>
+      <div [hidden]="deleteflag" class="env-btn environment-btntool">
+        <button id="deployenvbtn" [disabled]="!(deleteflag == true)" disabled>
+          <img src="../../../../assets/images/RPA/icon_latest/deploy-dis.svg" />
+          <span class="testtooltip">Deploy</span>
+        </button>
+      </div>
     </div>
-    <div class="col-md-12 con-envr">
-        <div class="environment-tablegrid">
-            <table  mat-table #sort1="matSort" [dataSource]="dataSource" matSort class="RPA table" id="listofenv">
+  </div>
+  <div class="col-12">
+    <div class="">
+      <app-dynamic-table
+        [columns_list]="columns_list"
+        [table_data]="environments"
+        (selectedData)="readSelectedData($event)"
+        [dataKeyId]="'environmentId'"
+        [search_fields]="table_searchFields"
+        [show_search_field]="true"
+        [show_column_filter]="true"
+        [show_clear_filter]="true"
+        [checkBoxShow]="true"
+        [screenTable]="'environment_table'"
+      >
+      </app-dynamic-table>
+
+      <!-- <table mat-table #sort1="matSort" [dataSource]="dataSource" matSort class="RPA table" id="listofenv">
                 <ng-container matColumnDef="check">
                     <th mat-header-cell *matHeaderCellDef class="cell1">
                         <input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag"
@@ -135,7 +169,6 @@
                         <span *ngIf="element.activeStatus == 7"><span class='green'>Active</span></span>
                         <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span
                                 class='red'>Inactive</span></span>
-                        <!--<span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>-->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="deployStatus">
@@ -147,7 +180,6 @@
                 </ng-container>
                 <ng-container matColumnDef="createdTimeStamp">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell12">Created Date</th>
-                    <!-- <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td> -->
                     <td mat-cell *matCellDef="let element" class="cell12"> {{element.createdTimeStamp_converted}}</td>
                 </ng-container>
                 <ng-container matColumnDef="createdBy">
@@ -158,19 +190,16 @@
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-          
-            
-            <div class="noDataMessage" *ngIf="noDataMessage">No Data Found</div>
+            </table> -->
 
-
-     
-        </div>
-        <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"
-            class="newpaginationdiv"></mat-paginator>
+      <!-- <div class="noDataMessage" *ngIf="noDataMessage">No Data Found</div> -->
     </div>
-    
+  </div>
 </div>
 
-
-    <app-rpa-environment-form [isCreate]="isCreate" [categoriesList]="categoryList" [updateenvdata]="updateenvdata" (refreshTable)="refreshEnvironmentList($event)"></app-rpa-environment-form>
+<app-rpa-environment-form
+  [isCreate]="isCreate"
+  [categoriesList]="categoryList"
+  [updateenvdata]="updateenvdata"
+  (refreshTable)="refreshEnvironmentList($event)"
+></app-rpa-environment-form>

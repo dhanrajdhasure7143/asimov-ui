@@ -224,8 +224,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
   status_list = [
     { name: "New" },
     { name: "In Progress" },
+    { name: "Pipeline" },
+    { name: "On Hold" },
     { name: "In Review" },
-    { name: "Done" },
+    { name: "Closed" },
   ];
 
   priority_list = [
@@ -612,7 +614,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
   
   ​​
-  console.log( this.projectDetails)
   //this.project_id=this.projectDetails.id
   if(this.projectDetails.resource.length!=0){
     // this.projectDetails.resource.forEach(item => {
@@ -626,17 +627,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
     //     }
     //   })
     // })
-    this.projectDetails.resource.forEach(item => {
+
       this.users_list.forEach(item2 => {
-        if (item2.user_email == item.resource) {
-          this.existingUsersList.push(item2)
-        // }else{
-        //   this.non_existUsers.push(item2)
-        }
+        if(this.projectDetails.resource.find((projectResource:any) => item2.user_email==projectResource.resource)==undefined)
+          this.non_existUsers.push(item2);
+        else
+          this.existingUsersList.push(item2);
       })
-    })
+  
     // this.onUsersTab(0);
-  }else{
+  }
+  else{
     this.existingUsersList=[];
     this.non_existUsers = this.users_list;
     // this.onUsersTab(0);
@@ -705,7 +706,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getallusers() {
     this.spinner.show();
     this.dt.logged_userData.subscribe(res=>{
-      console.log(res)
       if(res){
         this.userDetails = res;
       this.logged_userId=res.userId
@@ -1143,11 +1143,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
     this.rest_api.update_project(this.projectDetails).subscribe(res => {
       // this.spinner.hide()
-      let response: any = res;
-      if (response.errorMessage == undefined)
-        Swal.fire("Success", "Project Updated Successfully !!", "success")
-      else
-        Swal.fire("Error", response.errorMessage, "error");
+      // let response: any = res;
+      // if (response.errorMessage == undefined)
+      //   Swal.fire("Success", "Project Updated Successfully !!", "success")
+      // else
+      //   Swal.fire("Error", response.errorMessage, "error");
       this.getProjectdetails()
       // this.editdata = false;
     });
@@ -1900,6 +1900,7 @@ taskListView(){
 
   onUsersTab(index){
     this.users_tabIndex = index;
+    this.checkBoxselected=[];
     if(index == 0) {
       this.users_tableList = this.users_list
       this.columns_list = [
