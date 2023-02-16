@@ -2936,6 +2936,15 @@ button.btn.bluebg-button {
 } */
 
 
+/* Document-Tree  Screen Styles */
+
+.doctree .p-tree {
+  border: unset !important;
+  background: transparent !important;
+  padding: 0px !important;
+  border-radius: unset !important;
+}
+
 /* ----------------------NEW STYLES END------------------------- */
 
 
@@ -3054,3 +3063,4 @@ button.custom-popupbtn.mat-button {
 .document-tree .pi-folder-open, .document-tree .pi-folder{
   color:var(--main-bluecolor) !important;
 }
+
