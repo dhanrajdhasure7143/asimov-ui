@@ -36,6 +36,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatSortModule } from '@angular/material/sort';
 import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -59,7 +60,8 @@ import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
     MatPaginatorModule,
     PopoverModule.forRoot(),
     MatSortModule,
-    NgbModalDraggableModule
+    NgbModalDraggableModule,
+    PrimengCustomModule
   ],
   providers: [BpsDataSaveGuard,BpsHints, 
     {

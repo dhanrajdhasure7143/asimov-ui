@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, Output, EventEmitter, Inject, Input } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { RestApiService } from '../../services/rest-api.service';
@@ -20,6 +20,7 @@ import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/
 import { NgxSpinnerService } from 'ngx-spinner';
 import { APP_CONFIG } from 'src/app/app.config';
 import { SearchRpaPipe } from './Search.pipe';
+import { Table } from 'primeng/table';
 declare var $: any;
 
 @Component({
@@ -97,6 +98,20 @@ export class RpaHomeComponent implements OnInit {
   public sortkey: any;
   noDataMessage: boolean;
   hiddenPopUp:boolean = false;
+  _selectedColumns: any[];
+  search_fields:any[]=[];
+  categories_list_new:any[]=[];
+  columns_list = [
+    { field: 'botName', header: 'Bot Name',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { field: 'description', header: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true},
+    { field: 'categoryName', header: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true },
+    { field: 'version_new', header: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { field: 'botStatus', header: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { field: '', header: 'Actions' }
+  ];
+
+
+
   // noDataMessage: boolean;
   constructor(
     private rest: RestApiService,
@@ -105,6 +120,16 @@ export class RpaHomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     @Inject(APP_CONFIG) private appconfig
   ) { }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
+  set selectedColumns(val: any[]) {
+    this._selectedColumns = this.columns_list.filter((col) =>
+      val.includes(col)
+    );
+  }
 
   openModal(template: TemplateRef<any>) {
     if (this.freetrail == 'true') {
@@ -164,7 +189,7 @@ export class RpaHomeComponent implements OnInit {
     this.freetrail = localStorage.getItem('freetrail')
   }
 
-  botdelete(botId) {
+  botdelete(bot) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -177,7 +202,7 @@ export class RpaHomeComponent implements OnInit {
       if (result.value) {
         let response;
         this.spinner.show()
-        this.rest.getDeleteBot(botId).subscribe(data => {
+        this.rest.getDeleteBot(bot.botId).subscribe(data => {
           response = data;
           if (response.status != undefined) {
             this.spinner.hide()
@@ -221,7 +246,7 @@ export class RpaHomeComponent implements OnInit {
       this.botlistitems = botlist;
       this.botslist = botlist
       this.bot_list = botlist
-      this.assignPagination(this.bot_list);
+      // this.assignPagination(this.bot_list);
       this.spinner.hide();
       let selected_category = localStorage.getItem("rpa_search_category");
       if (this.categaoriesList.length == 1) {
@@ -233,6 +258,10 @@ export class RpaHomeComponent implements OnInit {
     }, (err) => {
       this.spinner.hide();
     })
+
+    this._selectedColumns = this.columns_list;
+    this.search_fields =['botName',"description","categoryName","version_new","botStatus"]
+
   }
 
   createoverlay() {
@@ -448,9 +477,9 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
-  getBotImage(botId, version, event) {
+  getBotImage(bot) {
     this.botImage = undefined
-    this.rest.getBotImage(botId, version).subscribe(data => {
+    this.rest.getBotImage(bot.botId, bot.version).subscribe(data => {
       let response: any = data;
       if (response.errorMessage) {
         this.botImage = {
@@ -479,6 +508,9 @@ export class RpaHomeComponent implements OnInit {
       let catResponse: any;
       catResponse = data
       this.categaoriesList = catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+      this.categaoriesList.forEach(element => {
+        this.categories_list_new.push(element.categoryName)
+      });
       if (this.categaoriesList.length == 1){
         this.rpaCategory = this.categaoriesList[0].categoryId;
           this.categoryName = this.categaoriesList[0].categoryName;
@@ -566,6 +598,15 @@ export class RpaHomeComponent implements OnInit {
   }
   closeOverlay(event) {
     this.hiddenPopUp = event;
+  }
+
+  clear(table: Table) {
+    table.clear();
+  }
+  onNavigateToWorkSpace(row){
+    this.router.navigate(["/pages/rpautomation/designer"], {
+      queryParams: { botId: row.botId },
+    });
   }
 
 }

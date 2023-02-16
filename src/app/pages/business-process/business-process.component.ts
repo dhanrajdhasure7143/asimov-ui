@@ -182,7 +182,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   
   backtoNavigate(){
-    if(localStorage.getItem('projectId')!="null"){
+    if(localStorage.getItem('projectId')!="null" && localStorage.getItem('project_id')!="null"){
       let projectId=localStorage.getItem("projectId");
       let projectName=localStorage.getItem("projectName")
       localStorage.removeItem("projectId");

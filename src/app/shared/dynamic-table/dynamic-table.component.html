@@ -151,7 +151,7 @@
                                 <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img" >
                                 <img src="../../../../assets/images/PI/eye-show-blue.svg" alt="" class="testplus hover-img" >
                             </span>
-                            <span (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData['createdBy'])
+                            <span (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
                             || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
                                 <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
                         </span>
