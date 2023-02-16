@@ -273,13 +273,18 @@
                                 </div>         
                         </div>
                         <div class="form-footer">
-                                <div class="featchTbale-btn" *ngIf="!isTableEnable">
-                                        <button class="btn eiap-btn btn-primary" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Fetch Tables</button>
+                        <div class="row">
+                          <div class="connection_btn ">
+                             <div *ngIf="!isTableEnable">
+                                    <button class="btn eiap-btn btn-primary" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Fetch Tables</button>
                                 </div>
-                                <div class="connection_btn" >
+                               </div>  &nbsp;&nbsp;
+                              <div class="connection_btn">
                                         <button class='btn btn-primary' [disabled]='database.invalid' (click)="testDbConnection()">Test Connection</button>
+                                       
                                         <button class='btn btn-primary db-gpg-btn' [disabled]='isDisabled' (click)="slideUp()">Generate Process Graph</button>
-                                </div>                                       
+                                </div> 
+                        </div>                            
                         </div>        
                 </form>
         </div>
