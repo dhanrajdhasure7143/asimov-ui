@@ -43,7 +43,7 @@ export class RpaCredentialFormComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
