@@ -1,41 +1,78 @@
-.btn-dots{background-color: #d1d1d1;
-padding: 8px 21px;
-border-radius: 4px;
-min-width:0px;}
-.well{padding: 10px 13px;
-    margin: 15px 0px;
-    border: 0px;
-    background-color: #ffffff6e;
-    box-shadow: 2px 2px 3px 0px #d6d3d3;}
-    .well1{     background-color: white;
-        box-shadow: 1px 0px 3px 0px #d6d3d336;
-        border: 2px dotted #e5e3e3;
-        border-radius: 4px;
-        padding: 11px 8px !important;}
- .flex-container {
-            display: flex;
-           
-          }
-          
-h5{margin-bottom:3px;}
-.img-div{    display: flex;
-    align-items: center;}
-    .main-content-head h3 .title_text {
-        font-size: 25px;
-        font-weight: 500;
-    }
-    .form-control {
-        border: 1px solid #7a7777 !important;
-        box-shadow: unset !important;
-        color: #292a2a !important;
-        border-radius: 4px !important;
-        padding: 6px 10px !important;
-    }
-    .search-align{margin-top:-59px;margin-left:109px;width: 17px;}
-    .eiap-btn {
-        
-        margin-top: 0px !important;
-       
-    }
-   
-  
+.btn-dots {
+	background-color: #dee1e6;
+	padding: 8px 15px;
+	border-radius: 4px;
+	min-width: 0px;
+}
+
+.well {
+	padding: 10px 20px;
+	margin: 15px 0px;
+	border: 0px;
+	background-color: #ffffff6e;
+	box-shadow: 2px 2px 3px 0px #d6d3d3;
+}
+
+.well1 {
+	background-color: white;
+	box-shadow: 1px 0px 3px 0px #d6d3d336;
+	border: 2px dotted #e5e3e3;
+	border-radius: 4px;
+	padding: 11px 8px !important;
+}
+
+.flex-container {
+	display: flex;
+
+}
+
+h5 {
+	margin-bottom: 3px;
+}
+
+.img-div {
+	margin-right: 10px;
+	align-items: center;
+}
+
+.main-content-head h3 .title_text {
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.form-control {
+	border: 1px solid #7a7777 !important;
+	box-shadow: unset !important;
+	color: #292a2a !important;
+	border-radius: 4px !important;
+	padding: 6px 10px !important;
+}
+
+.search-align {
+	margin-top: -59px;
+	margin-left: 127px;
+	width: 17px;
+}
+
+.eiap-btn {
+
+	margin-top: 0px !important;
+
+}
+
+.p-tabview-nav-content {
+	border-bottom: 2px solid #ddd;
+}
+
+.myPanelContent .ui-tabPanel {
+
+	border: black solid 1px !important;
+}
+
+ul.ui-p-tabview {
+	border: 2px solid #ddd;
+}
+
+:host ::ng-deep .prime-slider-override .p-tabview-nav-container {
+	border-bottom: 2px solid #DDD
+}
