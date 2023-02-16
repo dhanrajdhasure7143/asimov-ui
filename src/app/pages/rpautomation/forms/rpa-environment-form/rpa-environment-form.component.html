@@ -150,14 +150,14 @@
                     </div>
                 </form>
                 <div class="form-footer col">
-                    <button class="btn btn-default" (click)="resetEnvForm()">Reset</button>
+                    <button class="btn btn-default" (click)="resetEnvForm()">Reset</button>&nbsp;
                     <button class="btn btn-primary btn-test"
                         [disabled]="environmentForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
-                        (click)="testConnection()">Test Connection</button>
+                        (click)="testConnection()">Test Connection</button>&nbsp;
                     <button class="btn btn-primary"
                         [disabled]=" environmentForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
                         (click)="submitEnvironmentForm()">
-                        <span *ngIf="isCreate">Save</span>
+                        <span *ngIf="isCreate">Save</span>&nbsp;
                         <span *ngIf="!isCreate">Update</span>
                     </button>
                 </div>
