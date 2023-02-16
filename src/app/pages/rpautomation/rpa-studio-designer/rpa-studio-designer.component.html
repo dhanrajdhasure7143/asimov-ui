@@ -387,5 +387,22 @@
           <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Create Environment</h4>
       </div> -->
-      <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
   <!-- </div> -->
+  <div *ngIf="isOpenSideOverlay">
+    <app-split-overlay (closeOverlay)="closeSideOverlay($event)">
+        <!-- <div class="">
+            <div class="rpa-modal-header">
+                <h3>Create Task</h3>
+            </div>
+            <div class="modal-body actions-mbody actionsoverlay-mbody">
+                <div>
+                    <app-create-tasks [users_list]="users_list" [params_data]="params_data"
+                        [hiddenPopUp]="createTaskOverlay" [existingUsersList]="existingUsersList"
+                        [project_name]="projectDetails.projectName"></app-create-tasks>
+                </div>
+            </div>
+        </div> -->
+        <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
+
+    </app-split-overlay>
+</div>
