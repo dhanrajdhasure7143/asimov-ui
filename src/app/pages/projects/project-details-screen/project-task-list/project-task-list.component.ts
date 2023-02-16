@@ -125,7 +125,7 @@ export class ProjectTaskListComponent implements OnInit {
       },
       {
         ColumnName: "action",
-        //DisplayName: "Action",
+        DisplayName: "Action",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
