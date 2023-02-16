@@ -100,19 +100,309 @@
 
         </div>
         <div class="row">
-            <!-- <mat-card> -->
             <div class="orchestration-table-container">
-                <div *ngIf="responsedata!=undefined" >
+                <div *ngIf="responsedata!=undefined">
+                    <p-table [value]="responsedata" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)" >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Process Name</th>
+                                <th>Task</th>
+                                <th>Process Owner</th>
+                                <th>Task Owner</th>
+                                <th>Task Type</th>
+                                <th>Category</th>
+                                <th>Bot Source</th>
+                                <th>Assign Resource</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-element>
+                            <tr>
+                                <td [pTooltip]="element.processName">{{(element.processName.length >10) ?
+                                    ((element.processName).slice(0, 10) + '...') : element.processName}}</td>
+                                <td><span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
+                                        5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span>
+                                    <span *ngIf="element.taskName==null">---</span>
+                                </td>
+                                <td [pTooltip]="element.createdBy">{{(element.createdBy.length > 12) ? ((element.createdBy).slice(0, 12) + '...') :
+                                    element.createdBy}}</td>
+                                <td>
+                                    <span *ngIf="element.taskType=='Automated'">
+                                        <select class="form-control" style="width:165px;padding:0px;"
+                                            (change)="changeTaskOwner($event.target.value)" [(ngModel)]="element.taskOwner"
+                                            [value]="element.taskOwner">
+                                            <option value="" hidden disabled>Select Task Owner</option>
+                                            <option value="null" hidden disabled>Select Task Owner</option>
+                                            <option value="undefined" hidden disabled>Select Task Owner</option>
+                                            <option [value]="" hidden disabled>Select Task Owner</option>
+                                            <option [value]="undefined" hidden disabled>Select Task Owner</option>
+                                            <option [value]="null" hidden disabled>Select Task Owner</option>
+                                            <option *ngFor="let user of humans_list" [value]="user.userId.userId">
+                                                {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}
+                                            </option>
+                                        </select>
+                                    </span>
+                                    <span *ngIf="element.taskType !='Automated'">
+                                        -
+                                    </span>
+                                </td>
+                                <td>
+                                    <span *ngIf="element.taskType!=null" [pTooltip]="element.taskType">
+                                        {{(element.taskType.length > 10) ? ((element.taskType).slice(0, 10) + '...') :
+                                        element.taskType}}
+                                    </span>
+                                    <span *ngIf="element.taskType==null">-</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="element.category!=null">{{element.category}}</span>
+                                    <span *ngIf="element.category==null">-</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
+                                        <select class="form-control" [value]="element.sourceType"
+                                            (change)="changesource($event.target.value,element.taskId)"
+                                            style="width:140px;padding:0px;">
+                                            <option [value]="null" disabled hidden>Select Bot Source</option>
+                                            <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
+                                        </select>
+                                    </span>
+                                    <span *ngIf="element.taskType=='Human'">
+                                        -
+                                    </span>
+                                </td>
+                                <td>
+                                    <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
+            
+                                        <span *ngIf="isbotloading=='loading'">
+                                            Loading...
+                                        </span>
+                                        <span *ngIf="isbotloading=='Success'">
+                                            <span
+                                                *ngIf="element.sourceType==''||element.sourceType==undefined ||element.sourceType=='null'">-</span>
+            
+                                            <span *ngIf="element.sourceType=='EPSoft'">
+                                                <select class="form-control" style="width:200px;padding:0px"
+                                                    [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType "
+                                                    [id]="element.taskId+'__select'">
+                                                    <option value="0" disabled hidden>Select Bot</option>
+                                                    <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)"
+                                                        [value]="bot.botId" [selected]="bot.botId == element.botId">{{bot.botName}}
+                                                    </option>
+                                                </select>
+                                            </span>
+                                            <span *ngIf="element.sourceType=='UiPath'">
+                                                <span *ngIf="uiPathBotFlag==true">
+                                                    <select class="form-control" style="width:200px;padding:0px"
+                                                        [value]="(element.botId | checkResource : uipath_bots : element.sourceType : element.taskType) "
+                                                        [id]="element.taskId+'__select'">
+                                                        <option value="0" disabled hidden>Select Bot</option>
+                                                        <option *ngFor="let bot of uipath_bots" [value]="bot.Key"
+                                                            [selected]="bot.Key==element.botId">{{bot.ProcessKey}}</option>
+                                                    </select>
+                                                </span>
+                                                <span *ngIf="uiPathBotFlag==false">Loading...</span>
+            
+                                            </span>
+                                            <span *ngIf="element.sourceType=='BluePrism'">
+                                                <select class="form-control" style="width:200px;padding:0px" [value]="element.botId"
+                                                    [id]="element.taskId+'__select'">
+                                                    <option value="0" disabled hidden>Select Bot</option>
+                                                    <option *ngFor="let bot of blueprismbots" [value]="bot.botName"
+                                                        [selected]="bot.botName==element.botId">{{bot.botName}}</option>
+                                                </select>
+                                            </span>
+                                        </span>
+                                        <span *ngIf="isbotloading=='Error'">
+                                            Error......
+                                        </span>
+                                    </span>
+                                    <span *ngIf="element.taskType=='Human'">
+                                        <span *ngIf="isHumanLoading=='Loading'">Loading...</span>
+                                        <span *ngIf="isHumanLoading=='Success'">
+                                            <select class="form-control" style="width:200px;padding:0px;"
+                                                [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"
+                                                [id]="element.taskId+'__select'">
+                                                <option value="0" hidden selected>Select Resource</option>
+                                                <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )"
+                                                    [value]="human.userId.id">{{human.userId.firstName|titlecase}}
+                                                    {{human.userId.lastName|titlecase}} </option>
+                                            </select>
+                                        </span>
+                                        <span *ngIf="isHumanLoading=='Failure'">Error</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span [pTooltip]="element.status">
+                                        <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+                                            <span *ngIf="element.status=='Pending'" class="text-warning">
+                                                <i class="fa fa-clock"></i>
+                                            </span>
+            
+                                            <span *ngIf="element.status=='Running' || element.status=='InProgress'"
+                                                class="text-primary">
+                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="(element.status=='Success' || element.status=='Executed') ">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg"
+                                                    class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="element.status=='Rejected' ">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg"
+                                                    class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="element.status=='Approved' ">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg"
+                                                    class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="(element.status=='Failure' || element.status=='Failed')">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg"
+                                                    class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="element.status=='New'" class="text-primary">
+                                                <img src='../../../../../assets/images/RPA/newicon.png' class="testplus">
+                                            </span>
+                                            <span *ngIf="element.status=='Stop' || element.status=='Stopped'">
+                                                <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
+                                            </span>
+            
+                                            <span *ngIf="element.status=='Paused' || element.status=='Pause'">
+                                                <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" />
+                                            </span>
+            
+                                            <span *ngIf="element.status==null || element.status==''">
+                                                <span>
+                                                    <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" />
+                                                </span>--
+                                            </span>
+                                        </span>
+            
+                                        <span *ngIf="element.status=='null'">-</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div *ngIf="element.taskType=='Automated'">
+                                        <span>
+                                            <button [disabled]="element.taskType=='Human' || element.taskType==null"
+                                                [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''"
+                                                (click)="createtaskbotoverlay(element.taskId)"
+                                                pTooltip="Create and Assign Resource">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                    class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="assignbot(element.taskId, element.processId)"
+                                                *ngIf="element.taskType == 'Automated'" matTooltip="Assign">
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                            </button>
+                                            <button (click)="assignbot(element.taskId, element.processId)"
+                                                *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg"
+                                                    class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="loadbotdatadesign(element.botId)"
+                                                *ngIf="element.sourceType == 'EPSoft'" matTooltip="View Bot">
+                                                <img src="../../../../../assets/images/Projects/eye-show.svg"
+                                                    class="testplus default-img" />
+                                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
+                                                    class="testplus hover-img" />
+                                            </button>
+                                            <button *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
+                                                <img src="../../../../../assets/images/SO/eye-show dis.svg"
+                                                    class="testplus default-img" />
+                                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
+                                                    class="testplus hover-img" />
+                                            </button>
+                                            <button *ngIf="element.taskType !='Automated'" class="undobtn">
+                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                            </button>
+            
+                                        </span>
+                                        <span>
+                                            <button pTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId)">
+                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                                    class="testplus1 default-img" />
+                                                <img src="../../../../assets/images/Projects/delete-red.svg"
+                                                    class="testplus1 hover-img" />
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="element.taskType=='Human'">
+                                        <span>
+                                            <button [disabled]="element.taskType=='Human' || element.taskType==null"
+                                                [class]="(element.taskType=='Human' || element.                taskType==null)?'undobtn':''"
+                                                (click)="createtaskbotoverlay(element.taskId)"
+                                                pTooltip="Create and Assign Resource">
+                                                <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="assignhuman(element)" matTooltip="Assign Resource">
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg"
+                                                    class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button (click)="loadbotdatadesign(element.botId)"
+                                                *ngIf="element.taskType =='Automated'||element.taskType =='Bot'"
+                                                pTooltip="View Bot">
+                                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                            </button>
+                                            <button *ngIf="element.taskType !='Automated'">
+                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <button pTooltip="Delete Task" (click)="delete(element.taskId)">
+                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                                    class="testplus default-img" />
+                                                <img src="../../../../assets/images/Projects/delete-red.svg"
+                                                    class="testplus hover-img" />
+                                            </button>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td style="justify-content: center;" colspan="7">No records found</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <!-- <table mat-table #sort1="matSort"  [dataSource]="dataSource2" cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable"> -->
-                    <table mat-table #automatedSort="matSort" matSort [dataSource]="dataSource2"   cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" class=" RPA table" id="bmtable"  id="autotable">
+ <!-- <table mat-table #automatedSort="matSort" matSort [dataSource]="dataSource2"   cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" class=" RPA table" id="bmtable"  id="autotable">
     
                     
     
                         <ng-container matColumnDef="processName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell1">Process Name</th>
                             <td mat-cell [matTooltip]="element.processName" *matCellDef="let element"  class="cell1">
-                                <!-- <mat-icon style="cursor: pointer;"cdkDragHandle>reorder</mat-icon>     -->
                                 {{(element.processName.length >10) ? ((element.processName).slice(0, 10) + '...') : element.processName}}</td>
                         </ng-container>
                     
@@ -132,13 +422,8 @@
                         </ng-container>
                     
                         <ng-container matColumnDef="taskOwner">
-                            <th mat-header-cell *matHeaderCellDef class="cell4">Task Owner</th>
-                            <!-- <td mat-cell *matCellDef="let element" [matTooltip]="element.taskOwner" class="cell4">
-                            {{(element.taskOwner.length > 12) ? ((element.taskOwner).slice(0, 12) + '...') : element.taskOwner}}
-                             </td> -->
                             <td mat-cell *matCellDef="let element" class="cell4">
                                 <span *ngIf="element.taskType=='Automated'">
-                                    <!-- {{(element.taskOwner.length > 12) ? ((element.taskOwner).slice(0, 12) + '...') : element.taskOwner}} -->
                                     <select class="form-control" style="width:165px;padding:0px;"
                                         (change)="changeTaskOwner($event.target.value)" [(ngModel)]="element.taskOwner" [value]="element.taskOwner">
                                         <option value="" hidden disabled>Select Task Owner</option>
@@ -155,7 +440,6 @@
                                 <span *ngIf="element.taskType !='Automated'">
                                     -
                                 </span> 
-                                <!-- {{(element.taskOwner.length > 12) ? ((element.taskOwner).slice(0, 12) + '...') : element.taskOwner}} -->
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="taskType">
@@ -181,12 +465,6 @@
                                 <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
                     <select class="form-control" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)"  style="width:140px;padding:0px;">
                         <option [value]="null" disabled hidden>Select Bot Source</option>
-                        <!-- <option value="">Select Bot Source</option>
-                          <option value="EPSoft">EPSoft</option>
-                        <option value="UiPath">UiPath</option>
-                        <option value="BluePrism">BluePrism</option> -->
-                        <!--<option value="Blue Prism">Blue Prism</option>
-                        <option value="Kofax">Kofax</option> -->
                         <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
                     </select>
                   </span>
@@ -210,7 +488,6 @@
                                             <span *ngIf="element.sourceType=='EPSoft'">
                                                     <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
                                                         <option  value="0" disabled  hidden >Select Bot</option>
-                                                        <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
                                                         <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
                                                       </select>
                                                   </span>
@@ -266,69 +543,40 @@
                                 </span>
                             
                                 <span *ngIf="element.status=='Rejected' ">
-                                <!-- <li class="fa fa-times-circle"> -->
                                     <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
                                 </span>
                             
                                 <span  *ngIf="element.status=='Approved' ">
                                 <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
-                                <!-- <span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span> -->
                                 </span>
                             
                                 <span *ngIf="(element.status=='Failure' || element.status=='Failed')">
-                                <!-- <li class="fa fa-times-circle"> -->
                                     <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
                                 </span>
                             
-                                <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                                 <span *ngIf="element.status=='New'" class="text-primary">
                                 <img src='../../../../../assets/images/RPA/newicon.png' class="testplus" >
                                 </span>
-                                <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                                <!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
                                 <span *ngIf="element.status=='Stop' || element.status=='Stopped'">
                                     <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
                                     </span>
                                 
                                 <span *ngIf="element.status=='Paused' || element.status=='Pause'">
-                                <!-- <li class="fas fa-pause-circle"> -->
                                     <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
                                 </span>
                             
                                 <span  *ngIf="element.status==null || element.status==''">
                                 <span>
-                                    <!-- <li class="fas fa-pause-circle"> -->
                                     <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
                                     </span>--
                                 </span>
-                                <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-                    <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
-                    <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span> </span></span>
-                    <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span> </span></span>
-                    <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span> </span></span>
-                    -->
-                                </span>
+                               </span>
                             
                                 <span *ngIf="element.status=='null'">-</span>
                             </span>
                          </td>
                         </ng-container>
-                        <!--
-              <ng-container matColumnDef="successTask">
-                <th mat-header-cell *matHeaderCellDef>Success</th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.successTask!='null'" [id]="element.taskId+'__success'" [matTooltip]="element.successTask">{{(element.successTask.length > 20) ? ((element.successTask).slice(0, 20) + '...') : element.successTask}}</span>
-                    <span *ngIf="element.successTask=='null'">---</span>
-                </td>
-            </ng-container>
-        
-              <ng-container matColumnDef="failureTask">
-                  <th mat-header-cell *matHeaderCellDef>Failure</th>
-                  <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.failureTask!='null'" [id]="element.taskId+'__failed'">{{element.failureTask}}</span>
-                      <span *ngIf="element.failureTask=='null'">---</span>
-                  </td>
-              </ng-container>-->
+           
           
                         <ng-container matColumnDef="Operations">
                             <th mat-header-cell *matHeaderCellDef class="cell10">Actions</th>
@@ -341,11 +589,9 @@
                                     </span>
                                     <span>
                                         <button  (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign">
-                                            <!-- <i  class="fas fa-check text-success"></i> -->
                                             <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
                                         </button>
                                         <button (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
-                                            <!-- <i  class="fas fa-check text-success"></i> -->
                                             <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
                                         </button>
                                     </span>
@@ -363,9 +609,6 @@
                                           <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus default-img" />
                                           <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img" />
                                         </button>
-                                        <!-- <button [disabled]="element.botId==0"  [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)"  [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View             Bot">
-                                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
-                                        </button> -->
                                         <button  *ngIf="element.taskType !='Automated'" class="undobtn" >                                
                                           <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
                                         </button>
@@ -396,11 +639,9 @@
                                     </span>
                                     <span>
                                         <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
-                                          <!-- <i class="fa fa-eye"></i> -->
                                           <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
                                         </button>
                                         <button  *ngIf="element.taskType !='Automated'" >
-                                          <!-- <i class="fa fa-eye-slash"></i> class="undobtn"-->
                                           <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
                                         </button>
                                     </span>
@@ -409,48 +650,22 @@
                                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img"/>
                                           <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img"/>
                                         </button>
-                                        <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                                        <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                                     </span>
                                 </div>
                             </td>
                         </ng-container>
-                        <!-- <ng-container matColumnDef="Smoke_Test">
-                <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
-                <td mat-cell *matCellDef="let element" >
-                  <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
-                </td>
-              </ng-container> -->
-                        <!-- <ng-container matColumnDef="Loading">
-                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                Loading
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="noData">
-                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                No Records Found
-                            </td>
-                        </ng-container> -->
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
-                        <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
-                        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr> -->
-                    </table>
+                 </table>
                     <div class="text-center" *ngIf="dataSource2.data.length==0 || automatedtask.length==0">
                         <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:calc(100vh - 400px)">
                         <br/> No items to display
-                    </div>
-                </div>
-            </div>
-            <div class="newpaginationdiv">
+                    </div> -->
+                <!-- </div>
+            </div> -->
+            <!-- <div class="newpaginationdiv">
                 <mat-paginator class="newpaginationdiv" #paginator10 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
-            </div>
-            <!-- </mat-card> -->
-        </div>
-    </div>
-</div>
-
-
+            </div> -->
 <ng-template #process_logs>
     <div id='logsid' ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" >
         <div class="modal-header modelprhead class cursor-all-scroll" #draggableHandle>
@@ -519,7 +734,52 @@
                 <div class="row">
                     <div class="col-md-1" *ngIf="addBPconfigstatus == false"></div>
                     <div class="col-md-10" style="margin-top:10px;" *ngIf="addBPconfigstatus == false && BluePrismFlag==false">
-                        <table class="configtable table" style="width:100% !important">
+                  
+                        <p-table [value]="blueprism_configs" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Connection Name</th>
+                                    <th>Blue Prism UserName</th>
+                                    <th>Blue Prism Password</th>
+                                    <th>Hostname</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Port</th>
+                                    <th>Status</th>
+                                    <th style="width:100px"></th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-element>
+                                <tr>
+                                <td>{{element.configName}}</td>
+                                <td>{{element.bluePrismUsername}}</td>
+                                <td>{{element.bluPrismPassword | ipcustompipe}}</td>
+                                <td>{{element.hostAddress | ipcustompipe}}</td>
+                                <td>{{element.username}}</td>
+                                <td>{{element.password | ipcustompipe}}</td>
+                                <td>{{element.port}}</td>
+                                <td>
+                                    <span *ngIf="element.status==1">
+                                  <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" >Active
+                                </span>
+
+                                    <span *ngIf="element.status==0">
+                                 <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" >Inactive
+                              </span>
+                                </td>
+                                <td style="width:100px">
+                                    <span class="display_hover" style="background-color: #f5f5f5;">
+                                  <button class="display_hover_edit" title="edit" (click)="edit_blue_prism_config(element.bluePrismId)" style="padding:2px;"><i class="fas fa-edit"></i></button> &nbsp;
+                                  <button class="display_hover_alt" (click)="delete_blueprism_config(element.bluePrismId)" title="delete" style="padding:2px;"><i class="fas fa-trash-alt"></i></button>
+                                </span>
+                                </td>
+                                </tr>
+                            </ng-template>
+                            </p-table>
+                  
+                        <!-- <table class="configtable table" style="width:100% !important">
                             <tr>
                                 <th>Connection Name</th>
                                 <th>Blue Prism UserName</th>
@@ -556,7 +816,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                        <pagination-controls (pageChange)="q = $event"></pagination-controls> -->
 
 
                     </div>
@@ -652,8 +912,47 @@
                     </span>
                         </div>
                         <div class="col-md-12" *ngIf="addconfigstatus==false">
+                            <p-table [value]="configurations" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                         <th>Account Name</th>
+                                        <th>Tenant Name</th>
+                                        <th>Client ID</th>
+                                        <th>User Key</th>
+                                        <th>Status</th>
+                                        <th style="width:100px;"></th>
+    
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-element>
+                                    <tr>
+                                        <td>{{element.accountName}}</td>
 
-                            <table class="configtable table">
+                                        <td>{{element.tenantName}}</td>
+    
+                                        <td>{{element.clientId}}</td>
+    
+                                        <td>{{element.userKey}}</td>
+    
+                                        <td>
+                                            <span *ngIf="element.active == true">
+                                  <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png">Active
+                                </span>
+                                            <span *ngIf="element.active == false">
+                                  <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" >Inactive
+                                </span>
+                                        </td>
+                                        <td style="width:100px;">
+                                            <span class="display_hover" style="background-color: #f5f5f5;">
+                                  <button class="display_hover_edit" title="edit" style="padding:2px;"><i class="fas fa-edit"></i></button> &nbsp;
+                                  <button class="display_hover_alt" title="delete" style="padding:2px;"><i class="fas fa-trash-alt"></i></button>
+                                </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                </p-table>
+                            <!-- <table class="configtable table">
                                 <th>Account Name</th>
                                 <th>Tenant Name</th>
                                 <th>Client ID</th>
@@ -687,7 +986,7 @@
                                 </tr>
                             </table>
 
-                            <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                            <pagination-controls (pageChange)="q = $event"></pagination-controls> -->
 
                         </div>
 
