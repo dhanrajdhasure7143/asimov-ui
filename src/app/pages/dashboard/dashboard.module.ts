@@ -6,6 +6,9 @@ import { DashboardComponent } from './dashboard.component';
 import { DynamicDashboardComponent } from './dynamic-dashboard/dynamic-dashboard.component';
 import { ConfigureDashboardComponent} from './configure-dashboard/configure-dashboard.component'
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { MatIconModule } from '@angular/material/icon';
+// import { ChartModule } from 'primeng/chart';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -18,6 +21,10 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
    PrimengCustomModule,
    FormsModule,
    ReactiveFormsModule ,
+   MatIconModule,
+  
+  
+   
   
   ]
 })

@@ -21,7 +21,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest"       
             ],
             "styles": [
               "node_modules/sweetalert2/src/sweetalert2.scss",
@@ -50,7 +50,8 @@
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "src/assets/js/jquery-2.2.4.min.js",
               "src/assets/js/jquery.tipsy.js",
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+              "node_modules/chart.js/dist/Chart.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
