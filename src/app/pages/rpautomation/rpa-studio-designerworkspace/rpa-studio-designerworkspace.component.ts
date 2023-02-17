@@ -2718,6 +2718,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
   }
 
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+  }
+
   // stopBot() {
   //   let data="";
   //   if(this.savebotrespose!=undefined)

@@ -246,9 +246,7 @@ taskDescriptionMaxLength(value){
    }
   
    onAssigneeChange(event){
-    console.log(event)
-    console.log(this.existingUsersList,this.existingUsersList.find(data=>data.user_email == event.value))
-    // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
+     // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
       message: 'This user not in this project, Are you sure that you want to Invite him to this project?',

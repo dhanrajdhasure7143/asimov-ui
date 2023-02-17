@@ -67,6 +67,7 @@ import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manage
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
 import { CardModule } from 'primeng/card';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 
 @NgModule({
@@ -134,7 +135,8 @@ import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.com
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
-    CardModule
+    CardModule,
+    PrimengCustomModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

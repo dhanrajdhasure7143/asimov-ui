@@ -4,32 +4,22 @@ import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {Rpa_Hints} from "../model/RPA-Hints";
-import {Router} from "@angular/router";
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import {LoadChildren, Router} from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-rpa-credentials',
   templateUrl: './rpa-credentials.component.html',
   styleUrls: ['./rpa-credentials.component.css']
 })
 export class RpaCredentialsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","userName","password","serverName","categoryName","createdTimeStamp","createdBy"];
   public toggle:boolean;
-  dataSource2:MatTableDataSource<any>;
   public updateflag: boolean;
   public submitted:Boolean;
-  public Credcheckflag:boolean = false;
-  public dbupdateid : any;
   categoryList:any;
-  @ViewChild("paginator3") paginator3: MatPaginator;
-  @ViewChild("sort2") sort2: MatSort;
   public button:string;
-  public credentials:any=[];
-  public checkeddisabled:boolean =false;
-  public Credcheckeddisabled:boolean =false;
+  public credentials:any[]=[];
   public credupdatedata:any;
     public Credupdateflag:Boolean;
     public Creddeleteflag:Boolean;
@@ -39,20 +29,20 @@ export class RpaCredentialsComponent implements OnInit {
     enableCredential: boolean=false;
     userRole: any;
     public isButtonVisible = false;
-    addflag:boolean=false;
+    addflag:boolean = false;
     isCreateForm:boolean=true;
     isSearch:boolean=false;
     isLoading:boolean=true;
-  noDataMessage: boolean;
-
+    columns_list:any =[];
+    selectedData: any;
+    categories_list: any =[];
+    table_searchFields: any[]=[];
     
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
-      private formBuilder: FormBuilder,
-      private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
-      private spinner: NgxSpinnerService
+      private spinner: LoaderService
       ) { 
   
       this.Credupdateflag=false;
@@ -92,14 +82,14 @@ inputNumberOnly(event){
     }
 
   async getallCredentials(){
+    this.Credupdateflag = false;
     this.credentials= [];
     let role=localStorage.getItem('userRole')
     await this.api.get_All_Credentials(role).subscribe(
-      data1 => {
+      (data1:any) => {
         this.credentials = data1;
         this.isLoading=false;
         if(this.credentials.length>0){ 
-           this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
@@ -108,39 +98,77 @@ inputNumberOnly(event){
               return item;
             })
            }
-         
-         
-           setTimeout(() => {
-            this.sortmethod(); 
-          }, 80);
-  
          }
-         else
-         {
-           this.Credcheckeddisabled = true;
-         }
-        this.dataSource2= new MatTableDataSource(this.credentials);
+        
+         this.columns_list = [
+          {
+            ColumnName: "userName",
+            DisplayName: "Email",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "password",
+            DisplayName: "Password",
+            ShowFilter: true,
+            ShowGrid: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "serverName",
+            DisplayName: "Server Type",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "categoryName",
+            DisplayName: "Category",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+            "dropdownList":this.categories_list
+          },
+          {
+            ColumnName: "createdBy",
+            DisplayName: "Created By",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "date",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "createdTimeStamp_converted",
+            DisplayName: "Created Date",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+        ];
+        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted"]
         this.spinner.hide();
       });
   }
 
-  sortmethod(){
-    this.dataSource2.sort = this.sort2;   
-    this.dataSource2.paginator=this.paginator3; 
-  }
-
-  CredcheckAllCheckBox(ev) {
-    this.credentials.forEach(x =>
-       x.checked = ev.target.checked);
-       if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length){
-         this.Credcheckflag=true;
-       }
-       else{
-         this.Credcheckflag=false;  
-       }
-    this.Credchecktoupdate();
-    this.checktodelete();
-  }
+  
   
   openCreateCredential(){
     this.isCreateForm = true;
@@ -151,18 +179,12 @@ inputNumberOnly(event){
 
   openUpdateCredential() {
     document.getElementById('createcredentials').style.display = 'block';
-    let data: any;
     this.isCreateForm = false;
-    for (data of this.credentials) {
-      if (data.credentialId == this.dbupdateid) {
-        this.credupdatedata = data;
-        break;
-      }
-    }
+    this.credupdatedata = this.selectedData[0];
   }
 
   deleteCredentials(){
-    const selectedcredentials = this.credentials.filter(product => product.checked==true).map(p => p.credentialId);
+    const selectedcredentials = this.selectedData.map(p => p.credentialId);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -179,10 +201,7 @@ inputNumberOnly(event){
           this.spinner.hide();
           if(status.errorMessage==undefined){
             Swal.fire("Success",status.status,"success");
-            this.removeallchecks();
             this.getallCredentials();
-            this.Credchecktoupdate();  
-            this.checktodelete();   
           }else{
             Swal.fire("Error",status.errorMessage,"error")
           }              
@@ -194,64 +213,27 @@ inputNumberOnly(event){
     });
   }
 
-  Credchecktoupdate(){
-    const selectedcredentials = this.credentials.filter(product => product.checked==true);
-    if(selectedcredentials.length > 0){
-      this.addflag = true;
-    }else{
-      this.addflag = false;
-    }
-    if(selectedcredentials.length==1)
-    {
-      this.Credupdateflag=true;
-      this.dbupdateid=selectedcredentials[0].credentialId;
-    }else{
-      this.Credupdateflag=false;
-    }
-  }
-
-  CredcheckEnableDisableBtn(id, event){
-    this.credentials.find(data=>data.credentialId==id).checked=event.target.checked;
-    if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length){
-      this.Credcheckflag=true;
-    }else{
-      this.Credcheckflag=false;  
-    }
-    this.Credchecktoupdate();
-    this.checktodelete();
-  }
-
-  checktodelete(){
-    const selectedcredentialsdata = this.credentials.filter(product => product.checked).map(p => p.credentialId);
-    if(selectedcredentialsdata.length>0){
-      this.Creddeleteflag=true;
-    }else{
-      this.Creddeleteflag=false;
-    }
-  }
+ 
 
   applyFilter1(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource2.filter = filterValue;
-    if (this.dataSource2.filteredData.length === 0) {
-      this.noDataMessage = true;
-    }else {
-      this.noDataMessage = false;
-    }
-  }
-
-  removeallchecks(){
-    for(let i=0;i<this.credentials.length;i++){
-      this.credentials[i].checked= false;
-    }
-    this.Credcheckflag=false;
+    // this.dataSource2.filter = filterValue;
+    // if (this.dataSource2.filteredData.length === 0) {
+    //   this.noDataMessage = true;
+    // }else {
+    //   this.noDataMessage = false;
+    // }
   }
 
   getCategories(){
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
         this.categoryList=response.data;
+        let sortedList=this.categoryList.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    sortedList.forEach(element => {
+      this.categories_list.push(element.categoryName)
+    });
       this.getallCredentials();
     })
   }
@@ -260,5 +242,12 @@ inputNumberOnly(event){
     if(event){
       this.getallCredentials();
     }
+  }
+
+  readSelectedData(data) {
+    this.selectedData =data;
+    this.selectedData.length > 0 ?this.addflag =true :this.addflag =false
+    this.selectedData.length > 0 ?this.Creddeleteflag =true :this.Creddeleteflag =false
+    this.selectedData.length == 1 ?this.Credupdateflag =true :this.Credupdateflag =false
   }
 }

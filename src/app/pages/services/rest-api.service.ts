@@ -1491,9 +1491,6 @@ getprocessnamesByLatestVersion()
 {
   return this.http.get("/rpa-service/latest-version/process-name");
 }
-// getConnectionslist(){
-//   return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
-// }
 getTenantnameslist() {
   return this.http.get("/platform-service/screenGenerator/get-allorgtenent-data");
 }
@@ -1604,19 +1601,19 @@ getTenantnameslist() {
   }
   ///Connection manger APIS///
 getAuthTypes(){
-  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-authorization-type`);
+  return this.http.get(`/rpa-service/get-authorization-type`);
 }
 
 testConnections(body){
-  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/getTestApiCall`,body); 
+  return this.http.post(`/rpa-service/getTestApiCall`,body); 
 }
 
 getMethodTypes(){
-  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-method-type`);
+  return this.http.get(`/rpa-service/get-method-type`);
 }
 
 saveConnector(body){
-  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/save-api-list`,body); 
+  return this.http.post(`/rpa-service/save-api-list`,body); 
 }
 getProjectTaskDetailsById(projectId,taskId){
   return this.http.get('/platform-service/task/findTaskByProjectIdAndTaskId?projectId='+projectId+'&taskId='+taskId)
@@ -1625,4 +1622,26 @@ getProjectTaskDetailsById(projectId,taskId){
 getMessagesByProjectId(projectId){
   return this.http.get('http://localhost:8098/getChatData/'+projectId)
 }
+
+getConnectionTable(){
+  return this.http.get('/rpa-service/getConnectionTableData')
+}
+
+getConnectionslist(){
+  return this.http.get(`/rpa-service/get-all-connections`);
+}
+
+getGrantTypes(){
+  return this.http.get('/rpa-service/get-grant-type/{grantType}')
+}
+
+//get the list of existing uisers in project
+getusersListByProjectId(projectId){
+  return this.http.get('/platform-service/task/resourceTasksCount?projectId='+projectId);
+}
+
+getSnapshotd(projectId){
+  return this.http.get('/platform-service/project/getQuickSnapshots?projectId='+projectId);
+}
+
 }

@@ -242,7 +242,7 @@
                                                 alt="Active-Tasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">12</label>
+                                            <label class="qcard-count">{{snapshotDatails.ActiveTask}}</label>
                                             <p class="qcard-name">Active Tasks</p>
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@
                                                 alt="OverdueTasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">02</label>
+                                            <label class="qcard-count">{{snapshotDatails.DelayedTask}}</label>
                                             <p class="qcard-name">Delayed Tasks</p>
                                         </div>
                                     </div>
@@ -272,7 +272,7 @@
                                         </div>
                                         <!--style="margin-left: 8px;" style="margin-left: -9px;" -->
                                         <div class="qcard-info">
-                                            <label class="qcard-count">05</label>
+                                            <label class="qcard-count">{{snapshotDatails.CompletedTask}}</label>
                                             <p class="qcard-name">Completed Tasks</p>
                                         </div>
                                     </div>
@@ -286,7 +286,7 @@
                                                 alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">02</label>
+                                            <label class="qcard-count">{{snapshotDatails.UsersOnboarded}}</label>
                                             <p class="qcard-name">Users</p>
                                         </div>
                                     </div>
@@ -301,7 +301,7 @@
                                                 alt="Documents" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">07</label>
+                                            <label class="qcard-count">{{snapshotDatails.Documents}}</label>
                                             <p class="qcard-name">Documents</p>
                                         </div>
                                     </div>
@@ -317,7 +317,7 @@
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">02</label>
+                                            <label class="qcard-count">0</label>
                                             <p class="qcard-name">Pending Approvals</p>
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row quick-actions">
+                    <div class="row quick-actions" *ngIf="!isCreate">
                         <h6>Quick Actions</h6>
                         <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
                         <button class="btn blue-btntext" (click)="onCreateTask()">
@@ -509,11 +509,11 @@
 
 <!-- own-overlay rpa-modal dynamic-forms-modal -->
 
-<div class="" [hidden]="!hiddenPopUp" style="display: block">
+<div class="" *ngIf="hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
         <div class="splitoverlaydiv">
             <p-tabView #tabView (onChange)="onUsersTab($event.index)">
-                <p-tabPanel>
+                <p-tabPanel  [selected]="true">
                     <ng-template pTemplate="header">
                         <h4>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
                                 Users selected) </span></h4>
@@ -531,15 +531,15 @@
                         responsiveLayout="scroll" dataKey="id">
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
-                                <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list" class="listdropdown"
-                                    [(ngModel)]="selectedRole" (onChange)="onChangeRole($event)"
+                                <p-dropdown [options]="roles_list" class="listdropdown"
+                                    [(ngModel)]="selectedRole" (onChange)="onChangeRole($event,users_tabIndex)"
                                     optionLabel="name"></p-dropdown>
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input type="text" pInputText placeholder="Search"
                                         (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                 </span>
-                                <span *ngIf="users_tabIndex == 1" class="userstabbtns">
+                                <!-- <span *ngIf="users_tabIndex == 1" class="userstabbtns">
                                     <button class="btn">
                                         <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                                         <span>Open</span>
@@ -549,7 +549,7 @@
                                             alt="Create">
                                         <span>Create</span>
                                     </button>
-                                </span>
+                                </span> -->
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
@@ -610,3 +610,5 @@
         </div>
     </app-split-overlay>
 </div>
+
+<p-toast></p-toast>

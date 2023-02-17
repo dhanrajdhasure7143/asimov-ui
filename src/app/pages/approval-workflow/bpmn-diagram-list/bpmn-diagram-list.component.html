@@ -24,7 +24,7 @@
     <div class="list_header" mat-sort-header="approvalStatus">Status</div>
   </div>
   <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
-    <mat-accordion>
+    <mat-accordion class="w-100">
     <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of displayedRows$ | async | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
     [(expanded)]="each_diag.xpandStatus"
     (click)="clicked(i)"

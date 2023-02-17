@@ -2,8 +2,7 @@
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div *ngIf="addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="addbtn"
-                    [routerLink]="['/pages/rpautomation/action-item']">
+                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="openConnectorForm()">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
                     <span class="testtooltip">New</span>
                 </button>
@@ -12,6 +11,30 @@
                 <button class="tsttooltipbtn" id="addbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
                     <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()">
+                    <img src='../../../../assets/images-n/projects/eye-show-blue.svg'>
+                    <span class="testtooltip"> View</span>
+                </button>
+            </div>
+            <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
+                <button id="updateenvbtn" disabled>
+                    <img src='../../../../assets/images-n/projects/eye-show dis.svg'>
+                    <span class="testtooltip"> View</span>
+                </button>
+            </div>
+            <div *ngIf="updateflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
+                    <span class="testtooltip"> Edit</span>
+                </button>
+            </div>
+            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                <button id="updateenvbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
+                    <span class="testtooltip"> Edit</span>
                 </button>
             </div>
             <div class="env-btn credential-btntool" *ngIf="delete_flag">
@@ -29,7 +52,7 @@
         </div>
     </div>
     <div class="col-md-12 con-envr">
-        <div class="credential-tablegrid">
+        <div>
             <app-dynamic-table 
                 [representatives]="representatives" 
                 [columns_list]="columns_list"
@@ -45,5 +68,94 @@
                 [show_clear_filter]="true">
             </app-dynamic-table>
         </div>
+    </div>
+    <!-- <app-rpa-connection-manager-form [isConnectorForm]="isConnectorForm"> </app-rpa-connection-manager-form> -->
+    <div [hidden]="!isFormOverlay">
+        <app-split-overlay (closeOverlay)="closeFormOverlay($event)">
+            <!-- <h3> Creation Connection </h3> -->
+            <h5 class="create-title"> Create Connection</h5>
+            <div class="container col-lg-12">
+                <form>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Connector Name <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="connectionName"
+                            placeholder="Enter Connector Name">
+                        <!-- <span *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')" class="errspan required"> Connector Name Required* </span> -->
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Authorization Type <span
+                                class="star">*</span></label>
+                        <select name="" id="" class="form-control" formControlName="authorization_Type"
+                            (change)="changeAuth($event)">
+                            <option value="" hidden disabled>Select Authorization</option>
+                            <option value="null" hidden disabled>Select Authorization</option>
+                            <option value="undefined" hidden disabled>Select Authorization</option>
+                            <option *ngFor="let auth of authorizationType"> {{auth}}</option>
+                        </select>
+                        <!-- <span *ngIf="connectorForm.get('authorization_Type').invalid && connectorForm.get('authorization_Type').touched && !connectorForm.get('authorization_Type').hasError('pattern')" class="errspan required"> Authorization Type Required* </span> -->
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control"> Task Icon <span class="star">*</span></label>
+                        <input type="file" class="form-control" formControlName="" placeholder="Upload Icon">
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-primary"> Save </button> &nbsp;
+                        <button class="btn btn-primary"> Next </button>
+                    </div>
+                </form>
+            </div>
+
+        </app-split-overlay>
+    </div>
+
+    <div [hidden]="!isAuthOverlay">
+        <app-split-overlay (closeOverlay)="closeAuthOverlay($event)">
+
+            <h5 class="create-title"> Configuration Options </h5>
+            <div class="container modal-body col-lg-12">
+                <form>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Grant Type <span class="star">*</span></label>
+                        <!-- <input type="text" class="form-control" formControlName="" placeholder="Enter Grant Type"> -->
+                        <select name="" id="" class="form-control" formControlName="authorization_Type"
+                            (change)="changeAuth($event)">
+                            <option value="" hidden disabled>Select Grant Type</option>
+                            <option value="null" hidden disabled>Select Grant Type</option>
+                            <option value="undefined" hidden disabled>Select Grant Type</option>
+                            <option *ngFor="let grant of grantType"> {{grant}} </option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Access Token <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Access Token">
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Client ID <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Client ID">
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Client Secret <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Client Secret">
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Username <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Username">
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Password <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Password">
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName"> Scope <span class="star">*</span></label>
+                        <input type="text" class="form-control" formControlName="" placeholder="Enter Scope">
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-default btn-test">Reset</button> &nbsp;
+                        <button class="btn btn-primary" (click)="saveConfigurations()"> Submit </button>
+                    </div>
+                </form>
+            </div>
+        </app-split-overlay>
+
     </div>
 </div>

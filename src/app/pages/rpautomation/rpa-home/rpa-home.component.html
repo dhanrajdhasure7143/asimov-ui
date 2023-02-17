@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-12 p-0">
                 <div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-6 pl-0">
                             <h4 class="gridHeader">My Workspace</h4>
                         </div>
@@ -57,9 +57,143 @@
                             </div>
                         </div>
 
+                    </div> -->
+
+                    <div>
+                        <p-table #dt1 [columns]="selectedColumns" [value]="bot_list" dataKey="botId" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" 
+                        [reorderableColumns]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="table-header">
+                                    <h4 class="box-heading">My Workspace</h4>
+                                <div class="p-d-flex">
+                                    <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
+                                        selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                                            placeholder="Choose Columns">
+                                    </p-multiSelect>
+                                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
+                                    </button>
+                                    <span class="p-input-icon-right">
+                                        <i class="pi pi-search"></i>
+                                        <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
+                                            (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                    </span>
+                                </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 3em"></th>
+                                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
+                                        {{col.header}}
+                                        <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
+                                        <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" field="categoryName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                        [showAddButton]="false" display="menu">
+                                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <p-dropdown [ngModel]="value" [options]="categories_list_new" (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+                                            </ng-template>
+                                        </p-columnFilter>
+                                        <p-sortIcon [field]="col.field" *ngIf="col.ShowFilter"></p-sortIcon>
+    
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-i="rowIndex">
+                                <tr>
+                                    <td>
+                                        <a href="#" [pRowToggler]="rowData" (click)="getBotImage(rowData)">
+                                            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                        </a>
+                                    </td>
+                                    <td *ngFor="let col of columns">
+    
+                                        <span *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'">
+                                            {{rowData[col.field]?rowData[col.field]:'-'}}
+                                        </span>
+                                        <span *ngIf="col.header == 'Status'">
+                                            <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
+                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">
+                                            </span>
+                                            <span *ngIf="rowData['botStatus']=='Success'">
+                                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" pTooltip="Success" tooltipPosition="right"class="testplus1">
+                                            </span>
+
+                                            <span *ngIf="rowData['botStatus']=='Failure'">
+                                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" pTooltip="Failed" tooltipPosition="right" class="testplus1">
+                                            </span>
+                                            <span *ngIf="rowData['botStatus']=='New'" class="text-primary">
+                                                <img src="../../../../assets/images/RPA/userobot.png"  pTooltip="New" tooltipPosition="right" class="testplus1">
+                                            </span>
+
+                                            <span *ngIf="rowData['botStatus']=='Stop' || rowData['botStatus']=='Stopped'">
+                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" pTooltip="Stopped" tooltipPosition="right"class="testplus1">
+                                            </span>
+
+                                            <span *ngIf="rowData['botStatus']=='Pause'||rowData['botStatus']=='Paused'" class="text-primary">
+                                                <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus1">
+                                            </span>
+                                            <span *ngIf="rowData['botStatus']==null">-</span>
+                                        </span>
+
+    
+                                        <span  *ngIf="col.header == 'Actions'">
+                                            <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
+                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="true" (click)="openEditBotOverlay(rowData)">
+                                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus"> </button>
+                                                <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
+                                                    <img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus">
+                                                </button>
+                                            </div>
+                                            <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
+                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
+                                                        (click)="openEditBotOverlay(rowData)">
+                                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus default-img">
+                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> 
+                                                </button>                                                
+                                                <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
+                                                    <img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus default-img">
+                                                <img src="../../../../assets/images/Projects/delete-red.svg" alt="" class="testplus hover-img"></button>
+                                            </div>
+                                        </span>
+    
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
+                                <tr>
+                                    <td [attr.colspan]="columns.length + 1">
+                                        <div class="diagram_container">
+                                            <a class="btn open-btn-click btn-xs" (click)="onNavigateToWorkSpace(rowData)">
+                                                Click to open
+                                            </a>
+                                            <div *ngIf="botImage !=undefined">
+                                                <div class="rpa_botdiv" *ngIf="botImage.errorMessage==undefined">
+                                                    <img [src]="botImage.svg" style="width:100%">
+                                                </div>
+                                                <div *ngIf="botImage.errorMessage != undefined" style="width:100%" class=" text-center">
+                                                    <img src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                                                    <br>
+                                                    <span>{{botImage.errorMessage}}</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="botImage ==undefined">
+                                                <div class="text-center">
+                                                    Loading
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td style="justify-content: center;" colspan="7">No records found</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
 
-                    <mat-accordion>
+                    <!-- <mat-accordion>
                         <div class="flex-row Tabletype">
                             <div class="TabletypeHeader" matSort>
                                 <div class="flex-col header gridheader-th">
@@ -187,12 +321,12 @@
                         </div>
                        
 
-                    </mat-accordion>
+                    </mat-accordion> -->
                     
                 </div>
-                <div class="newpaginationdiv">
+                <!-- <div class="newpaginationdiv">
                     <mat-paginator #paginator301 [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
-                </div>
+                </div> -->
             </div>
 
         </div>
@@ -200,11 +334,11 @@
 
 
         <!--Edit Bot UI Bot-->
-        <div id="bot-form" class="rpa-modal">
-            <div *ngIf="botFormVisibility" >
-                <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
-            </div>
-        </div>
+        <div *ngIf="hiddenPopUp" > 
+            <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+            <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
+            </app-split-overlay>
+          </div>
 
         <!-- <div id="edit-bot" class="modal rpa-modal">
             <div class="rpa-modal-content">
@@ -395,4 +529,9 @@
     <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
   
   </ngx-spinner>
-  
+
+  <div *ngIf="hiddenPopUp" > 
+    <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+    <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
+    </app-split-overlay>
+  </div>

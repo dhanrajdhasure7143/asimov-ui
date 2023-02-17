@@ -189,7 +189,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
       if(params['vcmId']){
         this.vcmId=params['vcmId'];
       }
-
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
 
@@ -286,6 +285,9 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
         //   this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
         //   })
         // }
+        localStorage.removeItem("projectId");
+        localStorage.removeItem("project_id");
+      localStorage.removeItem("projectName")
       }
 
    setRPAData(){
