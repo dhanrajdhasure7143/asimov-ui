@@ -51,3 +51,42 @@
   border: 1px solid black;
 }
 
+
+.docscrnchngs {
+  height: 420px;
+  overflow: auto;
+}
+.docfootbtns {
+  text-align: right;
+  position: absolute;
+  bottom: 4px;
+  right: 0px;
+}
+.docfootbtns button.btn {
+  background: #fff!important;
+  padding: 10px 12px !important;
+  min-width: auto !important;
+  border-radius: 4px;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 15%);
+}
+.docfootbtns .pi-folder, .docfootbtns .pi-sitemap {
+  color: var(--main-bluecolor) !important;
+  font-size: 28px;
+}
+.docfootbtns button.btn:first-child {
+  margin-right: 15px !important;
+}
+.docritclk div:first-child {
+  margin-bottom: 10px;
+}
+
+
+.docfldnam input.p-inputtext {
+  width: 100%;
+}
+.docfldnam input.p-inputtext:focus {
+  box-shadow: none !important;
+}
+.docfldnam button.btn {
+  margin-top: 30px;
+}
