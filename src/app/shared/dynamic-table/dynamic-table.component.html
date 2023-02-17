@@ -87,27 +87,40 @@
 
                     </span>
                     
-                    <span *ngIf="col.multi && col.ColumnName!='action'">{{rowData[col.multiOptions[0]]}} <br>
-                        <span *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
-                        <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
-                        <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
+                    <span *ngIf="col.multi && col.ColumnName!='action'">
+                        <div *ngIf="col.multiOptions[1] == 'priority'">
+                            <span class="prjtaskname">{{rowData[col.multiOptions[0]]}}</span>
+                            <span class="prjgridpriority"  [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        </div>
+                        <div *ngIf="col.multiOptions[1] != 'priority'">
+                            <div class="d-flex align-items-center">
+                                <span class="prjlastupdateprofile">RS</span>
+                                <span>
+                                    <span class="prjlastupdatename">{{rowData[col.multiOptions[0]]}}</span>
+                                    <span class="prjgridtimestamp" > {{rowData[col.multiOptions[1]]}} </span>
+                                </span>
+                            </div>
+                        </div>
                     </span>
+                    <!-- <span *ngIf="col.multi && col.ColumnName!='action'">{{rowData[col.multiOptions[0]]}} <br>
+                        <span class="prjgridpriority" *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        <span class="prjgridtimestamp" *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
+                    </span> -->
+                    <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
                     <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
                         {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                     </span> -->
                     <span *ngIf="col.ColumnName == 'action'" class="newinntalx">
                         <span *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
-                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img" >
-                            <img src="../../../../assets/images/PI/eye-show-blue.svg" alt="" class="testplus hover-img" >
+                            <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </span>
                         <span *ngIf='rowData[col.kafkaConFail] == "Y" && show_retry_btn' (click)="onRetryGraphGenerate(rowData)">
-                            <img src="../../../../assets/images/PI/refresh.svg" alt="" class="testplus default-img" >
-                            <img src="../../../../assets/images/PI/refresh-blue.svg" alt="" class="testplus hover-img" >
+                            <img src="../../../../assets/images/PI/refresh.svg" alt="Refresh" class="testplus default-img" >
+                            <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-img" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
                             <span *ngIf="!isdisabled_edit" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
-                                <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img">
-                                <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img">
+                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>
                             <span *ngIf="isdisabled_edit">
                                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
@@ -115,8 +128,7 @@
                         </span>
                         <span *ngIf="show_delete_btn" class="editButton" >
                             <span *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img" alt="delete">
-                                <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" alt="">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
                             </span>
                             <span *ngIf="isdisabled_delete">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
@@ -135,12 +147,10 @@
                             </span>
                             <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
                                 <span (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                    <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img" alt="delete">
-                                    <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" alt="">
+                                    <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
                                 </span>
                                 <span  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
-                                    <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img">
-                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img">
+                                    <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                                 </span>
                             </span>
                         </div>
@@ -148,12 +158,11 @@
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
                             <span class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
-                                <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img" >
-                                <img src="../../../../assets/images/PI/eye-show-blue.svg" alt="" class="testplus hover-img" >
+                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                             </span>
                             <span (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
                             || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="testplus default-img">
                         </span>
                         </div>
                     </span>
@@ -164,10 +173,10 @@
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </a>
                             <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
-                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="default-img">
+                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="default-img">
                             </a>
                             <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../assets/images-n/common/delete-blue.svg" class="default-img">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="default-img">
                             </a>
                         </div>
                     </span>

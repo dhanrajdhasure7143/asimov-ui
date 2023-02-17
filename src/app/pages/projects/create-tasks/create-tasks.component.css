@@ -1,86 +1,40 @@
-/* ::ng-deep .ng-select-container {
-    height: auto !important;
-    font-size: 1.0em!important;
-    font-family:sans-serif;
-  }
-
-  .h-scroll {
-    height: calc(100% - 48px) !important;
-    overflow: auto !important;
-  }
-
-
-.maindivfoprm input,
-.maindivfoprm select,
-.maindivfoprm textarea {
-  background-color: #f6f6f6 !important;
-  border: 1px solid #D1D1D1;
-  box-shadow: unset !important;
-  color: #7B8694 !important;
-  border-radius: 2px;
-  padding: 6px 10px !important;
+.createform-overlay {
+  padding: 15px 10px 0px;
+  height: calc(100% - 185px);
+  overflow: auto;
 }
-
-.maindivfoprm input:focus,
-.maindivfoprm select:focus,
-.maindivfoprm textarea:focus {
-  border-color: #00a0e3 !important;
-  color: #001c47 !important;
-  background-color: #fff !important;
+button.btn.new-cancelbtn {
+  color: #098de6 !important;
+  font-size: 16px;
 }
-
-.status-good {
-  color: green;
-  font-size: 30px;
+.form-check span {
+  margin-right: 40px;
 }
-
-.maindivfoprm .inputfield-color,
-.maindivfoprm textarea.inputfield-color {
-  background-color: #f6f6f6 !important;
+.fromdate, .todate {
+  width: 50%;
+  position: relative;
 }
-
-.maindivfoprm input.enteredfield-color.ng-touched,
-.maindivfoprm select.enteredfield-color.ng-touched,
-.maindivfoprm textarea.enteredfield-color.ng-touched {
-  background-color: #ffffff !important;
-  border: 1px solid #D1D1D1;
+.fromdate {
+  position: relative;
 }
-
-.maindivfoprm input.enteredfield-color.ng-touched,
-.maindivfoprm select.enteredfield-color.ng-touched,
-.maindivfoprm textarea.enteredfield-color.ng-touched {
-  background-color: #ffffff !important;
-  border: 1px solid #D1D1D1;
-  color: #001c47 !important;
+span.dateseparator {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  color: #7d7d7d;
+  font-size: 20px;
 }
-label.label-control {
-  border: 1px solid transparent;
-  border-bottom: medium none;
-  margin: 0px !important;
-  border-radius: 2px;
-  color: black;
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 3px !important;
-  white-space: nowrap;
-  width: 100%;
-  text-overflow: ellipsis;
+.fromdate input.form-control.enteredfield-color {
+  background: transparent;
+  border: 1px solid #979797 !important;
+  border-right: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
-
-.prj-crt-form {
-  margin-right: -15px !important;
-  margin-left: -15px !important;
-}
-button.btn.btn-primary.btn-update {
-  margin-right: 0px !important;
-}
-
-.maindivfoprm {
-  width: 800px;
-  margin: 0px auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
-} */
-.form-check label{
-  padding-right: 20px;
+.todate input.form-control.enteredfield-color {
+  background: transparent;
+  border: 1px solid #979797 !important;
+  border-left: 0px !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
 }

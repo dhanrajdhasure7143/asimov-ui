@@ -80,8 +80,8 @@
   <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
     <div class="h-100">
       <div class="create-header" >
-        <h6 *ngIf="!isprojectCreateForm">Create Project / Program</h6>
-        <h6 *ngIf="isprojectCreateForm">Create Project</h6>        
+        <h3 *ngIf="!isprojectCreateForm">Create Project / Program</h3>
+        <h3 *ngIf="isprojectCreateForm">Create Project</h3>        
       </div>
       <div class="row create-body" *ngIf="!isprojectCreateForm">
         <div class="prjoverlay">
