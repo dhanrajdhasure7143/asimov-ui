@@ -1,35 +1,123 @@
-<div class="dashboard-main">
-    <img src="..\assets\images\Projects\illustration-Letstart.svg" class="dashboard-img"/>
-    <h2 class="dashboard-header" >Design your own dashboard</h2>
-    <div class="btn-p-align" style="text-align: center;">
-       <p-button placement="bottom" 
-          (click)="showDialog()">Let's Start
-       </p-button>
-    </div>
- </div>
- <div style="text-align: center">
-    <p-dialog header=" Create Dashboard" styleClass="my-style-class" 
-    [(visible)]="BasicShow"
-    [style]="{width: '30vw'}"
-    [draggable]="false" 
-    [resizable]="false">
-    <div  class="h-100">
-       <div>
-          <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
-          <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="text" />
-       </div>
-    </div>
-    <ng-template pTemplate="footer">
-       <p-button
-          (click)="BasicShow = false"
-          label="Cancel"
-          styleClass="btn-cancel1">
-       </p-button>
-       <p-button
-          (click)="navigateconfigure()"
-          label="Save"
-          styleClass="p-button p-dialogue-btn ">
-       </p-button>
-    </ng-template>
-    </p-dialog>
- </div>
+<p-splitter [style]="{'height': 'auto'}" [panelSizes]="[70,30]" layout="horizontal" >
+   <ng-template pTemplate>
+      <div class="container-fluid">
+         <div class="col-md-12 py-4 px-3">
+            <div class="row main-content-head">
+               <div class="col-md-4 pl-0">
+                  <h3>
+                     <span class="title_text">Dynamic Dashboard </span>
+                  </h3>
+               </div>
+               
+            </div>
+         </div>
+         <div class="col-md-12">
+            <div class="well flex-container">
+               <div class="img-div">
+                  <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
+               </div>
+               <div>
+                  <p class="warning-p" >Your currently editing your dashboard. Changes will be saved after clicking the done button.</p>
+               </div>
+            </div>
+            <div class=" flex-container">
+               <div class="img-div">
+               </div>
+               <div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-12 py-3 px-3">
+            <div class="row">
+               <div class="col-md-3 sec-2" >
+                  <div class="well1-dynmic">
+                     <div class="flex-container">
+                        <div class="img-div">
+                           <img src="..\assets\images-n\dashboard\Thumbup.svg" />
+                        </div>
+                        <div class="new-dynamic">
+                           <h3>04</h3>
+                           <p>Pending Approvals</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-3 sec-2" >
+                  <div class="well1-dynmic">
+                     <div class="flex-container">
+                        <div class="img-div">
+                           <img src="..\assets\images-n\dashboard\round-settings.svg" />
+                        </div>
+                        <div class="new-dynamic">
+                           <h3>32%</h3>
+                           <p>Automation Rate</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-3 sec-2" >
+                  <div class="well1-dynmic">
+                     <div class="flex-container">
+                        <div class="img-div">
+                           <img src="..\assets\images-n\dashboard\tasksoverdue.svg" />
+                        </div>
+                        <div class="new-dynamic">
+                           <h3>56</h3>
+                           <p>Tasks Overdue</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-3 sec-2" >
+                  <div class="well1-dynmic">
+                     <div class="flex-container">
+                        <div class="img-div">
+                           <img src="..\assets\images-n\dashboard\schedules.svg" />
+                        </div>
+                        <div class="new-dynamic">
+                           <h3>11</h3>
+                           <p>Schedules Failed</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+         <div class="col-md-12 py-3 px-3">
+            <div class="row">
+               <div class="col-md-6 sec-2" >
+                  <div class="well1 graph" >
+                    <div class="chart" >
+                        <div>
+                           <img src="..\assets\images\Projects\add-gadget.svg" />
+                        </div>
+                        <div>
+                           <p class="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
+                        </div>
+                     </div>
+                  
+                  </div>
+               </div>
+               <div class="col-md-6 sec-2" >
+                  <div class="well1 graph" >
+                     <div class="chart">
+                        <div>
+                           <img src="..\assets\images\Projects\add-gadget.svg"  />
+                        </div>
+                        <div>
+                           <p sclass="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </ng-template>
+  
+
+
+   </p-splitter>
+
+   <!-- <p-chart type="line" [data]="data" [options]="options"></p-chart> -->

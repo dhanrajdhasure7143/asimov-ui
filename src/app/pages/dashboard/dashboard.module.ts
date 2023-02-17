@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -7,13 +7,16 @@ import { DynamicDashboardComponent } from './dynamic-dashboard/dynamic-dashboard
 import { ConfigureDashboardComponent} from './configure-dashboard/configure-dashboard.component'
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { MatIconModule } from '@angular/material/icon';
-// import { ChartModule } from 'primeng/chart';
+import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
+
+
 
 @NgModule({
   declarations: [
     DashboardComponent,
     DynamicDashboardComponent,
-    ConfigureDashboardComponent
+    ConfigureDashboardComponent,
+    CreateDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -22,10 +25,13 @@ import { MatIconModule } from '@angular/material/icon';
    FormsModule,
    ReactiveFormsModule ,
    MatIconModule,
+ 
+ 
   
   
    
   
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DashboardModule { }

@@ -1,0 +1,52 @@
+.dashboard-main {
+	padding-top: 7%;
+}
+
+.dashboard-img {
+	display: block;
+	margin: auto;
+}
+
+.btn-strt {
+	padding: 10px 50px !important;
+	margin: auto;
+	display: block;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.dashboard-header {
+	text-align: center;
+	padding: 30px 0px
+}
+
+.p-dialogue-btn {
+	padding: 6px 30px;
+}
+
+.p-dialog-mask {
+	background-color: #6866666e;
+}
+
+.h-100 {
+	background-color: #fff !important;
+}
+
+:host ::ng-deep .btn-cancel1 {
+	color: #2196F3 !important;
+	padding: 0.5rem 1rem !important;
+	background-color: transparent !important;
+	border-color: transparent !important;
+
+
+}
+
+:host ::ng-deep .p-dialogue-btn {
+	padding: 8px 40px !important;
+
+
+}
+
+.my-style-class {
+	height: 70%
+}

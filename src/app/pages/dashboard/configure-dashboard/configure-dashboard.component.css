@@ -76,3 +76,17 @@ ul.ui-p-tabview {
 :host ::ng-deep .prime-slider-override .p-tabview-nav-container {
 	border-bottom: 2px solid #DDD
 }
+.warng-img{margin-right:3px;width:18px;}
+.warning-p{margin-bottom:0px;}
+.sec-2{padding-right:5px;padding-left:5px;}
+.sec-2 img{width:95%}
+.metric{font-weight:600}
+.graph{height:300px;}
+.chart{text-align: center;margin-top:25%}
+.chart img{width:80px;}
+.img-w{margin-right:30px;width:95%;}
+.wid-p{font-size: 14px;
+	color: #808080cc;}
+.widget-main{height:50px;}
+.widget-main .bps-labcls{float:right}
+.img-M{margin-right:9px;width:95%;}

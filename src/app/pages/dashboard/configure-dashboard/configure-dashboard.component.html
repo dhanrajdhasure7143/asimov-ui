@@ -19,10 +19,10 @@
           <div class="col-md-12">
              <div class="well flex-container">
                 <div class="img-div">
-                   <img src="..\assets\images-n\dashboard\warning2.svg" width="18px;" style="margin-right:3px;"/>
+                   <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
                 </div>
                 <div>
-                   <p style="margin-bottom:0px;">Your currently editing your dashboard. Changes will be saved after clicking the done button.</p>
+                   <p class="warning-p" >Your currently editing your dashboard. Changes will be saved after clicking the done button.</p>
                 </div>
              </div>
              <div class=" flex-container">
@@ -34,50 +34,50 @@
           </div>
           <div class="col-md-12 py-3 px-3">
              <div class="row">
-                <div class="col-md-3" style="padding-right:5px;padding-left:5px;">
+                <div class="col-md-3 sec-2" >
                    <div class="well1">
                       <div class="flex-container">
                          <div class="img-div">
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="95%" />
+                            <img src="..\assets\images\Projects\add-gadget.svg" />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add <br> a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p class="warning-p">Drag or Add <br> a <span class="metric" >Metric</span> to this column </p>
                          </div>
                       </div>
                    </div>
                 </div>
-                <div class="col-md-3" style="padding-right:5px;padding-left:5px;">
+                <div class="col-md-3 sec-2" >
                    <div class="well1">
                       <div class="flex-container">
                          <div class="img-div">
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="95%" />
+                            <img src="..\assets\images\Projects\add-gadget.svg"  />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add <br> a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
                          </div>
                       </div>
                    </div>
                 </div>
-                <div class="col-md-3" style="padding-right:5px;padding-left:5px;">
+                <div class="col-md-3 sec-2" >
                    <div class="well1">
                       <div class="flex-container">
                          <div class="img-div">
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="95%" />
+                            <img src="..\assets\images\Projects\add-gadget.svg" />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add <br> a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
                          </div>
                       </div>
                    </div>
                 </div>
-                <div class="col-md-3" style="padding-right:5px;padding-left:5px;">
+                <div class="col-md-3 sec-2" >
                    <div class="well1">
                       <div class="flex-container">
                          <div class="img-div">
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="95%" />
+                            <img src="..\assets\images\Projects\add-gadget.svg"  />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add <br> a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
                          </div>
                       </div>
                    </div>
@@ -86,26 +86,27 @@
           </div>
           <div class="col-md-12 py-3 px-3">
              <div class="row">
-                <div class="col-md-6" style="padding-right:5px;padding-left:5px;">
-                   <div class="well1" style="height:300px;">
-                      <div class="" style="text-align: center;margin-top:25%">
+                <div class="col-md-6 sec-2" >
+                   <div class="well1 graph" >
+                     <div class="chart" >
                          <div>
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="80px" />
+                            <img src="..\assets\images\Projects\add-gadget.svg" />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p class="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
                          </div>
                       </div>
+                   
                    </div>
                 </div>
-                <div class="col-md-6" style="padding-right:5px;padding-left:5px;">
-                   <div class="well1" style="height:300px;">
-                      <div class="" style="text-align: center;margin-top:25%">
+                <div class="col-md-6 sec-2" >
+                   <div class="well1 graph" >
+                      <div class="chart">
                          <div>
-                            <img src="..\assets\images\Projects\add-gadget.svg" width="80px" />
+                            <img src="..\assets\images\Projects\add-gadget.svg"  />
                          </div>
                          <div>
-                            <p style="margin-bottom:0px;">Drag or Add a <span style="font-weight:600;">Metric</span> to this column </p>
+                            <p sclass="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
                          </div>
                       </div>
                    </div>
@@ -117,13 +118,14 @@
     <ng-template pTemplate>
        <p-tabView styleClass="prime-slider-override">
           <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}">
-             <div class="col-md-12 mb-2" style="height:50px;">
+             <div class="col-md-12 mb-2 widget-main">
                 <div class="row">
-                   <div class="col-md-6 pl-0" style="float:right">
+                   <div class="col-md-6 pl-0 " style="float:right">
                       <input class="form-control toolbar-search" type="text" placeholder="Search">
                       <mat-icon matSuffix style="font-size: 1.2em">
                          <img src="../../../../assets/images/search.svg" alt="" class="search-align">
-                      </mat-icon>
+                      </mat-icon> 
+                    
                    </div>
                    <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
                       <select class="form-control data">
@@ -135,80 +137,74 @@
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\process.svg" width="95%" style="margin-right:9px;"/>
+                      <img src="..\assets\images-n\dashboard\process.svg" class="img-M"/>
                    </div>
                    <div>
                       <h5>Process Execution Rate</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\round-settings.svg" width="95%" style="margin-right:9px;" />
+                      <img src="..\assets\images-n\dashboard\round-settings.svg" class="img-M"/>
                    </div>
                    <div>
                       <h5>Automation Rate</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\schedules.svg" width="95%" style="margin-right:9px;" />
+                      <img src="..\assets\images-n\dashboard\schedules.svg" class="img-M" />
                    </div>
                    <div>
                       <h5>schedules Failed</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\Thumbup.svg" width="95%" style="margin-right:9px;" />
+                      <img src="..\assets\images-n\dashboard\Thumbup.svg" class="img-M" />
                    </div>
                    <div>
                       <h5>Pending Approvals</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\tasksoverdue.svg" width="95%" style="margin-right:9px;" />
+                      <img src="..\assets\images-n\dashboard\tasksoverdue.svg" class="img-M" />
                    </div>
                    <div>
                       <h5>Tasks Overdue</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\processonhold.svg" width="95%" style="margin-right:9px;" />
+                      <img src="..\assets\images-n\dashboard\processonhold.svg" class="img-M"/>
                    </div>
                    <div>
                       <h5>Process On Hold</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
           </p-tabPanel>
           <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}">
-             <div class="col-md-12 mb-2" style="height:50px;">
+             <div class="col-md-12 mb-2 widget-main">
                 <div class="col-md-6"></div>
-                <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
+                <div class="col-md-6 form-group pr-0 bps-labcls">
                    <select class="form-control data">
                       <option value="">All Widgets</option>
                    </select>
@@ -217,76 +213,75 @@
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart1.svg" width="95%" style="margin-right:30px;"/>
+                      <img src="..\assets\images-n\dashboard\chart1.svg" class="img-w"/>
                    </div>
                    <div>
                       <h5>Process Execution Rate</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart2.svg" width="95%" style="margin-right:30px;" />
+                      <img src="..\assets\images-n\dashboard\chart2.svg" class="img-w" />
                    </div>
                    <div>
                       <h5>Automation Rate</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart3.svg" width="95%" style="margin-right:30px;"/>
+                      <img src="..\assets\images-n\dashboard\chart3.svg"  class="img-w"/>
                    </div>
                    <div>
                       <h5>schedules Failed</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart4.svg" width="95%" style="margin-right:30px;"/>
+                      <img src="..\assets\images-n\dashboard\chart4.svg"  class="img-w"/>
                    </div>
                    <div>
                       <h5>Pending Approvals</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
                    <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart5.svg" width="95%" style="margin-right:30px;"/>
+                      <img src="..\assets\images-n\dashboard\chart5.svg" class="img-w"/>
                    </div>
                    <div>
                       <h5>Tasks Overdue</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
              <div class="col-md-12 mb-2">
                 <div class="flex-container">
-                   <div class="img-div">
-                      <img src="..\assets\images-n\dashboard\chart6.svg" width="95%" style="margin-right:30px;"/>
+                   <div class="img-div widget">
+                      <img src="..\assets\images-n\dashboard\chart6.svg" class="img-w" />
                    </div>
                    <div>
                       <h5>Process On Hold</h5>
-                      <p style="font-size: 14px;
-                         color: #808080cc;">Lists Recent activity in a single project, or in all projects</p>
+                      <p class="wid-p">Lists Recent activity in a single project, or in all projects</p>
                    </div>
                 </div>
              </div>
           </p-tabPanel>
        </p-tabView>
     </ng-template>
+
+   
+
     </p-splitter>
+
+    <!-- <p-chart type="line" [data]="data" [options]="options"></p-chart> -->

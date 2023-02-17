@@ -7,8 +7,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
-
+ 
+  
+    
   constructor(private activeRoute:ActivatedRoute) { }
+ 
 
   public metrics:any=[
     {
@@ -32,6 +35,11 @@ export class ConfigureDashboardComponent implements OnInit {
     this.activeRoute.queryParams.subscribe((params:any)=>{
       this.dashboardName=params.dashboardName
     })
+  
+}
   }
 
-}
+
+
+
+
