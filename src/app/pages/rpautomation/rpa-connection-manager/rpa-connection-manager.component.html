@@ -3,7 +3,7 @@
         <div class="env-data-tool credential-tools">
             <div *ngIf="addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="addbtn"
-                    [routerLink]="['/pages/rpautomation/connection']">
+                    [routerLink]="['/pages/rpautomation/action-item']">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
                     <span class="testtooltip">New</span>
                 </button>
@@ -42,8 +42,7 @@
                 [dataKeyId]="'connectorId'"
                 [show_search_field]="true"
                 [show_column_filter]="true"
-                [show_clear_filter]="true"
-                >
+                [show_clear_filter]="true">
             </app-dynamic-table>
         </div>
     </div>

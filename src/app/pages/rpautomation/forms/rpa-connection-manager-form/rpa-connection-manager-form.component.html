@@ -1,45 +1,13 @@
-<div class="module-heading title">
-    <span class="module-back-button">
-        <i class="fas fa-arrow-left" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/configurations']"></i>
-    </span>
-    <span class="module-header-title">
-        <span class="module-parent-title">Connection Manager</span>
-    </span>
-</div>
-
-<div class="rpa-content-div mx-3">
-    <div class="row credential-search-tools">
-        <div class="env-data-tool credential-tools">
-            <div *ngIf="addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="addbtn"
-                    [routerLink]="['/pages/rpautomation/connection']">
-                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
-                    <span class="testtooltip">New</span>
-                </button>
-            </div>
-        </div>
+<div style="background-color: white;">
+    <div class="module-heading title">
+        <span class="module-back-button">
+            <i class="fas fa-arrow-left" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/action-item']"></i>
+        </span>
+        <span class="module-header-title">
+            <span class="module-parent-title">Connection Manager</span>
+        </span>
     </div>
-
-<div class="col-md-12 con-envr">
-    <div class="credential-tablegrid">
-        <app-dynamic-table 
-            [representatives]="representatives" 
-            [columns_list]="columns_list"
-            [table_data]="connectorTable" 
-            (viewDetails)="viewDetails($event)" 
-            (deleteItem)="deleteById($event)"
-            [screenTable]="'common'" 
-            [checkBoxShow]="checkBoxShow" 
-            (selectedData)="readSelectedData($event)" 
-            [dataKeyId]="'connectorId'"
-            [show_search_field]="true"
-            [show_column_filter]="true"
-            [show_clear_filter]="true">
-        </app-dynamic-table>
-    </div>
-</div>
-
-    <!-- <div class="container-fluid h-scroll">
+    <div class="container-fluid h-scroll">
         <div class="maindivfoprm">
             <div class="innersform card-form">
                 <div class="container">
@@ -47,121 +15,130 @@
                         <div class="row prj-crt-form">
                             <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0">
-                                    <label class="label-control" for="programname"> Connector Name
-                                        <span class="star">*</span>
-                                    </label>
-                                    <input type="text" maxlength="256" class="form-control data" value="" formControlName="connectionName"
-                                    [ngClass]="connectorForm.get('connectionName').valid?'enteredfield-color':'inputfield-color'"
-                                     placeholder="Enter Connector Name">
-                                    <span *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')" class="errspan required"> Connector Name Required* </span>
-                                </div>
-                                <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Action Name
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value="" formControlName="actionType"
-                                     placeholder="Enter Action Name">
-                                    <span *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')" class="errspan required"> Action Name Required* </span>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="connectionName"
+                                        [ngClass]="connectorForm.get('connectionName').valid?'enteredfield-color':'inputfield-color'"
+                                        placeholder="Enter Action Name">
+                                    <span
+                                        *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')"
+                                        class="errspan required"> Connector Name Required* </span>
                                 </div>
-                            </div>
-                            <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
-                                    </label>    
+                                    </label>
                                     <select name="" id="" class="form-control data" formControlName="httpMethodType">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>
                                         <option *ngFor="let method of methodItems"> {{method}}</option>
                                     </select>
-                                    <span *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')" class="errspan required"> Method Type Required* </span>
+                                    <span
+                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required* </span>
                                 </div>
+                            </div>
+                            <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0">
-                                    <label class="label-control" for="programname"> Authorization Type
+                                    <label class="label-control" for="programname"> Attributes
                                         <span class="star">*</span>
-                                    </label>    
-                                    <select name="" id="" class="form-control data" formControlName="authorization_Type">
-                                        <option value="" hidden disabled>Select Authorization</option>
-                                        <option value="null" hidden disabled>Select Authorization</option>
-                                        <option value="undefined" hidden disabled>Select Authorization</option>
-                                        <option *ngFor="let auth of authorizationType"> {{auth}}</option>
-                                    </select>
-                                    <span *ngIf="connectorForm.get('authorization_Type').invalid && connectorForm.get('authorization_Type').touched && !connectorForm.get('authorization_Type').hasError('pattern')" class="errspan required"> Authorization Type Required* </span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="actionType" placeholder="Enter Attributes">
+                                    <span
+                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required* </span>
                                 </div>
                             </div>
                             <div class="col-md-12 martsascl api">
                                 <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea class="form-control" row="3" formControlName="url"
-                                    placeholder="Enter API" style=" resize: none;" maxlength="256">
+                                <textarea class="form-control" row="3" formControlName="url" placeholder="Enter API"
+                                    style=" resize: none;" maxlength="256">
                                 </textarea>
-                                <span *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')" class="errspan required"> API / URL Required* </span>
+                                <span
+                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
+                                    class="errspan required"> API / URL Required* </span>
                             </div>
                             <div class="col-md-6">
                                 <mat-tab-group>
-                                  <mat-tab label="Body"> 
-                                    <mat-tab-group>
-                                        <mat-tab label="Raw">
-                                            <textarea name="" id="" cols="30" rows="13" placeholder="Raw" formControlName="bodyRaw" class="form-control raw"></textarea>
-                                        </mat-tab>
-                                        <mat-tab label="URL Encoded">
-                                            <table class="table table-bordered mt-2">
-                                                <thead>
-                                                  <tr>
+                                    <mat-tab label="Body">
+                                        <mat-tab-group>
+                                            <mat-tab label="Raw">
+                                                <textarea name="" id="" cols="30" rows="13" placeholder="Raw"
+                                                    formControlName="bodyRaw" class="form-control raw"></textarea>
+                                            </mat-tab>
+                                            <mat-tab label="URL Encoded">
+                                                <table class="table table-bordered mt-2">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th scope="col">Key</th>
+                                                            <th scope="col">Value</th>
+                                                            <th>
+                                                                <button mat-mini-fab color="primary"
+                                                                    (click)="addHeader()"> <mat-icon> add </mat-icon>
+                                                                </button>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td> <input type="checkbox" class="check"
+                                                                    formControlName="encodedCheck"> </td>
+                                                            <td> <input type="text" name="" id="" class="form-control"
+                                                                    placeholder="Key" formControlName="encodedKey">
+                                                            </td>
+                                                            <td> <input type="text" name="" id="" class="form-control"
+                                                                    placeholder="Value" formControlName="encodedValue">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-tab>
+                                        </mat-tab-group>
+                                    </mat-tab>
+                                    <mat-tab label="Params">
+                                        <table class="table table-bordered mt-2">
+                                            <thead>
+                                                <tr>
                                                     <th></th>
                                                     <th scope="col">Key</th>
                                                     <th scope="col">Value</th>
-                                                    <th>    
-                                                        <button mat-mini-fab color="primary" (click)="addHeader()">  <mat-icon> add </mat-icon>  </button>
+                                                    <th>
+                                                        <button mat-mini-fab color="primary" (click)="addInput()">
+                                                            <mat-icon> add </mat-icon> </button>
                                                     </th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td> <input type="checkbox" class="check" formControlName="encodedCheck" > </td>
-                                                    <td> <input type="text" name="" id="" class="form-control" placeholder="Key" formControlName="encodedKey"> </td>
-                                                    <td> <input type="text" name="" id="" class="form-control" placeholder="Value" formControlName="encodedValue"> </td>
-                                                  </tr>
-                                                </tbody>
-                                                </table>  
-                                        </mat-tab>
-                                    </mat-tab-group>
-                                  </mat-tab>
-                                  <mat-tab label="Params">
-                                    <table class="table table-bordered mt-2">
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                        <th scope="col">Key</th>
-                                        <th scope="col">Value</th>
-                                        <th>    
-                                            <button mat-mini-fab color="primary" (click)="addInput()">  <mat-icon> add </mat-icon>  </button>
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td> <input type="checkbox" class="check" formControlName="paramsCheck"> </td>
-                                        <td> <input type="text" name="" id="" class="form-control" placeholder="Key" formControlName="paramsKey"> </td>
-                                        <td> <input type="text" name="" id="" class="form-control" placeholder="Value" formControlName="paramsValue"> </td>
-                                      </tr>
-                                    </tbody>
-                                    </table> 
-                                  </mat-tab>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> <input type="checkbox" class="check"
+                                                            formControlName="paramsCheck"> </td>
+                                                    <td> <input type="text" name="" id="" class="form-control"
+                                                            placeholder="Key" formControlName="paramsKey"> </td>
+                                                    <td> <input type="text" name="" id="" class="form-control"
+                                                            placeholder="Value" formControlName="paramsValue"> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </mat-tab>
                                 </mat-tab-group>
-                              </div>
-                              <div class="col-md-6 textresponse">
+                            </div>
+                            <div class="col-md-6 textresponse">
                                 <label class="label-control resp"> Response</label>
                                 <textarea name="" id="" cols="30" rows="16" class="form-control response"></textarea>
-                              </div>
-                              <div class="col-md-12 text-right">
+                            </div>
+                            <div class="col-md-12 text-right">
                                 <button type="button" class="btn btn-success" (click)="testForm()"> Test </button>
                                 <button type="button" class="btn btn-primary" (click)="saveForm()"> Save </button>
-                              </div>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>     -->
-
+    </div>
+</div>
