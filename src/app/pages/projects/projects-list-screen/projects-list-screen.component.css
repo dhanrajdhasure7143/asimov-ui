@@ -9,14 +9,14 @@
   height: 40px !important;
 }
 
-/* Overlay New Styles Start */
+/* Form Overlay New Styles Start */
 .create-header {
-  padding: 22px 15px !important;
+  padding: 22px 25px !important;
   border-bottom: 1px solid #e5e5e5;
 }
-.create-header h6 {
+.create-header h3 {
   font-size: 16px;
-  margin:0px;
+  margin: 0px;
 }
 .row.create-body {
   align-items: center;
@@ -33,4 +33,4 @@ p-image.p-element.crtprgm {
   margin-top: 20px;
   display: block;
 }
-/* Overlay New Styles End */
+/* Form Overlay New Styles End */

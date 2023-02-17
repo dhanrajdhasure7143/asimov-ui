@@ -1,3 +1,29 @@
+.prjgridpriority,
+.prjgridtimestamp {
+    display: block;
+    font-size: 14px;
+}
+.prjlastupdateprofile {
+    background-color: #e0e0e0;
+    color: #232832;
+    border-radius: 100%;
+    width: 34px;
+    height: 34px;
+    display: inline-block;
+    line-height: 15px;
+    padding: 11px 8px;
+    margin-right: 5px;
+}
+.inactive {
+    color: #ea3d3d;
+    font-weight: 600;
+}
+.active {
+    color: #27AD74;
+    font-weight: 600;
+}
+
+
 .p-input-icon-right{
     float: right;
     margin-right: 5px;
@@ -10,13 +36,5 @@
 
 .editButton{
     border : none !important;
-} 
-.red {
-    color: red;
-    font-weight: bold;
-  }
-  .green {
-    color: green;
-    font-weight: bold;
-  }
+}
   

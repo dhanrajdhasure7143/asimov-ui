@@ -1683,6 +1683,7 @@ span.star {
   margin-left: 4px;
   position: relative;
   top: -3px;
+  font-size: 14px !important;
 }
 
 .bpspaginationdiv .mat-paginator-range-label,
@@ -2565,6 +2566,7 @@ html {
   height: 100vh;
   width: 100%;
   user-select: none;
+  overflow: hidden;
 }
 h1,
 h2,
@@ -2750,15 +2752,18 @@ span.tabscount {
 /* Grid NEW Styles Start */
 .p-datatable-wrapper {
   width: 100% !important;
-  margin-top: 10px;
-  height: calc(100vh - 275px);
+  margin-top: 5px;
+  height: calc(100vh - 265px);
+  /* margin-top: 10px;
+  height: calc(100vh - 275px); */
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
   border: unset !important;
   border: none !important;
-  border: 1px solid transparent !important;
+  color: #232832 !important;
   border-width: unset !important;
+  border-color: transparent !important;
   padding: 0 !important;
   font-weight: 400 !important;
 }
@@ -2948,34 +2953,36 @@ button.btn.bluebg-button {
   justify-content: center;
 }
 
-.createform label {
+.createform-overlay label {
   font-size: 14px;
   color: #7d7d7d;
   margin-bottom: 2px;
   line-height: 18px;
 }
-.createform input.p-inputtext,
-.createform .p-dropdown {
+.createform-overlay input.p-inputtext,
+.createform-overlay .p-dropdown {
   border-color: #979797 !important;
   color: #232832;
   height: 40px;
   background: transparent;
   box-shadow: none !important;
 }
-.createform input.p-inputtext:focus,
-.createform .p-dropdown:focus,
-.createform textarea.p-inputtextarea.p-inputtext:focus {
+.createform-overlay input.p-inputtext:focus,
+.createform-overlay .p-dropdown:focus,
+.createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
+.createform-overlay .p-dropdown.p-dropdown-open {
   border-color: #098de6 !important;
 }
-.createform input.p-inputtext::placeholder,
+.createform-overlay input.p-inputtext::placeholder,
 .p-dropdown .p-dropdown-label.p-placeholder {
   color: #7d7d7d !important;
 }
-.createform textarea.p-inputtextarea.p-inputtext {
+.createform-overlay textarea.p-inputtextarea.p-inputtext {
   background: transparent;
   border: 1px solid #979797;
   box-shadow: none;
   width: 100%;
+  height: auto !important;
   overflow: hidden;
 }
 
