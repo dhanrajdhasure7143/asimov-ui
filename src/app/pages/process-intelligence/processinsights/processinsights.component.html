@@ -2,22 +2,22 @@
   <div class="container-fluid new-PI-layout">
     <div class="">
       <div class="row">
-        <div class="container-fluid p-0 input-fields">
-            <div class="col-sm-4 amountinputs text-center" id="humancost">
+        <div class="row col-md-12 p-0 input-fields">
+            <div class="col-sm-4 amountinputs" id="humancost">
                 <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation()">
                 <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
                 <i *ngIf="isEditable" (click)="editInput()" class="fas fa-check-circle"></i>
             </div>
-            <div class="col-sm-4 amountinputs text-center" id="BotCost">
+            <div class="col-sm-4 pl-0 amountinputs" id="BotCost">
                 <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation()">
                 <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
                 <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
             </div>
-            <div class="col-sm-4 amountinputs text-center" id="totalcases">
+            <div class="col-sm-4 pl-0 amountinputs" id="totalcases">
                 <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
             </div>
         </div>
-        <div class='col-md-12 boxes p-0'>
+        <div class='row col-md-12 boxes p-0'>
                 <div class="col-sm-3 pl-0">
                     <div class="col-sm-12 divbox divbox0">
                         <img src="/assets/images/PI/total-timespent.png" alt="">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
         </div>
-        <div class="col-md-12 p-0">                 
+        <div class="row col-md-12 p-0">                 
             <div class="col-sm-8 box_shadw PI-insigntscost">
                 
                 <div class="l_title"><label class="">Human Cost vs Bot Cost</label></div>
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>    
-        <div class="col-md-12 p-0">
+        <div class="row col-md-12 p-0">
             <div class="col-sm-6 pl-0 box_shadw1 box_shadw-activity">
                 <div class="insigntsoccur">
                   <ul class="groupBtn">
@@ -168,7 +168,7 @@
             </div>
             </div>
             </div>
-        <div class="col-md-12 p-0"  id="top10Activities">
+        <div class="row col-md-12 p-0"  id="top10Activities">
             <div class="col-sm-6 pl-0 table-box">
                 <div class="insigntsoccurtable top10cases">
                     <div class="table1-heading">Top 10% Of Cases (descending in order of duration)</div>
@@ -212,7 +212,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 p-0 resuractivity-footer">
+        <div class="row col-md-12 p-0 resuractivity-footer">
             <div class="col-md-12 resuractivity-header">
                 <div class="col-md-10 p-0 resuractivity-title">
                     <label>Resources</label>
