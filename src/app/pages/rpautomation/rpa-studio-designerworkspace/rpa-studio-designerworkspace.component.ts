@@ -2719,7 +2719,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    this.hiddenPopUp = event;
+    // this.hiddenPopUp = event;
+    this.scheduleOverlayFlag=event
   }
 
   // stopBot() {
