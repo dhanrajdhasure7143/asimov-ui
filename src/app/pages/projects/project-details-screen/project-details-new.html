@@ -325,7 +325,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row quick-actions">
+                    <div class="row quick-actions" *ngIf="!isCreate">
                         <h6>Quick Actions</h6>
                         <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
                         <button class="btn blue-btntext" (click)="onCreateTask()">
@@ -610,3 +610,5 @@
         </div>
     </app-split-overlay>
 </div>
+
+<p-toast></p-toast>

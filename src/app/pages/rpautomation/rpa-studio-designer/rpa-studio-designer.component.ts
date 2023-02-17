@@ -40,7 +40,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   updateBotDetails:any={};
   unsaved:boolean=false;
   isBotValidated:boolean = true;
-  params:any={}
+  isOpenSideOverlay:boolean=false;
+  params:any={};
+
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -423,9 +425,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   
   createEnvironment(){
     this.isCreate=true;
-    setTimeout(()=>{
-      document.getElementById("createenvironment").style.display='block';
-    },1000)
+    this.isOpenSideOverlay=true;
+    // setTimeout(()=>{
+    //   document.getElementById("createenvironment").style.display='block';
+    // },1000)
   }
   
   closeEnviromentOverlay() {
@@ -479,6 +482,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.updateBotDetails={}
     this.unsaved=false;
     this.botFormVisibility=false;
+  }
+
+  closeSideOverlay(event){
+    this.isOpenSideOverlay=event
   }
 
 }

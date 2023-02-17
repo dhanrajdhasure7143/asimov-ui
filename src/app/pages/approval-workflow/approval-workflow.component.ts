@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-approval-workflow',
   template: `<div class="main-content">
-              <div class="row content-area">
+              <div class="content-area">
                 <div class=" row module-heading title">
                   <span class="module-back-button" routerLink="/pages/businessProcess/home">
                     <i class="fas fa-arrow-left" aria-hidden="true"></i>

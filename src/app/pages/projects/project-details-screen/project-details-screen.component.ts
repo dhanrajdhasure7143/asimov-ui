@@ -21,11 +21,13 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-project-details-screen',
   templateUrl: './project-details-new.html',
-  styleUrls: ['./project-details-new.css']
+  styleUrls: ['./project-details-new.css'],
+  providers: [MessageService]
 })
 export class ProjectDetailsScreenComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
@@ -242,10 +244,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
   snapshotDatails:any=[];
 
 
-
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: LoaderService) {
+    private spinner: LoaderService,
+    private messageService: MessageService) {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
@@ -600,7 +602,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
 
   async getProjectdetails(){​​​​​​
-  this.spinner.show();
+  // this.spinner.show();
   this.existingUsersList = [];
   this.non_existUsers = [];
  await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
@@ -614,10 +616,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
   this.getTheExistingUsersList();
 
-  this.spinner.hide();
 })
-  this.getTaskandCommentsData();
-  this.getLatestFiveAttachments(this.project_id)
+  // this.getTaskandCommentsData();
+  // this.getLatestFiveAttachments(this.project_id)
   this.snapShotDetails();
   }
   profileName() {
@@ -1115,14 +1116,16 @@ export class ProjectDetailsScreenComponent implements OnInit {
     // this.projectDetails.startDate = this.projectStartDate;
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
     this.rest_api.update_project(this.projectDetails).subscribe(res => {
-      // this.spinner.hide()
-      // let response: any = res;
-      // if (response.errorMessage == undefined)
-      //   Swal.fire("Success", "Project Updated Successfully !!", "success")
-      // else
-      //   Swal.fire("Error", response.errorMessage, "error");
+      // this.spinner.hide();
+      let response: any = res;
+      if (response.errorMessage == undefined)
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !!'});
+      else
+      this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
       this.getProjectdetails()
       // this.editdata = false;
+    },err=>{
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Project Update failed"});
     });
   }
 
@@ -2068,6 +2071,7 @@ taskListView(){
     let res_data=[]
     this.rest_api.getSnapshotd(this.project_id).subscribe((data:any)=>{
       res_data = data
+      this.spinner.hide();
      if(res_data.length>0)
       this.snapshotDatails=data[0]
     })
