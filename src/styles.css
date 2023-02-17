@@ -2878,6 +2878,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
 }
+.p-overlaypanel-content {
+  width: 100px;
+  padding: 12px 16px !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -2983,6 +2987,62 @@ button.btn.bluebg-button {
 }
 
 /* Overlay  Screen Styles End */
+
+/* Document-Tree  Screen Styles */
+
+.doctree .p-tree {
+  border: unset !important;
+  background: transparent !important;
+  padding: 0px !important;
+  border-radius: unset !important;
+}
+.doctree .p-treenode .p-treenode-content {
+  padding: 10px 0px !important;
+}
+.doctree .p-treenode .p-treenode-content .p-tree-toggler {
+  margin-right: 0px !important;
+  justify-content: flex-start !important;
+}
+.doctree .p-treenode-icon {
+  margin-right: 1rem !important;
+  font-size: 22px;
+}
+.doctree span.p-treenode-label {
+  font-size: 16px;
+  color: #232832 !important;
+}
+.doctree span.p-treenode-label b {
+  font-weight: 400 !important;
+}
+.doctree .p-treenode-content:focus {
+  background: none !important;
+  box-shadow: unset !important;
+}
+.docfldnam .p-dialog-mask {
+  /* background: rgb(0 0 0 / 25%); */
+}
+.docfldnam .p-dialog {
+width: 400px;
+border-radius: 8px !important;
+padding: 20px;
+background-color: #fff;
+}
+.docfldnam .p-dialog .p-dialog-header {
+  color: #222222 !important;
+  padding: 0px !important;
+}
+.docfldnam .p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 500 !important;
+  font-size: 18px !important;
+}
+.docfldnam .p-dialog .p-dialog-content {
+  padding: 0px !important;
+  margin-top: 15px;
+}
+.docfldnam .p-float-label {
+  text-align: right;
+}
+
 
 /* ----------------------NEW STYLES END------------------------- */
 
@@ -3102,3 +3162,4 @@ button.custom-popupbtn.mat-button {
 .document-tree .pi-folder-open, .document-tree .pi-folder{
   color:var(--main-bluecolor) !important;
 }
+
