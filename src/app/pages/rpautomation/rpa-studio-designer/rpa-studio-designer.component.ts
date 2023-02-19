@@ -489,7 +489,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   closeSideOverlay(event){
     this.isOpenSideOverlay=event
   }
-  closeOverlay1(event){
+  closeOverlay1(event){  // in bot create new bot
     this.botFormVisibility=event
   }
 
