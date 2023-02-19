@@ -1898,7 +1898,7 @@ taskListView(){
       this.columns_list = [
         {ColumnName: "fullName",DisplayName:"Users Onboarded"},
         { ColumnName: "user_role",DisplayName:"Role"},
-        { ColumnName: "taskCount",DisplayName:"Number of Tasks"},
+        { ColumnName: "taskCount",DisplayName:"Tasks Assigned"},
         { ColumnName: "action",DisplayName:"Actions"},
       ];
   }

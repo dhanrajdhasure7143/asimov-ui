@@ -1,6 +1,6 @@
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-9">
+            <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a (click)="backToProjectDetails()"><img
@@ -11,7 +11,7 @@
                     </span>
                 </h3>
             </div>
-            <div class="col-3">
+            <div class="col-md-8 pr-0 text-right">
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
                     <input type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
@@ -27,11 +27,11 @@
                 <i class="pi pi-ellipsis-v"></i>Actions
             </div> -->
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col">
+        <div class="main-content-body">
+            <div class="">
+                <div class="docscrnchngs">
             <!-- <span class="title_text"></span> -->
-            <div *ngIf="isFolder == true" class="d-flex">
+            <div *ngIf="isFolder == true" class="d-flex docfolder">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (click)="openAddFolderOverlay(item)">  
                 <i [class]="item.collapsedIcon" style="font-size: 2rem"> </i>
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon" style="font-size: 2rem"> </i> <br>   <br>
@@ -43,7 +43,7 @@
             <p-card  class="cards" *ngFor="let folder of files; let i=index"> <i class="pi pi-folder-open" style="font-size: 2rem"></i>  <br>   {{ folder[i].children[i].label }} </p-card>
            </div> -->
 
-           <div *ngIf = "isTree == true">
+           <div *ngIf = "isTree == true" class="doctree">
             <p-tree [value]="files" [filter]="true" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile"> 
                 <ng-template let-node pTemplate="default">
@@ -71,14 +71,14 @@
            (click)="removeRoute(selected)">Remove Page</a>
         </div> -->
 
-            <div class="text-right">
-                <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder" style="font-size: 2rem"></i> </button> 
-                &nbsp; 
-                <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
-            </div>
+            
 
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
-        </div>
+                </div>
+                <div class="docfootbtns">
+                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>
+                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>                    
+                </div>
         </div>
     </div>
 
@@ -167,10 +167,9 @@
     </p-dialog>
 
 
-    <p-dialog header="Folder Name" [(visible)]="isDialog" [style]="{width: '25vw'}">
+    <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
-                name="folder"> <br>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
             <button type="button" class="btn btn-primary" (click)="treeChildSave()">Save</button>
         </span>
     </p-dialog>
@@ -184,18 +183,20 @@
         </span>
     </p-dialog>
 
-    <p-dialog header="Folder Name" [(visible)]="isDialog2" [style]="{width: '25vw'}">
+    <p-dialog header="Folder Name" [(visible)]="isDialog2" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
                 name="folder"> <br>
             <button type="button" class="btn btn-primary" (click)="saveRenameFolder()">Save</button>
         </span>
     </p-dialog>
-
+    
     <p-overlayPanel #op>
         <ng-template pTemplate>
-            <div class="" (click)="onFolderRename()">Rename</div>
-            <div>Delete</div>
+            <div class="docritclk">
+                <div class="" (click)="onFolderRename()">Rename</div>
+                <div>Delete</div>
+            </div>
         </ng-template>
     </p-overlayPanel>
 
