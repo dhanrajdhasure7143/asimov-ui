@@ -375,10 +375,14 @@
 </div>
 
 
-<div id="bot-form" class="rpa-modal">
-  <div *ngIf="botFormVisibility">
+<div   *ngIf="botFormVisibility"> class="rpa-modal">
+  <div id="bot-form">
+  <app-split-overlay (closeOverlay)="closeOverlay1($event)">
+  
     <app-rpa-bot-form  (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
-  </div>
+  
+</app-split-overlay>
+</div>
 </div>
 
 <!-- <div id="createenvironment" class="rpa-modal">
