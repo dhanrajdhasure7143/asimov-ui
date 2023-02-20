@@ -1715,106 +1715,145 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     await this.getsvg();
     this.rpaAuditLogs(env);
     await this.validateBotNodes();
-    this.saveBotdata = {
-      versionType: version_type,
-      comments: comments,
-      version: this.finalbot.version,
-      botId: this.finalbot.botId,
-      botName: this.finalbot.botName,
-      botType: this.finalbot.botType,
-      description: this.finalbot.botDescription,
-      department: this.finalbot.botDepartment,
-      botMainSchedulerEntity: null,
-      envIds: env,
-      isPredefined: this.finalbot.predefinedBot,
-      tasks: this.final_tasks,
-      createdBy: "admin",
-      groups: this.getGroupsInfo(),
-      lastSubmittedBy: "admin",
-      scheduler: null,
-      svg: this.svg,
-      sequences: this.getsequences(),
-      isBotCompiled: this.isBotCompiled
-    };
-
-    if (this.checkorderflag == false) {
-      this.spinner.hide();
-      Swal.fire("Warning", "Please check connections", "warning");
-    } else {
-      let previousBotDetails: any = { ...{}, ...this.finalbot };
-      (await this.rest.updateBot(this.saveBotdata)).subscribe(
-        (response: any) => {
-          this.spinner.hide();
-          if (response.errorMessage == undefined) {
-            this.isBotUpdated = false;
-            // this.finalbot=response;
-            // this.actualTaskValue=[...response.tasks];
-            this.finalbot = { ...{}, ...response };
-            this.actualTaskValue = [
-              ...response.tasks.filter(
-                (item) => (item.version = response.version)
-              ),
-            ];
-            this.finaldataobjects = [
-              ...response.tasks.filter(
-                (item) => (item.version = response.version)
-              ),
-            ];
-            this.actualEnv = [...response.envIds];
-            Swal.fire("Success", "Bot updated successfully", "success");
-            this.uploadfile(response.envIds, response.tasks);
-            let auditLogsList = [
-              ...this.auditLogs.map((item) => {
-                item["versionNew"] = response.versionNew;
-                item["comments"] = response.comments;
-                return item;
-              }),
-            ];
-            let firstName = localStorage.getItem("firstName");
-            let lastName = localStorage.getItem("lastName");
-            if (
-              parseFloat(previousBotDetails.versionNew).toFixed(1) <
-              parseFloat(response.versionNew).toFixed(1)
-            )
-              auditLogsList.push({
-                botId: response.botId,
-                botName: "SortingBot|UpdatedVersion",
-                changeActivity: "Updated Version",
-                changedBy: `${firstName} ${lastName}`,
-                comments: response.comments,
-                newValue: response.versionNew,
-                previousValue: previousBotDetails.versionNew,
-                taskName: "Version Upgrade",
-                version: 1,
-                versionNew: response.versionNew,
+   
+      let finalTasksData=[...this.final_tasks];
+      finalTasksData.forEach((item, finalIndex)=>{
+        if(this.actualTaskValue.length != 0 && item.validated==undefined)
+        {    
+          if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
+          {
+            let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
+            if(actualTasks.length!=0)
+            {
+              let indexList:any=[]
+              this.final_tasks.forEach((tempTask, index)=>{
+                if(tempTask.nodeId==item.nodeId)
+                  indexList.push(index)
               });
-            this.rest.addAuditLogs(auditLogsList).subscribe(
-              (response: any) => {
-                if (response.errorMessage == undefined) {
-                  this.notifier.notify(
-                    "success",
-                    "Audit logs updated successfully"
-                  );
-                } else {
-                  Swal.fire("Error", response.errorMessage, "error");
-                }
-              },
-              (err) => {
-                Swal.fire("Error", "Unable to update audit logs", "error");
-              }
-            );
-          } else {
-            this.spinner.hide();
-            Swal.fire("Error", response.errorMesssage, "error");
+              indexList.forEach((indexItem, indexmeta)=>{
+                  let task={...{},...finalTasksData[indexItem]}
+                  task.botTId=actualTasks[indexmeta].botTId;
+                  let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
+                  let attributes=[...task.attributes]
+                  actualTaskAttributes.forEach((item:any)=>{
+                    let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
+                    let attribute={...{},...attributes[attrIndex]};
+                    if(attribute !=undefined)
+                    {                      
+                      attribute.attrId=item.attrId;
+                      attribute.botTaskId=item.botTaskId;
+                      attributes[attrIndex]=attribute;
+                    }
+                  })
+                  task["attributes"]=[...attributes]
+                  task["validated"]=true;
+                  this.final_tasks[indexItem]=task;
+              })
+            }
           }
-        },
-        (err) => {
-          this.spinner.hide();
-          Swal.fire("Error", "Unable to update bot", "error");
+        
         }
-      );
-      //return false;
-    }
+      })
+      this.saveBotdata = {
+        versionType: version_type,
+        comments: comments,
+        version: this.finalbot.version,
+        botId: this.finalbot.botId,
+        botName: this.finalbot.botName,
+        botType: this.finalbot.botType,
+        description: this.finalbot.botDescription,
+        department: this.finalbot.botDepartment,
+        botMainSchedulerEntity: null,
+        envIds: env,
+        isPredefined: this.finalbot.predefinedBot,
+        tasks: this.final_tasks,
+        createdBy: "admin",
+        groups: this.getGroupsInfo(),
+        lastSubmittedBy: "admin",
+        scheduler: null,
+        svg: this.svg,
+        sequences: this.getsequences(),
+        isBotCompiled: this.isBotCompiled
+      };
+
+      if (this.checkorderflag == false) {
+        this.spinner.hide();
+        Swal.fire("Warning", "Please check connections", "warning");
+      } else {
+        let previousBotDetails: any = { ...{}, ...this.finalbot };
+        (await this.rest.updateBot(this.saveBotdata)).subscribe(
+          (response: any) => {
+            this.spinner.hide();
+            if (response.errorMessage == undefined) {
+              this.isBotUpdated = false;
+              // this.finalbot=response;
+              // this.actualTaskValue=[...response.tasks];
+              this.finalbot = { ...{}, ...response };
+              this.actualTaskValue = [
+                ...response.tasks.filter(
+                  (item) => (item.version = response.version)
+                ),
+              ];
+              this.finaldataobjects = [
+                ...response.tasks.filter(
+                  (item) => (item.version = response.version)
+                ),
+              ];
+              this.actualEnv = [...response.envIds];
+              Swal.fire("Success", "Bot updated successfully", "success");
+              this.uploadfile(response.envIds, response.tasks);
+              let auditLogsList = [
+                ...this.auditLogs.map((item) => {
+                  item["versionNew"] = response.versionNew;
+                  item["comments"] = response.comments;
+                  return item;
+                }),
+              ];
+              let firstName = localStorage.getItem("firstName");
+              let lastName = localStorage.getItem("lastName");
+              if (
+                parseFloat(previousBotDetails.versionNew).toFixed(1) <
+                parseFloat(response.versionNew).toFixed(1)
+              )
+                auditLogsList.push({
+                  botId: response.botId,
+                  botName: "SortingBot|UpdatedVersion",
+                  changeActivity: "Updated Version",
+                  changedBy: `${firstName} ${lastName}`,
+                  comments: response.comments,
+                  newValue: response.versionNew,
+                  previousValue: previousBotDetails.versionNew,
+                  taskName: "Version Upgrade",
+                  version: 1,
+                  versionNew: response.versionNew,
+                });
+              this.rest.addAuditLogs(auditLogsList).subscribe(
+                (response: any) => {
+                  if (response.errorMessage == undefined) {
+                    this.notifier.notify(
+                      "success",
+                      "Audit logs updated successfully"
+                    );
+                  } else {
+                    Swal.fire("Error", response.errorMessage, "error");
+                  }
+                },
+                (err) => {
+                  Swal.fire("Error", "Unable to update audit logs", "error");
+                }
+              );
+            } else {
+              this.spinner.hide();
+              Swal.fire("Error", response.errorMesssage, "error");
+            }
+          },
+          (err) => {
+            this.spinner.hide();
+            Swal.fire("Error", "Unable to update bot", "error");
+          }
+        );
+        //return false;
+      }
   }
 
   savedGroupsData: any = [];
