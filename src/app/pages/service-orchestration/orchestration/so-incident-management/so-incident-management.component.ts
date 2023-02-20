@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
 import moment from "moment";
-import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import { LoaderService } from "src/app/services/loader/loader.service";
 @Component({
   selector: "app-so-incident-management",
   templateUrl: "./so-incident-management.component.html",
@@ -18,22 +15,12 @@ export class SoIncidentManagementComponent implements OnInit {
   incidentFlag: boolean = false;
   loadingFlag: boolean = true;
   seachInput: string = "";
-  @ViewChild("incidentTablePaginator")
-  incidentTablePaginator: MatPaginator;
-  @ViewChild("incidentTableSort") incidentTableSort: MatSort;
-  incidentTableDisplayedColumns: any[] = [
-    "incidentId",
-    "convertedCreatedTime",
-    "assignedTo",
-    "description",
-    "priority",
-    "incidentStatus",
-  ];
-  incidentTableDataSource: MatTableDataSource<any>;
+  incidentTableDataSource:any =[];
   objincidentId:any=[]
+  columns_list: any=[];
   constructor(
     private rest: RestApiService,
-    private spinner: NgxSpinnerService
+    private spinner: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -102,19 +89,76 @@ export class SoIncidentManagementComponent implements OnInit {
             setTimeout(() => {
               this.getChartByStatus(statusBasedPieData);
               this.getChartByPriority(priorityBasedPieData);
-              this.incidentTableDataSource = new MatTableDataSource(
-                modifiedResponse
-              );
-              this.incidentTableDataSource.sort = this.incidentTableSort;
-              this.incidentTableDataSource.paginator = this.incidentTablePaginator;
+              this.incidentTableDataSource = modifiedResponse
+          this.columns_list = [
+            {
+              ColumnName: "incidentId",
+              DisplayName: "Incident Id",
+              ShowGrid: true,
+              ShowFilter: true,
+              filterWidget: "normal",
+              filterType: "text",
+              sort: true,
+              multi: false,
+            },
+            {
+              ColumnName: "convertedCreatedTime",
+              DisplayName: "Created At",
+              ShowGrid: true,
+              ShowFilter: true,
+              filterWidget: "normal",
+              filterType: "text",
+              sort: true,
+              multi: false,
+            },
+            {
+              ColumnName: "assignedTo",
+              DisplayName: "Assigned To",
+              ShowGrid: true,
+              ShowFilter: true,
+              filterWidget: "normal",
+              filterType: "text",
+              sort: true,
+              multi: false,
+            },
+            {
+              ColumnName: "description",
+              DisplayName: "Description",
+              ShowGrid: true,
+              ShowFilter: true,
+              filterWidget: "normal",
+              filterType: "text",
+              sort: true,
+              multi: false,
+            },
+            {
+              ColumnName: "priority",
+              DisplayName: "Priority",
+              ShowGrid: true,
+              ShowFilter: true,
+              filterWidget: "normal",
+              filterType: "text",
+              sort: true,
+              multi: false,
+            },
+            {
+            ColumnName: "incidentStatus",
+            DisplayName: "Incident Status",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          ];
+              // this.incidentTableDataSource.sort = this.incidentTableSort;
+              // this.incidentTableDataSource.paginator = this.incidentTablePaginator;
               this.getChartByBots(ticketsByDate)
               this.spinner.hide();
             }, 100);
           }
-        } else {
-           this.spinner.hide(); 
-          // Swal.fire("Error", response.errorMessage, "error")
-        };
+        }
       },
       (err) => {
         this.loadingFlag = false;
@@ -127,16 +171,17 @@ export class SoIncidentManagementComponent implements OnInit {
   searchIncidentTable() { // search table data
     let searchText = this.seachInput.trim();
     searchText = searchText.toLowerCase();
-    this.incidentTableDataSource.filter = searchText;
+    // this.incidentTableDataSource.filter = searchText;
   }
 
   reset() { // reset search input field
     this.seachInput = "";
-    this.incidentTableDataSource.filter = "";
+  //  this.incidentTableDataSource.filter = "";
   }
 
  
   getChartByStatus(pieData){
+    this.spinner.show()
     let data:any=pieData
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -215,7 +260,7 @@ export class SoIncidentManagementComponent implements OnInit {
           }
       })
     })
-
+    this.spinner.hide()
   }
 
   getChartByPriority(data)

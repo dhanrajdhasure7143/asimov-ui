@@ -1,28 +1,21 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
-import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-bots',
   templateUrl: './bots.component.html',
   styleUrls: ['./bots.component.css']
 })
-export class BotsComponent implements OnInit {
-  displayecolumns: string[] = ['botName','botSource','category','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
-  dataSource5:MatTableDataSource<any>;
+export class BotsComponent implements OnInit {  
   public log:any=[];
   public tabledata: boolean = false;
-  @ViewChild("paginator4") paginator4: MatPaginator;
-  @ViewChild("sort4") sort4: MatSort;
   public scheduledbots: any = [];
   search:any;
   constructor(
       private rest:RestApiService,
-      private spinner:NgxSpinnerService,
+      private spinner:LoaderService,
   ) { }
 
   ngOnInit() {
@@ -64,9 +57,10 @@ export class BotsComponent implements OnInit {
     //  ];
     this.log  = data1;
     this.tabledata = this.log.length <= '0'  ? false: true;
-    this.scheduledbots = new MatTableDataSource(this.log);  
-    this.scheduledbots.paginator=this.paginator4;
-    this.scheduledbots.sort=this.sort4;
+    this.scheduledbots = this.log
+    // this.scheduledbots = new MatTableDataSource(this.log);  
+    // this.scheduledbots.paginator=this.paginator4;
+    // this.scheduledbots.sort=this.sort4;
    //  });
      this.spinner.hide(); 
    });

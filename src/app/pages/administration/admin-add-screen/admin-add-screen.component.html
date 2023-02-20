@@ -113,7 +113,8 @@
         </div>
           <div class="col" *ngIf="tablehide && !loading">
             <app-dynamic-table [table_data]="tableData" [screenTable]="'common'" [columns_list]="columns_list"
-              (editRowById)="editColumn($event)" [show_delete_btn]="false"></app-dynamic-table>
+              (editRowById)="editColumn($event)" [show_edit_btn]="true"
+              [show_delete_btn]="false"></app-dynamic-table>
           </div>
           <div class="row">
           <div class="col-10"></div>

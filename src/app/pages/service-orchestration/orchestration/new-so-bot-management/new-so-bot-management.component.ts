@@ -8,14 +8,12 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
-import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 import * as moment from 'moment';
-import { NgxSpinnerService } from "ngx-spinner";
-import { Pipe, PipeTransform } from '@angular/core';
 declare var $:any;
 import { NotifierService } from 'angular-notifier';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -113,7 +111,7 @@ public slaupdate : boolean = false;
       private router: Router,
      // private hints: sohints,
       private dt : DataTransferService,
-      private spinner:NgxSpinnerService,
+      private spinner:LoaderService,
       private formBuilder: FormBuilder,
       private notify:NotifierService,
       private modalService:BsModalService,
@@ -154,7 +152,7 @@ public slaupdate : boolean = false;
   }
   method(){
     let result: any = [];
-    this.dataSource1 = this.datasourcelist;
+    this.bot_list = this.datasourcelist;
     if(this.selectedcat == undefined ){
       this.selectedcat = '';
     }
@@ -175,16 +173,17 @@ public slaupdate : boolean = false;
         }
       }
       this.respdata1=(result.lenght>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      let value1 = this.search.toLowerCase();
-       this.dataSource1.filter = value1;
-       this.dataSource1.sort=this.sort1;
-       this.dataSource1.paginator=this.paginator1;
-       if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      this.bot_list= result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // let value1 = this.search.toLowerCase();
+      //  this.dataSource1.filter = value1;
+      //  this.dataSource1.sort=this.sort1;
+      //  this.dataSource1.paginator=this.paginator1;
+      //  if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
       
     }
     else if(this.search != '' && this.selected_source !="")
@@ -197,16 +196,17 @@ public slaupdate : boolean = false;
       }
       
       this.respdata1=(result.length>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      let value1 = this.search.toLowerCase();
-       this.dataSource1.filter = value1;
-       this.dataSource1.sort=this.sort1;
-       this.dataSource1.paginator=this.paginator1;
-       if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      this.bot_list = result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // let value1 = this.search.toLowerCase();
+      //  this.dataSource1.filter = value1;
+      //  this.dataSource1.sort=this.sort1;
+      //  this.dataSource1.paginator=this.paginator1;
+      //  if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
     }
     else if(this.search != '' && this.selectedcat != '')
     {
@@ -219,18 +219,19 @@ public slaupdate : boolean = false;
       }
       
       this.respdata1=(result.length>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      let value1 = this.search.toLowerCase();
+      this.bot_list = result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // let value1 = this.search.toLowerCase();
       
-       this.dataSource1.filter = value1;
-       if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      //  this.dataSource1.filter = value1;
+      //  if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
      
-       this.dataSource1.sort=this.sort1;
-       this.dataSource1.paginator=this.paginator1;
+      //  this.dataSource1.sort=this.sort1;
+      //  this.dataSource1.paginator=this.paginator1;
     }
     else if(this.selected_source !='' && this.selectedcat != '')
     {
@@ -250,23 +251,25 @@ public slaupdate : boolean = false;
       }
       
       this.respdata1=(result.length>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
+      this.bot_list = result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // this.dataSource1.sort=this.sort1;
+      // this.dataSource1.paginator=this.paginator1;
     }
     else if(this.search !="")
     {
-      this.dataSource1 = new MatTableDataSource(this.datasourcelist);
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-      let value1 = this.search.toLowerCase();
-      this.dataSource1.filter = value1;
-      if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
-      this.respdata1=(this.dataSource1.filteredData.length>0)?false:true;
+      this.bot_list = this.datasourcelist
+      // this.dataSource1 = new MatTableDataSource(this.datasourcelist);
+      // this.dataSource1.sort=this.sort1;
+      // this.dataSource1.paginator=this.paginator1;
+      // let value1 = this.search.toLowerCase();
+      // this.dataSource1.filter = value1;
+      // if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
+      this.respdata1=(this.bot_list.filteredData.length>0)?false:true;
       
     }
     else if(this.selected_source!="")
@@ -279,14 +282,15 @@ public slaupdate : boolean = false;
       }
       
       this.respdata1=(result.length>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-      if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      this.bot_list = result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // this.dataSource1.sort=this.sort1;
+      // this.dataSource1.paginator=this.paginator1;
+      // if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
     }
     else if(this.selectedcat!="")
     {
@@ -298,25 +302,26 @@ public slaupdate : boolean = false;
         }
       }
       this.respdata1=(result.length>0)?false:true;
-      this.dataSource1 = new MatTableDataSource(result);
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-      if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      this.bot_list = result
+      // this.dataSource1 = new MatTableDataSource(result);
+      // this.dataSource1.sort=this.sort1;
+      // this.dataSource1.paginator=this.paginator1;
+      // if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
     }
     else
     {
-      this.dataSource1=new MatTableDataSource(this.bot_list);
-      this.dataSource1.paginator=this.paginator1;
-      this.dataSource1.sort=this.sort1;
-      if(this.dataSource1.filteredData.length == 0){
-        this.noDataMessage = true;
-      } else{
-        this.noDataMessage=false;
-      }
+      // this.dataSource1=new MatTableDataSource(this.bot_list);
+      // this.dataSource1.paginator=this.paginator1;
+      // this.dataSource1.sort=this.sort1;
+      // if(this.dataSource1.filteredData.length == 0){
+      //   this.noDataMessage = true;
+      // } else{
+      //   this.noDataMessage=false;
+      // }
 
     }
   }
@@ -370,6 +375,7 @@ public slaupdate : boolean = false;
   {
     this.rest.getslalist().subscribe(sla_list=>{
       this.sla_list=sla_list;
+      this.bot_list = sla_list
     })
   }
 
@@ -502,11 +508,11 @@ public slaupdate : boolean = false;
         });
 
         this.bot_list=botlist;
-        this.datasourcelist = this.bot_list;
-        this.dataSource1= new MatTableDataSource(botlist);
-        this.isDataSource = true;
-        this.dataSource1.sort=this.sort1;
-        this.dataSource1.paginator=this.paginator1;
+         this.datasourcelist = this.bot_list;
+        // this.dataSource1= new MatTableDataSource(botlist);
+        // this.isDataSource = true;
+        // this.dataSource1.sort=this.sort1;
+        // this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
     }
     },(err)=>{
@@ -1017,6 +1023,7 @@ public slaupdate : boolean = false;
   {
     this.rest.getautomatedtasks(0).subscribe(tasks=>{
       this.automatedtasks=tasks;
+      this.bot_list = tasks
     })
   }
 
@@ -1024,6 +1031,8 @@ public slaupdate : boolean = false;
     {
       this.rest.getprocessnames().subscribe(processnames=>{
         this.processnames=processnames;
+        this.bot_list = processnames
+
       })
     }
 

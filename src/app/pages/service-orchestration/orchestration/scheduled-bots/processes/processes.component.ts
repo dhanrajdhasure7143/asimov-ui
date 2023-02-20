@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
-import { NgxSpinnerService } from "ngx-spinner";
-import * as moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-processes',
@@ -13,19 +9,15 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 })
 export class ProcessesComponent implements OnInit {
 
-  displaycolumns: string[] = ['processName','category','environment','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
-  dataSource5:MatTableDataSource<any>;
   public log:any=[];
   public tabledata: boolean = false;
-  @ViewChild("paginator4") paginator4: MatPaginator;
-  @ViewChild("sort4") sort4: MatSort;
   public processschedule: any = [];
   environment: any;
   enivornmentname: any;
   search:any;
   constructor(
       private rest:RestApiService,
-      private spinner:NgxSpinnerService,
+      private spinner:LoaderService,
   ) { }
 
   ngOnInit() {
@@ -63,9 +55,10 @@ export class ProcessesComponent implements OnInit {
      return item;
     })
     this.tabledata = response.length <= '0'  ? false: true;
-    this.processschedule = new MatTableDataSource(response);  
-    this.processschedule.paginator=this.paginator4;
-    this.processschedule.sort=this.sort4;
+    this.processschedule = response
+    // this.processschedule = new MatTableDataSource(response);  
+    // this.processschedule.paginator=this.paginator4;
+    // this.processschedule.sort=this.sort4;
    //  });
      this.spinner.hide(); 
    });

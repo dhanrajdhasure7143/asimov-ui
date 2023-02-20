@@ -1,35 +1,28 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { DataTransferService } from "../../../services/data-transfer.service";
 import{sohints} from '../model/new-so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
   styleUrls: ['./so-inbox.component.css']
 })
 export class SoInboxComponent implements OnInit {
-    displayedColumns: any[] = ["processRunId","processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
-    dataSource1:MatTableDataSource<any>;
     public respdata1:boolean = false;
     searchinbox:any;
     logflag:Boolean;
     public showaction:boolean = false;
     logresponse:any=[];
-    @ViewChild("paginator1") paginator1: MatPaginator;
-    @ViewChild("sort1") sort1: MatSort;
-    noDataMessage: boolean;
+    response: any=[];
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private hints: sohints,
       private dt:DataTransferService,
-      private spinner:NgxSpinnerService,
+      private spinner:LoaderService,
       )
     {}
 
@@ -49,7 +42,7 @@ export class SoInboxComponent implements OnInit {
 
     this.rest.getInbox().subscribe(data =>
     {
-      response=data;
+      this.response=data;
       if(response.length >0)
       {
         this.respdata1 = false;
@@ -57,10 +50,11 @@ export class SoInboxComponent implements OnInit {
       {
         this.respdata1 = true;
       }
-      this.dataSource1= new MatTableDataSource(response);
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-      this.dataSource1.data = response;
+      
+      // this.dataSource1= new MatTableDataSource(response);
+      // this.dataSource1.sort=this.sort1;
+      // this.dataSource1.paginator=this.paginator1;
+      // this.dataSource1.data = response;
       this.spinner.hide(); 
     },(err)=>{
       //this.rpa_studio.spinner.hide();
@@ -114,12 +108,12 @@ export class SoInboxComponent implements OnInit {
 
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource1.filter = filterValue;
-    if(this.dataSource1.filteredData.length == 0){
-      this.noDataMessage = true;
-    } else{
-      this.noDataMessage=false;
-    }
+    // this.dataSource1.filter = filterValue;
+    // if(this.dataSource1.filteredData.length == 0){
+    //   this.noDataMessage = true;
+    // } else{
+    //   this.noDataMessage=false;
+    // }
   }
 
   reset(){

@@ -1,22 +1,17 @@
 import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, ChangeDetectorRef ,PipeTransform } from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
-import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
-import {MatTable} from '@angular/material/table';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
-import { ParseError } from '@angular/compiler';
+import { moveItemInArray} from '@angular/cdk/drag-drop';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -50,8 +45,6 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","createdBy","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
-  dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
   public isButtonVisible = false;
@@ -81,10 +74,6 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   uiPathBotFlag:Boolean=false;
   public tasksArray:any=[];
   public processId:any;
-  @ViewChild("paginator10") paginator10: MatPaginator;
- //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
-  @ViewChild("automatedSort") automatedSort: MatSort;
-  // @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
@@ -107,7 +96,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private rest:RestApiService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private spinner:NgxSpinnerService,
+    private spinner:LoaderService,
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
@@ -633,8 +622,8 @@ resetsla(){
       this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
         this.spinner.hide();
         this.responsedata=array
-        this.dataSource2.paginator=this.paginator10;
-        this.dataSource2.sort=this.automatedSort;
+        // this.dataSource2.paginator=this.paginator10;
+        // this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
         Swal.fire("Error","Unable to reorder tasks","error")
