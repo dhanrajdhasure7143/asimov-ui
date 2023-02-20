@@ -139,27 +139,26 @@ ul.historydiv li:last-child {
   overflow: auto;
 }
 
-
-
-
-  .fileupsec {
-    position: relative;
-  }
-  
-   input[type="file"] {
-    opacity: 0;
-    cursor: pointer;
-    width: 125px;
-    z-index: 1;
-    position: relative;
-  }
-  .fileupsec span {
-    position: absolute;
-    color: var(--main-bluecolor);
-    padding: 4px 20px;
-    top: 0px;
-    border-radius: 4px;
-    left: 0px;
-    cursor: pointer;
-    z-index: 0;
-  }
+.fileupsec {
+  position: relative;
+}
+input[type="file"] {
+  opacity: 0;
+  cursor: pointer;
+  width: 140px;
+  z-index: 1;
+  position: relative;
+}
+.fileupsec span {
+  position: absolute;
+  color: #098de6;
+  padding: 3px 5px;
+  left: 0px;
+  cursor: pointer;
+  z-index: 0;
+}
+.fileupsec img {
+  position: absolute;
+  right: 0px;
+  top: 5px;
+}
