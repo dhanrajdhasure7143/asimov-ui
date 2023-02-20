@@ -126,7 +126,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   deleteById(event) {}
   deleteConnection() {}
   openUpdateEnvOverlay() {}
-  viewConnector() {}
+  // viewConnector() {}
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);

@@ -13,18 +13,18 @@
                     <span class="testtooltip">New</span>
                 </button>
             </div>
-            <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()">
+            <div class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" [routerLink]="['/pages/rpautomation/action-item']">
                     <img src='../../../../assets/images-n/projects/eye-show-blue.svg'>
                     <span class="testtooltip"> View</span>
                 </button>
             </div>
-            <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
+            <!-- <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images-n/projects/eye-show dis.svg'>
                     <span class="testtooltip"> View</span>
                 </button>
-            </div>
+            </div> -->
             <div *ngIf="updateflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
