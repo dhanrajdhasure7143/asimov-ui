@@ -2638,7 +2638,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       botName: this.finalbot.botName,
     };
     this.scheduleOverlayFlag = true;
-    // document.getElementById("sch").style.display = "block";
+    document.getElementById("sch").style.display = "block";
   }
 
   closeScheduler() {
@@ -2758,8 +2758,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    // this.hiddenPopUp = event;
-    this.scheduleOverlayFlag=event
+    this.hiddenPopUp = event;
   }
 
   // stopBot() {
