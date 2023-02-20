@@ -771,7 +771,10 @@
   </div>
 </div>
 
-<div id="sch" *ngIf="scheduleOverlayFlag"  class="rpa-modal schedulemod">
+<!-- <div id="sch" *ngIf="scheduleOverlayFlag"  class="rpa-modal schedulemod"> -->
+<div *ngIf="scheduleOverlayFlag">
+
+  
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
       
    
