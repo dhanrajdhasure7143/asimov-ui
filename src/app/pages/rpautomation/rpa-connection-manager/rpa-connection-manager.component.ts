@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import moment from "moment";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -14,6 +15,7 @@ import { Rpa_Hints } from "../model/RPA-Hints";
   styleUrls: ["./rpa-connection-manager.component.css"],
 })
 export class RpaConnectionManagerComponent implements OnInit {
+  @Input() isCreate: boolean=true;
   connectorTable: any = [];
   representatives: any = [];
   columns_list: any = [];
@@ -29,16 +31,40 @@ export class RpaConnectionManagerComponent implements OnInit {
                  "Refresh Token"];
   updateflag:boolean = false;
   viewConnetorflag = false;
+  createConnectorForm: FormGroup;
+  configurationOptions: FormGroup;
+  optionValue:any;
+  optionValue1:any;
+  selectedData: any;
+  public connctionupdatedata:any;
+
 
   constructor(
     private rest_api: RestApiService,
     private router: Router,
     private hints: Rpa_Hints,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
     this.spinner.show();
+    this.createConnectorForm = this.formBuilder.group({
+      connectionName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      authorization_Type: ["", Validators.compose([Validators.required])],
+      taskIcon: ["", Validators.compose([Validators.required])]
+    })
+
+    this.configurationOptions = this.formBuilder.group({
+      GrantType: ["",Validators.compose([Validators.required])],
+      accessToken: ["",Validators.compose([Validators.required])],
+      clienId: ["",Validators.compose([Validators.required])],
+      clientSecret: ["",Validators.compose([Validators.required])],
+      userName: ["",Validators.compose([Validators.required])],
+      password: ["",Validators.compose([Validators.required])],
+      scope: ["",Validators.compose([Validators.required])],
+    })
+
     this.getAllConnections();
     this.authTypes();
     this.getGrantType();
@@ -47,7 +73,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   getAllConnections() {
     this.rest_api.getConnectionslist().subscribe((data: any) => {
       this.connectorTable = data;
-      console.log("connector list",data);
+      console.log("List Of Connections",data);
       this.spinner.hide();
       this.columns_list = [
         {
@@ -60,26 +86,6 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: true,
           multi: false,
         },
-        // {
-        //   ColumnName: "httpMethodType",
-        //   DisplayName: "Authentication Type",
-        //   ShowFilter: true,
-        //   ShowGrid: true,
-        //   filterWidget: "normal",
-        //   filterType: "text",
-        //   sort: true,
-        //   multi: false,
-        // },
-        // {
-        //   ColumnName: "actionType",
-        //   DisplayName: "Action Type",
-        //   ShowGrid: true,
-        //   ShowFilter: true,
-        //   filterWidget: "normal",
-        //   filterType: "text",
-        //   sort: true,
-        //   multi: false,
-        // },
         {
           ColumnName: "authorization_Type",
           DisplayName: "Authentication Type",
@@ -90,16 +96,6 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: true,
           multi: false,
         },
-        // {
-        //   ColumnName: "createdDate",
-        //   DisplayName: "Created Date",
-        //   ShowGrid: true,
-        //   ShowFilter: true,
-        //   filterWidget: "normal",
-        //   filterType: "date",
-        //   sort: true,
-        //   multi: false,
-        // },
         // {
         //   ColumnName: "lastModifiedBy",
         //   DisplayName: "Created By",
@@ -125,24 +121,37 @@ export class RpaConnectionManagerComponent implements OnInit {
   viewDetails(event) {}
   deleteById(event) {}
   deleteConnection() {}
-  openUpdateEnvOverlay() {}
+  addNewConnection(){
+    this.isCreate = true;
+
+  }
+  openUpdateOverlay() {
+    this.isCreate =false;
+    this.isFormOverlay = true;
+    this.connctionupdatedata = this.selectedData[0];
+    this.createConnectorForm.get("connectionName").setValue(this.connctionupdatedata["connectionName"]);
+    this.createConnectorForm.get("authorization_Type").setValue(this.connctionupdatedata["authorization_Type"]);
+    this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
+    console.log(this.selectedData);
+  }
   viewConnector() {}
   readSelectedData(data) {
-    data.length > 0 ? (this.addflag = false) : (this.addflag = true);
-    data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
-    data.length > 0 ? (this.updateflag =true) : (this.updateflag = false);
-    data.length > 0 ? (this.viewConnetorflag = true) : (this.viewConnetorflag = false);
+    this.selectedData = data;
+    this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
+    this.selectedData.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    this.selectedData.length == 1 ? (this.updateflag =true) : (this.updateflag = false);
+    this.selectedData.length == 1 ? (this.viewConnetorflag = true) : (this.viewConnetorflag = false);
   }
 
   openConnectorForm() {
     this.isFormOverlay = true;
     this.isConnectorForm = true;
-    // document.getElementById("createconnector").style.display='block';
   }
 
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       this.authorizationType = res;
+      console.log("auth types",res);
     });
   }
 
