@@ -99,6 +99,7 @@ export class RpaAuditlogsComponent implements OnInit {
           }
           return item;
         })].reverse();
+        
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {
