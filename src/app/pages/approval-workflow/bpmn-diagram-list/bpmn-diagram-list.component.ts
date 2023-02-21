@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild,HostListener, Input } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { DiagListData } from './model/bpmn-diag-list-data';
 import { RestApiService } from '../../services/rest-api.service';
@@ -18,6 +18,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -47,16 +48,36 @@ export class BpmnDiagramListComponent implements OnInit {
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
-@ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
+  search_fields:any[]=[];
+  _selectedColumns: any[];
+  categories_list_new:any[]=[];
+  columns_list = [
+  { field: 'processIntelligenceId', header: 'Process ID'},
+  { field: 'bpmnProcessName', header: 'Process Name'},
+  { field: 'convertedModifiedTime', header: 'Modified Time'},
+  { field: 'userName', header: 'Resource'},
+  { field: 'role', header: 'Role'},
+  { field: 'bpmnProcessStatus', header: 'Status'},
+];
 
   constructor(private dt: DataTransferService,
-    private hints:ApprovalHomeHints,
     private bpmnservice:SharebpmndiagramService,
     private global:GlobalScript, 
     private model: DiagListData, 
     private rest_Api: RestApiService,
     private router: Router,
     private loader: LoaderService) { }
+
+    @Input() get selectedColumns(): any[] {
+      return this._selectedColumns;
+    }
+  
+    set selectedColumns(val: any[]) {
+      this._selectedColumns = this.columns_list.filter((col) =>
+        val.includes(col)
+      );
+    }
 
   ngOnInit() {
     this.loader.show();
@@ -80,35 +101,45 @@ export class BpmnDiagramListComponent implements OnInit {
   collapseExpansion(){
     this.approval_msg="";
   }
-  expandPanel(i, eachBPMN): void {
+  expandPanel(i, each,expanded): void {
+    if(!expanded){
+      console.log(each)
+    let eachBPMN = each.bpmnProcessInfo[0];
+    console.log(eachBPMN)
+
     this.selected_processInfo = eachBPMN;
     let bpmnXmlNotation = this.selected_processInfo["bpmnXmlNotation"];
     let approval_msg = this.selected_processInfo["reviewComments"];
     this.index=i;
     this.approval_msg=approval_msg;
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
-    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
-    let notationJson = {
-      container: '.diagram_container'+i,
-      keyboard: {
-        bindTo: window
+    // if(document.getElementsByClassName('diagram_container'+each.bpmnApprovalId)[0].innerHTML.trim() != "") return;
+    setTimeout(()=>{
+      let notationJson = {
+        container: '.diagram_container'+each.bpmnApprovalId,
+        keyboard: {
+          bindTo: window
+        }
       }
-    }
-    if(eachBPMN.ntype == "bpmn")
-      this.bpmnModeler = new BpmnJS(notationJson);
-    else if(eachBPMN.ntype == "cmmn")
-      this.bpmnModeler = new CmmnJS(notationJson);
-    else if(eachBPMN.ntype == "dmn")
-      this.bpmnModeler = new DmnJS(notationJson); 
-      
-        this.bpmnModeler.importXML(byteBpmn, function(err){
-          if(err){
-            this.notifier.show({
-              type: "error",
-              message: "Could not import Bpmn notation!"
-            });
-          }
-        })
+      if(eachBPMN.ntype == "bpmn")
+        this.bpmnModeler = new BpmnJS(notationJson);
+      else if(eachBPMN.ntype == "cmmn")
+        this.bpmnModeler = new CmmnJS(notationJson);
+      else if(eachBPMN.ntype == "dmn")
+        this.bpmnModeler = new DmnJS(notationJson); 
+        
+          this.bpmnModeler.importXML(byteBpmn, function(err){
+            if(err){
+              this.notifier.show({
+                type: "error",
+                message: "Could not import Bpmn notation!"
+              });
+            }
+          })
+    },100)
+
+  }
+    
     // let canvas = this.bpmnModeler.get('canvas');
     // canvas.zoom('fit-viewport');
   }
@@ -186,37 +217,28 @@ this.selectedrow =i;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.loader.hide();
       this.griddata = data;
-     
+      console.log(data,"responsedata")
       this.griddata.forEach(ele=>{
         ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
         ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;
-        // ele["convertedModifiedTime"]=ele.bpmnProcessInfo[0].convertedModifiedTime;
+        ele["bpmnProcessStatus"]=ele.bpmnProcessInfo[0].bpmnProcessStatus;
         ele["convertedModifiedTime"]=moment(new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000)).format('lll');
         ele["userName"]=ele.bpmnProcessInfo[0].userName;
-        ele["role"]=ele.role;
-
+        // ele["role"]=ele.role;
       })
-      this.assignPagenation(this.griddata);
-      this.griddata.map(item => {item.xpandStatus = false;return item;})
+      // this.assignPagenation(this.griddata);
+      // this.griddata.map(item => {item.xpandStatus = false;return item;})
+      this._selectedColumns = this.columns_list;
+      this.search_fields =['processIntelligenceId',"bpmnProcessName","bpmnProcessStatus","convertedModifiedTime","userName","role"]
       this.disable_panels();
-     
-     if(this.griddata.length==0){
-      let touiGuide_ids=[{selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations'}]
-    }else{
-     let touiGuide_ids=[
-       { selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations', showNext:true },
-       { selector:'#bpmn_list_item1', event:'click', description:'Click on each record to display it as diagram' },
-       { selector:'.diagram_container1', description:'BPMN Diagram of the clicked record' }
-     ]
-    }
      });
    }
 
-   @HostListener('document:click',['$event'])
-   clickout(event) {
-     if(!document.getElementById("bpmn_list").contains(event.target) && this.index>=0)
-       this.griddata[this.index].xpandStatus=false;
-   }
+  //  @HostListener('document:click',['$event'])
+  //  clickout(event) {
+  //    if(!document.getElementById("bpmn_list").contains(event.target) && this.index>=0)
+  //      this.griddata[this.index].xpandStatus=false;
+  //  }
 
   approveDiagram(data) {
     let disabled_items = localStorage.getItem("pending_bpmnId")
@@ -399,6 +421,10 @@ this.selectedrow =i;
       return filtered
     }, [])
     this.assignPagenation(filtered);
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }
 
