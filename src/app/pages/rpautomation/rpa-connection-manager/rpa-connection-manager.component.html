@@ -13,7 +13,7 @@
                     <span class="testtooltip">New</span>
                 </button>
             </div>
-            <div class="env-btn credential-btntool">
+            <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" [routerLink]="['/pages/rpautomation/action-item']">
                     <img src='../../../../assets/images-n/projects/eye-show-blue.svg'>
                     <span class="testtooltip"> View</span>

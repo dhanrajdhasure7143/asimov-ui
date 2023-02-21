@@ -12,6 +12,29 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   public connectorForm: FormGroup;
   methodItems: any = [];
   encoded: FormArray;
+  actionItems: any = ["Authenticated", "API Request"];
+  authItems: any = [
+    "No Auth",
+    "API Key",
+    "Bearer Token",
+    "Basic Auth",
+    "Digest Auth",
+    "O AUth 1.0",
+    "O Auth 2.0",
+  ];
+  grantItems: any = [
+    "Authorization Code",
+    "Implicit",
+    "Client Credentials",
+    "Password Credentials",
+  ];
+  isAuthenticated: boolean = false;
+  isAction: boolean = false;
+  isAuthorization: boolean = false;
+  isClient: boolean = false;
+  isPassword: boolean = false;
+  isRequest: boolean = false;
+  isResponse: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +49,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       httpMethodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       url: ["", Validators.compose([Validators.required])],
-      authorization_Type: ["", Validators.compose([Validators.required])],
+      authType: ["", Validators.compose([Validators.required])],
       bodyRaw: ["", Validators.compose([Validators.required])],
       paramsKey: ["", Validators.compose([Validators.required])],
       paramsValue: ["", Validators.compose([Validators.required])],
@@ -105,4 +128,44 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   addHeader() {}
+
+  actionChange(event) {
+    if (event == "Authenticated") {
+      this.isAction = true;
+      this.isRequest = false;
+      this.isResponse = false;
+    } else if (event == "API Request") {
+      this.isRequest = true;
+      this.isAction = false;
+      this.isResponse = true;
+      this.isClient = false;
+      this.isPassword = false;
+      this.isAuthenticated = false;
+    }
+  }
+
+  authChange(event) {
+    if (event == "O Auth 2.0") {
+      this.isAuthenticated = true;
+    }
+  }
+
+  grantChange(event) {
+    if (event == "Authorization Code") {
+      this.isAuthorization = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isPassword = false;
+    } else if (event == "Password Credentials") {
+      this.isPassword = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isAuthorization = false;
+    } else if (event == "Client Credentials") {
+      this.isClient = true;
+      this.isResponse = true;
+      this.isAuthorization = false;
+      this.isPassword = false;
+    }
+  }
 }
