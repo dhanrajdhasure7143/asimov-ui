@@ -36,7 +36,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import {KnobModule} from 'primeng/knob';
 import {TooltipModule} from 'primeng/tooltip';
 import {DragDropModule} from 'primeng/dragdrop';
-import {ChartModule} from 'primeng/chart';
+// import {ChartModule} from 'primeng/chart';
 @NgModule({
   declarations: [],
   imports: [
@@ -76,7 +76,7 @@ import {ChartModule} from 'primeng/chart';
     KnobModule,
     TooltipModule,
     DragDropModule,
-    ChartModule
+    // ChartModule
   ],
   exports: [
     CommonModule,
@@ -116,7 +116,7 @@ import {ChartModule} from 'primeng/chart';
     KnobModule,
     TooltipModule,
     DragDropModule,
-    ChartModule
+    // ChartModule
   ],
   providers: [ConfirmationService, MessageService]
 })
