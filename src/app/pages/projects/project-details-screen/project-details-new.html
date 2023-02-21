@@ -511,7 +511,7 @@
 
 <div class="" *ngIf="hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
-        <div class="splitoverlaydiv">
+        <div class="splitoverlaydiv h-100">
             <p-tabView #tabView (onChange)="onUsersTab($event.index)">
                 <p-tabPanel  [selected]="true">
                     <ng-template pTemplate="header">

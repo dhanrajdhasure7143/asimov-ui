@@ -47,6 +47,7 @@ export class RpaCredentialFormComponent implements OnInit {
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
+    this.spinner.hide();
 
 
   }

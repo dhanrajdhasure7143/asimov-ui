@@ -10,14 +10,6 @@
 }
 
 /* Form Overlay New Styles Start */
-.create-header {
-  padding: 22px 25px !important;
-  border-bottom: 1px solid #e5e5e5;
-}
-.create-header h3 {
-  font-size: 16px;
-  margin: 0px;
-}
 .row.create-body {
   align-items: center;
   justify-content: space-evenly;

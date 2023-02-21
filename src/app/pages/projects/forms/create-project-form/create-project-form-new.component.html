@@ -2,7 +2,7 @@
     <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
         <div class="">
             <div class="row">
-                  <div class="form-fields col">
+                  <div class="form-fields col pl-0">
                       <label class="">Project Name<span class="star">*</span></label>
                       <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51"
                           formControlName="projectName" placeholder="Enter Project Name">
@@ -17,7 +17,7 @@
                           and special characters are not allowed Excluding( _ & - )
                       </span>
                   </div>
-                  <div class="form-fields col">
+                  <div class="form-fields col pr-0">
                       <label class="">Select Department<span class="star">*</span></label>
                       <p-dropdown [options]="categories_list" [filter]="true" formControlName="mapValueChain"
                           autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
@@ -30,7 +30,7 @@
                   </div>
             </div>
             <div class="row">
-                  <div class="form-fields col">
+                  <div class="form-fields col pl-0">
                       <label class="">Process Owner<span class="star">*</span></label>
                       <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
                           filterBy="user_email,fullName" [autoDisplayFirst]="false" (onChange)="onChange()"
@@ -45,7 +45,7 @@
                       <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
                           class="errspan required">Process Owner Required*</span>
                   </div>
-                  <div class="form-fields col">
+                  <div class="form-fields col pr-0">
                       <label class="">Select Process<span class="star">*</span></label>
                       <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}"
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
@@ -56,7 +56,7 @@
                   </div>
             </div>
             <div class="row">
-                  <div class="form-fields col">
+                  <div class="form-fields col p-0">
                       <label class="">Project Priority<span class="star">*</span></label>
                       <div>
                           <!-- <div class="field-radiobutton">
@@ -98,7 +98,7 @@
                   </div>
             </div>
             <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col p-0">
                       <label class="">Project Description<span class="star">*</span></label>
                       <textarea pInputTextarea formControlName="projectPurpose" placeholder="Enter Description"
                           [autoResize]="true" maxlength="251" required></textarea>
@@ -115,7 +115,7 @@
             </div>
         </div>
     </form>
-    <div class="pull-right form-footer">
+    <div class="createform-footer">
         <button (click)="resetcreateproject()" class="btn new-cancelbtn">Reset</button>
         <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn bluebg-button">Create</button>
     </div>

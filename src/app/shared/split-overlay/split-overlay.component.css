@@ -1,11 +1,12 @@
 .right_split {
   background-color:#f9f9f9;
   height: 100%;
+  padding: 15px 20px 0px;
 }
 .splitter-headers {
   position: absolute;
-  right: 25px;
-  top: 18px;
+  right: 30px;
+  top: 20px;
   z-index: 9999;
   cursor: pointer;
 }
