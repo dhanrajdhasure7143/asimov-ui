@@ -155,7 +155,7 @@
                             </span>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null" class="w-100 text-center">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
                             <span class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">

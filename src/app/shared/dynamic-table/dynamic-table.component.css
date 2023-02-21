@@ -7,12 +7,12 @@
     background-color: #e0e0e0;
     color: #232832;
     border-radius: 100%;
-    width: 34px;
-    height: 34px;
+    width: 33px;
+    height: 33px;
     display: inline-block;
-    line-height: 15px;
-    padding: 11px 8px;
-    margin-right: 5px;
+    line-height: 13px;
+    padding: 10px 8px;
+    margin-right: 3px;
 }
 .inactive {
     color: #ea3d3d;

@@ -62,7 +62,7 @@ export class DropDownComponent implements OnInit {
 
       onChangeEmail(event, options , field) {
         if (event.target.value == 'New') {
-          this.designer.createcredentials();
+          this.designer.openCreateCredential();
         }
         if (event.target.value == 'fill' || event.target.value == 'click') {
           this.fieldsWithoutRef = [...this.designer.fields];
