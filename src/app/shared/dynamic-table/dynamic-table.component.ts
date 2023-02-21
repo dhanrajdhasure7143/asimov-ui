@@ -49,8 +49,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.table_data)
-    console.log(this.userRoles)
 
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
