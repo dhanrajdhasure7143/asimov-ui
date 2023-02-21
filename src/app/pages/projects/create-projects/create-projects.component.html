@@ -7,8 +7,8 @@
             <i class="fas fa-arrow-left" aria-hidden="true"></i>
         </span>
         <span class="module-header-title">
-            <span class="module-parent-title">Projects</span>
-            <span class="backslash">/</span>
+            <!-- <span class="module-parent-title">Projects</span>
+            <span class="backslash">/</span> -->
             <span class="module-parent-title">Programs</span>
         </span>
         <!-- <span class="pull-right" style="font-size:20px;">
@@ -23,8 +23,8 @@
         <div class="maindivfoprm">
             <div class="innersform card-form">
 
-                <div class="create-heading">Create New</div>
-                <mat-tab-group mat-align-tabs="end">
+                <!-- <div class="create-heading">Create New</div> -->
+                <!-- <mat-tab-group mat-align-tabs="end"> -->
 
                     <!-- <mat-tab label="Project" *ngIf="projectsdata=='projects' || projectsdata=='projects&programs'">
                         <div class="container">
@@ -32,13 +32,13 @@
                         </div>
                     </mat-tab> -->
                     
-                    <mat-tab label="Program" *ngIf="projectsdata!='projects' || projectsdata=='projects&programs'">
-                        <div class="container">
+                    <!-- <mat-tab label="Program" *ngIf="projectsdata!='projects' || projectsdata=='projects&programs'"> -->
+                        <div class="container-fluid">
 
                             <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
                                 <div class="row prj-crt-form">
-                                    <div class="col-md-12">
-                                        <div class="form-fields col-md-6 pl-0">
+                                    <div class="col-12 row">
+                                        <div class="form-fields col-6 pl-0">
                                             <label class="label-control" for="programname">Program Name<span
                                                     class="star">*</span></label>
                                             <input type="text" maxlength="256" class="form-control data"
@@ -52,7 +52,7 @@
                                                 Maximum of 255 characters exceeded
                                             </span>
                                         </div>
-                                        <div class="form-fields col-md-6 pr-0">
+                                        <div class="form-fields col-6 pr-0">
                                             <label class="label-control" for="initiatives">Initiatives<span
                                                     class="star">*</span></label>
                                              <!-- <select class="form-control" formControlName="initiatives"
@@ -79,7 +79,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-12 row">
                                         <!-- <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="programpurpose">Add Program Purpose<span
                                                     class="star">*</span></label>
@@ -94,7 +94,7 @@
                                                 Maximum of 255 characters exceeded
                                             </span>
                                         </div> -->
-                                        <div class="form-fields col-md-6 pl-0">
+                                        <div class="form-fields col-6 pl-0">
                                             <label class="label-control" for="owner">Owner<span
                                                     class="star">*</span></label>
                                             <select formControlName="owner" class="form-control data" disabled 
@@ -122,7 +122,7 @@
                                    
                                  
                                         
-                                            <div class="form-fields col-md-6 pr-0">
+                                            <div class="form-fields col-6 pr-0">
                                                 <!-- <label class="label-control" for="programValueChain">Value Chain<span
                                                         class="star">*</span></label>
                                                       
@@ -186,10 +186,10 @@
                                         </div> -->
                                         
                                    
-                                    <div class="col-md-12">
+                                    <div class="col-12 row">
                                         
 
-                                        <div class="form-fields col-md-6 pl-0">
+                                        <div class="form-fields col-6 pl-0">
                                             <label class="label-control" for="priority">Program Priority<span
                                                     class="star">*</span></label>
                                             <select class="form-control" formControlName="priority"
@@ -220,7 +220,7 @@
                                                       </select>
                                                       <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="errspan required">Access Required*</span>
                                                     </div>                                                     -->
-                                        <div class="form-fields col-md-6 pr-0 slt-prjts">
+                                        <div class="form-fields col-6 pr-0 slt-prjts">
                                             <div class="select-project">
                                                 <label class="label-control">Select Projects</label>
                                                 <select class="form-control inputfield-color" id="selectprojects"
@@ -288,7 +288,7 @@
                                                 class=" errspan required">Access Required*</span>
                                         </div>
                                     </div> -->
-                                    <div class="col-md-12">
+                                    <div class="col-12 row">
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control">Select Process<span
                                                 class="star">*</span></label>
@@ -306,7 +306,7 @@
 
 
 
-                                            <div class="form-fields col-md-6 pr-0">
+                                            <div class="form-fields col-6 pr-0">
                                                 <label class="label-control" for="processOwner">Process Owner<span
                                                         class="star">*</span></label>
                                                 <select formControlName="processOwner" class="form-control data"  [attr.disabled]="processowner==false" 
@@ -326,7 +326,7 @@
 
                                        
                                 
-                                    <div class="col-md-12 martsascl">
+                                    <div class="col-12 martsascl">
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
                                                         placeholder="Enter Description"></textarea>
@@ -366,7 +366,7 @@
                                     <span class="removeallprjcts" (click)="selected_projects=[];newproject=[]">Remove All</span>
                                 </h4>
                                 <div class="row">
-                                    <div class="col-md-4 pl-0" *ngFor="let project of selected_projects">
+                                    <div class="col-4 pl-0" *ngFor="let project of selected_projects">
                                         <div class="project-card">
                                             <span class="card-placeholder">
                                                 Project Name
@@ -388,7 +388,7 @@
                                         </div>
                                        
                                     </div>
-                                    <div class="col-md-4 pl-0 " *ngFor="let project of newproject">
+                                    <div class="col-4 pl-0 " *ngFor="let project of newproject">
                                         <div class="project-card">
                                             <span class="card-placeholder">
                                                 Project Name
@@ -417,9 +417,9 @@
 
 
 
-                    </mat-tab>
+                    <!-- </mat-tab> -->
 
-                </mat-tab-group>
+                <!-- </mat-tab-group> -->
 
             </div>
         </div>
