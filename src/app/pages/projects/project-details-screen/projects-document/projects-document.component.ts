@@ -9,7 +9,7 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
   styleUrls: ["./projects-document.component.css"],
 })
 export class ProjectsDocumentComponent implements OnInit {
-  files: any[];
+  files: any[]=[];
   createFolderPopUP: boolean = false;
   hiddenPopUp1: boolean = false;
   createTreeFolderOverlay: boolean = false;
@@ -40,6 +40,7 @@ export class ProjectsDocumentComponent implements OnInit {
   params_data:any;
   project_id:any;
   project_name:any;
+  nodeMap:Object = {};
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -47,119 +48,162 @@ export class ProjectsDocumentComponent implements OnInit {
 
     this.route.queryParams.subscribe((data) => {
       this.params_data = data;
-      console.log(data);
       this.project_id = this.params_data.project_id;
       this.project_name = this.params_data.project_name;
     });
   }
 
   ngOnInit(): void {
-    this.files = [
+    this.files=[
       {
         key: "0",
         label: "Add Folder",
-        data: "Movies Folder",
+        data: "Add Folder",
+        data_type:"addfolder",
         collapsedIcon: 'pi pi-folder',
         expandedIcon: 'pi pi-folder'
       },
-      {
-        key: "1",
-        label: "Analysis",
-        data: "Documents Folder",
-        collapsedIcon: 'pi pi-folder',
-        expandedIcon: 'pi pi-folder-open',
-        children: [
-          {
-            key: "1-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "1-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "2",
-        label: "System Connectivity",
-        data: "Pictures Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "2-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "2-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "2-2",label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "2-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "3",
-        label: "Process Documents",
-        data: "Pictures Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "3-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "3-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "3-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "3-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "4",
-        label: "Testing",
-        data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "4-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "4-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "4-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "4-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "5",
-        label: "References",
-        data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "5-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "5-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "5-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      }
     ];
+    for (let obj of this.testData) {
+      let node = {
+        label: obj.label,
+        data: obj.data,
+        key: obj.key,
+      };
+        if(obj.data_type == 'folder'){
+          node['collapsedIcon']=  "pi pi-folder"
+          node["expandedIcon"]  ="pi pi-folder-open"
+      }else{
+        node['icon']=  "pi pi-file"
+      }
+      this.nodeMap[obj.key] = node;
+      if (obj.key.indexOf('-') === -1) {
+        this.files.push(node);
+      } else {
+        let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+        let parent = this.nodeMap[parentKey];
+        if (parent) {
+          if (!parent.children) {
+            let obj1={
+              key: obj.key+'-0',
+              label: "Add Folder / Document",
+              data_type:"addfolder",
+              collapsedIcon: 'pi pi-folder',
+              expandedIcon: 'pi pi-folder'
+            }
+            parent.children = [obj1];
+          }
+          parent.children.push(node);
+        }
+      }
+    }
     this.folder_files = this.files
+    // setTimeout(()=>{
+    //   // console.log(this.getDataByParentId(this.data, null));
+    //   console.log("testing",this.treeData)
+    // },1000)
+
+
   }
+  
+
+  
+
+  
+
+testData =[
+
+  {
+    key: "1",
+    label: "Analysis",
+    data: "Documents Folder",
+    data_type:"folder",},
+      { key: "1-2", label: "Document 2", data: "Document",data_type:"file",fileSize:"",task_id:'',project_id:''},
+      { key: "1-3", label: "Document 3", data: "Document",data_type:"file",fileSize:"",task_id:'',project_id:''},
+      { key: "1-3", label: "Document 3", data: "Document",data_type:"file",fileSize:"" ,task_id:'',project_id:''},
+  {
+    key: "2",
+    label: "System Connectivity",
+    data: "Pictures Folder",
+    data_type:"folder"},
+      { key: "2-1", label: "Document 1", data: "Document",data_type:"file" },
+      { key: "2-2",label: "Document 2", data: "Document",data_type:"file" },
+      { key: "2-3", label: "Document 3", data: "Document",data_type:"file" },
+  {
+    key: "3",
+    label: "Process Documents",
+    data: "Pictures Folder",
+    data_type:"folder"},
+      { key: "3-1", label: "Document 1", data: "Document",data_type:"file" },
+      { key: "3-2", label: "Document 2", data: "Document",data_type:"file" },
+      { key: "3-3", label: "Document 3", data: "Document",data_type:"file" },
+
+]
+
+  getDataByParentId1(data, parent) {
+    const result = data.filter(d => d.parentId === parent);
+    if (!result && !result.length) {
+      return null;
+    }
+  
+    return result.map(({ dataId, name, description,parentId }) => 
+      ({ dataId, name, description,parentId, children: this.getDataByParentId(data, dataId) }))
+  }
+
+  getDataByParentId(data, parent) {
+    const result = data.filter(d => d.parentId === parent);
+    if (!result && !result.length) {
+      return null;
+    }
+  
+    return result.map(({ dataId, name, description,parentId }) => 
+      ({ dataId, name, description,parentId, children: this.getDataByParentId(data, dataId) }))
+  }
+  
+  data = [{
+      dataId: 1,
+      name: 'test1',
+      description: 'some desc',
+      parentId: null
+    },
+    {
+      dataId: 2,
+      name: 'test2',
+      description: 'some desc',
+      parentId: 1
+    },
+    {
+      dataId: 3,
+      name: 'test3',
+      description: 'some desc',
+      parentId: 1
+    },
+    {
+      dataId: 5,
+      name: 'test5',
+      description: 'some desc',
+      parentId: 4
+    },
+    {
+      dataId: 4,
+      name: 'test4',
+      description: 'some desc',
+      parentId: null
+    },
+    {
+      dataId: 6,
+      name: 'test6',
+      description: 'some desc',
+      parentId: 5
+    },
+    {
+      dataId: 6,
+      name: 'test6',
+      description: 'some desc',
+      parentId: null
+    }
+  ];
+  
 
   treeChildSave() {
     if (this.selectedFile && this.entered_folder_name) {
@@ -172,13 +216,15 @@ export class ProjectsDocumentComponent implements OnInit {
           key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
           label: "Add Folder / Document",
           data: "Work Folder",
-          expandedIcon: "pi pi-folder-open",
+          data_type:"addfolder",
+          expandedIcon: "pi pi-folder",
           collapsedIcon: "pi pi-folder",
         },
       ]
       this.selectedFile.parent.children.push(object);
       this.entered_folder_name = "";
       this.isDialog = false;
+      console.log(this.selectedFile)
     }
   }
 
@@ -267,7 +313,8 @@ export class ProjectsDocumentComponent implements OnInit {
         key: this.selectedFolder.key + "-" + objectKey + "-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "pi pi-folder-open",
+        data_type:"addfolder",
+        expandedIcon: "pi pi-folder",
         collapsedIcon: "pi pi-folder",
       }
     ]
@@ -275,6 +322,8 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedFolder.children.push(object);
     this.entered_folder_name = "";
     this.isDialog1 = false;
+    console.log(this.selectedFile)
+
   }
 }
 
@@ -290,7 +339,8 @@ addParent() {
         key: String(this.files.length)+"-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "pi pi-folder-open",
+        data_type:"addfolder",
+        expandedIcon: "pi pi-folder",
         collapsedIcon: "pi pi-folder",
       },
     ],
@@ -378,6 +428,45 @@ addParent() {
   navigateToCreateDocument(){
     this.router.navigate(['pages/projects/document-editor'],
     { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
+  }
+
+  changefileUploadForm(e){
+  //   if(this.file_Category == "Template"){
+  //     this.fileList=[];
+  //     this.listOfFiles=[];
+  //   }
+  // for (var i = 0; i <= e.target.files.length - 1; i++) {
+  //   var selectedFile = e.target.files[i];
+  //   this.fileList.push(selectedFile);
+  //   var value = {
+  //     // File Name 
+  //     name: selectedFile.name,
+  //     //File Size 
+  //     size: selectedFile.size,
+  //   }
+  //   this.listOfFiles.push(value)
+  // }
+  }
+
+  onFolderSelect(event: any) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const folderName = files[0].webkitRelativePath.split('/')[0];
+      console.log('Selected folder:', folderName);
+    }
+    // console.log(files,event)
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.webkitRelativePath) {
+        // The file is inside a folder
+        console.log(file.webkitRelativePath);
+        // Upload the file as desired
+      } else {
+        // The file is not inside a folder
+        console.log(file.name);
+        // Upload the file as desired
+      }
+    }
   }
   
 }

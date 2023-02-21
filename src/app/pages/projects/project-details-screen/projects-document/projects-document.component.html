@@ -134,10 +134,18 @@
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <button>
+                        <!-- <button>
                             <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
                                 Upload folder </p-card>
-                        </button>
+                        </button> -->
+                        <div class="upload-btn-wrapper" (change)="onFolderSelect($event)" >
+                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem" (change)="onFolderSelect($event)" ></i><br>
+
+                                <button class="btn">Upload folder</button>
+                                <input type="file" webkitdirectory directory multiple (change)="onFolderSelect($event)">
+                              </p-card>
+
+                              </div>
                     </div>
                 </div>
                 <div class="row" *ngIf="hiddenPopUp1">
@@ -149,8 +157,16 @@
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
-                                Upload Document </p-card>
+                            <div class="upload-btn-wrapper" (change)="changefileUploadForm($event)" >
+                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem" (change)="changefileUploadForm($event)" ></i><br>
+
+                                <button class="btn">Upload Document</button>
+                                <input type="file" name="myfile" />
+                              </p-card>
+
+                              </div>
+                            <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
+                                Upload Document </p-card> -->
                         </button>
                     </div>
                 </div>
