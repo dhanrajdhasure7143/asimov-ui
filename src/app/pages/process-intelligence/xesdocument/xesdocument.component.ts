@@ -29,6 +29,7 @@ export class XesdocumentComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   overlay_data:any={};
+  hiddenPopUp1:boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -66,8 +67,9 @@ export class XesdocumentComponent implements OnInit {
   }
   slideUp() { //Bottom Slide Up
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display = "block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display = "block";
+    this.hiddenPopUp1 =  true;
   }
   generateGraph(e) {   //Process Graph Generate
     this.processId = Math.floor(100000 + Math.random() * 900000);
@@ -111,5 +113,9 @@ export class XesdocumentComponent implements OnInit {
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+
+  closeOverlay(event){
+    this.hiddenPopUp1 = event;
   }
 }
