@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-admin-add-screen",
@@ -35,7 +36,8 @@ export class AdminAddScreenComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private rest: RestApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner:LoaderService
   ) {
     this.route.queryParams.subscribe((res: any) => {
       this.screen_id = res.id;
@@ -137,27 +139,29 @@ export class AdminAddScreenComponent implements OnInit {
     let val = {
       objects: [payload],
     };
-    this.loading = true;
+    this.spinner.show();
+
     this.rest
       .updateColumn(this.elementId, this.screenId, val)
       .subscribe((data) => {
         this.updateColumndata = data;
         this.display = false;
         Swal.fire("Success", "Screen Updated Successfully!", "success");
-        this.loading = false;
+        this.spinner.hide();
+       
       });
   }
 
   getListofTables() {
-    this.loading = true;
+    this.spinner.show();
     this.rest.getListOfTables().subscribe((data) => {
       this.tableListData = data;
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
   onChangeTableName(tablename: any) {
-    this.loading = true;
+    this.spinner.show();
     this.tablehide = true;
     this.rest.getTabledataAdmin(tablename.value).subscribe((data) => {
       this.tableData = data;
@@ -184,7 +188,7 @@ export class AdminAddScreenComponent implements OnInit {
           multi: false,
         },
       ];
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
@@ -263,7 +267,7 @@ export class AdminAddScreenComponent implements OnInit {
             multi: false,
           },
         ];
-        this.loading = false;
+        this.spinner.hide();
       });
     });
   }
@@ -272,7 +276,7 @@ export class AdminAddScreenComponent implements OnInit {
     let payload = this.insertForm.value;
     payload["status"] = false;
     payload["fields"] = "";
-    this.loading = true;
+    this.spinner.show();
     this.rest.updateScreenData(payload, this.screen_id).subscribe((data) => {
       Swal.fire({
         title: "Success",
@@ -290,14 +294,14 @@ export class AdminAddScreenComponent implements OnInit {
           window.location.reload();
         }, 600);
       })  
-      this.loading = false;
+      this.spinner.hide();
     },(err: any) => {
       Swal.fire("Error", "Unable to Update Screen Details", "error");
     })  
   }
 
   saveScreen() {
-    this.loading = true;
+    this.spinner.show();
     let payload = this.insertForm.value;
     payload["status"] = false;
     payload["fields"] = "";
@@ -345,7 +349,7 @@ export class AdminAddScreenComponent implements OnInit {
      
       // window.location.reload();
       // Swal.fire("Success", "Screen Saved successfully !", "success");
-      this.loading = false;
+      this.spinner.hide();
       this.buttonDisable = true;
     }),
       (err: any) => {
