@@ -25,8 +25,6 @@ export class RpaConfigurationsComponent implements OnInit {
     if(localStorage.getItem("config_tab")){
       this.selectedTab = Number(localStorage.getItem("config_tab"));
       this.check_tab = Number(localStorage.getItem("config_tab"));
-      }else{
-        
       }
     }
     isEmpty(obj) {
@@ -40,10 +38,6 @@ export class RpaConfigurationsComponent implements OnInit {
       localStorage.setItem("config_tab", event.index)
       this.check_tab=event.index;
     }
-    back(event){
-      localStorage.setItem("config_tab", event.index = null)
-      this.selectedTab=0;
-      this.check_tab = 0;
-    }
+  
   }
 
