@@ -33,8 +33,8 @@
             <!-- <span class="title_text"></span> -->
             <div *ngIf="isFolder == true" class="d-flex docfolder">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (click)="openAddFolderOverlay(item)">  
-                <i [class]="item.collapsedIcon" style="font-size: 2rem"> </i>
-                <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon" style="font-size: 2rem"> </i> <br>   <br>
+                <i [class]="item.collapsedIcon"> </i>
+                <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
                 <span> {{ item.label }} </span>
             </p-card>
            </div>
@@ -158,10 +158,9 @@
         </app-split-overlay>
     </div>
 
-    <p-dialog header="Folder Name" [(visible)]="isDialogBox" [style]="{width: '25vw'}">
+    <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
-                name="folder"> <br>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder">
             <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
         </span>
     </p-dialog>
@@ -175,18 +174,16 @@
     </p-dialog>
 
     <!-- add sub folder in folder structure -->
-    <p-dialog header="Folder Name" [(visible)]="isDialog1" [style]="{width: '25vw'}">
+    <p-dialog header="Folder Name" [(visible)]="isDialog1" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
-                name="folder"> <br>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
             <button type="button" class="btn btn-primary" (click)="addSubfolder()">Save</button>
         </span>
     </p-dialog>
 
     <p-dialog header="Folder Name" [(visible)]="isDialog2" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
-                name="folder"> <br>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
             <button type="button" class="btn btn-primary" (click)="saveRenameFolder()">Save</button>
         </span>
     </p-dialog>
@@ -202,7 +199,9 @@
 
     <p-overlayPanel #op1>
         <ng-template pTemplate>
-            <div >Task 1</div>
-            <div>Task 2</div>
+            <div class="docritclk">
+                <div >Task 1</div>
+                <div>Task 2</div>
+            </div>
         </ng-template>
     </p-overlayPanel>

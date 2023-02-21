@@ -3006,6 +3006,7 @@ button.btn.bluebg-button {
 .doctree .p-treenode-icon {
   margin-right: 1rem !important;
   font-size: 22px;
+  color: var(--main-bluecolor) !important;
 }
 .doctree span.p-treenode-label {
   font-size: 16px;
@@ -3018,6 +3019,33 @@ button.btn.bluebg-button {
   background: none !important;
   box-shadow: unset !important;
 }
+
+/* Document-Tree  Screen Styles */
+
+.docfolder .p-card {
+  box-shadow: unset !important;
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+}
+.docfolder .p-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+}
+.docfolder .pi-folder, .docfolder .pi-file {
+  color: var(--main-bluecolor) !important;
+  font-size: 40px;
+}
+.docfolder .p-card-content span {
+  font-size: 16px;
+  color: #232832 !important;
+  display: block;
+  margin-top: 20px;
+}  
+
+/* Document FolderName Popup Styles */
+
 .docfldnam .p-dialog-mask {
   /* background: rgb(0 0 0 / 25%); */
 }
@@ -3153,13 +3181,10 @@ button.custom-popupbtn.mat-button {
   height: 160px !important;
 }
 
-.p-card .p-card-content {
+/* .p-card .p-card-content {
   margin-top: 20px !important;
-}
+} */
 .icon-color{
-  color:var(--main-bluecolor) !important;
-}
-.document-tree .pi-folder-open, .document-tree .pi-folder{
   color:var(--main-bluecolor) !important;
 }
 
