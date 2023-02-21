@@ -111,7 +111,7 @@
             </div>
           </div>
         </div>
-          <div class="col" *ngIf="tablehide && !loading">
+          <div class="col" *ngIf="tablehide">
             <app-dynamic-table [table_data]="tableData" [screenTable]="'common'" [columns_list]="columns_list"
               (editRowById)="editColumn($event)" [show_delete_btn]="false" [show_edit_btn]="true"></app-dynamic-table>
           </div>
@@ -239,8 +239,8 @@
     </button>
   </ng-template>
 </p-dialog>
-<div class="spinoverlay" *ngIf="loading">
+<!-- <div class="spinoverlay" *ngIf="loading">
   <div class="spincenter">
     <img src="../../../../assets/images/EZFlow_Loader.gif" class="ezflow-loader" alt="loader" />
   </div>
-</div>
+</div> -->
