@@ -136,7 +136,6 @@ export class ProjectTaskListComponent implements OnInit {
     this.getTheExistingUsersList();
     this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
       this.all_tasks_list = data;
-      console.log("tasks Data", data);
       this.all_tasks_list.map((item) => {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = moment(item.endDate).format("lll");
@@ -182,7 +181,6 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   viewDetails(event) {
-    console.log(event);
     this.router.navigate(["/pages/projects/taskDetails"], {
       queryParams: {
         project_id: this.project_id,
@@ -299,7 +297,6 @@ export class ProjectTaskListComponent implements OnInit {
 
   getTheExistingUsersList(){
     this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
-      console.log("existingUsersList",res)
       this.existingUsersList = res
     })
   }
