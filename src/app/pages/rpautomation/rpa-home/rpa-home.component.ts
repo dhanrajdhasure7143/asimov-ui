@@ -109,6 +109,7 @@ export class RpaHomeComponent implements OnInit {
     { field: 'botStatus', header: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
     { field: '', header: 'Actions' }
   ];
+  EdithiddenPopUp:boolean=false;
 
 
 
@@ -521,7 +522,7 @@ export class RpaHomeComponent implements OnInit {
 
   openEditBotOverlay(botDetails: any) {
     this.isCreateForm = false;
-    this.hiddenPopUp = true;
+    this.EdithiddenPopUp = true;
     this.botDetails = botDetails;
     this.botFormVisibility=true;
     document.getElementById('bot-form').style.display = 'block';
@@ -591,13 +592,12 @@ export class RpaHomeComponent implements OnInit {
   if(event)
     this.isCreateForm=true;
     this.botFormVisibility=false;
+    this.hiddenPopUp=false;
+    this.EdithiddenPopUp=false;
   }
 
   loopTrackBy(index, term) {
     return index;
-  }
-  closeOverlay(event) {
-    this.hiddenPopUp = event;
   }
 
   clear(table: Table) {
@@ -607,6 +607,12 @@ export class RpaHomeComponent implements OnInit {
     this.router.navigate(["/pages/rpautomation/designer"], {
       queryParams: { botId: row.botId },
     });
+  }
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+  }
+  closeOverlay1(event) {
+    this.EdithiddenPopUp = event;
   }
 
 }
