@@ -431,7 +431,8 @@ public slaupdate : boolean = false;
           {
             Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
-            document.getElementById("SLAConfig_overlay").style.display = "none";
+            // document.getElementById("SLAConfig_overlay").style.display = "none";
+            this.closeOverlay();
           }
           else
             Swal.fire("Error",resp.errorMessage,"error")
@@ -444,7 +445,9 @@ public slaupdate : boolean = false;
           {
             Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
-            document.getElementById("SLAConfig_overlay").style.display = "none";
+            // document.getElementById("SLAConfig_overlay").style.display = "none";
+            this.closeOverlay();
+
           }
           else
             Swal.fire("Error",resp.errorMessage,"error");
@@ -1032,6 +1035,7 @@ public slaupdate : boolean = false;
 
 
     openscheduler(bot)
+
     {
    //   $(".tour_guide").hide();
       this.botid=bot.botId;
@@ -1195,11 +1199,12 @@ public slaupdate : boolean = false;
       this.popup=event;
   }
 
-  closeOverlay(event){
+  closeOverlay(){
     
-    this.hiddenPopUp=event;
-    document.getElementById("SLAConfig_overlay").style.display = "none";
+    this.hiddenPopUp=false;
+    // document.getElementById("SLAConfig_overlay").style.display = "none";
    this.resetsla();
+   this.popup=false;
    
   }
 
