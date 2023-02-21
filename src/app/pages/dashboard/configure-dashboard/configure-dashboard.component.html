@@ -61,19 +61,19 @@
                 <span class="h5">{{widget.widget_title}}</span>   <i class="pi pi-times right" (click)="onDeactivate(widget,i, 'widgets')"></i>
                 <div class="" style="text-align: center;">
                   <div  *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                    <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                    <!-- <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart> -->
                   </div>
                   <div   *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
-                    <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                    <!-- <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="270"></p-chart> -->
                   </div>
                   <div   *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
-                    <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
+                    <!-- <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart> -->
                   </div>
                   <div   *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">        
-                    <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                    <!-- <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart> -->
                   </div>
                   <div  *ngIf="widget.widget_type=='LINE_CHART'">
-                    <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                    <!-- <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart> -->
                   </div>
                   <div *ngIf="widget.widget_type=='TABLE'">
 
