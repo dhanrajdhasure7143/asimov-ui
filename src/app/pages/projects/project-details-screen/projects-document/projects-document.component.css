@@ -43,6 +43,11 @@
   height: 420px;
   overflow: auto;
 }
+.docfilt-icon .pi-filter-slash {
+  font-size: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
 .docfolder .cards {
   width: 20%;
   text-align: center;
