@@ -2882,6 +2882,9 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   width: 100px;
   padding: 12px 16px !important;
 }
+.createtask-dialog .p-dialog-right {
+  justify-content: center !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -2889,10 +2892,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   padding-left: 60px !important;
   margin-top: 60px !important;
 }
-.splitoverlaydiv {
-  padding: 10px 20px 0px;
-  height: 100%;
-}
+
 .splitoverlaydiv .p-tabview.p-component,
 .commentBox .p-tabview.p-component {
   height: 100%;
@@ -2952,7 +2952,14 @@ button.btn.bluebg-button {
   align-items: center;
   justify-content: center;
 }
-
+.create-header {
+  padding: 10px 10px 15px 10px !important;
+  border-bottom: 1px solid #e5e5e5;
+}
+.create-header h3 {
+font-size: 16px;
+margin: 0px;
+}
 .createform-overlay label {
   font-size: 14px;
   color: #7d7d7d;
@@ -2984,6 +2991,13 @@ button.btn.bluebg-button {
   width: 100%;
   height: auto !important;
   overflow: hidden;
+}
+.createform-footer {
+  margin-top: auto !important;
+  text-align: end;
+  position: fixed;
+  bottom: 10px;
+  right: 30px;
 }
 
 /* Overlay  Screen Styles End */
