@@ -2769,6 +2769,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   closeOverlay(event) {
     this.hiddenPopUp = event;
+    // document.getElementById("sch").style.display = "none";
+    this.scheduleOverlayFlag = event;
   }
 
 
