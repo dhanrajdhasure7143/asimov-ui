@@ -68,12 +68,18 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.getAllConnections();
     this.authTypes();
     this.getGrantType();
+
+    this.connectorTable =[
+      {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
+      {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"}
+
+    ]
   }
 
   getAllConnections() {
-    this.rest_api.getConnectionslist().subscribe((data: any) => {
-      this.connectorTable = data;
-      console.log("List Of Connections",data);
+    // this.rest_api.getConnectionslist().subscribe((data: any) => {
+    //   this.connectorTable = data;
+    //   console.log("List Of Connections",data);
       this.spinner.hide();
       this.columns_list = [
         {
@@ -115,7 +121,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         //   multi: false,
         // },
       ];
-    });
+    // });
   }
 
   viewDetails(event) {}
