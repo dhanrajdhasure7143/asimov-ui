@@ -556,6 +556,8 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
+    this.hiddenPopUp1=false;
+    this.hiddenPopUp = false;
     this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     this.rest.getAlluserProcessPiIds().subscribe((data:any) => {
@@ -1118,8 +1120,8 @@ getDBTables(){      //get DB tables list
     this.mytemplateForm.controls["timestamp"].markAsUntouched();
   }
   closeOverlay(event){
-    this.hiddenPopUp=event;
-    this.hiddenPopUp1=event;
+    this.hiddenPopUp=false;
+    this.hiddenPopUp1=false;
   }
 
 }
