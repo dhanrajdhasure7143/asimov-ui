@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 
@@ -12,7 +13,8 @@ export class AdminScreenListComponent implements OnInit {
   screenlist: any = [];
   loading: boolean = false;
   columns_list: any = [];
-  constructor(private router: Router, private rest: RestApiService) {}
+  constructor(private router: Router, private rest: RestApiService,
+    private spinner:LoaderService) {}
 
   ngOnInit(): void {
     this.getScreenList();
@@ -27,7 +29,7 @@ export class AdminScreenListComponent implements OnInit {
   }
 
   getScreenList() {
-    this.loading = true;
+    this.spinner.show();
     this.rest.getScreenList().subscribe((data) => {
       this.screenlist = data;
       this.columns_list = [
@@ -62,7 +64,7 @@ export class AdminScreenListComponent implements OnInit {
           multi: false,
         },
       ];
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
@@ -73,7 +75,7 @@ export class AdminScreenListComponent implements OnInit {
   }
 
   deleteScreen(id: any) {
-    this.loading = true;
+    this.spinner.show();
 
     Swal.fire({
       title: "Are you sure?",
@@ -105,7 +107,7 @@ export class AdminScreenListComponent implements OnInit {
           });
       }
       this.getScreenList();
-      this.loading = false;
+      this.spinner.hide();
 
       // }),
     });

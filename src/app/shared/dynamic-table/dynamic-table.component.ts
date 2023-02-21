@@ -45,11 +45,11 @@ export class DynamicTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-   this.loggedInUser= localStorage.getItem("ProfileuserId")
+   this.loggedInUser= localStorage.getItem("ProfileuserId");
   }
 
   ngOnChanges() {
-    console.log(this.table_data)
+
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
     

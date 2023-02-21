@@ -24,10 +24,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { SplitOverlayComponent } from './split-overlay/split-overlay.component';
 import { AngularSplitModule } from 'angular-split';
+import { UserLettersPipe } from './pipes/user-letters.pipe';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe],
     imports: [
         CommonModule,
         NgxDropzoneModule,

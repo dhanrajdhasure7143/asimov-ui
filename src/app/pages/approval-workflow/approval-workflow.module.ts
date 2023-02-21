@@ -21,6 +21,7 @@ import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MatSortModule } from '@angular/material/sort';
     ApprovalWorkflowRoutingModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule,MatTooltipModule,MatPaginatorModule,MatSortModule
+    MatOptionModule, MatSelectModule,MatTooltipModule,MatPaginatorModule,MatSortModule,
+    PrimengCustomModule
   ],
   providers: [ApprovalHomeHints,
     {

@@ -86,6 +86,8 @@ export class UploadComponent implements OnInit {
   columns_list:any[];
   table_searchFields:any[]=[];
   categories_list_new:any[]=[];
+  hiddenPopUp:boolean=false;
+  hiddenPopUp1: boolean=false;
 
 
   constructor(private router: Router,
@@ -335,8 +337,9 @@ export class UploadComponent implements OnInit {
 
   openXESGZFile(){
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="block";
+    this.hiddenPopUp1=true;
   }
 
   error_display(event) {
@@ -526,6 +529,7 @@ export class UploadComponent implements OnInit {
     this.isTableEnable=false;
     this.isTimestammp=false;
     this.isIncrement=false;
+    this.hiddenPopUp=true;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
     this.rest.fileName.next(null);
@@ -1094,6 +1098,7 @@ getDBTables(){      //get DB tables list
   editProcess(obj){
     this.overlay_data={"type":"edit","module":"pi","selectedObj":obj};
     var modal = document.getElementById('myModal');
+    this.hiddenPopUp1=true;
     modal.style.display="block";
   }
   onChangeValues(){
@@ -1112,6 +1117,10 @@ getDBTables(){      //get DB tables list
     this.mytemplateForm.controls["increment"].markAsUntouched();
     if(this.mytemplateForm.controls["timestamp"])
     this.mytemplateForm.controls["timestamp"].markAsUntouched();
+  }
+  closeOverlay(event){
+    this.hiddenPopUp=event;
+    this.hiddenPopUp1=event;
   }
 
 }

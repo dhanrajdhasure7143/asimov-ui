@@ -9,7 +9,7 @@
                 </div>        
                 <div class="model-text">
                     <h3>Upload Process Model</h3>
-                    <h5>Drag and drop files here
+                    <h5>Drag and drop files here 
                         <span>{{'('+validNotationTypes+')'}}</span>
                     </h5>
                     <button class="btn btn-primary eiap-btn">
@@ -66,5 +66,8 @@
         </div>
 
     </div>
-
-<process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate"></process-category-overlay>
+    <div *ngIf="hiddenPopUp">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)" >
+        <process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate" (closeOverlay)="closeOverlay($event)"></process-category-overlay>
+    </app-split-overlay>
+    </div>

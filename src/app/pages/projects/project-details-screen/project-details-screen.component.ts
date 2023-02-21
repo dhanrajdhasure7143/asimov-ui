@@ -21,11 +21,13 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-project-details-screen',
   templateUrl: './project-details-new.html',
-  styleUrls: ['./project-details-new.css']
+  styleUrls: ['./project-details-new.css'],
+  providers: [MessageService]
 })
 export class ProjectDetailsScreenComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
@@ -226,7 +228,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     { name: "In Progress" },
     { name: "Pipeline" },
     { name: "On Hold" },
-    { name: "In Review" },
     { name: "Closed" },
   ];
 
@@ -240,15 +241,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
   active_inplace:any;
   project_desc_edit:any;
   isEditDesc:boolean=false;
-
+  snapshotDatails:any=[];
 
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: LoaderService) {
+    private spinner: LoaderService,
+    private messageService: MessageService) {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
+        this.role=this.params_data.role
         if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
         this.spinner.show();
         this.getallusers();
@@ -598,54 +601,25 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 
-  getProjectdetails(){​​​​​​
-  this.spinner.show();
+  async getProjectdetails(){​​​​​​
+  // this.spinner.show();
   this.existingUsersList = [];
   this.non_existUsers = [];
-  this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
+ await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
   this.projectDetails=res
-  console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
-  this.processOwnerFlag=false
+  this.processOwnerFlag=false;
   if(this.projectDetails.endDate){
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");
   }
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-  
-  ​​
-  //this.project_id=this.projectDetails.id
-  if(this.projectDetails.resource.length!=0){
-    // this.projectDetails.resource.forEach(item => {
-    //   this.users_list.forEach(item2 => {
-    //     console.log(item)
-    //     console.log(item2)
-    //     if (item2.user_email == item.resource) {
-    //       this.existingUsersList.push(item2)
-    //     }else{
-    //       this.non_existUsers.push(item2)
-    //     }
-    //   })
-    // })
+  this.getTheExistingUsersList();
 
-      this.users_list.forEach(item2 => {
-        if(this.projectDetails.resource.find((projectResource:any) => item2.user_email==projectResource.resource)==undefined)
-          this.non_existUsers.push(item2);
-        else
-          this.existingUsersList.push(item2);
-      })
-  
-    // this.onUsersTab(0);
-  }
-  else{
-    this.existingUsersList=[];
-    this.non_existUsers = this.users_list;
-    // this.onUsersTab(0);
-  }
-  this.spinner.hide();
 })
-  this.getTaskandCommentsData();
-  this.getLatestFiveAttachments(this.project_id)
+  // this.getTaskandCommentsData();
+  // this.getLatestFiveAttachments(this.project_id)
+  this.snapShotDetails();
   }
   profileName() {
     setTimeout(() => {
@@ -1142,14 +1116,16 @@ export class ProjectDetailsScreenComponent implements OnInit {
     // this.projectDetails.startDate = this.projectStartDate;
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
     this.rest_api.update_project(this.projectDetails).subscribe(res => {
-      // this.spinner.hide()
-      // let response: any = res;
-      // if (response.errorMessage == undefined)
-      //   Swal.fire("Success", "Project Updated Successfully !!", "success")
-      // else
-      //   Swal.fire("Error", response.errorMessage, "error");
+      // this.spinner.hide();
+      let response: any = res;
+      if (response.errorMessage == undefined)
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !!'});
+      else
+      this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
       this.getProjectdetails()
       // this.editdata = false;
+    },err=>{
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Project Update failed"});
     });
   }
 
@@ -1890,12 +1866,21 @@ taskListView(){
     this.hiddenPopUp = event;
   }
 
-  onChangeRole(event){
+  onChangeRole(event,tab){
+    if(tab == 0){
     if(event.value.code == 'All') {
     this.users_tableList = this.non_existUsers
     return
     }
-    this.users_tableList = this.non_existUsers.filter(item => (item.displayName == event.value.code))
+    this.users_tableList = this.non_existUsers.filter(item => (item.user_role == event.value.code))
+    }else{
+      if(event.value.code == 'All') {
+        this.users_tableList = this.existingUsersList
+        return
+      }
+      this.users_tableList = this.existingUsersList.filter(item => (item.user_role == event.value.code))
+    }
+
   }
 
   onUsersTab(index){
@@ -1913,7 +1898,7 @@ taskListView(){
       this.columns_list = [
         {ColumnName: "fullName",DisplayName:"Users Onboarded"},
         { ColumnName: "user_role",DisplayName:"Role"},
-        { ColumnName: "tasks",DisplayName:"Number of Tasks"},
+        { ColumnName: "taskCount",DisplayName:"Tasks Assigned"},
         { ColumnName: "action",DisplayName:"Actions"},
       ];
   }
@@ -2062,4 +2047,34 @@ taskListView(){
   onDeactivateEdit(){
     this.isEditDesc = false;
   }
+  
+  getTheExistingUsersList(){
+    let resp_data:any[]=[]
+    this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
+      console.log("existingUsersList",res)
+      resp_data=res;
+      this.users_list.forEach(item2 => {
+        if(resp_data.find((projectResource:any) => item2.user_email==projectResource.userId)==undefined)
+          this.non_existUsers.push(item2);
+        else
+          this.existingUsersList.push(item2);
+      })
+      resp_data.forEach(element => {
+        this.existingUsersList.forEach(ele=>{
+          if(element.userId == ele.user_email)
+            ele["taskCount"]=element.taskCount
+        })
+      });
+    })
+  }
+  snapShotDetails(){
+    let res_data=[]
+    this.rest_api.getSnapshotd(this.project_id).subscribe((data:any)=>{
+      res_data = data
+      this.spinner.hide();
+     if(res_data.length>0)
+      this.snapshotDatails=data[0]
+    })
+  }
+
 }
