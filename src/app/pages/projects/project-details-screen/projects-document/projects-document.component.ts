@@ -468,6 +468,8 @@ addParentFolder() {
 
   onRightClick(event,node){
     event.preventDefault();
+    if(this.selectedItem)this.selectedItem.type='default';
+    this.selectedItem=node;
     console.log(this.selectedItem)
     this.model2.hide();
     if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
