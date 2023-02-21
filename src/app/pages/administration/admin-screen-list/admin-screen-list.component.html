@@ -29,12 +29,13 @@
           (editRowById)="editScreen($event)"
           (deleteItem)="deleteScreen($event)"
           [show_delete_btn]="true"
+          [show_edit_btn]="true"
         ></app-dynamic-table>
     </div>
   </mat-card>
 </div>
 
-<div class="spinoverlay" *ngIf="loading">
+<!-- <div class="spinoverlay" *ngIf="loading">
   <div class="spincenter">
     <img
       src="../../../../assets/images/EZFlow_Loader.gif"
@@ -42,4 +43,4 @@
       alt="EZFlow_Loader"
     />
   </div>
-</div>
+</div> -->
