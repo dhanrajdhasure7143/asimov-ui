@@ -164,7 +164,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isShowExpand_icon : boolean = false;
   isBotCompiled: boolean = false;
   @Input() isBotValidated: boolean = false;
-  
+  isCreateForm:boolean=true;
+  credupdatedata:any;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -2768,6 +2769,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   closeOverlay(event) {
     this.hiddenPopUp = event;
+  }
+
+
+  openCreateCredential(){
+    this.isCreateForm = true;
+    this.hiddenPopUp=false;
+    document.getElementById("createcredentials").style.display='block';
+    // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
+    // document.getElementById("Updatecredntials").style.display='none';
+  }
+
+  refreshCredentialList(event)
+  {
+    this.getTaskForm(this.nodedata)
   }
 
   // stopBot() {
