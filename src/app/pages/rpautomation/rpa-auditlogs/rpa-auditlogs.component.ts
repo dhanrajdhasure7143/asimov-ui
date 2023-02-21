@@ -62,7 +62,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.auditLogsData = [...response.Status.map((item: any) => {
-          if (item.botName.split("|")[1] != undefined) {
+          if (item.botName.split("|")[1] != undefined) {        
             if (item.versionNew != null) {
               item["versionNew"] = parseFloat(item.versionNew).toFixed(1)
             }
@@ -75,11 +75,31 @@ export class RpaAuditlogsComponent implements OnInit {
             if(item['status']=='UpdatedVersion'){
               item["taskName"]=`Version ${item.previousValue} is upgraded to Version ${item.newValue}</b>`
             }
+            if(item['Status']=='UpdatedConfig')
+            {
+              if(item.taskName=="Login Mail")
+              {
+                if(item.changeActivity=='Email')
+                {
+                  let newValue:any=JSON.parse(item.newValue);
+                  let previouseValue:any=JSON.parse(item.previousValue);
+                  if(newValue.credentialId!=undefined)
+                  {
+                    item['newValue']=newValue.userName;
+                  }
+                  if(previouseValue.credentialId!=undefined)
+                  {
+                    item['previousValue']=previouseValue.userName;
+                  }
+                }
+              }
+            }
           } else {
-            item["Status"] = "UpdatedConfig"
+            item["Status"] = "UpdatedConfig";
           }
           return item;
         })].reverse();
+        
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {

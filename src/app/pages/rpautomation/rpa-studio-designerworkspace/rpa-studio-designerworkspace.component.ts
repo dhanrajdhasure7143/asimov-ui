@@ -164,7 +164,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isShowExpand_icon : boolean = false;
   isBotCompiled: boolean = false;
   @Input() isBotValidated: boolean = false;
-  
+  isCreateForm:boolean=true;
+  credupdatedata:any;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -2187,38 +2188,45 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (
         actualTasks.find((item2) => item.nodeId == item2.nodeId) == undefined
       ) {
-        this.auditLogs.push({
-          botId: this.finalbot.botId,
-          botName: `${this.finalbot.botName}|AddedTask`,
-          changeActivity: "-",
-          changedBy: `${firstName} ${lastName}`,
-          //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-          newValue: "-",
-          previousValue: "-",
-          taskName: item.taskName,
-          version: this.finalbot.version,
-        });
+       // console.log(this.auditLogs)
+        if(this.auditLogs.find((auditLog:any)=>auditLog.nodeId==item.nodeId)==undefined)
+          this.auditLogs.push({
+            botId: this.finalbot.botId,
+            botName: `${this.finalbot.botName}|AddedTask`,
+            changeActivity: "-",
+            changedBy: `${firstName} ${lastName}`,
+            //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            newValue: "-",
+            previousValue: "-",
+            taskName: item.taskName,
+            version: this.finalbot.version,
+            nodeId:item.nodeId,
+          });
       } else {
-        let actualTask: any = actualTasks.find(
-          (item2) => item.nodeId == item2.nodeId
-        );
-        for (let i = 0; i < item.attributes.length; i++) {
-          let actualTaskAttribute = actualTask.attributes.find(
-            (att: any) => att.metaAttrId == item.attributes[i].metaAttrId
+        if(this.auditLogs.find((auditLog:any)=>auditLog.nodeId==item.nodeId)==undefined)
+        {     
+          let actualTask: any = actualTasks.find(
+            (item2) => item.nodeId == item2.nodeId
           );
-          if (actualTaskAttribute != undefined) {
-            if (item.attributes[i].attrValue != actualTaskAttribute.attrValue) {
-              this.auditLogs.push({
-                botId: this.finalbot.botId,
-                botName: `${this.finalbot.botName}|UpdatedConfig`,
-                changeActivity: item.attributes[i].label,
-                changedBy: `${firstName} ${lastName}`,
-                //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-                newValue: item.attributes[i].attrValue,
-                previousValue: actualTaskAttribute.attrValue,
-                taskName: actualTask.taskName,
-                version: this.finalbot.version,
-              });
+          for (let i = 0; i < item.attributes.length; i++) {
+            let actualTaskAttribute = actualTask.attributes.find(
+              (att: any) => att.metaAttrId == item.attributes[i].metaAttrId
+            );
+            if (actualTaskAttribute != undefined) {
+              if (item.attributes[i].attrValue != actualTaskAttribute.attrValue) {
+                  this.auditLogs.push({
+                    botId: this.finalbot.botId,
+                    botName: `${this.finalbot.botName}|UpdatedConfig`,
+                    changeActivity: item.attributes[i].label,
+                    changedBy: `${firstName} ${lastName}`,
+                    //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                    newValue: item.attributes[i].attrValue,
+                    previousValue: actualTaskAttribute.attrValue,
+                    taskName: actualTask.taskName,
+                    version: this.finalbot.version,
+                    nodeId:item.nodeId,
+                  });
+              }
             }
           }
         }
@@ -2229,18 +2237,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (
         finalTasks.find((item2: any) => item2.nodeId == item.nodeId) ==
         undefined
-      ) {
-        this.auditLogs.push({
-          botId: this.finalbot.botId,
-          botName: `${this.finalbot.botName}|RemovedTask`,
-          changeActivity: "-",
-          changedBy: `${firstName} ${lastName}`,
-          // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-          newValue: "-",
-          previousValue: "-",
-          taskName: item.taskName,
-          version: this.finalbot.version,
-        });
+      ) {    
+        if(this.auditLogs.find((auditLog:any)=>auditLog.nodeId==item.nodeId)==undefined)
+          this.auditLogs.push({
+            botId: this.finalbot.botId,
+            botName: `${this.finalbot.botName}|RemovedTask`,
+            changeActivity: "-",
+            changedBy: `${firstName} ${lastName}`,
+            // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            newValue: "-",
+            previousValue: "-",
+            taskName: item.taskName,
+            version: this.finalbot.version,
+            nodeId:item.nodeId,
+          });
       }
     });
 
@@ -2759,6 +2769,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   closeOverlay(event) {
     this.hiddenPopUp = event;
+  }
+
+
+  openCreateCredential(){
+    this.isCreateForm = true;
+    this.hiddenPopUp=false;
+    document.getElementById("createcredentials").style.display='block';
+    // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
+    // document.getElementById("Updatecredntials").style.display='none';
+  }
+
+  refreshCredentialList(event)
+  {
+    this.getTaskForm(this.nodedata)
   }
 
   // stopBot() {
