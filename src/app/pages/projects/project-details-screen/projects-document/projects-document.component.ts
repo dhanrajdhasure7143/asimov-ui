@@ -21,8 +21,7 @@ export class ProjectsDocumentComponent implements OnInit {
   text: string;
   folder_name: any;
   isDialogBox: boolean = false;
-  isFolder : boolean = false;
-  isTree : boolean = true;
+  isFolder : boolean = true;
   isSubFolder : boolean = false;
   sampleNode_object = {
     key :"",
@@ -35,12 +34,15 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedFolder: any;
   selectedItem:any;
   @ViewChild('op', {static: false}) model;
+  @ViewChild('op2', {static: false}) model2;
   isDialog2:boolean = false;
   term:any;
   params_data:any;
   project_id:any;
   project_name:any;
   nodeMap:Object = {};
+  opened_folders:any[]=[];
+  selected_folder_rename:any;
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -50,6 +52,13 @@ export class ProjectsDocumentComponent implements OnInit {
       this.params_data = data;
       this.project_id = this.params_data.project_id;
       this.project_name = this.params_data.project_name;
+      if(this.params_data.folderView){
+        this.isFolder=true;
+      }
+        if(this.params_data.treeView){
+          this.isFolder=false
+        }
+      
     });
   }
 
@@ -69,6 +78,7 @@ export class ProjectsDocumentComponent implements OnInit {
         label: obj.label,
         data: obj.data,
         key: obj.key,
+        type:"default"
       };
         if(obj.data_type == 'folder'){
           node['collapsedIcon']=  "pi pi-folder"
@@ -160,50 +170,6 @@ testData =[
       ({ dataId, name, description,parentId, children: this.getDataByParentId(data, dataId) }))
   }
   
-  data = [{
-      dataId: 1,
-      name: 'test1',
-      description: 'some desc',
-      parentId: null
-    },
-    {
-      dataId: 2,
-      name: 'test2',
-      description: 'some desc',
-      parentId: 1
-    },
-    {
-      dataId: 3,
-      name: 'test3',
-      description: 'some desc',
-      parentId: 1
-    },
-    {
-      dataId: 5,
-      name: 'test5',
-      description: 'some desc',
-      parentId: 4
-    },
-    {
-      dataId: 4,
-      name: 'test4',
-      description: 'some desc',
-      parentId: null
-    },
-    {
-      dataId: 6,
-      name: 'test6',
-      description: 'some desc',
-      parentId: 5
-    },
-    {
-      dataId: 6,
-      name: 'test6',
-      description: 'some desc',
-      parentId: null
-    }
-  ];
-  
 
   treeChildSave() {
     if (this.selectedFile && this.entered_folder_name) {
@@ -268,15 +234,19 @@ testData =[
 
   folderView(){
     this.isFolder = true;
-    this.isTree = false;
+    let params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
   }
 
   treeView(){
-    this.isTree = true;
     this.isFolder = false;
+    this.folder_files = this.files;
+    this.opened_folders=[];
+    let params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
   }
 
-  openAddFolderOverlay(item){
+  openAddFolderOverlay(item,clickType){
     this.selectedItem = item;
     if(this.selectedItem.label =="Add Folder / Document" || this.selectedItem.label =="Add Folder"){
       this.createFolderPopUP = true;
@@ -286,7 +256,9 @@ testData =[
       if(this.selectedItem.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      this.onCreateFolder();
+      if(clickType== 'dblclick'){
+        this.onCreateFolder();
+      }
     }
   }
 
@@ -298,6 +270,7 @@ testData =[
     if(this.selectedItem.label =="Add Folder")
     return this.isDialogBox = true;
     this.selectedFolder = this.selectedItem
+    this.opened_folders.push(this.folder_files)
     this.folder_files = this.selectedItem.children
 
   }
@@ -327,7 +300,21 @@ testData =[
   }
 }
 
-addParent() {
+addParentFolder() {
+  let request_object=  {
+    key: String(this.files.length),
+    label: this.folder_name,
+    data: "Folder",
+    ChildId:1,
+    DataType:"folder",
+    ProjectId:this.project_id,
+    fileSize:"",
+    task_id:''
+  }     
+
+  this.rest_api.createFolderByProject(request_object).subscribe(res=>{
+    console.log(res)
+  })
   this.files.push({
     key: String(this.files.length),
     label: this.folder_name,
@@ -342,7 +329,7 @@ addParent() {
         data_type:"addfolder",
         expandedIcon: "pi pi-folder",
         collapsedIcon: "pi pi-folder",
-      },
+      }
     ],
   });
   this.folder_name = "";
@@ -384,6 +371,7 @@ addParent() {
 
   onNodeClick(event,node){
     // console.log(node)
+    console.log(this.selectedItem)
     this.model.hide();
     if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
       setTimeout(() => {
@@ -392,9 +380,18 @@ addParent() {
     }
   }
 
-  onFolderRename(){
-    this.isDialog2 = true;
-    this.entered_folder_name = this.selectedItem.node.label
+  onFolderRename(type){
+    // this.isDialog2 = true;
+    console.log(this.selectedItem)
+    if(type =='folderView'){
+      this.entered_folder_name = this.selectedItem.label
+      this.selectedItem.type ='textBox'
+      this.model2.hide();
+    }else{
+      this.entered_folder_name = this.selectedItem.node.label
+      this.selectedItem.node.type ='textBox'
+      this.model.hide();
+    }
   }
 
   saveRenameFolder(){
@@ -467,6 +464,34 @@ addParent() {
         // Upload the file as desired
       }
     }
+  }
+
+  onRightClick(event,node){
+    event.preventDefault();
+    console.log(this.selectedItem)
+    this.model2.hide();
+    if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
+      setTimeout(() => {
+        this.model2.show(event)
+        }, 200);
+  }
+}
+
+  onCancelFolderNameUpdate(){
+    this.selectedItem.node.type ='default';
+    this.entered_folder_name='';
+  }
+
+  onSaveFolderNameUpdate(){
+    console.log(this.selectedItem)
+    console.log(this.entered_folder_name)
+    this.selectedItem.node.label = this.entered_folder_name;
+    this.selectedItem.node.type ='default';
+  }
+  backToSelectedFolder(){
+    this.folder_files = this.opened_folders[this.opened_folders.length-1];
+    this.opened_folders.pop()
+    console.log(this.opened_folders)
   }
   
 }

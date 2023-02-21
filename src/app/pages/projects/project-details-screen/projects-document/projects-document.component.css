@@ -121,3 +121,7 @@
   top: 0;
   opacity: 0;
 }
+
+:host ::ng-deep .p-tree-filter-container {
+  margin-top: 1rem;
+}
