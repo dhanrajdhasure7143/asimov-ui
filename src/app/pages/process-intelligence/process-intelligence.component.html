@@ -11,7 +11,7 @@
             </span>
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="isPIHeaderShow || isProjDetails">
-            <div class="row bps-float">
+            <div class="row justify-content-end bps-float">
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
                 <img src="../../../assets/images/PI/download.svg">
                 <span class="testtooltip">Download</span>
@@ -110,7 +110,7 @@
             </div>  
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="insights_header">
-            <div class="row PI-insights-headericons pull-right">             
+            <div class="row w-100 justify-content-end PI-insights-headericons">             
               <button class="tsttooltipbtn" (click)="openinsightsHrsOverLay()">
                 <img src="../../../assets/images/PI/timefeed.svg">
                 <span class="testtooltip">Time Feed</span>

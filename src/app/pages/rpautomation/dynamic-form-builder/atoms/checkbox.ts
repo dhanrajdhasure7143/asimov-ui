@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       <div [formGroup]="form" *ngIf="field.type=='checkbox'">
         <div style="display:flex"  >
           <div  class="form-check form-check">
-             <input [attr.disabled]="feilddisable" (change)="updateFields()" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [checked]="field.value==true || field.value=='true'" />
+             <input [attr.disabled]="feilddisable" (change)="updateFields()" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [value]="(field.value==true || field.value=='true')?true:false" />
              &nbsp;<span>{{field.label}}</span>
           </div>
         </div>
@@ -37,8 +37,8 @@ export class CheckBoxComponent implements OnInit  {
     }
     ngOnInit() {
       this.fields=this.dynamic_forms.fields;
-     
-
+      if(this.field.value=='false')
+        this.form.get(this.field.name+"_"+this.field.id).setValue((this.field.value==true|| this.field.value=='true')?true:false);
       if(this.field.value=="true" && this.field.name=="isDownloadClick")
       {
         
@@ -48,6 +48,8 @@ export class CheckBoxComponent implements OnInit  {
         this.form.get([downloadRefField.name + '_' + downloadRefField.id]).setValidators(Validators.required);
         this.form.get([downloadRefField.name + '_' + downloadRefField.id]).updateValueAndValidity();
       }
+      if(this.field.dependency != "" && this.field.dependency != null && this.field.dependency != " ")
+      {
       let dependencydata:any=this.field.dependency;
       let dependency1=dependencydata.split(",")[0].split(":");
       let dependency2=dependencydata.split(",")[1].split(":");
@@ -74,8 +76,8 @@ export class CheckBoxComponent implements OnInit  {
         },500)
      
 
+        }
       }
-
     }
     
     change()

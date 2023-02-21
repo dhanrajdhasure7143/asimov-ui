@@ -511,7 +511,7 @@
 
 <div class="" *ngIf="hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
-        <div class="splitoverlaydiv">
+        <div class="splitoverlaydiv h-100">
             <p-tabView #tabView (onChange)="onUsersTab($event.index)">
                 <p-tabPanel  [selected]="true">
                     <ng-template pTemplate="header">
@@ -585,7 +585,7 @@
                     </p-table>
                 </div>
                 <div class="row justify-content-end" *ngIf="users_tabIndex != 1">
-                    <button class="btn blue-btntext">Cancel</button>
+                    <button class="btn new-cancelbtn">Cancel</button>
                     <button class="btn bluebg-button" (click)="addresources()">Onboard Users</button>
                 </div>
             </p-tabView>
@@ -596,16 +596,14 @@
 
 <div [hidden]="!createTaskOverlay">
     <app-split-overlay (closeOverlay)="closeCreateTaskOverlay($event)">
-        <div class="">
-            <div class="rpa-modal-header">
+        <div class="h-100">
+            <div class="create-header">
                 <h3>Create Task</h3>
             </div>
-            <div class="modal-body actions-mbody actionsoverlay-mbody">
-                <div>
-                    <app-create-tasks [users_list]="users_list" [params_data]="params_data"
+            <div class="h-100">
+                <app-create-tasks [users_list]="users_list" [params_data]="params_data"
                         [hiddenPopUp]="createTaskOverlay" [existingUsersList]="existingUsersList"
                         [project_name]="projectDetails.projectName"></app-create-tasks>
-                </div>
             </div>
         </div>
     </app-split-overlay>

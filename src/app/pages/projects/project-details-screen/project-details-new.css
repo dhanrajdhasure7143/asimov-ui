@@ -221,7 +221,8 @@ input.msgip {
 }
 
 button.btn.blue-btntext a,
-button.btn.blue-btntext {
+button.btn.blue-btntext,
+button.btn.new-cancelbtn {
     color: #098de6 !important;
     font-size: 16px;
 }
@@ -273,8 +274,25 @@ p.qcard-name {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
 }
-
 /* quicksnapshot styles */
+
+/* Form Overlay New Styles Start */
+.row.create-body {
+  align-items: center;
+  justify-content: space-evenly;
+  height: calc(100% - 125px);
+}
+.prjoverlay p.title_text {
+  margin: 0;
+  font-size: 18px;
+  color: #232832;
+  margin-top: 10px;
+}
+p-image.p-element.crtprgm {
+  margin-top: 20px;
+  display: block;
+}
+/* Form Overlay New Styles End */
 
 button span {
     margin-left: 5px;
@@ -295,26 +313,15 @@ span.userstabbtns {
 }
 
 .res-circle {
-    /* width: 44px;
-    border-radius: 100%;
-    height: 43px;
-    margin-top: 2px;
-    background: #fff;
-    margin-left: 5px;
-    font-weight: bold;
-    padding: 8px 11px;
-    border: 1px solid black; */
     width: 32px;
     border-radius: 100%;
     height: 32px;
     margin-top: 7px;
     margin-left: 5px;
     padding: 5px 7px;
-    /* border: 1px solid black; */
 }
 
 .res-reply {
-    width: 32px;
     width: 32px;
     height: 32px;
     position: absolute;

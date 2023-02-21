@@ -74,11 +74,9 @@ input:disabled{
     margin-left: -20px;
   }
 .input-fields{
-    margin-bottom: 20px;
-    padding: 10px 0px !important;
-    background-color: #f3f3f3;
-    margin-left: -10px;
-    margin-right: -10px;
+  margin: 10px 0px 20px 0px !important;
+  padding: 10px 0px !important;
+  background-color: #f3f3f3;
 }
 .input-fields label{
     font-weight: 400 !important;
@@ -486,7 +484,7 @@ img.hover-img {
 }
 
 .boxes {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .amountinputs input[type="text"]:not(.mat-input-element), .amountinputs input[type="password"] {
   border: 1px solid #ccc !important;
@@ -517,7 +515,7 @@ img.hover-img {
 }
 .resuractivity-footer {
   background-color: #f3f3f3;
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 .resuractivitytitle {
   padding-left: 15px;
