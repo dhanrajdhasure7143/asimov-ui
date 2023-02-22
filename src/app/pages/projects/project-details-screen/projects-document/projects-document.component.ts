@@ -63,92 +63,79 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.files=[
-      {
-        key: "0",
-        label: "Add Folder",
-        data: "Add Folder",
-        data_type:"addfolder",
-        collapsedIcon: 'pi pi-folder',
-        expandedIcon: 'pi pi-folder'
-      },
-    ];
-    for (let obj of this.testData) {
-      let node = {
-        label: obj.label,
-        data: obj.data,
-        key: obj.key,
-        type:"default"
-      };
-        if(obj.data_type == 'folder'){
-          node['collapsedIcon']=  "pi pi-folder"
-          node["expandedIcon"]  ="pi pi-folder-open"
-      }else{
-        node['icon']=  "pi pi-file"
-      }
-      this.nodeMap[obj.key] = node;
-      if (obj.key.indexOf('-') === -1) {
-        this.files.push(node);
-      } else {
-        let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
-        let parent = this.nodeMap[parentKey];
-        if (parent) {
-          if (!parent.children) {
-            let obj1={
-              key: obj.key+'-0',
-              label: "Add Folder / Document",
-              data_type:"addfolder",
-              collapsedIcon: 'pi pi-folder',
-              expandedIcon: 'pi pi-folder'
-            }
-            parent.children = [obj1];
-          }
-          parent.children.push(node);
-        }
-      }
-    }
-    this.folder_files = this.files
+
     // setTimeout(()=>{
     //   // console.log(this.getDataByParentId(this.data, null));
     //   console.log("testing",this.treeData)
     // },1000)
 
-
+    this.getTheListOfFolders();
   }
-  
 
-  
-
-  
-
-testData =[
-
-  {
-    key: "1",
-    label: "Analysis",
-    data: "Documents Folder",
-    data_type:"folder",},
-      { key: "1-2", label: "Document 2", data: "Document",data_type:"file",fileSize:"",task_id:'',project_id:''},
-      { key: "1-3", label: "Document 3", data: "Document",data_type:"file",fileSize:"",task_id:'',project_id:''},
-      { key: "1-3", label: "Document 3", data: "Document",data_type:"file",fileSize:"" ,task_id:'',project_id:''},
-  {
-    key: "2",
-    label: "System Connectivity",
-    data: "Pictures Folder",
-    data_type:"folder"},
-      { key: "2-1", label: "Document 1", data: "Document",data_type:"file" },
-      { key: "2-2",label: "Document 2", data: "Document",data_type:"file" },
-      { key: "2-3", label: "Document 3", data: "Document",data_type:"file" },
-  {
-    key: "3",
-    label: "Process Documents",
-    data: "Pictures Folder",
-    data_type:"folder"},
-      { key: "3-1", label: "Document 1", data: "Document",data_type:"file" },
-      { key: "3-2", label: "Document 2", data: "Document",data_type:"file" },
-      { key: "3-3", label: "Document 3", data: "Document",data_type:"file" },
-
-]
+  getTheListOfFolders(){
+    let res_data:any=[];
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
+      console.log(res)
+        res_data=res
+      this.files=[
+        {
+          key: "0",
+          label: "Add Folder",
+          data: "Add Folder",
+          data_type:"addfolder",
+          collapsedIcon: 'pi pi-folder',
+          expandedIcon: 'pi pi-folder'
+        },
+      ];
+      for (let obj of res_data) {
+        let node = {
+          label: obj.label,
+          data: obj.data,
+          key: obj.key,
+          type:"default",
+          uploadedBy:obj.uploadedBy,
+          projectId:obj.projectId,
+          id: obj.id
+        };
+          if(obj.dataType == 'folder'){
+            node['collapsedIcon']=  "pi pi-folder"
+            node["expandedIcon"]  ="pi pi-folder-open"
+        }else{
+          node['icon']=  "pi pi-file"
+        }
+        this.nodeMap[obj.key] = node;
+        if (obj.key.indexOf('-') === -1) {
+          node['children']=[
+          {
+            key: obj.key+'-0',
+            label: "Add Folder / Document",
+            data_type:"folder",
+            collapsedIcon: 'pi pi-folder',
+            expandedIcon: 'pi pi-folder'
+          }]
+          this.files.push(node);
+        } else {
+          let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+          let parent = this.nodeMap[parentKey];
+          if (parent) {
+            if (!parent.children) {
+              let obj1={
+                key: obj.key+'-0',
+                label: "Add Folder / Document",
+                data_type:"addfolder",
+                collapsedIcon: 'pi pi-folder',
+                expandedIcon: 'pi pi-folder'
+              }
+              parent.children = [obj1];
+            }
+            parent.children.push(node);
+          }
+        }
+      }
+      this.folder_files = this.files
+      console.log(this.files)
+    })
+  }
 
   getDataByParentId1(data, parent) {
     const result = data.filter(d => d.parentId === parent);
@@ -190,7 +177,6 @@ testData =[
       this.selectedFile.parent.children.push(object);
       this.entered_folder_name = "";
       this.isDialog = false;
-      console.log(this.selectedFile)
     }
   }
 
@@ -326,26 +312,27 @@ addParentFolder() {
 
   this.rest_api.createFolderByProject(fileData).subscribe(res=>{
     console.log(res)
+    this.files.push({
+      key: String(this.files.length),
+      label: this.folder_name,
+      data: "Movies Folder",
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      children: [
+        {
+          key: String(this.files.length)+"-0" ,
+          label: "Add Folder / Document",
+          data: "Work Folder",
+          data_type:"addfolder",
+          expandedIcon: "pi pi-folder",
+          collapsedIcon: "pi pi-folder",
+        }
+      ],
+    });
+    this.folder_name = "";
+    this.isDialogBox = false;
   })
-  this.files.push({
-    key: String(this.files.length),
-    label: this.folder_name,
-    data: "Movies Folder",
-    expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder",
-    children: [
-      {
-        key: String(this.files.length)+"-0" ,
-        label: "Add Folder / Document",
-        data: "Work Folder",
-        data_type:"addfolder",
-        expandedIcon: "pi pi-folder",
-        collapsedIcon: "pi pi-folder",
-      }
-    ],
-  });
-  this.folder_name = "";
-  this.isDialogBox = false;
+
 }
 
   // removeRoute(node) {
@@ -383,11 +370,12 @@ addParentFolder() {
 
   onNodeClick(event,node){
     // console.log(node)
-    console.log(this.selectedItem)
+    
     this.model.hide();
     if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
       setTimeout(() => {
         this.model.show(event)
+        console.log(this.selectedItem.node)
         }, 200);
     }
   }
@@ -439,7 +427,43 @@ addParentFolder() {
     { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
   }
 
-  changefileUploadForm(e){
+  singleFileUpload(e){
+    let object = { ...{}, ...this.sampleNode_object };
+    object.label = this.entered_folder_name;
+    let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
+    object.key = this.selectedFile.parent.key + "-" + objectKey;
+
+    var fileData = new FormData();
+    var selectedFile = e.target.files[0];
+    fileData.append("filePath", e.target.files[0]);
+    fileData.append("key",object.key)
+    fileData.append("label",selectedFile.name.split('.')[0])
+    fileData.append("data","file")
+    fileData.append("ChildId",'1')
+    fileData.append("dataType",selectedFile.name.split('.')[1])
+    fileData.append("fileSize",selectedFile.size)
+    fileData.append("task_id",'')
+    fileData.append("projectId", this.project_id)
+    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+      this.createTreeFolderOverlay=false;
+    // this.getTheListOfFolders();
+    let obj={
+      key: object.key,
+      label: selectedFile.name,
+      data: "file",
+      collapsedIcon: "pi pi-file",
+      dataType:selectedFile.name.split('.')[1],
+      project_id:this.project_id,
+      task_id:"",
+      fileSize:this.project_id
+    }
+    console.log(obj)
+    this.selectedFile.parent.children.push(obj)
+
+    })
+      // for (var i = 0; i < files.length; i++) {
+  //   fileData.append("filePath", files[i]);
+  // }
   //   if(this.file_Category == "Template"){
   //     this.fileList=[];
   //     this.listOfFiles=[];
@@ -463,19 +487,37 @@ addParentFolder() {
       const folderName = files[0].webkitRelativePath.split('/')[0];
       console.log('Selected folder:', folderName);
     }
+    let fileFormArray:any=[];
     // console.log(files,event)
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (file.webkitRelativePath) {
         // The file is inside a folder
+        let fileData=new FormData();
         console.log(file.webkitRelativePath);
+        fileData.append("filePath", file);
+        fileData.append("key",String("sample"))
+        fileData.append("label",file.name.split('.')[0])
+        fileData.append("data","file")
+        fileData.append("ChildId",'1')
+        fileData.append("DataType",file.name.split('.')[1])
+        fileData.append("fileSize",file.size)
+        fileData.append("task_id",'')
+        fileData.append("projectId", this.project_id);
+        fileFormArray.push(fileData)
         // Upload the file as desired
       } else {
+ 
         // The file is not inside a folder
         console.log(file.name);
         // Upload the file as desired
       }
     }
+    console.log(fileFormArray)
+    console.log(fileFormArray[0].get("label"))
+    // this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
+    //   console.log(res)
+    // })
   }
 
   onRightClick(event,node){
@@ -497,14 +539,13 @@ addParentFolder() {
   }
 
   onSaveFolderNameUpdate(){
-    console.log(this.selectedItem)
-    console.log(this.entered_folder_name)
     this.selectedItem.node.label = this.entered_folder_name;
     this.selectedItem.node.type ='default';
   }
+
   backToSelectedFolder(){
     this.folder_files = this.opened_folders[this.opened_folders.length-1];
-    this.opened_folders.pop()
+    this.opened_folders.pop();
     console.log(this.opened_folders)
   }
   
