@@ -179,8 +179,8 @@
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <div class="upload-btn-wrapper" (change)="changefileUploadForm($event)" >
-                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem" (change)="changefileUploadForm($event)" ></i><br>
+                            <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
+                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem" (change)="singleFileUpload($event)" ></i><br>
 
                                 <button class="btn">Upload Document</button>
                                 <input type="file" name="myfile" />
@@ -207,7 +207,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="treeChildSave()">Save</button>
+            <button type="button" class="btn btn-primary" (click)="treeChildSave()">TreeChildSave</button>
         </span>
     </p-dialog>
 

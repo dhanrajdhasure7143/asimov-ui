@@ -190,7 +190,6 @@ testData =[
       this.selectedFile.parent.children.push(object);
       this.entered_folder_name = "";
       this.isDialog = false;
-      console.log(this.selectedFile)
     }
   }
 
@@ -439,7 +438,30 @@ addParentFolder() {
     { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
   }
 
-  changefileUploadForm(e){
+  singleFileUpload(e){
+    let object = { ...{}, ...this.sampleNode_object };
+    object.label = this.entered_folder_name;
+    let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
+    object.key = this.selectedFile.parent.key + "-" + objectKey;
+
+    var fileData = new FormData();
+    var selectedFile = e.target.files[0];
+    console.log(selectedFile)
+    fileData.append("filePath", e.target.files[0]);
+    fileData.append("key",String(this.files.length))
+    fileData.append("label",selectedFile.name.split('.')[0])
+    fileData.append("data","file")
+    fileData.append("ChildId",'1')
+    fileData.append("DataType",selectedFile.name.split('.')[1])
+    fileData.append("fileSize",selectedFile.size)
+    fileData.append("task_id",'')
+    fileData.append("projectId", this.project_id)
+    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+      console.log(res)
+    })
+      // for (var i = 0; i < files.length; i++) {
+  //   fileData.append("filePath", files[i]);
+  // }
   //   if(this.file_Category == "Template"){
   //     this.fileList=[];
   //     this.listOfFiles=[];
