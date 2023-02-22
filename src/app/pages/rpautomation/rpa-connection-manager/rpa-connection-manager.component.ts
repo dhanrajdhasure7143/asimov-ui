@@ -146,7 +146,6 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
-  viewConnector() {}
   readSelectedData(data) {
     this.selectedData = data;
     this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
