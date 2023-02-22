@@ -19,7 +19,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width: 0.5rem" *ngIf="checkBoxShow">
+                <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}"
@@ -61,7 +61,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
-                <td *ngIf="checkBoxShow">
+                <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">

@@ -1,5 +1,5 @@
 <div class="main-content">
-    <div class="row content-area">
+    <div class="content-area">
         <div class="row module-heading title ">
           <span class="module-back-button" routerLink="/pages/rpautomation/home">
               <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -9,7 +9,7 @@
           </span>
         </div>
 
-      <mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+      <!-- <mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
           <mat-tab label="Environments">
 
               <ng-template mat-tab-label>
@@ -55,6 +55,37 @@
         <app-rpa-credentials></app-rpa-credentials>
       </div>
       </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
+
+    <p-tabView #tabView styleClass="tabview-custom" (onChange)="onTabChanged($event, tabView)" [(activeIndex)]="selected_tab_index">
+      <p-tabPanel header="Environments" >
+          <ng-template pTemplate = "header">
+              <i class="pi pi-desktop icon-color tab_icons"></i>
+              <span class="tab_icons">Environments</span>
+          </ng-template>
+          <app-environments></app-environments>
+      </p-tabPanel>
+      <p-tabPanel header="Database Connections">
+          <ng-template pTemplate = "header">
+              <i class="pi pi-database text-primary tab_icons"></i>
+              <span class="tab_icons">Database Connections</span>
+          </ng-template>
+          <app-rpa-database-connections></app-rpa-database-connections>
+      </p-tabPanel>
+      <p-tabPanel header="Connection Manager">
+          <ng-template pTemplate = "header">
+              <i class="pi pi-link tab_icons icon-color"></i>
+              <span class="tab_icons">Connection Manager</span>
+          </ng-template>
+          <app-rpa-connection-manager></app-rpa-connection-manager>
+      </p-tabPanel>
+      <p-tabPanel header="Email">
+        <ng-template pTemplate = "header">
+          <i class="pi pi-envelope tab_icons icon-color"></i>
+            <span class="tab_icons">Email</span>
+        </ng-template>
+        <app-rpa-credentials></app-rpa-credentials>
+    </p-tabPanel>
+  </p-tabView>
   </div>  
 </div>

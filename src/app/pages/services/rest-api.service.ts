@@ -1648,4 +1648,8 @@ createFolderByProject(body){
   return this.http.post("/platform-service/document/createFolder",body)
 }
 
+getListOfFoldersByProjectId(projectId){
+  return this.http.get("/platform-service/document/fetchFoldersDataByProjectId/"+projectId);
+}
+
 }

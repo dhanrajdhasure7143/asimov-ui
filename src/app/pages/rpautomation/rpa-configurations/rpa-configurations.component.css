@@ -110,4 +110,8 @@ min-width:10px !important;
   float: right !important;
   margin-right: 10px !important;
 }
+.tab_icons{
+  font-size: 17px;
+  padding-left: 13px;
+}
 
