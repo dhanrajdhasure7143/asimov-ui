@@ -22,7 +22,7 @@
 }
 .well1-dynmic{background-color: white;
 box-shadow: 1px 0px 3px 0px #d6d3d336;
-border: 1.5px solid #9a9898;
+border: 1.5px solid #B3BAC5;
 border-radius: 4px;
 padding: 11px 8px !important;}
 
@@ -103,3 +103,9 @@ ul.ui-p-tabview {
 .widget-main{height:50px;}
 .widget-main .bps-labcls{float:right}
 .img-M{margin-right:9px;width:95%;}
+.btn-secondary {
+    color: #080808;
+    background-color: #E9E9E9;
+    border-color: #E9E9E9;
+}
+.plus{margin-left:7px;font-size:15px;}

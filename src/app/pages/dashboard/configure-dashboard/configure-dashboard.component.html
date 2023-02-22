@@ -11,25 +11,45 @@
           <div class="col-md-8 pr-0 text-right">
             <button class="btn btn-primary eiap-btn">Done </button>
             <button class="btn-dots eiap-btn">
-              <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
+              <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-12">
-        <div class="card well">
-          <img src="..\assets\images-n\dashboard\warning2.svg" width="15px;" />
-          Your currently editing your dashboard. Changes will be saved after clicking the done button.
+        <div class="well flex-container">
+           <div class="img-div">
+              <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
+           </div>
+           <div>
+              <p class="warning-p" >Your currently editing your dashboard. Changes will be saved after clicking the done button.</p>
+           </div>
         </div>
-      </div>
+        <div class=" flex-container">
+           <div class="img-div">
+           </div>
+           <div>
+           </div>
+        </div>
+     </div>
       <div class="col-md-12 py-3 px-3" pDroppable="item" (onDrop)="drop()" (onDragEnter)="onEnter()">
         <div class="row">
 
 
           <div class="col-md-3" *ngFor="let item of dynamicDashBoard.metrics;let j =index"
             style="padding-right:5px;padding-left:5px;">
-            <div class="well1">
-              <i class="pi pi-times right" (click)="onDeactivate(item,j, 'metrics')"></i>
+            <div class="well1-dynmic">
+              <div class="flex-container">
+                <div class="img-div">
+                  <img src="..\assets\images-n\dashboard\{{item.src}}" width="95%" />
+                  <i class="pi pi-1 pi-times right" (click)="onDeactivate(item,j, 'metrics')"></i>
+                </div>
+                <div class="new-dynamic">
+                   <h3>10</h3>
+                   <p>{{item.metric_name}}</p>
+                </div>
+             </div>
+              <!-- <i class="pi pi-times right" (click)="onDeactivate(item,j, 'metrics')"></i>
               <div class="flex-container">
                 <div class="img-div">
                   <img src="..\assets\images-n\dashboard\{{item.src}}" width="95%" />
@@ -37,7 +57,7 @@
                 <div>
                   <p style="margin-bottom:0px;">{{item.metric_name}} <br> 10 <span style="font-weight:600;"></span> </p>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -119,87 +139,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12 py-3 px-3">
-            <div class="row">
-              <div class="col-md-3 sec-2">
-                <div class="well1">
-                  <div class="flex-container">
-                    <div class="img-div">
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 sec-2">
-                <div class="well1">
-                  <div class="flex-container">
-                    <div class="img-div">
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 sec-2">
-                <div class="well1">
-                  <div class="flex-container">
-                    <div class="img-div">
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 sec-2">
-                <div class="well1">
-                  <div class="flex-container">
-                    <div class="img-div">
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p class="warning-p">Drag or Add <br> a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 py-3 px-3">
-            <div class="row">
-              <div class="col-md-6 sec-2">
-                <div class="well1 graph">
-                  <div class="chart">
-                    <div>
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p class="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-6 sec-2">
-                <div class="well1 graph">
-                  <div class="chart">
-                    <div>
-                      <img src="..\assets\images\Projects\add-gadget.svg" />
-                    </div>
-                    <div>
-                      <p sclass="warning-p">Drag or Add a <span class="metric">Metric</span> to this column </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
         </div>
       </div>
     </div>
@@ -227,13 +167,14 @@
           <div class="col-md-12 mb-2" pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
             (onDragEnd)="dragEnd()" (click)="onSelectMetric(item,i)">
             <div class="flex-container">
-              <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
+              
               <div class="img-div">
                 <img src="..\assets\images-n\dashboard\{{item.src}}" [alt]="item.name" width="95%"
                   style="margin-right:20px;" />
               </div>
               <div>
                 <h5>{{item.metric_name}}</h5>
+                <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
                 <p style="font-size: 14px; color: #808080cc;">{{item.metric_desc}}</p>
               </div>
             </div>
@@ -251,13 +192,14 @@
         </div>
         <div *ngFor="let widget of widgets" (click)="addWidget(widget)" class="col-md-12 mb-2">
           <div class="flex-container">
-            <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
-            <div class="img-div">
-              <img src="..\assets\images-n\dashboard\{{widget.chartSrc}}" width="30%" />
+            
+            <div class="img-div" style="width:34%">
+              <img src="..\assets\images-n\dashboard\{{widget.chartSrc}}" width="100%" />
             </div>
 
             <div>
               <h5>{{widget.widget_title}}</h5>
+              <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
               <p style="font-size: 14px; color: #808080cc;">{{widget.widget_description}}</p>
             </div>
           </div>

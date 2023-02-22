@@ -1,5 +1,5 @@
 .btn-dots {
-	background-color: #dee1e6;
+	background-color: #E9E9E9;
 	padding: 8px 15px;
 	border-radius: 4px;
 	min-width: 0px;
@@ -12,6 +12,24 @@
 	background-color: #ffffff6e;
 	box-shadow: 2px 2px 3px 0px #d6d3d3;
 }
+.well1-dynmic{background-color: white;
+	box-shadow: 1px 0px 3px 0px #d6d3d336;
+	border: 1.5px solid #B3BAC5;
+	border-radius: 4px;
+	padding: 11px 8px !important;}
+	.pi-times:before {
+		content: "\e90b";
+		background-color: #dc3545;
+		border-color: #dc3545;
+		padding: 5px;
+		border-radius: 50%;
+		color: white;
+		font-size: 11px;
+	}
+	.pi-1{font-size: 1rem;
+		position: absolute;
+		right: 15px;
+		top: 8px;}
 
 .well1 {
 	background-color: white;
@@ -123,7 +141,7 @@ h5{margin-bottom:3px;}
         border-radius: 4px !important;
         padding: 6px 10px !important;
     }
-    .search-align{margin-top:-59px;margin-left:109px;width: 17px;}
+    .search-align{margin-top:-59px;margin-left:122px;width: 17px;}
     .eiap-btn {
         
         margin-top: 0px !important;
@@ -133,3 +151,18 @@ h5{margin-bottom:3px;}
   .chart{
     height:300px !important; 
   }
+  .pi-check:before {
+    content: "\e909";
+    background-color: #27AD74;
+    border-color: #27AD74;
+    padding: 5px;
+    border-radius: 50%;
+    color: white;
+    font-size: 11px;
+}
+.pi {
+    font-size: 1rem;
+    position: absolute;
+    right: 24px;
+    top: 0px;
+}
