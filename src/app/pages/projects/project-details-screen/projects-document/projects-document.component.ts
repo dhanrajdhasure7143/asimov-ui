@@ -311,8 +311,20 @@ addParentFolder() {
     fileSize:"",
     task_id:''
   }     
+  var fileData = new FormData();
+  // for (var i = 0; i < files.length; i++) {
+  //   fileData.append("filePath", files[i]);
+  // }
+  fileData.append("key",String(this.files.length))
+  fileData.append("label",this.folder_name)
+  fileData.append("data","Folder")
+  fileData.append("ChildId",'1')
+  fileData.append("DataType",'folder')
+  fileData.append("fileSize",'')
+  fileData.append("task_id",'')
+  fileData.append("projectId", this.project_id)
 
-  this.rest_api.createFolderByProject(request_object).subscribe(res=>{
+  this.rest_api.createFolderByProject(fileData).subscribe(res=>{
     console.log(res)
   })
   this.files.push({
