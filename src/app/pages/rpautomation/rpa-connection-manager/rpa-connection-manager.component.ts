@@ -51,7 +51,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
       connectionName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      authorization_Type: ["", Validators.compose([Validators.required])],
+      // authorization_Type: ["", Validators.compose([Validators.required])],
       taskIcon: ["", Validators.compose([Validators.required])]
     })
 
@@ -92,16 +92,16 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: true,
           multi: false,
         },
-        {
-          ColumnName: "authorization_Type",
-          DisplayName: "Authentication Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
+        // {
+        //   ColumnName: "authorization_Type",
+        //   DisplayName: "Authentication Type",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
         // {
         //   ColumnName: "lastModifiedBy",
         //   DisplayName: "Created By",

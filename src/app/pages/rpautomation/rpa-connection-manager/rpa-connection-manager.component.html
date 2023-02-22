@@ -86,22 +86,22 @@
                             Maximum of 50 characters
                         </span>
                     </div>
-                    <div class="col-md-12 p-0 form-group">
+                    <!-- <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="userName"> Authorization Type <span class="star">*</span></label>
                         <p-dropdown [options]="authorizationType" formControlName="authorization_Type" autoWidth="false"
                       [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Authorization"
                      (onChange)="changeAuth($event)" required></p-dropdown>
                         <span *ngIf="createConnectorForm.get('authorization_Type').invalid && createConnectorForm.get('authorization_Type').touched" class="errspan required"> Authorization Type Required* </span>
-                    </div>
+                    </div> -->
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control"> Task Icon <span class="star">*</span></label>
                         <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon">
                         <span *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched" class="errspan required"> Task Icon Required* </span>
                     </div>
                     <div class="form-footer">
+                        <button class="btn btn-primary"> Reset </button> &nbsp;
                         <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Save </button>
-                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button> &nbsp;
-                        <button class="btn btn-primary"> Next </button>
+                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button> 
                     </div>
                 </form>
             </div>
@@ -117,7 +117,7 @@
                             <label class="label-control" for="garnt_type"> Grant Type <span class="star">*</span></label>
                          <p-dropdown [options]="grantType" formControlName="GrantType" autoWidth="false"
                           [(ngModel)]="optionValue1" [style]="{'width':'100%'}" placeholder="Select Authorization"
-                          optionLabel="" optionValue="" (onChange)="changeAuth($event)" required></p-dropdown>
+                         (onChange)="changeAuth($event)" required></p-dropdown>
                             <span *ngIf="configurationOptions.get('GrantType').invalid && configurationOptions.get('GrantType').touched" class="errspan required"> Grant Type Required* </span>
                         </div>
                     <div class="col-md-12 p-0 form-group">
