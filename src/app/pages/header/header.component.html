@@ -85,12 +85,6 @@
       <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
     </div>
   </div>
-
-  <div class="txt-wh" style="line-height: 18px;margin-right: 13px;">
-    <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span>
-    <span class="header-rgttext" *ngIf="user_fName == null">-</span>
-    <span class="header-userrole">{{userRole}}</span>
-  </div>
   <span>
     <div *ngIf="profilePicture==true && user_fName!='null'">
       <img class="res-circle-img" [src]="retrievedImage">
@@ -102,6 +96,12 @@
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>
+  <div class="txt-wh">
+    <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span>
+    <span class="header-rgttext" *ngIf="user_fName == null">-</span>
+    <span class="header-userrole">{{userRole}}</span>
+  </div>
+  
   <span class="text-wh">
     <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
       aria-label="Example icon-button with a menu">

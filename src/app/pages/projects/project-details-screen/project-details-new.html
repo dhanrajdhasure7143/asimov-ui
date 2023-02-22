@@ -54,8 +54,11 @@
                             <img *ngIf="projectDetails.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="project-status-icon">
-                            <img *ngIf="projectDetails.status != 'Closed'"
+                            <img *ngIf="projectDetails.status != 'Closed' && projectDetails.status != 'New'"
                                 src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                alt="project-status-icon">
+                            <img *ngIf="projectDetails.status == 'New'"
+                                src="./../../../../assets/images-n/projects/NewStatus.svg"
                                 alt="project-status-icon">
                             <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
@@ -79,15 +82,17 @@
                                 </p-inplace>
                                 <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')">
                                     <ng-template pTemplate="display">
-                                        <span class="lowimp" *ngIf="projectDetails.priority == 'Low'"> <img
-                                                src="./../../../../assets/images-n/projects/low_priority.svg"
-                                                alt="importance">{{projectDetails.priority}}</span>
-                                        <span class="mediumimp" *ngIf="projectDetails.priority == 'Medium'"> <img
-                                                src="./../../../../assets/images-n/projects/medium_priority.svg"
-                                                alt="importance">{{projectDetails.priority}}</span>
-                                        <span class="highimp" *ngIf="projectDetails.priority == 'High'"> <img
-                                                src="./../../../../assets/images-n/projects/high_priority.svg"
-                                                alt="importance">{{projectDetails.priority}}</span>
+                                        <span>
+                                            <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                                alt="importance" *ngIf="projectDetails.priority == 'Low'">
+                                                <span class="lowimp" *ngIf="projectDetails.priority == 'Low'">{{projectDetails.priority}}</span>
+                                            <img src="./../../../../assets/images-n/projects/medium_priority.svg"
+                                                alt="importance" *ngIf="projectDetails.priority == 'Medium'">
+                                                <span class="mediumimp" *ngIf="projectDetails.priority == 'Medium'">{{projectDetails.priority}}</span>
+                                            <img src="./../../../../assets/images-n/projects/high_priority.svg"
+                                                alt="importance" *ngIf="projectDetails.priority == 'High'">
+                                            <span class="highimp" *ngIf="projectDetails.priority == 'High'">{{projectDetails.priority}}</span>
+                                        </span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
                                         <p-dropdown [options]="priority_list" [(ngModel)]="priority" optionLabel="name"
@@ -331,9 +336,6 @@
                         <button class="btn blue-btntext" (click)="onCreateTask()">
                             <a><span>Create Task</span></a>
                         </button>
-                        <!-- <button class="btn blue-btntext">
-                            <a><span> </span></a>
-                        </button> -->
                         <button class="btn blue-btntext" (click)="openUsersOverlay()">
                             <a><span>Users</span></a>
                         </button>
@@ -387,34 +389,32 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row acresources" *ngIf="isCreate">
-                        <div class="row ">
-                            <div class="col-sm-4">
-                                <div class="qcard-infoimg " style="margin-left: 2px;text-align: center;"> <img
-                                        src="./../../../../assets/images-n/projects/AutomationRate.svg"
-                                        alt="AutomationRate" class="qcard-img"> </div>
-                                <p class="text">Start onboarding users,who will be responsible forthe project.</p> <a
-                                    class="link-primary linkss" style="padding-left: 26px;"
-                                    (click)='openUsersOverlay()'>Users</a>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="vertical-line"
-                                    style="height: 213px; border-left: 1px solid rgb(164, 160, 160);"></div>
-                                <div class="qcard-infoimg" style="margin-left: 2px;text-align: center;"> <img
-                                        src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
-                                        class="qcard-img"> </div>
-                                <p class="text"> Start creating and assigning tasks to get the work started.</p> <a
-                                    class="link-primary linkss" (click)="onCreateTask()">Create Tasks</a>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="vertical-line"
-                                    style="height: 213px; border-left: 1px solid rgb(164, 160, 160);"></div>
-                                <div class="qcard-infoimg" style="margin-left: 2px;text-align: center;"> <img
-                                        src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
-                                        class="qcard-img"> </div>
-                                <p class="text"> You can start upload document related to the process</p> <a
-                                    class="link-primary linkss" style="text-align: center;">Upload document</a>
-                            </div>
+                    <div class="row quick-actionscards" *ngIf="isCreate">
+                        <div class="col-sm-4 text-center">
+                                <div class="qactionscard-info"> 
+                                    <img src="./../../../../assets/images-n/projects/AutomationRate.svg"
+                                        alt="AutomationRate" class="qcard-img">
+                                </div>
+                                <p class="text">Start onboarding users,who will be responsible forthe project.</p>
+                                <a class="link-primary linkss" (click)='openUsersOverlay()'>Users</a>
+                        </div>
+                        <div class="col-sm-4 text-center qamiddlecard">
+                                <div class="vertical-line"></div>
+                                <div class="qactionscard-info">
+                                    <img src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
+                                        class="qcard-img">
+                                </div>
+                                <p class="text">Start creating and assigning tasks to get the work started.</p>
+                                <a class="link-primary linkss" (click)="onCreateTask()">Create Tasks</a>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                                <div class="vertical-line"></div>
+                                <div class="qactionscard-info">
+                                    <img src="../../../../assets/images-n/projects/prj-upload-document.svg" alt="Active-Tasks"
+                                        class="qcard-img">
+                                </div>
+                                <p class="text">You can start upload document related to the process</p>
+                                <a class="link-primary linkss">Upload document</a>
                         </div>
                     </div>
                 </div>
@@ -473,14 +473,14 @@
                                 {{replay_msg.message}} <i class="pi pi-times" (click)="onClearReply()"></i>
                             </div>
                             <div *ngIf="messages_list.length == 0" class="emptychat text-center">
-                                <img alt="user-img" src="./../../../../assets/images-n/projects/chat_img.png" />
-                                <p>Start Conversation</p>
+                                <img alt="user-img" src="../../../../assets/images-n/projects/StartCollaborations.svg" />
+                                <p>Start a new conversation</p>
                             </div>
                         </div>
                         <div class="row collabottom">
                             <!-- <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
                                 value="Lorem ipsum dolor sit amet, consec" /> -->
-                            <div class="col-lg-11">
+                            <div class="col-sm-11 pl-0">
                                 <!-- <p-editor [(ngModel)]="typedMessage" [style]="{'height':'100px'}">
                                 <ng-template pTemplate="header">
                                     <span class="ql-formats">
@@ -490,7 +490,7 @@
                                     </span>
                                 </ng-template>
                             </p-editor> -->
-                                <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
+                                <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message"
                                     [(ngModel)]="typedMessage" [autoResize]="false"></textarea>
                             </div>
 
