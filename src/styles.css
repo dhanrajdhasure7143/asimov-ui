@@ -2587,7 +2587,7 @@ div {
   margin: 0;
   padding: 0;
   text-decoration: none !important;
-  list-style: none;
+  /* list-style: none; */
   color: inherit;
   font-family:  'Source Sans 3', sans-serif;
   font-weight: 400;
