@@ -61,7 +61,7 @@ label.label-control {
 }
 
 .container-fluid.h-scroll {
-    height: 493px;
+    height: 1000px;
 }
 
 input[type=file]::file-selector-button {

@@ -10,17 +10,11 @@ import Swal from "sweetalert2";
 })
 export class RpaConnectionManagerFormComponent implements OnInit {
   public connectorForm: FormGroup;
-  methodItems: any = ["GET","POST","UPDATE","DELETE"];
+  methodItems: any = [];
   encoded: FormArray;
   actionItems: any = ["Authenticated", "API Request"];
   authItems: any = [
-    "No Auth",
-    "API Key",
-    "Bearer Token",
-    "Basic Auth",
-    "Digest Auth",
-    "O AUth 1.0",
-    "O Auth 2.0",
+
   ];
   grantItems: any = [
     "Authorization Code",
@@ -60,8 +54,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedCheck: ["", Validators.compose([Validators.required])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
-    // this.methodTypes();
-    // this.authTypes();
+    this.methodTypes();
+    this.authTypes();
   }
 
   createItem() {
@@ -123,17 +117,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.connectorForm.reset();
   }
 
-  // methodTypes() {
-  //   this.rest_api.getMethodTypes().subscribe((res: any) => {
-  //     this.methodItems = res;
-  //   });
-  // }
+  methodTypes() {
+    this.rest_api.getMethodTypes().subscribe((res: any) => {
+      this.methodItems = res;
+    });
+  }
 
-  // authTypes(){
-  //   this.rest_api.getAuthTypes().subscribe((res: any) => {
-  //     this.authItems = res;
-  //   });
-  // }
+  authTypes(){
+    this.rest_api.getAuthTypes().subscribe((res: any) => {
+      this.authItems = res;
+    });
+  }
 
   addHeader() {}
 
@@ -153,7 +147,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   authChange(event) {
-    if (event == "O Auth 2.0") {
+    if (event == "OAUTH2") {
       this.isAuthenticated = true;
     }
   }
