@@ -2891,6 +2891,22 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .createtask-dialog .p-dialog-right {
   justify-content: center !important;
 }
+.selectfoldername .p-dialog-header {
+  padding: 15px 15px 15px 22px !important;
+}
+.selectfoldername .p-dialog-content {
+  padding: 0px 22px 15px !important;
+}
+.selectfoldername .p-dialog .p-dialog-header .p-dialog-title {
+  font-size: 16px !important;
+  color: #232832 !important;
+}
+.selectfoldername .p-dialog {
+  top: 4%;
+}
+.selectfoldername .p-tree {
+  height: calc(100vh - 280px) !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */

@@ -301,7 +301,7 @@ export class ProjectsListScreenComponent implements OnInit {
       // },
       {
         ColumnName: "action",
-        DisplayName: "",
+        DisplayName: "Actions",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,

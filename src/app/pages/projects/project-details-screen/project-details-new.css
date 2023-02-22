@@ -41,15 +41,15 @@ span.project-name {
 }
 span.highimp {
     color: #EA3D3D;
-    margin: 3px 0px 0px 5px;
+   margin-left: 5px;
 }
 span.mediumimp {
     color: #E58600;
-    margin: 3px 0px 0px 5px;
+   margin-left: 5px;
 }
 span.lowimp {
     color: #27AD74;
-    margin: 3px 0px 0px 5px;
+   margin-left: 5px;
 }
 .pinf p {
     margin-bottom: 5px;
@@ -260,6 +260,9 @@ button.btn.new-cancelbtn {
 a.link-primary.linkss {
     color: #098de6;
     cursor: pointer;
+}
+p.text {
+    margin-bottom: 18px;
 }
 
 /* quicksnapshot styles */
