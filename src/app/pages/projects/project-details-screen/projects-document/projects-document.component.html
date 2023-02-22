@@ -229,8 +229,8 @@
     <p-overlayPanel #op>
         <ng-template pTemplate>
             <div class="docritclk">
-                <div class="" (click)="onFolderRename('treeView')">Rename</div>
-                <!-- <div *ngIf="selectedItem.node.data_type == 'folder'" class="" (click)="onFolderRename('treeView')">Rename</div> -->
+                <!-- <div class="" (click)="onFolderRename('treeView')">Rename</div> -->
+                <div *ngIf="selectedItem.node.dataType == 'folder'" class="" (click)="onFolderRename('treeView')">Rename</div>
                 <div>Delete</div>
             </div>
         </ng-template>
