@@ -2783,7 +2783,7 @@ thead.p-datatable-thead tr {
   height: 50px;
 }
 
-th.p-element.p-sortable-column.p-resizable-column:before {
+th.p-element.p-sortable-column.p-resizable-column:before,th:before {
   content: " ";
  position: absolute;
  top: 5px;
