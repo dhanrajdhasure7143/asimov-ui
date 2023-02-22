@@ -1906,8 +1906,8 @@ taskListView(){
 
   connectToWebSocket() {
     console.log("Initialize WebSocket Connection");
-    // let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
-    let ws = new SockJS("http://localhost:8098/projectChat");
+    let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
+    // let ws = new SockJS("http://localhost:8098/projectChat");
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({}, function (frame) {
@@ -2024,6 +2024,7 @@ taskListView(){
   }
 
   getAllCategories() {    // get all categories list for dropdown
+    this.spinner.show();
     this.rest_api.getCategoriesList().subscribe(res => {
     let categoryList:any = res;
     this.categories_list=categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));

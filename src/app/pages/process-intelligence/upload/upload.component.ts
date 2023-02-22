@@ -337,8 +337,9 @@ export class UploadComponent implements OnInit {
 
   openXESGZFile(){
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="block";
+    this.hiddenPopUp1=true;
   }
 
   error_display(event) {

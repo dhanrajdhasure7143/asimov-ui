@@ -9,11 +9,6 @@
   padding: 0px !important;
 }
 
-.cards {
-  width: 20%;
-  margin: 10px;
-  text-align: center;
-}
 
 .dynamic-forms-modal .rpa-modal-content {
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
@@ -36,14 +31,6 @@
   margin-top: 50px !important;
 }
 
-.p-card .p-card-body {
-  height: 160px !important;
-}
-
-.p-card .p-card-content {
-  margin-top: 20px !important;
-}
-
 
 .box{
   height: 100px;
@@ -56,6 +43,24 @@
   height: 420px;
   overflow: auto;
 }
+.docfilt-icon .pi-filter-slash {
+  font-size: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.docfolder .cards {
+  width: 20%;
+  text-align: center;
+  margin: 0px 10px;
+}
+.docfolder .cards:first-child {
+  margin-left: 0px !important;
+}
+.docfolder .cards:last-child {
+  margin-right: 0px !important;
+}
+
+/* ----- Document Footer Tree/Folder Icon Styles ----- */
 .docfootbtns {
   text-align: right;
   position: absolute;
@@ -76,11 +81,17 @@
 .docfootbtns button.btn:first-child {
   margin-right: 15px !important;
 }
+
+/* ----- Document Filter & Rename p-overlaypanel Styles ----- */
+.docritclk div {
+  color: #222;
+}
 .docritclk div:first-child {
   margin-bottom: 10px;
 }
 
 
+/* ----- Folder Name Popup Styles ----- */
 .docfldnam input.p-inputtext {
   width: 100%;
 }
@@ -89,4 +100,28 @@
 }
 .docfldnam button.btn {
   margin-top: 30px;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  background-color: white;
+  padding: 25px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+:host ::ng-deep .p-tree-filter-container {
+  margin-top: 1rem;
 }
