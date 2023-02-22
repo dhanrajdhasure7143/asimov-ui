@@ -485,19 +485,37 @@ addParentFolder() {
       const folderName = files[0].webkitRelativePath.split('/')[0];
       console.log('Selected folder:', folderName);
     }
+    let fileFormArray:any=[];
     // console.log(files,event)
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (file.webkitRelativePath) {
         // The file is inside a folder
+        let fileData=new FormData();
         console.log(file.webkitRelativePath);
+        fileData.append("filePath", file);
+        fileData.append("key",String("sample"))
+        fileData.append("label",file.name.split('.')[0])
+        fileData.append("data","file")
+        fileData.append("ChildId",'1')
+        fileData.append("DataType",file.name.split('.')[1])
+        fileData.append("fileSize",file.size)
+        fileData.append("task_id",'')
+        fileData.append("projectId", this.project_id);
+        fileFormArray.push(fileData)
         // Upload the file as desired
       } else {
+ 
         // The file is not inside a folder
         console.log(file.name);
         // Upload the file as desired
       }
     }
+    console.log(fileFormArray)
+    console.log(fileFormArray[0].get("label"))
+    // this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
+    //   console.log(res)
+    // })
   }
 
   onRightClick(event,node){
