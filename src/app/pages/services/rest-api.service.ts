@@ -1620,7 +1620,7 @@ getProjectTaskDetailsById(projectId,taskId){
 }
 
 getMessagesByProjectId(projectId){
-  return this.http.get('http://localhost:8098/getChatData/'+projectId)
+  return this.http.get('https://ezflow.dev.epsoftinc.com/messageservice/getChatData/'+projectId)
 }
 
 getConnectionTable(){
@@ -1642,6 +1642,10 @@ getusersListByProjectId(projectId){
 
 getSnapshotd(projectId){
   return this.http.get('/platform-service/project/getQuickSnapshots?projectId='+projectId);
+}
+
+createFolderByProject(body){
+  return this.http.post("/platform-service/document/createFolder",body)
 }
 
 }
