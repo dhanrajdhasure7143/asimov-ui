@@ -2648,7 +2648,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       botName: this.finalbot.botName,
     };
     this.scheduleOverlayFlag = true;
-    document.getElementById("sch").style.display = "block";
+    // document.getElementById("sch").style.display = "block";
   }
 
   closeScheduler() {

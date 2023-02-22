@@ -525,7 +525,7 @@ export class RpaHomeComponent implements OnInit {
     this.EdithiddenPopUp = true;
     this.botDetails = botDetails;
     this.botFormVisibility=true;
-    document.getElementById('bot-form').style.display = 'block';
+    // document.getElementById('bot-form').style.display = 'block';
   }
 
 
@@ -534,7 +534,7 @@ export class RpaHomeComponent implements OnInit {
     this.hiddenPopUp = true;
     this.botDetails = undefined;
     this.botFormVisibility=true;
-    document.getElementById('bot-form').style.display = 'block';
+    // document.getElementById('bot-form').style.display = 'block';
   }
 
 
@@ -566,12 +566,12 @@ export class RpaHomeComponent implements OnInit {
   }
 
   assignPagination(data) {
-    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
-    const rows$ = of(data);
-    this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-    this.paginator301.firstPage();
+    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
+    // const rows$ = of(data);
+    // this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    // this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+    // this.paginator301.firstPage();
   }
 
   applySearchFilter(v) {
