@@ -221,7 +221,7 @@ export class BotStatusComponent implements OnInit {
             },
            }]
           }
-        }
+        }as any
       });
     })
 
@@ -237,9 +237,8 @@ export class BotStatusComponent implements OnInit {
           {
             data: Object.values(this.usageData),
             backgroundColor: ['rgb(255,106,129)','rgba(255, 0, 0, 0.1)','rgb(58,187,216)','rgba(16, 112, 210, 1)'],
-            fill: false,
             borderColor: '#fff',
-            borderWidth: '1px',
+            borderWidth: 1,
           },
         ]
       },
@@ -251,7 +250,7 @@ export class BotStatusComponent implements OnInit {
         tooltips:{
           enabled:true
         }
-      }
+      }as any
     });
   }else{
     this.chart = new Chart('canvas', {
@@ -263,9 +262,8 @@ export class BotStatusComponent implements OnInit {
           {
             data: [0],
             backgroundColor: ['rgba(224,237,255)'],
-            fill: false,
             borderColor: '#fff',
-            borderWidth: '1px',
+            borderWidth: 1,
           },
         ]
 
@@ -279,7 +277,7 @@ export class BotStatusComponent implements OnInit {
         tooltips:{
           enabled:true
         }
-      }
+      }as any
     });
   }
   })
