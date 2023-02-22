@@ -59,3 +59,23 @@ label.label-control {
 .check {
     margin: 10px 5px;
 }
+
+.container-fluid.h-scroll {
+    height: 493px;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #00a0e3;
+    /* padding: 10px 20px; */
+    margin-bottom: 10px !important;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+  }
+  
+  input[type=file]::file-selector-button:hover {
+    background: #0d45a5;
+  }
