@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTransferService} from "../../services/data-transfer.service";
-import { VERSION } from '@angular/material/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-rpa-configurations',
@@ -11,16 +9,25 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 export class RpaConfigurationsComponent implements OnInit {
   public selectedTab=0;
   public check_tab=0;
-  constructor(private dt:DataTransferService,) { }
+  public param:any=0;
+  selected_tab_index:Number;
 
-  ngOnInit() {
-    
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-      this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Configurations"});
+  constructor(private route:ActivatedRoute, 
+    private router: Router) {
+      this.route.queryParams.subscribe((data) => {
+        if(data)
+        this.selected_tab_index = data.index
+        else this.selected_tab_index=0;
+      });
+     }
+
+  ngOnInit() {}
+
+    onTabChanged(event,tabView){
+      const tab = tabView.tabs[event.index].header;
+      this.selected_tab_index = event.index
+      this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} });
     }
-    onTabChanged(event)
-    {
-      this.check_tab=event.index;
-    }
+  
   }
 
