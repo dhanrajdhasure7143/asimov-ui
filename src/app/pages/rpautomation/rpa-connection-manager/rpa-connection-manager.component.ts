@@ -155,10 +155,10 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   authTypes() {
-    this.rest_api.getAuthTypes().subscribe((res: any) => {
-      this.authorizationType = res;
-      console.log("auth types",res);
-    });
+    // this.rest_api.getAuthTypes().subscribe((res: any) => {
+    //   this.authorizationType = res;
+    //   console.log("auth types",res);
+    // });
   }
 
   closeFormOverlay(event) {
@@ -180,10 +180,10 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   getGrantType(){
-    this.rest_api.getGrantTypes().subscribe((res:any)=>{
-      // this.grantType =res;
-      console.log("grant types",res)
-    })
+    // this.rest_api.getGrantTypes().subscribe((res:any)=>{
+    //   this.grantType =res;
+    //   console.log("grant types",res)
+    // })
 
   }
 }

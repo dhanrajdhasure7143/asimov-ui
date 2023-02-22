@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTransferService} from "../../services/data-transfer.service";
-import { VERSION } from '@angular/material/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-rpa-configurations',
@@ -13,30 +10,23 @@ export class RpaConfigurationsComponent implements OnInit {
   public selectedTab=0;
   public check_tab=0;
   public param:any=0;
+  selected_tab_index:Number;
 
-  constructor(private dt:DataTransferService, private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute, 
+    private router: Router) {
+      this.route.queryParams.subscribe((data) => {
+        if(data)
+        this.selected_tab_index = data.index
+        else this.selected_tab_index=0;
+      });
+     }
 
-  ngOnInit() {
-    
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-      this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Configurations"});
-      this.dt.changeChildModule(undefined);
-    
-    if(localStorage.getItem("config_tab")){
-      this.selectedTab = Number(localStorage.getItem("config_tab"));
-      this.check_tab = Number(localStorage.getItem("config_tab"));
-      }
-    }
-    isEmpty(obj) {
-      for(var key in obj) {
-          if(obj.hasOwnProperty(key))
-              return false;
-      }
-      return true;
-    }
-    onTabChanged(event){
-      localStorage.setItem("config_tab", event.index)
-      this.check_tab=event.index;
+  ngOnInit() {}
+
+    onTabChanged(event,tabView){
+      const tab = tabView.tabs[event.index].header;
+      this.selected_tab_index = event.index
+      this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} });
     }
   
   }
