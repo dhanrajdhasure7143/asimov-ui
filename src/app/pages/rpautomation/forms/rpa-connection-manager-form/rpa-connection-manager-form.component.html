@@ -216,8 +216,9 @@
                             </div>
                             <div class="col-md-12 martsascl form-fields api" *ngIf="isRequest">
                                 <label class="label-control"> Attributes <span class="star">*</span> </label>
-                                <input type="text" name="" id="" class="form-control data"
-                                    placeholder="Enter Attributes" formControlName="">
+                                <!-- <input type="text" name="" id="" class="form-control data"
+                                    placeholder="Enter Attributes" formControlName=""> -->
+                                    <p-chips formControlName="attribute" separator="," placeholder="Enter Attributes"></p-chips>
                                 <!-- <span
                                     *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
                                     class="errspan required"> API / URL Required* </span> -->
@@ -230,6 +231,17 @@
                                     *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
                                     class="errspan required"> API / URL Required* 
                                 </span> -->
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isRequest">
+                                <div class="form-fields col-md-6 pl-0">
+                                <label class="label-control"> Request <span class="star">*</span> </label>
+                                <textarea class="form-control response"  cols="30" rows="16" formControlName="" placeholder="Get Response"
+                                    maxlength="256"> </textarea>
+                                <!-- <span
+                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
+                                    class="errspan required"> API / URL Required* 
+                                </span> -->
+                                </div>
                             </div>
                             <div class="col-md-12 text-right">
                                 <button type="button" class="btn btn-primary" (click)="testForm()"> Test </button>

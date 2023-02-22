@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 })
 export class RpaConnectionManagerFormComponent implements OnInit {
   public connectorForm: FormGroup;
-  methodItems: any = [];
+  methodItems: any = ["GET","POST","UPDATE","DELETE"];
   encoded: FormArray;
   actionItems: any = ["Authenticated", "API Request"];
   authItems: any = [
@@ -35,6 +35,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isPassword: boolean = false;
   isRequest: boolean = false;
   isResponse: boolean = false;
+  attribute = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +52,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       url: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
       bodyRaw: ["", Validators.compose([Validators.required])],
-      paramsKey: ["", Validators.compose([Validators.required])],
+      attribute: ["", Validators.compose([Validators.required])],
       paramsValue: ["", Validators.compose([Validators.required])],
       encodedKey: ["", Validators.compose([Validators.required])],
       encodedValue: ["", Validators.compose([Validators.required])],
@@ -59,7 +60,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedCheck: ["", Validators.compose([Validators.required])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
-    this.methodTypes();
+    // this.methodTypes();
+    // this.authTypes();
   }
 
   createItem() {
@@ -121,11 +123,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.connectorForm.reset();
   }
 
-  methodTypes() {
-    this.rest_api.getMethodTypes().subscribe((res: any) => {
-      this.methodItems = res;
-    });
-  }
+  // methodTypes() {
+  //   this.rest_api.getMethodTypes().subscribe((res: any) => {
+  //     this.methodItems = res;
+  //   });
+  // }
+
+  // authTypes(){
+  //   this.rest_api.getAuthTypes().subscribe((res: any) => {
+  //     this.authItems = res;
+  //   });
+  // }
 
   addHeader() {}
 
@@ -137,7 +145,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     } else if (event == "API Request") {
       this.isRequest = true;
       this.isAction = false;
-      this.isResponse = true;
+      this.isResponse = false;
       this.isClient = false;
       this.isPassword = false;
       this.isAuthenticated = false;

@@ -14,17 +14,17 @@
                 </button>
             </div>
             <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" [routerLink]="['/pages/rpautomation/action-item']">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()">
                     <img src='../../../../assets/images-n/projects/eye-show-blue.svg'>
                     <span class="testtooltip"> View</span>
                 </button>
             </div>
-            <!-- <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
+            <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images-n/projects/eye-show dis.svg'>
                     <span class="testtooltip"> View</span>
                 </button>
-            </div> -->
+            </div>
             <div *ngIf="updateflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
@@ -65,7 +65,8 @@
                 [dataKeyId]="'connectorId'"
                 [show_search_field]="true"
                 [show_column_filter]="true"
-                [show_clear_filter]="true">
+                [show_clear_filter]="true"
+                >
             </app-dynamic-table>
         </div>
     </div>
