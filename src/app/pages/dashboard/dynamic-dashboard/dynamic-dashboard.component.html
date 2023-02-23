@@ -5,7 +5,12 @@
             <div class="row main-content-head">
                <div class="col-md-4 pl-0">
                   <h3>
-                     <span class="title_text">Dynamic Dashboard </span>
+                     <span *ngIf="!editDashboardName" class="title_text">{{dashboardData.dashboardName}}</span>
+                     <span *ngIf="editDashboardName" ><input type="text" [(ngModel)]="dashboardName" value="{{dashboardData.dashboardName}}"></span>
+                     
+                     <button  *ngIf="!editDashboardName"  (click)="editDashboardName=true;">edit</button>
+                     <button  *ngIf="editDashboardName"  (click)="updateDashboardName()">Save</button>
+                  
                   </h3>
                </div>
                <div class="col-md-8 pr-0 text-right">
@@ -47,58 +52,22 @@
          </div> -->
          <div class="col-md-12 py-3 px-3">
             <div class="row">
-               <div class="col-md-3 sec-2" >
+            
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 sec-2" >
                   <div class="well1-dynmic">
                      <div class="flex-container">
                         <div class="img-div">
-                           <img src="..\assets\images-n\dashboard\Thumbup.svg" />
+                           <img src="..\assets\images-n\dashboard\{{item.src}}" />
+                           <i class="pi pi-1 pi-times right overlay-icon" ></i>
                         </div>
                         <div class="new-dynamic">
-                           <h3>04</h3>
-                           <p>Pending Approvals</p>
+                           <h3>10</h3>
+                           <p>{{item.metric_name}}</p>
                         </div>
                      </div>
                   </div>
                </div>
-               <div class="col-md-3 sec-2" >
-                  <div class="well1-dynmic">
-                     <div class="flex-container">
-                        <div class="img-div">
-                           <img src="..\assets\images-n\dashboard\round-settings.svg" />
-                        </div>
-                        <div class="new-dynamic">
-                           <h3>32%</h3>
-                           <p>Automation Rate</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-3 sec-2" >
-                  <div class="well1-dynmic">
-                     <div class="flex-container">
-                        <div class="img-div">
-                           <img src="..\assets\images-n\dashboard\tasksoverdue.svg" />
-                        </div>
-                        <div class="new-dynamic">
-                           <h3>56</h3>
-                           <p>Tasks Overdue</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-3 sec-2" >
-                  <div class="well1-dynmic">
-                     <div class="flex-container">
-                        <div class="img-div">
-                           <img src="..\assets\images-n\dashboard\schedules.svg" />
-                        </div>
-                        <div class="new-dynamic">
-                           <h3>11</h3>
-                           <p>Schedules Failed</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+            
                
             </div>
          </div>

@@ -10,6 +10,10 @@ import { DataTransferService } from '../../services/data-transfer.service';
   styleUrls: ['./dynamic-dashboard.component.css']
 })
 export class DynamicDashboardComponent implements OnInit {
+  dynamicDashBoard: any;
+  metrics_list: any;
+  defaultEmpty_metrics: any;
+  widgets: any;
  
  
  
@@ -18,18 +22,14 @@ export class DynamicDashboardComponent implements OnInit {
   constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService) { }
 
   dashboardName:String="";
-  data:any=[];
-  
+  dashboardData:any=[];
+  editDashboardName:boolean=false;
   ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe((params:any)=>{
-      this.dashboardName=params.dashboardName
-    })
-
+    
     this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>
     {
-     this.data=response;
-      console.log(this.data)
-      
+    this.dashboardName=response.dashboardName
+     this.dashboardData=response;
     }
     )
     
@@ -42,6 +42,12 @@ export class DynamicDashboardComponent implements OnInit {
   //   });
   // }
   
+}
+
+updateDashboardName()
+{
+  this.dashboardData.dashboardName=this.dashboardName;
+  this.editDashboardName=false;
 }
 
 
