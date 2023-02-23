@@ -43,7 +43,7 @@
         </div>
       </div>
       <br /><br />
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-10 p-0">
           <div class="col-md-3 form-group pl-0 sosearchfield">
             <input
@@ -65,7 +65,7 @@
             <span class="testtooltip">Reset</span>
           </button>
         </div>
-      </div>
+      </div> -->
       <div class="">
         <!-- <table
           mat-table
@@ -223,6 +223,10 @@
           [table_data]="incidentTableDataSource"
           [screenTable]="'common'"
           [columns_list]="columns_list"
+          [show_column_filter]="true"
+          [show_clear_filter]="true"
+          [show_search_field]="true"
+          [search_fields]="table_searchFields"
         ></app-dynamic-table>
       </div>
       <!-- <div class="newpaginationdiv">

@@ -18,6 +18,7 @@ export class SoIncidentManagementComponent implements OnInit {
   incidentTableDataSource:any =[];
   objincidentId:any=[]
   columns_list: any=[];
+  table_searchFields:any[]=[];
   constructor(
     private rest: RestApiService,
     private spinner: LoaderService
@@ -152,6 +153,7 @@ export class SoIncidentManagementComponent implements OnInit {
             multi: false,
           },
           ];
+          this.table_searchFields=['incidentId',"convertedCreatedTime","assignedTo","description","priority","incidentStatus"]
               // this.incidentTableDataSource.sort = this.incidentTableSort;
               // this.incidentTableDataSource.paginator = this.incidentTablePaginator;
               this.getChartByBots(ticketsByDate)
@@ -173,12 +175,6 @@ export class SoIncidentManagementComponent implements OnInit {
     searchText = searchText.toLowerCase();
     // this.incidentTableDataSource.filter = searchText;
   }
-
-  reset() { // reset search input field
-    this.seachInput = "";
-  //  this.incidentTableDataSource.filter = "";
-  }
-
  
   getChartByStatus(pieData){
     this.spinner.show()
