@@ -175,14 +175,12 @@
                                     <!--pinf-->
                                     <div class="d-flex">
                                         <span class="kpipercent">
-                                            <p-inplace #inplace5
+                                            <!-- <p-inplace #inplace5
                                                 (onActivate)="inplaceActivate('projectPercentage','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{projectDetails.projectPercentage}} %</p>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <!-- <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="projectPercentage" /> -->
                                                         <p-knob [(ngModel)]="projectPercentage"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check"
@@ -191,8 +189,8 @@
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
                                                     </span>
                                                 </ng-template>
-                                            </p-inplace>
-                                            <!-- <p>{{projectDetails.projectPercentage}} %</p> -->
+                                            </p-inplace> -->
+                                            <p-knob [(ngModel)]="projectDetails.projectPercentage" valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
                                             <label>Project Completion</label>
                                         </span>
                                     </div>

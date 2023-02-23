@@ -170,20 +170,19 @@
                                     <div class="d-flex">
                                         <label>Task Completion</label>
                                          <span class="kpipercent">
-                                            <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
+                                            <!-- <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{task_details.percentageComplete}} %</p>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <!-- <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="percentageComplete" /> -->
                                                         <p-knob [(ngModel)]="percentageComplete" valueTemplate="{value}%"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check" (click)="onUpdateDetails('percentageComplete')"></i>
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
                                                     </span>
                                                 </ng-template>
-                                            </p-inplace>
+                                            </p-inplace> -->
+                                            <p-knob [(ngModel)]="task_details.percentageComplete" valueTemplate="{value}%" (onChange)="updatetask()"></p-knob>
                                         </span>
                                     </div>
                                 </div>
