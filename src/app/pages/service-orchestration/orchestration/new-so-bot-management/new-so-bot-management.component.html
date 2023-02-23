@@ -378,7 +378,7 @@
           </div>
           <div class="modal-body">
               <div class="container m-contanier form-body">
-                  <button (click)="getBluePrismlogs(blueprismbotname)" matTooltip="Refresh" style='float:right;'>
+                  <button (click)="getBluePrismlogs(blueprismbotname)" pTooltip="Refresh" style='float:right;'>
               <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
             </button>
                   <div class="">
@@ -388,7 +388,7 @@
                           <!-- Run Id Column -->
                           <ng-container matColumnDef="bluePrismBotSessionid">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header>Session Id </th>
-                              <td mat-cell *matCellDef="let element" [matTooltip]="element.bluePrismBotSessionid">
+                              <td mat-cell *matCellDef="let element" [pTooltip]="element.bluePrismBotSessionid">
                                   <span *ngIf="element.bluePrismBotSessionid != null">{{(element.bluePrismBotSessionid.length > 30) ? ((element.bluePrismBotSessionid).slice(0, 30) + '...') : element.bluePrismBotSessionid}}
                           </span>
                                   <span *ngIf="element.bluePrismBotSessionid == null">-</span>
