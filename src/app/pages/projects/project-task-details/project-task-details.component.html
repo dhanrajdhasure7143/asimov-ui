@@ -27,12 +27,16 @@
             <div class="row project-Information">
                 <div class="row project-overview">
                     <div class="col-sm-1 p-0">
-                        <div class="row project-status">
-                            <!-- <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
-                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="project-status-icon" >
-                            <p>{{projectDetails.status}}</p> -->
-                            <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
-                                alt="project-status-icon">
+                        <div class="row task-status">
+                            <img *ngIf="task_details.status == 'Closed'"
+                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                alt="task-status-icon">
+                            <img *ngIf="task_details.status != 'Closed' && task_details.status != 'New'"
+                                src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                alt="task-status-icon">
+                            <img *ngIf="task_details.status == 'New'"
+                                src="./../../../../assets/images-n/projects/NewStatus.svg"
+                                alt="task-status-icon">
                         </div>
                     </div>
                     <div class="col-sm-11 p-0">
@@ -93,10 +97,11 @@
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
                                 <div class="pinf">
-                                    <p>{{task_details.createdBy}}</p>
                                     <label>Assigned By</label>
+                                    <p>{{task_details.createdBy}}</p>
                                 </div>
                                 <div class="pinf">
+                                    <label>Resource</label>
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
@@ -113,9 +118,9 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Resource</label>
                                 </div>
                                 <div class="pinf">
+                                    <label>Status</label>
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('status','inplace2')">
                                         <ng-template pTemplate="display">
                                             <span>{{task_details.status}}</span>
@@ -129,10 +134,10 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Status</label>
-                                </div>
+                                    </div>
                                 <div class="pinf">
                                     <!-- <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p> -->
+                                    <label>Due Date</label>
 
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                         <ng-template pTemplate="display">
@@ -155,15 +160,16 @@
                                             <p-calendar inputId="basic" [(ngModel)]="date1"></p-calendar>
                                         </div>
                                     </div> -->
-                                    <label>Due Date</label>
-                                </div>
+                                   </div>
                                 <div class="pinf">
-                                    <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
+                                    <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                    
                                 </div>
                                 <div class="pinf">
                                     <div class="d-flex">
-                                        <span class="kpipercent">
+                                        <label>Task Completion</label>
+                                         <span class="kpipercent">
                                             <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{task_details.percentageComplete}} %</p>
@@ -178,7 +184,6 @@
                                                     </span>
                                                 </ng-template>
                                             </p-inplace>
-                                            <label>Task Completion</label>
                                         </span>
                                     </div>
                                 </div>
@@ -233,7 +238,7 @@
                     <div class="commentBox">
                         <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
-                                <div class="content">
+                                <div class="content"  *ngIf="taskcomments_list.length != 0" >
                                     <div class="" *ngFor=" let item of taskcomments_list">
                                         <div class="row">
                                             <div class="userimage">
@@ -255,11 +260,16 @@
                                                     </button>
                                                 </div> -->
 
+
                                         </div>
                                     </div>
                                 </div>
+                                <div *ngIf="taskcomments_list.length == 0" class="emptycomments text-center content">
+                                    <img alt="user-img" src="../../../../assets/images-n/projects/NoComments.svg" />
+                                    <p>No Comments Yet</p>
+                                </div>
                                 <div class="addcomment">
-                                    <label>Add Comment</label>
+                                    <label><b>Add Comment</b></label> 
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
@@ -293,7 +303,7 @@
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
             <div class="h-100">
                 <div class="create-header">
-                    <h3> Attached Documnets</h3>
+                    <h3>Attached Documents</h3>
                 </div>
                 <div class="splitoverlaycontent">
                     <div class="tablediv">
@@ -347,11 +357,14 @@
         </app-split-overlay>
     </div>
 
-    <p-dialog header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+    <p-dialog class="selectfoldername" header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
         <span class="p-float-label">
             <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
-        </p-tree>
-        <button type="button" class="btn btn-primary" (click)='uploadFile()'>Save</button>
+            <!-- <ng-template let-node pTemplate="default">
+                <b (click)="onNodeClick($event,node)">{{node.label}}</b>
+            </ng-template> -->
+            </p-tree>
         </span>
+        <button type="button" class="btn btn-primary savefoldername">Save</button>
     </p-dialog>

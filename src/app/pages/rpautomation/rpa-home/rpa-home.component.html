@@ -72,7 +72,7 @@
                                     </p-multiSelect>
                                     <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
                                     </button>
-                                    <span class="p-input-icon-right">
+                                    <span class="p-input-icon-right" style="float: right;">
                                         <i class="pi pi-search"></i>
                                         <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
                                             (input)="dt1.filterGlobal($event.target.value, 'contains')">
@@ -187,7 +187,7 @@
                             </ng-template>
                             <ng-template pTemplate="emptymessage">
                                 <tr>
-                                    <td style="justify-content: center;" colspan="7">No records found</td>
+                                    <td style="justify-content: center;" colspan="7">No Records Found</td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -334,8 +334,8 @@
 
 
         <!--Edit Bot UI Bot-->
-        <div *ngIf="hiddenPopUp" > 
-            <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+        <div *ngIf="EdithiddenPopUp" > 
+            <app-split-overlay (closeOverlay)="closeOverlay1($event)"  >
             <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
             </app-split-overlay>
           </div>

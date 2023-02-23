@@ -20,7 +20,7 @@
                   <div class="form-fields col pr-0">
                       <label class="">Select Department<span class="star">*</span></label>
                       <p-dropdown [options]="categories_list" [filter]="true" formControlName="mapValueChain"
-                          autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
+                          autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           placeholder="Select a Department" optionLabel="categoryName"
                           optionValue="categoryName"></p-dropdown>
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
@@ -32,7 +32,7 @@
             <div class="row">
                   <div class="form-fields col pl-0">
                       <label class="">Process Owner<span class="star">*</span></label>
-                      <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
+                      <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           filterBy="user_email,fullName" [autoDisplayFirst]="false" (onChange)="onChange()"
                           placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
                           optionLabel="fullName">
@@ -47,7 +47,7 @@
                   </div>
                   <div class="form-fields col pr-0">
                       <label class="">Select Process<span class="star">*</span></label>
-                      <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}"
+                      <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
                           optionValue="processId" optionLabel="processName" filterBy="processName">
                       </p-dropdown>

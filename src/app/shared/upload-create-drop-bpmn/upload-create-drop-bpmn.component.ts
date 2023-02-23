@@ -107,13 +107,13 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       else {
         this.uploaded_file = null;
         var modal = document.getElementById('myModal');
-        modal.style.display = "block";
+        // modal.style.display = "block";
       }
     }
     else {
       this.uploaded_file = null;
       var modal = document.getElementById('myModal');
-      modal.style.display = "block";
+      // modal.style.display = "block";
     }
   }
 

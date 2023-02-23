@@ -37,6 +37,7 @@ export class RpaCredentialsComponent implements OnInit {
     selectedData: any;
     categories_list: any =[];
     table_searchFields: any[]=[];
+  hiddenPopUp:boolean=false;
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -172,15 +173,20 @@ inputNumberOnly(event){
   
   openCreateCredential(){
     this.isCreateForm = true;
+    this.hiddenPopUp=true;
     document.getElementById("createcredentials").style.display='block';
     // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     // document.getElementById("Updatecredntials").style.display='none';
   }
 
   openUpdateCredential() {
-    document.getElementById('createcredentials').style.display = 'block';
+    this.hiddenPopUp=true;
+
+    document.getElementById('createcredentials');
+
     this.isCreateForm = false;
     this.credupdatedata = this.selectedData[0];
+
   }
 
   deleteCredentials(){
@@ -249,5 +255,9 @@ inputNumberOnly(event){
     this.selectedData.length > 0 ?this.addflag =true :this.addflag =false
     this.selectedData.length > 0 ?this.Creddeleteflag =true :this.Creddeleteflag =false
     this.selectedData.length == 1 ?this.Credupdateflag =true :this.Credupdateflag =false
+  }
+  closeOverlay(event)
+  {
+    this.hiddenPopUp=event;
   }
 }

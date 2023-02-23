@@ -1395,6 +1395,10 @@ resetsla(){
     })
   }
 
+  closeOverlay(event){  //overlay close 
+
+    this.schedulepopup=event;
+  }
 
   
 }
