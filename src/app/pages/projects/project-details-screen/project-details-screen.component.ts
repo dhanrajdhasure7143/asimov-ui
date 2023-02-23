@@ -1932,7 +1932,8 @@ taskListView(){
       userId:this.logged_userId,
       message:this.typedMessage,
       projectId:this.project_id,
-      rmId:this.replay_msg.id?this.replay_msg.id:0,
+      // rmId:this.replay_msg.id?this.replay_msg.id:0,
+      rmId:0,
       firstName:this.userDetails.firstName,
       lastName:this.userDetails.lastName,
     }

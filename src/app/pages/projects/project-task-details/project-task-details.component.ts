@@ -6,6 +6,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import * as moment from "moment";
+import { MessageService } from "primeng/api";
 
 interface Status {
   name: string;
@@ -64,7 +65,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private rest_api: RestApiService,
     private router: Router,
     private dataTransfer: DataTransferService,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private messageService: MessageService
   ) {
     this.status_list = [
       { name: "New" },
@@ -294,6 +296,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       (res) => {
         this.taskcomments_list = this.added_comments_list;
         this.add_comment = "";
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Task Updated Successfully !!'});
         this.gettask();
         // let status: any = res;
         // if (status.errorMessage == undefined) {
@@ -303,7 +306,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         // }
       },
       (err) => {
-        Swal.fire("Error", "Something Went Wrong", "error");
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Task Update failed"});
       }
     );
     // } else {
@@ -382,18 +385,18 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
     var fileData = new FormData();
     fileData.append("filePath", this.uploaded_file);
-    // fileData.append("key",object.key)
+    fileData.append("key",'3-1')
     fileData.append("label",this.uploaded_file.name.split('.')[0])
     fileData.append("data","file")
     fileData.append("ChildId",'1')
     fileData.append("dataType",this.uploaded_file.name.split('.')[1])
     fileData.append("fileSize",this.uploaded_file.size)
-    fileData.append("task_id",'')
+    fileData.append("task_id",this.task_details.id)
     fileData.append("projectId", this.project_id)
   
-    // this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
 
-    // })
+    })
   }
 
 }

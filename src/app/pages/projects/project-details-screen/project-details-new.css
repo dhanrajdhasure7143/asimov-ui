@@ -11,6 +11,7 @@
 .row.project-overview {
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%);
     border-radius: 6px;
+    flex-wrap: initial;
 }
 
 .project-status {
@@ -19,6 +20,7 @@
     height: 100%;
     padding: 30px 10px !important;
     justify-content: center;
+    display: flex;
 }
 
 .project-status p {
@@ -27,14 +29,14 @@
 }
 
 .project-ninfo {
-    padding: 20px !important;
+    padding: 20px 10px !important;
 }
 .project-ninfo .col-md-10.pl-0,
 .project-ninfo .col-md-10.pl-0 .row {
     align-items: center;
     display: flex;
 }
-span.project-name {
+.project-name span {
     font-size: 32px;
     font-weight: 600;
     margin-right: 10px;
@@ -52,7 +54,7 @@ span.lowimp {
    margin-left: 5px;
 }
 .pinf p {
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     font-weight: 500;
     font-size: 16px !important;
 }
@@ -89,6 +91,16 @@ span.lowimp {
     color: #098de6;
     cursor: pointer;
     margin-left: 5px;
+}
+.editfields {
+    display: flex;
+    align-items: center;
+}
+.projectnamerow {
+    height: 50px;
+}
+.pinf {
+    width: calc(100% / 6);
 }
 
 /* Collaboration Styles Start */

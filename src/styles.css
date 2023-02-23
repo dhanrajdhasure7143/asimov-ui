@@ -2698,6 +2698,14 @@ input.p-inputtext {
     left: unset !important;
     width: max-content;
 }
+.editfields i {
+  padding: 6px;
+  background: #F5F6F7;
+  border: 1px solid #CFD2D9;
+  border-radius: 3px;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
+  margin-left: 3px;
+}
 
 /* Tabs NEW Styles Start */
 .p-tabview .p-tabview-nav {
@@ -2783,7 +2791,7 @@ thead.p-datatable-thead tr {
   height: 50px;
 }
 
-th.p-element.p-sortable-column.p-resizable-column:before,th:before {
+th.p-element.p-sortable-column.p-resizable-column:before {
   content: " ";
  position: absolute;
  top: 5px;
@@ -2885,7 +2893,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-overlaypanel {
   box-shadow: 0px 4px 10px rgb(0 0 0 / 25%) !important;
 }
-.p-overlaypanel::before {
+.p-overlaypanel::before, .p-overlaypanel::after {
   display: none !important;
 }
 .createtask-dialog .p-dialog-right {
@@ -2906,6 +2914,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .selectfoldername .p-tree {
   height: calc(100vh - 280px) !important;
+}
+.p-inplace .p-inplace-display:not(.p-disabled):hover {
+  color: unset !important;
+  background: transparent !important;
 }
 /* primeNg components Styles End */
 
@@ -3026,6 +3038,9 @@ margin: 0px;
 
 /* Document-Tree  Screen Styles */
 
+.doctree .p-treenode .p-treenode-content {
+  width: 25%;
+}
 .doctree .p-tree {
   border: unset !important;
   background: transparent !important;
@@ -3034,6 +3049,7 @@ margin: 0px;
 }
 .doctree .p-treenode .p-treenode-content {
   padding: 10px 0px !important;
+  align-items: flex-start;
 }
 .doctree .p-treenode .p-treenode-content .p-tree-toggler {
   margin-right: 0px !important;
@@ -3055,20 +3071,25 @@ margin: 0px;
   background: none !important;
   box-shadow: unset !important;
 }
+.doctree .p-tree-filter-container {
+  position: fixed;
+  top: 75px;
+  right: 60px;
+  width: 200px;
+}
 
 /* Document-Tree  Screen Styles */
 
 .docfolder .p-card {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: unset !important;
   border-radius: 6px;
   border: 1px solid #d0d0d0;
 }
-.docfolder .p-card-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 160px;
-}
+
 .docfolder .pi-folder, .docfolder .pi-file {
   color: var(--main-bluecolor) !important;
   font-size: 40px;
@@ -3079,6 +3100,12 @@ margin: 0px;
   display: block;
   margin-top: 20px;
 }  
+.docfolder .p-card-body {
+  padding: 0px !important;
+}
+.docfolder .p-card-content {
+  padding: 15px !important;
+}
 
 /* Document FolderName Popup Styles */
 
@@ -3213,9 +3240,9 @@ button.custom-popupbtn.mat-button {
 } */
 
 
-.p-card .p-card-body{
+/* .p-card .p-card-body{
   height: 160px !important;
-}
+} */
 
 /* .p-card .p-card-content {
   margin-top: 20px !important;

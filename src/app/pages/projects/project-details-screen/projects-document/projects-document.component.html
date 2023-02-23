@@ -41,11 +41,11 @@
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
                 <span *ngIf="item.type !='textBox'"> {{ item.label }} </span>
                 <span *ngIf="item.type=='textBox'">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength="20" pInputText>
-                    <span class="editfields">
+                    <input [(ngModel)]="entered_folder_name" type="text" maxlength="20" pInputText>
+                    <div class="editfields">
                         <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('folderView')" *ngIf="entered_folder_name"></i>
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate('folderView')"></i>
-                    </span>
+                    </div>
                 </span>
             </p-card>
            </div>
@@ -66,10 +66,10 @@
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
                     <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='20' pInputText>
-                    <span class="editfields">
+                    <div class="editfields">
                         <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('treeView')" *ngIf="entered_folder_name"></i>
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate('treeView')"></i>
-                    </span>
+                    </div>
                 </ng-template>
             </p-tree>
 
@@ -98,8 +98,8 @@
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
                 </div>
                 <div class="docfootbtns">
-                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>
-                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>                    
+                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>
+                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>                                        
                 </div>
         </div>
     </div>
@@ -209,7 +209,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addParentFolder()"> ParentSave </button>
+            <button type="button" class="btn btn-primary" (click)="addParentFolder()">Save</button>
         </span>
     </p-dialog>
 
@@ -217,7 +217,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="treeChildSave()">TreeChildSave</button>
+            <button type="button" class="btn btn-primary" (click)="treeChildSave()">Save</button>
         </span>
     </p-dialog>
 

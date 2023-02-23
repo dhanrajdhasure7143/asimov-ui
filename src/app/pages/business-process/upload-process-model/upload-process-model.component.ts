@@ -45,7 +45,7 @@ declare var require:any;
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css'],
-  providers:[BpmnShortcut,SharebpmndiagramService,BsModalService]
+  providers:[BpmnShortcut]
 })
 export class UploadProcessModelComponent implements ComponentCanDeactivate,OnInit,OnDestroy {
   isShowConformance:boolean = false;
