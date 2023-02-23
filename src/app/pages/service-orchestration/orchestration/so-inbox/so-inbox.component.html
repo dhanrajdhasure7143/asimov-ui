@@ -1,17 +1,16 @@
 <div class="so-sub-tab-content">
   <div class="container-fluid">
       <div class="row">
-          <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="inboxsearch">
+          <!-- <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="inboxsearch">
               <input class="form-control" placeholder="Search Inbox" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
               <img src="../../../../assets/images/search.svg" alt="" class="testplus">
-          </div>
+          </div> -->
           <div class="col-md-9 p-0 env-data-tool text-right">
               <button (click)="reset()" id="inboxreset" class="tsttooltipbtn">
                 <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
                 <span class="testtooltip">Reset</span>
               </button >
               <button (click)="refresh()" id="inboxrefresh" class="tsttooltipbtn">
-                <!-- <i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i> -->
                 <img src='../../../../../assets/images/RPA/icon_latest/repeat-blue.svg' class="testplus">
                 <span class="testtooltip">Refresh</span>
               </button >
@@ -20,7 +19,7 @@
     
           <!-- <div class="col-md-12 p-0"> -->
             <div  class="inbox-tablegrid">
-              <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="RPA table" id="inboxtable">
+              <!-- <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="RPA table" id="inboxtable">
 
                   <ng-container matColumnDef="processName">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell2">Process Name </th>
@@ -82,7 +81,6 @@
 
                       <span *ngIf="element.status=='Pending'">
                         <span class="verticalalignmiddle text-warning" >
-                          <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                           <i class="fa fa-clock"></i>
                         </span>&nbsp;
                         <span>{{element.status}}</span>
@@ -110,17 +108,7 @@
               </td>
               </ng-container>
               
-              <!--<ng-container matColumnDef="Action">
-                      <th mat-header-cell *matHeaderCellDef >Actions </th>
-                      <td mat-cell *matCellDef="let element">
-                          <span (click)="botidshowaction(10)"  matTooltip="Start Bot">
-                            <li class="fa fa-check text-primary" ></li>
-                          </span>&nbsp;&nbsp;
-                          <span (click)="removeBot()"  matTooltip="Pause Bot">
-                            <i class="fa fa fa-times text-danger " aria-hidden="true"></i> &nbsp;&nbsp;
-                          </span>
-                      </td>
-                  </ng-container>-->
+     
               <ng-container matColumnDef="noData">
                   <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="8">
                       No Records Found
@@ -129,13 +117,135 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
               <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
-              </table>
-              <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+              </table> -->
+
+              <p-table #dt1 [value]="response" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true"
+              [globalFilterFields]="['processName','processRunId','taskName','previousTask','nextSuccessTask','nextFailureTask','status']">
+                <ng-template pTemplate="caption">
+                  <div class="p-d-flex">
+                      <!-- <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
+                          selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                          placeholder="Choose Columns">
+                      </p-multiSelect> -->
+                      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
+                      </button>
+                      <span class="p-input-icon-right">
+                          <i class="pi pi-search"></i>
+                          <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
+                              (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                      </span>
+                  </div>
+              </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
+                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="processRunId" pReorderableColumn pResizableColumn>Run Id
+                      <p-columnFilter type="numeric" field="processRunId" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processRunId"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task Name
+                      <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="taskName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="previousTask" pReorderableColumn pResizableColumn>Previous Task
+                      <p-columnFilter type="text" field="previousTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="previousTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nextSuccessTask" pReorderableColumn pResizableColumn>Next Task (Upon Success)
+                      <p-columnFilter type="text" field="nextSuccessTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="nextSuccessTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nextFailureTask" pReorderableColumn pResizableColumn>Next Task (Upon Failure)
+                      <p-columnFilter type="text" field="nextFailureTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="nextFailureTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
+                      <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                      <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th>Action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-element>
+                  <tr>
+                    <td>
+                      <span *ngIf="element.processName!=null">{{element.processName}}</span>
+                      <span *ngIf="element.processName==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.processRunId!=null">{{element.processRunId}}</span>
+                      <span *ngIf="element.processRunId==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
+                      <span *ngIf="element.taskName==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.previousTask!=null">{{element.previousTask}}</span>
+                      <span *ngIf="element.previousTask==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.nextSuccessTask!=null">{{element.nextSuccessTask}}</span>
+                      <span *ngIf="element.nextSuccessTask==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.nextFailureTask!=null">{{element.nextFailureTask}}</span>
+                      <span *ngIf="element.nextFailureTask==null">-</span>
+                    </td>
+                    <td>
+                      <span *ngIf="element.status=='Approved'" class="text-success">
+                        <span class="verticalalignmiddle">
+                          <i class="fa fa-check-circle"></i>
+                        </span>&nbsp;
+                        <span>{{element.status}}</span>
+                      </span>
+                      <span *ngIf="element.status=='Rejected'" class="text-danger">
+                        <span class="verticalalignmiddle">
+                          <i class="fa fa-times-circle"></i>
+                        </span>&nbsp;
+                        <span>{{element.status}}</span>
+                      </span>
+                      <span *ngIf="element.status=='Pending'">
+                        <span class="verticalalignmiddle text-warning">
+                          <i class="fa fa-clock"></i>
+                        </span>&nbsp;
+                        <span>{{element.status}}</span>
+                      </span>
+                      <span *ngIf="element.status==null">---</span>
+                    </td>
+                    <td>
+                      <span>
+                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'"
+                          [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''"
+                          (click)="getapproved(element.processId,'Approved', element.taskId,element.processRunId,element.envId)"
+                          pTooltip="Approve">
+                          <i class="fas fa-check text-success"></i>
+                        </button>
+              
+                      </span>&nbsp;&nbsp;&nbsp;
+                      <span>
+                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'"
+                          [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''"
+                          (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"
+                          pTooltip="Reject">
+                          <i class="fas fa-times text-danger"></i>
+                        </button>
+              
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td style="justify-content: center;" colspan="8">No records found</td>
+                  </tr>
+                </ng-template>
+              </p-table>
           </div>
-          <div class="newpaginationdiv">
-            <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
-          </div>
-      <!-- </div> -->
+
 
   </div>
 
