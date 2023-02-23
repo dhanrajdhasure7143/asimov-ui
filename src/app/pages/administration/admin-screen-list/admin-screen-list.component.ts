@@ -31,36 +31,9 @@ export class AdminScreenListComponent implements OnInit {
     this.rest.getScreenList().subscribe((data) => {
       this.screenlist = data;
       this.columns_list = [
-        {
-          ColumnName: "Screen_Name",
-          DisplayName: "Screen Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "multiSelect",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "Table_Name",
-          DisplayName: "Table Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "multiSelect",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "action",
-          DisplayName: "Actions",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "multiSelect",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
+        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: true,filterWidget: "multiSelect",filterType: "text", sort: true,multi: false},
+        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: true,filterWidget: "multiSelect",filterType: "text",sort: true,multi: false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "multiSelect",filterType: "text",sort: false,multi: false},
       ];
       this.loading = false;
     });
