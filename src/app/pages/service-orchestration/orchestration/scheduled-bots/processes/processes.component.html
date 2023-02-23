@@ -116,7 +116,7 @@
             [globalFilterFields]="['processName','environmentName','category','environmentName','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <span class="p-input-icon-left ml-auto">
+                    <span class="p-input-icon-right ml-auto">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
                             placeholder="Search Process" />
@@ -166,8 +166,7 @@
                 <tr>
 
                     <td [pTooltip]="element.processName" style="width:200px;">
-                        <span *ngIf="element.processName != null">{{(element.processName.length > 10) ?
-                            ((element.processName).slice(0, 10) + '...') : element.botName}}
+                        <span *ngIf="element.processName != null">{{element.processName}}
                         </span>
                         <span *ngIf="element.processName == null">-</span>
                     </td>

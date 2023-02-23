@@ -14,6 +14,7 @@ declare var $:any;
 import { NotifierService } from 'angular-notifier';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -1196,4 +1197,7 @@ public slaupdate : boolean = false;
     })
   }
 
+  clear(table: Table) {
+    table.clear();
+  }
 }

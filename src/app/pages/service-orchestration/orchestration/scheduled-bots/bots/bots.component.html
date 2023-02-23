@@ -117,7 +117,7 @@
             [globalFilterFields]="['botName','botSource','category','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <span class="p-input-icon-left ml-auto">
+                    <span class="p-input-icon-right ml-auto">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
                             placeholder="Search Bots" />
@@ -167,10 +167,8 @@
                 <tr>
 
 
-                    <td [matTooltip]="element.botName" style="width:200px;">
-                        <span *ngIf="element.botName != null">{{(element.botName.length > 10) ?
-                            ((element.botName).slice(0, 10)
-                            + '...') : element.botName}}
+                    <td [pTooltip]="element.botName" style="width:200px;">
+                        <span *ngIf="element.botName != null">{{element.botName}}
                         </span>
                         <span *ngIf="element.botName == null">-</span>
                     </td>
@@ -184,7 +182,7 @@
                     </td>
                     <td>
                         <span *ngIf="element.lastRunTS != null"
-                            [matTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
+                            [pTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
 
                             {{(element.lastRunTS.length > 10) ? ((element.lastRunTS |date: 'MMM d, y, H:mm:ss').slice(0,
                             10) +
@@ -194,7 +192,7 @@
                     </td>
                     <td>
                         <span *ngIf="element.nextRunTS != null"
-                            [matTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
+                            [pTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
 
                             {{(element.nextRunTS.length > 10) ? ((element.nextRunTS |date: 'MMM d, y, H:mm:ss').slice(0,
                             10) +
@@ -212,15 +210,15 @@
                         </span>
 
                         <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"
-                            [matTooltip]="element.status">
+                            [pTooltip]="element.status">
                             <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">Saved
                         </span>
 
                         <span *ngIf="element.status=='Failure'|| element.status=='Failed'"
-                            [matTooltip]="element.status">
+                            [pTooltip]="element.status">
                             <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
                         </span>
-                        <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
+                        <span *ngIf="element.status=='Paused'" [pTooltip]="element.status">
                             <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg"
                                 class="testpause">Paused
                         </span>
@@ -235,7 +233,7 @@
                         </span>
 
                         <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'"
-                            [matTooltip]="element.status">
+                            [pTooltip]="element.status">
                             <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                             <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
                         </span>
@@ -243,7 +241,7 @@
                     </td>
                     <td>
                         <span *ngIf="element.timezone != null"
-                            [matTooltip]="element.timezone">{{(element.timezone.length > 8) ?
+                            [pTooltip]="element.timezone">{{(element.timezone.length > 8) ?
                             ((element.timezone).slice(0, 8) + '...') : element.timezone}}</span>
                         <span *ngIf="element.timezone == null">-</span>
                     </td>
@@ -257,9 +255,9 @@
             </ng-template>
         </p-table>
     </div>
-    <div class="newpaginationdiv">
+    <!-- <div class="newpaginationdiv">
         <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]"
             [showFirstLastButtons]="true"></mat-paginator>
-    </div>
+    </div> -->
     <!-- </div> -->
 </div>

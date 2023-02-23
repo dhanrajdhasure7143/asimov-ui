@@ -3,10 +3,10 @@
 
       <div class="row">
           <div class="col-md-10 p-0">
-              <div class="col-md-3 form-group pl-0 sosearchfield">
+              <!-- <div class="col-md-3 form-group pl-0 sosearchfield">
                   <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
                   <img src="../../../../assets/images/search.svg" class="testplus">
-              </div>
+              </div> -->
               <div class="col-md-3 pl-0">
                   <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
             <option value="">Select Source</option>
@@ -148,18 +148,46 @@
               </table> -->
 
 
-              <p-table [value]="bot_list">
+              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','taskType','botStatus']" [scrollable]="true"
+              [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>Bot Name</th>
-                    <th>Description</th>
-                    <th>Source</th>
-                    <th>Category</th>
-                    <th>Version</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                    <th>Schedule</th>
-                    <th>Logs</th>
+                    <th pReorderableColumn pResizableColumn>Bot Name
+                      <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="botName"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Description
+                      <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
+                      <p-sortIcon field="description"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Source
+                      <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
+                      <p-sortIcon field="department"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Category
+                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processName"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Version
+                      <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
+                      <p-sortIcon field="version"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Status
+                      <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
+                      <p-sortIcon field="botStatus"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Actions</th>
+                    <th pReorderableColumn pResizableColumn>Schedule</th>
+                    <th pReorderableColumn pResizableColumn>Logs</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-element>
