@@ -41,10 +41,10 @@
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
                 <span *ngIf="item.type !='textBox'"> {{ item.label }} </span>
                 <span *ngIf="item.type=='textBox'">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength="50" pInputText>
+                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength="20" pInputText>
                     <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
-                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('folderView')" *ngIf="entered_folder_name"></i>
+                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate('folderView')"></i>
                     </span>
                 </span>
             </p-card>
@@ -65,10 +65,10 @@
                     <b (click)="onNodeClick($event,node)">{{node.label}}</b>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='50' pInputText>
+                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='20' pInputText>
                     <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
-                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('treeView')" *ngIf="entered_folder_name"></i>
+                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate('treeView')"></i>
                     </span>
                 </ng-template>
             </p-tree>
@@ -135,9 +135,19 @@
                     </div>
                     <div class="col-md-6">
                         <button>
+                            <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" >
+                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem" (change)="singleFileUploadFolder($event)" ></i><br>
+                                <button class="btn">Upload Document</button>
+                                <input type="file" name="myfile" />
+                            </p-card>
+                              </div>
+                            <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
+                                Upload Document </p-card> -->
+                        </button>
+                        <!-- <button>
                             <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
                                 Upload Document </p-card>
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
@@ -215,7 +225,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialog1" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addSubfolder()">Save</button>
+            <button type="button" class="btn btn-primary" (click)="addSubfolder()">addSubFolderSave</button>
         </span>
     </p-dialog>
 
@@ -230,7 +240,7 @@
         <ng-template pTemplate>
             <div class="docritclk">
                 <!-- <div class="" (click)="onFolderRename('treeView')">Rename</div> -->
-                <div *ngIf="selectedItem.node.dataType == 'folder'" class="" (click)="onFolderRename('treeView')">Rename</div>
+                <div class="" (click)="onFolderRename('treeView')">Rename</div>
                 <div>Delete</div>
             </div>
         </ng-template>
@@ -248,7 +258,7 @@
     <p-overlayPanel #op2>
         <ng-template pTemplate>
             <div class="docritclk">
-                <div class="" (click)="onFolderRename('folderView')">Rename</div>
+                <div *ngIf="selectedItem.dataType=='folder'" class="" (click)="onFolderRename('folderView')">Rename</div>
                 <div>Delete</div>
             </div>
         </ng-template>
