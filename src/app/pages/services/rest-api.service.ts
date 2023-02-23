@@ -1632,7 +1632,11 @@ getConnectionslist(){
 }
 
 getGrantTypes(){
-  return this.http.get('/rpa-service/get-grant-type/{grantType}')
+  return this.http.get('/rpa-service/getGrantType')
+}
+
+getActionType(){
+  return this.http.get('/rpa-service/getActionType')
 }
 
 //get the list of existing uisers in project

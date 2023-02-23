@@ -12,16 +12,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   public connectorForm: FormGroup;
   methodItems: any = [];
   encoded: FormArray;
-  actionItems: any = ["Authenticated", "API Request"];
-  authItems: any = [
-
-  ];
-  grantItems: any = [
-    "Authorization Code",
-    "Implicit",
-    "Client Credentials",
-    "Password Credentials",
-  ];
+  actionItems: any = [];
+  authItems: any = [];
+  grantItems: any = [];
   isAuthenticated: boolean = false;
   isAction: boolean = false;
   isAuthorization: boolean = false;
@@ -56,6 +49,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
     this.methodTypes();
     this.authTypes();
+    this.getActionType();
+    this.getGrantTypes();
   }
 
   createItem() {
@@ -136,7 +131,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAction = true;
       this.isRequest = false;
       this.isResponse = false;
-    } else if (event == "API Request") {
+    } else if (event == "APIRequest") {
       this.isRequest = true;
       this.isAction = false;
       this.isResponse = false;
@@ -169,5 +164,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAuthorization = false;
       this.isPassword = false;
     }
+  }
+  getActionType(){
+   this.rest_api.getActionType().subscribe((res:any)=>{
+      this.actionItems =res;
+      console.log("Ation Items",res)
+    })
+  }
+  getGrantTypes(){
+    this.rest_api.getGrantTypes().subscribe((res:any)=>{
+      this.grantItems =res;
+      console.log("Grant Types",res);
+    })
   }
 }
