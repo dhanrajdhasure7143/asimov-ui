@@ -129,4 +129,9 @@ getUserScreenList(){
     this.screensList=data;
   });
 }
+userManagement(){
+  this.router.navigate(["/pages/admin/user-management"],{
+    queryParams:{index:0}
+  })
+}
 }
