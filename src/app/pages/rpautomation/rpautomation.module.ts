@@ -66,6 +66,7 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
 import { CardModule } from 'primeng/card';
+import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 
@@ -95,7 +96,8 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     RpaEnvironmentFormComponent,
     SearchRpaPipe,
     RpaConnectionManagerFormComponent,
-    RpaConnectionManagerComponent
+    RpaConnectionManagerComponent,
+    RpaActionItemsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,

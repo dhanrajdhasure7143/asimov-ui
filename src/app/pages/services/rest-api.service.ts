@@ -1601,7 +1601,7 @@ getTenantnameslist() {
   }
   ///Connection manger APIS///
 getAuthTypes(){
-  return this.http.get(`/rpa-service/get-authorization-type`);
+  return this.http.get(`/rpa-service/getAuthenticationType`);
 }
 
 testConnections(body){
@@ -1609,7 +1609,7 @@ testConnections(body){
 }
 
 getMethodTypes(){
-  return this.http.get(`/rpa-service/get-method-type`);
+  return this.http.get(`/rpa-service/getMethodType`);
 }
 
 saveConnector(body){
@@ -1632,7 +1632,11 @@ getConnectionslist(){
 }
 
 getGrantTypes(){
-  return this.http.get('/rpa-service/get-grant-type/{grantType}')
+  return this.http.get('/rpa-service/getGrantType')
+}
+
+getActionType(){
+  return this.http.get('/rpa-service/getActionType')
 }
 
 //get the list of existing uisers in project
