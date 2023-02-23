@@ -41,11 +41,11 @@
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
                 <span *ngIf="item.type !='textBox'"> {{ item.label }} </span>
                 <span *ngIf="item.type=='textBox'">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength="50" pInputText>
-                    <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
+                    <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
+                    <div class="editfields">
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
-                    </span>
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>                        
+                    </div>
                 </span>
             </p-card>
            </div>
@@ -65,11 +65,11 @@
                     <b (click)="onNodeClick($event,node)">{{node.label}}</b>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='50' pInputText>
-                    <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
+                    <input [(ngModel)]="entered_folder_name" type="text" maxlength='50' pInputText>
+                    <div class="editfields">
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
-                    </span>
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>                        
+                    </div>
                 </ng-template>
             </p-tree>
 
@@ -199,7 +199,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addParentFolder()"> ParentSave </button>
+            <button type="button" class="btn btn-primary" (click)="addParentFolder()">Save</button>
         </span>
     </p-dialog>
 

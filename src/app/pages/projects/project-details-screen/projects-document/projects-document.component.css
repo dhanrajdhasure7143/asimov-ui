@@ -49,7 +49,6 @@
   vertical-align: middle;
 }
 .docfolder .cards {
-  width: 20%;
   text-align: center;
   margin: 0px 10px;
 }
@@ -107,12 +106,12 @@
   display: inline-block;
 }
 
-.btn {
+/* .btn {
   background-color: white;
   padding: 25px 20px;
   border-radius: 8px;
   font-size: 15px;
-}
+} */
 
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -122,6 +121,17 @@
   opacity: 0;
 }
 
-:host ::ng-deep .p-tree-filter-container {
-  margin-top: 1rem;
+.editfields {
+  text-align: right;
+  margin-top: 5px;
+}
+.editfields i {
+  padding: 6px;
+  background: #F5F6F7;
+  border: 1px solid #CFD2D9;
+  border-radius: 3px;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
+}
+.editfields .pi-check {
+  margin-left: 5px;
 }
