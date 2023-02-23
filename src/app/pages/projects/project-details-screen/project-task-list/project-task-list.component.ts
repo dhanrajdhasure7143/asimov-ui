@@ -32,6 +32,7 @@ export class ProjectTaskListComponent implements OnInit {
   hiddenPopUp: boolean = false;
   project_name: any;
   params_data:any;
+  existingUsersList:any[]=[];
 
   constructor(
     private rest_api: RestApiService,
@@ -125,16 +126,16 @@ export class ProjectTaskListComponent implements OnInit {
       },
       {
         ColumnName: "action",
-        //DisplayName: "Action",
+        DisplayName: "Actions",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
         multi: false,
       },
     ];
+    this.getTheExistingUsersList();
     this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
       this.all_tasks_list = data;
-      console.log("tasks Data", data);
       this.all_tasks_list.map((item) => {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = moment(item.endDate).format("lll");
@@ -180,7 +181,6 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   viewDetails(event) {
-    console.log(event);
     this.router.navigate(["/pages/projects/taskDetails"], {
       queryParams: {
         project_id: this.project_id,
@@ -259,14 +259,13 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   openTaskWorkSpace(data) {
-    console.log(data);
-
     localStorage.setItem("project_id", this.project_id.id);
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(["/pages/rpautomation/designer"], {
         queryParams: {
-          projectId: this.project_id.id,
           botId: data.correlationID,
+          projectId: this.project_id,
+          projectName:this.project_name
         },
       });
     }
@@ -280,11 +279,13 @@ export class ProjectTaskListComponent implements OnInit {
           bpsId: data.correlationID.split(":")[0],
           ver: data.correlationID.split(":")[1],
           ntype: "bpmn",
+          projectId:this.project_id,
+          projectName:this.project_name
         },
       });
     }
     if (data.taskCategory == "RPA Design") {
-      // this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
+      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id}})
     }
 
     if (data.taskCategory == "Process Mining") {
@@ -292,5 +293,11 @@ export class ProjectTaskListComponent implements OnInit {
         queryParams: { wpiId: data.correlationID },
       });
     }
+  }
+
+  getTheExistingUsersList(){
+    this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
+      this.existingUsersList = res
+    })
   }
 }

@@ -1,8 +1,8 @@
-<div class="container-fluid maindivfoprm ">
-  <form [formGroup]="createtaskForm" class=" prj-crt-form" (ngSubmit)="savetasks()">
-      <div class="row">
-          <div class="form-fields col-lg-12">
-              <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
+<div class="createform-overlay ">
+    <form [formGroup]="createtaskForm" class=" prj-crt-form" (ngSubmit)="savetasks()">
+        <div class="row">
+            <div class="form-fields col p-0">
+              <label class="" for="taskName">Task Name<span class="star">*</span></label>
               <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="taskName"
                   placeholder="Enter Task Name" required>
               <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
@@ -10,165 +10,184 @@
               <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="errspan required">
                   Maximum of 50 characters
               </span>
-          </div>
-      </div>
-      <div class="">
-          <div class="row">
+            </div>
+        </div>
+        <div class="">
+            <div class="row">
 
-              <div class="form-fields col">
-                  <label class="label-control" for="taskCategory">Type of Task<span class="star">*</span></label>
-                  <p-dropdown [options]="task_categoriesList" formControlName="taskCategory" autoWidth="false"
-                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task"
+                <div class="form-fields col p-0">
+                    <label class="" for="taskCategory">Type of Task<span class="star">*</span></label>
+                    <p-dropdown [options]="task_categoriesList" formControlName="taskCategory" autoWidth="false"
+                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task" [appendTo]="'body'" 
                       optionLabel="category" optionValue="category" required></p-dropdown>
-                  <span
+                    <span
                       *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
                       class="errspan required">Type of Task Required*</span>
-              </div>
+                </div>
 
-              <div class="form-fields col" *ngIf="optionValue == 'RPA Implementation' || optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process' || optionValue == 'Process Mining'">
-                  <span class="label-control" for="correlationID">Pick A Workspace File<span
+                <div class="form-fields col pr-0" *ngIf="optionValue == 'RPA Implementation' || optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process' || optionValue == 'Process Mining'">
+                    <span class="" for="correlationID">Pick A Workspace File<span
                           class="star">*</span></span>
-                  <div *ngIf="!optionValue">
-                      <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false"
+                    <div *ngIf="!optionValue">
+                        <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false" [appendTo]="'body'" 
                           [style]="{'width':'100%'}" placeholder="Select Workspace File" optionLabel="processName"
                           optionValue="correlationID" required></p-dropdown>
-                  </div>
-                  <div
+                    </div>
+                    <div
                       *ngIf="optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
-                      <p-dropdown [options]="bpm_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                        <p-dropdown [options]="bpm_process_list" formControlName="correlationID" autoWidth="false"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="correlationID"
                           required></p-dropdown>
-                  </div>
-                  <div *ngIf="optionValue == 'Process Mining'">
-                      <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                    </div>
+                    <div *ngIf="optionValue == 'Process Mining'">
+                        <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="piId"
                           required></p-dropdown>
-                  </div>
-                  <div *ngIf="optionValue == 'RPA Implementation'">
-                      <p-dropdown [options]="bot_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                    </div>
+                    <div *ngIf="optionValue == 'RPA Implementation'">
+                        <p-dropdown [options]="bot_list" formControlName="correlationID" autoWidth="false"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="botName" optionValue="botId"
                           required></p-dropdown>
-                  </div>
-                  <span
+                    </div>
+                    <span
                       *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
                       class="errspan required">Pick A Workspace File Required*</span>
-              </div>
-          </div>
-          <div class="row">
-              <div class="form-fields col">
-                  <label class="label-control" for="resources">Assigned To<span class="star">*</span></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-fields col p-0">
+                    <label class="" for="resources">Assigned To<span class="star">*</span></label>
 
-                  <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
+                    <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                       filterBy="user_email,fullName" [autoDisplayFirst]="false" placeholder="Select Assignee"
                       formControlName="resources" optionValue="user_email" optionLabel="fullName" (onChange)="onAssigneeChange($event)">
-                  </p-dropdown>
-                  <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
+                    </p-dropdown>
+                    <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
                       class="errspan required">Assigned To Required*</span>
-              </div>
-              <div class="form-fields col">
-                  <label class="label-control" for="priority">Priority <span class="star">*</span></label>
-                  <div class="form-check">
-                      <span>
+                </div>
+                <div class="form-fields col pr-0">
+                    <label class="" for="priority">Priority <span class="star">*</span></label>
+                    <div class="form-check">
+                        <span>
                           <input class="form-check-input" type="radio" formControlName="priority" name="priority"
                               id="Low" value="Low" checked>
                           <label class="form-check-label" for="Low">
                               Low
                           </label>
-                      </span>
-                      <span>
+                        </span>
+                        <span>
                           <input class="form-check-input" type="radio" formControlName="priority" name="priority"
                               id="Medium" value="Medium">
                           <label class="form-check-label" for="Medium">
                               Medium
                           </label>
-                      </span>
-                      <span>
+                        </span>
+                        <span>
                           <input class="form-check-input" type="radio" formControlName="priority" name="priority"
                               id="High" value="High">
                           <label class="form-check-label" for="High">
                               High
                           </label>
-                      </span>
-                  </div>
-                  <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
+                        </span>
+                    </div>
+                    <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
                       class="errspan required">Priority Required*</span>
-              </div>
+                </div>
 
-          </div>
-          <div class="row">
-              <div class="form-fields col" *ngIf="freetrail!='true'">
-                  <label class="label-control" for="approvers">Approver<span class="star">*</span></label>
-                  <select class="form-control enteredfield-color" formControlName="approvers">
+            </div>
+            <div class="row">
+              <!-- <div class="form-fields col p-0" *ngIf="freetrail!='true'">
+                <label class="" for="approvers">Approver<span class="star">*</span></label>
+                <p-dropdown [options]="approverslist" [filter]="true" [style]="{'width':'100%'}"
+                          filterBy="userId,fullName" [autoDisplayFirst]="false"
+                          placeholder="Select Approver" formControlName="approvers" optionValue="userId"
+                          optionLabel="fullName" [appendTo]="'body'" >
+                </p-dropdown>
+                <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
+                  class="errspan required">Approvers Required*</span>
+              </div>
+              <div class="form-fields col p-0" *ngIf="freetrail=='true'">
+                <label class="" for="approvers">Approver<span class="star">*</span></label>
+                <p-dropdown [options]="approverslist" [filter]="true" [style]="{'width':'100%'}"
+                          filterBy="userId,fullName" [autoDisplayFirst]="false"
+                          placeholder="Select Approver" formControlName="approvers" optionValue="userId"
+                          optionLabel="fullName" [appendTo]="'body'">
+                </p-dropdown>
+              </div> -->
+                <div class="form-fields col p-0" *ngIf="freetrail!='true'">
+                    <label class="" for="approvers">Approver<span class="star">*</span></label>
+                    <select class="form-control enteredfield-color" formControlName="approvers">
                       <option [value]="null" disabled hidden>Select Approver</option>
                       <option [value]="undefined" disabled hidden>Select Approver</option>
                       <option [value]="" disabled hidden>Select Approver</option>
                       <option value="" disabled hidden>Select Approver</option>
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                  </select>
-                  <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
+                    </select>
+                    <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
                       class="errspan required">Approvers Required*</span>
-              </div>
-              <div class="form-fields col" *ngIf="freetrail=='true'">
-                  <label class="label-control" for="approvers">Approver</label>
-                  <select class="form-control enteredfield-color" [attr.disabled]="true" formControlName="approvers">
+                </div> 
+                <div class="form-fields col p-0" *ngIf="freetrail=='true'">
+                    <label class="" for="approvers">Approver</label>
+                    <select class="form-control enteredfield-color" [attr.disabled]="true" formControlName="approvers">
                       <option [value]="null" disabled hidden>Select Approver</option>
                       <option [value]="undefined" disabled hidden>Select Approver</option>
                       <option [value]="" disabled hidden>Select Approver</option>
                       <option value="" disabled hidden>Select Approver</option>
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                  </select>
-              </div>
-              <div class="col">
-                  <div class="row">
-                      <div class="">
-                          <label class="label-control">From <span class="star">*</span></label>
-                          <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
+                    </select>
+                </div> 
+                <div class="form-fields col pr-0">
+                    <div class="row">
+                        <div class="fromdate">
+                            <label class="">From <span class="star">*</span></label>
+                            <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
                               (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate">
-                          <span
+                            <span
                               *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
                               class="errspan required">From Date Required*</span>
-                      </div>
-                      <div class="">
-                          <label class="label-control" for="endDate">To<span class="star">*</span></label>
-                          <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
+                              <span class="dateseparator">|</span>
+                        </div>                       
+                        <div class="todate">
+                            <label class="" for="endDate">To<span class="star">*</span></label>
+                            <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
                               [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate">
-                          <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
+                            <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
                               class="errspan required">To Date Required*</span>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="form-fields col-lg-12">
-                  <label class="label-control">Task Description</label><span class="star">*</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col p-0">
+                    <label class="">Task Description</label><span class="star">*</span>
                   <!-- <textarea rows="4" maxlength="151" class="form-control enteredfield-color" formControlName="description"
                   placeholder="Enter Task Description..." (keyup)="taskDescriptionMaxLength($event.target.value)"
                   style=" resize: none;">
                           </textarea> -->
-                  <textarea [style]="{'width':'100%'}" [rows]="4" pInputTextarea formControlName="description"
-                      [autoResize]="true" maxlength="251"></textarea>
-                  <span *ngIf="taskDescriptionFlag" class="errspan required">
+                    <textarea pInputTextarea formControlName="description" placeholder="Enter Description"
+                      [autoResize]="true" maxlength="251" required></textarea>
+                    <span *ngIf="taskDescriptionFlag" class="errspan required">
                       Maximum of 150 characters
-                  </span>
-                  <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
-                  class="errspan required">Task Description Required*</span>
-              </div>
-          </div>
-      </div>
-  </form>
-  <br>
-  <div class="pull-right">
-      <button (click)="resettask()" class="btn btn-default">Reset</button>
-      <button [disabled]="createtaskForm.invalid || taskDescriptionFlag" (click)="savetasks()"
-          class="btn btn-primary btn-update">Save</button>
-  </div>
+                    </span>
+                    <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
+                    class="errspan required">Task Description Required*</span>
+                </div>
+            </div>
+        </div>
+    </form>
+  
+    <div class="createform-footer">
+        <button (click)="resettask()" class="btn new-cancelbtn">Reset</button>
+        <button [disabled]="createtaskForm.invalid || taskDescriptionFlag" (click)="savetasks()"
+          class="btn bluebg-button">Create</button>
+    </div>
 </div>
 
 <!-- <p-confirmPopup></p-confirmPopup> -->
 
-<p-confirmDialog [style]="{width: '20vw'}" key="positionDialog" position="right" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

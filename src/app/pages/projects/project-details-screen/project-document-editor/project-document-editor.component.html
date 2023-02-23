@@ -13,13 +13,22 @@
         </div>
         <div class="col-md-12">
             <br>
-            <ckeditor [(ngModel)]="documentData" 
+            <div class="document-editor">
+            <div id="toolbar-container"></div>
+            <div class="editor-container">
+
+                <div id="editor">
+                   
+                </div>
+            </div>
+        </div>
+            <!-- <ckeditor [(ngModel)]="documentData" 
                 #myckeditor="ngModel"
                 name="myckeditor"
                 required
                 [config]="ckeConfig" 
                 debounce="500" >
-	        </ckeditor>
+	        </ckeditor> -->
             <br>
             <button (click)="saveDocument()" class="btn btn-primary">Download</button>
             <button (click)="saveDocument()" class="btn btn-primary">Save</button>

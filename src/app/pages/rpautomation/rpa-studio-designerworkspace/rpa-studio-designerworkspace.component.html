@@ -199,66 +199,22 @@
   </div>
 </ng-template>
 
-<div
-  class="own-overlay rpa-modal dynamic-forms-modal"
-  *ngIf="hiddenPopUp"
-  style="display: block"
->
-  <as-split
-    direction="horizontal"
-    [useTransition]="true"
-    (dragEnd)="onDragEnd($event)"
-    #splitEl
-  >
-    <as-split-area [size]="areas[0].size" order="areas[0].order">
-      <!-- <p>LEFT</p> -->
-    </as-split-area>
-    <!-- minSize="200" maxSize="300" -->
-    <as-split-area
-      [size]="areas[1].size"
-      order="areas[1].order"
-      [minSize]="splitAreamin_size"
-    >
-      <div class="right_split">
-        <div class="rpa-modal-header">
-          <span class="rpa-modal-close">
-            <img
-              *ngIf="isShowExpand_icon"
-              src="../../../../assets/images/RPA/Expand-In.svg"
-              (click)="minimizeFullScreen()"
-              class="expandsvgimg"
-            />
-            <img
-              *ngIf="!isShowExpand_icon"
-              src="../../../../assets/images/RPA/Expand-Out.svg"
-              (click)="expandFullScreen()"
-              class="expandsvgimg"
-            />
-            <img
-              src="../../../../assets/images/RPA/icon_latest/close.svg"
-              (click)="closeFun()"
-              alt=""
-            />
-          </span>
-          <h4>{{ formHeader }}</h4>
-        </div>
-        <div
-          class="modal-body actions-mbody actionsoverlay-mbody"
-          *ngIf="form_change"
-        >
-          <app-dynamic-forms
-            [fields]="getFields()"
-            [multiarray]="multiarray"
-            [formheader]="formHeader"
-            [enableMultiForm]="enableMultiForm"
-            (Submit)="submitform($event)"
-            (onSubmit)="onFormSubmit($event, true)"
-          ></app-dynamic-forms>
-        </div>
+<div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="right_split">
+      <div class="rpa-modal-header">
+        <h4>{{ formHeader }}</h4>
       </div>
-    </as-split-area>
-  </as-split>
+      <div class="modal-body actions-mbody actionsoverlay-mbody" *ngIf="form_change">
+        <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
+          [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"
+          (onSubmit)="onFormSubmit($event, true)"></app-dynamic-forms>
+      </div>
+    </div>
+  </app-split-overlay>
 </div>
+
+
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
@@ -454,336 +410,26 @@
   </div>
 </div>
 
-<div id="createcredentials" class="rpa-modal">
-  <div class="rpa-modal-content">
+
+
+<div *ngIf="scheduleOverlayFlag">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+
+  <div >
     <div class="rpa-modal-header">
-      <!-- <span class="rpa-modal-close" (click)="closecredentials()">&times;</span> -->
-      <div class="formelement">
-        <button (click)="back()">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i>
-        </button>
-        <span class="h4">Create Credentials</span>
-      </div>
-    </div>
-
-    <div class="modal-body actions-mbody">
-      <form [formGroup]="insertForm" >
-        <!-- <div class="row"> -->
-        <div class="formelement">
-          <label for="userName">Email<span class="star">*</span></label>
-          <input
-            type="text"
-            maxlength="51"
-            class="form-control data"
-            formControlName="userName"
-            #userName
-            value=""
-            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-            placeholder="Enter Email"
-          />
-          <span
-            *ngIf="
-              insertForm.get('userName').invalid &&
-              insertForm.get('userName').touched &&
-              !insertForm.controls['userName'].hasError('pattern')
-            "
-            class="errspan required"
-            >Email Required*</span
-          >
-          <span
-            *ngIf="
-              (insertForm.controls['userName'].hasError('pattern') ||
-                insertForm.get('userName').hasError('required')) &&
-              !insertForm.get('userName').hasError('required')
-            "
-            class="errspan required"
-            >Enter valid email address</span
-          >
-          <div
-            *ngIf="insertForm.controls['userName'].hasError('maxlength')"
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-
-        <div class="formelement">
-          <label for="password">Password<span class="star">*</span></label>
-          <input
-            [type]="passwordtype1 ? 'text' : 'password'"
-            maxlength="51"
-            class="form-control"
-            formControlName="password"
-            value=""
-            placeholder="Enter Password"
-            passwordToggle
-          />
-          <span
-            *ngIf="passwordtype1 == false"
-            (click)="passwordtype1 = !passwordtype1"
-            class="pdicon"
-          >
-            <img
-              src="../../../../../assets/images/Projects/eye-show.svg"
-              class="credtestplus1"
-            />
-          </span>
-          <span
-            *ngIf="passwordtype1 == true"
-            (click)="passwordtype1 = !passwordtype1"
-            class="pdicon"
-          >
-            <img
-              src="../../../../../assets/images/Projects/eye-hide.svg"
-              class="credtestplus1"
-            />
-          </span>
-
-          <span
-            *ngIf="
-              insertForm.get('password').invalid &&
-              insertForm.get('password').touched &&
-              !insertForm.controls['password'].hasError('maxlength')
-            "
-            class="errspan required"
-          >
-            Password Required*</span
-          >
-          <div
-            *ngIf="insertForm.controls['password'].hasError('maxlength')"
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-        
-        <div class="modal-body actions-mbody">
-            <form [formGroup]="insertForm">
-                <!-- <div class="row"> -->
-                    <div class="formelement">
-                        <label for="userName">Email<span class="star">*</span></label>
-                        <input type="text" maxlength="51" class="form-control data" formControlName="userName" #userName value=""
-                        pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" placeholder="Enter Email">
-                        <span *ngIf="(insertForm.get('userName').invalid && insertForm.get('userName').touched) && !insertForm.controls['userName'].hasError('pattern')"  class="errspan required">Email Required*</span>
-                        <span *ngIf="(insertForm.controls['userName'].hasError('pattern') || insertForm.get('userName').hasError('required')) && !insertForm.get('userName').hasError('required')"  class="errspan required">Enter valid email address</span>
-                        <div *ngIf="insertForm.controls['userName'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
-                    
-                    <div class=" formelement">
-                        <label for="password">Password<span class="star">*</span></label>
-                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                        <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
-                            <img src="../../../../../assets/images/Projects/eye-show.svg"  class="credtestplus1">
-                        </span>
-                        <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
-                            <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="credtestplus1">
-                        </span>
-</div>
-        <div class="formelement">
-          <label class="label-control" for="categoryId"
-            >Category<span class="star">*</span></label
-          >
-          <select
-            type="text"
-            class="form-control"
-            formControlName="categoryId"
-            [value]="
-              categoryList.length == 1 ? categoryList[0].categoryId : '0'
-            "
-          >
-            <option value="0" disabled>Select Category</option>
-            <option
-              [value]="category.categoryId"
-              *ngFor="let category of categoryList"
-            >
-              {{ category.categoryName }}
-            </option>
-          </select>
-          <span
-            *ngIf="
-              insertForm.get('categoryId').invalid &&
-              insertForm.get('categoryId').touched
-            "
-            class="errspan required"
-            >Category Required*</span
-          >
-        </div>
-
-        <div class="formelement">
-          <label for="serverName">Mail Server<span class="star">*</span></label>
-          <select class="form-control" formControlName="serverName">
-            <option value="" [selected]="true">--Select Mail Server--</option>
-            <option value="Office365">Office365</option>
-            <option value="G-mail">G-mail</option>
-          </select>
-          <span
-            *ngIf="
-              insertForm.get('serverName').invalid &&
-              insertForm.get('serverName').touched
-            "
-            class="errspan required"
-          >
-            Server Type Required*</span
-          >
-        </div>
-
-        <div class="formelement">
-          <label for="inBoundAddress"
-            >In Bound Address<span class="star">*</span></label
-          >
-          <input
-            type="text"
-            maxlength="51"
-            class="form-control data"
-            formControlName="inBoundAddress"
-            #inBoundAddress
-            value=""
-            placeholder="Enter In Bound Address"
-          />
-          <span
-            *ngIf="
-              insertForm.get('inBoundAddress').invalid &&
-              insertForm.get('inBoundAddress').touched &&
-              !insertForm.controls['inBoundAddress'].hasError('maxlength')
-            "
-            class="errspan required"
-            >In Bound Address is required*</span
-          >
-          <div
-            *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')"
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-        <!-- </div> 
-
-                <div class="row"> -->
-        <div class="formelement">
-          <label for="inBoundAddressPort"
-            >In Bound Address Port<span class="star">*</span></label
-          >
-          <input
-            type="text"
-            (keydown)="inputNumberOnly($event)"
-            maxlength="6"
-            class="form-control data"
-            formControlName="inBoundAddressPort"
-            #inBoundAddressPort
-            value=""
-            placeholder="Enter In Bound Address Port"
-          />
-          <span
-            *ngIf="
-              insertForm.get('inBoundAddressPort').invalid &&
-              insertForm.get('inBoundAddressPort').touched &&
-              !insertForm.controls['inBoundAddressPort'].hasError('maxlength')
-            "
-            class="errspan required"
-            >In Bound Address Port is required*</span
-          >
-          <div
-            *ngIf="
-              insertForm.controls['inBoundAddressPort'].hasError('maxlength')
-            "
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-
-        <div class="formelement">
-          <label for="outBoundAddress"
-            >Out Bound Address<span class="star">*</span></label
-          >
-          <input
-            type="text"
-            maxlength="51"
-            class="form-control data"
-            formControlName="outBoundAddress"
-            #outBoundAddress
-            value=""
-            placeholder="Enter Out Bound Address"
-          />
-          <span
-            *ngIf="
-              insertForm.get('outBoundAddress').invalid &&
-              insertForm.get('outBoundAddress').touched &&
-              !insertForm.controls['outBoundAddress'].hasError('maxlength')
-            "
-            class="errspan required"
-            >Out Bound Address is required*</span
-          >
-          <div
-            *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')"
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-
-        <div class="formelement">
-          <label for="outboundAddressPort"
-            >Out Bound Address Port<span class="star">*</span></label
-          >
-          <input
-            type="text"
-            (keydown)="inputNumberOnly($event)"
-            maxlength="6"
-            class="form-control data"
-            formControlName="outboundAddressPort"
-            #outboundAddressPort
-            value=""
-            placeholder="Enter Out Bound Address Port"
-          />
-          <span
-            *ngIf="
-              insertForm.get('outboundAddressPort').invalid &&
-              insertForm.get('outboundAddressPort').touched &&
-              !insertForm.controls['outboundAddressPort'].hasError('maxlength')
-            "
-            class="errspan required"
-            >Out Bound Address Port is required*</span
-          >
-          <div
-            *ngIf="
-              insertForm.controls['outboundAddressPort'].hasError('maxlength')
-            "
-            class="errspan required"
-          >
-            Maximum of 50 characters
-          </div>
-        </div>
-
-                    
-                    <div class=" formelement">
-                        <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid">
-                        &nbsp;&nbsp;
-                        <input type="button" class="btn btn-primary" value="Reset"  (click)="resetCredForm()">
-                    </div>
-                    </form>
-                    </div>
-                    
-      </form>
-    </div>
-  </div>
-</div>
-
-<div id="sch" class="rpa-modal schedulemod">
-  <div class="rpa-modal-content">
-    <div class="rpa-modal-header">
-      <span class="rpa-modal-close" (click)="closeScheduler()"
+      <!-- <span class="rpa-modal-close" (click)="closeScheduler()"
         ><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""
-      /></span>
+      /></span> -->
       <h4>Scheduler</h4>
     </div>
-    <div *ngIf="scheduleOverlayFlag" class="modal-body actions-mbody">
-      <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler>
+    <div  class="modal-body actions-mbody">
+      <app-rpa-scheduler [data]="schedulerComponentInput"  (closeOverlay)="closeOverlay($event)"></app-rpa-scheduler>
     </div>
   </div>
+</app-split-overlay>
+
 </div>
+
 
 <ng-template #logspopup>
   <div
@@ -800,3 +446,7 @@
     ></app-rpa-so-logs>
   </div>
 </ng-template>
+
+
+<!--Credentials Form-->
+<app-rpa-credential-form [isCreateForm]="isCreateForm" [credupdatedata]="credupdatedata" (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>

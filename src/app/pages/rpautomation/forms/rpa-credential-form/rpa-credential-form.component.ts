@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, SimpleChanges, 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,7 +25,7 @@ export class RpaCredentialFormComponent implements OnInit {
   constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
-    private spinner: NgxSpinnerService) {
+    private spinner: LoaderService) {
 
       this.credentialForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -42,10 +43,11 @@ export class RpaCredentialFormComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
+    this.spinner.hide();
 
 
   }

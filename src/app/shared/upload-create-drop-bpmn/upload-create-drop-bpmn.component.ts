@@ -40,6 +40,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   @Input() selectedObj:any={}
   userRoles: any;
   freetrail: string;
+  hiddenPopUp: boolean=false;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef,
@@ -65,8 +66,9 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     if(this.isEdit_data){
       this.overlay_data={"type":"edit","module":"bps","selectedObj":this.selectedObj};
       this.uploaded_file = null;
-      var modal = document.getElementById('myModal');
-      modal.style.display = "block";
+      this.hiddenPopUp=true;
+      // var modal = document.getElementById('myModal');
+      // modal.style.display = "block";
     }
   }
 
@@ -86,6 +88,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   slideUp(){
+    this.hiddenPopUp=true;
     this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
@@ -104,13 +107,13 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       else {
         this.uploaded_file = null;
         var modal = document.getElementById('myModal');
-        modal.style.display = "block";
+        // modal.style.display = "block";
       }
     }
     else {
       this.uploaded_file = null;
       var modal = document.getElementById('myModal');
-      modal.style.display = "block";
+      // modal.style.display = "block";
     }
   }
 
@@ -201,6 +204,9 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     } else {
       return true;
     }
+  }
+  closeOverlay(event){
+    this.hiddenPopUp=event;
   }
 
 }

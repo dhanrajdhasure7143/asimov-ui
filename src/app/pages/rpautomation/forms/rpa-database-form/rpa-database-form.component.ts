@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { Rpa_Hints } from '../../model/RPA-Hints';
 
@@ -48,7 +49,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private dt:DataTransferService,
-    private spinner: NgxSpinnerService) {
+    private spinner: LoaderService) {
 
       this.dbForm=this.formBuilder.group({
         connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -67,7 +68,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
     this.api.getDatabaselist().subscribe(res=>{
       this.databaselist=res;
     })

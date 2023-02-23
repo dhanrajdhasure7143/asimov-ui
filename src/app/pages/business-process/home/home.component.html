@@ -4,12 +4,12 @@
             <div class="col-md-8"></div>
         </div>
         <div class="row">
-            <div class="col-md-12 new-bps-sample">
+            <div class="col-12 new-bps-sample">
                 <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" [selectedObj]="selectedObj"
                     [isEdit_data]="isEdit" isConfirmance="false"></app-upload-create-drop-bpmn>
             </div>
             <div class="col-md-12 box-border myworkspace-style">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-6 pl-0">
                         <h4 class="box-heading">My Workspace</h4>
                     </div>
@@ -32,8 +32,148 @@
                             <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                         </div>
                     </div>
+                </div> -->
+
+
+                <div>
+                    <p-table #dt1 [columns]="selectedColumns" [value]="saved_diagrams" dataKey="id"
+                        [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true"
+                        [reorderableColumns]="true" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
+                        [expandedRowKeys]="expandedRows">
+                        <ng-template pTemplate="caption">
+                            <div class="table-header">
+                                <h4 class="box-heading">My Workspace</h4>
+                                <div class="p-d-flex">
+                                    <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns"
+                                        optionLabel="header" selectedItemsLabel="{0} columns selected"
+                                        [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+                                    </p-multiSelect>
+                                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                        (click)="clear(dt1)">
+                                    </button>
+                                    <span class="p-input-icon-right">
+                                        <i class="pi pi-search"></i>
+                                        <input type="text" pInputText placeholder="Search" class="p-inputtext-lg"
+                                            (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 3em"></th>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn
+                                    pResizableColumn>
+                                    {{col.header}}
+                                    <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'"
+                                        [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
+                                        display="menu"></p-columnFilter>
+                                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
+                                        field="category" matchMode="equals" [showMatchModes]="false"
+                                        [showOperator]="false" [showAddButton]="false" display="menu">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown [ngModel]="value" [options]="categories_list_new"
+                                                (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    <p-sortIcon [field]="col.field" *ngIf="col.ShowFilter"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"
+                            let-i="rowIndex">
+                            <tr>
+                                <td>
+                                    <a href="#" [pRowToggler]="rowData" (click)=getSelectedNotation(rowData,i,expanded)>
+                                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                    </a>
+                                </td>
+                                <td *ngFor="let col of columns">
+
+                                    <span
+                                        *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'">
+                                        {{rowData[col.field]?rowData[col.field]:'-'}}
+                                    </span>
+                                    <span *ngIf="col.header == 'Status'">
+                                        <div [ngStyle]="{'color':getColor(rowData[col.field])}"
+                                            [class.pending_value_properties]="rowData[col.field]=='PENDING'">
+                                            {{getNotationStatus(rowData[col.field])}}</div>
+                                    </span>
+                                    <span *ngIf="col.header == 'Message'">
+                                        <div>
+                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus"
+                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="right">
+                                        </div>
+                                    </span>
+                                    <span *ngIf="col.header == 'Actions'">
+                                        <div class="cell cell11">
+                                            <span (click)="onEdit(rowData)" class="newinntalx">
+                                                <img pTooltip="Edit" tooltipPosition="right"
+                                                    src="../../../../assets/images/Projects/edit-black.svg"
+                                                    class="default-img">
+                                                <img pTooltip="Edit" tooltipPosition="right"
+                                                    src="../../../../../assets/images/Projects/Edit-blue.svg"
+                                                    class="hover-img">
+                                            </span>
+                                            <img src="../../../../assets/images/BPMS/Envelop.svg"
+                                                (click)="sendReminderMail(rowData)"
+                                                *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
+                                                pTooltip="Click to send reminder mail to Approver"
+                                                tooltipPosition="right" class="testplus1">
+                                            <span (click)="deleteProcess(rowData)"
+                                                *ngIf="(rowData['bpmnProcessStatus']!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (rowData['userEmail']==userEmail) ))"
+                                                class="delete-icon">
+                                                <img src="../../../../assets/images/Projects/delete-black.svg"
+                                                    pTooltip="Delete Notation" tooltipPosition="left"
+                                                    class="default-img">
+                                                <img src="../../../../assets/images/Projects/delete-red.svg"
+                                                    pTooltip="Delete Notation" tooltipPosition="left" class="hover-img">
+                                            </span>
+                                        </div>
+                                    </span>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
+                            <tr>
+                                <td [attr.colspan]="columns.length + 1">
+                                    <div class="bps_overlay1" *ngIf="isLoaderShow">
+                                        <div class="logs-container">
+                                            <div class="logs-loader">
+                                                <img src="../../../../assets/images/EZFlow_Loader.gif">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bps_overlay" *ngIf="!isLoaderShow">
+                                        <span class="info"
+                                            *ngIf="(selected_notation.bpmnProcessStatus && selected_notation.bpmnProcessStatus != 'PENDING')||(!selected_notation.bpmnProcessStatus) ">Click
+                                            to open</span>
+                                        <span><button title="Fit to the view port" class="right header_btn fit_button"
+                                                (click)="fitNotationView(selected_notation.ntype)"><img
+                                                    src="..\assets\fillView.svg"></button></span>
+                                        <span class="info"
+                                            *ngIf="selected_notation.bpmnProcessStatus && selected_notation.bpmnProcessStatus == 'PENDING'">Business
+                                            Process
+                                            Notation has been submitted for approval. Cannot be edited till it is
+                                            reviewed
+                                        </span>
+                                        <div [class]="'diagram_container'+i" (click)="openDiagram()"
+                                            [id]="'_diagram'+i"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td style="justify-content: center;" colspan="7">No Records Found</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
-                <div class="row col-md-12 text-bold workspace-title" matSort>
+
+                <!-- <div class="row col-md-12 text-bold workspace-title" matSort>
                     <div class="expan-icon"></div>
                     <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name</div>
                     <div class="cell cell3" mat-sort-header="ntype">Type</div>
@@ -45,13 +185,13 @@
                     <div class="cell cell9" mat-sort-header="bpmnProcessStatus">Status</div>
                     <div class="cell cell10" mat-sort-header="reviewComments">Message</div>
                     <div class="cell cell11">Actions</div>
-                </div>
+                </div> -->
 
-                <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
+                <!-- <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
                     <mat-accordion class="w-100">
                         <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
                             *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy"
-                            [id]="'bpmn_list_item'+i" (opened)="getSelectedNotation(each_diag,i)" hideToggle>
+                            [id]="'bpmn_list_item'+i"  hideToggle>
                             <mat-expansion-panel-header class="dropdown_icon">
                                 <mat-panel-title>
                                     <div class="row col-md-12">
@@ -72,7 +212,6 @@
                                             fitTableView(each_diag.processOwnerName) : '-'}}</div>
                                         <div class="cell cell6">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+"
                                             ": '-'}}</div>
-                                            <!-- <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}} -->
                                                 <div class="cell cell7">{{each_diag.convertedModifiedTime_new}}
                                         </div>
                                         <div class="cell cell8" [matTooltip]=each_diag.approverName
@@ -138,12 +277,12 @@
                         </mat-expansion-panel>
                         <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
                     </mat-accordion>
-                </div>
-                
-                <div class="bpspaginationdiv">
+                </div> -->
+
+                <!-- <div class="bpspaginationdiv">
                     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="25"
                         [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

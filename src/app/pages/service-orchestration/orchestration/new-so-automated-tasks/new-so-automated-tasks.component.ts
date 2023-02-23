@@ -1390,6 +1390,11 @@ resetsla(){
   clear(table: Table) {
     table.clear();
   }
+  closeOverlay(event){  //overlay close 
+
+    this.schedulepopup=event;
+  }
+
   
 }
 

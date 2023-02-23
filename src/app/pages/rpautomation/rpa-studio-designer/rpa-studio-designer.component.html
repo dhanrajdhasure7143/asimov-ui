@@ -333,10 +333,11 @@
       
 <!--load bot overlay-->
 <div id="load-bot" class="rpa-modal">
-  <div class="rpa-modal-content">
+  <app-split-overlay   (closeOverlay)="closeLoadBotFormOverlay()">
+  <div class="">
     <div class="rpa-modal-header">
-      <span class="rpa-modal-close" (click)="closeLoadBotFormOverlay()"><img
-          src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+      <!-- <span class="rpa-modal-close" (click)="closeLoadBotFormOverlay()"><img
+          src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
       <h4>Load Bot</h4>
     </div>
     <div class="modal-body">
@@ -372,13 +373,18 @@
       </form>
     </div>
   </div>
+</app-split-overlay>
 </div>
 
 
-<div id="bot-form" class="rpa-modal">
-  <div *ngIf="botFormVisibility">
+<div   *ngIf="botFormVisibility"> class="rpa-modal">
+  <div id="bot-form">
+  <app-split-overlay (closeOverlay)="closeOverlay1($event)">
+  
     <app-rpa-bot-form  (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
-  </div>
+  
+</app-split-overlay>
+</div>
 </div>
 
 <!-- <div id="createenvironment" class="rpa-modal">
@@ -387,5 +393,22 @@
           <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Create Environment</h4>
       </div> -->
-      <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
   <!-- </div> -->
+  <div *ngIf="isOpenSideOverlay">
+    <app-split-overlay (closeOverlay)="closeSideOverlay($event)">
+        <!-- <div class="">
+            <div class="rpa-modal-header">
+                <h3>Create Task</h3>
+            </div>
+            <div class="modal-body actions-mbody actionsoverlay-mbody">
+                <div>
+                    <app-create-tasks [users_list]="users_list" [params_data]="params_data"
+                        [hiddenPopUp]="createTaskOverlay" [existingUsersList]="existingUsersList"
+                        [project_name]="projectDetails.projectName"></app-create-tasks>
+                </div>
+            </div>
+        </div> -->
+        <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
+
+    </app-split-overlay>
+</div>

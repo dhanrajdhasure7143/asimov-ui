@@ -10,6 +10,7 @@
       color: #00a0e3;
       border: none;
       height: 40px;
+      flex-wrap: unset;
   }
   .list_header {
     text-align: left;
@@ -25,6 +26,7 @@
   display: -webkit-box;
   display: flex;
   color: #212529;
+  flex-wrap: unset;
 }
 .aprwkfl_search {
   float: right;
@@ -120,7 +122,7 @@ mat-expansion-panel-header {
   padding: 0px;
 }
 .aprwkfl-grid-data {
-  height: 65vh !important;
+  height: 60vh !important;
 }
 
 i.material-icons.expand-close {

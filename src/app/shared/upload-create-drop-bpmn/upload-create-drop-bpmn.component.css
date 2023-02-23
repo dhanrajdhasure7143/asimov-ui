@@ -49,3 +49,7 @@
 .gen-newdiv {
     padding: 0px 15px;
 }
+
+.box_area {
+    width: 95% !important;
+}

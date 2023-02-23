@@ -59,6 +59,7 @@ export class ProjectsListScreenComponent implements OnInit {
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
   isprojectCreateForm: boolean =false;
+  isprogramCreateForm: boolean =false;
   categoryList:any;
   categories_list:any[]=[]
 
@@ -96,8 +97,8 @@ export class ProjectsListScreenComponent implements OnInit {
       localStorage.getItem("lastName");
     this.getallprocesses();
     this.email = localStorage.getItem("ProfileuserId");
+    this.getAllCategories();
     this.getallProjects(this.userRoles, this.name, this.email);
-    // this.getallusers();
     this.getUsersList()
     this.freetrail = localStorage.getItem("freetrail");
   }
@@ -217,8 +218,6 @@ export class ProjectsListScreenComponent implements OnInit {
         }
       });
     });
-    this.getAllCategories();
-
 
     this.columns_list = [
       {
@@ -226,10 +225,11 @@ export class ProjectsListScreenComponent implements OnInit {
         DisplayName: "Type",
         ShowGrid: true,
         ShowFilter: true,
-        filterWidget: "multiSelect",
+        filterWidget: "dropdown",
         filterType: "text",
         sort: true,
         multi: false,
+        dropdownList:["Project","Program"]
       },
       {
         ColumnName: "projectName",
@@ -261,6 +261,7 @@ export class ProjectsListScreenComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
+        dropdownList:this.categories_list
       },
       {
         ColumnName: "createdDate",
@@ -301,7 +302,7 @@ export class ProjectsListScreenComponent implements OnInit {
       // },
       {
         ColumnName: "action",
-        DisplayName: "Action",
+        DisplayName: "Actions",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
@@ -469,7 +470,6 @@ export class ProjectsListScreenComponent implements OnInit {
    }
 
   closeOverlay(event) {
-    console.log(event)
     this.hiddenPopUp = event;
     this.isprojectCreateForm = false;
   }
@@ -499,9 +499,22 @@ export class ProjectsListScreenComponent implements OnInit {
   getAllCategories() {    // get all categories list for dropdown
     this.api.getCategoriesList().subscribe(res => {
     this.categoryList = res
-    this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
-    })
-  }
+    
+    let sortedList=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    sortedList.forEach(element => {
+      this.categories_list.push(element.categoryName)
+    });
+
+  })
+}
+
+onClikCreateProgram(){
+  // this.isprogramCreateForm =true;
+  this.router.navigate(["/pages/projects/create-projects"], {
+    queryParams: { id: this.create_Tabs },
+  });
+
+}
     
 
 }

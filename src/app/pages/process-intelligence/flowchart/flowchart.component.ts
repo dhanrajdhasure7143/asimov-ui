@@ -150,6 +150,7 @@ model3:any[]=[];
 selectedActivities1:any[]=[];
 combofilterObject:any;
 pi_fullGraph_data:any=[];
+  hiddenPopUp:boolean=false;
 
 
   constructor(private dt: DataTransferService,
@@ -1215,9 +1216,10 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
 }
 
   openVariantListNav(){   //variant list open
-    document.getElementById("mySidenav").style.width = "310px";
-    document.getElementById("main").style.marginRight = "310px";
-    this.isvariantListOpen=false;
+    // document.getElementById("mySidenav").style.width = "310px";
+    // document.getElementById("main").style.marginRight = "310px";
+    // this.isvariantListOpen=false;
+    this.hiddenPopUp=true;
   }
 
   closeNav() { // Variant list Close
@@ -2114,6 +2116,13 @@ addWorkingHours(){
       this.isWorkingHrsBtn = false;
       this.dt.pi_buttonValues({ "isPlaybtn": false, "isTimefeed_btn": this.isWorkingHrsBtn });
     }
+  }
+  //overlay
+  closeOverlay(event){
+    this.hiddenPopUp=event;
+    // document.getElementById("mySidenav").style.width = "0px";
+    document.getElementById("main").style.marginRight= "0px";
+    // this.isvariantListOpen=true;
   }
 
 }

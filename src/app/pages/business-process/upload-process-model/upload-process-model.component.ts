@@ -45,7 +45,7 @@ declare var require:any;
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css'],
-  providers:[BpmnShortcut]
+  providers:[BpmnShortcut,SharebpmndiagramService,BsModalService]
 })
 export class UploadProcessModelComponent implements ComponentCanDeactivate,OnInit,OnDestroy {
   isShowConformance:boolean = false;
@@ -189,7 +189,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
       if(params['vcmId']){
         this.vcmId=params['vcmId'];
       }
-
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
 

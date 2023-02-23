@@ -1,10 +1,9 @@
-<div class="container-fluid">
-  <div class="createform">
-      <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
-          <div class="">
-              <div class="row">
-                  <div class="form-fields col">
-                      <label class="label-control">Project Name<span class="star">*</span></label>
+<div class="createform-overlay">
+    <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
+        <div class="">
+            <div class="row">
+                  <div class="form-fields col pl-0">
+                      <label class="">Project Name<span class="star">*</span></label>
                       <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51"
                           formControlName="projectName" placeholder="Enter Project Name">
                       <span
@@ -18,10 +17,10 @@
                           and special characters are not allowed Excluding( _ & - )
                       </span>
                   </div>
-                  <div class="form-fields col">
-                      <label class="label-control">Select Department<span class="star">*</span></label>
+                  <div class="form-fields col pr-0">
+                      <label class="">Select Department<span class="star">*</span></label>
                       <p-dropdown [options]="categories_list" [filter]="true" formControlName="mapValueChain"
-                          autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
+                          autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           placeholder="Select a Department" optionLabel="categoryName"
                           optionValue="categoryName"></p-dropdown>
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
@@ -29,11 +28,11 @@
                           Department Required*
                       </div>
                   </div>
-              </div>
-              <div class="row">
-                  <div class="form-fields col">
-                      <label class="label-control">Process Owner<span class="star">*</span></label>
-                      <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
+            </div>
+            <div class="row">
+                  <div class="form-fields col pl-0">
+                      <label class="">Process Owner<span class="star">*</span></label>
+                      <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           filterBy="user_email,fullName" [autoDisplayFirst]="false" (onChange)="onChange()"
                           placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
                           optionLabel="fullName">
@@ -46,19 +45,19 @@
                       <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
                           class="errspan required">Process Owner Required*</span>
                   </div>
-                  <div class="form-fields col">
-                      <label class="label-control">Select Process<span class="star">*</span></label>
-                      <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}"
+                  <div class="form-fields col pr-0">
+                      <label class="">Select Process<span class="star">*</span></label>
+                      <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
                           optionValue="processId" optionLabel="processName" filterBy="processName">
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
                           class="errspan required">Process Required*</span>
                   </div>
-              </div>
-              <div class="row">
-                  <div class="form-fields">
-                      <label class="label-control">Project Priority<span class="star">*</span></label>
+            </div>
+            <div class="row">
+                  <div class="form-fields col p-0">
+                      <label class="">Project Priority<span class="star">*</span></label>
                       <div>
                           <!-- <div class="field-radiobutton">
                               <p-radioButton name="Priority" value="Low" formControlName="priority"></p-radioButton>
@@ -97,11 +96,11 @@
                               class="errspan required">Project Priority Required*</span>
                       </div>
                   </div>
-              </div>
-              <div class="row">
-                  <div class="form-fields col-lg-12">
-                      <label class="label-control">Project Description<span class="star">*</span></label>
-                      <textarea [style]="{'width':'100%'}" pInputTextarea formControlName="projectPurpose"
+            </div>
+            <div class="row">
+                  <div class="col p-0">
+                      <label class="">Project Description<span class="star">*</span></label>
+                      <textarea pInputTextarea formControlName="projectPurpose" placeholder="Enter Description"
                           [autoResize]="true" maxlength="251" required></textarea>
                       <!-- <textarea class="form-control data" formControlName="projectPurpose" row="3" placeholder="Enter Project Description" style=" resize: none;" maxlength="251" [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                           </textarea> -->
@@ -113,12 +112,11 @@
                           Maximum of 250 characters exceeded
                       </span>
                   </div>
-              </div>
-          </div>
-      </form>
-      <div class="pull-right form-footer" style="padding:10px;">
-          <button (click)="resetcreateproject()" class="btn btn-default">Reset</button>
-          <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn btn-primary">Save</button>
-      </div>
-  </div>
+            </div>
+        </div>
+    </form>
+    <div class="createform-footer">
+        <button (click)="resetcreateproject()" class="btn new-cancelbtn">Reset</button>
+        <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn bluebg-button">Create</button>
+    </div>
 </div>

@@ -106,7 +106,8 @@ public slaupdate : boolean = false;
     popup:Boolean=false;
     logs_modal:any;
     draggableHandle:any;
-  noDataMessage: boolean;
+    noDataMessage: boolean;
+    hiddenPopUp:boolean=false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -368,7 +369,8 @@ public slaupdate : boolean = false;
       this.insertslaForm_so_bot.get("breachAlerts").setValue("");
       this.slaconId=undefined
     }
-    document.getElementById("SLAConfig_overlay").style.display="block";
+    // document.getElementById("SLAConfig_overlay").style.display="block";
+    this.hiddenPopUp=true;
   }
 
 
@@ -436,7 +438,8 @@ public slaupdate : boolean = false;
           {
             Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
-            document.getElementById("SLAConfig_overlay").style.display = "none";
+            // document.getElementById("SLAConfig_overlay").style.display = "none";
+            this.closeOverlay();
           }
           else
             Swal.fire("Error",resp.errorMessage,"error")
@@ -449,7 +452,9 @@ public slaupdate : boolean = false;
           {
             Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
-            document.getElementById("SLAConfig_overlay").style.display = "none";
+            // document.getElementById("SLAConfig_overlay").style.display = "none";
+            this.closeOverlay();
+
           }
           else
             Swal.fire("Error",resp.errorMessage,"error");
@@ -1040,6 +1045,7 @@ public slaupdate : boolean = false;
 
 
     openscheduler(bot)
+
     {
    //   $(".tour_guide").hide();
       this.botid=bot.botId;
@@ -1200,4 +1206,19 @@ public slaupdate : boolean = false;
   clear(table: Table) {
     table.clear();
   }
+  closeOverlaysche(event){
+  
+    $(".tour_guide").show();
+      this.popup=event;
+  }
+
+  closeOverlay(){
+    
+    this.hiddenPopUp=false;
+    // document.getElementById("SLAConfig_overlay").style.display = "none";
+   this.resetsla();
+   this.popup=false;
+   
+  }
+
 }

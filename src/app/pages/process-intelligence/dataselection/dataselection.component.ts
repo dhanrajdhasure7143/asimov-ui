@@ -62,6 +62,7 @@ export class DataselectionComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   overlay_data={}
+  hiddenPopUp1:boolean=false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -115,8 +116,9 @@ export class DataselectionComponent implements OnInit {
 
   slideUp(){    //Open bottom overlay for Enter process name and generate graph
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="block";
+    this.hiddenPopUp1 = true;
   }
   
   generateGraph(e){   //Generate process graph for csv and xls
@@ -631,6 +633,10 @@ export class DataselectionComponent implements OnInit {
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+
+  closeOverlay(event){
+    this.hiddenPopUp1 = event;
   }
 
 }

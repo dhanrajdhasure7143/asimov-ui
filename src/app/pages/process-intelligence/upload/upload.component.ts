@@ -85,6 +85,9 @@ export class UploadComponent implements OnInit {
   noDataMessage: boolean;
   columns_list:any[];
   table_searchFields:any[]=[];
+  categories_list_new:any[]=[];
+  hiddenPopUp:boolean=false;
+  hiddenPopUp1: boolean=false;
 
 
   constructor(private router: Router,
@@ -169,7 +172,7 @@ export class UploadComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
-        dropDownList:[]
+        dropdownList:this.categories_list_new
       },
       {
         ColumnName: "status",
@@ -334,8 +337,9 @@ export class UploadComponent implements OnInit {
 
   openXESGZFile(){
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="block";
+    this.hiddenPopUp1=true;
   }
 
   error_display(event) {
@@ -525,6 +529,7 @@ export class UploadComponent implements OnInit {
     this.isTableEnable=false;
     this.isTimestammp=false;
     this.isIncrement=false;
+    this.hiddenPopUp=true;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
     this.rest.fileName.next(null);
@@ -552,6 +557,8 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
+    this.hiddenPopUp1=false;
+    this.hiddenPopUp = false;
     this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     this.rest.getAlluserProcessPiIds().subscribe((data:any) => {
@@ -622,6 +629,9 @@ export class UploadComponent implements OnInit {
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res
     this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+    this.categories_list.forEach(element => {
+      this.categories_list_new.push(element.categoryName)
+    });
     let selected_category=localStorage.getItem("pi_search_category");
       if(this.categories_list.length == 1){
         this.categoryName=this.categories_list[0].categoryName;
@@ -637,14 +647,14 @@ export class UploadComponent implements OnInit {
     if (category == "allcategories") {
       var fulldata='';
       this.dataSource.filter = fulldata;
-      this.dataSource.paginator.firstPage();
+      // this.dataSource.paginator.firstPage();
     }else{  
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return data.categoryName === category;
        };
        this.dataSource.filter = category;
-       this.dataSource.paginator=this.paginator;
-       this.dataSource.paginator.firstPage();
+      //  this.dataSource.paginator=this.paginator;
+      //  this.dataSource.paginator.firstPage();
     }
   }
 
@@ -1090,6 +1100,7 @@ getDBTables(){      //get DB tables list
   editProcess(obj){
     this.overlay_data={"type":"edit","module":"pi","selectedObj":obj};
     var modal = document.getElementById('myModal');
+    this.hiddenPopUp1=true;
     modal.style.display="block";
   }
   onChangeValues(){
@@ -1108,6 +1119,10 @@ getDBTables(){      //get DB tables list
     this.mytemplateForm.controls["increment"].markAsUntouched();
     if(this.mytemplateForm.controls["timestamp"])
     this.mytemplateForm.controls["timestamp"].markAsUntouched();
+  }
+  closeOverlay(event){
+    this.hiddenPopUp=false;
+    this.hiddenPopUp1=false;
   }
 
 }

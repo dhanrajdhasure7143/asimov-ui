@@ -10,14 +10,14 @@
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 100%);
   border-radius: 6px;
 }
-.project-status {
+.task-status {
   background-color: rgb(9 141 230 / 10%);
   border-radius: 6px 0px 0px 0px;
   height: 100%;
   padding: 30px 10px !important;
   justify-content: center;
 }
-.project-status p{
+.task-status p{
   font-size: 12px;
   margin:0px;
 }
@@ -35,15 +35,15 @@ span.project-name {
 }
 span.highimp {
   color: #EA3D3D;
-  margin: 3px 0px 0px 5px;
+ margin-left: 5px;
 }
 span.mediumimp {
   color: #E58600;
-  margin: 3px 0px 0px 5px;
+ margin-left: 5px;
 }
 span.lowimp {
   color: #27AD74;
-  margin: 3px 0px 0px 5px;
+ margin-left: 5px;
 }
 .pinf p {
   margin-bottom: 5px;
@@ -83,7 +83,7 @@ button span {
   border-radius: 6px;
   background-color: #fff;
   padding: 0px 15px 10px;
-  height: 100%;
+  height: 105%;
 } 
 .commentBox button {
   margin: 5px 0px 10px;
@@ -139,27 +139,39 @@ ul.historydiv li:last-child {
   overflow: auto;
 }
 
+.fileupsec {
+  position: relative;
+}
+input[type="file"] {
+  opacity: 0;
+  cursor: pointer;
+  width: 140px;
+  z-index: 1;
+  position: relative;
+}
+.fileupsec span {
+  position: absolute;
+  color: #098de6;
+  padding: 3px 5px;
+  left: 0px;
+  cursor: pointer;
+  z-index: 0;
+}
+.fileupsec img {
+  position: absolute;
+  right: 0px;
+  top: 5px;
+}
+.emptycomments img {
+  margin-top: 5%;
+}
+.emptycomments p {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
 
-
-
-  .fileupsec {
-    position: relative;
-  }
-  
-   input[type="file"] {
-    opacity: 0;
-    cursor: pointer;
-    width: 125px;
-    z-index: 1;
-    position: relative;
-  }
-  .fileupsec span {
-    position: absolute;
-    color: var(--main-bluecolor);
-    padding: 4px 20px;
-    top: 0px;
-    border-radius: 4px;
-    left: 0px;
-    cursor: pointer;
-    z-index: 0;
-  }
+button.btn.btn-primary.savefoldername {
+  margin-top: 15px;
+  float: right;
+}

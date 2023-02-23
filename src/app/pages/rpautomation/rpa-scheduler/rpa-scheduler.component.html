@@ -1,7 +1,7 @@
 <div class="container m-contanier form-body">
         <div class="RPA-scheduletimer">
             <div class="row RPA-scheduletimer-header">
-                <div class="col-md-11 p-0">
+                <div class="col p-0">
                     <span>
               <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone">
                 <option value="" disabled>Select Timezone</option>
@@ -19,19 +19,19 @@
               </mat-form-field>
             </span>
                 </div>
-                <div class="col-md-1 p-0 scheduletimer-loadicon">
+                <div class="col p-0 scheduletimer-loadicon">
                     <span>
               <button (click)="reset()" tooltip="Reset"><img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" alt="" class="testplus"></button>
             </span>
                 </div>
             </div>
-            <div class="col-md-12 p-0 form-group">
+            <div class="col p-0 form-group">
                 <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron here...
                 </cron-editor>
             </div>
             <div class="RPA-scheduletimer-body">
                 
-                    <div class="col-md-6 pl-0">
+                    <div class="col pl-0">
                             <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" class="rpa-control form-control form-group" [(ngModel)]="startdate" id="txtDate" >
                             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"  (timeChanged)="onChangeHour($event,'starttime')" [format]="24"   [(ngModel)]="starttime" ></ngx-timepicker-field>
                             <span class='errspan required' *ngIf="beforetime">{{starttimeerror}}</span>

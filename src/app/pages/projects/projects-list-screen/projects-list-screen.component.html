@@ -56,11 +56,11 @@
                 [screenTable]="'projectList'" 
                 [dataKeyId]="'id'"
                 [search_fields]="table_searchFields"
-                [show_view_btn]="true"
                 [categories_list]="categories_list"
                 [show_search_field]="true"
                 [show_column_filter]="true"
                 [show_clear_filter]="true"
+                [selectionMode]="'single'"
                 >
               </app-dynamic-table>
             </div>
@@ -78,41 +78,31 @@
 
 <div [hidden]="!hiddenPopUp" >
   <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
-    <div class="bgcolor">
-      <div class="rpa-modal-header" >
-        <h5 *ngIf="!isprojectCreateForm">Create Project / Program</h5>
-        <h2 *ngIf="isprojectCreateForm">Create Project</h2>
-        <br>
+    <div class="h-100">
+      <div class="create-header" >
+        <h3 *ngIf="!isprojectCreateForm">Create Project / Program</h3>
+        <h3 *ngIf="isprojectCreateForm">Create Project</h3>        
       </div>
-      <div class="modal-body actions-mbody actionsoverlay-mbody ">
-        <div class="container " *ngIf="!isprojectCreateForm">
-          <div class="row">
-            <div class="col-md-6 prjoverlay">
-              <p-card class="cards imgg"  >
-              <button type="button" (click)="onClikCreateProject()" style="padding-left:50px;">
-                <p-image src="../../../../assets/images/Projects/Create Project.png"  alt="Image" width="75" ></p-image>
-                 <br> &nbsp;
-                  <span class=" title_text">Create Project</span>
-                  &nbsp;
-              </button>
-            </p-card>
-            </div>
-            <div  class="col-md-6 prjoverlay">
-            <p-card class="cards side imgg" >
-              <button  type="button" style="padding-left:60px;">
-                <br>
-                <p-image src="../../../../assets/images/Projects/create program.png"  alt="Image" width="75" ></p-image>
-                <br>&nbsp;
-                <span > Creat Program</span>
-              </button>
-            </p-card>
-            </div>
-          </div>
+      <div class="row create-body" *ngIf="!isprojectCreateForm">
+        <div class="prjoverlay">
+          <p-card class="cards imgg"  >
+            <button type="button" (click)="onClikCreateProject()">
+              <p-image src="../../../../assets/images-n/projects/CreateProject.svg"  alt="Create Project"></p-image>                  
+              <p class=" title_text">Create Project</p>                  
+            </button>
+          </p-card>
         </div>
-
-        <div *ngIf="isprojectCreateForm">
-          <app-create-project-form [users_list]="users_list" [hiddenPopUp]="hiddenPopUp"></app-create-project-form>
+        <div class="prjoverlay">
+          <p-card class="cards side imgg" >
+            <button  type="button"  (click)="onClikCreateProgram()">                
+              <p-image src="../../../../assets/images-n/projects/CreateProgram.svg"  class="crtprgm" alt="Create Program"></p-image>                
+              <p class=" title_text">Creat Program</p>
+            </button>
+          </p-card>
         </div>
+      </div>
+      <div *ngIf="isprojectCreateForm" class="h-100">
+        <app-create-project-form [users_list]="users_list" [hiddenPopUp]="hiddenPopUp"></app-create-project-form>
       </div>
     </div>
   </app-split-overlay>

@@ -163,7 +163,7 @@ export class RpaBotFormComponent implements OnInit {
   closeBotForm() {
     this.botForm.reset();
     this.botForm.get("department").setValue("");
-    document.getElementById('bot-form').style.display = 'none';
+    // document.getElementById('bot-form').style.display = 'none';
     this.closeFormOverlay.emit(true);
     this.botNameCheck = false;
   }

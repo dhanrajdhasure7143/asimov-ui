@@ -55,6 +55,9 @@ export class ProjectTaskDetailsComponent implements OnInit {
   selected_folder:any;
   folder_files:any;
   files:any;
+  active_inplace:any;
+  nodeMap:Object = {};
+  uploaded_file:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,7 +70,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       { name: "New" },
       { name: "In Progress" },
       { name: "In Review" },
-      { name: "Done" },
+      { name: "Closed" },
     ];
     this.priority_list = [
       { name: "High" },
@@ -77,7 +80,6 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let today = new Date();
     this.getallusers();
   }
 
@@ -89,12 +91,10 @@ export class ProjectTaskDetailsComponent implements OnInit {
       this.rest_api
         .getProjectTaskDetailsById(this.project_id, this.params_data.task_id)
         .subscribe((response) => {
-          console.log("testing", response);
           let taskList: any = response;
           this.task_details = taskList[0];
           // this.task_details = taskList.find((item) => item.id == data.task_id);
           // this.selected_task_details = taskList.find((item) => item.id == data.task_id);
-          console.log("taskDetails", this.task_details);
           this.taskcomments_list = this.task_details.comments;
           this.taskhistory_list = this.task_details.history;
           this.added_comments_list = [];
@@ -105,6 +105,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
           this.mindate = moment(this.task_details.startDate).format(
             "YYYY-MM-DD"
           );
+        this.getTheListOfFolders();
         });
       this.spinner.hide();
     });
@@ -140,53 +141,50 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // this.getUserRole();
   }
 
-  onDeactivate() {
-    console.log(this.task_details);
-    // this.ip.activate();
-    this.inplace.deactivate();
-    this.inplace1.deactivate();
-    this.inplace2.deactivate();
-    this.inplace3.deactivate();
-    this.inplace4.deactivate();
-    this.inplace5.deactivate();
-    this.inplace6.deactivate();
+  onDeactivate(field){
+    this[field].deactivate();
   }
 
-  inplaceActivate(field) {
+  inplaceActivate(field, activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
+    this.active_inplace = activeField
     if (field == "endDate") {
       this.endDate = moment(this.task_details.endDate).format("YYYY-MM-DD");
       return;
     }
     this[field] = this.task_details[field];
-    console.log(this.resources);
     // e.deactivate();
   }
 
   onUpdateDetails(field) {
-    if (field == "percentageComplete") {
-      if (this.percentageComplete > 100) {
-        this.percentageComplete = 100;
-      } else {
-        this.task_details[field] = String(this[field]);
-        this.updatetask();
-        this.onDeactivate();
-        console.log();
-      }
-    } else {
+    // if (field == "percentageComplete") {
+    //   if (this.percentageComplete > 100) {
+    //     this.percentageComplete = 100;
+    //   } else {
+    //     this.task_details[field] = String(this[field]);
+    //     this.updatetask();
+    //     this[this.active_inplace].deactivate();
+    //   }
+    // } else {
       this.task_details[field] = this[field];
       this.updatetask();
-      this.onDeactivate();
-    }
+      this[this.active_inplace].deactivate();
+    // }
   }
 
-  inplaceActivateDesc() {
+  inplaceActivateDesc(activeField) {
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    this.active_inplace = activeField
     this.task_desc = this.task_details.description;
   }
 
   onUpdateDesc() {
     this.task_details.description = this.task_desc.toString();
     this.updatetask();
-    this.inplace3.deactivate();
+    this[this.active_inplace].deactivate();
   }
 
   closeOverlay(event) {
@@ -315,114 +313,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
   chnagefileUploadForm(event){
     console.log(event)
     this.isFile_upload_dialog = true;
+    this.uploaded_file= event.target.files[0]
 
     // for (var i = 0; i <= e.target.files.length - 1; i++) {
     // }
-    this.files = [
-      {
-        key: "0",
-        label: "Add Folder",
-        data: "Movies Folder",
-        collapsedIcon: 'pi pi-folder',
-        expandedIcon: 'pi pi-folder'
-      },
-      {
-        key: "1",
-        label: "Analysis",
-        data: "Documents Folder",
-        collapsedIcon: 'pi pi-folder',
-        expandedIcon: 'pi pi-folder-open',
-        children: [
-          {
-            key: "1-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "1-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "2",
-        label: "System Connectivity",
-        data: "Pictures Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "2-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "2-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "2-2",label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "2-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "3",
-        label: "Process Documents",
-        data: "Pictures Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "3-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "3-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "3-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "3-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "4",
-        label: "Testing",
-        data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "4-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "4-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "4-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "4-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      },
-      {
-        key: "5",
-        label: "References",
-        data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          {
-            key: "5-0",
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-          },
-          { key: "5-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { key: "5-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
-        ],
-      }
-    ];
-    this.folder_files = this.files
+
   }
 
   Space(event:any){
@@ -437,6 +332,68 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   onCloseFolderOverlay(){
     this.isFile_upload_dialog = false;
+  }
+
+  getTheListOfFolders(){
+    let res_data:any=[];
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
+      console.log(res)
+        res_data=res
+      this.files=[
+      ];
+      for (let obj of res_data) {
+        let node = {
+          label: obj.label,
+          data: obj.data,
+          key: obj.key,
+          type:"default",
+          uploadedBy:obj.uploadedBy,
+          projectId:obj.projectId,
+          id: obj.id
+        };
+          if(obj.dataType == 'folder'){
+            node['collapsedIcon']=  "pi pi-folder"
+            node["expandedIcon"]  ="pi pi-folder-open"
+        }else{
+          node['icon']=  "pi pi-file"
+        }
+        this.nodeMap[obj.key] = node;
+        if (obj.key.indexOf('-') === -1) {
+          node['children']=[
+          ]
+          this.files.push(node);
+        } else {
+          let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+          let parent = this.nodeMap[parentKey];
+          if (parent) {
+            if (!parent.children) {
+
+            }
+            parent.children.push(node);
+          }
+        }
+      }
+      this.folder_files = this.files
+    })
+  }
+
+  uploadFile(){
+    console.log(this.selected_folder,"Selectedfolders");
+
+    var fileData = new FormData();
+    fileData.append("filePath", this.uploaded_file);
+    // fileData.append("key",object.key)
+    fileData.append("label",this.uploaded_file.name.split('.')[0])
+    fileData.append("data","file")
+    fileData.append("ChildId",'1')
+    fileData.append("dataType",this.uploaded_file.name.split('.')[1])
+    fileData.append("fileSize",this.uploaded_file.size)
+    fileData.append("task_id",'')
+    fileData.append("projectId", this.project_id)
+  
+    // this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+
+    // })
   }
 
 }

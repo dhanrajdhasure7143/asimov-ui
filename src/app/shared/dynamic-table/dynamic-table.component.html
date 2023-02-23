@@ -19,7 +19,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width: 1rem" *ngIf="checkBoxShow">
+                <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}"
@@ -46,8 +46,7 @@
                     <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                     [showAddButton]="false" display="menu">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="categories_list" (onChange)="filter($event.value)" placeholder="Any"
-                                        optionValue="categoryName" optionLabel="categoryName">
+                            <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)" placeholder="Any">
                                 <!-- <ng-template let-option pTemplate="item">
                                     <span [class]="'customer-badge status-' + option.value">{{option.categoryName}}</span>
                                 </ng-template> -->
@@ -62,94 +61,122 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
-                <td *ngIf="checkBoxShow">
+                <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <span *ngIf="!col.multi && col.ColumnName!='action'">
-                        <span *ngIf="col.ColumnName != 'priority'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
-                        <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
+                        <span *ngIf="screenTable !='environment_table'">
+                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
+                            <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
+                            <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
+                        </span>
+                        <span *ngIf="screenTable =='environment_table'">
+                            <span *ngIf="col.ColumnName == 'activeStatus_new'" >
+                                <span *ngIf="rowData['activeStatus_new'] == 'Active'" class='green'>Active</span>
+                                <span *ngIf="rowData['activeStatus_new'] == 'Inactive'" class='red'>Inactive</span>
+                            </span>
+                            <span *ngIf="col.ColumnName == 'deploy_status_new'">
+                                <span *ngIf="rowData['deploy_status_new'] == 'Yes'"class='green'>Yes</span>
+                                <span *ngIf="rowData['deploy_status_new'] == 'No'"class='red'>No</span>
+                            </span>
+                            <span *ngIf="col.ColumnName != 'activeStatus_new' && col.ColumnName != 'deploy_status_new'">
+                                {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
+                            </span>
+                        </span>
+
                     </span>
                     
-                    <span *ngIf="col.multi && col.ColumnName!='action'">{{rowData[col.multiOptions[0]]}} <br>
-                        <span *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
-                        <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
-                        <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
+                    <span *ngIf="col.multi && col.ColumnName!='action'">
+                        <div *ngIf="col.multiOptions[1] == 'priority'">
+                            <span class="prjtaskname">{{rowData[col.multiOptions[0]]}}</span>
+                            <span class="prjgridpriority"  [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        </div>
+                        <div *ngIf="col.multiOptions[1] != 'priority'">
+                            <div class="d-flex align-items-center">
+                                <!-- <span class="prjlastupdateprofile">RS</span> -->
+                                <span>
+                                    <span class="prjlastupdatename">{{rowData[col.multiOptions[0]]}}</span>
+                                    <span class="prjgridtimestamp" > {{rowData[col.multiOptions[1]]}} </span>
+                                </span>
+                            </div>
+                        </div>
                     </span>
+                    <!-- <span *ngIf="col.multi && col.ColumnName!='action'">{{rowData[col.multiOptions[0]]}} <br>
+                        <span class="prjgridpriority" *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        <span class="prjgridtimestamp" *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
+                    </span> -->
+                    <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
                     <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
                         {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                     </span> -->
                     <span *ngIf="col.ColumnName == 'action'" class="newinntalx">
-                        <span *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)">
-                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img" >
-                            <img src="../../../../assets/images/PI/eye-show-blue.svg" alt="" class="testplus hover-img" >
+                        <span *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
+                            <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </span>
                         <span *ngIf='rowData[col.kafkaConFail] == "Y" && show_retry_btn' (click)="onRetryGraphGenerate(rowData)">
-                            <img src="../../../../assets/images/PI/refresh.svg" alt="" class="testplus default-img" >
-                            <img src="../../../../assets/images/PI/refresh-blue.svg" alt="" class="testplus hover-img" >
+                            <img src="../../../../assets/images/PI/refresh.svg" alt="Refresh" class="testplus default-img" >
+                            <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-img" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
-                            <span *ngIf="!isdisabled_edit" (click)="editRowBy_Id(rowData)">
-                                <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img">
-                                <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img">
+                            <span *ngIf="!isdisabled_edit" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>
                             <span *ngIf="isdisabled_edit">
                                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </span>
                         </span>
-                        <span *ngIf="show_delete_btn" class="editButton" (click)="deleteRow(rowData)">
-                            <span *ngIf="!isdisabled_delete">
-                                <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img" alt="delete">
-                                <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" alt="">
+                        <span *ngIf="show_delete_btn" class="editButton" >
+                            <span *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
                             </span>
                             <span *ngIf="isdisabled_delete">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </span>
                         </span>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='common'">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">
                         <div class="newinntalx">
-                            <!-- <span *ngIf="selectedScreen">
-                                <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit"
-                                    (click)="editRowBy_Id(rowData)">
-                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt=""
-                                        class="testplus clickable"> </button>
-                                <button class="editButton" [disabled]="!selectedScreen.Allow_Delete"
-                                    (click)="deleteRow(rowData)">
-                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                        class="testplus clickable" alt="close">
-                                </button>
-                            </span> -->
-                            <!-- <span *ngIf="!selectedScreen">
-                                <button placement="bottom" class="editButton" (click)="editRowBy_Id(rowData)">
-                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt=""
-                                        class="testplus clickable"> </button>
-                                <button *ngIf="show_delete_btn" class="editButton" (click)="deleteRow(rowData)">
-                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                        class="testplus clickable" alt="close">
-                                </button>
-                            </span> -->
+                            <span *ngIf="loggedInUser==rowData['email']" class="editButton">
+                                <span>
+                                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                                </span>
+                                <span>
+                                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
+                                </span>
+                            </span>
+                            <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
+                                <span (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                    <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
+                                </span>
+                                <span  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                                    <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                                </span>
+                            </span>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'">
-                        <div class="newinntalx">
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
-                            || (this.userRoles.includes('System Admin'))">
-                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                            </a>
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null" class="w-100 text-center">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <span class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
+                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
+                            </span>
+                            <span (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
+                            || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="testplus default-img">
+                        </span>
                         </div>
                     </span>
                     
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
-                            <a class="" (click)="openWorkSpace(rowData)">
+                            <a class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </a>
-                            <a class="" (click)="viewDetailsbyId(rowData)">
-                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="default-img">
+                            <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
+                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="default-img">
                             </a>
-                            <a (click)="deleteRow(rowData)">
-                                <img src="../../../assets/images-n/common/delete-blue.svg" class="default-img">
+                            <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="default-img">
                             </a>
                         </div>
                     </span>
@@ -200,7 +227,7 @@
         </ng-template> -->
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td style="justify-content: center;" colspan="7">No records found</td>
+                <td style="justify-content: center;" colspan="7">No Records Found</td>
             </tr>
         </ng-template>
     </p-table>
@@ -301,7 +328,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td  style="justify-content: center;" colspan="7">No records found</td>
+                <td  style="justify-content: center;" colspan="7">No Records Found</td>
             </tr>
         </ng-template>
     </p-table>
