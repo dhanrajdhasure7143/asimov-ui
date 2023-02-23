@@ -2587,7 +2587,7 @@ div {
   margin: 0;
   padding: 0;
   text-decoration: none !important;
-  list-style: none;
+  /* list-style: none; */
   color: inherit;
   font-family:  'Source Sans 3', sans-serif;
   font-weight: 400;
@@ -2783,7 +2783,7 @@ thead.p-datatable-thead tr {
   height: 50px;
 }
 
-th.p-element.p-sortable-column.p-resizable-column:before {
+th.p-element.p-sortable-column.p-resizable-column:before,th:before {
   content: " ";
  position: absolute;
  top: 5px;
@@ -2890,6 +2890,22 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .createtask-dialog .p-dialog-right {
   justify-content: center !important;
+}
+.selectfoldername .p-dialog-header {
+  padding: 15px 15px 15px 22px !important;
+}
+.selectfoldername .p-dialog-content {
+  padding: 0px 22px 15px !important;
+}
+.selectfoldername .p-dialog .p-dialog-header .p-dialog-title {
+  font-size: 16px !important;
+  color: #232832 !important;
+}
+.selectfoldername .p-dialog {
+  top: 4%;
+}
+.selectfoldername .p-tree {
+  height: calc(100vh - 280px) !important;
 }
 /* primeNg components Styles End */
 
