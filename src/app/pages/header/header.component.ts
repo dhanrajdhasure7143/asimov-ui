@@ -293,7 +293,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if(Array.isArray(resp_data)){
         this.notificationsList=resp_data.reverse()
       }
-      if (resp_data.errorMessage == 'No records found') {
+      if (resp_data.errorMessage == 'No Records Found') {
         this.error = "No Records Found"
       }
     })
