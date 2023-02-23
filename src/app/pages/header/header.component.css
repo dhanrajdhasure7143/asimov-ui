@@ -9,7 +9,9 @@
     flex: 1 1 auto;
   }
   .txt-wh{
-    color: white !important;
+    color: #fff;
+    line-height: 18px;
+    margin-left: 13px;
   }
   .abrand_div img{
       width:160px;
@@ -61,24 +63,18 @@
       min-width: 170px !important;
   }
   .res-circle {
-    width: 40px;
+    width: 38px;
     border-radius: 100%;
-    height: 40px;
-    margin-top: 2px;
+    height: 38px;
     color: #098de6;
     background: #fff;
-    margin-left: 5px;
     font-weight: bold;
-    padding: 4px 10px;
+    padding: 4px 8px;
   }
     .res-circle-img {
       border-radius: 100%;
-      width: 43px;
-      height: 41px;
-      margin-top: 0px;
-      color: black;
-      margin-left: -5px;
-      border: 0px solid black;
+      width: 38px;
+      height: 38px;
     }
     .res-circle:after {
       content: "";
@@ -184,9 +180,10 @@
   .header-rgttext {
     font-weight: 400;
     display: block;
+    font-size: 16px;
   }
   .header-userrole {
-    font-size: 11px !important;
+    font-size: 12px !important;
   }
   .header-seperator {
     color: #ddd !important;
