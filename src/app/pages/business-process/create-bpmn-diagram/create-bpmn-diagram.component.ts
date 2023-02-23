@@ -40,7 +40,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   selector: 'app-create-bpmn-diagram',
   templateUrl: './create-bpmn-diagram.component.html',
   styleUrls: ['./create-bpmn-diagram.component.css'],
-  providers:[BpmnShortcut]
+  providers:[BpmnShortcut,SharebpmndiagramService,BsModalService]
 })
 export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivate {
   bpmnModeler:any;

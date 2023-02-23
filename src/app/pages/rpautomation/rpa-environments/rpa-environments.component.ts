@@ -142,8 +142,8 @@ export class RpaenvironmentsComponent implements OnInit {
 
   openUpdateEnvOverlay() {
     this.isCreate = false;
-    // document.getElementById("createenvironment").style.display = 'block';
-    // document.getElementById('update-popup').style.display = 'block';
+    document.getElementById("createenvironment")
+    document.getElementById('update-popup')
         this.isOpenSideOverlay = true;
     for (let data of this.selected_list) {
         if (data.password.password == undefined) {

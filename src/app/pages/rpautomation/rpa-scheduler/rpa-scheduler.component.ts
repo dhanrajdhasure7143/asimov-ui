@@ -1,4 +1,4 @@
-import {Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
+import {Input, Component, OnInit ,Pipe, PipeTransform, EventEmitter,Output } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
@@ -17,6 +17,7 @@ export class RpaSchedulerComponent implements OnInit {
 
 
   @Input('data') public data: any;
+  @Output() closeFormOverlay = new EventEmitter<any>();
   botid:any;
   processid:any;
   beforetime:boolean=false;
@@ -178,6 +179,7 @@ gettime(){
   close()
   {
     document.getElementById("sch").style.display="none";
+    this.closeFormOverlay.emit(true)
   }
 
 
