@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-configure-dashboard',
@@ -17,7 +18,7 @@ export class ConfigureDashboardComponent implements OnInit {
     widgets:[],
     metrics:[]
   }
-  constructor(private activeRoute:ActivatedRoute) { }
+  constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService) { }
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((params:any)=>{
       this.dynamicDashBoard.dashboardName=params.dashboardName
@@ -218,6 +219,11 @@ dragEnd() {
 
 get defaultMetricsData():any[]{
   return this.defaultEmpty_metrics.filter(item=>item.metricAdded==false);
+}
+
+dynamicdatatransfer(){
+this.datatransfer.setdynamicscreen(this.dynamicDashBoard)
+
 }
 
 }
