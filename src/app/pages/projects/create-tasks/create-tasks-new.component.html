@@ -18,7 +18,7 @@
                 <div class="form-fields col p-0">
                     <label class="" for="taskCategory">Type of Task<span class="star">*</span></label>
                     <p-dropdown [options]="task_categoriesList" formControlName="taskCategory" autoWidth="false"
-                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task"
+                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task" [appendTo]="'body'" 
                       optionLabel="category" optionValue="category" required></p-dropdown>
                     <span
                       *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
@@ -29,26 +29,26 @@
                     <span class="" for="correlationID">Pick A Workspace File<span
                           class="star">*</span></span>
                     <div *ngIf="!optionValue">
-                        <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false"
+                        <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false" [appendTo]="'body'" 
                           [style]="{'width':'100%'}" placeholder="Select Workspace File" optionLabel="processName"
                           optionValue="correlationID" required></p-dropdown>
                     </div>
                     <div
                       *ngIf="optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
                         <p-dropdown [options]="bpm_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="correlationID"
                           required></p-dropdown>
                     </div>
                     <div *ngIf="optionValue == 'Process Mining'">
                         <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="piId"
                           required></p-dropdown>
                     </div>
                     <div *ngIf="optionValue == 'RPA Implementation'">
                         <p-dropdown [options]="bot_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No records found" [style]="{'width':'100%'}"
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="botName" optionValue="botId"
                           required></p-dropdown>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="form-fields col p-0">
                     <label class="" for="resources">Assigned To<span class="star">*</span></label>
 
-                    <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
+                    <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                       filterBy="user_email,fullName" [autoDisplayFirst]="false" placeholder="Select Assignee"
                       formControlName="resources" optionValue="user_email" optionLabel="fullName" (onChange)="onAssigneeChange($event)">
                     </p-dropdown>
@@ -99,12 +99,12 @@
 
             </div>
             <div class="row">
-              <div class="form-fields col p-0" *ngIf="freetrail!='true'">
+              <!-- <div class="form-fields col p-0" *ngIf="freetrail!='true'">
                 <label class="" for="approvers">Approver<span class="star">*</span></label>
                 <p-dropdown [options]="approverslist" [filter]="true" [style]="{'width':'100%'}"
                           filterBy="userId,fullName" [autoDisplayFirst]="false"
                           placeholder="Select Approver" formControlName="approvers" optionValue="userId"
-                          optionLabel="fullName">
+                          optionLabel="fullName" [appendTo]="'body'" >
                 </p-dropdown>
                 <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
                   class="errspan required">Approvers Required*</span>
@@ -114,10 +114,10 @@
                 <p-dropdown [options]="approverslist" [filter]="true" [style]="{'width':'100%'}"
                           filterBy="userId,fullName" [autoDisplayFirst]="false"
                           placeholder="Select Approver" formControlName="approvers" optionValue="userId"
-                          optionLabel="fullName">
+                          optionLabel="fullName" [appendTo]="'body'">
                 </p-dropdown>
-              </div>
-                <!-- <div class="form-fields col p-0" *ngIf="freetrail!='true'">
+              </div> -->
+                <div class="form-fields col p-0" *ngIf="freetrail!='true'">
                     <label class="" for="approvers">Approver<span class="star">*</span></label>
                     <select class="form-control enteredfield-color" formControlName="approvers">
                       <option [value]="null" disabled hidden>Select Approver</option>
@@ -140,7 +140,7 @@
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                     </select>
-                </div> -->
+                </div> 
                 <div class="form-fields col pr-0">
                     <div class="row">
                         <div class="fromdate">
