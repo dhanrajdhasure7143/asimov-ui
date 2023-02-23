@@ -11,8 +11,18 @@ import Swal from "sweetalert2";
 export class RpaConnectionManagerFormComponent implements OnInit {
   public connectorForm: FormGroup;
   methodItems: any = [];
-  authorizationType: any = ["O Auth 2.0"];
   encoded: FormArray;
+  actionItems: any = [];
+  authItems: any = [];
+  grantItems: any = [];
+  isAuthenticated: boolean = false;
+  isAction: boolean = false;
+  isAuthorization: boolean = false;
+  isClient: boolean = false;
+  isPassword: boolean = false;
+  isRequest: boolean = false;
+  isResponse: boolean = false;
+  attribute = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,9 +37,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       httpMethodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       url: ["", Validators.compose([Validators.required])],
-      authorization_Type: ["", Validators.compose([Validators.required])],
+      authType: ["", Validators.compose([Validators.required])],
       bodyRaw: ["", Validators.compose([Validators.required])],
-      paramsKey: ["", Validators.compose([Validators.required])],
+      attribute: ["", Validators.compose([Validators.required])],
       paramsValue: ["", Validators.compose([Validators.required])],
       encodedKey: ["", Validators.compose([Validators.required])],
       encodedValue: ["", Validators.compose([Validators.required])],
@@ -39,6 +49,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
     this.methodTypes();
     this.authTypes();
+    this.getActionType();
+    this.getGrantTypes();
   }
 
   createItem() {
@@ -106,11 +118,63 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  authTypes() {
+  authTypes(){
     this.rest_api.getAuthTypes().subscribe((res: any) => {
-      this.authorizationType = res;
+      this.authItems = res;
     });
   }
 
   addHeader() {}
+
+  actionChange(event) {
+    if (event == "Authenticated") {
+      this.isAction = true;
+      this.isRequest = false;
+      this.isResponse = false;
+    } else if (event == "APIRequest") {
+      this.isRequest = true;
+      this.isAction = false;
+      this.isResponse = false;
+      this.isClient = false;
+      this.isPassword = false;
+      this.isAuthenticated = false;
+    }
+  }
+
+  authChange(event) {
+    if (event == "OAUTH2") {
+      this.isAuthenticated = true;
+    }
+  }
+
+  grantChange(event) {
+    if (event == "Authorization Code") {
+      this.isAuthorization = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isPassword = false;
+    } else if (event == "Password Credentials") {
+      this.isPassword = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isAuthorization = false;
+    } else if (event == "Client Credentials") {
+      this.isClient = true;
+      this.isResponse = true;
+      this.isAuthorization = false;
+      this.isPassword = false;
+    }
+  }
+  getActionType(){
+   this.rest_api.getActionType().subscribe((res:any)=>{
+      this.actionItems =res;
+      console.log("Ation Items",res)
+    })
+  }
+  getGrantTypes(){
+    this.rest_api.getGrantTypes().subscribe((res:any)=>{
+      this.grantItems =res;
+      console.log("Grant Types",res);
+    })
+  }
 }

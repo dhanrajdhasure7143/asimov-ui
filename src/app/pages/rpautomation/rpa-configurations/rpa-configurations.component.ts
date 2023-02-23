@@ -9,14 +9,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RpaConfigurationsComponent implements OnInit {
   public selectedTab=0;
   public check_tab=0;
-  public param:any=0;
-  selected_tab_index:Number;
+  selected_tab_index:number=0;
 
   constructor(private route:ActivatedRoute, 
-    private router: Router) {
+              private router: Router) {
       this.route.queryParams.subscribe((data) => {
-        if(data)
+        if(data){
         this.selected_tab_index = data.index
+        this.check_tab = data.index;
+      }
         else this.selected_tab_index=0;
       });
      }
@@ -25,7 +26,8 @@ export class RpaConfigurationsComponent implements OnInit {
 
     onTabChanged(event,tabView){
       const tab = tabView.tabs[event.index].header;
-      this.selected_tab_index = event.index
+      this.selected_tab_index = event.index;
+      this.check_tab = event.index;
       this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} });
     }
   
