@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import * as moment from 'moment';
+import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
@@ -65,5 +66,8 @@ export class BotsComponent implements OnInit {
      this.spinner.hide(); 
    });
   }
-
+  
+  clear(table: Table) {
+    table.clear();
+  }
 }

@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
@@ -69,5 +70,9 @@ export class ProcessesComponent implements OnInit {
       this.environment=data
       this.getscheduledata();
   })
+}
+
+clear(table: Table) {
+  table.clear();
 }
 }

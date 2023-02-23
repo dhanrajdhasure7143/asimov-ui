@@ -1,12 +1,12 @@
 <div id="" class="container-fluid tests">
     <!-- <div class="so-sub-tab-content"> -->
-        <div class="row">
+    <!-- <div class="row">
             <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="bmsearch">
                 <input class="form-control" placeholder="Search Bots" autocomplete="off" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
                 <img src="../../../../assets/images/search.svg" class="testplus">
             </div>
-        </div>
-        <div class="schedule-table-container">
+        </div> -->
+    <div class="schedule-table-container">
         <!-- <table class="table projecttable" mat-table [dataSource]="scheduledbots" #sort4="matSort" matSort>
             <ng-container matColumnDef="botName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:200px;">Bot Name </th>
@@ -113,132 +113,153 @@
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
        </table> -->
 
-    <p-table [value]="scheduledbots">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Bot Name</th>
-                <th>Bot Source</th>
-                <th>Category</th>
-                <th>Previous Run</th>
-                <th>Next Run</th>
-                <th>Schedule Interval</th>
-                <th>Status</th>
-                <th>Time Zone</th>
-    
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-element>
-            <tr>
-    
-    
-                <td [matTooltip]="element.botName" style="width:200px;">
-                    <span *ngIf="element.botName != null">{{(element.botName.length > 10) ? ((element.botName).slice(0, 10)
-                        + '...') : element.botName}}
+        <p-table #dt [value]="scheduledbots"
+            [globalFilterFields]="['botName','botSource','category','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Search Bots" />
                     </span>
-                    <span *ngIf="element.botName == null">-</span>
-                </td>
-    
-    
-    
-                <td>
-                    <span *ngIf="element.botSource != null">{{element.botSource}}</span>
-                    <span *ngIf="element.botSource == null">-</span>
-                </td>
-    
-    
-    
-    
-                <td>
-                    <span *ngIf="element.category != null">{{element.category}}</span>
-                    <span *ngIf="element.category == null">-</span>
-                </td>
-    
-    
-    
-    
-                <td>
-                    <span *ngIf="element.lastRunTS != null" [matTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
-    
-                        {{(element.lastRunTS.length > 10) ? ((element.lastRunTS |date: 'MMM d, y, H:mm:ss').slice(0, 10) +
-                        '...') : element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}
-                    </span>
-                    <span *ngIf="element.lastRunTS == null">-</span>
-                </td>
-    
-    
-    
-                <td>
-                    <span *ngIf="element.nextRunTS != null" [matTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
-    
-                        {{(element.nextRunTS.length > 10) ? ((element.nextRunTS |date: 'MMM d, y, H:mm:ss').slice(0, 10) +
-                        '...') : element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}
-                    </span>
-                    <span *ngIf="element.nextRunTS == null">-</span>
-                </td>
-    
-    
-    
-                <td>
-                    <span *ngIf="element.scheduleInterval != null">{{element.scheduleInterval}}</span>
-                    <span *ngIf="element.scheduleInterval == null">-</span>
-                </td>
-    
-    
-                <td>
-                    <span *ngIf="element.status=='Running'" class="text-primary">
-                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
-                    </span>
-    
-                    <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"
-                        [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">Saved
-                    </span>
-    
-                    <span *ngIf="element.status=='Failure'|| element.status=='Failed'" [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
-                    </span>
-                    <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testpause">Paused
-                    </span>
-                    <span *ngIf="element.status=='New'">
-                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                        <span>{{element.status}}</span>
-                    </span>
-    
-                    <span *ngIf="element.status=='Pending'">
-                        <i class="fa fa-clock"></i>&nbsp;
-                        <span>{{element.status}}</span>
-                    </span>
-    
-                    <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'"
-                        [matTooltip]="element.status">
-                        <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                        <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
-                    </span>
-                    <span *ngIf="element.status == undefined">-</span>
-                </td>
-    
-    
-    
-    
-                <td>
-                    <span *ngIf="element.timezone != null" [matTooltip]="element.timezone">{{(element.timezone.length > 8) ?
-                        ((element.timezone).slice(0, 8) + '...') : element.timezone}}</span>
-                    <span *ngIf="element.timezone == null">-</span>
-                </td>
-    
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td style="justify-content: center;" colspan="8">No records found</td>
-            </tr>
-        </ng-template>
-    </p-table>
-       </div>
-        <div class="newpaginationdiv">
-           <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]"  
-           [showFirstLastButtons]="true"></mat-paginator>
-        </div>
-    <!-- </div> -->
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt)"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="botName">Bot Name
+                        <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
+                        <p-sortIcon field="botName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="botSource">Bot Source
+                        <p-columnFilter type="text" field="botSource" display="menu"></p-columnFilter>
+                        <p-sortIcon field="botSource"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="category">Category
+                        <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+                        <p-sortIcon field="category"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="lastRunTS">Previous Run
+                        <p-columnFilter type="text" field="lastRunTS" display="menu"></p-columnFilter>
+                        <p-sortIcon field="lastRunTS"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nextRunTS">Next Run
+                        <p-columnFilter type="text" field="nextRunTS" display="menu"></p-columnFilter>
+                        <p-sortIcon field="nextRunTS"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="scheduleInterval">Schedule Interval
+                        <p-columnFilter type="text" field="scheduleInterval" display="menu"></p-columnFilter>
+                        <p-sortIcon field="scheduleInterval"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status">Status
+                        <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="timezone">Time Zone
+                        <p-columnFilter type="text" field="timezone" display="menu"></p-columnFilter>
+                        <p-sortIcon field="timezone"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-element>
+                <tr>
+
+
+                    <td [matTooltip]="element.botName" style="width:200px;">
+                        <span *ngIf="element.botName != null">{{(element.botName.length > 10) ?
+                            ((element.botName).slice(0, 10)
+                            + '...') : element.botName}}
+                        </span>
+                        <span *ngIf="element.botName == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.botSource != null">{{element.botSource}}</span>
+                        <span *ngIf="element.botSource == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.category != null">{{element.category}}</span>
+                        <span *ngIf="element.category == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.lastRunTS != null"
+                            [matTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
+
+                            {{(element.lastRunTS.length > 10) ? ((element.lastRunTS |date: 'MMM d, y, H:mm:ss').slice(0,
+                            10) +
+                            '...') : element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}
+                        </span>
+                        <span *ngIf="element.lastRunTS == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.nextRunTS != null"
+                            [matTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
+
+                            {{(element.nextRunTS.length > 10) ? ((element.nextRunTS |date: 'MMM d, y, H:mm:ss').slice(0,
+                            10) +
+                            '...') : element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}
+                        </span>
+                        <span *ngIf="element.nextRunTS == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.scheduleInterval != null">{{element.scheduleInterval}}</span>
+                        <span *ngIf="element.scheduleInterval == null">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.status=='Running'" class="text-primary">
+                            <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                        </span>
+
+                        <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"
+                            [matTooltip]="element.status">
+                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">Saved
+                        </span>
+
+                        <span *ngIf="element.status=='Failure'|| element.status=='Failed'"
+                            [matTooltip]="element.status">
+                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                        </span>
+                        <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
+                            <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg"
+                                class="testpause">Paused
+                        </span>
+                        <span *ngIf="element.status=='New'">
+                            <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                            <span>{{element.status}}</span>
+                        </span>
+
+                        <span *ngIf="element.status=='Pending'">
+                            <i class="fa fa-clock"></i>&nbsp;
+                            <span>{{element.status}}</span>
+                        </span>
+
+                        <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'"
+                            [matTooltip]="element.status">
+                            <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
+                        </span>
+                        <span *ngIf="element.status == undefined">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="element.timezone != null"
+                            [matTooltip]="element.timezone">{{(element.timezone.length > 8) ?
+                            ((element.timezone).slice(0, 8) + '...') : element.timezone}}</span>
+                        <span *ngIf="element.timezone == null">-</span>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td style="justify-content: center;" colspan="8">No records found</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
+    <div class="newpaginationdiv">
+        <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]"
+            [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+    <!-- </div> -->
+</div>
