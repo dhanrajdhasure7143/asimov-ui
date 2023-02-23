@@ -2698,6 +2698,14 @@ input.p-inputtext {
     left: unset !important;
     width: max-content;
 }
+.editfields i {
+  padding: 6px;
+  background: #F5F6F7;
+  border: 1px solid #CFD2D9;
+  border-radius: 3px;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
+  margin-left: 3px;
+}
 
 /* Tabs NEW Styles Start */
 .p-tabview .p-tabview-nav {
@@ -2783,7 +2791,7 @@ thead.p-datatable-thead tr {
   height: 50px;
 }
 
-th.p-element.p-sortable-column.p-resizable-column:before,th:before {
+th.p-element.p-sortable-column.p-resizable-column:before {
   content: " ";
  position: absolute;
  top: 5px;
@@ -2906,6 +2914,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .selectfoldername .p-tree {
   height: calc(100vh - 280px) !important;
+}
+.p-inplace .p-inplace-display:not(.p-disabled):hover {
+  color: unset !important;
+  background: transparent !important;
 }
 /* primeNg components Styles End */
 

@@ -26,8 +26,8 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <div class="col-sm-1 p-0">
-                        <div class="row task-status">
+                    <!-- <div class="col-sm-1 p-0"> -->
+                        <div class="task-status">
                             <img *ngIf="task_details.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="task-status-icon">
@@ -37,17 +37,17 @@
                             <img *ngIf="task_details.status == 'New'"
                                 src="./../../../../assets/images-n/projects/NewStatus.svg"
                                 alt="task-status-icon">
-                        </div>
+                        <!-- </div> -->
                     </div>
-                    <div class="col-sm-11 p-0">
+                    <div class="col-sm-12 p-0" style="flex:auto;" >
                         <div class="row project-ninfo">
-                            <div class="row align-items-center">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')">
+                            <div class="row align-items-center projectnamerow">
+                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')" class="project-name">
                                     <ng-template pTemplate="display">
-                                        <span class="project-name">{{task_details.taskName}}</span>
+                                        <span class="">{{task_details.taskName}}</span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
-                                        <input type="text" [style]="{'width':'60%'}" pInputText
+                                        <input type="text" [style]="{'width':'100%'}" pInputText
                                             [(ngModel)]="taskName" (keydown)="Space($event)"/>
                                         <span class="editfields">
                                             <i class="pi pi-check"
@@ -104,7 +104,7 @@
                                     <label>Resource</label>
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
-                                            <span class="">{{task_details.resources| userPipe : users_list}}</span>
+                                            <p class="">{{task_details.resources| userPipe : users_list}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">                                            
                                             <p-dropdown [options]="users_list" [filter]="true"
@@ -123,7 +123,7 @@
                                     <label>Status</label>
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('status','inplace2')">
                                         <ng-template pTemplate="display">
-                                            <span>{{task_details.status}}</span>
+                                            <p>{{task_details.status}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <p-dropdown [options]="status_list" [(ngModel)]="status" required
@@ -141,7 +141,7 @@
 
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                         <ng-template pTemplate="display">
-                                            <span>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</span>
+                                            <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <!-- <p-calendar inputId="basic" [(ngModel)]="due_date"></p-calendar> -->
@@ -166,7 +166,7 @@
                                     <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     
                                 </div>
-                                <div class="pinf">
+                                <div class="">
                                     <div class="d-flex">
                                         <label>Task Completion</label>
                                          <span class="kpipercent">
