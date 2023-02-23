@@ -49,6 +49,7 @@
   vertical-align: middle;
 }
 .docfolder .cards {
+  width: 20%;
   text-align: center;
   margin: 0px 10px;
 }
@@ -58,6 +59,7 @@
 .docfolder .cards:last-child {
   margin-right: 0px !important;
 }
+
 
 /* ----- Document Footer Tree/Folder Icon Styles ----- */
 .docfootbtns {

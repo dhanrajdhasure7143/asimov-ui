@@ -3026,6 +3026,9 @@ margin: 0px;
 
 /* Document-Tree  Screen Styles */
 
+.doctree .p-treenode .p-treenode-content {
+  width: 25%;
+}
 .doctree .p-tree {
   border: unset !important;
   background: transparent !important;
@@ -3066,7 +3069,6 @@ margin: 0px;
 /* Document-Tree  Screen Styles */
 
 .docfolder .p-card {
-  width: 200px;
   height: 160px;
   display: flex;
   align-items: center;
@@ -3086,6 +3088,12 @@ margin: 0px;
   display: block;
   margin-top: 20px;
 }  
+.docfolder .p-card-body {
+  padding: 0px !important;
+}
+.docfolder .p-card-content {
+  padding: 15px !important;
+}
 
 /* Document FolderName Popup Styles */
 
