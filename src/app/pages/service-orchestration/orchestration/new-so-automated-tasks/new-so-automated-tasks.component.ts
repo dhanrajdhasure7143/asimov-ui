@@ -12,6 +12,7 @@ declare var $:any;
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { moveItemInArray} from '@angular/cdk/drag-drop';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -1386,7 +1387,9 @@ resetsla(){
     })
   }
 
-
+  clear(table: Table) {
+    table.clear();
+  }
   
 }
 

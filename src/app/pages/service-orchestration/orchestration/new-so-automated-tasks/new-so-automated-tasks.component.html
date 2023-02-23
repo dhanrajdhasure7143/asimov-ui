@@ -101,33 +101,63 @@
         </div>
         <div class="row">
             <div class="orchestration-table-container">
-                <div *ngIf="responsedata!=undefined">
-                    <p-table [value]="responsedata" cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)">
-                        <ng-template pTemplate="header">
+                <div>
+                    <p-table  #dt [value]="responsedata" cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)"
+                    [globalFilterFields]="['processName','taskName','createdBy','taskType','category','status']" [scrollable]="true"
+                    [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button> -->
+                            <span class="p-input-icon-right">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
                             <tr>
-                                <th>Process Name</th>
-                                <th>Task</th>
-                                <th>Process Owner</th>
+                                <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
+                                    <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="processName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task
+                                    <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="taskName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="createdBy" pReorderableColumn pResizableColumn>Process Owner
+                                    <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="createdBy"></p-sortIcon>
+                                </th>
                                 <th>Task Owner</th>
-                                <th>Task Type</th>
-                                <th>Category</th>
-                                <th>Bot Source</th>
-                                <th>Assign Resource</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th pSortableColumn="taskType" pReorderableColumn pResizableColumn>Task Type
+                                    <p-columnFilter type="text" field="taskType" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="taskType"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="category" pReorderableColumn pResizableColumn>Category
+                                    <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="category"></p-sortIcon>
+                                </th>
+                                <th pReorderableColumn pResizableColumn>Bot Source</th>
+                                <th pReorderableColumn pResizableColumn>Assign Resource</th>
+                                <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
+                                    <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                                     <p-sortIcon field="status"></p-sortIcon>
+                                </th>
+                                <th pReorderableColumn pResizableColumn>Actions</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-element>
                             <tr>
-                                <td [pTooltip]="element.processName">{{(element.processName.length >10) ?
-                                    ((element.processName).slice(0, 10) + '...') : element.processName}}</td>
-                                <td><span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
-                                        5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span>
-                                    <span *ngIf="element.taskName==null">---</span>
+                                <!-- <td [pTooltip]="element.processName">{{(element.processName.length >10) ?
+                                    ((element.processName).slice(0, 10) + '...') : element.processName}}</td> -->
+                                    <td [pTooltip]="element.processName">{{element.processName}}</td>
+                                <td>
+                                    <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{element.taskName}}</span>
+                                        <!-- <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
+                                            5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span> -->
+                                    <span *ngIf="element.taskName==null">-</span>
                                 </td>
-                                <td [pTooltip]="element.createdBy">{{(element.createdBy.length > 12) ? ((element.createdBy).slice(0, 12) +
-                                    '...') :
-                                    element.createdBy}}</td>
+                                <td [pTooltip]="element.createdBy">{{element.createdBy}}</td>
                                 <td>
                                     <span *ngIf="element.taskType=='Automated'">
                                         <select class="form-control" style="width:165px;padding:0px;"
@@ -291,22 +321,22 @@
                                         </span>
                                         <span>
                                             <button (click)="assignbot(element.taskId, element.processId)"
-                                                *ngIf="element.taskType == 'Automated'" matTooltip="Assign">
+                                                *ngIf="element.taskType == 'Automated'" pTooltip="Assign">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                             <button (click)="assignbot(element.taskId, element.processId)"
-                                                *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                                                *ngIf="element.taskType == 'Human'" pTooltip="Assign Resource">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset">
                                                 <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.sourceType == 'EPSoft'"
-                                                matTooltip="View Bot">
+                                                pTooltip="View Bot">
                                                 <img src="../../../../../assets/images/Projects/eye-show.svg"
                                                     class="testplus default-img" />
                                                 <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
@@ -339,12 +369,12 @@
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="assignhuman(element)" matTooltip="Assign Resource">
+                                            <button (click)="assignhuman(element)" pTooltip="Assign Resource">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset">
                                                 <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
                                             </button>
                                         </span>
