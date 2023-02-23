@@ -43,6 +43,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   selectedData: any;
   categories_list: any=[];
   table_searchFields: any[]=[];
+  hiddenPopUp:boolean=false;
 
   constructor(private api: RestApiService,
     private router: Router,
@@ -228,6 +229,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
 
   opencreatedbconnection() {
+    this.hiddenPopUp=true;
     this.isDatabase = true;
     document.getElementById("createdbconnection").style.display = 'block';
     // this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
@@ -289,7 +291,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   }
 
   updatedbdata() {
-    document.getElementById('createdbconnection').style.display = 'block';
+    this.hiddenPopUp=true;
+    document.getElementById('createdbconnection');
     this.isDatabase = false;
     this.dbupdatedata = this.selectedData[0];
   }
@@ -371,5 +374,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.selectedData.length > 0 ?this.addflag =true :this.addflag =false
     this.selectedData.length > 0 ?this.DBdeleteflag =true :this.DBdeleteflag =false
     this.selectedData.length == 1 ?this.DBupdateflag =true :this.DBupdateflag =false
+  }
+
+  closeOverlay(event)
+  {
+    this.hiddenPopUp=event;
   }
 }

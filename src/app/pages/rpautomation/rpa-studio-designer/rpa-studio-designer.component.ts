@@ -416,7 +416,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   openBotForm() {
-    document.getElementById("bot-form").style.display='block';
+    // document.getElementById("bot-form").style.display='block';
+    document.getElementById("bot-form")
+
     this.botFormVisibility=true;
     this.unsaved=false;
 
@@ -486,6 +488,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   closeSideOverlay(event){
     this.isOpenSideOverlay=event
+  }
+  closeOverlay1(event){  // in bot create new bot
+    this.botFormVisibility=event
   }
 
 }

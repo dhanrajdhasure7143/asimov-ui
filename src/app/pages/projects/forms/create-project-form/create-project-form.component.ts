@@ -235,10 +235,13 @@ export class CreateProjectFormComponent implements OnInit {
     //this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
     let data = this.insertForm2.value;
     // data["resource"]=data.resource.map(item=>{ return {resource:item}});
+    let selectedBpmn=this.selected_process_names.find(each=>each.processId == this.insertForm2.value.process).correlationID
     data["resource"] = [];
     data["effortsSpent"] = 0;
     data["projectHealth"] = "Good";
     data["projectPercentage"] = 0;
+    data["correlationID"] = selectedBpmn;
+
     // let project=JSON.stringify(data)
 
     this.spinner.show();

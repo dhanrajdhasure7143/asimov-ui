@@ -1,8 +1,8 @@
-<div id="createdbconnection" class="rpa-modal">
-    <div class="rpa-modal-content">
+<div id="createdbconnection" class="h-100">
+    <!-- <div class="rpa-modal-content"> -->
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closedbconnection()"><img
-                    src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+            <!-- <span class="rpa-modal-close" (click)="closedbconnection()"><img
+                    src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
             <h4 *ngIf="isDatabase">Create Database Connection</h4>
             <h4 *ngIf="!isDatabase">Update Database Connection</h4>
         </div>
@@ -157,9 +157,9 @@
                     </div>
                 </form>
                 <div class="form-footer">
-                    <button class="btn btn-default" (click)="resetDBForm()">Reset</button>
+                    <button class="btn btn-default" (click)="resetDBForm()">Reset</button>&nbsp;
                     <button class="btn btn-primary btn-test" [disabled]="dbForm.invalid"
-                        (click)="testConnection('insert')">Test Connection</button>
+                        (click)="testConnection('insert')">Test Connection</button>&nbsp;
                     <button class="btn btn-primary" [disabled]="dbForm.invalid" (click)="saveDBConnection()">
                         <span *ngIf="isDatabase">Save</span>
                         <span *ngIf="!isDatabase">Update</span>
@@ -167,5 +167,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </div>

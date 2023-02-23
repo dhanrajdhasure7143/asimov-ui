@@ -1968,7 +1968,6 @@ taskListView(){
   }
 
   onReadMoreHide(){
-    console.log("testing")
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
@@ -2052,7 +2051,6 @@ taskListView(){
   getTheExistingUsersList(){
     let resp_data:any[]=[]
     this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
-      console.log("existingUsersList",res)
       resp_data=res;
       this.users_list.forEach(item2 => {
         if(resp_data.find((projectResource:any) => item2.user_email==projectResource.userId)==undefined)
@@ -2076,6 +2074,25 @@ taskListView(){
      if(res_data.length>0)
       this.snapshotDatails=data[0]
     })
+  }
+
+  navigateToBPMN(){
+    let params_object= {
+      ntype: "bpmn",
+      projectId:this.project_id,
+      projectName:this.projectDetails.project_name
+    }
+    if(this.projectDetails.correlationID){
+      params_object["bpsId"]= this.projectDetails.correlationID.split(":")[0],
+      params_object["ver"]= this.projectDetails.correlationID.split(":")[1]
+  }else{
+    let selectedBpmn=this.selected_process_names.find(each=>each.processId == this.projectDetails.process).correlationID
+      params_object["bpsId"]= selectedBpmn.split(":")[0],
+      params_object["ver"]= selectedBpmn.split(":")[1]
+  }
+    this.router.navigate(["pages/businessProcess/uploadProcessModel"], {
+      queryParams: params_object
+    });
   }
 
 }

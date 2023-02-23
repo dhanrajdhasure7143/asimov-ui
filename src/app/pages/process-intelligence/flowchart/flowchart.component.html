@@ -2,15 +2,22 @@
  <ngx-spinner bdColor="rgba(255,255,255,0.9)"> <img src='{{loaderImgSrc}}'/></ngx-spinner>
  <div class="container-fluid p-0 h-100">
     <div class="row h-100">
-         <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1">
-             <div class='variants_slider'>
-                <div class="col-md-12 select_drpdwnone">
+
+         <!-- <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1"> -->
+         <div *ngIf="hiddenPopUp" class="col-md-12 p-0 ">
+
+        <app-split-overlay (closeOverlay)="closeOverlay($event)" >
+
+             <div class=''>
+                <!-- <div class="col-md-12 select_drpdwnone"> -->
+                <div class="">
+
                      <div class="variants-header">
                         <h3>Variants List</h3>  
-                        <button class="closebtn" (click)="closeNav()">
+                        <!-- <button class="closebtn" (click)="closeNav()">
                             <img src="../../../../assets/images/PI/close.svg" alt="" class="default-img">
                             <img src="../../../../assets/images/PI/close-blue.svg" alt="" class="hover-img">
-                        </button>                      
+                        </button>                       -->
                      </div>                   
                      <div class="col-md-12 p-0">
                          <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
@@ -25,7 +32,9 @@
                         <span class='event2'>Time Taken</span>
                     </div>                        
                 </div>
-                <div class="variant-body">
+                <!-- <div class="variant-body"> -->
+                <div class="">
+
                     <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
                      <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
                         <span>{{i+1}}</span>
@@ -44,9 +53,11 @@
                     </div>
                 </div>
              </div>
-         </div>
+        </app-split-overlay>
+    </div>
  
- 
+        
+
     <div id="main" class="newmaindiv">
         <div class='PImodule-fileds'>
             <div class='col-md-2'>  <!-- Add pr-0 class to adjust the spacing for fields If the Activities/Paths slider is removed -->
