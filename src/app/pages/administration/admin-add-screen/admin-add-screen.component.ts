@@ -336,12 +336,7 @@ export class AdminAddScreenComponent implements OnInit {
         cancelButtonColor: "#d33",
         heightAuto: false,
         confirmButtonText: "Ok",
-      }).then(()=>{
-        this.backToScreenList();
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      })      
+      })     
      
       // window.location.reload();
       // Swal.fire("Success", "Screen Saved successfully !", "success");
