@@ -49,8 +49,8 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <div class="col-sm-1 p-0">
-                        <div class="row project-status">
+                    <!-- <div class="col-sm-1 p-0"> -->
+                        <div class="project-status">
                             <img *ngIf="projectDetails.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="project-status-icon">
@@ -62,18 +62,18 @@
                                 alt="project-status-icon">
                             <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
-                    </div>
-                    <div class="col-sm-11 p-0">
+                    <!-- </div> -->
+                    <div class="col-sm-12 p-0" style="flex:auto;">
                         <div class="row project-ninfo">
-                            <div class="row align-items-center">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')">
+                            <div class="row align-items-center projectnamerow">
+                                <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')" class="project-name">
                                     <ng-template pTemplate="display">
-                                        <span class="project-name">{{projectDetails.projectName}}</span>
+                                        <span class="">{{projectDetails.projectName}}</span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
                                         <input type="text" [style]="{'width':'100%'}" pInputText
                                             [(ngModel)]="projectName" (keydown)="Space($event)" />
-                                        <span class="pull-right">
+                                        <span class="editfields">
                                             <i class="pi pi-check" *ngIf="projectName"
                                                 (click)="onUpdateDetails('projectName')"></i>
                                             <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
@@ -171,7 +171,8 @@
                                     <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
                                 </div>
-                                <div class="pinf">
+                                <div class=""> 
+                                    <!--pinf-->
                                     <div class="d-flex">
                                         <span class="kpipercent">
                                             <p-inplace #inplace5
