@@ -109,6 +109,7 @@ export class RpaHomeComponent implements OnInit {
     { field: 'botStatus', header: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
     { field: '', header: 'Actions' }
   ];
+  EdithiddenPopUp:boolean=false;
 
 
 
@@ -521,10 +522,10 @@ export class RpaHomeComponent implements OnInit {
 
   openEditBotOverlay(botDetails: any) {
     this.isCreateForm = false;
-    this.hiddenPopUp = true;
+    this.EdithiddenPopUp = true;
     this.botDetails = botDetails;
     this.botFormVisibility=true;
-    document.getElementById('bot-form').style.display = 'block';
+    // document.getElementById('bot-form').style.display = 'block';
   }
 
 
@@ -533,7 +534,7 @@ export class RpaHomeComponent implements OnInit {
     this.hiddenPopUp = true;
     this.botDetails = undefined;
     this.botFormVisibility=true;
-    document.getElementById('bot-form').style.display = 'block';
+    // document.getElementById('bot-form').style.display = 'block';
   }
 
 
@@ -565,12 +566,12 @@ export class RpaHomeComponent implements OnInit {
   }
 
   assignPagination(data) {
-    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
-    const rows$ = of(data);
-    this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-    this.paginator301.firstPage();
+    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
+    // const rows$ = of(data);
+    // this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    // this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+    // this.paginator301.firstPage();
   }
 
   applySearchFilter(v) {
@@ -591,13 +592,12 @@ export class RpaHomeComponent implements OnInit {
   if(event)
     this.isCreateForm=true;
     this.botFormVisibility=false;
+    this.hiddenPopUp=false;
+    this.EdithiddenPopUp=false;
   }
 
   loopTrackBy(index, term) {
     return index;
-  }
-  closeOverlay(event) {
-    this.hiddenPopUp = event;
   }
 
   clear(table: Table) {
@@ -607,6 +607,17 @@ export class RpaHomeComponent implements OnInit {
     this.router.navigate(["/pages/rpautomation/designer"], {
       queryParams: { botId: row.botId },
     });
+  }
+  cofigurationList(){
+    this.router.navigate(["/pages/rpautomation/configurations"],{
+      queryParams: {index:0}
+    })
+  }
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+  }
+  closeOverlay1(event) {
+    this.EdithiddenPopUp = event;
   }
 
 }

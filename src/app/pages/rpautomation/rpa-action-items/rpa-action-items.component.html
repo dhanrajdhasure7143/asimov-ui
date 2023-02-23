@@ -1,0 +1,32 @@
+<div class="module-heading title">
+    <span class="module-back-button">
+        <i class="fas fa-arrow-left" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/configurations']"></i>
+    </span>
+    <span class="module-header-title">
+        <span class="module-parent-title">Connection Manager</span>
+    </span>
+</div>
+
+<div class="rpa-content-div mx-3">
+    <div class="row credential-search-tools">
+        <div class="env-data-tool credential-tools">
+            <div *ngIf="addflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" value="Create" id="addbtn"
+                    [routerLink]="['/pages/rpautomation/connection']">
+                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 con-envr">
+        <div class="credential-tablegrid">
+            <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
+                [table_data]="connectorTable" (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
+                [screenTable]="'common'" [checkBoxShow]="checkBoxShow" (selectedData)="readSelectedData($event)"
+                [dataKeyId]="'connectorId'" [show_search_field]="true" [show_column_filter]="true"
+                [show_clear_filter]="true">
+            </app-dynamic-table>
+        </div>
+    </div>

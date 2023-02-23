@@ -3236,3 +3236,15 @@ button.custom-popupbtn.mat-button {
   color:var(--main-bluecolor) !important;
 }
 
+.attribute.p-chips.p-component {
+  width: 100% !important;
+  display: block;
+}
+.attribute ul.p-inputtext.p-chips-multiple-container {
+  background-color: #f9f9f9 !important;
+}
+
+.attribute input[type="text"]:not(.mat-input-element){
+  border-bottom: none !important;
+  background-color: #f6f6f6 !important;
+}

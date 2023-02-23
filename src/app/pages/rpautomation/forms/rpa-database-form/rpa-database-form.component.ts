@@ -68,7 +68,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
+    // this.spinner.show();
     this.api.getDatabaselist().subscribe(res=>{
       this.databaselist=res;
     })

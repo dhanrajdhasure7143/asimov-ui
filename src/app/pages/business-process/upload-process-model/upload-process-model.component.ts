@@ -45,7 +45,7 @@ declare var require:any;
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css'],
-  providers:[BpmnShortcut]
+  providers:[BpmnShortcut,SharebpmndiagramService,BsModalService]
 })
 export class UploadProcessModelComponent implements ComponentCanDeactivate,OnInit,OnDestroy {
   isShowConformance:boolean = false;
@@ -285,9 +285,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
         //   this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
         //   })
         // }
-        localStorage.removeItem("projectId");
-        localStorage.removeItem("project_id");
-      localStorage.removeItem("projectName")
       }
 
    setRPAData(){
