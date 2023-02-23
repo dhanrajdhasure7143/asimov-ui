@@ -22,6 +22,20 @@
             [maxlength]="field.length"
           />
         </div>
+        <div *ngIf="field.widget_type == 'file'">
+          <label class="over-lay"
+            >{{ field.DisplayName | removeUnderscore | titlecase }}
+            <span class="star" *ngIf="field.mandatory">*</span>
+          </label>
+          <input
+            type="file"
+            [formControlName]="field.ColumnName"
+            class="form-control"
+            [required]="field.mandatory"
+            [placeholder]="field.placeholder"
+            [maxlength]="field.length"
+          />
+        </div>
         <div
           *ngIf="
             field.widget_type == 'select' && !(field.ColumnName == 'PortalName')
@@ -131,6 +145,20 @@
             [attr.disabled]="
               field.read_only ? '' : null && details != undefined
             "
+            class="form-control"
+            [required]="field.mandatory"
+            [placeholder]="field.placeholder"
+            [maxlength]="field.length"
+          />
+        </div>
+        <div *ngIf="field.widget_type == 'file'">
+          <label class="over-lay"
+            >{{ field.DisplayName | removeUnderscore | titlecase }}
+            <span class="star" *ngIf="field.mandatory">*</span>
+          </label>
+          <input
+            type="file"
+            [formControlName]="field.ColumnName"
             class="form-control"
             [required]="field.mandatory"
             [placeholder]="field.placeholder"

@@ -55,15 +55,15 @@ export class RpaConnectionManagerComponent implements OnInit {
       taskIcon: ["", Validators.compose([Validators.required])]
     })
 
-    this.configurationOptions = this.formBuilder.group({
-      GrantType: ["",Validators.compose([Validators.required])],
-      accessToken: ["",Validators.compose([Validators.required])],
-      clienId: ["",Validators.compose([Validators.required])],
-      clientSecret: ["",Validators.compose([Validators.required])],
-      userName: ["",Validators.compose([Validators.required])],
-      password: ["",Validators.compose([Validators.required])],
-      scope: ["",Validators.compose([Validators.required])],
-    })
+    // this.configurationOptions = this.formBuilder.group({
+    //   GrantType: ["",Validators.compose([Validators.required])],
+    //   accessToken: ["",Validators.compose([Validators.required])],
+    //   clienId: ["",Validators.compose([Validators.required])],
+    //   clientSecret: ["",Validators.compose([Validators.required])],
+    //   userName: ["",Validators.compose([Validators.required])],
+    //   password: ["",Validators.compose([Validators.required])],
+    //   scope: ["",Validators.compose([Validators.required])],
+    // })
 
     this.getAllConnections();
     this.authTypes();
@@ -71,7 +71,9 @@ export class RpaConnectionManagerComponent implements OnInit {
 
     this.connectorTable =[
       {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
-      {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"}
+      {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
+      {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
+
 
     ]
   }
@@ -142,7 +144,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isFormOverlay = true;
     this.connctionupdatedata = this.selectedData[0];
     this.createConnectorForm.get("connectionName").setValue(this.connctionupdatedata["connectionName"]);
-    this.createConnectorForm.get("authorization_Type").setValue(this.connctionupdatedata["authorization_Type"]);
+    // this.createConnectorForm.get("authorization_Type").setValue(this.connctionupdatedata["authorization_Type"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
@@ -170,9 +172,9 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isFormOverlay = event;
   }
 
-  changeAuth(event) {
-    this.isAuthOverlay = true;
-  }
+  // changeAuth(event) {
+  //   this.isAuthOverlay = true;
+  // }
 
   closeAuthOverlay(event) {
     this.isAuthOverlay = event;
@@ -189,6 +191,11 @@ export class RpaConnectionManagerComponent implements OnInit {
     //   this.grantType =res;
     //   console.log("grant types",res)
     // })
+  }
 
+  resetForm(){
+  this.createConnectorForm.reset();
+  this.createConnectorForm.get("connectionName").setValue("");
+  this.createConnectorForm.get("taskIcon").setValue("");
   }
 }

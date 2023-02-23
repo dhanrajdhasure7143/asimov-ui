@@ -1,6 +1,6 @@
 .createform-overlay {
-  padding: 15px 10px;
-  height: calc(100% - 180px);
+  padding: 15px 10px 5px;
+  height: calc(100% - 165px);
   overflow: auto;
 }
 button.btn.new-cancelbtn {
@@ -22,18 +22,19 @@ span.dateseparator {
   top: 22px;
   right: 0;
   color: #7d7d7d;
-  font-size: 20px;
+  font-size: 25px;
 }
-.fromdate input.form-control.enteredfield-color {
+input.form-control.enteredfield-color {
   background: transparent;
   border: 1px solid #979797 !important;
+  height: 40px;
+}
+.fromdate input.form-control.enteredfield-color {
   border-right: 0px !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
 .todate input.form-control.enteredfield-color {
-  background: transparent;
-  border: 1px solid #979797 !important;
   border-left: 0px !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;

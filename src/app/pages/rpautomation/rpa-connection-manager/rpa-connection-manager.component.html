@@ -103,7 +103,7 @@
                         <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                     </div> -->
                     <div class="form-footer">
-                        <button class="btn btn-primary"> Reset </button> &nbsp;
+                        <button class="btn btn-primary" (click)="resetForm()"> Reset </button> &nbsp;
                         <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Save </button>
                         <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button> 
                     </div>
@@ -112,7 +112,7 @@
         </app-split-overlay>
     </div>
 
-    <div [hidden]="!isAuthOverlay">
+    <!-- <div [hidden]="!isAuthOverlay">
         <app-split-overlay (closeOverlay)="closeAuthOverlay($event)">
             <h5 class="create-title"> Configuration Options </h5>
             <div class="container modal-body col-lg-12">
@@ -161,5 +161,5 @@
                 </form>
             </div>
         </app-split-overlay>
-    </div>
+    </div> -->
 </div>

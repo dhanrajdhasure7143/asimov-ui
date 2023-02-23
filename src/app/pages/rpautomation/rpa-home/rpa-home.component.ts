@@ -608,6 +608,11 @@ export class RpaHomeComponent implements OnInit {
       queryParams: { botId: row.botId },
     });
   }
+  cofigurationList(){
+    this.router.navigate(["/pages/rpautomation/configurations"],{
+      queryParams: {index:0}
+    })
+  }
 
 }
 
