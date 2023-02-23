@@ -177,7 +177,7 @@
                                                 <ng-template pTemplate="content">
                                                     <!-- <input type="text" [style]="{'width':'30%'}" pInputText
                                                         [(ngModel)]="percentageComplete" /> -->
-                                                        <p-knob [(ngModel)]="percentageComplete"></p-knob>
+                                                        <p-knob [(ngModel)]="percentageComplete" valueTemplate="{value}%"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check" (click)="onUpdateDetails('percentageComplete')"></i>
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
@@ -366,5 +366,5 @@
             </ng-template> -->
             </p-tree>
         </span>
-        <button type="button" class="btn btn-primary savefoldername">Save</button>
+        <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>
