@@ -97,10 +97,11 @@
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
                                 <div class="pinf">
-                                    <p>{{task_details.createdBy}}</p>
                                     <label>Assigned By</label>
+                                    <p>{{task_details.createdBy}}</p>
                                 </div>
                                 <div class="pinf">
+                                    <label>Resource</label>
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
@@ -117,9 +118,9 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Resource</label>
                                 </div>
                                 <div class="pinf">
+                                    <label>Status</label>
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('status','inplace2')">
                                         <ng-template pTemplate="display">
                                             <span>{{task_details.status}}</span>
@@ -133,10 +134,10 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Status</label>
-                                </div>
+                                    </div>
                                 <div class="pinf">
                                     <!-- <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p> -->
+                                    <label>Due Date</label>
 
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                         <ng-template pTemplate="display">
@@ -159,15 +160,16 @@
                                             <p-calendar inputId="basic" [(ngModel)]="date1"></p-calendar>
                                         </div>
                                     </div> -->
-                                    <label>Due Date</label>
-                                </div>
+                                   </div>
                                 <div class="pinf">
-                                    <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
+                                    <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                    
                                 </div>
                                 <div class="pinf">
                                     <div class="d-flex">
-                                        <span class="kpipercent">
+                                        <label>Task Completion</label>
+                                         <span class="kpipercent">
                                             <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{task_details.percentageComplete}} %</p>
@@ -175,14 +177,13 @@
                                                 <ng-template pTemplate="content">
                                                     <!-- <input type="text" [style]="{'width':'30%'}" pInputText
                                                         [(ngModel)]="percentageComplete" /> -->
-                                                        <p-knob [(ngModel)]="percentageComplete"></p-knob>
+                                                        <p-knob [(ngModel)]="percentageComplete" valueTemplate="{value}%"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check" (click)="onUpdateDetails('percentageComplete')"></i>
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
                                                     </span>
                                                 </ng-template>
                                             </p-inplace>
-                                            <label>Task Completion</label>
                                         </span>
                                     </div>
                                 </div>
@@ -259,6 +260,7 @@
                                                     </button>
                                                 </div> -->
 
+
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +269,7 @@
                                     <p>No Comments Yet</p>
                                 </div>
                                 <div class="addcomment">
-                                    <label>Add Comment</label>
+                                    <label><b>Add Comment</b></label> 
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
@@ -364,5 +366,5 @@
             </ng-template> -->
             </p-tree>
         </span>
-        <button type="button" class="btn btn-primary savefoldername">Save</button>
+        <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>

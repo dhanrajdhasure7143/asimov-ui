@@ -557,6 +557,8 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
+    this.hiddenPopUp1=false;
+    this.hiddenPopUp = false;
     this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     this.rest.getAlluserProcessPiIds().subscribe((data:any) => {
@@ -645,14 +647,14 @@ export class UploadComponent implements OnInit {
     if (category == "allcategories") {
       var fulldata='';
       this.dataSource.filter = fulldata;
-      this.dataSource.paginator.firstPage();
+      // this.dataSource.paginator.firstPage();
     }else{  
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return data.categoryName === category;
        };
        this.dataSource.filter = category;
-       this.dataSource.paginator=this.paginator;
-       this.dataSource.paginator.firstPage();
+      //  this.dataSource.paginator=this.paginator;
+      //  this.dataSource.paginator.firstPage();
     }
   }
 
@@ -1119,8 +1121,8 @@ getDBTables(){      //get DB tables list
     this.mytemplateForm.controls["timestamp"].markAsUntouched();
   }
   closeOverlay(event){
-    this.hiddenPopUp=event;
-    this.hiddenPopUp1=event;
+    this.hiddenPopUp=false;
+    this.hiddenPopUp1=false;
   }
 
 }
