@@ -5,6 +5,7 @@ import{sohints} from '../model/new-so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
@@ -124,5 +125,9 @@ export class SoInboxComponent implements OnInit {
    refresh(){
     this.spinner.show();
     this.getallbots();
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

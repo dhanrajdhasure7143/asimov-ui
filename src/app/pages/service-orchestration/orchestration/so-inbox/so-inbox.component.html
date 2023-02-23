@@ -11,7 +11,6 @@
                 <span class="testtooltip">Reset</span>
               </button >
               <button (click)="refresh()" id="inboxrefresh" class="tsttooltipbtn">
-                <!-- <i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i> -->
                 <img src='../../../../../assets/images/RPA/icon_latest/repeat-blue.svg' class="testplus">
                 <span class="testtooltip">Refresh</span>
               </button >
@@ -120,17 +119,53 @@
               <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
               </table> -->
 
-              <p-table [value]="response" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-                [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">>
+              <p-table #dt1 [value]="response" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true"
+              [globalFilterFields]="['processName','processRunId','taskName','previousTask','nextSuccessTask','nextFailureTask','status']">
+                <ng-template pTemplate="caption">
+                  <div class="p-d-flex">
+                      <!-- <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
+                          selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                          placeholder="Choose Columns">
+                      </p-multiSelect> -->
+                      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
+                      </button>
+                      <span class="p-input-icon-right">
+                          <i class="pi pi-search"></i>
+                          <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
+                              (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                      </span>
+                  </div>
+              </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>Process Name</th>
-                    <th>Run Id</th>
-                    <th>Task Name</th>
-                    <th>Previous Task</th>
-                    <th>Next Task (Upon Success)</th>
-                    <th>Next Task (Upon Failure)</th>
-                    <th>Status</th>
+                    <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
+                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="processRunId" pReorderableColumn pResizableColumn>Run Id
+                      <p-columnFilter type="numeric" field="processRunId" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processRunId"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task Name
+                      <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="taskName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="previousTask" pReorderableColumn pResizableColumn>Previous Task
+                      <p-columnFilter type="text" field="previousTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="previousTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nextSuccessTask" pReorderableColumn pResizableColumn>Next Task (Upon Success)
+                      <p-columnFilter type="text" field="nextSuccessTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="nextSuccessTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nextFailureTask" pReorderableColumn pResizableColumn>Next Task (Upon Failure)
+                      <p-columnFilter type="text" field="nextFailureTask" display="menu"></p-columnFilter>
+                      <p-sortIcon field="nextFailureTask"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
+                      <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                      <p-sortIcon field="status"></p-sortIcon>
+                    </th>
                     <th>Action</th>
                   </tr>
                 </ng-template>
