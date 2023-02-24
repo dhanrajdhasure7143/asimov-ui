@@ -24,7 +24,7 @@
 box-shadow: 1px 0px 3px 0px #d6d3d336;
 border: 1.5px solid #B3BAC5;
 border-radius: 4px;
-padding: 11px 8px !important;
+padding: 15px 11px !important;
 margin-bottom:1rem;}
 
 .flex-container {
@@ -92,11 +92,12 @@ ul.ui-p-tabview {
 .warng-img{margin-right:3px;width:18px;}
 .warning-p{margin-bottom:0px;}
 .sec-2{padding-right:5px;padding-left:5px;}
-.sec-2 img{width: 80%;
-    margin-top: 8px;}
+.sec-2 img{    width: 85%;
+    margin-top: 8px;
+    margin-right: 5px;}
 .metric{font-weight:600}
 .graph{height:300px;}
-.chart{text-align: center;margin-top:25%}
+.chart{text-align: center;margin-top:18%}
 .chart img{width:80px;}
 .img-w{margin-right:30px;width:95%;}
 .wid-p{font-size: 14px;
@@ -127,3 +128,60 @@ ul.ui-p-tabview {
 .overlay-icon{visibility:hidden;}
 .well1-dynmic:hover .img-div .overlay-icon{visibility:visible;}
 .well1-dynmic:hover .overlay-icon{visibility:visible;}
+.p-splitter {
+   border: 0px solid #dee2e6 !important; 
+    background: #f5f5f5 !important;
+    border-radius: 3px;
+    color: #495057;
+}
+.container-fluid{background-color: #f5f5f5;}
+.h-100{background-color: #f5f5f5;}
+
+
+
+element.style {
+    height: auto;
+}
+.vertcl-img{width: 11px !important;
+    margin: 5px;
+    margin-right: 11px !important;
+margin-top:0px !important}
+.graph-horzdots{margin-top: 0px !important;
+    margin-right: 0px !important;
+   width: 100% !important;}
+.btn-grphs-horztal{    float: right;
+    line-height: 14px !important;
+    margin-left: 13px;}
+label{color:#969595}
+.check-label{color: #000;
+    font-size: 15px;margin-left: 8px;}
+.form-check-input{width:20px;height:20px; margin-top: 0rem !important;}
+
+.mat-menu-panel {
+    min-width: 134px !important;}
+.btn-cancel1 {
+		color: #2196F3 !important;
+		padding: 0.5rem 1rem !important;
+		background-color: transparent !important;
+		border-color: transparent !important;
+	
+	
+	}
+.btn-save {
+    background: #0d89ec;
+    color: #ffffff;
+    border-color: #0d89ec;
+	padding: 8px 40px !important;
+	border-radius: 3px;
+	font-size: 1rem;
+}
+
+
+.data-form{width:200px;float:right;}
+.main-content-head button span {
+     margin-left: 0px !important; 
+}
+button.btn {
+    padding: 5px 12px !important;}
+.menu-adj{height:35px !important;}
+.data-form .opt-list{width:250px}

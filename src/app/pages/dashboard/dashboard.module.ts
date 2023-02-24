@@ -7,7 +7,10 @@ import { DynamicDashboardComponent } from './dynamic-dashboard/dynamic-dashboard
 import { ConfigureDashboardComponent} from './configure-dashboard/configure-dashboard.component'
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule } from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 
@@ -25,6 +28,9 @@ import { CreateDashboardComponent } from './create-dashboard/create-dashboard.co
    FormsModule,
    ReactiveFormsModule ,
    MatIconModule,
+   MatMenuModule,
+   MatButtonModule,
+   DropdownModule
  
  
  

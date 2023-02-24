@@ -71,7 +71,7 @@
       <div class="col-md-12 py-3 px-3 metrics-space">
         <div class="row">
           <div class="col-md-6" *ngFor="let widget of dynamicDashBoard.widgets; let i=index" style="padding-right:5px;padding-left:5px;">
-            <div class="well1-dynmic" style="height:395px;padding:20px !important">
+            <div class="well1-dynmic graphs-align" >
               <span class="h5">{{widget.widget_title}}</span> <i class="pi pi-times right overlay-icon"
                 (click)="onDeactivate(widget,i, 'widgets')"></i>
               <div class="" style="text-align: center;margin:20px;">
