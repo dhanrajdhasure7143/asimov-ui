@@ -149,14 +149,14 @@ margin-top:0px !important}
 .graph-horzdots{margin-top: 0px !important;
     margin-right: 0px !important;
    width: 100% !important;}
-.btn-grphs-horztal{padding: 1px 9px !important;float:right;line-height: 25px !important;}
+.btn-grphs-horztal{    float: right;
+    line-height: 14px !important;
+    margin-left: 13px;}
 label{color:#969595}
 .check-label{color: #000;
     font-size: 15px;margin-left: 8px;}
 .form-check-input{width:20px;height:20px; margin-top: 0rem !important;}
-::ng-deep .cdk-overlay-connected-position-bounding-box {
-	left: 538.667px !important;
-}
+
 .mat-menu-panel {
     min-width: 134px !important;}
 .btn-cancel1 {
@@ -175,3 +175,13 @@ label{color:#969595}
 	border-radius: 3px;
 	font-size: 1rem;
 }
+
+
+.data-form{width:200px;float:right;}
+.main-content-head button span {
+     margin-left: 0px !important; 
+}
+button.btn {
+    padding: 5px 12px !important;}
+.menu-adj{height:35px !important;}
+.data-form .opt-list{width:250px}

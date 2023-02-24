@@ -2,34 +2,44 @@
    <ng-template pTemplate>
       <div class="container-fluid">
          <div class="col-md-12 py-4 px-3">
-            <div class="row main-content-head">
+            <div class="row ">
                <div class="col-md-4 pl-0">
                   <h3>
 
                   
                      <span *ngIf="!editDashboardName" class="title_text">{{dashboardData.dashboardName}}</span>
-                     <span *ngIf="editDashboardName" ><input type="text" [(ngModel)]="dashboardName" value="{{dashboardData.dashboardName}}"></span>
+                     <!-- <span *ngIf="editDashboardName" ><input type="text" [(ngModel)]="dashboardName" value="{{dashboardData.dashboardName}}"></span>
                      
                      <button  *ngIf="!editDashboardName"  (click)="editDashboardName=true;">edit</button>
-                     <button  *ngIf="editDashboardName"  (click)="updateDashboardName()">Save</button>
+                     <button  *ngIf="editDashboardName"  (click)="updateDashboardName()">Save</button> -->
                   
                   </h3>
                </div>
-               <div class="col-md-8 pr-0 text-right">
+               <div class="col-md-8 pr-0 ">
                  
-                  
-                  <!-- <div class="col-md-3">
-                  <select class="form-control data">
-                     <option value="">List of Dashboard</option>
+                  <div class="row">
+                  <div class="col-md-8 text-right pr-0">
+                  <select class="form-control data-form pull-right">
+                     <option value="" class="opt-list">List of Dashboard <span style="margin-left:15px;"><img scr="./../../../../assets/images-n/dashboard/star.svg"/></span></option>
+                     <option value="">Analytics Dashboard</option>
+                     <option value="">Performance Dashboard</option>
+                     <option value="">Revenue Dashboard</option>
                    </select>
-                  </div> -->
-                 
+                  </div>
+                  <div class="col-md-4 text-right">
                   <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg"/>
                   <span class="plus">Create</span>
                   <button class="btn btn-secondary eiap-btn">Configure </button>
-                  <button class="btn-dots eiap-btn" >
-                    <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                 
+                  <button mat-button [matMenuTriggerFor]="menu1" class="btn-dots eiap-btn btn-grphs-horztal">
+                     <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
+                  <mat-menu #menu1="matMenu">
+                   <button mat-menu-item class="menu-adj">Delete</button>
+                   <button mat-menu-item>Set As Default Dashbaord</button>
+                   </mat-menu>
+                  </div>
+               </div>
                
            
               

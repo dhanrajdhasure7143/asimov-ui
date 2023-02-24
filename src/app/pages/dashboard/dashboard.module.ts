@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule } from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 
@@ -28,7 +29,8 @@ import { CreateDashboardComponent } from './create-dashboard/create-dashboard.co
    ReactiveFormsModule ,
    MatIconModule,
    MatMenuModule,
-   MatButtonModule
+   MatButtonModule,
+   DropdownModule
  
  
  
