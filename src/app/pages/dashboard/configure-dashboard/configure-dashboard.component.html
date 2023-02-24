@@ -1,0 +1,202 @@
+<p-splitter [style]="{'height': 'auto'}" [panelSizes]="[70,30]" layout="horizontal">
+  <ng-template pTemplate>
+    <div class="container-fluid">
+      <div class="col-md-12 py-3 px-3 mt-3">
+        <div class="row main-content-head">
+          <div class="col-md-4 pl-0">
+            <h3>
+              <span class="title_text">{{dynamicDashBoard.dashboardName}} </span>
+            </h3>
+          </div>
+          <div class="col-md-8 pr-0 text-right">
+            <button class="btn btn-primary eiap-btn" (click)="dynamicdatatransfer()">Done </button>
+            <button class="btn-dots eiap-btn">
+              <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="well flex-container">
+           <div class="img-div">
+              <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
+           </div>
+           <div>
+              <p class="warning-p" >Your currently editing your dashboard. Changes will be saved after clicking the done button.</p>
+           </div>
+        </div>
+        <div class=" flex-container">
+           <div class="img-div">
+           </div>
+           <div>
+           </div>
+        </div>
+     </div>
+      <div class="col-md-12 px-3 sec2-align" pDroppable="item" (onDrop)="drop()" (onDragEnter)="onEnter()">
+        <div class="row">
+
+
+          <div class="col-md-3" *ngFor="let item of dynamicDashBoard.metrics;let j =index"
+            style="padding-right:5px;padding-left:5px;">
+            <div class="well1-dynmic">
+              <div class="flex-container text-control">
+                <div class="img-div">
+                  <img src="..\assets\images-n\dashboard\{{item.src}}" class="dashbrd-img"/>
+                  <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
+                </div>
+                <div class="new-dynamic">
+                   <h3>10</h3>
+                   <p>{{item.metric_name}}</p>
+                </div>
+             </div>
+              
+            </div>
+          </div>
+
+          <div class="col-md-3" *ngFor="let item of defaultMetricsData" style="padding-right:5px;padding-left:5px;">
+            <div class="well1">
+              <div class="flex-container">
+                <div class="img-div">
+                  <img src="..\assets\images\Projects\add-gadget.svg" width="80%" />
+                </div>
+                <div>
+                  <p style="margin-bottom:0px;">Drag or Add <br> a <span style="font-weight:600;">Metric</span> to this
+                    column </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 py-3 px-3 metrics-space">
+        <div class="row">
+          <div class="col-md-6" *ngFor="let widget of dynamicDashBoard.widgets; let i=index" style="padding-right:5px;padding-left:5px;">
+            <div class="well1-dynmic graphs-align" >
+              <span class="h5">{{widget.widget_title}}</span> <i class="pi pi-times right overlay-icon"
+                (click)="onDeactivate(widget,i, 'widgets')"></i>
+              <div class="" style="text-align: center;margin:20px;">
+                <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                  <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                </div>
+                <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                  <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                </div>
+                <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                  <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
+                </div>
+                <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                  <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                </div>
+                <div *ngIf="widget.widget_type=='LINE_CHART'">
+                  <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                </div>
+                <div *ngIf="widget.widget_type=='TABLE'">
+
+                </div>
+              </div>
+             
+              <p>{{widget.widget_description}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-6" *ngIf="dynamicDashBoard.widgets.length<1" style="padding-right:5px;padding-left:5px;">
+            <div class="well1" style="height:395px;">
+              <div class="" style="text-align: center;margin-top:25%">
+                <div>
+                  <img src="..\assets\images\Projects\add-gadget.svg" width="80px" />
+                </div>
+                <div>
+                  <p class="mt-2" style="margin-bottom:0px;">Drag or Add a <span style="font-weight:600;">Metric</span> to this
+                    column </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="dynamicDashBoard.widgets.length<2" style="padding-right:5px;padding-left:5px;">
+            <div class="well1" style="height:395px;">
+              <div class="" style="text-align: center;margin-top:25%">
+                <div>
+                  <img src="..\assets\images\Projects\add-gadget.svg" width="80px" />
+                </div>
+                <div>
+                  <p class="mt-1" style="margin-bottom:0px;">Drag or Add a <span style="font-weight:600;">Metric</span> to this
+                    column </p>
+                </div>
+              </div>
+            </div>
+            <div class=" flex-container">
+              <div class="img-div">
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+  <ng-template pTemplate>
+    <p-tabView>
+      <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}">
+        <div class="col-md-12 mb-2" style="height:50px;">
+          <div class="row">
+            <div class="col-md-6 pl-0" style="float:right">
+              <input class="form-control toolbar-search" type="text" placeholder="Search">
+              <mat-icon matSuffix style="font-size: 1.2em">
+                <img src="../../../../assets/images/search.svg" alt="" class="search-align">
+              </mat-icon>
+            </div>
+            <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
+              <select class="form-control data">
+                <option value="">All metrics</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let item of metrics_list; let i=index">
+          <div class="col-md-12 mb-2" pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
+            (onDragEnd)="dragEnd()" (click)="onSelectMetric(item,i)">
+            <div class="flex-container">
+              
+              <div class="img-div">
+                <img src="..\assets\images-n\dashboard\{{item.src}}" [alt]="item.name" width="60px" height="60px"
+                  style="margin-right:20px;" />
+              </div>
+              <div>
+                <h5>{{item.metric_name}}</h5>
+                <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
+                <p style="font-size: 14px; color: #808080cc;">{{item.metric_desc}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}">
+        <div class="col-md-12 mb-2" style="height:50px;">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
+            <select class="form-control data">
+              <option value="">All Widgets</option>
+            </select>
+          </div>
+        </div>
+        <div *ngFor="let widget of widgets" (click)="addWidget(widget)" class="col-md-12 mb-2">
+          <div class="flex-container">
+            
+            <div class="img-div" style="width:30%">
+              <img src="..\assets\images-n\dashboard\{{widget.chartSrc}}" width="60px" height="55px" />
+            </div>
+
+            <div>
+              <h5>{{widget.widget_title}}</h5>
+              <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
+              <p style="font-size: 14px; color: #808080cc;">{{widget.widget_description}}</p>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-template>
+</p-splitter>

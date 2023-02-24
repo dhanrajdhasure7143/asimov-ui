@@ -4,10 +4,11 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import * as moment from 'moment';
 import {NgxSpinnerService} from 'ngx-spinner';
-import * as Chart from 'chart.js'
+// import * as Chart from 'chart.js'
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as $ from 'jquery'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
@@ -833,7 +834,7 @@ export class MonitoringComponent implements OnInit {
                              }
                            }]
                          }
-                      }
+                      }as any
                   });
                   this.chart6.update();
   }
