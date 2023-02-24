@@ -354,6 +354,25 @@ p-image.p-element.crtprgm {
 }
 /* Form Overlay New Styles End */
 
+/* Folderpopover New Styles Start */
+.selectfoldername .p-dialog-mask {
+    /* background-color: rgba(0,0,0,0.3); */
+}
+button.btn.btn-primary.savefoldername {
+    margin-top: 15px;
+    float: right;
+}
+.docfldnam input.p-inputtext {
+    width: 100%;
+}
+.docfldnam input.p-inputtext:focus {
+  box-shadow: none !important;
+}
+.docfldnam button.btn {
+  margin-top: 30px;
+}
+/* Folderpopover New Styles End */
+
 button span {
     margin-left: 5px;
 }
