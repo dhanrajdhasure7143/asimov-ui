@@ -104,8 +104,8 @@
                                     </ng-template>
                                 </p-inplace>
                             </div>
-                            <div class="row pr-3 align-items-center justify-content-between">
-                                <div class="pinf">
+                            <div class="row pr-2 align-items-center justify-content-between">
+                                <div class="pinf procowner">
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                         <ng-template pTemplate="display">
                                             <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
@@ -126,7 +126,7 @@
                                     <!-- <p>{{getUserName(projectDetails.processOwner)}}</p> -->
                                     <label>Process Owner</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjdept">
                                     <p-inplace #inplace3 (onActivate)="inplaceActivate('mapValueChain','inplace3')">
                                         <ng-template pTemplate="display">
                                             <p class="">{{projectDetails.mapValueChain}}</p>
@@ -146,11 +146,11 @@
                                     <!-- <p>{{projectDetails.mapValueChain}}</p> -->
                                     <label>Departments</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjowner">
                                     <p>{{projectDetails.owner| userPipe : users_list}}</p>
                                     <label>Created By</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjstatus">
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
                                         <ng-template pTemplate="display">
                                             <p>{{projectDetails.status}}</p>
@@ -167,7 +167,7 @@
                                     <!-- <p>{{projectDetails.status}}</p> -->
                                     <label>Status</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjlastupdated">
                                     <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
                                 </div>
@@ -212,7 +212,7 @@
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
                     <!-- <p *ngIf="!isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="truncateDesc(project_desc)"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p> -->
-                    <div *ngIf="isEditDesc" class="col">
+                    <div *ngIf="isEditDesc" class="col p-0">
                         <!-- <p-editor [(ngModel)]="project_desc_edit" [style]="{'height':'150px'}" maxlength="100">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
@@ -226,8 +226,10 @@
 
                         <textarea [style]="{'width':'100%'}" pInputTextarea [(ngModel)]="project_desc_edit"
                             [autoResize]="true" maxlength="251"></textarea>
-                        <i class="pi pi-check" (click)="onUpdateDesc()"></i>
-                        <i class="pi pi-times" (click)="onDeactivateEdit()"></i>
+                        <span class="editfields prjdescef">
+                            <i class="pi pi-check" (click)="onUpdateDesc()"></i>
+                            <i class="pi pi-times" (click)="onDeactivateEdit()"></i>
+                        </span>
                     </div>
 
 
