@@ -518,6 +518,7 @@ addParentFolder() {
   }
 
   singleFileUpload(e){
+    this.loader.show()
     let object = { ...{}, ...this.sampleNode_object };
     object.label = this.entered_folder_name;
     let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
@@ -525,18 +526,19 @@ addParentFolder() {
 
     var fileData = new FormData();
     var selectedFile = e.target.files[0];
+
     fileData.append("filePath", e.target.files[0]);
-    fileData.append("key",object.key)
-    fileData.append("label",selectedFile.name.split('.')[0])
-    fileData.append("data","file")
+    fileData.append("projectId",this.project_id);
+    fileData.append("taskId",'')
     fileData.append("ChildId",'1')
-    fileData.append("dataType",selectedFile.name.split('.')[1])
-    fileData.append("fileSize",selectedFile.size)
-    fileData.append("task_id",'')
-    fileData.append("projectId", this.project_id)
-    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+
+    let obj=object.key
+    
+    fileData.append("fileUniqueIds",JSON.stringify([obj]))
+    this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
     let obj={
       key: object.key,
       label: selectedFile.name,
@@ -548,6 +550,7 @@ addParentFolder() {
       fileSize:this.project_id
     }
     console.log(obj)
+    this.loader.hide();
     this.selectedFile.parent.children.push(obj)
 
     })
@@ -669,7 +672,7 @@ addParentFolder() {
     object.label = this.entered_folder_name;
     let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
     object.key = this.selectedFolder.key + "-" + objectKey;
-
+    this.loader.show();
     const fileData = new FormData();
     const selectedFile = e.target.files[0];
     // fileData.append("filePath", e.target.files[0]);
@@ -679,22 +682,26 @@ addParentFolder() {
     // fileData.append("ChildId",'1')
     // fileData.append("dataType",selectedFile.name.split('.')[1])
     // fileData.append("fileSize",selectedFile.size)
-    // fileData.append("task_id",'')
+    // fileData.append("taskId",'')
     // fileData.append("projectId", this.project_id)
     // let fileFormArray:any=[];
 
     fileData.append("filePath", e.target.files[0]);
     fileData.append("projectId",this.project_id);
-    let obj={
-      "key": object.key,
+    fileData.append("taskId",'')
+    fileData.append("ChildId",'1')
+
+    let obj=object.key
       // "label":selectedFile.name.split('.')[0],
-      "ChildId":1,
-      "dataType":selectedFile.name.split('.')[1],
-      "taskId":'',
-    }
-    fileData.append("fileDetails",JSON.stringify([obj]))
+      // "ChildId":1,
+      // "dataType":selectedFile.name.split('.')[1],
+      // "taskId":'',
+    
+    fileData.append("fileUniqueIds",JSON.stringify([obj]))
 
     this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+      this.loader.hide();
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
       let obj={
         key: object.key,
         label: selectedFile.name,
@@ -710,7 +717,6 @@ addParentFolder() {
       this.isDialog1 = false;
     })
   }
-
   onDeleteItem(type){
     let req_body=[]
     if(type =='folderView'){
