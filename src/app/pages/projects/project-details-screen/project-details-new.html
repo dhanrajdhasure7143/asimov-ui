@@ -340,10 +340,10 @@
                         <button class="btn blue-btntext" (click)="openUsersOverlay()">
                             <a><span>Users</span></a>
                         </button>
-                        <button class="btn blue-btntext">
+                        <button class="btn blue-btntext" (click)="onCreateFolderDoc('folder')">
                             <a><span>Create Folder</span></a>
                         </button>
-                        <button class="btn blue-btntext" (click)="navigateToCreateDocument()">
+                        <button class="btn blue-btntext" (click)="onCreateFolderDoc('document')">
                             <a><span>Create Documents</span></a>
                         </button>
                         <button class="btn blue-btntext" (click)="navigateToBPMN()">
@@ -609,5 +609,22 @@
         </div>
     </app-split-overlay>
 </div>
+
+<p-dialog class="selectfoldername" header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+    <span class="p-float-label">
+        <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+       [(selection)]="selected_folder">
+        </p-tree>
+    </span>
+    <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername" (click)='createFolder()'>Ok</button>
+    <button *ngIf="selectedType !='createFolder' " type="button" class="btn btn-primary savefoldername" (click)='navigateToCreateDocument()'>Ok</button>
+</p-dialog>
+
+<p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
+    <span class="p-float-label">
+        <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
+        <button type="button" class="btn btn-primary" (click)="saveFolder()">Save</button>
+    </span>
+</p-dialog>
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>

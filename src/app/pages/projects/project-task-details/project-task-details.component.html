@@ -357,10 +357,8 @@
         <span class="p-float-label">
             <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
-            <!-- <ng-template let-node pTemplate="default">
-                <b (click)="onNodeClick($event,node)">{{node.label}}</b>
-            </ng-template> -->
             </p-tree>
         </span>
         <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>
+    <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
