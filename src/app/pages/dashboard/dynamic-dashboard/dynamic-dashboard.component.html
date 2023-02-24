@@ -23,8 +23,8 @@
                   </div> -->
                  
                   <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg"/>
-                  <span class="plus">Create</span>
-                  <button class="btn btn-secondary eiap-btn">Configure </button>
+                  <span (click)="navigateToCreateDashboard()" class="plus">Create</span>
+                  <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
                   <button class="btn-dots eiap-btn">
                     <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
@@ -58,7 +58,7 @@
                      <div class="flex-container">
                         <div class="img-div">
                            <img src="..\assets\images-n\dashboard\{{item.src}}" />
-                           <i class="pi pi-1 pi-times right overlay-icon" ></i>
+                           <!-- <i class="pi pi-1 pi-times right overlay-icon" ></i> -->
                         </div>
                         <div class="new-dynamic">
                            <h3>10</h3>
@@ -73,7 +73,39 @@
          </div>
          <div class="col-md-12 py-3 px-3">
             <div class="row">
-               <div class="col-md-6 sec-2" >
+           
+               <div class="col-md-6" *ngFor="let widget of dashboardData.widgets; let i=index" style="padding-right:5px;padding-left:5px;">
+                  <div class="well1-dynmic" style="height:395px;padding:20px !important">
+                    <span class="h5">{{widget.widget_title}}</span> 
+                    <!-- <i class="pi pi-times right overlay-icon"
+                      (click)="onDeactivate(widget,i, 'widgets')"></i> -->
+                    <div class="" style="text-align: center;margin:20px;">
+                      <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                        <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                      </div>
+                      <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                        <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                      </div>
+                      <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                        <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
+                      </div>
+                      <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                        <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                      </div>
+                      <div *ngIf="widget.widget_type=='LINE_CHART'">
+                        <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
+                      </div>
+                      <div *ngIf="widget.widget_type=='TABLE'">
+      
+                      </div>
+                    </div>
+                   
+                    <p>{{widget.widget_description}}</p>
+                  </div>
+                </div>
+
+
+                <div  *ngIf="dashboardData.widgets.length<1" class="col-md-6 sec-2" >
                   <div class="well1 graph" >
                     <div class="chart" >
                         <div>
@@ -86,7 +118,7 @@
                   
                   </div>
                </div>
-               <div class="col-md-6 sec-2" >
+               <div   *ngIf="dashboardData.widgets.length<2"  class="col-md-6 sec-2" >
                   <div class="well1 graph" >
                      <div class="chart">
                         <div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 
 
@@ -19,20 +19,23 @@ export class DynamicDashboardComponent implements OnInit {
  
 
 
-  constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService) { }
+  constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService, private router:Router) { }
 
   dashboardName:String="";
   dashboardData:any=[];
   editDashboardName:boolean=false;
   ngOnInit(): void {
-    
-    this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>
-    {
-    this.dashboardName=response.dashboardName
-     this.dashboardData=response;
-    }
-    )
-    
+    this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>{
+      // response=JSON.parse(response);
+      // console.log(response)
+      // if(response.find((item:any)=>item.dashboardId==item.dashboardId)!=undefined)
+      // {
+      //  let dashboardData=response.find((item:any)=>item.dashboardId==item.dashboardId)
+        this.dashboardName=response.dashboardName
+        this.dashboardData=response;
+      //}
+    })
+
   // getPortalNames() {
   //   this.datatransfer.screelistObservable.subscribe((data: any) => {
   //     this.tableData = data;
@@ -50,7 +53,17 @@ updateDashboardName()
   this.editDashboardName=false;
 }
 
+navigateToConfigure()
+{
+  this.datatransfer.setdynamicscreen(this.dashboardData)
+  this.router.navigate(["pages/dashboard/configure-dashboard"],{queryParams:{dashboardId:this.dashboardData.dashboardId}});
+}
 
-  }
+navigateToCreateDashboard()
+{
+  this.router.navigate(["pages/dashboard/create-dashboard"])
+}
+
+}
 
 
