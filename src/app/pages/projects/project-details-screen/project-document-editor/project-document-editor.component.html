@@ -1,37 +1,40 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-9">
-            <h3>
-                <label id="popup_title">
-                    <a (click)="onNavigate()"><img
-                            src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
-                </label>
-                <span class="title_text">
-                    Projects | {{projectName}} | <strong> Create Document </strong>
-                </span>
-            </h3>
-        </div>
-        <div class="col-md-12">
-            <br>
-            <div class="document-editor">
-            <div id="toolbar-container"></div>
-            <div class="editor-container">
-
-                <div id="editor">
-                   
-                </div>
+<div class="maincontent">
+    <div class="h-100">
+        <div class="row main-content-head">
+            <div class="col-md-4 pl-0">
+                <h3>
+                    <label id="popup_title">
+                        <a (click)="onNavigate()"><img
+                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                    </label>
+                    <span class="title_text">
+                        Projects | {{projectName}} | <strong> Create Document </strong>
+                    </span>
+                </h3>
+            </div>
+            <div class="col-md-8 pr-0 text-right">
+                <button (click)="saveDocument()" class="btn btn-primary">Download</button>
+                <button (click)="saveDocument()" class="btn btn-primary ml-3">Save</button>
             </div>
         </div>
-            <!-- <ckeditor [(ngModel)]="documentData" 
-                #myckeditor="ngModel"
-                name="myckeditor"
-                required
-                [config]="ckeConfig" 
-                debounce="500" >
-	        </ckeditor> -->
-            <br>
-            <button (click)="saveDocument()" class="btn btn-primary">Download</button>
-            <button (click)="saveDocument()" class="btn btn-primary">Save</button>
-        </div>
-    </div>
+        <div class="main-content-body">
+            <div class="">
+                <div class="document-editor">
+                <div id="toolbar-container"></div>
+                <div class="editor-container">    
+                    <div id="editor">
+                       
+                    </div>
+                </div>
+            </div>
+                <!-- <ckeditor [(ngModel)]="documentData" 
+                    #myckeditor="ngModel"
+                    name="myckeditor"
+                    required
+                    [config]="ckeConfig" 
+                    debounce="500" >
+                </ckeditor> -->                
+            </div>
+        </div>        
+    </div>    
 </div>

@@ -5,7 +5,7 @@
 }
 .splitter-headers {
   position: absolute;
-  right: 30px;
+  right: 20px;
   top: 20px;
   z-index: 9999;
   cursor: pointer;
