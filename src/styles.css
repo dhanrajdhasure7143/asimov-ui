@@ -2987,7 +2987,7 @@ button.btn.bluebg-button {
   justify-content: center;
 }
 .create-header {
-  padding: 10px 10px 15px 10px !important;
+  padding: 10px 0px 15px !important;
   border-bottom: 1px solid #e5e5e5;
 }
 .create-header h3 {
@@ -3088,6 +3088,7 @@ margin: 0px;
   box-shadow: unset !important;
   border-radius: 6px;
   border: 1px solid #d0d0d0;
+  margin: 10px;
 }
 
 .docfolder .pi-folder, .docfolder .pi-file {
@@ -3106,6 +3107,48 @@ margin: 0px;
 .docfolder .p-card-content {
   padding: 15px !important;
 }
+
+/* Document Overlay Styles */
+
+.fldrovrlay {
+  height: calc(100% - 125px);
+  display: grid;
+}
+.fldrovrlay .row {
+  align-items: center;
+  justify-content: space-evenly;  
+}
+.fldrovrlay .p-card.p-component {
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  box-shadow: none;
+}
+.fldrovrlay .p-card.p-component:hover {
+  border: 1px solid #098de6;
+}
+.fldrovrlay .p-card-body {
+  height: 180px !important;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fldrovrlay .p-card-content {
+  padding: 0px !important;
+  text-align: center;
+    
+}
+.fldrovrlay .p-card-content .pi-folder, .fldrovrlay .p-card-content .pi-file {
+  font-size: 40px;
+}
+.fldrovrlay .p-card-content span, .fldrovrlay .p-card-content button {
+  font-size: 16px;
+  color: #232832;
+  margin-top: 10px;
+  display: block;
+  padding: 0px !important
+}
+
 
 /* Document FolderName Popup Styles */
 
