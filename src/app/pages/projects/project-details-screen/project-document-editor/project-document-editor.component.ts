@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { asBlob } from 'html-docx-js-typescript'
 import {saveAs} from 'file-saver';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
@@ -15,12 +15,16 @@ export class ProjectDocumentEditorComponent implements OnInit {
   public project_id:any;
   public ckeConfig:any;
   public editorRef:any;
-  constructor(private activatedRoute:ActivatedRoute) { }
+  navigarteURL:any;
+  constructor(private activatedRoute:ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params:any)=>{
-      this.project_id=params.project_id;
-      this.projectName=params.projectName;
+      let paramsData = JSON.parse(atob(params.id))
+      this.navigarteURL = paramsData.url
+      this.project_id=paramsData.projectId;
+      this.projectName=paramsData.projectName;
       // this.ckeConfig = {
       //   allowedContent: false,
       //   extraPlugins: 'divarea',
@@ -47,6 +51,10 @@ export class ProjectDocumentEditorComponent implements OnInit {
     asBlob(this.documentData).then((data:any) => {
       saveAs(data, 'file.docx') // save as docx file
     })
+  }
+
+  onNavigate(){
+    this.router.navigateByUrl(this.navigarteURL)
   }
 
 }
