@@ -168,6 +168,7 @@
     width: auto;
     height: auto;
     margin-right: 15px;
+    margin-left: 0px;
     padding: 1px;
   }
   span.txt-wh.bread-crumb {
