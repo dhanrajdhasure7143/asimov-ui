@@ -2199,9 +2199,11 @@ taskListView(){
       task_id: "",
       projectId: this.project_id
     }];
+    this.spinner.show();
   
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.getTheListOfFolders();
+      this.spinner.hide();
       this.isDialog=false;
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
     },err=>{

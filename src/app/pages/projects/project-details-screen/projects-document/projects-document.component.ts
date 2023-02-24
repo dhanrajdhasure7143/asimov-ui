@@ -672,31 +672,29 @@ addParentFolder() {
 
     const fileData = new FormData();
     const selectedFile = e.target.files[0];
-    fileData.append("filePath", e.target.files[0]);
-    fileData.append("key",object.key)
-    fileData.append("label",selectedFile.name.split('.')[0])
-    fileData.append("data","file")
-    fileData.append("ChildId",'1')
-    fileData.append("dataType",selectedFile.name.split('.')[1])
-    fileData.append("fileSize",selectedFile.size)
-    fileData.append("task_id",'')
-    fileData.append("projectId", this.project_id)
-    let fileFormArray:any=[];
-
     // fileData.append("filePath", e.target.files[0]);
-    // let obj={
-    //   "key": object.key,
-    //   "label":selectedFile.name.split('.')[0],
-    //   "data":"file",
-    //   "ChildId":"1",
-    //   "dataType":selectedFile.name.split('.')[1],
-    //   "fileSize": selectedFile.size,
-    //   "task_id":'',
-    //   "projectId": this.project_id
-    // }
-    // fileData.append("fileDetails",JSON.stringify([obj]))
-    fileFormArray.push(fileData)
-    this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
+    // fileData.append("key",object.key)
+    // fileData.append("label",selectedFile.name.split('.')[0])
+    // fileData.append("data","file")
+    // fileData.append("ChildId",'1')
+    // fileData.append("dataType",selectedFile.name.split('.')[1])
+    // fileData.append("fileSize",selectedFile.size)
+    // fileData.append("task_id",'')
+    // fileData.append("projectId", this.project_id)
+    // let fileFormArray:any=[];
+
+    fileData.append("filePath", e.target.files[0]);
+    fileData.append("projectId",this.project_id);
+    let obj={
+      "key": object.key,
+      // "label":selectedFile.name.split('.')[0],
+      "ChildId":1,
+      "dataType":selectedFile.name.split('.')[1],
+      "taskId":'',
+    }
+    fileData.append("fileDetails",JSON.stringify([obj]))
+
+    this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
       let obj={
         key: object.key,
         label: selectedFile.name,
