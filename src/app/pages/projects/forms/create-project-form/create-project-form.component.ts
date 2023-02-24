@@ -184,8 +184,6 @@ export class CreateProjectFormComponent implements OnInit {
     }
   }
 
-  onChange() {}
-
   resetcreateproject() {
     this.insertForm2.reset();
 
@@ -250,6 +248,16 @@ export class CreateProjectFormComponent implements OnInit {
       this.spinner.hide();
       if (response.errorMessage == undefined) {
         let status: any = response;
+        let req_body = [
+          { key: 1, label: "Analysis", data: "folder",ChildId: "1",dataType: "folder",fileSize: "",task_id: "",projectId: response.project.id},
+          { key: 2, label: "System Connectivity", data: "folder",ChildId: "1",dataType: "folder",fileSize: "",task_id: "",projectId: response.project.id},
+          { key: 3, label: "Process Document", data: "folder",ChildId: "1",dataType: "folder",fileSize: "",task_id: "",projectId: response.project.id},
+          { key: 4, label: "Testing", data: "folder",ChildId: "1",dataType: "folder",fileSize: "",task_id: "",projectId: response.project.id},
+          { key: 5, label: "Reference",data: "folder",ChildId: "1",dataType: "folder",fileSize: "",task_id: "",projectId: response.project.id}
+        ];
+      
+        this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+        })
         Swal.fire({
           title: "Success",
           text: response.message,

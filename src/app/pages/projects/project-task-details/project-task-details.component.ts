@@ -391,15 +391,31 @@ export class ProjectTaskDetailsComponent implements OnInit {
     var fileData = new FormData();
     fileData.append("filePath", this.uploaded_file);
     fileData.append("key",'3-1')
-    fileData.append("label",this.uploaded_file.name.split('.')[0])
-    fileData.append("data","file")
-    fileData.append("ChildId",'1')
-    fileData.append("dataType",this.uploaded_file.name.split('.')[1])
-    fileData.append("fileSize",this.uploaded_file.size)
-    fileData.append("task_id",this.task_details.id)
-    fileData.append("projectId", this.project_id)
+    // fileData.append("label",this.uploaded_file.name.split('.')[0])
+    // fileData.append("data","file")
+    // fileData.append("ChildId",'1')
+    // fileData.append("dataType",this.uploaded_file.name.split('.')[1])
+    // fileData.append("fileSize",this.uploaded_file.size)
+    // fileData.append("task_id",this.task_details.id)
+    // fileData.append("projectId", this.project_id)
   
-    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+    
+    // fileData.append("filePath", e.target.files[0]);
+    // fileData.append("projectId",this.project_id);
+    // fileData.append("taskId",'')
+    // fileData.append("ChildId",'1')
+
+    // let obj=object.key
+      // "label":selectedFile.name.split('.')[0],
+      // "ChildId":1,
+      // "dataType":selectedFile.name.split('.')[1],
+      // "taskId":'',
+    
+    // fileData.append("fileUniqueIds",JSON.stringify([obj]))
+
+    this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+      this.spinner.hide();
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
 
     })
   }

@@ -1653,13 +1653,25 @@ createFolderByProject(body){
 }
 
 uploadfilesByProject(body){
-  return this.http.post("/platform-service/document/createFolder",body)
+  return this.http.post("/platform-service/document/uploadMultipleFiles",body)
 }
 
 getListOfFoldersByProjectId(projectId){
   return this.http.get("/platform-service/document/fetchFoldersDataByProjectId/"+projectId);
 }
 
+
+getWidgetData(api:any, methodType:any)
+{
+  if(methodType=='POST')
+  {
+    return this.http.post(api, "");
+  }
+  else
+  {
+    return this.http.get(api);
+  }
+}
 updateFolderNameByProject(body){
   return this.http.post("/platform-service/document/updateFolderName",body)
 }
