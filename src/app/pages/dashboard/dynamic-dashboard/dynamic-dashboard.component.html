@@ -76,11 +76,28 @@
             <div class="row">
            
                <div class="col-md-6" *ngFor="let widget of dashboardData.widgets; let i=index" style="padding-right:5px;padding-left:5px;">
-                  <div class="well1-dynmic" style="height:395px;padding:20px !important">
-                    <span class="h5">{{widget.widget_title}}</span> 
+                  <div class="well1-dynmic" style="height:500px;padding:20px !important">
+                  
+                    <div class="mt-2">
+                     <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img"/>  <span class="h5">{{widget.widget_title}}</span>
+                    
+      
+                        
+                        <button mat-button  [hidden]="!(widget.edit==false)"  [matMenuTriggerFor]="menu" class="btn-dots eiap-btn btn-grphs-horztal">
+                           <img  class="graph-horzdots" src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                        </button>
+                     
+                         
+                       <mat-menu [hidden]="!(widget.edit==false)" #menu="matMenu">
+                         <button (click)="widget.edit=true" mat-menu-item>Configure</button>
+                         <button mat-menu-item>Remove</button>
+                        
+                       </mat-menu>
+                     </div>
                     <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
-                    <div class="" style="text-align: center;margin:20px;">
+                    <div  *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
+                     <br>
                       <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
                         <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                       </div>
@@ -99,9 +116,73 @@
                       <div *ngIf="widget.widget_type=='TABLE'">
       
                       </div>
-                    </div>
+                      
+                        <p>{{widget.widget_description}}</p>
+                     </div>
                    
-                    <p>{{widget.widget_description}}</p>
+                    
+                     <div class="row" *ngIf="widget.edit==true">
+                       <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
+                          <label>Project Type</label>
+                          <div class="row">
+                             <div class="col-md-3">
+                          <input class="form-check-input" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
+                          value="option1" />&nbsp;
+                        <label class="label-control" for="screenname" class="check-label">In Progress</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <div class="col-md-3">
+                        <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
+                          value="option1" />&nbsp;
+                          <label class="label-control" for="screenname" class="check-label">Hold</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div class="col-md-3">
+                          <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
+                          value="option1" />&nbsp;
+                          <label class="label-control" for="screenname" class="check-label">Deployed</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                       </div>
+                       </div>
+                      
+                          <div class="col-md-6 form-group mb-4 bps-labcls">
+                             <label>Department</label>
+                             <select class="form-control data">
+                               <option value="">Engineering</option>
+                             </select>
+                           </div>
+                           <div class="col-md-6 form-group  bps-labcls">
+                             <label>Refresh Interval</label>
+                             <select class="form-control data">
+                               <option value="">30 Min</option>
+                             </select>
+                           </div>
+                           <div class="col-md-6 form-group mb-4 bps-labcls">
+                             <label>Department</label>
+                             <select class="form-control data">
+                               <option value="">Engineering</option>
+                             </select>
+                           </div>
+                           <div class="col-md-6 form-group mb-4 bps-labcls">
+                             <label>Refresh Interval</label>
+                             <select class="form-control data">
+                               <option value="">30 Min</option>
+                             </select>
+                           </div>
+                           <div class="col-md-6 form-group mb-4 bps-labcls">
+                             <label>Chart Type</label>
+                             <select class="form-control data">
+                               <option value="">Pie Chart</option>
+                             </select>
+                           </div>
+                           <div class="col-md-6 form-group mb-4 bps-labcls">
+                             <label>Number of Category</label>
+                             <input type="text"  placeholder="05" class="form-control"  >
+                           </div>
+                       
+                     <div class="col-md-12">
+                       <div class="mt-4 mb-4"  style="float:right">
+                       <button (click)="widget.edit=false" class="btn-cancel1">Cancel</button>
+                       <button (click)="widget.edit=false" class="btn-save">Save</button>
+                    </div>
+                    </div>
+                    </div>
+                 
                   </div>
                 </div>
 
@@ -132,85 +213,7 @@
                   </div>
                </div>
                <div class="col-md-6 sec-2" >
-                  <div class="well1-dynmic graphs-align" >
-                     <div class="mt-2">
-                     <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img"/><span class="h5">Project By Status</span>
-                    
-                       
-                        
-                        <button mat-button [matMenuTriggerFor]="menu" class="btn-dots eiap-btn btn-grphs-horztal">
-                           <img  class="graph-horzdots" src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
-                        </button>
-                     
-                         
-                       <mat-menu #menu="matMenu">
-                         <button mat-menu-item>Configure</button>
-                         <button mat-menu-item>Remove</button>
-                        
-                       </mat-menu>
-                     </div>
-                      <div class="row">
-                        <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
-                           <label>Project Type</label>
-                           <div class="row">
-                              <div class="col-md-3">
-                           <input class="form-check-input" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
-                           value="option1" />&nbsp;
-                         <label class="label-control" for="screenname" class="check-label">In Progress</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                         <div class="col-md-3">
-                         <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                           value="option1" />&nbsp;
-                           <label class="label-control" for="screenname" class="check-label">Hold</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                           <div class="col-md-3">
-                           <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                           value="option1" />&nbsp;
-                           <label class="label-control" for="screenname" class="check-label">Deployed</label>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                        </div>
-                        </div>
-                       
-                           <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                <option value="">Engineering</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6 form-group  bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                <option value="">30 Min</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                <option value="">Engineering</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                <option value="">30 Min</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Chart Type</label>
-                              <select class="form-control data">
-                                <option value="">Pie Chart</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Number of Category</label>
-                              <input type="text"  placeholder="05" class="form-control"  >
-                            </div>
-                        
-                      <div class="col-md-12">
-                        <div class="mt-4 mb-4"  style="float:right">
-                        <button class="btn-cancel1">Cancel</button>
-                        <button class="btn-save ">Save</button>
-                     </div>
-                     </div>
-                     </div>
-                  </div>
+                
                </div>
             </div>
          </div>

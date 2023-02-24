@@ -33,6 +33,10 @@ export class DynamicDashboardComponent implements OnInit {
       //  let dashboardData=response.find((item:any)=>item.dashboardId==item.dashboardId)
         this.dashboardName=response.dashboardName
         this.dashboardData=response;
+        this.dashboardData.widgets=response.widgets.map((item:any)=>{
+          item["edit"]=false;
+          return item;
+        })
       //}
     })
 
