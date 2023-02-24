@@ -242,7 +242,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
   project_desc_edit:any;
   isEditDesc:boolean=false;
   snapshotDatails:any=[];
-
+  selected_folder:any;
+  isFile_upload_dialog:boolean=false;
+  nodeMap:Object = {};
+  files:any[]=[];
+  selectedType:any;
+  isDialog:boolean=false;
+  entered_folder_name:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -694,6 +700,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.connectToWebSocket();
       this.getMessagesList();
       this.getAllCategories();
+      this.getTheListOfFolders();
       this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
       }
       // this.users_list.forEach(item2 => {
@@ -1932,7 +1939,8 @@ taskListView(){
       userId:this.logged_userId,
       message:this.typedMessage,
       projectId:this.project_id,
-      rmId:this.replay_msg.id?this.replay_msg.id:0,
+      // rmId:this.replay_msg.id?this.replay_msg.id:0,
+      rmId:0,
       firstName:this.userDetails.firstName,
       lastName:this.userDetails.lastName,
     }
@@ -1968,7 +1976,6 @@ taskListView(){
   }
 
   onReadMoreHide(){
-    console.log("testing")
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
@@ -1999,8 +2006,31 @@ taskListView(){
    }
 
    navigateToCreateDocument(){
+    console.log(this.selected_folder)
+    let objectKey;
+    let key;
+    // if(this.selected_folder.parent == undefined){
+    //   key= String(this.files.length+1)
+    // }else{
+      objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+      key= this.selected_folder.key + "-" + objectKey
+    // }
+    
+    let req_body = {
+      key: key,
+      label: "",
+      data: "folder",
+      ChildId: "1",
+      dataType: "folder",
+      fileSize: "",
+      task_id: "",
+      projectId: this.project_id,
+      url : this.router.url,
+      projectName:this.projectDetails.projectName
+    };
+    // console.log(req_body)
     this.router.navigate(['pages/projects/document-editor'],
-    { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
+    { queryParams: { id:btoa(JSON.stringify(req_body)) } })
   }
   
   onDeactivate(field){
@@ -2052,7 +2082,6 @@ taskListView(){
   getTheExistingUsersList(){
     let resp_data:any[]=[]
     this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
-      console.log("existingUsersList",res)
       resp_data=res;
       this.users_list.forEach(item2 => {
         if(resp_data.find((projectResource:any) => item2.user_email==projectResource.userId)==undefined)
@@ -2075,6 +2104,108 @@ taskListView(){
       this.spinner.hide();
      if(res_data.length>0)
       this.snapshotDatails=data[0]
+    })
+  }
+
+  navigateToBPMN(){
+    let params_object= {
+      ntype: "bpmn",
+      projectId:this.project_id,
+      projectName:this.projectDetails.project_name
+    }
+    if(this.projectDetails.correlationID){
+      params_object["bpsId"]= this.projectDetails.correlationID.split(":")[0],
+      params_object["ver"]= this.projectDetails.correlationID.split(":")[1]
+  }else{
+    let selectedBpmn=this.selected_process_names.find(each=>each.processId == this.projectDetails.process).correlationID
+      params_object["bpsId"]= selectedBpmn.split(":")[0],
+      params_object["ver"]= selectedBpmn.split(":")[1]
+  }
+    this.router.navigate(["pages/businessProcess/uploadProcessModel"], {
+      queryParams: params_object
+    });
+  }
+
+  onCloseFolderOverlay(){
+    this.isFile_upload_dialog = false;
+  }
+
+  createFolder(){
+    this.isDialog = true;
+    this.isFile_upload_dialog=false;
+  }
+
+  onCreateFolderDoc(type){
+    this.isFile_upload_dialog = true;
+    type=='folder'?this.selectedType="createFolder":this.selectedType="document"
+  }
+
+  getTheListOfFolders(){
+    let res_data:any=[];
+    this.files=[];
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
+        res_data=res
+        res_data.map(data=> {
+          if(data.dataType=='folder'){
+            data["children"]=[]
+          }
+          return data
+        })
+ 
+      for (let obj of res_data) {
+        let node = {
+          key: obj.key,
+          label: obj.label,
+          data: obj.data,
+          type:"default",
+          uploadedBy:obj.uploadedBy,
+          projectId:obj.projectId,
+          id: obj.id,
+          dataType:obj.dataType,
+          children:obj.children,
+          uploadedDate:obj.uploadedDate
+        };
+          if(obj.dataType == 'folder'){
+            node['collapsedIcon']=  "pi pi-folder"
+            node["expandedIcon"]  ="pi pi-folder-open"
+        }else{
+          node['icon']=  "pi pi-file"
+        }
+        this.nodeMap[obj.key] = node;
+        if (obj.key.indexOf('-') === -1) {
+          this.files.push(node);
+        } else {
+          let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+          let parent = this.nodeMap[parentKey];
+          if (parent) {
+            parent.children.push(node);
+          }
+        }
+      }
+    })
+  }
+
+  saveFolder(){
+      let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+      let key= this.selected_folder.key + "-" + objectKey;
+
+    let req_body = [{
+      key: key,
+      label: this.entered_folder_name,
+      data: "folder",
+      ChildId: "1",
+      dataType: "folder",
+      fileSize: "",
+      task_id: "",
+      projectId: this.project_id
+    }];
+  
+    this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+      this.getTheListOfFolders();
+      this.isDialog=false;
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    },err=>{
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
     })
   }
 

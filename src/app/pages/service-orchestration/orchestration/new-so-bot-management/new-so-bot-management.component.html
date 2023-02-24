@@ -3,10 +3,10 @@
 
       <div class="row">
           <div class="col-md-10 p-0">
-              <div class="col-md-3 form-group pl-0 sosearchfield">
+              <!-- <div class="col-md-3 form-group pl-0 sosearchfield">
                   <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
                   <img src="../../../../assets/images/search.svg" class="testplus">
-              </div>
+              </div> -->
               <div class="col-md-3 pl-0">
                   <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
             <option value="">Select Source</option>
@@ -35,7 +35,7 @@
         <div class="botmanagement-tablelist" >
           <!-- <mat-card> -->
             
-            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="bmtable">
+            <!-- <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="bmtable">
 
                 <ng-container matColumnDef="botName"id="bmbotname">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
@@ -50,14 +50,9 @@
                       <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 10) ? ((element.description).slice(0, 10) + '...') : element.description}}</span>
                       <span *ngIf="element.description==null || element.description==''">-</span> </td>
               </ng-container>
-              <!--  <ng-container matColumnDef="botType"id="bottype">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Type </th>
-                  <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
-              </ng-container> -->
-
+             
               <ng-container matColumnDef="sourceType">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Source </th>
-                  <!-- <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null"> -->
                   <td mat-cell *matCellDef="let element"> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
               </ng-container>
               <ng-container matColumnDef="department">
@@ -91,10 +86,8 @@
                         </span>
 
                           <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'" [matTooltip]="element.botStatus" class="text-danger">
-                          <!-- <li class="fa fa-times-circle"> -->
                           <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" >
                         </span>
-                          <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                           <span *ngIf="element.botStatus=='New'" [matTooltip]="element.botStatus" class="text-primary">
                           <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
                           </span>
@@ -106,8 +99,7 @@
                           </span>
 
                           <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'">
-                          <span class="text-primary"  [matTooltip]="element.botStatus"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                            <!-- <i class="fas fa-pause-circle"></i> -->
+                          <span class="text-primary"  [matTooltip]="element.botStatus">
                             <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" >
                           </span>
                           </span>
@@ -121,22 +113,14 @@
                   <th mat-header-cell *matHeaderCellDef>Actions </th>
                   <td mat-cell *matCellDef="let element">
                       <span (click)="executionAct(element.botId,element.sourceType)" matTooltip="Start Bot" style="cursor: pointer;">
-                          <!-- <li class="fa fa-play text-success" ></li> -->
                           <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus" >
                         </span>
-                      <!-- <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
-                          <i class="fa fa-pause "  aria-hidden="true" ></i> &nbsp;&nbsp;
-                        </span>
-                        <span (click)="resumeBot(element.botId)"  matTooltip="Resume Bot" >
-                          <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
-                        </span> -->
+                    
                       <span (click)="stopBot(element.botId)" matTooltip="Stop Bot" style="cursor: pointer;">
-                          <!-- <i class="fa fa-stop text-danger" aria-hidden="true"></i> -->
                           <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus" >
                         </span >
                         <span>
                           <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration" style="cursor: pointer;">
-                                <!-- <i class="fa fa-cog" aria-hidden="true"></i> -->
                             <img src="../../../../../assets/images/SO/configuration.svg" class="testplus" >
                           </button>
                         </span>
@@ -146,7 +130,6 @@
                   <th mat-header-cell *matHeaderCellDef>Schedule</th>
                   <td mat-cell *matCellDef="let element">
                       <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;">
-                        <!-- <i class="fa fa-calendar text-primary"  aria-hidden="true"></i> -->
                         <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus" >
                       </span>
                   </td>
@@ -162,28 +145,142 @@
             
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
               <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              <!-- <div *ngIf="respdata1 && (search !='' || selectedcat !='' || selected_source!='' ) && bot_list.length !=0" class="text-center">
-                <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 400px)">
-                <br><br>
-                  <h4>No items to display</h4>
-              
-             
-               </div> -->
-               <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+              </table> -->
 
+
+              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','taskType','botStatus']" [scrollable]="true"
+              [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pReorderableColumn pResizableColumn>Bot Name
+                      <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="botName"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Description
+                      <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
+                      <p-sortIcon field="description"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Source
+                      <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
+                      <p-sortIcon field="department"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Category
+                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                      <p-sortIcon field="processName"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Version
+                      <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
+                      <p-sortIcon field="version"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Status
+                      <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
+                      <p-sortIcon field="botStatus"></p-sortIcon>
+                    </th>
+                    <th pReorderableColumn pResizableColumn>Actions</th>
+                    <th pReorderableColumn pResizableColumn>Schedule</th>
+                    <th pReorderableColumn pResizableColumn>Logs</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-element>
+                  <tr>
+                    <td> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span
+                          *ngIf="element.botName!=null" [pTooltip]="element.botName">{{(element.botName.length > 8) ?
+                          ((element.botName).slice(0, 8) + '...') : element.botName}}</span>
+                        <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
+                    <td>
+                      <span *ngIf="element.description!=null" [pTooltip]="element.description">{{(element.description.length > 10) ?
+                        ((element.description).slice(0, 10) + '...') : element.description}}</span>
+                      <span *ngIf="element.description==null || element.description==''">-</span>
+                    </td>
+                    <td> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                    <td>
+                      <button *ngIf="element.department !=null && element.sourceType=='EPSoft' ">{{element.department}}</button>
+                      <button *ngIf="element.sourceType!='EPSoft' || element.department ==null " class="text-center">-</button>
+                    </td>
+                    <td>
+                      <button *ngIf="element.version!=null">V{{element.version}}
+                      </button>
+                      <span *ngIf="element.version==''">-</span>
+                    </td>
+                    <td>
+                      <div>
+                        <span [id]="element.botId+'__status'">
+                          <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" class="text-primary">
+                            <span>
+                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                            </span>
+                          </span>
+              
+                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'" [pTooltip]="element.botStatus">
+                            <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                          </span>
+              
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'" [pTooltip]="element.botStatus"
+                            class="text-danger">
+                            <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                          </span>
+                          <span *ngIf="element.botStatus=='New'" [pTooltip]="element.botStatus" class="text-primary">
+                            <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
+                          </span>
+                          <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'">
+                            <span [pTooltip]="element.botStatus">
+                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
+                            </span>
+                          </span>
+              
+                          <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'">
+                            <span class="text-primary" [pTooltip]="element.botStatus">
+                              <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                            </span>
+                          </span>
+                          <span *ngIf="element.botStatus==null">---</span>
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" style="cursor: pointer;">
+                        <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus">
+                      </span>
+                      <span (click)="stopBot(element.botId)" pTooltip="Stop Bot" style="cursor: pointer;">
+                        <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus">
+                      </span>
+                      <span>
+                        <button (click)="SelectSLACon(element)" pTooltip="SLA Configuration" style="cursor: pointer;">
+                          <img src="../../../../../assets/images/SO/configuration.svg" class="testplus">
+                        </button>
+                      </span>
+                    </td>
+                    <td>
+                      <span (click)="openscheduler(element)" pTooltip="Scheduler" style="cursor: pointer;">
+                        <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus">
+                      </span>
+                    </td>
+                    <td>
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='EPSoft'" pTooltip="View Logs"
+                        (click)="getBotVerions(element.botId,element.version,epsoft_logs_modal_ref)">View</a>
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='UiPath'" pTooltip="View Logs"
+                        (click)="getuipathlogs(uiPathLogsModal,element.botName,'closed')">View</a>
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='BluePrism'" pTooltip="View Logs"
+                        (click)="getBluePrismlogs(element.botName)">View</a>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td style="justify-content: center;" colspan="8">No records found</td>
+                  </tr>
+                </ng-template>
+              </p-table>
             </div>
-
-          <!-- <div *ngIf="bot_list.length==0" style="text-align: center;">
-            <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 400px)">
-            <br><br>
-              <h4>No items to display</h4>
-              
-          </div> -->
-          <div class="newpaginationdiv">
-            <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
-                 [showFirstLastButtons]="true"></mat-paginator>
-          </div>
       </div> 
   </div>
 
@@ -199,15 +296,21 @@
   <div *ngIf="popup">
     <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block">
         <div class="rpa-modal-content">
+        <!-- <div class=""> -->
+          <app-split-overlay  (closeOverlay)="closeOverlaysche($event)">
+
             <div class="rpa-modal-header">
-                <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
+                <!-- <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span> -->
                 <h4>Scheduler</h4>
             </div>
-            <div class="modal-body actions-mbody">
+            <div class="modal-body ">
                 <app-rpa-scheduler [data]="schdata" id="Scheduler"></app-rpa-scheduler>
             </div>
-        </div>
+        <!-- </div> -->
+    <!-- </div> -->
+  </app-split-overlay>
     </div>
+</div>
 </div>
 
 
@@ -309,7 +412,7 @@
           </div>
           <div class="modal-body">
               <div class="container m-contanier form-body">
-                  <button (click)="getBluePrismlogs(blueprismbotname)" matTooltip="Refresh" style='float:right;'>
+                  <button (click)="getBluePrismlogs(blueprismbotname)" pTooltip="Refresh" style='float:right;'>
               <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
             </button>
                   <div class="">
@@ -319,7 +422,7 @@
                           <!-- Run Id Column -->
                           <ng-container matColumnDef="bluePrismBotSessionid">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header>Session Id </th>
-                              <td mat-cell *matCellDef="let element" [matTooltip]="element.bluePrismBotSessionid">
+                              <td mat-cell *matCellDef="let element" [pTooltip]="element.bluePrismBotSessionid">
                                   <span *ngIf="element.bluePrismBotSessionid != null">{{(element.bluePrismBotSessionid.length > 30) ? ((element.bluePrismBotSessionid).slice(0, 30) + '...') : element.bluePrismBotSessionid}}
                           </span>
                                   <span *ngIf="element.bluePrismBotSessionid == null">-</span>
@@ -393,12 +496,15 @@
           </div>
       </div>
   </div>
-  <div id='SLAConfig_overlay' class="rpa-modal">
-      <div class="rpa-modal-content">
+
+  <div *ngIf="hiddenPopUp">
+    <!-- <div id="SLAConfig_overlay"> -->
+    <app-split-overlay (closeOverlay)="closeOverlay()"  >
+      <div class="h-100">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">
+              <!-- <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">
               <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
-            </span>
+            </span> -->
               <h4>SLA Configuration</h4>
           </div>
           <div class="modal-body">
@@ -508,7 +614,7 @@
                     </div> -->
 
                       <div class="form-footer">
-                          <button class="btn btn-default" (click)="resetsla()">Reset</button>
+                          <button class="btn btn-default" (click)="resetsla()">Reset</button>&nbsp;
                           <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
                       </div>
                   </form>
@@ -517,4 +623,6 @@
           </div>
 
       </div>
+    </app-split-overlay>
+  <!-- </div> -->
   </div> 

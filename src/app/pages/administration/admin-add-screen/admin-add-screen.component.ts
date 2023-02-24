@@ -311,24 +311,9 @@ export class AdminAddScreenComponent implements OnInit {
       console.log(this.savedata);
       this.tableData = this.savedata;
       this.columns_list = [
-        {
-          ColumnName: "ColumnName",
-          DisplayName: "Column Name",
-          ShowGrid: true,
-          sort: true
-        },
-        {
-          ColumnName: "DisplayName",
-          DisplayName: "Display Name",
-          ShowGrid: true,
-          sort: true,
-        },
-        {
-          ColumnName: "action",
-          DisplayName: "Actions",
-          ShowGrid: true,
-          sort: true
-        },
+        {ColumnName: "ColumnName",DisplayName: "Column Name",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "DisplayName",DisplayName: "Display Name",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
       Swal.fire({
         title: "Success",
@@ -340,12 +325,7 @@ export class AdminAddScreenComponent implements OnInit {
         cancelButtonColor: "#d33",
         heightAuto: false,
         confirmButtonText: "Ok",
-      }).then(()=>{
-        this.backToScreenList();
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      })      
+      })     
      
       // window.location.reload();
       // Swal.fire("Success", "Screen Saved successfully !", "success");

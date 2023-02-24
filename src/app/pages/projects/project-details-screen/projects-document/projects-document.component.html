@@ -35,17 +35,17 @@
             <div class="">
                 <div class="docscrnchngs">
             <!-- <span class="title_text"></span> -->
-            <div *ngIf="isFolder" class="d-flex docfolder">
+            <div *ngIf="isFolder" class="row docfolder">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" (contextmenu)="onRightClick($event,item)">  
                 <i [class]="item.collapsedIcon"> </i>
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
                 <span *ngIf="item.type !='textBox'"> {{ item.label }} </span>
                 <span *ngIf="item.type=='textBox'">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength="50" pInputText>
-                    <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
-                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
-                    </span>
+                    <input [(ngModel)]="entered_folder_name" type="text" maxlength="20" pInputText>
+                    <div class="editfields">
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('folderView')" *ngIf="entered_folder_name"></i>
+                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate('folderView')"></i>
+                    </div>
                 </span>
             </p-card>
            </div>
@@ -62,14 +62,14 @@
                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="test" class="node-icon">
                         {{node.label}}
                       </div> -->
-                    <b (click)="onNodeClick($event,node)">{{node.label}}</b>
+                    <b (contextmenu)="onNodeClick($event,node)">{{node.label}}</b>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='50' pInputText>
-                    <span class="editfields">
-                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate()" *ngIf="entered_folder_name"></i>
-                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate()"></i>
-                    </span>
+                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='20' pInputText>
+                    <div class="editfields">
+                        <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('treeView')" *ngIf="entered_folder_name"></i>
+                        <i class="pi pi-times" (click)="onCancelFolderNameUpdate('treeView')"></i>
+                    </div>
                 </ng-template>
             </p-tree>
 
@@ -98,8 +98,8 @@
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
                 </div>
                 <div class="docfootbtns">
-                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>
-                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>                    
+                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>
+                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>                                        
                 </div>
         </div>
     </div>
@@ -110,88 +110,107 @@
 
     <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createFolderPopUP" style="display: block">
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
-            <div class="container">
-                <h2> Create / Upload </h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
-                                Create folder </p-card>
-                        </button>
+            <div class="h-100">
+                <div class="create-header">
+                    <h3> Create / Upload </h3>
+                </div>
+                <div class="fldrovrlay">
+                    <div class="row">
+                        <div class="">
+                            <button>
+                                <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder icon-color"></i>
+                                    <span>Create folder</span> </p-card>
+                            </button>
+                        </div>
+                        <div class="">
+                            <button>
+                                <p-card class="cards side"> <i class="pi pi-folder icon-color"></i>
+                                    <span>Upload folder</span> </p-card>
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
-                                Upload folder </p-card>
-                        </button>
+                    <div class="row" *ngIf="hiddenPopUp1">
+                        <div class="">
+                            <button  (click)="navigateToCreateDocument()">
+                                <p-card class="cards side"> <i class="pi pi-file icon-color"></i>
+                                    <span>Create Document</span> </p-card>
+                            </button>
+                        </div>
+                        <div class="">
+                            <button>
+                                <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" >
+                                <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUploadFolder($event)" ></i>
+                                    <button class="btn">Upload Document</button>
+                                    <input type="file" name="myfile" />
+                                </p-card>
+                                  </div>
+                                <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
+                                    Upload Document </p-card> -->
+                            </button>
+                            <!-- <button>
+                                <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
+                                    Upload Document </p-card>
+                            </button> -->
+                        </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="hiddenPopUp1">
-                    <div class="col-md-6">
-                        <button  (click)="navigateToCreateDocument()">
-                            <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
-                                Create Document </p-card>
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
-                                Upload Document </p-card>
-                        </button>
-                    </div>
-                </div>
+                
             </div>
         </app-split-overlay>
     </div>
 
     <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createTreeFolderOverlay" style="display: block">
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
-            <div class="container">
-                <h2> Create / Upload </h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
-                                Create folder </p-card>
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- <button>
-                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
-                                Upload folder </p-card>
-                        </button> -->
-                        <div class="upload-btn-wrapper" (change)="onFolderSelect($event)" >
-                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem" (change)="onFolderSelect($event)" ></i><br>
-
-                                <button class="btn">Upload folder</button>
-                                <input type="file" webkitdirectory directory multiple (change)="onFolderSelect($event)">
-                              </p-card>
-
-                              </div>
-                    </div>
+            <div class="h-100">
+                <div class="create-header">
+                    <h3> Create / Upload </h3>
                 </div>
-                <div class="row" *ngIf="hiddenPopUp1">
-                    <div class="col-md-6">
-                        <button  (click)="navigateToCreateDocument()">
-                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
-                                Create Document </p-card>
-                        </button>
+                <div class="fldrovrlay">
+                    <div class="row">
+                        <div class="">
+                            <button>
+                                <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder icon-color"></i>
+                                    <span>Create folder</span> </p-card>
+                            </button>
+                        </div>
+                        <div class="">
+                            <!-- <button>
+                                <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
+                                    Upload folder </p-card>
+                            </button> -->
+                            <div class="upload-btn-wrapper" (change)="onFolderSelect($event)" >
+                                <p-card class="cards side"> <i class="pi pi-folder icon-color" (change)="onFolderSelect($event)" ></i>
+    
+                                    <button class="btn">Upload folder</button>
+                                    <input type="file" webkitdirectory directory multiple (change)="onFolderSelect($event)">
+                                  </p-card>
+    
+                                  </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <button>
-                            <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
-                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem" (change)="singleFileUpload($event)" ></i><br>
-
-                                <button class="btn">Upload Document</button>
-                                <input type="file" name="myfile" />
-                              </p-card>
-
-                              </div>
-                            <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
-                                Upload Document </p-card> -->
-                        </button>
+                    <div class="row" *ngIf="hiddenPopUp1">
+                        <div class="">
+                            <button  (click)="navigateToCreateDocument()">
+                                <p-card class="cards side"> <i class="pi pi-file icon-color"></i>
+                                    <span>Create Document</span> </p-card>
+                            </button>
+                        </div>
+                        <div class="">
+                            <button>
+                                <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
+                                <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUpload($event)" ></i>
+    
+                                    <button class="btn">Upload Document</button>
+                                    <input type="file" name="myfile" />
+                                  </p-card>
+    
+                                  </div>
+                                <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
+                                    Upload Document </p-card> -->
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </div>        
             </div>
         </app-split-overlay>
     </div>
@@ -199,7 +218,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addParentFolder()"> ParentSave </button>
+            <button type="button" class="btn btn-primary" (click)="addParentFolder()">Save</button>
         </span>
     </p-dialog>
 
@@ -207,7 +226,7 @@
     <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="treeChildSave()">TreeChildSave</button>
+            <button type="button" class="btn btn-primary" (click)="treeChildFolderSave()">Save</button>
         </span>
     </p-dialog>
 
@@ -218,20 +237,13 @@
             <button type="button" class="btn btn-primary" (click)="addSubfolder()">Save</button>
         </span>
     </p-dialog>
-
-    <p-dialog header="Folder Name" [(visible)]="isDialog2" class="docfldnam">
-        <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="saveRenameFolder()">Save</button>
-        </span>
-    </p-dialog>
     
     <p-overlayPanel #op>
         <ng-template pTemplate>
             <div class="docritclk">
-                <!-- <div class="" (click)="onFolderRename('treeView')">Rename</div> -->
-                <div *ngIf="selectedItem.node.dataType == 'folder'" class="" (click)="onFolderRename('treeView')">Rename</div>
-                <div>Delete</div>
+                <div class="" *ngIf="selected_folder_rename.dataType=='folder'" (click)="onFolderRename('treeView')">Rename</div>
+                <div (click)="onDeleteItem('treeView')">Delete</div>
+                <div *ngIf="selected_folder_rename.dataType != 'folder'">Download</div>
             </div>
         </ng-template>
     </p-overlayPanel>
@@ -248,8 +260,12 @@
     <p-overlayPanel #op2>
         <ng-template pTemplate>
             <div class="docritclk">
-                <div class="" (click)="onFolderRename('folderView')">Rename</div>
-                <div>Delete</div>
+                <div *ngIf="selectedItem.dataType=='folder'" class="" (click)="onFolderRename('folderView')">Rename</div>
+                <div (click)="onDeleteItem('folderView')">Delete</div>
+                <div *ngIf="selectedItem.dataType != 'folder'">Download</div>
             </div>
         </ng-template>
     </p-overlayPanel>
+
+    <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+    <p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

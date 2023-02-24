@@ -26,8 +26,8 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <div class="col-sm-1 p-0">
-                        <div class="row task-status">
+                    <!-- <div class="col-sm-1 p-0"> -->
+                        <div class="task-status">
                             <img *ngIf="task_details.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="task-status-icon">
@@ -37,17 +37,17 @@
                             <img *ngIf="task_details.status == 'New'"
                                 src="./../../../../assets/images-n/projects/NewStatus.svg"
                                 alt="task-status-icon">
-                        </div>
+                        <!-- </div> -->
                     </div>
-                    <div class="col-sm-11 p-0">
+                    <div class="col-sm-12 p-0" style="flex:auto;" >
                         <div class="row project-ninfo">
-                            <div class="row align-items-center">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')">
+                            <div class="row align-items-center projectnamerow">
+                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')" class="project-name">
                                     <ng-template pTemplate="display">
-                                        <span class="project-name">{{task_details.taskName}}</span>
+                                        <span class="">{{task_details.taskName}}</span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
-                                        <input type="text" [style]="{'width':'60%'}" pInputText
+                                        <input type="text" [style]="{'width':'100%'}" pInputText
                                             [(ngModel)]="taskName" (keydown)="Space($event)"/>
                                         <span class="editfields">
                                             <i class="pi pi-check"
@@ -95,15 +95,15 @@
                                 <!-- <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance"> -->
                                 <!-- <span class="highimp">{{projectDetails.priority}}</span> -->
                             </div>
-                            <div class="row pr-3 align-items-center justify-content-between">
-                                <div class="pinf">
+                            <div class="row pr-2 align-items-center justify-content-between">
+                                <div class="pinf taskassignby">
                                     <p>{{task_details.createdBy}}</p>
                                     <label>Assigned By</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf taskresource">
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
-                                            <span class="">{{task_details.resources| userPipe : users_list}}</span>
+                                            <p class="">{{task_details.resources| userPipe : users_list}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">                                            
                                             <p-dropdown [options]="users_list" [filter]="true"
@@ -119,10 +119,10 @@
                                     </p-inplace>
                                     <label>Resource</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf taskstatus">
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('status','inplace2')">
                                         <ng-template pTemplate="display">
-                                            <span>{{task_details.status}}</span>
+                                            <p>{{task_details.status}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <p-dropdown [options]="status_list" [(ngModel)]="status" required
@@ -134,13 +134,12 @@
                                         </ng-template>
                                     </p-inplace>
                                     <label>Status</label>
-                                </div>
-                                <div class="pinf">
+                                    </div>
+                                <div class="pinf taskduedate">
                                     <!-- <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p> -->
-
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                         <ng-template pTemplate="display">
-                                            <span>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</span>
+                                            <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <!-- <p-calendar inputId="basic" [(ngModel)]="due_date"></p-calendar> -->
@@ -153,35 +152,33 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-
+                                    <label>Due Date</label>
                                     <!-- <div class="p-fluid grid formgrid">
                                         <div class="field col-12 md:col-4">
                                             <p-calendar inputId="basic" [(ngModel)]="date1"></p-calendar>
                                         </div>
                                     </div> -->
-                                    <label>Due Date</label>
-                                </div>
-                                <div class="pinf">
+                                   </div>
+                                <div class="pinf tasklastupdated">
                                     <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="">
                                     <div class="d-flex">
                                         <span class="kpipercent">
-                                            <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
+                                            <!-- <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{task_details.percentageComplete}} %</p>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <!-- <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="percentageComplete" /> -->
-                                                        <p-knob [(ngModel)]="percentageComplete"></p-knob>
+                                                        <p-knob [(ngModel)]="percentageComplete" valueTemplate="{value}%"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check" (click)="onUpdateDetails('percentageComplete')"></i>
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
                                                     </span>
                                                 </ng-template>
-                                            </p-inplace>
+                                            </p-inplace> -->
+                                            <p-knob [(ngModel)]="task_details.percentageComplete" valueTemplate="{value}%" (onChange)="updatetask()"></p-knob>
                                             <label>Task Completion</label>
                                         </span>
                                     </div>
@@ -259,6 +256,7 @@
                                                     </button>
                                                 </div> -->
 
+
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +265,7 @@
                                     <p>No Comments Yet</p>
                                 </div>
                                 <div class="addcomment">
-                                    <label>Add Comment</label>
+                                    <label><b>Add Comment</b></label> 
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
@@ -296,7 +294,7 @@
             </div>
         </div>
     </div>
-
+<div>
     <div [hidden]="!hiddenPopUp">
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
             <div class="h-100">
@@ -359,10 +357,8 @@
         <span class="p-float-label">
             <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
-            <!-- <ng-template let-node pTemplate="default">
-                <b (click)="onNodeClick($event,node)">{{node.label}}</b>
-            </ng-template> -->
             </p-tree>
         </span>
-        <button type="button" class="btn btn-primary savefoldername">Save</button>
+        <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>
+    <p-toast  [style]="{marginTop: '50px'}" ></p-toast>

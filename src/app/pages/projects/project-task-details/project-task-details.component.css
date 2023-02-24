@@ -9,6 +9,7 @@
 .row.project-overview {
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 100%);
   border-radius: 6px;
+  flex-wrap: initial;
 }
 .task-status {
   background-color: rgb(9 141 230 / 10%);
@@ -16,64 +17,93 @@
   height: 100%;
   padding: 30px 10px !important;
   justify-content: center;
+  align-items: center;
+  display: flex;
 }
 .task-status p{
   font-size: 12px;
   margin:0px;
 }
+.task-status img {
+  width: 50px;
+  height: 55px;
+}
 .project-ninfo {
-  padding: 20px !important;
+  padding: 15px !important;
 }
 .project-ninfo .col-md-10.pl-0 ,.project-ninfo .col-md-10.pl-0 .row {
   align-items: center;
   display: flex;
 }
-span.project-name {
+.project-name span{
   font-size: 32px;
   font-weight: 600;
   margin-right: 10px;
 }
 span.highimp {
   color: #EA3D3D;
- margin-left: 5px;
+  margin-left: 5px;
 }
 span.mediumimp {
   color: #E58600;
- margin-left: 5px;
+  margin-left: 5px;
 }
 span.lowimp {
   color: #27AD74;
- margin-left: 5px;
+  margin-left: 5px;
+}
+.pinf {
+  position: relative;
+}
+.projectnamerow p-inplace.p-element {
+  position: relative;
+  margin-right: 8px;
 }
 .pinf p {
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
   font-weight: 500;
   font-size: 16px !important;
 }
 .pinf label {
   color: #535353;
 }
-.kpipercent {
+/* .kpipercent {
   border-left: 1px solid #e0e0e0;
   padding-left:15px !important;
-}
+} */
 .kpipercent p {
   font-size: 44px !important;
   margin-bottom: 2px;
   line-height: 1;
 }
-span.editfields {
-  margin-left: 7px;
+.projectnamerow {
+  height: 36px;
+}
+.pinf.taskassignby,
+.pinf.taskresource {
+  width: 18%;
+}
+.pinf.taskduedate,
+.pinf.tasklastupdated {
+  width: 15%;
+}
+.pinf.taskstatus {
+  width: 11%;
+}
+
+.editfields {
   display: flex;
   align-items: center;
+  position: absolute;
+  justify-content: end;
+  margin-top: 5px;
+  width: 100%;
 }
 .taskdescription span.editfields {
   text-align: right;
   display: block;
-  margin-top: 7px; 
-}
-.editfields i.pi {
-  margin-right: 3px;
+  margin-bottom: 7px; 
+  position: unset;
 }
 button span {
   margin-left: 5px;
@@ -83,7 +113,7 @@ button span {
   border-radius: 6px;
   background-color: #fff;
   padding: 0px 15px 10px;
-  height: 100%;
+  height: 105%;
 } 
 .commentBox button {
   margin: 5px 0px 10px;

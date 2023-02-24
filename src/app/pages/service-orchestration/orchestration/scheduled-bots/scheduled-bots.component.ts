@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
-import { NgxSpinnerService } from "ngx-spinner";
-import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-scheduled-bots',
@@ -17,7 +13,7 @@ export class ScheduledBotsComponent implements OnInit {
   
   constructor(
       private rest:RestApiService,
-      private spinner:NgxSpinnerService,
+      private spinner:LoaderService,
   ) { }
 
   ngOnInit() {

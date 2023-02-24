@@ -59,6 +59,7 @@ export class ProjectsListScreenComponent implements OnInit {
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
   isprojectCreateForm: boolean =false;
+  isprogramCreateForm: boolean =false;
   categoryList:any;
   categories_list:any[]=[]
 
@@ -301,7 +302,7 @@ export class ProjectsListScreenComponent implements OnInit {
       // },
       {
         ColumnName: "action",
-        DisplayName: "Actions",
+        DisplayName: "",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
@@ -469,7 +470,6 @@ export class ProjectsListScreenComponent implements OnInit {
    }
 
   closeOverlay(event) {
-    console.log(event)
     this.hiddenPopUp = event;
     this.isprojectCreateForm = false;
   }
@@ -506,6 +506,14 @@ export class ProjectsListScreenComponent implements OnInit {
     });
 
   })
+}
+
+onClikCreateProgram(){
+  // this.isprogramCreateForm =true;
+  this.router.navigate(["/pages/projects/create-projects"], {
+    queryParams: { id: this.create_Tabs },
+  });
+
 }
     
 

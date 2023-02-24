@@ -152,7 +152,7 @@
         </mat-list-item>
         <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
           <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
-            *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/user-management">
+            *ngIf="this.userRoles.includes('System Admin')" (click)="userManagement()">
             <span class="side-icon">
               <mat-icon>settings</mat-icon>
             </span>

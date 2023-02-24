@@ -49,8 +49,8 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <div class="col-sm-1 p-0">
-                        <div class="row project-status">
+                    <!-- <div class="col-sm-1 p-0"> -->
+                        <div class="project-status">
                             <img *ngIf="projectDetails.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="project-status-icon">
@@ -62,18 +62,18 @@
                                 alt="project-status-icon">
                             <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
-                    </div>
-                    <div class="col-sm-11 p-0">
+                    <!-- </div> -->
+                    <div class="col-sm-12 p-0" style="flex:auto;">
                         <div class="row project-ninfo">
-                            <div class="row align-items-center">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')">
+                            <div class="row align-items-center projectnamerow">
+                                <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')" class="project-name">
                                     <ng-template pTemplate="display">
-                                        <span class="project-name">{{projectDetails.projectName}}</span>
+                                        <span class="">{{projectDetails.projectName}}</span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
                                         <input type="text" [style]="{'width':'100%'}" pInputText
                                             [(ngModel)]="projectName" (keydown)="Space($event)" />
-                                        <span class="pull-right">
+                                        <span class="editfields">
                                             <i class="pi pi-check" *ngIf="projectName"
                                                 (click)="onUpdateDetails('projectName')"></i>
                                             <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
@@ -104,8 +104,8 @@
                                     </ng-template>
                                 </p-inplace>
                             </div>
-                            <div class="row pr-3 align-items-center justify-content-between">
-                                <div class="pinf">
+                            <div class="row pr-2 align-items-center justify-content-between">
+                                <div class="pinf procowner">
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                         <ng-template pTemplate="display">
                                             <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
@@ -126,7 +126,7 @@
                                     <!-- <p>{{getUserName(projectDetails.processOwner)}}</p> -->
                                     <label>Process Owner</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjdept">
                                     <p-inplace #inplace3 (onActivate)="inplaceActivate('mapValueChain','inplace3')">
                                         <ng-template pTemplate="display">
                                             <p class="">{{projectDetails.mapValueChain}}</p>
@@ -146,11 +146,11 @@
                                     <!-- <p>{{projectDetails.mapValueChain}}</p> -->
                                     <label>Departments</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjowner">
                                     <p>{{projectDetails.owner| userPipe : users_list}}</p>
                                     <label>Created By</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjstatus">
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
                                         <ng-template pTemplate="display">
                                             <p>{{projectDetails.status}}</p>
@@ -167,21 +167,20 @@
                                     <!-- <p>{{projectDetails.status}}</p> -->
                                     <label>Status</label>
                                 </div>
-                                <div class="pinf">
+                                <div class="pinf prjlastupdated">
                                     <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
                                 </div>
-                                <div class="pinf">
+                                <div class=""> 
+                                    <!--pinf-->
                                     <div class="d-flex">
                                         <span class="kpipercent">
-                                            <p-inplace #inplace5
+                                            <!-- <p-inplace #inplace5
                                                 (onActivate)="inplaceActivate('projectPercentage','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{projectDetails.projectPercentage}} %</p>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <!-- <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="projectPercentage" /> -->
                                                         <p-knob [(ngModel)]="projectPercentage"></p-knob>
                                                     <span class="editfields">
                                                         <i class="pi pi-check"
@@ -190,8 +189,8 @@
                                                         <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
                                                     </span>
                                                 </ng-template>
-                                            </p-inplace>
-                                            <!-- <p>{{projectDetails.projectPercentage}} %</p> -->
+                                            </p-inplace> -->
+                                            <p-knob [(ngModel)]="projectDetails.projectPercentage" valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
                                             <label>Project Completion</label>
                                         </span>
                                     </div>
@@ -213,7 +212,7 @@
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
                     <!-- <p *ngIf="!isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="truncateDesc(project_desc)"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p> -->
-                    <div *ngIf="isEditDesc" class="col">
+                    <div *ngIf="isEditDesc" class="col p-0">
                         <!-- <p-editor [(ngModel)]="project_desc_edit" [style]="{'height':'150px'}" maxlength="100">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
@@ -227,8 +226,10 @@
 
                         <textarea [style]="{'width':'100%'}" pInputTextarea [(ngModel)]="project_desc_edit"
                             [autoResize]="true" maxlength="251"></textarea>
-                        <i class="pi pi-check" (click)="onUpdateDesc()"></i>
-                        <i class="pi pi-times" (click)="onDeactivateEdit()"></i>
+                        <span class="editfields prjdescef">
+                            <i class="pi pi-check" (click)="onUpdateDesc()"></i>
+                            <i class="pi pi-times" (click)="onDeactivateEdit()"></i>
+                        </span>
                     </div>
 
 
@@ -339,13 +340,13 @@
                         <button class="btn blue-btntext" (click)="openUsersOverlay()">
                             <a><span>Users</span></a>
                         </button>
-                        <button class="btn blue-btntext">
+                        <button class="btn blue-btntext" (click)="onCreateFolderDoc('folder')">
                             <a><span>Create Folder</span></a>
                         </button>
-                        <button class="btn blue-btntext" (click)="navigateToCreateDocument()">
+                        <button class="btn blue-btntext" (click)="onCreateFolderDoc('document')">
                             <a><span>Create Documents</span></a>
                         </button>
-                        <button class="btn blue-btntext">
+                        <button class="btn blue-btntext" (click)="navigateToBPMN()">
                             <a><span>View BPMN</span></a>
                         </button>
                     </div>
@@ -608,5 +609,22 @@
         </div>
     </app-split-overlay>
 </div>
+
+<p-dialog class="selectfoldername" header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+    <span class="p-float-label">
+        <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+       [(selection)]="selected_folder">
+        </p-tree>
+    </span>
+    <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername" (click)='createFolder()'>Ok</button>
+    <button *ngIf="selectedType !='createFolder' " type="button" class="btn btn-primary savefoldername" (click)='navigateToCreateDocument()'>Ok</button>
+</p-dialog>
+
+<p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
+    <span class="p-float-label">
+        <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
+        <button type="button" class="btn btn-primary" (click)="saveFolder()">Save</button>
+    </span>
+</p-dialog>
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>

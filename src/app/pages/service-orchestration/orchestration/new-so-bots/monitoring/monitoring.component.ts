@@ -21,6 +21,7 @@ export class MonitoringComponent implements OnInit {
     private spinner:NgxSpinnerService
   ) { }
     q:any;
+    columns_list:any=[]
   ngOnInit() {
 
     this.getallbots();
@@ -71,6 +72,32 @@ export class MonitoringComponent implements OnInit {
          return 0;
      });
      this.failedbots=this.failedbots.reverse();
+     this.failedbots.map(data=>{
+      data["end_timestamp_new"] = moment(data.end_timestamp).format("lll")    
+      return data
+    })
+     this.columns_list = [
+      {
+        ColumnName: "botName",
+        DisplayName: "Failed Bots",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "end_timestamp_new",
+        DisplayName: "Time",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+    ];
       this.status1();
       this.status2();
       this.status4()

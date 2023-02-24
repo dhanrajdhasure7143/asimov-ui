@@ -51,14 +51,9 @@
 .docfolder .cards {
   width: 20%;
   text-align: center;
-  margin: 0px 10px;
 }
-.docfolder .cards:first-child {
-  margin-left: 0px !important;
-}
-.docfolder .cards:last-child {
-  margin-right: 0px !important;
-}
+
+
 
 /* ----- Document Footer Tree/Folder Icon Styles ----- */
 .docfootbtns {
@@ -107,21 +102,33 @@
   display: inline-block;
 }
 
-.btn {
+/* .btn {
   background-color: white;
   padding: 25px 20px;
   border-radius: 8px;
   font-size: 15px;
-}
+} */
 
 .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
+  font-size: 110px;
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
+  width: 100%;
 }
 
-:host ::ng-deep .p-tree-filter-container {
-  margin-top: 1rem;
+.editfields {
+  text-align: right;
+  margin-top: 5px;
+}
+.editfields i {
+  padding: 6px;
+  background: #F5F6F7;
+  border: 1px solid #CFD2D9;
+  border-radius: 3px;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
+}
+.editfields .pi-check {
+  margin-left: 5px;
 }

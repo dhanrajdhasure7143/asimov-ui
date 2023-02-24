@@ -65,6 +65,7 @@ import { RpautomationModule } from '../rpautomation/rpautomation.module';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { SoIncidentManagementComponent } from './orchestration/so-incident-management/so-incident-management.component';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -120,6 +121,7 @@ import { SoIncidentManagementComponent } from './orchestration/so-incident-manag
     ModalModule.forRoot(),
     NgSelectModule,
     RpautomationModule,
+    PrimengCustomModule
 
   ],
 

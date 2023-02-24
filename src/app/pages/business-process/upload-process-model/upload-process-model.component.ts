@@ -285,9 +285,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
         //   this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
         //   })
         // }
-        localStorage.removeItem("projectId");
-        localStorage.removeItem("project_id");
-      localStorage.removeItem("projectName")
       }
 
    setRPAData(){

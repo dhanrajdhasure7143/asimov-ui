@@ -1,22 +1,18 @@
 import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, ChangeDetectorRef ,PipeTransform } from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
-import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
-import {MatTable} from '@angular/material/table';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
-import { ParseError } from '@angular/compiler';
+import { moveItemInArray} from '@angular/cdk/drag-drop';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -50,8 +46,6 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","createdBy","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
-  dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
   public isButtonVisible = false;
@@ -81,10 +75,6 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   uiPathBotFlag:Boolean=false;
   public tasksArray:any=[];
   public processId:any;
-  @ViewChild("paginator10") paginator10: MatPaginator;
- //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
-  @ViewChild("automatedSort") automatedSort: MatSort;
-  // @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
@@ -101,12 +91,13 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   q=0;
   tasks:any;
  ExecutionTypearr:any[] =[]
+  resp: any =[];
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private spinner:NgxSpinnerService,
+    private spinner:LoaderService,
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
@@ -566,11 +557,11 @@ resetsla(){
           });
           this.responsedata=responsedata;
           this.automatedtask=responsedata;
-          this.dataSource2= new MatTableDataSource(this.responsedata);
-            this.dataSource2.paginator=this.paginator10;
-            setTimeout(()=>{
-              this.dataSource2.sort=this.automatedSort;
-            },300)
+         // this.dataSource2= new MatTableDataSource(this.responsedata);
+            // this.dataSource2.paginator=this.paginator10;
+            // setTimeout(()=>{
+            //   this.dataSource2.sort=this.automatedSort;
+            // },300)
             
           if(process==0)
           {
@@ -598,10 +589,9 @@ resetsla(){
     this.spinner.show();
     // this.rest.getprocessnames().subscribe(processnames=>{
     this.rest.getprocessnamesByLatestVersion().subscribe(processnames=>{
-      let resp:any=[]
-      resp=processnames
-      this.process_names=resp.filter(item=>item.status=="APPROVED");
-      let filtered_selected_process=resp.filter(item=>item.status=="APPROVED");
+      this.resp=processnames
+      this.process_names=this.resp.filter(item=>item.status=="APPROVED");
+      let filtered_selected_process=this.resp.filter(item=>item.status=="APPROVED");
       this.selected_process_names = filtered_selected_process.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
       let processnamebyid;
       if(processId != undefined)
@@ -632,9 +622,9 @@ resetsla(){
       })
       this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
         this.spinner.hide();
-        this.dataSource2=new MatTableDataSource(array);
-        this.dataSource2.paginator=this.paginator10;
-        this.dataSource2.sort=this.automatedSort;
+        this.responsedata=array
+        // this.dataSource2.paginator=this.paginator10;
+        // this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
         Swal.fire("Error","Unable to reorder tasks","error")
@@ -659,9 +649,9 @@ resetsla(){
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
     let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
-    this.dataSource2=new MatTableDataSource(processes);
-    this.dataSource2.paginator=this.paginator10;
-    this.dataSource2.sort=this.automatedSort
+    this.responsedata=processes
+    // this.dataSource2.paginator=this.paginator10;
+    // this.dataSource2.sort=this.automatedSort
     //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
   }
@@ -672,9 +662,9 @@ resetsla(){
     this.environments=this.environmentsData.filter(item=>item.categoryId==value);
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     let automatedTasks=this.automatedtask.filter(item=>item.categoryId==value);
-    this.dataSource2=new MatTableDataSource(automatedTasks);
-    this.dataSource2.paginator=this.paginator10;
-    this.dataSource2.sort=this.automatedSort;
+    this.responsedata=automatedTasks
+    // this.dataSource2.paginator=this.paginator10;
+    // this.dataSource2.sort=this.automatedSort;
     this.selectedvalue="";
   }
 
@@ -792,9 +782,9 @@ resetsla(){
           {
             this.automatedtask.find(item=>item.taskId==id).botId=(botId);
             this.responsedata.find(item=>item.taskId==id).botId=(botId);
-            this.dataSource2= new MatTableDataSource(this.responsedata);
-            this.dataSource2.sort=this.automatedSort;
-            this.dataSource2.paginator=this.paginator10;
+            
+            // this.dataSource2.sort=this.automatedSort;
+            // this.dataSource2.paginator=this.paginator10;
             if(this.selectedvalue!=undefined && this.selectedvalue!="")
             {
               this.applyFilter(this.selectedvalue);
@@ -894,9 +884,9 @@ resetsla(){
     this.rest.getautomatedtasks(0).subscribe(response=>{
       this.spinner.hide();
       let data:any=response;
-      this.dataSource2= new MatTableDataSource(data.automationTasks);
-      this.dataSource2.sort=this.automatedSort;
-      this.dataSource2.paginator=this.paginator10;
+      this.responsedata= data.automationTasks
+      // this.dataSource2.sort=this.automatedSort;
+      // this.dataSource2.paginator=this.paginator10;
       if(this.selectedvalue==undefined)
       {
         this.applyFilter(this.selectedvalue)
@@ -922,23 +912,23 @@ resetsla(){
               let data:any;
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
+                data="<span pTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
               }
               else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
-                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
+                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
               }
               else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
               {
-                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
+                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
               }
               else if(statusdata.status=="New")
               {
-                data="<span   matTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
+                data="<span   pTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
               }
               else if(statusdata.status=="Pending")
               {
-                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
+                data="<span  pTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
               }
               else if(statusdata.status=="")
               {
@@ -950,8 +940,10 @@ resetsla(){
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
               this.automatedtask.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
-
-              this.responsedata.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
+              if(this.responsedata.find(item=>item.taskId==statusdata.taskId)){
+                this.responsedata.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
+           
+              }
               // if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
               // {
               // }else
@@ -1076,9 +1068,9 @@ resetsla(){
     
     this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
     this.automatedtask.find(item=>item.taskId==id).sourceType=botsource; 
-    this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.automatedSort;
-    this.dataSource2.paginator=this.paginator10;
+  //  this.dataSource2= new MatTableDataSource(this.responsedata);
+    // this.dataSource2.sort=this.automatedSort;
+    // this.dataSource2.paginator=this.paginator10;
     if(this.selectedvalue!=undefined)
     {
       this.applyFilter(this.selectedvalue);
@@ -1395,6 +1387,13 @@ resetsla(){
     })
   }
 
+  clear(table: Table) {
+    table.clear();
+  }
+  closeOverlay(event){  //overlay close 
+
+    this.schedulepopup=event;
+  }
 
   
 }
