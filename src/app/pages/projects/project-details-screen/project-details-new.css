@@ -1,35 +1,35 @@
 .main-content-head .btn {
     min-width: auto;
 }
-
 .row.project-Information {
     border: 1px solid #dbdbdb;
     border-radius: 6px;
     margin-bottom: 25px !important;
 }
-
 .row.project-overview {
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%);
     border-radius: 6px;
     flex-wrap: initial;
 }
-
 .project-status {
     background-color: rgb(9 141 230 / 10%);
     border-radius: 6px 0px 0px 0px;
     height: 100%;
     padding: 30px 10px !important;
     justify-content: center;
+    align-items: center;
     display: flex;
 }
-
 .project-status p {
     font-size: 12px;
     margin: 0px;
 }
-
+.project-status img {
+    width: 50px;
+    height: 55px;
+}
 .project-ninfo {
-    padding: 20px 10px !important;
+    padding: 15px !important;
 }
 .project-ninfo .col-md-10.pl-0,
 .project-ninfo .col-md-10.pl-0 .row {
@@ -39,7 +39,6 @@
 .project-name span {
     font-size: 32px;
     font-weight: 600;
-    margin-right: 10px;
 }
 span.highimp {
     color: #EA3D3D;
@@ -53,6 +52,13 @@ span.lowimp {
     color: #27AD74;
    margin-left: 5px;
 }
+.pinf {
+    position: relative;
+}
+.projectnamerow p-inplace.p-element {
+    position: relative;
+    margin-right: 8px;
+}
 .pinf p {
     /* margin-bottom: 5px; */
     font-weight: 500;
@@ -61,10 +67,10 @@ span.lowimp {
 .pinf label {
     color: #535353;
 }
-.kpipercent {
+/* .kpipercent {
     border-left: 1px solid #e0e0e0;
-    padding-left: 15px !important;
-}
+    padding-left: 10px !important;
+} */
 .kpipercent p {
     font-size: 44px !important;
     margin-bottom: 2px;
@@ -95,12 +101,28 @@ span.lowimp {
 .editfields {
     display: flex;
     align-items: center;
+    position: absolute;
+    justify-content: end;
+    margin-top: 5px;
+    width: 100%;
+}
+.editfields.prjdescef{
+   position: unset;
+   margin: 0px;
 }
 .projectnamerow {
-    height: 50px;
+    height: 36px;
 }
-.pinf {
-    width: calc(100% / 6);
+.pinf.procowner,
+.pinf.prjdept {
+    width: 18%;
+}
+.pinf.prjowner,
+.pinf.prjlastupdated {
+    width: 15%;
+}
+.pinf.prjstatus {
+    width: 11%;
 }
 
 /* Collaboration Styles Start */
@@ -331,6 +353,25 @@ p-image.p-element.crtprgm {
   display: block;
 }
 /* Form Overlay New Styles End */
+
+/* Folderpopover New Styles Start */
+.selectfoldername .p-dialog-mask {
+    /* background-color: rgba(0,0,0,0.3); */
+}
+button.btn.btn-primary.savefoldername {
+    margin-top: 15px;
+    float: right;
+}
+.docfldnam input.p-inputtext {
+    width: 100%;
+}
+.docfldnam input.p-inputtext:focus {
+  box-shadow: none !important;
+}
+.docfldnam button.btn {
+  margin-top: 30px;
+}
+/* Folderpopover New Styles End */
 
 button span {
     margin-left: 5px;
