@@ -188,15 +188,27 @@
                                   </div>
                         </div>
                     </div>
-                    <div class="">
-                        <button>
-                            <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
-                            <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUpload($event)" ></i>
-                                <button class="btn">Upload Document</button>
-                                <input type="file" name="myfile" />
-                              </p-card>
-                              </div>
-                        </button>
+                    <div class="row" *ngIf="hiddenPopUp1">
+                        <div class="">
+                            <button  (click)="navigateToCreateDocument()">
+                                <p-card class="cards side"> <i class="pi pi-file icon-color"></i>
+                                    <span>Create Document</span> </p-card>
+                            </button>
+                        </div>
+                        <div class="">
+                            <button>
+                                <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
+                                <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUpload($event)" ></i>
+    
+                                    <button class="btn">Upload Document</button>
+                                    <input type="file" name="myfile" />
+                                  </p-card>
+    
+                                  </div>
+                                <!-- <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
+                                    Upload Document </p-card> -->
+                            </button>
+                        </div>
                     </div>
                 </div>        
             </div>
