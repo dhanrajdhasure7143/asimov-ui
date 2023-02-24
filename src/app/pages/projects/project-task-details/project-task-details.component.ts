@@ -55,7 +55,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   isFile_upload_dialog:boolean = false;
   selected_folder:any;
   folder_files:any;
-  files:any;
+  files:any[]=[];
   active_inplace:any;
   nodeMap:Object = {};
   uploaded_file:any;
@@ -340,19 +340,26 @@ export class ProjectTaskDetailsComponent implements OnInit {
   getTheListOfFolders(){
     let res_data:any=[];
     this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
-      console.log(res)
         res_data=res
-      this.files=[
-      ];
+        res_data.map(data=> {
+          if(data.dataType=='folder'){
+            data["children"]=[]
+          }
+          return data
+        })
+ 
       for (let obj of res_data) {
         let node = {
+          key: obj.key,
           label: obj.label,
           data: obj.data,
-          key: obj.key,
           type:"default",
           uploadedBy:obj.uploadedBy,
           projectId:obj.projectId,
-          id: obj.id
+          id: obj.id,
+          dataType:obj.dataType,
+          children:obj.children,
+          uploadedDate:obj.uploadedDate
         };
           if(obj.dataType == 'folder'){
             node['collapsedIcon']=  "pi pi-folder"
@@ -362,21 +369,19 @@ export class ProjectTaskDetailsComponent implements OnInit {
         }
         this.nodeMap[obj.key] = node;
         if (obj.key.indexOf('-') === -1) {
-          node['children']=[
-          ]
           this.files.push(node);
         } else {
           let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
           let parent = this.nodeMap[parentKey];
           if (parent) {
-            if (!parent.children) {
-
-            }
             parent.children.push(node);
           }
         }
       }
+
       this.folder_files = this.files
+      console.log(this.files)
+
     })
   }
 

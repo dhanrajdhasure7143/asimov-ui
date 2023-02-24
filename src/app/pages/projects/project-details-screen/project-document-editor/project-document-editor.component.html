@@ -3,7 +3,7 @@
         <div class="col-9">
             <h3>
                 <label id="popup_title">
-                    <a routerLink="/pages/projects/document" [queryParams]="{project_id: project_id, project_name:projectName}"><img
+                    <a (click)="onNavigate()"><img
                             src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                 </label>
                 <span class="title_text">
