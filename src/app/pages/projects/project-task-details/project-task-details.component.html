@@ -95,13 +95,12 @@
                                 <!-- <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance"> -->
                                 <!-- <span class="highimp">{{projectDetails.priority}}</span> -->
                             </div>
-                            <div class="row pr-3 align-items-center justify-content-between">
-                                <div class="pinf">
-                                    <label>Assigned By</label>
+                            <div class="row pr-2 align-items-center justify-content-between">
+                                <div class="pinf taskassignby">
                                     <p>{{task_details.createdBy}}</p>
+                                    <label>Assigned By</label>
                                 </div>
-                                <div class="pinf">
-                                    <label>Resource</label>
+                                <div class="pinf taskresource">
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
                                             <p class="">{{task_details.resources| userPipe : users_list}}</p>
@@ -118,9 +117,9 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
+                                    <label>Resource</label>
                                 </div>
-                                <div class="pinf">
-                                    <label>Status</label>
+                                <div class="pinf taskstatus">
                                     <p-inplace #inplace2 (onActivate)="inplaceActivate('status','inplace2')">
                                         <ng-template pTemplate="display">
                                             <p>{{task_details.status}}</p>
@@ -134,11 +133,10 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
+                                    <label>Status</label>
                                     </div>
-                                <div class="pinf">
+                                <div class="pinf taskduedate">
                                     <!-- <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p> -->
-                                    <label>Due Date</label>
-
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                         <ng-template pTemplate="display">
                                             <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p>
@@ -154,22 +152,20 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-
+                                    <label>Due Date</label>
                                     <!-- <div class="p-fluid grid formgrid">
                                         <div class="field col-12 md:col-4">
                                             <p-calendar inputId="basic" [(ngModel)]="date1"></p-calendar>
                                         </div>
                                     </div> -->
                                    </div>
-                                <div class="pinf">
-                                    <label>Last Updated</label>
+                                <div class="pinf tasklastupdated">
                                     <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
-                                    
+                                    <label>Last Updated</label>
                                 </div>
                                 <div class="">
                                     <div class="d-flex">
-                                        <label>Task Completion</label>
-                                         <span class="kpipercent">
+                                        <span class="kpipercent">
                                             <!-- <p-inplace #inplace5 (onActivate)="inplaceActivate('percentageComplete','inplace5')">
                                                 <ng-template pTemplate="display">
                                                     <p>{{task_details.percentageComplete}} %</p>
@@ -183,6 +179,7 @@
                                                 </ng-template>
                                             </p-inplace> -->
                                             <p-knob [(ngModel)]="task_details.percentageComplete" valueTemplate="{value}%" (onChange)="updatetask()"></p-knob>
+                                            <label>Task Completion</label>
                                         </span>
                                     </div>
                                 </div>
