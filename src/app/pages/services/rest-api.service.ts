@@ -1649,7 +1649,11 @@ getSnapshotd(projectId){
 }
 
 createFolderByProject(body){
-  return this.http.post("/platform-service/document/updateFolderName",body)
+  return this.http.post("/platform-service/document/folderCreation",body)
+}
+
+uploadfilesByProject(body){
+  return this.http.post("/platform-service/document/createFolder",body)
 }
 
 getListOfFoldersByProjectId(projectId){
@@ -1658,6 +1662,10 @@ getListOfFoldersByProjectId(projectId){
 
 updateFolderNameByProject(body){
   return this.http.post("/platform-service/document/updateFolderName",body)
+}
+
+deleteSelectedFileFolder(body){
+  return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
 }
 
 }
