@@ -14,7 +14,7 @@
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-                <button class="btn">
+                <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <!-- <span>Open</span> -->
                 </button>
@@ -26,7 +26,7 @@
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
                     <span>Actions</span>
                 </button> -->
-                <button class="btn" type="button" (click)="menu.toggle($event)">
+                <button class="btn" type="button" (click)="menu.toggle($event)" pTooltip="Action Menu" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                 </button>
                 <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>

@@ -20,7 +20,7 @@
                     <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search">
 
                 </span>
-                <span class="docfilt-icon" >
+                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="bottom">
                     <i (click)="op1.toggle($event)" class="pi pi-filter-slash icon-color"></i>
                 </span>
             </div>
@@ -98,8 +98,8 @@
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
                 </div>
                 <div class="docfootbtns">
-                    <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder"></i> </button>
-                    <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap"></i> </button>                                        
+                    <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top"> <i class="pi pi-folder"></i> </button>
+                    <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top"> <i class="pi pi-sitemap"></i> </button>                                        
                 </div>
         </div>
     </div>
