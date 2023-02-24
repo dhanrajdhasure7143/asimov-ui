@@ -422,7 +422,11 @@
                 <div class="col-md-4 pr-0 ">
                     <div class="activecollaboration">
                         <div class="row collab">
-                            <h4 class="colheads">Collaborations</h4>
+                            <h4 class="colheads chatheader">Collaborations</h4>
+                            <div class="pinnedmsgs">
+                                <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus">
+                                <span class="pinnedmsgtext">Lorem, ipsum dolor sit amet...</span>
+                            </div>
                             <div id="message-body" *ngIf="messages_list.length != 0">
                                 <div *ngFor="let each of messages_list" [class.selected]="each.id === selectedItem"
                                     [appScrollIntoView]="each.id === selectedItem">
@@ -437,8 +441,10 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <i class="pi pi-tag"></i>
-                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i>
+                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" class="testplus" >
+                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" (click)="replyMessage(each)"  class="testplus" >
+                                            <!-- <i class="pi pi-tag"></i>
+                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
                                         </div>
                                         <p>{{each.message}}</p>
                                     </div>
@@ -451,8 +457,10 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <i class="pi pi-tag"></i>
-                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i>
+                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"  class="testplus" >
+                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" (click)="replyMessage(each)"  class="testplus" >
+                                            <!-- <i class="pi pi-tag"></i>
+                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
                                         </div>
                                         <div>
                                             <p>{{each.message}}</p>
@@ -471,7 +479,10 @@
                                 </div>
                             </div>
                             <div *ngIf="replay_msg" class="rply-msg">
-                                {{replay_msg.message}} <i class="pi pi-times" (click)="onClearReply()"></i>
+                                {{replay_msg.message}}
+                                <img src="../../../../assets/images/PI/close-blue.svg" alt="replymsg" (click)="onClearReply()"  class="testplus" >
+                                <img src="../../../../assets/images/PI/close.svg" alt="replymsg" (click)="onClearReply()"  class="testplus" >
+                                <!-- <i class="pi pi-times" (click)="onClearReply()"></i> -->
                             </div>
                             <div *ngIf="messages_list.length == 0" class="emptychat text-center">
                                 <img alt="user-img" src="../../../../assets/images-n/projects/StartCollaborations.svg" />
