@@ -1653,7 +1653,7 @@ createFolderByProject(body){
 }
 
 uploadfilesByProject(body){
-  return this.http.post("/platform-service/document/createFolder",body)
+  return this.http.post("/platform-service/document/uploadMultipleFiles",body)
 }
 
 getListOfFoldersByProjectId(projectId){
