@@ -1680,4 +1680,8 @@ deleteSelectedFileFolder(body){
   return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
 }
 
+getDocumentsById(projectid,taskid){
+  return this.http.get("/platform-service/document/fetchFoldersDataByProjectIdAndTaskId/"+projectid+"/"+taskid+"")
+}
+
 }

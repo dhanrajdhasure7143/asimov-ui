@@ -17,6 +17,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @Input() buttonName:string = "Proceed";
   @Input() data:string;
   @Output() proceed = new EventEmitter<any>();
+  @Output() closeOverlay = new EventEmitter<any>();
   @Input() uploadedFileName?:string;
   @Input() overlay_data:any={};
   processCategoryForm:any;
@@ -197,8 +198,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
     this.isotherCategory = false;
     this.uploadedFileExtension = undefined;
-    var modal = document.getElementById('myModal');
-    modal.style.display="none";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="none";
+    this.closeOverlay.emit(false);
   }
 
   @HostListener('document:click', ['$event'])

@@ -19,10 +19,10 @@ export class ProjectsDocumentComponent implements OnInit {
   isSidebar: boolean = false;
   isDialog: boolean = false;
   isDialog1: boolean = false;
-  entered_folder_name: any;
+  entered_folder_name: string='';
   selectedFile: any;
   text: string;
-  folder_name: any;
+  folder_name: string='';
   isDialogBox: boolean = false;
   isFolder : boolean = true;
   isSubFolder : boolean = false;
@@ -59,7 +59,6 @@ export class ProjectsDocumentComponent implements OnInit {
       this.params_data = data;
       this.project_id = this.params_data.project_id;
       this.project_name = this.params_data.project_name;
-      this.loader.show();
       if(this.params_data.folderView){
         this.isFolder=true;
       }
@@ -71,7 +70,7 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loader.show();
     this.getTheListOfFolders();
   }
 
@@ -159,9 +158,9 @@ export class ProjectsDocumentComponent implements OnInit {
           }
         }
       }
+      this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
       this.folder_files = this.files
       this.loader.hide();
-      console.log(this.files,"files")
     })
   }
 
@@ -228,9 +227,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   nodeSelect(item) {
-    // this.model.toggle();
-    // this.model.show();
-
     this.selectedItem = item;
     if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
       this.createTreeFolderOverlay = true;
@@ -240,7 +236,6 @@ export class ProjectsDocumentComponent implements OnInit {
       if(this.selectedItem.node.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      // console.log(item,"open Doc")
     }
 
     // if (item.node.label == "Add Folder") {
@@ -267,16 +262,19 @@ export class ProjectsDocumentComponent implements OnInit {
 
   folderView(){
     this.isFolder = true;
-    // let params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
-    // this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    const params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
   }
 
   treeView(){
     this.isFolder = false;
     this.folder_files = this.files;
     this.opened_folders=[];
-    // let params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
-    // this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    const params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
+    this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: params, 
+      })
     this.loader.hide();
   }
 
@@ -444,11 +442,9 @@ addParentFolder() {
   }
 
   nodeUnselect(){
-    console.log("testing")
   }
 
   onNodeClick(event,node){
-    console.log(node)
     this.selected_folder_rename = node;
     event.preventDefault();
     this.model.hide();
@@ -495,14 +491,20 @@ addParentFolder() {
     });
   }
 
-  navigateToCreateDocument(){
+  navigateToCreateDocument(type){
     let url=this.router.url
-    // console.log(atob(url))
-    // console.log(url.split('?')[0])
+    let objectKey;
+    let folder_key;
+    if(type == 'treeView'){
+      objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
+      folder_key = this.selectedFile.parent.key + "-" + objectKey
+    }else{
+      objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+      folder_key = this.selectedFolder.key + "-" + objectKey
+    }
 
-    let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
     let req_body = {
-      key: this.selectedFile.parent.key + "-" + objectKey,
+      key: folder_key,
       label: this.entered_folder_name,
       data: "folder",
       ChildId: "1",
@@ -549,7 +551,6 @@ addParentFolder() {
       task_id:"",
       fileSize:this.project_id
     }
-    console.log(obj)
     this.loader.hide();
     this.selectedFile.parent.children.push(obj)
 
@@ -572,45 +573,6 @@ addParentFolder() {
   //   }
   //   this.listOfFiles.push(value)
   // }
-  }
-
-  onFolderSelect(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      const folderName = files[0].webkitRelativePath.split('/')[0];
-      console.log('Selected folder:', folderName);
-    }
-    let fileFormArray:any=[];
-    // console.log(files,event)
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.webkitRelativePath) {
-        // The file is inside a folder
-        let fileData=new FormData();
-        console.log(file.webkitRelativePath);
-        fileData.append("filePath", file);
-        fileData.append("key",String("sample"))
-        fileData.append("label",file.name.split('.')[0])
-        fileData.append("data","file")
-        fileData.append("ChildId",'1')
-        fileData.append("dataType",file.name.split('.')[1])
-        fileData.append("fileSize",file.size)
-        fileData.append("task_id",'')
-        fileData.append("projectId", this.project_id);
-        fileFormArray.push(fileData)
-        // Upload the file as desired
-      } else {
- 
-        // The file is not inside a folder
-        console.log(file.name);
-        // Upload the file as desired
-      }
-    }
-    console.log(fileFormArray)
-    console.log(fileFormArray[0].get("label"))
-    // this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
-    //   console.log(res)
-    // })
   }
 
   onRightClick(event,node){
@@ -664,7 +626,6 @@ addParentFolder() {
   backToSelectedFolder(){
     this.folder_files = this.opened_folders[this.opened_folders.length-1];
     this.opened_folders.pop();
-    console.log(this.opened_folders)
   }
 
   singleFileUploadFolder(e){
@@ -675,32 +636,18 @@ addParentFolder() {
     this.loader.show();
     const fileData = new FormData();
     const selectedFile = e.target.files[0];
-    // fileData.append("filePath", e.target.files[0]);
-    // fileData.append("key",object.key)
-    // fileData.append("label",selectedFile.name.split('.')[0])
-    // fileData.append("data","file")
-    // fileData.append("ChildId",'1')
-    // fileData.append("dataType",selectedFile.name.split('.')[1])
-    // fileData.append("fileSize",selectedFile.size)
-    // fileData.append("taskId",'')
-    // fileData.append("projectId", this.project_id)
-    // let fileFormArray:any=[];
 
     fileData.append("filePath", e.target.files[0]);
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')
-
     let obj=object.key
-      // "label":selectedFile.name.split('.')[0],
-      // "ChildId":1,
-      // "dataType":selectedFile.name.split('.')[1],
-      // "taskId":'',
-    
+   
     fileData.append("fileUniqueIds",JSON.stringify([obj]))
 
     this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
       this.loader.hide();
+      this.createFolderPopUP=false;
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
       let obj={
         key: object.key,
@@ -742,6 +689,91 @@ addParentFolder() {
       },
       key: "positionDialog"
   });
+  }
+
+  folderUpload(event: any,type) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const folderName = files[0].webkitRelativePath.split('/')[0];
+      let objectKey
+      let folder_key
+      if(type=='folderView'){
+        if(this.selectedFolder){
+          objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+          folder_key= this.selectedFolder.key + "-" + String(objectKey)
+        }else{
+          folder_key= this.files.length+1;
+        }
+      }else{
+        if(this.selectedFile.parent){
+          let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
+          folder_key = this.selectedFile.parent.key + "-" + objectKey;
+        }else{
+          folder_key= this.files.length+1;
+        }
+        
+      }
+
+      this.loader.show();
+      let req_body = [{
+        key: folder_key,
+        label: folderName,
+        data: "Folder",
+        ChildId: "1",
+        dataType: "folder",
+        fileSize: "",
+        task_id: "",
+        projectId: this.project_id,
+      }];
+      this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+        const fileData = new FormData();
+        let fileKeys = [];
+        for (let i = 0; i < files.length; i++) {
+            fileData.append("filePath", files[i]);
+            fileKeys.push(String(folder_key+'-'+(i+1)))
+        }
+        fileData.append("projectId",this.project_id);
+        fileData.append("taskId",'')
+        fileData.append("ChildId",'1')
+        fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+      this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+        this.loader.hide();
+        this.getTheListOfFolders();
+        this.createFolderPopUP=false;
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      },err=>{
+        this.loader.hide();
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+      })
+      },err=>{
+        this.loader.hide();
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+      })
+    }
+
+    //multiple files upload
+    // console.log(this.selectedFolder)
+    // let objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+    //   let folder_key= this.selectedFolder.key + "-" + String(objectKey)
+    // const fileData = new FormData();
+    //     let fileKeys = [];
+    //     for (let i = 0; i < files.length; i++) {
+    //         fileData.append("filePath", files[i]);
+    //         fileKeys.push(String(this.selectedFolder.key + "-" + String(objectKey+i)))
+    //     }
+    //     fileData.append("projectId",this.project_id);
+    //     fileData.append("taskId",'')
+    //     fileData.append("ChildId",'1')
+    //     fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+    //   this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+    //     this.loader.hide();
+    //     this.getTheListOfFolders();
+    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    //   },err=>{
+    //     this.loader.hide();
+    //     this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+    //   })
+
   }
   
 }

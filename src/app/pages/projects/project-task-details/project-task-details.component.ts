@@ -6,7 +6,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import * as moment from "moment";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 interface Status {
   name: string;
@@ -36,14 +36,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
   status_list: Status[];
   attached_list: any = [];
   checkBoxselected: any[] = [];
-  columns_list: any;
-  selectedCity: Status;
   taskName: any;
   edit_task_field: any;
   resources: any;
   status: any;
   hiddenPopUp: boolean = false;
-  isprojectCreateForm: boolean = false;
   params_data: any;
   endDate: any;
   mindate: any;
@@ -59,6 +56,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   active_inplace:any;
   nodeMap:Object = {};
   uploaded_file:any;
+  selectedItem:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +64,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private router: Router,
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.status_list = [
       { name: "New" },
@@ -114,10 +113,6 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   backToTaskList() {
-    console.log(this.project_id);
-    // this.router.navigate(['/pages/projects/tasks'],{
-    //   queryParams:{id: this.project_id}
-    // })
     this.router.navigate(["/pages/projects/tasks"], {
       queryParams: {
         project_id: this.project_id,
@@ -136,11 +131,6 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.getTaskAttachments();
       }
     });
-    // let user = this.users_list.find(
-    //   (item) => item.userId.userId == this.selectedtask.resources
-    // );
-    // this.taskresourceemail = user.userId.userId;
-    // this.getUserRole();
   }
 
   onDeactivate(field){
@@ -150,30 +140,18 @@ export class ProjectTaskDetailsComponent implements OnInit {
   inplaceActivate(field, activeField) {
     if(activeField != this.active_inplace)
     if(this.active_inplace) this[this.active_inplace].deactivate()
-    // this.active_inplace='';
     this.active_inplace = activeField
     if (field == "endDate") {
       this.endDate = moment(this.task_details.endDate).format("YYYY-MM-DD");
       return;
     }
     this[field] = this.task_details[field];
-    // e.deactivate();
   }
 
   onUpdateDetails(field) {
-    // if (field == "percentageComplete") {
-    //   if (this.percentageComplete > 100) {
-    //     this.percentageComplete = 100;
-    //   } else {
-    //     this.task_details[field] = String(this[field]);
-    //     this.updatetask();
-    //     this[this.active_inplace].deactivate();
-    //   }
-    // } else {
       this.task_details[field] = this[field];
       this.updatetask();
       this[this.active_inplace].deactivate();
-    // }
   }
 
   inplaceActivateDesc(activeField) {
@@ -190,24 +168,36 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    console.log(event);
     this.hiddenPopUp = event;
-    this.isprojectCreateForm = false;
   }
 
   taskAttachments() {
     this.hiddenPopUp = true;
-    this.isprojectCreateForm = false;
-    this.columns_list = [
-      { ColumnName: "fullName", DisplayName: "Document Name" },
-      { ColumnName: "user_role", DisplayName: "Attached Date" },
-      // { ColumnName: "actions",DisplayName:"Actions"},
-    ];
   }
 
-  onClikCreateProject() {}
-
-  deleteuserById(rowData) {}
+  deleteDocuments(){
+    let req_body=[]
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: 'Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(res=>{
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !!'});
+          this.getTheListOfFolders();
+          this.getTaskAttachments();
+          this.spinner.hide();
+        },err=>{
+          this.spinner.hide();
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+        })
+      },
+      reject: (type) => {
+      },
+      key: "positionDialog"
+  });
+  }
 
   postcomments() {
     if (this.add_comment != "") {
@@ -229,46 +219,15 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   async getTaskAttachments() {
-    await this.rest_api
-      .getTaskAttachments(this.params_data.project_id, this.params_data.task_id)
-      .subscribe((data) => {
-        // this.taskattacments = data;
+    await this.rest_api.getDocumentsById(this.params_data.project_id, this.params_data.task_id).subscribe((data) => {
+        this.attached_list = data;
+        this.checkBoxselected = [];
         // if (this.taskattacments.length == 0) {
         //   this.hidetaskdeletedownload = false;
         // } else {
         //   this.hidetaskdeletedownload = true;
         // }
       });
-  }
-  descChanges(str) {
-    //   var parser = new DOMParser();
-    // var doc = parser.parseFromString(str, 'text/html');
-    // console.log(doc)
-    // console.log(doc.body)
-    // return doc.body;
-
-    let spanEl: HTMLElement = document.createElement("div");
-    spanEl.innerText = str;
-    return spanEl.outerHTML;
-
-    var dom = document.createElement("div");
-    dom.innerHTML = str;
-    return dom;
-
-    //   var dom = document.createElement('div');
-    // dom.innerHTML = str;
-    // return dom;
-    //     var wrapper= document.createElement('div');
-    // wrapper.innerHTML= str;
-    // var div= wrapper.firstChild;
-    // return div
-
-    // var doc = new DOMParser().parseFromString(str, "text/xml")
-    // return doc
-
-    // var dom = document.createElement('div');
-    // dom.innerHTML = str;
-    // return dom;
   }
   updatetask() {
     // if (this.updatetaskForm.valid) {
@@ -314,13 +273,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // }
   }
   chnagefileUploadForm(event){
-    console.log(event)
     this.isFile_upload_dialog = true;
     this.uploaded_file= event.target.files[0]
-
-    // for (var i = 0; i <= e.target.files.length - 1; i++) {
-    // }
-
   }
 
   Space(event:any){
@@ -378,46 +332,49 @@ export class ProjectTaskDetailsComponent implements OnInit {
           }
         }
       }
-
+      this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
       this.folder_files = this.files
-      console.log(this.files)
-
     })
   }
 
   uploadFile(){
-    console.log(this.selected_folder,"Selectedfolders");
+    if(this.selected_folder.dataType != 'folder'){
+      this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+      return
+    }
+    this.isFile_upload_dialog=false;
+    this.spinner.show();
+   
+    let objectKey;
+    let fileKey;
+    if(this.selected_folder.parent){
+          objectKey = this.selected_folder.parent.children.length ? this.selected_folder.parent.children.length:"1";
+          fileKey = this.selected_folder.key + "-" + String(objectKey);
+    }else{
+      objectKey = this.selected_folder.children.length ? this.selected_folder.children.length:"1";
+      fileKey = this.selected_folder.key + "-" + String(objectKey+1);
+    }
 
     var fileData = new FormData();
     fileData.append("filePath", this.uploaded_file);
-    fileData.append("key",'3-1')
-    // fileData.append("label",this.uploaded_file.name.split('.')[0])
-    // fileData.append("data","file")
-    // fileData.append("ChildId",'1')
-    // fileData.append("dataType",this.uploaded_file.name.split('.')[1])
-    // fileData.append("fileSize",this.uploaded_file.size)
-    // fileData.append("task_id",this.task_details.id)
-    // fileData.append("projectId", this.project_id)
-  
-    
-    // fileData.append("filePath", e.target.files[0]);
-    // fileData.append("projectId",this.project_id);
-    // fileData.append("taskId",'')
-    // fileData.append("ChildId",'1')
-
-    // let obj=object.key
-      // "label":selectedFile.name.split('.')[0],
-      // "ChildId":1,
-      // "dataType":selectedFile.name.split('.')[1],
-      // "taskId":'',
-    
-    // fileData.append("fileUniqueIds",JSON.stringify([obj]))
-
+    fileData.append("projectId",this.project_id);
+    fileData.append("taskId",this.params_data.task_id)
+    fileData.append("ChildId",'1')
+    fileData.append("fileUniqueIds",JSON.stringify([fileKey]))
     this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
       this.spinner.hide();
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
-
+    this.getTaskAttachments();
+    },err=>{
+      this.spinner.hide();
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
     })
   }
 
+  selectRow(){
+    this.selectedItem='';
+    if(this.checkBoxselected.length > 0){
+      this.selectedItem = this.checkBoxselected[0].id
+    }
+  }
 }

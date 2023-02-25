@@ -248,7 +248,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   files:any[]=[];
   selectedType:any;
   isDialog:boolean=false;
-  entered_folder_name:any;
+  entered_folder_name:string='';
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -2006,16 +2006,18 @@ taskListView(){
    }
 
    navigateToCreateDocument(){
-    console.log(this.selected_folder)
     let objectKey;
     let key;
+    if(this.selected_folder.dataType != 'folder'){
+      this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+      return
+    }
     // if(this.selected_folder.parent == undefined){
     //   key= String(this.files.length+1)
     // }else{
       objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
       key= this.selected_folder.key + "-" + objectKey
     // }
-    
     let req_body = {
       key: key,
       label: "",
@@ -2182,10 +2184,15 @@ taskListView(){
           }
         }
       }
+      this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
     })
   }
 
   saveFolder(){
+    if(this.selected_folder.dataType != 'folder'){
+      this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+      return
+    }
       let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
       let key= this.selected_folder.key + "-" + objectKey;
 
@@ -2200,11 +2207,11 @@ taskListView(){
       projectId: this.project_id
     }];
     this.spinner.show();
-  
+    // this.isDialog=false;
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.getTheListOfFolders();
       this.spinner.hide();
-      this.isDialog=false;
+      // this.isDialog=false;
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
     },err=>{
       this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});

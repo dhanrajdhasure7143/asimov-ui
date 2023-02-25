@@ -105,8 +105,9 @@
                                         </a>
                                     </td>
                                     <td *ngFor="let col of columns">
-    
-                                        <span *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'">
+                                        <span *ngIf="col.field =='description'">{{rowData[col.field]?fitTableView(rowData['description']):'-'}}</span>
+
+                                        <span *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'&& col.field !='description'">
                                             {{rowData[col.field]?rowData[col.field]:'-'}}
                                         </span>
                                         <span *ngIf="col.header == 'Status'">
