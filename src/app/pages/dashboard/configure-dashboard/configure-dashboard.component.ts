@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SplitComponent } from 'angular-split';
 import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
+
   metrics_list:any[]=[];
   draggedProduct:any;
   defaultEmpty_metrics:any[]=[];
@@ -18,8 +20,13 @@ export class ConfigureDashboardComponent implements OnInit {
     widgets:[],
     metrics:[]
   }
+
+  isShowExpand: boolean = false
+ 
   constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService, private router:Router) { }
   ngOnInit(): void {
+   
+    
     this.activeRoute.queryParams.subscribe((params:any)=>{
       this.dynamicDashBoard.dashboardName=params.dashboardName
     })
@@ -156,7 +163,19 @@ export class ConfigureDashboardComponent implements OnInit {
    ]
 
   }
-
+  minimizeFullScreen() { 
+    this.isShowExpand = false;
+   
+  
+  }
+  closeSplitOverlay(){ // close the splitter overlay
+    this.minimizeFullScreen();
+   
+  }
+  expandFullScreen() { // to view the full view for the overlay
+    this.isShowExpand = true;
+    
+  }
   dragStart(item) {
     if(item.metricAdded== false){
     this.draggedProduct = item;
@@ -228,3 +247,7 @@ this.router.navigate(['/pages/dashboard/dynamicdashboard'])
 }
 
 }
+function minimizeFullScreen() {
+  throw new Error('Function not implemented.');
+}
+

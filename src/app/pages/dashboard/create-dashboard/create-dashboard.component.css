@@ -1,5 +1,5 @@
 .dashboard-main {
-	padding-top: 7%;
+	padding-top: 6%;
 }
 
 .dashboard-img {
@@ -20,12 +20,10 @@
 	padding: 30px 0px
 }
 
-.p-dialogue-btn {
-	padding: 6px 30px;
-}
-
-.p-dialog-mask {
-	background-color: #6866666e;
+:host ::ng-deep .p-dialogue-btn {
+	padding: 5px 30px !important;
+	border-radius: 4px;
+	font-size: 16px;
 }
 
 .h-100 {
@@ -37,12 +35,20 @@
 	padding: 0.5rem 1rem !important;
 	background-color: transparent !important;
 	border-color: transparent !important;
+	font-size: 16px;
 
 
 }
 
 :host ::ng-deep .p-dialogue-btn {
 	padding: 8px 40px !important;
+
+
+}
+
+:host ::ng-deep .p-dialogue-btn1 {
+	padding: 9px 63px !important;
+	border-radius: 4px;
 
 
 }

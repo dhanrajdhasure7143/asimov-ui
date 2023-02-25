@@ -17,6 +17,7 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { ContextMenuModule } from "primeng/contextmenu";
 import { DialogModule } from "primeng/dialog";
 import { ButtonModule } from "primeng/button";
+import { RippleModule } from 'primeng/ripple';
 import { DropdownModule } from "primeng/dropdown";
 import { ProgressBarModule } from "primeng/progressbar";
 import { InputTextModule } from "primeng/inputtext";
@@ -58,6 +59,7 @@ import {ChartModule} from 'primeng/chart';
     ContextMenuModule,
     DialogModule,
     ButtonModule,
+    RippleModule ,
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
