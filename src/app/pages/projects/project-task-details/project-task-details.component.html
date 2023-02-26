@@ -306,14 +306,15 @@
                         <p-table [value]="attached_list" [(selection)]="checkBoxselected" selectionMode="multiple"  dataKey="id">
                             <ng-template pTemplate="caption">
                                 <div class="table-header" *ngIf="checkBoxselected.length>1">
-                                    <span class="p-input-icon-left">
-                                        <span class="newinntalx header-delete">
+                                    <span class="">
+                                        <span class="newinntalx table-icons">
                                             <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
                                                 <i class="pi pi-download"></i>
                                               </span>
-                                            <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
-                                                <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img">
-                                            </a>
+                                            <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                                <i class="pi pi-trash"></i>
+                                                <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
+                                            </span>
                                         </span>
                                     </span>
                                 </div>
@@ -333,14 +334,15 @@
                                     <td> <p-tableCheckbox (click)="selectRow()" [value]="rowData"></p-tableCheckbox></td>
                                     <td>{{rowData.label}}</td>
                                     <td>{{rowData.uploadedDate | date: 'medium'}}</td>
-                                    <td >
+                                    <td>
                                         <span class="newinntalx" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
                                             <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
                                                 <i class="pi pi-download"></i>
                                               </span>
-                                                <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
-                                                    <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img">
-                                                </a>
+                                                <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                                    <i class="pi pi-trash"></i>
+                                                    <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
+                                                </span>
                                         </span>
                                     </td>
                                 </tr>
