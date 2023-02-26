@@ -668,7 +668,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}, // commented for remove console errors in prod build
           lintModule,
           BpmnColorPickerModule
         ],
