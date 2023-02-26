@@ -4,37 +4,51 @@
             <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="onNavigate()"><img
-                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a (click)="onNavigate()"><img src="./../../../../assets/images-n/projects/backarrow.svg"
+                                alt="back-arrow" /></a>
                     </label>
                     <span class="title_text">
-                        Projects | {{projectName}} | <strong> Create Document </strong>
+                        Projects | {{ projectName }} | <strong> Create Document </strong>
                     </span>
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-                <button (click)="saveDocument()" class="btn btn-primary">Download</button>
-                <button (click)="saveDocument()" class="btn btn-primary ml-3">Save</button>
+                <button (click)="downloadDocument()" class="btn btn-primary">
+                    Download
+                </button>
+                <button (click)="saveDocument()" class="btn btn-primary ml-3">
+                    Save
+                </button>
             </div>
         </div>
         <div class="main-content-body">
             <div class="">
                 <div class="document-editor">
-                <div id="toolbar-container"></div>
-                <div class="editor-container">    
-                    <div id="editor">
-                       
+                    <div id="toolbar-container"></div>
+                    <div class="editor-container">
+                        <div id="editor"></div>
                     </div>
                 </div>
-            </div>
                 <!-- <ckeditor [(ngModel)]="documentData" 
                     #myckeditor="ngModel"
                     name="myckeditor"
                     required
                     [config]="ckeConfig" 
                     debounce="500" >
-                </ckeditor> -->                
+                </ckeditor> -->
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 </div>
+
+<p-dialog header="Enter Folder Name" [(visible)]="isDialog" class="docfldnam">
+    <span class="p-float-label">
+        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folderName" name="folder"
+            maxlength="25" />
+        <button type="button" class="btn btn-primary" (click)="uploadFile()" [disabled]="!(entered_folderName.length > 4)">
+            Save
+        </button>
+    </span>
+</p-dialog>
+
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>

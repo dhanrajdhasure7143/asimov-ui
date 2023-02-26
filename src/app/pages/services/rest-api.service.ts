@@ -1620,7 +1620,8 @@ getProjectTaskDetailsById(projectId,taskId){
 }
 
 getMessagesByProjectId(projectId){
-  return this.http.get('https://ezflow.dev.epsoftinc.com/messageservice/getChatData/'+projectId)
+  // return this.http.get('https://ezflow.dev.epsoftinc.com/messageservice/getChatData/'+projectId)
+  return this.http.get('/platform-service/chat-message/getChatData/'+projectId)
 }
 
 getConnectionTable(){
@@ -1678,6 +1679,18 @@ updateFolderNameByProject(body){
 
 deleteSelectedFileFolder(body){
   return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
+}
+
+getDocumentsById(projectid,taskid){
+  return this.http.get("/platform-service/document/fetchFoldersDataByProjectIdAndTaskId/"+projectid+"/"+taskid+"")
+}
+
+dwnloadDocuments(body){
+  return this.http.post("/platform-service/document/downloadMultifulFile",body)
+}
+
+sendMessagesByProjectId(body){
+  return this.http.post("/platform-service/chat-message/saveAndGetChatMessages",body)
 }
 
 }

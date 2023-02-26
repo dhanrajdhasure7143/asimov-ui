@@ -30,26 +30,11 @@
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                 </button>
                 <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
-
-                <!-- <span class="text-wh">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
-                        aria-label="Example icon-button with a menu">
-                        <mat-icon class="menu-button">
-                        </mat-icon>
-                        <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
-                    </button>
-                </span>
-                <mat-menu #menu="matMenu">
-                    <button class="ep-pad" (click)='taskListView()'> Tasks</button>
-                    <button class="ep-pad" routerLink="/pages/projects/document"> Documents </button>
-                    <button class="ep-pad" (click)='openUsersOverlay()'>Users</button>
-                </mat-menu> -->
             </div>
         </div>
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <!-- <div class="col-sm-1 p-0"> -->
                         <div class="project-status">
                             <img *ngIf="projectDetails.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
@@ -60,9 +45,7 @@
                             <img *ngIf="projectDetails.status == 'New'"
                                 src="./../../../../assets/images-n/projects/NewStatus.svg"
                                 alt="project-status-icon">
-                            <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
-                    <!-- </div> -->
                     <div class="col-sm-12 p-0" style="flex:auto;">
                         <div class="row project-ninfo">
                             <div class="row align-items-center projectnamerow">
@@ -123,7 +106,6 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <!-- <p>{{getUserName(projectDetails.processOwner)}}</p> -->
                                     <label>Process Owner</label>
                                 </div>
                                 <div class="pinf prjdept">
@@ -143,7 +125,6 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <!-- <p>{{projectDetails.mapValueChain}}</p> -->
                                     <label>Departments</label>
                                 </div>
                                 <div class="pinf prjowner">
@@ -164,7 +145,6 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <!-- <p>{{projectDetails.status}}</p> -->
                                     <label>Status</label>
                                 </div>
                                 <div class="pinf prjlastupdated">
@@ -172,24 +152,8 @@
                                     <label>Last Updated</label>
                                 </div>
                                 <div class=""> 
-                                    <!--pinf-->
                                     <div class="d-flex">
                                         <span class="kpipercent">
-                                            <!-- <p-inplace #inplace5
-                                                (onActivate)="inplaceActivate('projectPercentage','inplace5')">
-                                                <ng-template pTemplate="display">
-                                                    <p>{{projectDetails.projectPercentage}} %</p>
-                                                </ng-template>
-                                                <ng-template pTemplate="content">
-                                                        <p-knob [(ngModel)]="projectPercentage"></p-knob>
-                                                    <span class="editfields">
-                                                        <i class="pi pi-check"
-                                                            *ngIf="projectPercentage >=0"
-                                                            (click)="onUpdateDetails('projectPercentage')"></i>
-                                                        <i class="pi pi-times" (click)="onDeactivate('inplace5')"></i>
-                                                    </span>
-                                                </ng-template>
-                                            </p-inplace> -->
                                             <p-knob [(ngModel)]="projectDetails.projectPercentage" valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
                                             <label>Project Completion</label>
                                         </span>
@@ -258,7 +222,6 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <!-- <img src="./../../../../assets/images-n/projects/OverdueTasks.svg" alt="OverdueTasks" class="qcard-img"> -->
                                             <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg"
                                                 alt="OverdueTasks" class="qcard-img">
                                         </div>
@@ -276,7 +239,6 @@
                                             <img src="./../../../../assets/images-n/projects/UsersOnboard.svg"
                                                 alt="UserOnboard" class="qcard-img">
                                         </div>
-                                        <!--style="margin-left: 8px;" style="margin-left: -9px;" -->
                                         <div class="qcard-info">
                                             <label class="qcard-count">{{snapshotDatails.CompletedTask}}</label>
                                             <p class="qcard-name">Completed Tasks</p>
@@ -318,7 +280,6 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <!-- <img src="./../../../../assets/images-n/projects/Frame 2.svg" alt="UnreadMessages" class="qcard-img"> -->
                                             <img src="./../../../../assets/images-n/projects/UnreadMessages.svg"
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
@@ -493,15 +454,6 @@
                             <!-- <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
                                 value="Lorem ipsum dolor sit amet, consec" /> -->
                             <div class="col-sm-11 pl-0">
-                                <!-- <p-editor [(ngModel)]="typedMessage" [style]="{'height':'100px'}">
-                                <ng-template pTemplate="header">
-                                    <span class="ql-formats">
-                                        <button type="button" class="ql-bold" aria-label="Bold"></button>
-                                        <button type="button" class="ql-italic" aria-label="Italic"></button>
-                                        <button type="button" class="ql-underline" aria-label="Underline"></button>
-                                    </span>
-                                </ng-template>
-                            </p-editor> -->
                                 <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message"
                                     [(ngModel)]="typedMessage" [autoResize]="false"></textarea>
                             </div>
@@ -518,8 +470,6 @@
     </div>
 </div>
 
-
-<!-- own-overlay rpa-modal dynamic-forms-modal -->
 
 <div class="" *ngIf="hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
@@ -551,17 +501,6 @@
                                     <input type="text" pInputText placeholder="Search"
                                         (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                 </span>
-                                <!-- <span *ngIf="users_tabIndex == 1" class="userstabbtns">
-                                    <button class="btn">
-                                        <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                                        <span>Open</span>
-                                    </button>
-                                    <button class="btn">
-                                        <img src="./../../../../assets/images-n/projects/plus-square_blue.svg"
-                                            alt="Create">
-                                        <span>Create</span>
-                                    </button>
-                                </span> -->
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
@@ -621,7 +560,7 @@
     </app-split-overlay>
 </div>
 
-<p-dialog class="selectfoldername" header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+<p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
     <span class="p-float-label">
         <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
        [(selection)]="selected_folder">
@@ -631,10 +570,10 @@
     <button *ngIf="selectedType !='createFolder' " type="button" class="btn btn-primary savefoldername" (click)='navigateToCreateDocument()'>Ok</button>
 </p-dialog>
 
-<p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
+<p-dialog header="Enter Folder Name" [(visible)]="isDialog" class="docfldnam">
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-        <button type="button" class="btn btn-primary" (click)="saveFolder()">Save</button>
+        <button type="button" class="btn btn-primary" (click)="saveFolder()" [disabled]="!(entered_folder_name.length > 4)">Save</button>
     </span>
 </p-dialog>
 

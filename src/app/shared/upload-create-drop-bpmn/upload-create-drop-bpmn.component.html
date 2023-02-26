@@ -66,7 +66,7 @@
         </div>
 
     </div>
-    <div *ngIf="hiddenPopUp">
+    <div [hidden]="!hiddenPopUp">
         <app-split-overlay (closeOverlay)="closeOverlay($event)" >
         <process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate" (closeOverlay)="closeOverlay($event)"></process-category-overlay>
     </app-split-overlay>

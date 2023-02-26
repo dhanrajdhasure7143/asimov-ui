@@ -23,7 +23,6 @@ export class ScrollIntoViewDirective implements OnChanges {
 
   ngOnChanges(simpleChange: SimpleChanges) {
     if (isPlatformBrowser(this.platformId)) {
-        console.log(this.platformId,this.appScrollIntoView)
       if (coerceBooleanProperty(this.appScrollIntoView)) {
         (this.elementRef.nativeElement as HTMLInputElement).scrollIntoView({
           behavior: 'smooth',

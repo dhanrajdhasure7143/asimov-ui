@@ -129,6 +129,8 @@ export class UploadComponent implements OnInit {
     this.refreshSubscription=this.dt.isTableRefresh.subscribe(res => {
       if (res) {
         if (res.isRfresh) {
+          this.hiddenPopUp=false;
+          this.hiddenPopUp1=false;
           this.getAlluserProcessPiIds();
         }
       }
@@ -530,16 +532,16 @@ export class UploadComponent implements OnInit {
     this.isTimestammp=false;
     this.isIncrement=false;
     this.hiddenPopUp=true;
-    var modal = document.getElementById('myModal1');
-    modal.style.display = "block";
+    // var modal = document.getElementById('myModal1');
+    // modal.style.display = "block";
     this.rest.fileName.next(null);
     this.mytemplateForm.resetForm();
     this.isDisabled=true;
   }
 
   closePopup() {    // close overlay
-    var modal = document.getElementById('myModal1');
-    modal.style.display = "none";
+    // var modal = document.getElementById('myModal1');
+    // modal.style.display = "none";
   }
 
   downloadCSV() { // Download sample csv file
@@ -772,8 +774,9 @@ testDbConnection(){     // check DB connection with port id and psw
   slideUp(){    //Open bottom Overlay
     this.closePopup();
     this.overlay_data={"type":"create","module":"pi"};
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    // var modal = document.getElementById('myModal');
+    // modal.style.display="block";
+    this.hiddenPopUp1=true;
   }
 
   generateGraph(e){       // Graph generation from bottom overlay
@@ -848,6 +851,7 @@ testDbConnection(){     // check DB connection with port id and psw
         connectorBody.config[modekey]=this.dbDetails.timestamp
       }
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+        this.hiddenPopUp1=false;
         this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
     }
@@ -1099,9 +1103,9 @@ getDBTables(){      //get DB tables list
   }
   editProcess(obj){
     this.overlay_data={"type":"edit","module":"pi","selectedObj":obj};
-    var modal = document.getElementById('myModal');
+    // var modal = document.getElementById('myModal');
     this.hiddenPopUp1=true;
-    modal.style.display="block";
+    // modal.style.display="block";
   }
   onChangeValues(){
     this.isTableEnable = false;

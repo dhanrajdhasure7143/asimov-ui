@@ -37,6 +37,7 @@ import {KnobModule} from 'primeng/knob';
 import {TooltipModule} from 'primeng/tooltip';
 import {DragDropModule} from 'primeng/dragdrop';
 import {ChartModule} from 'primeng/chart';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 @NgModule({
   declarations: [],
   imports: [
@@ -76,7 +77,8 @@ import {ChartModule} from 'primeng/chart';
     KnobModule,
     TooltipModule,
     DragDropModule,
-    ChartModule
+    ChartModule,
+    TieredMenuModule
   ],
   exports: [
     CommonModule,
@@ -116,7 +118,8 @@ import {ChartModule} from 'primeng/chart';
     KnobModule,
     TooltipModule,
     DragDropModule,
-    ChartModule
+    ChartModule,
+    TieredMenuModule
   ],
   providers: [ConfirmationService, MessageService]
 })

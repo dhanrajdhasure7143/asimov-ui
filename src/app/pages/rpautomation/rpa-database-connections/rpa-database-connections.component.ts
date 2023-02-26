@@ -231,13 +231,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   opencreatedbconnection() {
     this.hiddenPopUp=true;
     this.isDatabase = true;
-    document.getElementById("createdbconnection").style.display = 'block';
+    // document.getElementById("createdbconnection").style.display = 'block';
     // this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     // document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection() {
-    document.getElementById("createdbconnection").style.display = 'none';
+    // document.getElementById("createdbconnection").style.display = 'none';
     // document.getElementById("Updatedbconnection").style.display='block';
   }
 

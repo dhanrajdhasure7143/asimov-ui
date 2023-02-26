@@ -303,31 +303,46 @@
                 </div>
                 <div class="splitoverlaycontent">
                     <div class="tablediv">
-                        <p-table #dt1 [value]="attached_list" [columns]="columns_list" [(selection)]="checkBoxselected"
-                            [resizableColumns]="true" responsiveLayout="scroll" dataKey="id">
-                            <ng-template pTemplate="header" let-columns>
+                        <p-table [value]="attached_list" [(selection)]="checkBoxselected" selectionMode="multiple"  dataKey="id">
+                            <ng-template pTemplate="caption">
+                                <div class="table-header" *ngIf="checkBoxselected.length>1">
+                                    <span class="">
+                                        <span class="newinntalx table-icons">
+                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                                <i class="pi pi-download"></i>
+                                              </span>
+                                            <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                                <i class="pi pi-trash"></i>
+                                                <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 3rem">
-                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    <th style="width: 1rem">
+                                        <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                                     </th>
-                                    <th *ngFor="let col of columns">{{col.DisplayName}}
-                                    </th>
+                                    <th>Document Name</th>
+                                    <th>Attached Date</th>
+                                    <th>      </th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <ng-template pTemplate="body" let-rowData>
                                 <tr>
-                                    <td> <p-tableCheckbox></p-tableCheckbox></td>
+                                    <td> <p-tableCheckbox (click)="selectRow()" [value]="rowData"></p-tableCheckbox></td>
+                                    <td>{{rowData.label}}</td>
+                                    <td>{{rowData.uploadedDate | date: 'medium'}}</td>
                                     <td>
-                                        <span></span>
-                                        <span>
-                                            <div class="newinntalx">
-                                                <a (click)="deleteuserById(rowData)">
-                                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                                        alt="" class="default-img">
-                                                    <img src="../../../../../assets/images/Projects/delete-red.svg"
-                                                        alt="" class="hover-img">
-                                                </a>
-                                            </div>
+                                        <span class="newinntalx" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
+                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                                <i class="pi pi-download"></i>
+                                              </span>
+                                                <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                                    <i class="pi pi-trash"></i>
+                                                    <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
+                                                </span>
                                         </span>
                                     </td>
                                 </tr>
@@ -353,12 +368,16 @@
         </app-split-overlay>
     </div>
 
-    <p-dialog class="selectfoldername" header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+    <p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
         <span class="p-float-label">
             <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
+            <!-- <ng-template let-node pTemplate="default"> -->
+                <!-- <span [class]="node.dataType=='folder' ? 'selectable' : 'not-selectable'" [pSelectable]="node.dataType =='folder'" *ngIf="node.dataType=='folder'">{{node.label}}</span> -->
+            <!-- </ng-template> -->
             </p-tree>
         </span>
         <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>
     <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+    <p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

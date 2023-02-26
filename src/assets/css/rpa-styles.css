@@ -267,7 +267,7 @@ padding-bottom: 70px;
   }
   
   .rpa-modal-header {
-  padding: 11px 15px 1px !important;
+  /* padding: 11px 15px 1px !important; */
   border-bottom: 1px solid #e5e5e5;
   color: #000;
   }

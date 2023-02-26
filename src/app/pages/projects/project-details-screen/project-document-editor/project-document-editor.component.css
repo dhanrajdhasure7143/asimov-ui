@@ -23,3 +23,13 @@
     box-shadow: 0 2px 8px hsla( 0, 0%, 0%, .08 );
     margin: 40px auto;
 }
+
+.docfldnam input.p-inputtext {
+    width: 100%;
+  }
+  .docfldnam input.p-inputtext:focus {
+    box-shadow: none !important;
+  }
+  .docfldnam button.btn {
+    margin-top: 30px;
+  }
