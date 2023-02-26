@@ -95,7 +95,7 @@ span.lowimp {
   display: flex;
   align-items: center;
   position: absolute;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 5px;
   width: 100%;
 }

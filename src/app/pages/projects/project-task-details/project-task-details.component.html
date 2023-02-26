@@ -308,7 +308,10 @@
                                 <div class="table-header" *ngIf="checkBoxselected.length>1">
                                     <span class="p-input-icon-left">
                                         <span class="newinntalx header-delete">
-                                            <a (click)="deleteDocuments()">
+                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                                <i class="pi pi-download"></i>
+                                              </span>
+                                            <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
                                                 <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img">
                                             </a>
                                         </span>
@@ -330,9 +333,12 @@
                                     <td> <p-tableCheckbox (click)="selectRow()" [value]="rowData"></p-tableCheckbox></td>
                                     <td>{{rowData.label}}</td>
                                     <td>{{rowData.uploadedDate | date: 'medium'}}</td>
-                                    <td [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
-                                        <span class="newinntalx">
-                                                <a (click)="deleteDocuments()">
+                                    <td >
+                                        <span class="newinntalx" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
+                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                                <i class="pi pi-download"></i>
+                                              </span>
+                                                <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
                                                     <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img">
                                                 </a>
                                         </span>

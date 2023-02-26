@@ -210,16 +210,16 @@
             <div class="docritclk">
                 <div class="" *ngIf="selected_folder_rename.dataType=='folder'" (click)="onFolderRename('treeView')">Rename</div>
                 <div (click)="onDeleteItem('treeView')">Delete</div>
-                <div *ngIf="selected_folder_rename.dataType != 'folder'">Download</div>
+                <!-- <div *ngIf="selected_folder_rename.dataType != 'folder'" (click)="onDownloadDocument('treeView')">Download</div> -->
+                <div (click)="onDownloadDocument('treeView')">Download</div>
             </div>
         </ng-template>
     </p-overlayPanel>
 
     <p-overlayPanel #op1>
         <ng-template pTemplate>
-            <div class="docritclk">
-                <div >Task 1</div>
-                <div>Task 2</div>
+            <div class="docritclk" *ngFor="let each of taskList">
+                <div> <p-checkbox [value]="each" [(ngModel)]="selectedOne" (onChange)="onchangesCheckBox()"></p-checkbox><span>{{each.taskName}}</span></div>
             </div>
         </ng-template>
     </p-overlayPanel>
@@ -229,7 +229,7 @@
             <div class="docritclk">
                 <div *ngIf="selectedItem.dataType=='folder'" class="" (click)="onFolderRename('folderView')">Rename</div>
                 <div (click)="onDeleteItem('folderView')">Delete</div>
-                <div *ngIf="selectedItem.dataType != 'folder'">Download</div>
+                <div (click)="onDownloadDocument('folderView')">Download</div>
             </div>
         </ng-template>
     </p-overlayPanel>
