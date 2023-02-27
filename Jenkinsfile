@@ -1,4 +1,4 @@
-node("slave1") {
+node("master") {
   timestamps {
     deleteDir()
     properties ([pipelineTriggers([cron('45 13 * * *')])])
