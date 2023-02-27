@@ -1200,6 +1200,7 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
       let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
       let parent = this.nodeMap[parentKey];
       if (parent) {
+        if(parent.children)
         parent.children.push(node);
       }
     }
@@ -1209,12 +1210,19 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
 }
 
 saveFolder(){
+  let key
+  console.log(this.selected_folder)
+  if(this.selected_folder){
 if(this.selected_folder.dataType != 'folder'){
   this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
   return
 }
   let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
-  let key= this.selected_folder.key + "-" + objectKey;
+  key= this.selected_folder.key + "-" + objectKey;
+}else{
+  key = "1"
+}
+
 
 let req_body = [{
   key: key,
@@ -1231,9 +1239,11 @@ this.spinner.show();
 this.rest_api.createFolderByProject(req_body).subscribe(res=>{
   this.getTheListOfFolders();
   this.spinner.hide();
-  // this.isDialog=false;
+  this.isDialog=false;
+  this.entered_folder_name=''
   this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
 },err=>{
+  this.spinner.hide();
   this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
 })
 }
