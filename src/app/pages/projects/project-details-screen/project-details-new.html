@@ -487,7 +487,7 @@
                     </ng-template>
                 </p-tabPanel>
 
-                <div class="splitoverlaycontent">
+                <div class="splitoverlaycontent usersgrid">
                     <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
                         [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
                         responsiveLayout="scroll" dataKey="id">
@@ -517,11 +517,9 @@
                                     <span>{{rowData[col.ColumnName]}}</span>
                                     <span *ngIf="col.ColumnName == 'action'">
                                         <div class="newinntalx">
-                                            <a (click)="deleteuserById(rowData)">
-                                                <img src="../../../../../assets/images/Projects/delete-black.svg" alt=""
+                                            <a (click)="deleteuserById(rowData)" pTooltip="Delete" tooltipPosition="bottom">
+                                                <img src="../../../../assets/images-n/common/delete-blue.svg" alt="delete"
                                                     class="default-img">
-                                                <img src="../../../../../assets/images/Projects/delete-red.svg" alt=""
-                                                    class="hover-img">
                                             </a>
                                         </div>
                                     </span>
@@ -530,7 +528,7 @@
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td style="justify-content: center;" colspan="7">No Users found</td>
+                                <td style="text-align: center;" colspan="7">No Users Found</td>
                             </tr>
                         </ng-template>
                     </p-table>

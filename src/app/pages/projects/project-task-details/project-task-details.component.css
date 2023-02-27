@@ -35,7 +35,7 @@
   align-items: center;
   display: flex;
 }
-.project-name span{
+.task-name span{
   font-size: 32px;
   font-weight: 600;
   margin-right: 10px;
@@ -207,7 +207,4 @@ button.btn.btn-primary.savefoldername {
 }
 .header-delete{
   margin-left : 90%;
-}
-.table-icons{
-  margin-left: 90%;
 }
