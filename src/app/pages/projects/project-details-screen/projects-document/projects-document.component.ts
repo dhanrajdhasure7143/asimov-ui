@@ -84,6 +84,17 @@ export class ProjectsDocumentComponent implements OnInit {
     this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
         res_data=res
         this.documents_resData = res
+        this.loader.hide()
+        this.files=[
+          {
+            key: "0",
+            label: "Add Folder",
+            data: "Add Folder",
+            data_type:"addfolder",
+            collapsedIcon: 'pi pi-folder',
+            expandedIcon: 'pi pi-folder'
+          },
+        ];
         this.convertToTreeView(res_data)
     })
   }
@@ -101,16 +112,7 @@ export class ProjectsDocumentComponent implements OnInit {
       }
       return data
     })
-  this.files=[
-    {
-      key: "0",
-      label: "Add Folder",
-      data: "Add Folder",
-      data_type:"addfolder",
-      collapsedIcon: 'pi pi-folder',
-      expandedIcon: 'pi pi-folder'
-    },
-  ];
+
   for (let obj of res_data) {
     let node = {
       key: obj.key,
@@ -165,6 +167,7 @@ export class ProjectsDocumentComponent implements OnInit {
           // }
           // parent.children = [obj1];
         }
+        if(parent.children)
         parent.children.push(node);
       }
     }
