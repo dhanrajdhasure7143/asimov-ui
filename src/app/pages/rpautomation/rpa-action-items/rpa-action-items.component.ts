@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./rpa-action-items.component.css"],
 })
 export class RpaActionItemsComponent implements OnInit {
-  connectorTable: any = [];
+  actionTable: any = [];
   representatives: any = [];
   columns_list: any = [];
   addflag: boolean = true;
@@ -24,10 +24,20 @@ export class RpaActionItemsComponent implements OnInit {
     // this.connectorTable = data;
     this.columns_list = [
       {
-        ColumnName: "actionType",
+        ColumnName: "actionName",
         DisplayName: "Action Name",
         ShowGrid: true,
         ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "actionType",
+        DisplayName: "Action Type",
+        ShowFilter: true,
+        ShowGrid: true,
         filterWidget: "normal",
         filterType: "text",
         sort: true,
@@ -44,7 +54,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "httpMethodType",
+        ColumnName: "methodType",
         DisplayName: "Method Type",
         ShowGrid: true,
         ShowFilter: true,
@@ -54,7 +64,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "authorization_Type",
+        ColumnName: "attribute",
         DisplayName: "Attributes",
         ShowGrid: true,
         ShowFilter: true,
@@ -64,7 +74,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "createdDate",
+        ColumnName: "description",
         DisplayName: "Purpose",
         ShowGrid: true,
         ShowFilter: true,
@@ -74,6 +84,12 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
     ];
+
+    this.actionTable =[
+      {id:"1",actionName:"Login", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"POST",actionType:"API Request",attribute:"Employee ID",description:"-"},
+      {id:"2",actionName:"Create", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"POST",actionType:"API Request",attribute:"Employee ID",description:"Creation of an Employee"},
+      {id:"3",actionName:"Delete", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"DELETE",actionType:"Authenticated",attribute:"Employee ID",description:"Deletion of an employee"},
+    ]
   }
 
   viewDetails(event) {}

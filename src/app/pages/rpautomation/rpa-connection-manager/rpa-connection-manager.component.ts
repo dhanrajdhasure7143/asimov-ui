@@ -71,8 +71,8 @@ export class RpaConnectionManagerComponent implements OnInit {
 
     this.connectorTable =[
       {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
-      {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
-      {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
+      {id:"2",connectionName:"GIT", authorization_Type:"OAuth 2.0"},
+      {id:"3",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
 
 
     ]
@@ -197,5 +197,25 @@ export class RpaConnectionManagerComponent implements OnInit {
   this.createConnectorForm.reset();
   this.createConnectorForm.get("connectionName").setValue("");
   this.createConnectorForm.get("taskIcon").setValue("");
+  }
+
+  saveConnectorForm(){
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Connector Added Successfully !!",
+      heightAuto: false,
+    });
+    this.isFormOverlay = false;
+  }
+
+  updateConnectorForm(){
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Connector Updated Successfully !!",
+      heightAuto: false,
+    });
+    this.isFormOverlay = false;
   }
 }

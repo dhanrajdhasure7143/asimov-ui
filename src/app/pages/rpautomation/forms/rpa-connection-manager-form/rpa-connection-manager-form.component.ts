@@ -22,7 +22,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isPassword: boolean = false;
   isRequest: boolean = false;
   isResponse: boolean = false;
-  attribute = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,24 +32,34 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectorForm = this.formBuilder.group({
-      connectionName: ["", Validators.compose([Validators.required])],
-      httpMethodType: ["", Validators.compose([Validators.required])],
+      actionName: ["", Validators.compose([Validators.required])],
+      methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       url: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
-      bodyRaw: ["", Validators.compose([Validators.required])],
+      icon: ["", Validators.compose([])],
       attribute: ["", Validators.compose([Validators.required])],
-      paramsValue: ["", Validators.compose([Validators.required])],
-      encodedKey: ["", Validators.compose([Validators.required])],
-      encodedValue: ["", Validators.compose([Validators.required])],
-      paramsCheck: ["", Validators.compose([Validators.required])],
-      encodedCheck: ["", Validators.compose([Validators.required])],
+      grantType: ["", Validators.compose([Validators.required])],
+      code: ["", Validators.compose([Validators.required])],
+      redirect: ["", Validators.compose([Validators.required])],
+      username: ["", Validators.compose([Validators.required])],
+      password: ["", Validators.compose([Validators.required])],
+      clientId: ["", Validators.compose([Validators.required])],
+      secret: ["", Validators.compose([Validators.required])],
+      verifier: ["", Validators.compose([Validators.required])],
+      headerKey: ["", Validators.compose([Validators.required])],
+      headerValue: ["", Validators.compose([Validators.required])],
+      headerCheck: ["", Validators.compose([Validators.required])],
+      request: ["", Validators.compose([])],
+      response: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
+
     this.methodTypes();
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
+
   }
 
   createItem() {
@@ -118,7 +127,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  authTypes(){
+  authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       this.authItems = res;
     });
@@ -131,18 +140,19 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAction = true;
       this.isRequest = false;
       this.isResponse = false;
-    } else if (event == "APIRequest") {
+    } else if (event == "API Request") {
       this.isRequest = true;
       this.isAction = false;
       this.isResponse = false;
       this.isClient = false;
       this.isPassword = false;
       this.isAuthenticated = false;
+      this.isAuthorization = false;
     }
   }
 
   authChange(event) {
-    if (event == "OAUTH2") {
+    if (event == "OAuth 2.0") {
       this.isAuthenticated = true;
     }
   }
@@ -165,16 +175,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
     }
   }
-  getActionType(){
-   this.rest_api.getActionType().subscribe((res:any)=>{
-      this.actionItems =res;
-      console.log("Ation Items",res)
-    })
+
+  getActionType() {
+    this.rest_api.getActionType().subscribe((res: any) => {
+      this.actionItems = res;
+    });
   }
-  getGrantTypes(){
-    this.rest_api.getGrantTypes().subscribe((res:any)=>{
-      this.grantItems =res;
-      console.log("Grant Types",res);
-    })
+
+  getGrantTypes() {
+    this.rest_api.getGrantTypes().subscribe((res: any) => {
+      this.grantItems = res;
+    });
   }
 }
