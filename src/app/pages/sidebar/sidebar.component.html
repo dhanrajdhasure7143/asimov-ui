@@ -20,7 +20,7 @@
           <span class="side-menu-font">Dashboard</span>
         </a>
 
-        <!-- <a mat-list-item class="link" id="dashboard" (click)="hightlight('dashboard',null)"
+        <a mat-list-item class="link" id="dashboard" (click)="hightlight('dashboard',null)"
         routerLink="/pages/dashboard/create-dashboard" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
@@ -35,7 +35,7 @@
           </span>
         </span>
         <span class="side-menu-font" (click)="hightlight('dynamicdashboard','null')">Dashboard</span>
-      </a> -->
+      </a>
 
         <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
           routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''"
@@ -54,7 +54,7 @@
           <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
         </a>
         <!-- ToDO  Enable/Disable for VCM -->
-        <!-- <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
+        <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
           [ngClass]="{'activeMenu' : showprocessesSubmenu}" id='expand_processes' class="link"
           [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -80,7 +80,7 @@
             routerLink="/pages/vcm/view-vcm">
             <span class="side-menu-font">Value Chain Mapping</span>
           </a>
-        </div> -->
+        </div>
   
         <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)"
           routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
