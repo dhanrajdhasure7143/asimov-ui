@@ -1,4 +1,4 @@
-<div class="container m-contanier form-body">
+<div class="createform-overlay">
         <div class="RPA-scheduletimer">
             <div class="row RPA-scheduletimer-header">
                 <div class="col p-0">
@@ -7,7 +7,7 @@
                 <option value="" disabled>Select Timezone</option>
                 <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
               </select>
-            </span>&nbsp;&nbsp;
+            </span>
                     <span *ngIf="processid!='' && processid !=undefined">
               <mat-form-field>
                   <mat-label>Select Environemt</mat-label>

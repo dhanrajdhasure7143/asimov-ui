@@ -1,4 +1,12 @@
-.bg-color {
+.createform-overlay {
+  padding: 15px 0px 5px;
+  height: calc(100% - 165px);
+  overflow: auto;
+}
+
+
+
+/* .bg-color {
   background-color: rgb(241, 240, 240);
 }
 
@@ -96,4 +104,4 @@ input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calen
 button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
-  }
+  } */

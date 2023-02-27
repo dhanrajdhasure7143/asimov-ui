@@ -1,4 +1,13 @@
-.rpa-home-block {
+.createform-overlay {
+  padding: 15px 0px 5px;
+  height: calc(100% - 165px);
+  overflow: auto;
+}
+
+
+
+
+/* .rpa-home-block {
     display: inline-block;
     margin: 0px;
     margin-right: 15px;
@@ -409,4 +418,4 @@
     cursor: not-allowed;
   }
   
-  
+   */
