@@ -449,4 +449,10 @@
 
 
 <!--Credentials Form-->
-<app-rpa-credential-form [isCreateForm]="isCreateForm" [credupdatedata]="credupdatedata" (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>
+
+
+<div *ngIf="credentialsFormFlag">
+  <app-split-overlay (closeOverlay)="closeCredentailOverlay($event)">
+    <app-rpa-credential-form [isCreateForm]="isCreateForm" [credupdatedata]="credupdatedata" (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>
+  </app-split-overlay>
+  </div>
