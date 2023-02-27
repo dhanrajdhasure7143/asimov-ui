@@ -31,8 +31,8 @@
                   </div>
                   <div class="col-md-4 text-right">
                      <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg"/>
-                     <span class="plus">Create</span>
-                     <button class="btn btn-secondary eiap-btn">Configure </button>
+                     <span (click)="navigateToCreateDashboard()" class="plus">Create</span>
+                     <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
                      <button class="btn" type="button" (click)="menu.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
                      <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                      </button>
@@ -80,7 +80,9 @@
                         <button class="btn" type="button" (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
                         <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
 </button>
-<p-menu class="actionspopmenu p-menu-graph" #menu1 [popup]="true" [model]="items"></p-menu>
+<p-menu class="actionspopmenu p-menu-graph" #menu1 [popup]="true" [model]="items">
+
+</p-menu>
       
                      </div>
                     <!-- <i class="pi pi-times right overlay-icon"
