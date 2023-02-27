@@ -42,9 +42,9 @@
                     <div class="col-sm-12 p-0" style="flex:auto;" >
                         <div class="row project-ninfo">
                             <div class="row align-items-center projectnamerow">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')" class="project-name">
+                                <p-inplace #inplace (onActivate)="inplaceActivate('taskName','inplace')" class="task-name">
                                     <ng-template pTemplate="display">
-                                        <span class="">{{task_details.taskName}}</span>
+                                        <span>{{task_details.taskName}}</span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
                                         <input type="text" [style]="{'width':'100%'}" pInputText
@@ -103,7 +103,7 @@
                                 <div class="pinf taskresource">
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                         <ng-template pTemplate="display">
-                                            <p class="">{{task_details.resources| userPipe : users_list}}</p>
+                                            <p >{{task_details.resources| userPipe : users_list}}</p>
                                         </ng-template>
                                         <ng-template pTemplate="content">                                            
                                             <p-dropdown [options]="users_list" [filter]="true"
@@ -306,17 +306,16 @@
                         <p-table [value]="attached_list" [(selection)]="checkBoxselected" selectionMode="multiple"  dataKey="id">
                             <ng-template pTemplate="caption">
                                 <div class="table-header" *ngIf="checkBoxselected.length>1">
-                                    <span class="">
-                                        <span class="newinntalx table-icons">
-                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
-                                                <i class="pi pi-download"></i>
-                                              </span>
-                                            <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
-                                                <i class="pi pi-trash"></i>
-                                                <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
-                                            </span>
-                                        </span>
-                                    </span>
+                                    <div class="pt-1 text-right">
+                                        <a (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                            <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
+                                            class="default-img testplus">
+                                        </a>
+                                        <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                            <img src="../../../../assets/images-n/common/delete-blue.svg" alt="delete"
+                                            class="default-img testplus">
+                                        </a>
+                                    </div>
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="header">
@@ -335,14 +334,15 @@
                                     <td>{{rowData.label}}</td>
                                     <td>{{rowData.uploadedDate | date: 'medium'}}</td>
                                     <td>
-                                        <span class="newinntalx" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
-                                            <span (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
-                                                <i class="pi pi-download"></i>
-                                              </span>
-                                                <span (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
-                                                    <i class="pi pi-trash"></i>
-                                                    <!-- <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img"> -->
-                                                </span>
+                                        <span class="" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
+                                            <a (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
+                                                <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
+                                                class="default-img testplus">
+                                            </a>
+                                            <a (click)="deleteDocuments()" pTooltip="Delete" tooltipPosition="bottom">
+                                                <img src="../../../../assets/images-n/common/delete-blue.svg" alt="delete"
+                                                class="default-img testplus">
+                                            </a>
                                         </span>
                                     </td>
                                 </tr>

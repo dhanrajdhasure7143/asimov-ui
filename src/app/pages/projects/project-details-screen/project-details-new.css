@@ -19,6 +19,23 @@
     align-items: center;
     display: flex;
 }
+.project-status {
+    background-color: rgb(9 141 230 / 10%);
+    border-radius: 6px 0px 0px 0px;
+    height: 100%;
+    padding: 30px 10px !important;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.project-status p{
+  font-size: 12px;
+  margin:0px;
+}
+.project-status img {
+  width: 50px;
+  height: 55px;
+}
 .project-name span {
     font-size: 32px;
     font-weight: 600;
