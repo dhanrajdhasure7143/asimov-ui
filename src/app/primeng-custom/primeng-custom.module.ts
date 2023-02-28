@@ -35,7 +35,9 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import { ConfirmationService, MessageService } from "primeng/api";
 import {KnobModule} from 'primeng/knob';
 import {TooltipModule} from 'primeng/tooltip';
-
+import {DragDropModule} from 'primeng/dragdrop';
+import {ChartModule} from 'primeng/chart';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 @NgModule({
   declarations: [],
   imports: [
@@ -73,7 +75,10 @@ import {TooltipModule} from 'primeng/tooltip';
     ChipsModule,
     ConfirmPopupModule,
     KnobModule,
-    TooltipModule
+    TooltipModule,
+    DragDropModule,
+    ChartModule,
+    TieredMenuModule
   ],
   exports: [
     CommonModule,
@@ -111,7 +116,10 @@ import {TooltipModule} from 'primeng/tooltip';
     ChipsModule,
     ConfirmPopupModule,
     KnobModule,
-    TooltipModule
+    TooltipModule,
+    DragDropModule,
+    ChartModule,
+    TieredMenuModule
   ],
   providers: [ConfirmationService, MessageService]
 })

@@ -7,9 +7,17 @@
     margin-bottom: 25px !important;
 }
 .row.project-overview {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%);
+    /* background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%); */
     border-radius: 6px;
     flex-wrap: initial;
+}
+.project-ninfo {
+    padding: 15px !important;
+}
+.project-ninfo .col-md-10.pl-0,
+.project-ninfo .col-md-10.pl-0 .row {
+    align-items: center;
+    display: flex;
 }
 .project-status {
     background-color: rgb(9 141 230 / 10%);
@@ -20,21 +28,13 @@
     align-items: center;
     display: flex;
 }
-.project-status p {
-    font-size: 12px;
-    margin: 0px;
+.project-status p{
+  font-size: 12px;
+  margin:0px;
 }
 .project-status img {
-    width: 50px;
-    height: 55px;
-}
-.project-ninfo {
-    padding: 15px !important;
-}
-.project-ninfo .col-md-10.pl-0,
-.project-ninfo .col-md-10.pl-0 .row {
-    align-items: center;
-    display: flex;
+  width: 50px;
+  height: 55px;
 }
 .project-name span {
     font-size: 32px;
@@ -60,17 +60,12 @@ span.lowimp {
     margin-right: 8px;
 }
 .pinf p {
-    /* margin-bottom: 5px; */
     font-weight: 500;
     font-size: 16px !important;
 }
 .pinf label {
     color: #535353;
 }
-/* .kpipercent {
-    border-left: 1px solid #e0e0e0;
-    padding-left: 10px !important;
-} */
 .kpipercent p {
     font-size: 44px !important;
     margin-bottom: 2px;
@@ -102,7 +97,7 @@ span.lowimp {
     display: flex;
     align-items: center;
     position: absolute;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 5px;
     width: 100%;
 }
@@ -135,7 +130,6 @@ span.lowimp {
     position: relative;
 }
 .collab {
-    padding: 20px !important;
     border-radius: 6px 6px 0px 0px;
     height: 530px;
     display: block;
@@ -143,10 +137,10 @@ span.lowimp {
 .lftusermsg {
     background: #EDF6FD;
     border-radius: 0px 15px 15px 15px !important;
-    padding: 15px 6px 10px 30px !important;
+    padding: 20px 6px 10px 30px !important;
     margin: 20px 10px !important;
     position: relative;
-    width: 70%;
+    width: 77%;
 }
 .lftusermsg p {
     width: 100%;
@@ -154,10 +148,10 @@ span.lowimp {
 .rgtusermsg {
     background: #42A7EB;
     border-radius: 15px 0px 15px 15px;
-    padding: 15px 10px 2px !important;
+    padding: 25px 10px 2px !important;
     margin: 10px 0px 20px 0px !important;
     color: #fff;
-    width: 70%;
+    width: 77%;
     margin-left: 25% !important;
     position: relative;
 }
@@ -181,7 +175,37 @@ span.lowimp {
 .colheads {
     font-weight: 600;
     font-size: 20px !important;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    margin-bottom: 0px;
+}
+h4.colheads.chatheader {
+    padding: 10px 20px;
+    border-bottom: 1px solid #dbdbdb;
+}
+.pinnedmsgs {
+    background-color: #e5e5e5;
+    padding: 5px 10px 5px 20px;
+}
+#message-body {
+    height: 83%;
+    overflow: auto;
+    padding: 5px 20px;
+}
+.res-reply {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+}
+.rply-msg {
+    background-color: aliceblue;
+    color: #232832;
+    border-radius: 6px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+.rply-msg p {
+    font-weight: 300;
+    margin: 0px !important;
 }
 .collab p {
     margin-bottom: 10px;
@@ -337,11 +361,6 @@ p.qcard-name {
 /* quicksnapshot styles */
 
 /* Form Overlay New Styles Start */
-.row.create-body {
-  align-items: center;
-  justify-content: space-evenly;
-  height: calc(100% - 125px);
-}
 .prjoverlay p.title_text {
   margin: 0;
   font-size: 18px;
@@ -355,9 +374,6 @@ p-image.p-element.crtprgm {
 /* Form Overlay New Styles End */
 
 /* Folderpopover New Styles Start */
-.selectfoldername .p-dialog-mask {
-    /* background-color: rgba(0,0,0,0.3); */
-}
 button.btn.btn-primary.savefoldername {
     margin-top: 15px;
     float: right;
@@ -376,21 +392,6 @@ button.btn.btn-primary.savefoldername {
 button span {
     margin-left: 5px;
 }
-span.userstabbtns {
-    width: -webkit-fill-available;
-    text-align: right;
-}
-
-
-.userstabbtns button.btn:nth-child(2) {
-    padding-right: 0px !important;
-}
-
-#message-body {
-    height: 95%;
-    overflow: auto;
-}
-
 .res-circle {
     width: 32px;
     border-radius: 100%;
@@ -398,21 +399,4 @@ span.userstabbtns {
     margin-top: 7px;
     margin-left: 5px;
     padding: 5px 7px;
-}
-
-.res-reply {
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    top: 8px;
-    right: 0px;
-}
-.rply-msg {
-    border: 1px solid;
-}
-
-.project-description_truncate{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }

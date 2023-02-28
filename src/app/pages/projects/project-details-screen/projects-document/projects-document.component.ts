@@ -4,6 +4,8 @@ import { ConfirmationService, MessageService, TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
+import * as JSZip from "jszip";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "app-projects-document",
@@ -19,10 +21,10 @@ export class ProjectsDocumentComponent implements OnInit {
   isSidebar: boolean = false;
   isDialog: boolean = false;
   isDialog1: boolean = false;
-  entered_folder_name: any;
+  entered_folder_name: string='';
   selectedFile: any;
   text: string;
-  folder_name: any;
+  folder_name: string='';
   isDialogBox: boolean = false;
   isFolder : boolean = true;
   isSubFolder : boolean = false;
@@ -46,6 +48,9 @@ export class ProjectsDocumentComponent implements OnInit {
   nodeMap:Object = {};
   opened_folders:any[]=[];
   selected_folder_rename:any;
+  documents_resData:any[]=[];
+  taskList:[]=[];
+  selectedOne:any;
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -59,7 +64,6 @@ export class ProjectsDocumentComponent implements OnInit {
       this.params_data = data;
       this.project_id = this.params_data.project_id;
       this.project_name = this.params_data.project_name;
-      this.loader.show();
       if(this.params_data.folderView){
         this.isFolder=true;
       }
@@ -71,98 +75,107 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loader.show();
     this.getTheListOfFolders();
   }
 
   getTheListOfFolders(){
     let res_data:any=[];
-    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
         res_data=res
-        res_data.map(data=> {
-          if(data.dataType=='folder'){
-            data["children"]=[{
-              key: data.key+'-0',
-              label: "Add Folder / Document",
-              dataType:"folder",
-              collapsedIcon: 'pi pi-folder',
-              expandedIcon: 'pi pi-folder'
-            }]
-          }
-          return data
-        })
-      this.files=[
-        {
-          key: "0",
-          label: "Add Folder",
-          data: "Add Folder",
-          data_type:"addfolder",
+        this.documents_resData = res
+        this.loader.hide()
+        this.files=[
+          {
+            key: "0",
+            label: "Add Folder",
+            data: "Add Folder",
+            data_type:"addfolder",
+            collapsedIcon: 'pi pi-folder',
+            expandedIcon: 'pi pi-folder'
+          },
+        ];
+        this.convertToTreeView(res_data)
+    })
+  }
+
+  convertToTreeView(res_data){
+    res_data.map(data=> {
+      if(data.dataType=='folder'){
+        data["children"]=[{
+          key: data.key+'-0',
+          label: "Add Folder / Document",
+          dataType:"folder",
           collapsedIcon: 'pi pi-folder',
           expandedIcon: 'pi pi-folder'
-        },
-      ];
-      for (let obj of res_data) {
-        let node = {
-          key: obj.key,
-          label: obj.label,
-          data: obj.data,
-          type:"default",
-          uploadedBy:obj.uploadedBy,
-          projectId:obj.projectId,
-          id: obj.id,
-          dataType:obj.dataType,
-          children:obj.children,
-          uploadedDate:obj.uploadedDate
-        };
-          if(obj.dataType == 'folder'){
-            node['collapsedIcon']=  "pi pi-folder"
-            node["expandedIcon"]  ="pi pi-folder-open"
-        }else{
-          node['icon']=  "pi pi-file"
-        }
-        this.nodeMap[obj.key] = node;
-        if (obj.key.indexOf('-') === -1) {
-          // node['children']=[
-          // {
+        }]
+      }
+      return data
+    })
+
+  for (let obj of res_data) {
+    let node = {
+      key: obj.key,
+      label: obj.label,
+      data: obj.data,
+      type:"default",
+      uploadedBy:obj.uploadedBy,
+      projectId:obj.projectId,
+      id: obj.id,
+      dataType:obj.dataType,
+      children:obj.children,
+      uploadedDate:obj.uploadedDate
+    };
+      if(obj.dataType == 'folder'){
+        node['collapsedIcon']=  "pi pi-folder"
+        node["expandedIcon"]  ="pi pi-folder-open"
+    }else{
+      node['icon']=  "pi pi-file"
+    }
+    this.nodeMap[obj.key] = node;
+    if (obj.key.indexOf('-') === -1) {
+      // node['children']=[
+      // {
+      //   key: obj.key+'-0',
+      //   label: "Add Folder / Document",
+      //   dataType:"folder",
+      //   collapsedIcon: 'pi pi-folder',
+      //   expandedIcon: 'pi pi-folder'
+      // }]
+      this.files.push(node);
+    } else {
+      let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+      let parent = this.nodeMap[parentKey];
+      if (parent) {
+        if (!parent.children) {
+          // let obj1={
           //   key: obj.key+'-0',
           //   label: "Add Folder / Document",
           //   dataType:"folder",
           //   collapsedIcon: 'pi pi-folder',
           //   expandedIcon: 'pi pi-folder'
-          // }]
-          this.files.push(node);
-        } else {
-          let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
-          let parent = this.nodeMap[parentKey];
-          if (parent) {
-            if (!parent.children) {
-              // let obj1={
-              //   key: obj.key+'-0',
-              //   label: "Add Folder / Document",
-              //   dataType:"folder",
-              //   collapsedIcon: 'pi pi-folder',
-              //   expandedIcon: 'pi pi-folder'
-              // }
-              // parent.children = [obj1];
-            }else{
-              // let obj1={
-                
-              //   key: obj.key+'-0',
-              //   label: "Add Folder / Document",
-              //   dataType:"folder",
-              //   collapsedIcon: 'pi pi-folder',
-              //   expandedIcon: 'pi pi-folder'
-              // }
-              // parent.children = [obj1];
-            }
-            parent.children.push(node);
-          }
+          // }
+          // parent.children = [obj1];
+        }else{
+          // let obj1={
+            
+          //   key: obj.key+'-0',
+          //   label: "Add Folder / Document",
+          //   dataType:"folder",
+          //   collapsedIcon: 'pi pi-folder',
+          //   expandedIcon: 'pi pi-folder'
+          // }
+          // parent.children = [obj1];
         }
+        if(parent.children)
+        parent.children.push(node);
       }
-      this.folder_files = this.files
-      this.loader.hide();
-      console.log(this.files,"files")
-    })
+    }
+  }
+  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  this.folder_files = this.files
+  this.getTaskList();
+  this.loader.hide();
   }
 
   getDataByParentId1(data, parent) {
@@ -206,18 +219,32 @@ export class ProjectsDocumentComponent implements OnInit {
     
       this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         this.loader.hide();
+        let res_data:any = res
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
-        object["children"] = [
-          {
-            key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
-            label: "Add Folder / Document",
-            data: "Work Folder",
-            data_type:"addfolder",
-            expandedIcon: "pi pi-folder",
-            collapsedIcon: "pi pi-folder",
-          },
-        ]
-        this.selectedFile.parent.children.push(object);
+      let obj = res_data.data[0];
+      obj['expandedIcon'] = "pi pi-folder-open"
+      obj['collapsedIcon'] = "pi pi-folder";
+      obj["children"]= [
+        {
+          key: String(obj.key)+"-0" ,
+          label: "Add Folder / Document",
+          data: "Folder",
+          dataType:"folder",
+          expandedIcon: "pi pi-folder",
+          collapsedIcon: "pi pi-folder",
+        }
+      ]
+        // object["children"] = [
+        //   {
+        //     key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
+        //     label: "Add Folder / Document",
+        //     data: "Folder",
+        //     data_type:"addfolder",
+        //     expandedIcon: "pi pi-folder",
+        //     collapsedIcon: "pi pi-folder",
+        //   },
+        // ]
+        this.selectedFile.parent.children.push(obj);
         this.entered_folder_name = "";
         this.isDialog = false;
       },err=>{
@@ -228,9 +255,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   nodeSelect(item) {
-    // this.model.toggle();
-    // this.model.show();
-
     this.selectedItem = item;
     if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
       this.createTreeFolderOverlay = true;
@@ -240,7 +264,6 @@ export class ProjectsDocumentComponent implements OnInit {
       if(this.selectedItem.node.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      // console.log(item,"open Doc")
     }
 
     // if (item.node.label == "Add Folder") {
@@ -267,16 +290,19 @@ export class ProjectsDocumentComponent implements OnInit {
 
   folderView(){
     this.isFolder = true;
-    // let params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
-    // this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    const params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
   }
 
   treeView(){
     this.isFolder = false;
     this.folder_files = this.files;
     this.opened_folders=[];
-    // let params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
-    // this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    const params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
+    this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: params, 
+      })
     this.loader.hide();
   }
 
@@ -330,16 +356,30 @@ export class ProjectsDocumentComponent implements OnInit {
   
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.loader.hide();
+      let res_data:any = res
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
-      object["children"] = [{
-          key: this.selectedFolder.key + "-" + objectKey + "-0" ,
+      let obj = res_data.data[0];
+      obj['expandedIcon'] = "pi pi-folder-open"
+      obj['collapsedIcon'] = "pi pi-folder";
+      obj["children"]= [
+        {
+          key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
-          data: "Work Folder",
-          data_type:"addfolder",
+          data: "Folder",
+          dataType:"folder",
           expandedIcon: "pi pi-folder",
           collapsedIcon: "pi pi-folder",
-        }]
-      this.selectedFolder.children.push(object);
+        }
+      ]
+      // object["children"] = [{
+      //     key: this.selectedFolder.key + "-" + objectKey + "-0" ,
+      //     label: "Add Folder / Document",
+      //     data: "Work Folder",
+      //     data_type:"addfolder",
+      //     expandedIcon: "pi pi-folder",
+      //     collapsedIcon: "pi pi-folder",
+      //   }]
+      this.selectedFolder.children.push(obj);
       this.entered_folder_name = "";
       this.isDialog1 = false;
     },err=>{
@@ -386,25 +426,22 @@ addParentFolder() {
 
   this.rest_api.createFolderByProject(req_body).subscribe(res=>{
     this.loader.hide();
+    let res_data:any = res;
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
-    this.files.push({
-      key: String(this.files.length),
-      label: this.folder_name,
-      data: "Folder",
-      expandedIcon: "pi pi-folder-open",
-      dataType:'folder',
-      collapsedIcon: "pi pi-folder",
-      children: [
-        {
-          key: String(this.files.length)+"-0" ,
-          label: "Add Folder / Document",
-          data: "Work Folder",
-          dataType:"folder",
-          expandedIcon: "pi pi-folder",
-          collapsedIcon: "pi pi-folder",
-        }
-      ],
-    });
+    let obj = res_data.data[0];
+    obj['expandedIcon'] = "pi pi-folder-open"
+    obj['collapsedIcon'] = "pi pi-folder";
+    obj["children"]= [
+      {
+        key: String(obj.key)+"-0" ,
+        label: "Add Folder / Document",
+        data: "Folder",
+        dataType:"folder",
+        expandedIcon: "pi pi-folder",
+        collapsedIcon: "pi pi-folder",
+      }
+    ]
+    this.files.push(obj);
     this.folder_name = "";
     this.isDialogBox = false;
   },err=>{
@@ -444,11 +481,9 @@ addParentFolder() {
   }
 
   nodeUnselect(){
-    console.log("testing")
   }
 
   onNodeClick(event,node){
-    console.log(node)
     this.selected_folder_rename = node;
     event.preventDefault();
     this.model.hide();
@@ -495,14 +530,20 @@ addParentFolder() {
     });
   }
 
-  navigateToCreateDocument(){
+  navigateToCreateDocument(type){
     let url=this.router.url
-    // console.log(atob(url))
-    // console.log(url.split('?')[0])
+    let objectKey;
+    let folder_key;
+    if(type == 'treeView'){
+      objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
+      folder_key = this.selectedFile.parent.key + "-" + objectKey
+    }else{
+      objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+      folder_key = this.selectedFolder.key + "-" + objectKey
+    }
 
-    let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
     let req_body = {
-      key: this.selectedFile.parent.key + "-" + objectKey,
+      key: folder_key,
       label: this.entered_folder_name,
       data: "folder",
       ChildId: "1",
@@ -518,6 +559,7 @@ addParentFolder() {
   }
 
   singleFileUpload(e){
+    this.loader.show()
     let object = { ...{}, ...this.sampleNode_object };
     object.label = this.entered_folder_name;
     let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
@@ -525,29 +567,34 @@ addParentFolder() {
 
     var fileData = new FormData();
     var selectedFile = e.target.files[0];
+
     fileData.append("filePath", e.target.files[0]);
-    fileData.append("key",object.key)
-    fileData.append("label",selectedFile.name.split('.')[0])
-    fileData.append("data","file")
+    fileData.append("projectId",this.project_id);
+    fileData.append("taskId",'')
     fileData.append("ChildId",'1')
-    fileData.append("dataType",selectedFile.name.split('.')[1])
-    fileData.append("fileSize",selectedFile.size)
-    fileData.append("task_id",'')
-    fileData.append("projectId", this.project_id)
-    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
+
+    let obj=object.key
+    
+    fileData.append("fileUniqueIds",JSON.stringify([obj]))
+    this.rest_api.uploadfilesByProject(fileData).subscribe((res:any)=>{
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
-    let obj={
-      key: object.key,
-      label: selectedFile.name,
-      data: "file",
-      collapsedIcon: "pi pi-file",
-      dataType:selectedFile.name.split('.')[1],
-      project_id:this.project_id,
-      task_id:"",
-      fileSize:this.project_id
-    }
-    console.log(obj)
+    let res_data:any= res
+    console.log(res)
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    let obj = res_data.data[0]
+    obj["collapsedIcon"]= "pi pi-file",
+    // let obj={
+    //   key: object.key,
+    //   label: selectedFile.name,
+    //   data: "file",
+    //   collapsedIcon: "pi pi-file",
+    //   dataType:selectedFile.name.split('.')[1],
+    //   project_id:this.project_id,
+    //   task_id:"",
+    //   fileSize:this.project_id
+    // }
+    this.loader.hide();
     this.selectedFile.parent.children.push(obj)
 
     })
@@ -569,45 +616,6 @@ addParentFolder() {
   //   }
   //   this.listOfFiles.push(value)
   // }
-  }
-
-  onFolderSelect(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      const folderName = files[0].webkitRelativePath.split('/')[0];
-      console.log('Selected folder:', folderName);
-    }
-    let fileFormArray:any=[];
-    // console.log(files,event)
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.webkitRelativePath) {
-        // The file is inside a folder
-        let fileData=new FormData();
-        console.log(file.webkitRelativePath);
-        fileData.append("filePath", file);
-        fileData.append("key",String("sample"))
-        fileData.append("label",file.name.split('.')[0])
-        fileData.append("data","file")
-        fileData.append("ChildId",'1')
-        fileData.append("dataType",file.name.split('.')[1])
-        fileData.append("fileSize",file.size)
-        fileData.append("task_id",'')
-        fileData.append("projectId", this.project_id);
-        fileFormArray.push(fileData)
-        // Upload the file as desired
-      } else {
- 
-        // The file is not inside a folder
-        console.log(file.name);
-        // Upload the file as desired
-      }
-    }
-    console.log(fileFormArray)
-    console.log(fileFormArray[0].get("label"))
-    // this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
-    //   console.log(res)
-    // })
   }
 
   onRightClick(event,node){
@@ -661,7 +669,6 @@ addParentFolder() {
   backToSelectedFolder(){
     this.folder_files = this.opened_folders[this.opened_folders.length-1];
     this.opened_folders.pop();
-    console.log(this.opened_folders)
   }
 
   singleFileUploadFolder(e){
@@ -669,50 +676,40 @@ addParentFolder() {
     object.label = this.entered_folder_name;
     let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
     object.key = this.selectedFolder.key + "-" + objectKey;
-
+    this.loader.show();
     const fileData = new FormData();
     const selectedFile = e.target.files[0];
-    fileData.append("filePath", e.target.files[0]);
-    fileData.append("key",object.key)
-    fileData.append("label",selectedFile.name.split('.')[0])
-    fileData.append("data","file")
-    fileData.append("ChildId",'1')
-    fileData.append("dataType",selectedFile.name.split('.')[1])
-    fileData.append("fileSize",selectedFile.size)
-    fileData.append("task_id",'')
-    fileData.append("projectId", this.project_id)
-    let fileFormArray:any=[];
 
-    // fileData.append("filePath", e.target.files[0]);
-    // let obj={
-    //   "key": object.key,
-    //   "label":selectedFile.name.split('.')[0],
-    //   "data":"file",
-    //   "ChildId":"1",
-    //   "dataType":selectedFile.name.split('.')[1],
-    //   "fileSize": selectedFile.size,
-    //   "task_id":'',
-    //   "projectId": this.project_id
-    // }
-    // fileData.append("fileDetails",JSON.stringify([obj]))
-    fileFormArray.push(fileData)
-    this.rest_api.createFolderByProject(fileFormArray).subscribe(res=>{
-      let obj={
-        key: object.key,
-        label: selectedFile.name,
-        data: "file",
-        collapsedIcon: "pi pi-file",
-        dataType:selectedFile.name.split('.')[1],
-        project_id:this.project_id,
-        task_id:"",
-        fileSize:this.project_id
-      }
+    fileData.append("filePath", e.target.files[0]);
+    fileData.append("projectId",this.project_id);
+    fileData.append("taskId",'')
+    fileData.append("ChildId",'1')
+    let obj=object.key
+   
+    fileData.append("fileUniqueIds",JSON.stringify([obj]))
+
+    this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+      this.loader.hide();
+      this.createFolderPopUP=false;
+      let res_data:any = res
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    let obj = res_data.data[0];
+    obj["collapsedIcon"] = "pi pi-file"
+      // let obj={
+      //   key: object.key,
+      //   label: selectedFile.name,
+      //   data: "file",
+      //   collapsedIcon: "pi pi-file",
+      //   dataType:selectedFile.name.split('.')[1],
+      //   project_id:this.project_id,
+      //   task_id:"",
+      //   fileSize:this.project_id
+      // }
       this.selectedFolder.children.push(obj);
       this.entered_folder_name = "";
       this.isDialog1 = false;
     })
   }
-
   onDeleteItem(type){
     let req_body=[]
     if(type =='folderView'){
@@ -739,5 +736,171 @@ addParentFolder() {
       key: "positionDialog"
   });
   }
-  
+
+  folderUpload(event: any,type) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const folderName = files[0].webkitRelativePath.split('/')[0];
+      let objectKey
+      let folder_key
+      if(type=='folderView'){
+        if(this.selectedFolder){
+          objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+          folder_key= this.selectedFolder.key + "-" + String(objectKey)
+        }else{
+          folder_key= this.files.length+1;
+        }
+      }else{
+        if(this.selectedFile.parent){
+          let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
+          folder_key = this.selectedFile.parent.key + "-" + objectKey;
+        }else{
+          folder_key= this.files.length+1;
+        }
+        
+      }
+
+      this.loader.show();
+      let req_body = [{
+        key: folder_key,
+        label: folderName,
+        data: "Folder",
+        ChildId: "1",
+        dataType: "folder",
+        fileSize: "",
+        task_id: "",
+        projectId: this.project_id,
+      }];
+      this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+        const fileData = new FormData();
+        let fileKeys = [];
+        for (let i = 0; i < files.length; i++) {
+            fileData.append("filePath", files[i]);
+            fileKeys.push(String(folder_key+'-'+(i+1)))
+        }
+        fileData.append("projectId",this.project_id);
+        fileData.append("taskId",'')
+        fileData.append("ChildId",'1')
+        fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+      this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+        this.loader.hide();
+        this.getTheListOfFolders();
+        this.createFolderPopUP=false;
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      },err=>{
+        this.loader.hide();
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+      })
+      },err=>{
+        this.loader.hide();
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+      })
+    }
+
+    //multiple files upload
+    // console.log(this.selectedFolder)
+    // let objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+    //   let folder_key= this.selectedFolder.key + "-" + String(objectKey)
+    // const fileData = new FormData();
+    //     let fileKeys = [];
+    //     for (let i = 0; i < files.length; i++) {
+    //         fileData.append("filePath", files[i]);
+    //         fileKeys.push(String(this.selectedFolder.key + "-" + String(objectKey+i)))
+    //     }
+    //     fileData.append("projectId",this.project_id);
+    //     fileData.append("taskId",'')
+    //     fileData.append("ChildId",'1')
+    //     fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+    //   this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+    //     this.loader.hide();
+    //     this.getTheListOfFolders();
+    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    //   },err=>{
+    //     this.loader.hide();
+    //     this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+    //   })
+
+
+  }
+  onDownloadDocument(type){
+      let req_body = [];
+      let _me = this;
+      let folderName:string
+      this.loader.show();
+      if(type =='folderView'){
+        if(this.selectedItem.dataType == 'folder'){
+          this.selectedItem.children.forEach(element => {
+            if(element.dataType != 'folder'){
+              req_body.push(element.id)
+            }
+          });
+        }else{
+          req_body.push(this.selectedItem.id)
+        }
+        this.model2.hide();
+        folderName = this.selectedItem.label.split('.')[0]
+      }else{
+        if(this.selected_folder_rename.dataType == 'folder'){
+        this.selected_folder_rename.children.forEach(element => {
+          if(element.dataType != 'folder'){
+            req_body.push(element.id)
+          }
+        });
+      }else{
+        req_body.push(this.selected_folder_rename.id)
+      }
+      folderName = this.selected_folder_rename.label.split('.')[0]
+        this.model.hide();
+      }
+      if(req_body.length == 0){
+        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
+        return
+      }
+      this.rest_api.dwnloadDocuments(req_body).subscribe((response: any) => {
+      this.loader.hide();
+        let resp_data = [];
+        if(response.code == 4200){
+        resp_data = response.data;
+        if (resp_data.length > 0) {
+          if (resp_data.length == 1) {
+            let fileName = resp_data[0].label;
+            console.log(resp_data[0].data)
+            var link = document.createElement("a");
+            // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+            let extension = resp_data[0].dataType;
+            link.download = fileName;
+            link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
+                ? `data:image/${extension};base64,${resp_data[0].data}`
+                : `data:application/${extension};base64,${resp_data[0].data}`;
+            link.click();
+          } else {
+            var zip = new JSZip();
+            resp_data.forEach((value, i) => {
+              let fileName = resp_data[i].label;
+              // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+              let extension = resp_data[i].dataType;
+              if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+                zip.file(fileName, value.data, { base64: true });
+              else zip.file(fileName, value.data);
+            });
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+              FileSaver.saveAs(content, folderName + ".zip");
+            });
+          }
+        }
+      }
+      });
+    }
+
+    getTaskList(){
+      this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
+        this.taskList = data;
+      })
+    }
+
+    onchangesCheckBox(){
+      console.log(this.selectedOne)
+      // this.documents_resData = res
+      //   this.convertToTreeView(res_data)
+    }
 }

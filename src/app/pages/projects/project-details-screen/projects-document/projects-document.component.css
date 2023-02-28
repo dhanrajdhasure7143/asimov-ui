@@ -79,10 +79,12 @@
 
 /* ----- Document Filter & Rename p-overlaypanel Styles ----- */
 .docritclk div {
-  color: #222;
-}
-.docritclk div:first-child {
+  color: #232832;
   margin-bottom: 10px;
+  cursor: pointer;
+}
+.docritclk div:last-child {
+  margin-bottom: 0px;
 }
 
 

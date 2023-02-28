@@ -6,7 +6,9 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import * as moment from "moment";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
+import * as JSZip from "jszip";
+import * as FileSaver from "file-saver";
 
 interface Status {
   name: string;
@@ -36,29 +38,27 @@ export class ProjectTaskDetailsComponent implements OnInit {
   status_list: Status[];
   attached_list: any = [];
   checkBoxselected: any[] = [];
-  columns_list: any;
-  selectedCity: Status;
   taskName: any;
   edit_task_field: any;
   resources: any;
   status: any;
   hiddenPopUp: boolean = false;
-  isprojectCreateForm: boolean = false;
   params_data: any;
   endDate: any;
   mindate: any;
   add_comment: any;
   added_comments_list: any = [];
   percentageComplete: any;
-  priority:any;
+  priority: any;
   priority_list: any;
-  isFile_upload_dialog:boolean = false;
-  selected_folder:any;
-  folder_files:any;
-  files:any[]=[];
-  active_inplace:any;
-  nodeMap:Object = {};
-  uploaded_file:any;
+  isFile_upload_dialog: boolean = false;
+  selected_folder: any;
+  folder_files: any;
+  files: any[] = [];
+  active_inplace: any;
+  nodeMap: Object = {};
+  uploaded_file: any;
+  selectedItem: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +66,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private router: Router,
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.status_list = [
       { name: "New" },
@@ -107,17 +108,13 @@ export class ProjectTaskDetailsComponent implements OnInit {
           this.mindate = moment(this.task_details.startDate).format(
             "YYYY-MM-DD"
           );
-        this.getTheListOfFolders();
+          this.getTheListOfFolders();
         });
       this.spinner.hide();
     });
   }
 
   backToTaskList() {
-    console.log(this.project_id);
-    // this.router.navigate(['/pages/projects/tasks'],{
-    //   queryParams:{id: this.project_id}
-    // })
     this.router.navigate(["/pages/projects/tasks"], {
       queryParams: {
         project_id: this.project_id,
@@ -136,50 +133,33 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.getTaskAttachments();
       }
     });
-    // let user = this.users_list.find(
-    //   (item) => item.userId.userId == this.selectedtask.resources
-    // );
-    // this.taskresourceemail = user.userId.userId;
-    // this.getUserRole();
   }
 
-  onDeactivate(field){
+  onDeactivate(field) {
     this[field].deactivate();
   }
 
   inplaceActivate(field, activeField) {
-    if(activeField != this.active_inplace)
-    if(this.active_inplace) this[this.active_inplace].deactivate()
-    // this.active_inplace='';
-    this.active_inplace = activeField
+    if (activeField != this.active_inplace)
+      if (this.active_inplace) this[this.active_inplace].deactivate();
+    this.active_inplace = activeField;
     if (field == "endDate") {
       this.endDate = moment(this.task_details.endDate).format("YYYY-MM-DD");
       return;
     }
     this[field] = this.task_details[field];
-    // e.deactivate();
   }
 
   onUpdateDetails(field) {
-    // if (field == "percentageComplete") {
-    //   if (this.percentageComplete > 100) {
-    //     this.percentageComplete = 100;
-    //   } else {
-    //     this.task_details[field] = String(this[field]);
-    //     this.updatetask();
-    //     this[this.active_inplace].deactivate();
-    //   }
-    // } else {
-      this.task_details[field] = this[field];
-      this.updatetask();
-      this[this.active_inplace].deactivate();
-    // }
+    this.task_details[field] = this[field];
+    this.updatetask();
+    this[this.active_inplace].deactivate();
   }
 
   inplaceActivateDesc(activeField) {
-    if(activeField != this.active_inplace)
-    if(this.active_inplace) this[this.active_inplace].deactivate()
-    this.active_inplace = activeField
+    if (activeField != this.active_inplace)
+      if (this.active_inplace) this[this.active_inplace].deactivate();
+    this.active_inplace = activeField;
     this.task_desc = this.task_details.description;
   }
 
@@ -190,24 +170,46 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    console.log(event);
     this.hiddenPopUp = event;
-    this.isprojectCreateForm = false;
   }
 
   taskAttachments() {
     this.hiddenPopUp = true;
-    this.isprojectCreateForm = false;
-    this.columns_list = [
-      { ColumnName: "fullName", DisplayName: "Document Name" },
-      { ColumnName: "user_role", DisplayName: "Attached Date" },
-      // { ColumnName: "actions",DisplayName:"Actions"},
-    ];
   }
 
-  onClikCreateProject() {}
-
-  deleteuserById(rowData) {}
+  deleteDocuments() {
+    let req_body = [];
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(
+          (res) => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Deleted Successfully !!",
+            });
+            this.getTheListOfFolders();
+            this.getTaskAttachments();
+            this.spinner.hide();
+          },
+          (err) => {
+            this.spinner.hide();
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Failed to delete!",
+            });
+          }
+        );
+      },
+      reject: (type) => {},
+      key: "positionDialog",
+    });
+  }
 
   postcomments() {
     if (this.add_comment != "") {
@@ -230,45 +232,16 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   async getTaskAttachments() {
     await this.rest_api
-      .getTaskAttachments(this.params_data.project_id, this.params_data.task_id)
+      .getDocumentsById(this.params_data.project_id, this.params_data.task_id)
       .subscribe((data) => {
-        // this.taskattacments = data;
+        this.attached_list = data;
+        this.checkBoxselected = [];
         // if (this.taskattacments.length == 0) {
         //   this.hidetaskdeletedownload = false;
         // } else {
         //   this.hidetaskdeletedownload = true;
         // }
       });
-  }
-  descChanges(str) {
-    //   var parser = new DOMParser();
-    // var doc = parser.parseFromString(str, 'text/html');
-    // console.log(doc)
-    // console.log(doc.body)
-    // return doc.body;
-
-    let spanEl: HTMLElement = document.createElement("div");
-    spanEl.innerText = str;
-    return spanEl.outerHTML;
-
-    var dom = document.createElement("div");
-    dom.innerHTML = str;
-    return dom;
-
-    //   var dom = document.createElement('div');
-    // dom.innerHTML = str;
-    // return dom;
-    //     var wrapper= document.createElement('div');
-    // wrapper.innerHTML= str;
-    // var div= wrapper.firstChild;
-    // return div
-
-    // var doc = new DOMParser().parseFromString(str, "text/xml")
-    // return doc
-
-    // var dom = document.createElement('div');
-    // dom.innerHTML = str;
-    // return dom;
   }
   updatetask() {
     // if (this.updatetaskForm.valid) {
@@ -296,7 +269,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
       (res) => {
         this.taskcomments_list = this.added_comments_list;
         this.add_comment = "";
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Task Updated Successfully !!'});
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Task Updated Successfully !!",
+        });
         this.gettask();
         // let status: any = res;
         // if (status.errorMessage == undefined) {
@@ -306,102 +283,180 @@ export class ProjectTaskDetailsComponent implements OnInit {
         // }
       },
       (err) => {
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Task Update failed"});
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Task Update failed",
+        });
       }
     );
     // } else {
     //   alert("please fill all details");
     // }
   }
-  chnagefileUploadForm(event){
-    console.log(event)
+  chnagefileUploadForm(event) {
     this.isFile_upload_dialog = true;
-    this.uploaded_file= event.target.files[0]
-
-    // for (var i = 0; i <= e.target.files.length - 1; i++) {
-    // }
-
+    this.uploaded_file = event.target.files[0];
   }
 
-  Space(event:any){
-    if(event.target.selectionStart === 0 && event.code === "Space"){
+  Space(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
     }
   }
 
-  nodeUnselect(){
+  nodeUnselect() {}
 
-  }
-
-  onCloseFolderOverlay(){
+  onCloseFolderOverlay() {
     this.isFile_upload_dialog = false;
   }
 
-  getTheListOfFolders(){
-    let res_data:any=[];
-    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
-        res_data=res
-        res_data.map(data=> {
-          if(data.dataType=='folder'){
-            data["children"]=[]
+  getTheListOfFolders() {
+    let res_data: any = [];
+    this.rest_api
+      .getListOfFoldersByProjectId(this.project_id)
+      .subscribe((res) => {
+        res_data = res;
+        res_data.map((data) => {
+          if (data.dataType == "folder") {
+            data["children"] = [];
           }
-          return data
-        })
- 
-      for (let obj of res_data) {
-        let node = {
-          key: obj.key,
-          label: obj.label,
-          data: obj.data,
-          type:"default",
-          uploadedBy:obj.uploadedBy,
-          projectId:obj.projectId,
-          id: obj.id,
-          dataType:obj.dataType,
-          children:obj.children,
-          uploadedDate:obj.uploadedDate
-        };
-          if(obj.dataType == 'folder'){
-            node['collapsedIcon']=  "pi pi-folder"
-            node["expandedIcon"]  ="pi pi-folder-open"
-        }else{
-          node['icon']=  "pi pi-file"
-        }
-        this.nodeMap[obj.key] = node;
-        if (obj.key.indexOf('-') === -1) {
-          this.files.push(node);
-        } else {
-          let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
-          let parent = this.nodeMap[parentKey];
-          if (parent) {
-            parent.children.push(node);
+          return data;
+        });
+
+        for (let obj of res_data) {
+          let node = {
+            key: obj.key,
+            label: obj.label,
+            data: obj.data,
+            type: "default",
+            uploadedBy: obj.uploadedBy,
+            projectId: obj.projectId,
+            id: obj.id,
+            dataType: obj.dataType,
+            children: obj.children,
+            uploadedDate: obj.uploadedDate,
+          };
+          if (obj.dataType == "folder") {
+            node["collapsedIcon"] = "pi pi-folder";
+            node["expandedIcon"] = "pi pi-folder-open";
+          } else {
+            node["icon"] = "pi pi-file";
+          }
+          this.nodeMap[obj.key] = node;
+          if (obj.key.indexOf("-") === -1) {
+            this.files.push(node);
+          } else {
+            let parentKey = obj.key.substring(0, obj.key.lastIndexOf("-"));
+            let parent = this.nodeMap[parentKey];
+            if (parent) {
+              parent.children.push(node);
+            }
           }
         }
-      }
-
-      this.folder_files = this.files
-      console.log(this.files)
-
-    })
+        this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+        this.folder_files = this.files;
+      });
   }
 
-  uploadFile(){
-    console.log(this.selected_folder,"Selectedfolders");
+  uploadFile() {
+    if (this.selected_folder.dataType != "folder") {
+      this.messageService.add({
+        severity: "info",
+        summary: "Info",
+        detail: "Please select Folder",
+      });
+      return;
+    }
+    this.isFile_upload_dialog = false;
+    this.spinner.show();
+
+    let objectKey;
+    let fileKey;
+    if (this.selected_folder.parent) {
+      objectKey = this.selected_folder.parent.children.length
+        ? this.selected_folder.parent.children.length
+        : "1";
+      fileKey = this.selected_folder.key + "-" + String(objectKey);
+    } else {
+      objectKey = this.selected_folder.children.length
+        ? this.selected_folder.children.length
+        : "1";
+      fileKey = this.selected_folder.key + "-" + String(objectKey + 1);
+    }
 
     var fileData = new FormData();
     fileData.append("filePath", this.uploaded_file);
-    fileData.append("key",'3-1')
-    fileData.append("label",this.uploaded_file.name.split('.')[0])
-    fileData.append("data","file")
-    fileData.append("ChildId",'1')
-    fileData.append("dataType",this.uploaded_file.name.split('.')[1])
-    fileData.append("fileSize",this.uploaded_file.size)
-    fileData.append("task_id",this.task_details.id)
-    fileData.append("projectId", this.project_id)
-  
-    this.rest_api.createFolderByProject(fileData).subscribe(res=>{
-
-    })
+    fileData.append("projectId", this.project_id);
+    fileData.append("taskId", this.params_data.task_id);
+    fileData.append("ChildId", "1");
+    fileData.append("fileUniqueIds", JSON.stringify([fileKey]));
+    this.rest_api.uploadfilesByProject(fileData).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Uploaded Successfully !!",
+        });
+        this.getTaskAttachments();
+      },
+      (err) => {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to upload !",
+        });
+      }
+    );
   }
 
+  selectRow() {
+    this.selectedItem = "";
+    if (this.checkBoxselected.length > 0) {
+      this.selectedItem = this.checkBoxselected[0].id;
+    }
+  }
+
+  onDownloadDocument() {
+    let req_body = [];
+    let _me = this;
+    this.checkBoxselected.forEach((ele) => {
+      req_body.push(ele.id);
+    });
+    this.rest_api.dwnloadDocuments(req_body).subscribe((response: any) => {
+      let resp_data = [];
+      if(response.code == 4200){
+        resp_data = response.data;
+        if (resp_data.length > 0) {
+          if (resp_data.length == 1) {
+            let fileName = resp_data[0].label;
+            var link = document.createElement("a");
+            // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+            let extension = resp_data[0].dataType;
+            link.download = fileName;
+            link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
+                ? `data:image/${extension};base64,${resp_data[0].data}`
+                : `data:application/${extension};base64,${resp_data[0].data}`;
+            link.click();
+          } else {
+            var zip = new JSZip();
+            resp_data.forEach((value, i) => {
+              let fileName = resp_data[i].label;
+              // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+              let extension = resp_data[i].dataType;
+              if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+                zip.file(fileName, value.data, { base64: true });
+              else zip.file(fileName, value.data);
+            });
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+              FileSaver.saveAs(content, _me.task_details.taskName + ".zip");
+            });
+          }
+        }
+      }
+      
+    });
+  }
 }

@@ -1620,7 +1620,8 @@ getProjectTaskDetailsById(projectId,taskId){
 }
 
 getMessagesByProjectId(projectId){
-  return this.http.get('https://ezflow.dev.epsoftinc.com/messageservice/getChatData/'+projectId)
+  // return this.http.get('https://ezflow.dev.epsoftinc.com/messageservice/getChatData/'+projectId)
+  return this.http.get('/platform-service/chat-message/getChatData/'+projectId)
 }
 
 getConnectionTable(){
@@ -1653,19 +1654,43 @@ createFolderByProject(body){
 }
 
 uploadfilesByProject(body){
-  return this.http.post("/platform-service/document/createFolder",body)
+  return this.http.post("/platform-service/document/uploadMultipleFiles",body)
 }
 
 getListOfFoldersByProjectId(projectId){
   return this.http.get("/platform-service/document/fetchFoldersDataByProjectId/"+projectId);
 }
 
+
+getWidgetData(api:any, methodType:any)
+{
+  if(methodType=='POST')
+  {
+    return this.http.post(api, "");
+  }
+  else
+  {
+    return this.http.get(api);
+  }
+}
 updateFolderNameByProject(body){
   return this.http.post("/platform-service/document/updateFolderName",body)
 }
 
 deleteSelectedFileFolder(body){
   return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
+}
+
+getDocumentsById(projectid,taskid){
+  return this.http.get("/platform-service/document/fetchFoldersDataByProjectIdAndTaskId/"+projectid+"/"+taskid+"")
+}
+
+dwnloadDocuments(body){
+  return this.http.post("/platform-service/document/downloadMultifulFile",body)
+}
+
+sendMessagesByProjectId(body){
+  return this.http.post("/platform-service/chat-message/saveAndGetChatMessages",body)
 }
 
 }

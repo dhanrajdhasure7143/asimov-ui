@@ -13,6 +13,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "html-docx-js-typescript",
+              "sockjs-client",
+              "crypto-js",
+              "rxjs","xlsx",
+              "dagre-d3",
+              "lodash",
+              "raf",
+              "@babel/runtime",
+              "core-js",
+              "rxjs-compat",
+              "stompjs"
+            ],
             "outputPath": "dist/epsoft",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -21,7 +34,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest"       
             ],
             "styles": [
               "node_modules/sweetalert2/src/sweetalert2.scss",

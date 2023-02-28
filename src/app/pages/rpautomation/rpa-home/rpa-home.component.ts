@@ -1,25 +1,16 @@
 import { Component, OnInit, TemplateRef, ViewChild, Output, EventEmitter, Inject, Input } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { RestApiService } from '../../services/rest-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import { MatTableDataSource } from '@angular/material/table';
-import { DataTransferService } from "../../services/data-transfer.service";
-import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
-import { Sort } from '@angular/material/sort';
-import { of } from 'rxjs/observable/of';
-import { map } from 'rxjs/operators';
-import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { APP_CONFIG } from 'src/app/app.config';
-import { SearchRpaPipe } from './Search.pipe';
 import { Table } from 'primeng/table';
 declare var $: any;
 
@@ -61,7 +52,6 @@ export class RpaHomeComponent implements OnInit {
   botFormVisibility:boolean=false;
   @Output() pageChange: EventEmitter<number>;
   @Output() pageBoundsCorrection: EventEmitter<number>;
-  dataSource: MatTableDataSource<any>;
   importenv: any = "";
   importcat: any = "";
   importfile: any = "";
@@ -69,10 +59,6 @@ export class RpaHomeComponent implements OnInit {
   file_error: any = "";
   isCreateForm: boolean = false;
   botDetails: any;
-  @ViewChild("paginator1") paginator1: MatPaginator;
-  @ViewChild("paginator2") paginator2: MatPaginator;
-  @ViewChild("sort1") sort1: MatSort;
-  @ViewChild("sort2") sort2: MatSort;
   modbotName: any;
   modbotDescription: any;
   modDepartment: any;
@@ -87,11 +73,9 @@ export class RpaHomeComponent implements OnInit {
   userName: any = "";
   displayedRows$: Observable<any[]>;
   rpaVisible: boolean = false;
-  botslist: any = []
   userCheck: boolean = false;
   @ViewChild(MatSort) sort: MatSort;
   totalRows$: Observable<number>;
-  @ViewChild("paginator301") paginator301: MatPaginator;
   freetrail: string;
   botlistitems: any = []
   categoryName: any;
@@ -103,6 +87,7 @@ export class RpaHomeComponent implements OnInit {
   categories_list_new:any[]=[];
   columns_list = [
     { field: 'botName', header: 'Bot Name',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { field: 'createdBy', header: 'Created By',filterType:"text",filterWidget:"normal",ShowFilter:true },
     { field: 'description', header: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true},
     { field: 'categoryName', header: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true },
     { field: 'version_new', header: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true },
@@ -111,9 +96,6 @@ export class RpaHomeComponent implements OnInit {
   ];
   EdithiddenPopUp:boolean=false;
 
-
-
-  // noDataMessage: boolean;
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
@@ -222,53 +204,32 @@ export class RpaHomeComponent implements OnInit {
   }
 
   getallbots() {
-    this.bot_list = [];
     let response: any = [];
     this.spinner.show();
     this.loadflag = true;
     this.rest.getAllActiveBots().subscribe(botlist => {
         this.loadflag = false;
+        this.bot_list = [];
       response = botlist;
-      if(response.length==0)
-      {
-        this.noDataMessage=true;
-      }
-      else
-      {
-        this.noDataMessage=false;
-      }
       response.map(item => {
         if (item.version_new != null) {
           item["version_new"] = parseFloat(item.version_new)
           item["version_new"] = item.version_new.toFixed(1)
-          
         }
       })
       this.botlistitems = botlist;
-      this.botslist = botlist
       this.bot_list = botlist
-      // this.assignPagination(this.bot_list);
       this.spinner.hide();
-      let selected_category = localStorage.getItem("rpa_search_category");
-      if (this.categaoriesList.length == 1) {
-        this.categoryName = this.categaoriesList[0].categoryName;
-      } else {
-        this.categoryName = selected_category ? selected_category : 'allcategories';
-      }
-      this.searchByCategory(this.categoryName);
     }, (err) => {
       this.spinner.hide();
     })
-
     this._selectedColumns = this.columns_list;
-    this.search_fields =['botName',"description","categoryName","version_new","botStatus"]
-
+    this.search_fields =['botName',"description","categoryName","version_new","botStatus","createdBy"]
   }
 
   createoverlay() {
     this.botNamespace = false;
     if (this.freetrail == 'true') {
-     
       if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
         Swal.fire({
           title: 'Error',
@@ -315,13 +276,8 @@ export class RpaHomeComponent implements OnInit {
     }
   }
 
-
-
-
-
   onCreateSubmit() {
     this.userFilter.name = "";
-
     document.getElementById("create-bot").style.display = "none";
     var createBotFormValue = this.insertbot.value;
     let createbot = {
@@ -347,14 +303,11 @@ export class RpaHomeComponent implements OnInit {
               this.spinner.hide();
               Swal.fire("Error", res.errorMessage, "error");
             }
-
           }, err => {
             this.spinner.hide();
             Swal.fire("Error", catResponse.errorMessage, "error");
           });
           // let botId=Base64.encode(JSON.stringify(createBotFormValue));
-
-
         }
         else {
           Swal.fire("Error", catResponse.errorMessage, "error");
@@ -399,7 +352,6 @@ export class RpaHomeComponent implements OnInit {
     this.router.navigateByUrl(`./designer?botId=${botId}`)
   }
 
-
   isEmpty(obj) {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -431,6 +383,7 @@ export class RpaHomeComponent implements OnInit {
 
     }
   }
+
   upload(file) {
     var extarr = file.name.split('.')
     var ext = extarr.reverse()[0]
@@ -547,46 +500,6 @@ export class RpaHomeComponent implements OnInit {
         this.getallbots();
   }
 
-  searchByCategory(category) {
-    localStorage.setItem('rpa_search_category', category);    // Filter table data based on selected categories
-    var filter_saved_diagrams = []
-    this.botslist = []
-    if (category == "allcategories") {
-      this.botslist = this.botlistitems;
-      this.assignPagination(this.botslist);
-    } else {
-      filter_saved_diagrams = this.botlistitems;
-      filter_saved_diagrams.forEach(e => {
-        if (e.categoryName === category) {
-          this.botslist.push(e)
-        }
-      });
-      this.assignPagination(this.botslist);
-    }
-  }
-
-  assignPagination(data) {
-    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
-    // const rows$ = of(data);
-    // this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    // this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-    // this.paginator301.firstPage();
-  }
-
-  applySearchFilter(v) {
-    const filterPipe = new SearchRpaPipe();
-    const fiteredArr = filterPipe.transform(this.botslist, v);
-    this.assignPagination(fiteredArr);
-    if(fiteredArr.length == 0){
-      this.noDataMessage = true;
-    }
-    else{
-      this.noDataMessage=false;
-    }
-  
-  
-  }
 
   closeFormOverlay(event){
   if(event)
@@ -618,6 +531,11 @@ export class RpaHomeComponent implements OnInit {
   }
   closeOverlay1(event) {
     this.EdithiddenPopUp = event;
+  }
+  fitTableView(description) {
+    if (description && description.length > 15)
+      return description.substr(0, 15) + "...";
+    return description;
   }
 
 }

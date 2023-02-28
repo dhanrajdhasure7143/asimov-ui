@@ -1056,7 +1056,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}, // commented for remove console errors in prod build
           // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
           // CustomRenderer,
           lintModule,

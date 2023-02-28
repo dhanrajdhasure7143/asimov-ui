@@ -1,0 +1,32 @@
+<svg width="50" height="67" viewBox="0 0 50 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_21_1258)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.727539 17.6426C0.727539 15.9857 2.07068 14.6426 3.72754 14.6426H46.0001C47.657 14.6426 49.0001 15.9857 49.0001 17.6426V55.144C49.0001 56.8008 47.657 58.144 46.0001 58.144H30.6784C30.0371 58.144 29.4127 58.3495 28.8967 58.7303L20.4064 64.9974C18.525 66.3862 15.8485 65.1839 15.6371 62.855L15.4571 60.8727C15.3168 59.3273 14.0211 58.144 12.4694 58.144H3.72754C2.07068 58.144 0.727539 56.8008 0.727539 55.144V17.6426Z" stroke="#535353" stroke-width="1.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.727539 17.6426C0.727539 15.9857 2.07068 14.6426 3.72754 14.6426H46.0001C47.657 14.6426 49.0001 15.9857 49.0001 17.6426V55.144C49.0001 56.8008 47.657 58.144 46.0001 58.144H30.6784C30.0371 58.144 29.4127 58.3495 28.8967 58.7303L20.4064 64.9974C18.525 66.3862 15.8485 65.1839 15.6371 62.855L15.4571 60.8727C15.3168 59.3273 14.0211 58.144 12.4694 58.144H3.72754C2.07068 58.144 0.727539 56.8008 0.727539 55.144V17.6426Z" stroke="#979797" stroke-width="1.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.4077 14.2234V7.0107Z" fill="#63B8F2"/>
+<path d="M15.4077 14.2234V7.0107" stroke="#979797" stroke-width="1.5"/>
+<path d="M34.6421 14.2234V7.0107" stroke="#979797" stroke-width="1.5"/>
+<circle cx="34.6425" cy="4.60633" r="3.60633" fill="white" stroke="#979797" stroke-width="1.5" stroke-linejoin="round"/>
+<g filter="url(#filter0_d_21_1258)">
+<rect x="7" y="21" width="36" height="31" rx="2" fill="#098DE6"/>
+</g>
+<path d="M14 41.6211C14 41.6211 18.6316 43.6514 25.5789 43.6514C32.5263 43.6514 36 41.6211 36 41.6211" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 32.4849C14 32.4849 14 29.4395 17.5 29.4395C21 29.4395 21 32.4849 21 32.4849" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29 32.4849C29 32.4849 29 29.4395 32.5 29.4395C36 29.4395 36 32.4849 36 32.4849" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="15.4081" cy="4.60633" r="3.60633" fill="white" stroke="#979797" stroke-width="1.5" stroke-linejoin="round"/>
+</g>
+<defs>
+<filter id="filter0_d_21_1258" x="-3" y="15" width="56" height="51" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0352941 0 0 0 0 0.552941 0 0 0 0 0.901961 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_21_1258"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_21_1258" result="shape"/>
+</filter>
+<clipPath id="clip0_21_1258">
+<rect width="50" height="67" fill="white"/>
+</clipPath>
+</defs>
+</svg>

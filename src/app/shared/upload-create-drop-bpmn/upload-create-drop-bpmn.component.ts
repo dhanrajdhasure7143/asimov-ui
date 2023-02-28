@@ -88,7 +88,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   slideUp(){
-    this.hiddenPopUp=true;
     this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
@@ -106,13 +105,15 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }
       else {
         this.uploaded_file = null;
-        var modal = document.getElementById('myModal');
+        this.hiddenPopUp=true;
+        // var modal = document.getElementById('myModal');
         // modal.style.display = "block";
       }
     }
     else {
       this.uploaded_file = null;
-      var modal = document.getElementById('myModal');
+      this.hiddenPopUp=true;
+      // var modal = document.getElementById('myModal');
       // modal.style.display = "block";
     }
   }
