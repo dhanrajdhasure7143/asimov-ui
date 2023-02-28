@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
   selector: "app-rpa-action-items",
@@ -13,15 +16,21 @@ export class RpaActionItemsComponent implements OnInit {
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
 
-  constructor() {}
+  constructor(
+    private router:Router,
+    private loader:LoaderService,
+    private rest_api:RestApiService
+    ) {}
 
   ngOnInit(): void {
+    this.loader.show();
     this.getAlltoolsets();
   }
 
   getAlltoolsets() {
     // this.rest_api.getConnectionslist().subscribe((data: any) => {
     // this.connectorTable = data;
+    this.loader.hide();
     this.columns_list = [
       {
         ColumnName: "actionType",
@@ -74,6 +83,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
     ];
+  // })
   }
 
   viewDetails(event) {}
@@ -82,5 +92,10 @@ export class RpaActionItemsComponent implements OnInit {
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+  }
+  backToConnection(){
+    this.router.navigate(['/pages/rpautomation/configurations'],{
+      queryParams: {index:2}
+    })
   }
 }
