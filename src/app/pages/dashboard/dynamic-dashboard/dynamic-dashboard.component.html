@@ -1,4 +1,4 @@
-<p-splitter [style]="{'height': 'auto'}" [panelSizes]="[70,30]" layout="horizontal" >
+<p-splitter [style]="{'height': 'auto'}" [panelSizes]="[70,30]" layout="horizontal">
    <ng-template pTemplate>
       <div class="container-fluid">
          <div class="col-md-12 pt-5 pb-3 px-3 ">
@@ -7,50 +7,54 @@
                <div class="col-md-4 pl-0">
                   <h3>
 
-                  
+
                      <span *ngIf="!editDashboardName" class="title_text">{{dashboardData.dashboardName}}</span>
-                   
-                  
+
+
                   </h3>
                </div>
                <div class="col-md-8 pr-0 ">
-                 
+
                   <div class="row">
-                  <div class="col-md-8 text-right pr-0">
-                     <p-dropdown [options]="cars" [(ngModel)]="selectedCar" [style]="{'width':'220px','height' :'35px'}">
-                        <ng-template let-item pTemplate="selectedItem"> 
-                           <span >{{item.label}}</span>
-                        </ng-template>
-                        <ng-template let-car pTemplate="item">
-                           <div class="ui-helper-clearfix" style="position: relative;height:25px;">
-                              <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                           </div>
-                        </ng-template>
+                     <div class="col-md-8 text-right pr-0">
+                        <p-dropdown [options]="cars" [(ngModel)]="selectedCar"
+                           [style]="{'width':'220px','height' :'35px'}">
+                           <ng-template let-item pTemplate="selectedItem">
+                              <span>{{item.label}}</span>
+                           </ng-template>
+                           <ng-template let-car pTemplate="item">
+                              <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                                 <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                              </div>
+                           </ng-template>
                         </p-dropdown>
 
-                  </div>
-                  <div class="col-md-4 text-right">
-                     <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg"/>
-                     <span (click)="navigateToCreateDashboard()" class="plus">Create</span>
-                     <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
-                     <button class="btn" type="button" (click)="menu.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                     <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
-                     </button>
-                     <p-menu class="actionspopmenu" #menu [popup]="true" [model]="gfg"></p-menu>
+                     </div>
+                     <div class="col-md-4 text-right">
+                        <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                        <span (click)="navigateToCreateDashboard()" class="plus">Create</span>
+                        <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
+                        <button class="btn" type="button" (click)="menu.toggle($event)"
+                           class="btn-dots eiap-btn btn-grphs-horztal">
+                           <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                        </button>
+                        <p-menu class="actionspopmenu" #menu [popup]="true" [model]="gfg"></p-menu>
+                     </div>
+
                   </div>
 
+
+
                </div>
-               
-           
-              
-                </div>
             </div>
          </div>
-         
+         <!-- <div class="dbichart-body">
+            <div id="chartdiv" class="amart"></div>
+          </div> -->
          <div class="col-md-12 py-3 px-3">
             <div class="row">
-            
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 sec-2" >
+
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 sec-2">
                   <div class="well1-dynmic">
                      <div class="flex-container">
                         <div class="img-div">
@@ -64,130 +68,142 @@
                      </div>
                   </div>
                </div>
-            
-               
+
+
             </div>
          </div>
          <div class="col-md-12 pb-3 px-3">
             <div class="row">
-           
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets; let i=index" >
-                  <div class="well1-dynmic graph" >
-                  
-                    <div class="mt-2">
-                     <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img"/>  <span class="h5">{{widget.widget_title}}</span>
-                     
-                        <button class="btn" type="button" (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                        <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
-</button>
-<p-menu class="actionspopmenu p-menu-graph" #menu1 [popup]="true" [model]="items">
 
-</p-menu>
-      
+               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets; let i=index">
+                  <div class="well1-dynmic graph">
+
+                     <div class="mt-2">
+                        <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
+                           class="h5">{{widget.widget_title}}</span>
+
+                        <button class="btn" type="button" [hidden]="!(widget.edit==false)"
+                           (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
+                           <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                        </button>
+                        <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" [model]="items">
+
+                        </p-menu>
+
+                        <!-- <div [hidden]="!(widget.edit==false)">
+      <p (click)="widget.edit=true">one</p>
+      <p>two</p>
+   </div>  -->
                      </div>
-                    <!-- <i class="pi pi-times right overlay-icon"
+                    
+                     <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
-                    <div  *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
-                     <br>
-                      <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                        <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                      </div>
-                      <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
-                        <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
-                      </div>
-                      <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
-                        <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
-                      </div>
-                      <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
-                        <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
-                      </div>
-                      <div *ngIf="widget.widget_type=='LINE_CHART'">
-                        <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
-                      </div>
-                      <div *ngIf="widget.widget_type=='TABLE'">
-      
-                      </div>
-                      
-                       
+                     <div *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
+                        <br>
+                        <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                          
+                            <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div>
+                        <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                        </div>
+                        <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions"
+                              height="270"></p-chart>
+                        </div>
+                        <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                           <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div>
+                        <div *ngIf="widget.widget_type=='LINE_CHART'">
+                           <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div>
+                        <div *ngIf="widget.widget_type=='TABLE'">
+
+                        </div>
+
+
                      </div>
                      <p class="wid-description">{{widget.widget_description}}</p>
-                    
+
                      <div class="row" *ngIf="widget.edit==true">
-                       <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
-                          <label>Project Type</label>
-                          <div class="row">
-                             <div class="col-md-3">
-                              <input class="form-check-input" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
-                              value="option1" />&nbsp;
-                           <label class="label-control" for="screenname" class="check-label">In Progress</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                           <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                              value="option1" />&nbsp;
-                           <label class="label-control" for="screenname" class="check-label">Hold</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                           <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                              value="option1" />&nbsp;
-                           <label class="label-control" for="screenname" class="check-label">Deployed</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                     </div>
+                        <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
+                           <label>Project Type</label>
+                           <div class="row">
+                              <div class="col-md-3">
+                                 <input class="form-check-input" formControlName="allow_Insert" type="checkbox"
+                                    name="inlineRadioOptions" value="option1" />&nbsp;
+                                 <label class="label-control" for="screenname" class="check-label">In
+                                    Progress</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                              </div>
+                              <div class="col-md-3">
+                                 <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
+                                    name="inlineRadioOptions" value="option1" />&nbsp;
+                                 <label class="label-control" for="screenname"
+                                    class="check-label">Hold</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                              </div>
+                              <div class="col-md-3">
+                                 <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
+                                    name="inlineRadioOptions" value="option1" />&nbsp;
+                                 <label class="label-control" for="screenname"
+                                    class="check-label">Deployed</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                              </div>
+                           </div>
 
-                       </div>
-                      
-                       <div class="col-md-6 form-group mb-4 bps-labcls">
-                        <label>Department</label>
-                        <select class="form-control data">
-                           <option value="">Engineering</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 form-group  bps-labcls">
-                        <label>Refresh Interval</label>
-                        <select class="form-control data">
-                           <option value="">30 Min</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 form-group mb-4 bps-labcls">
-                        <label>Department</label>
-                        <select class="form-control data">
-                           <option value="">Engineering</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 form-group mb-4 bps-labcls">
-                        <label>Refresh Interval</label>
-                        <select class="form-control data">
-                           <option value="">30 Min</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 form-group mb-4 bps-labcls">
-                        <label>Chart Type</label>
-                        <select class="form-control data">
-                           <option value="">Pie Chart</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 form-group mb-4 bps-labcls">
-                        <label>Number of Category</label>
-                        <input type="text"  placeholder="05" class="form-control"  >
-                     </div>
-                     <div class="col-md-12">
-                        <div class="mt-4 mb-4"  style="float:right">
-                           <button class="btn-cancel1">Cancel</button>
-                           <button class="btn-save ">Save</button>
                         </div>
 
-                    
-                    </div>
-                 
+                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                           <label>Department</label>
+                           <select class="form-control data">
+                              <option value="">Engineering</option>
+                           </select>
+                        </div>
+                        <div class="col-md-6 form-group  bps-labcls">
+                           <label>Refresh Interval</label>
+                           <select class="form-control data">
+                              <option value="">30 Min</option>
+                           </select>
+                        </div>
+                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                           <label>Department</label>
+                           <select class="form-control data">
+                              <option value="">Engineering</option>
+                           </select>
+                        </div>
+                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                           <label>Refresh Interval</label>
+                           <select class="form-control data">
+                              <option value="">30 Min</option>
+                           </select>
+                        </div>
+                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                           <label>Chart Type</label>
+                           <select class="form-control data">
+                              <option value="">Pie Chart</option>
+                           </select>
+                        </div>
+                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                           <label>Number of Category</label>
+                           <input type="text" placeholder="05" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                           <div class="mt-4 mb-4" style="float:right">
+                              <button class="btn-cancel1">Cancel</button>
+                              <button class="btn-save ">Save</button>
+                           </div>
+
+
+                        </div>
+
+                     </div>
                   </div>
-                </div>
 
 
-               
+
+               </div>
             </div>
          </div>
       </div>
-      </div>
    </ng-template>
-  </p-splitter>
+</p-splitter>
 
-   <!-- <p-chart type="line" [data]="data" [options]="options"></p-chart> -->
+<!-- <p-chart type="line" [data]="data" [options]="options"></p-chart> -->
