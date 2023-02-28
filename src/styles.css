@@ -3121,7 +3121,7 @@ margin: 0px;
   margin: 10px;
 }
 
-.docfolder .pi-folder, .docfolder .pi-file {
+.docfolder .pi-folder, .docfolder .pi-file , .docfolder .pi-image{
   color: var(--main-bluecolor) !important;
   font-size: 40px;
 }

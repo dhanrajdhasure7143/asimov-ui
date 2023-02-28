@@ -61,7 +61,8 @@ import { ProjectTaskDetailsComponent } from './project-task-details/project-task
 import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProjectDocumentEditorComponent } from './project-details-screen/project-document-editor/project-document-editor.component';
-import { ScrollIntoViewDirective } from './project-details-screen/scroll-into-view.directive';
+import { ScrollIntoViewDirective } from './directives/scroll-into-view.directive';
+import { UserFilterDirective } from './directives/user-filter.directive';
 const materialModules: any[] = [
     
     
@@ -76,7 +77,8 @@ const materialModules: any[] = [
      ProjectTaskListComponent,
      ProjectTaskDetailsComponent,
      ProjectsDocumentComponent,
-     ProjectDocumentEditorComponent],
+     ProjectDocumentEditorComponent,
+     UserFilterDirective],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
