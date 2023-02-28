@@ -124,6 +124,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
   closeFormOverlay(event) {
     this.isFormOverlay = event;
+    this.createConnectorForm.reset();
   }
   closeAuthOverlay(event) {
     this.isAuthOverlay = event;
