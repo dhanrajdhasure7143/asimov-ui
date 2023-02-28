@@ -1123,11 +1123,13 @@ img.testplus {
   width: 16px;
   height: 16px;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 img.testplus1 {
   width: 16px;
   height: 16px;
+  cursor: pointer;
 }
 
 .newinntalx a img {
@@ -2768,9 +2770,12 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 265px);
-  /* margin-top: 10px;
-  height: calc(100vh - 275px); */
+  height: calc(100vh - 180px); /*  attached docs grid height*/
+  overflow: auto;
+}
+.usersgrid .p-datatable-wrapper {
+  height: calc(100vh - 240px);
+  overflow: auto;
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
@@ -2788,6 +2793,15 @@ span.tabscount {
   color: var(--main-txtcolor) !important;
   font-size: 16px;
   margin: 5px 0px 0px;
+}
+.p-datatable .p-datatable-thead > tr > th:before {
+  content: " ";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: -1px;
+  border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
 
 thead.p-datatable-thead tr {
@@ -2821,6 +2835,7 @@ th.p-element.p-sortable-column.p-resizable-column {
 
 .p-datatable .p-datatable-tbody > tr > td {
   border-bottom: 1px solid #E0E0E0 !important;
+  padding: 8px 10px !important;
 }
 tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
   border: 1.5px solid #4AB0F5;
