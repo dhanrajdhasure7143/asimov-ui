@@ -1,35 +1,35 @@
 <div class="dashboard-main">
-    <img src="..\assets\images\Projects\illustration-Letstart.svg" class="dashboard-img"/>
-    <h2 class="dashboard-header" >Design your own dashboard</h2>
-    <div class="btn-p-align" style="text-align: center;">
-       <p-button placement="bottom" 
-          (click)="showDialog()">Let's Start
-       </p-button>
-    </div>
- </div>
- <div style="text-align: center">
-    <p-dialog header=" Create Dashboard" styleClass="my-style-class" 
-    [(visible)]="BasicShow"
-    [style]="{width: '30vw'}"
-    [draggable]="false" 
-    [resizable]="false">
-    <div  class="h-100">
-       <div>
-          <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
-          <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="text" />
-       </div>
-    </div>
-    <ng-template pTemplate="footer">
-       <p-button
-          (click)="BasicShow = false"
-          label="Cancel"
-          styleClass="btn-cancel1">
-       </p-button>
-       <p-button
-          (click)="navigateconfigure()"
-          label="Save"
-          styleClass="p-button p-dialogue-btn ">
-       </p-button>
-    </ng-template>
-    </p-dialog>
- </div>
+   <img src="..\assets\images\Projects\illustration-Letstart.svg" class="dashboard-img"/>
+   <h2 class="dashboard-header" >Design your own dashboard</h2>
+   <div class="btn-p-align" style="text-align: center;">
+      <p-button placement="bottom"  styleClass="p-button p-dialogue-btn1 "
+         (click)="showDialog()">Let's Start
+      </p-button>
+   </div>
+</div>
+<div style="text-align: center">
+   <p-dialog header=" Create Dashboard" styleClass="my-style-class" 
+   [(visible)]="BasicShow"
+   [style]="{width: '30vw'}"
+   [draggable]="false" 
+   [resizable]="false">
+   <div  class="h-100">
+      <div>
+         <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
+         <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="text" />
+      </div>
+   </div>
+   <ng-template pTemplate="footer">
+      <p-button
+         (click)="BasicShow = false"
+         label="Cancel"
+         styleClass="btn-cancel1">
+      </p-button>
+      <p-button
+         (click)="navigateconfigure()"
+         label="Save"
+         styleClass="p-button p-dialogue-btn ">
+      </p-button>
+   </ng-template>
+   </p-dialog>
+</div>
