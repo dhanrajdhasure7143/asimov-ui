@@ -2770,7 +2770,7 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 180px); /*  attached docs grid height*/
+  height: calc(100vh - 260px); /*  attached docs grid height*/
   overflow: auto;
 }
 .usersgrid .p-datatable-wrapper {
@@ -2827,7 +2827,7 @@ th.p-element.p-sortable-column.p-resizable-column {
 }
 
  .p-datatable .p-sortable-column:not(.p-highlight):hover{
- background-color: transparent !important;
+ background-color: #f8f9fa !important;
 }
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
@@ -2914,7 +2914,6 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   border: 1px solid var(--main-bluecolor) !important;
 }
 .p-overlaypanel-content {
-  width: 100px;
   padding: 12px 16px !important;
 }
 .p-overlaypanel {
@@ -3097,10 +3096,6 @@ margin: 0px;
 .doctree span.p-treenode-label b {
   font-weight: 400 !important;
 }
-.doctree .p-treenode-content:focus {
-  background: none !important;
-  box-shadow: unset !important;
-}
 .doctree .p-tree-filter-container {
   position: fixed;
   top: 75px;
@@ -3119,6 +3114,9 @@ margin: 0px;
   border-radius: 6px;
   border: 1px solid #d0d0d0;
   margin: 10px;
+}
+.docfolder .p-card:hover {
+  border: 1px solid #098de6;
 }
 
 .docfolder .pi-folder, .docfolder .pi-file {
@@ -3182,9 +3180,7 @@ margin: 0px;
 
 /* Document FolderName Popup Styles */
 
-.docfldnam .p-dialog-mask {
-  /* background: rgb(0 0 0 / 25%); */
-}
+
 .docfldnam .p-dialog {
 width: 400px;
 border-radius: 8px !important;

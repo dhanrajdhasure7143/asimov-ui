@@ -75,7 +75,7 @@
   // font-size: 30px;
   color: rgb(128, 128, 128);
   padding: 0px;
-  width: 20px;
+  width: 22px;
 }
 
 
@@ -217,7 +217,7 @@ label.epsoft-label sup {
 
 .side-icon img {
   height: auto;
-  width: 20px;
+  width: 22px;
 }
 
 .mat-list-item:hover {
@@ -253,7 +253,7 @@ label.epsoft-label sup {
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
   display: block;
-  height: 42px;
+  height: 45px;
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   padding: 0;
@@ -360,3 +360,10 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   }
 }
 
+
+.orchimg span.side-icon {
+  width: 28px;
+}
+.orchimg img {
+  width: 28px !important;
+}
