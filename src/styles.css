@@ -3356,3 +3356,91 @@ button.custom-popupbtn.mat-button {
   border-bottom: none !important;
   background-color: #f6f6f6 !important;
 }
+/* dynamic dashbord prime styles */
+
+.dropdown-primeng .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll){
+	text-align: left;
+
+}
+.dropdown-primeng .p-dropdown {
+    
+    border: 1px solid #787a7c !important;
+   
+    border-radius: 7px;
+}
+.dropdown-primeng .p-dropdown .p-dropdown-panel {
+    min-width: 260px;
+}
+.dropdown-primeng .p-dropdown-panel {
+  
+    left: -37px !important;
+}
+
+.dropdown-primeng .p-dropdown-label {text-align:left;color:#000;}
+.dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+   border-bottom: 1px solid #cbc9c9;
+   background-color: transparent;
+   background-image: url("./assets/images-n/dashboard/star1.svg");
+   background-repeat: no-repeat;
+   background-position: 96% 53%;
+ 
+   
+   
+}
+.dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
+	background-image: url("./assets/images-n/dashboard/Vector.svg");
+	background-repeat: no-repeat;
+	background-position: 96% 53%;
+ 
+}
+.dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item{padding: 0.5rem 1rem;}
+.dropdown-primeng .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
+    text-align: left;
+    margin: 5px 9px;
+}
+
+ .p-menu-graph .p-menu-overlay {
+  position: absolute;
+  top: 57px !important;
+  right: 19px !important;
+left:unset;
+width:max-content;}
+
+.btn-cancel1 {
+	color: #2196F3 !important;
+	padding: 0.5rem 1rem !important;
+	background-color: transparent !important;
+	border-color: transparent !important;
+	font-size: 16px;
+
+
+}
+
+.p-dialogue-btn {
+	padding: 8px 40px !important;
+
+
+}
+.p-dialogue-btn1 {
+	padding: 9px 63px !important;
+	border-radius: 4px;
+
+
+}
+.p-dialogue-btn {
+	padding: 5px 30px !important;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.tab-primest .prime-slider-override .p-tabview-nav-container {
+	border-bottom: 2px solid #DDD
+}
+.tab-primest .p-tabview-nav-content {
+	border-bottom: 1.5px solid #e1e0e0;
+}
+
+.tab-primest .p-tabview {
+	margin: 0px 15px;
+}
+/* dynamic dashbord prime styles */

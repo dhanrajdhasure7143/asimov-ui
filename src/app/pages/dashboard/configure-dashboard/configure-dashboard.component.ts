@@ -9,6 +9,7 @@ import { RestApiService } from '../../services/rest-api.service';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
+ 
   metrics_list:any[]=[];
   draggedProduct:any;
   defaultEmpty_metrics:any[]=[];
@@ -20,19 +21,45 @@ export class ConfigureDashboardComponent implements OnInit {
     metrics:[]
   }
   chartOptions: { legend: { position: string; }; };
+  metricslist: any;
+  widgetslist: any;
+  metricslistimg: { src: string; }[];
+  result: any;
+  metricsitem: any;
   constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService, private router:Router, private rest:RestApiService) { }
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((params:any)=>{
       this.dynamicDashBoard.dashboardName=params.dashboardName
     })
-    this.metrics_list=[
-      {metricId:"01",metric_name:"Process Execution Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"process.svg",metricAdded:false,value:10},
-      {metricId:"02",metric_name:"Automation Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"round-settings.svg",metricAdded:false,value:10},
-      {metricId:"03",metric_name:"Schedules Failed",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"schedules.svg",metricAdded:false,value:10},
-      {metricId:"04",metric_name:"Pending Approvals",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"Thumbup.svg",metricAdded:false,value:10},
-      {metricId:"05",metric_name:"Tasks Overdue",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"tasksoverdue.svg",metricAdded:false,value:10},
-      {metricId:"06",metric_name:"Process On Hold",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"processonhold.svg",metricAdded:false,value:10}
+    this.getListOfWidgets();
+    this.getListOfMetrics();
+    this.metricslistimg=[
+      {src:"process.svg"},
+      {src:"round-settings.svg"},
+      {src:"schedules.svg"},
+      {src:"Thumbup.svg"},
+
     ]
+
+    // this.result = this.metricslist.map(metricslists => {
+    //   this.metricsitem = this.metricslistimg.find(name => name)
+      
+    //   this.result.address = this.metricsitem
+    //   ? this.metricsitem.address
+    //   : null
+      
+    //   return this.result
+    // })
+    // console.log(this.result)
+    
+    // this.metrics_list=[
+    //   {metricId:"01",metric_name:"Process Execution Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"process.svg",metricAdded:false,value:10},
+    //   {metricId:"02",metric_name:"Automation Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"round-settings.svg",metricAdded:false,value:10},
+    //   {metricId:"03",metric_name:"Schedules Failed",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"schedules.svg",metricAdded:false,value:10},
+    //   {metricId:"04",metric_name:"Pending Approvals",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"Thumbup.svg",metricAdded:false,value:10},
+    //   {metricId:"05",metric_name:"Tasks Overdue",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"tasksoverdue.svg",metricAdded:false,value:10},
+    //   {metricId:"06",metric_name:"Process On Hold",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"processonhold.svg",metricAdded:false,value:10}
+    // ]
     this.widgets=[
       {widgetId:"01", widget_type:"DONUT_WITHOUT_LEGENDS", widget_title:'Process Exectuin Rate', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'none'},
       {widgetId:"02",  widget_type:"HORIZANTAL_BAR_CHART", widget_title:'Automation Rate', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart2.png',chartOptions:{}, widgetAdded:false, api:'none'},
@@ -402,11 +429,24 @@ dynamicdatatransfer(){
   this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
 //})
-this.chartOptions = {
-  legend: { position: "bottom" },
- 
-};
 }
+getListOfMetrics(){
+  this.rest.getMetricsList().subscribe((data:any)=>{
+    this.metricslist=data.data;
+    this.metricslist=this.metricslist.map((item:any,index:number)=>{
+      // item["src"]=this.metricslistimg(i)
+      item["src"]="process.svg"
+    
+      return item
 
-
+    })    
+    
+      })
+}
+getListOfWidgets(){
+  this.rest.getWidgetsList().subscribe((data:any)=>{
+    this.widgetslist=data.data;
+    console.log( this.widgetslist)
+      })
+}
 }
