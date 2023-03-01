@@ -210,7 +210,7 @@ background-color: white;
 .dragicons {
   padding: 0px 5px 0px 12px;
   white-space: nowrap;
-  height: calc(100% - 90px);
+  height: calc(100% - 95px);
   overflow: hidden auto; 
 }
 span.con-text {
