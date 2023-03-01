@@ -9,6 +9,7 @@ import moment from "moment";
 import { APP_CONFIG } from "src/app/app.config";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-projects-list-screen",
@@ -48,8 +49,8 @@ export class ProjectsListScreenComponent implements OnInit {
   columns_list: any = [];
   statuses: any[];
   representatives: any = [];
-  table_searchFields:any=[]
-  hiddenPopUp:boolean = false;
+  table_searchFields: any = [];
+  hiddenPopUp: boolean = false;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
@@ -58,11 +59,10 @@ export class ProjectsListScreenComponent implements OnInit {
     { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
-  isprojectCreateForm: boolean =false;
-  isprogramCreateForm: boolean =false;
-  categoryList:any;
-  categories_list:any[]=[]
-
+  isprojectCreateForm: boolean = false;
+  isprogramCreateForm: boolean = false;
+  categoryList: any;
+  categories_list: any[] = [];
 
   constructor(
     private dt: DataTransferService,
@@ -70,6 +70,8 @@ export class ProjectsListScreenComponent implements OnInit {
     private spinner: LoaderService,
     private router: Router,
     @Inject(APP_CONFIG) private config,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -99,7 +101,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.email = localStorage.getItem("ProfileuserId");
     this.getAllCategories();
     this.getallProjects(this.userRoles, this.name, this.email);
-    this.getUsersList()
+    this.getUsersList();
     this.freetrail = localStorage.getItem("freetrail");
   }
 
@@ -107,24 +109,32 @@ export class ProjectsListScreenComponent implements OnInit {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
-      let res_list = response[0].concat(response[1])
+      let res_list = response[0].concat(response[1]);
       // console.log(res_list)
-      res_list.map(data=>{
-        data["projectName"] = data.programName? data.programName: data.projectName
-        data["process_name"] = this.getProcessNames(data.process)
-        data["status"] = data.status == null ? "New" : data.status
-        data["createdAt"] = moment(data.createdTimestamp).format("lll")
-        data["representative"]= {name: data.type == null ? "Project" : data.type}
-        data["type"] = data.type == null ? "Project" : data.type
-        data["department"]= data.mapValueChain?data.mapValueChain: data.programValueChain
-        data["createdDate"] = moment(data.createdTimestamp).format("lll")
-        data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll")
-        data["lastModifiedBy"] = data.lastModifiedBy?data.lastModifiedBy : data.createdBy
-        return data
-      })
+      res_list.map((data) => {
+        data["projectName"] = data.programName
+          ? data.programName
+          : data.projectName;
+        data["process_name"] = this.getProcessNames(data.process);
+        data["status"] = data.status == null ? "New" : data.status;
+        data["createdAt"] = moment(data.createdTimestamp).format("lll");
+        data["representative"] = {
+          name: data.type == null ? "Project" : data.type,
+        };
+        data["type"] = data.type == null ? "Project" : data.type;
+        data["department"] = data.mapValueChain
+          ? data.mapValueChain
+          : data.programValueChain;
+        data["createdDate"] = moment(data.createdTimestamp).format("lll");
+        data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll");
+        data["lastModifiedBy"] = data.lastModifiedBy
+          ? data.lastModifiedBy
+          : data.createdBy;
+        return data;
+      });
       this.projects_list = [];
-        this.all_projectslist = res_list
-        // console.log(this.all_projectslist)
+      this.all_projectslist = res_list;
+      // console.log(this.all_projectslist)
       // this.all_projectslist = [
       //   ...response[0].map((data) => {
       //     return {
@@ -229,7 +239,7 @@ export class ProjectsListScreenComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
-        dropdownList:["Project","Program"]
+        dropdownList: ["Project", "Program"],
       },
       {
         ColumnName: "projectName",
@@ -261,7 +271,7 @@ export class ProjectsListScreenComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
-        dropdownList:this.categories_list
+        dropdownList: this.categories_list,
       },
       {
         ColumnName: "createdDate",
@@ -310,7 +320,16 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
 
-    this.table_searchFields=['type','projectName','priority','process_name','department','createdDate','lastModifiedBy','updatedDate']
+    this.table_searchFields = [
+      "type",
+      "projectName",
+      "priority",
+      "process_name",
+      "department",
+      "createdDate",
+      "lastModifiedBy",
+      "updatedDate",
+    ];
     this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [
       { name: "Project", value: "Project" },
@@ -404,57 +423,75 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   deleteById(project) {
-    var projectdata: any = project;
     let delete_data = [
       {
         id: project.id,
         type: project.type,
       },
     ];
-    Swal.fire({
-      title: "Enter " + projectdata.type + " Name",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      accept: () => {
+        this.spinner.show();
+        this.api.delete_Project(delete_data).subscribe((res) => {
+          this.spinner.hide();
+          let response: any = res;
+          if (response.errorMessage == undefined && response.warningMessage == undefined) {
+            Swal.fire("Success", "Project Deleted Successfully !!", "success");
+            this.getallProjects(this.userRoles, this.name, this.email);
+          }
+        });
       },
-      showCancelButton: true,
-      confirmButtonText: "Delete",
-    }).then((result) => {
-      let value: any = result.value;
-      if (value != undefined)
-        if (projectdata.projectName.trim() == value.trim()) {
-          this.spinner.show();
-          this.api.delete_Project(delete_data).subscribe((res) => {
-            this.spinner.hide();
-            // this.getallProjects();
-            let response: any = res;
-            if (
-              response.errorMessage == undefined &&
-              response.warningMessage == undefined
-            ) {
-              Swal.fire(
-                "Success",
-                "Project Deleted Successfully !!",
-                "success"
-              );
-              this.getallProjects(this.userRoles, this.name, this.email);
-            } else if (
-              response.errorMessage == undefined &&
-              response.message == undefined
-            ) {
-              Swal.fire("Error", response.warningMessage, "error");
-            } else {
-              Swal.fire("Error", response.errorMessage, "error");
-            }
-          });
-        } else {
-          Swal.fire(
-            "Error",
-            "Entered " + projectdata.type + " Name is Invalid",
-            "error"
-          );
-        }
+      reject: (type) => {},
+      key: "positionDialog",
     });
+
+    // Swal.fire({
+    //   title: "Enter " + projectdata.type + " Name",
+    //   input: "text",
+    //   inputAttributes: {
+    //     autocapitalize: "off",
+    //   },
+    //   showCancelButton: true,
+    //   confirmButtonText: "Delete",
+    // }).then((result) => {
+    //   let value: any = result.value;
+    //   if (value != undefined)
+    //     if (projectdata.projectName.trim() == value.trim()) {
+    //       this.spinner.show();
+    //       this.api.delete_Project(delete_data).subscribe((res) => {
+    //         this.spinner.hide();
+    //         // this.getallProjects();
+    //         let response: any = res;
+    //         if (
+    //           response.errorMessage == undefined &&
+    //           response.warningMessage == undefined
+    //         ) {
+    //           Swal.fire(
+    //             "Success",
+    //             "Project Deleted Successfully !!",
+    //             "success"
+    //           );
+    //           this.getallProjects(this.userRoles, this.name, this.email);
+    //         } else if (
+    //           response.errorMessage == undefined &&
+    //           response.message == undefined
+    //         ) {
+    //           Swal.fire("Error", response.warningMessage, "error");
+    //         } else {
+    //           Swal.fire("Error", response.errorMessage, "error");
+    //         }
+    //       });
+    //     } else {
+    //       Swal.fire(
+    //         "Error",
+    //         "Entered " + projectdata.type + " Name is Invalid",
+    //         "error"
+    //       );
+    //     }
+    // });
   }
 
   getreducedValue(value) {
@@ -466,21 +503,21 @@ export class ProjectsListScreenComponent implements OnInit {
 
   tabViewChange(event, tabView: TabView) {
     const headerValue = tabView.tabs[event.index].header;
-    console.log(headerValue)
-   }
+    console.log(headerValue);
+  }
 
   closeOverlay(event) {
     this.hiddenPopUp = event;
     this.isprojectCreateForm = false;
   }
 
-  onCreateNew(){
+  onCreateNew() {
     this.hiddenPopUp = true;
     this.isprojectCreateForm = false;
   }
 
-  onClikCreateProject(){
-    this.isprojectCreateForm =true;
+  onClikCreateProject() {
+    this.isprojectCreateForm = true;
   }
 
   getUsersList() {
@@ -491,30 +528,33 @@ export class ProjectsListScreenComponent implements OnInit {
     });
   }
 
-  getProjectName(event){
-    if(event) return event
-    else return "Project"
+  getProjectName(event) {
+    if (event) return event;
+    else return "Project";
   }
 
-  getAllCategories() {    // get all categories list for dropdown
-    this.api.getCategoriesList().subscribe(res => {
-    this.categoryList = res
-    
-    let sortedList=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
-    sortedList.forEach(element => {
-      this.categories_list.push(element.categoryName)
+  getAllCategories() {
+    // get all categories list for dropdown
+    this.api.getCategoriesList().subscribe((res) => {
+      this.categoryList = res;
+
+      let sortedList = this.categoryList.data.sort((a, b) =>
+        a.categoryName.toLowerCase() > b.categoryName.toLowerCase()
+          ? 1
+          : b.categoryName.toLowerCase() > a.categoryName.toLowerCase()
+          ? -1
+          : 0
+      );
+      sortedList.forEach((element) => {
+        this.categories_list.push(element.categoryName);
+      });
     });
+  }
 
-  })
-}
-
-onClikCreateProgram(){
-  // this.isprogramCreateForm =true;
-  this.router.navigate(["/pages/projects/create-projects"], {
-    queryParams: { id: this.create_Tabs },
-  });
-
-}
-    
-
+  onClikCreateProgram() {
+    // this.isprogramCreateForm =true;
+    this.router.navigate(["/pages/projects/create-projects"], {
+      queryParams: { id: this.create_Tabs },
+    });
+  }
 }

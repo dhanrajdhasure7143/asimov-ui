@@ -3119,7 +3119,7 @@ margin: 0px;
   border: 1px solid #098de6;
 }
 
-.docfolder .pi-folder, .docfolder .pi-file {
+.docfolder .pi-folder, .docfolder .pi-file , .docfolder .pi-image{
   color: var(--main-bluecolor) !important;
   font-size: 40px;
 }

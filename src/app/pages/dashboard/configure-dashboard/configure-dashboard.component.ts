@@ -19,6 +19,7 @@ export class ConfigureDashboardComponent implements OnInit {
     widgets:[],
     metrics:[]
   }
+  chartOptions: { legend: { position: string; }; };
   constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService, private router:Router, private rest:RestApiService) { }
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((params:any)=>{
@@ -40,8 +41,8 @@ export class ConfigureDashboardComponent implements OnInit {
       {widgetId:"05", widget_type:"DONUT_WITH_LEGENDS_CHART",   widget_title:'Task Overdue', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart5.png',chartOptions:{}, widgetAdded:false , api:'none'},
       {widgetId:"06" , widget_type:"LINE_CHART" ,widget_title:'Process on hold', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart6.png',chartOptions:{}, widgetAdded:false , api:'none'},
       {widgetId:"07", widget_type:"DONUT_WITHOUT_LEGENDS", widget_title:'Bot Status', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'/rpa-service/management/all-bots'},
-      // {widgetId:"08", widget_type:"DONUT_WITHOUT_LEGENDS", widget_title:'Total Automations', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'get-processeNames'},
-      // {widgetId:"09", widget_type:"DONUT_WITHOUT_LEGENDS", widget_title:'Environments', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'get-environments'},
+       {widgetId:"08", widget_type:"DONUT_WITH_LEGENDS_CHART", widget_title:'Environments', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'/rpa-service/agent/get-environments'},
+     {widgetId:"09", widget_type:"DONUT_WITHOUT_LEGENDS", widget_title:'Total Automations', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart1.png', chartOptions:{}, widgetAdded:false, api:'/rpa-service/management/get-automations'},
       // {widgetId:"10", widget_type:"HORIZANTAL_BAR_CHART", widget_title:'Long Running Bots', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart2.png', chartOptions:{}, widgetAdded:false, api:'get-bot-runtimes'},
     ]
     this.widgets[0].sampleData={
@@ -273,39 +274,96 @@ dragEnd() {
     else
       methodType="GET"
     this.rest.getWidgetData(widget.api, methodType).subscribe((response:any)=>{
-      if(response.errorMessage!=undefined)
+      if(response.errorMessage==undefined)
       {
         if(widget.widget_title=='Bot Status')
         {
           widget.sampleData={
-            labels:["Failure", "New", "Stopped", "Success"],
+            
             datasets:[{
               data:[
                 response.filter(bot=>bot.botStatus=="Failure").length,
                 response.filter(bot=>bot.botStatus=="New").length,
                 response.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
                 response.filter(bot=>bot.botStatus=="Success").length,                
-              ]
-            }]
+              ],
+              backgroundColor:[
+                "#bc1d28",
+                "#00a0e3",
+                "#ff0000",
+                "#62c849"
+              ],
+            }],
+            labels:["Failure", "New", "Stopped", "Success"],
           }
           this.dynamicDashBoard.widgets.push(widget);
+          console.log(this.dynamicDashBoard);
         }
-        else if(widget.widget_title=='Environments')
+         else if(widget.widget_title=='Environments')
+         {
+           widget.sampleData={
+             labels:["Mac", "Windows", "Linux"],
+             datasets:[{
+               data:[
+                 response.filter(Environment=>Environment.environmentType=="Mac").length,
+                response.filter(Environment=>Environment.environmentType=="Windows").length,
+                response.filter(Environment=>Environment.environmentType=="Linux").length,
+                 
+                                
+               ],
+               backgroundColor:[
+                 "#c2b280",
+                 "#838381",
+                 "#be0032"
+                 
+               ],
+             }]
+           } 
+           console.log(response)
+           this.dynamicDashBoard.widgets.push(widget);
+        }
+
+        else if(widget.widget_title=='Automation')
         {
           widget.sampleData={
-            labels:["Failure", "New", "Stopped", "Success"],
+            labels:["Approved Processes", "Bots"],
             datasets:[{
               data:[
-                response.filter(bot=>bot.botStatus=="Failure").length,
-                response.filter(bot=>bot.botStatus=="New").length,
-                response.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
-                response.filter(bot=>bot.botStatus=="Success").length,                
-              ]
+                response.filter(automation=>automation.automationStatus=="Approved Processes").length,
+               response.filter(automation=>automation.automationStatu=="Bots").length,
+              ],
+              backgroundColor:[
+                "#ce3779",
+                "#575fcd"
+                
+                
+              ],
             }]
           } 
-        }
-        //console.log(response)
-        //this.dynamicDashBoard.widgets.push(widget);
+          console.log(response)
+          this.dynamicDashBoard.widgets.push(widget);
+       }
+      //  else if(widget.widget_title=='Long Running Bots')
+      //  {
+      //    widget.sampleData={
+      //      labels:["Approved Processes", "Bots"],
+      //      datasets:[{
+      //        data:[
+      //          response.filter(bots=>bots.longrunningbotstype=="Approved Processes").length,
+      //         response.filter(Environment=>Environment.environmentType=="Bots").length,
+      //        ],
+      //        backgroundColor:[
+      //          "#ce3779",
+      //          "#575fcd"
+               
+               
+      //        ],
+      //      }]
+      //    } 
+      //    console.log(response)
+      //    this.dynamicDashBoard.widgets.push(widget);
+      // }
+       
       }
     })
   }
@@ -344,7 +402,11 @@ dynamicdatatransfer(){
   this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
 //})
-
+this.chartOptions = {
+  legend: { position: "bottom" },
+ 
+};
 }
+
 
 }

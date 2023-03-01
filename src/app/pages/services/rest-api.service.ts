@@ -1693,4 +1693,12 @@ sendMessagesByProjectId(body){
   return this.http.post("/platform-service/chat-message/saveAndGetChatMessages",body)
 }
 
+createDashBoard(body){
+  return this.http.post('/platform-service/dashboard/createDashboard',body);
+}
+
+getDashBoardsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardListByUser');
+}
+
 }
