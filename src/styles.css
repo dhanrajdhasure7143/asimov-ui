@@ -1257,6 +1257,7 @@ select.form-control {
   padding: 15px 25px 10px 25px !important;
   background-color: #f0f8ff !important;
   border: none;
+  align-items: center;
 }
 
 .modal-body.modelprbody {
@@ -2156,7 +2157,8 @@ th.mat-header-cell {
   width:70% !important;
 }
 
-.logs-modal .logs-container
+.logs-modal .logs-container,
+.modal-lg .logs-container
 {
   height: 395px  !important;
   overflow:auto;
@@ -2173,7 +2175,8 @@ th.mat-header-cell {
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
   background-color: #f3f3f3 !important;
 }
-.logs-modal td span{
+.logs-modal td span,
+.modal-lg td span{
   font-size: 13px !important;
 }
 th .mat-sort-header-button {
@@ -2728,7 +2731,8 @@ input.p-inputtext {
     box-shadow: none !important;
     height: 100%;
 }
-.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
+cron-editor > div > div.card-header > ul > li > a.nav-link.active {
   border-color: var(--main-bluecolor)!important;
 }
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
@@ -2777,32 +2781,32 @@ span.tabscount {
   padding: 0 !important;
   font-weight: 400 !important;
 }
-.p-datatable .p-datatable-tbody > tr {
+.p-datatable .p-datatable-tbody > tr {  /* for normal th */
   background: transparent !important;
   height: 50px;
   color: var(--main-txtcolor) !important;
   font-size: 16px;
   margin: 5px 0px 0px;
 }
-.p-datatable .p-datatable-thead > tr > th:before {
+.p-datatable .p-datatable-thead > tr > th:before {   /* for normal th */
   content: " ";
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: -1px;
+  bottom: -2px;
   border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
 
 thead.p-datatable-thead tr {
   border-top: none !important;
   font-weight: 700;
-  border-bottom: 2px solid #098de6 !important;
+  border-bottom: 3px solid #098de6 !important;
   position: relative;
   height: 50px;
 }
 
-th.p-element.p-sortable-column.p-resizable-column:before {
+th.p-element.p-sortable-column.p-resizable-column:before {  /* for sortable th */
   content: " ";
  position: absolute;
  top: 5px;
@@ -2895,7 +2899,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .project-ninfo .pinf .p-inplace.p-component {
   height: 37px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
@@ -2940,8 +2944,20 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 
 /* Overlay Screen Styles Start */
 .dynamic-forms-modal{
+  display: none; 
+  position: fixed;  
   padding-left: 60px !important;
-  margin-top: 60px !important;
+  z-index: 1000; 
+  left: 0;
+  top: 60px;
+  width: 100%; 
+  height: 100%; 
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.3); 
+  -webkit-animation-name: fadeIn; 
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
 }
 
 .splitoverlaydiv .p-tabview.p-component,
@@ -2949,7 +2965,8 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 100%;
 }
 .splitoverlaycontent {
-  height: calc(100% - 160px);
+  /* height: calc(100% - 160px); */
+  height: calc(100% - 95px);
 }
 .splitoverlaycontent .p-dropdown {
   width: 200px;
@@ -3013,6 +3030,11 @@ button.btn.bluebg-button {
 .create-header h3 {
 font-size: 16px;
 margin: 0px;
+}
+.createform-overlay {
+  padding: 15px 0px 5px;
+  height: calc(100% - 165px);
+  overflow: auto;
 }
 .createform-overlay label {
   font-size: 14px;

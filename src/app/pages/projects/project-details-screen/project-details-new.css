@@ -175,12 +175,12 @@ span.lowimp {
 .colheads {
     font-weight: 600;
     font-size: 20px !important;
-    /* margin-bottom: 15px; */
-    margin-bottom: 0px;
+    margin-bottom: 15px;
 }
 h4.colheads.chatheader {
     padding: 10px 20px;
     border-bottom: 1px solid #dbdbdb;
+    margin-bottom: 0px;
 }
 .pinnedmsgs {
     background-color: #e5e5e5;

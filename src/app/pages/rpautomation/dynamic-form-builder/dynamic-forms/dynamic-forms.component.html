@@ -1,6 +1,6 @@
-<div  class="form-horizontal">
-    <div class="container m-contanier form-body">
-        <div class="actions-datafields-div">
+<div  class="createform-overlay">
+    <!-- <div class="container m-contanier form-body"> -->
+        <div class="actions-datafields-div h-100">
             <form  [formGroup]="form">
                 <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
                     <form-builder [field]="field" [fields]="fields" [form]="form"></form-builder>
@@ -60,5 +60,5 @@
           <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
           <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0 || !(otherAttributesForm.valid)"   class="btn btn-primary">Save</button>
         </div>
-    </div>
+    <!-- </div> -->
 </div>

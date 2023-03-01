@@ -1,9 +1,13 @@
 .createform-overlay {
-  padding: 15px 0px 5px;
-  height: calc(100% - 165px);
-  overflow: auto;
+  height: calc(100% - 45px);
 }
-
+.scheduletimer-loadicon {
+  align-items: center;
+  display: flex;
+}
+.scheduletimer-actionbtns button {
+  padding: 0px 5px;
+}
 
 
 /* .bg-color {

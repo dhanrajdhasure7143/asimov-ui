@@ -293,24 +293,20 @@
   </ng-template>
 
 
-  <div *ngIf="popup">
-    <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block">
-        <div class="rpa-modal-content">
-        <!-- <div class=""> -->
-          <app-split-overlay  (closeOverlay)="closeOverlaysche($event)">
-
-            <div class="rpa-modal-header">
-                <!-- <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span> -->
-                <h4>Scheduler</h4>
-            </div>
-            <div class="modal-body ">
-                <app-rpa-scheduler [data]="schdata" id="Scheduler"></app-rpa-scheduler>
-            </div>
-        <!-- </div> -->
-    <!-- </div> -->
-  </app-split-overlay>
-    </div>
-</div>
+<div *ngIf="popup">
+  <!-- <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block"> -->
+    <app-split-overlay  (closeOverlay)="closeOverlaysche($event)">
+      <div class="h-100">
+        <div class="create-header">
+          <!-- <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span> -->
+          <h3>Scheduler</h3>
+        </div>
+        <div class="h-100">
+          <app-rpa-scheduler [data]="schdata" id="Scheduler"></app-rpa-scheduler>
+        </div>
+      </div>
+    </app-split-overlay>
+  <!-- </div> -->
 </div>
 
 

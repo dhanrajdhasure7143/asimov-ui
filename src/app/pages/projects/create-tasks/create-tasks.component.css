@@ -1,8 +1,3 @@
-.createform-overlay {
-  padding: 15px 0px 5px;
-  height: calc(100% - 165px);
-  overflow: auto;
-}
 button.btn.new-cancelbtn {
   color: #098de6 !important;
   font-size: 16px;

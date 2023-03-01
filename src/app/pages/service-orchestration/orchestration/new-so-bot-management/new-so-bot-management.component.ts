@@ -656,7 +656,8 @@ public slaupdate : boolean = false;
       if(data.errorMessage==undefined){
         this.AllVersions=data;
         this.selectedversion=version
-        this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
+        // this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
+        this.logsmodalref=this.modalService.show(template, {class:"modal-lg"})
       }
        
       else
@@ -897,7 +898,8 @@ public slaupdate : boolean = false;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
         if(action=="closed")
-        this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
+        // this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
+        this.logsmodalref=this.modalService.show(template,{class:"modal-lg"});
       },err=>{
         this.spinner.hide()
         Swal.fire("Error","Unable to get uipath bots","error");
