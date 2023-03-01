@@ -98,7 +98,7 @@ ul.ui-p-tabview {
 .sec-2 img{    width: 85%;
    }
 .metric{font-weight:600}
-.graph{height:420px;}
+.graph{height:auto;}
 .chart{text-align: center;margin-top:18%}
 .chart img{width:80px;}
 .img-w{margin-right:30px;width:95%;}
