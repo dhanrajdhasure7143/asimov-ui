@@ -17,14 +17,14 @@
 
                   <div class="row">
                      <div class="col-md-8 text-right pr-0">
-                        <p-dropdown [options]="cars" [(ngModel)]="selectedCar"
+                        <p-dropdown [options]="dashbordlist"
                            [style]="{'width':'220px','height' :'35px'}">
                            <ng-template let-item pTemplate="selectedItem">
-                              <span>{{item.label}}</span>
+                              <span>{{item.dashboardName}}</span>
                            </ng-template>
-                           <ng-template let-car pTemplate="item">
+                           <ng-template let-item pTemplate="item">
                               <div class="ui-helper-clearfix" style="position: relative;height:25px;">
-                                 <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                                 <div style="font-size:14px;float:left;margin-top:4px">{{item.dashboardName}}</div>
                               </div>
                            </ng-template>
                         </p-dropdown>
