@@ -81,12 +81,15 @@
         </div> -->
 
                 </div>
-                <div class="docfootbtns">
-                    <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top"> <i class="pi pi-folder"></i> </button>
-                    <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top"> <i class="pi pi-sitemap"></i> </button>                                        
-                </div>
+                
         </div>
-    </div>
+        </div>
+        <div class="row position-relative">
+            <div class="docfootbtns">
+                <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top"> <i class="pi pi-folder"></i> </button>
+                <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top"> <i class="pi pi-sitemap"></i> </button>                                        
+            </div>
+        </div>
     </div>
 
     <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createFolderPopUP" style="display: block">

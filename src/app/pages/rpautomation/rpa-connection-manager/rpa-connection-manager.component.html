@@ -2,13 +2,13 @@
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div *ngIf="addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="openConnectorForm()">
+                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewConnection()">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
                     <span class="testtooltip">New</span>
                 </button>
             </div>
             <div *ngIf="!addflag" class="env-btn credential-btntool">
-                <button (click)="addNewConnection()" class="tsttooltipbtn" id="addbtn" disabled>
+                <button class="tsttooltipbtn" id="addbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
                     <span class="testtooltip">New</span>
                 </button>
@@ -60,7 +60,7 @@
                 (viewDetails)="viewDetails($event)" 
                 (deleteItem)="deleteById($event)"
                 [screenTable]="'common'" 
-                [checkBoxShow]="checkBoxShow" 
+                [checkBoxShow]="true" 
                 (selectedData)="readSelectedData($event)" 
                 [dataKeyId]="'connectorId'"
                 [show_search_field]="true"
@@ -78,14 +78,14 @@
             <div class="container col-lg-12">
                 <form [formGroup]="createConnectorForm">
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="userName"> Connector Name <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}"  maxlength="51" formControlName="connectionName"
+                        <label class="label-control" for="connection"> Connector Name <span class="star">*</span></label>
+                        <input type="text" class="form-control form-control-lg"  maxlength="51" formControlName="connectionName"
                             placeholder="Enter Connector Name">
                         <span *ngIf="createConnectorForm.get('connectionName').invalid && createConnectorForm.get('connectionName').touched && !createConnectorForm.get('connectionName').hasError('pattern')" class="errspan required"> Connector Name Required* </span>
                         <span *ngIf="createConnectorForm.controls['connectionName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
                         </span>
-                    </div>
+                    </div> <br>
                     <!-- <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="userName"> Authorization Type <span class="star">*</span></label>
                         <p-dropdown [options]="authorizationType" formControlName="authorization_Type" autoWidth="false"
@@ -94,18 +94,19 @@
                         <span *ngIf="createConnectorForm.get('authorization_Type').invalid && createConnectorForm.get('authorization_Type').touched" class="errspan required"> Authorization Type Required* </span>
                     </div> -->
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control"> Task Icon <span class="star">*</span></label>
-                        <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon">
+                        <label class="label-control" for="task_icon"> Task Icon <span class="star">*</span></label>
+                        <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
+                        <input class="form-control form-control-lg" accept="image/png, image/svg" formControlName="taskIcon" id="formFileLg" type="file" />
                         <span *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched" class="errspan required"> Task Icon Required* </span>
                     </div>
                     <!-- <div class="custom-file">
                         <input type="file" class="custom-file-input" id="customFileLang" lang="es">
-                        <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                        <label class="custom-filfe-label" for="customFileLang">Seleccionar Archivo</label>
                     </div> -->
                     <div class="form-footer">
                         <button class="btn btn-primary" (click)="resetForm()"> Reset </button> &nbsp;
-                        <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Save </button>
-                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button> 
+                        <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()" class="btn btn-primary"> Save </button>
+                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()"p class="btn btn-primary"> Update </button> 
                     </div>
                 </form>
             </div>
