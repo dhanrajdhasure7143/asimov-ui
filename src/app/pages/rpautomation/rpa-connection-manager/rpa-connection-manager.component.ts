@@ -21,22 +21,16 @@ export class RpaConnectionManagerComponent implements OnInit {
   columns_list: any = [];
   addflag: boolean = true;
   delete_flag: boolean = false;
-  checkBoxShow: boolean = true;
   isConnectorForm: boolean = true;
   isFormOverlay: boolean = false;
   authorizationType: any = [];
   isAuthOverlay: boolean = false;
-  grantType:any=["Authorization Code",
-                 "Password Credentials",
-                 "Refresh Token"];
   updateflag:boolean = false;
   viewConnetorflag = false;
   createConnectorForm: FormGroup;
-  configurationOptions: FormGroup;
-  optionValue:any;
-  optionValue1:any;
   selectedData: any;
   public connctionupdatedata:any;
+  submitted: boolean;
 
 
   constructor(
@@ -51,7 +45,6 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
       connectionName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      // authorization_Type: ["", Validators.compose([Validators.required])],
       taskIcon: ["", Validators.compose([Validators.required])]
     })
 
@@ -66,15 +59,10 @@ export class RpaConnectionManagerComponent implements OnInit {
     // })
 
     this.getAllConnections();
-    this.authTypes();
-    this.getGrantType();
-
     this.connectorTable =[
       {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
       {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
       {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
-
-
     ]
   }
 
@@ -104,24 +92,6 @@ export class RpaConnectionManagerComponent implements OnInit {
         //   sort: true,
         //   multi: false,
         // },
-        // {
-        //   ColumnName: "lastModifiedBy",
-        //   DisplayName: "Created By",
-        //   ShowGrid: true,
-        //   ShowFilter: true,
-        //   filterWidget: "normal",
-        //   filterType: "text",
-        //   sort: true,
-        //   multi: false,
-        // },
-        // {
-        //   ColumnName: "action",
-        //   DisplayName: "Action",
-        //   ShowGrid: true,
-        //   ShowFilter: false,
-        //   sort: false,
-        //   multi: false,
-        // },
       ];
     // });
   }
@@ -129,22 +99,19 @@ export class RpaConnectionManagerComponent implements OnInit {
   viewDetails(event) {}
   deleteById(event) {}
   deleteConnection() {}
-  openUpdateEnvOverlay() {}
-
   viewConnector() {
     this.router.navigate(["/pages/rpautomation/action-item"])
   }
 
   addNewConnection(){
     this.isCreate = true;
-
+    this.isFormOverlay = true;
   }
   openUpdateOverlay() {
     this.isCreate =false;
     this.isFormOverlay = true;
     this.connctionupdatedata = this.selectedData[0];
     this.createConnectorForm.get("connectionName").setValue(this.connctionupdatedata["connectionName"]);
-    // this.createConnectorForm.get("authorization_Type").setValue(this.connctionupdatedata["authorization_Type"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
@@ -155,47 +122,30 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.selectedData.length == 1 ? (this.updateflag =true) : (this.updateflag = false);
     this.selectedData.length == 1 ? (this.viewConnetorflag = true) : (this.viewConnetorflag = false);
   }
-
-  openConnectorForm() {
-    this.isFormOverlay = true;
-    this.isConnectorForm = true;
-  }
-
-  authTypes() {
-    // this.rest_api.getAuthTypes().subscribe((res: any) => {
-    //   this.authorizationType = res;
-    //   console.log("auth types",res);
-    // });
-  }
-
   closeFormOverlay(event) {
     this.isFormOverlay = event;
+    this.createConnectorForm.reset();
   }
-
-  // changeAuth(event) {
-  //   this.isAuthOverlay = true;
-  // }
-
   closeAuthOverlay(event) {
     this.isAuthOverlay = event;
     this.isFormOverlay = true;
   }
-
   saveConfigurations() {
     this.isAuthOverlay = false;
     this.isFormOverlay = true;
   }
-
-  getGrantType(){
-    // this.rest_api.getGrantTypes().subscribe((res:any)=>{
-    //   this.grantType =res;
-    //   console.log("grant types",res)
-    // })
-  }
-
   resetForm(){
   this.createConnectorForm.reset();
   this.createConnectorForm.get("connectionName").setValue("");
   this.createConnectorForm.get("taskIcon").setValue("");
+  }
+  saveConnector(){
+    if(this.isCreate){
+      if(this.createConnectorForm.valid){
+        this.spinner.show();
+        this.submitted=true;
+        let connections = this.createConnectorForm.value;
+      }
+    }
   }
 }

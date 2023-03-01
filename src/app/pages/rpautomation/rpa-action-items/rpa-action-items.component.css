@@ -92,3 +92,14 @@ span.testtooltip:before {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.credential-btntool img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .credential-btntool {
+    position: relative;
+    padding: 6px;
+    margin: 0px !important;
+  }

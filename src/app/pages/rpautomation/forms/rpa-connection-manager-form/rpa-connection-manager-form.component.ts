@@ -114,13 +114,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   methodTypes() {
     this.rest_api.getMethodTypes().subscribe((res: any) => {
-      this.methodItems = res;
+      let filterData = res;
+      this.methodItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
+      console.log("Method Types",this.methodItems)
+      return this.methodItems;
     });
   }
 
   authTypes(){
     this.rest_api.getAuthTypes().subscribe((res: any) => {
-      this.authItems = res;
+      let filterData = res;
+      this.authItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
+      console.log("Auth types",this.authItems)
+      return this.authItems;
+
     });
   }
 
@@ -131,7 +138,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAction = true;
       this.isRequest = false;
       this.isResponse = false;
-    } else if (event == "APIRequest") {
+    } else if (event == "API Request") {
       this.isRequest = true;
       this.isAction = false;
       this.isResponse = false;
@@ -142,7 +149,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   authChange(event) {
-    if (event == "OAUTH2") {
+    if (event == "OAuth 2.0") {
       this.isAuthenticated = true;
     }
   }
@@ -167,14 +174,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
   getActionType(){
    this.rest_api.getActionType().subscribe((res:any)=>{
-      this.actionItems =res;
-      console.log("Ation Items",res)
+    let filterData = res
+      this.actionItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
+      console.log("ActionTypesNew",this.actionItems);
+      return this.actionItems;
     })
   }
   getGrantTypes(){
     this.rest_api.getGrantTypes().subscribe((res:any)=>{
-      this.grantItems =res;
-      console.log("Grant Types",res);
+      let filterData =res;
+      this.grantItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
+      console.log("Grant Types",this.grantItems);
+      return this.grantItems;
     })
   }
 }
