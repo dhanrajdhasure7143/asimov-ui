@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-rpa-action-items",
@@ -12,8 +13,11 @@ export class RpaActionItemsComponent implements OnInit {
   addflag: boolean = true;
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
+  updateflag:boolean = false;
 
-  constructor() {}
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAlltoolsets();
@@ -98,5 +102,12 @@ export class RpaActionItemsComponent implements OnInit {
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    data.length == 1 ? (this.updateflag =true) : (this.updateflag = false);
   }
+
+  updateAction() {
+    this.router.navigate(["/pages/rpautomation/connection"])
+  }
+
+  deleteAction() {}
 }
