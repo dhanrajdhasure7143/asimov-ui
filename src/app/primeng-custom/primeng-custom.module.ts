@@ -18,6 +18,7 @@ import { ContextMenuModule } from "primeng/contextmenu";
 import { DialogModule } from "primeng/dialog";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
+import { RippleModule } from 'primeng/ripple';
 import { ProgressBarModule } from "primeng/progressbar";
 import { InputTextModule } from "primeng/inputtext";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
@@ -78,7 +79,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
     TooltipModule,
     DragDropModule,
     ChartModule,
-    TieredMenuModule
+    TieredMenuModule,
+    RippleModule
   ],
   exports: [
     CommonModule,
