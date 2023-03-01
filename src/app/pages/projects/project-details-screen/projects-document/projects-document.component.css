@@ -39,10 +39,7 @@
 }
 
 
-.docscrnchngs {
-  height: 420px;
-  overflow: auto;
-}
+
 .docfilt-icon .pi-filter-slash {
   font-size: 20px;
   margin-left: 10px;
@@ -85,6 +82,9 @@
 }
 .docritclk div:last-child {
   margin-bottom: 0px;
+}
+.docritclk p-checkbox {
+  margin-right: 10px;
 }
 
 

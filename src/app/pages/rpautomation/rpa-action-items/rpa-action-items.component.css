@@ -74,3 +74,13 @@ span.testtooltip:before {
 *{
     background-color: white;
 }
+.credential-btntool img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .credential-btntool {
+    position: relative;
+    padding: 6px;
+    margin: 0px !important;
+  }

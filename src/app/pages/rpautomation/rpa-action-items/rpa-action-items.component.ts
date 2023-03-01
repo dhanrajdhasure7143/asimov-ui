@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
   selector: "app-rpa-action-items",
@@ -16,16 +18,20 @@ export class RpaActionItemsComponent implements OnInit {
   updateflag:boolean = false;
 
   constructor(
-    private router: Router
-  ) {}
+    private router:Router,
+    private loader:LoaderService,
+    private rest_api:RestApiService
+    ) {}
 
   ngOnInit(): void {
+    this.loader.show();
     this.getAlltoolsets();
   }
 
   getAlltoolsets() {
     // this.rest_api.getConnectionslist().subscribe((data: any) => {
     // this.connectorTable = data;
+    this.loader.hide();
     this.columns_list = [
       {
         ColumnName: "actionName",
@@ -94,6 +100,7 @@ export class RpaActionItemsComponent implements OnInit {
       {id:"2",actionName:"Create", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"POST",actionType:"API Request",attribute:"Employee ID",description:"Creation of an Employee"},
       {id:"3",actionName:"Delete", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"DELETE",actionType:"Authenticated",attribute:"Employee ID",description:"Deletion of an employee"},
     ]
+  // })
   }
 
   viewDetails(event) {}
@@ -110,4 +117,9 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   deleteAction() {}
+  backToConnection(){
+    this.router.navigate(['/pages/rpautomation/configurations'],{
+      queryParams: {index:2}
+    })
+  }
 }

@@ -36,7 +36,7 @@
                                         <option value="" hidden disabled>Select Action</option>
                                         <option value="null" hidden disabled>Select Action</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let action of actionItems"> {{action}}</option>
+                                        <option *ngFor="let action of actionItems"> {{action.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
@@ -53,7 +53,7 @@
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>
-                                        <option *ngFor="let method of methodItems"> {{method}}</option>
+                                        <option *ngFor="let method of methodItems"> {{method.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
@@ -64,7 +64,10 @@
                                     <label class="label-control" for="programname"> Action Icon
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="file" class="form-control" formControlName="icon" placeholder="Upload Icon">
+                                    <input type="file" class="form-control" accept="image/png, image/svg" formControlName="" placeholder="Upload Icon">
+                                    <!-- <span
+                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required* </span> -->
                                 </div>
                             </div>
                             <div class="col-md-12 martsascl form-fields api">
@@ -87,7 +90,7 @@
                                         <option value="" hidden disabled>Select Authentication</option>
                                         <option value="null" hidden disabled>Select Authentication</option>
                                         <option value="undefined" hidden disabled>Select Authentication</option>
-                                        <option *ngFor="let auth of authItems"> {{auth}}</option>
+                                        <option *ngFor="let auth of authItems"> {{auth.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('authType').invalid && connectorForm.get('authType').touched && !connectorForm.get('authType').hasError('pattern')"
@@ -103,7 +106,7 @@
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let grant of grantItems"> {{grant}}</option>
+                                        <option *ngFor="let grant of grantItems"> {{grant.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
