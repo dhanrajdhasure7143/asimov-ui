@@ -20,26 +20,24 @@ export class DynamicDashboardComponent implements OnInit {
   metrics_list: any;
   defaultEmpty_metrics: any;
   widgets: any;
-  cars: SelectItem[];
-
+  // cars: SelectItem[];
   selectedCar: string;
-
- 
   dataTransfer: any;
+  dashbordlist={}
 
 
 
   constructor(private activeRoute: ActivatedRoute, private datatransfer: DataTransferService, private router: Router, private messageService: MessageService,
     private primengConfig: PrimeNGConfig, private rest:RestApiService,
   ) {
-    this.cars = [
-      { label: 'List of Dashboards', value: 'LOD' },
-      { label: 'Analytics dashboard', value: 'AD' },
-      { label: 'Performance Dashboard', value: 'PD' },
-      { label: 'Revenue Dashbaord', value: 'RD' },
-      { label: 'Process Owner Dashboard', value: 'POD' },
+    // this.cars = [
+    //   { label: 'List of Dashboards', value: 'LOD' },
+    //   { label: 'Analytics dashboard', value: 'AD' },
+    //   { label: 'Performance Dashboard', value: 'PD' },
+    //   { label: 'Revenue Dashbaord', value: 'RD' },
+    //   { label: 'Process Owner Dashboard', value: 'POD' },
 
-    ];
+    // ];
 
   }
   public allbots:any;
@@ -68,12 +66,12 @@ export class DynamicDashboardComponent implements OnInit {
       // if(response.find((item:any)=>item.dashboardId==item.dashboardId)!=undefined)
       // {
       //  let dashboardData=response.find((item:any)=>item.dashboardId==item.dashboardId)
-      this.dashboardName = response.dashboardName
-      this.dashboardData = response;
-      this.dashboardData.widgets = response.widgets.map((item: any) => {
-        item["edit"] = false;
-        return item;
-      })
+      // this.dashboardName = response.dashboardName
+      // this.dashboardData = response;
+      // this.dashboardData.widgets = response.widgets.map((item: any) => {
+      //   item["edit"] = false;
+      //   return item;
+      // })
       console.log(this.dashboardData.widgets)
       //}
     })
@@ -86,6 +84,8 @@ export class DynamicDashboardComponent implements OnInit {
     //     });
     //   });
     // }
+
+    this.getListOfDashBoards();
 
   }
   // getallbots()
@@ -158,6 +158,13 @@ export class DynamicDashboardComponent implements OnInit {
         }
       }]
 
+  }
+// Dash Board list in dropdown 
+  getListOfDashBoards(){
+    this.rest.getDashBoardsList().subscribe((data:any)=>{
+      this.dashbordlist=data.dataList;
+      console.log( this.dashbordlist)
+        })
   }
   // getUserDetails(){ // capture the userDatails 
   //   this.dataTransfer.logged_userData.subscribe(res=>{
