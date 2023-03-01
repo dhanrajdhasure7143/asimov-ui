@@ -1958,7 +1958,9 @@ th.mat-header-cell {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: #f6f6f6 !important;
+  /* background-color: #f6f6f6 !important; */
+  background-color: #e0e0e0 !important;
+  opacity: 0.9 !important;
 }
 .prj-db-btn button:hover img.default-img {
   display: none;

@@ -7,8 +7,8 @@
                 </div>
         
                 <div class="col-md-12 p-0 form-group" *ngIf="isMultiForm==true">            
-                    <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
-                    <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
+                    <button class="btn btn-primary" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
+                    <button class="btn btn-primary" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
                 </div>
 
             <div class="col-md-12 p-0 tablmacl " *ngIf="isMultiForm==true"  #scrollContainer>
