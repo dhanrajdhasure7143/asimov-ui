@@ -1700,5 +1700,13 @@ createDashBoard(body){
 getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
+getMetricsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardMetricsList');
+}
+getWidgetsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardWidgetsList');
+}
+
+
 
 }

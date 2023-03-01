@@ -17,7 +17,7 @@
 
                   <div class="row">
                      <div class="col-md-8 text-right pr-0">
-                        <p-dropdown [options]="dashbordlist"
+                        <p-dropdown [options]="dashbordlist" class="dropdown-primeng"
                            [style]="{'width':'220px','height' :'35px'}">
                            <ng-template let-item pTemplate="selectedItem">
                               <span>{{item.dashboardName}}</span>
@@ -38,7 +38,7 @@
                            class="btn-dots eiap-btn btn-grphs-horztal">
                            <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                         </button>
-                        <p-menu class="actionspopmenu" #menu [popup]="true" [model]="gfg"></p-menu>
+                        <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
                      </div>
 
                   </div>
