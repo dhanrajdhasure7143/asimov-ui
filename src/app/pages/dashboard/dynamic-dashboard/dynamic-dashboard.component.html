@@ -8,7 +8,7 @@
                   <h3>
 
 
-                     <span *ngIf="!editDashboardName" class="title_text">{{dashboardData.dashboardName}}</span>
+                     <span *ngIf="!editDashboardName" class="title_text">{{_paramsData.dashboardName}}</span>
 
 
                   </h3>
@@ -62,14 +62,12 @@
                            <!-- <i class="pi pi-1 pi-times right overlay-icon" ></i> -->
                         </div>
                         <div class="new-dynamic">
-                           <h3>10</h3>
-                           <p>{{item.metric_name}}</p>
+                           <h3>{{item.metricValue}}</h3>
+                           <p>{{item.name}}</p>
                         </div>
                      </div>
                   </div>
                </div>
-
-
             </div>
          </div>
          <div class="col-md-12 pb-3 px-3">
@@ -100,7 +98,11 @@
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
                      <div *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
                         <br>
-                        <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                        <div>
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div>
+                        <div>
+                        <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
                           
                             <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div>
@@ -118,15 +120,15 @@
                            <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='TABLE'">
-
-                        </div>
+                        </div> -->
+                     </div>
 
 
                      </div>
                      <p class="wid-description">{{widget.widget_description}}</p>
 
                      <div class="row" *ngIf="widget.edit==true">
-                        <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
+                        <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
                            <label>Project Type</label>
                            <div class="row">
                               <div class="col-md-3">
@@ -149,51 +151,51 @@
                               </div>
                            </div>
 
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Department</label>
                            <select class="form-control data">
                               <option value="">Engineering</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group  bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group  bps-labcls">
                            <label>Refresh Interval</label>
                            <select class="form-control data">
                               <option value="">30 Min</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Department</label>
                            <select class="form-control data">
                               <option value="">Engineering</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Refresh Interval</label>
                            <select class="form-control data">
                               <option value="">30 Min</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <div class="col-6 form-group mb-4 bps-labcls">
                            <label>Chart Type</label>
-                           <select class="form-control data">
+                           <!-- <select class="form-control data">
                               <option value="">Pie Chart</option>
-                           </select>
+                           </select> -->
+                           <p-dropdown [options]="widget.filterOptions.widgetTypes"[style]="{'width':'100%'}"
+                                 placeholder="Select Chart"[(ngModel)]="widget.widget_type">
+                         </p-dropdown>
                         </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        <div class="col-6 form-group mb-4 bps-labcls">
                            <label>Number of Category</label>
                            <input type="text" placeholder="05" class="form-control">
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-12">
                            <div class="mt-4 mb-4" style="float:right">
-                              <button class="btn-cancel1">Cancel</button>
+                              <button class="btn-cancel1" (click)="cancelEdit()">Cancel</button>
                               <button class="btn-save ">Save</button>
                            </div>
-
-
                         </div>
-
                      </div>
                   </div>
 

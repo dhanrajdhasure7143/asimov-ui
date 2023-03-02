@@ -27,362 +27,20 @@ export class DynamicDashboardComponent implements OnInit {
   editDashboardName: boolean = false;
   dashbordlist:any;
   dashboardData:any;
-//   dashboardData: any = {
-//     "dashboardName":"testing",
-//     "widgets":[
-//        {
-//           "widgetId":"01",
-//           "widget_type":"DONUT_WITHOUT_LEGENDS",
-//           "widget_title":"Process Exectuin Rate",
-//           "widget_description":"Lists Recent activity in a single project, or in all projects",
-//           "sampleData":{
-//              "labels":[
-//                 "A",
-//                 "B",
-//                 "C"
-//              ],
-//              "datasets":[
-//                 {
-//                    "data":[
-//                       300,
-//                       50,
-//                       100
-//                    ],
-//                    "backgroundColor":[
-//                       "#FF6384",
-//                       "#36A2EB",
-//                       "#FFCE56"
-//                    ],
-//                    "hoverBackgroundColor":[
-//                       "#FF6384",
-//                       "#36A2EB",
-//                       "#FFCE56"
-//                    ]
-//                 }
-//              ]
-//           },
-//           "chartSrc":"chart1.png",
-//           "chartOptions":{
-             
-//           },
-//           "widgetAdded":true,
-//           "api":"none",
-//           "edit":false
-//        },
-//        {
-//           "widgetId":"02",
-//           "widget_type":"HORIZANTAL_BAR_CHART",
-//           "widget_title":"Automation Rate",
-//           "widget_description":"Lists Recent activity in a single project, or in all projects",
-//           "sampleData":{
-//              "labels":[
-//                 "January",
-//                 "February",
-//                 "March",
-//                 "April",
-//                 "May",
-//                 "June",
-//                 "July"
-//              ],
-//              "datasets":[
-//                 {
-//                    "label":"My First dataset",
-//                    "backgroundColor":"#42A5F5",
-//                    "data":[
-//                       65,
-//                       59,
-//                       80,
-//                       81,
-//                       56,
-//                       55,
-//                       40
-//                    ]
-//                 },
-//                 {
-//                    "label":"My Second dataset",
-//                    "backgroundColor":"#FFA726",
-//                    "data":[
-//                       28,
-//                       48,
-//                       40,
-//                       19,
-//                       86,
-//                       27,
-//                       90
-//                    ]
-//                 }
-//              ]
-//           },
-//           "chartSrc":"chart2.png",
-//           "chartOptions":{
-//              "indexAxis":"y",
-//              "plugins":{
-//                 "legend":{
-//                    "labels":{
-//                       "color":"#495057"
-//                    }
-//                 }
-//              },
-//              "scales":{
-//                 "x":{
-//                    "axis":"x",
-//                    "ticks":{
-//                       "color":"#495057",
-//                       "minRotation":0,
-//                       "maxRotation":50,
-//                       "mirror":false,
-//                       "textStrokeWidth":0,
-//                       "textStrokeColor":"",
-//                       "padding":3,
-//                       "display":true,
-//                       "autoSkip":true,
-//                       "autoSkipPadding":3,
-//                       "labelOffset":0,
-//                       "minor":{
-                         
-//                       },
-//                       "major":{
-                         
-//                       },
-//                       "align":"center",
-//                       "crossAlign":"near",
-//                       "showLabelBackdrop":false,
-//                       "backdropColor":"rgba(255, 255, 255, 0.75)",
-//                       "backdropPadding":2
-//                    },
-//                    "grid":{
-//                       "color":"#ebedef",
-//                       "display":true,
-//                       "lineWidth":1,
-//                       "drawBorder":true,
-//                       "drawOnChartArea":true,
-//                       "drawTicks":true,
-//                       "tickLength":8,
-//                       "offset":false,
-//                       "borderDash":[
-                         
-//                       ],
-//                       "borderDashOffset":0,
-//                       "borderWidth":1,
-//                       "borderColor":"rgba(0,0,0,0.1)"
-//                    },
-//                    "type":"linear",
-//                    "beginAtZero":true,
-//                    "display":true,
-//                    "offset":false,
-//                    "reverse":false,
-//                    "bounds":"ticks",
-//                    "grace":0,
-//                    "title":{
-//                       "display":false,
-//                       "text":"",
-//                       "padding":{
-//                          "top":4,
-//                          "bottom":4
-//                       },
-//                       "color":"#666"
-//                    },
-//                    "id":"x",
-//                    "position":"bottom"
-//                 },
-//                 "y":{
-//                    "axis":"y",
-//                    "ticks":{
-//                       "color":"#495057",
-//                       "minRotation":0,
-//                       "maxRotation":50,
-//                       "mirror":false,
-//                       "textStrokeWidth":0,
-//                       "textStrokeColor":"",
-//                       "padding":3,
-//                       "display":true,
-//                       "autoSkip":true,
-//                       "autoSkipPadding":3,
-//                       "labelOffset":0,
-//                       "minor":{
-                         
-//                       },
-//                       "major":{
-                         
-//                       },
-//                       "align":"center",
-//                       "crossAlign":"near",
-//                       "showLabelBackdrop":false,
-//                       "backdropColor":"rgba(255, 255, 255, 0.75)",
-//                       "backdropPadding":2
-//                    },
-//                    "grid":{
-//                       "color":"#ebedef",
-//                       "offset":true,
-//                       "display":true,
-//                       "lineWidth":1,
-//                       "drawBorder":true,
-//                       "drawOnChartArea":true,
-//                       "drawTicks":true,
-//                       "tickLength":8,
-//                       "borderDash":[
-                         
-//                       ],
-//                       "borderDashOffset":0,
-//                       "borderWidth":1,
-//                       "borderColor":"rgba(0,0,0,0.1)"
-//                    },
-//                    "type":"category",
-//                    "offset":true,
-//                    "display":true,
-//                    "reverse":false,
-//                    "beginAtZero":false,
-//                    "bounds":"ticks",
-//                    "grace":0,
-//                    "title":{
-//                       "display":false,
-//                       "text":"",
-//                       "padding":{
-//                          "top":4,
-//                          "bottom":4
-//                       },
-//                       "color":"#666"
-//                    },
-//                    "id":"y",
-//                    "position":"left"
-//                 }
-//              },
-//              "responsive":true,
-//              "maintainAspectRatio":false
-//           },
-//           "widgetAdded":true,
-//           "api":"none",
-//           "edit":false
-//        },
-//        {
-//           "widgetId":"03",
-//           "widget_type":"VERTICAL_BAR_CHART",
-//           "widget_title":"Scheduled Fields",
-//           "widget_description":"Lists Recent activity in a single project, or in all projects",
-//           "sampleData":{
-//              "labels":[
-//                 "January",
-//                 "February",
-//                 "March",
-//                 "April",
-//                 "May",
-//                 "June",
-//                 "July"
-//              ],
-//              "datasets":[
-//                 {
-//                    "label":"My First dataset",
-//                    "backgroundColor":"#42A5F5",
-//                    "data":[
-//                       65,
-//                       59,
-//                       80,
-//                       81,
-//                       56,
-//                       55,
-//                       40
-//                    ]
-//                 },
-//                 {
-//                    "label":"My Second dataset",
-//                    "backgroundColor":"#FFA726",
-//                    "data":[
-//                       28,
-//                       48,
-//                       40,
-//                       19,
-//                       86,
-//                       27,
-//                       90
-//                    ]
-//                 }
-//              ]
-//           },
-//           "chartSrc":"chart3.png",
-//           "chartOptions":{
-             
-//           },
-//           "widgetAdded":true,
-//           "api":"none",
-//           "edit":false
-//        },
-//        {
-//           "widgetId":"08",
-//           "widget_type":"DONUT_WITH_LEGENDS_CHART",
-//           "widget_title":"Environments",
-//           "widget_description":"Lists Recent activity in a single project, or in all projects",
-//           "sampleData":{
-//              "labels":[
-//                 "Mac",
-//                 "Windows",
-//                 "Linux"
-//              ],
-//              "datasets":[
-//                 {
-//                    "data":[
-//                       0,
-//                       9,
-//                       2
-//                    ],
-//                    "backgroundColor":[
-//                       "#c2b280",
-//                       "#838381",
-//                       "#be0032"
-//                    ]
-//                 }
-//              ]
-//           },
-//           "chartSrc":"chart1.png",
-//           "chartOptions":{
-             
-//           },
-//           "widgetAdded":true,
-//           "api":"/rpa-service/agent/get-environments",
-//           "edit":false
-//        }
-//     ],
-//     "metrics":[
-//        {
-//           "metricId":"01",
-//           "metric_name":"Process Execution Rate",
-//           "metric_desc":"Lists Recent activity in a single project, or in all projects",
-//           "src":"process.svg",
-//           "metricAdded":true,
-//           "value":10
-//        },
-//        {
-//           "metricId":"02",
-//           "metric_name":"Automation Rate",
-//           "metric_desc":"Lists Recent activity in a single project, or in all projects",
-//           "src":"round-settings.svg",
-//           "metricAdded":true,
-//           "value":10
-//        },
-//        {
-//           "metricId":"03",
-//           "metric_name":"Schedules Failed",
-//           "metric_desc":"Lists Recent activity in a single project, or in all projects",
-//           "src":"schedules.svg",
-//           "metricAdded":true,
-//           "value":10
-//        },
-//        {
-//           "metricId":"04",
-//           "metric_name":"Pending Approvals",
-//           "metric_desc":"Lists Recent activity in a single project, or in all projects",
-//           "src":"Thumbup.svg",
-//           "metricAdded":true,
-//           "value":10
-//        }
-//     ]
-//  }
+  _paramsData:any;
 
-
-  constructor(private activeRoute: ActivatedRoute, private datatransfer: DataTransferService, private router: Router, private messageService: MessageService,
-    private primengConfig: PrimeNGConfig, private rest:RestApiService,
+  constructor(private activeRoute: ActivatedRoute, 
+    private datatransfer: DataTransferService, 
+    private router: Router, 
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig, 
+    private rest:RestApiService,
   ) {
-
-  }
+    this.activeRoute.queryParams.subscribe(res=>{
+      console.log(res)
+      this._paramsData = res
+    })
+   }
 
   ngOnInit(): void {
     // this.getUserDetails();
@@ -412,11 +70,76 @@ export class DynamicDashboardComponent implements OnInit {
       
       this.dashboardName = response.dashboardName
       this.dashboardData = response;
+      console.log(this.dashboardData)
+
+      if(response.widgets){
       this.dashboardData.widgets = response.widgets.map((item: any) => {
         item["edit"] = false;
         return item;
       })
-      console.log(this.dashboardData.widgets)
+      console.log(JSON.stringify(this.dashboardData))
+    }else{
+      this.dashboardData= {
+        "dashboardName":"testing",
+        "widgets":[
+           {
+              "widgetId":"01",
+              "widget_type":"pie",
+              "widget_title":"Process Exectuin Rate",
+              "sampleData":{
+                 "labels":["Mac","Windows","Linux"],
+                 "datasets":[
+                    {
+                       "data":[300,50,100],
+                       "backgroundColor":["#FF6384","#36A2EB","#FFCE56"],
+                       "hoverBackgroundColor":["#FF6384","#36A2EB","#FFCE56"]
+                    }
+                 ]
+              },
+              "chartOptions":{ },
+              "widgetAdded":true,
+              "edit":false,
+              filterOptions:{
+                widgetTypes:["pie","bar"]
+              }
+           }
+        ],
+        "metrics":[
+          {
+             "id":1,
+             "name":"Total Number of Resources",
+             "description":"Display the total count of resources onboarded into EZFlow for the tenant",
+             "metricAdded":true,
+             "metricValue":29,
+             "src":"process.svg"
+          },
+          {
+             "id":2,
+             "name":"Total Processes Documented",
+             "description":"Displays the count of processes across all departments",
+             "metricAdded":true,
+             "metricValue":38,
+             "src":"process.svg"
+          },
+          {
+             "id":3,
+             "name":"Total Processes Automated",
+             "description":"Displays the count of processes that has RPA assigned to any of the step",
+             "metricAdded":true,
+             "metricValue":47,
+             "src":"process.svg"
+          },
+          {
+             "id":4,
+             "name":"Processes pending approval",
+             "description":"Total list of processes for which approval is pending",
+             "metricAdded":true,
+             "metricValue":56,
+             "src":"process.svg"
+          }
+       ]
+     }
+    }
 
       //}
     })
@@ -478,14 +201,14 @@ export class DynamicDashboardComponent implements OnInit {
 
   navigateToConfigure() {
     this.datatransfer.setdynamicscreen(this.dashboardData)
-    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: { dashboardId: this.dashboardData.dashboardId } });
+    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams:this._paramsData });
   }
 
   navigateToCreateDashboard() {
     this.router.navigate(["pages/dashboard/create-dashboard"])
   }
   toggleConfigure(e, widget?: any) {
-  
+  console.log(e, widget)
     this.dashboardData.widgets.
       forEach(element => {
         element.edit=true
@@ -504,6 +227,15 @@ export class DynamicDashboardComponent implements OnInit {
       }]
 
   }
+
+  cancelEdit() {
+      this.dashboardData.widgets.
+        forEach(element => {
+          element.edit=false
+        });
+      console.log(this.dashboardData.widgets)
+    }
+
 // Dash Board list in dropdown 
   getListOfDashBoards(){
     this.rest.getDashBoardsList().subscribe((data:any)=>{
@@ -511,14 +243,6 @@ export class DynamicDashboardComponent implements OnInit {
       console.log( this.dashbordlist)
         })
   }
-  // getUserDetails(){ // capture the userDatails 
-  //   this.dataTransfer.logged_userData.subscribe(res=>{
-  //    if(res){
-      
-  //      this.getallbots();
-  //       }
-  //     })
-  //   }
 }
 
 

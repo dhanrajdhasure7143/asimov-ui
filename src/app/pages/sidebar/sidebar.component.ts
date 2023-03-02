@@ -134,4 +134,16 @@ userManagement(){
     queryParams:{index:0}
   })
 }
+
+navigateToDashBoard(){
+        this.rest_service.getDashBoardsList().subscribe((data:any)=>{
+        let dashbordlist=data.dataList;
+        let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+        if(dashbordlist.length == 0){
+          this.router.navigate(["/pages/dashboard/create-dashboard"])
+        }else{
+          this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: {dashboardId:defaultDashBoard.id,dashboardName:defaultDashBoard.dashboardName}})
+        }
+      })
+}
 }

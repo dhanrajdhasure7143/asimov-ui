@@ -20,8 +20,8 @@
           <span class="side-menu-font">Dashboard</span>
         </a>
 
-        <a mat-list-item class="link" id="dashboard" (click)="hightlight('dashboard',null)"
-        routerLink="/pages/dashboard/dynamicdashboard" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''"
+        <a mat-list-item class="link" id="dashboard" (click)="navigateToDashBoard()"
+         [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
           <span class="active-img" id="eiap-home-icon-active">

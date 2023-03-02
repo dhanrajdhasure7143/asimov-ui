@@ -26,11 +26,21 @@ export class ConfigureDashboardComponent implements OnInit {
   metricslistimg: { src: string; }[];
   result: any;
   metricsitem: any;
-  constructor(private activeRoute:ActivatedRoute, private datatransfer:DataTransferService, private router:Router, private rest:RestApiService) { }
+  addedMetrics:any[]=[];
+  addedWidgets:any[]=[];
+  _paramsData:any;
+
+  constructor(private activeRoute:ActivatedRoute, 
+              private datatransfer:DataTransferService, 
+              private router:Router, 
+              private rest:RestApiService) 
+              {
+                this.activeRoute.queryParams.subscribe((params:any)=>{
+                  this._paramsData = params
+                  this.dynamicDashBoard.dashboardName=params.dashboardName
+                })
+               }
   ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe((params:any)=>{
-      this.dynamicDashBoard.dashboardName=params.dashboardName
-    })
     this.getListOfWidgets();
     this.getListOfMetrics();
     this.metricslistimg=[
@@ -38,7 +48,6 @@ export class ConfigureDashboardComponent implements OnInit {
       {src:"round-settings.svg"},
       {src:"schedules.svg"},
       {src:"Thumbup.svg"},
-
     ]
 
     // this.result = this.metricslist.map(metricslists => {
@@ -187,45 +196,9 @@ export class ConfigureDashboardComponent implements OnInit {
       {metricId:"00",metric_name:"Drag And Drop",src:"schedules.svg",metricAdded:false},
       {metricId:"00",metric_name:"Drag And Drop",src:"Thumbup.svg",metricAdded:false}
    ]
-   this.activeRoute.queryParams.subscribe((params:any)=>{
-    if(params.dashboardName!=undefined)
-    {
-      this.dynamicDashBoard.dashboardName=params.dashboardName
-    }
-    // if(params.dashboardId!=undefined)
-    // {
-    //   //localStorage.setItem("", )
-    //   this.datatransfer.dynamicscreenObservable.subscribe((res:any)=>{
-    //     let dashboardsList:any[]=JSON.parse(res);
-    //     console.log(dashboardsList)
-    //     if(dashboardsList.find((item:any)=>item.dashboardId=params.dashbaordId)!=undefined)
-    //     {
-    //         let dynamicDashBoard=dashboardsList.find((item:any)=>item.dashboardId=params.dashbaordId);
-    //         this.dynamicDashBoard=dynamicDashBoard
-    //         dynamicDashBoard.metrics.forEach((item:any)=>{
-    //           this.metrics_list.find((metric_item:any)=>metric_item.metricId==item.metricId).metricAdded=true;
-    //         })
-    //         dynamicDashBoard.widgets.forEach((item:any)=>{
-    //           this.widgets.find((widget_item:any)=>widget_item.widgetId==item.widgetId).widgetAdded=true;
-    //         })
-    //       }
 
-    //     })
 
-    // }
-    else
-    {
-      this.datatransfer.dynamicscreenObservable.subscribe((res:any)=>{
-        this.dynamicDashBoard=res;
-       res.metrics.forEach((item:any)=>{
-            this.metrics_list.find((metric_item:any)=>metric_item.metricId==item.metricId).metricAdded=true;
-        })
-        res.widgets.forEach((item:any)=>{
-          this.widgets.find((widget_item:any)=>widget_item.widgetId==item.widgetId).widgetAdded=true;
-      })
-      })
-    }
-  })
+
   }
 
   dragStart(item) {
@@ -236,8 +209,8 @@ export class ConfigureDashboardComponent implements OnInit {
 
 drop() {
     if (this.draggedProduct) {
-        this.metrics_list.find(item=>item.metricId==this.draggedProduct.metricId).metricAdded=true;
-        this.dynamicDashBoard.metrics.push(this.draggedProduct);
+        this.metrics_list.find(item=>item.id==this.draggedProduct.id).metricAdded=true;
+        this.addedMetrics.push(this.draggedProduct);
         if(this.defaultEmpty_metrics.find(item=>item.metricAdded == false)!=undefined)
           this.defaultEmpty_metrics.find(item=>item.metricAdded == false).metricAdded=true
     }
@@ -247,54 +220,53 @@ dragEnd() {
     this.draggedProduct = null;
 }
 
-  onSelectMetric(event,index){
-      if(event.metricAdded== false){
+  onSelectMetric(metric,index){
+      if(metric.metricAdded== false){
         this.metrics_list[index].metricAdded=true;
-        this.dynamicDashBoard.metrics.push(this.metrics_list[index]);
+        this.addedMetrics.push(metric);
+        // this.dynamicDashBoard.metrics.push(this.metrics_list[index]);
         if(this.defaultEmpty_metrics.find(item=>item.metricAdded == false)!=undefined)
           this.defaultEmpty_metrics.find(item=>item.metricAdded == false).metricAdded=true
     }
-  }
-
-  onEnter(){
+    console.log("addedMetrics",this.addedMetrics)
   }
 
   onDeactivate(data,index, type){
-    if(type=='metrics')
-    {
-      this.dynamicDashBoard.metrics.splice(index, 1);
-      this.metrics_list.find(item=>item.metricId==data.metricId).metricAdded=false;
+    if(type=='metrics'){
+      this.addedMetrics.splice(index, 1);
+      // this.dynamicDashBoard.metrics.splice(index, 1);
+      this.metrics_list.find(item=>item.id==data.id).metricAdded=false;
       if(this.defaultEmpty_metrics.find((item)=>item.metricAdded==true))
       this.defaultEmpty_metrics.find((item)=>item.metricAdded==true).metricAdded=false;
     }
-    if(type=='widgets')
-    {
+    if(type=='widgets'){
+      this.addedWidgets.splice(index, 1)
       this.dynamicDashBoard.widgets.splice(index, 1);
-      if(this.widgets.find(item=>item.widgetId==data.widgetId)!= undefined)
-        this.widgets.find(item=>item.widgetId==data.widgetId).widgetAdded=false;
+      if(this.widgets.find(item=>item.id==data.id)!= undefined)
+        this.widgets.find(item=>item.id==data.id).widgetAdded=false;
     }
   }
 
 
-  addWidget(widget:any)
-  {
-    if(widget.widgetAdded==false)
-    {
-      if(this.widgets.find((item:any)=>item.widgetId==widget.widgetId)!=undefined)
-      {
-        this.widgets.find((item:any)=>item.widgetId==widget.widgetId).widgetAdded=true;
-        if(widget.api == 'none')
+  addWidget(widget:any){
+    if(widget.widgetAdded==false){
+      if(this.widgetslist.find((item:any)=>item.id==widget.id)!=undefined){
+        this.widgetslist.find((item:any)=>item.id==widget.id).widgetAdded=true;
+      let obj={};
+
+      obj={widgetId:widget.id,widgetName:widget.name,widget_type:"pie"}
+
+        this.addedWidgets.push(obj)
           this.dynamicDashBoard.widgets.push(widget);
-        else  
-          this.getChartData(widget);
+          console.log(this.addedWidgets)
+        // else  
+        //   this.getChartData(widget);
       }
     }
   }
 
 
-  getChartData(widget:any)
-  {
-
+  getChartData(widget:any){
     let methodType:any=""
     if(widget.widget_title=='Bot Status')
       methodType="POST"
@@ -306,7 +278,6 @@ dragEnd() {
         if(widget.widget_title=='Bot Status')
         {
           widget.sampleData={
-            
             datasets:[{
               data:[
                 response.filter(bot=>bot.botStatus=="Failure").length,
@@ -426,27 +397,49 @@ dynamicdatatransfer(){
   //   this.datatransfer.setdynamicscreen(JSON.stringify(response)); 
   //   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
   // }
+    console.log(this.addedMetrics);
+    this.dynamicDashBoard.metrics = this.addedMetrics;
+
   this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
-  this.router.navigate(['/pages/dashboard/dynamicdashboard'])
+  this.router.navigate(['/pages/dashboard/dynamicdashboard'],{queryParams:this._paramsData})
 //})
 }
 getListOfMetrics(){
   this.rest.getMetricsList().subscribe((data:any)=>{
-    this.metricslist=data.data;
-    this.metricslist=this.metricslist.map((item:any,index:number)=>{
-      // item["src"]=this.metricslistimg(i)
+    this.metrics_list=data.data;
+    this.metrics_list=this.metrics_list.map((item:any,index:number)=>{
+      item["metricAdded"] =false
+      item["metricValue"] =20+Number(item.id*9)
       item["src"]="process.svg"
-    
       return item
-
-    })    
-    
+    })
+    this.datatransfer.dynamicscreenObservable.subscribe((res:any)=>{
+      console.log(res.widgets)
+      if(res.metrics){
+      this.dynamicDashBoard=res;
+      this.addedMetrics = this.dynamicDashBoard.metrics
+     res.metrics.forEach((item:any)=>{
+          this.metrics_list.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
+          // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
       })
+  
+      res.widgets.forEach((item:any)=>{
+        this.widgets.find((widget_item:any)=>widget_item.id==item.id).widgetAdded=true;
+    })
+      }
+    })
+    console.log("this.metrics_list",this.metrics_list)
+  })
 }
 getListOfWidgets(){
   this.rest.getWidgetsList().subscribe((data:any)=>{
     this.widgetslist=data.data;
-    console.log( this.widgetslist)
-      })
+    this.widgetslist=this.widgetslist.map((item:any,index:number)=>{
+      item["widgetAdded"] =false
+      item["chartSrc"]="chart4.png'"
+      return item
+    })
+    console.log("this.widgetslist" ,this.widgetslist)
+  })
 }
 }
