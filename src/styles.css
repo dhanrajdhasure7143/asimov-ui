@@ -586,23 +586,23 @@ foreignObject {
 }
 
 .density-low path {
-  stroke: green !important;
+  stroke: var(--low-importance) !important;
 }
 
 .density-medium path {
-  stroke: orange !important;
+  stroke: var(--medium-importance) !important;
 }
 
 .density-high path {
-  stroke: red !important;
+  stroke: var(--high-importance) !important;
 }
 
 .density-low marker path {
-  fill: green;
+  fill: var(--low-importance);
 }
 
 .density-medium marker path {
-  fill: orange;
+  fill: var(--medium-importance);
 }
 
 .density-high marker path {
@@ -1243,7 +1243,7 @@ select.form-control {
 
 .required,
 .star {
-  color: #EA3D3D;
+  color: var(--high-importance);
   font-size: 12px !important;
   line-height: 17px;
   letter-spacing: 0.2px;
@@ -2740,18 +2740,18 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
   border-color: transparent;
 }
-#tabs_screen .p-tabview .p-tabview-nav li{
+.tabs_screen .p-tabview .p-tabview-nav li{
   width: 200px !important;
 }
-#tabs_screen .p-tabview-nav-content {
+.tabs_screen.config_tabs .p-tabview .p-tabview-nav li {
+  width: 225px !important;
+}
+.tabs_screen .p-tabview-nav-content {
   border: 1px solid #D0D0D0 !important;
   background-color: #fff;
   border-radius: 6px;
   height: 70px;
   width: 100%;
-}
-#tabs_screen th{
-  color: var(--main-txtcolor);
 }
 span.tabscount {
   font-size: 44px !important;

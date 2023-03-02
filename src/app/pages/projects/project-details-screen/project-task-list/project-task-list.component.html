@@ -25,7 +25,7 @@
       </div>
       <div class="main-content-body tablist-cont">
           <div class="h-100">
-              <div class="h-100" id="tabs_screen">
+              <div class="tabs_screen h-100" id="">
                   <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
                       <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
                           [selected]="i == 0">
