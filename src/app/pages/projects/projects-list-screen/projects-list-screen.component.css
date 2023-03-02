@@ -13,7 +13,7 @@
 .row.create-body {
   align-items: center;
   justify-content: space-evenly;
-  height: calc(100% - 125px);
+  height: calc(100% - 50px);
 }
 .prjoverlay p.title_text {
   margin: 0;

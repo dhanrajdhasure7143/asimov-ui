@@ -1,3 +1,9 @@
+/* New Styles */
+.createform-overlay {
+  height: calc(100% - 100px);
+}
+/* New Styles */
+
 .tabs {
     overflow: visible !important;
     position: relative !important;
