@@ -1328,6 +1328,8 @@ onFilteredUsers(usernames: string[]) {
     messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
   }
 }
-
+cancelSelectedUsers(){
+  this.checkBoxselected=[];
+}
 }
 
