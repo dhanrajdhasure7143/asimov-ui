@@ -193,6 +193,12 @@ label.epsoft-label {
 }
 
 label.epsoft-label sup {
+  font-size: 25px;
+    position: absolute;
+    top: 11px;
+    right: -12px;
+    color: #001c47;
+  /* need to remove
   font-size: 6px;
   border: 1px solid #001c47;
   border-radius: 50%;
@@ -201,7 +207,7 @@ label.epsoft-label sup {
   width: 8px;
   position: absolute;
   top: 0px;
-  right: -10px;
+  right: -10px;*/
 }
 
 

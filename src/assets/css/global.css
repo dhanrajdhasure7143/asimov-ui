@@ -19,16 +19,16 @@
   outline: none;
 }
 
-input[type="text"]:not(.mat-input-element),
+/* input[type="text"]:not(.mat-input-element),
 input[type="password"] {
   border: none;
   border-bottom: 1px solid gray;
   text-align: left;
-}
+} 
 
 sup {
   top: -1.5em
-}
+}*/
 
 span.user_name::before {
   content: "\f007";

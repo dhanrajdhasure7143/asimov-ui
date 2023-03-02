@@ -13,6 +13,7 @@ import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 import {MessageService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
 selector: 'app-project-details-screen',
@@ -220,11 +221,15 @@ files:any[]=[];
 selectedType:any;
 isDialog:boolean=false;
 entered_folder_name:string='';
+_pinnedMessage:any[]=[];
+filteredUsers:any;
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
 private spinner: LoaderService,
-private messageService: MessageService) {
+private messageService: MessageService,
+private confirmationService: ConfirmationService
+) {
   this.route.queryParams.subscribe((data:any)=>{​​​​​​
     this.params_data=data
     this.project_id = this.params_data.project_id
@@ -948,36 +953,85 @@ this.rest_api
 };
 
 
-sendMessage() {
-let message={
-  userId:this.logged_userId,
-  message:this.typedMessage,
-  projectId:this.project_id,
-  rmId:0,
-  firstName:this.userDetails.firstName,
-  lastName:this.userDetails.lastName,
-  "pinnedMessage": false,
-  "replyMessage": "",
-}
+sendMessage(item,type) {
+  console.log(item)
+  let message
+  if(type == 'save'){
+  message={
+      userId:this.logged_userId,
+      message:this.typedMessage,
+      projectId:this.project_id,
+      rmId:0,
+      firstName:this.userDetails.firstName,
+      lastName:this.userDetails.lastName,
+      "pinnedMessage": false,
+      "replyMessage": "",
+    }
+  }
+
+  if(type == 'pinned'){
+    message= item;
+    message.pinnedMessage = true;
+    this.replay_msg=''
+  }
+
+    if(type == "unpinned"){
+      message = this._pinnedMessage[0];
+      message.pinnedMessage = false;
+      this.replay_msg='';
+    }
+
+    if(this.replay_msg){
+      message.rmId = this.replay_msg.id;
+      message.replyMessage = this.replay_msg.message;
+    }
+
 // console.log("calling logout api via web socket",message);
 // this.typedMessage='';
 // this.replay_msg = null;
 // this.stompClient.send("/app/send", {}, JSON.stringify(message));
   this.rest_api.sendMessagesByProjectId(message).subscribe(res=>{
     this.typedMessage='';
+    this.replay_msg="";
     this.getMessagesList();
   })
+}
+
+pinMessage(item){
+  this.replay_msg='';
+  if(this._pinnedMessage.length>0){
+  this.confirmationService.confirm({
+    message: 'Want to replace the currently pinned message with this one?',
+    header: 'Confirmation',
+    icon: 'pi pi-info-circle',
+    accept: () => {
+      this.sendMessage(item,'pinned')
+    },
+    reject: (type) => {
+    },
+    key: "positionDialog"
+});
+}else{
+  this.sendMessage(item,'pinned')
+}
 }
 
 getMessagesList(){
 this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
   this.messages_list = res;
+  this._pinnedMessage = [];
+  this.messages_list.reverse();
   console.log("messageList", this.messages_list);
-  if(this.messages_list.length >0)
+  if(this.messages_list.length >0){
+  this.messages_list.forEach(ele=>{
+    if(ele.pinnedMessage)
+    this._pinnedMessage.push(ele)
+  })
   setTimeout(()=>{
       var objDiv = document.getElementById("message-body");
       objDiv.scrollTop = objDiv.scrollHeight;
     },100)
+  }
 })
 }
 
@@ -1009,12 +1063,14 @@ return firstName.charAt(0)+lastName.charAt(0);
 
   replyMessage(message){
 this.replay_msg=message;
+console.log(message)
 // this.el.nativeElement;
 // var element = document.querySelector('.selected-order');
 // element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
 }
 
-scrollTomain(message){
+scrollTomain(message,type){
+  type == "replyMessage"? this.selectedItem = message.rmId: this.selectedItem = message.id
 this.selectedItem = message.rmId
 setTimeout(()=>{
   this.selectedItem =''
@@ -1153,6 +1209,10 @@ this.isFile_upload_dialog = false;
 }
 
 createFolder(){
+  if(this.selected_folder.dataType != 'folder'){
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+    return
+  }
 this.isDialog = true;
 this.isFile_upload_dialog=false;
 }
@@ -1248,4 +1308,26 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
 })
 }
 
+truncateValue(replyMessage) {
+  if (replyMessage && replyMessage.length > 20)
+    return replyMessage.substr(0, 20) + "...";
+  return replyMessage;
 }
+
+onFilteredUsers(usernames: string[]) {
+  this.filteredUsers = this.existingUsersList.filter(user => {
+    console.log( this.filteredUsers)
+    if(usernames.length>0)
+      if((usernames[0].toLowerCase()).includes(user.firstName.toLowerCase()))
+      {
+        return user;
+      } 
+  });
+  if(this.filteredUsers.length>0){
+    const messageInput = document.getElementById('message-input') as HTMLInputElement;
+    messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
+  }
+}
+
+}
+
