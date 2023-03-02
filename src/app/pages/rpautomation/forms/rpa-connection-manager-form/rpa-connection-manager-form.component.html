@@ -75,6 +75,12 @@
                                 <span
                                     *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
                                     class="errspan required"> API / URL Required* </span>
+                                   <textarea name="" id="" cols="30" rows="13" placeholder="Raw"  id="value" (keyup)="isJsonValid()" formControlName="bodyRaw" class="form-control raw"></textarea>
+                                            <span *ngIf="connectorForm.get('bodyRaw').invalid && connectorForm.get('bodyRaw').touched" class="errspan required">Body Raw Required* </span>
+                                            <span *ngIf="connectorForm.get('bodyRaw').valid">
+                                                <p *ngIf="validateJSON" class="text-danger">Invalid JSON Format</p>
+                                                <p *ngIf="!validateJSON" class="text-success">Valid JSON Format</p>
+                                            </span>
                             </div>
                             <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0" *ngIf="isAction">
