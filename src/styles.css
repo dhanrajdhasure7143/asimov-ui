@@ -2820,10 +2820,15 @@ th.p-element.p-sortable-column.p-resizable-column:before {  /* for sortable th *
 
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
+  color: var(--main-txtcolor);
+}
+.p-datatable .p-sortable-column.p-highlight:hover {
+  color: var(--main-txtcolor) !important;
 }
 
  .p-datatable .p-sortable-column:not(.p-highlight):hover{
  background-color: #f8f9fa !important;
+ color: var(--main-txtcolor) !important;
 }
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
