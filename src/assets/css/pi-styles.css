@@ -24,7 +24,7 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  background-color: #00a0e3 !important;
+  background-color: #098de6 !important;
   cursor: no-drop;
   pointer-events:none;
   color: #fff;
@@ -915,14 +915,14 @@ img.hover-img {
   width: 22px;
   height: 22px;
   top: -10px;
-  background-color: #00A0E3;
+  background-color: #098de6;
 }
 .filter-slider .ng5-slider .ng5-slider-bubble {
   color: #333;
   font-size: 14px;
 }
 .filter-slider .ng5-slider .ng5-slider-selection {
-  background: #00a0e3;
+  background: #098de6;
 }
 .piechart_graph .ngx-charts-outer {
   width: 80px !important;
@@ -961,23 +961,28 @@ img.hover-img {
   font-size: 13px;
   font-weight: 600;
 }
+.check_box input#check_box {
+    width: 16px !important;
+    height: 16px !important;
+}
 .event2 {
-  float: right;
+  margin-left: auto !important;
   width: 26%;
 }
 .variant_border {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
   cursor: pointer;
   display: flex;
   font-size: 14px;
   padding: 6px 10px !important;
+  height: 45px;
+  align-items: center;
 }
 .variant_border:hover{
   background-color: #ffffff;
-  color: #00a0e3;
+  color: #098de6;
 }
 .event3 {
-  font-size: 14px;
   width: 30%;
 }
 .variant_parcent {
@@ -985,7 +990,6 @@ img.hover-img {
 }
 .varaint-days {
   width: 25%;
-  font-size: 14px;
 }
 .event3 span, .variant_parcent span {
   font-size: 14px;

@@ -66,18 +66,8 @@
     @keyframes fadeIn {
     from {opacity: 0} 
     to {opacity: 1}
-    }
-    
-
-.errspan{
-    position: relative;
-    z-index: 2;
-    color: #EA3D3D;
-    font-size: 12px;
-    letter-spacing: 0.2px;
-    padding-right: 10px;
-    line-height: 12px;
 }
+
 .connection-buttons{
     margin-left: 20%;
 }

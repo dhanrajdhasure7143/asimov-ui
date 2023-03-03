@@ -728,6 +728,7 @@ foreignObject {
 
 .ngx-timepicker-control__input {
   font-size: 16px !important;
+  background: transparent;
 }
 
 .chart-legend .legend-wrap {
@@ -1247,10 +1248,6 @@ select.form-control {
   font-size: 12px !important;
   line-height: 17px;
   letter-spacing: 0.2px;
-  /* color: rgb(253 75 75) !important;
-  font-size: 12px !important;
-  font-weight: normal !important;
-  letter-spacing: 0.2px; */
 }
 
 .modal-header.modelprhead {
