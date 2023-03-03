@@ -44,14 +44,7 @@
     cursor: pointer;
     }
     
-    .modal-header {
-    padding: 2px 16px;
-    background-color: #e5e5e5;
-    color: #000;
-    }
-    .modal-header .close {
-    /* margin-top: 5px; */
-   }
+   
     
     
     /* Add Animation */
@@ -75,9 +68,7 @@
     to {opacity: 1}
     }
     
-.databaseForm{
-    padding: 10px;
-}
+
 .errspan{
     position: relative;
     z-index: 2;
@@ -339,4 +330,17 @@ img.hover-img {
     padding-right: 0px !important;
     height: 62vh;
     overflow: hidden auto;
+} */
+
+ /* .modal-header {
+    padding: 2px 16px;
+    background-color: #e5e5e5;
+    color: #000;
+    } */
+    .modal-header .close {
+        /* margin-top: 5px; */
+    }
+
+/* .databaseForm{
+    padding: 10px;
 } */

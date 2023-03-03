@@ -100,24 +100,29 @@
     padding-left: 10px;
   }
   .edgemetrics_spinner{
-    background-color: #f4f4f4;
-    color: black !important;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 8px 10px;
+    font-size: 14px;
+    padding: 10px;
     cursor: auto;
   }
+  .edgemetrics_spinner span{
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    display: flex;
+    align-items: flex-start;
+  }
   .form-check-input{
-    margin-top: 3px;
-    margin-right: 4px;
+    margin-top: 4px;
+    margin-right: 5px;
+    margin-left: 0px;
+    position: inherit;
   }
   .isactive{
     color: white !important;
-    background-color: #00a0e3
+    background-color: #098de6
   }
   .activevaraint{
     color: #ffffff;
-    background-color: #00a0e3;
+    background-color: #098de6;
   }
   .events1 p{
     font-size: 12px;
@@ -141,11 +146,13 @@
     transition: margin-right .5s;
   }
   .reset_btn{
-    margin-left: 105px;
+    margin-left: 100px;
     border: none !important;
     background: none;
-    color: #00a0e3;
-    padding-top: 5px;
+    color: #098de6;
+    padding-top: 8px;
+    font-weight: 500;
+    font-size: 15px;
   }
   #linkname{
     font-size: 14px;
@@ -365,11 +372,7 @@
 button.closebtn:hover {
   color: #00a0e3;
 }
-.edgemetrics_spinner span{
-  font-size: 13px !important;
-  margin-bottom: 8px !important;
-  display: flex;
-}
+
 
 
 img.hover-img {

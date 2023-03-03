@@ -54,7 +54,7 @@ span.testtooltip:before {
     margin-left: 4px;
     border-width: 8px;
     border-style: solid;
-    border-color: transparent transparent #ccc transparent;
+    border-color: transparent transparent #ccc;
   }  
   .hrsInput input{
     border: 1px solid lightgray !important;
@@ -128,18 +128,14 @@ span.testtooltip:before {
   margin-right: 0px !important;
 }
 .timefeed-header h3 {
-  margin-top: 0px !important;
-  margin-bottom: 15px !important;
-  font-size: 18px !important;
+  font-size: 20px !important;
   font-weight: 600;
-  color: #001c47;
 }
 .timefeed-header span.close {
-  margin-top: -4px;
+  margin-top: 2px;
   opacity: 1;
   font-size: 20px;
   font-weight: 600;
-  color: #001c47;
 }
 .timefeed-header span.close:hover {
   color: #00a0e3;
@@ -147,6 +143,12 @@ span.testtooltip:before {
 .PI-insights-headericons button img {
   width: 17px;
   height: 17px;
+}
+.timefeed-body label {
+  font-size: 14px;
+    color: #7d7d7d;
+    margin-bottom: 2px;
+    line-height: 18px;
 }
 .PI-insights-timefeed {
   transform: translate(235px, 41px) !important;
@@ -166,3 +168,7 @@ span.testtooltip:before {
 }
 
 
+button.btn.canlrst-btn:hover {
+  background: transparent !important;
+  color: #098de6;
+}
