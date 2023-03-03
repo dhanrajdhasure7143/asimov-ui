@@ -13,9 +13,9 @@
                         #environmentName value="" placeholder="Enter Name">
                     <span
                         *ngIf="(environmentForm.get('environmentName').invalid && environmentForm.get('environmentName').touched) && !environmentForm.controls['environmentName'].hasError('maxlength')"
-                        class="errspan required">Name Required*</span>
+                        class="required">Name Required*</span>
                     <div *ngIf="environmentForm.controls['environmentName'].hasError('maxlength')"
-                        class="errspan required">
+                        class="required">
                         Maximum of 50 characters
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     </select>
                     <span
                         *ngIf="environmentForm.get('environmentType').invalid && environmentForm.get('environmentType').touched"
-                        class="errspan required">Type Required*</span>
+                        class="required">Type Required*</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
@@ -37,17 +37,17 @@
                         placeholder="Enter Agent Path">
                     <span
                         *ngIf="(environmentForm.get('agentPath').invalid && environmentForm.get('agentPath').touched) && !environmentForm.controls['agentPath'].hasError('maxlength')&& !environmentForm.controls['agentPath'].hasError('pattern')"
-                        class="errspan required"> Agent Path Required*</span>
+                        class="required"> Agent Path Required*</span>
                     <div *ngIf="environmentForm.controls['agentPath'].hasError('maxlength')"
-                        class="errspan required">
+                        class="required">
                         Maximum of 50 characters
                     </div>
                     <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && !environmentForm.controls['agentPath'].hasError('maxlength')) && environmentForm.get('agentPath').touched"
-                    class="errspan required">
+                    class="required">
                     Invalid Agent Path format*
                 </div>
                 <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && environmentForm.controls['agentPath'].hasError('maxlength'))"
-                    class="errspan required">
+                    class="required">
                     Invalid Agent Path format*
                 </div>
                 </div>
@@ -58,13 +58,13 @@
                         placeholder="Enter IP Address / Host">
                     <span
                         *ngIf="(environmentForm.get('hostAddress').invalid && environmentForm.get('hostAddress').touched) && !environmentForm.controls['hostAddress'].hasError('maxlength') && !environmentForm.controls['hostAddress'].hasError('pattern')"
-                        class="errspan required"> IP Address/Host Required*</span>
+                        class="required"> IP Address/Host Required*</span>
                     <div *ngIf="(environmentForm.controls['hostAddress'].hasError('pattern') && !environmentForm.controls['hostAddress'].hasError('maxlength')) && environmentForm.get('hostAddress').touched"
-                        class="errspan required">
+                        class="required">
                         Invalid IP Address format
                     </div>
                     <div *ngIf="(environmentForm.controls['hostAddress'].hasError('pattern') && environmentForm.controls['hostAddress'].hasError('maxlength'))"
-                        class="errspan required">
+                        class="required">
                         Invalid IP Address format
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     </select>
                     <span
                         *ngIf="(environmentForm.get('categoryId').invalid && environmentForm.get('categoryId').touched)"
-                        class="errspan required"> Category Required*</span>
+                        class="required"> Category Required*</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="userName">Username<span class="star">*</span></label>
@@ -86,9 +86,9 @@
                         placeholder="Enter Username">
                     <span
                         *ngIf="(environmentForm.get('username').invalid && environmentForm.get('username').touched) && !environmentForm.controls['username'].hasError('maxlength')"
-                        class="errspan required"> Username Required*</span>
+                        class="required"> Username Required*</span>
                     <div *ngIf="environmentForm.controls['username'].hasError('maxlength')"
-                        class="errspan required">
+                        class="required">
                         Maximum of 50 characters
                     </div>
                 </div>
@@ -121,9 +121,9 @@
                         placeholder="Enter Connection Type" readonly>
                     <span
                         *ngIf="(environmentForm.get('connectionType').invalid && environmentForm.get('connectionType').touched) && !environmentForm.controls['connectionType'].hasError('maxlength')"
-                        class="errspan required"> Connection Type Required*</span>
+                        class="required"> Connection Type Required*</span>
                     <div *ngIf="environmentForm.controls['connectionType'].hasError('maxlength')"
-                        class="errspan required">
+                        class="required">
                         Maximum of 50 characters
                     </div>
                 </div>
@@ -134,9 +134,9 @@
                         value="" placeholder="Enter Port">
                     <span
                         *ngIf="(environmentForm.get('portNumber').invalid && environmentForm.get('portNumber').touched) && !environmentForm.controls['portNumber'].hasError('maxlength')"
-                        class="errspan required"> Port Required*</span>
+                        class="required"> Port Required*</span>
                     <div *ngIf="environmentForm.controls['portNumber'].hasError('maxlength')"
-                        class="errspan required">
+                        class="required">
                         Maximum of 4 characters
                     </div>
                 </div>

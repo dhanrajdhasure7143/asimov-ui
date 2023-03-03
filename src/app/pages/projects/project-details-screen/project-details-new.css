@@ -138,7 +138,7 @@ span.lowimp {
     background: #EDF6FD;
     border-radius: 0px 15px 15px 15px !important;
     padding: 20px 6px 10px 30px !important;
-    margin: 20px 10px !important;
+    margin: 25px 10px 30px !important;
     position: relative;
     width: 77%;
 }
@@ -146,11 +146,10 @@ span.lowimp {
     width: 100%;
 }
 .rgtusermsg {
-    background: #42A7EB;
+    background: #eeeeee;
     border-radius: 15px 0px 15px 15px;
     padding: 25px 10px 2px !important;
-    margin: 10px 0px 20px 0px !important;
-    color: #fff;
+    margin: 10px 0px 30px 0px !important;
     width: 77%;
     margin-left: 25% !important;
     position: relative;
@@ -184,7 +183,9 @@ h4.colheads.chatheader {
 }
 .pinnedmsgs {
     background-color: #e5e5e5;
-    padding: 5px 10px 5px 20px;
+    padding: 8px 10px 8px 20px;
+    display: flex;
+    align-items: center;
 }
 #message-body {
     height: 83%;
@@ -194,18 +195,44 @@ h4.colheads.chatheader {
 .res-reply {
     position: absolute;
     top: 8px;
+    right: 10px;
+}
+.rgtusermsg p.userinfo {
+    position: absolute;
+    top: -18px;
     right: 0px;
 }
 .rply-msg {
-    background-color: aliceblue;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
     color: #232832;
-    border-radius: 6px;
-    padding: 5px 10px;
+    border-radius: 3px;
+    padding: 5px;
     margin-top: 10px;
+}
+.res-reply img.testplus {
+    width: 13px;
+    margin-right: 10px;
+}
+.pinnedmsgs img {
+    width: 14px;
+    margin-right: 10px;
 }
 .rply-msg p {
     font-weight: 300;
     margin: 0px !important;
+    border-left: 3px solid #ddd;
+    padding-left: 5px;
+}
+.rply-div{
+    position: absolute;
+    bottom: 85px;
+    width: 100%;
+    background-color: rgb(220, 223, 250);
+    border-radius: 0px !important;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
 }
 .collab p {
     margin-bottom: 10px;
@@ -214,6 +241,9 @@ h4.colheads.chatheader {
     color: #7D7D7D;
     font-size: 12px;
     margin-bottom: 0px;
+    position: absolute;
+    top: -18px;
+    left: 30px;
 }
 .lftusermsg a {
     color: #098DE6;
@@ -399,8 +429,4 @@ button span {
     margin-top: 7px;
     margin-left: 5px;
     padding: 5px 7px;
-}
-
-.rplY-div{
-    margin-top: -20px;
 }

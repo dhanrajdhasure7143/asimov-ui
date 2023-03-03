@@ -1,4 +1,13 @@
-  ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+/* New Styles */
+
+.createform-overlay {
+  height: calc(100% - 125px);
+}
+
+/* New Styles */
+
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
     color:white;
     height: 130px;
     background: gray;
@@ -92,41 +101,41 @@
     border-radius: 50%;
     background: white;
     }
-    ::ng-deep #myDiagramDiv canvas {
-    outline: none;
-    }
   .tooltiptext1 p{
     color: black;
     padding-left: 10px;
   }
   .edgemetrics_spinner{
-    background-color: #f4f4f4;
-    color: black !important;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 8px 10px;
+    font-size: 14px;
+    padding: 10px;
     cursor: auto;
   }
+  .edgemetrics_spinner span{
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    display: flex;
+    align-items: flex-start;
+  }
   .form-check-input{
-    margin-top: 3px;
-    margin-right: 4px;
+    margin-top: 4px;
+    margin-right: 5px;
+    margin-left: 0px;
+    position: inherit;
   }
   .isactive{
     color: white !important;
-    background-color: #00a0e3
+    background-color: #098de6
   }
   .activevaraint{
     color: #ffffff;
-    background-color: #00a0e3;
+    background-color: #098de6;
+    opacity: 0.9;
+    border-top: 1px solid #ffffff !important;
+    border-left: medium none !important;
   }
   .events1 p{
     font-size: 12px;
   }
-  .activevaraint {
-    border-top: 1px solid #ffffff !important;
-    border-left: medium none !important;
-  }
-
   .sidenav {
     width: 0;
     height: 100vh;
@@ -141,11 +150,13 @@
     transition: margin-right .5s;
   }
   .reset_btn{
-    margin-left: 105px;
+    margin-left: 100px;
     border: none !important;
     background: none;
-    color: #00a0e3;
-    padding-top: 5px;
+    color: #098de6;
+    padding-top: 8px;
+    font-weight: 500;
+    font-size: 15px;
   }
   #linkname{
     font-size: 14px;
@@ -167,9 +178,6 @@
     font-weight: bold;
     text-align: center;
   }
-  .download_selection p{
-    cursor: pointer;
-  }
   .download_selection p:hover{
       font-weight: bold;
       font-size: 14px;
@@ -177,6 +185,7 @@
   .download_selection p{
     padding-left:5px;
     color: #0162cf;
+    cursor: pointer;
   }
   .download_selection{
     min-width: 86px !important;
@@ -237,14 +246,7 @@
   font-size: 28px;
   font-weight: bold;
   }
-  .m-contanier {
-    padding: 16px;
-    width: 30%;
-    }
-.m-btn{
-  margin-left: 70%;
-}
-  
+
   .close:hover,
   .close:focus {
   color: #000;
@@ -252,14 +254,7 @@
   cursor: pointer;
   }
   
-  .modal-header {
-  padding: 2px 16px;
-  background-color: #e5e5e5;
-  color: #000;
-  }
-  .modal-header .close {
-  /* margin-top: 2px; */
- }
+
   
   /* Add Animation */
   @-webkit-keyframes slideIn {
@@ -365,11 +360,7 @@
 button.closebtn:hover {
   color: #00a0e3;
 }
-.edgemetrics_spinner span{
-  font-size: 13px !important;
-  margin-bottom: 8px !important;
-  display: flex;
-}
+
 
 
 img.hover-img {

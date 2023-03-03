@@ -2,35 +2,35 @@
     <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="h-100 prj-crt-form">
         <div class="h-100">
             <div class="row">
-                  <div class="form-fields col pl-0">
+                  <div class="form-group col pl-0">
                       <label class="">Project Name<span class="star">*</span></label>
                       <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51"
                           formControlName="projectName" placeholder="Enter Project Name">
                       <span
                           *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched && !insertForm2.get('projectName').hasError('pattern')"
-                          class="errspan required">Project Name Required*</span>
+                          class="required">Project Name Required*</span>
                       <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')"
-                          class="errspan required">
+                          class="required">
                           Maximum of 50 characters exceeded
                       </span>
-                      <span *ngIf="insertForm2.get('projectName').hasError('pattern')" class="errspan required">Spaces
+                      <span *ngIf="insertForm2.get('projectName').hasError('pattern')" class="required">Spaces
                           and special characters are not allowed Excluding( _ & - )
                       </span>
                   </div>
-                  <div class="form-fields col pr-0">
+                  <div class="form-group col pr-0">
                       <label class="">Select Department<span class="star">*</span></label>
                       <p-dropdown [options]="categories_list" [filter]="true" formControlName="mapValueChain"
                           autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           placeholder="Select a Department" optionLabel="categoryName"
                           optionValue="categoryName"></p-dropdown>
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
-                          class="errspan required">
+                          class="required">
                           Department Required*
                       </div>
                   </div>
             </div>
             <div class="row">
-                  <div class="form-fields col pl-0">
+                  <div class="form-group col pl-0">
                       <label class="">Process Owner<span class="star">*</span></label>
                       <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           filterBy="user_email,fullName" [autoDisplayFirst]="false"
@@ -43,20 +43,20 @@
                       </ng-template> -->
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
-                          class="errspan required">Process Owner Required*</span>
+                          class="required">Process Owner Required*</span>
                   </div>
-                  <div class="form-fields col pr-0">
+                  <div class="form-group col pr-0">
                       <label class="">Select Process<span class="star">*</span></label>
                       <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
                           optionValue="processId" optionLabel="processName" filterBy="processName">
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
-                          class="errspan required">Process Required*</span>
+                          class="required">Process Required*</span>
                   </div>
             </div>
             <div class="row">
-                  <div class="form-fields col p-0">
+                  <div class="form-group col p-0">
                       <label class="">Project Priority<span class="star">*</span></label>
                       <div>
                           <!-- <div class="field-radiobutton">
@@ -93,7 +93,7 @@
                               </span>
                           </div>
                           <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched"
-                              class="errspan required">Project Priority Required*</span>
+                              class="required">Project Priority Required*</span>
                       </div>
                   </div>
             </div>
@@ -106,9 +106,9 @@
                           </textarea> -->
                       <span *ngIf="(insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched)
                       && !insertForm2.controls['projectPurpose'].hasError('maxlength')"
-                          class="errspan required">Project Description Required*</span>
+                          class="required">Project Description Required*</span>
                       <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')"
-                          class="errspan required">
+                          class="required">
                           Maximum of 250 characters exceeded
                       </span>
                   </div>
