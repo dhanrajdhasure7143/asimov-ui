@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { LoaderService } from 'src/app/services/loader/loader.service';
+import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -9,18 +9,19 @@ import { RestApiService } from "../../services/rest-api.service";
   styleUrls: ["./rpa-action-items.component.css"],
 })
 export class RpaActionItemsComponent implements OnInit {
-  connectorTable: any = [];
+  actionTable: any = [];
   representatives: any = [];
   columns_list: any = [];
   addflag: boolean = true;
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
+  updateflag: boolean = false;
 
   constructor(
-    private router:Router,
-    private loader:LoaderService,
-    private rest_api:RestApiService
-    ) {}
+    private router: Router,
+    private loader: LoaderService,
+    private rest_api: RestApiService
+  ) {}
 
   ngOnInit(): void {
     this.loader.show();
@@ -33,10 +34,20 @@ export class RpaActionItemsComponent implements OnInit {
     this.loader.hide();
     this.columns_list = [
       {
-        ColumnName: "actionType",
+        ColumnName: "actionName",
         DisplayName: "Action Name",
         ShowGrid: true,
         ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "actionType",
+        DisplayName: "Action Type",
+        ShowFilter: true,
+        ShowGrid: true,
         filterWidget: "normal",
         filterType: "text",
         sort: true,
@@ -53,7 +64,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "httpMethodType",
+        ColumnName: "methodType",
         DisplayName: "Method Type",
         ShowGrid: true,
         ShowFilter: true,
@@ -63,7 +74,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "authorization_Type",
+        ColumnName: "attribute",
         DisplayName: "Attributes",
         ShowGrid: true,
         ShowFilter: true,
@@ -73,7 +84,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "createdDate",
+        ColumnName: "description",
         DisplayName: "Purpose",
         ShowGrid: true,
         ShowFilter: true,
@@ -83,19 +94,30 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
     ];
-  // })
+
   }
 
   viewDetails(event) {}
+
   deleteById(event) {}
+
   deleteConnection() {}
+
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    data.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
-  backToConnection(){
-    this.router.navigate(['/pages/rpautomation/configurations'],{
-      queryParams: {index:2}
-    })
+
+  updateAction() {
+    this.router.navigate(["/pages/rpautomation/connection"]);
+  }
+
+  deleteAction() {}
+  
+  backToConnection() {
+    this.router.navigate(["/pages/rpautomation/configurations"], {
+      queryParams: { index: 2 },
+    });
   }
 }
