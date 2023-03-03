@@ -1,0 +1,168 @@
+{
+    
+    "widgets": [
+        {
+            "id": 1,
+            "widget_type": "pie",
+            "name": "Bot Execution Status",
+            "description": "Provides the execution status of the bots - failed ones vs successfully executed ones",
+            "sampleData": {
+               
+                
+                "labels": [
+                    "Mac",
+                    "Windows",
+                    "Linux"
+                ],
+           
+                "datasets": [
+                    {
+                        "data": [
+                            300,
+                            50,
+                            100
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }
+                ]
+            },
+            "chartOptions": {
+                "plugins": {
+                    "legend": {
+                    "position": "bottom"
+                }
+            }
+            },
+          
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "pie",
+                    "bar"
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "widget_type": "bar",
+            "name": "Rank Average exeuction time",
+            "description": "Display the average time taken for 1 execution of a bot. Top 5 to be listed",
+            "sampleData": {
+                "labels": [
+                    "Mac",
+                    "Windows",
+                    "Linux"
+                ],
+                "datasets": [
+                    {
+                        "data": [
+                            300,
+                            50,
+                            100
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }
+                ]
+            },
+            "chartOptions": {
+                "plugins": {
+                    "legend": {
+                    "position": "bottom"
+                }
+            }
+            },
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "bar",
+                    "pie"
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "widget_type": "pie",
+            "name": "Total Number of Resources department wise",
+            "description": "Total resources onboarded into EZFlow for the tenant based on department & project",
+            "sampleData": {
+                "labels": [
+                    "Mac",
+                    "Windows",
+                    "Linux"
+                ],
+                "datasets": [
+                    {
+                        "data": [
+                            300,
+                            50,
+                            100
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }
+                ]
+            },
+            "chartOptions": {
+                "plugins": {
+                    "legend": {
+                    "position": "bottom"
+                }
+            }
+            },
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "pie",
+                    "bar"
+                ]
+            }
+        },
+       
+        {
+            "id": 5,
+            "widget_type": "bar",
+            "name": "Upcoming Executions",
+            "description": "Display the average time taken for 1 execution of a bot. Top 5 to be listed",
+          
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "bar",
+                    "pie"
+                ]
+            }
+        }
+
+    ]
+}
+

@@ -59,6 +59,7 @@
 
 .flex-container {
 	display: flex;
+	width:100%;
 
 }
 
@@ -274,8 +275,8 @@ h5 {
 
 .pi-check {
 	position: absolute;
-	right: 12px;
-	top: -2px;
+	right: -6px;
+	top: 0px;
 }
 
 .pi-times {

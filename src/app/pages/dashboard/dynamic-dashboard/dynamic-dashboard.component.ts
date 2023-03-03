@@ -22,27 +22,28 @@ export class DynamicDashboardComponent implements OnInit {
   widgets: any;
   selectedCar: string;
   dataTransfer: any;
-  public allbots:any;
+  public allbots: any;
   dashboardName: String = "";
   editDashboardName: boolean = false;
-  dashbordlist:any;
-  dashboardData:any;
-  _paramsData:any;
+  dashbordlist: any;
+  dashboardData: any;
+  _paramsData: any;
 
-  constructor(private activeRoute: ActivatedRoute, 
-    private datatransfer: DataTransferService, 
-    private router: Router, 
+  constructor(private activeRoute: ActivatedRoute,
+    private datatransfer: DataTransferService,
+    private router: Router,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig, 
-    private rest:RestApiService,
+    private primengConfig: PrimeNGConfig,
+    private rest: RestApiService,
   ) {
-    this.activeRoute.queryParams.subscribe(res=>{
+    this.activeRoute.queryParams.subscribe(res => {
       console.log(res)
       this._paramsData = res
     })
-   }
+  }
 
   ngOnInit(): void {
+
     // this.getUserDetails();
     this.primengConfig.ripple = true;
     this.gfg = [
@@ -67,79 +68,110 @@ export class DynamicDashboardComponent implements OnInit {
 
 
 
-      
+
       this.dashboardName = response.dashboardName
       this.dashboardData = response;
       console.log(this.dashboardData)
 
-      if(response.widgets){
-      this.dashboardData.widgets = response.widgets.map((item: any) => {
-        item["edit"] = false;
-        return item;
-      })
-      console.log(JSON.stringify(this.dashboardData))
-    }else{
-      this.dashboardData= {
-        "dashboardName":"testing",
-        "widgets":[
-           {
-              "widgetId":"01",
-              "widget_type":"pie",
-              "widget_title":"Process Exectuin Rate",
-              "sampleData":{
-                 "labels":["Mac","Windows","Linux"],
-                 "datasets":[
-                    {
-                       "data":[300,50,100],
-                       "backgroundColor":["#FF6384","#36A2EB","#FFCE56"],
-                       "hoverBackgroundColor":["#FF6384","#36A2EB","#FFCE56"]
-                    }
-                 ]
+      if (response.widgets) {
+        this.dashboardData.widgets = response.widgets.map((item: any) => {
+          item["edit"] = false;
+          return item;
+        })
+        console.log(this.dashboardData)
+      } else {
+        this.dashboardData = {
+          "dashboardName": "testing",
+          "widgets": [
+            {
+              "id": 1,
+              "widget_type": "pie",
+              "name": "Bot Execution Status",
+              "description": "Provides the execution status of the bots - failed ones vs successfully executed ones",
+              "sampleData": {
+
+
+                "labels": [
+                  "Mac",
+                  "Windows",
+                  "Linux"
+                ],
+
+                "datasets": [
+                  {
+                    "data": [
+                      300,
+                      50,
+                      100
+                    ],
+                    "backgroundColor": [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                    ],
+                    "hoverBackgroundColor": [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                    ]
+                  }
+                ]
               },
-              "chartOptions":{ },
-              "widgetAdded":true,
-              "edit":false,
-              filterOptions:{
-                widgetTypes:["pie","bar"]
+              "chartOptions": {
+                "plugins": {
+                  "legend": {
+                    "position": "bottom"
+                  }
+                }
+              },
+
+              "widgetAdded": true,
+              "edit": false,
+              "filterOptions": {
+                "widgetTypes": [
+                  "pie",
+                  "bar"
+                ]
               }
-           }
-        ],
-        "metrics":[
-          {
-             "id":1,
-             "name":"Total Number of Resources",
-             "description":"Display the total count of resources onboarded into EZFlow for the tenant",
-             "metricAdded":true,
-             "metricValue":29,
-             "src":"process.svg"
-          },
-          {
-             "id":2,
-             "name":"Total Processes Documented",
-             "description":"Displays the count of processes across all departments",
-             "metricAdded":true,
-             "metricValue":38,
-             "src":"process.svg"
-          },
-          {
-             "id":3,
-             "name":"Total Processes Automated",
-             "description":"Displays the count of processes that has RPA assigned to any of the step",
-             "metricAdded":true,
-             "metricValue":47,
-             "src":"process.svg"
-          },
-          {
-             "id":4,
-             "name":"Processes pending approval",
-             "description":"Total list of processes for which approval is pending",
-             "metricAdded":true,
-             "metricValue":56,
-             "src":"process.svg"
-          }
-       ]
-     }
-    }
+            },
+
+          ],
+          "metrics": [
+            {
+              "id": 1,
+              "name": "Total Number of Resources",
+              "description": "Display the total count of resources onboarded into EZFlow for the tenant",
+              "metricAdded": true,
+              "metricValue": 29,
+              "src": "process.svg"
+            },
+            {
+              "id": 2,
+              "name": "Total Processes Documented",
+              "description": "Displays the count of processes across all departments",
+              "metricAdded": true,
+              "metricValue": 38,
+              "src": "process.svg"
+            },
+            {
+              "id": 3,
+              "name": "Total Processes Automated",
+              "description": "Displays the count of processes that has RPA assigned to any of the step",
+              "metricAdded": true,
+              "metricValue": 47,
+              "src": "process.svg"
+            },
+            {
+              "id": 4,
+              "name": "Processes pending approval",
+              "description": "Total list of processes for which approval is pending",
+              "metricAdded": true,
+              "metricValue": 56,
+              "src": "process.svg"
+            }
+          ]
+        }
+      }
 
       //}
     })
@@ -160,7 +192,7 @@ export class DynamicDashboardComponent implements OnInit {
   // {
   //   am4core.useTheme(am4themes_animated);
   //   this.rest.getallsobots().subscribe((item:any)=>{
-     
+
   //     if(item.errorMessage==undefined){
   //       this.allbots=item;
   //       let data:any=[{
@@ -182,18 +214,18 @@ export class DynamicDashboardComponent implements OnInit {
   //         "color":"#62C849"
   //       }];
   //       this.chart1(data)
-  
+
   //   }
-  
-     
-      
-     
+
+
+
+
   //     //this.chart2()
-     
+
   //   },
   //  )
   // }
- 
+
   updateDashboardName() {
     this.dashboardData.dashboardName = this.dashboardName;
     this.editDashboardName = false;
@@ -201,17 +233,17 @@ export class DynamicDashboardComponent implements OnInit {
 
   navigateToConfigure() {
     this.datatransfer.setdynamicscreen(this.dashboardData)
-    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams:this._paramsData });
+    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: this._paramsData });
   }
 
   navigateToCreateDashboard() {
     this.router.navigate(["pages/dashboard/create-dashboard"])
   }
   toggleConfigure(e, widget?: any) {
-  console.log(e, widget)
+    console.log(e, widget)
     this.dashboardData.widgets.
       forEach(element => {
-        element.edit=true
+        element.edit = true
         console.log(element, widget)
       });
   }
@@ -229,19 +261,19 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   cancelEdit() {
-      this.dashboardData.widgets.
-        forEach(element => {
-          element.edit=false
-        });
-      console.log(this.dashboardData.widgets)
-    }
+    this.dashboardData.widgets.
+      forEach(element => {
+        element.edit = false
+      });
+    console.log(this.dashboardData.widgets)
+  }
 
-// Dash Board list in dropdown 
-  getListOfDashBoards(){
-    this.rest.getDashBoardsList().subscribe((data:any)=>{
-      this.dashbordlist=data.dataList;
-      console.log( this.dashbordlist)
-        })
+  // Dash Board list in dropdown 
+  getListOfDashBoards() {
+    this.rest.getDashBoardsList().subscribe((data: any) => {
+      this.dashbordlist = data.dataList;
+      console.log(this.dashbordlist)
+    })
   }
 }
 
