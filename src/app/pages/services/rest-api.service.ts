@@ -1706,6 +1706,12 @@ getMetricsList(){
 getWidgetsList(){
   return this.http.get('/platform-service/dashboard/findDashboardWidgetsList');
 }
+updateDashBoardNamed(body){
+  return this.http.post('/platform-service/dashboard/updateDashboard',body);
+}
+getdeleteDashBoard(dashboard_id){
+  return this.http.get('/platform-service/dashboard/deleteDashboard?id='+dashboard_id)
+}
 
 
 

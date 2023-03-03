@@ -326,3 +326,30 @@ button.btn {
 	position: relative;
 	height: 25px;
 }
+.project-name span {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.dashbordnamerow {
+    height: 36px;
+}
+	.project-name span {
+		font-size: 32px;
+		font-weight: 600;
+	}
+	
+	.pi-check {
+		position: absolute;
+    right: 383px;
+    top: 46px;
+	}
+	.pi-times{
+		position: absolute;
+		right: 350px;
+		top: 46px;
+	}
+	.dashboard-name span {
+		font-size: 32px;
+		font-weight: 600;
+	}

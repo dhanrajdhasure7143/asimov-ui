@@ -5,19 +5,32 @@
             <div class="row main-content-head">
 
                <div class="col-md-4 pl-0">
-                  <h3>
-
-
-                     <span *ngIf="!editDashboardName" class="title_text">{{_paramsData.dashboardName}}</span>
-
-
-                  </h3>
+                 
+                  <div class="row align-items-center dashboardnamerow">
+                     <p-inplace #inplace (onActivate)="inplaceActivate('dashbordatadashboardName','inplace')" class="dashboard-name">
+                        <ng-template pTemplate="display">
+                           <span [hidden]="editDashboardName"class="title_text">{{_paramsData.dashboardName}}</span>
+                           <span [hidden]="!editDashboardName" class="title_text">{{dashbordatadashboardName}}</span>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <input type="text" [style]="{'width':'100%'}" pInputText
+                                [(ngModel)]="dashbordatadashboardName" (keydown)="Space($event)" />
+                            <span class="editfields">
+                                <i class="pi pi-check" *ngIf="dashbordatadashboardName"
+                                    (click)="onUpdateDetails('dashbordatadashboardName')"></i>
+                                <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
+                            </span>
+                        </ng-template>
+                    </p-inplace>
+                   
+                 </div>
+              
                </div>
                <div class="col-md-8 pr-0 ">
 
                   <div class="row">
                      <div class="col-md-8 text-right pr-0">
-                        <p-dropdown [options]="dashbordlist" class="dropdown-primeng"
+                        <p-dropdown [options]="dashbordlist" class="dropdown-primeng"  (onChange)="onDropdownChange($event)"
                            [style]="{'width':'220px','height' :'35px'}">
                            <ng-template let-item pTemplate="selectedItem">
                               <span>{{item.dashboardName}}</span>
