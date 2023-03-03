@@ -95,36 +95,6 @@ export class RpaActionItemsComponent implements OnInit {
       },
     ];
 
-    this.actionTable = [
-      {
-        id: "1",
-        actionName: "Login",
-        url: "http://www.zohoapis.com/crm/v3/leads",
-        methodType: "POST",
-        actionType: "API Request",
-        attribute: "Employee ID",
-        description: "-",
-      },
-      {
-        id: "2",
-        actionName: "Create",
-        url: "http://www.zohoapis.com/crm/v3/leads",
-        methodType: "POST",
-        actionType: "API Request",
-        attribute: "Employee ID",
-        description: "Creation of an Employee",
-      },
-      {
-        id: "3",
-        actionName: "Delete",
-        url: "http://www.zohoapis.com/crm/v3/leads",
-        methodType: "DELETE",
-        actionType: "Authenticated",
-        attribute: "Employee ID",
-        description: "Deletion of an employee",
-      },
-    ];
-    // })
   }
 
   viewDetails(event) {}
