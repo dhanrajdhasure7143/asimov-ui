@@ -1,4 +1,16 @@
-.bg-color {
+.createform-overlay {
+  height: calc(100% - 75px);
+}
+.scheduletimer-loadicon {
+  align-items: center;
+  display: flex;
+}
+.scheduletimer-actionbtns button {
+  padding: 0px 5px;
+}
+
+
+/* .bg-color {
   background-color: rgb(241, 240, 240);
 }
 
@@ -96,4 +108,4 @@ input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calen
 button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
-  }
+  } */

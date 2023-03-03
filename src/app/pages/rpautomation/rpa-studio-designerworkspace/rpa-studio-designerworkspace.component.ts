@@ -2660,7 +2660,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   openLogs() {
     this.logsOverlayFlag = true;
     this.logsOverlayModel = this.modalService.show(this.logsOverlayRef, {
-      class: "logs-modal",
+      // class: "logs-modal",
+      class: "modal-lg",
     });
   }
 

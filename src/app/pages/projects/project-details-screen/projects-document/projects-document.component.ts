@@ -6,6 +6,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
+import { lineTo } from "@amcharts/amcharts4/.internal/core/rendering/Path";
 
 @Component({
   selector: "app-projects-document",
@@ -129,6 +130,8 @@ export class ProjectsDocumentComponent implements OnInit {
       if(obj.dataType == 'folder'){
         node['collapsedIcon']=  "pi pi-folder"
         node["expandedIcon"]  ="pi pi-folder-open"
+      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+        node['icon']=  "pi pi-image"
     }else{
       node['icon']=  "pi pi-file"
     }
@@ -583,7 +586,13 @@ addParentFolder() {
     console.log(res)
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
     let obj = res_data.data[0]
-    obj["collapsedIcon"]= "pi pi-file",
+  if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+    obj['icon']=  "pi pi-image"
+  }else{
+    obj["collapsedIcon"]= "pi pi-file"
+
+  }
+
     // let obj={
     //   key: object.key,
     //   label: selectedFile.name,
@@ -694,7 +703,13 @@ addParentFolder() {
       let res_data:any = res
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
     let obj = res_data.data[0];
-    obj["collapsedIcon"] = "pi pi-file"
+    // obj["collapsedIcon"] = "pi pi-file"
+    if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+      obj['icon']=  "pi pi-image"
+    }else{
+      obj["collapsedIcon"]= "pi pi-file"
+  
+    }
       // let obj={
       //   key: object.key,
       //   label: selectedFile.name,
@@ -738,7 +753,13 @@ addParentFolder() {
   }
 
   folderUpload(event: any,type) {
+    // let _selectedFile:any;
     const files = event.target.files;
+  // const filesWithModifiedPath = Array.from(files).map((file:any) => {
+  //   // Create a new File object with a modified webkitRelativePath property
+  //   return new File([file], file.name, { type: file.type, lastModified: file.lastModified });
+  // });
+  
     if (files.length > 0) {
       const folderName = files[0].webkitRelativePath.split('/')[0];
       let objectKey
@@ -774,10 +795,15 @@ addParentFolder() {
       this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         const fileData = new FormData();
         let fileKeys = [];
-        for (let i = 0; i < files.length; i++) {
-            fileData.append("filePath", files[i]);
+          const filesWithModifiedPath = Array.from(files).map((file:any) => {
+    // Create a new File object with a modified webkitRelativePath property
+            return new File([file], file.name, { type: file.type, lastModified: file.lastModified });
+        });
+        for (let i = 0; i < filesWithModifiedPath.length; i++) {
+            fileData.append("filePath", filesWithModifiedPath[i]);
             fileKeys.push(String(folder_key+'-'+(i+1)))
         }
+        
         fileData.append("projectId",this.project_id);
         fileData.append("taskId",'')
         fileData.append("ChildId",'1')
@@ -786,14 +812,14 @@ addParentFolder() {
         this.loader.hide();
         this.getTheListOfFolders();
         this.createFolderPopUP=false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !!'});
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       })
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       })
     }
 

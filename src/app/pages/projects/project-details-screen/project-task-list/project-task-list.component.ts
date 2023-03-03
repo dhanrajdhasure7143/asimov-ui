@@ -6,6 +6,7 @@ import { DataTransferService } from "src/app/pages/services/data-transfer.servic
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-project-task-list",
@@ -39,7 +40,9 @@ export class ProjectTaskListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dataTransfer: DataTransferService,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private confirmationService : ConfirmationService,
+    private messageService : MessageService 
   ) {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data
@@ -210,44 +213,67 @@ export class ProjectTaskListComponent implements OnInit {
       },
     ];
 
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      accept: () => {
+        this.spinner.show();
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            Swal.fire({
-              title: "Success",
-              text: "" + status.message,
-              position: "center",
-              icon: "success",
-              showCancelButton: false,
-              confirmButtonColor: "#007bff",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Ok",
-            });
+            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+' !!'});
             this.getTasksList();
           },
           (err) => {
             this.spinner.hide();
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-            });
+            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete !"});
           }
         );
-      }
+      },
+      reject: (type) => {},
+      key: "positionDialog",
     });
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then((result) => {
+    //   if (result.value) {
+    //     this.spinner.show();
+    //     this.rest_api.deleteTask(deletetask).subscribe(
+    //       (res) => {
+    //         let status: any = res;
+    //         this.spinner.hide();
+    //         Swal.fire({
+    //           title: "Success",
+    //           text: "" + status.message,
+    //           position: "center",
+    //           icon: "success",
+    //           showCancelButton: false,
+    //           confirmButtonColor: "#007bff",
+    //           cancelButtonColor: "#d33",
+    //           confirmButtonText: "Ok",
+    //         });
+    //         this.getTasksList();
+    //       },
+    //       (err) => {
+    //         this.spinner.hide();
+    //         Swal.fire({
+    //           icon: "error",
+    //           title: "Oops...",
+    //           text: "Something went wrong!",
+    //         });
+    //       }
+    //     );
+    //   }
+    // });
   }
 
   onCreateTask() {
