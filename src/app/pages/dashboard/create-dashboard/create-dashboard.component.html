@@ -9,27 +9,31 @@
 </div>
 <div style="text-align: center">
    <p-dialog header=" Create Dashboard" styleClass="my-style-class" 
-   [(visible)]="BasicShow"
+   [(visible)]="isDialogShow"
    [style]="{width: '30vw'}"
    [draggable]="false" 
    [resizable]="false">
    <div  class="h-100">
       <div>
          <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
-         <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="text" />
+         <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
       </div>
    </div>
    <ng-template pTemplate="footer">
       <p-button
-         (click)="BasicShow = false"
+         (click)="isDialogShow = false"
          label="Cancel"
          styleClass="btn-cancel1">
       </p-button>
       <p-button
          (click)="navigateconfigure()"
          label="Save"
-         styleClass="p-button p-dialogue-btn ">
+         styleClass="p-button p-dialogue-btn "
+         [disabled]="!(entered_name.length >= 5)">
       </p-button>
    </ng-template>
    </p-dialog>
 </div>
+
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+

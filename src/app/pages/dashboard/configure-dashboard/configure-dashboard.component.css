@@ -12,35 +12,38 @@
 	background-color: #ffffff6e;
 	box-shadow: 2px 2px 3px 0px #d6d3d3;
 }
-.well1-dynmic{background-color: white;
+
+.well1-dynmic {
+	background-color: white;
 	box-shadow: 1px 0px 3px 0px #d6d3d336;
 	border: 1.5px solid #B3BAC5;
 	border-radius: 4px;
 	padding: 12px 8px !important;
-	}
-	.text-control {
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-	
-	.pi-times:before {
-		content: "\e90b";
-		background-color: #dc3545;
-		border-color: #dc3545;
-		padding: 5px;
-		border-radius: 50%;
-		color: white;
-		font-size: 11px;
-	}
-	
-	.pi-1 {
-		font-size: 1rem;
-		position: absolute;
-		right: 15px;
-		top: 8px;
-	}
-	
+}
+
+.text-control {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.pi-times:before {
+	content: "\e90b";
+	background-color: #dc3545;
+	border-color: #dc3545;
+	padding: 5px;
+	border-radius: 50%;
+	color: white;
+	font-size: 11px;
+}
+
+.pi-1 {
+	font-size: 1rem;
+	position: absolute;
+	right: 15px;
+	top: 8px;
+}
+
 
 .well1 {
 	background-color: #fafafa;
@@ -49,9 +52,14 @@
 	border-radius: 4px;
 	padding: 11px 8px !important;
 }
-.metrics-space{margin-top:0.5rem;}
+
+.metrics-space {
+	margin-top: 0.5rem;
+}
+
 .flex-container {
 	display: flex;
+	width:100%;
 
 }
 
@@ -60,7 +68,7 @@ h5 {
 }
 
 .img-div {
-	
+
 	align-items: center;
 }
 
@@ -84,7 +92,11 @@ h5 {
 	width: 17px;
 
 }
-.container-fluid{background-color: #f5f5f5;}
+
+.container-fluid {
+	background-color: #f5f5f5;
+}
+
 .eiap-btn {
 
 	margin-top: 0px !important;
@@ -102,17 +114,6 @@ h5 {
 
 ul.ui-p-tabview {
 	border: 2px solid #ddd;
-}
-
-:host ::ng-deep .prime-slider-override .p-tabview-nav-container {
-	border-bottom: 2px solid #DDD
-}
-:host ::ng-deep .p-tabview-nav-content {
-	border-bottom: 1.5px solid #e1e0e0;
-}
-
-:host ::ng-deep .p-tabview {
-	margin: 0px 15px;
 }
 
 .splitter-headers {
@@ -268,13 +269,14 @@ h5 {
 }
 
 .pi {
-    font-size: 1rem;
-   
+	font-size: 1rem;
+
 }
+
 .pi-check {
 	position: absolute;
-	right: 12px;
-	top: -2px;
+	right: -6px;
+	top: 0px;
 }
 
 .pi-times {
@@ -323,5 +325,3 @@ h5 {
 	height: 395px;
 	padding: 20px !important
 }
-
-

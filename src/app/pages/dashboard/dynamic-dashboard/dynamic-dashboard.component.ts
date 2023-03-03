@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { MenuItem, SelectItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from 'primeng/inplace';
 
 
 
@@ -13,381 +15,55 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
   styleUrls: ['./dynamic-dashboard.component.css']
 })
 export class DynamicDashboardComponent implements OnInit {
+  @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
   gfg: MenuItem[];
-
   dynamicDashBoard: any;
   metrics_list: any;
   defaultEmpty_metrics: any;
   widgets: any;
   selectedCar: string;
   dataTransfer: any;
-  public allbots:any;
+  public allbots: any;
   dashboardName: String = "";
-  editDashboardName: boolean = false;
   dashbordlist:any;
-  dashboardData: any = {
-    "dashboardName":"testing",
-    "widgets":[
-       {
-          "widgetId":"01",
-          "widget_type":"DONUT_WITHOUT_LEGENDS",
-          "widget_title":"Process Exectuin Rate",
-          "widget_description":"Lists Recent activity in a single project, or in all projects",
-          "sampleData":{
-             "labels":[
-                "A",
-                "B",
-                "C"
-             ],
-             "datasets":[
-                {
-                   "data":[
-                      300,
-                      50,
-                      100
-                   ],
-                   "backgroundColor":[
-                      "#FF6384",
-                      "#36A2EB",
-                      "#FFCE56"
-                   ],
-                   "hoverBackgroundColor":[
-                      "#FF6384",
-                      "#36A2EB",
-                      "#FFCE56"
-                   ]
-                }
-             ]
-          },
-          "chartSrc":"chart1.png",
-          "chartOptions":{
-             
-          },
-          "widgetAdded":true,
-          "api":"none",
-          "edit":false
-       },
-       {
-          "widgetId":"02",
-          "widget_type":"HORIZANTAL_BAR_CHART",
-          "widget_title":"Automation Rate",
-          "widget_description":"Lists Recent activity in a single project, or in all projects",
-          "sampleData":{
-             "labels":[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July"
-             ],
-             "datasets":[
-                {
-                   "label":"My First dataset",
-                   "backgroundColor":"#42A5F5",
-                   "data":[
-                      65,
-                      59,
-                      80,
-                      81,
-                      56,
-                      55,
-                      40
-                   ]
-                },
-                {
-                   "label":"My Second dataset",
-                   "backgroundColor":"#FFA726",
-                   "data":[
-                      28,
-                      48,
-                      40,
-                      19,
-                      86,
-                      27,
-                      90
-                   ]
-                }
-             ]
-          },
-          "chartSrc":"chart2.png",
-          "chartOptions":{
-             "indexAxis":"y",
-             "plugins":{
-                "legend":{
-                   "labels":{
-                      "color":"#495057"
-                   }
-                }
-             },
-             "scales":{
-                "x":{
-                   "axis":"x",
-                   "ticks":{
-                      "color":"#495057",
-                      "minRotation":0,
-                      "maxRotation":50,
-                      "mirror":false,
-                      "textStrokeWidth":0,
-                      "textStrokeColor":"",
-                      "padding":3,
-                      "display":true,
-                      "autoSkip":true,
-                      "autoSkipPadding":3,
-                      "labelOffset":0,
-                      "minor":{
-                         
-                      },
-                      "major":{
-                         
-                      },
-                      "align":"center",
-                      "crossAlign":"near",
-                      "showLabelBackdrop":false,
-                      "backdropColor":"rgba(255, 255, 255, 0.75)",
-                      "backdropPadding":2
-                   },
-                   "grid":{
-                      "color":"#ebedef",
-                      "display":true,
-                      "lineWidth":1,
-                      "drawBorder":true,
-                      "drawOnChartArea":true,
-                      "drawTicks":true,
-                      "tickLength":8,
-                      "offset":false,
-                      "borderDash":[
-                         
-                      ],
-                      "borderDashOffset":0,
-                      "borderWidth":1,
-                      "borderColor":"rgba(0,0,0,0.1)"
-                   },
-                   "type":"linear",
-                   "beginAtZero":true,
-                   "display":true,
-                   "offset":false,
-                   "reverse":false,
-                   "bounds":"ticks",
-                   "grace":0,
-                   "title":{
-                      "display":false,
-                      "text":"",
-                      "padding":{
-                         "top":4,
-                         "bottom":4
-                      },
-                      "color":"#666"
-                   },
-                   "id":"x",
-                   "position":"bottom"
-                },
-                "y":{
-                   "axis":"y",
-                   "ticks":{
-                      "color":"#495057",
-                      "minRotation":0,
-                      "maxRotation":50,
-                      "mirror":false,
-                      "textStrokeWidth":0,
-                      "textStrokeColor":"",
-                      "padding":3,
-                      "display":true,
-                      "autoSkip":true,
-                      "autoSkipPadding":3,
-                      "labelOffset":0,
-                      "minor":{
-                         
-                      },
-                      "major":{
-                         
-                      },
-                      "align":"center",
-                      "crossAlign":"near",
-                      "showLabelBackdrop":false,
-                      "backdropColor":"rgba(255, 255, 255, 0.75)",
-                      "backdropPadding":2
-                   },
-                   "grid":{
-                      "color":"#ebedef",
-                      "offset":true,
-                      "display":true,
-                      "lineWidth":1,
-                      "drawBorder":true,
-                      "drawOnChartArea":true,
-                      "drawTicks":true,
-                      "tickLength":8,
-                      "borderDash":[
-                         
-                      ],
-                      "borderDashOffset":0,
-                      "borderWidth":1,
-                      "borderColor":"rgba(0,0,0,0.1)"
-                   },
-                   "type":"category",
-                   "offset":true,
-                   "display":true,
-                   "reverse":false,
-                   "beginAtZero":false,
-                   "bounds":"ticks",
-                   "grace":0,
-                   "title":{
-                      "display":false,
-                      "text":"",
-                      "padding":{
-                         "top":4,
-                         "bottom":4
-                      },
-                      "color":"#666"
-                   },
-                   "id":"y",
-                   "position":"left"
-                }
-             },
-             "responsive":true,
-             "maintainAspectRatio":false
-          },
-          "widgetAdded":true,
-          "api":"none",
-          "edit":false
-       },
-       {
-          "widgetId":"03",
-          "widget_type":"VERTICAL_BAR_CHART",
-          "widget_title":"Scheduled Fields",
-          "widget_description":"Lists Recent activity in a single project, or in all projects",
-          "sampleData":{
-             "labels":[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July"
-             ],
-             "datasets":[
-                {
-                   "label":"My First dataset",
-                   "backgroundColor":"#42A5F5",
-                   "data":[
-                      65,
-                      59,
-                      80,
-                      81,
-                      56,
-                      55,
-                      40
-                   ]
-                },
-                {
-                   "label":"My Second dataset",
-                   "backgroundColor":"#FFA726",
-                   "data":[
-                      28,
-                      48,
-                      40,
-                      19,
-                      86,
-                      27,
-                      90
-                   ]
-                }
-             ]
-          },
-          "chartSrc":"chart3.png",
-          "chartOptions":{
-             
-          },
-          "widgetAdded":true,
-          "api":"none",
-          "edit":false
-       },
-       {
-          "widgetId":"08",
-          "widget_type":"DONUT_WITH_LEGENDS_CHART",
-          "widget_title":"Environments",
-          "widget_description":"Lists Recent activity in a single project, or in all projects",
-          "sampleData":{
-             "labels":[
-                "Mac",
-                "Windows",
-                "Linux"
-             ],
-             "datasets":[
-                {
-                   "data":[
-                      0,
-                      9,
-                      2
-                   ],
-                   "backgroundColor":[
-                      "#c2b280",
-                      "#838381",
-                      "#be0032"
-                   ]
-                }
-             ]
-          },
-          "chartSrc":"chart1.png",
-          "chartOptions":{
-             
-          },
-          "widgetAdded":true,
-          "api":"/rpa-service/agent/get-environments",
-          "edit":false
-       }
-    ],
-    "metrics":[
-       {
-          "metricId":"01",
-          "metric_name":"Process Execution Rate",
-          "metric_desc":"Lists Recent activity in a single project, or in all projects",
-          "src":"process.svg",
-          "metricAdded":true,
-          "value":10
-       },
-       {
-          "metricId":"02",
-          "metric_name":"Automation Rate",
-          "metric_desc":"Lists Recent activity in a single project, or in all projects",
-          "src":"round-settings.svg",
-          "metricAdded":true,
-          "value":10
-       },
-       {
-          "metricId":"03",
-          "metric_name":"Schedules Failed",
-          "metric_desc":"Lists Recent activity in a single project, or in all projects",
-          "src":"schedules.svg",
-          "metricAdded":true,
-          "value":10
-       },
-       {
-          "metricId":"04",
-          "metric_name":"Pending Approvals",
-          "metric_desc":"Lists Recent activity in a single project, or in all projects",
-          "src":"Thumbup.svg",
-          "metricAdded":true,
-          "value":10
-       }
-    ]
- }
+  dashboardData:any;
+  _paramsData:any;
+  _dashboardName:any
+  isEditDesc:boolean=false;
+  editdashbordnamedata: any;
+  active_inplace: any;
+ selectedDashBoardName:any;
+ selectedDashBoard:any;
+  
 
-
-  constructor(private activeRoute: ActivatedRoute, private datatransfer: DataTransferService, private router: Router, private messageService: MessageService,
-    private primengConfig: PrimeNGConfig, private rest:RestApiService,
+  constructor(private activeRoute: ActivatedRoute,
+    private datatransfer: DataTransferService,
+    private router: Router,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig, 
+    private rest:RestApiService,
+    private spinner: LoaderService,
+    private loader:LoaderService
   ) {
-
+    this.activeRoute.queryParams.subscribe(res => {
+      console.log(res)
+      this._paramsData = res
+      this.selectedDashBoardName= this._paramsData.dashboardName
+    })
   }
 
   ngOnInit(): void {
+
     // this.getUserDetails();
     this.primengConfig.ripple = true;
     this.gfg = [
-      { label: 'Delete', },
+      { 
+        label: 'Delete',
+        command: () => {
+          this.deletedashbord();
+      }
+     },
       { label: 'Set As Background', }
 
     ];
@@ -405,13 +81,114 @@ export class DynamicDashboardComponent implements OnInit {
       // if(response.find((item:any)=>item.dashboardId==item.dashboardId)!=undefined)
       // {
       //  let dashboardData=response.find((item:any)=>item.dashboardId==item.dashboardId)
-      // this.dashboardName = response.dashboardName
-      // this.dashboardData = response;
-      // this.dashboardData.widgets = response.widgets.map((item: any) => {
-      //   item["edit"] = false;
-      //   return item;
-      // })
-      console.log(this.dashboardData.widgets)
+
+
+
+
+      this.dashboardName = response.dashboardName
+      this.dashboardData = response;
+      console.log(this.dashboardData)
+
+      if (response.widgets) {
+        this.dashboardData.widgets = response.widgets.map((item: any) => {
+          item["edit"] = false;
+          return item;
+        })
+        console.log(this.dashboardData)
+      } else {
+        this.dashboardData = {
+          "dashboardName": "testing",
+          "widgets": [
+            {
+              "id": 1,
+              "widget_type": "pie",
+              "name": "Bot Execution Status",
+              "description": "Provides the execution status of the bots - failed ones vs successfully executed ones",
+              "sampleData": {
+
+
+                "labels": [
+                  "Mac",
+                  "Windows",
+                  "Linux"
+                ],
+
+                "datasets": [
+                  {
+                    "data": [
+                      300,
+                      50,
+                      100
+                    ],
+                    "backgroundColor": [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                    ],
+                    "hoverBackgroundColor": [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                    ]
+                  }
+                ]
+              },
+              "chartOptions": {
+                "plugins": {
+                  "legend": {
+                    "position": "bottom"
+                  }
+                }
+              },
+
+              "widgetAdded": true,
+              "edit": false,
+              "filterOptions": {
+                "widgetTypes": [
+                  "pie",
+                  "bar"
+                ]
+              }
+            },
+
+          ],
+          "metrics": [
+            {
+              "id": 1,
+              "name": "Total Number of Resources",
+              "description": "Display the total count of resources onboarded into EZFlow for the tenant",
+              "metricAdded": true,
+              "metricValue": 29,
+              "src": "process.svg"
+            },
+            {
+              "id": 2,
+              "name": "Total Processes Documented",
+              "description": "Displays the count of processes across all departments",
+              "metricAdded": true,
+              "metricValue": 38,
+              "src": "process.svg"
+            },
+            {
+              "id": 3,
+              "name": "Total Processes Automated",
+              "description": "Displays the count of processes that has RPA assigned to any of the step",
+              "metricAdded": true,
+              "metricValue": 47,
+              "src": "process.svg"
+            },
+            {
+              "id": 4,
+              "name": "Processes pending approval",
+              "description": "Total list of processes for which approval is pending",
+              "metricAdded": true,
+              "metricValue": 56,
+              "src": "process.svg"
+            }
+          ]
+        }
+      }
+
       //}
     })
 
@@ -431,7 +208,7 @@ export class DynamicDashboardComponent implements OnInit {
   // {
   //   am4core.useTheme(am4themes_animated);
   //   this.rest.getallsobots().subscribe((item:any)=>{
-     
+
   //     if(item.errorMessage==undefined){
   //       this.allbots=item;
   //       let data:any=[{
@@ -453,39 +230,44 @@ export class DynamicDashboardComponent implements OnInit {
   //         "color":"#62C849"
   //       }];
   //       this.chart1(data)
-  
+
   //   }
-  
-     
-      
-     
+
+
+
+
   //     //this.chart2()
-     
+
   //   },
   //  )
   // }
- 
+
   updateDashboardName() {
-    this.dashboardData.dashboardName = this.dashboardName;
-    this.editDashboardName = false;
+    this.selectedDashBoardName=this._dashboardName
+    this.selectedDashBoard["dashboardName"]= this.selectedDashBoardName
+    this.rest.updateDashBoardNamed(this.selectedDashBoard).subscribe((response:any)=>{
+      console.log('update bot details=================',response)
+    })
   }
 
   navigateToConfigure() {
     this.datatransfer.setdynamicscreen(this.dashboardData)
-    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: { dashboardId: this.dashboardData.dashboardId } });
+    this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: this._paramsData });
   }
 
   navigateToCreateDashboard() {
     this.router.navigate(["pages/dashboard/create-dashboard"])
   }
+
   toggleConfigure(e, widget?: any) {
-  
+    console.log(e, widget)
     this.dashboardData.widgets.
       forEach(element => {
-        element.edit=true
+        element.edit = true
         console.log(element, widget)
       });
   }
+
   getItemActionDetails(widget) {
     console.log(widget);
     return [
@@ -493,26 +275,57 @@ export class DynamicDashboardComponent implements OnInit {
       {
         label: 'Configure', command: (e) => {
           console.clear()
-          console.log(widget)
+          console.log(e)
         }
       }]
 
   }
+
+  cancelEdit() {
+    this.dashboardData.widgets.
+      forEach(element => {
+        element.edit = false
+      });
+    console.log(this.dashboardData.widgets)
+  }
+
 // Dash Board list in dropdown 
   getListOfDashBoards(){
-    this.rest.getDashBoardsList().subscribe((data:any)=>{
-      this.dashbordlist=data.dataList;
-      console.log( this.dashbordlist)
-        })
+    this.rest.getDashBoardsList().subscribe((res:any)=>{
+      this.dashbordlist=res.data;
+      this.selectedDashBoard = this.dashbordlist.find(item=>item.id == this._paramsData.dashboardId);
+    })     
   }
-  // getUserDetails(){ // capture the userDatails 
-  //   this.dataTransfer.logged_userData.subscribe(res=>{
-  //    if(res){
-      
-  //      this.getallbots();
-  //       }
-  //     })
-  //   }
-}
+
+  onDropdownChange(event){
+    this.selectedDashBoard = event.value
+    this.selectedDashBoardName = this.selectedDashBoard.dashboardName
+   console.log('this is dropdownselected data',event);
+   let params1= {dashboardId:this.selectedDashBoard.id,dashboardName:this.selectedDashBoard.dashboardName};
+   this.router.navigate([],{ relativeTo:this.activeRoute, queryParams:params1 });
+  }
+
+  inplaceActivate() {
+    this._dashboardName = this.selectedDashBoardName
+  }
+
+    Space(event:any){
+      if(event.target.selectionStart === 0 && event.code === "Space"){
+        event.preventDefault();
+      }
+      }
+
+
+  onDeactivate(){
+    this.inplace.deactivate();
+   }
+       
+  deletedashbord(){
+  this.rest.getdeleteDashBoard(this.selectedDashBoard.id).subscribe(data=>{
+    this.inplace.deactivate();
+  });
+  }
+
+ }
 
 
