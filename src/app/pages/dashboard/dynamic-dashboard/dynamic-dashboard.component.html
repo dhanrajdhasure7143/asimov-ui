@@ -96,7 +96,7 @@
                      <div *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
                         <br>
                         <div>
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <!-- <div *ngIf="widget.widget_type=='pie'">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>

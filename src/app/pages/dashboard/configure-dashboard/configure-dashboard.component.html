@@ -74,15 +74,42 @@
       </div>
       <div class="col-md-12 py-3 px-3 metrics-space">
         <div class="row">
-          <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let i=index" >
+          <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let j=index" >
             <div class="well1-dynmic graphs-align" >
                <span class="h5">{{widget.name}}</span> 
                <i class="pi pi-times right overlay-icon"
-                  (click)="onDeactivate(widget,i, 'widgets')"></i>
-               <div class="" style="text-align: center;margin:20px;">
+                  (click)="onDeactivate(widget,j, 'widgets')"></i>
+                  
+               <div  class="" style="text-align: center;margin:20px;">
                   <div >
                      <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
+                   
                   </div>
+                 
+                  <div *ngIf="widget.widget_type=='TABLE'">
+                  
+             <p-table >
+               <ng-template pTemplate="header">
+                   <tr>
+                       <th>Vin</th>
+                       <th>Year</th>
+                       <th>Brand</th>
+                       <th>Color</th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-car>
+                   <tr>
+                       <td>Test1</td>
+                       <td>Test2</td>
+                       <td>Test3</td>
+                       <td>Test4</td>
+                   </tr>
+               </ng-template>
+           </p-table>
+        
+                 </div>
+                 
+                
                  <!-- <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
                   </div> -->
@@ -96,12 +123,57 @@
                      <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
                   </div>
                   <div *ngIf="widget.widget_type=='TABLE'">
+                     <div *ngIf ="isShow">
+              <p-table >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Vin</th>
+                        <th>Year</th>
+                        <th>Brand</th>
+                        <th>Color</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-car>
+                    <tr>
+                        <td>Test1</td>
+                        <td>Test2</td>
+                        <td>Test3</td>
+                        <td>Test4</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+          </div>
                   </div> -->
                </div>
                <p>{{widget.description}}</p>
             </div>
+           
+           
+          
           </div>
-
+          <!-- <div class="col-md-6 sec-1" >
+            <div class="well1-dynmic" >
+          <div *ngIf ="isShow">
+            <p-table >
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Vin</th>
+                      <th>Year</th>
+                      <th>Brand</th>
+                      <th>Color</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-car>
+                  <tr>
+                      <td>Test1</td>
+                      <td>Test2</td>
+                      <td>Test3</td>
+                      <td>Test4</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+        </div>
+        </div></div> -->
           <div class="col-md-6 sec-1" *ngIf="dynamicDashBoard.widgets.length<1" >
             <div class="well1" style="height:395px;">
               <div class="" style="text-align: center;margin-top:25%">
@@ -185,7 +257,7 @@
             </select>
           </div>
         </div>
-        <div *ngFor="let widget of widgetslist; let i=index"  class="col-md-12 mb-2">
+        <div *ngFor="let widget of widgetslist; let i=index"  >
           <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
             
@@ -201,6 +273,20 @@
           </div>
           </div>
         </div>
+        <div class="col-md-12 mb-2 p-0" (click)="addtable()">
+          <div class="flex-container">
+            
+            <div class="img-div" style="width:30%;margin-right:20px;">
+              <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
+            </div>
+
+            <div>
+              <h5>Table</h5>
+              
+              <p style="font-size: 14px; color: #808080cc;">Check Table</p>
+            </div>
+          </div>
+          </div>
       </p-tabPanel>
     </p-tabView>
     <span class="splitter-headers">
