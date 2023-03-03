@@ -96,8 +96,11 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="task_icon"> Task Icon <span class="star">*</span></label>
                         <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
-                        <input class="form-control form-control-lg" accept="image/png, image/svg" formControlName="taskIcon" id="formFileLg" type="file" />
-                        <span *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched" class="errspan required"> Task Icon Required* </span>
+                        <input class="form-control form-control-lg" accept="image/png, image/svg"
+                            formControlName="taskIcon" id="formFileLg" type="file" />
+                        <span
+                            *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched"
+                            class="errspan required"> Task Icon Required* </span>
                     </div>
                     <!-- <div class="custom-file">
                         <input type="file" class="custom-file-input" id="customFileLang" lang="es">

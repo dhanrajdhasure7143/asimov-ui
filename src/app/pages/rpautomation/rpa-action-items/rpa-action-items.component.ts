@@ -16,6 +16,7 @@ export class RpaActionItemsComponent implements OnInit {
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
   selectedId:any;
+  updateflag: boolean = false;
 
   constructor(
     private router:Router,
@@ -27,10 +28,9 @@ export class RpaActionItemsComponent implements OnInit {
       this.route.queryParams.subscribe((data)=>{
         this.selectedId = data.id;
         console.log(data.id)
-      }
-      
-      )
+      })
     }
+
 
   ngOnInit(): void {
     this.loader.show();
@@ -49,6 +49,16 @@ export class RpaActionItemsComponent implements OnInit {
         DisplayName: "Action Name",
         ShowGrid: true,
         ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "actionType",
+        DisplayName: "Action Type",
+        ShowFilter: true,
+        ShowGrid: true,
         filterWidget: "normal",
         filterType: "text",
         sort: true,
@@ -75,7 +85,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "authorization_Type",
+        ColumnName: "attribute",
         DisplayName: "Attributes",
         ShowGrid: true,
         ShowFilter: true,
@@ -96,18 +106,30 @@ export class RpaActionItemsComponent implements OnInit {
       },
     ];
   })
+
   }
 
   viewDetails(event) {}
+
   deleteById(event) {}
+
   deleteConnection() {}
+
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    data.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
-  backToConnection(){
-    this.router.navigate(['/pages/rpautomation/configurations'],{
-      queryParams: {index:2}
-    })
+
+  updateAction() {
+    this.router.navigate(["/pages/rpautomation/connection"]);
+  }
+
+  deleteAction() {}
+  
+  backToConnection() {
+    this.router.navigate(["/pages/rpautomation/configurations"], {
+      queryParams: { index: 2 },
+    });
   }
 }

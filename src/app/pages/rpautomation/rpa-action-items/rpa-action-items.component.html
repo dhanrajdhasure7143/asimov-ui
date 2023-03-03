@@ -7,7 +7,7 @@
     </span>
 </div>
 
-<div class="rpa-content-div mx-3">
+<div class="rpa-content-div">
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div *ngIf="addflag" class="env-btn credential-btntool">
@@ -15,6 +15,36 @@
                     [routerLink]="['/pages/rpautomation/connection']">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
                     <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="!addflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="addbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="updateflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" (click)="updateAction()">
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
+                    <span class="testtooltip"> Edit</span>
+                </button>
+            </div>
+            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                <button id="updateenvbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
+                    <span class="testtooltip"> Edit</span>
+                </button>
+            </div>
+            <div class="env-btn credential-btntool" *ngIf="delete_flag">
+                <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteAction()">
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
+                    <span class="testtooltip">Delete</span>
+                </button>
+            </div>
+            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
+                <button data-placement="top" id="deletebtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'>
+                    <span class="testtooltip">Delete</span>
                 </button>
             </div>
         </div>
@@ -28,5 +58,5 @@
                 [dataKeyId]="'id'" [show_search_field]="true" [show_column_filter]="true"
                 [show_clear_filter]="true">
             </app-dynamic-table>
-        </div>
     </div>
+</div>    

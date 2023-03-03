@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import moment from "moment";
@@ -15,7 +21,7 @@ import { Rpa_Hints } from "../model/RPA-Hints";
   styleUrls: ["./rpa-connection-manager.component.css"],
 })
 export class RpaConnectionManagerComponent implements OnInit {
-  @Input() isCreate: boolean=true;
+  @Input() isCreate: boolean = true;
   connectorTable: any = [];
   representatives: any = [];
   columns_list: any = [];
@@ -25,13 +31,12 @@ export class RpaConnectionManagerComponent implements OnInit {
   isFormOverlay: boolean = false;
   authorizationType: any = [];
   isAuthOverlay: boolean = false;
-  updateflag:boolean = false;
+  updateflag: boolean = false;
   viewConnetorflag = false;
   createConnectorForm: FormGroup;
   selectedData: any;
-  public connctionupdatedata:any;
+  public connctionupdatedata: any;
   submitted: boolean;
-
 
   constructor(
     private rest_api: RestApiService,
@@ -97,8 +102,11 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   viewDetails(event) {}
+
   deleteById(event) {}
+
   deleteConnection() {}
+  
   viewConnector() {
     console.log("Selected Data",this.selectedData[0].id)
     this.router.navigate(["/pages/rpautomation/action-item"],{
@@ -106,33 +114,46 @@ export class RpaConnectionManagerComponent implements OnInit {
     })
   }
 
-  addNewConnection(){
+  addNewConnection() {
     this.isCreate = true;
     this.isFormOverlay = true;
   }
+
   openUpdateOverlay() {
-    this.isCreate =false;
+    this.isCreate = false;
     this.isFormOverlay = true;
     this.connctionupdatedata = this.selectedData[0];
     this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
+
   readSelectedData(data) {
     this.selectedData = data;
-    this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
-    this.selectedData.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
-    this.selectedData.length == 1 ? (this.updateflag =true) : (this.updateflag = false);
-    this.selectedData.length == 1 ? (this.viewConnetorflag = true) : (this.viewConnetorflag = false);
+    this.selectedData.length > 0
+      ? (this.addflag = false)
+      : (this.addflag = true);
+    this.selectedData.length > 0
+      ? (this.delete_flag = true)
+      : (this.delete_flag = false);
+    this.selectedData.length == 1
+      ? (this.updateflag = true)
+      : (this.updateflag = false);
+    this.selectedData.length == 1
+      ? (this.viewConnetorflag = true)
+      : (this.viewConnetorflag = false);
   }
+
   closeFormOverlay(event) {
     this.isFormOverlay = event;
     this.createConnectorForm.reset();
   }
+
   closeAuthOverlay(event) {
     this.isAuthOverlay = event;
     this.isFormOverlay = true;
   }
+
   saveConfigurations() {
     this.isAuthOverlay = false;
     this.isFormOverlay = true;
@@ -142,16 +163,24 @@ export class RpaConnectionManagerComponent implements OnInit {
   this.createConnectorForm.get("name").setValue("");
   this.createConnectorForm.get("taskIcon").setValue("");
   }
-  saveConnector(){
-    if(this.isCreate){
-      if(this.createConnectorForm.valid){
-        this.spinner.show();
-        this.submitted=true;
-        let connections = this.createConnectorForm.value;
-      }
-    }
+
+  saveConnector() {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Connector Added Successfully !!",
+      heightAuto: false,
+    });
+    this.isFormOverlay = false;
   }
-  updateConnector(){
-    
+
+updateConnector() {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Connector Updated Successfully !!",
+      heightAuto: false,
+    });
+    this.isFormOverlay = false;
   }
 }
