@@ -352,7 +352,7 @@
               </option>
             </select>
             <div *ngIf="loadBotForm.get('botDepartment').invalid && loadBotForm.get('botDepartment').touched"
-              class="errspan required">
+              class="required">
               Category Required*
             </div>
           </div>
@@ -362,7 +362,7 @@
               <option value="" selected hidden>Select Bot</option>
               <option *ngFor="let bot of filteredBotsList" [value]="bot.botId">{{bot.botName}}</option>
             </select>
-            <div *ngIf="loadBotForm.get('bot').invalid && loadBotForm.get('bot').touched" class="errspan required">
+            <div *ngIf="loadBotForm.get('bot').invalid && loadBotForm.get('bot').touched" class="required">
               Bot Required*
             </div>
           </div>

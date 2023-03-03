@@ -169,19 +169,19 @@
           botDetailsForm.get('botName').touched &&
           !botDetailsForm.controls['botName'].hasError('maxlength')
         "
-        class="errspan required"
+        class="required"
       >
         Bot Name Required*
       </div>
       <div
         *ngIf="botNameCheck && botDetailsForm.get('botName').value"
-        class="errspan required"
+        class="required"
       >
         Bot Name is already exists*
       </div>
       <div
         *ngIf="botDetailsForm.get('botName').hasError('pattern')"
-        class="errspan required"
+        class="required"
       >
         Spaces and special characters are not allowed Excluding( _ & - )
       </div>

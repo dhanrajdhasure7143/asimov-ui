@@ -1,5 +1,5 @@
 <div class="rpa-content-div row" *ngIf="this.isButtonVisible || enableDbconnection">
-    <div class="col-12 credential-search-tools">
+    <div class="row credential-search-tools">
         <!-- <div class="rpa-env-search credential-search">
             <input class="form-control toolbar-search" placeholder="Search" (keyup)="applyFilter1($event.target.value)">
             <img src="../../../../assets/images/search.svg" matSuffix class="testplus1">
@@ -7,44 +7,44 @@
         <div class="env-data-tool credential-tools">
             <div *ngIf="!addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()">
-                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add" class="testplus">
                     <span class="testtooltip">New</span>
                 </button>
             </div>
             <div *ngIf="addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add" class="testplus">
                     <span class="testtooltip">New</span>
                 </button>
             </div>
             <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()">
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit" class="testplus">
                     <span class="testtooltip">Edit</span>
                 </button>
             </div>
             <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
                 <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit" class="testplus">
                     <span class="testtooltip">Edit</span>
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete" class="testplus">
                     <span class="testtooltip">Delete</span>
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==false" class="env-btn credential-btntool">
                 <button id="deletedbbtn" title="Delete Database Connection" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'>
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete" class="testplus">
                     <span class="testtooltip">Delete</span>
                 </button>
             </div>
         </div>
 
     </div>
-    <div class="col-md-12 con-envr">
+    <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid">
             <!-- <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="listofdb">
 
@@ -149,18 +149,20 @@
         <mat-paginator #paginator4 [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]"
             [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
             <app-dynamic-table
-        [table_data]="dbconnections"
-        [screenTable]="'common'"
-        [columns_list]="columns_list"
-        [checkBoxShow]="true"
-        (selectedData)="readSelectedData($event)"
-        [show_column_filter]="true"
-        [show_clear_filter]="true"
-        [show_search_field]="true"
-      ></app-dynamic-table>
-    </div>   
-    <div *ngIf="hiddenPopUp">
+                [table_data]="dbconnections"
+                [screenTable]="'common'"
+                [columns_list]="columns_list"
+                [checkBoxShow]="true"
+                (selectedData)="readSelectedData($event)"
+                [show_column_filter]="true"
+                [show_clear_filter]="true"
+                [show_search_field]="true"
+            ></app-dynamic-table>
+        </div>
+    </div>
+</div>  
+<div *ngIf="hiddenPopUp">
     <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
-    <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"   (closeOverlay)="closeOverlay($event)"> </app-rpa-database-form>
+        <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"   (closeOverlay)="closeOverlay($event)"> </app-rpa-database-form>
     </app-split-overlay>
-     </div>
+</div>

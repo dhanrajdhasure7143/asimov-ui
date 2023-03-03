@@ -1,5 +1,5 @@
 <div class="rpa-content-div row" *ngIf="this.isButtonVisible || enableEnvironment">
-  <div class="col-12 environment-search-tools">
+  <div class="row environment-search-tools">
     <!-- <div class="rpa-env-search environment-search">
             <input class="form-control toolbar-search" placeholder="Search"
                 (keyup)="applyFilter($event.target.value)">
@@ -8,78 +8,57 @@
         </div> -->
     <div class="env-data-tool environment-tools">
       <div [hidden]="addflag" class="env-btn environment-btntool">
-        <button
-          class="tsttooltipbtn"
-          id="addenvbtn"
-          (click)="openCreateEnvOverlay()"
-        >
-          <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" />
+        <button class="tsttooltipbtn" id="addenvbtn" (click)="openCreateEnvOverlay()">
+          <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" alt="add" class="testplus"/>
           <span class="testtooltip">New</span>
         </button>
       </div>
 
       <div [hidden]="!addflag" class="env-btn environment-btntool">
         <button class="deleteenvbtn" id="addenvbtn" disabled>
-          <img src="../../../../assets/images/RPA/icon_latest/plus dis.svg" />
+          <img src="../../../../assets/images/RPA/icon_latest/plus dis.svg" alt="add" class="testplus"/>
           <span class="testtooltip">New</span>
         </button>
       </div>
       <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-        <button
-          class="tsttooltipbtn"
-          id="deleteenvbtn"
-          (click)="deleteEnvironments()"
-        >
-          <img
-            src="../../../../assets/images/RPA/icon_latest/delete-blue.svg"
-          />
+        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deleteEnvironments()">
+          <img src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" alt="delete" class="testplus"/>
           <span class="testtooltip">Delete</span>
         </button>
       </div>
       <div [hidden]="deleteflag" class="env-btn environment-btntool">
         <button id="deleteenvbtn" title="Delete Environment" disabled>
-          <img src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" />
+          <img src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" alt="delete" class="testplus"/>
           <span class="testtooltip">Delete</span>
         </button>
       </div>
       <div [hidden]="!updateflag" class="env-btn environment-btntool">
-        <button
-          class="tsttooltipbtn"
-          id="updateenvbtn"
-          (click)="openUpdateEnvOverlay()"
-        >
-          <img src="../../../../assets/images/RPA/icon_latest/edit-blue.svg" />
+        <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()">
+          <img src="../../../../assets/images/RPA/icon_latest/edit-blue.svg" alt="edit" class="testplus"/>
           <span class="testtooltip"> Edit</span>
         </button>
       </div>
       <div [hidden]="updateflag" class="env-btn environment-btntool">
         <button id="updateenvbtn" disabled>
-          <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" />
+          <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="edit" class="testplus"/>
           <span class="testtooltip"> Edit</span>
         </button>
       </div>
       <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-        <button
-          class="tsttooltipbtn"
-          id="deleteenvbtn"
-          (click)="deploybotenvironment()"
-        >
-          <img
-            src="../../../../assets/images/RPA/icon_latest/deploy-blue.svg"
-          />
+        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deploybotenvironment()">
+          <img src="../../../../assets/images/RPA/icon_latest/deploy-blue.svg" alt="deploy" class="testplus"/>
           <span class="testtooltip">Deploy</span>
         </button>
       </div>
       <div [hidden]="deleteflag" class="env-btn environment-btntool">
         <button id="deployenvbtn" [disabled]="!(deleteflag == true)" disabled>
-          <img src="../../../../assets/images/RPA/icon_latest/deploy-dis.svg" />
+          <img src="../../../../assets/images/RPA/icon_latest/deploy-dis.svg" alt="deploy" class="testplus"/>
           <span class="testtooltip">Deploy</span>
         </button>
       </div>
     </div>
   </div>
-  <div class="col-12">
-    <div class="">
+  <div class="col-12 p-0">
       <app-dynamic-table
         [columns_list]="columns_list"
         [table_data]="environments"
@@ -193,7 +172,6 @@
             </table> -->
 
       <!-- <div class="noDataMessage" *ngIf="noDataMessage">No Data Found</div> -->
-    </div>
   </div>
 </div>
 

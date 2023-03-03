@@ -165,20 +165,20 @@
         </div>
 </div>
 
-<div class="bpmnCreate" [hidden]="!hiddenPopUp">
+<div class="" [hidden]="!hiddenPopUp">
 <app-split-overlay (closeOverlay)="closeOverlay($event)"> 
-<div id="myModal1" >
+<div class="h-100">
 
         <!-- <div class="modal-content">  -->
-                        <div class="modal-header">
-                <h4>Database</h4>
+                        <div class="create-header">
+                <h3>Database</h3>
                 <!-- <span class="close" (click)="closePopup();database.reset()">&times;</span>                 -->
         </div>
-        <div class="modal-body databaseForm">
-                <form autocomplete="off" class="" #database="ngForm">
-                        <div class="container m-contanier form-body" [ngClass]="{hasthreebtns: !isTableEnable, hastwobtns: isTableEnable}">
-                                <div class="row p-0 form-group">
-                                   <div class="col-6 pl-0">
+        <div class="createform-overlay">
+                <form autocomplete="off" class="h-100" #database="ngForm">
+                        <div class="h-100" [ngClass]="{hasthreebtns: !isTableEnable, hastwobtns: isTableEnable}">
+                                <div class="row">
+                                   <div class="col-6 pl-0 form-group">
                                         <label class="label-control" for="type">Type<span class="star">*</span></label>
                                         <select class="form-control" name="type" id="type" #type="ngModel" (change)="changeType()" [(ngModel)]="dbDetails.dbType" required>
                                                 <option [value]="undefined" disabled hidden>Select Type</option>
@@ -186,54 +186,53 @@
                                                 <option value="postgresql">Postgres SQL</option>
                                         </select>
                                         <span *ngIf="((type.invalid && database.submitted) || (type.errors && type.touched) )" 
-                                                class='errspan required'> Type is required </span>
+                                                class='required'> Type is required </span>
                                    </div>
-                                   <div class="col-6 p-0">
+                                   <div class="col-6 pr-0 form-group">
                                         <label class="label-control" for="connection">Connection Name<span class="star">*</span></label>
                                         <input type="text" name="connection" #connection="ngModel" [(ngModel)]="dbDetails.connectionName" class="form-control" placeholder="Enter Connection Name" required/>
                                         <span *ngIf="((connection.invalid && database.submitted) || (connection.errors && connection.touched) )" 
-                                                class='errspan required'> Connection Name is required </span>                                   
+                                                class='required'> Connection Name is required </span>                                   
                                    </div>                
                                 </div>
-                                <div class="row p-0 form-group">
-                                        <div class="col-6 pl-0">
+                                <div class="row">
+                                        <div class="col-6 pl-0 form-group">
                                                 <label class="label-control" for="dbname">DB Name<span class="star">*</span></label>
                                                 <input type="text" name="dbname" #dbname='ngModel' (keyup)="onChangeValues()" [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
                                                 <span *ngIf="((dbname.invalid && database.submitted) || (dbname.errors && dbname.touched) )" 
-                                                class='errspan required'> DB Name is required </span>
+                                                class='required'> DB Name is required </span>
                                         </div>
                                   
-                                   <div class="col-6 p-0">
+                                   <div class="col-6 pr-0 form-group">
                                         <label class="label-control" for="otherPort">Port Number<span class="star">*</span></label>
                                         <input type="text" name="otherPort" #otherPort='ngModel' (keyup)="onChangeValues()" [(ngModel)]="dbDetails.portNumber" class="form-control" placeholder="Enter Port Number" required/>
                                         <span *ngIf="((otherPort.invalid && database.submitted) || (otherPort.errors && otherPort.touched) )" 
-                                        class='errspan required'>Port Number is required </span>
+                                        class='required'>Port Number is required </span>
                                    </div>
-                                </div>
-                                
-                                <div class="row p-0 form-group">
-                                        <div class="col-6 pl-0">
+                                </div>                                
+                                <div class="row">
+                                        <div class="col-6 pl-0 form-group">
                                                 <label class="label-control" for="username">User Name<span class="star">*</span></label>
                                                 <input type="text" name="username" #username='ngModel' (keyup)="onChangeValues()" class="form-control" [(ngModel)]='dbDetails.userName' placeholder="Enter User Name" required/>
                                                 <span *ngIf="((username.invalid && database.submitted) || (username.errors && username.touched) )" 
-                                                        class='errspan required'> User Name is required </span>
+                                                        class='required'> User Name is required </span>
                                         </div>
-                                        <div class="col-6 p-0">
+                                        <div class="col-6 pr-0 form-group">
                                                 <label class="label-control" for="password">Password<span class="star">*</span></label>
                                                 <input type="password" name="pass_word" #pass_word='ngModel' [(ngModel)]='dbDetails.password' (keyup)="onKeyUpPassword()" class="form-control" placeholder="Enter Password" required/>
                                                 <span *ngIf="((pass_word.invalid && database.submitted) || (pass_word.errors && pass_word.touched) )" 
-                                                        class='errspan required'> Password is required </span>
+                                                        class='required'> Password is required </span>
                                         </div>
                                 </div>
-                                <div class="row p-0 form-group">
-                                        <div class="col-6 pl-0">
+                                <div class="row">
+                                        <div class="col-6 pl-0 form-group">
                                                 <label class="label-control" for="hostname">Host Name / IP<span class="star">*</span></label>
                                                 <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required 
                                                 [readonly]="!dbDetails.dbType || !dbDetails.portNumber || !dbDetails.dbName || !dbDetails.userName || !dbDetails.password"/>
                                                 <span *ngIf="hostname.errors && hostname.touched" 
-                                                        class='errspan required'> Host Name/IPis required </span>
+                                                        class='required'> Host Name/IPis required </span>
                                         </div>
-                                      <div class="col-6 p-0" [hidden]="!isTableEnable">
+                                      <div class="col-6 pr-0 form-group" [hidden]="!isTableEnable">
                                         <label class="label-control" for="tablename">Table Name<span class="star">*</span></label>
                                         <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" (change)="onChangeTable()" required>
                                                 <option [value]="undefined" disabled hidden>Select Table Name</option>
@@ -241,56 +240,53 @@
                                                 <option value="" disabled hidden>Select Table Name</option>
                                                 <option *ngFor="let tName of tableList" value="{{tName}}">{{tName}}</option>
                                         </select>
-                                        <span *ngIf="tablename.errors && tablename.touched" class='errspan required'> Table Name is required </span>
+                                        <span *ngIf="tablename.errors && tablename.touched" class='required'> Table Name is required </span>
                                       </div>                                              
                                 </div>
-                                
-                                        <div class="row p-0 form-group" *ngIf="isTableEnable">
+                                <div class="row" *ngIf="isTableEnable">
+                                        <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control" for="increase">Mode<span class="star">*</span></label>
-                                                <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
-                                                        <option [value]="undefined" disabled hidden>Select Mode</option>
-                                                        <option [value]="null" disabled hidden>Select Mode</option>
-                                                        <option value="" disabled hidden>Select Mode</option>
-                                                        <option *ngFor="let each of modesList" [value]="each.value">{{each.name}}</option>
-                                                </select> 
-                                                <span *ngIf="increase.errors && increase.touched" 
-                                                class='errspan required'> Mode is required </span>
-                                        </div>
-                                
-                                   <div class="row p-0 form-group" *ngIf="isTableEnable">
-                                        <div class="col-6 pl-0" *ngIf="isIncrement" >
+                                        <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
+                                                <option [value]="undefined" disabled hidden>Select Mode</option>
+                                                <option [value]="null" disabled hidden>Select Mode</option>
+                                                <option value="" disabled hidden>Select Mode</option>
+                                                <option *ngFor="let each of modesList" [value]="each.value">{{each.name}}</option>
+                                        </select> 
+                                        <span *ngIf="increase.errors && increase.touched" 
+                                        class='required'> Mode is required </span>
+                                        </div>                                        
+                                </div>
+                                <div class="row" *ngIf="isTableEnable">
+                                        <div class="col-6 pl-0 form-group" *ngIf="isIncrement" >
                                                 <label class="label-control" for="increment">Increment Column Name<span class="star">*</span></label>
                                                 <input type="text" name="increment" class="form-control" #increment="ngModel" [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
                                                 <span *ngIf="increment.errors && increment.touched" 
-                                                     class='errspan required'> Increment column name is required </span>
+                                                     class='required'> Increment column name is required </span>
                                         </div>
-                                        <div class="col-6 p-0" *ngIf="isTimestammp">
+                                        <div class="col-6 pr-0 form-group" *ngIf="isTimestammp">
                                                 <label class="label-control" for="timestamp">Timestamp Column Name<span class="star">*</span></label>
                                                 <input type="text" name="timestamp" #timestamp="ngModel" class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
                                                 <span *ngIf="timestamp.errors && timestamp.touched" 
-                                                     class='errspan required'> Timestamp column name is required </span>
+                                                     class='required'> Timestamp column name is required </span>
                                         </div>
-                                </div>         
-                        </div>
-                        <div class="form-footer">
-                        <div class="row">
-                          <div class="connection_btn ">
-                             <div *ngIf="!isTableEnable">
-                                    <button class="btn eiap-btn btn-primary" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Fetch Tables</button>
                                 </div>
-                               </div>  &nbsp;&nbsp;
-                              <div class="connection_btn">
-                                        <button class='btn btn-primary' [disabled]='database.invalid' (click)="testDbConnection()">Test Connection</button>
-                                       
-                                        <button class='btn btn-primary db-gpg-btn' [disabled]='isDisabled' (click)="slideUp()">Generate Process Graph</button>
-                                </div> 
-                        </div>                            
-                        </div>        
+                        </div>                             
                 </form>
+                <div class="createform-footer">
+                        <div class="row">
+                          <div class="">
+                             <div *ngIf="!isTableEnable">
+                                <button class="btn bluebg-button mr-3" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Fetch Tables</button>
+                             </div>
+                          </div>
+                          <div class="">
+                                <button class='btn bluebg-button' [disabled]='database.invalid' (click)="testDbConnection()">Test Connection</button>                                       
+                                <button class='btn bluebg-button ml-3' [disabled]='isDisabled' (click)="slideUp()">Generate Process Graph</button>
+                          </div> 
+                        </div>                            
+                </div>   
         </div>
 <!-- </div> -->
-
-
 </div>
 </app-split-overlay>
 </div>

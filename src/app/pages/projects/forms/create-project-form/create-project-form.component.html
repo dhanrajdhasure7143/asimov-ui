@@ -5,7 +5,7 @@
         <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control">Project Name<span class="star">*</span></label>
                         <input type="text" maxlength="51" formControlName="projectName" class="form-control data" placeholder="Enter Project Name" [ngClass]="insertForm2.get('projectName').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched && !insertForm2.get('projectName').hasError('pattern')" class="errspan required">Project Name Required*</span>
@@ -15,7 +15,7 @@
                     <span *ngIf="insertForm2.get('projectName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
                     </span>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label class="label-control">Initiatives<span class="star">*</span></label>
                         <!-- <select formControlName="initiatives" class="form-control data"
                         [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0 ngselectfield">
+                    <div class="form-group col-md-6 pl-0 ngselectfield">
                         <label class="label-control">Add Resources <span
                             class="star">*</span></label>
                         <!-- <select formControlName="resources" class="form-control data"
@@ -49,7 +49,7 @@
 
                         <span *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched" class="errspan required">Resources Required*</span>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label class="label-control">Project Owner<span
                             class="star">*</span></label>
                         <select formControlName="owner" disabled class="form-control data" [ngClass]="insertForm2.get('owner').valid?'enteredfield-color':'inputfield-color'">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control">Metrics To Be Measured<span
                             class="star">*</span></label>
                         <input type="text" formControlName="measurableMetrics" maxlength="51" placeholder="Enter Metrics To Be Measured" class="form-control data" [ngClass]="insertForm2.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
@@ -71,7 +71,7 @@
                             Maximum of 50 characters exceeded
                         </span>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <!-- <label class="label-control">Value Chain<span
                             class="star">*</span></label> -->
 
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="freetrail!='true'">
                         <label class="label-control">Select Process<span class="star">*</span></label>
                         <select class="form-control data" formControlName="process" (change)="onProcessChange($event.target.value)" [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
@@ -113,7 +113,7 @@
                     </select>
                         <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" class="errspan required">Process Required*</span>
                     </div>
-                    <div class="form-fields col-md-6 pl-0" *ngIf="freetrail=='true'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="freetrail=='true'">
                         <label class="label-control">Select Process</label>
                         <select class="form-control data" [disabled]="true" (change)="onProcessChange($event.target.value)" [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
@@ -123,7 +123,7 @@
                     </select>
                     </div>
 
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <!-- <label class="label-control">Access<span class="star">*</span></label>
                     <select formControlName="access" class="form-control data"
                         [ngClass]="insertForm2.get('access').valid?'enteredfield-color':'inputfield-color'">
@@ -161,13 +161,13 @@
                             -->
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control">Start Date<span class="star">*</span></label>
                         <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
                         <input class="form-control" type="date" name="daytime" max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate" [ngClass]="insertForm2.get('startDate').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" class="errspan required">Start Date Required*</span>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label class="label-control">End Date<span class="star"></span></label>
                         <input class="form-control" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate" class="form-control data" [ngClass]="insertForm2.get('endDate').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" class="errspan required">End Date Required*</span>
@@ -177,7 +177,7 @@
 
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="freetrail!='true'">
                         <label class="label-control">Process Owner<span class="star">*</span></label>
                         <select formControlName="processOwner" [attr.disabled]="processOwner==false" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
                             <option value="" disabled hidden>Select Process Owner</option>
@@ -188,7 +188,7 @@
                         <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched" class="errspan required">Process Owner Required*</span>
                     </div>
                     
-                    <div class="form-fields col-md-6 pl-0" *ngIf="freetrail=='true'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="freetrail=='true'">
                         <label class="label-control">Process Owner</label>
                         <select  [disabled]="true" class="form-control" [attr.disabled]="processOwner==false" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Process Owner</option>
@@ -196,7 +196,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-fields">
+                    <div class="form-group">
                         <label class="label-control">Project Description<span
                             class="star">*</span></label>
                         <!-- <input type="text" formControlName="projectPurpose" class="form-control data" placeholder="Enter Project Purpose"
