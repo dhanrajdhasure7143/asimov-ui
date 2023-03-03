@@ -73,12 +73,12 @@
          <div class="col-md-12 pb-3 px-3">
             <div class="row">
 
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets; let i=index">
+               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets">
                   <div class="well1-dynmic graph">
 
                      <div class="mt-2">
                         <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
-                           class="h5">{{widget.widget_title}}</span>
+                           class="h5">{{widget.name}}</span>
 
                         <button class="btn" type="button" [hidden]="!(widget.edit==false)"
                            (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
@@ -88,10 +88,7 @@
 
                         </p-menu>
 
-                        <!-- <div [hidden]="!(widget.edit==false)">
-      <p (click)="widget.edit=true">one</p>
-      <p>two</p>
-   </div>  -->
+            
                      </div>
                     
                      <!-- <i class="pi pi-times right overlay-icon"
@@ -101,7 +98,10 @@
                         <div>
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div>
-                        <div>
+                        <!-- <div *ngIf="widget.widget_type=='pie'">
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div> -->
+                      
                         <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
                           
                             <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
@@ -121,11 +121,11 @@
                         </div>
                         <div *ngIf="widget.widget_type=='TABLE'">
                         </div> -->
-                     </div>
+                    
 
 
                      </div>
-                     <p class="wid-description">{{widget.widget_description}}</p>
+                     <p class="wid-description">{{widget.description}}</p>
 
                      <div class="row" *ngIf="widget.edit==true">
                         <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">

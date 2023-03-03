@@ -74,30 +74,31 @@
       </div>
       <div class="col-md-12 py-3 px-3 metrics-space">
         <div class="row">
-          <div class="col-md-6 sec-1"  *ngFor="let widget of dynamicDashBoard.widgets; let i=index" >
+          <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let i=index" >
             <div class="well1-dynmic graphs-align" >
-               <span class="h5">{{widget.widget_title}}</span> <i class="pi pi-times right overlay-icon"
+               <span class="h5">{{widget.name}}</span> 
+               <i class="pi pi-times right overlay-icon"
                   (click)="onDeactivate(widget,i, 'widgets')"></i>
                <div class="" style="text-align: center;margin:20px;">
-                  <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                     <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                  <div >
+                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
                   </div>
-                  <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                 <!-- <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
-                  </div>
-                  <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                  </div> -->
+                   <!-- <div *ngIf="widget.widget_type=='pie'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
                   </div>
-                  <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                  <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
                   </div>
-                  <div *ngIf="widget.widget_type=='LINE_CHART'">
+                  <div *ngIf="widget.widget_type=='pie'">
                      <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
                   </div>
                   <div *ngIf="widget.widget_type=='TABLE'">
-                  </div>
+                  </div> -->
                </div>
-               <p>{{widget.widget_description}}</p>
+               <p>{{widget.description}}</p>
             </div>
           </div>
 
@@ -184,10 +185,11 @@
             </select>
           </div>
         </div>
-        <div *ngFor="let widget of widgetslist" (click)="addWidget(widget)" class="col-md-12 mb-2">
+        <div *ngFor="let widget of widgetslist; let i=index"  class="col-md-12 mb-2">
+          <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
             
-            <div class="img-div" style="width:30%">
+            <div class="img-div" style="width:30%;margin-right:20px;">
               <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
             </div>
 
@@ -196,6 +198,7 @@
               <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
               <p style="font-size: 14px; color: #808080cc;">{{widget.description}}</p>
             </div>
+          </div>
           </div>
         </div>
       </p-tabPanel>

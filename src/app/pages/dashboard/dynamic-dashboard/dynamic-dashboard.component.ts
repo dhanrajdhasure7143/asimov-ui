@@ -43,6 +43,7 @@ export class DynamicDashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
     // this.getUserDetails();
     this.primengConfig.ripple = true;
     this.gfg = [
@@ -82,27 +83,48 @@ export class DynamicDashboardComponent implements OnInit {
       this.dashboardData= {
         "dashboardName":"testing",
         "widgets":[
-           {
-              "widgetId":"01",
-              "widget_type":"pie",
-              "widget_title":"Process Exectuin Rate",
-              "sampleData":{
-                 "labels":["Mac","Windows","Linux"],
-                 "datasets":[
+          {
+            "id": 1,
+            "widget_type": "bar",
+            "name": "Bot Execution Status",
+            "description": "Provides the execution status of the bots - failed ones vs successfully executed ones",
+            "sampleData": {
+                "labels": [
+                    "Mac",
+                    "Windows",
+                    "Linux"
+                ],
+                "datasets": [
                     {
-                       "data":[300,50,100],
-                       "backgroundColor":["#FF6384","#36A2EB","#FFCE56"],
-                       "hoverBackgroundColor":["#FF6384","#36A2EB","#FFCE56"]
+                        "data": [
+                            300,
+                            50,
+                            100
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
                     }
-                 ]
-              },
-              "chartOptions":{ },
-              "widgetAdded":true,
-              "edit":false,
-              filterOptions:{
-                widgetTypes:["pie","bar"]
-              }
-           }
+                ]
+            },
+            "chartOptions": {},
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "pie",
+                    "bar"
+                ]
+            }
+        },
+         
         ],
         "metrics":[
           {
