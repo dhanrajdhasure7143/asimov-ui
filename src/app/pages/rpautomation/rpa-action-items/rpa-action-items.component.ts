@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from "../../services/rest-api.service";
 
@@ -9,31 +9,43 @@ import { RestApiService } from "../../services/rest-api.service";
   styleUrls: ["./rpa-action-items.component.css"],
 })
 export class RpaActionItemsComponent implements OnInit {
-  connectorTable: any = [];
+  actionTable: any = [];
   representatives: any = [];
   columns_list: any = [];
   addflag: boolean = true;
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
+  selectedId:any;
 
   constructor(
     private router:Router,
     private loader:LoaderService,
-    private rest_api:RestApiService
-    ) {}
+    private rest_api:RestApiService,
+    private route:ActivatedRoute
+    ) 
+    {
+      this.route.queryParams.subscribe((data)=>{
+        this.selectedId = data.id;
+        console.log(data.id)
+      }
+      
+      )
+    }
 
   ngOnInit(): void {
     this.loader.show();
-    this.getAlltoolsets();
+    this.getAllActionItems();
   }
 
-  getAlltoolsets() {
-    // this.rest_api.getConnectionslist().subscribe((data: any) => {
-    // this.connectorTable = data;
+  getAllActionItems() {
+    this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((data: any) => {
+    this.actionTable = data;
+    console.log("ActionItems",this.actionTable);
+    
     this.loader.hide();
     this.columns_list = [
       {
-        ColumnName: "actionType",
+        ColumnName: "name",
         DisplayName: "Action Name",
         ShowGrid: true,
         ShowFilter: true,
@@ -53,7 +65,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "httpMethodType",
+        ColumnName: "type",
         DisplayName: "Method Type",
         ShowGrid: true,
         ShowFilter: true,
@@ -73,7 +85,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "createdDate",
+        ColumnName: "description",
         DisplayName: "Purpose",
         ShowGrid: true,
         ShowFilter: true,
@@ -83,7 +95,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
     ];
-  // })
+  })
   }
 
   viewDetails(event) {}

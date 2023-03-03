@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 
@@ -23,6 +23,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isRequest: boolean = false;
   isResponse: boolean = false;
   attribute = [];
+  addInputForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,6 +52,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
+
+    this.addInputForm = new FormGroup({
+      addInputField: new FormArray([
+        new FormGroup({
+          encodedCheck: new FormControl(''),
+          encodedKey: new FormControl(''),
+          encodedValue: new FormControl(''),
+          encodedDelete:new FormControl('')
+        })
+      ])
+    });
   }
 
   createItem() {
@@ -131,8 +143,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  addHeader() {}
-
   actionChange(event) {
     if (event == "Authenticated") {
       this.isAction = true;
@@ -188,4 +198,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       return this.grantItems;
     })
   }
+  get addInputField(): FormArray {
+    return this.addInputForm.get('addInputField') as FormArray;
+  }
+  addHeader() {
+    this.addInputField.push(
+      new FormGroup({
+        encodedCheck: new FormControl(''),
+        encodedKey: new FormControl(''),
+        encodedValue: new FormControl(''),
+        encodedDelete: new FormControl('')
+      })
+    );
+  }
+
 }

@@ -23,9 +23,9 @@
     <div class="col-md-12 con-envr">
         <div class="credential-tablegrid">
             <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
-                [table_data]="connectorTable" (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
+                [table_data]="actionTable" (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
                 [screenTable]="'common'" [checkBoxShow]="checkBoxShow" (selectedData)="readSelectedData($event)"
-                [dataKeyId]="'connectorId'" [show_search_field]="true" [show_column_filter]="true"
+                [dataKeyId]="'id'" [show_search_field]="true" [show_column_filter]="true"
                 [show_clear_filter]="true">
             </app-dynamic-table>
         </div>

@@ -44,7 +44,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      connectionName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      name: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])]
     })
 
@@ -59,21 +59,21 @@ export class RpaConnectionManagerComponent implements OnInit {
     // })
 
     this.getAllConnections();
-    this.connectorTable =[
-      {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
-      {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
-      {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
-    ]
+    // this.connectorTable =[
+    //   {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
+    //   {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
+    //   {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
+    // ]
   }
 
   getAllConnections() {
-    // this.rest_api.getConnectionslist().subscribe((data: any) => {
-    //   this.connectorTable = data;
-    //   console.log("List Of Connections",data);
+    this.rest_api.getConnectionslist().subscribe((data: any) => {
+      this.connectorTable = data;
+      console.log("List Of Connections",data);
       this.spinner.hide();
       this.columns_list = [
         {
-          ColumnName: "connectionName",
+          ColumnName: "name",
           DisplayName: "Connector Name",
           ShowGrid: true,
           ShowFilter: true,
@@ -93,14 +93,17 @@ export class RpaConnectionManagerComponent implements OnInit {
         //   multi: false,
         // },
       ];
-    // });
+    });
   }
 
   viewDetails(event) {}
   deleteById(event) {}
   deleteConnection() {}
   viewConnector() {
-    this.router.navigate(["/pages/rpautomation/action-item"])
+    console.log("Selected Data",this.selectedData[0].id)
+    this.router.navigate(["/pages/rpautomation/action-item"],{
+    queryParams:{id:this.selectedData[0].id}
+    })
   }
 
   addNewConnection(){
@@ -111,7 +114,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isCreate =false;
     this.isFormOverlay = true;
     this.connctionupdatedata = this.selectedData[0];
-    this.createConnectorForm.get("connectionName").setValue(this.connctionupdatedata["connectionName"]);
+    this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
@@ -136,7 +139,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
   resetForm(){
   this.createConnectorForm.reset();
-  this.createConnectorForm.get("connectionName").setValue("");
+  this.createConnectorForm.get("name").setValue("");
   this.createConnectorForm.get("taskIcon").setValue("");
   }
   saveConnector(){
@@ -147,5 +150,8 @@ export class RpaConnectionManagerComponent implements OnInit {
         let connections = this.createConnectorForm.value;
       }
     }
+  }
+  updateConnector(){
+    
   }
 }

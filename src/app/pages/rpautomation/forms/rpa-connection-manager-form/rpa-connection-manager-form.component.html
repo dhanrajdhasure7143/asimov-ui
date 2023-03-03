@@ -210,14 +210,15 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
+                                        <tbody [formGroup]="addInputForm">
+                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index"[formGroupName]="i">
                                                 <td> <input type="checkbox" class="check"
                                                         formControlName="encodedCheck"> </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
                                                         placeholder="Key" formControlName="encodedKey"> </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
                                                         placeholder="Value" formControlName="encodedValue"> </td>
+                                                <td> <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""></td>        
                                             </tr>
                                         </tbody>
                                     </table>

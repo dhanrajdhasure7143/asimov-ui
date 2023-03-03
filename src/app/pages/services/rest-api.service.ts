@@ -1624,12 +1624,12 @@ getMessagesByProjectId(projectId){
   return this.http.get('/platform-service/chat-message/getChatData/'+projectId)
 }
 
-getConnectionTable(){
-  return this.http.get('/rpa-service/getConnectionTableData')
+getActionsByConnectionId(id:any){
+  return this.http.get('/rpa-service/getConfiguredAction/'+id)
 }
 
 getConnectionslist(){
-  return this.http.get(`/rpa-service/get-all-connections`);
+  return this.http.get(`/rpa-service/getConfiguredConnection`);
 }
 
 getGrantTypes(){
@@ -1700,5 +1700,7 @@ createDashBoard(body){
 getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
-
+updateConnection(data){
+  return this.http.post('/rpa-service/updateConfiguredConnection/',data)
+}
 }
