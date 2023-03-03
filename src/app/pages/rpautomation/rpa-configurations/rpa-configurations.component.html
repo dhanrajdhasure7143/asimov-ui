@@ -1,13 +1,19 @@
-<div class="main-content">
-    <div class="content-area">
-        <div class="row module-heading title ">
-          <span class="module-back-button" routerLink="/pages/rpautomation/home">
+<div class="maincont">
+  <div class="maincont-contentarea">
+    <div class="row main-content-head">
+      <h3>
+        <label id="popup_title">
+            <a routerLink="/pages/rpautomation/home"><img
+                    src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+        </label>
+        <span class="title_text">
+          <span class="title_text">Configurations</span>
+        </span>
+      </h3>
+          <!-- <span class="module-back-button" routerLink="/pages/rpautomation/home">
               <i class="fas fa-arrow-left" aria-hidden="true"></i>
-          </span>
-          <span class="module-header-title">
-              <span class="module-parent-title">Configurations</span>
-          </span>
-        </div>
+          </span> -->
+    </div>
 
       <!-- <mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
           <mat-tab label="Environments">
@@ -56,44 +62,47 @@
       </div>
       </mat-tab>
     </mat-tab-group> -->
-
-    <p-tabView #tabView styleClass="tabview-custom" (onChange)="onTabChanged($event, tabView)" [(activeIndex)]="selected_tab_index">
-      <p-tabPanel header="Environments" >
-          <ng-template pTemplate = "header">
+    <div class="main-content-body tablist-cont">
+      <div id="" class="tabs_screen config_tabs h-100">
+        <p-tabView #tabView styleClass="tabview-custom" (onChange)="onTabChanged($event, tabView)" [(activeIndex)]="selected_tab_index">
+          <p-tabPanel header="Environments" >
+            <ng-template pTemplate = "header">
               <i class="pi pi-desktop icon-color tab_icons"></i>
-              <span class="tab_icons">Environments</span>
-          </ng-template>
-          <span *ngIf="check_tab == 0">
-            <app-environments></app-environments>
-          </span>
-      </p-tabPanel>
-      <p-tabPanel header="Database Connections">
-          <ng-template pTemplate = "header">
+              <span class="tab_title">Environments</span>
+            </ng-template>
+            <span *ngIf="check_tab == 0">
+              <app-environments></app-environments>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Database Connections">
+            <ng-template pTemplate = "header">
               <i class="pi pi-database text-primary tab_icons"></i>
-              <span class="tab_icons">Database Connections</span>
-          </ng-template>
-          <span *ngIf="check_tab == 1">
-          <app-rpa-database-connections></app-rpa-database-connections>
-        </span>
-      </p-tabPanel>
-      <p-tabPanel header="Connection Manager">
-          <ng-template pTemplate = "header">
+              <span class="tab_title">Database Connections</span>
+            </ng-template>
+            <span *ngIf="check_tab == 1">
+              <app-rpa-database-connections></app-rpa-database-connections>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Connection Manager">
+            <ng-template pTemplate = "header">
               <i class="pi pi-link tab_icons icon-color"></i>
-              <span class="tab_icons">Connection Manager</span>
-          </ng-template>
-          <span *ngIf="check_tab == 2">
-          <app-rpa-connection-manager></app-rpa-connection-manager>
-          </span>
-      </p-tabPanel>
-      <p-tabPanel header="Email">
-        <ng-template pTemplate = "header">
-          <i class="pi pi-envelope tab_icons icon-color"></i>
-            <span class="tab_icons">Email</span>
-        </ng-template>
-        <span *ngIf="check_tab == 3">
-        <app-rpa-credentials></app-rpa-credentials>
-        </span>
-    </p-tabPanel>
-  </p-tabView>
+              <span class="tab_title">Connection Manager</span>
+            </ng-template>
+            <span *ngIf="check_tab == 2">
+              <app-rpa-connection-manager></app-rpa-connection-manager>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Email">
+            <ng-template pTemplate = "header">
+              <i class="pi pi-envelope tab_icons icon-color"></i>
+              <span class="tab_title">Email</span>
+            </ng-template>
+            <span *ngIf="check_tab == 3">
+              <app-rpa-credentials></app-rpa-credentials>
+            </span>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
   </div>  
 </div>

@@ -23,7 +23,7 @@
   .errspan{
     position: relative;
     z-index: 2;
-    color: #dc3545;
+    color: #EA3D3D;
     font-size: 12px;
     letter-spacing: 0.2px;
     padding-right: 10px;
@@ -38,28 +38,6 @@
   }
   .rpa-table.dataTable thead .rpa-checkbox-th{
     background : none;
-  }
-
-  .env-btn > button > img{
-    color:black !important;
-    width:25px;
-    background-color: white !important;
-
-  }
-
-  .env-btn > button:disabled > img{
-    color:rgb(116, 116, 116) !important;
-    background-color:white!important;
-  }
-  .env-btn > button:disabled{
-    background-color:white;
-  }
-  .env-btn > button > div{
-    color:black !important;
-  }
-
-  .env-btn > button:disabled > div{
-    color:lightgrey !important;
   }
 
   .rpa-image1 {
@@ -110,8 +88,13 @@ min-width:10px !important;
   float: right !important;
   margin-right: 10px !important;
 }
+
+
 .tab_icons{
+  font-size: 28px;
+}
+.tab_title {
   font-size: 16px;
-  padding-left: 13px;
+  padding-left: 15px;
 }
 
