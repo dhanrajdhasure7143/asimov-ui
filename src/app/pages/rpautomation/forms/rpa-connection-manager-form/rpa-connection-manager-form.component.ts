@@ -59,7 +59,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
-
   }
 
   createItem() {
@@ -124,8 +123,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   methodTypes() {
     this.rest_api.getMethodTypes().subscribe((res: any) => {
       let filterData = res;
-      this.methodItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Method Types",this.methodItems)
+      this.methodItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.methodItems;
     });
   }
@@ -133,10 +134,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       let filterData = res;
-      this.authItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Auth types",this.authItems)
+      this.authItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.authItems;
-
     });
   }
 
@@ -182,20 +184,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
     }
   }
-  getActionType(){
-   this.rest_api.getActionType().subscribe((res:any)=>{
-    let filterData = res
-      this.actionItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("ActionTypesNew",this.actionItems);
+
+  getActionType() {
+    this.rest_api.getActionType().subscribe((res: any) => {
+      let filterData = res;
+      this.actionItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.actionItems;
-    })
+    });
   }
-  getGrantTypes(){
-    this.rest_api.getGrantTypes().subscribe((res:any)=>{
-      let filterData =res;
-      this.grantItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Grant Types",this.grantItems);
+
+  getGrantTypes() {
+    this.rest_api.getGrantTypes().subscribe((res: any) => {
+      let filterData = res;
+      this.grantItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.grantItems;
-    })
+    });
   }
+
 }

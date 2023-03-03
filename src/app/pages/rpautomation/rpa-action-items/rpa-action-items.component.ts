@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { LoaderService } from 'src/app/services/loader/loader.service';
+import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -15,13 +15,13 @@ export class RpaActionItemsComponent implements OnInit {
   addflag: boolean = true;
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
-  updateflag:boolean = false;
+  updateflag: boolean = false;
 
   constructor(
-    private router:Router,
-    private loader:LoaderService,
-    private rest_api:RestApiService
-    ) {}
+    private router: Router,
+    private loader: LoaderService,
+    private rest_api: RestApiService
+  ) {}
 
   ngOnInit(): void {
     this.loader.show();
@@ -95,31 +95,59 @@ export class RpaActionItemsComponent implements OnInit {
       },
     ];
 
-    this.actionTable =[
-      {id:"1",actionName:"Login", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"POST",actionType:"API Request",attribute:"Employee ID",description:"-"},
-      {id:"2",actionName:"Create", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"POST",actionType:"API Request",attribute:"Employee ID",description:"Creation of an Employee"},
-      {id:"3",actionName:"Delete", url:"http://www.zohoapis.com/crm/v3/leads",methodType:"DELETE",actionType:"Authenticated",attribute:"Employee ID",description:"Deletion of an employee"},
-    ]
-  // })
+    this.actionTable = [
+      {
+        id: "1",
+        actionName: "Login",
+        url: "http://www.zohoapis.com/crm/v3/leads",
+        methodType: "POST",
+        actionType: "API Request",
+        attribute: "Employee ID",
+        description: "-",
+      },
+      {
+        id: "2",
+        actionName: "Create",
+        url: "http://www.zohoapis.com/crm/v3/leads",
+        methodType: "POST",
+        actionType: "API Request",
+        attribute: "Employee ID",
+        description: "Creation of an Employee",
+      },
+      {
+        id: "3",
+        actionName: "Delete",
+        url: "http://www.zohoapis.com/crm/v3/leads",
+        methodType: "DELETE",
+        actionType: "Authenticated",
+        attribute: "Employee ID",
+        description: "Deletion of an employee",
+      },
+    ];
+    // })
   }
 
   viewDetails(event) {}
+
   deleteById(event) {}
+
   deleteConnection() {}
+
   readSelectedData(data) {
     data.length > 0 ? (this.addflag = false) : (this.addflag = true);
     data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
-    data.length == 1 ? (this.updateflag =true) : (this.updateflag = false);
+    data.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
 
   updateAction() {
-    this.router.navigate(["/pages/rpautomation/connection"])
+    this.router.navigate(["/pages/rpautomation/connection"]);
   }
 
   deleteAction() {}
-  backToConnection(){
-    this.router.navigate(['/pages/rpautomation/configurations'],{
-      queryParams: {index:2}
-    })
+  
+  backToConnection() {
+    this.router.navigate(["/pages/rpautomation/configurations"], {
+      queryParams: { index: 2 },
+    });
   }
 }
