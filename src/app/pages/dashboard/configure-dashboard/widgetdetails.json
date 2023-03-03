@@ -146,13 +146,44 @@
                 ]
             }
         },
-       
         {
-            "id": 5,
+            "id": 4,
             "widget_type": "bar",
             "name": "Upcoming Executions",
             "description": "Display the average time taken for 1 execution of a bot. Top 5 to be listed",
-          
+            "sampleData": {
+                "labels": [
+                    "Mac",
+                    "Windows",
+                    "Linux"
+                ],
+                "datasets": [
+                    {
+                        "data": [
+                            300,
+                            50,
+                            100
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }
+                ]
+            },
+            "chartOptions": {
+                "plugins": {
+                    "legend": {
+                    "position": "bottom"
+                }
+            }
+            },
             "widgetAdded": true,
             "edit": false,
             "filterOptions": {
@@ -162,6 +193,7 @@
                 ]
             }
         }
+      
 
     ]
 }
