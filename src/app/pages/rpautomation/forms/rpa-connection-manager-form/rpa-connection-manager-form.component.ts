@@ -24,11 +24,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isResponse: boolean = false;
   attribute = [];
   addInputForm: FormGroup;
+  public result ={};
+  public reactiveForm:FormGroup;
+  validateJSON:boolean=false;
 
   constructor(
     private formBuilder: FormBuilder,
     private rest_api: RestApiService
   ) {
+    this.reactiveForm=this.formBuilder.group({
+      result:[""]
+    })
     this.createItem();
   }
 
@@ -154,6 +160,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       return this.authItems;
     });
   }
+
+  isJsonValid(){
+    let jsonData=this.connectorForm.get('bodyRaw').value;
+      try{
+        JSON.parse(jsonData);
+        this.validateJSON= false;
+      }
+      catch(e)
+      {
+        console.log(e)
+        this.validateJSON=true;
+      }
+  }
+
 
   actionChange(event) {
     if (event == "Authenticated") {
