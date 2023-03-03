@@ -45,7 +45,7 @@ export class CreateDashboardComponent implements OnInit {
     }
     this.rest.createDashBoard(req_data).subscribe((response: any) => {
       if(response.code == 4200){
-        let res_data = response.dashboard
+        let res_data = response.data
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName}});
       }
       if(response.errorCode == 8010){
