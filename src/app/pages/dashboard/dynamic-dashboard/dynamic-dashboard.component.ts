@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { MenuItem, SelectItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from 'primeng/inplace';
 
 
 
@@ -14,9 +15,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./dynamic-dashboard.component.css']
 })
 export class DynamicDashboardComponent implements OnInit {
+  @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
   gfg: MenuItem[];
-
   dynamicDashBoard: any;
   metrics_list: any;
   defaultEmpty_metrics: any;
@@ -25,16 +26,15 @@ export class DynamicDashboardComponent implements OnInit {
   dataTransfer: any;
   public allbots: any;
   dashboardName: String = "";
-  editDashboardName: boolean = false;
   dashbordlist:any;
   dashboardData:any;
   _paramsData:any;
-  drpdwndashboard: any;
-  dashbordatadashboardName:any
+  _dashboardName:any
   isEditDesc:boolean=false;
   editdashbordnamedata: any;
   active_inplace: any;
- public  currentdashbord_id: any;
+ selectedDashBoardName:any;
+ selectedDashBoard:any;
   
 
   constructor(private activeRoute: ActivatedRoute,
@@ -49,6 +49,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.activeRoute.queryParams.subscribe(res => {
       console.log(res)
       this._paramsData = res
+      this.selectedDashBoardName= this._paramsData.dashboardName
     })
   }
 
@@ -242,26 +243,12 @@ export class DynamicDashboardComponent implements OnInit {
   // }
 
   updateDashboardName() {
-
-    this.currentdashbord_id=this.drpdwndashboard.id;
-// localStorage.setItem('currentdashbord_id', JSON.stringify(this.drpdwndashboard.id));
-    
-    let req_data={
-      "dashboardName":this.editdashbordnamedata,
-       "defaultDashboard": true,
-        "firstName": localStorage.getItem('firstName'),
-        "id": this.currentdashbord_id,
-        "lastName":localStorage.getItem('lastName')
-    }
-    this.rest.updateDashBoardNamed(req_data).subscribe((reasons:any)=>{
-      console.log('update bot details=================',reasons)
-
+    this.selectedDashBoardName=this._dashboardName
+    this.selectedDashBoard["dashboardName"]= this.selectedDashBoardName
+    this.rest.updateDashBoardNamed(this.selectedDashBoard).subscribe((response:any)=>{
+      console.log('update bot details=================',response)
     })
-    this.editDashboardName = false;
   }
-  // onDeactivateEdit(){
-  //   this.isEditDesc = false;
-  //   }
 
   navigateToConfigure() {
     this.datatransfer.setdynamicscreen(this.dashboardData)
@@ -271,6 +258,7 @@ export class DynamicDashboardComponent implements OnInit {
   navigateToCreateDashboard() {
     this.router.navigate(["pages/dashboard/create-dashboard"])
   }
+
   toggleConfigure(e, widget?: any) {
     console.log(e, widget)
     this.dashboardData.widgets.
@@ -279,6 +267,7 @@ export class DynamicDashboardComponent implements OnInit {
         console.log(element, widget)
       });
   }
+
   getItemActionDetails(widget) {
     console.log(widget);
     return [
@@ -286,7 +275,7 @@ export class DynamicDashboardComponent implements OnInit {
       {
         label: 'Configure', command: (e) => {
           console.clear()
-          console.log(widget)
+          console.log(e)
         }
       }]
 
@@ -302,60 +291,39 @@ export class DynamicDashboardComponent implements OnInit {
 
 // Dash Board list in dropdown 
   getListOfDashBoards(){
-    this.rest.getDashBoardsList().subscribe((data:any)=>{
-      this.dashbordlist=data.dataList;
-      console.log( this.dashbordlist)
-        })     
+    this.rest.getDashBoardsList().subscribe((res:any)=>{
+      this.dashbordlist=res.data;
+      this.selectedDashBoard = this.dashbordlist.find(item=>item.id == this._paramsData.dashboardId);
+    })     
   }
+
   onDropdownChange(event){
-
-   this.drpdwndashboard=event.value
-   let dashboard=this.drpdwndashboard.dashboardName
-   this.currentdashbord_id=this.drpdwndashboard.id
-   localStorage.setItem('currentdashbord_id', JSON.stringify(this.drpdwndashboard.id));
-   this.dashbordatadashboardName=dashboard
-   console.log('this is dropdownselected data',this._paramsData.dashboardName);
-   this.editDashboardName = true;
- 
+    this.selectedDashBoard = event.value
+    this.selectedDashBoardName = this.selectedDashBoard.dashboardName
+   console.log('this is dropdownselected data',event);
+   let params1= {dashboardId:this.selectedDashBoard.id,dashboardName:this.selectedDashBoard.dashboardName};
+   this.router.navigate([],{ relativeTo:this.activeRoute, queryParams:params1 });
   }
 
-  inplaceActivate(field:any,activeField) {
-    
-    if(activeField != this.active_inplace)
-    if(this.active_inplace) this[this.active_inplace].deactivate()
-    // this.active_inplace='';
-    this.active_inplace = activeField
-      // this[activeField].activate();
-    this[field] = this.dashbordatadashboardName
-    this.isEditDesc = false;
-}
+  inplaceActivate() {
+    this._dashboardName = this.selectedDashBoardName
+  }
 
     Space(event:any){
       if(event.target.selectionStart === 0 && event.code === "Space"){
         event.preventDefault();
       }
       }
-  onUpdateDetails(field){
 
-    this.editdashbordnamedata=this[field]
-    this.updateDashboardName();
-  // this.onDeactivate(field);
-  // this[this.active_inplace].deactivate();
-  // this.isEditDesc = true;
 
-   }
-  onDeactivate(field){
-    this[field].deactivate();
+  onDeactivate(){
+    this.inplace.deactivate();
    }
        
-   deletedashbord(){
- 
-   this.currentdashbord_id
-   this.rest.getdeleteDashBoard(this.currentdashbord_id).subscribe(data=>{
-    console.log('reponse data',data)
-    
-    window.location.reload();
-  })
+  deletedashbord(){
+  this.rest.getdeleteDashBoard(this.selectedDashBoard.id).subscribe(data=>{
+    this.inplace.deactivate();
+  });
   }
 
  }

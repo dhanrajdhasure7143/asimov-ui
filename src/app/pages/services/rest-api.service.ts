@@ -1709,8 +1709,12 @@ getWidgetsList(){
 updateDashBoardNamed(body){
   return this.http.post('/platform-service/dashboard/updateDashboard',body);
 }
-getdeleteDashBoard(dashboard_id){
+getdeleteDashBoard(dashboard_id:any){
   return this.http.get('/platform-service/dashboard/deleteDashboard?id='+dashboard_id)
+}
+
+SaveDashBoardData(body:any){
+  return this.http.post('/platform-service/dashboard/saveDashboardMetricsWidgets',body)
 }
 
 

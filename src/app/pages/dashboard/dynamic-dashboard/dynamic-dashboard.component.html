@@ -7,18 +7,17 @@
                <div class="col-md-4 pl-0">
                  
                   <div class="row align-items-center dashboardnamerow">
-                     <p-inplace #inplace (onActivate)="inplaceActivate('dashbordatadashboardName','inplace')" class="dashboard-name">
+                     <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
                         <ng-template pTemplate="display">
-                           <span [hidden]="editDashboardName"class="title_text">{{_paramsData.dashboardName}}</span>
-                           <span [hidden]="!editDashboardName" class="title_text">{{dashbordatadashboardName}}</span>
+                           <span class="title_text">{{selectedDashBoardName}}</span>
                         </ng-template>
                         <ng-template pTemplate="content">
                             <input type="text" [style]="{'width':'100%'}" pInputText
-                                [(ngModel)]="dashbordatadashboardName" (keydown)="Space($event)" />
+                                [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
                             <span class="editfields">
-                                <i class="pi pi-check" *ngIf="dashbordatadashboardName"
-                                    (click)="onUpdateDetails('dashbordatadashboardName')"></i>
-                                <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
+                                <i class="pi pi-check" *ngIf="_dashboardName"
+                                    (click)="updateDashboardName()"></i>
+                                <i class="pi pi-times" (click)="onDeactivate()"></i>
                             </span>
                         </ng-template>
                     </p-inplace>

@@ -36,7 +36,7 @@ export class ConfigureDashboardComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
     private router: Router,
-    private rest: RestApiService) {
+    private rest_api: RestApiService) {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.dynamicDashBoard.dashboardName = params.dashboardName
@@ -392,7 +392,17 @@ export class ConfigureDashboardComponent implements OnInit {
     return this.defaultEmpty_metrics.filter(item => item.metricAdded == false);
   }
 
-  dynamicdatatransfer() {
+  saveDashBoard() {
+    console.log(this.addedMetrics);
+    
+    let req_body={
+
+    }
+    let req_array:any
+
+    // this.rest_api.SaveDashBoardData().subscribe(res=>{
+
+    // })
 
     // this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>{
     // if(this.dynamicDashBoard.dashboardId==undefined)
@@ -426,7 +436,7 @@ export class ConfigureDashboardComponent implements OnInit {
     //})
   }
   getListOfMetrics() {
-    this.rest.getMetricsList().subscribe((data: any) => {
+    this.rest_api.getMetricsList().subscribe((data: any) => {
       this.metrics_list = data.data;
       this.metrics_list = this.metrics_list.map((item: any, index: number) => {
         item["metricAdded"] = false
@@ -453,7 +463,7 @@ export class ConfigureDashboardComponent implements OnInit {
     })
   }
   getListOfWidgets() {
-    this.rest.getWidgetsList().subscribe((data: any) => {
+    this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.data;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
