@@ -263,9 +263,10 @@ export class ConfigureDashboardComponent implements OnInit {
     }
     if (type == 'widgets') {
       this.addedWidgets.splice(index, 1)
-      this.dynamicDashBoard.widgets.splice(index, 1);
-      if (this.widgets.find(item => item.id == data.id) != undefined)
-        this.widgets.find(item => item.id == data.id).widgetAdded = false;
+      //this.dynamicDashBoard.widgets.splice(index, 1);
+      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
+      if (this.widgetslist.find((item) => item.widgetAdded == true))
+        this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
     }
   }
 
