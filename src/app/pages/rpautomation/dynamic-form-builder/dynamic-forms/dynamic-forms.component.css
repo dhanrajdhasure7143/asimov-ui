@@ -1,12 +1,3 @@
-/* New Styles */
-.createform-overlay {
-    height: calc(100% - 100px);
-}
-/* New Styles */
-
-
-
-
 /* Animate items as they're being sorted. */
 .cdk-drag-preview {
     box-sizing: content-box;

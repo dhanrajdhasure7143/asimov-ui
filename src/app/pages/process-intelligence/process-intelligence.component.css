@@ -83,14 +83,19 @@ span.testtooltip:before {
     color: red;
     font-size: 12px;
   }
-.main-content1 .module-heading.title {
+.main-content1 .maincont-contentarea {
+  padding: 0px !important;
+}
+.main-content1 .main-content-head {
   background-color: #F3F3F3;
   padding: 12px 15px 8px !important;
 }
-.main-content1 .module-header-title {
-  font-weight: 600;
-  font-size: 18px;
-  color: #001c47;
+.main-content1 .module-body {
+  background-color: #fff;
+}
+.module-body {
+  height: calc(100% - 32px) !important;
+  padding: 10px 0px 0px !important;
 }
 .new-bps-icons .bps-float {
   float: right;

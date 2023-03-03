@@ -19,12 +19,13 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="connectionName"
-                                        [ngClass]="connectorForm.get('connectionName').valid?'enteredfield-color':'inputfield-color'"
+                                        formControlName="actionName"
+                                        [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
                                         placeholder="Enter Action Name">
                                     <span
-                                        *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')"
-                                        class="errspan required"> Connector Name Required* </span>
+                                        *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched && !connectorForm.get('actionName').hasError('pattern')"
+                                        class="errspan required"> Action Name Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Action Type
@@ -39,7 +40,8 @@
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="errspan required"> Action Type Required* </span>
+                                        class="errspan required"> Action Type Required*
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex">
@@ -47,21 +49,23 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="httpMethodType">
+                                    <select name="" id="" class="form-control data" formControlName="methodType">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>
                                         <option *ngFor="let method of methodItems"> {{method.value}}</option>
                                     </select>
                                     <span
-                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span>
+                                        *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Action Icon
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="file" class="form-control" accept="image/png, image/svg" formControlName="" placeholder="Upload Icon">
+                                    <input type="file" class="form-control" accept="image/png, image/svg"
+                                        formControlName="" placeholder="Upload Icon">
                                     <!-- <span
                                         *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
                                         class="errspan required"> Method Type Required* </span> -->
@@ -74,7 +78,8 @@
                                 </textarea>
                                 <span
                                     *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* </span>
+                                    class="errspan required"> API / URL Required*
+                                </span>
                             </div>
                             <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0" *ngIf="isAction">
@@ -90,22 +95,24 @@
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('authType').invalid && connectorForm.get('authType').touched && !connectorForm.get('authType').hasError('pattern')"
-                                        class="errspan required"> Authentication Type Required* </span>
+                                        class="errspan required"> Authentication Type Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0" *ngIf="isAuthenticated">
                                     <label class="label-control" for="programname"> Grant Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName=""
+                                    <select name="" id="" class="form-control data" formControlName="grantType"
                                         (change)="grantChange($event.target.value)">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
                                         <option *ngFor="let grant of grantItems"> {{grant.value}}</option>
                                     </select>
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span> -->
+                                    <span
+                                        *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
+                                        class="errspan required"> Grant Type Required*
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex" *ngIf="isAuthorization">
@@ -114,20 +121,22 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Code">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')"
-                                        class="errspan required"> Connector Name Required* </span> -->
+                                        formControlName="code" placeholder="Enter Code">
+                                    <span
+                                        *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
+                                        class="errspan required"> Code Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Redirect URL
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Redirect URL">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span> -->
+                                        formControlName="redirect" placeholder="Enter Redirect URL">
+                                    <span
+                                        *ngIf="connectorForm.get('redirect').invalid && connectorForm.get('redirect').touched && !connectorForm.get('redirect').hasError('pattern')"
+                                        class="errspan required"> Redirect URL Required*
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex" *ngIf="isPassword">
@@ -136,20 +145,22 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Username">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')"
-                                        class="errspan required"> Connector Name Required* </span> -->
+                                        formControlName="username" placeholder="Enter Username">
+                                    <span
+                                        *ngIf="connectorForm.get('username').invalid && connectorForm.get('username').touched && !connectorForm.get('username').hasError('pattern')"
+                                        class="errspan required"> Username Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Password
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Password">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span> -->
+                                    <input type="password" maxlength="256" class="form-control data" value=""
+                                        formControlName="password" placeholder="Enter Password">
+                                    <span
+                                        *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
+                                        class="errspan required"> Password Required*
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex" *ngIf="isClient">
@@ -158,20 +169,22 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Client ID">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('connectionName').invalid && connectorForm.get('connectionName').touched && !connectorForm.get('connectionName').hasError('pattern')"
-                                        class="errspan required"> Connector Name Required* </span> -->
+                                        formControlName="clientId" placeholder="Enter Client ID">
+                                    <span
+                                        *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
+                                        class="errspan required"> Client ID Required*
+                                    </span>
                                 </div>
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Client Secret
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Client Secret">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span> -->
+                                        formControlName="secret" placeholder="Enter Client Secret">
+                                    <span
+                                        *ngIf="connectorForm.get('secret').invalid && connectorForm.get('secret').touched && !connectorForm.get('secret').hasError('pattern')"
+                                        class="errspan required"> Client Secret Required*
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex" *ngIf="isAuthorization">
@@ -180,20 +193,13 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="" placeholder="Enter Code Verifier">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
-                                        class="errspan required"> Method Type Required* </span> -->
+                                        formControlName="verifier" placeholder="Enter Code Verifier">
+                                    <span
+                                        *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
+                                        class="errspan required"> Code Verifier Required*
+                                    </span>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12 martsascl api" *ngIf="isClient">
-                                <label class="label-control"> Response <span class="star">*</span> </label>
-                                <textarea class="form-control" row="6" formControlName="" placeholder="Get Response" maxlength="256"> </textarea>
-                                 <span
-                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* 
-                                </span> 
-                            </div> -->
                             <div class="col-md-12" *ngIf="isRequest">
                                 <div class="form-fields pl-0">
                                     <label class="label-control"> Header <span class="star">*</span> </label>
@@ -212,12 +218,12 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td> <input type="checkbox" class="check"
-                                                        formControlName="encodedCheck"> </td>
+                                                <td> <input type="checkbox" class="check" formControlName="headerCheck">
+                                                </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Key" formControlName="encodedKey"> </td>
+                                                        placeholder="Key" formControlName="headerKey"> </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Value" formControlName="encodedValue"> </td>
+                                                        placeholder="Value" formControlName="headerValue"> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -225,37 +231,25 @@
                             </div>
                             <div class="col-md-12 martsascl form-fields api" *ngIf="isRequest">
                                 <label class="label-control"> Attributes <span class="star">*</span> </label>
-                                <!-- <input type="text" name="" id="" class="form-control data"
-                                    placeholder="Enter Attributes" formControlName=""> -->
-                                    <p-chips formControlName="attribute" styleClass="attribute" separator="," placeholder="Enter Attributes"></p-chips>
-                                <!-- <span
-                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* </span> -->
+                                <p-chips formControlName="attribute" styleClass="attribute" separator=","
+                                    placeholder="Enter Attributes"></p-chips>
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isResponse">
-                                <label class="label-control"> Response <span class="star">*</span> </label>
-                                <textarea class="form-control" row="6" formControlName="" placeholder="Get Response"
-                                    maxlength="256"> </textarea>
-                                <!-- <span
-                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* 
-                                </span> -->
+                                <label class="label-control"> Scope </label>
+                                <textarea class="form-control" cols="30" rows="10" formControlName="resposne"
+                                    placeholder="Get Response" maxlength="256"> </textarea>
                             </div>
-                            <div class="col-md-12 d-flex" *ngIf="isRequest">
-                                <div class="form-fields col-md-6 pl-0">
-                                <label class="label-control"> Request <span class="star">*</span> </label>
-                                <textarea class="form-control response"  cols="30" rows="16" formControlName="" placeholder="Get Response"
-                                    maxlength="256"> </textarea>
-                                <!-- <span
-                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* 
-                                </span> -->
-                                </div>
+                            <div class="col-md-12 martsascl api" *ngIf="isRequest">
+                                <label class="label-control"> Request </label>
+                                <textarea class="form-control response" cols="30" rows="10" formControlName="request"
+                                    placeholder="Get Request" maxlength="256"> </textarea>
                             </div>
                             <div class="col-md-12 text-right">
-                                <button type="button" class="btn btn-primary" (click)="testForm()"> Test </button>
+                                <button type="button" class="btn btn-primary" [disabled]="isRequest"
+                                    (click)="testForm()"> Test </button>
                                 &nbsp;
-                                <button type="button" class="btn btn-primary" (click)="saveForm()"> Save </button>
+                                <button type="button" class="btn btn-primary" [disabled]="connectorForm.invalid"
+                                    (click)="saveForm()"> Save </button>
                             </div>
                         </div>
                     </form>

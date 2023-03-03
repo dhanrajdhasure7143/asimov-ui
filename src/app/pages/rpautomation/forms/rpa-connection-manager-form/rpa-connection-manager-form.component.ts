@@ -22,7 +22,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isPassword: boolean = false;
   isRequest: boolean = false;
   isResponse: boolean = false;
-  attribute = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,20 +32,29 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectorForm = this.formBuilder.group({
-      connectionName: ["", Validators.compose([Validators.required])],
-      httpMethodType: ["", Validators.compose([Validators.required])],
+      actionName: ["", Validators.compose([Validators.required])],
+      methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       url: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
-      bodyRaw: ["", Validators.compose([Validators.required])],
+      icon: ["", Validators.compose([])],
       attribute: ["", Validators.compose([Validators.required])],
-      paramsValue: ["", Validators.compose([Validators.required])],
-      encodedKey: ["", Validators.compose([Validators.required])],
-      encodedValue: ["", Validators.compose([Validators.required])],
-      paramsCheck: ["", Validators.compose([Validators.required])],
-      encodedCheck: ["", Validators.compose([Validators.required])],
+      grantType: ["", Validators.compose([Validators.required])],
+      code: ["", Validators.compose([Validators.required])],
+      redirect: ["", Validators.compose([Validators.required])],
+      username: ["", Validators.compose([Validators.required])],
+      password: ["", Validators.compose([Validators.required])],
+      clientId: ["", Validators.compose([Validators.required])],
+      secret: ["", Validators.compose([Validators.required])],
+      verifier: ["", Validators.compose([Validators.required])],
+      headerKey: ["", Validators.compose([Validators.required])],
+      headerValue: ["", Validators.compose([Validators.required])],
+      headerCheck: ["", Validators.compose([Validators.required])],
+      request: ["", Validators.compose([])],
+      response: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
+
     this.methodTypes();
     this.authTypes();
     this.getActionType();
@@ -115,19 +123,22 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   methodTypes() {
     this.rest_api.getMethodTypes().subscribe((res: any) => {
       let filterData = res;
-      this.methodItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Method Types",this.methodItems)
+      this.methodItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.methodItems;
     });
   }
 
-  authTypes(){
+  authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       let filterData = res;
-      this.authItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Auth types",this.authItems)
+      this.authItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.authItems;
-
     });
   }
 
@@ -145,6 +156,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isClient = false;
       this.isPassword = false;
       this.isAuthenticated = false;
+      this.isAuthorization = false;
     }
   }
 
@@ -172,20 +184,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
     }
   }
-  getActionType(){
-   this.rest_api.getActionType().subscribe((res:any)=>{
-    let filterData = res
-      this.actionItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("ActionTypesNew",this.actionItems);
+
+  getActionType() {
+    this.rest_api.getActionType().subscribe((res: any) => {
+      let filterData = res;
+      this.actionItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.actionItems;
-    })
+    });
   }
-  getGrantTypes(){
-    this.rest_api.getGrantTypes().subscribe((res:any)=>{
-      let filterData =res;
-      this.grantItems = Object.keys(filterData).map(key => ({type: key, value: filterData[key]}));
-      console.log("Grant Types",this.grantItems);
+
+  getGrantTypes() {
+    this.rest_api.getGrantTypes().subscribe((res: any) => {
+      let filterData = res;
+      this.grantItems = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
       return this.grantItems;
-    })
+    });
   }
+
 }

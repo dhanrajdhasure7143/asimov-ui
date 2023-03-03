@@ -1,13 +1,13 @@
 <div class="new-PI-layout ">
-        <div class='PI-uploadgrid p-0'>
+        <div class='PI-uploadgrid'>
           <div class="row">
-           <div class=" col PI-heading">
-                <label class="maintitle PI-heading">Connect Your Data</label>
-                <h4 class="subtitle">Choose from the following file formats to upload your data. | 
+           <div class="col PI-heading">
+                <h4 class="colheads">Connect Your Data</h4>
+                <label class="subtitle">Choose from the following file formats to upload your data. | 
                         <span class=" download_link" id="download_template">
                                 <a (click)="downloadCSV()">Download Sample Template</a>
                         </span>
-                </h4>
+                </label>
            </div> 
           </div>
           <div class="row">    
@@ -60,8 +60,8 @@
         </div>
         <div class="col-md-12 PI-workspace-table p-0" id="my_workspace">
             <div class="row">
-                <div class='col-md-6 pl-0'>
-                        <h4 class="box-heading">My Workspace</h4>
+                <div class='col-md-6 p-0 mb-3'>
+                        <h4 class="colheads">My Workspace</h4>
                 </div>
                 <!-- <form action="" class="col-md-6 p-0 tableControls">
                                 <div class="col-md-6 form-group pr-0 offset-4">
@@ -80,8 +80,8 @@
                                 </div>        
                 </form> -->
             </div>
-            <div class="test1">
-                <div class="col-sm-12 graph_table">
+            <div class="row">
+                <div class="col-sm-12 graph_table p-0">
                         <app-dynamic-table 
                                 [columns_list]="columns_list"
                                 [table_data]="process_graph_list" 

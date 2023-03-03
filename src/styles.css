@@ -2239,7 +2239,7 @@ td.mat-cell span {
 span.pdicon {
   position: absolute;
   right: 13px;
-  top: 28px;
+  top: 30px;
 }
 #exportSVGtoPDF .node g.label{
   font-weight: 400 !important;
@@ -2820,10 +2820,15 @@ th.p-element.p-sortable-column.p-resizable-column:before {  /* for sortable th *
 
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
+  color: var(--main-txtcolor);
+}
+.p-datatable .p-sortable-column.p-highlight:hover {
+  color: var(--main-txtcolor) !important;
 }
 
  .p-datatable .p-sortable-column:not(.p-highlight):hover{
  background-color: #f8f9fa !important;
+ color: var(--main-txtcolor) !important;
 }
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
@@ -3029,13 +3034,13 @@ button.btn.bluebg-button {
   border-bottom: 1px solid #e5e5e5;
 }
 .create-header h3 {
-font-size: 16px;
-margin: 0px;
+  font-size: 16px;
+  margin: 0px;
 }
 .createform-overlay {
-  padding: 15px 0px 5px;
-  height: calc(100% - 165px);
+  height: calc(100% - 115px);
   overflow: auto;
+  margin: 15px 0px 5px;
 }
 .createform-overlay label {
   font-size: 14px;
@@ -3153,7 +3158,7 @@ margin: 0px;
 /* Document Overlay Styles */
 
 .fldrovrlay {
-  height: calc(100% - 125px);
+  height: calc(100% - 50px);
   display: grid;
 }
 .fldrovrlay .row {
