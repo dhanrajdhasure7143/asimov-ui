@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { MenuItem, SelectItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 
@@ -28,6 +29,13 @@ export class DynamicDashboardComponent implements OnInit {
   dashbordlist:any;
   dashboardData:any;
   _paramsData:any;
+  drpdwndashboard: any;
+  dashbordatadashboardName:any
+  isEditDesc:boolean=false;
+  editdashbordnamedata: any;
+  active_inplace: any;
+ public  currentdashbord_id: any;
+  
 
   constructor(private activeRoute: ActivatedRoute, 
     private datatransfer: DataTransferService, 
@@ -35,6 +43,8 @@ export class DynamicDashboardComponent implements OnInit {
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig, 
     private rest:RestApiService,
+    private spinner: LoaderService,
+    private loader:LoaderService
   ) {
     this.activeRoute.queryParams.subscribe(res=>{
       console.log(res)
@@ -46,7 +56,12 @@ export class DynamicDashboardComponent implements OnInit {
     // this.getUserDetails();
     this.primengConfig.ripple = true;
     this.gfg = [
-      { label: 'Delete', },
+      { 
+        label: 'Delete',
+        command: () => {
+          this.deletedashbord();
+      }
+     },
       { label: 'Set As Background', }
 
     ];
@@ -195,9 +210,26 @@ export class DynamicDashboardComponent implements OnInit {
   // }
  
   updateDashboardName() {
-    this.dashboardData.dashboardName = this.dashboardName;
+
+    this.currentdashbord_id=this.drpdwndashboard.id;
+// localStorage.setItem('currentdashbord_id', JSON.stringify(this.drpdwndashboard.id));
+    
+    let req_data={
+      "dashboardName":this.editdashbordnamedata,
+       "defaultDashboard": true,
+        "firstName": localStorage.getItem('firstName'),
+        "id": this.currentdashbord_id,
+        "lastName":localStorage.getItem('lastName')
+    }
+    this.rest.updateDashBoardNamed(req_data).subscribe((reasons:any)=>{
+      console.log('update bot details=================',reasons)
+
+    })
     this.editDashboardName = false;
   }
+  // onDeactivateEdit(){
+  //   this.isEditDesc = false;
+  //   }
 
   navigateToConfigure() {
     this.datatransfer.setdynamicscreen(this.dashboardData)
@@ -241,8 +273,59 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.getDashBoardsList().subscribe((data:any)=>{
       this.dashbordlist=data.dataList;
       console.log( this.dashbordlist)
-        })
+        })     
   }
+  onDropdownChange(event){
+
+   this.drpdwndashboard=event.value
+   let dashboard=this.drpdwndashboard.dashboardName
+   this.currentdashbord_id=this.drpdwndashboard.id
+   localStorage.setItem('currentdashbord_id', JSON.stringify(this.drpdwndashboard.id));
+   this.dashbordatadashboardName=dashboard
+   console.log('this is dropdownselected data',this._paramsData.dashboardName);
+   this.editDashboardName = true;
+ 
+  }
+
+  inplaceActivate(field:any,activeField) {
+    
+    if(activeField != this.active_inplace)
+    if(this.active_inplace) this[this.active_inplace].deactivate()
+    // this.active_inplace='';
+    this.active_inplace = activeField
+      // this[activeField].activate();
+    this[field] = this.dashbordatadashboardName
+    this.isEditDesc = false;
 }
+
+    Space(event:any){
+      if(event.target.selectionStart === 0 && event.code === "Space"){
+        event.preventDefault();
+      }
+      }
+  onUpdateDetails(field){
+
+    this.editdashbordnamedata=this[field]
+    this.updateDashboardName();
+  // this.onDeactivate(field);
+  // this[this.active_inplace].deactivate();
+  // this.isEditDesc = true;
+
+   }
+  onDeactivate(field){
+    this[field].deactivate();
+   }
+       
+   deletedashbord(){
+ 
+   this.currentdashbord_id
+   this.rest.getdeleteDashBoard(this.currentdashbord_id).subscribe(data=>{
+    console.log('reponse data',data)
+    
+    window.location.reload();
+  })
+  }
+
+ }
 
 
