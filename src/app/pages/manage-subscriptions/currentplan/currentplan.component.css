@@ -323,8 +323,10 @@
     text-decoration-line: underline;
   }
   
-  
-  
+  .h-scroll {
+    height: calc(100vh - 110px);
+    overflow: auto;
+  }
   
   
   

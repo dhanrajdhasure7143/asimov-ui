@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PagesComponent } from '../pages.component';
 import { RestApiService } from '../services/rest-api.service';
@@ -20,8 +21,18 @@ export class ManageSubscriptionsComponent implements OnInit {
   billingaddresssection: boolean = false;
   paymenthistorysection: boolean = false;
   orderdetailssection: boolean = false;
+  index: number;
+  activeIndex :number=0
+  check_tab=0
   constructor(public obj: PagesComponent, private rest_service: RestApiService,
-    private spinner: LoaderService) { }
+    private spinner: LoaderService,private route: ActivatedRoute,private router:Router) {
+       this.route.queryParams.subscribe((data) => {
+      if(data){
+      this.activeIndex = data.index
+      this.check_tab = data.index;
+    }
+      else this.activeIndex=0;
+    });}
 
   ngOnInit(): void {
 
@@ -43,54 +54,92 @@ export class ManageSubscriptionsComponent implements OnInit {
   }
 
 
-  hightlight(element, name) {
-    this.spinner.show();
-    localStorage.setItem('selectedModule', element + '&' + name)
-    $('.link').removeClass('active');
-    $('#' + element).addClass("active");
-    if (name) {
-      $('#' + name).addClass("active");
-    }
-    this.obj.sideBarOpen = false;
-    this.obj.sidebar.showSubmenu = false;
-    this.obj.sidebar.showadminSubmenu = false;
-    this.obj.contentMargin = 60;
+  // hightlight(element, name) {
+  //   this.spinner.show();
+  //   localStorage.setItem('selectedModule', element + '&' + name)
+  //   $('.link').removeClass('active');
+  //   $('#' + element).addClass("active");
+  //   if (name) {
+  //     $('#' + name).addClass("active");
+  //   }
+  //   this.obj.sideBarOpen = false;
+  //   this.obj.sidebar.showSubmenu = false;
+  //   this.obj.sidebar.showadminSubmenu = false;
+  //   this.obj.contentMargin = 60;
 
-    if (element == "currentplan") {
-      this.billingaddresssection = false
-      this.currentplansection = true
-      this.paymentmethodssection = false
-      this.paymenthistorysection = false
-      this.orderdetailssection = false
-    }
-    if (element == "paymentmethods") {
-      this.paymentmethodssection = true
-      this.currentplansection = false
-      this.billingaddresssection = false
-      this.paymenthistorysection = false
-      this.orderdetailssection = false
-    }
-    if (element == "billing") {
-      this.billingaddresssection = true
-      this.currentplansection = false
-      this.paymentmethodssection = false
-      this.paymenthistorysection = false
-      this.orderdetailssection = false
-    } if (element == "paymenthistory") {
-      this.paymenthistorysection = true
-      this.billingaddresssection = false
-      this.currentplansection = false
-      this.paymentmethodssection = false
-      this.orderdetailssection = false
-    }
-    if (element == "order") {
-      this.orderdetailssection = true
-      this.paymenthistorysection = false
-      this.billingaddresssection = false
-      this.currentplansection = false
-      this.paymentmethodssection = false
-    }
-    this.spinner.hide();
+  //   if (element == "currentplan") {
+  //     this.billingaddresssection = false
+  //     this.currentplansection = true
+  //     this.paymentmethodssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (element == "paymentmethods") {
+  //     this.paymentmethodssection = true
+  //     this.currentplansection = false
+  //     this.billingaddresssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (element == "billing") {
+  //     this.billingaddresssection = true
+  //     this.currentplansection = false
+  //     this.paymentmethodssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   } if (element == "paymenthistory") {
+  //     this.paymenthistorysection = true
+  //     this.billingaddresssection = false
+  //     this.currentplansection = false
+  //     this.paymentmethodssection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (element == "order") {
+  //     this.orderdetailssection = true
+  //     this.paymenthistorysection = false
+  //     this.billingaddresssection = false
+  //     this.currentplansection = false
+  //     this.paymentmethodssection = false
+  //   }
+  //   this.spinner.hide();
+  // }
+
+  handleChange(event,tabView) {
+    const tab = tabView.tabs[event.index].header;
+    this.activeIndex = event.index;
+    console.log(this.activeIndex);
+    
+    this.check_tab = event.index;
+    this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} })
+  //   if (e.originalEvent.target.outerText == "Invoices") {
+  //     this.paymenthistorysection = true
+  //     this.billingaddresssection = false
+  //     this.currentplansection = false
+  //     this.paymentmethodssection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (e.originalEvent.target.outerText == "Billing Information") {
+  //     this.billingaddresssection = true
+  //     this.currentplansection = false
+  //     this.paymentmethodssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (e.originalEvent.target.outerText == "Payment Methods") {
+  //     this.paymentmethodssection = true
+  //     this.currentplansection = false
+  //     this.billingaddresssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   }
+  //   if (e.originalEvent.target.outerText == "Package Options") {
+  //     this.billingaddresssection = false
+  //     this.currentplansection = true
+  //     this.paymentmethodssection = false
+  //     this.paymenthistorysection = false
+  //     this.orderdetailssection = false
+  //   }
+  // }
   }
   
 }

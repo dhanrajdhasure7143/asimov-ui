@@ -134,4 +134,9 @@ userManagement(){
     queryParams:{index:0}
   })
 }
+onClickSubscription(){
+this.router.navigate(["/pages/subscriptions"],{
+  queryParams:{index:0}
+})
+}
 }

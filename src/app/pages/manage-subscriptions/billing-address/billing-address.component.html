@@ -1,1 +1,105 @@
-<p>billing-address works!</p>
+<form [formGroup]="createtaskForm" class="billing-form">
+    <div class="row">
+        <div class="form-fields col p-0">
+            <label class="" for="taskName">First Name<span class="star">*</span></label>
+            <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
+                placeholder="Enter First Name" required>
+            <!-- <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
+              class="errspan required">First Name Required*</span>
+          <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="errspan required">
+              Maximum of 50 characters
+          </span> -->
+        </div>
+        <div class="form-fields col pl-3">
+            <label class="" for="taskCategory">Last Name<span class="star">*</span></label>
+            <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
+                formControlName="firstName">
+
+        </div>
+    </div>
+    <div class="">
+        <div class="row">
+            <div class="form-fields col p-0">
+                <label class="" for="taskCategory">Country<span class="star">*</span></label>
+ 
+    <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false" emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
+                    [style]="{'width':'100%'}" [appendTo]="'body'" placeholder="Select Country" optionLabel="CountryName"></p-dropdown>
+            </div>
+            <!-- <span
+                  *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                  class="errspan required">Pick A Workspace File Required*</span> -->
+            <div class="form-fields col pl-3">
+                <label class="" for="resources">State/Region<span class="star">*</span></label>
+                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionLabel="StateName" [autoDisplayFirst]="false"
+                    placeholder="Select State/Region" formControlName="state" (onChange)="onChangeState($event.value)">
+                </p-dropdown>
+                <!-- <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
+                      class="errspan required">Assigned To Required*</span> -->
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="form-fields col p-0">
+            <label class="" for="priority">City <span class="star">*</span></label>
+            <span>
+                <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}" [appendTo]="'body'" [autoDisplayFirst]="false"
+                    placeholder="Select City" formControlName="state">
+                </p-dropdown>
+            </span>
+            <!-- <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
+                          class="errspan required">Priority Required*</span> -->
+
+
+        </div>
+        <div class="form-fields col pl-4">
+            <label class="" for="approvers">Postal Code<span class="star">*</span></label>
+            <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalCode"
+                placeholder="Enter Postal Code">
+            <!-- <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
+                      class="errspan required">Approvers Required*</span> -->
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-fields col p-0">
+            <label class="" for="approvers">Address Line1<span class="star">*</span></label>
+            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
+                placeholder="Enter Address Line 1">
+        </div>
+        <div class="form-fields col pl-3">
+            <label class="">Address Line2 <span class="star">*</span></label>
+            <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
+                placeholder="Enter Address Line 2">
+            <!-- <span
+                              *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
+                              class="errspan required">From Date Required*</span>
+                              <span class="dateseparator">|</span> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-fields col p-0">
+            <span *ngIf="!isRefresh">
+                <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
+                <input pInputText type="text" [style]="{'width':'238%'}" formControlName="phoneNumber"
+                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: phnCountry}">
+            </span>
+            <span *ngIf="isRefresh">
+                <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
+                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="phoneNumber"
+                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: phnCountry}">
+            </span>
+        </div>
+        <div class="form-fields col p-0">
+            <label class="" for="approvers">Email<span class="star">*</span></label>
+            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
+        </div>
+    
+    </div>
+    
+    <p-button class="float-right" label="Save"></p-button>
+</form>

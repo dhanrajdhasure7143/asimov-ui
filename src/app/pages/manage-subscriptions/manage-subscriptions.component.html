@@ -7,9 +7,9 @@
       <span class="module-header-title">Manage Subscriptions</span>
     </div>
     <br />
-    <div class="row">
-      <div class="col-2 subscription-section-area">
-        <section class="tp-section">
+
+    <!-- <div> -->
+    <!-- <section class="tp-section">
           <mat-nav-list class="">
             <a
               mat-list-item
@@ -67,7 +67,7 @@
               </span>
               <span class="side-menu-font">Payment Methods</span>
             </a>
-            <!-- <a mat-list-item class="link" id="eiap-home" (click)="hightlight('billing',null)"
+            <a mat-list-item class="link" id="eiap-home" (click)="hightlight('billing',null)"
                         [matTooltip]=" !obj.sideBarOpen ? 'Billing Address' : ''" matTooltipClass="sidebarTooltip"
                         matTooltipPosition="right">
                         <span class="side-icon">
@@ -84,7 +84,7 @@
 
                         <span class="side-menu-font">Billing Address</span>
 
-                    </a> -->
+                    </a>
             <a
               mat-list-item
               class="link"
@@ -145,9 +145,9 @@
               <span class="side-menu-font">Order Details</span>
             </a>
           </mat-nav-list>
-        </section>
-      </div>
-      <div class="col subscription-content-area">
+        </section> -->
+    <!-- </div> -->
+    <!-- <div class="col subscription-content-area">
         <div class="section one" id="section1" *ngIf="currentplansection">
           <app-currentplan></app-currentplan>
         </div>
@@ -159,16 +159,53 @@
         >
           <app-payment-methods></app-payment-methods>
         </div>
-        <!-- <div class="section one" id="section1" *ngIf="billingaddresssection">
+        <div class="section one" id="section1" *ngIf="billingaddresssection">
                 <app-billing-address></app-billing-address>
-            </div> -->
+            </div>
         <div class="section one" id="section1" *ngIf="paymenthistorysection">
           <app-payment-history></app-payment-history>
         </div>
         <div class="section one" id="section1" *ngIf="orderdetailssection">
           <app-order-details></app-order-details>
         </div>
-      </div>
-    </div>
-  </div>
+      </div> -->
+   
+
+  <!-- </div>
+</div> -->
+
+<div class="card">
+  <p-tabView #tabView [(activeIndex)]="activeIndex" (onChange)="handleChange($event,tabView)">
+    <p-tabPanel header="Overview">
+      <span *ngIf="check_tab == 0">
+        <app-overview></app-overview>
+      </span>
+      
+    </p-tabPanel>
+    <p-tabPanel header="Invoices" >
+      <span *ngIf="check_tab == 1">
+        <app-payment-history></app-payment-history>
+      </span>
+    </p-tabPanel>
+    <p-tabPanel header="Billing Information">
+      <span  *ngIf="check_tab == 2">
+        <app-billing-address></app-billing-address>
+      </span>
+    </p-tabPanel>
+    <p-tabPanel header="Payment Methods" >
+      <span *ngIf="check_tab == 3">
+        <app-payment-methods></app-payment-methods>
+      </span>
+    </p-tabPanel>
+    <p-tabPanel header="Package Options" >
+      <span *ngIf="check_tab == 4" >
+        <app-currentplan></app-currentplan>
+      </span>
+    </p-tabPanel>
+    <p-tabPanel header="Package Options" >
+      <span *ngIf="check_tab == 5" >
+        <app-order-details></app-order-details>
+      </span>
+    </p-tabPanel>
+  </p-tabView>
 </div>
