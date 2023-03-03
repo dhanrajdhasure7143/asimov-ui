@@ -24,17 +24,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isResponse: boolean = false;
   attribute = [];
   addInputForm: FormGroup;
-  public result ={};
-  public reactiveForm:FormGroup;
-  validateJSON:boolean=false;
+  validateJSON: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private rest_api: RestApiService
   ) {
-    this.reactiveForm=this.formBuilder.group({
-      result:[""]
-    })
     this.createItem();
   }
 
@@ -58,7 +53,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerKey: ["", Validators.compose([Validators.required])],
       headerValue: ["", Validators.compose([Validators.required])],
       headerCheck: ["", Validators.compose([Validators.required])],
-      request: ["", Validators.compose([])],
+      scope: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
@@ -71,12 +66,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.addInputForm = new FormGroup({
       addInputField: new FormArray([
         new FormGroup({
-          encodedCheck: new FormControl(''),
-          encodedKey: new FormControl(''),
-          encodedValue: new FormControl(''),
-          encodedDelete:new FormControl('')
-        })
-      ])
+          encodedCheck: new FormControl(""),
+          encodedKey: new FormControl(""),
+          encodedValue: new FormControl(""),
+          encodedDelete: new FormControl(""),
+        }),
+      ]),
     });
   }
 
@@ -161,19 +156,25 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  isJsonValid(){
-    let jsonData=this.connectorForm.get('bodyRaw').value;
-      try{
-        JSON.parse(jsonData);
-        this.validateJSON= false;
-      }
-      catch(e)
-      {
-        console.log(e)
-        this.validateJSON=true;
-      }
+  isJsonValid() {
+    let jsonData = this.connectorForm.get("scope").value;
+    try {
+      JSON.parse(jsonData);
+      this.validateJSON = false;
+    } catch (e) {
+      this.validateJSON = true;
+    }
   }
 
+  isJsonData(){
+    let jsonValidate = this.connectorForm.get("request").value;
+    try {
+      JSON.parse(jsonValidate);
+      this.validateJSON = false;
+    } catch (e) {
+      this.validateJSON = true;
+    }
+  }
 
   actionChange(event) {
     if (event == "Authenticated") {
@@ -238,17 +239,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
   get addInputField(): FormArray {
-    return this.addInputForm.get('addInputField') as FormArray;
+    return this.addInputForm.get("addInputField") as FormArray;
   }
   addHeader() {
     this.addInputField.push(
       new FormGroup({
-        encodedCheck: new FormControl(''),
-        encodedKey: new FormControl(''),
-        encodedValue: new FormControl(''),
-        encodedDelete: new FormControl('')
+        encodedCheck: new FormControl(""),
+        encodedKey: new FormControl(""),
+        encodedValue: new FormControl(""),
+        encodedDelete: new FormControl(""),
       })
     );
   }
-
 }
