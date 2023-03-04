@@ -109,35 +109,6 @@ export class ManageSubscriptionsComponent implements OnInit {
     this.activeIndex = event.index;
     this.check_tab = event.index;
     this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} })
-  //   if (e.originalEvent.target.outerText == "Invoices") {
-  //     this.paymenthistorysection = true
-  //     this.billingaddresssection = false
-  //     this.currentplansection = false
-  //     this.paymentmethodssection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (e.originalEvent.target.outerText == "Billing Information") {
-  //     this.billingaddresssection = true
-  //     this.currentplansection = false
-  //     this.paymentmethodssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (e.originalEvent.target.outerText == "Payment Methods") {
-  //     this.paymentmethodssection = true
-  //     this.currentplansection = false
-  //     this.billingaddresssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (e.originalEvent.target.outerText == "Package Options") {
-  //     this.billingaddresssection = false
-  //     this.currentplansection = true
-  //     this.paymentmethodssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   }
-  // }
   }
   
 }

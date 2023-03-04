@@ -136,7 +136,6 @@ export class BillingAddressComponent implements OnInit {
     this.api.getBillingInfo(this.id).subscribe((data) => {
       this.data = data;
       this.spinner.hide();
-      console.log(this.data);
       this.billingForm.reset();
       this.billingForm.get("firstName").setValue(this.data["firstName"]);
       this.billingForm.get("lastName").setValue(this.data["lastName"]);
