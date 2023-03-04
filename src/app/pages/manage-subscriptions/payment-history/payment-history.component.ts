@@ -57,7 +57,6 @@ export class PaymentHistoryComponent implements OnInit {
 //  }
 
  invoicedownload(invoicedata) {
-  console.log("testing")
   this.spinner.show();
   this.invoiceid = invoicedata.invoiceId;
   this.rest.invoicedownload(this.invoiceid).subscribe(data => {
