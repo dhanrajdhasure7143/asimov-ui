@@ -103,7 +103,7 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  subscriptionCancelModalSubmit() {
+  subscriptionCancel() {
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: "Confirmation",
@@ -114,16 +114,14 @@ export class OverviewComponent implements OnInit {
         this.api.cancelSubscription(this.result[0]).subscribe((res) => {
           this.spinner.hide();
           if (res == null) {
-         
             this.messageService.add({
               severity: "success",
               summary: "Success",
               detail: "Subscription Cancelled Successfully !!",
             });
-          }  
-        })
-      },     
+          }
+        });
+      },
     });
-   
   }
 }

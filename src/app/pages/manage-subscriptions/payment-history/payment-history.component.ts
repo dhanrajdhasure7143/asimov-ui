@@ -16,10 +16,7 @@ import { RestApiService } from '../../services/rest-api.service';
 })
 export class PaymentHistoryComponent implements OnInit {
   
-  displayedColumns8: string[] = ["invoiceNumber","subscriptionId","amount","createDate","nextdue","status","action"];
-  dataSource8:MatTableDataSource<any>;
-  @ViewChild("sort104") sort104: MatSort;
-  @ViewChild("paginator104") paginator104: MatPaginator;
+
   public invoicedata: any=[];
   tot: any=[];
   public tableData: any=[];
@@ -36,10 +33,7 @@ export class PaymentHistoryComponent implements OnInit {
   getAllSubscrptions() {
    this.spinner.show();
     this.rest.listofinvoices().subscribe(response => { 
-      this.invoicedata = response.data 
-      // this.dataSource8= new MatTableDataSource(this.invoicedata);
-      // this.dataSource8.sort=this.sort104;
-      // this.dataSource8.paginator=this.paginator104;
+      this.invoicedata = response.data;
       this.invoicedata.map(data=>{
         data["created_timestamp"] = moment(data.createDate).format("MMMM DD [,] yy") 
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 

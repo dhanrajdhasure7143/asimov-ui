@@ -107,8 +107,6 @@ export class ManageSubscriptionsComponent implements OnInit {
   handleChange(event,tabView) {
     const tab = tabView.tabs[event.index].header;
     this.activeIndex = event.index;
-    console.log(this.activeIndex);
-    
     this.check_tab = event.index;
     this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} })
   //   if (e.originalEvent.target.outerText == "Invoices") {
