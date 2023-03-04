@@ -1702,4 +1702,30 @@ updateInfo(id,data){
 getBillingInfo(id){
   return this.http.get(`/subscriptionservice/v1/billingContact/get/${id}`);
 }
+createDashBoard(body){
+  return this.http.post('/platform-service/dashboard/createDashboard',body);
+}
+
+getDashBoardsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardListByUser');
+}
+getMetricsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardMetricsList');
+}
+getWidgetsList(){
+  return this.http.get('/platform-service/dashboard/findDashboardWidgetsList');
+}
+updateDashBoardNamed(body){
+  return this.http.post('/platform-service/dashboard/updateDashboard',body);
+}
+getdeleteDashBoard(dashboard_id:any){
+  return this.http.get('/platform-service/dashboard/deleteDashboard?id='+dashboard_id)
+}
+
+SaveDashBoardData(body:any){
+  return this.http.post('/platform-service/dashboard/saveDashboardMetricsWidgets',body)
+}
+
+
+
 }

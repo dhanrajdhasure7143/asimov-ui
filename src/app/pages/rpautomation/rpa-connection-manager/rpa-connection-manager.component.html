@@ -78,11 +78,15 @@
             <div class="container col-lg-12">
                 <form [formGroup]="createConnectorForm">
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="connection"> Connector Name <span class="star">*</span></label>
-                        <input type="text" class="form-control form-control-lg"  maxlength="51" formControlName="connectionName"
-                            placeholder="Enter Connector Name">
-                        <span *ngIf="createConnectorForm.get('connectionName').invalid && createConnectorForm.get('connectionName').touched && !createConnectorForm.get('connectionName').hasError('pattern')" class="errspan required"> Connector Name Required* </span>
-                        <span *ngIf="createConnectorForm.controls['connectionName'].hasError('maxlength')" class="errspan required">
+                        <label class="label-control" for="connection"> Connector Name <span
+                                class="star">*</span></label>
+                        <input type="text" class="form-control form-control-lg" maxlength="51"
+                            formControlName="connectionName" placeholder="Enter Connector Name">
+                        <span
+                            *ngIf="createConnectorForm.get('connectionName').invalid && createConnectorForm.get('connectionName').touched && !createConnectorForm.get('connectionName').hasError('pattern')"
+                            class="errspan required"> Connector Name Required* </span>
+                        <span *ngIf="createConnectorForm.controls['connectionName'].hasError('maxlength')"
+                            class="errspan required">
                             Maximum of 50 characters
                         </span>
                     </div> <br>
@@ -96,8 +100,11 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="task_icon"> Task Icon <span class="star">*</span></label>
                         <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
-                        <input class="form-control form-control-lg" accept="image/png, image/svg" formControlName="taskIcon" id="formFileLg" type="file" />
-                        <span *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched" class="errspan required"> Task Icon Required* </span>
+                        <input class="form-control form-control-lg" accept="image/png, image/svg"
+                            formControlName="taskIcon" id="formFileLg" type="file" />
+                        <span
+                            *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched"
+                            class="errspan required"> Task Icon Required* </span>
                     </div>
                     <!-- <div class="custom-file">
                         <input type="file" class="custom-file-input" id="customFileLang" lang="es">
@@ -105,8 +112,10 @@
                     </div> -->
                     <div class="form-footer">
                         <button class="btn btn-primary" (click)="resetForm()"> Reset </button> &nbsp;
-                        <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()" class="btn btn-primary"> Save </button>
-                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()"p class="btn btn-primary"> Update </button> 
+                        <button *ngIf="isCreate" (click)="saveConnectorForm()" [disabled]="createConnectorForm.invalid"
+                            class="btn btn-primary"> Save </button>
+                        <button *ngIf="!isCreate" (click)="updateConnectorForm()"
+                            [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button>
                     </div>
                 </form>
             </div>

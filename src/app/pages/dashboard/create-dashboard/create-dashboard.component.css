@@ -1,5 +1,5 @@
 .dashboard-main {
-	padding-top: 7%;
+	padding-top: 6%;
 }
 
 .dashboard-img {
@@ -20,31 +20,8 @@
 	padding: 30px 0px
 }
 
-.p-dialogue-btn {
-	padding: 6px 30px;
-}
-
-.p-dialog-mask {
-	background-color: #6866666e;
-}
-
 .h-100 {
 	background-color: #fff !important;
-}
-
-:host ::ng-deep .btn-cancel1 {
-	color: #2196F3 !important;
-	padding: 0.5rem 1rem !important;
-	background-color: transparent !important;
-	border-color: transparent !important;
-
-
-}
-
-:host ::ng-deep .p-dialogue-btn {
-	padding: 8px 40px !important;
-
-
 }
 
 .my-style-class {

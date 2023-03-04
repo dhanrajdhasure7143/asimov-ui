@@ -193,6 +193,12 @@ label.epsoft-label {
 }
 
 label.epsoft-label sup {
+  font-size: 25px;
+    position: absolute;
+    top: 11px;
+    right: -12px;
+    color: #001c47;
+  /* need to remove
   font-size: 6px;
   border: 1px solid #001c47;
   border-radius: 50%;
@@ -201,7 +207,7 @@ label.epsoft-label sup {
   width: 8px;
   position: absolute;
   top: 0px;
-  right: -10px;
+  right: -10px;*/
 }
 
 
@@ -217,7 +223,7 @@ label.epsoft-label sup {
 
 .side-icon img {
   height: auto;
-  width: 22px;
+  width: 24px;
 }
 
 .mat-list-item:hover {
@@ -253,7 +259,7 @@ label.epsoft-label sup {
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
   display: block;
-  height: 45px;
+  height: 46px;
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   padding: 0;
@@ -361,9 +367,9 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 }
 
 
-.orchimg span.side-icon {
-  width: 28px;
-}
-.orchimg img {
+.orchimg span.side-icon, .orchimg img {
   width: 28px !important;
+}
+.processesimg span.side-icon, .processesimg img {
+  width: 26px !important;
 }

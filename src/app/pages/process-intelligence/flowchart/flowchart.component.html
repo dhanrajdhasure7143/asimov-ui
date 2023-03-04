@@ -4,120 +4,117 @@
     <div class="row h-100">
 
          <!-- <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1"> -->
-         <div *ngIf="hiddenPopUp" class="col-md-12 p-0 ">
+        <div *ngIf="hiddenPopUp">
 
-        <app-split-overlay (closeOverlay)="closeOverlay($event)" >
-
-             <div class=''>
-                <!-- <div class="col-md-12 select_drpdwnone"> -->
-                <div class="">
-
-                     <div class="variants-header">
+            <app-split-overlay (closeOverlay)="closeOverlay($event)" >
+                <div class="h-100">
+                    <!-- <div class="col-md-12 select_drpdwnone"> -->
+                    <div class="create-header">
                         <h3>Variants List</h3>  
                         <!-- <button class="closebtn" (click)="closeNav()">
                             <img src="../../../../assets/images/PI/close.svg" alt="" class="default-img">
                             <img src="../../../../assets/images/PI/close-blue.svg" alt="" class="hover-img">
                         </button>                       -->
-                     </div>                   
-                     <div class="col-md-12 p-0">
+                    </div>                   
+                    <div class="col-md-6 p-0 mt-3">
                          <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
                             <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                          </select>
-                     </div>
-                </div>
-                <div class='col-sm-12 variant2'>
-                    <div class="check_box">
-                        <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
-                        <span class="">Select all</span>
-                        <span class='event2'>Time Taken</span>
-                    </div>                        
-                </div>
-                <!-- <div class="variant-body"> -->
-                <div class="">
-
-                    <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
-                     <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
-                        <span>{{i+1}}</span>
                     </div>
-                    <div class='variant_parcent'>
-                        <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
-                            <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                    <div class="createform-overlay">
+                        <div class='col-sm-12 variant2'>
+                            <div class="row check_box">
+                                <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
+                                <span class="">Select all</span>
+                                <span class='event2'>Time Taken</span>
+                            </div>                        
                         </div>
-                        <div (click)="caseIdSelect(data,i)" class=''></div>
-                        <div class="text-center" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
-                             <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
-                             <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
-                         </div> 
-                     </div>
-                     <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+                        <!-- <div class="variant-body"> -->
+                        <div class="">
+
+                            <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                             <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
+                                <span>{{i+1}}</span>
+                            </div>
+                            <div class='variant_parcent'>
+                                <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
+                                    <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                                </div>
+                                <div (click)="caseIdSelect(data,i)" class=''></div>
+                                <div class="text-center" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                                     <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
+                                     <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
+                                 </div> 
+                             </div>
+                             <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-             </div>
-        </app-split-overlay>
-    </div>
- 
+                 </div>
+            </app-split-overlay>
+        </div>
         
 
-    <div id="main" class="newmaindiv">
-        <div class='PImodule-fileds'>
-            <div class='col-md-2'>  <!-- Add pr-0 class to adjust the spacing for fields If the Activities/Paths slider is removed -->
-                <select class="form-control border_bottom" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
-                    <option value="undefined" hidden disabled>Select Process Graph</option>
-                    <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName}}</option>
-                </select>            
+        <div id="main" class="newmaindiv">
+            <div class='PImodule-fileds'>
+                <div class='col-md-2'>  <!-- Add pr-0 class to adjust the spacing for fields If the Activities/Paths slider is removed -->
+                    <select class="form-control border_bottom" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
+                        <option value="undefined" hidden disabled>Select Process Graph</option>
+                        <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName}}</option>
+                    </select>            
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 h-100">
-             <div class="tooltip_button tooltip1" #toogleBtn>
-                 <span class="PI-frpr-spin" (click)='spinnermetrics()'><img  src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1"></span>
-                 <div *ngIf='isedgespinner' class="tooltiptext1">
-                    <form action="">
-                     <div class="PI-flow-freq">
-                         <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency<span class="caret"></span></h5>
-                         <div *ngIf='isfrequencymetrics' class='edgemetrics_spinner'>
-                            <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span>
-                            <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span>
-                            <span><input type="radio"  class="form-check-input" name="check" value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Repetitions</span>
-                            <hr>
-                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
+            <div class="row">
+                <div class="col-md-12 h-100">
+                 <div class="tooltip_button tooltip1" #toogleBtn>
+                     <span class="PI-frpr-spin" (click)='spinnermetrics()'><img  src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1"></span>
+                     <div *ngIf='isedgespinner' class="tooltiptext1">
+                        <form action="">
+                         <div class="PI-flow-freq">
+                             <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency<span class="caret"></span></h5>
+                             <div *ngIf='isfrequencymetrics' class='edgemetrics_spinner'>
+                                <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span>
+                                <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span>
+                                <span><input type="radio"  class="form-check-input" name="check" value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Repetitions</span>
+                                <hr>
+                                <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
+                             </div>
                          </div>
-                     </div>
-                     <hr>
-                     <div class="PI-flow-per">
-                         <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
-                         <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>                                                
-                            <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span>
-                            <span><input type="radio" class="form-check-input" name="check" value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Median Duration</span>
-                            <span><input type="radio" class="form-check-input" name="check" value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Mean Duration</span>
-                            <span><input type="radio" class="form-check-input" name="check" value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Duration</span>
-                            <span><input type="radio" class="form-check-input" name="check" value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Min Duration</span>
-                            <hr>
-                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
+                         <hr>
+                         <div class="PI-flow-per">
+                             <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
+                             <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>                                                
+                                <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span>
+                                <span><input type="radio" class="form-check-input" name="check" value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Median Duration</span>
+                                <span><input type="radio" class="form-check-input" name="check" value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Mean Duration</span>
+                                <span><input type="radio" class="form-check-input" name="check" value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Duration</span>
+                                <span><input type="radio" class="form-check-input" name="check" value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Min Duration</span>
+                                <hr>
+                                <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
+                             </div>
                          </div>
+                        </form>
                      </div>
-                    </form>
                  </div>
+                    <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName' [isSlider]="isSliderBPMN"></app-d3flowchart>
+                </div>
+                <!-- TODO -- Enable?comment below code for enable sliders in PI graph page and change col-md-12 in line number 59  -->
+                <div class='col-md-1'>
+             <div class="path_slider1 text-center">
+                 <div>
+                 <div class="vertical_slider custom-slider" id="act_slider">
+                     <ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+                 </div>
+                 <p class="slider_label Activities_slider">Activities</p>
+                 <div>
+                 <div class="vertical_slider custom-slider" id="path_slider">
+                     <ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
+                 </div>
+                 <p class="slider_label Paths_slider">Paths</p>
              </div>
-                <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName' [isSlider]="isSliderBPMN"></app-d3flowchart>
+                </div>
             </div>
-            <!-- TODO -- Enable?comment below code for enable sliders in PI graph page and change col-md-12 in line number 59  -->
-            <!-- <div class='col-md-1'>
-         <div class="path_slider1 text-center">
-             <div>
-             <div class="vertical_slider custom-slider" id="act_slider">
-                 <ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
-             </div>
-             <p class="slider_label Activities_slider">Activities</p>
-             <div>
-             <div class="vertical_slider custom-slider" id="path_slider">
-                 <ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
-             </div>
-             <p class="slider_label Paths_slider">Paths</p>
-         </div>
-            </div> -->
-        </div>
-    </div>  <!-- Id main -->
+        </div>  <!-- Id main -->
    </div>
  </div> 
  
@@ -161,7 +158,7 @@
                  </div>
              </div>
 </div>
- 
+
 <div class="bpmnCreate">
     <div id="filterModal" class="modal">
          <div class="modal-content">

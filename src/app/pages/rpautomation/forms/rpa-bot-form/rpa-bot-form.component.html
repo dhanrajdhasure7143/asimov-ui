@@ -1,13 +1,13 @@
-<div class="">
-    <div class="rpa-modal-header">
+<div class="h-100">
+    <div class="create-header">
         <!-- <span class="rpa-modal-close" (click)="closeBotForm()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
-        <h4 *ngIf="isCreateForm">Create Bot</h4>
-        <h4 *ngIf="!isCreateForm">Update Bot</h4>
+        <h3 *ngIf="isCreateForm">Create Bot</h3>
+        <h3 *ngIf="!isCreateForm">Update Bot</h3>
     </div>
-    <div class="modal-body">
-        <form [formGroup]="botForm">
-            <div class="container m-contanier form-body">
-           
+    <div class="createform-overlay">
+        <form [formGroup]="botForm" class="h-100">
+            <div class="">
+                <!-- container m-contanier form-body -->
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
                     <select  class="form-control" [disabled]="categoriesList.length==1" formControlName="department" (change)="$event.target.value!=''?checkBotCategory=false:checkBotCategory=true;" name="botDepartment">
@@ -15,7 +15,7 @@
                         <option *ngFor="let category of categoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                     </select>
 
-                    <div *ngIf=" (botForm.get('department').invalid && botForm.get('department').touched) || checkBotCategory" class="errspan required">
+                    <div *ngIf=" (botForm.get('department').invalid && botForm.get('department').touched) || checkBotCategory" class="required">
                         Category Required*
                     </div>
 
@@ -27,20 +27,20 @@
                         name="botName" required />
                     <div *ngIf="!(isCreateForm)">
                         <div *ngIf="(botForm.get('botName').hasError('required') && botForm.get('botName').touched) && !botForm.controls['botName'].hasError('maxlength')"
-                            class="errspan required">
+                            class="required">
                             Bot Name Required*
                         </div>
                     </div>
-                    <div *ngIf="botNameCheck && botForm.get('botName').value && !botForm.get('botName').hasError('pattern')" class="errspan required">
+                    <div *ngIf="botNameCheck && botForm.get('botName').value && !botForm.get('botName').hasError('pattern')" class="required">
                         Bot Name is already exists*
                     </div>
-                    <div *ngIf="botForm.get('botName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
+                    <div *ngIf="botForm.get('botName').hasError('pattern')" class="required">Spaces and special characters are not allowed Excluding( _ & - )
                     </div>
 
-                    <div *ngIf="botForm.controls['botName'].hasError('maxlength')" class="errspan required">
+                    <div *ngIf="botForm.controls['botName'].hasError('maxlength')" class="required">
                         Maximum of 30 characters exceeded
                     </div>
-                    <!-- <div *ngIf="botForm.controls['botName'].hasError('minlength')" class="errspan required">
+                    <!-- <div *ngIf="botForm.controls['botName'].hasError('minlength')" class="required">
                                         Minimum 2 characters required
                                     </div> -->
                 </div>
@@ -49,34 +49,35 @@
                     <textarea type="text" autocomplete="off" formControlName="description"
                         placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
                         name="botDescription"></textarea>
-                    <div *ngIf="botForm.controls['description'].hasError('maxlength')" class="errspan required">
+                    <div *ngIf="botForm.controls['description'].hasError('maxlength')" class="required">
                         Maximum of 150 characters exceeded
                     </div>
                 </div>
 
-                <div class="col-md-6 p-0 form-group">
-                    <input type="checkbox" formControlName="isPredefined" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+                <div class="col-md-6 p-0">
+                    <input type="checkbox" formControlName="isPredefined" name="predefinedBot">
+                    <span class="pl-2">Predefined Bot</span>
                 </div>
             </div>
-            <div class="form-footer">
-                <button class="btn btn-primary"
-                    [disabled]="(botForm.invalid || botNameCheck)  && (!(unsaved))"  *ngIf="!isCreateForm" (click)="onFormSubmit()">
-                    <span >Update</span>
-                </button>
-                <button *ngIf="isCreateForm && (botForm.get('botName').value==''|| botForm.get('botName').value==null) && (!(unsaved)) " (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
-                    <span >Submit</span>
-                </button>
-                <button *ngIf="isCreateForm && (botForm.get('botName').value!='' &&  botForm.get('botName').value!=null) && (!(unsaved))" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
-                    <span >Submit</span>
-                </button>
-                <button *ngIf="(unsaved)" (click)="submitUnsavedBot()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
-                    <span >Submit</span>
-                </button>
-                <!-- &nbsp;
-                <button *ngIf="isCreateForm" (click)="skipSaveBot()" class="btn btn-primary">
-                    <span *ngIf="isCreateForm">Skip</span>
-                </button> -->
-            </div>
         </form>
+        <div class="createform-footer">
+            <button class="btn btn-primary"
+                [disabled]="(botForm.invalid || botNameCheck)  && (!(unsaved))"  *ngIf="!isCreateForm" (click)="onFormSubmit()">
+                <span >Update</span>
+            </button>
+            <button *ngIf="isCreateForm && (botForm.get('botName').value==''|| botForm.get('botName').value==null) && (!(unsaved)) " (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
+                <span >Submit</span>
+            </button>
+            <button *ngIf="isCreateForm && (botForm.get('botName').value!='' &&  botForm.get('botName').value!=null) && (!(unsaved))" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
+                <span >Submit</span>
+            </button>
+            <button *ngIf="(unsaved)" (click)="submitUnsavedBot()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
+                <span >Submit</span>
+            </button>
+            <!-- &nbsp;
+            <button *ngIf="isCreateForm" (click)="skipSaveBot()" class="btn btn-primary">
+                <span *ngIf="isCreateForm">Skip</span>
+            </button> -->
+        </div>
     </div>
 </div>

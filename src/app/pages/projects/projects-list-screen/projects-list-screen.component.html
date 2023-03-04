@@ -28,9 +28,7 @@
       </div>
     </div>
     <div class="main-content-body tablist-cont">
-      <div class="h-100">
-
-        <div id="tabs_screen" class="h-100">
+        <div class="tabs_screen h-100">
           <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
             <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
               <ng-template pTemplate="header">
@@ -66,8 +64,6 @@
             </div>
           </p-tabView>
         </div>
-
-      </div>
     </div>
   </div>
 </div>
@@ -96,7 +92,7 @@
           <p-card class="cards side imgg" >
             <button  type="button"  (click)="onClikCreateProgram()">                
               <p-image src="../../../../assets/images-n/projects/CreateProgram.svg"  class="crtprgm" alt="Create Program"></p-image>                
-              <p class=" title_text">Creat Program</p>
+              <p class=" title_text">Create Program</p>
             </button>
           </p-card>
         </div>
@@ -107,3 +103,6 @@
     </div>
   </app-split-overlay>
 </div>
+
+<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+

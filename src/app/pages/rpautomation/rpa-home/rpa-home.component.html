@@ -188,7 +188,7 @@
                             </ng-template>
                             <ng-template pTemplate="emptymessage">
                                 <tr>
-                                    <td style="justify-content: center;" colspan="7">No Records Found</td>
+                                    <td style="text-align: center;" colspan="7">No Records Found</td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -357,15 +357,15 @@
 
                                 <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
                                 <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
-                                <div *ngIf="(editbot.get('botName').hasError('required') && editbot.get('botName').touched) && !editbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="(editbot.get('botName').hasError('required') && editbot.get('botName').touched) && !editbot.controls['botName'].hasError('maxlength')" class="required">
                                     Bot Name Required*
                                 </div>
-                                <div *ngIf="checkbotname && editbot.get('botName').touched" class="errspan required">
+                                <div *ngIf="checkbotname && editbot.get('botName').touched" class="required">
                                     Bot Name is already exists*
                                 </div>
-                                <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>
+                                <div *ngIf="botNamespace" class="required">special characters are not allowed Excluding( _ & - )</div>
 
-                                <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="required">
                                     Maximum of 30 characters exceeded.
                                 </div>
                              
@@ -381,7 +381,7 @@
                                 <div *ngIf="rpaCategory==='others'">
                                     <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
                                 </div>
-                                <div *ngIf="editbot.get('department').invalid && editbot.get('department').touched" class="errspan required">
+                                <div *ngIf="editbot.get('department').invalid && editbot.get('department').touched" class="required">
                                     Category Required*
                                 </div>
 
@@ -391,7 +391,7 @@
                                 <label class="label-control" for="botDescription">Bot Description</label>
                                 <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
 
-                                <div *ngIf="editbot.controls['description'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="editbot.controls['description'].hasError('maxlength')" class="required">
                                     Maximum of 150 characters exceeded.
                                 </div>
 
@@ -426,15 +426,15 @@
 
                                 <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
                                 <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  ngModel maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
-                                <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="required">
                                     Bot Name Required*
                                 </div>
-                                <div *ngIf="checkbotname && insertbot.get('botName').value" class="errspan required">
+                                <div *ngIf="checkbotname && insertbot.get('botName').value" class="required">
                                     Bot Name is already exists*
                                 </div>
-                                <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>
+                                <div *ngIf="botNamespace" class="required">special characters are not allowed Excluding( _ & - )</div>
 
-                                <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="required">
                                     Maximum of 30 characters exceeded
                                 </div>
                             </div>
@@ -450,7 +450,7 @@
                                     <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                                 </select>
                               
-                                <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="errspan required">
+                                <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="required">
                                     Category Required*
                                 </div>
 
@@ -458,7 +458,7 @@
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDescription">Bot Description</label>
                                 <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
-                                <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
+                                <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="required">
                                     Maximum of 150 characters exceeded
                                 </div>
                             </div>

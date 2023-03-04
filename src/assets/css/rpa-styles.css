@@ -117,20 +117,15 @@ height: 20px;
 width:20px;
 stroke-width: 100;
 }
-.env-search{
+/* .env-search{
   display:inline-block;
   float:right;
   }
-.env-data-tool{
-  padding:5px;
-  float: right;
-  margin-left: auto;
-  justify-content: end;
-}
+
 .rpa-env-search{
   padding:5px;
   float:left;
-}
+} */
 
 #listofenv_filter > label > input[type=search]
 {
@@ -347,16 +342,6 @@ padding-bottom: 70px;
     color:rgb(149, 149, 149);
   }
 
-
-  cron-editor > div > div.card-header > ul > li > a.nav-link
-  {
-    padding: 6px 13px!important;
-    border-radius: 4px 4px 0 0 !important;
-    font-weight:normal;
-    font-size:14px;
-    
-  }
-
   .mat-paginator > div > div > div.mat-paginator-range-actions > button:disabled{
 
     background-color: transparent !important;    
@@ -510,10 +495,7 @@ mat-paginator button:disabled{
   overflow: scroll;
   height: 220px;
 }
-.innertabld{
-  width: 500px;
-  
-}
+
 .pagicl {
   margin-top: 10px;
   text-align: right;
@@ -522,10 +504,10 @@ mat-paginator button:disabled{
   color: #00a0e3 !important;
   background: #fefefe !important;
 }
-
-.row.environment-search-tools, .credential-search-tools {
+/* 
+.credential-search-tools {
   padding: 10px 10px 0px 10px;
-}
+} */
 .con-envr {
   padding: 10px 10px 0px !important;
 }
@@ -534,3 +516,44 @@ mat-paginator button:disabled{
   overflow: auto;
   height: calc(100vh - 270px);
 }
+
+/* New Styles for Scheduler Overlay  */
+
+.scheduler-tabsrow .card.cron-editor-main {
+  background-color: transparent;
+  border: none;
+}
+.scheduler-tabsrow .card-header {
+  background-color: transparent;
+  padding: 0px;
+}
+.scheduler-tabsrow ul.nav.nav-tabs {
+  border: none !important;
+  margin: 0px !important;
+}
+.scheduler-tabsrow ul.nav.nav-tabs.card-header-tabs.tab-nav li a {
+  height: 45px !important;
+}
+cron-editor > div > div.card-header > ul > li > a.nav-link
+{
+  border-color: transparent !important; 
+  color: var(--main-txtcolor) !important;
+  background-color: transparent !important;
+  margin: 0px !important;
+  border-width: 0 0 4px 0 !important;
+  box-shadow: none !important;
+  height: 100%;
+}
+.cron-editor-main .cron-editor-container {
+  margin-top: 0px !important;
+  padding: 15px 10px 0px !important;
+}
+.cron-editor-main .tab-pane.active {
+  background-color: transparent !important;
+}
+.ngx-timepicker {
+  height: 40px !important;
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+}
+/* New Styles for Scheduler Overlay  */

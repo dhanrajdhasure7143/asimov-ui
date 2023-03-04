@@ -24,7 +24,7 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  background-color: #00a0e3 !important;
+  background-color: #098de6 !important;
   cursor: no-drop;
   pointer-events:none;
   color: #fff;
@@ -355,7 +355,7 @@ width: 160px !important;
 padding: 0px 0px;
 position: absolute;
 z-index: 1;
-top: 43px;
+top: 39px;
 left: -2px;
 background-color: #fff;
 background-clip: padding-box;
@@ -365,12 +365,16 @@ box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .tooltiptext1 h5{
-color: #000 !important;
-font-weight: normal;
-padding: 10px;;
+font-weight: 400;
+padding: 10px 14px;
 margin-top: 0px;
 margin-bottom: 0px;
+font-size: 15px;
 }
+.tooltiptext1 h5::after{
+  float: right;
+    margin-top: 6px;
+  }
 
 .tooltip1 .tooltiptext1::after {
 content: "";
@@ -379,7 +383,7 @@ top: -13px;
 left: -1px;
 border-width: 6px;
 border-style: solid;
-border-color: transparent transparent #ccc transparent ;
+border-color: transparent transparent #ccc;
 }
 .play_label,.download_label{
   font-size: 11px;
@@ -759,20 +763,12 @@ button{
 }
 /*pi bpmn component styles - Ends*/
 /*upload component styles - Starts*/
-.download_link{
-  text-align: center;
-  cursor: pointer;
-  margin-top: 30px;
-}
 
 
 .upload_btn{
     margin-left:-10px;
 }
-.subtitle{
-    color:#006ed5;
-    margin-top: 0px
-}
+
 .preview-modal{
   width: 147%;
 }
@@ -876,8 +872,8 @@ table.dataTable {
   left: 5px !important;
 }
 .timefeed-body .ngx-timepicker {
-  border: 1px solid #D1D1D1 !important;
-  border-radius: 4px;
+  border: 1px solid #979797 !important;
+    color: #232832 !important;
 }
 .timefeed-body .ngx-timepicker-control {
   width: 90px !important;
@@ -919,14 +915,14 @@ img.hover-img {
   width: 22px;
   height: 22px;
   top: -10px;
-  background-color: #00A0E3;
+  background-color: #098de6;
 }
 .filter-slider .ng5-slider .ng5-slider-bubble {
   color: #333;
   font-size: 14px;
 }
 .filter-slider .ng5-slider .ng5-slider-selection {
-  background: #00a0e3;
+  background: #098de6;
 }
 .piechart_graph .ngx-charts-outer {
   width: 80px !important;
@@ -965,23 +961,28 @@ img.hover-img {
   font-size: 13px;
   font-weight: 600;
 }
+.check_box input#check_box {
+    width: 16px !important;
+    height: 16px !important;
+}
 .event2 {
-  float: right;
+  margin-left: auto !important;
   width: 26%;
 }
 .variant_border {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
   cursor: pointer;
   display: flex;
   font-size: 14px;
   padding: 6px 10px !important;
+  height: 45px;
+  align-items: center;
 }
 .variant_border:hover{
   background-color: #ffffff;
-  color: #00a0e3;
+  color: #098de6;
 }
 .event3 {
-  font-size: 14px;
   width: 30%;
 }
 .variant_parcent {
@@ -989,7 +990,6 @@ img.hover-img {
 }
 .varaint-days {
   width: 25%;
-  font-size: 14px;
 }
 .event3 span, .variant_parcent span {
   font-size: 14px;
