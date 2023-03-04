@@ -360,20 +360,10 @@ export class UploadComponent implements OnInit {
     const datepipe: DatePipe = new DatePipe('en-US');
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr,  { type: 'binary', cellText:false, cellDates:true });
+      const wb: XLSX.WorkBook = XLSX.read(bstr,  { type: 'binary', cellText: false, cellDates:true });
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, range: 0 }));
-      
-      let index = 0;
-      this.data = this.data.map( item => {
-        if(index > 0) {
-          item[3] = datepipe.transform(item[3], 'dd-MMM-YYYY HH:mm:ss');
-          item[4] = datepipe.transform(item[4], 'dd-MMM-YYYY HH:mm:ss');
-        }
-        index ++;
-        return item;
-      });
+      this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
 
       this.dt.changePiData(this.data);
       let excelfile = [];
