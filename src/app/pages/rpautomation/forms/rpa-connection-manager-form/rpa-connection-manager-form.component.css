@@ -79,3 +79,6 @@ input[type=file]::file-selector-button {
 input[type=file]::file-selector-button:hover {
     background: #0d45a5;
 }
+.maincont{
+    overflow: scroll;
+}
