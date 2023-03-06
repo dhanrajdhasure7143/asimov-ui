@@ -150,10 +150,8 @@
                     </div>
                 </div>                
             </form>
-            <div class="createform-footer">
-                <!-- <button class="btn bluebg-button" type="submit" (click)="updateChanges();" [disabled]="(!data && !processCategoryForm.valid )">Update</button> -->
-                <button class="btn bluebg-button" type="submit" (click)="updateChanges();" >Update</button>
-
+            <div class="createform-footer" *ngIf="overlay_data.type == 'edit'">
+                <button class="btn bluebg-button" type="submit" (click)="updateChanges();" [disabled]="(!data && !processCategoryForm.valid )">Update</button>
             </div>
 
         <!-- </div> -->
