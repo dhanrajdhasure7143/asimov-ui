@@ -1,4 +1,47 @@
-
+#Orchestration-tabs  .mat-tab-label .mat-tab-label-content{
+  color: #232832;
+  font-size: 16px !important;
+}
+#Orchestration-tabs mat-tab-header.mat-tab-header {
+  border: 1px solid #D0D0D0 !important;
+  background-color: #fff;
+  border-radius: 6px;
+  height: 70px;
+  width: 100%;
+}
+#Orchestration-tabs .mat-tab-labels {
+    height: 100%;
+    align-items: center;
+}
+#Orchestration-tabs .so-subtab-header mat-tab-header.mat-tab-header {
+    border-top: 0px !important;
+    height: 55px;
+}
+#Orchestration-tabs .so-subtab-header span.titlelabel {
+   margin-left: 0px;
+}
+.orches_new .so-subtab-header .mat-tab-label {
+  padding: 0px 20px !important;
+}
+span.titlelabel {
+  margin-left: 15px;
+}
+#Orchestration-tabs i.material-icons, 
+#Orchestration-tabs mat-icon.mat-icon, 
+#Orchestration-tabs i.fa.fa-chart-area {
+  color: #098de6;
+  font-size: 32px;
+}
+#Orchestration-tabs mat-icon.mat-icon {
+  width: 30px;
+  height: 34px;
+}
+.orches_new .mat-tab-label {
+  padding: 0px 16px !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+  height: 100% !important;
+}
 
 
 
@@ -38,70 +81,6 @@ tr.mat-header-row {
   height: 45px !important;
 }
 
-
-.clickable{
-  cursor: pointer;
-}
-
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content1 {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content1 a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content1 a:hover {background-color: #ddd;}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content1 {display: block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
-
-
-.text-success{
-  color : #4FA908 !important;
-}
-
-
- #Orchestration-tabs  .mat-tab-label .mat-tab-label-content{
-  color: #001c47 ;
-  font-weight: 700 !important;
-  font-size: 15px !important;
-}
-
-
-
-
-#Orchestration-tabs .mat-tab-label-active .mat-tab-label-content {
-  color: #00a0e3 !important ;
-}
-
 /* newstyles */
 .pr-0 {
   padding-right: 0px;
@@ -116,10 +95,7 @@ tr.mat-header-row {
 .orches_new .wrapper {
   padding:0px;
 }
-.orches_new .mat-tab-label {
-  padding: 0px 15px !important;
-  background-color: transparent !important;
-}
+
 .mat-form-field.mat-focused .mat-form-field-label {
   color: #0062cf;
   font-size: 16px !important;
@@ -229,10 +205,10 @@ body .leftfporm select {
 }
 
 .so-subtab-header mat-tab-header.mat-tab-header {
-  background-color: #e8f7fd;
+  /* background-color: #e8f7fd; */
 }
 .so-sub-tab-content {
-  padding-top: 8px;
+  padding-top: 15px;
 }
 
 .newexecbots_progress {
