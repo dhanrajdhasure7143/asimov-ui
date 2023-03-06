@@ -10,7 +10,7 @@ import widgetOptions from './widgetdetails.json';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
- 
+
   metrics_list: any[] = [];
   draggedProduct: any;
   defaultEmpty_metrics: any[] = [];
@@ -20,11 +20,14 @@ export class ConfigureDashboardComponent implements OnInit {
     dashboardName: '',
     widgets: [],
     metrics: [],
-    
+
+
   }
+
   chartOptions: { legend: { position: string; }; };
   metricslist: any;
   widgetslist: any;
+  tablelist: any;
   metricslistimg: { src: string; }[];
   result: any;
   metricsitem: any;
@@ -32,7 +35,7 @@ export class ConfigureDashboardComponent implements OnInit {
   addedWidgets: any[] = [];
   _paramsData: any;
   draggedProduct1: any;
-  isShow:boolean;
+  isShow: boolean;
 
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
@@ -46,7 +49,7 @@ export class ConfigureDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.chartOptions = {
       legend: { position: "bottom" },
-     
+
     };
     this.getListOfWidgets();
     this.getListOfMetrics();
@@ -253,6 +256,10 @@ export class ConfigureDashboardComponent implements OnInit {
     }
     console.log("addedMetrics", this.addedMetrics)
   }
+  addtable(item, i) {
+
+
+  }
 
   onDeactivate(data, index, type) {
     if (type == 'metrics') {
@@ -267,14 +274,14 @@ export class ConfigureDashboardComponent implements OnInit {
       //this.dynamicDashBoard.widgets.splice(index, 1);
       this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
       if (this.widgetslist.find((item) => item.widgetAdded == true))
-      this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
+        this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
     }
   }
 
 
   addWidget(widget: any, index) {
     console.log(this.addedWidgets)
-   
+
     if (widget.widgetAdded == false) {
       this.widgetslist[index].widgetAdded = true;
       if (this.widgetslist.find((item: any) => item.id == widget.id) != undefined) {
@@ -283,19 +290,20 @@ export class ConfigureDashboardComponent implements OnInit {
         const widgetData = widgetOptions.widgets;
         // this.tabledata = this.addedWidgets[0].sampleData;
         // console.log(this.tabledata);
-        
+
         obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-       
+
         this.addedWidgets.push(obj);
-       
-        this.dynamicDashBoard.widgets=this.addedWidgets;
+
+        this.dynamicDashBoard.widgets = this.addedWidgets;
         console.log(this.addedWidgets)
-        
+
       }
     }
   }
 
- 
+
+
   // getChartData(widget: any) {
   //   let methodType: any = ""
   //   if (widget.widget_title == 'Bot Status')
@@ -398,32 +406,32 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   saveDashBoard() {
-    let req_array:any = [];
+    let req_array: any = [];
     console.log(this.addedMetrics);
-    this.addedMetrics.forEach(item=>{
-      let req_body={
+    this.addedMetrics.forEach(item => {
+      let req_body = {
         childId: item.id,
         screenId: this._paramsData.dashboardId,
-        type:"metric",
-        widgetType:"",
-        name:item.name
+        type: "metric",
+        widgetType: "",
+        name: item.name
       }
       req_array.push(req_body)
     })
 
     this.dynamicDashBoard.widgets.forEach(element => {
-      let req_body={
+      let req_body = {
         childId: element.id,
         screenId: Number(this._paramsData.dashboardId),
-        type:"widget",
-        widgetType:element.widget_type,
-        name:element.name
+        type: "widget",
+        widgetType: element.widget_type,
+        name: element.name
       }
       req_array.push(req_body)
     });
-    console.log(this.dynamicDashBoard,req_array)
+    console.log(this.dynamicDashBoard, req_array)
 
-    this.rest_api.SaveDashBoardData(req_array).subscribe(res=>{
+    this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
       console.log(res)
     })
 
@@ -477,7 +485,7 @@ export class ConfigureDashboardComponent implements OnInit {
             // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
           })
 
-         
+
         }
       })
       console.log("this.metrics_list", this.metrics_list)
@@ -488,8 +496,24 @@ export class ConfigureDashboardComponent implements OnInit {
       this.widgetslist = data.data;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-         item["chartSrc"] = "chart4.png'"
+        item["chartSrc"] = "chart4.png'"
         return item
+      })
+      this.widgetslist.push({
+        "chartSrc":
+          "chart4.png'",
+        "description"
+          :
+          "Display the Table Data",
+        "id"
+          :
+          99,
+        "name"
+          :
+          "Bot Execution Status In Table",
+        "widgetAdded"
+          :
+          false
       })
       this.datatransfer.dynamicscreenObservable.subscribe((res: any) => {
         console.log(res.metrics)
@@ -509,8 +533,5 @@ export class ConfigureDashboardComponent implements OnInit {
       console.log("this.widgetslist", this.widgetslist)
     })
   }
-  addtable(){
-    console.log("click successful")
-    this.isShow = !this.isShow; 
-  }
+
 }

@@ -236,7 +236,70 @@ export class DynamicDashboardComponent implements OnInit {
                 ]
               }
             },
-
+            {
+              "id": 99,
+              "widget_type": "table",
+              "name": "Bot Execution Status In Table",
+              "description": "Display the Table Data",
+              "sampleData": {
+                  "labels": [
+                      {
+                          "field": "firstname",
+                          "header": "First Name"
+                      },
+                      {
+                          "field": "lastname",
+                          "header": "Last Name"
+                      },
+                      {
+                          "field": "age",
+                          "header": "Age"
+                      }
+                  ],
+                  "datasets": [
+                      {
+                          "data": [
+                              {
+                                  "firstname": "David",
+                                  "lastname": "ace",
+                                  "age": "40"
+                              },
+                              {
+                                  "firstname": "AJne",
+                                  "lastname": "west",
+                                  "age": "40"
+                              }
+                            
+                          ],
+                          "backgroundColor": [
+                              "#FF6384",
+                              "#36A2EB",
+                              "#FFCE56"
+                          ],
+                          "hoverBackgroundColor": [
+                              "#FF6384",
+                              "#36A2EB",
+                              "#FFCE56"
+                          ]
+                      }
+                  ]
+              },
+              "chartOptions": {
+                  "plugins": {
+                      "legend": {
+                      "position": "bottom"
+                  }
+              }
+              },
+              "widgetAdded": true,
+              "edit": false,
+              "filterOptions": {
+                  "widgetTypes": [
+                      "bar",
+                      "pie"
+                  ]
+              }
+          }
           ],
           "metrics": [
             {
@@ -271,7 +334,7 @@ export class DynamicDashboardComponent implements OnInit {
               "metricValue": 56,
               "src": "process.svg"
             }
-          ]
+          ],
         //   "cols" : [
         //     {
         //         field: 'firstname',
@@ -297,140 +360,10 @@ export class DynamicDashboardComponent implements OnInit {
         //         lastname: 'west',
         //         age: '40',
         //     },
-        //     {
-        //         firstname: 'Mak',
-        //         lastname: 'Lame',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Peter',
-        //         lastname: 'raw',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Kane',
-        //         lastname: 'James',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Peter',
-        //         lastname: 'raw',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Kane',
-        //         lastname: 'James',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Peter',
-        //         lastname: 'raw',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Kane',
-        //         lastname: 'James',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Peter',
-        //         lastname: 'raw',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Kane',
-        //         lastname: 'James',
-        //         age: '40',
-        //     },
-        //     {
-        //         firstname: 'Peter',
-        //         lastname: 'raw',
-        //         age: '40',
-        //     },
-          
+            
         // ]
         }
-        this.cols =[
-          {
-            field: 'firstname',
-            header: 'First Name'
-        },
-        {
-            field: 'lastname',
-            header: 'Last Name'
-        },
-        {
-            field: 'age',
-            header: 'Age'
-        },
-      ];
-      this.tableData = [
-        {
-            firstname: 'David',
-            lastname: 'ace',
-            age: '40',
-        },
-        {
-            firstname: 'AJne',
-            lastname: 'west',
-            age: '40',
-        },
-        {
-            firstname: 'Mak',
-            lastname: 'Lame',
-            age: '40',
-        },
-        {
-            firstname: 'Peter',
-            lastname: 'raw',
-            age: '40',
-        },
-        {
-            firstname: 'Kane',
-            lastname: 'James',
-            age: '40',
-        },
-        {
-            firstname: 'Peter',
-            lastname: 'raw',
-            age: '40',
-        },
-        {
-            firstname: 'Kane',
-            lastname: 'James',
-            age: '40',
-        },
-        {
-            firstname: 'Peter',
-            lastname: 'raw',
-            age: '40',
-        },
-        {
-            firstname: 'Kane',
-            lastname: 'James',
-            age: '40',
-        },
-        {
-            firstname: 'Peter',
-            lastname: 'raw',
-            age: '40',
-        },
-        {
-            firstname: 'Kane',
-            lastname: 'James',
-            age: '40',
-        },
-        {
-            firstname: 'Peter',
-            lastname: 'raw',
-            age: '40',
-        },
-        {
-            firstname: 'Kane',
-            lastname: 'James',
-            age: '40',
-        },
-      ];
+     
       }
 
       //}

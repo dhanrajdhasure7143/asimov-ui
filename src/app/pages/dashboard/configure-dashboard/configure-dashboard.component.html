@@ -81,35 +81,44 @@
                   (click)="onDeactivate(widget,j, 'widgets')"></i>
                   
                <div  class="" style="text-align: center;margin:20px;">
-                  <div >
+                  <div *ngIf="widget.widget_type!='table'">
                      <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
                    
                   </div>
-                 
-                  <!-- <div *ngIf="widget.widget_type=='TABLE'">
-                  
-             <p-table >
-               <ng-template pTemplate="header">
-                   <tr>
-                       <th>Vin</th>
-                       <th>Year</th>
-                       <th>Brand</th>
-                       <th>Color</th>
-                   </tr>
-               </ng-template>
-               <ng-template pTemplate="body" let-car>
-                   <tr>
-                       <td>Test1</td>
-                       <td>Test2</td>
-                       <td>Test3</td>
-                       <td>Test4</td>
-                   </tr>
-               </ng-template>
-           </p-table>
-        
-                 </div> -->
-                 
+                 <div *ngIf="widget.widget_type=='table'">
+                  <p-table
+                  #myTab
+                  [value]="widget.sampleData.datasets[0].data"
+                  [scrollable]="true"
+                  scrollHeight="280px"
+                  [columns]="widget.sampleData.labels"
+              >
+                  <ng-template pTemplate="header" 
+                               let-columns>
+                      <tr>
+                          <th *ngFor="let col of columns">
+                              {{ col.header }}
+                          </th>
+                      </tr>
+                  </ng-template>
                 
+                  <ng-template pTemplate="body" 
+                               let-people>
+                      <tr>
+                          <td>
+                              {{ people.firstname }}
+                          </td>
+                          <td>
+                              {{ people.lastname }}
+                          </td>
+                          <td>
+                              {{ people.age }}
+                          </td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+                 </div>
+                 <p>{{widget.description}}</p>
                  <!-- <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
                   </div> -->
@@ -145,7 +154,7 @@
           </div>
                   </div> -->
                </div>
-               <p>{{widget.description}}</p>
+             
             </div>
            
            
@@ -273,20 +282,7 @@
           </div>
           </div>
         </div>
-        <div class="col-md-12 mb-2 p-0" (click)="addtable()">
-          <div class="flex-container">
-            
-            <div class="img-div" style="margin-right:20px;">
-              <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
-            </div>
-
-            <div>
-              <h5>Table</h5>
-              
-              <p style="font-size: 14px; color: #808080cc;">Check Table</p>
-            </div>
-          </div>
-          </div>
+      
       </p-tabPanel>
     </p-tabView>
     <span class="splitter-headers">

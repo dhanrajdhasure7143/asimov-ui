@@ -107,9 +107,42 @@
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
                      <div *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
                         <br>
-                        <div>
+                        <div *ngIf="widget.widget_type!='table'">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
+                        <div *ngIf="widget.widget_type=='table'">
+                           <p-table
+                           #myTab
+                           [value]="widget.sampleData.datasets[0].data"
+                           [scrollable]="true"
+                           scrollHeight="260px"
+                           [columns]="widget.sampleData.labels"
+                       >
+                           <ng-template pTemplate="header" 
+                                        let-columns>
+                               <tr>
+                                   <th *ngFor="let col of columns">
+                                       {{ col.header }}
+                                   </th>
+                               </tr>
+                           </ng-template>
+                         
+                           <ng-template pTemplate="body" 
+                                        let-people>
+                               <tr>
+                                   <td>
+                                       {{ people.firstname }}
+                                   </td>
+                                   <td>
+                                       {{ people.lastname }}
+                                   </td>
+                                   <td>
+                                       {{ people.age }}
+                                   </td>
+                               </tr>
+                           </ng-template>
+                       </p-table>
+                          </div>
                         <!-- <div *ngIf="widget.widget_type=='pie'">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div> -->
@@ -213,42 +246,7 @@
 
                   
              </div>
-             <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets">
-             <div class="well1-dynmic graph">
-               <p-table
-               #myTab
-               [value]="tableData"
-               [scrollable]="true"
-               scrollHeight="390px"
-               [columns]="cols"
-           >
-               <ng-template pTemplate="header" 
-                            let-columns>
-                   <tr>
-                       <th *ngFor="let col of columns">
-                           {{ col.header }}
-                       </th>
-                   </tr>
-               </ng-template>
-             
-               <ng-template pTemplate="body" 
-                            let-people>
-                   <tr>
-                       <td>
-                           {{ people.firstname }}
-                       </td>
-                       <td>
-                           {{ people.lastname }}
-                       </td>
-                       <td>
-                           {{ people.age }}
-                       </td>
-                   </tr>
-               </ng-template>
-           </p-table>
             
-               </div>
-               </div>
             </div>
          </div>
       </div>
