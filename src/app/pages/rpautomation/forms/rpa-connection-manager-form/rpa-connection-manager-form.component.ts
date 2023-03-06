@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 
@@ -25,12 +26,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   attribute = [];
   addInputForm: FormGroup;
   validateJSON: boolean = false;
+  selectedId:any;
+  selectedOne:any[]=[];
+  isCreate:boolean=false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private rest_api: RestApiService
+    private rest_api: RestApiService,
+    private router:Router,
+    private route:ActivatedRoute
   ) {
     this.createItem();
+
+    this.route.queryParams.subscribe((data)=>{
+    this.selectedId = data.id;
+    this.isCreate = data.create;
+    console.log(this.isCreate);
+    
+    })
   }
 
   ngOnInit(): void {
@@ -251,4 +264,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       })
     );
   }
+  backToaction(){
+    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}}
+  )}
+
 }

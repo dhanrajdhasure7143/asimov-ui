@@ -122,7 +122,7 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-    this.router.navigate(["/pages/rpautomation/connection"]);
+    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedId, create:false}});
   }
 
   deleteAction() {}
@@ -131,5 +131,8 @@ export class RpaActionItemsComponent implements OnInit {
     this.router.navigate(["/pages/rpautomation/configurations"], {
       queryParams: { index: 2 },
     });
+  }
+  addNewAction(){
+    this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, create:true}})
   }
 }
