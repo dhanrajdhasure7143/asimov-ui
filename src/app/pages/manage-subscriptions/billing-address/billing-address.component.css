@@ -1,0 +1,14 @@
+.billing-form {
+    margin-left: 19px !important; 
+    overflow: auto;
+    height: calc(100vh - 206px);
+  }
+
+  .label-control {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+  .Admin-countrylist input {
+    border: unset !important;
+  }  

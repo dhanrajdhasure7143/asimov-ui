@@ -137,6 +137,5 @@ dynamicscreenObservable = this.dynamicscreen.asObservable();
 
 setdynamicscreen(module:any){
   this.dynamicscreen.next(module);
-  console.log(module)
 }
 }

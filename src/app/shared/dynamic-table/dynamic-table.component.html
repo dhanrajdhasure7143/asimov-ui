@@ -75,9 +75,10 @@
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <span *ngIf="!col.multi && col.ColumnName!='action'">
                         <span *ngIf="screenTable !='environment_table'">
-                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
+                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
                             <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
                             <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
+                            <span *ngIf="col.ColumnName == 'amount'">${{rowData[col.ColumnName]}}</span>
                         </span>
                         <span *ngIf="screenTable =='environment_table'">
                             <span *ngIf="col.ColumnName == 'activeStatus_new'" >
@@ -92,7 +93,6 @@
                                 {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                             </span>
                         </span>
-
                     </span>
                     
                     <span *ngIf="col.multi && col.ColumnName!='action'">
@@ -141,6 +141,9 @@
                             <span *ngIf="isdisabled_delete">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </span>
+                        </span>
+                        <span *ngIf="show_download_btn" class="editButton" >
+                            <button pButton pRipple class="p-button-secondary" label="Download" icon="pi pi-download" type="button"  (click)="downloadRow(rowData)"></button>
                         </span>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">

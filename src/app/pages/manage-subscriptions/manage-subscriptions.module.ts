@@ -40,12 +40,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { OrderByPipe } from './pipes/orderby-pipe.pipe';
 import { AddcardComponent } from './addcard/addcard.component';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { OverviewComponent } from './overview/overview.component';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,OrderByPipe, AddcardComponent],
+     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,
@@ -58,7 +62,10 @@ import { AddcardComponent } from './addcard/addcard.component';
     DataTablesModule,ReactiveFormsModule,FormsModule,MatSliderModule,
     MatFormFieldModule,NgxPaginationModule,
     ModalModule.forRoot(),
-    NgbModule,NgxSpinnerModule
+    NgbModule,NgxSpinnerModule,
+    PrimengCustomModule,
+    Ng2TelInputModule,
+    SharedModule
   ],
 
   providers:[
