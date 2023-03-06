@@ -87,22 +87,42 @@ export class UserScreenComponent implements OnInit {
 
   deleteRecord(data: any) {
     this.spinner.show();
-    this.rest
-      .deleteRecord(
-        this.selectedScreen.Table_Name,
-        this.primaryKey,
-        data[this.primaryKey]
-      )
-      .subscribe(
-        (response: any) => {
-          Swal.fire("Success", "Record deleted successfully", "success");
-          this.getUserScreenData();
-          window.location.reload();
-        },
-        (err: any) => {
-          Swal.fire("Error", "Unable to delete record", "error");
-        }
-      );
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Delete the Record!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      heightAuto: false,
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        this.rest.deleteRecord( this.selectedScreen.Table_Name,
+          this.primaryKey,
+          data[this.primaryKey]).subscribe((resp) => {
+          Swal.fire({
+            title: "Success",
+            text: "Record Deleted Successfully!!",
+            position: "center",
+            icon: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#007bff",
+            cancelButtonColor: "#d33",
+            heightAuto: false,
+            confirmButtonText: "Ok",
+          }).then(()=>{
+            window.location.reload();
+          })      
+        },(err: any) => {
+            Swal.fire("Error", "Unable to delete record", "error")
+          });
+      }
+      this.getUserScreenData();
+      this.spinner.hide();
+
+      // }),
+    });
   }
 
   caputreFormValues(values: any) {

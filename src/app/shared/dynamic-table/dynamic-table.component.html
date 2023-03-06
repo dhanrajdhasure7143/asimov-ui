@@ -7,6 +7,14 @@
                 <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
                     selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
                     placeholder="Choose Columns">
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item" *ngIf="item.DisplayName">
+                            <div>{{item.DisplayName}}</div>
+                        </div>
+                        <div class="country-item" *ngIf="!item.DisplayName">
+                            <div>Action</div>
+                        </div>
+                    </ng-template>
                 </p-multiSelect>
                 <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
                 </button>
@@ -19,7 +27,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
+                <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}"
@@ -61,15 +69,16 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
-                <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow">
+                <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <span *ngIf="!col.multi && col.ColumnName!='action'">
                         <span *ngIf="screenTable !='environment_table'">
-                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
+                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
                             <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
                             <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
+                            <span *ngIf="col.ColumnName == 'amount'">${{rowData[col.ColumnName]}}</span>
                         </span>
                         <span *ngIf="screenTable =='environment_table'">
                             <span *ngIf="col.ColumnName == 'activeStatus_new'" >
@@ -84,7 +93,6 @@
                                 {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                             </span>
                         </span>
-
                     </span>
                     
                     <span *ngIf="col.multi && col.ColumnName!='action'">
@@ -133,6 +141,9 @@
                             <span *ngIf="isdisabled_delete">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </span>
+                        </span>
+                        <span *ngIf="show_download_btn" class="editButton" >
+                            <button pButton pRipple class="p-button-secondary" label="Download" icon="pi pi-download" type="button"  (click)="downloadRow(rowData)"></button>
                         </span>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">

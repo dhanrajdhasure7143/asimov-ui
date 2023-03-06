@@ -34,12 +34,12 @@
         <div class="col pl-0 form-group">
             <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" class="rpa-control form-control form-group" [(ngModel)]="startdate" id="txtDate" >
             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"  (timeChanged)="onChangeHour($event,'starttime')" [format]="24"   [(ngModel)]="starttime" ></ngx-timepicker-field>
-            <span class='errspan required' *ngIf="beforetime">{{starttimeerror}}</span>
+            <span class='required' *ngIf="beforetime">{{starttimeerror}}</span>
         </div>
         <div class="col pr-0 form-group">
             <input type="date" (change)="dateChange($event,'enddate')" class="rpa-control form-control form-group" [(ngModel)]="enddate" id="enddatepicker"  >
             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"(timeChanged)="onChangeHour($event,'endtime')"  [format]="24" [(ngModel)]="endtime" ></ngx-timepicker-field>
-            <span  class='errspan required' *ngIf="aftertime">{{endtimeerror}}</span>
+            <span  class='required' *ngIf="aftertime">{{endtimeerror}}</span>
         </div>
     </div>
     <div class="col p-0 form-group">

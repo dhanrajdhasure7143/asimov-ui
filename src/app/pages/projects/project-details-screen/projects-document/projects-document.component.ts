@@ -852,7 +852,6 @@ addParentFolder() {
       let req_body = [];
       let _me = this;
       let folderName:string
-      this.loader.show();
       if(type =='folderView'){
         if(this.selectedItem.dataType == 'folder'){
           this.selectedItem.children.forEach(element => {
@@ -882,6 +881,7 @@ addParentFolder() {
         this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
         return
       }
+            this.loader.show();
       this.rest_api.dwnloadDocuments(req_body).subscribe((response: any) => {
       this.loader.hide();
         let resp_data = [];

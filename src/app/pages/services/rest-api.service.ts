@@ -1693,6 +1693,15 @@ sendMessagesByProjectId(body){
   return this.http.post("/platform-service/chat-message/saveAndGetChatMessages",body)
 }
 
+saveBillingInfo(data,){
+  return this.http.post('/subscriptionservice/v1/billingContact/saveBillingContactData',data)
+}
+updateInfo(id,data){
+  return this.http.post(`/subscriptionservice/v1/billingContact/saveBillingContactData/${id}`, data);
+}
+getBillingInfo(id){
+  return this.http.get(`/subscriptionservice/v1/billingContact/get/${id}`);
+}
 createDashBoard(body){
   return this.http.post('/platform-service/dashboard/createDashboard',body);
 }

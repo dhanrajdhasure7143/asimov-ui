@@ -398,16 +398,34 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   saveDashBoard() {
+    let req_array:any = [];
     console.log(this.addedMetrics);
-    
-    let req_body={
+    this.addedMetrics.forEach(item=>{
+      let req_body={
+        childId: item.id,
+        screenId: this._paramsData.dashboardId,
+        type:"metric",
+        widgetType:"",
+        name:item.name
+      }
+      req_array.push(req_body)
+    })
 
-    }
-    let req_array:any
+    this.dynamicDashBoard.widgets.forEach(element => {
+      let req_body={
+        childId: element.id,
+        screenId: Number(this._paramsData.dashboardId),
+        type:"widget",
+        widgetType:element.widget_type,
+        name:element.name
+      }
+      req_array.push(req_body)
+    });
+    console.log(this.dynamicDashBoard,req_array)
 
-    // this.rest_api.SaveDashBoardData().subscribe(res=>{
-
-    // })
+    this.rest_api.SaveDashBoardData(req_array).subscribe(res=>{
+      console.log(res)
+    })
 
     // this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>{
     // if(this.dynamicDashBoard.dashboardId==undefined)
@@ -433,11 +451,11 @@ export class ConfigureDashboardComponent implements OnInit {
     //   this.datatransfer.setdynamicscreen(JSON.stringify(response)); 
     //   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
     // }
-    console.log(this.addedMetrics);
-    this.dynamicDashBoard.metrics = this.addedMetrics;
+    // console.log(this.addedMetrics);
+    // this.dynamicDashBoard.metrics = this.addedMetrics;
 
-    this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
-    this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
+    // this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
+    // this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     //})
   }
   getListOfMetrics() {

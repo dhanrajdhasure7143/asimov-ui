@@ -44,14 +44,7 @@
     cursor: pointer;
     }
     
-    .modal-header {
-    padding: 2px 16px;
-    background-color: #e5e5e5;
-    color: #000;
-    }
-    .modal-header .close {
-    /* margin-top: 5px; */
-   }
+   
     
     
     /* Add Animation */
@@ -73,20 +66,8 @@
     @keyframes fadeIn {
     from {opacity: 0} 
     to {opacity: 1}
-    }
-    
-.databaseForm{
-    padding: 10px;
 }
-.errspan{
-    position: relative;
-    z-index: 2;
-    color: #dc3545;
-    font-size: 12px;
-    letter-spacing: 0.2px;
-    padding-right: 10px;
-    line-height: 12px;
-}
+
 .connection-buttons{
     margin-left: 20%;
 }
@@ -339,4 +320,17 @@ img.hover-img {
     padding-right: 0px !important;
     height: 62vh;
     overflow: hidden auto;
+} */
+
+ /* .modal-header {
+    padding: 2px 16px;
+    background-color: #e5e5e5;
+    color: #000;
+    } */
+    .modal-header .close {
+        /* margin-top: 5px; */
+    }
+
+/* .databaseForm{
+    padding: 10px;
 } */
