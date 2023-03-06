@@ -459,9 +459,7 @@ export class ConfigureDashboardComponent implements OnInit {
             // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
           })
 
-          res.widgets.forEach((item: any) => {
-            this.widgets.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
-          })
+         
         }
       })
       console.log("this.metrics_list", this.metrics_list)
@@ -485,9 +483,8 @@ export class ConfigureDashboardComponent implements OnInit {
 
           //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
           // })
-          res.metrics.forEach((item: any) => {
-            this.metrics_list.find((metric_item: any) => metric_item.id === item.id).metricAdded = true;
-
+          res.widgets.forEach((item: any) => {
+            this.widgetslist.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
           })
         }
       })

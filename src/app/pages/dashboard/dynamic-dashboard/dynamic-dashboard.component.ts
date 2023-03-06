@@ -7,7 +7,11 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 
-
+interface People {
+  firstname?: string;
+  lastname?: string;
+  age?: string;
+}
 
 @Component({
   selector: 'app-dynamic-dashboard',
@@ -15,6 +19,8 @@ import { Inplace } from 'primeng/inplace';
   styleUrls: ['./dynamic-dashboard.component.css']
 })
 export class DynamicDashboardComponent implements OnInit {
+  tableData: People[] = [];
+  cols: any[] = [];
   @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
   gfg: MenuItem[];
@@ -35,7 +41,7 @@ export class DynamicDashboardComponent implements OnInit {
   active_inplace: any;
  selectedDashBoardName:any;
  selectedDashBoard:any;
-  
+ 
 
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
@@ -54,7 +60,87 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+//     this.cols =[
+//     {
+//       field: 'firstname',
+//       header: 'First Name'
+//   },
+//   {
+//       field: 'lastname',
+//       header: 'Last Name'
+//   },
+//   {
+//       field: 'age',
+//       header: 'Age'
+//   },
+// ];
+// this.tableData = [
+//   {
+//       firstname: 'David',
+//       lastname: 'ace',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'AJne',
+//       lastname: 'west',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Mak',
+//       lastname: 'Lame',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Peter',
+//       lastname: 'raw',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Kane',
+//       lastname: 'James',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Peter',
+//       lastname: 'raw',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Kane',
+//       lastname: 'James',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Peter',
+//       lastname: 'raw',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Kane',
+//       lastname: 'James',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Peter',
+//       lastname: 'raw',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Kane',
+//       lastname: 'James',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Peter',
+//       lastname: 'raw',
+//       age: '40',
+//   },
+//   {
+//       firstname: 'Kane',
+//       lastname: 'James',
+//       age: '40',
+//   },
+// ];
     // this.getUserDetails();
     this.primengConfig.ripple = true;
     this.gfg = [
@@ -186,7 +272,165 @@ export class DynamicDashboardComponent implements OnInit {
               "src": "process.svg"
             }
           ]
+        //   "cols" : [
+        //     {
+        //         field: 'firstname',
+        //         header: 'First Name'
+        //     },
+        //     {
+        //         field: 'lastname',
+        //         header: 'Last Name'
+        //     },
+        //     {
+        //         field: 'age',
+        //         header: 'Age'
+        //     },
+        // ],
+        // "tableData" : [
+        //     {
+        //         firstname: 'David',
+        //         lastname: 'ace',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'AJne',
+        //         lastname: 'west',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Mak',
+        //         lastname: 'Lame',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Peter',
+        //         lastname: 'raw',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Kane',
+        //         lastname: 'James',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Peter',
+        //         lastname: 'raw',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Kane',
+        //         lastname: 'James',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Peter',
+        //         lastname: 'raw',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Kane',
+        //         lastname: 'James',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Peter',
+        //         lastname: 'raw',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Kane',
+        //         lastname: 'James',
+        //         age: '40',
+        //     },
+        //     {
+        //         firstname: 'Peter',
+        //         lastname: 'raw',
+        //         age: '40',
+        //     },
+          
+        // ]
         }
+        this.cols =[
+          {
+            field: 'firstname',
+            header: 'First Name'
+        },
+        {
+            field: 'lastname',
+            header: 'Last Name'
+        },
+        {
+            field: 'age',
+            header: 'Age'
+        },
+      ];
+      this.tableData = [
+        {
+            firstname: 'David',
+            lastname: 'ace',
+            age: '40',
+        },
+        {
+            firstname: 'AJne',
+            lastname: 'west',
+            age: '40',
+        },
+        {
+            firstname: 'Mak',
+            lastname: 'Lame',
+            age: '40',
+        },
+        {
+            firstname: 'Peter',
+            lastname: 'raw',
+            age: '40',
+        },
+        {
+            firstname: 'Kane',
+            lastname: 'James',
+            age: '40',
+        },
+        {
+            firstname: 'Peter',
+            lastname: 'raw',
+            age: '40',
+        },
+        {
+            firstname: 'Kane',
+            lastname: 'James',
+            age: '40',
+        },
+        {
+            firstname: 'Peter',
+            lastname: 'raw',
+            age: '40',
+        },
+        {
+            firstname: 'Kane',
+            lastname: 'James',
+            age: '40',
+        },
+        {
+            firstname: 'Peter',
+            lastname: 'raw',
+            age: '40',
+        },
+        {
+            firstname: 'Kane',
+            lastname: 'James',
+            age: '40',
+        },
+        {
+            firstname: 'Peter',
+            lastname: 'raw',
+            age: '40',
+        },
+        {
+            firstname: 'Kane',
+            lastname: 'James',
+            age: '40',
+        },
+      ];
       }
 
       //}
