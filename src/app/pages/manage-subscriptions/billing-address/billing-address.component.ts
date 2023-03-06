@@ -1,6 +1,7 @@
 import { Component, OnInit, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MessageService } from "primeng/api";
 import countries from "src/app/../assets/jsons/countries.json";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
@@ -28,7 +29,8 @@ export class BillingAddressComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private route: ActivatedRoute,
-    private api: RestApiService
+    private api: RestApiService,
+    private messageService:MessageService
   ) {
     this.route.queryParams.subscribe((data) => {
       if (data) {
@@ -110,12 +112,19 @@ export class BillingAddressComponent implements OnInit {
         payload["state"] = this.stateName;
         this.api.saveBillingInfo(payload).subscribe((data) => {
           this.billingInfo = data;
-          this.id = this.billingInfo.id;
-          setTimeout(() => {
-            this.getBillingInfo();
-          }, 500);
           this.spinner.hide();
+          this.id = this.billingInfo.id;
+          if(data){
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Saved Successfully !!",
+            });
+          }
         });
+        setTimeout(() => {
+          this.getBillingInfo();
+        }, 500);
       }
     } else {
       this.updateForm();
@@ -128,7 +137,12 @@ export class BillingAddressComponent implements OnInit {
       payload["country"] = this.countryName;
       payload["state"] = this.stateName;
       this.api.updateInfo(this.id, payload).subscribe();
-    }
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Updated Successfully !!",
+        });
+  }
   }
 
   getBillingInfo() {
@@ -139,7 +153,7 @@ export class BillingAddressComponent implements OnInit {
       this.billingForm.reset();
       this.billingForm.get("firstName").setValue(this.data["firstName"]);
       this.billingForm.get("lastName").setValue(this.data["lastName"]);
-      this.countryName= this.billingForm.get("country").setValue(this.data["country"]);
+      this.billingForm.get("country").setValue(this.data["country"]);
       this.billingForm.get("state").setValue(this.data["state"]);
       this.billingForm.get("city").setValue(this.data["city"]);
       this.billingForm.get("postalcode").setValue(this.data["postalcode"]);
