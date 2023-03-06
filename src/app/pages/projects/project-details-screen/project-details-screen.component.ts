@@ -453,7 +453,7 @@ if(this.projectDetails.endDate){
 this.projectenddate=moment(this.projectDetails.endDate).format("lll");
 }
 this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-this.getTheExistingUsersList();
+this.getTheExistingUsersList(null);
 
 })
 this.snapShotDetails();
@@ -589,15 +589,20 @@ this.spinner.show();
 this.rest_api.addresourcebyid(item_data).subscribe(data => {
   let response: any = data;
   if (response.errorMessage == undefined) {
-    this.getTheExistingUsersList();
+    this.getTheExistingUsersList(0);
     this.checktodelete();
     this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !!'});
     this.checkBoxselected =[];
-    this.onUsersTab(0);
+    // this.onUsersTab(0);
+    this.spinner.hide();
   }
   else {
     this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
+    this.spinner.hide();
   }
+},err=>{
+  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource"});
+  this.spinner.hide();
 })
 }
 
@@ -632,11 +637,15 @@ this.confirmationService.confirm({
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !!'});
-      this.getProjectdetails();
-      this.onUsersTab(1);
+    this.getTheExistingUsersList(1);
+    // setTimeout(() => {
+    //   this.onUsersTab(1);
+    // }, 500);
       this.checktodelete();
+      this.spinner.hide();
     }, err => {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong!'});
+      this.spinner.hide();
     })
   },
   reject: (type) => {
@@ -976,7 +985,7 @@ getMessagesList(){
 this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
   this.messages_list = res;
   this._pinnedMessage = [];
-  this.messages_list.reverse();
+  // this.messages_list.reverse();
   if(this.messages_list.length >0){
   this.messages_list.forEach(ele=>{
     if(ele.pinnedMessage)
@@ -1111,7 +1120,7 @@ onDeactivateEdit(){
 this.isEditDesc = false;
 }
 
-getTheExistingUsersList(){
+getTheExistingUsersList(tab_index){
 let resp_data:any[]=[];
 this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
   resp_data=res;
@@ -1123,12 +1132,14 @@ this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
     else
       this.existingUsersList.push(item2);
   })
+  this.users_tableList = this.non_existUsers
   resp_data.forEach(element => {
     this.existingUsersList.forEach(ele=>{
       if(element.userId == ele.user_email)
-        ele["taskCount"]=element.taskCount
+        ele["taskCount"]=element.taskCount?element.taskCount:0
     })
   });
+  this.onUsersTab(tab_index?tab_index:0);
 })
 }
 snapShotDetails(){
@@ -1282,6 +1293,10 @@ onFilteredUsers(usernames: string[]) {
     const messageInput = document.getElementById('message-input') as HTMLInputElement;
     messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
   }
+}
+
+onCancel(){
+  this.checkBoxselected=[];
 }
 
 }
