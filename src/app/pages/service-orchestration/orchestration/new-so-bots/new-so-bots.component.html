@@ -5,7 +5,7 @@
             <ng-template mat-tab-label>
                 <!-- <mat-icon  class="text-primary">desktop_windows</mat-icon> -->
                 <!-- &nbsp;&nbsp; -->
-                Statistics
+                <span class="titlelabel">Statistics</span>
             </ng-template>
             <div *ngIf="check_tab==0" class="h-100 so-sub-tab-content">
                 <app-statistics></app-statistics>
@@ -17,7 +17,7 @@
             <ng-template mat-tab-label>
                 <!-- <i class="text-primary material-icons">inbox</i> -->
                 <!-- &nbsp;&nbsp; -->
-                Monitoring
+                <span class="titlelabel">Monitoring</span>
             </ng-template>
             <div *ngIf="check_tab==1" class="h-100 so-sub-tab-content">
                 <app-monitoring></app-monitoring>
