@@ -1,0 +1,63 @@
+<div class="container h-scroll">
+    <span class="module-header-title">
+        <h4>Plan Details</h4>
+    </span>
+    <div *ngIf="error">
+        {{error}}
+    </div>
+    <div *ngFor="let planlist of plansList; let i=index">
+        <div class="col p-0" *ngIf="planlist.subscribed">
+            <h6 id="planName" *ngIf="planlist.nickName =='Standard'">- Your EZFLW is on <b>Free Tier(Monthly)</b> <button
+                    (click)="onChangePlan()">
+                    <a class="link">Change Plan</a></button></h6>
+            <h6 id="planName" *ngIf="planlist.nickName !='Standard'">- Your EZFLW is on <b> {{planlist.nickName}}
+                    Plan(Yearly).</b> <button (click)="onChangePlan()">
+                    <a class="link">Change Plan</a></button></h6>
+            <div *ngIf="planlist.nickName =='Professional'">
+                <h6 id="planName">- Your Plan Will Renew On <b>{{planlist.due_timestamp}}</b>, charging your Credit Card
+                    <b>${{planlist.amount}}.</b>
+                </h6>
+            </div>
+            <div *ngIf="planlist.nickName!='Professional'">
+                <h6 id="planName">- Your Plan Will Renew On <b>{{planlist.due_timestamp1}}</b>, charging your Credit
+                    Card
+                    <b>${{planlist.amount}}.</b>
+                </h6>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<br>
+
+<div div class="container">
+    <span class="module-header-title pt-5">
+        <h4>Billing Actions</h4>
+    </span>
+
+    <h6>- Your future Charges Will be billed to the Card
+        <span *ngFor="let payment of paymentMode">
+            <span *ngIf="payment.defaultSource == true"><b>***{{payment.cardLast4}}.&nbsp;</b></span>
+        </span>
+        <button (click)="onChangePaymentMethod()"> <a class="link">Change Payment Method</a></button>
+
+    </h6>
+
+    <h6>- Billing Emails are sent to <b></b>
+        <button (click)="onChangeEmail()">
+            <a class="link">Change Email</a></button>
+    </h6>
+</div>
+<br>
+
+<div>
+    <button (click)="subscriptionCancel()">
+        <a class="link">Cancel Subscription</a></button>
+</div><br>
+<p>
+    <b>Note:</b> Your Account Will Be Inactivated For 60 days, then it will be deleted completely
+</p>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

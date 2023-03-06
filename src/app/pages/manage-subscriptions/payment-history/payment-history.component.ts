@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
@@ -15,16 +16,13 @@ import { RestApiService } from '../../services/rest-api.service';
 })
 export class PaymentHistoryComponent implements OnInit {
   
-  displayedColumns8: string[] = ["invoiceNumber","subscriptionId","amount","createDate","nextdue","status","action"];
-  dataSource8:MatTableDataSource<any>;
-  @ViewChild("sort104") sort104: MatSort;
-  @ViewChild("paginator104") paginator104: MatPaginator;
+
   public invoicedata: any=[];
   tot: any=[];
   public tableData: any=[];
   invoiceid: any;
   errorMessage:any;
-  
+  columns_list:any=[]
   constructor(private rest:RestApiService,private spinner:LoaderService) { }
 
   ngOnInit(): void {
@@ -34,16 +32,29 @@ export class PaymentHistoryComponent implements OnInit {
 
   getAllSubscrptions() {
    this.spinner.show();
-    this.rest.listofinvoices().subscribe(response => { this.invoicedata = response.data 
-      this.dataSource8= new MatTableDataSource(this.invoicedata);
-      this.dataSource8.sort=this.sort104;
-      this.dataSource8.paginator=this.paginator104;
+    this.rest.listofinvoices().subscribe(response => { 
+      this.invoicedata = response.data;
+      this.invoicedata.map(data=>{
+        data["created_timestamp"] = moment(data.createDate).format("MMMM DD [,] yy") 
+        data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
+        return data
+      })
+      this.columns_list = [
+        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "amount",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "created_timestamp",DisplayName: "Issue Date",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
+
+
+      ];
       this.spinner.hide();
      });
 }
-getinvoiceDate(createDate){
-  return moment(createDate).add(1, 'months').format('MM/DD/YYYY')
- }
+// getinvoiceDate(createDate){
+//   return moment(createDate).add(1, 'months').format('MM/DD/YYYY')
+//  }
 
  invoicedownload(invoicedata) {
   this.spinner.show();
@@ -81,5 +92,8 @@ getinvoiceDate(createDate){
     })
   }
   )
+}
+clear(table: Table) {
+  table.clear();
 }
 }
