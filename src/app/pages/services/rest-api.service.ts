@@ -1726,6 +1726,10 @@ SaveDashBoardData(body:any){
   return this.http.post('/platform-service/dashboard/saveDashboardMetricsWidgets',body)
 }
 
+getDashBoardItems(id){
+  return this.http.get("/platform-service/dashboard/findDashboardMetricsAndWidgetsValues?screenId="+id);
+}
+
 
 
 }
