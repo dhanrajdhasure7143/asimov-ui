@@ -10,7 +10,7 @@ import widgetOptions from './widgetdetails.json';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
-
+ 
   metrics_list: any[] = [];
   draggedProduct: any;
   defaultEmpty_metrics: any[] = [];
@@ -19,7 +19,8 @@ export class ConfigureDashboardComponent implements OnInit {
   public dynamicDashBoard: any = {
     dashboardName: '',
     widgets: [],
-    metrics: []
+    metrics: [],
+    
   }
   chartOptions: { legend: { position: string; }; };
   metricslist: any;
@@ -266,7 +267,7 @@ export class ConfigureDashboardComponent implements OnInit {
       //this.dynamicDashBoard.widgets.splice(index, 1);
       this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
       if (this.widgetslist.find((item) => item.widgetAdded == true))
-        this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
+      this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
     }
   }
 
@@ -280,6 +281,9 @@ export class ConfigureDashboardComponent implements OnInit {
         this.widgetslist.find((item: any) => item.id == widget.id).widgetAdded = true;
         let obj = {};
         const widgetData = widgetOptions.widgets;
+        // this.tabledata = this.addedWidgets[0].sampleData;
+        // console.log(this.tabledata);
+        
         obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
        
         this.addedWidgets.push(obj);
