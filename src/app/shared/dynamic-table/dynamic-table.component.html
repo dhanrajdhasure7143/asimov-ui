@@ -1,7 +1,7 @@
 <div class="">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields"
         [reorderableColumns]="true" [(selection)]="selectedItem" [scrollable]="true"
-        [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId" [loading]="loading">
+        [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
