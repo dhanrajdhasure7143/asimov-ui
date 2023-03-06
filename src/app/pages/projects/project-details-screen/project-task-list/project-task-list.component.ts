@@ -234,7 +234,7 @@ export class ProjectTaskListComponent implements OnInit {
         );
       },
       reject: (type) => {},
-      key: "positionDialog",
+      key: "positionDialog1",
     });
     // Swal.fire({
     //   title: "Are you sure?",
