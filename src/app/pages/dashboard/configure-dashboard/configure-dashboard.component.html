@@ -5,11 +5,11 @@
          <div class="row main-content-head">
             <div class="col-md-4 pl-0">
                <h3>
-                  <span class="title_text">{{dynamicDashBoard.dashboardName}} </span>
+                  <span class="title_text">{{_paramsData.dashboardName}} </span>
                </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-               <button class="btn btn-primary eiap-btn" (click)="dynamicdatatransfer()">Done </button>
+               <button class="btn btn-primary eiap-btn" (click)="saveDashBoard()">Done</button>
                <button class="btn-dots eiap-btn">
                <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                </button>
@@ -36,11 +36,11 @@
            </div>
         </div>
      </div>
-      <div class="col-md-12 px-3 sec2-align" pDroppable="item" (onDrop)="drop()" (onDragEnter)="onEnter()">
+      <div class="col-md-12 px-3 sec2-align" pDroppable="item" (onDrop)="drop()">
         <div class="row">
 
 
-          <div class="col-md-3 sec-1" *ngFor="let item of dynamicDashBoard.metrics;let j =index"
+          <div class="col-md-3 sec-1" *ngFor="let item of addedMetrics;let j =index"
             >
             <div class="well1-dynmic">
               <div class="flex-container text-control">
@@ -49,8 +49,8 @@
                   <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
                 </div>
                 <div class="new-dynamic">
-                   <h3>10</h3>
-                   <p>{{item.metric_name}}</p>
+                   <h3>{{item.metricValue}}</h3>
+                   <p>{{item.name}}</p>
                 </div>
              </div>
               
@@ -74,34 +74,106 @@
       </div>
       <div class="col-md-12 py-3 px-3 metrics-space">
         <div class="row">
-          <div class="col-md-6 sec-1"  *ngFor="let widget of dynamicDashBoard.widgets; let i=index" >
+          <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let j=index" >
             <div class="well1-dynmic graphs-align" >
-               <span class="h5">{{widget.widget_title}}</span> <i class="pi pi-times right overlay-icon"
-                  (click)="onDeactivate(widget,i, 'widgets')"></i>
-               <div class="" style="text-align: center;margin:20px;">
-                  <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                     <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+               <span class="h5">{{widget.name}}</span> 
+               <i class="pi pi-times right overlay-icon"
+                  (click)="onDeactivate(widget,j, 'widgets')"></i>
+                  
+               <div  class="" style="text-align: center;margin:20px;">
+                  <div >
+                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
+                   
                   </div>
-                  <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                 
+                  <!-- <div *ngIf="widget.widget_type=='TABLE'">
+                  
+             <p-table >
+               <ng-template pTemplate="header">
+                   <tr>
+                       <th>Vin</th>
+                       <th>Year</th>
+                       <th>Brand</th>
+                       <th>Color</th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-car>
+                   <tr>
+                       <td>Test1</td>
+                       <td>Test2</td>
+                       <td>Test3</td>
+                       <td>Test4</td>
+                   </tr>
+               </ng-template>
+           </p-table>
+        
+                 </div> -->
+                 
+                
+                 <!-- <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
-                  </div>
-                  <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                  </div> -->
+                   <!-- <div *ngIf="widget.widget_type=='pie'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
                   </div>
-                  <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                  <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
                   </div>
-                  <div *ngIf="widget.widget_type=='LINE_CHART'">
+                  <div *ngIf="widget.widget_type=='pie'">
                      <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
                   </div>
                   <div *ngIf="widget.widget_type=='TABLE'">
-                  </div>
-               </div>
-               <p>{{widget.widget_description}}</p>
-
-            </div>
+                     <div *ngIf ="isShow">
+              <p-table >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Vin</th>
+                        <th>Year</th>
+                        <th>Brand</th>
+                        <th>Color</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-car>
+                    <tr>
+                        <td>Test1</td>
+                        <td>Test2</td>
+                        <td>Test3</td>
+                        <td>Test4</td>
+                    </tr>
+                </ng-template>
+            </p-table>
           </div>
-
+                  </div> -->
+               </div>
+               <p>{{widget.description}}</p>
+            </div>
+           
+           
+          
+          </div>
+          <!-- <div class="col-md-6 sec-1" >
+            <div class="well1-dynmic" >
+          <div *ngIf ="isShow">
+            <p-table >
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Vin</th>
+                      <th>Year</th>
+                      <th>Brand</th>
+                      <th>Color</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-car>
+                  <tr>
+                      <td>Test1</td>
+                      <td>Test2</td>
+                      <td>Test3</td>
+                      <td>Test4</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+        </div>
+        </div></div> -->
           <div class="col-md-6 sec-1" *ngIf="dynamicDashBoard.widgets.length<1" >
             <div class="well1" style="height:395px;">
               <div class="" style="text-align: center;margin-top:25%">
@@ -141,8 +213,8 @@
 
   </ng-template>
   <ng-template pTemplate>
-    <p-tabView>
-      <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}">
+    <p-tabView class="tab-primest">
+      <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}" >
         <div class="col-md-12 mb-2 p-0" style="height:50px;">
           <div class="row">
             <div class="col-md-6 pl-0" style="float:right">
@@ -168,15 +240,15 @@
                   style="margin-right:20px;" />
               </div>
               <div>
-                <h5>{{item.metric_name}}</h5>
+                <h5>{{item.name}}</h5>
                 <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
-                <p style="font-size: 14px; color: #808080cc;">{{item.metric_desc}}</p>
+                <p style="font-size: 14px; color: #808080cc;">{{item.description}}</p>
               </div>
             </div>
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}">
+      <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
         <div class="col-md-12 mb-2" style="height:50px;">
           <div class="col-md-6"></div>
           <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
@@ -185,20 +257,36 @@
             </select>
           </div>
         </div>
-        <div *ngFor="let widget of widgets" (click)="addWidget(widget)" class="col-md-12 mb-2">
+        <div *ngFor="let widget of widgetslist; let i=index"  >
+          <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
             
-            <div class="img-div" style="width:30%">
-              <img src="..\assets\images-n\dashboard\{{widget.chartSrc}}" width="60px" height="55px" />
+            <div class="img-div" style="width:30%;margin-right:20px;">
+              <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
             </div>
 
             <div>
-              <h5>{{widget.widget_title}}</h5>
+              <h5>{{widget.name}}</h5>
               <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
-              <p style="font-size: 14px; color: #808080cc;">{{widget.widget_description}}</p>
+              <p style="font-size: 14px; color: #808080cc;">{{widget.description}}</p>
             </div>
           </div>
+          </div>
         </div>
+        <div class="col-md-12 mb-2 p-0" (click)="addtable()">
+          <div class="flex-container">
+            
+            <div class="img-div" style="width:30%;margin-right:20px;">
+              <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
+            </div>
+
+            <div>
+              <h5>Table</h5>
+              
+              <p style="font-size: 14px; color: #808080cc;">Check Table</p>
+            </div>
+          </div>
+          </div>
       </p-tabPanel>
     </p-tabView>
     <span class="splitter-headers">

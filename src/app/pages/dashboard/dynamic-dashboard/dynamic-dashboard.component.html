@@ -5,19 +5,31 @@
             <div class="row main-content-head">
 
                <div class="col-md-4 pl-0">
-                  <h3>
-
-
-                     <span *ngIf="!editDashboardName" class="title_text">{{dashboardData.dashboardName}}</span>
-
-
-                  </h3>
+                 
+                  <div class="row align-items-center dashboardnamerow">
+                     <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
+                        <ng-template pTemplate="display">
+                           <span class="title_text">{{selectedDashBoardName}}</span>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <input type="text" [style]="{'width':'100%'}" pInputText
+                                [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
+                            <span class="editfields">
+                                <i class="pi pi-check" *ngIf="_dashboardName"
+                                    (click)="updateDashboardName()"></i>
+                                <i class="pi pi-times" (click)="onDeactivate()"></i>
+                            </span>
+                        </ng-template>
+                    </p-inplace>
+                   
+                 </div>
+              
                </div>
                <div class="col-md-8 pr-0 ">
 
                   <div class="row">
                      <div class="col-md-8 text-right pr-0">
-                        <p-dropdown [options]="dashbordlist"
+                        <p-dropdown [options]="dashbordlist" class="dropdown-primeng"  (onChange)="onDropdownChange($event)"
                            [style]="{'width':'220px','height' :'35px'}">
                            <ng-template let-item pTemplate="selectedItem">
                               <span>{{item.dashboardName}}</span>
@@ -38,7 +50,7 @@
                            class="btn-dots eiap-btn btn-grphs-horztal">
                            <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                         </button>
-                        <p-menu class="actionspopmenu" #menu [popup]="true" [model]="gfg"></p-menu>
+                        <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
                      </div>
 
                   </div>
@@ -62,25 +74,23 @@
                            <!-- <i class="pi pi-1 pi-times right overlay-icon" ></i> -->
                         </div>
                         <div class="new-dynamic">
-                           <h3>10</h3>
-                           <p>{{item.metric_name}}</p>
+                           <h3>{{item.metricValue}}</h3>
+                           <p>{{item.name}}</p>
                         </div>
                      </div>
                   </div>
                </div>
-
-
             </div>
          </div>
          <div class="col-md-12 pb-3 px-3">
             <div class="row">
 
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets; let i=index">
+               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets">
                   <div class="well1-dynmic graph">
 
                      <div class="mt-2">
                         <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
-                           class="h5">{{widget.widget_title}}</span>
+                           class="h5">{{widget.name}}</span>
 
                         <button class="btn" type="button" [hidden]="!(widget.edit==false)"
                            (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
@@ -90,17 +100,21 @@
 
                         </p-menu>
 
-                        <!-- <div [hidden]="!(widget.edit==false)">
-      <p (click)="widget.edit=true">one</p>
-      <p>two</p>
-   </div>  -->
+            
                      </div>
                     
                      <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
                      <div *ngIf="widget.edit==false" style="text-align: center;margin:20px;">
                         <br>
-                        <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                        <div>
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart>
+                        </div>
+                        <!-- <div *ngIf="widget.widget_type=='pie'">
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div> -->
+                      
+                        <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
                           
                             <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div>
@@ -118,15 +132,15 @@
                            <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='TABLE'">
-
-                        </div>
+                        </div> -->
+                    
 
 
                      </div>
-                     <p class="wid-description">{{widget.widget_description}}</p>
+                     <p class="wid-description">{{widget.description}}</p>
 
                      <div class="row" *ngIf="widget.edit==true">
-                        <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
+                        <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
                            <label>Project Type</label>
                            <div class="row">
                               <div class="col-md-3">
@@ -149,51 +163,51 @@
                               </div>
                            </div>
 
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Department</label>
                            <select class="form-control data">
                               <option value="">Engineering</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group  bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group  bps-labcls">
                            <label>Refresh Interval</label>
                            <select class="form-control data">
                               <option value="">30 Min</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Department</label>
                            <select class="form-control data">
                               <option value="">Engineering</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
                            <label>Refresh Interval</label>
                            <select class="form-control data">
                               <option value="">30 Min</option>
                            </select>
-                        </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        </div> -->
+                        <div class="col-6 form-group mb-4 bps-labcls">
                            <label>Chart Type</label>
-                           <select class="form-control data">
+                           <!-- <select class="form-control data">
                               <option value="">Pie Chart</option>
-                           </select>
+                           </select> -->
+                           <p-dropdown [options]="widget.filterOptions.widgetTypes"[style]="{'width':'100%'}"
+                                 placeholder="Select Chart"[(ngModel)]="widget.widget_type">
+                         </p-dropdown>
                         </div>
-                        <div class="col-md-6 form-group mb-4 bps-labcls">
+                        <div class="col-6 form-group mb-4 bps-labcls">
                            <label>Number of Category</label>
                            <input type="text" placeholder="05" class="form-control">
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-12">
                            <div class="mt-4 mb-4" style="float:right">
-                              <button class="btn-cancel1">Cancel</button>
+                              <button class="btn-cancel1" (click)="cancelEdit()">Cancel</button>
                               <button class="btn-save ">Save</button>
                            </div>
-
-
                         </div>
-
                      </div>
                   </div>
 

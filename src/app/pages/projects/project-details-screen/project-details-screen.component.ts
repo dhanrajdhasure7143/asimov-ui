@@ -444,8 +444,6 @@ this.rest_api.getRole(this.userid).subscribe(data => {
 
 async getProjectdetails(){​​​​​​
 // this.spinner.show();
-this.existingUsersList = [];
-this.non_existUsers = [];
 await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
 this.projectDetails=res
 this.processownername = this.projectDetails.processOwner
@@ -455,7 +453,7 @@ if(this.projectDetails.endDate){
 this.projectenddate=moment(this.projectDetails.endDate).format("lll");
 }
 this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-this.getTheExistingUsersList();
+this.getTheExistingUsersList(null);
 
 })
 this.snapShotDetails();
@@ -591,32 +589,21 @@ this.spinner.show();
 this.rest_api.addresourcebyid(item_data).subscribe(data => {
   let response: any = data;
   if (response.errorMessage == undefined) {
-    this.getProjectdetails();
+    this.getTheExistingUsersList(0);
     this.checktodelete();
-    // this.isCreate = false;
-    // this.router.navigate([],{ relativeTo:this.route, queryParams:{project_id: this.params_data.project.id} });
-    Swal.fire("Success", response.status, "success");
+    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !!'});
     this.checkBoxselected =[];
-    this.onUsersTab(0);
+    // this.onUsersTab(0);
+    this.spinner.hide();
   }
   else {
-    Swal.fire("Error", response.errorMessage, "error");
+    this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
+    this.spinner.hide();
   }
+},err=>{
+  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource"});
+  this.spinner.hide();
 })
-//   this.rest_api.addresourcesbyprogramid(item_data).subscribe(data=>{
-//    let response:any=data;
-//    if(response.errorMessage==undefined)
-//    {
-//      
-//       this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
-//       Swal.fire("Success",response.status,"success");
-//    }
-//    else
-//    {
-//       Swal.fire("Error",response.errorMessage,"error");
-//    }
-
-// })
 }
 
 // projectDetailsbyId(id){
@@ -635,55 +622,35 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
 // }
 
 deleteuserById(row) {
-// const selectedresource = this.resources_list.filter(product => product.checked == true).map(p => {
-//   return {
-//     "projectId": this.project_id,
-//     "resource": p.userId.userId
-//   }
-// });
 const selectedresource = [
       {
         "projectId": this.project_id,
         "resource": row.user_email
       }
 ]
-Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.value) {
+
+this.confirmationService.confirm({
+  message: "Are you sure?, You won't be able to revert this!",
+  header: 'Confirmation',
+  icon: 'pi pi-info-circle',
+  accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
-      Swal.fire({
-        title: 'Success',
-        text: "Resource Deleted Successfully !",
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-      })
-      this.getProjectdetails();
-      this.onUsersTab(1);
-      // this.getallusers();
-      // this.removeallchecks();
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !!'});
+    this.getTheExistingUsersList(1);
+    // setTimeout(() => {
+    //   this.onUsersTab(1);
+    // }, 500);
       this.checktodelete();
-
+      this.spinner.hide();
     }, err => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-      })
-
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong!'});
+      this.spinner.hide();
     })
-  }
+  },
+  reject: (type) => {
+  },
+  key: "positionDialog"
 });
 }
 
@@ -912,7 +879,7 @@ onUsersTab(index){
 this.users_tabIndex = index;
 this.checkBoxselected=[];
 if(index == 0) {
-  this.users_tableList = this.users_list
+  this.users_tableList = this.non_existUsers
   this.columns_list = [
     {ColumnName: "fullName"},
     { ColumnName: "user_role"},
@@ -930,7 +897,7 @@ if(index == 0) {
 
 
 connectToWebSocket() {
-console.log("Initialize WebSocket Connection");
+// console.log("Initialize WebSocket Connection");
 // let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
 // // let ws = new SockJS("http://localhost:8098/projectChat");
 // this.stompClient = Stomp.over(ws);
@@ -949,12 +916,10 @@ console.log("Initialize WebSocket Connection");
 // },(err)=>{
 //   // console.log(err)
 // });
-this.rest_api
 };
 
 
 sendMessage(item,type) {
-  console.log(item)
   let message
   if(type == 'save'){
   message={
@@ -1020,8 +985,7 @@ getMessagesList(){
 this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
   this.messages_list = res;
   this._pinnedMessage = [];
-  this.messages_list.reverse();
-  console.log("messageList", this.messages_list);
+  // this.messages_list.reverse();
   if(this.messages_list.length >0){
   this.messages_list.forEach(ele=>{
     if(ele.pinnedMessage)
@@ -1061,9 +1025,8 @@ userFirstValues(firstName,lastName){
 return firstName.charAt(0)+lastName.charAt(0);
 }
 
-  replyMessage(message){
+ replyMessage(message){
 this.replay_msg=message;
-console.log(message)
 // this.el.nativeElement;
 // var element = document.querySelector('.selected-order');
 // element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
@@ -1157,22 +1120,26 @@ onDeactivateEdit(){
 this.isEditDesc = false;
 }
 
-getTheExistingUsersList(){
-let resp_data:any[]=[]
+getTheExistingUsersList(tab_index){
+let resp_data:any[]=[];
 this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
   resp_data=res;
+  this.existingUsersList = [];
+  this.non_existUsers = [];
   this.users_list.forEach(item2 => {
     if(resp_data.find((projectResource:any) => item2.user_email==projectResource.userId)==undefined)
       this.non_existUsers.push(item2);
     else
       this.existingUsersList.push(item2);
   })
+  this.users_tableList = this.non_existUsers
   resp_data.forEach(element => {
     this.existingUsersList.forEach(ele=>{
       if(element.userId == ele.user_email)
-        ele["taskCount"]=element.taskCount
+        ele["taskCount"]=element.taskCount?element.taskCount:0
     })
   });
+  this.onUsersTab(tab_index?tab_index:0);
 })
 }
 snapShotDetails(){
@@ -1271,7 +1238,6 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
 
 saveFolder(){
   let key
-  console.log(this.selected_folder)
   if(this.selected_folder){
 if(this.selected_folder.dataType != 'folder'){
   this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
@@ -1328,8 +1294,10 @@ onFilteredUsers(usernames: string[]) {
     messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
   }
 }
-cancelSelectedUsers(){
+
+onCancel(){
   this.checkBoxselected=[];
 }
+
 }
 

@@ -33,7 +33,8 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_search_field") public show_search_field:boolean;
   @Input("show_column_filter") public show_column_filter:boolean;
   @Input("show_clear_filter") public show_clear_filter:boolean;
-
+  @Input("show_download_btn") public show_download_btn:boolean;
+  @Output() downloadItem = new EventEmitter<any[]>();
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -110,5 +111,9 @@ export class DynamicTableComponent implements OnInit {
 
   filter1(e){
     console.log(e)
+  }
+
+  downloadRow(row) {
+    this.downloadItem.emit(row);
   }
 }

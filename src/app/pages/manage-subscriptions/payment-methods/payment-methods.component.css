@@ -75,12 +75,13 @@
     font-weight: bold;
   }
   .active-card{
-    background-color: #23c523;
+    background-color: #2196F3;
     color: white;
     border-radius: 14px !important;
     font-size: 15px !important;
     padding: 8px;
     float: right;
+    cursor: pointer;
     /* height: 49px;
     width: 25%; */
   } 
@@ -91,7 +92,6 @@
     font-size: 15px !important;
     padding: 8px;
     float: right;
-    cursor: pointer;
     /* height: 49px;
     width: 25%; */
   }
@@ -148,7 +148,11 @@
     color: #0061cf;
   }
   
-  
+  .add-new{
+    margin: 1%;
+    height: 313px;
+    cursor: pointer;
+  }
   
   
   
