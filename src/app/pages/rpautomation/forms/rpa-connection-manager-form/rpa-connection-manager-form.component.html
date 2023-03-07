@@ -239,12 +239,12 @@
                                     placeholder="Enter Attributes"></p-chips>
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isResponse">
-                                <label class="label-control"> Scope </label>
-                                <textarea class="form-control" cols="30" rows="10" formControlName="scope" (keyup)="isJsonValid()"
-                                    placeholder="Scope">
+                                <label class="label-control"> Response </label>
+                                <textarea class="form-control" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                    placeholder="Response">
                                 </textarea>
-                                <span *ngIf="validateJSON && connectorForm.get('scope').value" class="text-danger"> Invalid JSON Format </span>
-                                <span *ngIf="!validateJSON && connectorForm.get('scope').value" class="text-success"> Valid JSON Format </span>
+                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
                                 <label class="label-control"> Request </label>

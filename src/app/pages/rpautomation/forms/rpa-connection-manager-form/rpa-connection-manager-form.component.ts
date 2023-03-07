@@ -65,7 +65,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerKey: ["", Validators.compose([Validators.required])],
       headerValue: ["", Validators.compose([Validators.required])],
       headerCheck: ["", Validators.compose([Validators.required])],
-      scope: ["", Validators.compose([])],
+      request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
@@ -152,7 +152,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     console.log(this.connectorForm.value)
     this.rest_api.testActions(req_body).subscribe((res:any)=>{
     if(res.access_token)
-    this.connectorForm.get("scope").setValue(res.access_token)
+    this.connectorForm.get("response").setValue(res.access_token)
     })
   }
 

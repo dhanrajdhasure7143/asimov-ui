@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService } from "primeng/api";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
@@ -25,7 +24,6 @@ export class RpaActionItemsComponent implements OnInit {
     private loader:LoaderService,
     private rest_api:RestApiService,
     private route:ActivatedRoute,
-    private confirmationService:ConfirmationService
     ) 
     {
       this.route.queryParams.subscribe((data)=>{
