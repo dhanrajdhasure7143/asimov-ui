@@ -36,6 +36,7 @@ export class DynamicDashboardComponent implements OnInit {
  selectedDashBoardName:any;
  selectedDashBoard:any;
  selecteddashboard:any
+  selectedIcon: any;
   
 
   constructor(private activeRoute: ActivatedRoute,
@@ -188,6 +189,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.updateDashBoardNamed(this.selectedDashBoard).subscribe((response:any)=>{
       console.log('update bot details=================',response)
     })
+    this.inplace.deactivate();
   }
 
   navigateToConfigure() {
@@ -264,7 +266,9 @@ export class DynamicDashboardComponent implements OnInit {
   onDeactivate(){
     this.inplace.deactivate();
    }
-       
+   setDefaultDashboard(){
+    this.selectedDashBoard=this.selectedDashBoard.defaultDashboard
+   }     
   deletedashbord(){
     console.log(this.selectedDashBoard)
     if(this.selectedDashBoard.defaultDashboard){
