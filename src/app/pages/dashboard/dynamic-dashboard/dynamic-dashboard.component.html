@@ -12,12 +12,12 @@
                            <span class="title_text">{{selectedDashBoardName}}</span>
                         </ng-template>
                         <ng-template pTemplate="content">
-                            <input type="text" [style]="{'width':'100%'}" pInputText
+                            <input type="text" [style]="{'width':'220px'}" pInputText
                                 [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
                             <span class="editfields">
-                                <i class="pi pi-check" *ngIf="_dashboardName"
+                                <i class="pi pi-check check1" *ngIf="_dashboardName"
                                     (click)="updateDashboardName()"></i>
-                                <i class="pi pi-times" (click)="onDeactivate()"></i>
+                                <i class="pi pi-times close1" (click)="onDeactivate()"></i>
                             </span>
                         </ng-template>
                     </p-inplace>
@@ -33,17 +33,21 @@
                            [style]="{'width':'220px','height' :'35px'}">
                            <ng-template let-item pTemplate="selectedItem">
                               <span>{{item.dashboardName}}</span>
+                             
                            </ng-template>
                            <ng-template let-item pTemplate="item">
                               <div class="ui-helper-clearfix" style="position: relative;height:25px;">
                                  <div style="font-size:14px;float:left;margin-top:4px">{{item.dashboardName}}</div>
                               </div>
+                              <span class="dropdown-icon"  (click)="setDefaultDashboard()">
+                                 <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
+                              </span>
                            </ng-template>
                         </p-dropdown>
 
                      </div>
                      <div class="col-md-4 text-right">
-                        <span (click)="navigateToCreateDashboard()"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                        <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
                            <span class="plus">Create</span>
                         </span>
                         <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
