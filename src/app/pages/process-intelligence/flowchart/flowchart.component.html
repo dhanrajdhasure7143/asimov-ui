@@ -41,7 +41,7 @@
                                     <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
                                 </div>
                                 <div (click)="caseIdSelect(data,i)" class=''></div>
-                                <div class="text-center" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                                <div class="" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
                                      <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                                      <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                                  </div> 
