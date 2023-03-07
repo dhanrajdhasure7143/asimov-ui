@@ -209,10 +209,11 @@
                                             Loading...
                                         </span>
                                         <span *ngIf="isbotloading=='Success'">
-                                            <span
-                                                *ngIf="element.sourceType==''||element.sourceType==undefined ||element.sourceType=='null'">-</span>
+                                            <!-- <span
+                                                *ngIf="element.sourceType==''||element.sourceType==undefined ||element.sourceType=='null'">-</span> -->
                     
-                                            <span *ngIf="element.sourceType=='EPSoft'">
+                                            <!-- <span *ngIf="element.sourceType=='EPSoft'"> -->
+                                            <span>
                                                 <select class="form-control" style="width:200px;padding:0px"
                                                     [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType "
                                                     [id]="element.taskId+'__select'">
@@ -222,7 +223,7 @@
                                                     </option>
                                                 </select>
                                             </span>
-                                            <span *ngIf="element.sourceType=='UiPath'">
+                                            <!-- <span *ngIf="element.sourceType=='UiPath'">
                                                 <span *ngIf="uiPathBotFlag==true">
                                                     <select class="form-control" style="width:200px;padding:0px"
                                                         [value]="(element.botId | checkResource : uipath_bots : element.sourceType : element.taskType) "
@@ -242,7 +243,7 @@
                                                     <option *ngFor="let bot of blueprismbots" [value]="bot.botName"
                                                         [selected]="bot.botName==element.botId">{{bot.botName}}</option>
                                                 </select>
-                                            </span>
+                                            </span> -->
                                         </span>
                                         <span *ngIf="isbotloading=='Error'">
                                             Error......
