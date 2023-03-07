@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
 import { DataTransferService } from "../../services/data-transfer.service";
@@ -356,12 +357,14 @@ export class UploadComponent implements OnInit {
   readExcelFile(evt) {    // read xls files
     const target: DataTransfer = <DataTransfer>(evt.addedFiles);
     const reader: FileReader = new FileReader();
+    const datepipe: DatePipe = new DatePipe('en-US');
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const wb: XLSX.WorkBook = XLSX.read(bstr,  { type: 'binary', cellText: false, cellDates:true });
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, range: 0 }));
+      this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
+
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
