@@ -1,5 +1,5 @@
     <div class="">
-        <div class="container-fluid new-PI-layout">
+        <div class="">
             <div class="secone">
                 <h1>Business Metrics</h1>
                 <div class="row">
@@ -24,12 +24,12 @@
                 </div>
             </div>
             <div class="chartssc">                
-                <h2 class="heading">Time Analysis</h2>
+                <h1 class="heading">Time Analysis</h1>
                 <div class="row">
                     <div class="col-md-6 pl-0">
                         <div class="chartinnsec">
                             <div class="TA-Header">
-                                <label class="">Activity Time</label>                                
+                                <h2 class="">Activity Time</h2>                                
                             </div>
                             <div id="chartdiv"></div>
                         </div>
@@ -37,7 +37,7 @@
                     <div class="col-md-6 pr-0">
                         <div class="chartinnsec">
                             <div class="TA-Header">
-                                <label class="">Throughput Time in {{valueType}}</label>
+                                <h2 class="">Throughput Time in {{valueType}}</h2>
                             </div>
                             <div id="chartdiv2"></div>
                         </div>
@@ -45,14 +45,14 @@
                 </div>
             </div>
             <div class="varienanal chartinnsec">
-                    <label>Variant Analysis</label>
+                    <h2>Variant Analysis</h2>
                     <div class="maintx" *ngFor="let element of displayedRows$ | async;let i=index;trackBy:loopTrackBy">
-                        <div class="maintx d-flex">
+                        <div class="d-flex">
                             <div class="leftyext">
                                 <h4>Variant {{element.variantNumber}}</h4>
                             </div>
                             <div class="leftyight">
-                            <h5>{{convertedValue(element.percentage)}}% cases take {{getTimeConversion(element.medianDuration)}} on an average to complete the process</h5>
+                                <h4>{{convertedValue(element.percentage)}}% cases take {{getTimeConversion(element.medianDuration)}} on an average to complete the process</h4>
                             </div>
                         </div>
                     </div>
