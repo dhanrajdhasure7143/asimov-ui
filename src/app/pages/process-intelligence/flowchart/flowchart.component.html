@@ -41,7 +41,7 @@
                                     <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
                                 </div>
                                 <div (click)="caseIdSelect(data,i)" class=''></div>
-                                <div class="text-center" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                                <div class="" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
                                      <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                                      <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                                  </div> 
@@ -99,19 +99,19 @@
                     <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName' [isSlider]="isSliderBPMN"></app-d3flowchart>
                 </div>
                 <!-- TODO -- Enable?comment below code for enable sliders in PI graph page and change col-md-12 in line number 59  -->
-                <div class='col-md-1'>
-             <div class="path_slider1 text-center">
-                 <div>
-                 <div class="vertical_slider custom-slider" id="act_slider">
-                     <ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
-                 </div>
-                 <p class="slider_label Activities_slider">Activities</p>
-                 <div>
-                 <div class="vertical_slider custom-slider" id="path_slider">
-                     <ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
-                 </div>
-                 <p class="slider_label Paths_slider">Paths</p>
-             </div>
+                <div class='PI-sliderspath'>
+                    <div class="path_slider1 text-center">
+                        <div>
+                        <div class="vertical_slider custom-slider" id="act_slider">
+                            <ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+                        </div>
+                        <p class="slider_label Activities_slider">Activities</p>
+                        <div>
+                        <div class="vertical_slider custom-slider" id="path_slider">
+                            <ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
+                        </div>
+                        <p class="slider_label Paths_slider">Paths</p>
+                    </div>
                 </div>
             </div>
         </div>  <!-- Id main -->

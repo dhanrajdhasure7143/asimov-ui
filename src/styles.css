@@ -441,7 +441,7 @@ div#tooltip_template span ul div:first-child,
   display: inline-block;
   word-break: break-word;
   font-size: 13px;
-  color: #000000DE;
+  color: #232832;
 }
 
 div#tooltip_template span ul div:last-child,
@@ -450,7 +450,7 @@ div#tooltip_template span ul div:last-child,
   width: 30%;
   word-break: break-word;
   font-size: 13px;
-  color: #000000DE;
+  color: #232832;
 }
 
 div#tooltip_template.tooltip-panel p,
@@ -458,12 +458,13 @@ div#tooltip_template.tooltip-panel p,
   background: rgb(250, 250, 250) !important;
   padding: 2px;
   font-size: 14px !important;
-  font-weight: normal;
+  font-weight: 500;
 }
 
 .tipsy-inner .metrics-name {
   margin-bottom: 5px;
   border-bottom: 1px solid #e5e5e5;
+  color: #232832;
 }
 
 .tipsy-inner .node-name {
@@ -471,6 +472,7 @@ div#tooltip_template.tooltip-panel p,
   font-size: 15px !important;
   line-height: 20px;
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 .filter-icon {
@@ -487,8 +489,8 @@ div#tooltip_template.tooltip-panel p:first-child {
 }
 
 .tipsy-inner p:first-child {
-  margin-top: -10px 5px -10px -10px !important;
-  color: #001c47;
+  margin-top:-10px 5px -10px -10px !important;
+  color: #098de6;
 }
 
 .tipsy-inner p {
@@ -558,6 +560,7 @@ div.tipsy.tipsy-e {
 foreignObject {
   width: 140px !important;
   padding-right: 125px !important;
+  height: 35px !important;
 }
 
 .breadcrumb>li+li:before {
