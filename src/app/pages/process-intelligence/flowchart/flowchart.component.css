@@ -406,3 +406,7 @@ span.PI-frpr-spin {
   display: inline-block;
   overflow: hidden auto;
 }
+.PI-sliderspath {
+  position: absolute;
+  right: 40px;
+}
