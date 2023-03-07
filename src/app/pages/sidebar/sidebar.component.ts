@@ -135,6 +135,12 @@ userManagement(){
   })
 }
 
+onClickSubscription(){
+this.router.navigate(["/pages/subscriptions"],{
+  queryParams:{index:0}
+})
+}
+
 navigateToDashBoard(){
         this.rest_service.getDashBoardsList().subscribe((res:any)=>{
         let dashbordlist:any=res.data;
