@@ -1735,4 +1735,7 @@ deleteConnectorbyId(id: any) {
 testActions(body){
   return this.http.post('/rpa-service/getAccessToken',body)
 }
+deleteActionById(id:any){
+return this.http.delete(`/rpa-service/deleteConfiguredAction/${id}`)
+}
 }

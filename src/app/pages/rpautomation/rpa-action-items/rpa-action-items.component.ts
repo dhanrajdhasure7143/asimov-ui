@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ConfirmationService } from "primeng/api";
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -17,12 +19,13 @@ export class RpaActionItemsComponent implements OnInit {
   checkBoxShow: boolean = true;
   selectedId:any;
   updateflag: boolean = false;
-
+  selectedData:any;
   constructor(
     private router:Router,
     private loader:LoaderService,
     private rest_api:RestApiService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private confirmationService:ConfirmationService
     ) 
     {
       this.route.queryParams.subscribe((data)=>{
@@ -116,16 +119,38 @@ export class RpaActionItemsComponent implements OnInit {
   deleteConnection() {}
 
   readSelectedData(data) {
-    data.length > 0 ? (this.addflag = false) : (this.addflag = true);
-    data.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
-    data.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
+    this.selectedData =data;
+    this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
+    this.selectedData.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    this.selectedData.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
 
   updateAction() {
     this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedId, create:false}});
   }
 
-  deleteAction() {}
+  deleteAction() {
+    this.loader.show();
+    let selectedId = this.selectedData[0].id;
+    this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Action Deleted Successfully !!",
+        heightAuto: false,
+      });
+      this.getAllActionItems();
+      this.loader.hide();
+    },(err) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        heightAuto: false,
+      });
+      this.loader.hide();
+    })
+  }
   
   backToConnection() {
     this.router.navigate(["/pages/rpautomation/configurations"], {
