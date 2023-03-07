@@ -18,15 +18,20 @@
   <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
   <!-- <img  src='\assets\images\RPA\rpa-loader.gif' /> -->
 </ngx-spinner>
-<div class="main-content orches_new">
-  <div class="row content-area">
-      <div class="row module-heading title">
-          <span *ngIf="back_button==true" class="module-back-button" (click)="routeToProjectDetails()">
-      <i aria-hidden="true" class="fas fa-arrow-left"></i>
-    </span>
-          <span class="module-header-title">Service Orchestration</span>
+<div class="maincont orches_new">
+  <div class="maincont-contentarea">
+      <div class="row main-content-head">
+        <h3>
+          <label id="popup_title" *ngIf="back_button==true">
+              <a (click)="routeToProjectDetails()" ><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+          </label>
+          <span class="title_text">Service Orchestration</span>
+        </h3>
+          <!-- <span *ngIf="back_button==true" class="module-back-button" (click)="routeToProjectDetails()">
+            <i aria-hidden="true" class="fas fa-arrow-left"></i>
+          </span>-->
       </div>
-      <div class="module-body">
+      <div class="main-content-body tablist-cont">
           <mat-tab-group class="h-100" [selectedIndex]="selectedTab" id="Orchestration-tabs" (selectedTabChange)="onTabChanged($event)">
               <!-- <mat-tab>
         <ng-template mat-tab-label>
@@ -85,7 +90,7 @@
               <mat-tab label="Bots">
                   <ng-template mat-tab-label>
                       <mat-icon>android</mat-icon>
-                      &nbsp;&nbsp; Bots
+                      <span class="titlelabel">Bots</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==0">
                       <app-new-so-bots></app-new-so-bots>
@@ -95,7 +100,7 @@
 
                   <ng-template mat-tab-label>
                       <mat-icon>desktop_windows</mat-icon>
-                      &nbsp;&nbsp; Environments Management
+                      <span class="titlelabel">Environments Management</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==1">
                       <app-so-environments></app-so-environments>
@@ -105,7 +110,7 @@
               <mat-tab label="Incident Management">
 
                   <ng-template mat-tab-label>
-                      <i class="material-icons">inbox</i> &nbsp;&nbsp; Incident Management
+                      <i class="material-icons">inbox</i><span class="titlelabel">Incident Management</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==1">
                       <app-so-incident-management></app-so-incident-management>
@@ -116,7 +121,7 @@
               <mat-tab label="Orchestrator">
                   <ng-template mat-tab-label>
                       <mat-icon>control_camera</mat-icon>
-                      &nbsp;&nbsp; Orchestration
+                      <span class="titlelabel">Orchestration</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==2">
                       <app-new-so-automated-tasks></app-new-so-automated-tasks>
@@ -126,7 +131,7 @@
 
                   <ng-template mat-tab-label>
                       <mat-icon>android</mat-icon>
-                      &nbsp;&nbsp; Bot Management
+                      <span class="titlelabel">Bot Management</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==3">
                       <app-new-so-bot-management></app-new-so-bot-management>
@@ -135,7 +140,7 @@
               <mat-tab label="Monitoring">
                   <ng-template mat-tab-label>
                       <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
-                      <i class="fa fa-chart-area" style="font-size:20px"></i> &nbsp;&nbsp; Monitoring
+                      <i class="fa fa-chart-area" style="font-size:28px"></i><span class="titlelabel">Monitoring</span>
 
                       <!-- </button> -->
 
@@ -164,7 +169,7 @@
               <!-- <mat-tab label="Monitoring">
                   <ng-template mat-tab-label> -->
                       <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
-                      <!-- <i class="fa fa-chart-area" style="font-size:20px"></i> &nbsp;&nbsp; Monitoring -->
+                      <!-- <i class="fa fa-chart-area" style="font-size:20px"></i><span class="titlelabel">Monitoring</span> -->
 
                       <!-- </button> -->
 
@@ -196,7 +201,7 @@
 
                   <ng-template mat-tab-label>
                       <mat-icon>inbox</mat-icon>
-                      &nbsp;&nbsp; Inbox
+                      <span class="titlelabel">Inbox</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==5">
                       <app-so-inbox></app-so-inbox>
@@ -208,7 +213,7 @@
 
                   <ng-template mat-tab-label>
                       <mat-icon>event_note</mat-icon>
-                      &nbsp;&nbsp; Scheduled Info
+                      <span class="titlelabel">Scheduled Info</span>
                   </ng-template>
                   <div class="h-100" *ngIf="check_tab==6">
                       <app-scheduled-bots></app-scheduled-bots>
