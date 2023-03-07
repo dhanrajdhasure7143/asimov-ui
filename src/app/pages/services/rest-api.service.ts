@@ -1613,7 +1613,7 @@ getMethodTypes(){
 }
 
 saveConnector(body){
-  return this.http.post(`/rpa-service/save-api-list`,body); 
+  return this.http.post(`/rpa-service/saveConfiguredConnection`,body); 
 }
 getProjectTaskDetailsById(projectId,taskId){
   return this.http.get('/platform-service/task/findTaskByProjectIdAndTaskId?projectId='+projectId+'&taskId='+taskId)
@@ -1701,6 +1701,13 @@ getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
 updateConnection(data){
-  return this.http.post('/rpa-service/updateConfiguredConnection/',data)
+  return this.http.post('/rpa-service/updateConfiguredConnection',data)
+}
+
+deleteConnectorbyId(id: any) {
+  return this.http.delete(`/rpa-service/deleteConfiguredConnection/${id}`);
+}
+testActions(body){
+  return this.http.post('/rpa-service/getAccessToken',body)
 }
 }

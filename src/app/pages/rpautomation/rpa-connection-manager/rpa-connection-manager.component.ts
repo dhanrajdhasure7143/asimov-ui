@@ -1,17 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import {Component, Input, OnInit,} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import moment from "moment";
-import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
-import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 
@@ -37,7 +28,8 @@ export class RpaConnectionManagerComponent implements OnInit {
   selectedData: any;
   public connctionupdatedata: any;
   submitted: boolean;
-
+  connectorName:any;
+  conn_logo:any;
   constructor(
     private rest_api: RestApiService,
     private router: Router,
@@ -52,26 +44,11 @@ export class RpaConnectionManagerComponent implements OnInit {
       name: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])]
     })
-
-    // this.configurationOptions = this.formBuilder.group({
-    //   GrantType: ["",Validators.compose([Validators.required])],
-    //   accessToken: ["",Validators.compose([Validators.required])],
-    //   clienId: ["",Validators.compose([Validators.required])],
-    //   clientSecret: ["",Validators.compose([Validators.required])],
-    //   userName: ["",Validators.compose([Validators.required])],
-    //   password: ["",Validators.compose([Validators.required])],
-    //   scope: ["",Validators.compose([Validators.required])],
-    // })
-
     this.getAllConnections();
-    // this.connectorTable =[
-    //   {id:"1",connectionName:"Zoho", authorization_Type:"OAuth 2.0"},
-    //   {id:"2",connectionName:"GIt", authorization_Type:"OAuth 2.0"},
-    //   {id:"2",connectionName:"Microsoft online", authorization_Type:"OAuth 2.0"},
-    // ]
-  }
+    }
 
   getAllConnections() {
+    this.spinner.show();
     this.rest_api.getConnectionslist().subscribe((data: any) => {
       this.connectorTable = data;
       console.log("List Of Connections",data);
@@ -88,8 +65,8 @@ export class RpaConnectionManagerComponent implements OnInit {
           multi: false,
         },
         // {
-        //   ColumnName: "authorization_Type",
-        //   DisplayName: "Authentication Type",
+        //   ColumnName: "connectionLogo",
+        //   DisplayName: "Connector Logo",
         //   ShowGrid: true,
         //   ShowFilter: true,
         //   filterWidget: "normal",
@@ -105,9 +82,30 @@ export class RpaConnectionManagerComponent implements OnInit {
 
   deleteById(event) {}
 
-  deleteConnection() {}
-  
-  viewConnector() {
+  deleteConnection(){
+    this.spinner.show();
+    let selectedId = this.selectedData[0].id;
+    this.rest_api.deleteConnectorbyId(selectedId).subscribe((resp) => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Done Successfully !!",
+      heightAuto: false,
+    });
+    this.getAllConnections();
+    this.spinner.hide();
+  },(err) => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!",
+      heightAuto: false,
+    });
+    this.spinner.hide();
+  });
+    }
+ 
+    viewConnector() {
     console.log("Selected Data",this.selectedData[0].id)
     this.router.navigate(["/pages/rpautomation/action-item"],{
     queryParams:{id:this.selectedData[0].id}
@@ -165,16 +163,42 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   saveConnector() {
+  this.spinner.show();
+  this.connectorName = this.createConnectorForm.get('name').value
+  let req_body = {
+    "id": '',
+    "name": this.connectorName,
+    "connectionLogo": this.conn_logo
+  }
+  this.rest_api.saveConnector(req_body).subscribe((res:any)=>{
+  this.spinner.hide();
     Swal.fire({
       icon: "success",
       title: "Success",
       text: "Connector Added Successfully !!",
       heightAuto: false,
     });
-    this.isFormOverlay = false;
-  }
+    this.createConnectorForm.reset();
+    this.isFormOverlay=false;
+    this.getAllConnections();
+  },(err: any) => {
+    Swal.fire("Error", "Unable to save connector", "error")
+    this.createConnectorForm.reset();
+    this.isFormOverlay=false;
+    this.spinner.hide();
+  })
+}
 
 updateConnector() {
+  this.spinner.show();
+  let connectorName1 = this.createConnectorForm.get('name').value
+  let data={
+  connectionLogo: this.conn_logo,
+  id: this.selectedData[0].id,
+  name: connectorName1
+};
+  this.rest_api.updateConnection(data).subscribe((res:any)=>{
+  this.spinner.hide();
     Swal.fire({
       icon: "success",
       title: "Success",
@@ -182,5 +206,27 @@ updateConnector() {
       heightAuto: false,
     });
     this.isFormOverlay = false;
+    this.getAllConnections();
+  },(err: any) => {
+    Swal.fire("Error", "Unable to update connector", "error")
+    this.spinner.hide();
+  });
   }
+  imageUpload(e) {
+    console.log("input change")
+    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    var pattern = /image-*/;
+    var reader = new FileReader();
+    if (!file.type.match(pattern)) {
+        alert('invalid format');
+        return;
+    }
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+}
+_handleReaderLoaded(e) {
+     console.log("_handleReaderLoaded")
+    var reader = e.target;
+    this.conn_logo = reader.result;
+}
 }
