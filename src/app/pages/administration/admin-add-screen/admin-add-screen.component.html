@@ -19,9 +19,11 @@
               <input type="text" formControlName="screen_Name" placeholder="Enter Screen Name" class="form-control" />
               <span *ngIf="
                   insertForm.get('screen_Name')!.invalid &&
-                  insertForm.get('screen_Name')!.touched
+                  insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
                 " class="star">
                 Screen Name is Required*
+              </span>
+              <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="errspan required">Only letters, numbers, spaces, and hyphens are allowed.
               </span>
             </div>
             <div class="form-group col-sm-10">
@@ -137,6 +139,8 @@
 </div>
 
 <!-- </common-body> -->
+
+
 <p-dialog [(visible)]="display" header=" Update Column" [style]="{width: '50vw'}">
   <form [formGroup]="updateColumnForm" class="h-100">
     <div>

@@ -31,7 +31,8 @@ export class AdminAddScreenComponent implements OnInit {
   showCheckbox: boolean = false;
   labelupdate: boolean = false;
   display: boolean = false;
-
+  table_searchFields: any = [];
+  hiddenPopUp: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -72,7 +73,7 @@ export class AdminAddScreenComponent implements OnInit {
     });
 
     this.insertForm = this.formBuilder.group({
-      screen_Name: ["", Validators.compose([Validators.required])],
+      screen_Name: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9 ]*$')])],
       table_Name: ["", Validators.compose([Validators.required])],
       allow_Insert: [false],
       allow_Edit: [false],
@@ -98,6 +99,7 @@ export class AdminAddScreenComponent implements OnInit {
 
   editColumn(row: any) {
     this.display = true;
+    this.hiddenPopUp = true;
     this.elementId = row.ElementId;
     this.screenId = row.ScreenId;
     // this.modalref = this.modalservice.show(content);
@@ -146,8 +148,21 @@ export class AdminAddScreenComponent implements OnInit {
       .subscribe((data) => {
         this.updateColumndata = data;
         this.display = false;
-        Swal.fire("Success", "Screen Updated Successfully!", "success");
+        Swal.fire({
+          title: "Success",
+          text: "Column Updated Successfully !!",
+          position: "center",
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#007bff",
+          cancelButtonColor: "#d33",
+          heightAuto: false,
+          confirmButtonText: "Ok",
+        }).then(()=>{
+          this.getScreenDetail();
+        })  
         this.spinner.hide();
+        this.hiddenPopUp = false;
        
       });
   }
@@ -325,8 +340,9 @@ export class AdminAddScreenComponent implements OnInit {
         cancelButtonColor: "#d33",
         heightAuto: false,
         confirmButtonText: "Ok",
-      })     
-     
+      }).then(()=>{
+        this.backToScreenList();
+      }) 
       // window.location.reload();
       // Swal.fire("Success", "Screen Saved successfully !", "success");
       this.spinner.hide();
@@ -335,5 +351,10 @@ export class AdminAddScreenComponent implements OnInit {
       (err: any) => {
         Swal.fire("Error", "Unable to Save!", "error");
       };
+  }
+
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+
   }
 }
