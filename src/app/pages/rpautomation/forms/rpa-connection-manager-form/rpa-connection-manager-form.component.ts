@@ -29,6 +29,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   selectedId:any;
   selectedOne:any[]=[];
   isCreate:boolean=false;
+  isVerifier: boolean;
+  isScopeField: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,6 +69,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerCheck: ["", Validators.compose([Validators.required])],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
+      ScopeFeild: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
 
@@ -228,16 +231,29 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isClient = true;
       this.isResponse = true;
       this.isPassword = false;
+      this.isVerifier = false;
+      this.isScopeField = false;
     } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
+      this.isVerifier = false;
+      this.isScopeField = false;
     } else if (event == "ClientCredentials") {
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
       this.isPassword = false;
+      this.isVerifier = false;
+      this.isScopeField = true;
+    } else if(event == "AuthorizationCodeWithPKCE"){
+      this.isAuthorization = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isPassword = false;
+      this.isVerifier = true;
+      this.isScopeField = false;
     }
   }
 

@@ -187,7 +187,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-12 d-flex" *ngIf="isAuthorization">
+                            <div class="col-md-12 d-flex" *ngIf="isVerifier">
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Code Verifier
                                         <span class="star">*</span>
@@ -196,6 +196,19 @@
                                         formControlName="verifier" placeholder="Enter Code Verifier">
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
+                                        class="errspan required"> Code Verifier Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isScopeField">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> scope
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="ScopeFeild" placeholder="Enter Scope ">
+                                    <span
+                                        *ngIf="connectorForm.get('ScopeFeild').invalid && connectorForm.get('ScopeFeild').touched && !connectorForm.get('ScopeFeild').hasError('pattern')"
                                         class="errspan required"> Code Verifier Required*
                                     </span>
                                 </div>
