@@ -17,10 +17,13 @@
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <span>Open</span>
                 </button> -->
-        <button class="btn" (click)="onCreateNew()" pTooltip="Create Project" tooltipPosition="bottom">
+        <!-- <button class="btn" (click)="onCreateNew()" pTooltip="Create" tooltipPosition="bottom">
           <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-          <!-- <span>Create</span> -->
+        </button> -->
+        <button class="btn" pTooltip="Create" (click)="menu.toggle($event)" tooltipPosition="bottom">
+          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
         </button>
+        <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
         <!-- <button class="btn" pTooltip="Actions" tooltipPosition="bottom">
           <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
           <span>Actions</span>

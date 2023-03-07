@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import widgetOptions from './widgetdetails.json';
@@ -32,17 +33,22 @@ export class ConfigureDashboardComponent implements OnInit {
   _paramsData: any;
   draggedProduct1: any;
   isShow:boolean;
+  isCreate:any
 
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
     private router: Router,
-    private rest_api: RestApiService) {
+    private rest_api: RestApiService,
+    private loader : LoaderService) {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.dynamicDashBoard.dashboardName = params.dashboardName
+      this.isCreate = this._paramsData.isCreate
+
     })
   }
   ngOnInit(): void {
+    this.loader.show();
     this.chartOptions = {
       legend: { position: "bottom" },
      
@@ -202,8 +208,6 @@ export class ConfigureDashboardComponent implements OnInit {
       { metricId: "00", metric_name: "Drag And Drop", src: "schedules.svg", metricAdded: false },
       { metricId: "00", metric_name: "Drag And Drop", src: "Thumbup.svg", metricAdded: false }
     ]
-
-
 
   }
 
@@ -394,6 +398,7 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   saveDashBoard() {
+    this.loader.show();
     let req_array:any = [];
     console.log(this.addedMetrics);
     this.addedMetrics.forEach(item=>{
@@ -421,6 +426,8 @@ export class ConfigureDashboardComponent implements OnInit {
 
     this.rest_api.SaveDashBoardData(req_array).subscribe(res=>{
       console.log(res)
+      this.loader.hide();
+      this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     })
 
     // this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>{
@@ -459,19 +466,23 @@ export class ConfigureDashboardComponent implements OnInit {
       this.metrics_list = data.data;
       this.metrics_list = this.metrics_list.map((item: any, index: number) => {
         item["metricAdded"] = false
-        item["metricValue"] = 20 + Number(item.id * 9)
         item["src"] = "process.svg"
         return item
       })
+      if(this._paramsData.isCreate==0){
+        this.getDashBoardData(this._paramsData.dashboardId)
+      }else{
+        this.loader.hide();
+      }
       this.datatransfer.dynamicscreenObservable.subscribe((res: any) => {
         console.log(res.widgets)
         if (res.metrics) {
           this.dynamicDashBoard = res;
-          this.addedMetrics = this.dynamicDashBoard.metrics
-          res.metrics.forEach((item: any) => {
-            this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
-            // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
-          })
+          // this.addedMetrics = this.dynamicDashBoard.metrics
+          // res.metrics.forEach((item: any) => {
+          //   this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
+          //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
+          // })
 
           res.widgets.forEach((item: any) => {
             this.widgets.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
@@ -511,5 +522,25 @@ export class ConfigureDashboardComponent implements OnInit {
   addtable(){
     console.log("click successful")
     this.isShow = !this.isShow; 
+  }
+
+  getDashBoardData(screenId){
+    this.rest_api.getDashBoardItems(screenId).subscribe((data:any)=>{
+      console.log(data)
+      this.dynamicDashBoard.metrics=data.metrics
+      this.addedMetrics = this.dynamicDashBoard.metrics
+
+      this.addedMetrics = this.addedMetrics.map((item: any, index: number) => {
+        item["metricAdded"] = true
+        return item
+      })
+      this.addedMetrics.forEach((item: any) => {
+        this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
+        if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
+        this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
+      })
+
+      this.loader.hide();
+    });
   }
 }

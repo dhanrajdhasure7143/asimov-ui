@@ -1738,4 +1738,10 @@ testActions(body){
 deleteActionById(id:any){
 return this.http.delete(`/rpa-service/deleteConfiguredAction/${id}`)
 }
+getDashBoardItems(id){
+  return this.http.get("/platform-service/dashboard/findDashboardMetricsAndWidgetsValues?screenId="+id);
+}
+
+
+
 }
