@@ -53,7 +53,7 @@ export class ProjectsListScreenComponent implements OnInit {
   hiddenPopUp: boolean = false;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
-    { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
+    // { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
     { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
     { tabName: "In Progress", count: "0", img_src: "inprogress-tasks.svg" },
     { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
@@ -63,6 +63,10 @@ export class ProjectsListScreenComponent implements OnInit {
   isprogramCreateForm: boolean = false;
   categoryList: any;
   categories_list: any[] = [];
+  actionsitems = [
+    {label: 'Create Project', command: () => {this.onClikCreateProject();}},
+    {label: 'Create Program', command: () => {this.onClikCreateProgram();}}
+  ];
 
   constructor(
     private dt: DataTransferService,
@@ -517,6 +521,7 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   onClikCreateProject() {
+    this.hiddenPopUp = true;
     this.isprojectCreateForm = true;
   }
 

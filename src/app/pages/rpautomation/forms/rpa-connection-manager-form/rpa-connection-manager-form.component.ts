@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 
@@ -23,18 +24,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isRequest: boolean = false;
   isResponse: boolean = false;
   attribute = [];
-  public result ={};
-  public reactiveForm:FormGroup;
-  validateJSON:boolean=false;
+  addInputForm: FormGroup;
+  validateJSON: boolean = false;
+  selectedId:any;
+  selectedOne:any[]=[];
+  isCreate:boolean=false;
+  isVerifier: boolean;
+  isScopeField: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
-    private rest_api: RestApiService
+    private rest_api: RestApiService,
+    private router:Router,
+    private route:ActivatedRoute
   ) {
-    this.reactiveForm=this.formBuilder.group({
-      result:[""]
-    })
     this.createItem();
+    this.route.queryParams.subscribe((data)=>{
+    this.selectedId = data.id;
+    this.isCreate = data.create;
+    console.log(this.isCreate);
+    
+    })
   }
 
   ngOnInit(): void {
@@ -42,23 +52,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       actionName: ["", Validators.compose([Validators.required])],
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
-      url: ["", Validators.compose([Validators.required])],
+      endPoint: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
       icon: ["", Validators.compose([])],
       attribute: ["", Validators.compose([Validators.required])],
       grantType: ["", Validators.compose([Validators.required])],
       code: ["", Validators.compose([Validators.required])],
-      redirect: ["", Validators.compose([Validators.required])],
-      username: ["", Validators.compose([Validators.required])],
+      redirect_uri: ["", Validators.compose([Validators.required])],
+      userName: ["", Validators.compose([Validators.required])],
       password: ["", Validators.compose([Validators.required])],
       clientId: ["", Validators.compose([Validators.required])],
-      secret: ["", Validators.compose([Validators.required])],
+      clientSecret: ["", Validators.compose([Validators.required])],
       verifier: ["", Validators.compose([Validators.required])],
       headerKey: ["", Validators.compose([Validators.required])],
       headerValue: ["", Validators.compose([Validators.required])],
       headerCheck: ["", Validators.compose([Validators.required])],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
+      ScopeFeild: ["", Validators.compose([])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
 
@@ -66,6 +77,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
+
+    this.addInputForm = new FormGroup({
+      addInputField: new FormArray([
+        new FormGroup({
+          encodedCheck: new FormControl(""),
+          encodedKey: new FormControl(""),
+          encodedValue: new FormControl(""),
+          encodedDelete: new FormControl(""),
+        }),
+      ]),
+    });
   }
 
   createItem() {
@@ -105,26 +127,36 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   testForm() {
-    let connector = this.connectorForm.value;
-    this.rest_api.testConnections(connector).subscribe(
-      (res) => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Done Successfully !!",
-          heightAuto: false,
-        });
-      },
-      (err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          heightAuto: false,
-        });
-      }
-    );
-    this.connectorForm.reset();
+    let req_body:any={
+    "clientId": this.connectorForm.value.clientId,
+    "clientSecret": this.connectorForm.value.clientSecret,
+    "endPoint": this.connectorForm.value.endPoint,
+    "type": "OAUTH"
+  }
+    if (this.connectorForm.value.grantType == "AuthorizationCode") {
+      req_body["grantType"]="authorization_code"
+      req_body["code"]= this.connectorForm.value.code
+      req_body["redirect_uri"]=this.connectorForm.value.redirect_uri
+    } 
+    else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      // "grantType": this.connectorForm.value.grantType,
+      req_body["grantType"]= "password",
+      req_body["password"]= this.connectorForm.value.password
+      req_body["userName"]= this.connectorForm.value.userName
+    } 
+    else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      req_body["grantType"]=this.connectorForm.value.grantType
+      req_body["scope"]= this.connectorForm.value.scope
+    }
+    // else if (this.connectorForm.value.grantType == "RefreshToken") {
+    //       req_body["grantType"]="refresh_token"
+    //       req_body["refreshToken"]="1000.246a848d7739e32dace9179429e3451a.0b4254d5019f473478da157067e697ad"
+    // }
+    console.log(this.connectorForm.value)
+    this.rest_api.testActions(req_body).subscribe((res:any)=>{
+    if(res.access_token)
+    this.connectorForm.get("response").setValue(res.access_token)
+    })
   }
 
   methodTypes() {
@@ -145,24 +177,31 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         type: key,
         value: filterData[key],
       }));
+      console.log(this.authItems);
+      
       return this.authItems;
     });
   }
 
-  addHeader() {}
-  isJsonValid(){
-    let jsonData=this.connectorForm.get('bodyRaw').value;
-      try{
-        JSON.parse(jsonData);
-        this.validateJSON= false;
-      }
-      catch(e)
-      {
-        console.log(e)
-        this.validateJSON=true;
-      }
+  isJsonValid() {
+    let jsonData = this.connectorForm.get("scope").value;
+    try {
+      JSON.parse(jsonData);
+      this.validateJSON = false;
+    } catch (e) {
+      this.validateJSON = true;
+    }
   }
 
+  isJsonData(){
+    let jsonValidate = this.connectorForm.get("request").value;
+    try {
+      JSON.parse(jsonValidate);
+      this.validateJSON = false;
+    } catch (e) {
+      this.validateJSON = true;
+    }
+  }
 
   actionChange(event) {
     if (event == "Authenticated") {
@@ -187,21 +226,34 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   grantChange(event) {
-    if (event == "Authorization Code") {
+    if (event == "AuthorizationCode") {
       this.isAuthorization = true;
       this.isClient = true;
       this.isResponse = true;
       this.isPassword = false;
-    } else if (event == "Password Credentials") {
+      this.isVerifier = false;
+      this.isScopeField = false;
+    } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
-    } else if (event == "Client Credentials") {
+      this.isVerifier = false;
+      this.isScopeField = false;
+    } else if (event == "ClientCredentials") {
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
       this.isPassword = false;
+      this.isVerifier = false;
+      this.isScopeField = true;
+    } else if(event == "AuthorizationCodeWithPKCE"){
+      this.isAuthorization = true;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isPassword = false;
+      this.isVerifier = true;
+      this.isScopeField = false;
     }
   }
 
@@ -218,13 +270,30 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   getGrantTypes() {
     this.rest_api.getGrantTypes().subscribe((res: any) => {
-      let filterData = res;
+      let filterData = res;      
       this.grantItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
+    console.log(this.grantItems);
       return this.grantItems;
     });
   }
+  get addInputField(): FormArray {
+    return this.addInputForm.get("addInputField") as FormArray;
+  }
+  addHeader() {
+    this.addInputField.push(
+      new FormGroup({
+        encodedCheck: new FormControl(""),
+        encodedKey: new FormControl(""),
+        encodedValue: new FormControl(""),
+        encodedDelete: new FormControl(""),
+      })
+    );
+  }
+  backToaction(){
+    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}}
+  )}
 
 }
