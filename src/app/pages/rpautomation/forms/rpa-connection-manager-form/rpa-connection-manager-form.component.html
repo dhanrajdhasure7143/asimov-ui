@@ -36,7 +36,7 @@
                                         <option value="" hidden disabled>Select Action</option>
                                         <option value="null" hidden disabled>Select Action</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let action of actionItems"> {{action.value}}</option>
+                                        <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
@@ -202,14 +202,14 @@
                             </div>
                             <div class="col-md-12 d-flex" *ngIf="isScopeField">
                                 <div class="form-fields col-md-6 pl-0">
-                                    <label class="label-control" for="programname"> scope
+                                    <label class="label-control" for="programname"> Scope
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
                                         formControlName="ScopeFeild" placeholder="Enter Scope ">
                                     <span
                                         *ngIf="connectorForm.get('ScopeFeild').invalid && connectorForm.get('ScopeFeild').touched && !connectorForm.get('ScopeFeild').hasError('pattern')"
-                                        class="errspan required"> Code Verifier Required*
+                                        class="errspan required"> Scope Required*
                                     </span>
                                 </div>
                             </div>
