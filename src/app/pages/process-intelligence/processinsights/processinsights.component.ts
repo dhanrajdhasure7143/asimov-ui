@@ -183,6 +183,7 @@ yAxisLabel_duration: string = 'Duration(Hrs)';
 // maxRadius_duration: number = 1000;
 minRadius_duration: number = 0;
 yScaleMin_duration: number = 0;
+hiddenPopUp:boolean=false;
 // yScaleMax: number = 200;
 
 
@@ -736,11 +737,13 @@ yScaleMin_duration: number = 0;
 
 
     openVariantListNav() {   //variant list open
-        document.getElementById("mySidenav").style.width = "310px";
+      // document.getElementById("mySidenav").style.width = "310px";
+      this.hiddenPopUp=true;
     }
 
     closeNav() { // Variant list Close
-        document.getElementById("mySidenav").style.width = "0px";
+        // document.getElementById("mySidenav").style.width = "0px";
+        this.hiddenPopUp=false;
     }
 
     getAllVariantList() {
@@ -1091,6 +1094,9 @@ yScaleMin_duration: number = 0;
 
     loopTrackBy(index, term) {
         return index;
+      }
+      closeOverlay(event){
+        this.hiddenPopUp=event;
       }
   
 }
