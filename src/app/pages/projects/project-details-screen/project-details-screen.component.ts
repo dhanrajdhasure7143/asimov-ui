@@ -198,7 +198,7 @@ projectPercentage:any;
 status_list = [
 { name: "New" },
 { name: "In Progress" },
-{ name: "Pipeline" },
+// { name: "Pipeline" },
 { name: "On Hold" },
 { name: "Closed" },
 ];

@@ -180,7 +180,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     //this.getCategoryList(this.processId);
     this.ExecutionTypearr = [
       { name: "Serial",},
-      { name: "Parllel"},
+      { name: "Parallel"},
     ];
  }
 

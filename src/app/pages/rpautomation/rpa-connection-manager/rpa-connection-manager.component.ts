@@ -1,17 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import {Component, Input, OnInit,} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import moment from "moment";
-import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
-import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 
@@ -37,7 +28,8 @@ export class RpaConnectionManagerComponent implements OnInit {
   selectedData: any;
   public connctionupdatedata: any;
   submitted: boolean;
-
+  connectorName:any;
+  conn_logo:any;
   constructor(
     private rest_api: RestApiService,
     private router: Router,
@@ -49,73 +41,75 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      connectionName: [
-        "",
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
-      ],
-      taskIcon: ["", Validators.compose([Validators.required])],
-    });
-
-    // this.configurationOptions = this.formBuilder.group({
-    //   GrantType: ["",Validators.compose([Validators.required])],
-    //   accessToken: ["",Validators.compose([Validators.required])],
-    //   clienId: ["",Validators.compose([Validators.required])],
-    //   clientSecret: ["",Validators.compose([Validators.required])],
-    //   userName: ["",Validators.compose([Validators.required])],
-    //   password: ["",Validators.compose([Validators.required])],
-    //   scope: ["",Validators.compose([Validators.required])],
-    // })
-
+      name: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      taskIcon: ["", Validators.compose([Validators.required])]
+    })
     this.getAllConnections();
-    this.connectorTable = [
-      { id: "1", connectionName: "Zoho", authorization_Type: "OAuth 2.0" },
-      { id: "2", connectionName: "GIT", authorization_Type: "OAuth 2.0" },
-      {
-        id: "3",
-        connectionName: "Microsoft online",
-        authorization_Type: "OAuth 2.0",
-      },
-    ];
-  }
+    }
 
   getAllConnections() {
-    // this.rest_api.getConnectionslist().subscribe((data: any) => {
-    //   this.connectorTable = data;
-    //   console.log("List Of Connections",data);
-    this.spinner.hide();
-    this.columns_list = [
-      {
-        ColumnName: "connectionName",
-        DisplayName: "Connector Name",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      // {
-      //   ColumnName: "authorization_Type",
-      //   DisplayName: "Authentication Type",
-      //   ShowGrid: true,
-      //   ShowFilter: true,
-      //   filterWidget: "normal",
-      //   filterType: "text",
-      //   sort: true,
-      //   multi: false,
-      // },
-    ];
-    // });
+    this.spinner.show();
+    this.rest_api.getConnectionslist().subscribe((data: any) => {
+      this.connectorTable = data;
+      console.log("List Of Connections",data);
+      this.spinner.hide();
+      this.columns_list = [
+        {
+          ColumnName: "name",
+          DisplayName: "Connector Name",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        // {
+        //   ColumnName: "connectionLogo",
+        //   DisplayName: "Connector Logo",
+        //   ShowGrid: true,
+        //   ShowFilter: true,
+        //   filterWidget: "normal",
+        //   filterType: "text",
+        //   sort: true,
+        //   multi: false,
+        // },
+      ];
+    });
   }
 
   viewDetails(event) {}
 
   deleteById(event) {}
 
-  deleteConnection() {}
-  
-  viewConnector() {
-    this.router.navigate(["/pages/rpautomation/action-item"]);
+  deleteConnection(){
+    this.spinner.show();
+    let selectedId = this.selectedData[0].id;
+    this.rest_api.deleteConnectorbyId(selectedId).subscribe((resp) => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Done Successfully !!",
+      heightAuto: false,
+    });
+    this.getAllConnections();
+    this.spinner.hide();
+  },(err) => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!",
+      heightAuto: false,
+    });
+    this.spinner.hide();
+  });
+    }
+ 
+    viewConnector() {
+    console.log("Selected Data",this.selectedData[0].id)
+    this.router.navigate(["/pages/rpautomation/action-item"],{
+    queryParams:{id:this.selectedData[0].id}
+    })
   }
 
   addNewConnection() {
@@ -127,12 +121,8 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isCreate = false;
     this.isFormOverlay = true;
     this.connctionupdatedata = this.selectedData[0];
-    this.createConnectorForm
-      .get("connectionName")
-      .setValue(this.connctionupdatedata["connectionName"]);
-    this.createConnectorForm
-      .get("taskIcon")
-      .setValue(this.connctionupdatedata["taskIcon"]);
+    this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
+    this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
     console.log(this.selectedData);
   }
 
@@ -166,24 +156,49 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isAuthOverlay = false;
     this.isFormOverlay = true;
   }
-
-  resetForm() {
-    this.createConnectorForm.reset();
-    this.createConnectorForm.get("connectionName").setValue("");
-    this.createConnectorForm.get("taskIcon").setValue("");
+  resetForm(){
+  this.createConnectorForm.reset();
+  this.createConnectorForm.get("name").setValue("");
+  this.createConnectorForm.get("taskIcon").setValue("");
   }
 
-  saveConnectorForm() {
+  saveConnector() {
+  this.spinner.show();
+  this.connectorName = this.createConnectorForm.get('name').value
+  let req_body = {
+    "id": '',
+    "name": this.connectorName,
+    "connectionLogo": this.conn_logo.split(',')[1]
+  }
+  this.rest_api.saveConnector(req_body).subscribe((res:any)=>{
+  this.spinner.hide();
     Swal.fire({
       icon: "success",
       title: "Success",
       text: "Connector Added Successfully !!",
       heightAuto: false,
     });
-    this.isFormOverlay = false;
-  }
+    this.createConnectorForm.reset();
+    this.isFormOverlay=false;
+    this.getAllConnections();
+  },(err: any) => {
+    Swal.fire("Error", "Unable to save connector", "error")
+    this.createConnectorForm.reset();
+    this.isFormOverlay=false;
+    this.spinner.hide();
+  })
+}
 
-  updateConnectorForm() {
+updateConnector() {
+  this.spinner.show();
+  let connectorName1 = this.createConnectorForm.get('name').value
+  let data={
+  connectionLogo: this.conn_logo.split(',')[1],
+  id: this.selectedData[0].id,
+  name: connectorName1
+};
+  this.rest_api.updateConnection(data).subscribe((res:any)=>{
+  this.spinner.hide();
     Swal.fire({
       icon: "success",
       title: "Success",
@@ -191,5 +206,29 @@ export class RpaConnectionManagerComponent implements OnInit {
       heightAuto: false,
     });
     this.isFormOverlay = false;
+    this.getAllConnections();
+  },(err: any) => {
+    Swal.fire("Error", "Unable to update connector", "error")
+    this.spinner.hide();
+    this.isFormOverlay = false;
+    this.getAllConnections();
+  });
   }
+  imageUpload(e) {
+    console.log("input change")
+    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    var pattern = /image-*/;
+    var reader = new FileReader();
+    if (!file.type.match(pattern)) {
+        alert('invalid format');
+        return;
+    }
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+}
+_handleReaderLoaded(e) {
+     console.log("_handleReaderLoaded")
+    var reader = e.target;
+    this.conn_logo = reader.result;
+}
 }
