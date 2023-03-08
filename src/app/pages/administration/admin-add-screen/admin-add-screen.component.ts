@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { validateVerticalPosition } from "@angular/cdk/overlay";
 
 @Component({
   selector: "app-admin-add-screen",
@@ -51,7 +52,7 @@ export class AdminAddScreenComponent implements OnInit {
         { value: "", disabled: true },
         Validators.compose([Validators.required]),
       ],
-      DisplayName: ["", Validators.compose([Validators.required])],
+      DisplayName: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9_-]*$'),Validators.maxLength(255)])],
       widget_type: ["", Validators.compose([Validators.required])],
       ShowGrid: [false],
       ShowSearch: [false],
@@ -73,7 +74,7 @@ export class AdminAddScreenComponent implements OnInit {
     });
 
     this.insertForm = this.formBuilder.group({
-      screen_Name: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9 ]*$')])],
+      screen_Name: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),Validators.maxLength(255)])],
       table_Name: ["", Validators.compose([Validators.required])],
       allow_Insert: [false],
       allow_Edit: [false],
@@ -219,7 +220,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.insertForm = this.formBuilder.group({
         screen_Name: [
           filterData.Screen_Name,
-          Validators.compose([Validators.required]),
+          Validators.compose([Validators.required,,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')]),
         ],
         table_Name: [filterData.Table_Name],
         allow_Insert: [filterData.Allow_Insert],
