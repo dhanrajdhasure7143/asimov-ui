@@ -16,14 +16,17 @@
           <div class="col-6">
             <div class="form-group col-sm-10">
               <label class="label-control">Screen Name <span class="star">*</span></label>
-              <input type="text" formControlName="screen_Name" placeholder="Enter Screen Name" class="form-control" />
+              <input type="text" formControlName="screen_Name" maxlength="256" placeholder="Enter Screen Name" class="form-control" />
               <span *ngIf="
                   insertForm.get('screen_Name')!.invalid &&
                   insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
+                  && !insertForm.controls['screen_Name'].hasError('maxlength')
                 " class="star">
                 Screen Name is Required*
               </span>
-              <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="errspan required">Only letters, numbers, spaces, and hyphens are allowed.
+              <span *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
+              class="errspan required">Maximum of 255 characters*</span>
+              <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="errspan required">Only spaces between words are allowed.
               </span>
             </div>
             <div class="form-group col-sm-10">
@@ -150,7 +153,18 @@
     <br />
     <div>
       <label for="" class="label-control">Column Label Name <span class="star">*</span></label>
-      <input type="text" formControlName="DisplayName" class="form-control" placeholder="Enter Label Name" />
+      <input type="text" maxlength="256" formControlName="DisplayName" class="form-control" placeholder="Enter Label Name" />
+      <span *ngIf="
+      updateColumnForm.get('DisplayName')!.invalid &&
+      updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
+      && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
+    " class="star">
+    Column Label Name is Required*
+  </span>
+  <span *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"
+  class="errspan required">Maximum of 255 characters*</span>
+  <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
+  </span>
     </div>
     <br />
     <div>
