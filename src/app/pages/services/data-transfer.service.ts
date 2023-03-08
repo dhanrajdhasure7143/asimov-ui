@@ -138,4 +138,12 @@ dynamicscreenObservable = this.dynamicscreen.asObservable();
 setdynamicscreen(module:any){
   this.dynamicscreen.next(module);
 }
+
+private billingData:BehaviorSubject<any> = new BehaviorSubject<any>({});
+
+billingDataObservable = this.billingData.asObservable();
+
+setbillingInfo(module:any){
+  this.billingData.next(module);
+}
 }
