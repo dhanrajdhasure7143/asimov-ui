@@ -150,7 +150,7 @@
           <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}">&#xe5cf;
           </mat-icon>
         </mat-list-item>
-        <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
+        <div class="submenus adminsubmenus" [ngClass]="{'expanded' : showadminSubmenu}">
           <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
             *ngIf="this.userRoles.includes('System Admin')" (click)="userManagement()">
             <span class="side-icon">

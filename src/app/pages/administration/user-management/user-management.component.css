@@ -1,4 +1,10 @@
-.tab_icons{
-    font-size: 16px;
-    padding-left: 13px;
-  }
+span.titlelabel {
+  margin-left: 15px;
+  font-size: 16px;
+}
+mat-icon.mat-icon {
+  width: 30px;
+  height: 34px;
+  color: #098de6;
+  font-size: 32px;
+}

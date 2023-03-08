@@ -1,29 +1,26 @@
 <div class="h-100">
-  <div id="projects_list_screen" class="h-100">
-    <div class="module-heading title">
+  <div class="depart-btns">
+    <span routerLink="/pages/admin/create-department" pTooltip="Create New" tooltipPosition="top">
+      <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt="Create New" />
+    </span>
+    <span id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
+      <img *ngIf="Departmentdeleteflag" src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" class="testplus" alt="Delete" />
+      <img *ngIf="!Departmentdeleteflag" src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" class="testplus" alt="Delete" />
+    </span>
+  </div>
       <!-- <div class=""> 
           <div class="row">-->
       <!-- <span class="module-header-title"><span>Departments</span></span> -->
 
-      <div class="row">
-        <!-- <div class="col-md-3 pl-0 departmentsearch">
+     <!-- <div class="col-md-3 pl-0 departmentsearch">
                 <input class="form-control toolbar-search departments-home-fileds" matInput (keyup)="applyFilter($event.target.value)"
                   placeholder="Search Department">
                 <img src="../../../../assets/images/search.svg" alt="" class="testplus">
               </div> -->
-        <div class="col-md-9 p-0 env-data-tool text-right">
-          <div>
-            <!-- <button (click)="resetSearch()" id="deptreset" class="tsttooltipbtn">
+        <!-- <button (click)="resetSearch()" id="deptreset" class="tsttooltipbtn">
                     <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" >
                     <span class="testtooltip">Reset</span>
                   </button > -->
-          </div>
-          <div>
-            <button class="btn btn-primary" routerLink="/pages/admin/create-department">
-              <!-- <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/> -->
-              Create New
-            </button>
-          </div>
           <!-- <div *ngIf="Departmentdeleteflag">
             <button
               id="deletebtn"
@@ -33,12 +30,6 @@
               Delete
             </button>
           </div> -->
-          <div >
-            <button id="deletebtn" class="btn btn-primary" [disabled]="!Departmentdeleteflag" (click)="deleteDepartment()">Delete
-            </button>
-          </div>
-        </div>
-      </div>
       <!-- 
           </div>
           </div> -->
@@ -55,23 +46,20 @@
             </div>
             </span>
           </div>     -->
-    </div>
-    <div class="">
-        <app-dynamic-table
-          [columns_list]="columns_list"
-          [table_data]="departments_list"
-          (selectedData)="readSelectedData($event)"
-          [dataKeyId]="'categoryId'"
-          [search_fields]="table_searchFields"
-          (editRowById)="editdepartment($event)"
-          [show_search_field]="true"
-          [show_column_filter]="true"
-          [show_clear_filter]="true"
-          [show_edit_btn]="true"
-          [checkBoxShow]="true"
-        >
-        </app-dynamic-table>
-
-    </div>
+  <div class="">
+    <app-dynamic-table
+      [columns_list]="columns_list"
+      [table_data]="departments_list"
+      (selectedData)="readSelectedData($event)"
+      [dataKeyId]="'categoryId'"
+      [search_fields]="table_searchFields"
+      (editRowById)="editdepartment($event)"
+      [show_search_field]="true"
+      [show_column_filter]="true"
+      [show_clear_filter]="true"
+      [show_edit_btn]="true"
+      [checkBoxShow]="true"
+    >
+    </app-dynamic-table>
   </div>
 </div>

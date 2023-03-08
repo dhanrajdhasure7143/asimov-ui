@@ -93,8 +93,11 @@
                     </div>
                 </div>
                 <div class="col-md-12 p-0 form-group">
-                    <label class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair"
-                            (change)="keypair($event)">Key Pair Authentication</label>
+                    <span class="" for="password">
+                        <input type="checkbox" [checked]="isKeyValuePair"
+                            (change)="keypair($event)">
+                        <span class="ml-2">Key Pair Authentication</span>
+                    </span>
                 </div>
                 <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                     <label class="label-control" for="password">Password<span class="star">*</span></label>
@@ -141,7 +144,8 @@
                     </div>
                 </div>
                 <div class="col-md-6 p-0 form-group">
-                    <input type="checkbox" formControlName="activeStatus"> Active
+                    <input type="checkbox" formControlName="activeStatus">
+                    <span class="ml-2">Active</span>
                 </div>
         </form>
         <div class="createform-footer">

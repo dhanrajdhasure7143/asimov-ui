@@ -122,7 +122,7 @@ div[class^='diagram_container'] .djs-container svg {
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: #bebcbc66;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*spinner styles*/
@@ -1148,10 +1148,14 @@ img.testplus1 {
 
 .maindivfoprm .label-control,
 .modelprbody label {
-  color: #001c47 !important;
+  /* color: #001c47 !important;
   font-weight: normal !important;
   font-size: 15px !important;
-  margin-bottom: 5px;
+  margin-bottom: 5px; */
+  font-size: 14px;
+  color: #7d7d7d;
+  margin-bottom: 2px;
+  line-height: 18px;
 }
 
 .modelprbody input,
@@ -1171,7 +1175,7 @@ img.testplus1 {
 .modelprbody select:focus,
 .modelprbody textarea:focus {
   border-color: var(--main-bluecolor) !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
   background-color: #fff !important;
 }
 
@@ -1701,12 +1705,16 @@ span.star {
 }
 .form-control:focus {
   border-color: var(--main-bluecolor) !important;
+  background-color: #fff !important;
 }
 input.form-control, select.form-control {
   height: 40px;
 }
-input.form-control::placeholder, select.form-control::placeholder {
-  color: #7d7d7d;
+input.form-control::placeholder, select.form-control::placeholder,
+select.form-control.data.ng-pristine,
+select.form-control.ng-untouched.ng-pristine.ng-invalid,
+select.form-control.ng-pristine.ng-invalid.ng-touched {
+  color: #7d7d7d !important;
 }
 
 #projectfavourites .mat-tab-label-content {
@@ -1748,6 +1756,7 @@ input.bps-home-fileds {
   left: 6px !important;
   z-index: 99 !important;
   padding-bottom: 0px !important;
+  color: #7d7d7d !important
 }
 
 .addrespopup .ng-dropdown-panel,
@@ -1861,11 +1870,11 @@ span.projects-header-title {
 .ngselectfield .ng-select,
 .addrespopup .ng-select,
 .addrespopup .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
 }
 
 .ngselectfield .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
   background-color: #f6f6f6 !important;
   border-radius: 2px !important;
   border: 1px solid #d1d1d1 !important;
@@ -2286,9 +2295,7 @@ span.pdicon {
 .Attached-contents .mat-progress-bar-fill::after {
   background: #4FA908  !important;
 }
-.ng-select .ng-select-container {
-  min-height: 34px !important;
-}
+
 .update_department .ng-select .ng-select-container{
   max-height: 65px !important;
   overflow: auto !important;
@@ -3002,7 +3009,8 @@ button.btn.bluebg-button {
   color: #fff;
   padding: 6px 30px;
 }
-button.btn.canlrst-btn {
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
   color: #098de6 !important;
   font-size: 16px;
 }
@@ -3065,6 +3073,7 @@ button.btn.canlrst-btn {
 .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
 .createform-overlay .p-dropdown.p-dropdown-open {
   border-color: #098de6 !important;
+  background-color: #fff;
 }
 .createform-overlay input.p-inputtext::placeholder,
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -3226,6 +3235,24 @@ background-color: #fff;
   text-align: right;
 }
 
+/* new styles for ng select */
+.ng-select .ng-select-container {
+  min-height: 40px !important;
+  background-color: transparent !important;
+  border: 1px solid #979797 !important;
+  box-shadow: none !important;
+}
+.ng-select.ng-select-opened>.ng-select-container{
+  border: 1px solid #098de6 !important;
+}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  background: transparent !important;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 10px !important;
+  color: #7d7d7d !important;
+}
+/* new styles for ng select */
 
 /* ----------------------NEW STYLES END------------------------- */
 
