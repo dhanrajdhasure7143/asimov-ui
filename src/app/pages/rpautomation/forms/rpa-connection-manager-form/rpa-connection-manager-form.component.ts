@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 
@@ -26,15 +27,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   public result ={};
   public reactiveForm:FormGroup;
   validateJSON:boolean=false;
+  disabled : boolean;
 
   constructor(
     private formBuilder: FormBuilder,
-    private rest_api: RestApiService
+    private rest_api: RestApiService,
+    private route: ActivatedRoute
   ) {
-    this.reactiveForm=this.formBuilder.group({
-      result:[""]
-    })
-    this.createItem();
+    this.route.queryParams.subscribe((res:any) => {
+       this.disabled = res.isDisabled
+    });
   }
 
   ngOnInit(): void {

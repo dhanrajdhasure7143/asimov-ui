@@ -32,7 +32,7 @@
                                         <span class="star">*</span>
                                     </label>
                                     <select name="" id="" class="form-control data" formControlName="actionType"
-                                        (change)="actionChange($event.target.value)">
+                                        (change)="actionChange($event.target.value)" [disabled]="disabled">
                                         <option value="" hidden disabled>Select Action</option>
                                         <option value="null" hidden disabled>Select Action</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
@@ -49,7 +49,7 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="methodType">
+                                    <select name="" id="" class="form-control data" formControlName="methodType" [disabled]="disabled">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>

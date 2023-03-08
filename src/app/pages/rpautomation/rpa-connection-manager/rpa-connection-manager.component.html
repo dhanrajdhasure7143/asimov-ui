@@ -1,4 +1,4 @@
-<div class="rpa-content-div mx-3">
+<div class="rpa-content-div">
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div *ngIf="addflag" class="env-btn credential-btntool">
@@ -51,8 +51,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 con-envr">
-        <div>
+    <div class="col-md-12 con-envr p-0">
+        <div class="credential-tablegrid">
             <app-dynamic-table 
                 [representatives]="representatives" 
                 [columns_list]="columns_list"
@@ -70,8 +70,9 @@
             </app-dynamic-table>
         </div>
     </div>
-    <!-- <app-rpa-connection-manager-form [isConnectorForm]="isConnectorForm"> </app-rpa-connection-manager-form> -->
-    <div [hidden]="!isFormOverlay">
+</div>    
+<!-- <app-rpa-connection-manager-form [isConnectorForm]="isConnectorForm"> </app-rpa-connection-manager-form> -->
+<div [hidden]="!isFormOverlay">
         <app-split-overlay (closeOverlay)="closeFormOverlay($event)">
             <h5 *ngIf="isCreate" class="create-title"> Create Connection</h5>
             <h5 *ngIf="!isCreate" class="create-title"> Update Connection</h5>
@@ -115,12 +116,12 @@
                         <button *ngIf="isCreate" (click)="saveConnectorForm()" [disabled]="createConnectorForm.invalid"
                             class="btn btn-primary"> Save </button>
                         <button *ngIf="!isCreate" (click)="updateConnectorForm()"
-                            [disabled]="createConnectorForm.invalid" class="btn btn-primary"> Update </button>
+                             class="btn btn-primary"> Update </button>
                     </div>
                 </form>
             </div>
         </app-split-overlay>
-    </div>
+</div>
 
     <!-- <div [hidden]="!isAuthOverlay">
         <app-split-overlay (closeOverlay)="closeAuthOverlay($event)">
@@ -172,4 +173,3 @@
             </div>
         </app-split-overlay>
     </div> -->
-</div>

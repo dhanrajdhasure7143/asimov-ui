@@ -16,6 +16,7 @@ export class RpaActionItemsComponent implements OnInit {
   delete_flag: boolean = false;
   checkBoxShow: boolean = true;
   updateflag: boolean = false;
+  isDisabled: boolean = false;
 
   constructor(
     private router: Router,
@@ -110,11 +111,13 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-    this.router.navigate(["/pages/rpautomation/connection"]);
+    this.router.navigate(["/pages/rpautomation/connection"], {
+      queryParams: { isDisabled : true },
+    });
   }
 
   deleteAction() {}
-  
+
   backToConnection() {
     this.router.navigate(["/pages/rpautomation/configurations"], {
       queryParams: { index: 2 },
