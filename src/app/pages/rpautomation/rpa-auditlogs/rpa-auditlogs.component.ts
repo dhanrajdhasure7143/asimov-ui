@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import moment from 'moment';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-rpa-auditlogs',
   templateUrl: './rpa-auditlogs.component.html',
@@ -19,6 +20,8 @@ export class RpaAuditlogsComponent implements OnInit {
   displayedColumns: string[] = ["versionNew", "changedDate", 'botName', "changedBy", "comments"];
   dataSource: MatTableDataSource<any>;
   @ViewChild("paginator") paginator: MatPaginator;
+  columns_list: any = [];
+  logsData: any =[];
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private rest: RestApiService, private spinner: NgxSpinnerService) { }
   
   ngOnInit(): void {
@@ -40,7 +43,7 @@ export class RpaAuditlogsComponent implements OnInit {
       if (response.errorMessage == undefined) {
         let environments: any = [];
         environments = response.filter(item => item.activeStatus == 7);
-        this.getAuditLogs(environments)
+       this.getAuditLogs(environments)
       }
       else {
         this.spinner.hide();
@@ -55,13 +58,17 @@ export class RpaAuditlogsComponent implements OnInit {
   getAuditLogs(environments) {  // api to get audit logs
     this.spinner.show()
     this.rest.getAuditLogs(this.botId).subscribe((data: any) => {
-      let response: any = data
+      // let response: any = data
+      this.logsData = data.Status
+      console.log(this.logsData)
       this.spinner.hide()
-      if (response.errorMessage == undefined) {
-        this.dataSource = new MatTableDataSource(response.Status);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.auditLogsData = [...response.Status.map((item: any) => {
+      // this.search_fields =["versionNew","changedDate","taskName","changedBy","comments"];
+      if (this.logsData.errorMessage == undefined) {
+      // console.log('this is the data',filteredData)
+        // this.dataSource = new MatTableDataSource(response.Status);
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+        this.auditLogsData = [this.logsData.map((item: any) => {
           if (item.botName.split("|")[1] != undefined) {        
             if (item.versionNew != null) {
               item["versionNew"] = parseFloat(item.versionNew).toFixed(1)
@@ -103,7 +110,7 @@ export class RpaAuditlogsComponent implements OnInit {
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {
-        Swal.fire("Error", response.errorMessage, "error")
+        Swal.fire("Error", this.logsData.errorMessage, "error")
       }
       this.spinner.hide();
     }, err => {
@@ -121,4 +128,8 @@ export class RpaAuditlogsComponent implements OnInit {
       return processName.substr(0, 30) + '..';
     return processName;
   }
+  
+  clear(table: Table) {
+    table.clear();
+}
 }
