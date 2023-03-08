@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import countries from "src/app/../assets/jsons/countries.json";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -30,7 +31,8 @@ export class BillingAddressComponent implements OnInit {
     private spinner: LoaderService,
     private route: ActivatedRoute,
     private api: RestApiService,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private dt:DataTransferService
   ) {
     this.route.queryParams.subscribe((data) => {
       if (data) {
@@ -149,6 +151,7 @@ export class BillingAddressComponent implements OnInit {
     this.spinner.show();
     this.api.getBillingInfo(this.id).subscribe((data) => {
       this.data = data;
+      this.dt.setbillingInfo(this.data)
       this.spinner.hide();
       this.billingForm.reset();
       this.billingForm.get("firstName").setValue(this.data["firstName"]);
