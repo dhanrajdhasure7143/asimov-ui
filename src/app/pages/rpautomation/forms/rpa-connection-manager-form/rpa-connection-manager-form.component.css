@@ -61,7 +61,7 @@ label.label-control {
 }
 
 .container-fluid.h-scroll {
-    height: 1140px;
+    height: 100%;
 }
 
 input[type=file]::file-selector-button {
@@ -78,4 +78,7 @@ input[type=file]::file-selector-button {
 
 input[type=file]::file-selector-button:hover {
     background: #0d45a5;
+}
+.maincont{
+    overflow: scroll;
 }

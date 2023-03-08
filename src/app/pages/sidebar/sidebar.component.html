@@ -20,7 +20,7 @@
           <span class="side-menu-font">Dashboard</span>
         </a>
 
-        <!-- <a mat-list-item class="link" id="dashboard" (click)="navigateToDashBoard()"
+        <a mat-list-item class="link" id="dashboard" (click)="navigateToDashBoard()"
          [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
@@ -35,7 +35,7 @@
           </span>
         </span>
         <span class="side-menu-font" (click)="hightlight('dynamicdashboard','null')">Dashboard</span>
-      </a> -->
+      </a>
 
         <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
           routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''"
@@ -158,6 +158,23 @@
             </span>
             <span class="side-menu-font">User Management</span>
           </a>
+          <a mat-list-item class="link" id='subscriptions'
+          *ngIf="this.userRoles.includes('System Admin')" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
+            [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
+            matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <span class="side-icon">
+              <span class="active-img" id="eiap-home-icon-active">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Active.svg">
+              </span>
+              <span class="hover-img" id="eiap-home-icon-white">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Hover.svg">
+              </span>
+              <span class="default-img" id="eiap-home-icon-gray">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Normal.svg">
+              </span>
+            </span>
+            <span class="side-menu-font">Manage Subscriptions</span>
+          </a>
           <!-- <a mat-list-item  class="link" id="bps" (click)="hightlight('settings','expand_admin')"  >
       <span class="side-icon">
         <mat-icon>settings</mat-icon>
@@ -187,7 +204,7 @@
   
         <!-- will uncomment Subscriptions after the completion of credit card work -->
   
-        <a mat-list-item class="link" id='subscriptions'
+        <!-- <a mat-list-item class="link" id='subscriptions'
         *ngIf="this.userRoles.includes('System Admin')" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
           [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -203,7 +220,7 @@
             </span>
           </span>
           <span class="side-menu-font">Manage Subscriptions</span>
-        </a>
+        </a> -->
   
       </mat-nav-list>
     </section>

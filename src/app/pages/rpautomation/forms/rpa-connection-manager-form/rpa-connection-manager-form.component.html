@@ -1,7 +1,7 @@
-<div style="background-color: white;">
+<div class="maincont"style="background-color: white;">
     <div class="module-heading title">
         <span class="module-back-button">
-            <i class="fas fa-arrow-left" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/action-item']"></i>
+            <i class="fas fa-arrow-left" aria-hidden="true" (click)="backToaction()"></i>
         </span>
         <span class="module-header-title">
             <span class="module-parent-title">Connection Manager</span>
@@ -73,20 +73,13 @@
                             </div>
                             <div class="col-md-12 martsascl form-fields api">
                                 <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea class="form-control" row="3" formControlName="url" placeholder="Enter API"
+                                <textarea class="form-control" row="3" formControlName="endPoint" placeholder="Enter API"
                                     style=" resize: none;" maxlength="256">
                                 </textarea>
                                 <span
-                                    *ngIf="connectorForm.get('url').invalid && connectorForm.get('url').touched && !connectorForm.get('url').hasError('pattern')"
-                                    class="errspan required"> API / URL Required* </span>
-                                   <textarea name="" id="" cols="30" rows="13" placeholder="Raw"  id="value" (keyup)="isJsonValid()" formControlName="bodyRaw" class="form-control raw"></textarea>
-                                            <span *ngIf="connectorForm.get('bodyRaw').invalid && connectorForm.get('bodyRaw').touched" class="errspan required">Body Raw Required* </span>
-                                            <span *ngIf="connectorForm.get('bodyRaw').valid">
-                                                <p *ngIf="validateJSON" class="text-danger">Invalid JSON Format</p>
-                                                <p *ngIf="!validateJSON" class="text-success">Valid JSON Format</p>
-                                            </span>
-                                            <span class="errspan required"> API / URL Required*
-                                </span>
+                                    *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
+                                    class="errspan required"> API / URL Required*
+                                </span>            
                             </div>
                             <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0" *ngIf="isAction">
@@ -114,7 +107,7 @@
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let grant of grantItems"> {{grant.value}}</option>
+                                        <option *ngFor="let grant of grantItems" [value]="grant.type"> {{grant.value}}</option>
                                     </select>
                                     <span
                                         *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
@@ -139,9 +132,9 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="redirect" placeholder="Enter Redirect URL">
+                                        formControlName="redirect_uri" placeholder="Enter Redirect URL">
                                     <span
-                                        *ngIf="connectorForm.get('redirect').invalid && connectorForm.get('redirect').touched && !connectorForm.get('redirect').hasError('pattern')"
+                                        *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
                                         class="errspan required"> Redirect URL Required*
                                     </span>
                                 </div>
@@ -152,9 +145,9 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="username" placeholder="Enter Username">
+                                        formControlName="userName" placeholder="Enter Username">
                                     <span
-                                        *ngIf="connectorForm.get('username').invalid && connectorForm.get('username').touched && !connectorForm.get('username').hasError('pattern')"
+                                        *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
                                         class="errspan required"> Username Required*
                                     </span>
                                 </div>
@@ -187,14 +180,14 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="secret" placeholder="Enter Client Secret">
+                                        formControlName="clientSecret" placeholder="Enter Client Secret">
                                     <span
-                                        *ngIf="connectorForm.get('secret').invalid && connectorForm.get('secret').touched && !connectorForm.get('secret').hasError('pattern')"
+                                        *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
                                         class="errspan required"> Client Secret Required*
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-12 d-flex" *ngIf="isAuthorization">
+                            <div class="col-md-12 d-flex" *ngIf="isVerifier">
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Code Verifier
                                         <span class="star">*</span>
@@ -203,6 +196,19 @@
                                         formControlName="verifier" placeholder="Enter Code Verifier">
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
+                                        class="errspan required"> Code Verifier Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isScopeField">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> scope
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="ScopeFeild" placeholder="Enter Scope ">
+                                    <span
+                                        *ngIf="connectorForm.get('ScopeFeild').invalid && connectorForm.get('ScopeFeild').touched && !connectorForm.get('ScopeFeild').hasError('pattern')"
                                         class="errspan required"> Code Verifier Required*
                                     </span>
                                 </div>
@@ -223,14 +229,18 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td> <input type="checkbox" class="check" formControlName="headerCheck">
-                                                </td>
+                                        <tbody [formGroup]="addInputForm">
+                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index"[formGroupName]="i">
+                                                <td>
+                                             <p-checkbox [value]="addInpuGroup" [(ngModel)]="selectedOne"></p-checkbox>
+                                                    <!-- <input type="checkbox" class="check"
+                                                        formControlName="encodedCheck">  -->
+                                                    </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Key" formControlName="headerKey"> </td>
+                                                        placeholder="Key" formControlName="encodedKey"> </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Value" formControlName="headerValue"> </td>
+                                                        placeholder="Value" formControlName="encodedValue"> </td>
+                                                <td> <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""></td>        
                                             </tr>
                                         </tbody>
                                     </table>
@@ -242,14 +252,20 @@
                                     placeholder="Enter Attributes"></p-chips>
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isResponse">
-                                <label class="label-control"> Scope </label>
-                                <textarea class="form-control" cols="30" rows="10" formControlName="resposne"
-                                    placeholder="Get Response" maxlength="256"> </textarea>
+                                <label class="label-control"> Response </label>
+                                <textarea class="form-control" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                    placeholder="Response">
+                                </textarea>
+                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
                                 <label class="label-control"> Request </label>
-                                <textarea class="form-control response" cols="30" rows="10" formControlName="request"
-                                    placeholder="Get Request" maxlength="256"> </textarea>
+                                <textarea class="form-control response" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
+                                    placeholder="Get Request">
+                                </textarea>
+                                <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('request').value" class="text-success"> Valid JSON Format </span>
                             </div>
                             <div class="col-md-12 text-right">
                                 <button type="button" class="btn btn-primary" [disabled]="isRequest"
