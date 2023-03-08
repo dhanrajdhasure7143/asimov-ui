@@ -97,6 +97,19 @@ span.testtooltip:before {
   height: calc(100% - 32px) !important;
   padding: 10px 0px 0px !important;
 }
+.module-back-button {
+  border-right: unset !important;
+  margin-right: 0px !important;
+}
+.module-back-button i {
+  margin-right: 5px;
+  background: transparent;
+}
+.module-back-button:hover i {
+  border-radius: unset;
+  background: unset !important;
+  color: #098de6;
+}
 .new-bps-icons .bps-float {
   float: right;
 }
