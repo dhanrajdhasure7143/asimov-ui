@@ -529,7 +529,7 @@ img.hover-img {
 
 .variant-body {
   height: calc(100vh - 240px);
-  display: inline-block;
+  display: inline;
   overflow: hidden auto;
 }
 
