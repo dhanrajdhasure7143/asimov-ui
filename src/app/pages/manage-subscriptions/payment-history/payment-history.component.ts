@@ -23,6 +23,7 @@ export class PaymentHistoryComponent implements OnInit {
   invoiceid: any;
   errorMessage:any;
   columns_list:any=[]
+  table_searchFields: any=[];
   constructor(private rest:RestApiService,private spinner:LoaderService) { }
 
   ngOnInit(): void {
@@ -46,8 +47,13 @@ export class PaymentHistoryComponent implements OnInit {
         {ColumnName: "created_timestamp",DisplayName: "Issue Date",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
-
-
+      ];
+      this.table_searchFields = [
+        "invoiceNumber",
+        "subscriptionId",
+        "amount",
+        "created_timestamp",
+        "status_converted"
       ];
       this.spinner.hide();
      });
