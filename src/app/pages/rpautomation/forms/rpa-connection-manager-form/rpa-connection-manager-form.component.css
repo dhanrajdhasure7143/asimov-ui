@@ -68,7 +68,6 @@ input[type=file]::file-selector-button {
     margin-right: 20px;
     border: none;
     background: #00a0e3;
-    /* padding: 10px 20px; */
     margin-bottom: 10px !important;
     border-radius: 4px;
     color: #fff;
@@ -79,6 +78,7 @@ input[type=file]::file-selector-button {
 input[type=file]::file-selector-button:hover {
     background: #0d45a5;
 }
+
 .maincont{
     overflow: scroll;
 }

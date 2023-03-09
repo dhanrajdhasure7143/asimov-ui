@@ -94,17 +94,7 @@ export class RpaActionItemsComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
-      },
-      {
-        ColumnName: "description",
-        DisplayName: "Purpose",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-        multi: false,
-      },
+      }
     ];
   })
 
