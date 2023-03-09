@@ -13,13 +13,11 @@
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-                <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
+                <!-- <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                    <!-- <span>Open</span> -->
-                </button>
+                </button> -->
                 <button class="btn" (click)="taskAttachments()" pTooltip="Attachments" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Attach Documents- Icon.svg" alt="Attachments">
-                    <!-- <span>Attached Documents</span> -->
                 </button>
             </div>
         </div>
@@ -208,7 +206,7 @@
                                     <i class="pi pi-check" (click)="onUpdateDesc()"></i>
                                     <i class="pi pi-times" (click)="onDeactivate('inplace3')"></i>
                                 </span> 
-                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'250px'}">
+                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'320px'}">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
                                             <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -235,7 +233,7 @@
                         <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
                                 <div class="content"  *ngIf="taskcomments_list.length != 0" >
-                                    <div class="" *ngFor=" let item of taskcomments_list">
+                                    <div class="pb-2" *ngFor=" let item of taskcomments_list">
                                         <div class="row">
                                             <div class="userimage">
                                                 <div class="res-circle">
@@ -301,7 +299,7 @@
                 <div class="create-header">
                     <h3>Attached Documents</h3>
                 </div>
-                <div class="splitoverlaycontent">
+                <div class="splitoverlaycontent attachdocgrid">
                     <div class="tablediv">
                         <p-table [value]="attached_list" [(selection)]="checkBoxselected" selectionMode="multiple"  dataKey="id">
                             <ng-template pTemplate="caption">

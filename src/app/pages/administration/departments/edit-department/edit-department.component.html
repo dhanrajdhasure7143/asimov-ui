@@ -1,18 +1,22 @@
 <div class="h-100">
-    <mat-card class="h-100">
-        <div class="module-heading title">
-            <span class="module-back-button" routerLink="/pages/admin/user-management">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </span>
-            <span class="module-header-title">
-                <span class="module-parent-title">Update Department</span>
-            </span>
-            <div class="ml-auto pull-right">
+    <!-- <mat-card class="h-100"> -->
+        <div class="row main-content-head">
+            <div class="col-md-4 pl-0">
+                <h3>
+                    <label id="popup_title">
+                        <a routerLink="/pages/admin/user-management">
+                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                        </a>
+                    </label>
+                    <span class="title_text">Update Department</span>
+                </h3>
+            </div>
+            <!-- <div class="col-sm-8 pr-0 text-right">
                 <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button>
                 <button [disabled]="editDepartmentForm.invalid" (click)="updateDepartment()" class="btn btn-primary btn-update">Update</button>
-            </div>
+            </div> -->
         </div>
-        <div class="container-fluid  h-scroll">
+        <!-- <div class="container-fluid  h-scroll"> -->
             <div class="maindivfoprm">
                 <!-- <div class="create-heading">Update Department</div> -->
                 <form [formGroup]="editDepartmentForm"  (ngSubmit)="updateDepartment()">
@@ -30,7 +34,7 @@
                             <div class="form-fields col-md-12 p-0">
                                 <label class="label-control">Owner<span class="star">*</span></label>
                                 <select  formControlName="owner" class="form-control data">
-                                    <option value="">Select Owner</option>
+                                    <option value="" disabled>Select Owner</option>
                                     <option *ngFor="let user of users_list" [value]="user.userId.userId">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                                 </select>
@@ -41,11 +45,11 @@
                        
                     </div>
                 </form>
-                <!-- <div class="pull-right">
-                    <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button>
-                    <button [disabled]="editDepartmentForm.invalid" (click)="updateDepartment()" class="btn btn-primary btn-update">Save</button>
-                </div> -->
+                <div class="usersfooterbtns">
+                    <button (click)="reseteditdepartment()" class="btn new-cancelbtn">Reset</button>
+                    <button [disabled]="editDepartmentForm.invalid" (click)="updateDepartment()" class="btn bluebg-button">Update</button>
+                </div>
             </div>
-        </div>
-    </mat-card>
+        <!-- </div> -->
+    <!-- </mat-card> -->
 </div>

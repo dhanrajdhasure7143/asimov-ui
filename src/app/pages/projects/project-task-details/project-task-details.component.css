@@ -67,10 +67,11 @@ span.lowimp {
 .pinf label {
   color: #535353;
 }
-/* .kpipercent {
+.kpipercent {
   border-left: 1px solid #e0e0e0;
   padding-left:15px !important;
-} */
+  text-align: center;
+}
 .kpipercent p {
   font-size: 44px !important;
   margin-bottom: 2px;
@@ -113,7 +114,7 @@ button span {
   border-radius: 6px;
   background-color: #fff;
   padding: 0px 15px 10px;
-  height: 105%;
+  height: 100%;
 } 
 .commentBox button {
   margin: 5px 0px 10px;
