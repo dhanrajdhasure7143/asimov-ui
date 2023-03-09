@@ -15,13 +15,13 @@
                         Plan(Yearly).</b> <button (click)="onChangePlan()">
                         <a class="link">Change Plan</a></button></h6>
                 <div *ngIf="planlist.nickName =='Professional'">
-                    <h6 id="planName">- Your Plan Will Renew On <b>{{planlist.due_timestamp}}</b>, charging your Credit
+                    <h6 id="planName">- Your Plan Will Renew On <b>{{due_timestamp}}</b>, charging your Credit
                         Card
                         <b>${{planlist.amount}}.</b>
                     </h6>
                 </div>
                 <div *ngIf="planlist.nickName!='Professional'">
-                    <h6 id="planName">- Your Plan Will Renew On <b>{{planlist.due_timestamp1}}</b>, charging your Credit
+                    <h6 id="planName">- Your Plan Will Renew On <b>{{due_timestamp1}}</b>, charging your Credit
                         Card
                         <b>${{planlist.amount}}.</b>
                     </h6>
