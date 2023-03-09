@@ -109,7 +109,7 @@
 
     <app-dynamic-table [table_data]="invoicedata" [columns_list]="columns_list"
     [show_download_btn]="true"  [show_column_filter]="true"
-    [show_clear_filter]="true" [show_search_field]="true"
+    [show_clear_filter]="true" [show_search_field]="true" [search_fields]="table_searchFields"
     (downloadItem)="invoicedownload($event)"></app-dynamic-table>
   </div>
 </div>
