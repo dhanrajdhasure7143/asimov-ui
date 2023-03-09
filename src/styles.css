@@ -2603,8 +2603,8 @@ div {
 
 /* Scrollbar styles START */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   cursor: pointer;
 }
 ::-webkit-scrollbar:hover {
@@ -2776,12 +2776,14 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 210px); /*  for attached docs grid height*/
+  height: calc(100vh - 260px); 
   overflow: auto;
 }
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
-  overflow: auto;
+}
+.attachdocgrid .p-datatable-wrapper {
+  height: calc(100vh - 210px); /* for Attached Documents grid */
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
