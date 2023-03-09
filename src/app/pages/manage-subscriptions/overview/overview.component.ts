@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import moment from "moment";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -11,25 +12,29 @@ import { RestApiService } from "../../services/rest-api.service";
   styleUrls: ["./overview.component.css"],
 })
 export class OverviewComponent implements OnInit {
-  plansList: any;
+  plansList: any =[];
   tenantId: string;
   paymentMode: any = [];
   error: string;
   tableData: any = [];
   result: any;
+  error1: string;
+  email: any;
 
   constructor(
     private api: RestApiService,
     private spinner: LoaderService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dt:DataTransferService
   ) {}
 
   ngOnInit(): void {
     this.getCurrentPlan();
     this.getAllPaymentmodes();
     this.getAllSubscrptions();
+    this.getBillingInfo();
   }
 
   getCurrentPlan() {
@@ -88,6 +93,9 @@ export class OverviewComponent implements OnInit {
     this.spinner.show();
     this.api.listofPaymentModes().subscribe((response) => {
       this.paymentMode = response;
+      if(this.paymentMode.message=='Billing account not found'){
+        this.error1="Billing Account Not Found"
+     }
       this.spinner.hide();
     });
   }
@@ -123,5 +131,11 @@ export class OverviewComponent implements OnInit {
         });
       },
     });
+  }
+
+  getBillingInfo(){
+    this.dt.billingDataObservable.subscribe(data=>{
+      this.email=data.email
+    })
   }
 }

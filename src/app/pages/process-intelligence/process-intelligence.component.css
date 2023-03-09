@@ -103,7 +103,7 @@ span.testtooltip:before {
 .new-bps-icons button {
   padding: 6px 8px;
   position: relative;
-  z-index: 999;
+  z-index: 99;
 }
 .bps-float button img {
   height: 17px;

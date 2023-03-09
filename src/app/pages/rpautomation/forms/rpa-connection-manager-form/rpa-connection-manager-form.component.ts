@@ -28,9 +28,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   addInputForm: FormGroup;
   selectedId:any;
   selectedOne:any[]=[];
-  isCreate:boolean=false;
+  isCreate:any;
   isVerifier: boolean;
   isScopeField: boolean;
+  selectedToolsetName:string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,7 +43,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.route.queryParams.subscribe((data)=>{
     this.selectedId = data.id;
     this.isCreate = data.create;
-    console.log(this.isCreate);
+    if(data.name)
+    this.selectedToolsetName = data.name;
+    console.log(data);
     
     })
   }
@@ -69,7 +72,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerCheck: ["", Validators.compose([Validators.required])],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
-      ScopeFeild: ["", Validators.compose([])],
+      ScopeFeild: ["", Validators.compose([Validators.required])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
 
@@ -77,6 +80,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
+    if(this.isCreate=="false"){
+      this.getActionById()
+    }
 
     this.addInputForm = new FormGroup({
       addInputField: new FormArray([
@@ -104,9 +110,26 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   saveForm() {
-    let connect = this.connectorForm.value;
-    this.rest_api.saveConnector(connect).subscribe(
-      (res) => {
+    console.log(this.connectorForm.value);
+    
+    let req_body=[
+      {
+        "id": this.selectedId,
+        "name": this.connectorForm.value.actionName,
+        "audit": null,
+        "type": this.connectorForm.value.methodType,
+        "configuredConnectionId": null,
+        // "description": "login for zoho", //we dont have description in UI
+        // "configuration": "{\"endPoint\" : \"https://accounts.zoho.com/oauth/v2/token\",\"actionType\":\"APIRequest\",\"clientId\" : \"1000.B88M52TRKWRD3SG8G4BFUOM1NC4WHA\",\"clientSecret\" : \"e81b73aeca3594855c40605eb27d3152c466f22ac9\",\"grantType\" : \"refresh_token\",\"scope\" : null,\"userName\" : null,\"password\" : null,\"refreshToken\" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\",\"contentType\" : null,\"authorizationCode\" : null,\"redirectUri\" : null,\"attributes\" : [ \"ClientId\", \"ClientSecret\" ],\"type\" : \"OAUTH\"}",
+        "actionType":this.connectorForm.value.actionType,
+        "endPoint": this.connectorForm.value.endPoint
+      }
+    ]
+    let object={"endPoint" : this.connectorForm.value.endPoint,"actionType":this.connectorForm.value.actionType,"clientId" : this.connectorForm.value.clientId,"clientSecret" : this.connectorForm.value.clientSecret,"grantType" : this.connectorForm.value.grantType,"scope" : null,"userName" : null,"password" : null,"contentType" : null,"authorizationCode" : null,"redirectUri" : null,"attributes" : [ "ClientId", "ClientSecret" ],"type" : "OAUTH"}
+   // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
+    req_body[0]["configuration"]=JSON.stringify(object);
+    console.log(req_body);
+    this.rest_api.saveAction(req_body).subscribe((res) => {
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -208,7 +231,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAction = true;
       this.isRequest = false;
       this.isResponse = false;
-    } else if (event == "API Request") {
+    } else if (event == "APIRequest") {
       this.isRequest = true;
       this.isAction = false;
       this.isResponse = false;
@@ -260,10 +283,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   getActionType() {
     this.rest_api.getActionType().subscribe((res: any) => {
       let filterData = res;
+      console.log(res);
       this.actionItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
+      console.log(this.actionItems);
       return this.actionItems;
     });
   }
@@ -295,5 +320,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   backToaction(){
     this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}}
   )}
-
+getActionById(){
+  this.rest_api.getActionById(this.selectedId).subscribe((res)=>{
+    console.log("TestAction",res);
+    
+  })
+}
 }

@@ -95,6 +95,16 @@ export class RpaActionItemsComponent implements OnInit {
         sort: true,
         multi: false,
       }
+      // {
+      //   ColumnName: "attribute",
+      //   DisplayName: "Attributes",
+      //   ShowGrid: true,
+      //   ShowFilter: true,
+      //   filterWidget: "normal",
+      //   filterType: "text",
+      //   sort: true,
+      //   multi: false,
+      // },
     ];
   })
 
@@ -114,7 +124,7 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedId, create:false}});
+      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedData[0].id, name:this.selectedData[0].name, create:false}});
   }
 
   deleteAction() {
