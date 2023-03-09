@@ -2808,8 +2808,11 @@ span.tabscount {
   right: 0px;
   bottom: 0px;  
   border-bottom: 5px solid rgb(9 141 230 / 20%);
-  /* bottom: -2px;
-  border-bottom: 5px solid rgb(9 141 230 / 5%); */
+}
+.usersgrid .p-datatable .p-datatable-thead > tr > th:before,
+.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before {  /* for normal th users onboard grid */
+  bottom: -2px;
+  border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
 
 thead.p-datatable-thead tr {
