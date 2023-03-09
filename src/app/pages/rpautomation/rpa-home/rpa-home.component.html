@@ -1,9 +1,11 @@
-<div class="main-content ">
-    <div class="row content-area">
-        <div class="row module-heading title">
-           <span class="module-header-title">Robotic Process Automation</span>
+<div class="maincont">
+    <div class="maincont-contentarea">
+        <div class="row main-content-head">
+            <h3>
+                <span class="title_text">Robotic Process Automation</span>
+            </h3>
         </div>
-        <div class="row rpa-content-home">
+        <div class="main-content-body">
             <div class="main-subheader">
                 <div class="main-subheaderTitle">
                     <label class="main-subtitle">Let’s Automate !</label>
@@ -60,11 +62,11 @@
                     </div> -->
 
                     <div>
-                        <p-table #dt1 [columns]="selectedColumns" [value]="bot_list" dataKey="botId" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" 
+                        <p-table #dt1 [columns]="selectedColumns" [value]="bot_list" dataKey="botId" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" [scrollable]="true"
                         [reorderableColumns]="true">
                             <ng-template pTemplate="caption">
                                 <div class="table-header">
-                                    <h4 class="box-heading">My Workspace</h4>
+                                    <h4 class="col-heads">My Workspace</h4>
                                 <div class="p-d-flex">
                                     <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
                                         selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
@@ -82,7 +84,7 @@
                             </ng-template>
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th style="width: 3em"></th>
+                                    <th style="flex:0.2 1 0;"></th>
                                     <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                         {{col.header}}
                                         <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
@@ -99,7 +101,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-i="rowIndex">
                                 <tr>
-                                    <td>
+                                    <td style="flex:0.2 1 0;">
                                         <a href="#" [pRowToggler]="rowData" (click)="getBotImage(rowData)">
                                             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                         </a>
@@ -139,20 +141,19 @@
                                         <span  *ngIf="col.header == 'Actions'">
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="true" (click)="openEditBotOverlay(rowData)">
-                                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus"> </button>
+                                                    <img src="../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus"> </button>
                                                 <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
-                                                    <img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus">
+                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus">
                                                 </button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
                                                         (click)="openEditBotOverlay(rowData)">
-                                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus default-img">
-                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> 
+                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus default-img"> 
                                                 </button>                                                
                                                 <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
-                                                    <img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus default-img">
-                                                <img src="../../../../assets/images/Projects/delete-red.svg" alt="" class="testplus hover-img"></button>
+                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus default-img">
+                                                </button>
                                             </div>
                                         </span>
     
@@ -160,7 +161,7 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
-                                <tr>
+                                <tr class="botpreviewtr">
                                     <td [attr.colspan]="columns.length + 1">
                                         <div class="diagram_container">
                                             <a class="btn open-btn-click btn-xs" (click)="onNavigateToWorkSpace(rowData)">
@@ -188,7 +189,7 @@
                             </ng-template>
                             <ng-template pTemplate="emptymessage">
                                 <tr>
-                                    <td style="text-align: center;" colspan="7">No Records Found</td>
+                                    <td style="justify-content: center;" colspan="7">No Records Found</td>
                                 </tr>
                             </ng-template>
                         </p-table>

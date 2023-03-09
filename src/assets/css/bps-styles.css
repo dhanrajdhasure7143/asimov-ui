@@ -197,6 +197,7 @@ div[class^='diagram_container'] svg {
 
 div[class^='diagram_container'] {
   height: 400px;
+  width:100%;
   border: 1px solid #00a0e3;
   border-radius: 10px;
   padding: 5px;
