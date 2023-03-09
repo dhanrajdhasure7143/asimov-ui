@@ -1,26 +1,25 @@
-body{
+/* body{
     background-color: #F1F0F0;
 }
 h1,h2,h3,h4,h5,h6,a,ul,li,ol,p,span{
     margin: 0px;
     padding: 0px;
     color: #081D2A;
-}
+} 
+.main {
+    background-color: #F1F0F0;
+}*/
+
+
 [aria-labelledby*="-title"] {
     display: none;
 }
-.main {
-    background-color: #F1F0F0;
-}
-.secone h1, .chartssc h2, .varienanal h1 {
-    font-size: 18px;
-    margin-bottom: 15px;
+.secone h1, .chartssc h1, .varienanal h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
 }
-.innersecone h2 {
-    color: #fff;
-    font-weight: 600;
-    font-size: 34px;
+.innersecone h2 {    
     line-height: 16px;
     position: relative;
     top: 50%;
@@ -33,17 +32,18 @@ span.smalfon {
     width: 100%;
     font-size: 18px;
     font-weight: normal;
-    line-height: 22px;
+    line-height: 22px;    
 }
 .innersecone p {
     font-size: 16px;
     line-height: 18px;
     position: relative;
-    top: 49%;
+    top: 50%;
     transform: translateY(-50%);
+    color: #232832;
 }
 .leftinsec {
-    background-color: #00a0e3;
+    background-color: #098de6;
     padding: 10px;
     width: 72px;
 }
@@ -51,9 +51,8 @@ span.smalfon {
     padding: 10px;
 }
 .innersecone {
-    border: 1px solid #00a0e3;
+    border: 1px solid #098de6;
     border-radius: 4px;
-    background-color: #fff;
     min-height: 71px;
 }
 
@@ -62,26 +61,22 @@ span.smalfon {
     margin-bottom: 15px;
     width: 100%;
 }
-.maintx:last-child {
-    margin: unset;
-}
+
 .leftyext {
-    background-color: rgb(255 131 115 / 20%);
-    border-left: 2px solid #FF8373;
+    background-color: rgb(9 141 230 / 15%);
+    border-left: 2px solid #098de6;
     padding: 10px 15px;
 }
-.leftyext h4 {
+.leftyext h4, .leftyight h4 {
     font-size: 15px;
-    text-align: center;
-    color: #43425D;
+    color: #232832;
+    margin-bottom: 0px !important;
+    font-weight: 400;
 }
 .leftyight {
     padding: 10px;
 }
-.leftyight h5 {
-    color: #4D4F5C;
-    font-size: 15px;
-}
+
 .leftyight p {
     color: #4D4F5C;
     font-size: 15px;
@@ -90,16 +85,13 @@ span.smalfon {
     background-color: #fff;
     border: 1px solid #e1e7ec;
     border-radius: 4px;
-    padding: 10px;
+    padding: 15px;
     width: 100%;
 }
-.TA-Header {
-    padding: 5px 0px;
-}
-.TA-Header label {
-    color: #000000DE;
-    font-size: 16px;
-    font-weight: 600;
+
+.TA-Header h2, .varienanal h2 {
+    color: #232832;
+    font-size: 18px;
 }
 .chartinnsec select {
     border: 1px solid #D7DAE2;
@@ -118,7 +110,7 @@ span.smalfon {
     height: 340px;
 }
 .chartssc, .varienanal {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .rightsecr {
     width: 80px;
@@ -132,15 +124,6 @@ span.smalfon {
 }
 
 
-.d-flex
-{
-    display:flex !important;
-}
-
-
-.heading{
-    font-weight:600;
-}
 .chartinnsec g[aria-labelledby*="-title"] {
     display: none;
 }
@@ -152,12 +135,6 @@ span.smalfon {
     position: relative;
     width: 100%;
     bottom: 0px;
-}
-.varienanal label {
-    color: #000000DE;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 15px;
 }
 
 .varienanal.chartinnsec {

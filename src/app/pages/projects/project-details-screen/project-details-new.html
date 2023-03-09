@@ -14,10 +14,9 @@
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-                <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
+                <!-- <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                    <!-- <span>Open</span> -->
-                </button>
+                </button> -->
                 <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Attribute.svg" alt="Attributes" >
                     <span>Attributes</span>
@@ -254,7 +253,7 @@
                                                 alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">{{snapshotDatails.UsersOnboarded}}</label>
+                                            <label class="qcard-count">{{snapshotDatails.UsersOnboarded?snapshotDatails.UsersOnboarded-1:0}}</label>
                                             <p class="qcard-name">Users</p>
                                         </div>
                                     </div>
@@ -313,7 +312,7 @@
                     </div>
                     <div class="row acresources" *ngIf="!isCreate">
                         <h4 class="colheads">Recent Activities</h4>
-                        <button class="btn blue-btntext"><a href="#">View All</a></button>
+                        <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
                         <table class="table imgInFirstCol">
                             <thead>
                                 <tr>
