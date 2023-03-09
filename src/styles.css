@@ -2765,6 +2765,9 @@ span.tabscount {
   margin-right: 5px;
   font-weight: 400 !important;
   line-height: 32px;
+  margin-left: 5px;
+  height: 100%;
+  display: inline-block;  
 }
 /* Tabs NEW Styles End */
 
@@ -2773,11 +2776,11 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 260px); /*  attached docs grid height*/
+  height: calc(100vh - 210px); /*  for attached docs grid height*/
   overflow: auto;
 }
 .usersgrid .p-datatable-wrapper {
-  height: calc(100vh - 240px);
+  height: calc(100vh - 240px); /* for Onboard Users grid */
   overflow: auto;
 }
 .p-datatable .p-datatable-header {
@@ -2800,7 +2803,6 @@ span.tabscount {
 .p-datatable .p-datatable-thead > tr > th:before {   /* for normal th */
   content: " ";
   position: absolute;
-  top: 0px;
   left: 0px;
   right: 0px;
   bottom: -2px;
@@ -2893,6 +2895,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-menu .p-menuitem-link:focus {
   box-shadow: none !important;
 }
+.p-checkbox .p-checkbox-box {
+  width: 18px !important;
+  height: 18px !important;
+}
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
   border-color: var(--main-bluecolor) !important;
@@ -2920,6 +2926,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-inputtext:enabled:focus {
   border: 1px solid var(--main-bluecolor) !important;
+  box-shadow: none !important;
 }
 .p-overlaypanel-content {
   padding: 12px 16px !important;
@@ -3061,7 +3068,9 @@ button.btn.new-cancelbtn {
   line-height: 18px;
 }
 .createform-overlay input.p-inputtext,
-.createform-overlay .p-dropdown {
+.createform-overlay .p-dropdown,
+.splitoverlaycontent .p-dropdown,
+.splitoverlaycontent input.p-inputtext {
   border-color: #979797 !important;
   color: #232832;
   height: 40px;
@@ -3071,7 +3080,9 @@ button.btn.new-cancelbtn {
 .createform-overlay input.p-inputtext:focus,
 .createform-overlay .p-dropdown:focus,
 .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
-.createform-overlay .p-dropdown.p-dropdown-open {
+.createform-overlay .p-dropdown.p-dropdown-open,
+.splitoverlaycontent .p-dropdown.p-dropdown-open,
+.splitoverlaycontent input.p-inputtext:focus {
   border-color: #098de6 !important;
   background-color: #fff;
 }
