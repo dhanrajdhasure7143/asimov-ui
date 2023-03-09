@@ -96,7 +96,7 @@ export class ProcessinsightsComponent implements OnInit {
 
     bubbleData:any =[];
   view: any[] = [800, 420];
-  view1:any[] = [600, 340]
+  view1:any[] = [530, 340]
 
   // options
   legend: boolean = false;
@@ -134,7 +134,7 @@ yAxisLabel1: string = 'Occurences';
 
 
 //   combo chart
-view2 = [500,400];
+view2 = [445,400];
 gradient = false;
 showLegend = false;
 legendPosition = 'right';
