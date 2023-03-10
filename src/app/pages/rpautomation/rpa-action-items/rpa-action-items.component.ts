@@ -39,10 +39,8 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   getAllActionItems() {
-    this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((data: any) => {
-    this.actionTable = data;
-    console.log("ActionItems",this.actionTable);
-    
+    this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
+    this.actionTable = res.data;    
     this.loader.hide();
     this.columns_list = [
       {
@@ -146,6 +144,7 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Something went wrong!",
         heightAuto: false,
       });
+      this.getAllActionItems();
       this.loader.hide();
     })
   }
