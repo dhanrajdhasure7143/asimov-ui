@@ -31,7 +31,10 @@
                             <img *ngIf="task_details.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="task-status-icon">
-                            <img *ngIf="task_details.status != 'Closed' && task_details.status != 'New'"
+                                <img *ngIf="task_details.status == 'In Review'"
+                                src="./../../../../assets/images-n/projects/inreview-tasks.svg"
+                                alt="task-status-icon">
+                            <img *ngIf="task_details.status == 'In Progress'"
                                 src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
                                 alt="task-status-icon">
                             <img *ngIf="task_details.status == 'New'"
