@@ -100,6 +100,7 @@ export class CreateTasksComponent implements OnInit {
         if(user.roleID.displayName==="Process Architect"){
         const element = user;
         this.approverslist.push(element);
+        console.log(this.approverslist)
       }
       }
     }
@@ -167,6 +168,7 @@ export class CreateTasksComponent implements OnInit {
     this.api.getAlluserProcessPiIds().subscribe(data =>{
       let response:any=data;
       this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
+    console.log(this.pi_process_list)
     })
   }
 

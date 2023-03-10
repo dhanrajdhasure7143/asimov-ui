@@ -65,7 +65,8 @@ export class ProjectsListScreenComponent implements OnInit {
   categories_list: any[] = [];
   actionsitems = [
     {label: 'Create Project', command: () => {this.onClikCreateProject();}},
-    {label: 'Create Program', command: () => {this.onClikCreateProgram();}}
+    // {label: 'Create Program', command: () => {this.onClikCreateProgram();}}
+    {label: 'Create Program'}
   ];
 
   constructor(
