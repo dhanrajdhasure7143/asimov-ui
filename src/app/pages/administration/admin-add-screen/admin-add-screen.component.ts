@@ -343,9 +343,8 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
-      }) 
-      // window.location.reload();
-      // Swal.fire("Success", "Screen Saved successfully !", "success");
+        window.location.reload();
+      })
       this.spinner.hide();
       this.buttonDisable = true;
     }),

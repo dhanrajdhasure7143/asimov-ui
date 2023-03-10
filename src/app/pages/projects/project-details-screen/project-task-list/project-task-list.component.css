@@ -19,10 +19,12 @@ td p.lowpriority {
 
   .status-tabs {
     display: flex;
-    padding: 0px;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
-.status-img>img {
+.status-img > img {
     height: 40px !important;
 }
 .newstatu .status-img img {

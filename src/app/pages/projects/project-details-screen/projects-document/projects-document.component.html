@@ -222,8 +222,10 @@
     <p-overlayPanel #op1>
         <ng-template pTemplate>
         <span *ngIf="taskList.length>0">
-            <div class="docritclk" *ngFor="let each of taskList">
-                <div> <p-checkbox [value]="each" [(ngModel)]="selectedOne" (onChange)="onchangesCheckBox()"></p-checkbox><span>{{each.taskName}}</span></div>
+            <div class="docritclk">
+                <div *ngFor="let each of taskList">
+                    <p-checkbox [value]="each" [(ngModel)]="selectedOne" (onChange)="onchangesCheckBox()"></p-checkbox><span>{{each.taskName}}</span>
+                </div>
             </div>
         </span>
         <span *ngIf="taskList.length == 0">
