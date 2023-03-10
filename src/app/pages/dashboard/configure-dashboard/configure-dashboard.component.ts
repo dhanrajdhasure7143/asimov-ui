@@ -1,8 +1,11 @@
-import { Component, OnInit,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
+import { Inplace } from 'primeng/inplace';
 import widgetOptions from './widgetdetails.json';
 
 @Component({
@@ -14,6 +17,8 @@ export class ConfigureDashboardComponent implements OnInit {
   public panelSizes = [70, 30];
   isShowExpand: boolean = false;
   @Output() closeOverlay:any= new EventEmitter<boolean>();
+  @ViewChild("inplace") inplace!: Inplace;
+  items: MenuItem[];
   metrics_list: any[] = [];
   draggedProduct: any;
   defaultEmpty_metrics: any[] = [];
@@ -40,18 +45,22 @@ export class ConfigureDashboardComponent implements OnInit {
   draggedProduct1: any;
   isShow: boolean;
   isCreate:any
-  items: { label: string; }[];
+ // items: { label: string; }[];
   screenId: any;
+  
+ // childId: any;
+  selectedDashBoard: any;
+  
 
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
     private router: Router,
     private rest_api: RestApiService,
-    private loader : LoaderService) {
+    private loader : LoaderService, private confirmationService: ConfirmationService) {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.screenId=params.dashboardId
-      
+     
       this.dynamicDashBoard.dashboardName = params.dashboardName
       this.isCreate = this._paramsData.isCreate
 
@@ -59,8 +68,15 @@ export class ConfigureDashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.items = [
-      {label: 'Delete' 
-    }]
+      { 
+        label: 'Delete',
+        command: () => {
+          
+          this.deletedashbord();
+      }
+      
+     },
+    ]
     // this.loader.show();
     this.chartOptions = {
       legend: { position: "bottom" },
@@ -275,7 +291,7 @@ export class ConfigureDashboardComponent implements OnInit {
     if (type == 'metrics') {
       this.addedMetrics.splice(index, 1);
       // this.dynamicDashBoard.metrics.splice(index, 1);
-      this.metrics_list.find(item => item.id == data.id).metricAdded = false;
+      this.metrics_list.find(item => item.id == data.childId).metricAdded = false;
       if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
         this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
@@ -417,7 +433,7 @@ export class ConfigureDashboardComponent implements OnInit {
 
   saveDashBoard() {
     let req_array: any = [];
-    this.loader.show();
+    //this.loader.show();
     console.log(this.addedMetrics);
     this.addedMetrics.forEach(item => {
       let req_body = {
@@ -567,7 +583,7 @@ export class ConfigureDashboardComponent implements OnInit {
         return item
       })
       this.addedMetrics.forEach((item: any) => {
-        this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
+        this.metrics_list.find((metric_item: any) => metric_item.id == item.childId).metricAdded = true;
         if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
       })
@@ -590,9 +606,42 @@ export class ConfigureDashboardComponent implements OnInit {
    this.closeOverlay.emit(false)
   }
   getUpdatedList(){
-    this.rest_api.updateList(this.screenId,this.addedMetrics).subscribe((data:any)=>{
-      console.log(data)
+    let req_array: any = [];
+    this.addedMetrics.forEach(item => {
+      let req_body = {
+       childId: item.id,
+        screenId: this._paramsData.dashboardId,
+        type: "metric",
+        widgetType: "",
+        name: item.name
+      }
+      req_array.push(req_body)
+    })
+    console.log("this.addedMetrics,req_array")
+    this.rest_api.updateList(req_array).subscribe(res => {
+      
+      console.log(res)
       this.loader.hide();
     }
     )}
+  
+    deletedashbord(){
+      console.log("on delete")
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      accept: () => {
+        this.loader.show();
+        this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
+          this.inplace.deactivate();
+          this.loader.hide();
+         
+        });
+      },
+      key: "positionDialog",
+    });
+  
+    }
+
 }

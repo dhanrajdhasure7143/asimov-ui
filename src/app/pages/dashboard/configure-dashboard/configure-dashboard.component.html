@@ -11,10 +11,10 @@
             <div class="col-md-8 pr-0 text-right">
               <button *ngIf="isCreate==1" class="btn btn-primary eiap-btn" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="getUpdatedList()">Update</button>
-              <button class="btn-dots eiap-btn" (click)="menu1.toggle($event)">
+              <button class="btn-dots eiap-btn" (click)="menu.toggle($event)">
               <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
               </button>
-              <p-menu class="actionspopmenu p-menu-graph1"  #menu1 [popup]="true"  [model]="items">
+              <p-menu class="actionspopmenu p-menu-graph1"  #menu [popup]="true"  [model]="items">
              </p-menu>
             </div>
          </div>
