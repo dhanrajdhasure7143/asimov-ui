@@ -157,12 +157,13 @@
                                 </span>
                             </span>
                             <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
-                                <span (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
-                                </span>
                                 <span  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
                                     <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                                 </span>
+                                <span (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                    <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
+                                </span>
+                                
                             </span>
                         </div>
                     </span>

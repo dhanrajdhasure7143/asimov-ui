@@ -132,7 +132,7 @@
           </a>
         </div>
   
-        <mat-list-item *ngIf="freetrail!=true && this.userRoles.includes('System Admin')"
+        <mat-list-item *ngIf="this.userRoles.includes('System Admin')"
           (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}"
           id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -151,9 +151,9 @@
           <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}">&#xe5cf;
           </mat-icon>
         </mat-list-item>
-        <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
+        <div class="submenus adminsubmenus" [ngClass]="{'expanded' : showadminSubmenu}">
           <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
-            *ngIf="this.userRoles.includes('System Admin')" (click)="userManagement()">
+            *ngIf="freetrail!=true && this.userRoles.includes('System Admin')" (click)="userManagement()">
             <span class="side-icon">
               <mat-icon>settings</mat-icon>
             </span>
@@ -189,7 +189,7 @@
                     <span class="side-menu-font">Support</span>
                 </a> -->
                 <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
-          *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/admin-screen-list">
+          *ngIf="freetrail!=true && this.userRoles.includes('System Admin')" routerLink="/pages/admin/admin-screen-list">
           <span class="side-icon">
             <mat-icon>settings</mat-icon>
           </span>

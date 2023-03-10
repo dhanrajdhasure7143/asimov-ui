@@ -126,10 +126,6 @@
                                     </p-inplace>
                                     <label>Departments</label>
                                 </div>
-                                <div class="pinf prjowner">
-                                    <p>{{projectDetails.owner| userPipe : users_list}}</p>
-                                    <label>Created By</label>
-                                </div>
                                 <div class="pinf prjstatus">
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
                                         <ng-template pTemplate="display">
@@ -146,6 +142,10 @@
                                     </p-inplace>
                                     <label>Status</label>
                                 </div>
+                                <div class="pinf prjowner">
+                                    <p>{{projectDetails.owner| userPipe : users_list}}</p>
+                                    <label>Created By</label>
+                                </div>
                                 <div class="pinf prjlastupdated">
                                     <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
@@ -154,7 +154,7 @@
                                     <div class="d-flex">
                                         <span class="kpipercent">
                                             <p-knob [(ngModel)]="projectDetails.projectPercentage" valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
-                                            <label>Project Completion</label>
+                                            <label>Completed</label>
                                         </span>
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg"
+                                            <img src="./../../../../assets/images-n/projects/OverdueTasks.svg"
                                                 alt="OverdueTasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -235,7 +235,7 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg"
+                                            <img src="./../../../../assets/images-n/projects/CompletedTasks.svg"
                                                 alt="UserOnboard" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -249,7 +249,7 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg"
+                                            <img src="./../../../../assets/images-n/projects/Users-Onboard.svg"
                                                 alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -279,7 +279,7 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UnreadMessages.svg"
+                                            <img src="./../../../../assets/images-n/projects/PendingApprovals.svg"
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">

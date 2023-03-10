@@ -122,7 +122,7 @@ div[class^='diagram_container'] .djs-container svg {
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: #bebcbc66;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*spinner styles*/
@@ -1148,10 +1148,14 @@ img.testplus1 {
 
 .maindivfoprm .label-control,
 .modelprbody label {
-  color: #001c47 !important;
+  /* color: #001c47 !important;
   font-weight: normal !important;
   font-size: 15px !important;
-  margin-bottom: 5px;
+  margin-bottom: 5px; */
+  font-size: 14px;
+  color: #7d7d7d;
+  margin-bottom: 2px;
+  line-height: 18px;
 }
 
 .modelprbody input,
@@ -1171,7 +1175,7 @@ img.testplus1 {
 .modelprbody select:focus,
 .modelprbody textarea:focus {
   border-color: var(--main-bluecolor) !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
   background-color: #fff !important;
 }
 
@@ -1372,7 +1376,7 @@ img.testplusupload {
   padding: 3px 4px;
   border-radius: 50%;
   background: #eef2f5;
-  color: #00a1e3;
+  color: #098de6;
   margin-right: 8px;
   font-size: 14px;
 }
@@ -1701,12 +1705,16 @@ span.star {
 }
 .form-control:focus {
   border-color: var(--main-bluecolor) !important;
+  background-color: #fff !important;
 }
 input.form-control, select.form-control {
   height: 40px;
 }
-input.form-control::placeholder, select.form-control::placeholder {
-  color: #7d7d7d;
+input.form-control::placeholder, select.form-control::placeholder,
+select.form-control.data.ng-pristine,
+select.form-control.ng-untouched.ng-pristine.ng-invalid,
+select.form-control.ng-pristine.ng-invalid.ng-touched {
+  color: #7d7d7d !important;
 }
 
 #projectfavourites .mat-tab-label-content {
@@ -1748,6 +1756,7 @@ input.bps-home-fileds {
   left: 6px !important;
   z-index: 99 !important;
   padding-bottom: 0px !important;
+  color: #7d7d7d !important
 }
 
 .addrespopup .ng-dropdown-panel,
@@ -1861,11 +1870,11 @@ span.projects-header-title {
 .ngselectfield .ng-select,
 .addrespopup .ng-select,
 .addrespopup .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
 }
 
 .ngselectfield .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
   background-color: #f6f6f6 !important;
   border-radius: 2px !important;
   border: 1px solid #d1d1d1 !important;
@@ -2286,9 +2295,7 @@ span.pdicon {
 .Attached-contents .mat-progress-bar-fill::after {
   background: #4FA908  !important;
 }
-.ng-select .ng-select-container {
-  min-height: 34px !important;
-}
+
 .update_department .ng-select .ng-select-container{
   max-height: 65px !important;
   overflow: auto !important;
@@ -2596,8 +2603,8 @@ div {
 
 /* Scrollbar styles START */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   cursor: pointer;
 }
 ::-webkit-scrollbar:hover {
@@ -2616,8 +2623,6 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
 background: var(--main-bluecolor) !important;
 cursor: pointer;
-width: 8px;
-height: 8px;
 }
 /* Scrollbar styles END */
 
@@ -2646,6 +2651,7 @@ height: 8px;
 }
 .main-content-head h3 .title_text{
   font-size: 16px;
+  font-weight: 500;
 }
 .main-content-head button span {
   margin-left: 5px;
@@ -2758,6 +2764,9 @@ span.tabscount {
   margin-right: 5px;
   font-weight: 400 !important;
   line-height: 32px;
+  margin-left: 5px;
+  height: 100%;
+  display: inline-block;  
 }
 /* Tabs NEW Styles End */
 
@@ -2766,12 +2775,14 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 260px); /*  attached docs grid height*/
+  height: calc(100vh - 260px); 
   overflow: auto;
 }
 .usersgrid .p-datatable-wrapper {
-  height: calc(100vh - 240px);
-  overflow: auto;
+  height: calc(100vh - 240px); /* for Onboard Users grid */
+}
+.attachdocgrid .p-datatable-wrapper {
+  height: calc(100vh - 210px); /* for Attached Documents grid */
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
@@ -2793,9 +2804,13 @@ span.tabscount {
 .p-datatable .p-datatable-thead > tr > th:before {   /* for normal th */
   content: " ";
   position: absolute;
-  top: 0px;
   left: 0px;
   right: 0px;
+  bottom: 0px;  
+  border-bottom: 5px solid rgb(9 141 230 / 20%);
+}
+.usersgrid .p-datatable .p-datatable-thead > tr > th:before,
+.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before {  /* for normal th users onboard grid */
   bottom: -2px;
   border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
@@ -2886,6 +2901,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-menu .p-menuitem-link:focus {
   box-shadow: none !important;
 }
+.p-checkbox .p-checkbox-box {
+  width: 18px !important;
+  height: 18px !important;
+}
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
   border-color: var(--main-bluecolor) !important;
@@ -2913,6 +2932,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-inputtext:enabled:focus {
   border: 1px solid var(--main-bluecolor) !important;
+  box-shadow: none !important;
 }
 .p-overlaypanel-content {
   padding: 12px 16px !important;
@@ -3002,7 +3022,8 @@ button.btn.bluebg-button {
   color: #fff;
   padding: 6px 30px;
 }
-button.btn.canlrst-btn {
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
   color: #098de6 !important;
   font-size: 16px;
 }
@@ -3053,7 +3074,9 @@ button.btn.canlrst-btn {
   line-height: 18px;
 }
 .createform-overlay input.p-inputtext,
-.createform-overlay .p-dropdown {
+.createform-overlay .p-dropdown,
+.splitoverlaycontent .p-dropdown,
+.splitoverlaycontent input.p-inputtext {
   border-color: #979797 !important;
   color: #232832;
   height: 40px;
@@ -3063,8 +3086,11 @@ button.btn.canlrst-btn {
 .createform-overlay input.p-inputtext:focus,
 .createform-overlay .p-dropdown:focus,
 .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
-.createform-overlay .p-dropdown.p-dropdown-open {
+.createform-overlay .p-dropdown.p-dropdown-open,
+.splitoverlaycontent .p-dropdown.p-dropdown-open,
+.splitoverlaycontent input.p-inputtext:focus {
   border-color: #098de6 !important;
+  background-color: #fff;
 }
 .createform-overlay input.p-inputtext::placeholder,
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -3226,6 +3252,24 @@ background-color: #fff;
   text-align: right;
 }
 
+/* new styles for ng select */
+.ng-select .ng-select-container {
+  min-height: 40px !important;
+  background-color: transparent !important;
+  border: 1px solid #979797 !important;
+  box-shadow: none !important;
+}
+.ng-select.ng-select-opened>.ng-select-container{
+  border: 1px solid #098de6 !important;
+}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  background: transparent !important;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 10px !important;
+  color: #7d7d7d !important;
+}
+/* new styles for ng select */
 
 /* ----------------------NEW STYLES END------------------------- */
 
@@ -3286,35 +3330,6 @@ body {
 } 
  .row {
   margin: 0px !important;
-} 
-
- ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar:hover {
-  width: 8px !important;
-  height: 8px !important;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0081B833;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(73, 88, 145);
-  cursor: pointer;
-  width: 8px;
-  height: 8px;
 } 
  
 .bpp-properties-entry, .dpp-properties-entry {

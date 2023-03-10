@@ -1,8 +1,6 @@
 :host {
 
   .mat-icon {
-    // vertical-align: middle;
-    // margin-right: 20px;
     vertical-align: middle;
     margin-right: 0px;
     margin-left: auto;
@@ -43,23 +41,6 @@
   width: 260px;
 }
 
-
-.mat-nav-list {
-  a {
-    // font-weight: 300;
-  }
-}
-
-.ep-nav-font {
-  a {
-
-    // font-size: 20px !important;
-    // font-weight: 400 !important;
-
-  }
-}
-
-
 .side-menu-font {
   font-size: 15px;
   padding: 0px 15px;
@@ -81,16 +62,8 @@
 
 .mat-list-base {
   padding-top: 0px !important;
+  height: 100%;
 }
-
-// .main-close{
-//   margin-left:66px
-// }
-
-
-//.main-open{
-//margin-left:300px;
-//}
 
 ::ng-deep mat-nav-list a:active {
   background-color: #00a0e3 !important;
@@ -118,17 +91,11 @@
 }
 
 .sidebar-main {
-  // height: calc(100vh - 147px);
   height: calc(100% - 60px);
-  // overflow:scroll;
-  // border-right:1px solid rgb(184, 184, 184);
 }
 
 .nav-main {
   height: calc(100% - 0px);
-  // border-right:1px solid lightblue;
-  //box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
 }
 
 .menu-button {
@@ -154,6 +121,14 @@
 .submenus.expanded {
   transform: scaleY(1);
   height: auto;
+   padding: 0px;
+  background: #00a0e309;
+  padding-left: 30px;
+  padding-bottom: 15px;
+}
+.submenus.adminsubmenus.expanded {
+  height: calc(100% - 315px);
+  overflow: auto;
 }
 
 .full-width {
@@ -198,16 +173,6 @@ label.epsoft-label sup {
     top: 11px;
     right: -12px;
     color: #001c47;
-  /* need to remove
-  font-size: 6px;
-  border: 1px solid #001c47;
-  border-radius: 50%;
-  padding: 3px 1.0px;
-  height: 8px;
-  width: 8px;
-  position: absolute;
-  top: 0px;
-  right: -10px;*/
 }
 
 
@@ -234,10 +199,6 @@ label.epsoft-label sup {
   display: none;
 }
 
-// .mat-list-item:hover span.side-icon .active-img {
-//   display: block !important;
-// }
-
 .mat-list-item:hover span.side-menu-font {
   color: white !important;
 }
@@ -251,11 +212,6 @@ label.epsoft-label sup {
   color: #ffffff;
 }
 
-.mat-list-item:hover mat-icon.menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
-  color: #ffffff;
-}
-
-
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
   display: block;
@@ -265,15 +221,6 @@ label.epsoft-label sup {
   padding: 0;
   position: relative;
   background: transparent;
-}
-
-.submenus.expanded {
-  padding: 0px;
-  background: #00a0e309;
-  // margin-left: 30px;
-  padding-left: 30px;
-  padding-bottom: 15px;
-  // border-left: 2px solid #00a0e3;
 }
 
 .submenus.expanded .mat-list-item.active {
@@ -287,7 +234,6 @@ label.epsoft-label sup {
 }
 
 .submenus.expanded .mat-list-item {
-  // padding-left: -5px !important;
   border-left: 3px solid #00a0e31c;
 }
 

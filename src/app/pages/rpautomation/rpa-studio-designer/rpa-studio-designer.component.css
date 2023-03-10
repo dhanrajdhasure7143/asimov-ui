@@ -43,7 +43,7 @@
 
 span.tab-botname {
     margin: 0px 26px 0px 6px;
-    color: #001c47;
+    color: #232832;
 }
 
 .bot-close img {
@@ -111,7 +111,7 @@ span.tab-botname {
 .main-content1 .module-header-title {
     font-weight: 600;
     font-size: 22px;
-    color: #001c47;
+    color: #232832;
     line-height: 0px !important;
 }
 
@@ -162,7 +162,7 @@ ul#environments li img {
 .rpa-layout-header span.module-heading-title {
     font-weight: 600;
     font-size: 20px;
-    color: #001c47;
+    color: #232832;
 }
 
 span.bpsbtnsep {
@@ -195,7 +195,7 @@ ul#other_actions li img {
 .designer-module-heading-title {
     font-weight: 600;
     font-size: 22px;
-    color: #001c47;
+    color: #232832;
 }
 
 hr {
@@ -249,7 +249,7 @@ ul#versions li.clickable:hover {
 }
 
 .action-item.hovericon:hover {
-    background-color: #00a0e3;
+    background-color: #098de6;
     border-radius: 3px;
 }
 
@@ -264,7 +264,7 @@ ul#versions li.clickable:hover {
 }
 
 .rpa-subtitle {
-    color: #001C47;
+    color: #232832;
     font-weight: 400;
     font-size: 13px;
     padding-top: 8px;
@@ -273,7 +273,7 @@ ul#versions li.clickable:hover {
 .rpa-main-title {
     font-weight: 600;
     font-size: 18px;
-    color: #001c47;
+    color: #232832;
     line-height: 0px !important;
 }
 
@@ -454,13 +454,6 @@ span.testtooltip::before {
   overflow:visible !important;
   position: relative  !important;
 }
-/* need to remove
-::-webkit-scrollbar {
-  display: none;
-} *
- .dropdown-menu::-webkit-scrollbar {
-  display: block;
-} */
 
 .imageI{
   width: 100%;
@@ -712,7 +705,7 @@ ul#versions li:hover {
 .newmodelcla .refecls {
   cursor: pointer;
   font-size: 10px;
-  background-color: #00a0e3 !important;
+  background-color: #098de6 !important;
   color: #fff;
   padding: 2px 9px;
   border-radius: 10px;
@@ -726,7 +719,7 @@ ul#versions li:hover {
 }
 
 .action-item.hovericon:hover {
-  background-color: #00a0e3;
+  background-color: #098de6;
   border-radius: 3px;
 }
 .action-item.hovericon:hover img {

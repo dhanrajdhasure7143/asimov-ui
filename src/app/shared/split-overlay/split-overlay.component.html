@@ -1,14 +1,13 @@
 <div class="dynamic-forms-modal" style="display: block">
-    <!-- own-overlay rpa-modal // removed these classes if in any overlay missed css please check the main class  -->
 <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
     <as-split-area [size]="areas[0].size" order="areas[0].order">
     </as-split-area>
     <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
         <div class="right_split">
             <span class="splitter-headers">
-                <img *ngIf="isShowExpand" src="../../../assets/images-n/projects/minimize.svg"
+                <img *ngIf="isShowExpand" src="../../../assets/images-n/projects/minimize.svg" alt="Minimize"
                     (click)="minimizeFullScreen()" class="expandsvgimg" pTooltip="Minimize" tooltipPosition="bottom"/>
-                <img *ngIf="!isShowExpand" src="../../../assets/images-n/projects/maximize.svg"
+                <img *ngIf="!isShowExpand" src="../../../assets/images-n/projects/maximize.svg" alt="Maximize"
                     (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="bottom"/>
                 <a (click)="closeSplitOverlay()" class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
                         alt="close" pTooltip="Close" tooltipPosition="bottom"></a>
