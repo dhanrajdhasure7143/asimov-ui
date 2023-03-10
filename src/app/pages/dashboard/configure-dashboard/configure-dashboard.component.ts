@@ -71,10 +71,8 @@ export class ConfigureDashboardComponent implements OnInit {
       { 
         label: 'Delete',
         command: () => {
-          
           this.deletedashbord();
       }
-      
      },
     ]
     // this.loader.show();
@@ -291,14 +289,15 @@ export class ConfigureDashboardComponent implements OnInit {
     if (type == 'metrics') {
       this.addedMetrics.splice(index, 1);
       // this.dynamicDashBoard.metrics.splice(index, 1);
-      this.metrics_list.find(item => item.id == data.childId).metricAdded = false;
+      let itemId=data.childId? data.childId: data.id
+      this.metrics_list.find(item => item.id == itemId).metricAdded = false;
       if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
         this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
     if (type == 'widgets') {
       this.addedWidgets.splice(index, 1)
       //this.dynamicDashBoard.widgets.splice(index, 1);
-      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
+      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;``
       if (this.widgetslist.find((item) => item.widgetAdded == true))
         this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
     }
@@ -605,11 +604,13 @@ export class ConfigureDashboardComponent implements OnInit {
     this.minimizeFullScreen();
    this.closeOverlay.emit(false)
   }
-  getUpdatedList(){
+  Updatedconfiguration(){
     let req_array: any = [];
+    console.log(this.addedMetrics)
+    this.loader.show();
     this.addedMetrics.forEach(item => {
       let req_body = {
-       childId: item.id,
+       childId: item.childId? item.childId: item.id,
         screenId: this._paramsData.dashboardId,
         type: "metric",
         widgetType: "",
@@ -618,10 +619,10 @@ export class ConfigureDashboardComponent implements OnInit {
       req_array.push(req_body)
     })
     console.log("this.addedMetrics,req_array")
-    this.rest_api.updateList(req_array).subscribe(res => {
-      
+    this.rest_api.updateDashboardConfiguration(req_array,this._paramsData.dashboardId).subscribe(res => {
       console.log(res)
       this.loader.hide();
+      this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     }
     )}
   

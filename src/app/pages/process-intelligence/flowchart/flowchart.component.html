@@ -161,13 +161,14 @@
 
 <div class="bpmnCreate">
     <div id="filterModal" class="modal">
-         <div class="modal-content">
+        <app-split-overlay (closeOverlay)="closePopup()" >
+         <div class="">
            <div class="modal-header">
             <h4>Filter</h4>
-             <span class="close" (click)="closePopup();">
+             <!-- <span class="close" (click)="closePopup();">
                 <img alt="" class="default-img" src="../../../../assets/images/PI/close.svg">
                 <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
-             </span>             
+             </span>              -->
            </div>
            <div class="modal-body">
              <div *ngIf="isFilterComponent">
@@ -175,6 +176,7 @@
              </div>
            </div>
         </div>
+        </app-split-overlay>
     </div>
 </div>
  

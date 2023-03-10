@@ -1748,7 +1748,7 @@ getActionById(id){
 saveAction(body){
   return this.http.post("/rpa-service/saveAction",body)
 }
-updateList(body:any){
-  return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets`,body)
+updateDashboardConfiguration(body:any,screenId){
+  return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets?screenId=`+screenId,body)
 }
 }

@@ -10,9 +10,9 @@
             </div>
             <div class="col-md-8 pr-0 text-right">
               <button *ngIf="isCreate==1" class="btn btn-primary eiap-btn" (click)="saveDashBoard()">Done</button>
-              <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="getUpdatedList()">Update</button>
+              <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="Updatedconfiguration()">Update</button>
               <button class="btn-dots eiap-btn" (click)="menu.toggle($event)">
-              <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
+                <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
               </button>
               <p-menu class="actionspopmenu p-menu-graph1"  #menu [popup]="true"  [model]="items">
              </p-menu>
@@ -48,7 +48,7 @@
             <div class="well1-dynmic">
               <div class="flex-container text-control">
                 <div class="img-div">
-                  <img src="..\assets\images-n\dashboard\{{item.src}}" class="dashbrd-img"/>
+                  <!-- <img src="..\assets\images-n\dashboard\{{item.src}}" class="dashbrd-img"/> -->
                   <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
                 </div>
                 <div class="new-dynamic">
@@ -254,10 +254,10 @@
             (onDragEnd)="dragEnd()" (click)="onSelectMetric(item,i)">
             <div class="flex-container">
               
-              <div class="img-div">
+              <!-- <div class="img-div">
                 <img src="..\assets\images-n\dashboard\{{item.src}}" [alt]="item.name" width="60px" height="60px"
                   style="margin-right:20px;" />
-              </div>
+              </div> -->
               <div>
                 <h5>{{item.name}}</h5>
                 <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
