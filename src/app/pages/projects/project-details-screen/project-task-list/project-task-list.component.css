@@ -25,7 +25,7 @@ td p.lowpriority {
   }
 
 .status-img > img {
-    height: 40px !important;
+    /* height: 40px !important; */
 }
 .newstatu .status-img img {
     padding: 0px;

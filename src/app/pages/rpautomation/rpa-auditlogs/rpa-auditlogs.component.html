@@ -1,24 +1,21 @@
-<div class="main-content prjmain">
-    <div class="content-area">
-        <div class="prj-rpadesign-main h-100">
-            <div class="h-100" id="my_workspace">
-                <div class="module-heading title">
-                    <div class="col-md-2 p-0">
-                        <span class="module-header-title">
-                            <span class="module-back-button" (click)="open()">
-                                <i aria-hidden="true" class="fas fa-arrow-left"></i>
-                            </span>
-                            <span class="module-parent-title">Audit Logs</span>
-                        </span>
-                    </div>
-                </div>
-                <!-- <div class="prj-rpadesign-body"> -->
-                <p-table  #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true"
+<div class="maincont">
+    <div class="maincont-contentarea">
+        <div class="h-100" id="my_workspace">
+            <div class="row main-content-head">
+                <h3>
+                    <label id="popup_title">
+                        <a (click)="open()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                    </label>
+                    <span class="title_text">Audit Logs</span>
+                </h3>
+            </div>
+            <div class="main-content-body rpaauditsgrid">
+                <p-table  #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true" [scrollable]="true"
                     [reorderableColumns]="true" [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments']">
                     <ng-template pTemplate="caption">
                         <div class="flex">
                             <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
-                            <span class="p-input-icon-right ml-auto">
+                            <span class="p-input-icon-right float-right">
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
                             </span>
@@ -84,6 +81,7 @@
                         </tr>
                     </ng-template>
                 </p-table>
+            </div>
                 <!-- 
                     <div class="table_responsive graph_table">
                         <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
@@ -154,11 +152,8 @@
             
             </div>  -->
         
-            </div>
-        </div> 
-        
+        </div>        
     </div>
-
 </div>
 
 <ngx-spinner bdColor="#bebcbc66" type="">

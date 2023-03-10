@@ -52,11 +52,11 @@ export class ProjectsListScreenComponent implements OnInit {
   table_searchFields: any = [];
   hiddenPopUp: boolean = false;
   _tabsList: any = [
-    { tabName: "All", count: "0", img_src: "Projects-Active.svg" },
+    { tabName: "All", count: "0", img_src: "Projects-tab.svg" },
     // { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
     { tabName: "New", count: "0", img_src: "NewStatus.svg" },
     { tabName: "In Progress", count: "0", img_src: "inprogress-tasks.svg" },
-    { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
+    { tabName: "On Hold", count: "0", img_src: "onhold-status.svg" },
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
   isprojectCreateForm: boolean = false;

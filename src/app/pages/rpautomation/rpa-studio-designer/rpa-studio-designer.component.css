@@ -1,8 +1,10 @@
-/* New Styles */
 .createform-overlay {
   height: calc(100% - 100px);
 }
-/* New Styles */
+.module-back-button {
+  border-right: unset !important;
+  margin-right: 0px !important;
+}
 
 .tabs {
     overflow: visible !important;
@@ -272,7 +274,7 @@ ul#versions li.clickable:hover {
 
 .rpa-main-title {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     color: #232832;
     line-height: 0px !important;
 }
@@ -556,27 +558,13 @@ background-color: blue !important;
   margin-top: 5px !important;
 }
 
-
-.actionsmenu-right{
-  display:flex;
-  float:right
-}
 .actionsmenu-left{
   display: flex;
   float:left;
 }
-.action-item {
-  width:auto;
-  /* font-size: 18px; */
-  padding: 6px 8px;
-  margin-top: 8px;
-  cursor: pointer;
-  position: relative;
-}
-
 
 .action-item i{
-  color:#0062cf !important;
+  color:#098de6 !important;
   font-size:24px;
   align-self: baseline;
   vertical-align: middle;

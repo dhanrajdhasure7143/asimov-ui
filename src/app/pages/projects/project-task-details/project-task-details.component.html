@@ -24,18 +24,20 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <!-- <div class="col-sm-1 p-0"> -->
                         <div class="task-status">
-                            <img *ngIf="task_details.status == 'Closed'"
-                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
-                                alt="task-status-icon">
-                            <img *ngIf="task_details.status != 'Closed' && task_details.status != 'New'"
+                            <img *ngIf="task_details.status == 'New'"
+                            src="./../../../../assets/images-n/projects/NewStatus.svg"
+                            alt="task-status-icon">
+                            <img *ngIf="task_details.status == 'In Progress'"
                                 src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
                                 alt="task-status-icon">
-                            <img *ngIf="task_details.status == 'New'"
-                                src="./../../../../assets/images-n/projects/NewStatus.svg"
+                            <img *ngIf="task_details.status == 'In Review'"
+                                src="./../../../../assets/images-n/projects/inreview-tasks.svg"
                                 alt="task-status-icon">
-                        <!-- </div> -->
+                            <img *ngIf="task_details.status == 'Closed'"
+                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                alt="task-status-icon">                            
+                           
                     </div>
                     <div class="col-sm-12 p-0" style="flex:auto;" >
                         <div class="row project-ninfo">
