@@ -11,7 +11,7 @@
               <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
               <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
           </div>
-          <div class="col-sm-4 pr-0 amountinputs" id="totalcases">
+          <div class="col-sm-4 pr-0 amountinputs nonedit" id="totalcases">
               <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
           </div>
       </div>
@@ -293,42 +293,44 @@
     <p>Activity Cost : <strong id="value1"></strong></p>
 </div>
 
-<div *ngIf="hiddenPopUp"class="col-sm-12 p-0 sidenav tracking_detsils1">
+<div *ngIf="hiddenPopUp" >
     <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
-       <div class="col-sm-12 ">
-            <div class="variants-header">
+        <div class="h-100">
+            <div class="create-header">
                 <h3>Variants List</h3>
                 <!-- <button class="closebtn" (click)="closeNav()">
                     <img src="../../../../assets/images/PI/close.svg" alt="" class="default-img">
                     <img src="../../../../assets/images/PI/close-blue.svg" alt="" class="hover-img">
                 </button> -->
             </div>
-            <div class="col-md-12 p-0">
+            <div class="col-md-6 p-0 mt-3">
                 <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
                     <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                 </select>
             </div>
-        </div>
-        <div class='col-sm-12 variant2'>
-            <div class="check_box">
-                <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
-                <span class="">Select all</span>
-                <span class='event2'>Time Taken</span>
-            </div>   
-        </div>
-        <div class="variant-body">
-            <div class='col-md-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
-                <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
-                    <span>{{i+1}}</span>
-                </div>
-                <div class='variant_parcent'>
-                    <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
-                        <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+            <div class="createform-overlay">
+                <div class='col-sm-12 variant2'>
+                    <div class="row check_box">
+                        <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)     ="selectAllVariants()">
+                        <span class="">Select all</span>
+                        <span class='event2'>Time Taken</span>
+                    </div>   
+                </div>            
+                <div class="">
+                    <div class='col-md-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''"       *ngFor="let data of this.varaint_data.data; let i=index">
+                        <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
+                            <span>{{i+1}}</span>
+                        </div>
+                        <div class='variant_parcent'>
+                            <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
+                                <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                            </div>
+                            <div (click)="caseIdSelect(data,i)" class=''></div>
+                        </div>
+                        <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
                     </div>
-                    <div (click)="caseIdSelect(data,i)" class=''></div>
                 </div>
-                <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
             </div>
         </div>
-</app-split-overlay>       
+    </app-split-overlay>       
 </div>

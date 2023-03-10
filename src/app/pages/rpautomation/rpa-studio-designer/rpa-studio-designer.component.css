@@ -3,7 +3,7 @@
 }
 .module-back-button {
   border-right: unset !important;
-  margin-right: 0px !important;
+  margin-right: 8px !important;
 }
 
 .tabs {
@@ -151,8 +151,9 @@ ul#environments li img {
 
 .rpa-layout-header {
     background-color: #F3F3F3;
-    padding: 5px 15px !important;
+    padding: 12px 15px 5px !important;
     height: 97px !important;
+    position: relative;
 }
 
 .rpa-layout-header .module-heading {
@@ -168,9 +169,9 @@ ul#environments li img {
 }
 
 span.bpsbtnsep {
-    color: #ddd;
-    font-size: 20px;
-    padding: 0px !important;
+  color: #e0e0e0;
+  font-size: 22px !important;
+  padding: 0px 5px !important;
 }
 
 span.rpatitsep {
@@ -211,6 +212,7 @@ hr {
     width: 20px;
     height: 20px;
     margin-right: 5px;
+    font-size: 16px !important;
 }
 
 .add-new {
@@ -274,16 +276,10 @@ ul#versions li.clickable:hover {
 
 .rpa-main-title {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     color: #232832;
     line-height: 0px !important;
 }
-
-
-.rpa-header-data {
-    line-height: 1cm
-}
-
 
 ::ng-deep .rpa-bottom-tab .mat-tab-header {
     background: white !important;
@@ -303,7 +299,8 @@ ul#versions li.clickable:hover {
 }
 
 .toolsetmenuicon {
-    padding-top: 15px;
+    position: absolute;
+    bottom: 5px;
 }
 
 button:disabled {
@@ -345,22 +342,6 @@ span.testtooltip::before {
     width: 18px !important;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css"; */
 .menu-item{
@@ -478,22 +459,6 @@ select.versions.form-control
 }
 ::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
 {
-  background-color: blue !important;
-}
-
-
-::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
-{
-
-  background-color: blue !important;
-}
-
-::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill{
-background-color: blue !important;
-}
-
-::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
-{
   background-color: #0062cf !important;
 }
 
@@ -527,12 +492,9 @@ background-color: blue !important;
 
 
 .rpa-dropdown{
- /*top:-78px !important;*/
- /* min-width:53px !important; */
  min-width: 80px !important;
     padding: 0px !important;
     left: -10px;
- /* left: -38px; */
 }
 
 
@@ -576,22 +538,10 @@ background-color: blue !important;
   padding-left:0px !important;
 }
 
-
-.menu-icon{
-  font-size: 16px !important;
-}
-
-
 .action-item-data{
   padding: 8px 6px;
 }
 
-
-.dropdown-action-item{
-  border-right: 1px solid #e0e0e0;
-  padding-right:15px;
-  /* padding-left:15px; */
-}
 .rpa-custom-slider {
   /* height: 200px;
   position: absolute;
@@ -739,8 +689,3 @@ ul#versions li:hover {
 .logsVersionFilter:focus{
   border:none !important;
 }
-
-
-
-
-

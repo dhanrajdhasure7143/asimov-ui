@@ -8,7 +8,6 @@
 
             <app-split-overlay (closeOverlay)="closeOverlay($event)" >
                 <div class="h-100">
-                    <!-- <div class="col-md-12 select_drpdwnone"> -->
                     <div class="create-header">
                         <h3>Variants List</h3>  
                         <!-- <button class="closebtn" (click)="closeNav()">
@@ -29,7 +28,6 @@
                                 <span class='event2'>Time Taken</span>
                             </div>                        
                         </div>
-                        <!-- <div class="variant-body"> -->
                         <div class="">
 
                             <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
