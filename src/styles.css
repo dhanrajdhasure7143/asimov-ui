@@ -2614,8 +2614,6 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
 background: var(--main-bluecolor) !important;
 cursor: pointer;
-width: 8px;
-height: 8px;
 }
 /* Scrollbar styles END */
 
@@ -2644,6 +2642,7 @@ height: 8px;
 }
 .main-content-head h3 .title_text{
   font-size: 16px;
+  font-weight: 500;
 }
 .main-content-head button span {
   margin-left: 5px;
@@ -2798,6 +2797,11 @@ span.tabscount {
   position: absolute;
   left: 0px;
   right: 0px;
+  bottom: 0px;  
+  border-bottom: 5px solid rgb(9 141 230 / 20%);
+}
+.usersgrid .p-datatable .p-datatable-thead > tr > th:before,
+.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before {  /* for normal th users onboard grid */
   bottom: -2px;
   border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
@@ -3317,35 +3321,6 @@ body {
 } 
  .row {
   margin: 0px !important;
-} 
-
- ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar:hover {
-  width: 8px !important;
-  height: 8px !important;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0081B833;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(73, 88, 145);
-  cursor: pointer;
-  width: 8px;
-  height: 8px;
 } 
  
 .bpp-properties-entry, .dpp-properties-entry {

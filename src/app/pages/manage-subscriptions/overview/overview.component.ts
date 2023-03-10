@@ -20,6 +20,8 @@ export class OverviewComponent implements OnInit {
   result: any;
   error1: string;
   email: any;
+  due_timestamp: string;
+  due_timestamp1: string;
 
   constructor(
     private api: RestApiService,
@@ -42,15 +44,6 @@ export class OverviewComponent implements OnInit {
     this.tenantId = localStorage.getItem("tenantName");
     this.api.getProductPlans("EZFlow", this.tenantId).subscribe((data) => {
       this.plansList = data;
-      this.plansList.map((data) => {
-        data["due_timestamp"] = moment(data.createdAt * 1000)
-          .add(1, "years")
-          .format("MMMM DD [,] yy");
-        data["due_timestamp1"] = moment(data.createdAt * 1000)
-          .add(1, "months")
-          .format("MMMM DD [,] yy");
-        return data;
-      });
       var plans: any = [];
       var allplans: any;
       allplans = this.plansList;
@@ -83,6 +76,7 @@ export class OverviewComponent implements OnInit {
       queryParams: { index: 3 },
     });
   }
+  
   onChangeEmail() {
     this.router.navigate(["/pages/subscriptions/billinginfo"], {
       queryParams: { index: 2 },
@@ -107,6 +101,8 @@ export class OverviewComponent implements OnInit {
       this.result = this.tableData.filter((obj) => {
         return obj.status == "Active";
       });
+      this.due_timestamp = moment(this.result.createdAt).add(1, "years").format("MMMM DD [,] yy")
+      this.due_timestamp1 = moment(this.result.createdAt).add(1, "months").format("MMMM DD [,] yy")
       this.spinner.hide();
     });
   }
