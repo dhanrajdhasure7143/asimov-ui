@@ -175,4 +175,9 @@ export class InviteUserComponent implements OnInit {
       this.isdprtDisabled = false;
     }
   }
+  userManagement(){
+    this.router.navigate(["/pages/admin/user-management"],{
+      queryParams:{index:0}
+    })
+  }
 }
