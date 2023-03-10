@@ -119,7 +119,9 @@ export class ModifyUserComponent implements OnInit {
           cancelButtonColor: "#d33",
           confirmButtonText: "Ok",
         }).then((result) => {
-          this.router.navigate(["/pages/admin/user-management"]);
+          // this.router.navigate(["/pages/admin/user-management"]);
+          this.userManagementUrl();
+          
         });
       } else {
         this.loader.hide();
@@ -141,7 +143,7 @@ export class ModifyUserComponent implements OnInit {
       this.isdprtDisabled = false;
     }
   }
-  userManagement(){
+  userManagementUrl(){
       this.router.navigate(["/pages/admin/user-management"],{
         queryParams:{index:0}
       })

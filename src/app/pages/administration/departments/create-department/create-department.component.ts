@@ -47,7 +47,8 @@ export class CreateDepartmentComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetdepartment();
-        this.router.navigate(['/pages/admin/user-management'])
+        // this.router.navigate(['/pages/admin/user-management'])
+        this.userManagement();
       })
       }
       else if(resp.message==="Category already exists"){
@@ -76,6 +77,11 @@ export class CreateDepartmentComponent implements OnInit {
         }
       })
       this.loader.hide();
+    })
+  }
+  userManagement(){
+    this.router.navigate(["/pages/admin/user-management"],{
+      queryParams:{index:1}
     })
   }
 }

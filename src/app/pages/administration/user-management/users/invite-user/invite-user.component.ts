@@ -138,7 +138,8 @@ export class InviteUserComponent implements OnInit {
                 confirmButtonText: "Ok",
               }).then((result) => {
                 this.resetUserInvite(form);
-                this.router.navigate(["/pages/admin/user-management"]);
+                // this.router.navigate(["/pages/admin/user-management"]);
+                this.userManagementUrl();
               });
             } else {
               Swal.fire(
@@ -175,7 +176,7 @@ export class InviteUserComponent implements OnInit {
       this.isdprtDisabled = false;
     }
   }
-  userManagement(){
+  userManagementUrl(){
     this.router.navigate(["/pages/admin/user-management"],{
       queryParams:{index:0}
     })
