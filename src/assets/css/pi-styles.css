@@ -42,10 +42,10 @@ float: left !important;
 .svg_icons{
   font-size:9px;
 }
-.columnSelection{
+/* .columnSelection{
   color: #0062cf;
   margin: 5px 0;
-}
+} */
 .sel_row{
   width: 669px;
 }
@@ -1010,3 +1010,13 @@ img.hover-img {
   top: 0px;
 }
 
+.PI-serwksp img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.PI-serwksp {
+  /* width: 40%; */
+  margin-right: 15px;
+  position: relative;
+}

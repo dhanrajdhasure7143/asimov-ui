@@ -116,51 +116,85 @@
     #select_tagOne{
         display: none;
     }
-    .activetag {
-        display: block;
-        position: absolute;
-        z-index: 1000;
-        color: white;
-        background-color: #18a318;
-        padding: 8px 10px;
-        margin: 100px 20px !important;
-        text-align: center;
-        border-radius: 20px;
-        cursor: default;
-        font-size: 14px;
-    }
+    
 
     
-.new-PI-layout {
-    padding: 15px 10px 10px;
-}
-
+/*  */
 .PI-serwksp input {
     height: 36px;
 } 
 .PI-srh-graph {
-    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
 .resur-value-data h5 {
-    color: #00a0e3;
-    font-weight: 600;
-    margin: 0px 0px 6px 0px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
 }
 .resur-value-data small {
     font-size: 13px;
 }
+
+.sltrst-xclose {
+    height: 12px;
+}
+.sel-tab{
+    display: contents;
+}
+.sel-tab td {
+    border-top: medium none !important;
+    padding: 0px !important;
+}
+.activetag {
+    display: block;
+    z-index: 1000;
+    color: white;
+    background-color: #18a318;
+    padding: 8px 10px;
+    font-size: 15px;
+    position: relative;
+}
+.activetag button {
+    position: absolute;
+    right: 10px;
+}
+
+
+.PI.table thead {
+    border-bottom: medium none !important;
+}
+.PI.table th {
+    border-bottom: unset !important;
+    padding: 0px 10px !important;
+    background-color: #f9f9f9 !important;
+    color: #232832 !important;
+    font-weight: 600;
+}
+.PI.table th:first-child {
+    padding-left: 0px !important;
+}
+.PI.table th:last-child {
+    padding-right: 0px !important;
+}
+.PI.table thead tr {
+    height: 24px !important;
+}
+.PI.table th select {
+    margin-bottom: 10px !important;
+}
+
+
+/* .new-PI-layout {
+    padding: 15px 10px 10px;
+}
+.PI-srh-graph {
+    float: right;
+} 
 .PI-select-data {
     color: unset !important;
     margin: 0px 0px 10px 0px!important;
     width: 71.6%;
 }
-.sltrst-xclose {
-    height: 12px;
-    margin-left: 4px;
-}
-.PI.table th {
-    border-bottom: unset !important;
-}
-.sel-tab{
-    display: contents;
-}
+*/
