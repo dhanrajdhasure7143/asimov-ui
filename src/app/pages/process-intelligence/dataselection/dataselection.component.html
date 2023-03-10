@@ -1,22 +1,27 @@
-<div class="container-fluid new-PI-layout">
-  <div class="col-md-12 p-0">
-    <div class="d-flex PI-srh-graph">
-      <div class="form-group" id="title">
-          <button class="btn btn-default" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
-      </div>
-      <div class="form-group">
-          <button class="btn btn-primary" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
-              <img src="../.././../../assets/images/PI/generate graph.svg" class="testplus">Generate Process Graph</button>
-      </div>
-    </div>
-    <div *ngIf="headerName" class="columnSelection PI-select-data">
-      <div class="resur-value-data">
-        <h5>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</h5>
-        <small *ngIf="content_no == 1">(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small>
-        <small *ngIf="content_no == 2">(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small>
-        <small *ngIf="content_no == 3 || content_no == 4">(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small>  
+<div class="">
+  <div class="row mb-3">
+    <div class="col-md-7 pl-0">
+      <div *ngIf="headerName" class="columnSelection PI-select-data">
+        <div class="resur-value-data">
+          <h5>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</h5>
+          <small *ngIf="content_no == 1">(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small>
+          <small *ngIf="content_no == 2">(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small>
+          <small *ngIf="content_no == 3 || content_no == 4">(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small>  
+        </div>
       </div>
     </div>
+    <div class="col-md-5 pr-0">
+      <div class="PI-srh-graph">
+        <div class="mr-3" id="title">
+            <button class="btn btn-default" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
+        </div>
+        <div class="">
+            <button class="btn btn-primary" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
+                <img src="../.././../../assets/images/PI/generate graph.svg" class="testplus">Generate Process Graph</button>
+        </div>
+      </div>
+    </div>
+    
   </div>    
   <div class="col-md-12 p-0">
       <form id="DataDocTableForm">
@@ -117,7 +122,12 @@
             <tbody #container>
                 <tr class="sel-tab">
                     <td *ngFor="let val of headerData;trackBy:loopTrackBy;">
-                        <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><img src="../../../../assets/images/PI/x.svg" alt="" class="sltrst-xclose"></button> </div>
+                        <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>
+                          <span>{{headerName}}</span>
+                          <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'>
+                            <img src="../../../../assets/images/PI/x.svg" alt="" class="sltrst-xclose">
+                          </button> 
+                        </div>
                     </td>
                   </tr>
                 <tr *ngFor="let row of displayedRows$|async;trackBy:loopTrackBy;let i=index;" class="tableRow">
