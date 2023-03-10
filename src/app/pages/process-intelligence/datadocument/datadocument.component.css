@@ -46,7 +46,24 @@
 
 .PI.table th {
     border-bottom: unset !important;
+    padding: 0px 10px !important;
+    background-color: #f9f9f9 !important;
+    color: #232832 !important;
+    font-weight: 600;
 }
+.PI.table th:first-child {
+    padding-left: 0px !important;
+}
+.PI.table th:last-child {
+    padding-right: 0px !important;
+}
+.PI.table thead tr {
+    height: 24px !important;
+}
+.PI.table th select {
+    margin-bottom: 10px !important;
+}
+
 
 .modal-body.modelprbody.datadocmodal {
     height: calc(100vh - 280px);
