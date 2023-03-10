@@ -977,12 +977,12 @@ export class D3flowchartComponent {
   }
 
   timeConversion(millisec) {
-    var seconds: any = (millisec / 1000).toFixed(1);
-    var minutes: any = (millisec / (1000 * 60)).toFixed(1);
-    var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+    var seconds: any = (millisec / 1000).toFixed(2);
+    var minutes: any = (millisec / (1000 * 60)).toFixed(2);
+    var hours: any = (millisec / (1000 * 60 * 60)).toFixed(2);
     // var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
 
-    var days1: any = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+    var days1: any = (millisec / (1000 * 60 * 60 * 24)).toFixed(2);
     if (days1 >= 7) {
       let t = days1 / 7
       var days: any
