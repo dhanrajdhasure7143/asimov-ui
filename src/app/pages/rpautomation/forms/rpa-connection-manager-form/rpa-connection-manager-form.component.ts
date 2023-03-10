@@ -141,7 +141,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
+          text: "Something went wrong !!",
           heightAuto: false,
         });
       }
