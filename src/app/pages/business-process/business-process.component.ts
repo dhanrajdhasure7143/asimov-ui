@@ -60,12 +60,13 @@ export class BusinessProcessComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
-      if(params["projectId"])
-      {
+      if(params["projectId"]){
         console.log(params)
         localStorage.setItem("projectId", params.projectId);
         localStorage.setItem("projectName", params.projectName);
       }
+      if(params["navigateTo"])
+      localStorage.setItem("navigateTo", params.navigateTo);
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.selectedNotationType = params['ntype'];
       this.process_id=params['pid'];
@@ -182,13 +183,20 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   
   backtoNavigate(){
-    if(localStorage.getItem('projectId')!="null" && localStorage.getItem('project_id')!="null"){
+    if(localStorage.getItem('projectId')!="null" && localStorage.getItem('projectId') != undefined ){
       let projectId=localStorage.getItem("projectId");
       let projectName=localStorage.getItem("projectName")
       localStorage.removeItem("projectId");
       localStorage.removeItem("projectName")
-      this.router.navigate(["/pages/projects/tasks"], 
-      {queryParams:{"project_id":projectId, "project_name":projectName}})
+      console.log(localStorage.getItem("navigateTo"))
+      if(localStorage.getItem("navigateTo")){
+        this.router.navigate(["/pages/projects/projectdetails"], 
+        {queryParams:{"project_id":projectId, "project_name":projectName}})
+        localStorage.removeItem("navigateTo")
+      }else{
+        this.router.navigate(["/pages/projects/tasks"], 
+        {queryParams:{"project_id":projectId, "project_name":projectName}})
+      } 
     } else{
       this.router.navigate(['/pages/businessProcess/home'])
     }

@@ -223,6 +223,7 @@ isDialog:boolean=false;
 entered_folder_name:string='';
 _pinnedMessage:any[]=[];
 filteredUsers:any;
+interval:any;
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -528,8 +529,8 @@ this.dt.tenantBased_UsersList.subscribe(response => {
     usersDatausers_list = response;
   if(usersDatausers_list.length>0){
   this.getProjectdetails();
-  this.connectToWebSocket();
-  this.getMessagesList();
+  // this.connectToWebSocket();
+    this.getMessagesList();
   this.getAllCategories();
   this.getTheListOfFolders();
   this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
@@ -991,6 +992,9 @@ this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
     if(ele.pinnedMessage)
     this._pinnedMessage.push(ele)
   })
+  this.interval = setInterval(() => {
+    this.getMessagesListByInterval();
+  }, 2000);
   setTimeout(()=>{
       var objDiv = document.getElementById("message-body");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -998,6 +1002,20 @@ this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
   }
 })
 }
+
+getMessagesListByInterval(){
+  this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
+    this.messages_list = res;
+    this._pinnedMessage = [];
+    // this.messages_list.reverse();
+    if(this.messages_list.length >0){
+    this.messages_list.forEach(ele=>{
+      if(ele.pinnedMessage)
+      this._pinnedMessage.push(ele)
+    })
+    }
+  })
+  }
 
 onCreateTask() {
 this.createTaskOverlay = true;
@@ -1033,8 +1051,9 @@ this.replay_msg=message;
 }
 
 scrollTomain(message,type){
+  console.log(message)
   type == "replyMessage"? this.selectedItem = message.rmId: this.selectedItem = message.id
-this.selectedItem = message.rmId
+// this.selectedItem = message.rmId
 setTimeout(()=>{
   this.selectedItem =''
 },200)
@@ -1156,7 +1175,8 @@ navigateToBPMN(){
 let params_object= {
   ntype: "bpmn",
   projectId:this.project_id,
-  projectName:this.projectDetails.project_name
+  projectName:this.projectDetails.project_name,
+  navigateTo:"projectDetails"
 }
 if(this.projectDetails.correlationID){
   params_object["bpsId"]= this.projectDetails.correlationID.split(":")[0],
@@ -1275,14 +1295,13 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
 }
 
 truncateValue(replyMessage) {
-  if (replyMessage && replyMessage.length > 20)
+  if (replyMessage && replyMessage.length > 21)
     return replyMessage.substr(0, 20) + "...";
   return replyMessage;
 }
 
 onFilteredUsers(usernames: string[]) {
   this.filteredUsers = this.existingUsersList.filter(user => {
-    console.log( this.filteredUsers)
     if(usernames.length>0)
       if((usernames[0].toLowerCase()).includes(user.firstName.toLowerCase()))
       {
@@ -1297,6 +1316,16 @@ onFilteredUsers(usernames: string[]) {
 
 onCancel(){
   this.checkBoxselected=[];
+}
+
+ngOnDestroy() {
+  clearInterval(this.interval);
+}
+
+truncatemessage(data){
+  if(data && data.length > 66)
+    return data.substr(0,65)+'...';
+  return data;
 }
 
 }

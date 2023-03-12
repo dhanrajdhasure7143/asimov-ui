@@ -63,7 +63,7 @@ export class CreateProjectFormComponent implements OnInit {
       ],
       projectPurpose: [
         "",
-        Validators.compose([Validators.required, Validators.maxLength(250)]),
+        Validators.compose([Validators.required]),
       ],
       owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
 

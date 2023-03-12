@@ -3096,7 +3096,7 @@ button.btn.new-cancelbtn {
   border: 1px solid #979797;
   box-shadow: none;
   width: 100%;
-  height: auto !important;
+  /* height: auto !important; */
   overflow: hidden;
 }
 .createform-footer {

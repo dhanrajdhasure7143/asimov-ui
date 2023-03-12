@@ -376,7 +376,7 @@
 
     <p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
         <span class="p-float-label">
-            <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+            <p-tree [value]="folder_files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
             <!-- <ng-template let-node pTemplate="default"> -->
                 <!-- <span [class]="node.dataType=='folder' ? 'selectable' : 'not-selectable'" [pSelectable]="node.dataType =='folder'" *ngIf="node.dataType=='folder'">{{node.label}}</span> -->
