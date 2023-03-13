@@ -13,31 +13,37 @@
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-                <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
+                <!-- <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                    <!-- <span>Open</span> -->
-                </button>
+                </button> -->
                 <button class="btn" (click)="taskAttachments()" pTooltip="Attachments" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Attach Documents- Icon.svg" alt="Attachments">
-                    <!-- <span>Attached Documents</span> -->
                 </button>
             </div>
         </div>
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <!-- <div class="col-sm-1 p-0"> -->
                         <div class="task-status">
                             <img *ngIf="task_details.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
                                 alt="task-status-icon">
-                            <img *ngIf="task_details.status != 'Closed' && task_details.status != 'New'"
+                                <img *ngIf="task_details.status == 'In Review'"
+                                src="./../../../../assets/images-n/projects/inreview-tasks.svg"
+                                alt="task-status-icon">
+                            <img *ngIf="task_details.status == 'In Progress'"
                                 src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
                                 alt="task-status-icon">
-                            <img *ngIf="task_details.status == 'New'"
-                                src="./../../../../assets/images-n/projects/NewStatus.svg"
+                            <img *ngIf="task_details.status == 'In Review'"
+                                src="./../../../../assets/images-n/projects/inreview-tasks.svg"
                                 alt="task-status-icon">
-                        <!-- </div> -->
+                            <img *ngIf="task_details.status == 'Closed'"
+                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                alt="task-status-icon">    
+                            <img *ngIf="task_details.status == 'New'"
+                            src="./../../../../assets/images-n/projects/NewStatus.svg"
+                            alt="task-status-icon">                        
+                           
                     </div>
                     <div class="col-sm-12 p-0" style="flex:auto;" >
                         <div class="row project-ninfo">
@@ -208,7 +214,7 @@
                                     <i class="pi pi-check" (click)="onUpdateDesc()"></i>
                                     <i class="pi pi-times" (click)="onDeactivate('inplace3')"></i>
                                 </span> 
-                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'250px'}">
+                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'320px'}">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
                                             <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -235,7 +241,7 @@
                         <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
                                 <div class="content"  *ngIf="taskcomments_list.length != 0" >
-                                    <div class="" *ngFor=" let item of taskcomments_list">
+                                    <div class="pb-2" *ngFor=" let item of taskcomments_list">
                                         <div class="row">
                                             <div class="userimage">
                                                 <div class="res-circle">
@@ -301,7 +307,7 @@
                 <div class="create-header">
                     <h3>Attached Documents</h3>
                 </div>
-                <div class="splitoverlaycontent">
+                <div class="splitoverlaycontent attachdocgrid">
                     <div class="tablediv">
                         <p-table [value]="attached_list" [(selection)]="checkBoxselected" selectionMode="multiple"  dataKey="id">
                             <ng-template pTemplate="caption">
@@ -370,7 +376,7 @@
 
     <p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
         <span class="p-float-label">
-            <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+            <p-tree [value]="folder_files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
             <!-- <ng-template let-node pTemplate="default"> -->
                 <!-- <span [class]="node.dataType=='folder' ? 'selectable' : 'not-selectable'" [pSelectable]="node.dataType =='folder'" *ngIf="node.dataType=='folder'">{{node.label}}</span> -->

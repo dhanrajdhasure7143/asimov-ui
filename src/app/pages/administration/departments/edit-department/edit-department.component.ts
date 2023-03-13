@@ -60,7 +60,7 @@ export class EditDepartmentComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
         }).then((result) => {
-          this.router.navigate(['/pages/admin/user-management'])
+          this.userManagement();
         })
         }
         else if(resp.message==="Category already exists"){
@@ -94,6 +94,11 @@ export class EditDepartmentComponent implements OnInit {
       let users:any=item
       this.users_list=users;
       this.loader.hide();
+    })
+  }
+  userManagement(){
+    this.router.navigate(["/pages/admin/user-management"],{
+      queryParams:{index:1}
     })
   }
 }

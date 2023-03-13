@@ -192,8 +192,71 @@
                     "pie"
                 ]
             }
+        },
+        {
+            "id": 99,
+            "widget_type": "table",
+            "name": "Bot Execution Status In Table",
+            "description": "Display The Table Data",
+            "sampleData": {
+                "labels": [
+                    {
+                        "field": "firstname",
+                        "header": "First Name"
+                    },
+                    {
+                        "field": "lastname",
+                        "header": "Last Name"
+                    },
+                    {
+                        "field": "age",
+                        "header": "Age"
+                    }
+                ],
+                "datasets": [
+                    {
+                        "data": [
+                            {
+                                "firstname": "David",
+                                "lastname": "ace",
+                                "age": "40"
+                            },
+                            {
+                                "firstname": "AJne",
+                                "lastname": "west",
+                                "age": "40"
+                            }
+                          
+                        ],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }
+                ]
+            },
+            "chartOptions": {
+                "plugins": {
+                    "legend": {
+                    "position": "bottom"
+                }
+            }
+            },
+            "widgetAdded": true,
+            "edit": false,
+            "filterOptions": {
+                "widgetTypes": [
+                    "bar",
+                    "pie"
+                ]
+            }
         }
-      
 
     ]
 }

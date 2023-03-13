@@ -1,13 +1,11 @@
-<div class="container-fluid h-100">
-  <div>
-    <div class="module-heading title">
-      <div class="ml-auto prj-lstscr-btn" (click)="inviteUser()">
-        <button class="btn btn-primary" type="button">Invite User</button>
-      </div>
-    </div>
-    <div class="userscontentdiv">
-      <div class="">
-        <app-dynamic-table
+<div class="h-100">
+  <div class="inviteuser-btn" (click)="inviteUser()">
+    <span pTooltip="Invite User" tooltipPosition="top">
+      <img src="../../../../../assets/images-n/common/Invite-User.svg" alt="inviteUser" />
+    </span>
+  </div>
+  <div class="">
+    <app-dynamic-table
           [columns_list]="columns_list"
           [table_data]="userslist"
           (deleteItem)="deleteUser($event)"
@@ -19,8 +17,6 @@
           [show_column_filter]="true"
           [show_clear_filter]="true"
         >
-        </app-dynamic-table>
-      </div>
-    </div>
+    </app-dynamic-table>
   </div>
 </div>

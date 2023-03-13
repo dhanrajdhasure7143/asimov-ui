@@ -35,15 +35,18 @@
             <div class="row project-Information">
                 <div class="row project-overview">
                         <div class="project-status">
-                            <img *ngIf="projectDetails.status == 'Closed'"
-                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
-                                alt="project-status-icon">
-                            <img *ngIf="projectDetails.status != 'Closed' && projectDetails.status != 'New'"
-                                src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
-                                alt="project-status-icon">
                             <img *ngIf="projectDetails.status == 'New'"
                                 src="./../../../../assets/images-n/projects/NewStatus.svg"
                                 alt="project-status-icon">
+                            <img *ngIf="projectDetails.status == 'In Progress'"
+                                src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                alt="project-status-icon">
+                            <img *ngIf="projectDetails.status == 'On Hold'"
+                                src="./../../../../assets/images-n/projects/onhold-status.svg"
+                                alt="project-status-icon">
+                            <img *ngIf="projectDetails.status == 'Closed'"
+                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                alt="project-status-icon">                            
                         </div>
                     <div class="col-sm-12 p-0" style="flex:auto;">
                         <div class="row project-ninfo">
@@ -126,10 +129,6 @@
                                     </p-inplace>
                                     <label>Departments</label>
                                 </div>
-                                <div class="pinf prjowner">
-                                    <p>{{projectDetails.owner| userPipe : users_list}}</p>
-                                    <label>Created By</label>
-                                </div>
                                 <div class="pinf prjstatus">
                                     <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
                                         <ng-template pTemplate="display">
@@ -146,6 +145,10 @@
                                     </p-inplace>
                                     <label>Status</label>
                                 </div>
+                                <div class="pinf prjowner">
+                                    <p>{{projectDetails.owner| userPipe : users_list}}</p>
+                                    <label>Created By</label>
+                                </div>
                                 <div class="pinf prjlastupdated">
                                     <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
                                     <label>Last Updated</label>
@@ -154,7 +157,7 @@
                                     <div class="d-flex">
                                         <span class="kpipercent">
                                             <p-knob [(ngModel)]="projectDetails.projectPercentage" valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
-                                            <label>Project Completion</label>
+                                            <label>Completed</label>
                                         </span>
                                     </div>
                                 </div>
@@ -164,12 +167,14 @@
                 </div>
                 <div class="row project-description">
                     <label>Description</label>
-                    <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()">{{project_desc}}</span>
+                    <!-- <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()">{{project_desc}}</span>
                         <span class="readmore icon-color" (click)="onReadMoreHide()">Hide</span></p>
                     <p *ngIf="!isReadmoreShow && !isEditDesc"> <span
-                            (click)="onClickToEditDesc()">{{truncateDesc(project_desc)}} </span><span
-                            class="readmore icon-color" (click)="onReadMoreHide()"
-                            *ngIf="project_desc.length > 150">Read more</span></p>
+                            (click)="onClickToEditDesc()">{{truncateDesc(project_desc)}} </span>
+                            <span class="readmore icon-color" (click)="onReadMoreHide()"
+                            *ngIf="project_desc.length > 150">Read more</span>
+                        </p> -->
+                        <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()">{{project_desc}}</span>
                     <!-- <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="project_desc"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()">Hide</span></p> -->
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
@@ -188,7 +193,7 @@
                                 </p-editor> -->
 
                         <textarea [style]="{'width':'100%'}" pInputTextarea [(ngModel)]="project_desc_edit"
-                            [autoResize]="true" maxlength="251"></textarea>
+                            [autoResize]="true"></textarea>
                         <span class="editfields prjdescef">
                             <i class="pi pi-check" (click)="onUpdateDesc()"></i>
                             <i class="pi pi-times" (click)="onDeactivateEdit()"></i>
@@ -221,7 +226,7 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg"
+                                            <img src="./../../../../assets/images-n/projects/OverdueTasks.svg"
                                                 alt="OverdueTasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -235,7 +240,7 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg"
+                                            <img src="./../../../../assets/images-n/projects/CompletedTasks.svg"
                                                 alt="UserOnboard" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -249,7 +254,7 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg"
+                                            <img src="./../../../../assets/images-n/projects/Users-Onboard.svg"
                                                 alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -279,7 +284,7 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UnreadMessages.svg"
+                                            <img src="./../../../../assets/images-n/projects/PendingApprovals.svg"
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -386,7 +391,7 @@
                             <span>
                             <div class="pinnedmsgs" *ngIf="_pinnedMessage.length > 0">
                                 <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
-                                <span class="pinnedmsgtext" (click)="scrollTomain(_pinnedMessage[0],'pin_message')">{{_pinnedMessage[0].message}}</span>
+                                <span class="pinnedmsgtext" (click)="scrollTomain(_pinnedMessage[0],'pin_message')">{{truncatemessage(_pinnedMessage[0].message)}}</span>
                             </div>
                             </span>
                             <div id="message-body" *ngIf="messages_list.length != 0">
@@ -404,15 +409,12 @@
                                         <div class="user_keys res-reply">
                                             <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" (click)="pinMessage(each)" class="testplus">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" (click)="replyMessage(each)"  class="testplus" >
-                                            
-                                            <!-- <i class="pi pi-tag"></i>
-                                            <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
                                         </div>
                                         <p>{{each.message}}</p>
+                                        <p class="userinfo">
+                                            <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
+                                            {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
                                     </div>
-                                    <!-- <p class="userinfo">{{each.firstName}} {{each.lastName}} |
-                                            {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p> -->
-
 
                                     <div *ngIf="each.rmId == 0"
                                         [ngClass]="logged_userId == each.userId ?'rgtusermsg': 'lftusermsg'" class="">
@@ -427,7 +429,8 @@
                                         <div>
                                             <p>{{each.message}}</p>
                                         </div>
-                                        <p class="userinfo">{{each.firstName}} {{each.lastName}} |
+                                        <p class="userinfo">
+                                            <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
                                             {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
                                     </div>
                                     <!-- <div class="rgtusermsg" *ngIf="logged_userId == each.userId">
@@ -441,10 +444,8 @@
                                 </div>
                             </div>
                             <div *ngIf="replay_msg" class="rply-msg rply-div">
-                                {{replay_msg.message}}
+                                {{truncatemessage(replay_msg.message)}}
                                 <img src="../../../../assets/images/PI/close.svg" alt="replymsg" (click)="onClearReply()"  class="testplus" >
-                                <!-- <img src="../../../../assets/images/PI/close.svg" alt="replymsg" (click)="onClearReply()"  class="testplus" > -->
-                                <!-- <i class="pi pi-times" (click)="onClearReply()"></i> -->
                             </div>
                             <div *ngIf="messages_list.length == 0" class="emptychat text-center">
                                 <img alt="user-img" src="../../../../assets/images-n/projects/StartCollaborations.svg" />

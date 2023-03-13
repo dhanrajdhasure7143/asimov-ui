@@ -226,6 +226,7 @@ export class RestApiService{
 
   listDBConnection(){
     return this.http.get("/rpa-service/agent/get-connections")
+
   }
   addDBConnection(data:any){
     return this.http.post('/rpa-service/agent/save-connection',data)
@@ -1746,5 +1747,8 @@ getActionById(id){
 }
 saveAction(body){
   return this.http.post("/rpa-service/action",body)
+}
+updateDashboardConfiguration(body:any,screenId){
+  return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets?screenId=`+screenId,body)
 }
 }

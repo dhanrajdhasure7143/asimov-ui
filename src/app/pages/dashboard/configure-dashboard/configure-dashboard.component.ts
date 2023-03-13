@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
+import { Inplace } from 'primeng/inplace';
 import widgetOptions from './widgetdetails.json';
 
 @Component({
@@ -11,7 +14,11 @@ import widgetOptions from './widgetdetails.json';
   styleUrls: ['./configure-dashboard.component.css']
 })
 export class ConfigureDashboardComponent implements OnInit {
-
+  public panelSizes = [70, 30];
+  isShowExpand: boolean = false;
+  @Output() closeOverlay:any= new EventEmitter<boolean>();
+  @ViewChild("inplace") inplace!: Inplace;
+  items: MenuItem[];
   metrics_list: any[] = [];
   draggedProduct: any;
   defaultEmpty_metrics: any[] = [];
@@ -20,11 +27,15 @@ export class ConfigureDashboardComponent implements OnInit {
   public dynamicDashBoard: any = {
     dashboardName: '',
     widgets: [],
-    metrics: []
+    metrics: [],
+
+
   }
+
   chartOptions: { legend: { position: string; }; };
   metricslist: any;
   widgetslist: any;
+  tablelist: any;
   metricslistimg: { src: string; }[];
   result: any;
   metricsitem: any;
@@ -32,26 +43,42 @@ export class ConfigureDashboardComponent implements OnInit {
   addedWidgets: any[] = [];
   _paramsData: any;
   draggedProduct1: any;
-  isShow:boolean;
+  isShow: boolean;
   isCreate:any
+ // items: { label: string; }[];
+  screenId: any;
+  
+ // childId: any;
+  selectedDashBoard: any;
+  
 
   constructor(private activeRoute: ActivatedRoute,
     private datatransfer: DataTransferService,
     private router: Router,
     private rest_api: RestApiService,
-    private loader : LoaderService) {
+    private loader : LoaderService, private confirmationService: ConfirmationService) {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
+      this.screenId=params.dashboardId
+     
       this.dynamicDashBoard.dashboardName = params.dashboardName
       this.isCreate = this._paramsData.isCreate
 
     })
   }
   ngOnInit(): void {
-    this.loader.show();
+    this.items = [
+      { 
+        label: 'Delete',
+        command: () => {
+          this.deletedashbord();
+      }
+     },
+    ]
+    // this.loader.show();
     this.chartOptions = {
       legend: { position: "bottom" },
-     
+
     };
     this.getListOfWidgets();
     this.getListOfMetrics();
@@ -257,45 +284,51 @@ export class ConfigureDashboardComponent implements OnInit {
     console.log("addedMetrics", this.addedMetrics)
   }
 
+
   onDeactivate(data, index, type) {
     if (type == 'metrics') {
       this.addedMetrics.splice(index, 1);
       // this.dynamicDashBoard.metrics.splice(index, 1);
-      this.metrics_list.find(item => item.id == data.id).metricAdded = false;
+      let itemId=data.childId? data.childId: data.id
+      this.metrics_list.find(item => item.id == itemId).metricAdded = false;
       if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
         this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
     if (type == 'widgets') {
       this.addedWidgets.splice(index, 1)
       //this.dynamicDashBoard.widgets.splice(index, 1);
-      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
+      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;``
       if (this.widgetslist.find((item) => item.widgetAdded == true))
-        this.widgetslist.find(item => item.id == data.id).widgetAdded = false;
+        this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
     }
   }
 
 
   addWidget(widget: any, index) {
     console.log(this.addedWidgets)
-   
+
     if (widget.widgetAdded == false) {
       this.widgetslist[index].widgetAdded = true;
       if (this.widgetslist.find((item: any) => item.id == widget.id) != undefined) {
         this.widgetslist.find((item: any) => item.id == widget.id).widgetAdded = true;
         let obj = {};
         const widgetData = widgetOptions.widgets;
+        // this.tabledata = this.addedWidgets[0].sampleData;
+        // console.log(this.tabledata);
+
         obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-       
+
         this.addedWidgets.push(obj);
-       
-        this.dynamicDashBoard.widgets=this.addedWidgets;
+
+        this.dynamicDashBoard.widgets = this.addedWidgets;
         console.log(this.addedWidgets)
-        
+
       }
     }
   }
 
- 
+
+
   // getChartData(widget: any) {
   //   let methodType: any = ""
   //   if (widget.widget_title == 'Bot Status')
@@ -398,33 +431,33 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   saveDashBoard() {
-    this.loader.show();
-    let req_array:any = [];
+    let req_array: any = [];
+    //this.loader.show();
     console.log(this.addedMetrics);
-    this.addedMetrics.forEach(item=>{
-      let req_body={
+    this.addedMetrics.forEach(item => {
+      let req_body = {
         childId: item.id,
         screenId: this._paramsData.dashboardId,
-        type:"metric",
-        widgetType:"",
-        name:item.name
+        type: "metric",
+        widgetType: "",
+        name: item.name
       }
       req_array.push(req_body)
     })
 
     this.dynamicDashBoard.widgets.forEach(element => {
-      let req_body={
+      let req_body = {
         childId: element.id,
         screenId: Number(this._paramsData.dashboardId),
-        type:"widget",
-        widgetType:element.widget_type,
-        name:element.name
+        type: "widget",
+        widgetType: element.widget_type,
+        name: element.name
       }
       req_array.push(req_body)
     });
-    console.log(this.dynamicDashBoard,req_array)
+    console.log(this.dynamicDashBoard, req_array)
 
-    this.rest_api.SaveDashBoardData(req_array).subscribe(res=>{
+    this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
       console.log(res)
       this.loader.hide();
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
@@ -484,9 +517,7 @@ export class ConfigureDashboardComponent implements OnInit {
           //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
           // })
 
-          res.widgets.forEach((item: any) => {
-            this.widgets.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
-          })
+
         }
       })
       console.log("this.metrics_list", this.metrics_list)
@@ -497,8 +528,24 @@ export class ConfigureDashboardComponent implements OnInit {
       this.widgetslist = data.data;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-         item["chartSrc"] = "chart4.png'"
+        item["chartSrc"] = "chart4.png'"
         return item
+      })
+      this.widgetslist.push({
+        "chartSrc":
+          "chart4.png'",
+        "description"
+          :
+          "Display the Table Data",
+        "id"
+          :
+          99,
+        "name"
+          :
+          "Bot Execution Status In Table",
+        "widgetAdded"
+          :
+          false
       })
       this.datatransfer.dynamicscreenObservable.subscribe((res: any) => {
         console.log(res.metrics)
@@ -510,15 +557,15 @@ export class ConfigureDashboardComponent implements OnInit {
 
           //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
           // })
-          res.metrics.forEach((item: any) => {
-            this.metrics_list.find((metric_item: any) => metric_item.id === item.id).metricAdded = true;
-
+          res.widgets.forEach((item: any) => {
+            this.widgetslist.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
           })
         }
       })
       console.log("this.widgetslist", this.widgetslist)
     })
   }
+
   addtable(){
     console.log("click successful")
     this.isShow = !this.isShow; 
@@ -535,7 +582,7 @@ export class ConfigureDashboardComponent implements OnInit {
         return item
       })
       this.addedMetrics.forEach((item: any) => {
-        this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
+        this.metrics_list.find((metric_item: any) => metric_item.id == item.childId).metricAdded = true;
         if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
       })
@@ -543,4 +590,59 @@ export class ConfigureDashboardComponent implements OnInit {
       this.loader.hide();
     });
   }
+  minimizeFullScreen(){
+    this.isShowExpand = false;
+   
+    this.panelSizes = [70, 30];
+  }
+  expandFullScreen(){
+    this.isShowExpand = true;
+   
+    this.panelSizes = [30, 70];
+  }
+  closeSplitOverlay(){
+    this.minimizeFullScreen();
+   this.closeOverlay.emit(false)
+  }
+  Updatedconfiguration(){
+    let req_array: any = [];
+    console.log(this.addedMetrics)
+    this.loader.show();
+    this.addedMetrics.forEach(item => {
+      let req_body = {
+       childId: item.childId? item.childId: item.id,
+        screenId: this._paramsData.dashboardId,
+        type: "metric",
+        widgetType: "",
+        name: item.name
+      }
+      req_array.push(req_body)
+    })
+    console.log("this.addedMetrics,req_array")
+    this.rest_api.updateDashboardConfiguration(req_array,this._paramsData.dashboardId).subscribe(res => {
+      console.log(res)
+      this.loader.hide();
+      this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
+    }
+    )}
+  
+    deletedashbord(){
+      console.log("on delete")
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      accept: () => {
+        this.loader.show();
+        this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
+          this.inplace.deactivate();
+          this.loader.hide();
+         
+        });
+      },
+      key: "positionDialog",
+    });
+  
+    }
+
 }

@@ -122,7 +122,7 @@ div[class^='diagram_container'] .djs-container svg {
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: #bebcbc66;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /*spinner styles*/
@@ -490,7 +490,7 @@ div#tooltip_template.tooltip-panel p:first-child {
 
 .tipsy-inner p:first-child {
   margin-top:-10px 5px -10px -10px !important;
-  color: #098de6;
+  color: var(--main-bluecolor);
 }
 
 .tipsy-inner p {
@@ -1148,10 +1148,14 @@ img.testplus1 {
 
 .maindivfoprm .label-control,
 .modelprbody label {
-  color: #001c47 !important;
+  /* color: #001c47 !important;
   font-weight: normal !important;
   font-size: 15px !important;
-  margin-bottom: 5px;
+  margin-bottom: 5px; */
+  font-size: 14px;
+  color: #7d7d7d;
+  margin-bottom: 2px;
+  line-height: 18px;
 }
 
 .modelprbody input,
@@ -1171,7 +1175,7 @@ img.testplus1 {
 .modelprbody select:focus,
 .modelprbody textarea:focus {
   border-color: var(--main-bluecolor) !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
   background-color: #fff !important;
 }
 
@@ -1267,7 +1271,7 @@ select.form-control {
 
 .modal-header.modelprhead h4 {
   font-size: 16px;
-  color: #001c47;
+  color: var(--main-txtcolor);
   font-weight: 600;
   line-height: 22px;
 }
@@ -1372,14 +1376,14 @@ img.testplusupload {
   padding: 3px 4px;
   border-radius: 50%;
   background: #eef2f5;
-  color: #00a1e3;
+  color: var(--main-bluecolor);
   margin-right: 8px;
   font-size: 14px;
 }
 
 .module-back-button:hover i {
   border-radius: 50%;
-  background: #00a1e3 !important;
+  background: var(--main-bluecolor) !important;
   color: #fff;
 }
 
@@ -1519,7 +1523,7 @@ select.small-input {
 .dpp-properties-panel textarea:focus,
 .dpp-properties-panel [contenteditable]:focus {
   border-color: var(--main-bluecolor) !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
   background-color: #fff !important;
   box-shadow: none;
 }
@@ -1653,7 +1657,7 @@ button.action-button.clear {
 }
 
 .mat-paginator .mat-icon-button:hover {
-  background-color: #00a0e4;
+  background-color: var(--main-bluecolor);
   color: #fff;
 }
 
@@ -1701,12 +1705,16 @@ span.star {
 }
 .form-control:focus {
   border-color: var(--main-bluecolor) !important;
+  background-color: #fff !important;
 }
 input.form-control, select.form-control {
   height: 40px;
 }
-input.form-control::placeholder, select.form-control::placeholder {
-  color: #7d7d7d;
+input.form-control::placeholder, select.form-control::placeholder,
+select.form-control.data.ng-pristine,
+select.form-control.ng-untouched.ng-pristine.ng-invalid,
+select.form-control.ng-pristine.ng-invalid.ng-touched {
+  color: #7d7d7d !important;
 }
 
 #projectfavourites .mat-tab-label-content {
@@ -1748,6 +1756,7 @@ input.bps-home-fileds {
   left: 6px !important;
   z-index: 99 !important;
   padding-bottom: 0px !important;
+  color: #7d7d7d !important
 }
 
 .addrespopup .ng-dropdown-panel,
@@ -1797,7 +1806,7 @@ button.btn {
   font-size: 15px;
   /* margin-right: 10px !important; */
   border-radius: 3px;
-  color: #001c47;
+  color: var(--main-txtcolor);
   min-width: 75px;
   display: inline-flex;
   align-items: center;
@@ -1861,11 +1870,11 @@ span.projects-header-title {
 .ngselectfield .ng-select,
 .addrespopup .ng-select,
 .addrespopup .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
 }
 
 .ngselectfield .ng-select-container {
-  min-height: 34px !important;
+  min-height: 40px !important;
   background-color: #f6f6f6 !important;
   border-radius: 2px !important;
   border: 1px solid #d1d1d1 !important;
@@ -1880,7 +1889,7 @@ span.projects-header-title {
 }
 
 .module-sub-header-title {
-  color: #001c47;
+  color: var(--main-txtcolor);
   width: 90%;
 }
 
@@ -1979,16 +1988,7 @@ th.mat-header-cell {
   transform: translateY(-70%)
 }
 
-.PI-serwksp img {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-.PI-serwksp {
-  width: 100%;
-  margin-right: 15px;
-  position: relative;
-}
+
 
 
 /* RPA Module New Styles */
@@ -2052,7 +2052,7 @@ th.mat-header-cell {
   text-align: center;
   content: "Select File";
   display: inline-block;
-  background: #00a1e3;
+  background: var(--main-bluecolor);
   border-radius: 2px;
   padding: 6px 8px;
   outline: none;
@@ -2171,7 +2171,7 @@ th.mat-header-cell {
 
 .logs-table th{
   background-color: white !important;
-  color: #00a1e3 !important;
+  color: var(--main-bluecolor) !important;
 }
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
@@ -2286,9 +2286,7 @@ span.pdicon {
 .Attached-contents .mat-progress-bar-fill::after {
   background: #4FA908  !important;
 }
-.ng-select .ng-select-container {
-  min-height: 34px !important;
-}
+
 .update_department .ng-select .ng-select-container{
   max-height: 65px !important;
   overflow: auto !important;
@@ -2339,7 +2337,7 @@ span.pdicon {
 }
 
 .vcmprop.mat-drawer-opened .mat-tab-label-active {
-  color: #00a1e4 !important;
+  color: var(--main-bluecolor) !important;
   opacity: 1;
 }
 .vcmprop .propertiesContainer span.mat-expansion-indicator {
@@ -2454,7 +2452,7 @@ button.custom-popupbtn.mat-button {
   height: 36px;
   padding: 0px 15px !important;
   background-color: aliceblue !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
 }
 .prj_activities_block .mat-tab-label-active {
   opacity: 1;
@@ -2546,6 +2544,7 @@ button.custom-popupbtn.mat-button {
 
 .mat-drawer-container  {
   color: var(--main-txtcolor) !important;
+  background-color: #fff !important;
 }
 
 * {
@@ -2596,8 +2595,8 @@ div {
 
 /* Scrollbar styles START */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   cursor: pointer;
 }
 ::-webkit-scrollbar:hover {
@@ -2616,8 +2615,6 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
 background: var(--main-bluecolor) !important;
 cursor: pointer;
-width: 8px;
-height: 8px;
 }
 /* Scrollbar styles END */
 
@@ -2646,6 +2643,7 @@ height: 8px;
 }
 .main-content-head h3 .title_text{
   font-size: 16px;
+  font-weight: 500;
 }
 .main-content-head button span {
   margin-left: 5px;
@@ -2674,7 +2672,7 @@ label#popup_title {
   margin-right: 8px;
 }
 #popup_title a:hover {
-  color: #00a1e3;
+  color: var(--main-bluecolor);
 }
 #popup_title .rightareabtn {
   margin-left: 0px !important;
@@ -2758,6 +2756,9 @@ span.tabscount {
   margin-right: 5px;
   font-weight: 400 !important;
   line-height: 32px;
+  margin-left: 5px;
+  height: 100%;
+  display: inline-block;  
 }
 /* Tabs NEW Styles End */
 
@@ -2766,12 +2767,17 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 260px); /*  attached docs grid height*/
+  height: calc(100vh - 260px); 
   overflow: auto;
 }
+.rpaauditsgrid .p-datatable-wrapper {
+  height: calc(100% - 177px); /* for rpa audit logs grid */
+}
 .usersgrid .p-datatable-wrapper {
-  height: calc(100vh - 240px);
-  overflow: auto;
+  height: calc(100vh - 240px); /* for Onboard Users grid */
+}
+.attachdocgrid .p-datatable-wrapper {
+  height: calc(100vh - 210px); /* for Attached Documents grid */
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
@@ -2793,9 +2799,13 @@ span.tabscount {
 .p-datatable .p-datatable-thead > tr > th:before {   /* for normal th */
   content: " ";
   position: absolute;
-  top: 0px;
   left: 0px;
   right: 0px;
+  bottom: 0px;  
+  border-bottom: 5px solid rgb(9 141 230 / 20%);
+}
+.usersgrid .p-datatable .p-datatable-thead > tr > th:before,
+.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before {  /* for normal th users onboard grid */
   bottom: -2px;
   border-bottom: 5px solid rgb(9 141 230 / 5%);
 }
@@ -2803,7 +2813,7 @@ span.tabscount {
 thead.p-datatable-thead tr {
   border-top: none !important;
   font-weight: 700;
-  border-bottom: 3px solid #098de6 !important;
+  border-bottom: 3px solid var(--main-bluecolor) !important;
   position: relative;
   height: 50px;
 }
@@ -2886,6 +2896,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-menu .p-menuitem-link:focus {
   box-shadow: none !important;
 }
+.p-checkbox .p-checkbox-box {
+  width: 18px !important;
+  height: 18px !important;
+}
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
   border-color: var(--main-bluecolor) !important;
@@ -2913,6 +2927,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-inputtext:enabled:focus {
   border: 1px solid var(--main-bluecolor) !important;
+  box-shadow: none !important;
 }
 .p-overlaypanel-content {
   padding: 12px 16px !important;
@@ -3002,8 +3017,9 @@ button.btn.bluebg-button {
   color: #fff;
   padding: 6px 30px;
 }
-button.btn.canlrst-btn {
-  color: #098de6 !important;
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
+  color: var(--main-bluecolor) !important;
   font-size: 16px;
 }
 .commentBox .p-tabview-panels {
@@ -3016,7 +3032,7 @@ button.btn.canlrst-btn {
   box-shadow: none;
 }
 .create-body .prjoverlay .p-card.p-component:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 .create-body .prjoverlay .p-card .p-card-body{
   height: 230px !important;
@@ -3053,7 +3069,9 @@ button.btn.canlrst-btn {
   line-height: 18px;
 }
 .createform-overlay input.p-inputtext,
-.createform-overlay .p-dropdown {
+.createform-overlay .p-dropdown,
+.splitoverlaycontent .p-dropdown,
+.splitoverlaycontent input.p-inputtext {
   border-color: #979797 !important;
   color: #232832;
   height: 40px;
@@ -3063,8 +3081,11 @@ button.btn.canlrst-btn {
 .createform-overlay input.p-inputtext:focus,
 .createform-overlay .p-dropdown:focus,
 .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
-.createform-overlay .p-dropdown.p-dropdown-open {
-  border-color: #098de6 !important;
+.createform-overlay .p-dropdown.p-dropdown-open,
+.splitoverlaycontent .p-dropdown.p-dropdown-open,
+.splitoverlaycontent input.p-inputtext:focus {
+  border-color: var(--main-bluecolor) !important;
+  background-color: #fff;
 }
 .createform-overlay input.p-inputtext::placeholder,
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -3075,7 +3096,7 @@ button.btn.canlrst-btn {
   border: 1px solid #979797;
   box-shadow: none;
   width: 100%;
-  height: auto !important;
+  /* height: auto !important; */
   overflow: hidden;
 }
 .createform-footer {
@@ -3139,7 +3160,7 @@ button.btn.canlrst-btn {
   margin: 10px;
 }
 .docfolder .p-card:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 
 .docfolder .pi-folder, .docfolder .pi-file , .docfolder .pi-image{
@@ -3175,7 +3196,7 @@ button.btn.canlrst-btn {
   box-shadow: none;
 }
 .fldrovrlay .p-card.p-component:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 .fldrovrlay .p-card-body {
   height: 180px !important;
@@ -3226,6 +3247,24 @@ background-color: #fff;
   text-align: right;
 }
 
+/* new styles for ng select */
+.ng-select .ng-select-container {
+  min-height: 40px !important;
+  background-color: transparent !important;
+  border: 1px solid #979797 !important;
+  box-shadow: none !important;
+}
+.ng-select.ng-select-opened>.ng-select-container{
+  border: 1px solid var(--main-bluecolor) !important;
+}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  background: transparent !important;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 10px !important;
+  color: #7d7d7d !important;
+}
+/* new styles for ng select */
 
 /* ----------------------NEW STYLES END------------------------- */
 
@@ -3286,35 +3325,6 @@ body {
 } 
  .row {
   margin: 0px !important;
-} 
-
- ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar:hover {
-  width: 8px !important;
-  height: 8px !important;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0081B833;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(73, 88, 145);
-  cursor: pointer;
-  width: 8px;
-  height: 8px;
 } 
  
 .bpp-properties-entry, .dpp-properties-entry {

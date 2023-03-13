@@ -43,7 +43,7 @@
                     <div *ngIf="optionValue == 'Process Mining'">
                         <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
                           emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
-                          placeholder="Select Workspace File" optionLabel="processName" optionValue="piId"
+                          placeholder="Select Workspace File" optionLabel="piName" optionValue="piId"
                           required></p-dropdown>
                     </div>
                     <div *ngIf="optionValue == 'RPA Implementation'">
@@ -119,14 +119,18 @@
               </div> -->
                 <div class="form-group col p-0" *ngIf="freetrail!='true'">
                     <label class="" for="approvers">Approver<span class="star">*</span></label>
-                    <select class="form-control enteredfield-color" formControlName="approvers">
+                    <p-dropdown [options]="approverslist" [style]="{'width':'100%'}"
+                      placeholder="Select Approver"
+                      formControlName="approvers" optionValue="user_email" optionLabel="fullName" required>
+                    </p-dropdown>
+                    <!-- <select class="form-control enteredfield-color" formControlName="approvers">
                       <option [value]="null" disabled hidden>Select Approver</option>
                       <option [value]="undefined" disabled hidden>Select Approver</option>
                       <option [value]="" disabled hidden>Select Approver</option>
                       <option value="" disabled hidden>Select Approver</option>
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                    </select>
+                    </select> -->
                     <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
                       class="required">Approvers Required*</span>
                 </div> 
@@ -170,10 +174,10 @@
                   style=" resize: none;">
                           </textarea> -->
                     <textarea pInputTextarea formControlName="description" placeholder="Enter Description"
-                      [autoResize]="true" maxlength="251" required></textarea>
-                    <span *ngIf="taskDescriptionFlag" class="required">
+                      [autoResize]="true" required></textarea>
+                    <!-- <span *ngIf="taskDescriptionFlag" class="required">
                       Maximum of 150 characters
-                    </span>
+                    </span> -->
                     <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
                     class="required">Task Description Required*</span>
                 </div>

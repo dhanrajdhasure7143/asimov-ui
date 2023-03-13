@@ -7,7 +7,7 @@
     margin-bottom: 25px !important;
 }
 .row.project-overview {
-    /* background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%); */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%);
     border-radius: 6px;
     flex-wrap: initial;
 }
@@ -33,8 +33,8 @@
   margin:0px;
 }
 .project-status img {
-  width: 50px;
-  height: 55px;
+  width: 35px;
+  /* height: 55px; */
 }
 .project-name span {
     font-size: 32px;
@@ -66,6 +66,11 @@ span.lowimp {
 .pinf label {
     color: #535353;
 }
+.kpipercent {
+    border-left: 1px solid #e0e0e0;
+    padding-left:15px !important;
+    text-align: center;
+}
 .kpipercent p {
     font-size: 44px !important;
     margin-bottom: 2px;
@@ -77,6 +82,7 @@ span.lowimp {
     padding: 15px 20px !important;
     border-radius: 0px 0px 6px 6px;
     width: 100%;
+    /* height: 100px; */
 }
 .project-description label {
     margin: 0px 10px 0px 0px !important;
