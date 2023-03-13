@@ -343,7 +343,6 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
-        window.location.reload();
       })
       this.spinner.hide();
       this.buttonDisable = true;
