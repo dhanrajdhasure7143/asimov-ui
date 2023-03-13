@@ -8,10 +8,10 @@
     <div *ngIf='!error'>
         <div *ngFor="let planlist of plansList">
             <div class="col p-0" *ngIf="planlist.subscribed">
-                <h6 id="planName" *ngIf="planlist.nickName =='Standard'">- Your EZFLW is on <b>Free Tier(Monthly)</b>
+                <h6 id="planName" *ngIf="planlist.nickName =='Standard'">- Your EZFLOW is on <b>Free Tier(Monthly)</b>
                     <button (click)="onChangePlan()">
                         <a class="link">Change Plan</a></button></h6>
-                <h6 id="planName" *ngIf="planlist.nickName !='Standard'">- Your EZFLW is on <b> {{planlist.nickName}}
+                <h6 id="planName" *ngIf="planlist.nickName !='Standard'">- Your EZFLOW is on <b> {{planlist.nickName}}
                         Plan(Yearly).</b> <button (click)="onChangePlan()">
                         <a class="link">Change Plan</a></button></h6>
                 <div *ngIf="planlist.nickName =='Professional'">
