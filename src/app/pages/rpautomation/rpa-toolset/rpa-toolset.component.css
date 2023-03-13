@@ -19,7 +19,7 @@
 .left-panel-header{
   padding: 10px 10px;
   min-height: 20px;
-  background-color: #00a0e3!important;
+  background-color: #098de6!important;
   width: 100%;
   font-weight: 600 !important;
   color: white !important;
@@ -134,7 +134,7 @@ background-color: white;
 
 
 .nodename{
-  color: #001c47;
+  color: #232832;
   font-weight: 400;
   font-size: 14px;
 }
@@ -151,7 +151,7 @@ background-color: white;
 
 .taskname{
   font-size: 14px;
-  color: #001c47;
+  color: #232832;
   font-weight: 400;
 }
 
@@ -216,7 +216,7 @@ background-color: white;
 span.con-text {
   font-size: 14px;
   font-weight: 400;
-  color: #001c47;
+  color: #232832;
   padding-left: 5px;
   vertical-align: middle;
 }

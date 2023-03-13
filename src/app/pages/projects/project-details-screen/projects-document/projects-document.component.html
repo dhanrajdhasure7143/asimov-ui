@@ -27,13 +27,17 @@
         <div class="main-content-body">
             <div class="">
                 <div class="docscrnchngs">
+                    <!-- <div *ngIf="isFolder">
+                        <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+                    </div> -->
             <div *ngIf="isFolder" class="row docfolder">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" (contextmenu)="onRightClick($event,item)">  
                 <i [class]="item.collapsedIcon"> </i>
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
-                <span *ngIf="item.type !='textBox'"> {{ item.label }} </span>
+                <!-- <span *ngIf="item.type !='textBox'"> {{ item.label }} </span> -->
+                <span *ngIf="item.type !='textBox'" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top"> {{truncateDesc(item.label)}} </span>
                 <span *ngIf="item.type=='textBox'">
-                    <input [(ngModel)]="entered_folder_name" type="text" maxlength="20" pInputText>
+                    <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
                     <div class="editfields">
                         <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('folderView')" *ngIf="entered_folder_name"></i>
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate('folderView')"></i>
@@ -49,10 +53,13 @@
                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="test" class="node-icon">
                         {{node.label}}
                       </div> -->
-                    <b (contextmenu)="onNodeClick($event,node)">{{node.label}}</b>
+                    <b (contextmenu)="onNodeClick($event,node)">
+                        <span [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
+                        <!-- {{node.label}} -->
+                    </b>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
-                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='20' pInputText>
+                    <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='50' pInputText>
                     <div class="editfields">
                         <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('treeView')" *ngIf="entered_folder_name"></i>
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate('treeView')"></i>
@@ -70,17 +77,7 @@
             </p-tree> -->
 
            </div>
-
-
-            <!-- <p-tree [value]="files"
-            selectionMode="single"
-            [(selection)]="selected">
-    </p-tree> -->
-            <!-- <a class="btn btn-primary"
-           (click)="removeRoute(selected)">Remove Page</a>
-        </div> -->
-
-                </div>
+        </div>
                 
         </div>
         </div>
@@ -188,23 +185,26 @@
 
     <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addParentFolder()" [disabled]="!(folder_name.length > 4)">Save</button>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
+            <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
+            <button type="button" class="btn btn-primary" (click)="addParentFolder()" [disabled]="folder_name.length < 4 || folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
     <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="treeChildFolderSave()" [disabled]="!(entered_folder_name.length > 4)">Save</button>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
+            <button type="button" class="btn btn-primary" (click)="treeChildFolderSave()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
     <!-- add sub folder in folder structure -->
     <p-dialog header="Folder Name" [(visible)]="isDialog1" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-            <button type="button" class="btn btn-primary" (click)="addSubfolder()" [disabled]="!(entered_folder_name.length > 4)">Save</button>
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
+            <button type="button" class="btn btn-primary" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
     

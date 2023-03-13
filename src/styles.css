@@ -490,7 +490,7 @@ div#tooltip_template.tooltip-panel p:first-child {
 
 .tipsy-inner p:first-child {
   margin-top:-10px 5px -10px -10px !important;
-  color: #098de6;
+  color: var(--main-bluecolor);
 }
 
 .tipsy-inner p {
@@ -1271,7 +1271,7 @@ select.form-control {
 
 .modal-header.modelprhead h4 {
   font-size: 16px;
-  color: #001c47;
+  color: var(--main-txtcolor);
   font-weight: 600;
   line-height: 22px;
 }
@@ -1376,14 +1376,14 @@ img.testplusupload {
   padding: 3px 4px;
   border-radius: 50%;
   background: #eef2f5;
-  color: #098de6;
+  color: var(--main-bluecolor);
   margin-right: 8px;
   font-size: 14px;
 }
 
 .module-back-button:hover i {
   border-radius: 50%;
-  background: #00a1e3 !important;
+  background: var(--main-bluecolor) !important;
   color: #fff;
 }
 
@@ -1523,7 +1523,7 @@ select.small-input {
 .dpp-properties-panel textarea:focus,
 .dpp-properties-panel [contenteditable]:focus {
   border-color: var(--main-bluecolor) !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
   background-color: #fff !important;
   box-shadow: none;
 }
@@ -1657,7 +1657,7 @@ button.action-button.clear {
 }
 
 .mat-paginator .mat-icon-button:hover {
-  background-color: #00a0e4;
+  background-color: var(--main-bluecolor);
   color: #fff;
 }
 
@@ -1806,7 +1806,7 @@ button.btn {
   font-size: 15px;
   /* margin-right: 10px !important; */
   border-radius: 3px;
-  color: #001c47;
+  color: var(--main-txtcolor);
   min-width: 75px;
   display: inline-flex;
   align-items: center;
@@ -1889,7 +1889,7 @@ span.projects-header-title {
 }
 
 .module-sub-header-title {
-  color: #001c47;
+  color: var(--main-txtcolor);
   width: 90%;
 }
 
@@ -2052,7 +2052,7 @@ th.mat-header-cell {
   text-align: center;
   content: "Select File";
   display: inline-block;
-  background: #00a1e3;
+  background: var(--main-bluecolor);
   border-radius: 2px;
   padding: 6px 8px;
   outline: none;
@@ -2171,7 +2171,7 @@ th.mat-header-cell {
 
 .logs-table th{
   background-color: white !important;
-  color: #00a1e3 !important;
+  color: var(--main-bluecolor) !important;
 }
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
@@ -2337,7 +2337,7 @@ span.pdicon {
 }
 
 .vcmprop.mat-drawer-opened .mat-tab-label-active {
-  color: #00a1e4 !important;
+  color: var(--main-bluecolor) !important;
   opacity: 1;
 }
 .vcmprop .propertiesContainer span.mat-expansion-indicator {
@@ -2452,7 +2452,7 @@ button.custom-popupbtn.mat-button {
   height: 36px;
   padding: 0px 15px !important;
   background-color: aliceblue !important;
-  color: #001c47 !important;
+  color: var(--main-txtcolor) !important;
 }
 .prj_activities_block .mat-tab-label-active {
   opacity: 1;
@@ -2544,6 +2544,7 @@ button.custom-popupbtn.mat-button {
 
 .mat-drawer-container  {
   color: var(--main-txtcolor) !important;
+  background-color: #fff !important;
 }
 
 * {
@@ -2671,7 +2672,7 @@ label#popup_title {
   margin-right: 8px;
 }
 #popup_title a:hover {
-  color: #00a1e3;
+  color: var(--main-bluecolor);
 }
 #popup_title .rightareabtn {
   margin-left: 0px !important;
@@ -2769,6 +2770,9 @@ span.tabscount {
   height: calc(100vh - 260px); 
   overflow: auto;
 }
+.rpaauditsgrid .p-datatable-wrapper {
+  height: calc(100% - 177px); /* for rpa audit logs grid */
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
 }
@@ -2809,7 +2813,7 @@ span.tabscount {
 thead.p-datatable-thead tr {
   border-top: none !important;
   font-weight: 700;
-  border-bottom: 3px solid #098de6 !important;
+  border-bottom: 3px solid var(--main-bluecolor) !important;
   position: relative;
   height: 50px;
 }
@@ -3015,7 +3019,7 @@ button.btn.bluebg-button {
 }
 button.btn.canlrst-btn,
 button.btn.new-cancelbtn {
-  color: #098de6 !important;
+  color: var(--main-bluecolor) !important;
   font-size: 16px;
 }
 .commentBox .p-tabview-panels {
@@ -3028,7 +3032,7 @@ button.btn.new-cancelbtn {
   box-shadow: none;
 }
 .create-body .prjoverlay .p-card.p-component:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 .create-body .prjoverlay .p-card .p-card-body{
   height: 230px !important;
@@ -3080,7 +3084,7 @@ button.btn.new-cancelbtn {
 .createform-overlay .p-dropdown.p-dropdown-open,
 .splitoverlaycontent .p-dropdown.p-dropdown-open,
 .splitoverlaycontent input.p-inputtext:focus {
-  border-color: #098de6 !important;
+  border-color: var(--main-bluecolor) !important;
   background-color: #fff;
 }
 .createform-overlay input.p-inputtext::placeholder,
@@ -3092,7 +3096,7 @@ button.btn.new-cancelbtn {
   border: 1px solid #979797;
   box-shadow: none;
   width: 100%;
-  height: auto !important;
+  /* height: auto !important; */
   overflow: hidden;
 }
 .createform-footer {
@@ -3156,7 +3160,7 @@ button.btn.new-cancelbtn {
   margin: 10px;
 }
 .docfolder .p-card:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 
 .docfolder .pi-folder, .docfolder .pi-file , .docfolder .pi-image{
@@ -3192,7 +3196,7 @@ button.btn.new-cancelbtn {
   box-shadow: none;
 }
 .fldrovrlay .p-card.p-component:hover {
-  border: 1px solid #098de6;
+  border: 1px solid var(--main-bluecolor);
 }
 .fldrovrlay .p-card-body {
   height: 180px !important;
@@ -3251,7 +3255,7 @@ background-color: #fff;
   box-shadow: none !important;
 }
 .ng-select.ng-select-opened>.ng-select-container{
-  border: 1px solid #098de6 !important;
+  border: 1px solid var(--main-bluecolor) !important;
 }
 .ng-select .ng-select-container .ng-value-container .ng-input>input {
   background: transparent !important;

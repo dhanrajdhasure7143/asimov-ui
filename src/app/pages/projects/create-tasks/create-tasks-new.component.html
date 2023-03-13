@@ -25,7 +25,7 @@
                       class="required">Type of Task Required*</span>
                 </div>
 
-                <div class="form-group col pr-0" *ngIf="optionValue == 'RPA Implementation' || optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process' || optionValue == 'Task Mining'">
+                <div class="form-group col pr-0" *ngIf="optionValue == 'RPA Implementation' || optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process' || optionValue == 'Process Mining'">
                     <span class="" for="correlationID">Pick A Workspace File<span
                           class="star">*</span></span>
                     <div *ngIf="!optionValue">
@@ -40,7 +40,7 @@
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="correlationID"
                           required></p-dropdown>
                     </div>
-                    <div *ngIf="optionValue == 'Task Mining'">
+                    <div *ngIf="optionValue == 'Process Mining'">
                         <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
                           emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
                           placeholder="Select Workspace File" optionLabel="piName" optionValue="piId"
@@ -174,10 +174,10 @@
                   style=" resize: none;">
                           </textarea> -->
                     <textarea pInputTextarea formControlName="description" placeholder="Enter Description"
-                      [autoResize]="true" maxlength="251" required></textarea>
-                    <span *ngIf="taskDescriptionFlag" class="required">
+                      [autoResize]="true" required></textarea>
+                    <!-- <span *ngIf="taskDescriptionFlag" class="required">
                       Maximum of 150 characters
-                    </span>
+                    </span> -->
                     <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
                     class="required">Task Description Required*</span>
                 </div>

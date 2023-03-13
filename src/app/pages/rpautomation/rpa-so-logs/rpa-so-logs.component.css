@@ -307,7 +307,7 @@ ul#versions {
 ul#versions li {
   padding: 8px 10px;
   font-size: 14px;
-  color: #001c47;
+  color: #232832;
 }
 ul#versions li:hover {
   background: rgba(0,0,0,.04);
@@ -327,21 +327,21 @@ ul#versions li:hover {
 .newmodelcla .refecls {
   cursor: pointer;
   font-size: 10px;
-  background-color: #00a0e3 !important;
+  background-color: #098de6 !important;
   color: #fff;
   padding: 2px 9px;
   border-radius: 10px;
   margin-left: 8px;
 }
 .newmodelcla .refecls:hover {
-  background-color: #001c47 !important;
+  background-color: #232832 !important;
 }
 .backarrcl img {
   width: 12px;
 }
 
 .action-item.hovericon:hover {
-  background-color: #00a0e3;
+  background-color: #098de6;
   border-radius: 3px;
 }
 .action-item.hovericon:hover img {

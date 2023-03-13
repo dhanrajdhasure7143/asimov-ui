@@ -5,22 +5,24 @@
 <div class="container-fluid main-content1 main-content">
   <div class="content-area RPA-Layout">
       <div class="rpa-layout-header">
-          <div class="row  module-heading title ">
+          <div class="row main-content-head">
+            <!-- module-heading title -->
               <div class="col-md-6 rpa-header-data p-0">
-                  <div>
+                  <h3>
                     <span>
-                      <button [disabled]="current_instance == undefined" class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
-                        <i class="fas fa-arrow-left"></i>
+                      <button [disabled]="current_instance == undefined" class="clickable module-back-button"  (click)="removenodes()">
+                        <!-- <i class="fas fa-chevron-left"></i> -->
+                        <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
                       </button>
                     </span>
                       <span class="rpa-main-title">RPA Studio</span>
                       <span class="rpatitsep" *ngIf="current_instance != undefined">/</span>
-                      <span *ngIf="current_instance != undefined">{{current_instance.finalbot.botName}}</span>
-                  </div>
+                      <span class="title_text" *ngIf="current_instance != undefined">{{current_instance.finalbot.botName}}</span>
+                  </h3>
 
                   <!-- <div *ngIf="current_instance != undefined" class="rpa-subtitle">
           <span class="clickable module-back-button"  *ngIf="current_instance.botState.botId!=undefined" (click)="removenodes()"><i class="text-primary fas fa-arrow-left"></i></span>
-          <span *ngIf="current_instance.botState.botId!=undefined">Created By: {{current_instance.botState.createdBy}}&nbsp;|&nbsp;{{current_instance.botState.lastSubmittedTS | date :'medium'}}</span>
+          <span *ngIf="current_instance.botState.botId!=undefined">Created By: {{current_instance.botState.createdBy}}|{{current_instance.botState.lastSubmittedTS | date :'medium'}}</span>
         </div> -->
               </div>
               <div class="col-md-6 p-0">
@@ -29,9 +31,8 @@
                   <div class="action-item">
                     <button id="Environments" placement="bottom">
                       <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
-                      &nbsp;
                       <span>Environment</span>
-                      &nbsp;<span class="caret"></span>
+                      <span class="caret"></span>
                     </button>
                   </div>
                   <div class="action-item hovericon bvcsave">
@@ -48,7 +49,7 @@
                   <div class="action-item hovericon">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn">
                       <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
-                      &nbsp;<span class="caret"></span>
+                      <span class="caret"></span>
                     </button>
               
                   </div>
@@ -96,27 +97,26 @@
                 <div class="actionsmenu-right" *ngIf="!isActionsShow && current_instance != undefined">
                   <div class="action-item" *ngIf="current_instance != undefined" dropdown #dropdown="bs-dropdown"
                     [insideClick]="true">
-                    <button class="dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom"
-                      tooltip="Environments" dropdownToggle type="button" aria-controls="environments">
+                    <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
                       <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
-                      &nbsp;
                       <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
                       <span *ngIf="getSelectedEnvironments().length>=1">{{getSelectedEnvironments()[0].environmentName}}<span
                           *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
-                      &nbsp;<span class="caret"></span>
+                      <span class="caret"></span>
+                      <span class="testtooltip">Environments</span>
                     </button>
                     <ul id="environments" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                       <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.filteredEnvironments"
                         style="white-space: nowrap;">
                         <input #inputEl type="checkbox" [checked]="env.check==true"
-                          (change)=" current_instance.checkUncheckEnvironments(env.environmentId,inputEl.checked)"> &nbsp; {{env.environmentName}}
+                          (change)=" current_instance.checkUncheckEnvironments(env.environmentId,inputEl.checked)">  {{env.environmentName}}
                       </li>
                       <li role="menuitem" class="clickable" (click)="createEnvironment()">
                         <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus" />New
                       </li>
                     </ul>
                   </div>
-                  <!-- <span class="bpsbtnsep">|</span> -->
+                  <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
                     <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
                       (click)="clear()"  #versionControlPopup="bs-popover" [popover]="popTemplate" placement="bottom">
@@ -145,7 +145,7 @@
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle
                       type="button" aria-controls="predefinedBotDropdown">
                       <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
-                      &nbsp;<span class="caret"></span>
+                      <span class="caret"></span>
                       <span class="testtooltip">Predefined Bots</span>
                     </button>
                     <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu"
@@ -157,6 +157,7 @@
                     </ul>
               
                   </div>
+                  <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
                       (click)="current_instance.openLogs()">
@@ -195,11 +196,11 @@
                     </button>
                     <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
                       <div class="d-format"><a class="dropdown-item clickable"
-                          (click)=" current_instance.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
+                          (click)=" current_instance.downloadJpeg()"><span>JPEG</span></a></div>
                       <div class="d-format"><a class="dropdown-item clickable"
-                          (click)=" current_instance.downloadPng()">&nbsp;<span>PNG</span></a></div>
+                          (click)=" current_instance.downloadPng()"><span>PNG</span></a></div>
                       <div class="d-format"><a class="dropdown-item clickable"
-                          (click)=" current_instance.downloadPdf()">&nbsp;<span>PDF</span></a></div>
+                          (click)=" current_instance.downloadPdf()"><span>PDF</span></a></div>
                     </div>
                   </div>
               
@@ -232,7 +233,7 @@
           <!-- <div class="col-md-3">
         <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="rpa_studio.onLoad()">
             <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
-            <img src="../../../../assets/images/RPA/icon_latest/load.svg" class="hover-img">&nbsp;&nbsp;Load
+            <img src="../../../../assets/images/RPA/icon_latest/load.svg" class="hover-img">Load
           </button>
           
           <button  type="button"  *ngIf="tabsArray.length > 0"  class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="rpa_studio.onCreate(0)">
@@ -284,10 +285,10 @@
         </span>
                       <mat-menu #menu="matMenu">
                           <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail" *ngIf="userRole.includes('Process Owner') || userRole.includes('RPA Developer')">
-              <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
+              <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> Create New</button>
                           <hr>
                           <button mat-menu-item (click)="loadBotFormOverlay()" [disabled]="freetrail">
-              <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> &nbsp;Load</button>
+              <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> Load</button>
                       </mat-menu>
 
                   </ng-template>
@@ -299,7 +300,7 @@
                   <select id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion==undefined?0:current_instance.selectedversion">
                 <option value=0 disabled>Select Version</option>
                 <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
-                  Version&nbsp; {{version.vId}}
+                  Version {{version.vId}}
                 </option>
               </select>
               </div> -->
