@@ -246,11 +246,11 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-12 martsascl form-fields api" *ngIf="isRequest">
+                            <!-- <div class="col-md-12 martsascl form-fields api" *ngIf="isRequest">
                                 <label class="label-control"> Attributes <span class="star">*</span> </label>
                                 <p-chips formControlName="attribute" styleClass="attribute" separator=","
                                     placeholder="Enter Attributes"></p-chips>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 martsascl api" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
                                 <textarea class="form-control" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
@@ -260,9 +260,9 @@
                                 <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
-                                <label class="label-control"> Request </label>
+                                <label class="label-control"> Request : Hint- {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}} </label>
                                 <textarea class="form-control response" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
-                                    placeholder="Get Request">
+                                    placeholder="Request Body">
                                 </textarea>
                                 <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>
                                 <span *ngIf="!validateJSON && connectorForm.get('request').value" class="text-success"> Valid JSON Format </span>
