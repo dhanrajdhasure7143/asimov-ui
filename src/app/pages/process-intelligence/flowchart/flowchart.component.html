@@ -8,7 +8,6 @@
 
             <app-split-overlay (closeOverlay)="closeOverlay($event)" >
                 <div class="h-100">
-                    <!-- <div class="col-md-12 select_drpdwnone"> -->
                     <div class="create-header">
                         <h3>Variants List</h3>  
                         <!-- <button class="closebtn" (click)="closeNav()">
@@ -29,7 +28,6 @@
                                 <span class='event2'>Time Taken</span>
                             </div>                        
                         </div>
-                        <!-- <div class="variant-body"> -->
                         <div class="">
 
                             <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
@@ -161,13 +159,14 @@
 
 <div class="bpmnCreate">
     <div id="filterModal" class="modal">
-         <div class="modal-content">
+        <app-split-overlay (closeOverlay)="closePopup()" >
+         <div class="">
            <div class="modal-header">
             <h4>Filter</h4>
-             <span class="close" (click)="closePopup();">
+             <!-- <span class="close" (click)="closePopup();">
                 <img alt="" class="default-img" src="../../../../assets/images/PI/close.svg">
                 <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
-             </span>             
+             </span>              -->
            </div>
            <div class="modal-body">
              <div *ngIf="isFilterComponent">
@@ -175,6 +174,7 @@
              </div>
            </div>
         </div>
+        </app-split-overlay>
     </div>
 </div>
  

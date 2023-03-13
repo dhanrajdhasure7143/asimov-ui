@@ -317,6 +317,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       .getListOfFoldersByProjectId(this.project_id)
       .subscribe((res) => {
         res_data = res;
+        this.files = [];
         res_data.map((data) => {
           if (data.dataType == "folder") {
             data["children"] = [];
@@ -369,31 +370,31 @@ export class ProjectTaskDetailsComponent implements OnInit {
       return;
     }
     this.isFile_upload_dialog = false;
-    this.spinner.show();
+    // this.spinner.show();
 
     let objectKey;
     let fileKey;
     if (this.selected_folder.parent) {
       objectKey = this.selected_folder.parent.children.length
         ? this.selected_folder.parent.children.length
-        : "1";
-      fileKey = this.selected_folder.key + "-" + String(objectKey);
+        : 0;
+      fileKey = this.selected_folder.key + "-" + Number(objectKey);
     } else {
       objectKey = this.selected_folder.children.length
         ? this.selected_folder.children.length
-        : "1";
-      fileKey = this.selected_folder.key + "-" + String(objectKey + 1);
+        : 0;
+      fileKey = this.selected_folder.key + "-" + Number(objectKey + 1);
     }
-
     var fileData = new FormData();
     fileData.append("filePath", this.uploaded_file);
     fileData.append("projectId", this.project_id);
     fileData.append("taskId", this.params_data.task_id);
     fileData.append("ChildId", "1");
-    fileData.append("fileUniqueIds", JSON.stringify([fileKey]));
+    fileData.append("fileUniqueIds", JSON.stringify([String(fileKey)]));
     this.rest_api.uploadfilesByProject(fileData).subscribe(
       (res) => {
         this.spinner.hide();
+        this.getTheListOfFolders()
         this.messageService.add({
           severity: "success",
           summary: "Success",

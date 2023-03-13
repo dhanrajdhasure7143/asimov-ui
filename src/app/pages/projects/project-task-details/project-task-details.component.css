@@ -25,8 +25,8 @@
   margin:0px;
 }
 .task-status img {
-  width: 50px;
-  height: 55px;
+  width: 35px;
+  /* height: 55px; */
 }
 .project-ninfo {
   padding: 15px !important;

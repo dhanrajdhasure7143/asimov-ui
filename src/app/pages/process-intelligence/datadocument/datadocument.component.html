@@ -1,21 +1,25 @@
-<div class="container-fluid new-PI-layout">
-    <div class="col-md-12 p-0">
-      <div class="d-flex PI-srh-graph">
-        <div class="form-group PI-serwksp">
-          <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" (keyup)="ontableSearch(searchTerm)">
-          <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
-          <img src="../../../../assets/images/PI/next.svg" class="testplus">Next</button>
+<div class="datadocgrid">
+    <div class="row mb-3">
+      <div class="col-md-6 pl-0">        
+        <div *ngIf="headerName" class="columnSelection PI-select-data">
+          <!-- <div class="resur-value-data d-flex">
+          </div> -->
+          <div class="err-mapping">
+            <span><img src="../../../../assets/images/PI/ErMap1.svg">Success Mapping</span>
+            <span><img src="../../../../assets/images/PI/ErMap2.svg">Error Mapping</span>
+          </div>
         </div>
       </div>
-      <div *ngIf="headerName" class="columnSelection PI-select-data">
-        <div class="resur-value-data d-flex">
-        </div>
-        <div class="err-mapping">
-          <span><img src="../../../../assets/images/PI/ErMap1.svg">Success Mapping</span>
-          <span><img src="../../../../assets/images/PI/ErMap2.svg">Error Mapping</span>
+      <div class="col-md-6 pr-0">
+        <div class="PI-srh-graph">
+          <div class="PI-serwksp">
+            <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" (keyup)="ontableSearch(searchTerm)">
+            <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+          </div>
+          <div class="">
+            <button class="btn btn-primary" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
+            <img src="../../../../assets/images/PI/next.svg" class="testplus">Next</button>
+          </div>
         </div>
       </div>  
     </div>  

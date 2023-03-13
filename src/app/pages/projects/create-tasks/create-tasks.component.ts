@@ -57,7 +57,7 @@ export class CreateTasksComponent implements OnInit {
       endDate: ["",Validators.compose([Validators.required])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       approvers: ["",Validators.compose([Validators.required,Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.required,Validators.maxLength(250)])],
+      description: ["", Validators.compose([Validators.required])],
 
 
       // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -122,7 +122,6 @@ export class CreateTasksComponent implements OnInit {
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
-      console.log(response)
       if(response.code == 4200){
         let status: any= response;
         //this.createtaskmodalref.hide();

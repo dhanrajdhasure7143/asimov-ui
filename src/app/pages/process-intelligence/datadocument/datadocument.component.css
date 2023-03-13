@@ -1,14 +1,38 @@
-.new-PI-layout {
+/* .new-PI-layout {
     padding: 15px 10px 10px;
 }
-
-.PI-serwksp input {
-    height: 36px;
-} 
 .PI-srh-graph {
     width: 24%;
     float: right;
 }
+.PI-select-data {
+    color: unset !important;
+    margin: 0px !important;
+    width: 70%;
+} */
+
+
+.PI-srh-graph {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.PI-serwksp input {
+    height: 36px;
+} 
+.err-mapping span {
+    padding-right: 10px;
+    font-size: 14px;
+}
+.err-mapping img {
+    padding-right: 6px;
+    height: 14px;
+}
+.err-mapping {
+    margin-top: 6px;
+}
+
+
 .resur-value-data h5 {
     color: #00a0e3;
     font-weight: 600;
@@ -18,25 +42,28 @@
     padding-right: 15px;
     font-size: 13px;
 }
-.err-mapping span {
-    padding-right: 10px;
-    font-size: 13px;
-}
-.err-mapping img {
-    padding-right: 5px;
-    height: 13px;
-}
-.err-mapping {
-    margin-top: 6px;
-}
-.PI-select-data {
-    color: unset !important;
-    margin: 0px !important;
-    width: 70%;
-}
+
+
 .PI.table th {
     border-bottom: unset !important;
+    padding: 0px 10px !important;
+    background-color: #f9f9f9 !important;
+    color: #232832 !important;
+    font-weight: 600;
 }
+.PI.table th:first-child {
+    padding-left: 0px !important;
+}
+.PI.table th:last-child {
+    padding-right: 0px !important;
+}
+.PI.table thead tr {
+    height: 24px !important;
+}
+.PI.table th select {
+    margin-bottom: 10px !important;
+}
+
 
 .modal-body.modelprbody.datadocmodal {
     height: calc(100vh - 280px);

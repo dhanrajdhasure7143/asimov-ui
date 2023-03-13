@@ -52,6 +52,8 @@ export class ProjectsDocumentComponent implements OnInit {
   documents_resData:any[]=[];
   taskList:[]=[];
   selectedOne:any;
+  breadcrumbItems:any[]=[
+    {label: 'Analysis'}]
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -336,6 +338,9 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedFolder = this.selectedItem
     this.opened_folders.push(this.folder_files)
     this.folder_files = this.selectedItem.children
+    let obj = {label:this.selectedItem.label}
+    this.breadcrumbItems.push(obj)
+    this.breadcrumbItems = [...this.breadcrumbItems];
 
   }
 
@@ -583,7 +588,6 @@ addParentFolder() {
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
-    console.log(res)
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
     let obj = res_data.data[0]
   if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
@@ -890,7 +894,6 @@ addParentFolder() {
         if (resp_data.length > 0) {
           if (resp_data.length == 1) {
             let fileName = resp_data[0].label;
-            console.log(resp_data[0].data)
             var link = document.createElement("a");
             // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
             let extension = resp_data[0].dataType;
@@ -925,8 +928,49 @@ addParentFolder() {
     }
 
     onchangesCheckBox(){
-      console.log(this.selectedOne)
-      // this.documents_resData = res
-      //   this.convertToTreeView(res_data)
+      if(this.selectedOne.length>0){
+        this.files=[];
+      let filteredData:any=[];
+      this.selectedOne.forEach(element => {
+        this.documents_resData.forEach(ele =>{
+          if(element.id == ele.taskId || ele.dataType =="folder"){
+            filteredData.push(ele)
+          }
+        })
+
+      });
+      setTimeout(() => {
+        this.files=[
+          {
+            key: "0",
+            label: "Add Folder",
+            data: "Add Folder",
+            data_type:"addfolder",
+            collapsedIcon: 'pi pi-folder',
+            expandedIcon: 'pi pi-folder'
+          },
+        ];
+        this.convertToTreeView(filteredData)
+      }, 200);
+    }else{
+      this.files=[];
+      this.files=[
+        {
+          key: "0",
+          label: "Add Folder",
+          data: "Add Folder",
+          data_type:"addfolder",
+          collapsedIcon: 'pi pi-folder',
+          expandedIcon: 'pi pi-folder'
+        },
+      ];
+      this.convertToTreeView(this.documents_resData)
+    }
+    }
+
+    truncateDesc(data){
+      if(data && data.length > 51)
+        return data.substr(0,50)+'...';
+      return data;
     }
 }

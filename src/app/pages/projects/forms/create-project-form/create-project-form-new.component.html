@@ -101,16 +101,16 @@
                   <div class="col p-0">
                       <label class="">Project Description<span class="star">*</span></label>
                       <textarea pInputTextarea formControlName="projectPurpose" placeholder="Enter Description"
-                          [autoResize]="true" maxlength="251" required></textarea>
+                          [autoResize]="true" required></textarea>
                       <!-- <textarea class="form-control data" formControlName="projectPurpose" row="3" placeholder="Enter Project Description" style=" resize: none;" maxlength="251" [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                           </textarea> -->
                       <span *ngIf="(insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched)
                       && !insertForm2.controls['projectPurpose'].hasError('maxlength')"
                           class="required">Project Description Required*</span>
-                      <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')"
+                      <!-- <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')"
                           class="required">
                           Maximum of 250 characters exceeded
-                      </span>
+                      </span> -->
                   </div>
             </div>
         </div>
