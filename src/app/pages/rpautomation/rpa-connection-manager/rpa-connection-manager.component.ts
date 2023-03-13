@@ -100,12 +100,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.spinner.hide();
       },
       (err) => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Done Successfully !!",
-          heightAuto: false,
-        });
+        Swal.fire("Error", "Unable to delete Connector", "error");
         this.getAllConnections();
         this.spinner.hide();
       }
@@ -195,12 +190,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.getAllConnections();
       },
       (err: any) => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Connector Added Successfully !!",
-          heightAuto: false,
-        });
+        Swal.fire("Error", "Unable to Add Connector", "error")
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.spinner.hide();
@@ -230,12 +220,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.getAllConnections();
       },
       (err: any) => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Connector Updated Successfully !!",
-          heightAuto: false,
-        });
+        Swal.fire("Error", "Unable to Update connector", "error");
         this.spinner.hide();
         this.isFormOverlay = false;
         this.getAllConnections();
