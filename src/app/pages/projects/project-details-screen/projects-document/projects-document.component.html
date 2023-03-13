@@ -27,13 +27,19 @@
         <div class="main-content-body">
             <div class="">
                 <div class="docscrnchngs">
-                    <!-- <div *ngIf="isFolder">
+                    <div *ngIf="isFolder && breadcrumbItems.length>0">
                         <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
-                    </div> -->
+                    </div>
             <div *ngIf="isFolder" class="row docfolder">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" (contextmenu)="onRightClick($event,item)">  
+                
+                <span *ngIf="item.label == 'Add Folder' || item.label == 'Add Folder / Document'">
+                    <img src="./../../../../assets/images-n/projects/AddFolder.svg" alt="Create">
+                </span>
+                <span *ngIf="item.label != 'Add Folder'&& item.label != 'Add Folder / Document'">
                 <i [class]="item.collapsedIcon"> </i>
                 <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
+            </span>
                 <!-- <span *ngIf="item.type !='textBox'"> {{ item.label }} </span> -->
                 <span *ngIf="item.type !='textBox'" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top"> {{truncateDesc(item.label)}} </span>
                 <span *ngIf="item.type=='textBox'">
@@ -49,10 +55,9 @@
             <p-tree [value]="files" [filter]="true" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile"> 
                 <ng-template let-node pTemplate="default">
-                    <!-- <div class="node-content">
+                    <!-- <div class="node-content" *ngIf="node.label=='Add Folder'">
                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="test" class="node-icon">
-                        {{node.label}}
-                      </div> -->
+                    </div> -->
                     <b (contextmenu)="onNodeClick($event,node)">
                         <span [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
                         <!-- {{node.label}} -->
