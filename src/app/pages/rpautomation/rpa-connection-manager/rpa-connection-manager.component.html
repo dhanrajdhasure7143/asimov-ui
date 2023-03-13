@@ -110,7 +110,7 @@
                     <div class="form-footer">
                         <button class="btn btn-primary" (click)="resetForm()"> Reset </button> &nbsp;
                         <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()" class="btn btn-primary"> Save </button>
-                        <button *ngIf="!isCreate" [disabled]="createConnectorForm.invalid" (click)="updateConnector()"p class="btn btn-primary"> Update </button> 
+                        <button *ngIf="!isCreate" (click)="updateConnector()"p class="btn btn-primary"> Update </button> 
                     </div>
                 </form>
             </div>
