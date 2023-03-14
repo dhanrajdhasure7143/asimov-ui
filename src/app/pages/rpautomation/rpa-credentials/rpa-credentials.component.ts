@@ -101,7 +101,6 @@ inputNumberOnly(event){
             })
            }
          }
-        
          this.columns_list = [
           {
             ColumnName: "userName",
