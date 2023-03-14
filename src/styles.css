@@ -103,7 +103,7 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 div[class^='diagram_container'] .djs-container svg {
-  margin-left: 5px;
+  /* margin-left: 5px; */
 }
 
 .spincenter {
@@ -220,7 +220,7 @@ button:disabled {
 .invisible {
   visibility: hidden;
 }
-
+/* 
 th {
   border-top: none !important;
   color: var(--main-bluecolor);
@@ -230,10 +230,10 @@ th {
   font-size: 14px !important;
   vertical-align: middle !important;
   text-align: left;
-}
+} 
 thead  tr,tbody tr {
   height: 40px;
-}
+} */
 
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
@@ -913,14 +913,14 @@ foreignObject {
   font-size: 18px;
 }
 
-app-home,
+/* app-home,
 app-bussiness-process,
 app-bpshome,
 app-create-projects,
 app-projects-list-screen,
 app-projects-programs-table {
   height: 100%;
-}
+} */
 
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
@@ -2773,30 +2773,53 @@ span.tabscount {
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
 }
+.bps-approvalgrid .p-datatable-wrapper {
+  height: calc(100vh - 195px); /* for bps approval grid */
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
 }
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
 }
-.p-datatable .p-datatable-header {
-  background: transparent !important;
+.p-datatable .p-datatable-header,
+th {
+  /* background: transparent !important; */
   border: unset !important;
   border: none !important;
   color: #232832 !important;
   border-width: unset !important;
   border-color: transparent !important;
-  padding: 0 !important;
-  font-weight: 400 !important;
+  padding: 5px 10px !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  font-size: 14px !important;
 }
-.p-datatable .p-datatable-tbody > tr {  /* for normal th */
+thead.p-datatable-thead tr,
+thead tr {
+  border-top: none !important;
+  border-bottom: 3px solid var(--main-bluecolor) !important;
+  position: relative;
+  height: 50px;
+}
+.p-datatable .p-datatable-tbody > tr,
+tbody tr { 
   background: transparent !important;
   height: 50px;
   color: var(--main-txtcolor) !important;
   font-size: 16px;
   margin: 5px 0px 0px;
 }
-.p-datatable .p-datatable-thead > tr > th:before {   /* for normal th */
+.p-datatable .p-datatable-tbody > tr > td,
+tbody tr td {
+  border-bottom: 1px solid #E0E0E0 !important;
+  padding: 8px 10px !important;
+}
+
+th.arrowcol {   /* for arrow / checkbox columns header */
+  position: relative;
+}
+th.arrowcol:before {  /* for arrow / checkbox columns header */
   content: " ";
   position: absolute;
   left: 0px;
@@ -2804,21 +2827,19 @@ span.tabscount {
   bottom: 0px;  
   border-bottom: 5px solid rgb(9 141 230 / 20%);
 }
+thead tr th:before,
 .usersgrid .p-datatable .p-datatable-thead > tr > th:before,
-.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before {  /* for normal th users onboard grid */
-  bottom: -2px;
-  border-bottom: 5px solid rgb(9 141 230 / 5%);
+.attachdocgrid .p-datatable .p-datatable-thead > tr > th:before  {
+  content: " ";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: -2px;  
+  border-bottom: 5px solid rgb(9 141 230 / 4%);
 }
 
-thead.p-datatable-thead tr {
-  border-top: none !important;
-  font-weight: 700;
-  border-bottom: 3px solid var(--main-bluecolor) !important;
-  position: relative;
-  height: 50px;
-}
-
-th.p-element.p-sortable-column.p-resizable-column:before {  /* for sortable th */
+/* for sortable th */
+th.p-element.p-sortable-column.p-resizable-column:before {  
   content: " ";
  position: absolute;
  top: 5px;
@@ -2836,7 +2857,7 @@ th.p-element.p-sortable-column.p-resizable-column {
   color: var(--main-txtcolor) !important;
 }
 
- .p-datatable .p-sortable-column:not(.p-highlight):hover{
+.p-datatable .p-sortable-column:not(.p-highlight):hover{
  background-color: #f8f9fa !important;
  color: var(--main-txtcolor) !important;
 }
@@ -2844,10 +2865,6 @@ th.p-element.p-sortable-column.p-resizable-column {
   box-shadow: none !important;
 } 
 
-.p-datatable .p-datatable-tbody > tr > td {
-  border-bottom: 1px solid #E0E0E0 !important;
-  padding: 8px 10px !important;
-}
 tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
   border: 1.5px solid #4AB0F5;
   box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
