@@ -16,6 +16,7 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkDirective } from '../../../shared/directives/cdkdirective';
+import { Secretkey } from './atoms/secretkey';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CdkDirective } from '../../../shared/directives/cdkdirective';
     TextBoxComponent,
     FileComponent,
     IPCCheckboxComponent,
-    CdkDirective
+    CdkDirective,
+    Secretkey
   ],
   imports: [
     CommonModule,

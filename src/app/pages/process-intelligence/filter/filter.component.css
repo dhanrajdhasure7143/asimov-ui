@@ -33,98 +33,8 @@
     left:130px !important;
     top:-6px;
   }
-.dataValues{
-    margin-top: 10px;
-    overflow: hidden auto;
-    height: calc(100vh - 310px);
-}
 
-.data_values{
-    border: 1px solid #e5e5e5;
-    border-radius: 3px;
-    font-size: 13px;
-    font-weight: normal;
-    cursor:pointer;
-    padding: 8px 10px;
-    margin-bottom: 7px;
-}
-.inner-addon i{
-    position: absolute;
-    padding-left: 88%;
-    pointer-events: none;
-    width: 50px;
-    margin-top: 10px
-}
-.right-addon input{ 
-    padding-right: 20px !important;
-    width: 120%; 
-}
-.selectall-btn{
-  border-bottom: 1px solid gray;
-  border-radius: 0;
-}
-.pill {
-  background: #012e4c;
-  color: #ffff;
-  padding: 6px 8px;
-  width: 125px;
-  border-radius: 3px;
-  margin-right: 10px;
-}
-.pill span{
-  cursor: pointer;
-  float: right;
-}
-.pill span:hover{
-  font-weight: bold;
-}
-
-.barchart_graph{
-  background: #07051d;
-  height: 200px;
-  border-radius: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-.piechart_graph{
-  border: 1px solid #d1d1d1;
-  box-shadow: 0px 2px 5px rgb(0 0 0 / 15%);
-  background: #ffff;
-  width: 160px;
-  height: 85px;
-  border-radius: 4px;
-  align-items: center;
-  margin: 0px auto;
-}
-
-.pie_label{
-    font-weight: 600;
-    margin-top: 20px;
-}
-.drp_btns {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-.pp_chart {
-  position: relative;
-}
-
-.arrows {
-  appearance: none;
-  background-image: url('../../../../assets/images/PI/dual-arrow.svg');
-  background-position: calc(100% - .5rem), 100% 0;
-  background-size:  1.5em 1.5em;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.arrows:focus {
-  border-color: blue;
-  outline: 0;
-}
-.modal {
+  .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 10000; /* Sit on top */
@@ -143,31 +53,175 @@
 
   /* Modal Content */
   .modal-content {
-  position: fixed;
-  left: 70px;
-  top: 65px;
-  width: 65% !important;
-  height: 88.5%;
+  left: 74px;
+  top: 70px;
+  width: 580px !important;
+  height: 100%;
   background-color: #fefefe;
+  padding: 15px 20px 0px;
+  }
+  
+.container {
+  padding: 0px;
   width: 100%;
-  -webkit-animation-name: slideIn;
-  -webkit-animation-duration: 0.4s;
-  animation-name: slideIn;
-  animation-duration: 0.4s
-  }
-  .apply-btn{
-    margin-top: 240px;
-  }
-  .container.m-contanier.form-body {
-    padding: 0px;
-    width: 100%;
 }
-.form-footer {
+
+.PI-filterby {
+  margin-top: 15px;
+  margin-bottom: 15px !important;
+}
+.PI-filterby p {
+  margin-bottom: 5px !important;
+}
+.filterValueshi8 {
+  margin-top: 10px;
+  overflow: hidden auto;
+  height: calc(100vh - 320px);
+}
+.data_values{
+    border-radius: 3px;
+    font-weight: normal;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    padding: 6px 10px !important;
+    height: 45px;
+    align-items: center;
+    margin-bottom: 7px;
+}
+.data_values:hover {
+  background-color: #ffffff;
+  color: #098de6;
+}
+.pill {
+  background: #012e4c;
+  color: #ffff;
+  padding: 6px 8px;
+  width: 125px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+.pill span{
+  cursor: pointer;
+  float: right;
+}
+.pill span:hover{
+  font-weight: bold;
+}
+.event3 {
+  width: 24%;
+}
+.variant_parcent {
+  width: 56%;
+}
+.days {
+  width: 20%;
+}
+.event3, .Covered, .days {
+  font-size: 14px;
+}
+.timestamp-header {
+  padding: 5px 0px 10px !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+.timestamp-header h3 {
+  font-size: 16px;
+  margin: 0px;
+}
+img.hover-img {
+  display: none;
+}
+.timestamp-header span:hover img.default-img, .pill span:hover img.default-img {
+  display: none;
+}
+.timestamp-header span:hover img.hover-img, .pill span:hover img.hover-img {
+  display: initial;
+}
+.timestamp-header .close {
+  padding: 0px;
+  margin: 0px;
+}
+.modal-body.timestamp-body {
+  /* height: calc(100% - 52px) !important;
+  overflow: auto; */
+  padding: 10px 0px;  
+}
+.timestamp-footer .btn-primary {
+  margin-right: 0px !important;
+}
+.timestamp-footer {
+  margin-top: auto !important;
+  text-align: end;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+}
+.piechart_graph{
+  border: 1px solid #d1d1d1;
+  box-shadow: 0px 1px 3px rgb(0 0 0 / 10%);
+  background: #ffff;
+  width: 180px;
+  height: 75px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  margin: 0px auto;
+}
+.pie_label{
+    font-weight: 600;
+}
+
+.duration-clickable input.form-control, .duration-clickable select.form-control {
+  height: 34px !important;
+}
+.setvalue-btn{
+  text-align: right;
+  margin-top: 15px;
+}
+.setvalue-btn button {
+  height: 34px;
+}
+
+
+
+.inner-addon i{
+    position: absolute;
+    padding-left: 88%;
+    pointer-events: none;
+    width: 50px;
+    margin-top: 10px
+}
+.right-addon input{ 
+    padding-right: 20px !important;
+    width: 120%; 
+}
+
+.arrows {
+  appearance: none;
+  background-image: url('../../../../assets/images/PI/dual-arrow.svg');
+  background-position: calc(100% - .5rem), 100% 0;
+  background-size:  1.5em 1.5em;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.arrows:focus {
+  border-color: blue;
+  outline: 0;
+}
+
+
+
+/* .form-footer {
   margin-top: auto !important;
   text-align: end;
   position: fixed;
   bottom: 10px;
   right: 15px;
+}
+.apply-btn{
+  margin-top: 240px;
 }
 .PI-filter-DVheader {
   display: flex;
@@ -185,54 +239,34 @@
 }
 .PI-filter-DVbuttons .btn-primary {
   margin-right: 0px !important;
-}
-.PI-filterby p {
-  font-size: 14px !important;
-  font-weight: 600;
-  margin-bottom: 5px !important;
-}
-.event3 {
-  width: 24%;
-}
-.variant_parcent {
-  width: 56%;
-}
-.days {
-  width: 20%;
-}
-.event3, .Covered, .days {
-  font-size: 14px;
-}
-.timestamp-header .close {
-  /* font-size: 28px !important;
-  line-height: unset; */
-}
-.timestamp-footer {
-  margin-top: auto !important;
-  text-align: end;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-}
-.modal-body.timestamp-body {
-  height: calc(100% - 52px) !important;
-}
-.timestamp-footer .btn-primary {
-  margin-right: 0px !important;
-}
+} 
 .timestamp-header.close {
   margin-top: 2px;
- }
-img.hover-img {
-  display: none;
+ } 
+ .activevaraint{
+  color: #ffffff !important;
+  background-color: #098de6 !important;
+  border-top: 1px solid #ffffff !important;
+  border-left: medium none !important;
 }
-.timestamp-header span:hover img.default-img, .pill span:hover img.default-img {
-  display: none;
+.selectall-btn{
+  border-bottom: 1px solid gray;
+  border-radius: 0;
 }
-.timestamp-header span:hover img.hover-img, .pill span:hover img.hover-img {
-  display: initial;
+.barchart_graph{
+ background: #07051d;
+  height: 200px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.setvalue-btn button{
+ .drp_btns {
+  position: relative;
+  display: flex;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
+.pp_chart {
+  position: relative;
+} 
+*/

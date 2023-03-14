@@ -93,16 +93,14 @@ float: left !important;
     margin-right: -85px;
 }
 
-.filter_typesOne{
+/* .filter_typesOne{
     font-size: 13px;
     font-weight: bold;
-}
+} */
 
-.dataType_filter{
-  font-size: 14px !important;
-  font-weight: 600;
+/* .daTyp_filter{  
   margin-bottom: 0px !important;
-}
+} */
 
 .type_filter, .percent_filter{
     font-size: 13px;
@@ -131,13 +129,13 @@ float: left !important;
     margin-left: 30px;
     font-size: 13px;
 }
-.data_values{
+/* .data_values{
     background: #f4f4f4;
     font-size: 13px;
     font-weight: 600;
     cursor:pointer;
     padding: 10px;
-}
+} */
 
 .reports{
     margin-top: 10px;
@@ -897,13 +895,13 @@ img.hover-img {
 .filter-overlayheader button:hover img.hover-img {
   display: initial;
 }
-.barchart_graph .ngx-charts-outer {
+/* .barchart_graph .ngx-charts-outer {
   width: 100% !important;
   overflow-x: scroll;
-}
-.filter-slider {
+} */
+/* .filter-slider {
   margin-top: 15px;
-}
+} */
 .filter-slider .ng5-slider .ng5-slider-pointer:after {
   width: 6px;
   height: 6px;
@@ -998,9 +996,9 @@ img.hover-img {
 .variant_parcent div  {
   font-size: 14px;
 }
-.piechart_graph svg{
+/* .piechart_graph svg{
   margin-top: -9px;
-}
+} */
 
 .linechart1 g[aria-labelledby*="-title"] {
   display: none;
@@ -1019,4 +1017,10 @@ img.hover-img {
   /* width: 40%; */
   margin-right: 15px;
   position: relative;
+}
+
+.drp_btns .popover-body {
+  padding: 10px;
+  color: #232832;
+  box-shadow: 0px 3px 8px rgb(0,0,0 / 20%);
 }

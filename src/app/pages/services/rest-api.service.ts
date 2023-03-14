@@ -1614,7 +1614,7 @@ getMethodTypes(){
 }
 
 saveConnector(body){
-  return this.http.post(`/rpa-service/saveConnection`,body); 
+  return this.http.post(`/rpa-service/connection`,body); 
 }
 getProjectTaskDetailsById(projectId,taskId){
   return this.http.get('/platform-service/task/findTaskByProjectIdAndTaskId?projectId='+projectId+'&taskId='+taskId)
@@ -1626,11 +1626,11 @@ getMessagesByProjectId(projectId){
 }
 
 getActionsByConnectionId(id:any){
-  return this.http.get('/rpa-service/getConfiguredAction/'+id)
+  return this.http.get('/rpa-service/action/all/'+id)
 }
 
 getConnectionslist(){
-  return this.http.get(`/rpa-service/getConnection`);
+  return this.http.get(`/rpa-service/connection/all`);
 }
 
 getGrantTypes(){
@@ -1711,7 +1711,7 @@ getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
 updateConnection(data){
-  return this.http.post('/rpa-service/updateConnection',data)
+  return this.http.post('/rpa-service/connection',data)
 }
 getMetricsList(){
   return this.http.get('/platform-service/dashboard/findDashboardMetricsList');
@@ -1731,13 +1731,13 @@ SaveDashBoardData(body:any){
 }
 
 deleteConnectorbyId(id: any) {
-  return this.http.delete(`/rpa-service/deleteConnection/${id}`);
+  return this.http.delete(`/rpa-service/connection/${id}`);
 }
 testActions(body){
   return this.http.post('/rpa-service/getAccessToken',body)
 }
 deleteActionById(id:any){
-return this.http.delete(`/rpa-service/deleteConfiguredAction/${id}`)
+return this.http.delete(`/rpa-service/action/${id}`)
 }
 getDashBoardItems(id){
   return this.http.get("/platform-service/dashboard/findDashboardMetricsAndWidgetsValues?screenId="+id);
@@ -1746,7 +1746,7 @@ getActionById(id){
   return this.http.get(`/rpa-service/getActionById/${id}`)
 }
 saveAction(body){
-  return this.http.post("/rpa-service/saveAction",body)
+  return this.http.post("/rpa-service/action",body)
 }
 updateDashboardConfiguration(body:any,screenId){
   return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets?screenId=`+screenId,body)
