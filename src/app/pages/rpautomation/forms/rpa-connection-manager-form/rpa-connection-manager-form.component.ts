@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@ang
 import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-rpa-connection-manager-form",
@@ -32,12 +33,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isVerifier: boolean;
   isScopeField: boolean;
   selectedToolsetName:string;
+  requestJson_body:any[]=[];
+passengerForm = [{
+  index:0,
+  encodedKey: "",
+  encodedValue: "",
+  }
+];
 
   constructor(
     private formBuilder: FormBuilder,
     private rest_api: RestApiService,
     private router:Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private spinner:LoaderService
   ) {
     this.createItem();
     this.route.queryParams.subscribe((data)=>{
@@ -72,7 +81,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerCheck: ["", Validators.compose([Validators.required])],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
-      ScopeFeild: ["", Validators.compose([Validators.required])],
+      scope: ["", Validators.compose([Validators.required])],
       encoded: this.formBuilder.array([this.createItem()]),
     });
 
@@ -84,16 +93,14 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.getActionById()
     }
 
-    this.addInputForm = new FormGroup({
-      addInputField: new FormArray([
-        new FormGroup({
-          encodedCheck: new FormControl(""),
-          encodedKey: new FormControl(""),
-          encodedValue: new FormControl(""),
-          encodedDelete: new FormControl(""),
-        }),
-      ]),
-    });
+    // this.addInputForm = new FormGroup({
+    //   addInputField: new FormArray([
+    //     new FormGroup({
+    //       encodedKey: new FormControl(""),
+    //       encodedValue: new FormControl(""),
+    //     }),
+    //   ]),
+    // });
   }
 
   createItem() {
@@ -111,14 +118,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   saveForm() {
     console.log(this.connectorForm.value);
+    let req_body
+    if(this.connectorForm.value.actionType == "Authenticated"){
     
-    let req_body=[
+    req_body=[
       {
         "id": this.selectedId,
         "name": this.connectorForm.value.actionName,
         "audit": null,
         "type": this.connectorForm.value.methodType,
-        "configuredConnectionId": null,
+        "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
         // "configuration": "{\"endPoint\" : \"https://accounts.zoho.com/oauth/v2/token\",\"actionType\":\"APIRequest\",\"clientId\" : \"1000.B88M52TRKWRD3SG8G4BFUOM1NC4WHA\",\"clientSecret\" : \"e81b73aeca3594855c40605eb27d3152c466f22ac9\",\"grantType\" : \"refresh_token\",\"scope\" : null,\"userName\" : null,\"password\" : null,\"refreshToken\" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\",\"contentType\" : null,\"authorizationCode\" : null,\"redirectUri\" : null,\"attributes\" : [ \"ClientId\", \"ClientSecret\" ],\"type\" : \"OAUTH\"}",
         "actionType":this.connectorForm.value.actionType,
@@ -129,6 +138,28 @@ export class RpaConnectionManagerFormComponent implements OnInit {
    // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
     req_body[0]["configuration"]=JSON.stringify(object);
     console.log(req_body);
+
+    }
+    else{
+      req_body = {
+        "name" : this.connectorForm.value.actionName,
+        "type" : this.connectorForm.value.actionType,
+        "configuredConnectionId" : this.selectedId,
+        "description" : "",
+        // "configuration" : "{\"endPoint\":\"https://www.zohoapis.com/crm/v3/Leads\",\"requestPayload\":{\"data\":[{\"Company\":\"AmeripriseDummy\",\"Last_Name\":\"Matt\",\"First_Name\":\"[@First_Name|string|Haley@]\",\"Email\":\"Matt.Haley@gmail.com\",\"State\":\"[@State|string|California@]\"}]}\",\"requestMethod\":\"POST\",\"contentType\":\"application/json\",\"httpHeaders\":null,\"type\":\"API\"}"
+      }
+      let object={
+        "endPoint" : this.connectorForm.value.endPoint,
+        "requestMethod":this.connectorForm.value.methodType,
+        "contentType":"application/json",
+        "httpHeaders":null,
+        "type":"API",
+        "requestPayload":{
+          "data":this.requestJson_body
+        }
+    }
+    req_body["configuration"]=JSON.stringify(object)
+    }
     this.rest_api.saveAction(req_body).subscribe((res) => {
         Swal.fire({
           icon: "success",
@@ -150,6 +181,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   testForm() {
+    this.spinner.show();
     let req_body:any={
     "clientId": this.connectorForm.value.clientId,
     "clientSecret": this.connectorForm.value.clientSecret,
@@ -177,8 +209,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     // }
     console.log(this.connectorForm.value)
     this.rest_api.testActions(req_body).subscribe((res:any)=>{
-    if(res.access_token)
-    this.connectorForm.get("response").setValue(res.access_token)
+    if(res.data.access_token)
+    this.connectorForm.get("response").setValue(res.data.access_token)
+    this.spinner.hide();
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: res.message,
+      heightAuto: false,
+    })
+    },(err: any) => {
+      Swal.fire("Error", "Unable generate access token", "error")
+      this.spinner.hide();
     })
   }
 
@@ -308,14 +350,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     return this.addInputForm.get("addInputField") as FormArray;
   }
   addHeader() {
-    this.addInputField.push(
-      new FormGroup({
-        encodedCheck: new FormControl(""),
-        encodedKey: new FormControl(""),
-        encodedValue: new FormControl(""),
-        encodedDelete: new FormControl(""),
-      })
-    );
+    // this.addInputField.push(
+    //   new FormGroup({
+    //     encodedKey: new FormControl(""),
+    //     encodedValue: new FormControl(""),
+    //   })
+    // );
+    this.passengerForm.push({
+      index:this.passengerForm.length,
+      encodedKey: "",
+      encodedValue: "",
+    });
+
   }
   backToaction(){
     this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}}
@@ -326,4 +372,20 @@ getActionById(){
     
   })
 }
+
+selectRow(){
+  console.log(this.selectedOne);
+  this.requestJson_body=[]
+  let obj={}
+  this.selectedOne.forEach(ele=>{
+    obj[ele["encodedKey"]]=ele["encodedValue"]
+  })
+  this.requestJson_body.push(obj);
+  this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
+}
+
+onDelete(index){
+  this.passengerForm.splice(index,1)
+}
+
 }

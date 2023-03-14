@@ -206,9 +206,9 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
-                                        formControlName="ScopeFeild" placeholder="Enter Scope ">
+                                        formControlName="scope" placeholder="Enter Scope ">
                                     <span
-                                        *ngIf="connectorForm.get('ScopeFeild').invalid && connectorForm.get('ScopeFeild').touched && !connectorForm.get('ScopeFeild').hasError('pattern')"
+                                        *ngIf="connectorForm.get('scope').invalid && connectorForm.get('scope').touched && !connectorForm.get('scope').hasError('pattern')"
                                         class="errspan required"> Scope Required*
                                     </span>
                                 </div>
@@ -229,20 +229,34 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody [formGroup]="addInputForm">
-                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index"[formGroupName]="i">
+                                        <tbody>
+                                            <tr *ngFor="let each of passengerForm;let i = index">
                                                 <td>
-                                             <p-checkbox [value]="addInpuGroup" [(ngModel)]="selectedOne"></p-checkbox>
-                                                    <!-- <input type="checkbox" class="check"
-                                                        formControlName="encodedCheck">  -->
-                                                    </td>
+                                                    <p-checkbox [value]="each" [(ngModel)]="selectedOne" (click)="selectRow()" [ngModelOptions]="{standalone: true}"></p-checkbox>
+                                                </td>
+                                                <td> <input type="text" name="test+i" id="" class="form-control"
+                                                    placeholder="Key" [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}"> </td>
+                                            <td> 
+                                                <input type="text" name="" id="" class="form-control" placeholder="Value" [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}"> </td>
+                                            <td>
+                                                <span *ngIf="passengerForm.length>1"> 
+                                                    <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="" (click)="onDelete(i)">
+                                                </span>
+                                            </td>        
+                                        </tr>
+                                        </tbody>
+                                        <!-- <tbody [formGroup]="addInputForm">
+                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index" [formGroupName]="i">
+                                                <td>
+                                                    <p-checkbox [value]="addInpuGroup" [(ngModel)]="selectedOne" (click)="selectRow()"></p-checkbox>
+                                                </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
                                                         placeholder="Key" formControlName="encodedKey"> </td>
                                                 <td> <input type="text" name="" id="" class="form-control"
                                                         placeholder="Value" formControlName="encodedValue"> </td>
                                                 <td> <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""></td>        
                                             </tr>
-                                        </tbody>
+                                        </tbody> -->
                                     </table>
                                 </div>
                             </div>
@@ -271,7 +285,7 @@
                                 <button type="button" class="btn btn-primary" [disabled]="isRequest"
                                     (click)="testForm()"> Test </button>
                                 &nbsp;
-                                <button type="button" class="btn btn-primary" [disabled]="connectorForm.invalid"
+                                <button type="button" class="btn btn-primary"
                                     (click)="saveForm()"> Save </button>
                             </div>
                         </div>

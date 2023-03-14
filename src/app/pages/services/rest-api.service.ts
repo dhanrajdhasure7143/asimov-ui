@@ -1734,7 +1734,7 @@ deleteConnectorbyId(id: any) {
   return this.http.delete(`/rpa-service/connection/${id}`);
 }
 testActions(body){
-  return this.http.post('/rpa-service/getAccessToken',body)
+  return this.http.post('/rpa-service/connection/test',body)
 }
 deleteActionById(id:any){
 return this.http.delete(`/rpa-service/action/${id}`)
@@ -1743,7 +1743,7 @@ getDashBoardItems(id){
   return this.http.get("/platform-service/dashboard/findDashboardMetricsAndWidgetsValues?screenId="+id);
 }
 getActionById(id){
-  return this.http.get(`/rpa-service/getActionById/${id}`)
+  return this.http.get(`/rpa-service/action/${id}`)
 }
 saveAction(body){
   return this.http.post("/rpa-service/action",body)
