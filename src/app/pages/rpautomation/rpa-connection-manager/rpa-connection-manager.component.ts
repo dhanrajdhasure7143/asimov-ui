@@ -92,7 +92,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Done Successfully !!",
+          text: "Connector Deleted Successfully !!",
           heightAuto: false,
         });
         this.getAllConnections();
