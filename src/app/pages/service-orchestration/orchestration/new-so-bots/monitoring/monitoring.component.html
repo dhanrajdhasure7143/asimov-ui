@@ -1,12 +1,12 @@
 <div class="" *ngIf="bots_list.length!=0">
         
         <div class="row">
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 pl-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <span class="module-sub-header-title">Status</span>
+                        <h2 class="module-sub-header-title">Status</h2>
                     </div>
-                    <div class="dbichart-body" >
+                    <div class="dbichart-body statustablehi8" >
                         <!-- <table class="table" >
                                 <thead>
                                     <tr>
@@ -60,7 +60,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <span class="module-sub-header-title">Job History</span>
+                        <h2 class="module-sub-header-title">Job History</h2>
                         <span *ngIf="runtimeflag==false" (click)="this.runtimeflag=true;botruntimestats();" class="clickable pull-right"><i class="fa fa-arrow-left"></i></span>
                     </div>
                     
@@ -108,10 +108,10 @@
 
 
 
-            <div class="col-md-4 p-0">
+            <div class="col-md-4 pl-0">
                 <div class="dbichart-block block chartinner" style="height: 380px">
                     <div class="dbichart-head">
-                        <span class="module-sub-header-title">Executed Bots</span>
+                        <h2 class="module-sub-header-title">Executed Bots</h2>
                     </div>
                     
                     <div class="dbichart-body ">
@@ -142,7 +142,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <span class="module-sub-header-title">Bot Transactions (Last 30 Days)</span>
+                        <h2 class="module-sub-header-title">Bot Transactions (Last 30 Days)</h2>
                     </div>
                     <div class="dbichart-body"  id="linechart_data">
                         <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>
