@@ -51,6 +51,10 @@ template:`
       </div>
       
       <div *ngIf ="field.visibility">
+      <Secretkey [feilddisable]="isdisabled" *ngSwitchCase="'secretkey'" [field]="field" [form]="form"></Secretkey>
+    </div>
+      
+      <div *ngIf ="field.visibility">
       <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
     </div>
      

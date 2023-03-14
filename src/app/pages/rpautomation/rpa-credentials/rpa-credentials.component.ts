@@ -95,7 +95,8 @@ inputNumberOnly(event){
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
+              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll');
+              item["password_new"]=("*").repeat(10);
               return item;
             })
            }
@@ -113,7 +114,7 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "password",
+            ColumnName: "password_new",
             DisplayName: "Password",
             ShowFilter: true,
             ShowGrid: true,
