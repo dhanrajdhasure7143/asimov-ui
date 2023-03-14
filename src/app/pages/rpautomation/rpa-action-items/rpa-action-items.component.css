@@ -1,3 +1,40 @@
+.row.credential-search-tools {
+  width: auto;
+  position: absolute;
+  right: 230px;
+  top: 57px;
+  z-index: 2;
+}
+
+.env-btn>button:disabled {
+  background-color: transparent !important;
+}
+
+.credential-btntool {
+  padding: 6px;
+  position: relative;
+}
+
+.credential-tablegrid table td span {
+  font-size: 13px !important;
+}
+
+.credential-tools {
+  padding: 0px !important;
+  display: flex;
+}
+
+.credential-btntool {
+  position: relative;
+  padding: 6px;
+  margin: 0px !important;
+}
+
+.credential-btntool img {
+  width: 16px;
+  height: 16px;
+}
+
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
@@ -30,58 +67,16 @@ span.testtooltip:before {
   transform: rotate(45deg);
 }
 
-.env-btn>button:disabled>img {
-  color: rgb(116, 116, 116) !important;
-  background-color: white !important;
+.create-title {
+  padding: 19px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
-.env-btn>button:disabled {
+.modal-body {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.con-envr{
   background-color: white;
-}
-
-.env-btn>button>div {
-  color: black !important;
-}
-
-.env-btn>button:disabled>div {
-  color: lightgrey !important;
-}
-
-.credential-tablegrid table td span {
-  font-size: 13px !important;
-}
-
-.credential-tools {
-  padding: 0px !important;
-  display: flex;
-}
-
-.credential-btntool {
-  position: relative;
-  padding: 6px;
-  margin: 0px !important;
-}
-
-.credential-btntool img {
-  width: 16px;
-  height: 16px;
-}
-
-.con-envr {
-  background-color: white;
-}
-
-* {
-  background-color: white;
-}
-
-.credential-btntool img {
-  width: 16px;
-  height: 16px;
-}
-
-.credential-btntool {
-  position: relative;
-  padding: 6px;
-  margin: 0px !important;
 }
