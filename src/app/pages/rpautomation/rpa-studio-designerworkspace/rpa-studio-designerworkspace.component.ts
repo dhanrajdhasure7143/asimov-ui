@@ -1135,7 +1135,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           });
         });
-      }, 500);
+      }, 1000);
     }
   }
 
