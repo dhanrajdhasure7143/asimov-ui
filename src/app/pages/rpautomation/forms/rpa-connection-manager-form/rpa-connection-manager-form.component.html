@@ -71,9 +71,9 @@
                                         class="errspan required"> Method Type Required* </span> -->
                                 </div>
                             </div>
-                            <div class="col-md-12 martsascl form-fields api">
+                            <div class="col-md-12 martsascl form-fields">
                                 <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea class="form-control" row="3" formControlName="endPoint" placeholder="Enter API"
+                                <textarea class="form-control api" row="3" formControlName="endPoint" placeholder="Enter API"
                                     style=" resize: none;" maxlength="256">
                                 </textarea>
                                 <span
@@ -216,7 +216,7 @@
                             <div class="col-md-12" *ngIf="isRequest">
                                 <div class="form-fields pl-0">
                                     <label class="label-control"> Header <span class="star">*</span> </label>
-                                    <table class="table table-bordered mt-2">
+                                    <table class="table table-bordered mt-2 api">
                                         <thead>
                                             <tr>
                                                 <th></th>
@@ -267,15 +267,15 @@
                             </div> -->
                             <div class="col-md-12 martsascl api" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
-                                <textarea class="form-control" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                <textarea class="form-control api" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
                                     placeholder="Response">
                                 </textarea>
                                 <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
                                 <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
-                                <label class="label-control"> Request : Hint- {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}} </label>
-                                <textarea class="form-control response" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
+                                <label class="label-control"> Request </label> <span> Hint - {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}}</span>
+                                <textarea class="form-control api" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
                                     placeholder="Request Body">
                                 </textarea>
                                 <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>

@@ -157,18 +157,18 @@
              </div>
 </div>
 
-<div class="bpmnCreate">
+<div class="">
     <div id="filterModal" class="modal">
         <app-split-overlay (closeOverlay)="closePopup()" >
-         <div class="">
-           <div class="modal-header">
-            <h4>Filter</h4>
+         <div class="h-100">
+           <div class="create-header">
+            <h3>Filter</h3>
              <!-- <span class="close" (click)="closePopup();">
                 <img alt="" class="default-img" src="../../../../assets/images/PI/close.svg">
                 <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
              </span>              -->
            </div>
-           <div class="modal-body">
+           <div class="">
              <div *ngIf="isFilterComponent">
                 <app-filter *ngIf="isFilterComponent" [isClearFilter]='isClearFilter' [isFilterApplied]='isFilterApplied' [dataValues]='dataValues' [isGraph_changed]="isGraph_changed" [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" [performanceFilterInput]="performanceFilterInput" (selectedNodes)="readselectedNodes1($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedFilterValues)="readSelectedFilterValues($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)" (appliedPerformanceFiterValues)="applyPerformanceFilterMethod($event)"></app-filter>
              </div>

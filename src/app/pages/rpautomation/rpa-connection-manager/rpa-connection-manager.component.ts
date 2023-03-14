@@ -54,7 +54,6 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getConnectionslist().subscribe((res: any) => {
       this.connectorTable = res.data;
-      // console.log("List Of Connections",data);
       this.spinner.hide();
       this.columns_list = [
         {
@@ -108,7 +107,6 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   viewConnector() {
-    console.log("Selected Data", this.selectedData[0].id);
     this.router.navigate(["/pages/rpautomation/action-item"], {
       queryParams: { id: this.selectedData[0].id },
     });
@@ -129,7 +127,6 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.createConnectorForm
       .get("taskIcon")
       .setValue(this.connctionupdatedata["taskIcon"]);
-    console.log(this.selectedData);
   }
 
   readSelectedData(data) {
@@ -229,19 +226,14 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   imageUpload(e) {
-    console.log("input change");
     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     var pattern = /image-*/;
     var reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert("invalid format");
-      return;
-    }
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
   }
+
   _handleReaderLoaded(e) {
-    console.log("_handleReaderLoaded");
     var reader = e.target;
     this.conn_logo = reader.result;
   }

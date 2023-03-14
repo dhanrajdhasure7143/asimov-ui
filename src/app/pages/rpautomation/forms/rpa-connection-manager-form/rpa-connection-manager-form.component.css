@@ -16,10 +16,6 @@ label.label-control {
     text-overflow: ellipsis;
 }
 
-.response {
-    width: 97%;
-}
-
 .raw {
     margin: 5px 0 0 0;
 }
@@ -29,12 +25,13 @@ label.label-control {
 }
 
 .text-right {
-    margin: 20px;
+    top: 25px;
+    right: 15px;
     width: 95%;
 }
 
 .api {
-    width: 98.2%;
+    width: 877px;
 }
 
 .maindivfoprm input,

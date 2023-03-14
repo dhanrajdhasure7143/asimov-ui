@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
@@ -25,11 +31,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isRequest: boolean = false;
   isResponse: boolean = false;
   attribute = [];
-  validateJSON:boolean=false;
+  validateJSON: boolean = false;
   addInputForm: FormGroup;
-  selectedId:any;
-  selectedOne:any[]=[];
-  isCreate:any;
+  selectedId: any;
+  selectedOne: any[] = [];
+  isCreate: any;
   isVerifier: boolean;
   isScopeField: boolean;
   selectedToolsetName:string;
@@ -49,14 +55,11 @@ passengerForm = [{
     private spinner:LoaderService
   ) {
     this.createItem();
-    this.route.queryParams.subscribe((data)=>{
-    this.selectedId = data.id;
-    this.isCreate = data.create;
-    if(data.name)
-    this.selectedToolsetName = data.name;
-    console.log(data);
-    
-    })
+    this.route.queryParams.subscribe((data) => {
+      this.selectedId = data.id;
+      this.isCreate = data.create;
+      if (data.name) this.selectedToolsetName = data.name;
+    });
   }
 
   ngOnInit(): void {
@@ -89,8 +92,8 @@ passengerForm = [{
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
-    if(this.isCreate=="false"){
-      this.getActionById()
+    if (this.isCreate == "false") {
+      this.getActionById();
     }
 
     // this.addInputForm = new FormGroup({
@@ -189,19 +192,17 @@ passengerForm = [{
     "type": "OAUTH"
   }
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
-      req_body["grantType"]="authorization_code"
-      req_body["code"]= this.connectorForm.value.code
-      req_body["redirect_uri"]=this.connectorForm.value.redirect_uri
-    } 
-    else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      req_body["grantType"] = "authorization_code";
+      req_body["code"] = this.connectorForm.value.code;
+      req_body["redirect_uri"] = this.connectorForm.value.redirect_uri;
+    } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
       // "grantType": this.connectorForm.value.grantType,
-      req_body["grantType"]= "password",
-      req_body["password"]= this.connectorForm.value.password
-      req_body["userName"]= this.connectorForm.value.userName
-    } 
-    else if (this.connectorForm.value.grantType == "ClientCredentials") {
-      req_body["grantType"]=this.connectorForm.value.grantType
-      req_body["scope"]= this.connectorForm.value.scope
+      (req_body["grantType"] = "password"),
+        (req_body["password"] = this.connectorForm.value.password);
+      req_body["userName"] = this.connectorForm.value.userName;
+    } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      req_body["grantType"] = this.connectorForm.value.grantType;
+      req_body["scope"] = this.connectorForm.value.scope;
     }
     // else if (this.connectorForm.value.grantType == "RefreshToken") {
     //       req_body["grantType"]="refresh_token"
@@ -242,8 +243,6 @@ passengerForm = [{
         type: key,
         value: filterData[key],
       }));
-      console.log(this.authItems);
-      
       return this.authItems;
     });
   }
@@ -258,7 +257,7 @@ passengerForm = [{
     }
   }
 
-  isJsonData(){
+  isJsonData() {
     let jsonValidate = this.connectorForm.get("request").value;
     try {
       JSON.parse(jsonValidate);
@@ -312,7 +311,7 @@ passengerForm = [{
       this.isPassword = false;
       this.isVerifier = false;
       this.isScopeField = true;
-    } else if(event == "AuthorizationCodeWithPKCE"){
+    } else if (event == "AuthorizationCodeWithPKCE") {
       this.isAuthorization = true;
       this.isClient = true;
       this.isResponse = true;
@@ -325,30 +324,29 @@ passengerForm = [{
   getActionType() {
     this.rest_api.getActionType().subscribe((res: any) => {
       let filterData = res;
-      console.log(res);
       this.actionItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
-      console.log(this.actionItems);
       return this.actionItems;
     });
   }
 
   getGrantTypes() {
     this.rest_api.getGrantTypes().subscribe((res: any) => {
-      let filterData = res;      
+      let filterData = res;
       this.grantItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
-    console.log(this.grantItems);
       return this.grantItems;
     });
   }
+
   get addInputField(): FormArray {
     return this.addInputForm.get("addInputField") as FormArray;
   }
+
   addHeader() {
     // this.addInputField.push(
     //   new FormGroup({
@@ -364,13 +362,11 @@ passengerForm = [{
 
   }
   backToaction(){
-    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}}
-  )}
+    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}})
+  }
+
 getActionById(){
-  this.rest_api.getActionById(this.selectedId).subscribe((res)=>{
-    console.log("TestAction",res);
-    
-  })
+  this.rest_api.getActionById(this.selectedId).subscribe((res)=>{})
 }
 
 selectRow(){

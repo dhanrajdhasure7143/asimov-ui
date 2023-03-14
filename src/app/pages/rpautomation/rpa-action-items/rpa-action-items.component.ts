@@ -28,7 +28,6 @@ export class RpaActionItemsComponent implements OnInit {
     {
       this.route.queryParams.subscribe((data)=>{
         this.selectedId = data.id;
-        console.log(data.id)
       })
     }
 
