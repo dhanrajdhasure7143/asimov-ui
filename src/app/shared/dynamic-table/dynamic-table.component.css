@@ -34,11 +34,6 @@ th.checkboxth:before {
     margin-right: 5px;
 }
 
-.p-button-outlined{
-    margin: 0 0 0 10px;
-    color: #098de6;
-}
-
 .editButton{
     border : none !important;
 }

@@ -149,10 +149,10 @@
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
                                                         (click)="openEditBotOverlay(rowData)">
-                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus default-img"> 
+                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus "> 
                                                 </button>                                                
                                                 <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
-                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus default-img">
+                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus ">
                                                 </button>
                                             </div>
                                         </span>
@@ -288,8 +288,8 @@
                                                 <button matTooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus"></button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
-                                                <button matTooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="openEditBotOverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus default-img"><img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> </button>                                                
-                                                <button matTooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus default-img">
+                                                <button matTooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="openEditBotOverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus "><img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> </button>                                                
+                                                <button matTooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus ">
                                                 <img src="../../../../assets/images/Projects/delete-red.svg" alt="" class="testplus hover-img"></button>
                                             </div>
                                         </div>

@@ -188,7 +188,7 @@ mat-tab-body {
 
 div[class^='diagram_container'] svg {
   position: relative;
-  z-index: -10;
+  /* z-index: -10; */
 }
 
 div[class^='diagram_container'] {
@@ -598,7 +598,7 @@ mat-tab-body {
 }
 
 .fit_button {
-  z-index: 200;
+  z-index: 1;
   position: absolute;
   right: 5px;
   top: 5px;
@@ -765,7 +765,7 @@ mat-tab-body {
 
 
 .box_area {
-  margin-top: 5px;
+  /* margin-top: 5px; */
   margin-bottom: 15px;
 }
 
