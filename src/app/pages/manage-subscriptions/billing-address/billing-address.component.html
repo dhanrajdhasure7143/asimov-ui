@@ -27,16 +27,15 @@
         <div class="row">
             <div class="form-fields col p-0">
                 <label class="" for="taskCategory">Country<span class="star">*</span></label>
-
                 <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
-                    emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
-                    [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName"></p-dropdown>
+                    emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)" 
+                    [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName" optionValue="CountryName"></p-dropdown>
             </div>
             <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
                 class="errspan required">Country is Required*</span>
             <div class="form-fields col pl-3">
                 <label class="" for="resources">State/Region<span class="star">*</span></label>
-                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionLabel="StateName"
+                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionLabel="StateName" 
                     [autoDisplayFirst]="false" placeholder="Select State/Region" formControlName="state"
                     (onChange)="onChangeState($event.value)">
                 </p-dropdown>
@@ -50,7 +49,7 @@
         <div class="form-fields col p-0">
             <label class="" for="priority">City <span class="star">*</span></label>
             <span>
-                <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}" [appendTo]="'body'"
+                <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}" 
                     [autoDisplayFirst]="false" placeholder="Select City" formControlName="city">
                 </p-dropdown>
             </span>
@@ -85,21 +84,10 @@
     </div>
     <div class="row">
         <div class="form-fields col p-0">
-            <span *ngIf="!isRefresh">
-                <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
-                <input pInputText type="text" [style]="{'width':'238%'}" maxlength="10" formControlName="phoneNumber"
-                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" ng2TelInput
-                    [ng2TelInputOptions]="{initialCountry: phnCountry}">
-
+            <span> <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
+                <input pInputText type="text" [style]="{'width':'97%'}" maxlength="10" formControlName="phoneNumber"
+                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)">
             </span>
-            <span *ngIf="isRefresh">
-                <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
-                <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
-                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" ng2TelInput
-                    [ng2TelInputOptions]="{initialCountry: phnCountry}">
-
-            </span>
-
         </div>
         <span
             *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched && 
