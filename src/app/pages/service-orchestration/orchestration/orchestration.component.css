@@ -226,11 +226,11 @@ body .leftfporm select {
   margin-bottom: 8px !important;
 }
 
-.schedule-table-container{
+/* .schedule-table-container{
   height: calc(100vh - 320px);
   overflow: auto;
   width: 100%;
-}
+} */
 .so-bot-graph .mat-tab-body-content {
   overflow: auto !important;
 }

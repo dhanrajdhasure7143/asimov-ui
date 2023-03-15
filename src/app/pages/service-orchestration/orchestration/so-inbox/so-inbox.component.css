@@ -2,7 +2,12 @@
   background-color: rgb(241, 240, 240);
 }
 
-.undobtn {background-color:gainsboro; border-radius: 5px;}
+.undobtn {
+  background-color:transparent; 
+}
+.undobtn:disabled i.fas {
+  color: #a0a0a0 !important;
+}
 
 .verticalalignmiddle{
   vertical-align: middle !important;
@@ -11,7 +16,8 @@
 .Inboxtab-btns {
   position: absolute;
   right: 20%;
-  top: 20px;
+  top: 26px;
+  z-index: 9;
 }
 .Inboxtab-btns button:first-child {
   padding-right: 15px;

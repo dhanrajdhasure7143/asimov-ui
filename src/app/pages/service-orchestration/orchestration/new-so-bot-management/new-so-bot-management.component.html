@@ -163,33 +163,33 @@
             </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pReorderableColumn pResizableColumn>Bot Name
+                    <th pSortableColumn="botName" pReorderableColumn pResizableColumn>Bot Name
                       <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
                       <p-sortIcon field="botName"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Description
+                    <th pSortableColumn="description" pReorderableColumn pResizableColumn>Description
                       <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
                       <p-sortIcon field="description"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Source
+                    <th pSortableColumn="Source" pReorderableColumn pResizableColumn>Source
                       <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
                       <p-sortIcon field="department"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Category
+                    <th pSortableColumn="Category" pReorderableColumn pResizableColumn>Category
                       <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
                       <p-sortIcon field="processName"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Version
+                    <th pSortableColumn="Version" pReorderableColumn pResizableColumn>Version
                       <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
                       <p-sortIcon field="version"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Status
+                    <th pSortableColumn="Status" pReorderableColumn pResizableColumn>Status
                       <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
                       <p-sortIcon field="botStatus"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Actions</th>
-                    <th pReorderableColumn pResizableColumn>Schedule</th>
-                    <th pReorderableColumn pResizableColumn>Logs</th>
+                    <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
+                    <th pSortableColumn="Schedule" pReorderableColumn pResizableColumn>Schedule</th>
+                    <th pSortableColumn="Logs" pReorderableColumn pResizableColumn>Logs</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-element>
