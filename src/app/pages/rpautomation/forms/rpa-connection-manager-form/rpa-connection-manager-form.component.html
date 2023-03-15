@@ -4,7 +4,8 @@
             <i class="fas fa-arrow-left" aria-hidden="true" (click)="backToaction()"></i>
         </span>
         <span class="module-header-title">
-            <span class="module-parent-title">Connection Manager</span>
+            <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }} - {{ selectedToolsetName }} </span>
+            <span class="module-parent-title" *ngIf="istoolSet" >Connection Manager - {{ selectedConnector }} - Create New </span>
         </span>
     </div>
     <div class="container-fluid h-scroll">
