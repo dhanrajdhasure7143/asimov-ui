@@ -1,7 +1,10 @@
 .billing-form {
-    margin-left: 19px !important; 
+    /* margin-left: 19px !important;  */
     overflow: auto;
     height: calc(100vh - 206px);
+    background: #ffffff;
+    padding-top: 21px;
+    padding-left: 17px;
   }
 
   .label-control {
@@ -12,3 +15,8 @@
   .Admin-countrylist input {
     border: unset !important;
   }  
+
+  .h-scroll {
+    height: 400px; 
+    overflow-y: scroll; 
+  }

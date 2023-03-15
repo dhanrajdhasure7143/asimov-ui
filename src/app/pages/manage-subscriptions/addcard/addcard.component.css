@@ -190,7 +190,7 @@
   
   .mat2-card{
    
-    margin-top: 20px;
+    margin-top: 15px;
     width:85% !important;
     transform: translate(76px, 0px);
     box-shadow: #5784e999 0px 1px 6px;
@@ -314,6 +314,7 @@
   .btn-continue{
    
     left: 120px;
+    padding-bottom: 3px;
   }
   
   .btn-back{
@@ -361,19 +362,19 @@
     .cc-number2
     {
       width: 63%;
-      margin-top: -34px;
+      margin-top: -40px;
       margin-left: 64px;
     }
     .cc-number3
     {
       width: 62%;
-      margin-top: -34px;
-      margin-left: 127px;
+      margin-top: -40px;
+      margin-left: 128px;
     }
     .cc-number4{
       width: 62%;
-      margin-top: -34px;
-      margin-left: 197px;
+      margin-top: -39px;
+      margin-left: 194px;
     }
   
   .card{
@@ -399,4 +400,12 @@
   }
   .col-md-4.plan_detail_box {
     left: 91px;
+  }
+  .addedcard {
+    /* margin-left: 19px !important;  */
+    overflow: auto;
+    height: calc(100vh - 206px);
+    background: #ffffff;
+    padding-top: 21px;
+    padding-left: 17px;
   }
