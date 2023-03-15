@@ -59,7 +59,7 @@ export class AdminAddScreenComponent implements OnInit {
       ShowForm: [false],
       read_only: [false],
       mandatory: [false],
-      length: ["", Validators.compose([Validators.required])],
+      length: ["", Validators.compose([Validators.required,Validators.pattern('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')])],
       default_type: ["", Validators.compose([Validators.required])],
       data_type: [
         { value: "", disabled: true },
@@ -355,5 +355,13 @@ export class AdminAddScreenComponent implements OnInit {
   closeOverlay(event) {
     this.hiddenPopUp = event;
 
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+    }
+    return true;
   }
 }
