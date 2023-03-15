@@ -1,7 +1,7 @@
 .billing-form {
     /* margin-left: 19px !important;  */
     overflow: auto;
-    height: calc(100vh - 206px);
+    height: calc(100vh - 240px);
     background: #ffffff;
     padding-top: 21px;
     padding-left: 17px;
@@ -17,6 +17,5 @@
   }  
 
   .h-scroll {
-    height: 400px; 
     overflow-y: scroll; 
   }

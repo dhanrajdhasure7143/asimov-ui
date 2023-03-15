@@ -147,7 +147,6 @@ export class BillingAddressComponent implements OnInit {
       if(data){
       this.billingForm.get("firstName").setValue(this.billingContactData["firstName"]);
       this.billingForm.get("lastName").setValue(this.billingContactData["lastName"]);
-      // this.billingForm.get("country").setValue(this.billingContactData["country"]);
       this.billingForm.get("state").setValue(this.billingContactData["state"]);
       this.billingForm.get("city").setValue(this.billingContactData["city"]);
       this.billingForm.get("postalcode").setValue(this.billingContactData["postalcode"]);
