@@ -1,4 +1,55 @@
-  .aprwkfl_bpmn_list_header {
+.p-button-outlined {
+  margin: 0 0 0 10px;
+  color: #098de6;
+}
+.botpreviewtr {
+  height: auto !important;
+}
+.aprwkfl_table h4 {
+  color: #535353;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.aprwkfl_actions_icons {
+  display: flex;
+  align-items: center;
+}
+.aprwkfl_actions button {
+  padding: 0px !important;
+  background-color: unset !important;
+  min-width: unset !important;
+  margin: 0px !important;
+  opacity: 1;
+  margin-right: 5px !important;
+}
+.list_header {
+  text-align: left;
+  width: 100%;
+  display: inline;
+  font-size: 14px !important;
+}
+.bps_overlay .fit_button {
+  top: 15px;
+  right: 15px;
+  position: absolute;
+}
+.account_pay_details_table thead tr, .account_pay_details_table tbody tr {
+  height: 40px;
+}
+.bps_overlay div[class^='diagram_container'] {
+  padding-top: 65px;
+  height: 300px;
+}
+.down-btn {
+  position: absolute;
+  right: 45px;
+  top: 15px;
+  z-index: 2;
+}
+
+/* 
+.aprwkfl_bpmn_list_header {
       background-color: #e8f7fd;
       padding: 6px 10px !important;
       display: -webkit-box;
@@ -12,23 +63,7 @@
       height: 40px;
       flex-wrap: unset;
   }
-  .list_header {
-    text-align: left;
-    width: 100%;
-    display: inline;
-    font-size: 14px !important;
-}
-
-#bpmn_list .row {
-  font-size: 12px;
-  font-weight: 400;
-  padding: 0px;
-  display: -webkit-box;
-  display: flex;
-  color: #212529;
-  flex-wrap: unset;
-}
-.aprwkfl_search {
+  .aprwkfl_search {
   float: right;
   display: flex;
 }
@@ -51,7 +86,6 @@
 }
 .searchinputar .notranslate.material-icons.mat-icon-no-color img{
  width: 16px;
-
 }
 .aprwkfl-grid-data .bps_overlay span.info {
   border-radius: 4px;
@@ -61,70 +95,13 @@
   width: 100px !important;
   position: absolute;
   text-align: center !important;
-}  
-.bps_overlay .fit_button {
-  top: 15px;
-  right: 15px;
-  position: absolute;
-}
-.aprwkfl_table h4.child_list_header {
-  color: #5b5b5b;
-  font-size: 15px;
-}
-.aprwkfl_table tr th {
-  background-color: #e8f7fd;
-  color: #00a0e3;
-  font-weight: 400;
-  font-size: 14px;
-  text-align: left !important;
-  padding: 5px 8px;
-  font-size: 15px !important;  
-  border-bottom: 1px solid #4a4a4a33;
-}
-.aprwkfl_table tbody td {
-  font-weight: 400;
-  font-size: 13px;
-  text-align: left !important;
-  border-bottom: 1px solid #4a4a4a33;
-  padding: 5px 8px;
-}
-.aprwkfl_actions_icons {
-  display: flex;
-  align-items: center;
-}
-.aprwkfl_actions button {
-  padding: 0px !important;
-  background-color: unset !important;
-  min-width: unset !important;
-  margin: 0px !important;
-  opacity: 1;
-  margin-right: 5px !important;
-}
-.account_pay_details_table thead tr, .account_pay_details_table tbody tr {
-  height: 40px;
-}
-mat-expansion-panel-header {
-  position: relative;
-}
+} 
 .row.grid-header {
   padding: 0px 0px 10px;
-}
-.new-bps-layout {
-  overflow: hidden auto;
-  height: calc(100% - 50px);
-  position: relative;
-  padding: 10px 12px;
-}
-.box-border {
-  border: none;
-  border-radius: 0px;
-  margin: 0px;
-  padding: 0px;
 }
 .aprwkfl-grid-data {
   height: 60vh !important;
 }
-
 i.material-icons.expand-close {
   display: none;
 }
@@ -143,4 +120,9 @@ i.material-icons.expand-open {
 }
 .expan-icon{
   width: 16% !important;
+} 
+*/ 
+
+mat-expansion-panel-header {
+  position: relative;
 }
