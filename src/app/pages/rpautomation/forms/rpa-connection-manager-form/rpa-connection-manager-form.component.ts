@@ -131,11 +131,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "id": this.selectedId,
         "name": this.connectorForm.value.actionName,
         "audit": null,
-        "type": this.connectorForm.value.methodType,
+        // "type": this.connectorForm.value.methodType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
         // "configuration": "{\"endPoint\" : \"https://accounts.zoho.com/oauth/v2/token\",\"actionType\":\"APIRequest\",\"clientId\" : \"1000.B88M52TRKWRD3SG8G4BFUOM1NC4WHA\",\"clientSecret\" : \"e81b73aeca3594855c40605eb27d3152c466f22ac9\",\"grantType\" : \"refresh_token\",\"scope\" : null,\"userName\" : null,\"password\" : null,\"refreshToken\" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\",\"contentType\" : null,\"authorizationCode\" : null,\"redirectUri\" : null,\"attributes\" : [ \"ClientId\", \"ClientSecret\" ],\"type\" : \"OAUTH\"}",
-        "actionType":this.connectorForm.value.actionType,
+        // "actionType":this.connectorForm.value.actionType,
         "actionLogo" : ""
         // "endPoint": this.connectorForm.value.endPoint
       }
@@ -145,6 +145,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     let object={
       "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
       "grant_type" : `[@grant_type|string|${this.connectorForm.value.grantType}@]`,
+      "methodType" : this.connectorForm.value.methodType,
+      "actionType": this.connectorForm.value.actionType,
     }
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
 
@@ -179,15 +181,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     else{
       req_body = {
         "name" : this.connectorForm.value.actionName,
-        "type" : this.connectorForm.value.actionType,
+        // "type" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
         // "configuration" : "{\"endPoint\":\"https://www.zohoapis.com/crm/v3/Leads\",\"requestPayload\":{\"data\":[{\"Company\":\"AmeripriseDummy\",\"Last_Name\":\"Matt\",\"First_Name\":\"[@First_Name|string|Haley@]\",\"Email\":\"Matt.Haley@gmail.com\",\"State\":\"[@State|string|California@]\"}]}\",\"requestMethod\":\"POST\",\"contentType\":\"application/json\",\"httpHeaders\":null,\"type\":\"API\"}"
       }
       this.requestJson_body.push(this.connectorForm.get("request").value)
       let object={
-        "endPoint" : this.connectorForm.value.endPoint,
-        "requestMethod":this.connectorForm.value.methodType,
+        // "endPoint" : this.connectorForm.value.endPoint,
+        "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
+        "methodType" : this.connectorForm.value.methodType,
+        "actionType": this.connectorForm.value.actionType,
+        // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
         "httpHeaders":null,
         "type":"API",
