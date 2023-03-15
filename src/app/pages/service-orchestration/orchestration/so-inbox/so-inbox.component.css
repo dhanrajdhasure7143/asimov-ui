@@ -8,11 +8,24 @@
   vertical-align: middle !important;
 }
 
-.inbox-tablegrid {
+.Inboxtab-btns {
+  position: absolute;
+  right: 20%;
+  top: 20px;
+}
+.Inboxtab-btns button:first-child {
+  padding-right: 15px;
+}
+button#inboxrefresh img {
+  width: 19px;
+  height: auto;
+}
+
+/* .inbox-tablegrid {
   width: 100%;
   overflow: auto;
   height: calc(100vh - 265px);
-}
+} */
 
 .inbox-tablegrid table td span{
   font-size: 13px !important;

@@ -240,6 +240,7 @@ button:focus {
     padding: 10px 14px;
     width: 100%;
     margin-bottom: 25px;
+    background-color: #fff;
 }
 .dbichart-block .dbichart-head label {
     font-weight: 600;
@@ -252,7 +253,7 @@ button:focus {
     padding: 5px 0px;
 }
 .dbichart-head h2 {
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 500;
     margin-bottom: 0px;
 }

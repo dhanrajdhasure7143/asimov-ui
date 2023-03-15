@@ -2961,6 +2961,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   color: unset !important;
   background: transparent !important;
 }
+.p-input-icon-right {
+  float: right;
+  margin-right: 5px;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
