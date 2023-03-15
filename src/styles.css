@@ -72,9 +72,9 @@
 .bjs-powered-by {
   position: absolute;
   bottom: 5px !important;
-  right: 100px !important;
-  /* z-index: unset !important; */
+  left: 10px !important;
   opacity: 0.1;
+  width: max-content;
 }
 
 .bpmn-icon-rpa::before {

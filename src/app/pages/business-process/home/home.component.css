@@ -25,7 +25,7 @@
     width: 100%;
     align-items: center;
     font-size: 14px;
-    color: #00a0e3;
+    color: #098de6;
     font-weight: 600;
     border: none;
     height: 40px;
@@ -70,10 +70,10 @@ span.comment {
 .bps_overlay1 {
     border-radius: 4px;
     height: 450px;
-    border: 1px solid #00a0e3;
+    border: 1px solid #098de6;
     border-radius: 10px;
 }
-.new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
+.new-bps-grid-data .bps_overlay span.info{
     border-radius: 4px;
     padding: 8px 12px;
     top: 50px !important;
@@ -82,11 +82,7 @@ span.comment {
     position: absolute;
     text-align: center !important;
 }
-.bps_overlay .fit_button {
-    top: 50px;
-    right: 15px;
-    position: absolute;
-}
+
 .header_addon {
     position: absolute;
     top: 80px;
@@ -228,7 +224,9 @@ div#bpmn_list {
     text-align: center;
     margin-top: 100px;
 }
-
+.bps_overlay div[class^='diagram_container'] {
+    padding-top: 50px;
+}
 /* 
 .new-bps-layout {
     overflow: auto;
