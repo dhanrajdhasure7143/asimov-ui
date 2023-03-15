@@ -230,7 +230,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let each of passengerForm;let i = index">
+                                            <tr *ngFor="let each of headerForm; let i = index">
                                                 <td>
                                                     <p-checkbox [value]="each" [(ngModel)]="selectedOne" (click)="selectRow()" [ngModelOptions]="{standalone: true}"></p-checkbox>
                                                 </td>
@@ -239,7 +239,7 @@
                                             <td> 
                                                 <input type="text" name="" id="" class="form-control" placeholder="Value" [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}"> </td>
                                             <td>
-                                                <span *ngIf="passengerForm.length>1"> 
+                                                <span *ngIf="headerForm.length>1"> 
                                                     <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="" (click)="onDelete(i)">
                                                 </span>
                                             </td>        

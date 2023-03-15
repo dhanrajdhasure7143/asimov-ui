@@ -63,7 +63,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "url",
+        ColumnName: "endPoint",
         DisplayName: "URL/Root Domain",
         ShowFilter: true,
         ShowGrid: true,
@@ -82,16 +82,16 @@ export class RpaActionItemsComponent implements OnInit {
         sort: true,
         multi: false,
       },
-      {
-        ColumnName: "attribute",
-        DisplayName: "Attributes",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      }
+      // {
+      //   ColumnName: "attribute",
+      //   DisplayName: "Attributes",
+      //   ShowGrid: true,
+      //   ShowFilter: true,
+      //   filterWidget: "normal",
+      //   filterType: "text",
+      //   sort: true,
+      //   multi: false,
+      // }
       // {
       //   ColumnName: "attribute",
       //   DisplayName: "Attributes",
@@ -121,7 +121,7 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedData[0].id, name:this.selectedData[0].name, create:false}});
+      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, create:false}});
   }
 
   deleteAction() {

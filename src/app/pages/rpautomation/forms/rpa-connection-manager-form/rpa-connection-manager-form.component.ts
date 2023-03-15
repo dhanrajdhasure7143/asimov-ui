@@ -40,12 +40,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isScopeField: boolean;
   selectedToolsetName:string;
   requestJson_body:any[]=[];
-passengerForm = [{
+  headerForm = [{
   index:0,
   encodedKey: "",
   encodedValue: "",
   }
 ];
+  action_id:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,6 +58,7 @@ passengerForm = [{
     this.createItem();
     this.route.queryParams.subscribe((data) => {
       this.selectedId = data.id;
+      this.action_id = data.action_Id;
       this.isCreate = data.create;
       if (data.name) this.selectedToolsetName = data.name;
     });
@@ -124,9 +126,9 @@ passengerForm = [{
     let req_body
     if(this.connectorForm.value.actionType == "Authenticated"){
     
-    req_body=[
+    req_body=
       {
-        "id": this.selectedId,
+        // "id": this.selectedId,
         "name": this.connectorForm.value.actionName,
         "audit": null,
         "type": this.connectorForm.value.methodType,
@@ -134,12 +136,43 @@ passengerForm = [{
         // "description": "login for zoho", //we dont have description in UI
         // "configuration": "{\"endPoint\" : \"https://accounts.zoho.com/oauth/v2/token\",\"actionType\":\"APIRequest\",\"clientId\" : \"1000.B88M52TRKWRD3SG8G4BFUOM1NC4WHA\",\"clientSecret\" : \"e81b73aeca3594855c40605eb27d3152c466f22ac9\",\"grantType\" : \"refresh_token\",\"scope\" : null,\"userName\" : null,\"password\" : null,\"refreshToken\" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\",\"contentType\" : null,\"authorizationCode\" : null,\"redirectUri\" : null,\"attributes\" : [ \"ClientId\", \"ClientSecret\" ],\"type\" : \"OAUTH\"}",
         "actionType":this.connectorForm.value.actionType,
-        "endPoint": this.connectorForm.value.endPoint
+        "actionLogo" : ""
+        // "endPoint": this.connectorForm.value.endPoint
       }
-    ]
-    let object={"endPoint" : this.connectorForm.value.endPoint,"actionType":this.connectorForm.value.actionType,"clientId" : this.connectorForm.value.clientId,"clientSecret" : this.connectorForm.value.clientSecret,"grantType" : this.connectorForm.value.grantType,"scope" : null,"userName" : null,"password" : null,"contentType" : null,"authorizationCode" : null,"redirectUri" : null,"attributes" : [ "ClientId", "ClientSecret" ],"type" : "OAUTH"}
+    
+    // "configuration": "{\"endPoint\": \"http.sample\",
+    // [@endPoint|string|https://accounts.zoho.com/oauth/v2/token@]\",\"grant_type\": \"[@grant_type|string|authorization_code@]\",\"client_id\": \"[@client_id|string|1000.CH7ESPHDBG11Z0JJQJRCHQOYJVVWEJ@]\",\"client_secret\": \"[@client_secret|string|b864aac0bbd2a1e220763893424634e5e435d6c23a@]\",\"refresh_token\": \"[@refresh_token|string|1000.f0d3765b56b3d90eeebe6554981e68d9.a26589d8b570f3ba33e9f7d0e8eab980@]\"}"
+    let object={
+      "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
+      "grant_type" : `[@grant_type|string|${this.connectorForm.value.grantType}@]`,
+    }
+    if (this.connectorForm.value.grantType == "AuthorizationCode") {
+
+      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
+      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
+      object["code"] = `[@code|string|${this.connectorForm.value.code}@]`
+      object["redirect_uri"] = `[@redirect_uri|string|${this.connectorForm.value.redirect_uri}@]`
+
+    } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
+      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
+      object["userName"] = `[@userName|string|${this.connectorForm.value.userName}@]`
+      object["password"] = `[@password|string|${this.connectorForm.value.password}@]`
+
+    } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
+      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
+      object["scope"] = `[@scope|string|${this.connectorForm.value.scope}@]`
+
+    } else if (this.connectorForm.value.grantType == "AuthorizationCodeWithPKCE") {
+      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
+      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
+      object["code"] = `[@code|string|${this.connectorForm.value.code}@]`
+      object["redirect_uri"] = `[@redirect_uri|string|${this.connectorForm.value.redirect_uri}@]`
+      object["verifier"] = `[@verifier|string|${this.connectorForm.value.verifier}@]`
+    }
    // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
-    req_body[0]["configuration"]=JSON.stringify(object);
+    req_body["configuration"]=JSON.stringify(object);
     console.log(req_body);
 
     }
@@ -151,6 +184,7 @@ passengerForm = [{
         "description" : "",
         // "configuration" : "{\"endPoint\":\"https://www.zohoapis.com/crm/v3/Leads\",\"requestPayload\":{\"data\":[{\"Company\":\"AmeripriseDummy\",\"Last_Name\":\"Matt\",\"First_Name\":\"[@First_Name|string|Haley@]\",\"Email\":\"Matt.Haley@gmail.com\",\"State\":\"[@State|string|California@]\"}]}\",\"requestMethod\":\"POST\",\"contentType\":\"application/json\",\"httpHeaders\":null,\"type\":\"API\"}"
       }
+      this.requestJson_body.push(this.connectorForm.get("request").value)
       let object={
         "endPoint" : this.connectorForm.value.endPoint,
         "requestMethod":this.connectorForm.value.methodType,
@@ -163,6 +197,7 @@ passengerForm = [{
     }
     req_body["configuration"]=JSON.stringify(object)
     }
+    console.log(req_body)
     this.rest_api.saveAction(req_body).subscribe((res) => {
         Swal.fire({
           icon: "success",
@@ -198,7 +233,7 @@ passengerForm = [{
     } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
       // "grantType": this.connectorForm.value.grantType,
       (req_body["grantType"] = "password"),
-        (req_body["password"] = this.connectorForm.value.password);
+      (req_body["password"] = this.connectorForm.value.password);
       req_body["userName"] = this.connectorForm.value.userName;
     } else if (this.connectorForm.value.grantType == "ClientCredentials") {
       req_body["grantType"] = this.connectorForm.value.grantType;
@@ -333,7 +368,7 @@ passengerForm = [{
   }
 
   getGrantTypes() {
-    this.rest_api.getGrantTypes().subscribe((res: any) => {
+    this.rest_api.getGrantTypes().subscribe((res: any) => {      
       let filterData = res;
       this.grantItems = Object.keys(filterData).map((key) => ({
         type: key,
@@ -354,8 +389,8 @@ passengerForm = [{
     //     encodedValue: new FormControl(""),
     //   })
     // );
-    this.passengerForm.push({
-      index:this.passengerForm.length,
+    this.headerForm.push({
+      index:this.headerForm.length,
       encodedKey: "",
       encodedValue: "",
     });
@@ -377,11 +412,11 @@ selectRow(){
     obj[ele["encodedKey"]]=ele["encodedValue"]
   })
   this.requestJson_body.push(obj);
-  this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
+  // this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
 }
 
 onDelete(index){
-  this.passengerForm.splice(index,1)
+  this.headerForm.splice(index,1)
 }
 
 }
