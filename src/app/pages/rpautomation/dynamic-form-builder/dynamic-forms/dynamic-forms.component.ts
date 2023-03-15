@@ -55,6 +55,7 @@ export class DynamicFormsComponent implements OnInit {
     }
   }
   edit(obj) {
+    obj={...(obj),...{}}
     this.editfill = true
     this.id = obj.id;
     let key=Object.keys(obj).find(item=>item.split("_")[0]=="fillValueType")
@@ -64,6 +65,10 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="password"
         obj[valueKey]=Base64.decode(obj[valueKey]);
+      }
+      else
+      {
+        this.fields.find(item=>item.name=="fillValue").type="textarea";
       }
     if (obj["Action_"+environment.webActionAttrId] == 'fill') {
       this.fields.forEach(item => {
