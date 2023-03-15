@@ -47,6 +47,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 ];
   action_id:any;
+  selectedConnector: any;
+  istoolSet: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,7 +62,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
-      if (data.name) this.selectedToolsetName = data.name;
+      this.selectedConnector = data.connector_name
+      if (data.name) {
+        this.selectedConnector = data.connector_name
+        this.selectedToolsetName = data.name;
+        this.istoolSet = false;
+      };
+      if(!data.name){
+        this.selectedConnector = data.connector_name
+        this.istoolSet = true
+      }
     });
   }
 
