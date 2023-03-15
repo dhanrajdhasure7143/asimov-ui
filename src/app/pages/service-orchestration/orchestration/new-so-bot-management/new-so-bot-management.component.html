@@ -1,35 +1,37 @@
 <div class="so-sub-tab-content">
   <div class="">
 
-      <div class="row">
-          <div class="col-md-10 p-0">
-              <!-- <div class="col-md-3 form-group pl-0 sosearchfield">
-                  <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
-                  <img src="../../../../assets/images/search.svg" class="testplus">
-              </div> -->
-              <div class="col-md-3 pl-0">
-                  <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
-            <option value="">Select Source</option>
-            <!-- <option value="EPSoft">EPSoft</option>
-            <option value="BluePrism">BluePrism</option>
-            <option value="UiPath">UiPath</option> -->
-            <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
-          </select> 
-              </div>
-              <div class="col-md-3 pl-0">
-                <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
-                    <option  value="">Select Category</option>
-                    <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
-                </select>
-              </div>
+      <div class="row mb-3">
+        <div class="col-md-10 p-0">
+          <div class="row">
+            <!-- <div class="col-md-3 form-group pl-0 sosearchfield">
+              <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
+              <img src="../../../../assets/images/search.svg" class="testplus">
+            </div> -->
+            <div class="col-md-3 pl-0">
+              <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
+                <option value="">Select Source</option>
+                <!-- <option value="EPSoft">EPSoft</option>
+                <option value="BluePrism">BluePrism</option>
+                <option value="UiPath">UiPath</option> -->
+                <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
+              </select> 
+            </div>
+            <div class="col-md-3 pl-0">
+              <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
+                  <option  value="">Select Category</option>
+                  <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+              </select>
+            </div>
           </div>
-          <div class="col-md-2 p-0 env-data-tool text-right">
-              <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
-          <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
-          <span class="testtooltip">Reset</span>
-        </button >
+        </div>
+      <div class="col-md-2 p-0 env-data-tool text-right">
+          <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
+      <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
+      <span class="testtooltip">Reset</span>
+    </button >
       </div>
-    </div>
+      </div>
     
     <div class="row">
         <div class="botmanagement-tablelist" >
@@ -161,33 +163,33 @@
             </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pReorderableColumn pResizableColumn>Bot Name
+                    <th pSortableColumn="botName" pReorderableColumn pResizableColumn>Bot Name
                       <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
                       <p-sortIcon field="botName"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Description
+                    <th pSortableColumn="description" pReorderableColumn pResizableColumn>Description
                       <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
                       <p-sortIcon field="description"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Source
+                    <th pSortableColumn="Source" pReorderableColumn pResizableColumn>Source
                       <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
                       <p-sortIcon field="department"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Category
+                    <th pSortableColumn="Category" pReorderableColumn pResizableColumn>Category
                       <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
                       <p-sortIcon field="processName"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Version
+                    <th pSortableColumn="Version" pReorderableColumn pResizableColumn>Version
                       <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
                       <p-sortIcon field="version"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Status
+                    <th pSortableColumn="Status" pReorderableColumn pResizableColumn>Status
                       <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
                       <p-sortIcon field="botStatus"></p-sortIcon>
                     </th>
-                    <th pReorderableColumn pResizableColumn>Actions</th>
-                    <th pReorderableColumn pResizableColumn>Schedule</th>
-                    <th pReorderableColumn pResizableColumn>Logs</th>
+                    <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
+                    <th pSortableColumn="Schedule" pReorderableColumn pResizableColumn>Schedule</th>
+                    <th pSortableColumn="Logs" pReorderableColumn pResizableColumn>Logs</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-element>
@@ -497,17 +499,17 @@
     <!-- <div id="SLAConfig_overlay"> -->
     <app-split-overlay (closeOverlay)="closeOverlay()"  >
       <div class="h-100">
-          <div class="rpa-modal-header">
+          <div class="create-header">
               <!-- <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">
               <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
             </span> -->
-              <h4>SLA Configuration</h4>
+              <h3>SLA Configuration</h3>
           </div>
-          <div class="modal-body">
-              <div class="container m-contanier form-body">
+          <div class="createform-overlay">
+              <div class="">
                   <form [formGroup]="insertslaForm_so_bot">
-
-                      <!--<div class="col-md-12 p-0 form-group">
+                    <div class="row">
+                       <!--<div class="col-md-12 p-0 form-group">
                       <label class="label-control" for="processName">Process Name<span class="star">*</span></label>
                       <input type="text" class="form-control data" formControlName="processName" #processName value="" placeholder="Enter Process Name">
                       <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
@@ -515,108 +517,107 @@
                           Maximum of 50 characters
                       </div>
                     </div>-->
-                      <div class="col-md-12 p-0 form-group">
-                          <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
-                          <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
-                          <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">Required Bot Name*</span>
-                          <!--<div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
-                        </div>-->
-                      </div>
-                      <!--  <div class="col-md-12 p-0 form-group">
-                        <label class="label-control"  for="botSource">Bot Source<span class="star">*</span></label>
-                        <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
-                        <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Required Bot Source*</span>
-                        <div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div> -->
-                   
-                      <div class="col-md-12 p-0 form-group">
-                        
-                          <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
-                          <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
-                          <select formControlName="taskOwner" class="form-control">
-                          <option value="" disabled>Select Task Owner</option>
-                          <option [value]="owner.userId.firstName+' '+owner.userId.lastName" *ngFor="let owner of usersList">{{owner.userId.firstName}} {{owner.userId.lastName}}</option>
-                        </select>
-                          <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
-                          <p style="font-size:12px;">Note* : Notifications will be send to this User Email ID</p>
-                          <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
-                        </div>-->
-                      </div>
-                      <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
-                         <!-- <span class="star">*</span> -->
-                       </label>
-                          <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
-
-                          <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
-                        <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">Required SLA Configuration*</span> -->
-                          <!--<div *ngIf="insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">
-                            Maximum of 2 characters
-                        </div>  -->
-                      </div>
-
-
-                      <!-- <div class="col-md-12 pl-0 form-group">
-                  <label class="label-control" for="breachAlerts">Breach Actual Alert<span class="star">*</span></label>
-                  <select class="form-control"  value="" formControlName="breachAlerts">
-                      <option value="">-- Select Breach Actual Alerts --</option>
-                      <option value="Error">Error</option>
-                      <option value="Warning">Warning</option>
-                      <option value="All">All</option>
+                    <div class="col-md-6 pl-0 form-group">
+                      <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                      <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
+                      <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">Required Bot Name*</span>
+                      <!--<div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>-->
+                  </div>
+                  <!--  <div class="col-md-12 p-0 form-group">
+                    <label class="label-control"  for="botSource">Bot Source<span class="star">*</span></label>
+                    <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
+                    <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Required Bot Source*</span>
+                    <div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+                </div> -->
+               
+                  <div class="col-md-6 pr-0 form-group">
+                    
+                      <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
+                      <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
+                      <select formControlName="taskOwner" class="form-control">
+                      <option value="" disabled>Select Task Owner</option>
+                      <option [value]="owner.userId.firstName+' '+owner.userId.lastName" *ngFor="let owner of usersList">{{owner.userId.firstName}} {{owner.userId.lastName}}</option>
                     </select>
-                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
-                  <span *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
-                      Maximum of 50 characters
-                  </span>
-                      </div> -->
-                      <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
-                         <!-- <span class="star">*</span> -->
-                       </label>
-                          <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
-                          <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" class="errspan required">Required Threshold Limit*</span>
-                      </div>
+                      <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
+                      <p class="SLAconfig-filenote">Note* : Notifications will be send to this User Email ID</p>
+                      <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>-->
+                  </div>
+                  <div class="col-md-6 pl-0 form-group">
+                      <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
+                     <!-- <span class="star">*</span> -->
+                   </label>
+                      <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
 
-                      <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="totalRetries">Total Retries</label>
-                          <input type="number" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries" value="" placeholder="0">
-                          <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
-                        <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
-                        </div>-->
-                      </div>
-                      <!--  <div class="col-md-6 pr-0 form-group">
-                        <label class="label-control" for="retriesInterval">Retry Interval (Min)</label>
-                        <input type="number"  maxlength="2" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
-                        <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> 
-                    </div> -->
+                      <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
+                    <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">Required SLA Configuration*</span> -->
+                      <!--<div *ngIf="insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">
+                        Maximum of 2 characters
+                    </div>  -->
+                  </div>
+                  <!-- <div class="col-md-12 pl-0 form-group">
+              <label class="label-control" for="breachAlerts">Breach Actual Alert<span class="star">*</span></label>
+              <select class="form-control"  value="" formControlName="breachAlerts">
+                  <option value="">-- Select Breach Actual Alerts --</option>
+                  <option value="Error">Error</option>
+                  <option value="Warning">Warning</option>
+                  <option value="All">All</option>
+                </select>
+              <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
+              <span *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
+                  Maximum of 50 characters
+              </span>
+                  </div> -->
+                  <div class="col-md-6 pr-0 form-group">
+                      <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
+                     <!-- <span class="star">*</span> -->
+                   </label>
+                      <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
+                      <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" class="errspan required">Required Threshold Limit*</span>
+                  </div>
+                  <div class="col-md-12 p-0 form-group">
+                      <label class="label-control" for="totalRetries">Total Retries</label>
+                      <input type="number" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries" value="" placeholder="0">
+                      <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
+                    <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>-->
+                  </div>
+                  <!--  <div class="col-md-6 pr-0 form-group">
+                    <label class="label-control" for="retriesInterval">Retry Interval (Min)</label>
+                    <input type="number"  maxlength="2" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
+                    <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> 
+                </div> -->
 
-                      <!-- <div class="col-md-12 p-0 form-group">
-                      <label class="label-control" for="notificationType">Notification Type<span class="star">*</span></label>
-                      <div class="row">
-                        <div class="col-md-6 p-0">
-                          <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
-                          <label class="lbl_chk_cls"  for="emailcheck">E-mail</label>
-                        </div>
-                        <div class="col-md-6 p-0">
-                          <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
-                          <label class="lbl_chk_cls" for="smscheck">SMS</label>
-                        </div>
-                      </div>
-                    </div> -->
+                  <!-- <div class="col-md-12 p-0 form-group">
+                  <label class="label-control" for="notificationType">Notification Type<span class="star">*</span></label>
+                  <div class="row">
+                    <div class="col-md-6 p-0">
+                      <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
+                      <label class="lbl_chk_cls"  for="emailcheck">E-mail</label>
+                    </div>
+                    <div class="col-md-6 p-0">
+                      <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
+                      <label class="lbl_chk_cls" for="smscheck">SMS</label>
+                    </div>
+                  </div>
+                </div> -->
 
-                      <div class="form-footer">
-                          <button class="btn btn-default" (click)="resetsla()">Reset</button>&nbsp;
-                          <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
-                      </div>
+                    </div>                      
                   </form>
+                  <div class="createform-footer">
+                    <button class="btn" (click)="resetsla()">Reset</button>&nbsp;
+                    <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
+                  </div>
               </div>
 
           </div>
+          
 
       </div>
     </app-split-overlay>

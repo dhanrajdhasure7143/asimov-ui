@@ -27,7 +27,18 @@ button:disabled {
     }
 
 
-    .modal-body{
-        max-height: calc(100vh - 160px) !important;
-        overflow-y: auto !important;
-    }
+.createform-overlay {
+    height: calc(100% - 75px);
+}
+
+.SO-scheduletimer .scheduletimer-actionbtns button {
+    padding: 0px 5px;
+    box-shadow: unset;
+    color: unset;
+    width: auto;
+    height: auto;
+    border-radius: unset;
+}
+.pagicl {
+    display: none;
+}
