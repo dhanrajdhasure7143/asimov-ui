@@ -2770,6 +2770,11 @@ span.tabscount {
   height: calc(100vh - 260px); 
   overflow: auto;
 }
+.table-height-adj .p-datatable-wrapper {
+ 
+  height: calc(100vh - 200px) !important; 
+ 
+}
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
 }
