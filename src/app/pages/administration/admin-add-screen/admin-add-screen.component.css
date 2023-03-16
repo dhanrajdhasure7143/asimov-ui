@@ -1,10 +1,13 @@
 .h-scroll {
-  height: calc(100vh - 130px);
+  height: calc(100vh - 160px);
   overflow: auto;
 }
 
 .editButton {
   border: none !important;
+}
+.new-head{padding: 10px 0px 20px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 
