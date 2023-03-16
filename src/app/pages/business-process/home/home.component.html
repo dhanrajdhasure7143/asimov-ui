@@ -37,13 +37,13 @@
 
 
                 <div>
-                    <p-table #dt1 [columns]="selectedColumns" [value]="saved_diagrams" dataKey="id"
+                    <p-table #dt1 [columns]="selectedColumns" [value]="saved_diagrams" dataKey="id" 
                         [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true"
                         [reorderableColumns]="true" (onRowExpand)="onRowExpand()" (onRowCollapse)="onRowCollapse()"
-                        [expandedRowKeys]="expandedRows">
+                        [expandedRowKeys]="expandedRows" [scrollable]="true">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
-                                <h4 class="box-heading">My Workspace</h4>
+                                <h4 class="col-heads">My Workspace</h4>
                                 <div class="p-d-flex">
                                     <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns"
                                         optionLabel="header" selectedItemsLabel="{0} columns selected"
@@ -62,9 +62,8 @@
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th style="width: 3em"></th>
-                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn
-                                    pResizableColumn>
+                                <th style="flex:0.2 1 0;" class="arrowcol"></th>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                     {{col.header}}
                                     <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'"
                                         [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
@@ -84,7 +83,7 @@
                         <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"
                             let-i="rowIndex">
                             <tr>
-                                <td>
+                                <td style="flex:0.2 1 0;">
                                     <a href="#" [pRowToggler]="rowData" (click)=getSelectedNotation(rowData,i,expanded)>
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
@@ -102,21 +101,17 @@
                                     </span>
                                     <span *ngIf="col.header == 'Message'">
                                         <div>
-                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus"
+                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"
                                                 [pTooltip]="rowData['reviewComments']" tooltipPosition="right">
                                         </div>
                                     </span>
                                     <span *ngIf="col.header == 'Actions'">
                                         <div class="cell cell11">
-                                            <span (click)="onEdit(rowData)" class="newinntalx">
-                                                <img pTooltip="Edit" tooltipPosition="right"
-                                                    src="../../../../assets/images/Projects/edit-black.svg"
-                                                    class="default-img">
-                                                <img pTooltip="Edit" tooltipPosition="right"
-                                                    src="../../../../../assets/images/Projects/Edit-blue.svg"
-                                                    class="hover-img">
+                                            <span (click)="onEdit(rowData)">
+                                                <img pTooltip="Edit" tooltipPosition="right" alt="Edit" class="testplus"
+                                                    src="../../../../../assets/images/Projects/Edit-blue.svg">
                                             </span>
-                                            <img src="../../../../assets/images/BPMS/Envelop.svg"
+                                            <img src="../../../../assets/images/BPMS/Envelop.svg" alt="Envelop"
                                                 (click)="sendReminderMail(rowData)"
                                                 *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
                                                 pTooltip="Click to send reminder mail to Approver"
@@ -124,11 +119,8 @@
                                             <span (click)="deleteProcess(rowData)"
                                                 *ngIf="(rowData['bpmnProcessStatus']!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (rowData['userEmail']==userEmail) ))"
                                                 class="delete-icon">
-                                                <img src="../../../../assets/images/Projects/delete-black.svg"
-                                                    pTooltip="Delete Notation" tooltipPosition="left"
-                                                    class="default-img">
-                                                <img src="../../../../assets/images/Projects/delete-red.svg"
-                                                    pTooltip="Delete Notation" tooltipPosition="left" class="hover-img">
+                                                <img src="../../../../assets/images-n/common/delete-blue.svg"
+                                                    pTooltip="Delete Notation" tooltipPosition="left" alt="Delete">
                                             </span>
                                         </div>
                                     </span>
@@ -137,22 +129,28 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
-                            <tr>
+                            <tr class="botpreviewtr">
                                 <td [attr.colspan]="columns.length + 1">
                                     <div class="bps_overlay1" *ngIf="isLoaderShow">
-                                        <div class="logs-container">
+                                        <div class="text-center">
+                                            Loading...
+                                        </div>
+                                        <!-- <div class="logs-container">
                                             <div class="logs-loader">
                                                 <img src="../../../../assets/images/EZFlow_Loader.gif">
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="bps_overlay" *ngIf="!isLoaderShow">
                                         <span class="info btn"
                                             *ngIf="(selected_notation.bpmnProcessStatus && selected_notation.bpmnProcessStatus != 'PENDING')||(!selected_notation.bpmnProcessStatus) ">Click
                                             to open</span>
-                                        <span><button pTooltip="Fit to the view port" tooltipPosition="top" class="right fit_button"
-                                                (click)="fitNotationView(selected_notation.ntype)"><img
-                                                    src="..\assets\fillView.svg"></button></span>
+                                        <span>
+                                            <button pTooltip="Fit to the view port" tooltipPosition="top" class="right fit_button"
+                                                (click)="fitNotationView(selected_notation.ntype)">
+                                                <img src="../../../../assets/fillView.svg" alt="view">
+                                            </button>
+                                        </span>
                                         <span class="info btn"
                                             *ngIf="selected_notation.bpmnProcessStatus && selected_notation.bpmnProcessStatus == 'PENDING'">Business
                                             Process
@@ -168,7 +166,7 @@
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td style="justify-content: center;" colspan="7">No Records Found</td>
+                                <td style="justify-content: center;" colspan="11">No Records Found</td>
                             </tr>
                         </ng-template>
                     </p-table>

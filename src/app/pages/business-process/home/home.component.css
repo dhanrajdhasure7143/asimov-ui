@@ -212,14 +212,14 @@ div#bpmn_list {
         display: initial;
     }
     .newinntalx img{
-        width: 20px;
+        width: 24px;
         padding-left: 3px;
         padding-right: 3px;
     }
     .logs-loader{
         margin-top:12%;
         text-align: center;
-      }
+    }
 .noDataMessage{
     text-align: center;
     margin-top: 100px;
@@ -227,6 +227,19 @@ div#bpmn_list {
 .bps_overlay div[class^='diagram_container'] {
     padding-top: 50px;
 }
+h4.col-heads {
+    font-size: 20px;
+    margin: 0px;
+    margin-bottom: 10px;
+    line-height: normal;
+}
+.botpreviewtr {
+    height: auto !important;
+}
+.botpreviewtr td {
+   display: block !important;
+}
+
 /* 
 .new-bps-layout {
     overflow: auto;

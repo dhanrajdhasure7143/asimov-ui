@@ -72,7 +72,7 @@
 .bjs-powered-by {
   position: absolute;
   bottom: 5px !important;
-  left: 10px !important;
+  right: 10px !important;
   opacity: 0.1;
   width: max-content;
 }
@@ -103,7 +103,7 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 div[class^='diagram_container'] .djs-container svg {
-  /* margin-left: 5px; */
+  /* margin-left: 75px; */
 }
 
 .spincenter {
@@ -2857,6 +2857,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
   color: var(--main-txtcolor);
+  padding-right: 45px !important;
 }
 .p-datatable .p-sortable-column.p-highlight:hover {
   color: var(--main-txtcolor) !important;

@@ -84,7 +84,7 @@
                             </ng-template>
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th style="flex:0.2 1 0;"></th>
+                                    <th style="flex:0.2 1 0;" class="arrowcol"></th>
                                     <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                         {{col.header}}
                                         <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
@@ -173,13 +173,12 @@
                                                 </div>
                                                 <div *ngIf="botImage.errorMessage != undefined" style="width:100%" class=" text-center">
                                                     <img src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-                                                    <br>
                                                     <span>{{botImage.errorMessage}}</span>
                                                 </div>
                                             </div>
                                             <div *ngIf="botImage ==undefined">
                                                 <div class="text-center">
-                                                    Loading
+                                                    Loading...
                                                 </div>
                                             </div>
                                         </div>
