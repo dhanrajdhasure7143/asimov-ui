@@ -1751,4 +1751,14 @@ saveAction(body){
 updateDashboardConfiguration(body:any,screenId){
   return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets?screenId=`+screenId,body)
 }
+
+onRemoveSelectedWidget(widgetId:any){
+  return this.http.get("/platform-service/dashboard/deleteDashboardMetricOrWidgetById?id="+widgetId)
+}
+
+updateWidgetInDashboard(body:any){
+  return this.http.post("/platform-service/dashboard/updateEachDashboardMetricOrWidget",body)
+}
+
+
 }
