@@ -49,6 +49,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
+  isDisabled: boolean = false;
+  actionUpdate: any;
+  actionData: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,8 +60,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private route:ActivatedRoute,
     private spinner:LoaderService
   ) {
-    this.createItem();
     this.route.queryParams.subscribe((data) => {
+      this.isDisabled = data.formDisabled;
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
@@ -98,7 +101,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       scope: ["", Validators.compose([Validators.required])],
-      encoded: this.formBuilder.array([this.createItem()]),
     });
 
     this.methodTypes();
@@ -108,28 +110,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     if (this.isCreate == "false") {
       this.getActionById();
     }
-
-    // this.addInputForm = new FormGroup({
-    //   addInputField: new FormArray([
-    //     new FormGroup({
-    //       encodedKey: new FormControl(""),
-    //       encodedValue: new FormControl(""),
-    //     }),
-    //   ]),
-    // });
-  }
-
-  createItem() {
-    return this.formBuilder.group({
-      encodedKey: ["", Validators.required],
-      encodedValue: ["", Validators.required],
-      encodedCheck: ["", Validators.required],
-    });
-  }
-
-  addInput() {
-    let rows = this.connectorForm.get("encoded") as FormArray;
-    rows.push(this.createItem());
   }
 
   saveForm() {
@@ -196,11 +176,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "configuration" : "{\"endPoint\":\"https://www.zohoapis.com/crm/v3/Leads\",\"requestPayload\":{\"data\":[{\"Company\":\"AmeripriseDummy\",\"Last_Name\":\"Matt\",\"First_Name\":\"[@First_Name|string|Haley@]\",\"Email\":\"Matt.Haley@gmail.com\",\"State\":\"[@State|string|California@]\"}]}\",\"requestMethod\":\"POST\",\"contentType\":\"application/json\",\"httpHeaders\":null,\"type\":\"API\"}"
       }
       this.requestJson_body.push(this.connectorForm.get("request").value)
+      let obj={};
+      obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
       let object={
         "endPoint" : this.connectorForm.value.endPoint,
         "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
-        "httpHeaders":null,
+        "httpHeaders": obj,
         "type":"API",
         "requestPayload":{
           "data":this.requestJson_body
@@ -408,11 +390,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   }
   backToaction(){
-    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId}})
+    this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId, name : this.selectedConnector}})
   }
 
 getActionById(){
-  this.rest_api.getActionById(this.selectedId).subscribe((res)=>{})
+  this.rest_api.getActionById(this.action_id).subscribe((res)=>{
+    this.actionData = res["data"]
+    console.log(res["data"],"action"); 
+    this.connectorForm.get("actionName").setValue(this.actionData["name"]);
+    this.connectorForm.get("endPoint").setValue(this.actionData["endPoint"]);
+    this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
+    this.connectorForm.get("methodType").setValue(this.actionData["type"]);
+    this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
+    this.connectorForm.get("authType").setValue(this.actionData["type"]);
+  })
 }
 
 selectRow(){

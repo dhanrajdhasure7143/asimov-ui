@@ -124,7 +124,7 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false}});
+      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false, formDisabled : true}});
   }
 
   deleteAction() {
@@ -156,7 +156,7 @@ export class RpaActionItemsComponent implements OnInit {
       queryParams: { index: 2 },
     });
   }
-  
+
   addNewAction(){
     this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, connector_name : this.selectedName, create:true}})
   }
