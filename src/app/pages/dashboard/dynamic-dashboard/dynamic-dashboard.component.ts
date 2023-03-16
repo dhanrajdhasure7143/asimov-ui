@@ -61,7 +61,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.activeRoute.queryParams.subscribe(res => {
       console.log(res)
       this._paramsData = res
-      this.selectedDashBoardName= this._paramsData.dashboardName
+      // this.selectedDashBoardName= this._paramsData.dashboardName
     })
   }
 
@@ -424,6 +424,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.getDashBoardsList().subscribe((res:any)=>{
       this.dashbordlist=res.data;
       this.selectedDashBoard = this.dashbordlist.find(item=>item.id == this._paramsData.dashboardId);
+      this.selectedDashBoardName = this.selectedDashBoard.dashboardName
     })     
   }
 
@@ -451,9 +452,11 @@ export class DynamicDashboardComponent implements OnInit {
   onDeactivate(){
     this.inplace.deactivate();
    }
+
    setDefaultDashboard(){
     this.selectedDashBoard=this.selectedDashBoard.defaultDashboard
-   }     
+   }
+
   deletedashbord(){
     console.log(this.selectedDashBoard)
     if(this.selectedDashBoard.defaultDashboard){
@@ -478,13 +481,21 @@ export class DynamicDashboardComponent implements OnInit {
       this.loader.show();
       this.rest.getdeleteDashBoard(this.selectedDashBoard.id).subscribe(data=>{
         this.inplace.deactivate();
-        this.loader.hide();
-        this.getListOfDashBoards()
+        this.changeToDefaultDashBoard();
       });
     },
     key: "positionDialog",
   });
+  }
 
+  changeToDefaultDashBoard(){
+    this.rest.getDashBoardsList().subscribe((res:any)=>{
+      this.dashbordlist=res.data;
+      this.selectedDashBoard = this.dashbordlist.find(item=>item.defaultDashboard == true);
+      let params1= {dashboardId:this.selectedDashBoard.id,dashboardName:this.selectedDashBoard.dashboardName};
+      this.router.navigate([],{ relativeTo:this.activeRoute, queryParams:params1});
+      this.getDashBoardData(this.selectedDashBoard.id);
+    })  
   }
 
   getDashBoardData(screenId){

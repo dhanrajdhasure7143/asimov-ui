@@ -59,13 +59,14 @@ export class ConfigureDashboardComponent implements OnInit {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.screenId=params.dashboardId
-     
       this.dynamicDashBoard.dashboardName = params.dashboardName
       this.isCreate = this._paramsData.isCreate
 
     })
   }
+
   ngOnInit(): void {
+    this.loader.show();
     this.items = [
       { 
         label: 'Delete',
@@ -442,7 +443,7 @@ export class ConfigureDashboardComponent implements OnInit {
       req_array.push(req_body)
     })
 
-    this.dynamicDashBoard.widgets.forEach(element => {
+    this.addedWidgets.forEach(element => {
       let req_body = {
         childId: element.id,
         screenId: Number(this._paramsData.dashboardId),
@@ -452,9 +453,7 @@ export class ConfigureDashboardComponent implements OnInit {
       }
       req_array.push(req_body)
     });
-    console.log(this.dynamicDashBoard, req_array)
     this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
-      console.log(res)
       this.loader.hide();
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     })
@@ -614,7 +613,10 @@ export class ConfigureDashboardComponent implements OnInit {
       },
       key: "positionDialog",
     });
-  
+    }
+
+    canelUpdate(){
+      this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     }
 
 }

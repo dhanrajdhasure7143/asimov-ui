@@ -10,6 +10,7 @@
             </div>
             <div class="col-md-8 pr-0 text-right">
               <button *ngIf="isCreate==1" class="btn btn-primary eiap-btn" (click)="saveDashBoard()">Done</button>
+              <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="Updatedconfiguration()">Update</button>
               <button class="btn-dots eiap-btn" (click)="menu.toggle($event)">
                 <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
