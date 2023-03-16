@@ -179,12 +179,8 @@ mat-tab-body {
 }
 
 .bps_overlay .info {
-  border: 1px solid #F99D1C;
-  border-radius: 20px;
-  font-size: 12px;
-  padding: 1px 10px;
-  position: relative;
-  top: 8px;
+  position: absolute;
+  top: 10px;
   left: 8px;
   color: white;
   background-color: #F99D1C;
@@ -210,9 +206,8 @@ div[class^='diagram_container'] {
 }
 
 .bps_overlay {
-  z-index: 30;
+  /* z-index: 30; */
   cursor: pointer;
-  opacity: 0.9;
 }
 
 
@@ -605,7 +600,8 @@ mat-tab-body {
 .fit_button {
   z-index: 200;
   position: absolute;
-  right: 25px;
+  right: 5px;
+  top: 5px;
 }
 
 .create-logo {
@@ -719,10 +715,10 @@ mat-tab-body {
 
 
 
-.account_pay_details_table td,
+/* .account_pay_details_table td,
 .account_pay_details_table th {
   text-align: center;
-}
+} */
 
 .bpmn_list {
   width: 100%;

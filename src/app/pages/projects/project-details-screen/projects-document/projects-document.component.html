@@ -20,7 +20,7 @@
                     <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search">
                 </span>
                 <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="bottom">
-                    <i (click)="op1.toggle($event)" class="pi pi-filter-slash icon-color"></i>
+                    <i (click)="op1.toggle($event)" class="pi pi-filter icon-color"></i>
                 </span>
             </div>
         </div>
@@ -88,8 +88,14 @@
         </div>
         <div class="row position-relative">
             <div class="docfootbtns">
-                <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top"> <i class="pi pi-folder"></i> </button>
-                <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top"> <i class="pi pi-sitemap"></i> </button>                                        
+                <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top">
+                    <!-- <i class="pi pi-folder"></i> -->
+                    <img src="../../../../../assets/images-n/projects/FolderView.svg" alt="Tree View" />
+                </button>
+                <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top">
+                    <!-- <i class="pi pi-sitemap"></i>  -->
+                    <img src="../../../../../assets/images-n/projects/TreeView.svg" alt="Tree View" />
+                </button>                                        
             </div>
         </div>
     </div>

@@ -1,14 +1,13 @@
 <div class="h-100">
-    <!-- <div class="modal-content"> -->
-        <div class="create-header">
-            <h3>{{headerTitle}}</h3>
+    <div class="create-header">
+        <h3>{{headerTitle}}</h3>
             <!-- <span class="rpa-modal-close" (click)="slideDown(processCategoryForm);">
                 <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
             </span>             -->
-        </div>
-        <div class="createform-overlay">
-            <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'create'">
-                <div class="container m-contanier form-body">
+    </div>
+    <div class="createform-overlay">
+        <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'create'" class="h-100">
+            <div class="h-100">
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Select Category<span class="star">*</span></label>
                         <select  name="category" (change)="onchangeCategories(categoryName)" [disabled]="categories_list.length==1" #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
@@ -19,7 +18,7 @@
                                 {{categories.categoryName}}</option>
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
-                        class='errspan required'> Please select a category </span>
+                        class='required'> Please select a category </span>
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
@@ -34,7 +33,7 @@
                                 <!-- <option value="dmn">DMN</option> -->
                             </select>
                             <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
-                            class='errspan required'> Please select notation type </span>
+                            class='required'> Please select notation type </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='false'">
@@ -49,7 +48,7 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='errspan required'> Please Select Process Owner </span>
+                            class='required'> Please Select Process Owner </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='true'">
@@ -64,25 +63,26 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='errspan required'> Please Select Process Owner </span>
+                            class='required'> Please Select Process Owner </span>
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group"> <!-- pattern="^[a-zA-Z0-9_-].{3,25}$" -->
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
-                            <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
+                            <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
                         </span>
-                        <span class='errspan required' *ngIf="processName && isValidName"> Invalid Process name</span>
+                        <span class='required' *ngIf="processName && isValidName"> Invalid Process name</span>
                     </div>
-                </div>
-                <div class="form-footer">
-                    <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="(!data && !processCategoryForm.valid )">{{buttonName}}</button>
-                </div>
-            </form>
+            </div>
+            <div class="createform-footer" >
+                <button class="btn bluebg-button" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="(!data && !processCategoryForm.valid )">{{buttonName}}</button>
+            </div>
+        </form>
+       
 
-            <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'edit'" class="h-100">
-                <div class="h-100">
+        <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'edit'" class="h-100">
+            <div class="h-100">
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Select Category<span class="star">*</span></label>
                         <select  name="category" (change)="onchangeCategories(categoryName)" disabled #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
@@ -92,7 +92,7 @@
                             <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">{{categories.categoryName}}</option>
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
-                        class='errspan required'> Please select a category </span>
+                        class='required'> Please select a category </span>
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
@@ -106,7 +106,7 @@
                                 <option value="dmn">DMN</option>
                             </select>
                             <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
-                            class='errspan required'> Please select notation type </span>
+                            class='required'> Please select notation type </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='false'">
@@ -121,7 +121,7 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='errspan required'> Please Select Process Owner </span>
+                            class='required'> Please Select Process Owner </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='true'">
@@ -136,25 +136,23 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='errspan required'> Please Select Process Owner </span>
+                            class='required'> Please Select Process Owner </span>
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
-                            <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
-                            <!-- <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
+                            <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
+                            <!-- <span class='required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                         </span>
-                        <span class='errspan required' *ngIf="processName && isValidName"> Invalid Process name</span>
+                        <span class='required' *ngIf="processName && isValidName"> Invalid Process name</span>
                     </div>
-                </div>                
-            </form>
-            <div class="createform-footer" *ngIf="overlay_data.type == 'edit'">
-                <button class="btn bluebg-button" type="submit" (click)="updateChanges();" [disabled]="(!data && !processCategoryForm.valid )">Update</button>
-            </div>
-
-        <!-- </div> -->
+            </div>                
+        </form>
+        <div class="createform-footer" *ngIf="overlay_data.type == 'edit'">
+            <button class="btn bluebg-button" type="submit" (click)="updateChanges();" [disabled]="(!data && !processCategoryForm.valid )">Update</button>
+        </div>
     </div>
 </div>
 

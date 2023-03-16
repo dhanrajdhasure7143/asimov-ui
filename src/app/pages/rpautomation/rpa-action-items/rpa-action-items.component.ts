@@ -28,7 +28,6 @@ export class RpaActionItemsComponent implements OnInit {
     {
       this.route.queryParams.subscribe((data)=>{
         this.selectedId = data.id;
-        console.log(data.id)
       })
     }
 
@@ -39,10 +38,8 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   getAllActionItems() {
-    this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((data: any) => {
-    this.actionTable = data;
-    console.log("ActionItems",this.actionTable);
-    
+    this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
+    this.actionTable = res.data;    
     this.loader.hide();
     this.columns_list = [
       {
@@ -85,6 +82,16 @@ export class RpaActionItemsComponent implements OnInit {
         sort: true,
         multi: false,
       },
+      {
+        ColumnName: "attribute",
+        DisplayName: "Attributes",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      }
       // {
       //   ColumnName: "attribute",
       //   DisplayName: "Attributes",
@@ -95,16 +102,6 @@ export class RpaActionItemsComponent implements OnInit {
       //   sort: true,
       //   multi: false,
       // },
-      {
-        ColumnName: "description",
-        DisplayName: "Purpose",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-        multi: false,
-      },
     ];
   })
 
@@ -146,6 +143,7 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Something went wrong!",
         heightAuto: false,
       });
+      this.getAllActionItems();
       this.loader.hide();
     })
   }
