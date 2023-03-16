@@ -130,8 +130,8 @@ export class OverviewComponent implements OnInit {
   }
 
   getBillingInfo(){
-    this.dt.billingDataObservable.subscribe(data=>{
-      this.email=data.email
-    })
+  this.api.getBillingInfo().subscribe(data=>{
+    this.email = data['email']
+  })
   }
 }

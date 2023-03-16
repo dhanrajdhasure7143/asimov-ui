@@ -426,5 +426,16 @@ this.selectedrow =i;
   clear(table: Table) {
     table.clear();
   }
+  
+  fitTableView(userName){
+    if(userName && userName.length > 10)
+      return userName.substr(0,10)+'...';
+    return userName;
+  }
+  fitTableViewDate(convertedModifiedTime){
+    if(convertedModifiedTime && convertedModifiedTime.length > 12)
+      return convertedModifiedTime.substr(0,12)+'...';
+    return convertedModifiedTime;
+  }
 }
 

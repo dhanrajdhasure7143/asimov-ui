@@ -913,6 +913,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   getTaskForm(node) {
     this.nodedata = node;
     this.form_change = false;
+    this.isShowExpand_icon=false;
     this.enableMultiForm.check = false;
     const selectedNodeId: Number =  node.selectedNodeId;
     if (node.selectedNodeTask != "") {
@@ -1135,7 +1136,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           });
         });
-      }, 500);
+      }, 1000);
     }
   }
 
@@ -1793,12 +1794,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.finalbot = { ...{}, ...response };
               this.actualTaskValue = [
                 ...response.tasks.filter(
-                  (item) => (item.version = response.version)
+                  (item) => (item.version == response.version)
                 ),
               ];
               this.finaldataobjects = [
                 ...response.tasks.filter(
-                  (item) => (item.version = response.version)
+                  (item) => (item.version == response.version)
                 ),
               ];
               this.actualEnv = [...response.envIds];

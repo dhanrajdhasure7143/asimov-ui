@@ -206,7 +206,10 @@
 
             <div class="form-group col p-0">
               <label for="" class="label-control">Length</label>
-              <input type="text" formControlName="length" class="form-control" placeholder="Enter Length" />
+              <input type="text" (keypress)="numberOnly($event)" formControlName="length" class="form-control" placeholder="Enter Length" />
+              <span *ngIf="updateColumnForm.get('length').hasError('pattern')" class="errspan required">
+                Enter a number between 0 and 255
+              </span>
             </div>
 
             <div class="form-group col p-0">
@@ -270,123 +273,3 @@
   </app-split-overlay>
 
 </div>
-
-<!-- <p-dialog [(visible)]="display" header=" Update Column" [style]="{width: '50vw'}">
-  <form [formGroup]="updateColumnForm" class="h-100">
-    <div>
-      <label for="" class="label-control">Column Name<span class="star">*</span></label>
-      <input type="text" class="form-control" formControlName="ColumnName" placeholder="Enter Name" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Column Label Name <span class="star">*</span></label>
-      <input type="text" maxlength="256" formControlName="DisplayName" class="form-control" placeholder="Enter Label Name" />
-      <span *ngIf="
-      updateColumnForm.get('DisplayName')!.invalid &&
-      updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
-      && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
-    " class="star">
-    Column Label Name is Required*
-  </span>
-  <span *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"
-  class="errspan required">Maximum of 255 characters*</span>
-  <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
-  </span>
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Widget Type <span class="star">*</span></label>
-      <select class="form-control data" formControlName="widget_type">
-        <option value="">Select Option</option>
-        <option value="textbox">Text Box</option>
-        <option value="select">Select Box</option>
-        <option value="checkbox">Check Box</option>
-        <option value="radio">Radio Button</option>
-        <option value="file">Upload</option>
-      </select>
-    </div>
-    <br />
-    <div class="checkboxes">
-      <label class="label-control"><input type="checkbox" formControlName="ShowGrid" />
-        <span class="span">Show grid</span></label>
-      <label class="label-control"><input type="checkbox" formControlName="ShowSearch" />
-        <span class="span">Show in Search</span></label>
-      <label class="label-control"><input type="checkbox" formControlName="ShowForm" /></label>
-      <span class="span">Show in Form</span> <br />
-      <br />
-      <label class="label-control">
-        <input type="checkbox" formControlName="read_only" />
-        <span class="span">Read Only</span>
-      </label>
-      <label class="label-control"><input type="checkbox" formControlName="mandatory" />
-        <span class="span">Mandatory</span></label>
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Length</label>
-      <input type="text" formControlName="length" class="form-control" placeholder="Enter Length" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Defualt Type</label>
-      <select class="form-control data" formControlName="default_type">
-        <option value="">Select Option</option>
-        <option>Text</option>
-      </select>
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Data Type</label>
-      <input type="text" class="form-control" formControlName="data_type" placeholder="Enter Data type" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Default Value</label>
-      <input type="text" class="form-control" formControlName="DefaultValue" placeholder="Enter Value" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Coloumn Order</label>
-      <select class="form-control data" formControlName="ColumnOrder">
-        <option value="">Select Option</option>
-        <option>Text</option>
-      </select>
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Text Align</label>
-      <select class="form-control data" formControlName="text_align">
-        <option value="">Select Option</option>
-        <option *ngFor="let float of textAlign">{{ float }}</option>
-      </select>
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Width</label>
-      <input type="text" class="form-control" formControlName="width" placeholder="Enter Width" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Tool Tip</label>
-      <input type="text" class="form-control" formControlName="tooltip" placeholder="Enter tooltip" />
-    </div>
-    <br />
-    <div>
-      <label for="" class="label-control">Placeholder</label>
-      <input type="text" class="form-control" formControlName="placeholder" placeholder="Enter placeholder" />
-    </div>
-    <br />
-  </form>
-
-  <ng-template pTemplate="footer">
-    <button type="button" class="btn btn-dark" (click)="display = false"> Cancel</button>
-    <button type="button" class="btn btn-primary btn-space" (click)="updateColumn()">
-      Update
-    </button>
-  </ng-template>
-</p-dialog> -->
-<!-- <div class="spinoverlay" *ngIf="loading">
-  <div class="spincenter">
-    <img src="../../../../assets/images/EZFlow_Loader.gif" class="ezflow-loader" alt="loader" />
-  </div>
-</div> -->

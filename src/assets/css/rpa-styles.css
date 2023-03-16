@@ -557,3 +557,12 @@ cron-editor > div > div.card-header > ul > li > a.nav-link
   border-radius: 3px !important;
 }
 /* New Styles for Scheduler Overlay  */
+
+
+.card.cron-editor-main cron-time-picker select.form-control {
+  width: 45px !important;
+  height: 30px !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+  font-size: 13px;
+}

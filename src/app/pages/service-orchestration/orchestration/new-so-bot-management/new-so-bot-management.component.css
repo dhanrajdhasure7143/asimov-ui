@@ -41,8 +41,6 @@ select {
 }
 .botmanagement-tablelist {
   width:100%;
-  overflow: auto;
-  height: calc(100vh - 265px);
 }
 
 
@@ -136,4 +134,12 @@ span.logrefresh {
 .noDataMessage{
   text-align: center;
   margin-top: 100px;
+}
+
+.createform-overlay {
+  height: calc(100% - 110px);
+}
+.SLAconfig-filenote {
+  font-size: 12px;
+  margin-bottom: 0px;
 }

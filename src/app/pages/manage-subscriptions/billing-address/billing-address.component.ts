@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService } from "primeng/api";
+import { element } from "protractor";
 import countries from "src/app/../assets/jsons/countries.json";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
@@ -14,38 +15,31 @@ import { RestApiService } from "../../services/rest-api.service";
 })
 export class BillingAddressComponent implements OnInit {
   billingForm: FormGroup;
-  countryInfo: any = [];
-  stateInfo: any[];
+  countryInfo: any[] = [];
+  stateInfo: any;
   cityInfo: any[];
   phnCountry: any;
-  isRefresh: any;
   billingInfo: any = [];
   countryName: any;
   stateName: any;
   activeIndex: any;
   id: any;
   editButton: boolean;
-  data: Object;
+  billingContactData: any;
+  selectedCountry: any;
+  states: any;
   constructor(
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
-    private route: ActivatedRoute,
     private api: RestApiService,
     private messageService:MessageService,
-    private dt:DataTransferService
-  ) {
-    this.route.queryParams.subscribe((data) => {
-      if (data) {
-        this.activeIndex = data.index;
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.billingForm = this.formBuilder.group({
       firstName: ["",Validators.compose([Validators.required, Validators.maxLength(50)]),],
       lastName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      country: ["", Validators.compose([Validators.required])],
+      country: ["India", Validators.compose([Validators.required])],
       city: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
       state: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
       postalcode: ["", Validators.compose([Validators.required])],
@@ -55,19 +49,19 @@ export class BillingAddressComponent implements OnInit {
       email: ["", Validators.compose([Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])],
     });
     this.getCountries();
+    this.getBillingInfo()
+    
   }
 
   getCountries() {
     this.countryInfo = countries.Countries;
   }
+  
 
   onChangeCountry(countryValue) {
-    this.isRefresh = !this.isRefresh;
     this.stateInfo = [];
     for (var i = 0; i < this.countryInfo.length; i++) {
-      if (this.countryInfo[i].CountryName == countryValue.CountryName) {
-        this.countryName = countryValue.CountryName;
-        this.phnCountry = this.countryInfo[i].CountryCode;
+      if (this.countryInfo[i].CountryName == countryValue) {
         this.stateInfo = this.countryInfo[i].States;
       }
     }
@@ -78,7 +72,6 @@ export class BillingAddressComponent implements OnInit {
     this.cityInfo = [];
     for (var i = 0; i < this.stateInfo.length; i++) {
       if (this.stateInfo[i].StateName == stateValue.StateName) {
-        this.stateName = stateValue.StateName;
         this.cityInfo = this.stateInfo[i].Cities;
       }
     }
@@ -123,10 +116,9 @@ export class BillingAddressComponent implements OnInit {
               detail: "Saved Successfully !!",
             });
           }
-        });
-        setTimeout(() => {
+          this.billingForm.reset();
           this.getBillingInfo();
-        }, 500);
+        })
       }
     } else {
       this.updateForm();
@@ -149,21 +141,20 @@ export class BillingAddressComponent implements OnInit {
 
   getBillingInfo() {
     this.spinner.show();
-    this.api.getBillingInfo(this.id).subscribe((data) => {
-      this.data = data;
-      this.dt.setbillingInfo(this.data)
+    this.api.getBillingInfo().subscribe(data => {
+      this.billingContactData = data;
       this.spinner.hide();
-      this.billingForm.reset();
-      this.billingForm.get("firstName").setValue(this.data["firstName"]);
-      this.billingForm.get("lastName").setValue(this.data["lastName"]);
-      this.billingForm.get("country").setValue(this.data["country"]);
-      this.billingForm.get("state").setValue(this.data["state"]);
-      this.billingForm.get("city").setValue(this.data["city"]);
-      this.billingForm.get("postalcode").setValue(this.data["postalcode"]);
-      this.billingForm.get("addressLine1").setValue(this.data["addressLine1"]);
-      this.billingForm.get("addressLine2").setValue(this.data["addressLine2"]);
-      this.billingForm.get("phoneNumber").setValue(this.data["phoneNumber"]);
-      this.billingForm.get("email").setValue(this.data["email"]);
+      if(data){
+      this.billingForm.get("firstName").setValue(this.billingContactData["firstName"]);
+      this.billingForm.get("lastName").setValue(this.billingContactData["lastName"]);
+      this.billingForm.get("state").setValue(this.billingContactData["state"]);
+      this.billingForm.get("city").setValue(this.billingContactData["city"]);
+      this.billingForm.get("postalcode").setValue(this.billingContactData["postalcode"]);
+      this.billingForm.get("addressLine1").setValue(this.billingContactData["addressLine1"]);
+      this.billingForm.get("addressLine2").setValue(this.billingContactData["addressLine2"]);
+      this.billingForm.get("phoneNumber").setValue(this.billingContactData["phoneNumber"]);
+      this.billingForm.get("email").setValue(this.billingContactData["email"]);
+      }
     });
   }
 }
