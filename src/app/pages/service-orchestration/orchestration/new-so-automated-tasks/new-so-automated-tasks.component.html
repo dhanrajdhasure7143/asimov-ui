@@ -16,18 +16,7 @@
                     </select>
                 </div>
 
-                <div id="autoenvsearch" class="col-md-3 pl-0">
-                    <select class="rpa-control form-control" [(ngModel)]="selectedEnvironment">
-                        <option value="" disabled hidden>Select Environment</option>
-                        <option value="null" hidden disabled>Select Environment</option>
-                        <option [value]="" hidden disabled>SSelect Environment</option>
-                        <option [value]="null" hidden disabled>Select Environment</option>
-                        <option *ngFor="let environment of environments" [value]="environment.environmentId">{{environment.environmentName}}
-                        </option>
-                    </select>
-                </div>
-
-                <div *ngIf="process_names!=undefined" id="autoprocesssearch" class="col-md-2 p-0">
+                <div *ngIf="process_names!=undefined" id="autoprocesssearch" class="col-md-3 pl-0">
                     <select class="rpa-control form-control" [value]="selectedvalue" (change)="applyFilter($event.target.value)">
                         <option value="" disabled hidden>Select Process</option>
                         <option value="null" hidden disabled>Select Process</option>
@@ -35,6 +24,17 @@
                         <option [value]="null" hidden disabled>Select Process</option>
                         <option *ngFor="let process of selected_process_names" [selected]="process.processId==selectedvalue"
                             [value]="process.processId">{{process.processName}}
+                        </option>
+                    </select>
+                </div>
+
+                <div id="autoenvsearch" class="col-md-3 p-0">
+                    <select class="rpa-control form-control" [(ngModel)]="selectedEnvironment">
+                        <option value="" disabled hidden>Select Environment</option>
+                        <option value="null" hidden disabled>Select Environment</option>
+                        <option [value]="" hidden disabled>SSelect Environment</option>
+                        <option [value]="null" hidden disabled>Select Environment</option>
+                        <option *ngFor="let environment of environments" [value]="environment.environmentId">{{environment.environmentName}}
                         </option>
                     </select>
                 </div>

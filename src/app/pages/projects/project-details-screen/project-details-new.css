@@ -146,7 +146,8 @@ span.lowimp {
     padding: 20px 6px 10px 30px !important;
     margin: 25px 10px 30px !important;
     position: relative;
-    width: 77%;
+    /* width: 77%; */
+    width: 90%;
 }
 .lftusermsg p {
     width: 100%;
@@ -156,8 +157,10 @@ span.lowimp {
     border-radius: 15px 0px 15px 15px;
     padding: 25px 10px 2px !important;
     margin: 10px 0px 30px 0px !important;
-    width: 77%;
-    margin-left: 25% !important;
+    width: 90%;
+    margin-left: 10% !important;
+    /* width: 77%;
+    margin-left: 25% !important; */
     position: relative;
 }
 .lftuserimg .user_keys {
@@ -194,7 +197,7 @@ h4.colheads.chatheader {
     align-items: center;
 }
 #message-body {
-    height: 83%;
+    height: 88%;
     overflow: auto;
     padding: 5px 20px;
 }

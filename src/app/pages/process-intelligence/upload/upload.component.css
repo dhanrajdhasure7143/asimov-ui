@@ -178,6 +178,9 @@ tr.mat-header-row {
     margin: 0px;
     line-height: normal;
 }
+h4.colheads {
+    margin-bottom: 10px;
+}
 .PI-heading label {
     font-size: 14px;
     font-weight: 400;
