@@ -206,7 +206,10 @@
 
             <div class="form-group col p-0">
               <label for="" class="label-control">Length</label>
-              <input type="text" formControlName="length" class="form-control" placeholder="Enter Length" />
+              <input type="text" (keypress)="numberOnly($event)" formControlName="length" class="form-control" placeholder="Enter Length" />
+              <span *ngIf="updateColumnForm.get('length').hasError('pattern')" class="errspan required">
+                Enter a number between 0 and 255
+              </span>
             </div>
 
             <div class="form-group col p-0">
