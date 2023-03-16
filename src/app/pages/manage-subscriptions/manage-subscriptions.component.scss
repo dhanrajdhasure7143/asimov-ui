@@ -1,12 +1,12 @@
-:host {
-  img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
+// :host {
+  // img {
+    // width: 100px;
+    // height: 100px;
+    // object-fit: cover;
+    // border-radius: 50%;
 
-  }
-}
+  // }
+// }
 
 .mat-nav-list {
   a {
@@ -220,4 +220,18 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   height: 85%;
   overflow: hidden;
   width: 81%;
+}
+.p-tabview-nav-content {
+   border: 1px solid #d0d0d0!important;
+  background-color: #fff; 
+  border-radius: 6px;
+  height: 70px;
+  width: 100%;
+}
+.tab_icons{
+  font-size: 28px;
+}
+.tab_title {
+  font-size: 16px;
+  padding-left: 15px;
 }

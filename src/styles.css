@@ -2899,7 +2899,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   margin-right: 10px !important;
 }
 .p-column-filter-buttonbar {
-  justify-content: left !important;
+  justify-content: right !important;
   padding: 0px 16px 10px !important;
 }
 .p-column-filter-buttonbar .p-button {

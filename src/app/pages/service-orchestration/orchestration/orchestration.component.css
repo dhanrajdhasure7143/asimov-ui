@@ -266,3 +266,10 @@ body .leftfporm select {
   margin-right: 4px !important;
   font-size: 13px;
 }
+
+.so-sub-tab-content .p-datatable-header {
+  padding: 0px !important;
+}
+.schedule-table-container .p-datatable .p-datatable-thead > tr > th {
+  white-space: nowrap !important;
+}
