@@ -6,30 +6,43 @@
     width: 20px;
     height: 20px;
 }
-
-
-
-.main-content1 .module-heading.title {
-    background-color: #F3F3F3;
-    padding: 12px 15px 8px !important;
+.main-content1 .maincont-contentarea {
+    padding: 0px !important;
 }
-
-.main-content1 .module-header-title {
+.row.main-content-head {
+    padding: 12px 20px;
+    background-color: #F3F3F3;
+}
+.main-content1 .title_text {
     font-weight: 600;
     font-size: 22px;
     color: #232832;
 }
-.main-content1 .module-heading.title .value span {
-    color: #232832;
-    font-size: 12px;
-} 
-
+.main-content1 span.sub_title_text {
+    font-size: 15px;
+}
+.main-content1 .main-content-head h3 {
+    line-height: unset;
+    height: auto;
+}
+.module-back-button {
+    border: none !important;
+    cursor:pointer;
+}
 .value {
     color: #232832;
     font-weight: 400;
     font-size: 13px;
-    padding-top: 8px;
+    padding-top: 5px;
 }
+
+
+
+
+.main-content1 .main-content-head .value span {
+    color: #232832;
+    font-size: 12px;
+} 
 .level3sep {
     color:#ddd;
     font-size: 20px;
@@ -151,10 +164,7 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
-span.module-back-button {
-    border: none !important;
-    margin: 0px !important;
-}
+
 .module-back-button i {
     margin-right: 3px !important;
 }
@@ -207,5 +217,8 @@ img.hover-img {
 span.bps-header-title.gen-bpsheader {
     display: block;
 }
-
+.main-content1 .main-content-head {
+    background-color: #F3F3F3;
+    padding: 12px 15px 8px !important;
+}
 */

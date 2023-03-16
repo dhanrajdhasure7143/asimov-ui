@@ -390,7 +390,7 @@ mat-tab-body {
 .changesContainer {
   position: absolute;
   width: 40%;
-  bottom: 0;
+  bottom: -5px;
   left: 30%;
 }
 
@@ -936,7 +936,9 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 
 .module-body.bpms-canvas-body {
-  height: calc(100% - 71px);
+  /* height: calc(100% - 71px); */
+  height: calc(100% - 80px);
+  background-color: #fff;
   overflow: auto;
   padding: 0px 0px;
 }
@@ -1019,7 +1021,7 @@ mat-expansion-panel.menuprop-disabled {
 }
 
 .canvas1 .bjsl-button {
-  bottom: 40px !important;
+  bottom: 50px !important;
   position: fixed;
   left: 70%;
 }

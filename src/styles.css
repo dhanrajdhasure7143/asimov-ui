@@ -1899,12 +1899,9 @@ button.btn.btn-primary:first-child {
 
 .bpm-notation-fields {
   position: absolute !important;
-  bottom: 40px;
-  right: 0px;
-  width: 100%;
-  /* bottom: 6px;
-  right: 15px;
-  width: auto; */
+  bottom: 8px;
+  right: 35px;
+  width: auto;
   top: auto;
   z-index: 100;
 }
