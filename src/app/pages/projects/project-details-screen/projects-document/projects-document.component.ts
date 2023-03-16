@@ -52,8 +52,7 @@ export class ProjectsDocumentComponent implements OnInit {
   documents_resData:any[]=[];
   taskList:[]=[];
   selectedOne:any;
-  breadcrumbItems:any[]=[
-    {label: 'Analysis'}]
+  breadcrumbItems:any[]=[]
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -321,7 +320,7 @@ export class ProjectsDocumentComponent implements OnInit {
       if(this.selectedItem.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      if(clickType== 'dblclick'){
+      if(clickType== 'dblclick' && this.selectedItem.dataType == 'folder'){
         this.onCreateFolder();
         if(this.selectedItem)this.selectedItem.type='default';
       }
@@ -680,8 +679,11 @@ addParentFolder() {
   }
 
   backToSelectedFolder(){
+    console.log(this.opened_folders)
     this.folder_files = this.opened_folders[this.opened_folders.length-1];
     this.opened_folders.pop();
+    this.breadcrumbItems.splice(-1)
+    this.breadcrumbItems = [...this.breadcrumbItems];
   }
 
   singleFileUploadFolder(e){

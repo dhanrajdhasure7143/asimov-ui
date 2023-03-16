@@ -86,7 +86,7 @@
          <div class="col-md-12 pb-3 px-3">
             <div class="row">
 
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets">
+               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
                      <div class="mt-2">
@@ -100,17 +100,21 @@
                         <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" [model]="items">
                         </p-menu>
 
-            
+                        <!-- <p-menu [model]="items" #menu1 [popup]="true" class="actionspopmenu p-menu-graph">
+                           <ng-template let-item pTemplate="menuItem">
+                             <span (click)="getItemActionDetails($event,widget,item)">{{item.label}}</span>
+                           </ng-template>
+                         </p-menu> -->
                      </div>
                     
                      <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
                      <div style="text-align: center;margin:20px;">
                         <br>
+                        <div *ngIf="configuration_id != widget.id">
+                           <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
                         <div *ngIf="widget.widget_type!='table'">
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart>
-                        <div>
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.data" height="270" [options]="widget.chartOptions"></p-chart>
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
                            <p-table
@@ -168,12 +172,9 @@
                         </div>
                         <div *ngIf="widget.widget_type=='TABLE'">
                         </div> -->
-                    
-
-
                      </div>
 
-                     <div class="row" *ngIf="widget.edit==true">
+                     <div  *ngIf="configuration_id == widget.id">
                         <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
                            <label>Project Type</label>
                            <div class="row">
@@ -223,25 +224,29 @@
                               <option value="">30 Min</option>
                            </select>
                         </div> -->
-                        <div class="col-6 form-group mb-4 bps-labcls">
-                           <label>Chart Type</label>
+                     <form [formGroup]="dynamicFormConfiure" class="row">
+                        <div class="col-6 form-group mb-4 bps-labcls" *ngFor="let each of widget.filterOptions">
                            <!-- <select class="form-control data">
                               <option value="">Pie Chart</option>
                            </select> -->
-                           <p-dropdown [options]="widget.filterOptions.widgetTypes"[style]="{'width':'100%'}"
-                                 placeholder="Select Chart"[(ngModel)]="widget.widget_type">
-                         </p-dropdown>
+                          
+                           <div >
+                           <label>{{each.label}}</label>
+                              <p-dropdown [formControlName]="each.name" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                           </div>
                         </div>
-                        <div class="col-6 form-group mb-4 bps-labcls">
+                        <!-- <div class="col-6 form-group mb-4 bps-labcls">
                            <label>Number of Category</label>
                            <input type="text" placeholder="05" class="form-control">
-                        </div>
+                        </div> -->
+                        
                         <div class="col-12">
                            <div class="mt-4 mb-4" style="float:right">
                               <button class="btn-cancel1" (click)="cancelEdit()">Cancel</button>
-                              <button class="btn-save ">Save</button>
+                              <button class="btn-save " (click)="saveConfigure(i)">Save</button>
                            </div>
                         </div>
+                     </form>
                      </div>
                   </div>
 </div>
@@ -256,6 +261,8 @@
 
 <p-confirmDialog [style]="{width: '20vw'}" key="positionDialog2" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '30vw'}" key="positionDialog3" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
 <!-- <p-chart type="line" [data]="data" [options]="options"></p-chart> -->
