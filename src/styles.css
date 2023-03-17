@@ -2782,9 +2782,7 @@ span.tabscount {
   overflow: auto;
 }
 .table-height-adj .p-datatable-wrapper {
- 
   height: calc(100vh - 200px) !important; 
- 
 }
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
@@ -2873,7 +2871,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
   color: var(--main-txtcolor);
-  padding-right: 45px !important;
+  /* padding-right: 35px !important; */
 }
 .p-datatable .p-sortable-column.p-highlight:hover {
   color: var(--main-txtcolor) !important;
@@ -2908,6 +2906,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   margin: 0 0 0 10px !important;
   color: #098de6 !important;
 }
+.p-button-outlined.only_clearbtn {
+  margin:0px !important;
+}
+
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
