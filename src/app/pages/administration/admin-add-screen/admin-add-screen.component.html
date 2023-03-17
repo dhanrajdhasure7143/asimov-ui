@@ -144,7 +144,7 @@
               <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">
                 Back
               </button>
-              &nbsp;&nbsp;
+             
               
               <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">
                 Save
@@ -210,8 +210,8 @@
               <label class="label-control"><input type="checkbox" formControlName="ShowSearch" />
                 <span class="span">Show in Search</span></label>
               <label class="label-control"><input type="checkbox" formControlName="ShowForm" /></label>
-              <span class="span">Show in Form</span> <br />
-              <br />
+              <span class="span">Show in Form</span> 
+             
               <label class="label-control">
                 <input type="checkbox" formControlName="read_only" />
                 <span class="span">Read Only</span>
