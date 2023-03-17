@@ -3,13 +3,13 @@
    <h2 class="dashboard-header" >Design your own dashboard</h2>
    <div class="btn-p-align" style="text-align: center;">
       <button pButton placement="bottom"  styleClass="btn bluebg-button "
-         (click)="showDialog()">Let's Start
-      </button>
+         (click)="showModalDialog()">Let's Start
+   </button>
    </div>
 </div>
-<div class="btn-p-align" style="text-align: center">
-   <p-dialog header=" Create Dashboard" styleClass="my-style-class" 
-   [(visible)]="isDialogShow"
+<div  class="dialogue-check" style="text-align: center">
+   <p-dialog header=" Create Dashboard" [(visible)]="displayModal" [modal]="true"  [baseZIndex]="10000" styleClass="my-style-class" 
+ 
    [style]="{width: '30vw'}"
    [draggable]="false" 
    [resizable]="false">
@@ -19,18 +19,23 @@
          <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
       </div>
    </div>
-   <ng-template pTemplate="footer">
-      <p-button
-         (click)="isDialogShow = false"
+   <ng-template pTemplate="footer" class="pfooter">
+      
+      
+      <button pButton
+         (click)="displayModal = false"
          label="Cancel"
-         styleClass="btn new-cancelbtn">
-      </p-button>
-      <p-button
+         class="p-button p-new-cancelbtn">
+      </button>
+   
+  
+      <button pButton
          (click)="navigateconfigure()"
          label="Save"
-         styleClass="btn bluebg-button "
+         class="btn bluebg-button "
          [disabled]="!(entered_name.length >= 5)">
-      </p-button>
+      </button>
+    
    </ng-template>
    </p-dialog>
 </div>

@@ -3049,6 +3049,23 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
+.bluebg-button{
+  background-color: var(--main-bluecolor);
+  color: hsl(0, 0%, 100%);
+  padding: 6px 30px;}
+  .bluebg-button:hover{
+    background-color: var(--main-bluecolor);
+    color: hsl(0, 0%, 100%);
+    padding: 6px 30px;}
+    .bluebg-button:active{
+      background: var(--main-bluecolor) !important;
+      background-color: var(--main-bluecolor) !important;
+      color: hsl(0, 0%, 100%);
+      padding: 6px 30px;}
+    .bluebg-button:focus{
+      background-color: var(--main-bluecolor);
+      color: hsl(0, 0%, 100%);
+      padding: 6px 30px;box-shadow:none;}
 .btn-p-align .p-button {
   background-color: var(--main-bluecolor);
   color: #fff;
@@ -3077,6 +3094,24 @@ button.btn.bluebg-button {
 }
 button.btn.canlrst-btn,
 button.btn.new-cancelbtn {
+  color: var(--main-bluecolor) !important;
+  font-size: 16px;
+ 
+}
+.p-new-cancelbtn {
+  background-color: transparent !important;
+  border: transparent !important;
+  color: var(--main-bluecolor) !important;
+  font-size: 16px !important;
+}
+.p-new-cancelbtn:focus {
+  background-color: transparent !important;
+  border: transparent !important;
+  color: var(--main-bluecolor) !important;
+  font-size: 16px !important;
+  box-shadow:0 0 0 0rem #a6d5fa00 !important;
+}
+.btn-p-align.btn.new-cancelbtn {
   color: var(--main-bluecolor) !important;
   font-size: 16px;
 }
@@ -3555,6 +3590,22 @@ width:max-content;}
 
         .pluscreate{cursor:pointer;}
 /* dynamic dashbord prime styles */
+
+button:disabled {
+  cursor: no-drop !important;
+  background-color: #d1d1d1;
+  border-color:#d1d1d1;
+
+}
+.dialogue-check .p-dialog .p-dialog-footer button{margin:0 0rem 0 0!important;}
+.dialogue-check .p-dialog .p-dialog-header .p-dialog-title{
+  font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 28px;
+color:#222222
+}
 
 
 
