@@ -9,7 +9,7 @@
 .main-content1 .maincont-contentarea {
     padding: 0px !important;
 }
-.row.main-content-head {
+.main-content1 .main-content-head {
     padding: 12px 20px;
     background-color: #F3F3F3;
 }
@@ -33,16 +33,9 @@
     color: #232832;
     font-weight: 400;
     font-size: 13px;
-    padding-top: 5px;
+    /* padding-top: 5px; */
 }
-
-
-
-
-.main-content1 .main-content-head .value span {
-    color: #232832;
-    font-size: 12px;
-} 
+ 
 .level3sep {
     color:#ddd;
     font-size: 20px;
@@ -64,7 +57,7 @@
     font-size: 15px !important;
 }
 .bps-upload:hover {
-    background-color: #232832 !important;
+    background-color: #001c47 !important;
 }
 .bps-upload img {
     padding-right: 8px;
@@ -81,17 +74,6 @@
     font-size: 20px;
     margin: 10px;
     padding: 0px !important;
-}
-
-::ng-deep .bpsHeaderTooltip {
-    color:#ffffff !important;
-    background-color: #232832 !important;
-    font-size: 15px;
-    position: absolute;
-    top: 0px;
-    left: -40px;
-    width: auto;
-    white-space: nowrap;
 }
 
 span.label_icon.inpro-label {
@@ -120,20 +102,17 @@ span.label_icon.inpro-label {
     letter-spacing: 0.25px;
 }
 
-
 .bps-float button img {
     height: 18px;
     width: auto;
 }
-.icon-disabled{
+.icon-disabled , .edit-disabled{
     cursor: no-drop !important;
 }
 
-
-
 .bg-orange {
     font-weight: 600;
-    background: #f99d1c;
+    background: #E58600;
     color: #ffffff;
 }
 
@@ -141,7 +120,7 @@ span.testtooltip {
     position: absolute;
     top: 45px;
     right: 0px;
-    background-color: #232832;
+    background-color: #001c47;
     color: #fff;
     width: max-content;
     padding: 3px 10px;
@@ -151,25 +130,18 @@ span.testtooltip {
 
 span.testtooltip:before {
     content: '';
-    border: 2px solid #232832;
+    border: 2px solid #001c47;
     border-width: 0px 0px 2px 2px;
     position: absolute;
     padding: 4px;
     right: 13px;
     top:  -5px;
-    background: #232832;
+    background: #001c47;
     transform: rotate(45deg);
 }
 
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
-}
-
-.module-back-button i {
-    margin-right: 3px !important;
-}
-.value strong, .value b {
-    font-weight: 600;
 }
 
 .module-heading-buttons {
@@ -200,9 +172,6 @@ img.hover-img {
 }
 
 
-.edit-disabled{
-    cursor: no-drop;
-}
 /* 
 .module-heading.title {
     margin-bottom: 0px;
@@ -220,5 +189,25 @@ span.bps-header-title.gen-bpsheader {
 .main-content1 .main-content-head {
     background-color: #F3F3F3;
     padding: 12px 15px 8px !important;
+}
+.main-content1 .main-content-head .value span {
+    color: #232832;
+    font-size: 12px;
+}
+.module-back-button i {
+    margin-right: 3px !important;
+}
+.value strong, .value b {
+    font-weight: 600;
+}
+::ng-deep .bpsHeaderTooltip {
+    color:#ffffff !important;
+    background-color: #232832 !important;
+    font-size: 15px;
+    position: absolute;
+    top: 0px;
+    left: -40px;
+    width: auto;
+    white-space: nowrap;
 }
 */

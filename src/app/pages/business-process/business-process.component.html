@@ -8,7 +8,7 @@
             <span class="bps-header-title" [class.gen-bpsheader]="!rejectedOrApproved">
               <h3>
                 <span class="title_text">Business Process Studio 
-                  <span  class="sub_title_text" *ngIf="isHeaderShow == 'true'" [matTooltip]=currentNotation_name matTooltipClass="bpsHeaderTooltip">
+                  <span  class="sub_title_text" *ngIf="isHeaderShow == 'true'" [pTooltip]=currentNotation_name tooltipPosition="bottom">
                     <span *ngIf="currentNotation_name">/ </span> {{fitTableView(currentNotation_name)}}</span>
                 </span>
                 <span class="" *ngIf="isHeaderShow == 'true'">

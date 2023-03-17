@@ -183,7 +183,8 @@ mat-tab-body {
   top: 10px;
   left: 40px;
   color: white;
-  background-color: #F99D1C;
+  background-color: #E58600;
+  /* background-color: #F99D1C; */
 }
 
 div[class^='diagram_container'] svg {
