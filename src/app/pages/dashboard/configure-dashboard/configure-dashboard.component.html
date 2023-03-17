@@ -86,12 +86,12 @@
                   
                <div  class="" style="text-align: center;margin:20px;">
                   <div *ngIf="widget.widget_type!='table'">
-                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
+                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270"  [options]="widget.chartOptions" ></p-chart>
                   </div>
                  <div *ngIf="widget.widget_type=='table'">
                   <p-table
                   #myTab
-                  [value]="widget.sampleData.datasets[0].data"
+                  [value]="widget.widgetData"
                   [scrollable]="true"
                   scrollHeight="280px"
                   [columns]="widget.sampleData.labels"
@@ -278,13 +278,10 @@
         <div *ngFor="let widget of widgetslist; let i=index"  >
           <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
-            
             <div class="img-div" style="margin-right:20px;">
-              <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
-              <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="55px"  [options]="widget.chartOptions" ></p-chart> -->
-
+              <!-- <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" /> -->
+              <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="55px" width="60px"></p-chart>
             </div>
-
             <div>
               <h5>{{widget.name}}</h5>
               <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
@@ -303,8 +300,6 @@
       (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="bottom"/>
   <a (click)="closeSplitOverlay()" class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
           alt="close" pTooltip="Close" tooltipPosition="bottom"></a>
-         
         </span> 
- 
   </ng-template>
 </p-splitter>

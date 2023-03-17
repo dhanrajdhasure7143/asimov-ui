@@ -1,12 +1,9 @@
 import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { Inplace } from 'primeng/inplace';
-import widgetOptions from './widgetdetails.json';
 
 @Component({
   selector: 'app-configure-dashboard',
@@ -496,16 +493,18 @@ export class ConfigureDashboardComponent implements OnInit {
         item["metricAdded"] = false
         return item
       })
-
-
       console.log("this.metrics_list", this.metrics_list)
     })
   }
   getListOfWidgets() {
     this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.widgetData;
+      console.log(this.widgetslist)
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
+        // item["chartOptions"]["plugins"]["legend"]= {
+        //   display: false 
+        // }
         // item["chartSrc"] = "chart4.png'"
         return item
       })
