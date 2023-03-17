@@ -13,16 +13,12 @@ td.lowpriority,
 td p.lowpriority {
     color: #27AD74;
 }
-.main-content-head .btn {
-  min-width: auto;
-}
-
-  .status-tabs {
+.status-tabs {
     display: flex;
     display: flex;
     align-items: center;
     height: 100%;
-  }
+}
 
 .status-img > img {
     /* height: 40px !important; */

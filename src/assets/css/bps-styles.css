@@ -183,7 +183,8 @@ mat-tab-body {
   top: 10px;
   left: 40px;
   color: white;
-  background-color: #F99D1C;
+  background-color: #E58600;
+  /* background-color: #F99D1C; */
 }
 
 div[class^='diagram_container'] svg {
@@ -390,7 +391,7 @@ mat-tab-body {
 .changesContainer {
   position: absolute;
   width: 40%;
-  bottom: 0;
+  bottom: -5px;
   left: 30%;
 }
 
@@ -936,7 +937,9 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 
 .module-body.bpms-canvas-body {
-  height: calc(100% - 71px);
+  /* height: calc(100% - 71px); */
+  height: calc(100% - 80px);
+  background-color: #fff;
   overflow: auto;
   padding: 0px 0px;
 }
@@ -1019,7 +1022,7 @@ mat-expansion-panel.menuprop-disabled {
 }
 
 .canvas1 .bjsl-button {
-  bottom: 40px !important;
+  bottom: 50px !important;
   position: fixed;
   left: 70%;
 }
