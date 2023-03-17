@@ -2,17 +2,36 @@
   background-color: rgb(241, 240, 240);
 }
 
-.undobtn {background-color:gainsboro; border-radius: 5px;}
+.undobtn {
+  background-color:transparent; 
+}
+.undobtn:disabled i.fas {
+  color: #a0a0a0 !important;
+}
 
 .verticalalignmiddle{
   vertical-align: middle !important;
 }
 
-.inbox-tablegrid {
+.Inboxtab-btns {
+  position: absolute;
+  right: 20%;
+  top: 22px;
+  z-index: 9;
+}
+.Inboxtab-btns button:first-child {
+  padding-right: 15px;
+}
+button#inboxrefresh img {
+  width: 19px;
+  height: auto;
+}
+
+/* .inbox-tablegrid {
   width: 100%;
   overflow: auto;
   height: calc(100vh - 265px);
-}
+} */
 
 .inbox-tablegrid table td span{
   font-size: 13px !important;

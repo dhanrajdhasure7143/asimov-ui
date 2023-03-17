@@ -3,7 +3,7 @@
     <div class="">
         <div class="row">
 
-            <div class="form-group leftfporm col-md-9 pl-0">
+            <div class="form-group leftfporm col-md-10 pl-0">
                 <div id="autocategorysearch" class="col-md-3 pl-0">
                     <select class="rpa-control form-control" [(ngModel)]="selectedcategory" [disabled]="categaoriesList.length==1"
                         [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" (change)="applyFilter1($event.target.value)">
@@ -28,7 +28,7 @@
                     </select>
                 </div>
 
-                <div id="autoenvsearch" class="col-md-3 pl-0">
+                <div id="autoenvsearch" class="col-md-3 p-0">
                     <select class="rpa-control form-control" [(ngModel)]="selectedEnvironment">
                         <option value="" disabled hidden>Select Environment</option>
                         <option value="null" hidden disabled>Select Environment</option>
@@ -38,7 +38,8 @@
                         </option>
                     </select>
                 </div>
-                <div id="autoenvsearch" class="col-md-3 pl-0">
+                
+                <div id="autoenvsearch" class="col-md-2 pr-0">
                     <select class="rpa-control form-control" name="executiontype" [(ngModel)]="selectedexecutiontype">
                         <option value="" hidden disabled>Execution Type</option>
                         <option *ngFor="let type of ExecutionTypearr" [value]="type.name">{{type.name}}
@@ -50,7 +51,7 @@
             </div>
 
 
-            <div class="text-right roghtform col-md-3 pr-0">
+            <div class="text-right roghtform col-md-2 pr-0">
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
@@ -125,11 +126,11 @@
                                     <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
                                      <p-sortIcon field="taskName"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="createdBy" pReorderableColumn pResizableColumn>Process Owner
+                                <th pSortableColumn="ProcessOwner" pReorderableColumn pResizableColumn>Process Owner
                                     <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
                                      <p-sortIcon field="createdBy"></p-sortIcon>
                                 </th>
-                                <th>Task Owner</th>
+                                <th pSortableColumn="TaskOwner" pReorderableColumn pResizableColumn>Task Owner</th>
                                 <th pSortableColumn="taskType" pReorderableColumn pResizableColumn>Task Type
                                     <p-columnFilter type="text" field="taskType" display="menu"></p-columnFilter>
                                      <p-sortIcon field="taskType"></p-sortIcon>
@@ -138,13 +139,13 @@
                                     <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
                                      <p-sortIcon field="category"></p-sortIcon>
                                 </th>
-                                <th pReorderableColumn pResizableColumn>Bot Source</th>
-                                <th pReorderableColumn pResizableColumn>Assign Resource</th>
+                                <th pSortableColumn="BotSource" pReorderableColumn pResizableColumn>Bot Source</th>
+                                <th pSortableColumn="AssignResource" pReorderableColumn pResizableColumn>Assign Resource</th>
                                 <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
                                     <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
                                      <p-sortIcon field="status"></p-sortIcon>
                                 </th>
-                                <th pReorderableColumn pResizableColumn>Actions</th>
+                                <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-element>
@@ -161,7 +162,7 @@
                                 <td [pTooltip]="element.createdBy">{{element.createdBy}}</td>
                                 <td>
                                     <span *ngIf="element.taskType=='Automated'">
-                                        <select class="form-control" style="width:165px;padding:0px;"
+                                        <select class="form-control" 
                                             (change)="changeTaskOwner($event.target.value)" [(ngModel)]="element.taskOwner"
                                             [value]="element.taskOwner">
                                             <option value="" hidden disabled>Select Task Owner</option>
@@ -193,7 +194,7 @@
                                 <td>
                                     <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
                                         <select class="form-control" [value]="element.sourceType"
-                                            (change)="changesource($event.target.value,element.taskId)" style="width:140px;padding:0px;">
+                                            (change)="changesource($event.target.value,element.taskId)">
                                             <option [value]="null" disabled hidden>Select Bot Source</option>
                                             <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
                                         </select>
@@ -214,7 +215,7 @@
                     
                                             <!-- <span *ngIf="element.sourceType=='EPSoft'"> -->
                                             <span>
-                                                <select class="form-control" style="width:200px;padding:0px"
+                                                <select class="form-control" 
                                                     [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType "
                                                     [id]="element.taskId+'__select'">
                                                     <option value="0" disabled hidden>Select Bot</option>
@@ -252,7 +253,7 @@
                                     <span *ngIf="element.taskType=='Human'">
                                         <span *ngIf="isHumanLoading=='Loading'">Loading...</span>
                                         <span *ngIf="isHumanLoading=='Success'">
-                                            <select class="form-control" style="width:200px;padding:0px;"
+                                            <select class="form-control" 
                                                 [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"
                                                 [id]="element.taskId+'__select'">
                                                 <option value="0" hidden selected>Select Resource</option>
@@ -683,7 +684,7 @@
                 <mat-paginator class="newpaginationdiv" #paginator10 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
             </div> -->
 <ng-template #process_logs>
-    <div id='logsid' ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" >
+    <div id='logsid' ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="OS-AddtaskPopup">
         <div class="modal-header modelprhead class cursor-all-scroll" #draggableHandle>
             <!-- <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
       <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -710,14 +711,16 @@
         <div>
         <!-- <div class="rpa-modal-content"> -->
             <app-split-overlay  (closeOverlay)="closeOverlay($event)">
-            <div class="rpa-modal-header">
-                <!-- <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
-                <h4>Scheduler</h4>
-            </div>
-            <div>
-                <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
-            </div>
-        </app-split-overlay>
+                <div class="h-100">
+                    <div class="create-header">
+                        <!-- <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
+                        <h3>Scheduler</h3>
+                    </div>
+                    <div class="h-100">
+                        <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
+                    </div>
+                </div>      
+            </app-split-overlay>
         <!-- </div> -->
     </div>
 </div>
@@ -1226,7 +1229,7 @@
 
 
         <ng-template class="modal-lg"  #addTask >
-           <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle">
+           <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="OS-AddtaskPopup">
             <div class="modal-header modelprhead cursor-all-scroll" #draggableHandle>
                     <!-- <div class="modal-header modelprhead"> -->
                             <h4 class="modal-title pull-left">Add Task</h4>
@@ -1247,10 +1250,10 @@
                                     </div>
                                 </form>
                                 
-                                <div class="buttons pull right">
-                                    <button (click)="logs_modal.hide()" class="btn btn-default">Cancel</button>
+                                <div class="right mt-3">
+                                    <button (click)="logs_modal.hide()" class="btn">Cancel</button>
                                     <button (click)="addexistingtasks()" class="btn btn-primary btn-update">Submit</button>
-                                    <br><br>
+                                    
                                 </div>
                                
                             </div>

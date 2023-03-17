@@ -1700,8 +1700,8 @@ saveBillingInfo(data,){
 updateInfo(id,data){
   return this.http.post(`/subscriptionservice/v1/billingContact/saveBillingContactData/${id}`, data);
 }
-getBillingInfo(id){
-  return this.http.get(`/subscriptionservice/v1/billingContact/get/${id}`);
+getBillingInfo(){
+  return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
 }
 createDashBoard(body){
   return this.http.post('/platform-service/dashboard/createDashboard',body);
@@ -1751,4 +1751,14 @@ saveAction(body){
 updateDashboardConfiguration(body:any,screenId){
   return this.http.post(`/platform-service/dashboard/updateDashboardMetricsWidgets?screenId=`+screenId,body)
 }
+
+onRemoveSelectedWidget(widgetId:any){
+  return this.http.get("/platform-service/dashboard/deleteDashboardMetricOrWidgetById?id="+widgetId)
+}
+
+updateWidgetInDashboard(body:any){
+  return this.http.post("/platform-service/dashboard/updateEachDashboardMetricOrWidget",body)
+}
+
+
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { statSync } from "fs";
 import { Table } from "primeng/table";
+import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 
 @Component({
   selector: "app-dynamic-table",
@@ -41,21 +43,28 @@ export class DynamicTableComponent implements OnInit {
   selectedItem: any;
   loading: boolean = true;
   loggedInUser:String;
+  users_list:any=[];
   
 
-  constructor() {}
+  constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
   ngOnInit(): void {
    this.loggedInUser= localStorage.getItem("ProfileuserId");
+   this.dt.tenantBased_UsersList.subscribe(response => {
+    let usersDatausers_list:any[] = [];
+    if(response)
+      usersDatausers_list = response;
+    if(usersDatausers_list.length>0){
+    // this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
+    this.users_list = usersDatausers_list
+    }
+  })
   }
 
   ngOnChanges() {
-    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
-    
-    
-    
+
     this._selectedColumns = this.columns_list;
     if (this.table_data.length > 0) this.loading = false;
   }

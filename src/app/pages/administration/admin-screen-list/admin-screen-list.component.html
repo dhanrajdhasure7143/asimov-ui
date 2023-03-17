@@ -1,10 +1,69 @@
-<div class="h-100">
-  <mat-card id="projects_list_screen" class="h-100">
+<div class="maincontent">
+  <div id="projects_list_screen" class="h-100">
+    <div class="row main-content-head">
+      <div class="col-md-4 pl-0">
+        <h3>
+          <label id="popup_title">
+            <a routerLink="/pages/home"><img
+                    src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+        </label>
+         
+        <span class="title_text">
+            Screen Generation
+          </span>
+        </h3>
+      </div>
+      <div class="col-md-8 pr-0 text-right">
+        <!-- <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                    <span>Open</span>
+                </button> -->
+        <!-- <button class="btn" (click)="onCreateNew()" pTooltip="Create" tooltipPosition="bottom">
+          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
+        </button> -->
+        <button class="btn" pTooltip="Add New" (click)="addNew()" tooltipPosition="bottom">
+          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Add New">
+        </button>
+        
+        <!-- <button class="btn" pTooltip="Actions" tooltipPosition="bottom">
+          <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
+          <span>Actions</span>
+        </button> -->
+      </div>
+    </div>
+    <div class="main-content-body tablist-cont  table-height-adj">
+      <div class="tabs_screen h-100">
+      
+       
+          <div class="">
+            <app-dynamic-table
+            [table_data]="screenlist"
+            [screenTable]="'common'"
+            [columns_list]="columns_list"
+            (editRowById)="editScreen($event)"
+            (deleteItem)="deleteScreen($event)"
+            [show_delete_btn]="true"
+            [show_edit_btn]="true"
+            [show_column_filter]="true"
+            [show_clear_filter]="true"
+            [show_search_field]="true"
+            [search_fields]="table_searchFields"
+          ></app-dynamic-table>
+          </div>
+     
+      </div>
+  </div>
+
+
+  <!-- <mat-card id="projects_list_screen" class="h-100">
     <div class="row module-heading title">
+      <span class="module-back-button"  routerLink="/pages/home" >
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span>
       <span class="module-back-button" routerLink="/pages/home">
         <i aria-hidden="true" class="fas fa-arrow-left"></i>
       </span>
-      <span class="module-header-title">Screen Generation</span>
+      <span class="module-header-title">Screen Generation new</span>
     </div>
     <div class="module-heading title">
       <div class="col-md-12 p-0">
@@ -31,14 +90,13 @@
           [show_delete_btn]="true"
           [show_edit_btn]="true"
           [show_column_filter]="true"
-          [show_clear_filter]="true"
           [show_search_field]="true"
           [search_fields]="table_searchFields"
         ></app-dynamic-table>
     </div>
-  </mat-card>
+  </mat-card> -->
 </div>
-
+</div>
 <!-- <div class="spinoverlay" *ngIf="loading">
   <div class="spincenter">
     <img

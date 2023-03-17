@@ -237,9 +237,10 @@ button:focus {
 .dbichart-block {
     border: 1px solid #e1e7ec;
     border-radius: 4px;
-    padding: 10px;
+    padding: 10px 14px;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    background-color: #fff;
 }
 .dbichart-block .dbichart-head label {
     font-weight: 600;
@@ -251,7 +252,11 @@ button:focus {
     justify-content: space-between;
     padding: 5px 0px;
 }
-
+.dbichart-head h2 {
+    font-size: 16px !important;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
 .dbichart-block .dbichart-head .dbichart-dropdown span {
     color: rgb(51, 51, 51);
     font-size: 14px;
@@ -679,4 +684,10 @@ span.requir {
 }
 .my-new-div .nav-tabs>li.active>a, .my-new-div .nav-tabs>li.active>a:focus, .my-new-div .nav-tabs>li.active>a:hover {
     border: 0px !important;
+}
+
+
+.statustablehi8 .p-datatable-wrapper {
+    height: calc(100vh - 330px) !important;
+    overflow: auto !important;
 }

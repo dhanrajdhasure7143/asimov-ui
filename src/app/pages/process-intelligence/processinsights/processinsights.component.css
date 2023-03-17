@@ -15,6 +15,10 @@
 .table-striped>tbody>tr:nth-of-type(odd){
 background-color: #fff !important;
 }
+table thead th {
+  background-color: #f9f9f9 !important;
+  color: #232832 !important;
+}
 table thead th, table tbody td {
   border-left: medium none;
   border-right: medium none;

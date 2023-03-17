@@ -65,7 +65,10 @@ span.titlelabel {
   padding-left: 35px;
 }
 
-th{
+
+
+/* newstyles */
+/* th{
   background-color: #e8f7fd !important;
     color: #00a0e3 !important;
     font-size: 14px !important;
@@ -80,14 +83,12 @@ td {
 tr.mat-header-row {
   height: 45px !important;
 }
-
-/* newstyles */
 .pr-0 {
   padding-right: 0px;
 }
 .pl-0 {
   padding-left: 0px;
-}
+} */
 
 .orches_new .mat-ink-bar {
   transition: unset;
@@ -225,11 +226,50 @@ body .leftfporm select {
   margin-bottom: 8px !important;
 }
 
-.schedule-table-container{
+/* .schedule-table-container{
   height: calc(100vh - 320px);
   overflow: auto;
   width: 100%;
-}
+} */
 .so-bot-graph .mat-tab-body-content {
   overflow: auto !important;
+}
+
+
+/* #Orchestration-tabs .mat-tab-body.mat-tab-body-active, #Orchestration-tabs .mat-tab-body-content {
+  overflow-y: hidden !important;
+}
+#Orchestration-tabs .p-datatable-resizable>.p-datatable-wrapper {
+  overflow-x: hidden !important;
+} */
+
+.SO-scheduletimer .card-header {
+  background-color: transparent;
+  padding: 0px;
+}
+.SO-scheduletimer .card.cron-editor-main {
+  background-color: transparent;
+  border: none;
+}
+.SO-scheduletimer ul.nav.nav-tabs {
+  border: none !important;
+  margin: 0px !important;
+}
+.SO-scheduletimer ul.nav.nav-tabs.card-header-tabs.tab-nav li a {
+  height: 45px !important;
+}
+
+.card.cron-editor-main cron-time-picker select.form-control {
+  width: 45px !important;
+  height: 30px !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+  font-size: 13px;
+}
+
+.so-sub-tab-content .p-datatable-header {
+  padding: 0px !important;
+}
+.schedule-table-container .p-datatable .p-datatable-thead > tr > th {
+  white-space: nowrap !important;
 }

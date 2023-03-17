@@ -70,3 +70,12 @@ span.testtooltip:before {
 .no-item-img{
     height: calc(100vh - 500px);
 }
+
+.newmodelcla .refrsh-btn {
+    position: absolute;
+    top: -40px;
+    left: 50px;
+}
+.newmodelcla .refrsh-btn i {
+    margin-right: 4px;
+}

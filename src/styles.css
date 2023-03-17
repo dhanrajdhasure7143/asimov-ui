@@ -72,9 +72,9 @@
 .bjs-powered-by {
   position: absolute;
   bottom: 5px !important;
-  right: 100px !important;
-  z-index: 100;
+  right: 10px !important;
   opacity: 0.1;
+  width: max-content;
 }
 
 .bpmn-icon-rpa::before {
@@ -103,7 +103,7 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 div[class^='diagram_container'] .djs-container svg {
-  /* margin-left: 5px; */
+  /* margin-left: 75px; */
 }
 
 .spincenter {
@@ -2770,6 +2770,11 @@ span.tabscount {
   height: calc(100vh - 260px); 
   overflow: auto;
 }
+.table-height-adj .p-datatable-wrapper {
+ 
+  height: calc(100vh - 200px) !important; 
+ 
+}
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
 }
@@ -2784,7 +2789,6 @@ span.tabscount {
 }
 .p-datatable .p-datatable-header,
 th {
-  /* background: transparent !important; */
   border: unset !important;
   border: none !important;
   color: #232832 !important;
@@ -2794,6 +2798,12 @@ th {
   font-weight: 600 !important;
   vertical-align: middle !important;
   font-size: 14px !important;
+}
+.p-datatable .p-datatable-header {  
+  padding: 0px !important;
+}
+.p-datatable-scrollable .p-datatable-thead {
+  z-index: 999 !important;
 }
 thead.p-datatable-thead tr,
 thead tr {
@@ -2852,6 +2862,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
   color: var(--main-txtcolor);
+  padding-right: 45px !important;
 }
 .p-datatable .p-sortable-column.p-highlight:hover {
   color: var(--main-txtcolor) !important;
@@ -2882,20 +2893,25 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   background-color: #fff !important;
 }
+.p-button-outlined {
+  margin: 0 0 0 10px !important;
+  color: #098de6 !important;
+}
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
   background: transparent !important;
-  margin-right: 10px;
+  margin-right: 10px !important;
 }
 .p-column-filter-buttonbar {
-  justify-content: left !important;
+  justify-content: right !important;
   padding: 0px 16px 10px !important;
 }
 .p-column-filter-buttonbar .p-button {
   background: var(--main-bluecolor) !important;
   border: 1px solid var(--main-bluecolor) !important;
   padding: 4px 12px;
+  margin: 0px !important;
 }
 /* grid-filter Overlay Styles End */
 /* Grid NEW Styles End */
@@ -2977,6 +2993,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inplace .p-inplace-display:not(.p-disabled):hover {
   color: unset !important;
   background: transparent !important;
+}
+.p-input-icon-right {
+  float: right;
+  margin-right: 5px;
 }
 /* primeNg components Styles End */
 
