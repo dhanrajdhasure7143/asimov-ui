@@ -47,6 +47,8 @@ export class DynamicDashboardComponent implements OnInit {
   configuration_id: any;
   selected_widget: any;
   dynamicFormConfiure: any;
+  isDialogShow:boolean=false;
+  entered_name:string='';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -402,7 +404,8 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   navigateToCreateDashboard() {
-    this.router.navigate(["pages/dashboard/create-dashboard"]);
+    // this.router.navigate(["pages/dashboard/create-dashboard"]);
+    this.isDialogShow=true;
   }
 
   toggleConfigure(e, widget?: any) {
@@ -507,6 +510,7 @@ export class DynamicDashboardComponent implements OnInit {
         relativeTo: this.activeRoute,
         queryParams: params1,
       });
+      this.selectedDashBoardName = this.selectedDashBoard.dashboardName
       this.getDashBoardData(this.selectedDashBoard.id);
     });
   }
@@ -532,7 +536,7 @@ export class DynamicDashboardComponent implements OnInit {
         chartOptions: {
           plugins: {
             legend: {
-              display: false,
+              display: "false",
             },
             tooltip: {
               callbacks: {
@@ -601,5 +605,27 @@ export class DynamicDashboardComponent implements OnInit {
       },
       key: "positionDialog3",
     });
+  }
+
+  navigateconfigure() {
+    let req_data = {
+      "dashboardName": this.entered_name,
+      "defaultDashboard": false,
+      "firstName": localStorage.getItem("firstName"),
+      "lastName": localStorage.getItem("lastName"),
+    }
+    this.rest.createDashBoard(req_data).subscribe((response: any) => {
+      if(response.code == 4200){
+        let res_data = response.data
+        this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
+      }
+      if(response.errorCode == 8010){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: response.errorMessage+' !',
+        });
+      }
+    })
   }
 }
