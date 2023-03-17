@@ -1,6 +1,14 @@
-.module-heading.title {
-    margin-bottom: 0px;
+.main-content-head .btn {
+    min-width: auto;
+    padding-right: 0px !important;
 }
+.module-heading-buttons .btn img {
+    width: 20px;
+    height: 20px;
+}
+
+
+
 .main-content1 .module-heading.title {
     background-color: #F3F3F3;
     padding: 12px 15px 8px !important;
@@ -9,16 +17,15 @@
 .main-content1 .module-header-title {
     font-weight: 600;
     font-size: 22px;
-    color: #001c47;
-    /* line-height: 0px !important; */
+    color: #232832;
 }
 .main-content1 .module-heading.title .value span {
-    color: #001c47;
+    color: #232832;
     font-size: 12px;
-}
+} 
 
 .value {
-    color: #001C47;
+    color: #232832;
     font-weight: 400;
     font-size: 13px;
     padding-top: 8px;
@@ -38,21 +45,19 @@
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
     border-radius: 3px;
-    background-color: #00a0e3 !important;
+    background-color: #098de6 !important;
     padding: 8px 12px !important;
     color: #fff;
     font-size: 15px !important;
 }
 .bps-upload:hover {
-    background-color: #001c47 !important;
+    background-color: #232832 !important;
 }
 .bps-upload img {
     padding-right: 8px;
 }
 
-.new-bps-header-title {
-    padding: 0px;
-}
+
 .new-bps-icons .bps-float {
     /* float: right; */
     justify-content: end;
@@ -67,7 +72,7 @@
 
 ::ng-deep .bpsHeaderTooltip {
     color:#ffffff !important;
-    background-color: #001c47 !important;
+    background-color: #232832 !important;
     font-size: 15px;
     position: absolute;
     top: 0px;
@@ -82,10 +87,11 @@ span.label_icon.inpro-label {
     margin-left: 8px;
 }
 .upload_again_btn {
-    background-color: #f3f3f3 !important;
+    /* background-color: #f3f3f3 !important; */
+    background-color: #f9f9f9 !important;
 }
 .bps-float button:hover, button.editprimary:disabled {
-    background-color: #00a0e3;
+    background-color: #098de6;
     border-radius: 3px;
 }
 .bps-float button:hover img, button.editprimary:disabled img {
@@ -110,10 +116,7 @@ span.label_icon.inpro-label {
     cursor: no-drop !important;
 }
 
-.bps-header-title{
-    display: flex;
-    align-items: center;
-}
+
 
 .bg-orange {
     font-weight: 600;
@@ -125,7 +128,7 @@ span.testtooltip {
     position: absolute;
     top: 45px;
     right: 0px;
-    background-color: #001c47;
+    background-color: #232832;
     color: #fff;
     width: max-content;
     padding: 3px 10px;
@@ -135,13 +138,13 @@ span.testtooltip {
 
 span.testtooltip:before {
     content: '';
-    border: 2px solid #001c47;
+    border: 2px solid #232832;
     border-width: 0px 0px 2px 2px;
     position: absolute;
     padding: 4px;
     right: 13px;
     top:  -5px;
-    background: #001c47;
+    background: #232832;
     transform: rotate(45deg);
 }
 
@@ -186,9 +189,23 @@ img.hover-img {
     float: right;
 }
 
-span.bps-header-title.gen-bpsheader {
-    display: block;
-}
+
 .edit-disabled{
     cursor: no-drop;
 }
+/* 
+.module-heading.title {
+    margin-bottom: 0px;
+}
+.new-bps-header-title {
+    padding: 0px;
+} 
+.bps-header-title{
+    display: flex;
+    align-items: center;
+}
+span.bps-header-title.gen-bpsheader {
+    display: block;
+}
+
+*/

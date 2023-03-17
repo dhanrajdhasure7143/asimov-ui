@@ -16,12 +16,7 @@
 .box-border.myworkspace-style {
     margin:0px;
 }
-.new-bps-layout {
-    overflow: auto;
-    height: calc(100% - 50px);
-    position:relative;
-    padding: 15px 10px;
-}
+
 
 .workspace-title {
     background-color: #e8f7fd;
@@ -30,7 +25,7 @@
     width: 100%;
     align-items: center;
     font-size: 14px;
-    color: #00a0e3;
+    color: #098de6;
     font-weight: 600;
     border: none;
     height: 40px;
@@ -75,10 +70,10 @@ span.comment {
 .bps_overlay1 {
     border-radius: 4px;
     height: 450px;
-    border: 1px solid #00a0e3;
+    border: 1px solid #098de6;
     border-radius: 10px;
 }
-.new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
+.new-bps-grid-data .bps_overlay span.info{
     border-radius: 4px;
     padding: 8px 12px;
     top: 50px !important;
@@ -87,11 +82,7 @@ span.comment {
     position: absolute;
     text-align: center !important;
 }
-.bps_overlay .fit_button {
-    top: 50px;
-    right: 15px;
-    position: absolute;
-}
+
 .header_addon {
     position: absolute;
     top: 80px;
@@ -221,15 +212,40 @@ div#bpmn_list {
         display: initial;
     }
     .newinntalx img{
-        width: 20px;
+        width: 24px;
         padding-left: 3px;
         padding-right: 3px;
     }
     .logs-loader{
         margin-top:12%;
         text-align: center;
-      }
+    }
 .noDataMessage{
     text-align: center;
     margin-top: 100px;
 }
+.bps_overlay div[class^='diagram_container'] {
+    padding-top: 50px;
+}
+h4.col-heads {
+    font-size: 20px;
+    margin: 0px;
+    margin-bottom: 10px;
+    line-height: normal;
+}
+.botpreviewtr {
+    height: auto !important;
+}
+.botpreviewtr td {
+   display: block !important;
+}
+
+/* 
+.new-bps-layout {
+    overflow: auto;
+    height: calc(100% - 50px);
+    position:relative;
+    padding: 15px 10px;
+} 
+
+*/

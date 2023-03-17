@@ -181,20 +181,19 @@ mat-tab-body {
 .bps_overlay .info {
   position: absolute;
   top: 10px;
-  left: 8px;
+  left: 40px;
   color: white;
   background-color: #F99D1C;
 }
 
 div[class^='diagram_container'] svg {
-  position: relative;
-  z-index: -10;
+  /* position: relative; */
 }
 
 div[class^='diagram_container'] {
-  height: 400px;
+  height: 280px;
   width:100%;
-  border: 1px solid #00a0e3;
+  border: 1px solid #098de6;
   border-radius: 10px;
   padding: 5px;
   position: relative;
@@ -208,6 +207,7 @@ div[class^='diagram_container'] {
 .bps_overlay {
   /* z-index: 30; */
   cursor: pointer;
+  position:relative;
 }
 
 
@@ -597,11 +597,12 @@ mat-tab-body {
   border-color: #8080804a;
 }
 
-.fit_button {
-  z-index: 200;
-  position: absolute;
-  right: 5px;
-  top: 5px;
+.bps_overlay .fit_button {
+    top: 14px;
+    left: 10px;
+    position: absolute;
+    width: max-content;
+    z-index: 1;
 }
 
 .create-logo {
@@ -765,7 +766,7 @@ mat-tab-body {
 
 
 .box_area {
-  margin-top: 5px;
+  /* margin-top: 5px; */
   margin-bottom: 15px;
 }
 
