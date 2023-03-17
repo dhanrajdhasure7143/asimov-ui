@@ -381,12 +381,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   addHeader() {
-    // this.addInputField.push(
-    //   new FormGroup({
-    //     encodedKey: new FormControl(""),
-    //     encodedValue: new FormControl(""),
-    //   })
-    // );
     this.headerForm.push({
       index:this.headerForm.length,
       encodedKey: "",
@@ -408,6 +402,7 @@ getActionById(){
     this.connectorForm.get("methodType").setValue(this.actionData["type"]);
     this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
     this.connectorForm.get("authType").setValue(this.actionData["type"]);
+    
   })
 }
 
