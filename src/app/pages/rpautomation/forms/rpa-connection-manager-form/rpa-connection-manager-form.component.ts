@@ -37,6 +37,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   selectedOne: any[] = [];
   isCreate: any;
   isVerifier: boolean;
+  isRefreshToken:boolean;
   isScopeField: boolean;
   selectedToolsetName:string;
   requestJson_body:any[]=[];
@@ -52,6 +53,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isDisabled: boolean = false;
   actionUpdate: any;
   actionData: any = [];
+  action_logo:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -101,6 +103,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       scope: ["", Validators.compose([Validators.required])],
+      refreshToken:["", Validators.compose([Validators.required])]
     });
 
     this.methodTypes();
@@ -119,25 +122,23 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     
     req_body=
       {
-        // "id": this.selectedId,
+        "id": "",
         "name": this.connectorForm.value.actionName,
         "audit": null,
-        // "type": this.connectorForm.value.methodType,
+        "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        // "configuration": "{\"endPoint\" : \"https://accounts.zoho.com/oauth/v2/token\",\"actionType\":\"APIRequest\",\"clientId\" : \"1000.B88M52TRKWRD3SG8G4BFUOM1NC4WHA\",\"clientSecret\" : \"e81b73aeca3594855c40605eb27d3152c466f22ac9\",\"grantType\" : \"refresh_token\",\"scope\" : null,\"userName\" : null,\"password\" : null,\"refreshToken\" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\",\"contentType\" : null,\"authorizationCode\" : null,\"redirectUri\" : null,\"attributes\" : [ \"ClientId\", \"ClientSecret\" ],\"type\" : \"OAUTH\"}",
-        // "actionType":this.connectorForm.value.actionType,
-        "actionLogo" : ""
+        // "actionLogo" : ""
+        "actionLogo": new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       }
     
-    // "configuration": "{\"endPoint\": \"http.sample\",
-    // [@endPoint|string|https://accounts.zoho.com/oauth/v2/token@]\",\"grant_type\": \"[@grant_type|string|authorization_code@]\",\"client_id\": \"[@client_id|string|1000.CH7ESPHDBG11Z0JJQJRCHQOYJVVWEJ@]\",\"client_secret\": \"[@client_secret|string|b864aac0bbd2a1e220763893424634e5e435d6c23a@]\",\"refresh_token\": \"[@refresh_token|string|1000.f0d3765b56b3d90eeebe6554981e68d9.a26589d8b570f3ba33e9f7d0e8eab980@]\"}"
     let object={
       "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
-      "grant_type" : `[@grant_type|string|${this.connectorForm.value.grantType}@]`,
+      "grant_type" : this.connectorForm.value.grantType,
       "methodType" : this.connectorForm.value.methodType,
-      "actionType": this.connectorForm.value.actionType,
+      "type" : this.connectorForm.value.authType
+      // "actionType": this.connectorForm.value.actionType,
     }
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
 
@@ -171,24 +172,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     else{
       req_body = {
+        "id":"",
         "name" : this.connectorForm.value.actionName,
-        // "type" : this.connectorForm.value.actionType,
+        "actionLogo": new String(this.action_logo.split(",")[1]),
+        "actionType" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
-        // "configuration" : "{\"endPoint\":\"https://www.zohoapis.com/crm/v3/Leads\",\"requestPayload\":{\"data\":[{\"Company\":\"AmeripriseDummy\",\"Last_Name\":\"Matt\",\"First_Name\":\"[@First_Name|string|Haley@]\",\"Email\":\"Matt.Haley@gmail.com\",\"State\":\"[@State|string|California@]\"}]}\",\"requestMethod\":\"POST\",\"contentType\":\"application/json\",\"httpHeaders\":null,\"type\":\"API\"}"
       }
       this.requestJson_body.push(this.connectorForm.get("request").value)
       let obj={};
       obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
       let object={
-        // "endPoint" : this.connectorForm.value.endPoint,
-        "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
+        "endPoint" : this.connectorForm.value.endPoint,
         "methodType" : this.connectorForm.value.methodType,
-        "actionType": this.connectorForm.value.actionType,
+        // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
         "httpHeaders": obj,
-        "type":"API",
+        // "type":"API",
         "requestPayload":{
           "data":this.requestJson_body
         }
@@ -222,8 +223,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     "clientId": this.connectorForm.value.clientId,
     "clientSecret": this.connectorForm.value.clientSecret,
     "endPoint": this.connectorForm.value.endPoint,
-    "type": "OAUTH"
+    "type": this.connectorForm.value.authType
   }
+  console.log(req_body)
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
       req_body["grantType"] = "authorization_code";
       req_body["code"] = this.connectorForm.value.code;
@@ -271,11 +273,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
+      console.log("authTypes",res);
       let filterData = res;
       this.authItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
+      console.log(this.authItems)
       return this.authItems;
     });
   }
@@ -313,11 +317,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
       this.isAuthenticated = false;
       this.isAuthorization = false;
+      this.isRefreshToken = false;
+      this.isScopeField = false; 
     }
   }
 
   authChange(event) {
-    if (event == "OAuth 2.0") {
+    if (event == "OAUTH2") {
       this.isAuthenticated = true;
     }
   }
@@ -330,6 +336,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
       this.isVerifier = false;
       this.isScopeField = false;
+      this.isRefreshToken = false;
     } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
@@ -337,6 +344,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAuthorization = false;
       this.isVerifier = false;
       this.isScopeField = false;
+      this.isRefreshToken = false;
     } else if (event == "ClientCredentials") {
       this.isClient = true;
       this.isResponse = true;
@@ -344,6 +352,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
       this.isVerifier = false;
       this.isScopeField = true;
+      this.isRefreshToken = false;
     } else if (event == "AuthorizationCodeWithPKCE") {
       this.isAuthorization = true;
       this.isClient = true;
@@ -351,6 +360,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isPassword = false;
       this.isVerifier = true;
       this.isScopeField = false;
+      this.isRefreshToken = false;
+    }else if (event == "RefreshToken") {
+      this.isAuthorization = false;
+      this.isClient = true;
+      this.isResponse = true;
+      this.isPassword = false;
+      this.isVerifier = false;
+      this.isScopeField = true;
+      this.isRefreshToken = true;
     }
   }
 
@@ -424,6 +442,19 @@ selectRow(){
 
 onDelete(index){
   this.headerForm.splice(index,1)
+}
+
+imageUpload(e) {
+  var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+  var pattern = /image-*/;
+  var reader = new FileReader();
+  reader.onload = this._handleReaderLoaded.bind(this);
+  reader.readAsDataURL(file);
+}
+
+_handleReaderLoaded(e) {
+  var reader = e.target;
+  this.action_logo = reader.result;
 }
 
 }
