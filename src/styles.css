@@ -3049,10 +3049,31 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
+.btn-p-align .p-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;}
 button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 30px;
+}
+.btn-p-align .p-button:enabled:active {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+  
+}
+.btn-p-align .p-button:enabled:hover{
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+}
+.btn-p-align .p-button:focus{
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+  box-shadow: none;
 }
 button.btn.canlrst-btn,
 button.btn.new-cancelbtn {
@@ -3534,3 +3555,6 @@ width:max-content;}
 
         .pluscreate{cursor:pointer;}
 /* dynamic dashbord prime styles */
+
+
+
