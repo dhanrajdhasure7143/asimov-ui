@@ -114,15 +114,15 @@
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
                         <div *ngIf="widget.widget_type!='table'">
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="270" [options]="widget.chartOptions"></p-chart>
+                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
                            <p-table
                            #myTab
-                           [value]="widget.sampleData.datasets[0].data"
+                           [value]="widget.widgetData"
                            [scrollable]="true"
                            scrollHeight="260px"
-                           [columns]="widget.sampleData.labels"
+                           [columns]="widget.labels"
                        >
                            <ng-template pTemplate="header" 
                                         let-columns>
