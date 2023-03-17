@@ -1,69 +1,65 @@
-<p-splitter [style]="{'height': 'auto'}" [panelSizes]="[70,30]" layout="horizontal">
-   <ng-template pTemplate>
-      <div class="container-fluid">
-         <div class="col-md-12 pt-5 pb-3 px-3 ">
-            <div class="row main-content-head">
 
-               <div class="col-md-4 pl-0">
-                 
-                  <div class="row align-items-center dashboardnamerow">
-                     <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
-                        <ng-template pTemplate="display">
-                           <span class="title_text">{{selectedDashBoardName}}</span>
-                        </ng-template>
-                        <ng-template pTemplate="content">
-                            <input type="text" [style]="{'width':'220px'}" pInputText
-                                [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
-                            <span class="editfields">
-                                <i class="pi pi-check check1" *ngIf="_dashboardName"
-                                    (click)="updateDashboardName()"></i>
-                                <i class="pi pi-times close1" (click)="onDeactivate()"></i>
-                            </span>
-                        </ng-template>
-                    </p-inplace>
-                   
-                 </div>
-              
-               </div>
-               <div class="col-md-8 pr-0 ">
-
-                  <div class="row">
-                     <div class="col-md-8 text-right pr-0">
-                        <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
-                           [style]="{'width':'220px','height' :'35px'}">
-                           <ng-template let-item pTemplate="selectedItem">
-                              <span>{{item.dashboardName}}</span>
-                             
-                           </ng-template>
-                           <ng-template let-item pTemplate="item">
-                              <div class="ui-helper-clearfix" style="position: relative;height:25px;">
-                                 <div style="font-size:14px;float:left;margin-top:4px">{{item.dashboardName}}</div>
-                              </div>
-                              <span class="dropdown-icon"  (click)="setDefaultDashboard()">
-                                 <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
-                              </span>
-                           </ng-template>
-                        </p-dropdown>
-
-                     </div>
-                     <div class="col-md-4 text-right">
-                        <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
-                           <span class="plus">Create</span>
+<div class="maincontent">
+   <div  class="h-100">
+      <div class="row main-content-head">
+         <div class="col-md-4 pl-0">
+           
+            <div class="row align-items-center dashboardnamerow">
+               <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
+                  <ng-template pTemplate="display">
+                    <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3>
+                  </ng-template>
+                  <ng-template pTemplate="content">
+                      <input type="text" [style]="{'width':'220px'}" pInputText
+                          [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
+                      <span class="editfields">
+                          <i class="pi pi-check check1" *ngIf="_dashboardName"
+                              (click)="updateDashboardName()"></i>
+                          <i class="pi pi-times close1" (click)="onDeactivate()"></i>
+                      </span>
+                  </ng-template>
+              </p-inplace>
+             
+           
+          
+         </div>
+         </div>
+         <div class="col-md-8 pr-0 text-right">
+         
+            <div class="row">
+               <div class="col-md-8 text-right pr-0">
+                  <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
+                     [style]="{'width':'220px','height' :'35px'}">
+                     <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.dashboardName}}</span>
+                       
+                     </ng-template>
+                     <ng-template let-item pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                           <div style="font-size:14px;float:left;margin-top:4px">{{item.dashboardName}}</div>
+                        </div>
+                        <span class="dropdown-icon"  (click)="setDefaultDashboard()">
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
                         </span>
-                        <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
-                        <button class="btn" type="button" (click)="menu.toggle($event)"
-                           class="btn-dots eiap-btn btn-grphs-horztal">
-                           <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
-                        </button>
-                        <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
-                     </div>
-                  </div>
+                     </ng-template>
+                  </p-dropdown>
+
+               </div>
+               <div class="col-md-4 text-right">
+                  <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                     <span class="plus">Create</span>
+                  </span>
+                  <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
+                  <button class="btn" type="button" (click)="menu.toggle($event)"
+                     class="btn-dots eiap-btn btn-grphs-horztal">
+                     <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                  </button>
+                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
                </div>
             </div>
          </div>
-         <!-- <div class="dbichart-body">
-            <div id="chartdiv" class="amart"></div>
-          </div> -->
+       </div>
+       <div class="main-content-body ">
          <div class="col-md-12 py-3 px-3">
             <div class="row">
 
@@ -255,9 +251,9 @@
             
             </div>
          </div>
+     </div>
       </div>
-   </ng-template>
-</p-splitter>
+   </div>
 
 <p-confirmDialog [style]="{width: '20vw'}" key="positionDialog2" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
