@@ -240,13 +240,16 @@ export class ConfigureDashboardComponent implements OnInit {
       this.draggedProduct = item;
     }
   }
-  // dragStart1(widget){
-  //   if (widget.widgetAdded == false) {
-  //     this.draggedProduct1 = widget;
-  //   }
-  // }
+
+  widgetDragStart(widget){
+    // if (widget.widgetAdded == false) {
+      this.draggedProduct1 = widget;
+      // console.log(widget)
+    // }
+  }
 
   drop() {
+    console.log(this.draggedProduct,this.draggedProduct1)
     if (this.draggedProduct) {
       this.metrics_list.find(item => item.id == this.draggedProduct.id).metricAdded = true;
       this.addedMetrics.push(this.draggedProduct);
@@ -254,21 +257,22 @@ export class ConfigureDashboardComponent implements OnInit {
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
     }
   }
-  // drop1() {
-  //   if (this.draggedProduct1) {
-  //     this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
-  //     this.addedMetrics.push(this.draggedProduct1);
-  //     if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
-  //       this.widgetslist.find(item => item.widgetAdded == false).widgetAdded = true
-  //   }
-  // }
+  dropWidget() {
+    console.log(this.draggedProduct1)
+    if (this.draggedProduct1) {
+      this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
+      this.addedMetrics.push(this.draggedProduct1);
+      if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
+        this.widgetslist.find(item => item.widgetAdded == false).widgetAdded = true
+    }
+  }
 
   dragEnd() {
     this.draggedProduct = null;
   }
-  // dragEnd1() {
-  //   this.draggedProduct1 = null;
-  // }
+  widgetDragEnd() {
+    this.draggedProduct1 = null;
+  }
 
   onSelectMetric(metric, index) {
     if (metric.metricAdded == false) {
@@ -296,8 +300,8 @@ export class ConfigureDashboardComponent implements OnInit {
       let itemId2=data.childId? data.childId: data.id
       //this.dynamicDashBoard.widgets.splice(index, 1);
       this.widgetslist.find(item => item.id == itemId2).widgetAdded = false;
-      if (this.widgetslist.find((item) => item.widgetAdded == true))
-        this.widgetslist.find((item) => item.widgetAdded == true).widgetAdded = false;
+      // if (this.widgetslist.find((item) => item.widgetAdded == true))
+      //   this.widgetslist.find((item) => item.widgetAdded == true).widgetAdded = false;
     }
   }
 
@@ -313,7 +317,7 @@ export class ConfigureDashboardComponent implements OnInit {
         // console.log(this.tabledata);
 
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-
+        widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
 
         // this.dynamicDashBoard.widgets = this.addedWidgets;
@@ -502,12 +506,14 @@ export class ConfigureDashboardComponent implements OnInit {
       console.log(this.widgetslist)
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-        // item["chartOptions"]["plugins"]["legend"]= {
-        //   display: false 
-        // }
+        item["chartOptions"]["plugins"]["legend"]["display"]=false;
         // item["chartSrc"] = "chart4.png'"
         return item
       })
+      this.widgetslist.forEach(element => {
+        console.log(element.chartOptions.plugins.legend)
+        element.chartOptions.plugins.legend["display"]=false;
+      });
       if(this._paramsData.isCreate==0){
         this.getDashBoardData(this._paramsData.dashboardId)
       }else{

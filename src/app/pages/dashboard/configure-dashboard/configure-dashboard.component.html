@@ -83,7 +83,6 @@
                <span class="h5">{{widget.name}}</span> 
                <i class="pi pi-times right overlay-icon"
                   (click)="onDeactivate(widget,j, 'widgets')"></i>
-                  
                <div  class="" style="text-align: center;margin:20px;">
                   <div *ngIf="widget.widget_type!='table'">
                      <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270"  [options]="widget.chartOptions" ></p-chart>
@@ -226,25 +225,23 @@
   <ng-template pTemplate>
     <p-tabView class="tab-primest">
       <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}" >
-        <div class="col-md-12 mb-2 p-0" style="height:50px;">
+        <div class="col-md-12 mb-2 p-0">
           <!-- <span class="p-input-icon-right">
             <i class="pi pi-search"></i>
             <input type="text" pInputText  placeholder="Search">         
         </span> -->
           <div class="row">
-            <div class="col-md-6 pl-0" style="float:right">
-              <!-- <input class="form-control toolbar-search" type="text" placeholder="Search">
+            <div class="col-md-6 pl-0" >
+              <input class="form-control toolbar-search" type="text" placeholder="Search">
               <mat-icon matSuffix style="font-size: 1.2em">
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
-              </mat-icon> -->
-            
-             
+              </mat-icon>
             </div>
             <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
              
-              <select class="form-control data">
+              <!-- <select class="form-control data">
                 <option value="">All metrics</option>
-              </select>
+              </select> -->
             </div>
           </div>
         </div>
@@ -278,9 +275,9 @@
         <div *ngFor="let widget of widgetslist; let i=index"  >
           <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
-            <div class="img-div" style="margin-right:20px;">
+            <div class="img-div" style="margin-right:20px;" *ngIf="widget.widget_type !='table'">
               <!-- <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" /> -->
-              <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="55px" width="60px"></p-chart>
+              <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions" height="55px" width="60px"></p-chart>
             </div>
             <div>
               <h5>{{widget.name}}</h5>
