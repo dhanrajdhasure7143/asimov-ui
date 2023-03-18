@@ -273,3 +273,18 @@ body .leftfporm select {
 .schedule-table-container .p-datatable .p-datatable-thead > tr > th {
   white-space: nowrap !important;
 }
+
+/* Grid heights */
+.inbox-tablegrid .p-datatable-wrapper {
+  height: calc(100vh - 262px); 
+}
+.schedule-table-container .p-datatable-wrapper {
+  height: calc(100vh - 317px) !important;
+}
+.botmanagement-tablelist .p-datatable-wrapper {
+  height: calc(100vh - 316px);
+}
+.orchestration-table-container .p-datatable-wrapper {
+  height: calc(100vh - 302px);
+}
+/* Grid heights */

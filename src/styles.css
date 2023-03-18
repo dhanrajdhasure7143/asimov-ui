@@ -101,6 +101,9 @@ div[class^='diagram_container'] .djs-palette {
 .djs-palette .djs-palette-toggle {
   width: 58px !important;
 }
+.djs-palette .entry:hover {
+  color: var(--main-bluecolor) !important;
+}
 
 div[class^='diagram_container'] .djs-container svg {
   /* margin-left: 75px; */
@@ -1228,6 +1231,7 @@ select.form-control {
 .modal-header.modelprhead button {
   margin-right: 0px;
   opacity: 1 !important;
+  padding: 0px !important;
 }
 
 .form-footer {
@@ -1240,7 +1244,7 @@ select.form-control {
 
 .modelprbody,
 .modelprfooter {
-  padding: 15px 25px;
+  padding: 15px 25px !important;
   background-color: #FFF !important;
 }
 
@@ -1572,15 +1576,21 @@ select.small-input {
 
 button.action-button.clear {
   border: medium none;
-  color: #ccc;
+  color: #acacac;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   padding: 0px 0px;
-  top: 30%;
+  top: 35% !important;
   position: absolute;
   transform: translate(0px, -20%);
+  box-shadow: none !important;
+}
+
+.bpp-element-list .action-button.clear {
+  top: -15% !important;
+  right: 30px !important;
 }
 
 .bpp-table-row>label.dpp-table-row-columns-2.dpp-table-row-removable,
@@ -1815,6 +1825,7 @@ button.btn {
 
 button.btn.btn-default {
   background: #eeeeee;
+  margin-right: 10px;
 
 }
 
@@ -1899,12 +1910,9 @@ button.btn.btn-primary:first-child {
 
 .bpm-notation-fields {
   position: absolute !important;
-  bottom: 40px;
-  right: 0px;
-  width: 100%;
-  /* bottom: 6px;
-  right: 15px;
-  width: auto; */
+  bottom: 8px;
+  right: 35px;
+  width: auto;
   top: auto;
   z-index: 100;
 }
@@ -2645,6 +2653,9 @@ cursor: pointer;
   font-size: 16px;
   font-weight: 500;
 }
+.main-content-head .btn {
+  min-width: auto;
+}
 .main-content-head button span {
   margin-left: 5px;
 }
@@ -2771,9 +2782,7 @@ span.tabscount {
   overflow: auto;
 }
 .table-height-adj .p-datatable-wrapper {
- 
   height: calc(100vh - 200px) !important; 
- 
 }
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
@@ -2862,7 +2871,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
   color: var(--main-txtcolor);
-  padding-right: 45px !important;
+  /* padding-right: 35px !important; */
 }
 .p-datatable .p-sortable-column.p-highlight:hover {
   color: var(--main-txtcolor) !important;
@@ -2897,6 +2906,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   margin: 0 0 0 10px !important;
   color: #098de6 !important;
 }
+.p-button-outlined.only_clearbtn {
+  margin:0px !important;
+}
+
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
@@ -3049,13 +3062,69 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
+.bluebg-button{
+  background-color: var(--main-bluecolor);
+  color: hsl(0, 0%, 100%);
+  padding: 6px 30px;}
+  .bluebg-button:hover{
+    background-color: var(--main-bluecolor);
+    color: hsl(0, 0%, 100%);
+    padding: 6px 30px;}
+    .bluebg-button:active{
+      background: var(--main-bluecolor) !important;
+      background-color: var(--main-bluecolor) !important;
+      color: hsl(0, 0%, 100%);
+      padding: 6px 30px;}
+    .bluebg-button:focus{
+      background-color: var(--main-bluecolor);
+      color: hsl(0, 0%, 100%);
+      padding: 6px 30px;box-shadow:none;}
+.btn-p-align .p-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;}
 button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 30px;
 }
+.btn-p-align .p-button:enabled:active {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+  
+}
+.btn-p-align .p-button:enabled:hover{
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+}
+.btn-p-align .p-button:focus{
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+  box-shadow: none;
+}
 button.btn.canlrst-btn,
 button.btn.new-cancelbtn {
+  color: var(--main-bluecolor) !important;
+  font-size: 16px;
+ 
+}
+.p-new-cancelbtn {
+  background-color: transparent !important;
+  border: transparent !important;
+  color: var(--main-bluecolor) !important;
+  font-size: 16px !important;
+}
+.p-new-cancelbtn:focus {
+  background-color: transparent !important;
+  border: transparent !important;
+  color: var(--main-bluecolor) !important;
+  font-size: 16px !important;
+  box-shadow:0 0 0 0rem #a6d5fa00 !important;
+}
+.btn-p-align.btn.new-cancelbtn {
   color: var(--main-bluecolor) !important;
   font-size: 16px;
 }
@@ -3534,3 +3603,22 @@ width:max-content;}
 
         .pluscreate{cursor:pointer;}
 /* dynamic dashbord prime styles */
+
+button:disabled {
+  cursor: no-drop !important;
+  background-color: #d1d1d1;
+  border-color:#d1d1d1;
+
+}
+.dialogue-check .p-dialog .p-dialog-footer button{margin:0 0rem 0 0!important;}
+.dialogue-check .p-dialog .p-dialog-header .p-dialog-title{
+  font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 28px;
+color:#222222
+}
+
+
+

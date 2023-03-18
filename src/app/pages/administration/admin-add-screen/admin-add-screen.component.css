@@ -9,5 +9,7 @@
 .new-head{padding: 10px 0px 20px;
   border-bottom: 1px solid #e5e5e5;
 }
-
+.inp-align{margin-left:0px;}
+.inp-label{margin-left: 20px;margin-right:20px;}
+.main-top-align{margin-top:10px;}
 
