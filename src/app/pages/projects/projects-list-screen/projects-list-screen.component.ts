@@ -99,7 +99,9 @@ export class ProjectsListScreenComponent implements OnInit {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
-      let res_list = response[0].concat(response[1]);
+      // TODO- Enable to show programs
+      // let res_list = response[0].concat(response[1]); 
+      let res_list = response[1];
       res_list.map((data) => {
         data["projectName"] = data.programName? data.programName: data.projectName;
         data["process_name"] = this.getProcessNames(data.process);

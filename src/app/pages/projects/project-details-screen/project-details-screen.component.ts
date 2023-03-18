@@ -168,6 +168,7 @@ existingUsersList:any[]=[];
 checkBoxselected:any[]=[];
 roles_list = [
 {name: 'All Roles', code: 'All'},
+{name: 'System Admin', code: 'System Admin'},
 {name: 'Process Architect', code: 'Process Architect'},
 {name: 'RPA Developer', code: 'RPA Developer'},
 {name: 'Process Owner', code: 'Process Owner'},

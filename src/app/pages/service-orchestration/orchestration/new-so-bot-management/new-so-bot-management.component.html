@@ -33,7 +33,7 @@
       </div>
       </div>
     
-    <div class="row">
+    <!-- <div class="row"> -->
         <div class="botmanagement-tablelist" >
           <!-- <mat-card> -->
             
@@ -154,7 +154,7 @@
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
                 <div class="flex">
-                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                    <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                     <span class="p-input-icon-right">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
@@ -284,7 +284,7 @@
               </p-table>
             </div>
       </div> 
-  </div>
+  <!-- </div> -->
 
 
   <ng-template #epsoft_logs_modal_ref>

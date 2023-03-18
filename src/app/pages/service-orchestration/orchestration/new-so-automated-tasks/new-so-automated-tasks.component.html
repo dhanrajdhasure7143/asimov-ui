@@ -103,7 +103,7 @@
         <div class="">
             <!-- <mat-card> -->
             <div class="orchestration-table-container">
-                <div>
+                
                     <p-table  #dt [value]="responsedata" cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)"
                     [globalFilterFields]="['processName','taskName','createdBy','taskType','category','status']" [scrollable]="true"
                     [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
@@ -407,7 +407,7 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                </div>
+                
             </div>
         </div>
     </div>
