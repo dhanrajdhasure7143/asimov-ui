@@ -53,7 +53,6 @@ export class ConfigureDashboardComponent implements OnInit {
   
 
   constructor(private activeRoute: ActivatedRoute,
-    private datatransfer: DataTransferService,
     private router: Router,
     private rest_api: RestApiService,
     private loader : LoaderService, private confirmationService: ConfirmationService) {
@@ -296,31 +295,30 @@ export class ConfigureDashboardComponent implements OnInit {
     }
     if (type == 'widgets') {
       this.addedWidgets.splice(index, 1)
+      let itemId2=data.childId? data.childId: data.id
       //this.dynamicDashBoard.widgets.splice(index, 1);
-      this.widgetslist.find(item => item.id == data.id).widgetAdded = false;``
+      this.widgetslist.find(item => item.id == itemId2).widgetAdded = false;
       if (this.widgetslist.find((item) => item.widgetAdded == true))
-        this.widgetslist.find((item) => item.id == data.id).widgetAdded = false;
+        this.widgetslist.find((item) => item.widgetAdded == true).widgetAdded = false;
     }
   }
 
 
   addWidget(widget: any, index) {
-    console.log(this.addedWidgets)
-
     if (widget.widgetAdded == false) {
       this.widgetslist[index].widgetAdded = true;
       if (this.widgetslist.find((item: any) => item.id == widget.id) != undefined) {
         this.widgetslist.find((item: any) => item.id == widget.id).widgetAdded = true;
         let obj = {};
-        const widgetData = widgetOptions.widgets;
+        // const widgetData = widgetOptions.widgets;
         // this.tabledata = this.addedWidgets[0].sampleData;
         // console.log(this.tabledata);
 
-        obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
+        // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
 
-        this.addedWidgets.push(obj);
+        this.addedWidgets.push(widget);
 
-        this.dynamicDashBoard.widgets = this.addedWidgets;
+        // this.dynamicDashBoard.widgets = this.addedWidgets;
         console.log(this.addedWidgets)
 
       }
@@ -433,7 +431,6 @@ export class ConfigureDashboardComponent implements OnInit {
   saveDashBoard() {
     let req_array: any = [];
     //this.loader.show();
-    console.log(this.addedMetrics);
     this.addedMetrics.forEach(item => {
       let req_body = {
         childId: item.id,
@@ -456,7 +453,6 @@ export class ConfigureDashboardComponent implements OnInit {
       req_array.push(req_body)
     });
     console.log(this.dynamicDashBoard, req_array)
-
     this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
       console.log(res)
       this.loader.hide();
@@ -499,7 +495,19 @@ export class ConfigureDashboardComponent implements OnInit {
       this.metrics_list = data.data;
       this.metrics_list = this.metrics_list.map((item: any, index: number) => {
         item["metricAdded"] = false
-        item["src"] = "process.svg"
+        return item
+      })
+
+
+      console.log("this.metrics_list", this.metrics_list)
+    })
+  }
+  getListOfWidgets() {
+    this.rest_api.getWidgetsList().subscribe((data: any) => {
+      this.widgetslist = data.widgetData;
+      this.widgetslist = this.widgetslist.map((item: any, index: number) => {
+        item["widgetAdded"] = false
+        // item["chartSrc"] = "chart4.png'"
         return item
       })
       if(this._paramsData.isCreate==0){
@@ -507,61 +515,6 @@ export class ConfigureDashboardComponent implements OnInit {
       }else{
         this.loader.hide();
       }
-      this.datatransfer.dynamicscreenObservable.subscribe((res: any) => {
-        console.log(res.widgets)
-        if (res.metrics) {
-          this.dynamicDashBoard = res;
-          // this.addedMetrics = this.dynamicDashBoard.metrics
-          // res.metrics.forEach((item: any) => {
-          //   this.metrics_list.find((metric_item: any) => metric_item.id == item.id).metricAdded = true;
-          //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
-          // })
-
-
-        }
-      })
-      console.log("this.metrics_list", this.metrics_list)
-    })
-  }
-  getListOfWidgets() {
-    this.rest_api.getWidgetsList().subscribe((data: any) => {
-      this.widgetslist = data.data;
-      this.widgetslist = this.widgetslist.map((item: any, index: number) => {
-        item["widgetAdded"] = false
-        item["chartSrc"] = "chart4.png'"
-        return item
-      })
-      this.widgetslist.push({
-        "chartSrc":
-          "chart4.png'",
-        "description"
-          :
-          "Display the Table Data",
-        "id"
-          :
-          99,
-        "name"
-          :
-          "Bot Execution Status In Table",
-        "widgetAdded"
-          :
-          false
-      })
-      this.datatransfer.dynamicscreenObservable.subscribe((res: any) => {
-        console.log(res.metrics)
-        if (res.widgets) {
-          this.dynamicDashBoard = res;
-          this.addedWidgets = this.dynamicDashBoard.widgets
-          // res.widgets.forEach((item: any) => {
-          //   this.widgets.find((widget_item: any) => widget_item.id === item.id).widgetAdded = true;
-
-          //   // this.defaultEmpty_metrics.find((metric_item:any)=>metric_item.id==item.id).metricAdded=true;
-          // })
-          res.widgets.forEach((item: any) => {
-            this.widgetslist.find((widget_item: any) => widget_item.id == item.id).widgetAdded = true;
-          })
-        }
-      })
       console.log("this.widgetslist", this.widgetslist)
     })
   }
@@ -572,19 +525,26 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   getDashBoardData(screenId){
+    this.loader.show();
     this.rest_api.getDashBoardItems(screenId).subscribe((data:any)=>{
-      console.log(data)
-      this.dynamicDashBoard.metrics=data.metrics
+      this.dynamicDashBoard.metrics=data.metrics;
+      this.dynamicDashBoard.widgets = data.widgets;
       this.addedMetrics = this.dynamicDashBoard.metrics
-
       this.addedMetrics = this.addedMetrics.map((item: any, index: number) => {
         item["metricAdded"] = true
         return item
       })
+
+
       this.addedMetrics.forEach((item: any) => {
         this.metrics_list.find((metric_item: any) => metric_item.id == item.childId).metricAdded = true;
         if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
+      })
+      this.addedWidgets = this.dynamicDashBoard.widgets
+      console.log(this.addedWidgets,this.widgetslist)
+      this.addedWidgets.forEach((item: any) => {
+        this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
       })
 
       this.loader.hide();
@@ -611,14 +571,26 @@ export class ConfigureDashboardComponent implements OnInit {
     this.addedMetrics.forEach(item => {
       let req_body = {
        childId: item.childId? item.childId: item.id,
-        screenId: this._paramsData.dashboardId,
+        screenId: Number(this._paramsData.dashboardId),
         type: "metric",
         widgetType: "",
         name: item.name
       }
       req_array.push(req_body)
     })
-    console.log("this.addedMetrics,req_array")
+
+    this.addedWidgets.forEach(element => {
+      let req_body = {
+        childId: element.childId? element.childId: element.id,
+        screenId: Number(this._paramsData.dashboardId),
+        type: "widget",
+        widgetType: element.widget_type,
+        name: element.name
+      }
+      req_array.push(req_body)
+    });
+
+    console.log("this.addedMetrics,req_array",req_array)
     this.rest_api.updateDashboardConfiguration(req_array,this._paramsData.dashboardId).subscribe(res => {
       console.log(res)
       this.loader.hide();

@@ -1,20 +1,34 @@
-<div class="container-fluid">
-  <div class="">
-    <mat-card id="projects_list_screen" class="h-100">
-      <div class="row module-heading title">
-        <div class="col">
+<div class="col-md-12 maincontent">
+  <div id="projects_list_screen" class="h-100">
+
+      <div class="row main-content-head new-head">
+        <h3>
+          <label id="popup_title">
+            <a routerLink="/pages/admin/admin-screen-list"><img
+                    src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+        </label>
+         
+        <span class="title_text" *ngIf="!labelupdate">
+          Create Screen
+          </span>
+          <span class="title_text" *ngIf="labelupdate">
+            Update Screen
+          </span>
+        </h3>
+        <!-- <div class="col">
           <span class="module-back-button" routerLink="/pages/admin/admin-screen-list">
             <i aria-hidden="true" class="fas fa-arrow-left"></i>
           </span>
           <span class="module-header-title" *ngIf="!labelupdate">Create Screen</span>
           <span class="module-header-title" *ngIf="labelupdate">Update Screen</span>
-        </div>
+        </div> -->
       </div>
-      <div class="card-form h-scroll" style="margin-top: 10px">
+      <div class="main-content-body h-scroll">
+      <div class="" style="margin-top: 10px">
         <form [formGroup]="insertForm">
           <div class="row">
-            <div class="col-6">
-              <div class="form-group col-sm-10">
+            <div class="col-6 pl-0">
+              <div class="form-group col-sm-11 pl-0">
                 <label class="label-control">Screen Name <span class="star">*</span></label>
                 <input type="text" formControlName="screen_Name" maxlength="256" placeholder="Enter Screen Name"
                   class="form-control" />
@@ -32,33 +46,33 @@
                   between words are allowed.
                 </span>
               </div>
-              <div class="form-group col-sm-10">
+              <div class="form-group col-sm-11 pl-0">
                 <input class="form-check-input" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
-                  value="option1" />&nbsp;
-                <label class="label-control" for="screenname">Allow Insert</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                  value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="label-control" for="screenname" style="margin-left: 4px;">Allow Insert</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                  value="option1" />&nbsp;
-                <label class="label-control" for="femaleGender">Allow Edit</label>
+                  value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="label-control" for="femaleGender" style="margin-left: 4px;">Allow Edit</label>
               </div>
-              <div class="form-group col-sm-10">
+              <div class="form-group col-sm-11 pl-0">
                 <label class="label-control" formControlName="default_Sort" ngDefaultControl>Default Sort</label>
                 <select class="form-control data">
                   <option value="">Select Option</option>
                 </select>
               </div>
-              <div class="form-group col-sm-10">
+              <div class="form-group col-sm-11 pl-0">
                 <label class="label-control" for="lastName">Preferences</label>
                 <select class="form-control data" formControlName="preferences">
                   <option value="">Select Option</option>
                 </select>
               </div>
-              <div class="form-group col-sm-10">
+              <div class="form-group col-sm-11 pl-0">
                 <label class="label-control">Insights</label>
                 <select class="form-control data" formControlName="insights">
                   <option value="">Select Option</option>
                 </select>
               </div>
-              <div class="form-group col-sm-10">
+              <div class="form-group col-sm-11 pl-0">
                 <label class="label-control" formControlName="formType" ngDefaultControl>Form Type</label>
                 <select class="form-control data">
                   <option value="">Select Option</option>
@@ -67,9 +81,9 @@
               <div class="col-sm-4"></div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 pr-0">
               <div class="">
-                <div class="form-group col-sm-10">
+                <div class="form-group col-sm-11 pr-0">
                   <label class="label-control">Table Name <span class="star">*</span></label>
                   <select class="form-control data" formControlName="table_Name"
                     (change)="onChangeTableName($event.target)" [attr.disabled]="isDisabled ? '' : null">
@@ -85,25 +99,25 @@
                     Table Name is Required*
                   </span>
                 </div>
-                <div class="form-group col-sm-10">
+                <div class="form-group  col-sm-11 pr-0">
                   <input class="form-check-input" formControlName="allow_Delete" type="checkbox"
-                    name="inlineRadioOptions" id="femaleGender" value="option1" />&nbsp;
-                  <label class="label-control">Allow Delete</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label class="label-control" style="margin-left: 4px;">Allow Delete</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" formControlName="show_As_Child" type="checkbox"
-                    name="inlineRadioOptions" id="femaleGender" value="option1" />&nbsp;
-                  <label class="label-control">Show As Child</label>
+                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label class="label-control" style="margin-left: 4px;">Show As Child</label>
                 </div>
-                <div class="form-group col-sm-10">
+                <div class="form-group  col-sm-11 pr-0">
                   <label class="label-control">Default Filter Clause</label>
                   <input type="text" formControlName="default_Filter_Clause" class="form-control" type="text"
                     placeholder="Enter Filter Clause" />
                 </div>
-                <div class="form-group col-sm-10">
+                <div class="form-group  col-sm-11 pr-0">
                   <label class="label-control">Row Count</label>
                   <input class="form-control data" formControlName="row_Count" type="number"
                     placeholder="Enter Count" />
                 </div>
-                <div class="form-group col-sm-10">
+                <div class="form-group  col-sm-11 pr-0">
                   <label class="label-control">Select Screen Type <span class="star">*</span></label>
                   <select class="form-control data" formControlName="screenType">
                     <option value="" hidden disabled>Select Option</option>
@@ -125,23 +139,25 @@
               (editRowById)="editColumn($event)" [show_delete_btn]="false" [show_edit_btn]="true"></app-dynamic-table>
           </div>
           <div class="row">
-            <div class="col-10"></div>
-            <div class="col-2 btn-continue">
-              <button type="button" class="btn btn-secondary" (click)="backToScreenList()">
+           
+            <div class="col-12 btn-continue" style="text-align: right;">
+              <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">
                 Back
               </button>
               &nbsp;&nbsp;
-              <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn btn-primary" (click)="saveScreen()">
+              
+              <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">
                 Save
               </button>
-              <button *ngIf="screen_id" class="btn btn-primary" (click)="updateData()">
+              <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">
                 Update
               </button>
             </div>
           </div>
         </form>
       </div>
-    </mat-card>
+    </div>
+   
   </div>
 </div>
 

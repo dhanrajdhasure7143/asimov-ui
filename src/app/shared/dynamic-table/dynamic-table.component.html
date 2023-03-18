@@ -102,7 +102,7 @@
                         </div>
                         <div *ngIf="col.multiOptions[1] != 'priority'">
                             <div class="d-flex align-items-center">
-                                <!-- <span class="prjlastupdateprofile">RS</span> -->
+                                <span class="prjlastupdateprofile">{{rowData['lastModifiedByEmail']|userLetters:users_list}}</span>
                                 <span>
                                     <span class="prjlastupdatename">{{rowData[col.multiOptions[0]]}}</span>
                                     <span class="prjgridtimestamp" > {{rowData[col.multiOptions[1]]}} </span>
@@ -181,7 +181,7 @@
                     
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
-                            <a class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
+                            <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </a>
                             <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">

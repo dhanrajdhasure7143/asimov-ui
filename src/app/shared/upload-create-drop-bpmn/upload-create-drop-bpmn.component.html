@@ -2,7 +2,7 @@
 
     <!-- div for bpmn-worksapce -->
     <div class="row" *ngIf="!isShowConformance">
-        <div class="col-sm-6">
+        <div class="col-sm-6 p-0">
             <div class='drop_box' id="upload_bpmn">
                 <ngx-dropzone (click)="onUploadClick()" (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                     <div class="model-img">
@@ -19,7 +19,7 @@
                 </ngx-dropzone>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 p-0">
             <div class='drop_box create_box' id="create_bpmn-box">
                 <div class="model-img">
                     <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>

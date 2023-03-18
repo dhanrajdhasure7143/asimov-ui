@@ -85,8 +85,7 @@
                   
                <div  class="" style="text-align: center;margin:20px;">
                   <div *ngIf="widget.widget_type!='table'">
-                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
-                   
+                     <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="270"  [options]="widget.chartOptions" ></p-chart>
                   </div>
                  <div *ngIf="widget.widget_type=='table'">
                   <p-table
@@ -121,7 +120,6 @@
                   </ng-template>
               </p-table>
                  </div>
-                 <p>{{widget.description}}</p>
                  <!-- <div *ngIf="widget.widget_type=='bar'">
                      <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
                   </div> -->
@@ -282,6 +280,8 @@
             
             <div class="img-div" style="margin-right:20px;">
               <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" />
+              <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.SampleData" height="55px"  [options]="widget.chartOptions" ></p-chart> -->
+
             </div>
 
             <div>

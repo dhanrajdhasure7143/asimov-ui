@@ -20,21 +20,6 @@ export class ProjectsListScreenComponent implements OnInit {
   projects_list: any[] = [];
   users_list: any = [];
   processes: any = [];
-  selected_tab: any;
-  search: any = "";
-  count: any = {
-    New: 0,
-    Inprogress: 0,
-    OnHold: 0,
-    Pipeline: 0,
-    Rejected: 0,
-    Inreview: 0,
-    Approved: 0,
-    Closed: 0,
-    Deployed: 0,
-  };
-
-  public isButtonVisible = false;
   public userRole: any = [];
   customUserRole: any;
   enablecreateproject: boolean = false;
@@ -115,11 +100,8 @@ export class ProjectsListScreenComponent implements OnInit {
       let response: any = res;
       this.projectsresponse = response;
       let res_list = response[0].concat(response[1]);
-      // console.log(res_list)
       res_list.map((data) => {
-        data["projectName"] = data.programName
-          ? data.programName
-          : data.projectName;
+        data["projectName"] = data.programName? data.programName: data.projectName;
         data["process_name"] = this.getProcessNames(data.process);
         data["status"] = data.status == null ? "New" : data.status;
         data["createdAt"] = moment(data.createdTimestamp).format("lll");
@@ -127,102 +109,22 @@ export class ProjectsListScreenComponent implements OnInit {
           name: data.type == null ? "Project" : data.type,
         };
         data["type"] = data.type == null ? "Project" : data.type;
-        data["department"] = data.mapValueChain
-          ? data.mapValueChain
-          : data.programValueChain;
+        data["department"] = data.mapValueChain? data.mapValueChain: data.programValueChain;
         data["createdDate"] = moment(data.createdTimestamp).format("lll");
         data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll");
-        data["lastModifiedBy"] = data.lastModifiedBy
-          ? data.lastModifiedBy
-          : data.createdBy;
+        data["lastModifiedBy"] = data.lastModifiedBy? data.lastModifiedBy: data.createdBy;
+        data["lastModifiedByEmail"] = data.lastModifiedByEmail? data.lastModifiedByEmail: data.owner;
         return data;
       });
       this.projects_list = [];
       this.all_projectslist = res_list;
-      // console.log(this.all_projectslist)
-      // this.all_projectslist = [
-      //   ...response[0].map((data) => {
-      //     return {
-      //       id: data.id,
-      //       projectName: data.programName,
-      //       initiatives: data.initiatives,
-      //       priority: data.priority,
-      //       process: this.getProcessNames(data.process),
-      //       owner: data.owner,
-      //       status: data.status == null ? "New" : data.status,
-      //       createdAt: moment(data.createdTimestamp).format("lll"),
-      //       createdBy: data.createdBy,
-      //       lastModifiedBy: data.lastModifiedBy,
-      //       representative: {
-      //         name: data.type,
-      //       },
-      //       type: data.type,
-      //       department: data.programValueChain,
-      //       createdDate: moment(data.createdTimestamp).format("lll"),
-      //       updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
-      //       mapValueChain: data.mapValueChain,
-      //     };
-      //   }),
-      //   ...response[1].map((data) => {
-      //     return {
-      //       id: data.id,
-      //       projectName: data.projectName,
-      //       initiatives: data.initiatives,
-      //       priority: data.priority,
-      //       process: this.getProcessNames(data.process),
-      //       owner: data.owner,
-      //       status: data.status == null ? "New" : data.status,
-      //       createdAt:data.createdTimestamp,
-      //       createdBy: data.createdBy,
-      //       lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
-      //       representative: {
-      //         name: data.type == null ? "Project" : data.type,
-      //       },
-      //       type: data.type == null ? "Project" : data.type,
-      //       department: data.mapValueChain,
-      //       createdDate: moment(data.createdTimestamp).format("lll"),
-      //       updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
-      //       mapValueChain: data.mapValueChain,
-      //     };
-      //   }),
-      // ];
       this.spinner.hide();
-      // this.count.New = this.all_projectslist.filter(
-      //   (item) => item.status == "New"
-      // ).length;
-      // this.count.Inprogress = this.all_projectslist.filter(
-      //   (item) => item.status == "In Progress"
-      // ).length;
-      // this.count.Pipeline = this.all_projectslist.filter(
-      //   (item) => item.status == "Pipeline"
-      // ).length;
-      // this.count.OnHold = this.all_projectslist.filter(
-      //   (item) => item.status == "On Hold"
-      // ).length;
-      // this.count.Rejected = this.all_projectslist.filter(
-      //   (item) => item.status == "Rejected"
-      // ).length;
-      // this.count.Inreview = this.all_projectslist.filter(
-      //   (item) => item.status == "In Review"
-      // ).length;
-      // this.count.Approved = this.all_projectslist.filter(
-      //   (item) => item.status == "Approved"
-      // ).length;
-      // this.count.Closed = this.all_projectslist.filter(
-      //   (item) => item.status == "Closed"
-      // ).length;
-      // this.count.Deployed = this.all_projectslist.filter(
-      //   (item) => item.status == "Deployed"
-      // ).length;
-
       this.all_projectslist.sort(function (a, b) {
         a = new Date(a.createdDate);
         b = new Date(b.createdDate);
         return a > b ? -1 : a < b ? 1 : 0;
       });
-
       this.projects_list = this.all_projectslist;
-
       this._tabsList.forEach((element) => {
         if (element.tabName == "All") {
           element.count = this.all_projectslist.length;
@@ -340,15 +242,6 @@ export class ProjectsListScreenComponent implements OnInit {
       { name: "Project", value: "Project" },
       { name: "Program", value: "Program" },
     ];
-    //document.getElementById("filters").style.display='block';
-  }
-
-  getallusers() {
-    let tenantid = localStorage.getItem("tenantName");
-    this.api.getuserslist(tenantid).subscribe((item) => {
-      let users: any = item;
-      this.users_list = users;
-    });
   }
 
   getallprocesses() {
@@ -452,58 +345,6 @@ export class ProjectsListScreenComponent implements OnInit {
       reject: (type) => {},
       key: "positionDialog",
     });
-
-    // Swal.fire({
-    //   title: "Enter " + projectdata.type + " Name",
-    //   input: "text",
-    //   inputAttributes: {
-    //     autocapitalize: "off",
-    //   },
-    //   showCancelButton: true,
-    //   confirmButtonText: "Delete",
-    // }).then((result) => {
-    //   let value: any = result.value;
-    //   if (value != undefined)
-    //     if (projectdata.projectName.trim() == value.trim()) {
-    //       this.spinner.show();
-    //       this.api.delete_Project(delete_data).subscribe((res) => {
-    //         this.spinner.hide();
-    //         // this.getallProjects();
-    //         let response: any = res;
-    //         if (
-    //           response.errorMessage == undefined &&
-    //           response.warningMessage == undefined
-    //         ) {
-    //           Swal.fire(
-    //             "Success",
-    //             "Project Deleted Successfully !!",
-    //             "success"
-    //           );
-    //           this.getallProjects(this.userRoles, this.name, this.email);
-    //         } else if (
-    //           response.errorMessage == undefined &&
-    //           response.message == undefined
-    //         ) {
-    //           Swal.fire("Error", response.warningMessage, "error");
-    //         } else {
-    //           Swal.fire("Error", response.errorMessage, "error");
-    //         }
-    //       });
-    //     } else {
-    //       Swal.fire(
-    //         "Error",
-    //         "Entered " + projectdata.type + " Name is Invalid",
-    //         "error"
-    //       );
-    //     }
-    // });
-  }
-
-  getreducedValue(value) {
-    if (value != undefined) {
-      if (value.length > 15) return value.substring(0, 16) + "...";
-      else return value;
-    }
   }
 
   tabViewChange(event, tabView: TabView) {
