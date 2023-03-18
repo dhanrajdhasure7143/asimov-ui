@@ -271,7 +271,7 @@
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
                                         [(ngModel)]="add_comment" [autoResize]="true" maxlength="100"></textarea>
-                                    <button type="button" class="btn btn-primary btn-sm" (click)='postcomments()'>Add</button>
+                                    <button [disabled]="add_comment == undefined" type="button" class="btn btn-primary btn-sm" (click)='postcomments()'>Add</button>
                                 </div>
                             </p-tabPanel>
                             <p-tabPanel header="Audit">

@@ -14,7 +14,7 @@
                     [reorderableColumns]="true" [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments']">
                     <ng-template pTemplate="caption">
                         <div class="flex">
-                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                            <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                             <span class="p-input-icon-right float-right">
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
@@ -78,6 +78,11 @@
                                     -
                                 </span>
                             </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td style="justify-content: center;" colspan="5">No Records Found</td>
                         </tr>
                     </ng-template>
                 </p-table>

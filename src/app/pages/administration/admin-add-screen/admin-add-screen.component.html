@@ -24,7 +24,7 @@
         </div> -->
       </div>
       <div class="main-content-body h-scroll">
-      <div class="" style="margin-top: 10px">
+      <div class="main-top-align">
         <form [formGroup]="insertForm">
           <div class="row">
             <div class="col-6 pl-0">
@@ -47,12 +47,12 @@
                 </span>
               </div>
               <div class="form-group col-sm-11 pl-0">
-                <input class="form-check-input" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
-                  value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label class="label-control" for="screenname" style="margin-left: 4px;">Allow Insert</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
-                  value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label class="label-control" for="femaleGender" style="margin-left: 4px;">Allow Edit</label>
+                <input class="form-check-input inp-align" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
+                  value="option1" />
+                <label class="label-control inp-label" for="screenname">Allow Insert</label>
+                <input class="form-check-input inp-align" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
+                  value="option1" />
+                <label class="label-control inp-label" for="femaleGender" >Allow Edit</label>
               </div>
               <div class="form-group col-sm-11 pl-0">
                 <label class="label-control" formControlName="default_Sort" ngDefaultControl>Default Sort</label>
@@ -100,12 +100,12 @@
                   </span>
                 </div>
                 <div class="form-group  col-sm-11 pr-0">
-                  <input class="form-check-input" formControlName="allow_Delete" type="checkbox"
-                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label class="label-control" style="margin-left: 4px;">Allow Delete</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input class="form-check-input" formControlName="show_As_Child" type="checkbox"
-                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label class="label-control" style="margin-left: 4px;">Show As Child</label>
+                  <input class="form-check-input inp-align" formControlName="allow_Delete" type="checkbox"
+                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>
+                  <label class="label-control inp-label" >Allow Delete</label>
+                  <input class="form-check-input inp-align" formControlName="show_As_Child" type="checkbox"
+                    name="inlineRadioOptions" id="femaleGender" value="option1" style="margin-left:0px;"/>
+                  <label class="label-control inp-label" >Show As Child</label>
                 </div>
                 <div class="form-group  col-sm-11 pr-0">
                   <label class="label-control">Default Filter Clause</label>
@@ -144,7 +144,7 @@
               <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">
                 Back
               </button>
-              &nbsp;&nbsp;
+             
               
               <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">
                 Save
@@ -210,8 +210,8 @@
               <label class="label-control"><input type="checkbox" formControlName="ShowSearch" />
                 <span class="span">Show in Search</span></label>
               <label class="label-control"><input type="checkbox" formControlName="ShowForm" /></label>
-              <span class="span">Show in Form</span> <br />
-              <br />
+              <span class="span">Show in Form</span> 
+             
               <label class="label-control">
                 <input type="checkbox" formControlName="read_only" />
                 <span class="span">Read Only</span>
