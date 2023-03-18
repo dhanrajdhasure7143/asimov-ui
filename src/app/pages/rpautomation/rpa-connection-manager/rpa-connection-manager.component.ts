@@ -172,7 +172,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     let req_body = {
       id: "",
       name: this.connectorName,
-      connectionLogo: new String(this.conn_logo),
+      connectionLogo: new String(this.conn_logo.split(",")[1]),
     };
     this.rest_api.saveConnector(req_body).subscribe(
       (res: any) => {

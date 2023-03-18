@@ -56,7 +56,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "type",
+        ColumnName: "actionType",
         DisplayName: "Action Type",
         ShowFilter: true,
         ShowGrid: true,
@@ -76,7 +76,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "type",
+        ColumnName: "methodType",
         DisplayName: "Method Type",
         ShowGrid: true,
         ShowFilter: true,
@@ -86,8 +86,8 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       // {
-      //   ColumnName: "attribute",
-      //   DisplayName: "Attributes",
+      //   ColumnName: "actionLogo",
+      //   DisplayName: "Action Logo",
       //   ShowGrid: true,
       //   ShowFilter: true,
       //   filterWidget: "normal",
