@@ -439,3 +439,8 @@ button span {
     margin-left: 5px;
     padding: 5px 7px;
 }
+
+.selectable {
+    user-select: text;
+    cursor: text;
+  }
