@@ -29,23 +29,41 @@ export class HomeComponent implements OnInit {
   plansList: any;
   freetrail: boolean;
   expiry: any;
+  _params:any={};
   
-  constructor(private router: Router, private dt:DataTransferService, private rest_api: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
-  }
+  constructor(private router: Router, 
+    private dt:DataTransferService, 
+    private rest_api: RestApiService, 
+    private route: ActivatedRoute) 
+    {
+      this.route.queryParams.subscribe(params => {
+        this._params = params
+      })
+    }
 
   ngOnInit() {
     this.getAllPlans();
-    this.rest_api.getUserRole(2).subscribe(res=>{
-    this.userRole=res.message;
-    if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
-      this.isdivShow=true;
-    }else{
-      this._isShow=true;
-    }
-      localStorage.setItem('userRole',this.userRole);
-      localStorage.setItem('project_id',null);
-    },error => {
-      //this.error = "Please complete your registration process";
+    // this.rest_api.getUserRole(2).subscribe(res=>{
+    // this.userRole=res.message;
+    // if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
+    //   this.isdivShow=true;
+    // }else{
+    //   this._isShow=true;
+    // }
+    //   localStorage.setItem('userRole',this.userRole);
+    //   localStorage.setItem('project_id',null);
+    // },error => {
+    //   //this.error = "Please complete your registration process";
+    // })
+    this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+      let dashbordlist:any=res.data;
+      let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+      if(dashbordlist.length == 0){
+        this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
+      }else{
+        const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+        this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+      }
     })
   }
 

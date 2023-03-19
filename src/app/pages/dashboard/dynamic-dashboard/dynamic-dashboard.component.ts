@@ -151,7 +151,6 @@ export class DynamicDashboardComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.menuItems = [
       {label: "Delete",command: () => { this.deletedashbord()}},
-      {label: "Set as Default",command: () => { this.setDefaultDashboard()}},
     ];
     this.items = [
       {
@@ -491,6 +490,11 @@ export class DynamicDashboardComponent implements OnInit {
           .getdeleteDashBoard(this.selectedDashBoard.id)
           .subscribe((data) => {
             this.inplace.deactivate();
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Deleted Successfully !!",
+            });
             this.changeToDefaultDashBoard();
           });
       },
@@ -512,6 +516,9 @@ export class DynamicDashboardComponent implements OnInit {
         relativeTo: this.activeRoute,
         queryParams: params1,
       });
+      setTimeout(() => {
+        this.selecteddashboard = this.selectedDashBoard
+      }, 100);
       this.selectedDashBoardName = this.selectedDashBoard.dashboardName
       this.getDashBoardData(this.selectedDashBoard.id);
     });

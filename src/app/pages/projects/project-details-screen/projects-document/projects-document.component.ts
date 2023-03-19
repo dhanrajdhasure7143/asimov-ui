@@ -933,15 +933,19 @@ addParentFolder() {
       if(this.selectedOne.length>0){
         this.files=[];
       let filteredData:any=[];
-      this.selectedOne.forEach(element => {
-        this.documents_resData.forEach(ele =>{
-          if(element.id == ele.taskId || ele.dataType =="folder"){
+      this.selectedOne.forEach((element,index) => {
+        this.documents_resData.forEach((ele,i) =>{
+          if(index == 0 && ele.dataType =="folder"){
+            filteredData.push(ele)
+          }
+          if(element.id == ele.taskId){
             filteredData.push(ele)
           }
         })
 
       });
       setTimeout(() => {
+        console.log(filteredData)
         this.files=[
           {
             key: "0",
@@ -953,7 +957,7 @@ addParentFolder() {
           },
         ];
         this.convertToTreeView(filteredData)
-      }, 200);
+      }, 100);
     }else{
       this.files=[];
       this.files=[
