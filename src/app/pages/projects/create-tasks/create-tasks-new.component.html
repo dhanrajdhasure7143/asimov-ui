@@ -173,12 +173,15 @@
                   placeholder="Enter Task Description..." (keyup)="taskDescriptionMaxLength($event.target.value)"
                   style=" resize: none;">
                           </textarea> -->
-                    <textarea pInputTextarea formControlName="description" placeholder="Enter Description"
-                      [autoResize]="true" required></textarea>
+                    <textarea pInputTextarea formControlName="description"   placeholder="Enter Description"
+                    [autoResize]="true" style="min-height:56px;overflow:auto" required></textarea>
+                         <!-- <textarea pInputTextarea formControlName="projectPurpose" placeholder="Enter Description"
+                         [autoResize]="true" required></textarea> -->
                     <!-- <span *ngIf="taskDescriptionFlag" class="required">
                       Maximum of 150 characters
                     </span> -->
-                    <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
+                    <span *ngIf="(createtaskForm.get('description').invalid && createtaskForm.get('description').touched)&& 
+                    !createtaskForm.controls['description'].hasError('maxlength')"
                     class="required">Task Description Required*</span>
                 </div>
             </div>
