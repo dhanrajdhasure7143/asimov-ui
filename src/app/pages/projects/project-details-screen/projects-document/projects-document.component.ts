@@ -6,7 +6,6 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
-import { lineTo } from "@amcharts/amcharts4/.internal/core/rendering/Path";
 
 @Component({
   selector: "app-projects-document",
@@ -238,16 +237,6 @@ export class ProjectsDocumentComponent implements OnInit {
           collapsedIcon: "pi pi-folder",
         }
       ]
-        // object["children"] = [
-        //   {
-        //     key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
-        //     label: "Add Folder / Document",
-        //     data: "Folder",
-        //     data_type:"addfolder",
-        //     expandedIcon: "pi pi-folder",
-        //     collapsedIcon: "pi pi-folder",
-        //   },
-        // ]
         this.selectedFile.parent.children.push(obj);
         this.entered_folder_name = "";
         this.isDialog = false;
@@ -269,13 +258,6 @@ export class ProjectsDocumentComponent implements OnInit {
       return this.hiddenPopUp1 = false;
     }else{
     }
-
-    // if (item.node.label == "Add Folder") {
-    //   this.isDialogBox = true;
-    // }
-    //   if (item.node.label == "Add Folder / Document") {
-    //     this.isDialog = true;
-    //   }
   }
 
   onCreateTreeFolder(){
@@ -378,14 +360,7 @@ export class ProjectsDocumentComponent implements OnInit {
           collapsedIcon: "pi pi-folder",
         }
       ]
-      // object["children"] = [{
-      //     key: this.selectedFolder.key + "-" + objectKey + "-0" ,
-      //     label: "Add Folder / Document",
-      //     data: "Work Folder",
-      //     data_type:"addfolder",
-      //     expandedIcon: "pi pi-folder",
-      //     collapsedIcon: "pi pi-folder",
-      //   }]
+
       this.selectedFolder.children.push(obj);
       this.entered_folder_name = "";
       this.isDialog1 = false;
@@ -393,27 +368,6 @@ export class ProjectsDocumentComponent implements OnInit {
       this.loader.hide();
       this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
     })
-
-
-    // let object = { ...{}, ...this.sampleNode_object };
-    // object.label = this.entered_folder_name;
-    // let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
-    // object.key = this.selectedFolder.key + "-" + objectKey;
-    // object["children"] = [
-    //   {
-    //     key: this.selectedFolder.key + "-" + objectKey + "-0" ,
-    //     label: "Add Folder / Document",
-    //     data: "Work Folder",
-    //     data_type:"addfolder",
-    //     expandedIcon: "pi pi-folder",
-    //     collapsedIcon: "pi pi-folder",
-    //   }
-    // ]
-    // console.log("object",object)
-    // this.selectedFolder.children.push(object);
-    // this.entered_folder_name = "";
-    // this.isDialog1 = false;
-    // console.log(this.selectedFile)
 
   }
 }
@@ -461,7 +415,6 @@ addParentFolder() {
   // removeRoute(node) {
   //   const parent: any = this.findById(this.files, node.parentId);
   //   const index = parent.children.findIndex((c) => c.id === node.id);
-  //   console.log(index, 1);
   //   parent.children.splice(index, 1);
   // }
   // public selected: any;
@@ -945,7 +898,6 @@ addParentFolder() {
 
       });
       setTimeout(() => {
-        console.log(filteredData)
         this.files=[
           {
             key: "0",
