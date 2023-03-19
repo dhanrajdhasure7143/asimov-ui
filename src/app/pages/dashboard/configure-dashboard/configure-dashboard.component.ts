@@ -42,10 +42,7 @@ export class ConfigureDashboardComponent implements OnInit {
   draggedProduct1: any;
   isShow: boolean;
   isCreate:any
- // items: { label: string; }[];
   screenId: any;
-  
- // childId: any;
   selectedDashBoard: any;
   
 
@@ -249,7 +246,6 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   drop() {
-    console.log(this.draggedProduct,this.draggedProduct1)
     if (this.draggedProduct) {
       this.metrics_list.find(item => item.id == this.draggedProduct.id).metricAdded = true;
       this.addedMetrics.push(this.draggedProduct);
@@ -282,7 +278,6 @@ export class ConfigureDashboardComponent implements OnInit {
       if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
     }
-    console.log("addedMetrics", this.addedMetrics)
   }
 
 
@@ -317,6 +312,7 @@ export class ConfigureDashboardComponent implements OnInit {
         // console.log(this.tabledata);
 
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
+        if(widget["widget_type"] != "table")
         widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
 
@@ -497,23 +493,29 @@ export class ConfigureDashboardComponent implements OnInit {
         item["metricAdded"] = false
         return item
       })
-      console.log("this.metrics_list", this.metrics_list)
     })
   }
   getListOfWidgets() {
     this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.widgetData;
-      console.log(this.widgetslist)
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-        item["chartOptions"]["plugins"]["legend"]["display"]=false;
-        // item["chartSrc"] = "chart4.png'"
+        if(item["widget_type"] != "table")
+        // item["chartOptions"]["plugins"]["legend"]["display"]=false;
+        item["chartOptions"]= {
+                       "plugins": {
+                             "legend": {
+                            "position": "bottom",
+                            "display" : false
+                        }
+                    }
+                  }
         return item
       })
-      this.widgetslist.forEach(element => {
-        console.log(element.chartOptions.plugins.legend)
-        element.chartOptions.plugins.legend["display"]=false;
-      });
+      // this.widgetslist.forEach(element => {
+      //   console.log(element.chartOptions.plugins.legend)
+      //   element.chartOptions.plugins.legend["display"]=false;
+      // });
       if(this._paramsData.isCreate==0){
         this.getDashBoardData(this._paramsData.dashboardId)
       }else{
