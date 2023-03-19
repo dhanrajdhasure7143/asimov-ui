@@ -115,8 +115,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
   }
 
+
   saveForm() {
-    console.log(this.connectorForm.value);
+    this.spinner.show();
     let req_body
     if(this.connectorForm.value.actionType == "Authenticated"){
     
@@ -197,22 +198,31 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     req_body["configuration"]=JSON.stringify(object)
     }
     console.log(req_body)
-    this.rest_api.saveAction(req_body).subscribe((res) => {
+    this.rest_api.saveAction(req_body).subscribe((res:any) => {
+      this.spinner.hide();
+      if(res.message === "Successfully saved configured action"){
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Done Successfully !!",
+          text: "Action Saved Successfully !!",
           heightAuto: false,
+      }).then((result) => {
+        this.connectorForm.reset();
+        this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId, name : this.selectedConnector}}) 
         });
-      },
-      (err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong !!",
-          heightAuto: false,
-        });
+      }else{
+        this.spinner.hide();
+        (err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong !!",
+            heightAuto: false,
+          });
+        }
       }
+      },
+      
     );
     this.connectorForm.reset();
   }

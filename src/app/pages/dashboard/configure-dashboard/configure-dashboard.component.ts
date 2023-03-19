@@ -1,12 +1,9 @@
 import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { Inplace } from 'primeng/inplace';
-import widgetOptions from './widgetdetails.json';
 
 @Component({
   selector: 'app-configure-dashboard',
@@ -59,13 +56,14 @@ export class ConfigureDashboardComponent implements OnInit {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.screenId=params.dashboardId
-     
       this.dynamicDashBoard.dashboardName = params.dashboardName
       this.isCreate = this._paramsData.isCreate
 
     })
   }
+
   ngOnInit(): void {
+    this.loader.show();
     this.items = [
       { 
         label: 'Delete',
@@ -242,13 +240,16 @@ export class ConfigureDashboardComponent implements OnInit {
       this.draggedProduct = item;
     }
   }
-  // dragStart1(widget){
-  //   if (widget.widgetAdded == false) {
-  //     this.draggedProduct1 = widget;
-  //   }
-  // }
+
+  widgetDragStart(widget){
+    // if (widget.widgetAdded == false) {
+      this.draggedProduct1 = widget;
+      // console.log(widget)
+    // }
+  }
 
   drop() {
+    console.log(this.draggedProduct,this.draggedProduct1)
     if (this.draggedProduct) {
       this.metrics_list.find(item => item.id == this.draggedProduct.id).metricAdded = true;
       this.addedMetrics.push(this.draggedProduct);
@@ -256,21 +257,22 @@ export class ConfigureDashboardComponent implements OnInit {
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
     }
   }
-  // drop1() {
-  //   if (this.draggedProduct1) {
-  //     this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
-  //     this.addedMetrics.push(this.draggedProduct1);
-  //     if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
-  //       this.widgetslist.find(item => item.widgetAdded == false).widgetAdded = true
-  //   }
-  // }
+  dropWidget() {
+    console.log(this.draggedProduct1)
+    if (this.draggedProduct1) {
+      this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
+      this.addedMetrics.push(this.draggedProduct1);
+      if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
+        this.widgetslist.find(item => item.widgetAdded == false).widgetAdded = true
+    }
+  }
 
   dragEnd() {
     this.draggedProduct = null;
   }
-  // dragEnd1() {
-  //   this.draggedProduct1 = null;
-  // }
+  widgetDragEnd() {
+    this.draggedProduct1 = null;
+  }
 
   onSelectMetric(metric, index) {
     if (metric.metricAdded == false) {
@@ -298,8 +300,8 @@ export class ConfigureDashboardComponent implements OnInit {
       let itemId2=data.childId? data.childId: data.id
       //this.dynamicDashBoard.widgets.splice(index, 1);
       this.widgetslist.find(item => item.id == itemId2).widgetAdded = false;
-      if (this.widgetslist.find((item) => item.widgetAdded == true))
-        this.widgetslist.find((item) => item.widgetAdded == true).widgetAdded = false;
+      // if (this.widgetslist.find((item) => item.widgetAdded == true))
+      //   this.widgetslist.find((item) => item.widgetAdded == true).widgetAdded = false;
     }
   }
 
@@ -315,7 +317,7 @@ export class ConfigureDashboardComponent implements OnInit {
         // console.log(this.tabledata);
 
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-
+        widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
 
         // this.dynamicDashBoard.widgets = this.addedWidgets;
@@ -442,7 +444,7 @@ export class ConfigureDashboardComponent implements OnInit {
       req_array.push(req_body)
     })
 
-    this.dynamicDashBoard.widgets.forEach(element => {
+    this.addedWidgets.forEach(element => {
       let req_body = {
         childId: element.id,
         screenId: Number(this._paramsData.dashboardId),
@@ -452,9 +454,7 @@ export class ConfigureDashboardComponent implements OnInit {
       }
       req_array.push(req_body)
     });
-    console.log(this.dynamicDashBoard, req_array)
     this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
-      console.log(res)
       this.loader.hide();
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     })
@@ -497,19 +497,23 @@ export class ConfigureDashboardComponent implements OnInit {
         item["metricAdded"] = false
         return item
       })
-
-
       console.log("this.metrics_list", this.metrics_list)
     })
   }
   getListOfWidgets() {
     this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.widgetData;
+      console.log(this.widgetslist)
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
+        item["chartOptions"]["plugins"]["legend"]["display"]=false;
         // item["chartSrc"] = "chart4.png'"
         return item
       })
+      this.widgetslist.forEach(element => {
+        console.log(element.chartOptions.plugins.legend)
+        element.chartOptions.plugins.legend["display"]=false;
+      });
       if(this._paramsData.isCreate==0){
         this.getDashBoardData(this._paramsData.dashboardId)
       }else{
@@ -614,7 +618,10 @@ export class ConfigureDashboardComponent implements OnInit {
       },
       key: "positionDialog",
     });
-  
+    }
+
+    canelUpdate(){
+      this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     }
 
 }

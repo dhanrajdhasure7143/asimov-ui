@@ -10,7 +10,7 @@ import { RestApiService } from '../../services/rest-api.service';
 export class CreateDashboardComponent implements OnInit {
   display: boolean = false;
   entered_name: String='';
-  isDialogShow: boolean = false;
+  displayModal: boolean = false;
   dashbordlist:any[]=[];
 
   constructor(private primengConfig: PrimeNGConfig,
@@ -32,8 +32,8 @@ export class CreateDashboardComponent implements OnInit {
   }
 
   
-  showDialog() {
-      this.isDialogShow = true;
+  showModalDialog() {
+      this.displayModal = true;
   }
 
   navigateconfigure() {
