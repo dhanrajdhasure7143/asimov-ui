@@ -24,7 +24,7 @@ export class DynamicDashboardComponent implements OnInit {
   cols: any[] = [];
   @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
-  gfg: MenuItem[];
+  menuItems: MenuItem[];
   dynamicDashBoard: any;
   metrics_list: any;
   defaultEmpty_metrics: any;
@@ -60,7 +60,6 @@ export class DynamicDashboardComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {
     this.activeRoute.queryParams.subscribe((res) => {
-      console.log(res);
       this._paramsData = res;
       // this.selectedDashBoardName= this._paramsData.dashboardName
     });
@@ -150,13 +149,9 @@ export class DynamicDashboardComponent implements OnInit {
     // ];
     this.getDashBoardData(this._paramsData.dashboardId);
     this.primengConfig.ripple = true;
-    this.gfg = [
-      {
-        label: "Delete",
-        command: () => {
-          this.deletedashbord();
-        },
-      },
+    this.menuItems = [
+      {label: "Delete",command: () => { this.deletedashbord()}},
+      {label: "Set as Default",command: () => { this.setDefaultDashboard()}},
     ];
     this.items = [
       {
@@ -328,7 +323,6 @@ export class DynamicDashboardComponent implements OnInit {
 
   openConfiguration(widget: any) {
     let formData: any = {};
-    console.log(widget);
     widget.filterOptions.forEach((item: any) => {
       formData[item.name] = new FormControl(
         widget[item.name] == undefined ? "" : widget[item.name]
@@ -339,8 +333,6 @@ export class DynamicDashboardComponent implements OnInit {
 
   saveConfigure(index: number) {
     let formDataValue = this.dynamicFormConfiure.value;
-    console.log(formDataValue, "testing");
-
     let req_body = [
       {
         childId: this.dashboardData.widgets[index].childId,
@@ -351,7 +343,7 @@ export class DynamicDashboardComponent implements OnInit {
         screenId: this.selectedDashBoard.id,
       },
     ];
-    // console.log(req_body)
+
     this.rest.updateWidgetInDashboard(req_body).subscribe(
       (res) => {
         this.messageService.add({
@@ -388,7 +380,6 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest
       .updateDashBoardNamed(this.selectedDashBoard)
       .subscribe((response: any) => {
-        console.log("update bot details=================", response);
       });
     this.inplace.deactivate();
   }
@@ -397,9 +388,10 @@ export class DynamicDashboardComponent implements OnInit {
     let _params: any = {};
     _params["dashboardId"] = this._paramsData.dashboardId;
     _params["dashboardName"] = this._paramsData.dashboardName;
+    _params["defaultDashboard"] = this.selectedDashBoard.defaultDashboard
     _params["isCreate"] = 0;
     this.router.navigate(["pages/dashboard/configure-dashboard"], {
-      queryParams: _params,
+      queryParams:_params,
     });
   }
 
@@ -430,6 +422,9 @@ export class DynamicDashboardComponent implements OnInit {
       this.selectedDashBoard = this.dashbordlist.find(
         (item) => item.id == this._paramsData.dashboardId
       );
+      setTimeout(() => {
+        this.selecteddashboard = this.selectedDashBoard
+      }, 100);
       this.selectedDashBoardName = this.selectedDashBoard.dashboardName;
     });
   }
@@ -445,6 +440,13 @@ export class DynamicDashboardComponent implements OnInit {
       relativeTo: this.activeRoute,
       queryParams: params1,
     });
+    if(this.menuItems.length == 2)this.menuItems.splice(1,1)
+    if(!this.selectedDashBoard.defaultDashboard){
+    let obj = {label: "Set as Default",command: () => { this.setDefaultDashboard()}}
+    this.menuItems.push(obj);
+    }else{
+      this.menuItems.splice(1,1)
+    }
     this.getDashBoardData(this.selectedDashBoard.id);
   }
 
@@ -542,7 +544,6 @@ export class DynamicDashboardComponent implements OnInit {
               callbacks: {
                 label: (tooltipItem, data) => {
                   const datasetIndex = tooltipItem.datasetIndex;
-                  // console.log(data,tooltipItem)
                   return (
                     tooltipItem.label + ": " + tooltipItem.formattedValue * 2
                   );
@@ -567,7 +568,7 @@ export class DynamicDashboardComponent implements OnInit {
           },
         ],
       };
-      this.dashboardData.widgets.push(array);
+      // this.dashboardData.widgets.push(array);
       this.primengConfig.ripple = true;
       this.loader.hide();
     });
