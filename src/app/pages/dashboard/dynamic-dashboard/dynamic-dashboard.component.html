@@ -28,11 +28,10 @@
          
             <div class="row">
                <div class="col-md-8 text-right pr-0">
-                  <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
+                  <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
                      [style]="{'width':'220px','height' :'35px'}">
                      <ng-template let-item pTemplate="selectedItem">
                         <span>{{item.dashboardName}}</span>
-                       
                      </ng-template>
                      <ng-template let-item pTemplate="item">
                         <div class="ui-helper-clearfix" style="position: relative;height:25px;">
@@ -42,8 +41,10 @@
                            <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
                         </span>
                      </ng-template>
+                  </p-dropdown> -->
+                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'35px'}" autoWidth="false"
+                     (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown>
-
                </div>
                <div class="col-md-4 text-right">
                   <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
@@ -54,7 +55,7 @@
                      class="btn-dots eiap-btn btn-grphs-horztal">
                      <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
-                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
+                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
                </div>
             </div>
          </div>
@@ -113,37 +114,26 @@
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
-                           <p-table
-                           #myTab
-                           [value]="widget.widgetData"
-                           [scrollable]="true"
-                           scrollHeight="260px"
-                           [columns]="widget.labels"
-                       >
-                           <ng-template pTemplate="header" 
-                                        let-columns>
-                               <tr>
-                                   <th *ngFor="let col of columns">
-                                       {{ col.header }}
-                                   </th>
-                               </tr>
-                           </ng-template>
-                         
-                           <ng-template pTemplate="body" 
-                                        let-people>
-                               <tr>
-                                   <td>
-                                       {{ people.firstname }}
-                                   </td>
-                                   <td>
-                                       {{ people.lastname }}
-                                   </td>
-                                   <td>
-                                       {{ people.age }}
-                                   </td>
-                               </tr>
-                           </ng-template>
-                       </p-table>
+                           <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll">
+                              <ng-template pTemplate="header" let-columns>
+                                           <tr>
+                                            <th>Name
+                                              <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                              <p-sortIcon field="name"></p-sortIcon>
+                                            </th>
+                                            <th>Next Run
+                                              <p-columnFilter type="date" field="value" display="menu"></p-columnFilter>
+                                              <p-sortIcon field="value"></p-sortIcon>
+                                            </th>
+                                          </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-people>
+                                  <tr>
+                                      <td>{{people.name}}</td>
+                                      <td>{{people.value}}</td>
+                                  </tr>
+                              </ng-template>
+                          </p-table>
                           </div>
                         <!-- <div *ngIf="widget.widget_type=='pie'">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
