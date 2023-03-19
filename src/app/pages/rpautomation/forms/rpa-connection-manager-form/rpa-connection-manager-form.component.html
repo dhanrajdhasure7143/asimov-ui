@@ -4,7 +4,7 @@
             <i class="fas fa-arrow-left" aria-hidden="true" (click)="backToaction()"></i>
         </span>
         <span class="module-header-title">
-            <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }}  {{ selectedToolsetName }} </span>
+            <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }} - {{ selectedToolsetName }} </span>
             <span class="module-parent-title" *ngIf="istoolSet" >Connection Manager - {{ selectedConnector }} - Create New </span>
         </span>
     </div>
@@ -297,8 +297,10 @@
                                 <button type="button" class="btn btn-primary" [disabled]="isRequest"
                                     (click)="testForm()"> Test </button>
                                 &nbsp;
-                                <button type="button" class="btn btn-primary"
+                                <button *ngIf="!isUpdate" type="button" class="btn btn-primary"
                                     (click)="saveForm()"> Save </button>
+                                <button *ngIf="isUpdate" type="button" class="btn btn-primary"
+                                    (click)="updateForm()"> Update </button>    
                             </div>
                         </div>
                     </form>

@@ -54,6 +54,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   actionUpdate: any;
   actionData: any = [];
   action_logo:any;
+  isUpdate: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -111,6 +112,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.getActionType();
     this.getGrantTypes();
     if (this.isCreate == "false") {
+      this.isUpdate = true;
       this.getActionById();
     }
   }
@@ -135,7 +137,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
     
     let object={
-      "endPoint" : `[@endPoint|string|${this.connectorForm.value.endPoint}@]`,
+      "endPoint" : this.connectorForm.value.endPoint,
       "grant_type" : this.connectorForm.value.grantType,
       "methodType" : this.connectorForm.value.methodType,
       "type" : this.connectorForm.value.authType
@@ -143,28 +145,28 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
 
-      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
-      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
-      object["code"] = `[@code|string|${this.connectorForm.value.code}@]`
-      object["redirect_uri"] = `[@redirect_uri|string|${this.connectorForm.value.redirect_uri}@]`
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["code"] = this.connectorForm.value.code
+      object["redirect_uri"] = this.connectorForm.value.redirect_uri
 
     } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
-      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
-      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
-      object["userName"] = `[@userName|string|${this.connectorForm.value.userName}@]`
-      object["password"] = `[@password|string|${this.connectorForm.value.password}@]`
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["userName"] = this.connectorForm.value.userName
+      object["password"] = this.connectorForm.value.password
 
     } else if (this.connectorForm.value.grantType == "ClientCredentials") {
-      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
-      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
-      object["scope"] = `[@scope|string|${this.connectorForm.value.scope}@]`
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["scope"] = this.connectorForm.value.scope
 
     } else if (this.connectorForm.value.grantType == "AuthorizationCodeWithPKCE") {
-      object["clientId"] = `[@clientId|string|${this.connectorForm.value.clientId}@]`
-      object["clientSecret"] = `[@clientSecret|string|${this.connectorForm.value.clientSecret}@]`
-      object["code"] = `[@code|string|${this.connectorForm.value.code}@]`
-      object["redirect_uri"] = `[@redirect_uri|string|${this.connectorForm.value.redirect_uri}@]`
-      object["verifier"] = `[@verifier|string|${this.connectorForm.value.verifier}@]`
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["code"] = this.connectorForm.value.code
+      object["redirect_uri"] = this.connectorForm.value.redirect_uri
+      object["verifier"] = this.connectorForm.value.verifier
     }
    // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
     req_body["configuration"]=JSON.stringify(object);
@@ -249,10 +251,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["grantType"] = this.connectorForm.value.grantType;
       req_body["scope"] = this.connectorForm.value.scope;
     }
-    // else if (this.connectorForm.value.grantType == "RefreshToken") {
-    //       req_body["grantType"]="refresh_token"
-    //       req_body["refreshToken"]="1000.246a848d7739e32dace9179429e3451a.0b4254d5019f473478da157067e697ad"
-    // }
+    else if (this.connectorForm.value.grantType == "RefreshToken") {
+      req_body["grantType"] = "refresh_token"
+      req_body["refreshToken"] = this.connectorForm.value.refreshToken
+}
     console.log(this.connectorForm.value)
     this.rest_api.testActions(req_body).subscribe((res:any)=>{
     if(res.data.access_token)
@@ -420,19 +422,93 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId, name : this.selectedConnector}})
   }
 
-getActionById(){
-  this.rest_api.getActionById(this.action_id).subscribe((res)=>{
-    this.actionData = res["data"]
-    console.log(res["data"],"action"); 
-    this.connectorForm.get("actionName").setValue(this.actionData["name"]);
-    this.connectorForm.get("endPoint").setValue(this.actionData["endPoint"]);
-    this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
-    this.connectorForm.get("methodType").setValue(this.actionData["type"]);
-    this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
-    this.connectorForm.get("authType").setValue(this.actionData["type"]);
-    
-  })
-}
+  getActionById(){
+    this.rest_api.getActionById(this.action_id).subscribe((res)=>{
+      this.actionData = res["data"]
+      console.log(res["data"],"action"); 
+      if(this.actionData["actionType"] == "APIRequest"){
+        this.isRequest = true;
+        this.isAction = false;
+        this.isResponse = false;
+        this.isClient = false;
+        this.isPassword = false;
+        this.isAuthenticated = false;
+        this.isAuthorization = false;
+      }
+      if(this.actionData["actionType"] == "Authenticated"){
+        this.isAction = true;
+        this.isRequest = false;
+        this.isResponse = false;
+      }
+      if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
+        this.isAuthenticated = true;
+      }
+      if (this.actionData.configurationAsJson["grant_type"] == "AuthorizationCode") {
+        this.isAuthorization = true;
+        this.isClient = true;
+        this.isResponse = true;
+        this.isPassword = false;
+        this.isVerifier = false;
+        this.isScopeField = false;
+        this.isRefreshToken = false;
+      } else if (this.actionData.configurationAsJson["grant_type"] == "PasswordCredentials") {
+        this.isPassword = true;
+        this.isClient = true;
+        this.isResponse = true;
+        this.isAuthorization = false;
+        this.isVerifier = false;
+        this.isScopeField = false;
+        this.isRefreshToken = false;
+      } else if (this.actionData.configurationAsJson["grant_type"] == "ClientCredentials") {
+        this.isClient = true;
+        this.isResponse = true;
+        this.isAuthorization = false;
+        this.isPassword = false;
+        this.isVerifier = false;
+        this.isScopeField = true;
+        this.isRefreshToken = false;
+      } else if (this.actionData.configurationAsJson["grant_type"] == "AuthorizationCodeWithPKCE") {
+        this.isAuthorization = true;
+        this.isClient = true;
+        this.isResponse = true;
+        this.isPassword = false;
+        this.isVerifier = true;
+        this.isScopeField = false;
+        this.isRefreshToken = false;
+      }else if (this.actionData.configurationAsJson["grant_type"] == "RefreshToken") {
+        this.isAuthorization = false;
+        this.isClient = true;
+        this.isResponse = true;
+        this.isPassword = false;
+        this.isVerifier = false;
+        this.isScopeField = true;
+        this.isRefreshToken = true;
+      }
+  
+      console.log(this.actionData.configurationAsJson["clientId"]);
+      this.connectorForm.get("actionName").setValue(this.actionData["name"]);
+      this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
+      this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
+      this.connectorForm.get("methodType").setValue(this.actionData.configurationAsJson["methodType"]);
+      this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
+      this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
+      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grant_type"]);
+      this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
+      this.connectorForm.get("redirect_uri").setValue(this.actionData.configurationAsJson["redirect_uri"]);
+      this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
+      this.connectorForm.get("password").setValue(this.actionData.configurationAsJson["password"]);
+      this.connectorForm.get("clientId").setValue(this.actionData.configurationAsJson["clientId"]);
+      this.connectorForm.get("clientSecret").setValue(this.actionData.configurationAsJson["clientSecret"]);
+      this.connectorForm.get("verifier").setValue(this.actionData.configurationAsJson["verifier"]);
+      this.connectorForm.get("headerKey").setValue(this.actionData["headerKey"]);
+      this.connectorForm.get("headerValue").setValue(this.actionData["headerValue"]);
+      this.connectorForm.get("headerCheck").setValue(this.actionData["headerCheck"]);
+      this.connectorForm.get("request").setValue(this.actionData["request"]);
+      this.connectorForm.get("response").setValue(this.actionData["response"]);
+      this.connectorForm.get("scope").setValue(this.actionData["scope"]);
+      this.connectorForm.get("refreshToken").setValue(this.actionData["refreshToken"]);
+    })
+  }
 
 selectRow(){
   console.log(this.selectedOne);
@@ -460,6 +536,116 @@ imageUpload(e) {
 _handleReaderLoaded(e) {
   var reader = e.target;
   this.action_logo = reader.result;
+}
+
+updateForm(){
+  this.spinner.show();
+    let req_body
+    if(this.connectorForm.value.actionType == "Authenticated"){
+    
+    req_body=
+      {
+        "id": "",
+        "name": this.connectorForm.value.actionName,
+        "audit": null,
+        "actionType": this.connectorForm.value.actionType,
+        "configuredConnectionId": this.selectedId,
+        // "description": "login for zoho", //we dont have description in UI
+        // "actionLogo" : ""
+        "actionLogo": new String(this.action_logo.split(",")[1]),
+        // "endPoint": this.connectorForm.value.endPoint
+      }
+    
+    let object={
+      "endPoint" : this.connectorForm.value.endPoint,
+      "grant_type" : this.connectorForm.value.grantType,
+      "methodType" : this.connectorForm.value.methodType,
+      "type" : this.connectorForm.value.authType
+      // "actionType": this.connectorForm.value.actionType,
+    }
+    if (this.connectorForm.value.grantType == "AuthorizationCode") {
+
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["code"] = this.connectorForm.value.code
+      object["redirect_uri"] = this.connectorForm.value.redirect_uri
+
+    } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["userName"] = this.connectorForm.value.userName
+      object["password"] = this.connectorForm.value.password
+
+    } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["scope"] = this.connectorForm.value.scope
+
+    } else if (this.connectorForm.value.grantType == "AuthorizationCodeWithPKCE") {
+      object["clientId"] = this.connectorForm.value.clientId
+      object["clientSecret"] = this.connectorForm.value.clientSecret
+      object["code"] = this.connectorForm.value.code
+      object["redirect_uri"] = this.connectorForm.value.redirect_uri
+      object["verifier"] = this.connectorForm.value.verifier
+    }
+   // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
+    req_body["configuration"]=JSON.stringify(object);
+    console.log(req_body);
+
+    }
+    else{
+      req_body = {
+        "id":this.action_id,
+        "name" : this.connectorForm.value.actionName,
+        "actionLogo": new String(this.action_logo.split(",")[1]),
+        "actionType" : this.connectorForm.value.actionType,
+        "configuredConnectionId" : this.selectedId,
+        "description" : "",
+      }
+      this.requestJson_body.push(this.connectorForm.get("request").value)
+      let obj={};
+      obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
+      let object={
+        "endPoint" : this.connectorForm.value.endPoint,
+        "methodType" : this.connectorForm.value.methodType,
+        // "actionType": this.connectorForm.value.actionType,
+        // "requestMethod":this.connectorForm.value.methodType,
+        "contentType":"application/json",
+        "httpHeaders": obj,
+        // "type":"API",
+        "requestPayload":{
+          "data":this.requestJson_body
+        }
+    }
+    req_body["configuration"]=JSON.stringify(object)
+    }
+    this.rest_api.updateAction(this.action_id,req_body).subscribe((res:any) => {
+      this.spinner.hide();
+      if(res.message === "Successfully updated configured action"){
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Action Updated Successfully !!",
+          heightAuto: false,
+      }).then((result) => {
+        this.connectorForm.reset();
+        this.router.navigate(['/pages/rpautomation/action-item'],{queryParams: {id: this.selectedId, name : this.selectedConnector}}) 
+        });
+      }else{
+        this.spinner.hide();
+        (err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong !!",
+            heightAuto: false,
+          });
+        }
+      }
+      },
+      
+    );
+    this.connectorForm.reset();
 }
 
 }

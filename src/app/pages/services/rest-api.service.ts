@@ -1760,5 +1760,8 @@ updateWidgetInDashboard(body:any){
   return this.http.post("/platform-service/dashboard/updateEachDashboardMetricOrWidget",body)
 }
 
+updateAction(id:any,body:any){
+  return this.http.put('/rpa-service/action/'+id,body)
+}
 
 }
