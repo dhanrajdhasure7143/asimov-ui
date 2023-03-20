@@ -95,12 +95,11 @@ export class RpaConnectionManagerComponent implements OnInit {
           text: "Connector Deleted Successfully !!",
           heightAuto: false,
         });
-        this.getAllConnections();
         this.spinner.hide();
+        this.getAllConnections();
       },
       (err) => {
         Swal.fire("Error", "Unable to delete Connector", "error");
-        this.getAllConnections();
         this.spinner.hide();
       }
     );
