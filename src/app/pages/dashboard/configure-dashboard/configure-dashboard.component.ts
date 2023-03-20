@@ -42,11 +42,8 @@ export class ConfigureDashboardComponent implements OnInit {
   draggedProduct1: any;
   isShow: boolean;
   isCreate:any
- // items: { label: string; }[];
   screenId: any;
-  
- // childId: any;
-  selectedDashBoard: any;
+  isdefaultDashboard:any;
   
 
   constructor(private activeRoute: ActivatedRoute,
@@ -58,7 +55,7 @@ export class ConfigureDashboardComponent implements OnInit {
       this.screenId=params.dashboardId
       this.dynamicDashBoard.dashboardName = params.dashboardName
       this.isCreate = this._paramsData.isCreate
-
+      this.isdefaultDashboard = params.defaultDashboard
     })
   }
 
@@ -244,12 +241,10 @@ export class ConfigureDashboardComponent implements OnInit {
   widgetDragStart(widget){
     // if (widget.widgetAdded == false) {
       this.draggedProduct1 = widget;
-      // console.log(widget)
     // }
   }
 
   drop() {
-    console.log(this.draggedProduct,this.draggedProduct1)
     if (this.draggedProduct) {
       this.metrics_list.find(item => item.id == this.draggedProduct.id).metricAdded = true;
       this.addedMetrics.push(this.draggedProduct);
@@ -258,7 +253,6 @@ export class ConfigureDashboardComponent implements OnInit {
     }
   }
   dropWidget() {
-    console.log(this.draggedProduct1)
     if (this.draggedProduct1) {
       this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
       this.addedMetrics.push(this.draggedProduct1);
@@ -282,7 +276,6 @@ export class ConfigureDashboardComponent implements OnInit {
       if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
     }
-    console.log("addedMetrics", this.addedMetrics)
   }
 
 
@@ -314,15 +307,11 @@ export class ConfigureDashboardComponent implements OnInit {
         let obj = {};
         // const widgetData = widgetOptions.widgets;
         // this.tabledata = this.addedWidgets[0].sampleData;
-        // console.log(this.tabledata);
 
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
+        if(widget["widget_type"] != "table")
         widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
-
-        // this.dynamicDashBoard.widgets = this.addedWidgets;
-        console.log(this.addedWidgets)
-
       }
     }
   }
@@ -497,35 +486,35 @@ export class ConfigureDashboardComponent implements OnInit {
         item["metricAdded"] = false
         return item
       })
-      console.log("this.metrics_list", this.metrics_list)
     })
   }
   getListOfWidgets() {
     this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.widgetData;
-      console.log(this.widgetslist)
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-        item["chartOptions"]["plugins"]["legend"]["display"]=false;
-        // item["chartSrc"] = "chart4.png'"
+        if(item["widget_type"] != "table")
+        // item["chartOptions"]["plugins"]["legend"]["display"]=false;
+        item["chartOptions"]= {
+                       "plugins": {
+                             "legend": {
+                            "position": "bottom",
+                            "display" : false
+                        }
+                    }
+                  }
         return item
       })
-      this.widgetslist.forEach(element => {
-        console.log(element.chartOptions.plugins.legend)
-        element.chartOptions.plugins.legend["display"]=false;
-      });
+      // this.widgetslist.forEach(element => {
+      //   console.log(element.chartOptions.plugins.legend)
+      //   element.chartOptions.plugins.legend["display"]=false;
+      // });
       if(this._paramsData.isCreate==0){
         this.getDashBoardData(this._paramsData.dashboardId)
       }else{
         this.loader.hide();
       }
-      console.log("this.widgetslist", this.widgetslist)
     })
-  }
-
-  addtable(){
-    console.log("click successful")
-    this.isShow = !this.isShow; 
   }
 
   getDashBoardData(screenId){
@@ -546,7 +535,6 @@ export class ConfigureDashboardComponent implements OnInit {
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
       })
       this.addedWidgets = this.dynamicDashBoard.widgets
-      console.log(this.addedWidgets,this.widgetslist)
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
       })
@@ -570,7 +558,6 @@ export class ConfigureDashboardComponent implements OnInit {
   }
   Updatedconfiguration(){
     let req_array: any = [];
-    console.log(this.addedMetrics)
     this.loader.show();
     this.addedMetrics.forEach(item => {
       let req_body = {
@@ -594,16 +581,26 @@ export class ConfigureDashboardComponent implements OnInit {
       req_array.push(req_body)
     });
 
-    console.log("this.addedMetrics,req_array",req_array)
     this.rest_api.updateDashboardConfiguration(req_array,this._paramsData.dashboardId).subscribe(res => {
-      console.log(res)
       this.loader.hide();
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     }
     )}
   
     deletedashbord(){
-      console.log("on delete")
+     
+      if (this.isdefaultDashboard == "true") {
+        this.confirmationService.confirm({
+          message: "Change the default dashboard",
+          header: "Info",
+          icon: "pi pi-info-circle",
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog",
+        });
+        return;
+      }
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: "Confirmation",
@@ -613,7 +610,6 @@ export class ConfigureDashboardComponent implements OnInit {
         this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
           this.inplace.deactivate();
           this.loader.hide();
-         
         });
       },
       key: "positionDialog",

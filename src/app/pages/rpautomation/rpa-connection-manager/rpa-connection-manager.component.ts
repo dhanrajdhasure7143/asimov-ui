@@ -66,16 +66,16 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: true,
           multi: false,
         },
-        // {
-        //   ColumnName: "connectionLogo",
-        //   DisplayName: "Connector Logo",
-        //   ShowGrid: true,
-        //   ShowFilter: true,
-        //   filterWidget: "normal",
-        //   filterType: "text",
-        //   sort: true,
-        //   multi: false,
-        // },
+        {
+          ColumnName: "connectionLogo",
+          DisplayName: "Connector Logo",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
       ];
     });
   }
@@ -92,7 +92,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Done Successfully !!",
+          text: "Connector Deleted Successfully !!",
           heightAuto: false,
         });
         this.getAllConnections();
@@ -108,7 +108,7 @@ export class RpaConnectionManagerComponent implements OnInit {
 
   viewConnector() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedData[0].id },
+      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name },
     });
   }
 
@@ -168,10 +168,11 @@ export class RpaConnectionManagerComponent implements OnInit {
   saveConnector() {
     this.spinner.show();
     this.connectorName = this.createConnectorForm.get("name").value;
+    console.log(this.conn_logo)
     let req_body = {
       id: "",
       name: this.connectorName,
-      connectionLogo: this.conn_logo.split(",")[1],
+      connectionLogo: new String(this.conn_logo.split(",")[1]),
     };
     this.rest_api.saveConnector(req_body).subscribe(
       (res: any) => {

@@ -1,7 +1,8 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 210px;
+  top: 90px;
+  right: 225px;
   z-index: 2;
 }
 

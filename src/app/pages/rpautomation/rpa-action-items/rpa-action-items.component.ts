@@ -19,6 +19,8 @@ export class RpaActionItemsComponent implements OnInit {
   selectedId:any;
   updateflag: boolean = false;
   selectedData:any;
+  selectedName: any;
+
   constructor(
     private router:Router,
     private loader:LoaderService,
@@ -28,6 +30,7 @@ export class RpaActionItemsComponent implements OnInit {
     {
       this.route.queryParams.subscribe((data)=>{
         this.selectedId = data.id;
+        this.selectedName = data.name
       })
     }
 
@@ -63,7 +66,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "url",
+        ColumnName: "endPoint",
         DisplayName: "URL/Root Domain",
         ShowFilter: true,
         ShowGrid: true,
@@ -73,7 +76,7 @@ export class RpaActionItemsComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "type",
+        ColumnName: "methodType",
         DisplayName: "Method Type",
         ShowGrid: true,
         ShowFilter: true,
@@ -82,16 +85,16 @@ export class RpaActionItemsComponent implements OnInit {
         sort: true,
         multi: false,
       },
-      {
-        ColumnName: "attribute",
-        DisplayName: "Attributes",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      }
+      // {
+      //   ColumnName: "actionLogo",
+      //   DisplayName: "Action Logo",
+      //   ShowGrid: true,
+      //   ShowFilter: true,
+      //   filterWidget: "normal",
+      //   filterType: "text",
+      //   sort: true,
+      //   multi: false,
+      // }
       // {
       //   ColumnName: "attribute",
       //   DisplayName: "Attributes",
@@ -121,7 +124,7 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   updateAction() {
-      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{id:this.selectedData[0].id, name:this.selectedData[0].name, create:false}});
+      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false, formDisabled : true}});
   }
 
   deleteAction() {
@@ -153,7 +156,8 @@ export class RpaActionItemsComponent implements OnInit {
       queryParams: { index: 2 },
     });
   }
+
   addNewAction(){
-    this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, create:true}})
+    this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, connector_name : this.selectedName, create:true}})
   }
 }

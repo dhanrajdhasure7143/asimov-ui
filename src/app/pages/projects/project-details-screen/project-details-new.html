@@ -389,12 +389,12 @@
                         <div class="row collab">
                             <h4 class="colheads chatheader">Collaborations</h4>
                             <span>
-                            <div class="pinnedmsgs" *ngIf="_pinnedMessage.length > 0">
+                            <div class="pinnedmsgs selectable"  *ngIf="_pinnedMessage.length > 0">
                                 <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
                                 <span class="pinnedmsgtext" (click)="scrollTomain(_pinnedMessage[0],'pin_message')">{{truncatemessage(_pinnedMessage[0].message)}}</span>
                             </div>
                             </span>
-                            <div id="message-body" *ngIf="messages_list.length != 0">
+                            <div id="message-body" class="selectable" *ngIf="messages_list.length != 0">
                                 <div *ngFor="let each of messages_list" [class.selected]="each.id === selectedItem"
                                     [appScrollIntoView]="each.id === selectedItem">
 
@@ -456,10 +456,10 @@
                             <!-- <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
                                 value="Lorem ipsum dolor sit amet, consec" /> -->
                             <div class="col-sm-11 pl-0">
-                                <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" ></textarea>
-                                    <!-- <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)"></textarea> -->
+                                <!-- <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [autoResize]="false" ></textarea> -->
+                                    <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)"></textarea>
                             </div>
 
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->

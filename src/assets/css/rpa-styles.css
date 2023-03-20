@@ -514,7 +514,7 @@ mat-paginator button:disabled{
 .environment-tablegrid, .credential-tablegrid {
   width: 100%;
   overflow: auto;
-  height: calc(100vh - 270px);
+  height: calc(100vh - 209px);
 }
 
 /* New Styles for Scheduler Overlay  */

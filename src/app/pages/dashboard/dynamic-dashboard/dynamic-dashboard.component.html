@@ -28,66 +28,11 @@
          <div class="col-md-8 text-right">
          
             <div class="row">
-               <div class="col-md-12 text-right pr-0">
-                  <div id="app-cover">
-                     <div id="select-box">
-                       <input type="checkbox" id="options-view-button">
-                       <div id="select-button" class="brd">
-                         <div id="selected-value">
-                           <span>Select a platform</span>
-                         </div>
-                         <div id="chevrons">
-
-                           <i class="fas fa-chevron-down"></i>
-                         </div>
-                         
-                       </div>
-                       
-                       <div id="options">
-                         <div class="option">
-                           <input class="s-c top" type="radio" name="platform" value="codepen">
-                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                           <!-- <i class="fas fa-codepen"></i> -->
-                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
-                           <span class="label">example1</span>
-                           <span class="opt-val">example1</span>
-                          
-                         </div>
-                         <div class="option">
-                           <input class="s-c top" type="radio" name="platform" value="codepen">
-                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                           <!-- <i class="fas fa-codepen"></i> -->
-                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
-                           <span class="label">example2</span>
-                           <span class="opt-val">example2</span>
-                         </div>
-                         <div class="option">
-                           <input class="s-c top" type="radio" name="platform" value="codepen">
-                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                           <!-- <i class="fas fa-codepen"></i> -->
-                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
-                           <span class="label">example3</span>
-                           <span class="opt-val">example3</span>
-                         </div>
-                         <div class="option">
-                           <input class="s-c top" type="radio" name="platform" value="codepen">
-                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                           <!-- <i class="fas fa-codepen"></i> -->
-                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
-                           <span class="label">example4</span>
-                           <span class="opt-val">example4</span>
-                         </div>
-                      
-                         <div id="option-bg"></div>
-                       </div>
-                     </div>
-                   </div>
-                   
+               <div class="col-md-8 text-right pr-0">
                   <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
                      [style]="{'width':'220px','height' :'35px'}">
                      <ng-template let-item pTemplate="selectedItem">
                         <span>{{item.dashboardName}}</span>
-                       
                      </ng-template>
                      <ng-template let-item pTemplate="item">
                         <div class="ui-helper-clearfix" style="position: relative;height:25px;">
@@ -98,7 +43,12 @@
                         </span>
                      </ng-template>
                   </p-dropdown> -->
-                  <span (click)="navigateToCreateDashboard()" class="eiap-btn pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'35px'}" autoWidth="false"
+                     (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
+                  </p-dropdown>
+               </div>
+               <div class="col-md-4 text-right">
+                  <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
                      <span class="plus">Create</span>
                   </span>
                   <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
@@ -106,11 +56,7 @@
                      class="btn-dots eiap-btn ">
                      <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
-                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
-
-               </div>
-               <div class="col-md-4 text-right pr-0 pl-0">
-                 
+                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
                </div>
             </div>
          </div>
@@ -169,37 +115,26 @@
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
-                           <p-table
-                           #myTab
-                           [value]="widget.widgetData"
-                           [scrollable]="true"
-                           scrollHeight="260px"
-                           [columns]="widget.labels"
-                       >
-                           <ng-template pTemplate="header" 
-                                        let-columns>
-                               <tr>
-                                   <th *ngFor="let col of columns">
-                                       {{ col.header }}
-                                   </th>
-                               </tr>
-                           </ng-template>
-                         
-                           <ng-template pTemplate="body" 
-                                        let-people>
-                               <tr>
-                                   <td>
-                                       {{ people.firstname }}
-                                   </td>
-                                   <td>
-                                       {{ people.lastname }}
-                                   </td>
-                                   <td>
-                                       {{ people.age }}
-                                   </td>
-                               </tr>
-                           </ng-template>
-                       </p-table>
+                           <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll">
+                              <ng-template pTemplate="header" let-columns>
+                                           <tr>
+                                            <th>Name
+                                              <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                              <p-sortIcon field="name"></p-sortIcon>
+                                            </th>
+                                            <th>Next Run
+                                              <p-columnFilter type="date" field="value" display="menu"></p-columnFilter>
+                                              <p-sortIcon field="value"></p-sortIcon>
+                                            </th>
+                                          </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-people>
+                                  <tr>
+                                      <td>{{people.name}}</td>
+                                      <td>{{people.value}}</td>
+                                  </tr>
+                              </ng-template>
+                          </p-table>
                           </div>
                         <!-- <div *ngIf="widget.widget_type=='pie'">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
