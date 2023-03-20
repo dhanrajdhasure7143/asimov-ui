@@ -2,20 +2,21 @@
 <div class="maincontent">
    <div  class="h-100">
       <div class="row main-content-head">
-         <div class="col-md-4 pl-0">
+         <div class="col-md-4">
            
             <div class="row align-items-center dashboardnamerow">
                <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
                   <ng-template pTemplate="display">
                     <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3>
                   </ng-template>
+                  
                   <ng-template pTemplate="content">
                       <input type="text" [style]="{'width':'220px'}" pInputText
                           [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
                       <span class="editfields">
-                          <i class="pi pi-check check1" *ngIf="_dashboardName"
+                          <i class="pi pi-check" *ngIf="_dashboardName"
                               (click)="updateDashboardName()"></i>
-                          <i class="pi pi-times close1" (click)="onDeactivate()"></i>
+                          <i class="pi pi-times " (click)="onDeactivate()"></i>
                       </span>
                   </ng-template>
               </p-inplace>
@@ -24,11 +25,65 @@
           
          </div>
          </div>
-         <div class="col-md-8 pr-0 text-right">
+         <div class="col-md-8 text-right">
          
             <div class="row">
-               <div class="col-md-8 text-right pr-0">
-                  <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
+               <div class="col-md-12 text-right pr-0">
+                  <div id="app-cover">
+                     <div id="select-box">
+                       <input type="checkbox" id="options-view-button">
+                       <div id="select-button" class="brd">
+                         <div id="selected-value">
+                           <span>Select a platform</span>
+                         </div>
+                         <div id="chevrons">
+
+                           <i class="fas fa-chevron-down"></i>
+                         </div>
+                         
+                       </div>
+                       
+                       <div id="options">
+                         <div class="option">
+                           <input class="s-c top" type="radio" name="platform" value="codepen">
+                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                           <!-- <i class="fas fa-codepen"></i> -->
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
+                           <span class="label">example1</span>
+                           <span class="opt-val">example1</span>
+                          
+                         </div>
+                         <div class="option">
+                           <input class="s-c top" type="radio" name="platform" value="codepen">
+                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                           <!-- <i class="fas fa-codepen"></i> -->
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
+                           <span class="label">example2</span>
+                           <span class="opt-val">example2</span>
+                         </div>
+                         <div class="option">
+                           <input class="s-c top" type="radio" name="platform" value="codepen">
+                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                           <!-- <i class="fas fa-codepen"></i> -->
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
+                           <span class="label">example3</span>
+                           <span class="opt-val">example3</span>
+                         </div>
+                         <div class="option">
+                           <input class="s-c top" type="radio" name="platform" value="codepen">
+                           <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                           <!-- <i class="fas fa-codepen"></i> -->
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg" class="fa-codepen" style="position:absolute;left:10;top:10;"/> 
+                           <span class="label">example4</span>
+                           <span class="opt-val">example4</span>
+                         </div>
+                      
+                         <div id="option-bg"></div>
+                       </div>
+                     </div>
+                   </div>
+                   
+                  <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
                      [style]="{'width':'220px','height' :'35px'}">
                      <ng-template let-item pTemplate="selectedItem">
                         <span>{{item.dashboardName}}</span>
@@ -42,28 +97,29 @@
                            <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
                         </span>
                      </ng-template>
-                  </p-dropdown>
-
-               </div>
-               <div class="col-md-4 text-right">
-                  <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                  </p-dropdown> -->
+                  <span (click)="navigateToCreateDashboard()" class="eiap-btn pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
                      <span class="plus">Create</span>
                   </span>
                   <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
                   <button class="btn" type="button" (click)="menu.toggle($event)"
-                     class="btn-dots eiap-btn btn-grphs-horztal">
+                     class="btn-dots eiap-btn ">
                      <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
                   <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="gfg"></p-menu>
+
+               </div>
+               <div class="col-md-4 text-right pr-0 pl-0">
+                 
                </div>
             </div>
          </div>
        </div>
        <div class="main-content-body ">
-         <div class="col-md-12 py-3 px-3">
+         <div class="col-md-12 p-0">
             <div class="row">
 
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 sec-2">
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 ">
                   <div class="well1-dynmic">
                      <div class="flex-container">
                         <div class="img-div">
@@ -79,19 +135,19 @@
                </div>
             </div>
          </div>
-         <div class="col-md-12 pb-3 px-3">
+         <div class="col-md-12 p-0">
             <div class="row">
 
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets;let i = index">
+               <div class="col-md-6 " *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
-                     <div class="mt-2">
+                     <div class="mt-2 align-menubtn">
                         <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
-                           class="h5">{{widget.name}}</span>
+                           class="h5 graph-text">{{widget.name}}</span>
 
-                        <button class="btn" type="button"
+                        <button class="btn" type="button" pButton 
                            (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                           <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                           <!-- <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions"> -->
                         </button>
                         <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" [model]="items">
                         </p-menu>
@@ -105,11 +161,11 @@
                     
                      <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
-                     <div style="text-align: center;margin:20px;">
+                     <div style="text-align: center;margin:10px 0px;">
                         <br>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                        <div *ngIf="widget.widget_type!='table'">
+                        <div *ngIf="widget.widget_type!='table'" class="graph-set">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
@@ -226,7 +282,7 @@
                               <option value="">Pie Chart</option>
                            </select> -->
                           
-                           <div >
+                           <div style="text-align: left;">
                            <label>{{each.label}}</label>
                               <p-dropdown [formControlName]="each.name" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                            </div>

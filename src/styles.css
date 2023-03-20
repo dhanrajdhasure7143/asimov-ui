@@ -179,8 +179,8 @@ button:disabled {
 
 .eiap-btn {
   border-radius: 4px !important;
-  margin-left: 13px;
-  margin-top: 5px;
+  margin-left: 10px;
+ 
   min-width: 90px;
 }
 
@@ -3536,10 +3536,28 @@ button.custom-popupbtn.mat-button {
 
  .p-menu-graph .p-menu-overlay {
   position: absolute;
-  top: 57px !important;
-  right: 19px !important;
-left:unset;
-width:max-content;}
+  top: 59px !important;
+    width: 120px;
+    height: 70px;
+    right: 35px !important;
+  }
+  .btn-dots {
+    width: 32px;
+     height: 32px;
+     background-color: #E9E9E9;
+     border-radius: 4px;
+      min-width: 0px;
+  }
+  .eiap-btn {
+
+    margin-top: 0px !important;
+  
+  }
+ .btn-grphs-horztal {
+    float: right;
+    line-height: 14px !important;
+    margin-left: 9px;
+  }
 
 .btn-cancel1 {
 	color: #2196F3 !important;
@@ -3584,7 +3602,7 @@ width:max-content;}
   border-radius: 7px}
 
 
-    .editfields .check1{color: #28a745;
+    /* .editfields .check1{color: #28a745;
       font-size: 12px;
       font-weight: bold;
       padding: 5px;
@@ -3599,7 +3617,7 @@ width:max-content;}
         border: 2px solid #ec1a1a;
         border-radius: 50%;
         right: 77px !important;
-        top: 15px !important;}
+        top: 15px !important;} */
 
         .pluscreate{cursor:pointer;}
 /* dynamic dashbord prime styles */
