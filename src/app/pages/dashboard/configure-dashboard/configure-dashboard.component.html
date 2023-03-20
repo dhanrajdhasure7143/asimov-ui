@@ -264,9 +264,15 @@
         <div *ngFor="let widget of widgetslist; let i=index"  >
           <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
           <div class="flex-container">
-            <div class="img-div" style="margin-right:20px;" *ngIf="widget.widget_type !='table'">
+            <div class="img-div" style="margin-right:20px;" *ngIf="widget.widget_type =='pie' || widget.widget_type =='doughnut'">
               <!-- <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" /> -->
               <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions" height="55px" width="60px"></p-chart>
+            </div>
+            <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='table'">
+              <img src="../../../../assets/images-n/dashboard/table-chart.svg" alt="">
+            </div>
+            <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='bar'">
+              <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="">
             </div>
             <!-- <div *ngIf="widget.widget_type=='table'">
               <p-table #myTab [value]="widget.widgetData">

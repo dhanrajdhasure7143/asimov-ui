@@ -101,3 +101,8 @@
 .editfields .pi-check {
   margin-left: 5px;
 }
+
+.docfilt-icon .pi-filter.icon-color {
+  font-size: 20px !important;
+  margin: 7px 15px 0px 0px !important;
+}
