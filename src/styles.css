@@ -2700,8 +2700,8 @@ input.p-inputtext {
 }
 .actionspopmenu .p-menu-overlay {
   position: absolute;
-    top: 40px !important;
-    right: 0px !important;
+    top: 33px !important;
+    right: 13px !important;
     left: unset !important;
     width: max-content;
 }
@@ -3595,6 +3595,9 @@ button.custom-popupbtn.mat-button {
 
 .tab-primest .p-tabview {
 	margin: 0px 15px;
+  position:fixed;
+  overflow-y: auto;
+    height: auto;
 }
 
 .dashboardnamerow input.p-inputtext{height: 35px;

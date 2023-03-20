@@ -272,7 +272,7 @@ h5 {
 
 .pi-check {
 	position: absolute;
-	right: -6px;
+	right: -8px;
 	top: 0px;
 }
 
@@ -319,6 +319,7 @@ h5 {
 }
 
 .graphs-align {
-	height: 395px;
-	padding: 20px !important
+	height: 400px;
+	padding: 20px !important;
+	margin-bottom:15px;
 }

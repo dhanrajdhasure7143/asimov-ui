@@ -160,7 +160,7 @@ ul.ui-p-tabview {
 }
 
 .graph {
-	height: auto;
+	height: 400px;
 	padding: 20px !important;
 }
 .graph-text{font-size: 18px;
