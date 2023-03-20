@@ -1204,9 +1204,9 @@ select.form-control {
 .createform input[type="date"],
 .modelprbody input[type="date"],
 input[type="date"] {
-  background-image: url('assets/images/Projects/calendar.svg');
-  background-position: calc(100% - 10px) center;
-  background-repeat: no-repeat;
+  background-image: url('assets/images/Projects/calendar.svg') !important;
+  background-position: calc(100% - 10px) center !important;
+  background-repeat: no-repeat !important;
   cursor: pointer;
 }
 .createform input[type="date"]::-webkit-calendar-picker-indicator,
@@ -1216,7 +1216,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
   height: 16px;
   -webkit-appearance: none;
-  background-position: calc(100% + 5px) center;
+  background-position: calc(100% + 5px) center !important;
   background-size: 12px;
   background-repeat: no-repeat;
   color: rgba(204, 204, 204, 0);
@@ -1680,7 +1680,7 @@ button.action-button.clear {
 }
 
 span.star {
-  margin-left: 4px;
+  margin-left: 3px;
   position: relative;
   top: -3px;
   font-size: 14px !important;
@@ -2636,13 +2636,17 @@ cursor: pointer;
 }
 .maincont-contentarea {
   height: 100%;
-  padding: 15px 30px 10px;
+  padding: 15px 30px 10px; /* pagescroll */
   position: relative;
 }
 .maincontent {
   height: 100%;
   width: 100%;
 }
+/* pagescroll */
+/* .main-content-head {
+  padding: 15px 30px 0px;
+} */
 .main-content-head h3 {
   font-weight: var(--main-fontweight);
   line-height: 30px;
@@ -2663,6 +2667,9 @@ cursor: pointer;
 }
 .main-content-body {
   height: calc(100% - 50px);
+  /* pagescroll */
+  /* height: calc(100% - 65px); 
+  padding: 0px 30px 10px; */ 
   overflow: auto;
   position: relative;
   margin-top: 10px;
@@ -2797,6 +2804,9 @@ span.tabscount {
 }
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
+}
+.credential-tablegrid .p-datatable-wrapper {
+  height: calc(100vh - 192px); /* for view connection manager grid */
 }
 .p-datatable .p-datatable-header,
 th {
