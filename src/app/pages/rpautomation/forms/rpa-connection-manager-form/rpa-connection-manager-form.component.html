@@ -206,14 +206,14 @@
                             <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0"  *ngIf="isScopeField">
                                     <label class="label-control" for="programname"> Scope
-                                        <span class="star">*</span>
+                                        <!-- <span class="star">*</span> -->
                                     </label>
                                     <input type="text" maxlength="256" class="form-control data" value=""
                                         formControlName="scope" placeholder="Enter Scope ">
-                                    <span
+                                    <!-- <span
                                         *ngIf="connectorForm.get('scope').invalid && connectorForm.get('scope').touched && !connectorForm.get('scope').hasError('pattern')"
                                         class="errspan required"> Scope Required*
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <div class="form-fields col-md-6 pl-0" *ngIf="isRefreshToken">
                                     <label class="label-control" for="programname"> Refresh Token

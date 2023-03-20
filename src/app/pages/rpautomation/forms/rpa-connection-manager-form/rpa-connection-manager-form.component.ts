@@ -30,7 +30,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isPassword: boolean = false;
   isRequest: boolean = false;
   isResponse: boolean = false;
-  attribute = [];
+  // attribute = [];
   validateJSON: boolean = false;
   addInputForm: FormGroup;
   selectedId: any;
@@ -89,7 +89,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       endPoint: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
       icon: ["", Validators.compose([])],
-      attribute: ["", Validators.compose([Validators.required])],
+      // attribute: ["", Validators.compose([Validators.required])],
       grantType: ["", Validators.compose([Validators.required])],
       code: ["", Validators.compose([Validators.required])],
       redirect_uri: ["", Validators.compose([Validators.required])],
@@ -103,7 +103,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       headerCheck: ["", Validators.compose([Validators.required])],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
-      scope: ["", Validators.compose([Validators.required])],
+      scope: ["", Validators.compose([])],
       refreshToken:["", Validators.compose([Validators.required])]
     });
 
