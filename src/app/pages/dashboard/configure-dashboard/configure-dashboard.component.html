@@ -1,7 +1,7 @@
 <p-splitter [style]="{'height': 'auto'}" [panelSizes]="panelSizes" layout="horizontal">
   <ng-template pTemplate>
     <div class="container-fluid">
-      <div class="col-md-12 py-3 px-3 mt-3">
+      <div class="col-md-12 sec-1 p-0">
          <div class="row main-content-head">
             <div class="col-md-4 pl-0">
                <h3>
@@ -9,10 +9,10 @@
                </h3>
             </div>
             <div class="col-md-8 pr-0 text-right">
-              <button *ngIf="isCreate==1" class="btn btn-primary eiap-btn" (click)="saveDashBoard()">Done</button>
-              <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="canelUpdate()">Cancel</button>
-              <button *ngIf="isCreate==0" class="btn btn-primary eiap-btn"(click)="Updatedconfiguration()">Update</button>
-              <button class="btn-dots eiap-btn" (click)="menu.toggle($event)">
+              <button pButton *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
+              <button pButton *ngIf="isCreate==0" class="p-button p-new-cancelbtn"(click)="canelUpdate()">Cancel</button>
+              <button pButton  *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
+              <button class="btn" type="button" class="btn-dots eiap-btn " (click)="menu.toggle($event)">
                 <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
               </button>
               <p-menu class="actionspopmenu p-menu-graph1"  #menu [popup]="true"  [model]="items">
@@ -22,7 +22,7 @@
 
         </div>
       
-        <div class="col-md-12">
+        <div class="col-md-12 sec-1 p-0">
           <div class="well flex-container">
              <div class="img-div">
                 <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
@@ -40,7 +40,7 @@
            </div>
         </div>
      </div>
-      <div class="col-md-12 px-3 sec2-align" pDroppable="item" (onDrop)="drop()">
+      <div class="col-md-12 p-0" pDroppable="item" (onDrop)="drop()">
         <div class="row">
 
 
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 py-3 px-3 metrics-space">
+      <div class="col-md-12 p-0 metrics-space">
         <div class="row">
           <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let j=index" >
             <div class="well1-dynmic graphs-align" >
@@ -254,12 +254,20 @@
       </p-tabPanel>
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
         <div class="col-md-12 mb-2" style="height:50px;">
-          <div class="col-md-6"></div>
+         <div class="row">
+            <div class="col-md-6 pl-0" >
+              <input class="form-control toolbar-search" type="text" placeholder="Search">
+              <mat-icon matSuffix style="font-size: 1.2em">
+                <img src="../../../../assets/images/search.svg" alt="" class="search-align">
+              </mat-icon>
+            </div>
+          
           <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
             <select class="form-control data">
               <option value="">All Widgets</option>
             </select>
           </div>
+        </div>
         </div>
         <div *ngFor="let widget of widgetslist; let i=index"  >
           <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >

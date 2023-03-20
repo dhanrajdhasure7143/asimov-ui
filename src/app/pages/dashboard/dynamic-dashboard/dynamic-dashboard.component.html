@@ -2,20 +2,21 @@
 <div class="maincontent">
    <div  class="h-100">
       <div class="row main-content-head">
-         <div class="col-md-4 pl-0">
+         <div class="col-md-4">
            
             <div class="row align-items-center dashboardnamerow">
                <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
                   <ng-template pTemplate="display">
                     <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3>
                   </ng-template>
+                  
                   <ng-template pTemplate="content">
                       <input type="text" [style]="{'width':'220px'}" pInputText
                           [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
                       <span class="editfields">
-                          <i class="pi pi-check check1" *ngIf="_dashboardName"
+                          <i class="pi pi-check" *ngIf="_dashboardName"
                               (click)="updateDashboardName()"></i>
-                          <i class="pi pi-times close1" (click)="onDeactivate()"></i>
+                          <i class="pi pi-times " (click)="onDeactivate()"></i>
                       </span>
                   </ng-template>
               </p-inplace>
@@ -24,7 +25,7 @@
           
          </div>
          </div>
-         <div class="col-md-8 pr-0 text-right">
+         <div class="col-md-8 text-right">
          
             <div class="row">
                <div class="col-md-8 text-right pr-0">
@@ -52,7 +53,7 @@
                   </span>
                   <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
                   <button class="btn" type="button" (click)="menu.toggle($event)"
-                     class="btn-dots eiap-btn btn-grphs-horztal">
+                     class="btn-dots eiap-btn ">
                      <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
                   </button>
                   <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
@@ -61,10 +62,10 @@
          </div>
        </div>
        <div class="main-content-body ">
-         <div class="col-md-12 py-3 px-3">
+         <div class="col-md-12 p-0">
             <div class="row">
 
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 sec-2">
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 ">
                   <div class="well1-dynmic">
                      <div class="flex-container">
                         <div class="img-div">
@@ -80,19 +81,19 @@
                </div>
             </div>
          </div>
-         <div class="col-md-12 pb-3 px-3">
+         <div class="col-md-12 p-0">
             <div class="row">
 
-               <div class="col-md-6 sec-2" *ngFor="let widget of dashboardData.widgets;let i = index">
+               <div class="col-md-6 " *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
-                     <div class="mt-2">
+                     <div class="mt-2 align-menubtn">
                         <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
-                           class="h5">{{widget.name}}</span>
+                           class="h5 graph-text">{{widget.name}}</span>
 
-                        <button class="btn" type="button"
+                        <button class="btn" type="button" pButton 
                            (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                           <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                           <!-- <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions"> -->
                         </button>
                         <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" [model]="items">
                         </p-menu>
@@ -106,11 +107,11 @@
                     
                      <!-- <i class="pi pi-times right overlay-icon"
                       (click)="onDeactivate(widget,i, 'widgets')"></i> -->
-                     <div style="text-align: center;margin:20px;">
+                     <div style="text-align: center;margin:10px 0px;">
                         <br>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                        <div *ngIf="widget.widget_type!='table'">
+                        <div *ngIf="widget.widget_type!='table'" class="graph-set">
                            <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
                         </div>
                         <div *ngIf="widget.widget_type=='table'">
@@ -216,7 +217,7 @@
                               <option value="">Pie Chart</option>
                            </select> -->
                           
-                           <div >
+                           <div style="text-align: left;">
                            <label>{{each.label}}</label>
                               <p-dropdown [formControlName]="each.name" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                            </div>
