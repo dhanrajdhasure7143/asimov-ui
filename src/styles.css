@@ -1202,7 +1202,8 @@ select.form-control {
 
 .maindivfoprm input[type="date"],
 .createform input[type="date"],
-.modelprbody input[type="date"] {
+.modelprbody input[type="date"],
+input[type="date"] {
   background-image: url('assets/images/Projects/calendar.svg');
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
@@ -1210,7 +1211,8 @@ select.form-control {
 }
 .createform input[type="date"]::-webkit-calendar-picker-indicator,
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
-.modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
+.modelprbody input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
   height: 16px;
   -webkit-appearance: none;
@@ -3249,8 +3251,8 @@ button.btn.new-cancelbtn {
 .doctree .p-tree-filter-container {
   position: fixed;
   top: 75px;
-  right: 60px;
-  width: 200px;
+  right: 35px;
+  width: 199px;
 }
 
 /* Document-Tree  Screen Styles */
