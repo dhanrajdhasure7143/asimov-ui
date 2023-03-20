@@ -168,7 +168,6 @@ export class RpaConnectionManagerComponent implements OnInit {
   saveConnector() {
     this.spinner.show();
     this.connectorName = this.createConnectorForm.get("name").value;
-    console.log(this.conn_logo)
     let req_body = {
       id: "",
       name: this.connectorName,

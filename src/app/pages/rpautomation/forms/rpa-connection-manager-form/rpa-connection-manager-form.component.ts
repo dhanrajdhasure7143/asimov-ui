@@ -170,7 +170,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
    // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
     req_body["configuration"]=JSON.stringify(object);
-    console.log(req_body);
 
     }
     else{
@@ -199,7 +198,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     req_body["configuration"]=JSON.stringify(object)
     }
-    console.log(req_body)
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
       if(res.message === "Successfully saved configured action"){
@@ -237,7 +235,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     "endPoint": this.connectorForm.value.endPoint,
     "type": this.connectorForm.value.authType
   }
-  console.log(req_body)
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
       req_body["grantType"] = "authorization_code";
       req_body["code"] = this.connectorForm.value.code;
@@ -255,7 +252,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["grantType"] = "refresh_token"
       req_body["refreshToken"] = this.connectorForm.value.refreshToken
 }
-    console.log(this.connectorForm.value)
     this.rest_api.testActions(req_body).subscribe((res:any)=>{
     if(res.data.access_token)
     this.connectorForm.get("response").setValue(res.data.access_token)
@@ -285,13 +281,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
-      console.log("authTypes",res);
       let filterData = res;
       this.authItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
       }));
-      console.log(this.authItems)
       return this.authItems;
     });
   }
@@ -423,9 +417,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   getActionById(){
+    this.spinner.show();
     this.rest_api.getActionById(this.action_id).subscribe((res)=>{
       this.actionData = res["data"]
-      console.log(res["data"],"action"); 
       if(this.actionData["actionType"] == "APIRequest"){
         this.isRequest = true;
         this.isAction = false;
@@ -485,7 +479,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRefreshToken = true;
       }
   
-      console.log(this.actionData.configurationAsJson["clientId"]);
       this.connectorForm.get("actionName").setValue(this.actionData["name"]);
       this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
       this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
@@ -507,11 +500,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("response").setValue(this.actionData["response"]);
       this.connectorForm.get("scope").setValue(this.actionData["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData["refreshToken"]);
+      this.spinner.hide();
     })
   }
 
 selectRow(){
-  console.log(this.selectedOne);
   this.requestJson_body=[]
   let obj={}
   this.selectedOne.forEach(ele=>{
@@ -590,7 +583,6 @@ updateForm(){
     }
    // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
     req_body["configuration"]=JSON.stringify(object);
-    console.log(req_body);
 
     }
     else{
