@@ -6,6 +6,8 @@
         <span class="module-header-title">
             <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }} - {{ selectedToolsetName }} </span>
             <span class="module-parent-title" *ngIf="istoolSet" >Connection Manager - {{ selectedConnector }} - Create New </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <span> Note : To add attribute dynamically use format --> [@client_id|string|********************@]\" </span>
         </span>
     </div>
     <div class="container-fluid h-scroll">
@@ -286,7 +288,7 @@
                                 <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
-                                <label class="label-control"> Request </label> <span> Hint - {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}}</span>
+                                <label class="label-control"> Request <span> Hint - {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}}</span> </label> 
                                 <textarea class="form-control api" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
                                     placeholder="Request Body">
                                 </textarea>
