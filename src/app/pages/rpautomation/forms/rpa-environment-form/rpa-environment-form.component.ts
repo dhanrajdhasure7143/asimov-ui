@@ -37,13 +37,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
       categoryId: ["", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-      portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(4)])],
+      portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(5)])],
       activeStatus: [true]
     })
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.updateenvdata)
     if (!this.isCreate && this.updateenvdata) {
       this.environmentForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
       this.environmentForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
@@ -76,7 +75,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
         categoryId: ["", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(4)])],
+        portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(5)])],
         activeStatus: [true]
       })
       this.environmentForm.get("categoryId").setValue(this.categoriesList.length == 1 ? this.categoriesList[0].categoryId : "")
