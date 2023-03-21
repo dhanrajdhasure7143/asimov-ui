@@ -10,7 +10,9 @@ import { Inplace } from 'primeng/inplace';
   templateUrl: './configure-dashboard.component.html',
   styleUrls: ['./configure-dashboard.component.css']
 })
+
 export class ConfigureDashboardComponent implements OnInit {
+  
   public panelSizes = [70, 30];
   isShowExpand: boolean = false;
   @Output() closeOverlay:any= new EventEmitter<boolean>();
@@ -52,6 +54,7 @@ ngClass: string
     private router: Router,
     private rest_api: RestApiService,
     private loader : LoaderService, private confirmationService: ConfirmationService) {
+    
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.screenId=params.dashboardId

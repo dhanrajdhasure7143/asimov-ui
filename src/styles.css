@@ -3658,3 +3658,36 @@ color:#222222
 
 
 
+
+
+/*new styles dropdown*/
+.custom-ms .p-multiselect{width: 180px;
+  height: 32px;
+  top:10px;
+  border: 1px solid #979797;
+  border-radius: 6px;}
+
+  .custom-ms .p-multiselect-panel .p-multiselect-header{display: none;}
+  .custom-ms .p-multiselect-item{display: block;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item>span{float:left;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox{float:right;}
+  .custom-ms .p-checkbox .p-checkbox-box{
+    background-image: url(./assets/images-n/dashboard/Vector.svg);
+    border:0px;
+  }
+  .custom-ms .p-checkbox .p-checkbox-box.p-highlight{
+    background: transparent !important;
+    border-color:transparent !important;
+    background-image: url(./assets/images-n/dashboard/star1.svg) !important;
+  }
+  .custom-ms .p-checkbox .p-checkbox-box.p-highlight, .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover{ background: transparent !important;
+    border-color:transparent !important;
+    background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
+  .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
+  .custom-ms .p-multiselect .p-multiselect-label{float: left;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
+  
+/*new styles dropdown*/
+
+
+

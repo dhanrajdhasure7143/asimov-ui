@@ -44,6 +44,7 @@
                         </span>
                      </ng-template>
                   </p-dropdown> -->
+                  <p-multiSelect class="custom-ms" [selectionLimit]="1" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
                   <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'32px','top' : '2px'}" autoWidth="false"
                      (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown>
