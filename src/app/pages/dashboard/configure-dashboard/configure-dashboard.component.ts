@@ -1,4 +1,4 @@
-import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter,ViewChild,Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
@@ -44,7 +44,9 @@ export class ConfigureDashboardComponent implements OnInit {
   isCreate:any
   screenId: any;
   isdefaultDashboard:any;
-  
+ 
+  @Input()
+ngClass: string
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,

@@ -1,12 +1,19 @@
 .maincontent {
-    padding: 30px 20px 10px;
+    padding: 0px 20px 10px;
     background-color: #f5f5f5;
 	overflow: auto;
 }
+.align-headright{padding-left:10px;}
+.align-headleft{padding-right:10px;}
 .main-content-body {
     overflow: inherit !important;
-	margin-top:30px !important;
+    margin-top:0px;
 }
+.sec-new{padding: 20px 0px 20px;}
+.header-fix{position: sticky;
+    top: 0;
+    background-color: whitesmoke;
+    z-index: 999;}
  .btn-dots {
 	width: 32px;
     height: 32px;
@@ -20,6 +27,16 @@
 .container-fluid {
 	background-color: #f5f5f5;
 }
+.set-pad{padding-right: 7.5px;
+padding-left: 7.5px;
+}
+/* div.set-pad:nth-last-child(n + 4){
+padding-left:0px;
+}
+div.set-pad:nth-last-child(-n + 1){
+    padding-right:0px;
+    } */
+ 
 
 .well {
 	padding: 10px 20px;
@@ -42,8 +59,8 @@
 .well1-dynmic {
 	
 	
-	padding: 7px 11px !important;
-	margin-bottom: 30px;
+	padding: 8px 16px !important;
+	margin-bottom: 20px;
 	background: #FFFFFF;
     border: 1px solid #B3BAC5;
     
@@ -84,7 +101,7 @@ h5 {
     font-size: 22px;
     line-height: 31px;
 }
-
+.main-content-head {display:flex;align-items:center;}
 .form-control {
 	border: 1px solid #7a7777 !important;
 	box-shadow: unset !important;
@@ -161,7 +178,7 @@ ul.ui-p-tabview {
 
 .graph {
 	height: 400px;
-	padding: 20px !important;
+	
 }
 .graph-text{font-size: 18px;
     font-weight: 400;
