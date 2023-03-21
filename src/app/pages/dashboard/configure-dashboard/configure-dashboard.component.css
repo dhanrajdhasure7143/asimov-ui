@@ -9,11 +9,11 @@
 }
 
 .well {
-	padding: 10px 20px;
-	margin: 20px 0px;
-	border: 0px;
-	background-color: #ffffff6e;
-	box-shadow: 2px 2px 3px 0px hsl(0, 4%, 83%);
+	padding: 10px 13px;
+    margin: 20px 0px;
+    border: 0px;
+    background-color: #FBFAFA;
+    box-shadow: 0px 0px 2px 0px #d6d3d3;
 }
 
 .well1-dynmic {
@@ -204,17 +204,6 @@ ul.ui-p-tabview {
 	width: 95%;
 }
 
-
-
-.well {
-	padding: 10px 13px;
-	margin: 20px 0px;
-	border: 0px;
-	background-color: #ffffff8f;
-	box-shadow: 0px 0px 2px 0px #d6d3d3;
-}
-
-
 .flex-container {
 	display: flex;
 
@@ -276,7 +265,7 @@ h5 {
 
 .pi-check {
 	position: absolute;
-	right: 12px;
+	right: 7px;
 	top: 9px;
 }
 
@@ -323,13 +312,19 @@ display:flex;align-items: center;}
 	width: 48px;
 	height: 48px;
 }
-
+.vertcl-img {
+	width: 11px !important;
+	margin: 5px;
+	margin-right: 11px !important;
+	margin-top: 0px !important
+}
 .graphs-align {
 	height: 400px;
-	padding: 8px 15px !important;
+	padding: 16px 16px !important;
 	margin-bottom:20px;
 }
-.metricalign{padding:10px 22px 10px 10px;}
+.graphs-align .h5{font-size:16px;}
+.metricalign{padding:10px 22px 10px 4px;}
 
 .first{box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);}
 .class1{box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);}

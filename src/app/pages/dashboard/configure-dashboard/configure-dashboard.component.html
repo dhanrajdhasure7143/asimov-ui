@@ -82,6 +82,7 @@
         <div class="row">
           <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let j=index" >
             <div class="well1-dynmic graphs-align" >
+              <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> 
                <span class="h5">{{widget.name}}</span> 
                <i class="pi pi-times right overlay-icon"
                   (click)="onDeactivate(widget,j, 'widgets')"></i>
@@ -294,7 +295,7 @@
               </table> -->
             </div>
             <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='bar'">
-              <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="">
+              <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
             </div>
            
             <div>
