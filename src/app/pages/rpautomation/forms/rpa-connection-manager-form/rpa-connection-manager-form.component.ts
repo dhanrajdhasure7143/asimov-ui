@@ -41,12 +41,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isScopeField: boolean;
   selectedToolsetName:string;
   requestJson_body:any[]=[];
-  headerForm = [{
-  index:0,
-  encodedKey: "",
-  encodedValue: "",
-  }
-];
+  headerForm = [];
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
@@ -181,23 +176,30 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "configuredConnectionId" : this.selectedId,
         "description" : "",
       }
-      this.requestJson_body.push(this.connectorForm.get("request").value)
-      let obj={};
-      obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
+      
+        this.requestJson_body=[]
+        let obj1={}
+        this.selectedOne.forEach(ele=>{
+          obj1[ele["encodedKey"]]=ele["encodedValue"];
+        })
+        this.requestJson_body.push(obj1);
+        console.log(this.requestJson_body);
+      // this.requestJson_body.push(this.connectorForm.get("request").value)
+      // let obj={};
+      // obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
       let object={
         "endPoint" : this.connectorForm.value.endPoint,
         "methodType" : this.connectorForm.value.methodType,
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
-        "httpHeaders": obj,
+        "httpHeaders": this.requestJson_body,
         // "type":"API",
-        "requestPayload":{
-          "data":this.requestJson_body
-        }
+        "requestPayload":this.connectorForm.get("request").value
     }
     req_body["configuration"]=JSON.stringify(object)
     }
+    console.log("req_body",req_body)
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
       if(res.message === "Successfully saved configured action"){
@@ -505,12 +507,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
 selectRow(){
-  this.requestJson_body=[]
-  let obj={}
-  this.selectedOne.forEach(ele=>{
-    obj[ele["encodedKey"]]=ele["encodedValue"]
-  })
-  this.requestJson_body.push(obj);
+  // this.requestJson_body=[]
+  // let obj={}
+  // this.selectedOne.forEach(ele=>{
+  //   obj[ele["encodedKey"]]=ele["encodedValue"]
+  // })
+  // this.requestJson_body.push(obj);
   // this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
 }
 
