@@ -180,9 +180,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
       
         this.requestJson_body=[]
-        let obj1={}
+        let obj={}
         this.selectedOne.forEach(ele=>{
-          obj1[ele["encodedKey"]]=ele["encodedValue"];
+          obj[ele["encodedKey"]]=ele["encodedValue"];
         })
         // this.requestJson_body.push(obj1);
       // this.requestJson_body.push(this.connectorForm.get("request").value)
@@ -194,7 +194,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
-        "httpHeaders": obj1,
+        "httpHeaders": obj,
         // "type":"API",
         "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
     }
@@ -669,9 +669,10 @@ selectRow(){
         description: "",
       };
       this.requestJson_body.push(this.connectorForm.get("request").value);
-      let obj = {};
-      obj[this.connectorForm.value.headerKey] =
-        this.connectorForm.value.headerValue;
+        let obj={}
+        this.selectedOne.forEach(ele=>{
+          obj[ele["encodedKey"]]=ele["encodedValue"];
+        })
       let object = {
         endPoint: this.connectorForm.value.endPoint,
         methodType: this.connectorForm.value.methodType,
@@ -680,15 +681,14 @@ selectRow(){
         contentType: "application/json",
         httpHeaders: obj,
         // "type":"API",
-        requestPayload: {
-          data: this.requestJson_body,
-        },
+        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
+        // requestPayload: {
+        //   data: this.requestJson_body,
+        // },
       };
       req_body["configuration"] = JSON.stringify(object);
     }
-    this.rest_api
-      .updateAction(this.action_id, req_body)
-      .subscribe((res: any) => {
+    this.rest_api.updateAction(this.action_id, req_body).subscribe((res: any) => {
         this.spinner.hide();
         if (res.message === "Successfully updated configured action") {
           Swal.fire({
