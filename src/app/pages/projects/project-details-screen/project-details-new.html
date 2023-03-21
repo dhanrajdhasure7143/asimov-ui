@@ -410,7 +410,7 @@
                                             <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" (click)="pinMessage(each)" class="testplus">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" (click)="replyMessage(each)"  class="testplus" >
                                         </div>
-                                        <p>{{each.message}}</p>
+                                        <p class="usermessage">{{each.message}}</p>
                                         <p class="userinfo">
                                             <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
                                             {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
@@ -427,7 +427,7 @@
                                             <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
                                         </div>
                                         <div>
-                                            <p>{{each.message}}</p>
+                                            <p class="usermessage">{{each.message}}</p>
                                         </div>
                                         <p class="userinfo">
                                             <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
