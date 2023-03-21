@@ -118,16 +118,19 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
   }
 
+
   saveAction() {
     this.spinner.show();
-    let req_body;
-    if (this.connectorForm.value.actionType == "Authenticated") {
-      req_body = {
-        id: "",
-        name: this.connectorForm.value.actionName,
-        audit: null,
-        actionType: this.connectorForm.value.actionType,
-        configuredConnectionId: this.selectedId,
+    let req_body
+    if(this.connectorForm.value.actionType == "Authenticated"){
+    
+    req_body=
+      {
+        "id": "",
+        "name": this.connectorForm.value.actionName,
+        "audit": null,
+        "actionType": this.connectorForm.value.actionType,
+        "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
         // "actionLogo" : ""
         actionLogo: new String(this.action_logo.split(",")[1]),
@@ -181,7 +184,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.selectedOne.forEach(ele=>{
           obj1[ele["encodedKey"]]=ele["encodedValue"];
         })
-        this.requestJson_body.push(obj1);
+        // this.requestJson_body.push(obj1);
         console.log(this.requestJson_body);
       // this.requestJson_body.push(this.connectorForm.get("request").value)
       // let obj={};
@@ -192,11 +195,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
-        "httpHeaders": this.requestJson_body,
+        "httpHeaders": obj1,
         // "type":"API",
-        "requestPayload":this.connectorForm.get("request").value
+        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
     }
-    req_body["configuration"]=JSON.stringify(object)
+    // console.log(this.connectorForm.get("request").value.replace(/\n|\t/g, ''))
+    req_body["configuration"]=JSON.stringify(object);
     }
     console.log("req_body",req_body)
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
