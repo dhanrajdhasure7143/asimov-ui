@@ -114,7 +114,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
 
   saveForm() {
-    this.spinner.show();
+    // this.spinner.show();
     let req_body
     if(this.connectorForm.value.actionType == "Authenticated"){
     
@@ -182,7 +182,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.selectedOne.forEach(ele=>{
           obj1[ele["encodedKey"]]=ele["encodedValue"];
         })
-        this.requestJson_body.push(obj1);
+        // this.requestJson_body.push(obj1);
         console.log(this.requestJson_body);
       // this.requestJson_body.push(this.connectorForm.get("request").value)
       // let obj={};
@@ -193,11 +193,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
-        "httpHeaders": this.requestJson_body,
+        "httpHeaders": obj1,
         // "type":"API",
-        "requestPayload":this.connectorForm.get("request").value
+        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
     }
-    req_body["configuration"]=JSON.stringify(object)
+    // console.log(this.connectorForm.get("request").value.replace(/\n|\t/g, ''))
+    req_body["configuration"]=JSON.stringify(object);
     }
     console.log("req_body",req_body)
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
