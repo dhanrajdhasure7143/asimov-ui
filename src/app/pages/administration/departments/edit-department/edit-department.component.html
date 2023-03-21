@@ -21,17 +21,17 @@
                 <!-- <div class="create-heading">Update Department</div> -->
                 <form [formGroup]="editDepartmentForm"  (ngSubmit)="updateDepartment()">
                     <div class="row fcont">
-                            <div class="form-fields col-md-12 p-0">
+                            <div class="form-group col-md-12 p-0">
                                 <label class="label-control">Department<span class="star">*</span></label>
                                 <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="editDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
                                 <span
                                         *ngIf="(editDepartmentForm.get('departmentName').invalid && editDepartmentForm.get('departmentName').touched)
-                                                && !editDepartmentForm.controls['departmentName'].hasError('maxlength')" class=" errspan required">Department Required*</span>
+                                                && !editDepartmentForm.controls['departmentName'].hasError('maxlength')" class="required">Department Required *</span>
                                 <span
                                         *ngIf="editDepartmentForm.controls['departmentName'].hasError('maxlength')"
-                                             class="errspan required">Maximum of 50 characters</span>
+                                             class="required">Maximum of 50 characters</span>
                             </div>
-                            <div class="form-fields col-md-12 p-0">
+                            <div class="form-group col-md-12 p-0">
                                 <label class="label-control">Owner<span class="star">*</span></label>
                                 <select  formControlName="owner" class="form-control data">
                                     <option value="" disabled>Select Owner</option>
@@ -40,7 +40,7 @@
                                 </select>
                                 <span
                                     *ngIf="editDepartmentForm.get('owner').invalid && editDepartmentForm.get('owner').touched"
-                                    class="errspan required">Owner Required*</span>
+                                    class="required">Owner Required *</span>
                             </div>
                        
                     </div>

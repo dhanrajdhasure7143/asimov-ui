@@ -25,7 +25,7 @@
                 <!-- <form #inviteUser_form="ngForm" autocomplete="off"> -->
                     <!-- <div class="row fcont"> -->
 
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Email<span class="star">*</span></label>
                         <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
                             (change)="onEmailChange()" class="form-control data" (keyup)="myemailFunction()"
@@ -38,7 +38,7 @@
                         <!-- <span class='required' *ngIf="!inviteeMail"> Email is Required</span> -->
                     </div>
                     <!-- </div> -->
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Role<span class="star">*</span></label>
                         <select [(ngModel)]="role" class="form-control data" (change)="onchangeRole($event.target.value)" name="user_role" #user_role="ngModel" required>
                             <option [value]="null" disabled hidden>Select Role</option>
@@ -60,7 +60,7 @@
                         <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="required">Role Required*</span> -->
                     </div>
 
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Department(s)<span class="star">*</span></label>
                         <!-- <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
                                           [(ngModel)]="departments"  required>

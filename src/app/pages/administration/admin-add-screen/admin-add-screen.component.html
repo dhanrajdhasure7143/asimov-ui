@@ -23,7 +23,7 @@
         </div> -->
   </div>
   <div class="main-content-body">
-      <div class="maincontform">
+      <div class="maindivfoprm">
         <form [formGroup]="insertForm">
           <div class="row">
             <div class="col-6 p-0">
@@ -36,12 +36,12 @@
                   insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
                   && !insertForm.controls['screen_Name'].hasError('maxlength')
                 " class="star">
-                  Screen Name is Required*
+                  Screen Name is Required *
                 </span>
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
-                  class="errspan required">Maximum of 255 characters*</span>
-                <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="errspan required">Only spaces
+                  class="required">Maximum of 255 characters *</span>
+                <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="required">Only spaces
                   between words are allowed.
                 </span>
               </div>
@@ -95,7 +95,7 @@
                     insertForm.get('table_Name')!.invalid &&
                     insertForm.get('table_Name')!.touched
                   " class="star">
-                    Table Name is Required*
+                    Table Name is Required *
                   </span>
                 </div>
                 <div class="form-group  col-sm-12 pr-0">
@@ -127,7 +127,7 @@
                     insertForm.get('screenType')!.invalid &&
                     insertForm.get('screenType')!.touched
                   " class="star">
-                    Screen Type is Required*
+                    Screen Type is Required *
                   </span>
                 </div>
               </div>
@@ -150,16 +150,10 @@
           </div> -->
         </form>
         <div class="row justify-content-end">
-          <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">
-            Back
-          </button>
-          <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">
-            Save
-          </button>
-          <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">
-            Update
-          </button>
-      </div>
+          <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Back</button>
+          <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">Save</button>
+          <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">Update</button>
+        </div>
       </div>
   </div>
 </div>
@@ -187,12 +181,12 @@
         updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
         && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
       " class="required">
-                Column Label Name is Required*
+                Column Label Name is Required *
               </span>
               <span
                 *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"
-                class="errspan required">Maximum of 255 characters*</span>
-              <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="errspan required">Spaces and
+                class="required">Maximum of 255 characters *</span>
+              <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="required">Spaces and
                 special characters are not allowed Excluding( _ & - )
               </span>
             </div>
@@ -226,7 +220,7 @@
             <div class="form-group col p-0">
               <label for="" class="label-control">Length</label>
               <input type="text" (keypress)="numberOnly($event)" formControlName="length" class="form-control" placeholder="Enter Length" />
-              <span *ngIf="updateColumnForm.get('length').hasError('pattern')" class="errspan required">
+              <span *ngIf="updateColumnForm.get('length').hasError('pattern')" class="required">
                 Enter a number between 0 and 255
               </span>
             </div>
