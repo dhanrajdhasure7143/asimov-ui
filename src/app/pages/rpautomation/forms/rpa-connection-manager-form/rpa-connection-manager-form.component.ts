@@ -39,16 +39,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isVerifier: boolean;
   isRefreshToken: boolean;
   isScopeField: boolean;
-  selectedToolsetName: string;
-  requestJson_body: any[] = [];
-  headerForm = [
-    {
-      index: 0,
-      encodedKey: "",
-      encodedValue: "",
-    },
-  ];
-  action_id: any;
+  selectedToolsetName:string;
+  requestJson_body:any[]=[];
+  headerForm = [];
+  action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
   isDisabled: boolean = false;
@@ -174,32 +168,38 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["configuration"] = JSON.stringify(object);
     } else {
       req_body = {
-        id: "",
-        name: this.connectorForm.value.actionName,
-        actionLogo: new String(this.action_logo.split(",")[1]),
-        actionType: this.connectorForm.value.actionType,
-        configuredConnectionId: this.selectedId,
-        description: "",
-      };
-      this.requestJson_body.push(this.connectorForm.get("request").value);
-      let obj = {};
-      obj[this.connectorForm.value.headerKey] =
-        this.connectorForm.value.headerValue;
-      let object = {
-        endPoint: this.connectorForm.value.endPoint,
-        methodType: this.connectorForm.value.methodType,
+        "id":"",
+        "name" : this.connectorForm.value.actionName,
+        "actionLogo": new String(this.action_logo.split(",")[1]),
+        "actionType" : this.connectorForm.value.actionType,
+        "configuredConnectionId" : this.selectedId,
+        "description" : "",
+      }
+      
+        this.requestJson_body=[]
+        let obj1={}
+        this.selectedOne.forEach(ele=>{
+          obj1[ele["encodedKey"]]=ele["encodedValue"];
+        })
+        this.requestJson_body.push(obj1);
+        console.log(this.requestJson_body);
+      // this.requestJson_body.push(this.connectorForm.get("request").value)
+      // let obj={};
+      // obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
+      let object={
+        "endPoint" : this.connectorForm.value.endPoint,
+        "methodType" : this.connectorForm.value.methodType,
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
-        contentType: "application/json",
-        httpHeaders: obj,
+        "contentType":"application/json",
+        "httpHeaders": this.requestJson_body,
         // "type":"API",
-        requestPayload: {
-          data: this.requestJson_body,
-        },
-      };
-      req_body["configuration"] = JSON.stringify(object);
+        "requestPayload":this.connectorForm.get("request").value
     }
-    this.rest_api.saveAction(req_body).subscribe((res: any) => {
+    req_body["configuration"]=JSON.stringify(object)
+    }
+    console.log("req_body",req_body)
+    this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
       if (res.message === "Successfully saved configured action") {
         Swal.fire({
@@ -569,15 +569,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  selectRow() {
-    this.requestJson_body = [];
-    let obj = {};
-    this.selectedOne.forEach((ele) => {
-      obj[ele["encodedKey"]] = ele["encodedValue"];
-    });
-    this.requestJson_body.push(obj);
-    // this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
-  }
+selectRow(){
+  // this.requestJson_body=[]
+  // let obj={}
+  // this.selectedOne.forEach(ele=>{
+  //   obj[ele["encodedKey"]]=ele["encodedValue"]
+  // })
+  // this.requestJson_body.push(obj);
+  // this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
+}
 
   onDelete(index) {
     this.headerForm.splice(index, 1);

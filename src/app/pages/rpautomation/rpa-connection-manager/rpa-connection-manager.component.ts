@@ -30,6 +30,8 @@ export class RpaConnectionManagerComponent implements OnInit {
   submitted: boolean;
   connectorName: any;
   conn_logo: any;
+  table_searchFields:any[]=[];
+
   constructor(
     private rest_api: RestApiService,
     private router: Router,
@@ -41,10 +43,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      name: [
-        "",
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
-      ],
+      name: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();
@@ -77,6 +76,7 @@ export class RpaConnectionManagerComponent implements OnInit {
           multi: false,
         },
       ];
+      this.table_searchFields=["name"]
     });
   }
 
