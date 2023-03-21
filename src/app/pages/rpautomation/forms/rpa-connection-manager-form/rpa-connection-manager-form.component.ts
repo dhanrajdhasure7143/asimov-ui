@@ -160,13 +160,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
       } else if (
         this.connectorForm.value.grantType == "AuthorizationCodeWithPKCE"
-      ) {
+      )  {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
         object["verifier"] = this.connectorForm.value.verifier;
-      }
+      } else if (this.connectorForm.value.grantType == "RefreshToken") {
+        req_body["grantType"]="refresh_token"
+        req_body["refreshToken"]=this.connectorForm.value.refreshToken
+  }
       // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
       req_body["configuration"] = JSON.stringify(object);
     } else {
@@ -656,6 +659,9 @@ selectRow(){
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
         object["verifier"] = this.connectorForm.value.verifier;
+      } else if (this.connectorForm.value.grantType == "RefreshToken") {
+        req_body["grantType"]="refresh_token"
+        req_body["refreshToken"]=this.connectorForm.value.refreshToken
       }
       // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
       req_body["configuration"] = JSON.stringify(object);
