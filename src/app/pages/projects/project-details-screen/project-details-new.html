@@ -410,7 +410,8 @@
                                             <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" (click)="pinMessage(each)" class="testplus">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" (click)="replyMessage(each)"  class="testplus" >
                                         </div>
-                                        <p>{{each.message}}</p>
+                                        <!-- <p>{{each.message}}</p> -->
+                                        <p  [innerHTML]="urlify(each.message) | sanitizeHtml"></p>
                                         <p class="userinfo">
                                             <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
                                             {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
@@ -427,7 +428,7 @@
                                             <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
                                         </div>
                                         <div>
-                                            <p>{{each.message}}</p>
+                                            <p  [innerHTML]="urlify(each.message) | sanitizeHtml"></p>
                                         </div>
                                         <p class="userinfo">
                                             <span *ngIf="logged_userId != each.userId">{{each.firstName}} {{each.lastName}} |</span>
@@ -453,18 +454,22 @@
                             </div>
                         </div>
                         <div class="row collabottom">
-                            <!-- <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
-                                value="Lorem ipsum dolor sit amet, consec" /> -->
                             <div class="col-sm-11 pl-0">
                                 <!-- <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
                                     [(ngModel)]="typedMessage" [autoResize]="false" ></textarea> -->
-                                    <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)"></textarea>
+                                    <textarea [style]="{'width':'100%'}" [rows]="2" (keyup)="onKeyUp($event)" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)" ></textarea>
+                                    <!-- (keyup)="$event.keyCode == 13 && sendMessage(null,'save')" (keyup.enter)="sendMessage(null,'save')"-->
                             </div>
 
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
                             <button class="btn" (click)="sendMessage(null,'save')"><img alt="send"
                                     src="./../../../../assets/images-n/projects/send.svg" /></button>
+                                    <div *ngIf="showUserList" class="usersOverLay"> 
+                                        <ul>
+                                            <li *ngFor="let user of filteredUsers" (click)="addUserInChat(user)">{{user.firstName}} {{user.lastName}}</li>
+                                        </ul>
+                                    </div>
                         </div>
                     </div>
 

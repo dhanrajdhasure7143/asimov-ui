@@ -559,6 +559,10 @@ export class DynamicDashboardComponent implements OnInit {
             },
           },
         },
+        filterValue:[
+          {filterId:"123",filtername:"department",value:"Engineering"},
+          {filterId:"123",filtername:"department",value:"Engineering"}
+      ],
         filterOptions: [{
             filter: "widget",
             name: "widget_type",
