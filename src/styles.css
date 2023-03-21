@@ -2228,13 +2228,16 @@ td.mat-cell span {
 
 .Admin-countrylist .iti.iti--allow-dropdown {
   display: flex;
+  border: 1px solid #979797;
+  border-radius: 3px;
+  /* display: flex;
   background-color: #f6f6f6 !important;
   border: 1px solid #D1D1D1;
   border-radius: 2px;
-  width: 385px;
+  width: 385px; */
 }
 .Admin-countrylist .iti__flag-container {
-  border-right: 1px solid #D1D1D1;
+  border-right: 1px solid #979797;
 }
 .Admin-countrylist .iti__country-list {
   left: 0px;
