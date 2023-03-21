@@ -84,16 +84,19 @@ export class RpaAuditlogsComponent implements OnInit {
             }
             if(item['Status']=='UpdatedConfig')
             {
-              if(item.taskName=="Login Mail")
+              if(item.changeActivity=='Email')
               {
-                if(item.changeActivity=='Email')
-                {
+                if(item.newValue!="")
+                {  
                   let newValue:any=JSON.parse(item.newValue);
-                  let previouseValue:any=JSON.parse(item.previousValue);
                   if(newValue.credentialId!=undefined)
                   {
                     item['newValue']=newValue.userName;
                   }
+                }
+                if(item["previousValue"]!="")
+                {
+                  let previouseValue:any=JSON.parse(item.previousValue);
                   if(previouseValue.credentialId!=undefined)
                   {
                     item['previousValue']=previouseValue.userName;

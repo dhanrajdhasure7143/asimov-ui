@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
-                    <input type="number" maxlength="5" onkeypress="if(this.value.length==4) return false"
+                    <input type="number" maxlength="5"  onkeypress="if(this.value.length==5) return false"
                         class="form-control" (keypress)="onlyNumbersAllowed($event)" formControlName="portNumber"
                         value="" placeholder="Enter Port">
                     <span
