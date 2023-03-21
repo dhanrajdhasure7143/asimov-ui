@@ -82,9 +82,16 @@
   <!-- <span class="txt-wh header-seperator">|</span> -->
   <div class="space">
     <div class="">
-      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
+    <button #btn type="button" pButton (click)="menu.toggle($event)">
+      <img src="./../../../../assets/images-n/common/headerimg/Demo.svg" alt="Actions">{{navigationTenantName}} <span><i class="pi pi-angle-down" style="font-size: 1.5rem"></i></span></button>
+    <p-tieredMenu #menu [model]="tenantsList" [popup]="true"></p-tieredMenu>
     </div>
   </div>
+  <!-- <div class="space">
+    <div class="">
+      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
+    </div>
+  </div> -->
   <span>
     <div *ngIf="profilePicture==true && user_fName!='null'">
       <img class="res-circle-img" [src]="retrievedImage">

@@ -55,7 +55,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user_firstletter:any;
   user_lName:any
   user_fName:any;
-
   lastName:any;
   firstName:any;
   tenantName:any;
@@ -340,11 +339,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;
+    this.tenantsList.map(item=>{
+      item["label"] = item.tenant_name,
+      item["command"]= (e) => { this.onChangeTenant(e)}
+      return item
+    })
   })
 }
 
 onChangeTenant(event:any){
-  let value = this.tenantsList.find(data=>data.tenant_name == event.value);
+  let value = event.item
+  // let value = this.tenantsList.find(data=>data.tenant_name == event.value);
   this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
   await localStorage.setItem("accessToken", data.accessToken);
   await localStorage.setItem("tenantName",value.tenant_id);
