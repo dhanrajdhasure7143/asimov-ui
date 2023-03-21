@@ -96,10 +96,13 @@
     <div *ngIf="profilePicture==true && user_fName!='null'">
       <img class="res-circle-img" [src]="retrievedImage">
     </div>
-    <div class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
+    <span *ngIf="profilePicture==false && user_fName!='null'">
+      <p-avatar [label]="user_firstletter|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
+    </span>
+    <!-- <div class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
       <span>{{user_firstletter|uppercase}}</span>
-    </div>
-    <div *ngIf=" user_fName =='null'">
+    </div> -->
+    <div *ngIf="user_fName =='null'">
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>
@@ -110,17 +113,19 @@
   </div>
   
   <span class="text-wh">
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
+    <button type="button" pButton icon="pi pi-angle-down" (click)="menu1.toggle($event)"></button>
+<p-menu #menu1 [popup]="true" [model]="items"></p-menu>
+    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
       aria-label="Example icon-button with a menu">
       <mat-icon class="menu-button" >&#xe5cf;
       </mat-icon>
-    </button>
+    </button> -->
   </span>
-  <mat-menu #menu="matMenu">
+  <!-- <mat-menu #menu="matMenu">
     <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
     <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
     <button class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
-  </mat-menu>
+  </mat-menu> -->
 </mat-toolbar>
 <!-- <ng-template #shareTemplate>
   <div class="notification-heading">
