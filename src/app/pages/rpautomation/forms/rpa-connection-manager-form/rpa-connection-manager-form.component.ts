@@ -185,7 +185,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           obj1[ele["encodedKey"]]=ele["encodedValue"];
         })
         // this.requestJson_body.push(obj1);
-        console.log(this.requestJson_body);
       // this.requestJson_body.push(this.connectorForm.get("request").value)
       // let obj={};
       // obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
@@ -554,15 +553,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm
         .get("verifier")
         .setValue(this.actionData.configurationAsJson["verifier"]);
-      this.connectorForm
-        .get("headerKey")
-        .setValue(this.actionData["headerKey"]);
-      this.connectorForm
-        .get("headerValue")
-        .setValue(this.actionData["headerValue"]);
-      this.connectorForm
-        .get("headerCheck")
-        .setValue(this.actionData["headerCheck"]);
+      // this.connectorForm
+      //   .get("headerKey")
+      //   .setValue(this.actionData["headerKey"]);
+      // this.connectorForm
+      //   .get("headerValue")
+      //   .setValue(this.actionData["headerValue"]);
+      // this.connectorForm
+      //   .get("headerCheck")
+      //   .setValue(this.actionData["headerCheck"]);
+      // this.actionData.configurationAsJson["httpHeaders"].forEach((element,index) => {
+        
+      // });
+      let headers_data = this.actionData.configurationAsJson["httpHeaders"]
+      Object.keys(headers_data).map((key,i) => (
+      this.headerForm.push({
+        index: i,
+        encodedKey: key,
+        encodedValue: headers_data[key],
+      })
+      ));
+      this.selectedOne = this.headerForm;
       this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"]);
       this.connectorForm.get("response").setValue(this.actionData["response"]);
       this.connectorForm.get("scope").setValue(this.actionData["scope"]);
