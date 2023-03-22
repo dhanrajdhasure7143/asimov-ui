@@ -1778,7 +1778,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         sequences: this.getsequences(),
         isBotCompiled: this.isBotCompiled
       };
-
       if (this.checkorderflag == false) {
         this.spinner.hide();
         Swal.fire("Warning", "Please check connections", "warning");
