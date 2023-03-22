@@ -1784,6 +1784,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         Swal.fire("Warning", "Please check connections", "warning");
       } else {
         let previousBotDetails: any = { ...{}, ...this.finalbot };
+        this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
           (response: any) => {
             this.spinner.hide();
@@ -1857,6 +1858,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         );
         //return false;
       }
+  }
+
+
+  assignTaskConfiguration()
+  {
+    let tasksList:any=[]
+    this.toolset.forEach((toolsetItem:any)=>{
+      toolsetItem.tasks.forEach((item:any)=>{
+        tasksList.push(item);
+      })
+    })
+    this.final_tasks=[...this.final_tasks.map((item:any)=>{
+      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId);
+      item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
+      return item;
+    })]
   }
 
   savedGroupsData: any = [];
