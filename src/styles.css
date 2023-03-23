@@ -72,7 +72,7 @@
 .bjs-powered-by {
   position: absolute;
   bottom: 5px !important;
-  right: 10px !important;
+  right: 100px !important;
   opacity: 0.1;
   width: max-content;
 }
@@ -1911,13 +1911,15 @@ button.btn.btn-primary:first-child {
 
 .bpm-notation-fields {
   position: absolute !important;
-  bottom: 8px;
-  right: 35px;
+  bottom: 15px;
+  right: 45px;
   width: auto;
   top: auto;
   z-index: 100;
 }
-
+as-split-area.as-split-area {
+  overflow-y: hidden !important;
+}
 
 
 .custom-content .mat-menu-content {
