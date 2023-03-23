@@ -1,53 +1,78 @@
-<div class="maincont">
-    <div class="maincont-contentarea">
-        <div class="maincontent">
-            <div class="row main-content-head">
-                <h3>
-                    <label id="popup_title">
-                        <a (click)="backToaction()">
-                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                        </a>
-                    </label>
-                    <span class="title_text">
-                        <span *ngIf="!istoolSet" >
-                            <span>Connection Manager | {{ selectedConnector }} | </span>
-                            <span class="sub_title_text">{{ selectedToolsetName }}</span>
-                        </span>
-                        <span *ngIf="istoolSet" >
-                            <span>Connection Manager | </span><span class="sub_title_text">{{ selectedConnector }} - Create New</span>
-                        </span>
-                    </span>
-                </h3>
-            </div>
-            <div class="main-content-body">
-                <span class="userhint"><b>Note:</b> To add attribute dynamically use format --> [@client_id|string|********************@]\" </span>
-                <div class="maindivfoprm">
+<div class="maincont"style="background-color: white;">
+    <div class="module-heading title">
+        <span class="module-back-button">
+            <i class="fas fa-arrow-left" aria-hidden="true" (click)="backToaction()"></i>
+        </span>
+        <span class="module-header-title">
+            <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }} - {{ selectedToolsetName }} </span>
+            <span class="module-parent-title" *ngIf="istoolSet" >Connection Manager - {{ selectedConnector }} - Create New </span>
+            <span class="note"> Note : To add attribute dynamically use format --> [@client_id|string|1000.****************0001@] </span>
+        </span>
+    </div>
+    <div class="container-fluid h-scroll">
+        <div class="maindivfoprm">
+            <div class="innersform card-form">
+                <div class="container">
                     <form [formGroup]="connectorForm">
-                        <div class="row">
-                            <div class="form-group col-md-6 pl-0">
-                                <label class="label-control" for="programname">Action Name
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" maxlength="256" class="form-control data" value=""
-                                    formControlName="actionName"
-                                    [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
-                                    placeholder="Enter Action Name">
-                                <span 
-                                    *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched &&      !connectorForm.get('actionName').hasError('pattern')" class="required">Action Name Required *</span>
+                        <div class="row prj-crt-form">
+                            <div class="col-md-12 d-flex">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Action Name
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="actionName"
+                                        [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
+                                        placeholder="Enter Action Name">
+                                    <span
+                                        *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched && !connectorForm.get('actionName').hasError('pattern')"
+                                        class="errspan required"> Action Name Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Action Type
+                                        <span class="star">*</span>
+                                    </label>
+                                    <select name="" id="" class="form-control data" formControlName="actionType" [disabled] = "isDisabled"
+                                        (change)="actionChange($event.target.value)">
+                                        <option value="" hidden disabled>Select Action</option>
+                                        <option value="null" hidden disabled>Select Action</option>
+                                        <option value="undefined" hidden disabled>Select Action</option>
+                                        <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
+                                    </select>
+                                    <span
+                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
+                                        class="errspan required"> Action Type Required*
+                                    </span>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6 pr-0">
-                                <label class="label-control" for="programname">Action Type
-                                    <span class="star">*</span>
-                                </label>
-                                <select name="" id="" class="form-control data" formControlName="actionType"
-                                    (change)="actionChange($event.target.value)">
-                                    <option value="" hidden disabled>Select Action</option>
-                                    <option value="null" hidden disabled>Select Action</option>
-                                    <option value="undefined" hidden disabled>Select Action</option>
-                                    <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
-                                </select>
-                                <span 
-                                    *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')" class="required">Action Type Required *</span>
+                            <div class="col-md-12 d-flex">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Method Type
+                                        <span class="star">*</span>
+                                    </label>
+                                    <select name="" id="" class="form-control data" formControlName="methodType" [disabled] = "isCreate"
+                                      (change)="methodChange($event.target.value)">
+                                        <option value="" hidden disabled>Select Method</option>
+                                        <option value="null" hidden disabled>Select Method</option>
+                                        <option value="undefined" hidden disabled>Select Method</option>
+                                        <option *ngFor="let method of methodItems"> {{method.value}}</option>
+                                    </select>
+                                    <span
+                                        *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Action Icon
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="file" class="form-control" accept="image/png, image/svg" (change)="imageUpload($event)"
+                                        formControlName="" placeholder="Upload Icon">
+                                    <!-- <span
+                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
+                                        class="errspan required"> Method Type Required* </span> -->
+                                </div>
                             </div>
                             <div class="form-group col-md-6 pl-0">
                                 <label class="label-control" for="programname"> Method Type
@@ -63,15 +88,225 @@
                                     *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')" class="required"> Method Type Required *
                                 </span>
                             </div>
-                            <div class="form-group col-md-6 pr-0">
-                                <label class="label-control" for="programname"> Action Icon
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="file" class="form-control" accept="image/png, image/svg" (change)="imageUpload($event)"
-                                                formControlName="" placeholder="Upload Icon">
-                                <!-- <span
-                                    *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
-                                                class="required"> Method Type Required* </span> -->
+                            <div class="col-md-12 d-flex">
+                                <div class="form-fields col-md-6 pl-0" *ngIf="isAction">
+                                    <label class="label-control" for="programname"> Authentication Type
+                                        <span class="star">*</span>
+                                    </label>
+                                    <select name="" id="" class="form-control data" formControlName="authType"
+                                        (change)="authChange($event.target.value)">
+                                        <option value="" hidden disabled>Select Authentication</option>
+                                        <option value="null" hidden disabled>Select Authentication</option>
+                                        <option value="undefined" hidden disabled>Select Authentication</option>
+                                        <option *ngFor="let auth of authItems" [value]="auth.type"> {{auth.value}}</option>
+                                    </select>
+                                    <span
+                                        *ngIf="connectorForm.get('authType').invalid && connectorForm.get('authType').touched && !connectorForm.get('authType').hasError('pattern')"
+                                        class="errspan required"> Authentication Type Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0" *ngIf="isAuthenticated">
+                                    <label class="label-control" for="programname"> Grant Type
+                                        <span class="star">*</span>
+                                    </label>
+                                    <select name="" id="" class="form-control data" formControlName="grantType"
+                                        (change)="grantChange($event.target.value)">
+                                        <option value="" hidden disabled>Select Method</option>
+                                        <option value="null" hidden disabled>Select Method</option>
+                                        <option value="undefined" hidden disabled>Select Action</option>
+                                        <option *ngFor="let grant of grantItems" [value]="grant.type"> {{grant.value}}</option>
+                                    </select>
+                                    <span
+                                        *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
+                                        class="errspan required"> Grant Type Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isAuthorization">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Code
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="code" placeholder="Enter Code">
+                                    <span
+                                        *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
+                                        class="errspan required"> Code Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Redirect URL
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="redirect_uri" placeholder="Enter Redirect URL">
+                                    <span
+                                        *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
+                                        class="errspan required"> Redirect URL Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isPassword">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Username
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="userName" placeholder="Enter Username">
+                                    <span
+                                        *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
+                                        class="errspan required"> Username Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Password
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="password" maxlength="256" class="form-control data" value=""
+                                        formControlName="password" placeholder="Enter Password">
+                                    <span
+                                        *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
+                                        class="errspan required"> Password Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isClient">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Client ID
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="clientId" placeholder="Enter Client ID">
+                                    <span
+                                        *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
+                                        class="errspan required"> Client ID Required*
+                                    </span>
+                                </div>
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Client Secret
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="clientSecret" placeholder="Enter Client Secret">
+                                    <span
+                                        *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
+                                        class="errspan required"> Client Secret Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex" *ngIf="isVerifier">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control" for="programname"> Code Verifier
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="verifier" placeholder="Enter Code Verifier">
+                                    <span
+                                        *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
+                                        class="errspan required"> Code Verifier Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex">
+                                <div class="form-fields col-md-6 pl-0"  *ngIf="isScopeField">
+                                    <label class="label-control" for="programname"> Scope
+                                        <!-- <span class="star">*</span> -->
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="scope" placeholder="Enter Scope ">
+                                    <!-- <span
+                                        *ngIf="connectorForm.get('scope').invalid && connectorForm.get('scope').touched && !connectorForm.get('scope').hasError('pattern')"
+                                        class="errspan required"> Scope Required*
+                                    </span> -->
+                                </div>
+                                <div class="form-fields col-md-6 pl-0" *ngIf="isRefreshToken">
+                                    <label class="label-control" for="programname"> Refresh Token
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                        formControlName="refreshToken" placeholder=" Refresh Token">
+                                    <span
+                                        *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"
+                                        class="errspan required"> Refresh Token Required*
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf="isHeader">
+                                <div class="form-fields pl-0">
+                                    <label class="label-control"> Header <span class="star">*</span> </label>
+                                    <table class="table table-bordered mt-2 api">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th scope="col">Key</th>
+                                                <th scope="col">Value</th>
+                                                <th>
+                                                    <button mat-mini-fab color="primary" (click)="addHeader()">
+                                                        <mat-icon> add </mat-icon>
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let each of headerForm; let i = index">
+                                                <td>
+                                                    <p-checkbox [value]="each" [(ngModel)]="selectedOne" (click)="selectRow()" [ngModelOptions]="{standalone: true}"></p-checkbox>
+                                                </td>
+                                                <td> <input type="text" name="test+i" id="" class="form-control"
+                                                    placeholder="Key" [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}"> </td>
+                                            <td> 
+                                                <input type="text" name="" id="" class="form-control" placeholder="Value" [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}"> </td>
+                                            <td>
+                                                <span> 
+                                                    <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="" (click)="onDelete(i)">
+                                                </span>
+                                            </td>        
+                                        </tr>
+                                        </tbody>
+                                        <!-- <tbody [formGroup]="addInputForm">
+                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index" [formGroupName]="i">
+                                                <td>
+                                                    <p-checkbox [value]="addInpuGroup" [(ngModel)]="selectedOne" (click)="selectRow()"></p-checkbox>
+                                                </td>
+                                                <td> <input type="text" name="" id="" class="form-control"
+                                                        placeholder="Key" formControlName="encodedKey"> </td>
+                                                <td> <input type="text" name="" id="" class="form-control"
+                                                        placeholder="Value" formControlName="encodedValue"> </td>
+                                                <td> <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""></td>        
+                                            </tr>
+                                        </tbody> -->
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-12 martsascl form-fields api" *ngIf="isRequest">
+                                <label class="label-control"> Attributes <span class="star">*</span> </label>
+                                <p-chips formControlName="attribute" styleClass="attribute" separator=","
+                                    placeholder="Enter Attributes"></p-chips>
+                            </div> -->
+                            <div class="col-md-12 martsascl api" *ngIf="isResponse">
+                                <label class="label-control"> Response </label>
+                                <textarea class="form-control api" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                    placeholder="Response">
+                                </textarea>
+                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
+                            </div>
+                            <div class="col-md-12 martsascl api" *ngIf="isRequest">
+                                <label class="label-control"> Request </label> 
+                                <textarea class="form-control api" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
+                                    placeholder="Request Body">
+                                </textarea>
+                                <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('request').value" class="text-success"> Valid JSON Format </span>
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-primary" [disabled]="isRequest || isUpdate"
+                                    (click)="testAction()"> Test </button>
+                                &nbsp;
+                                <button *ngIf="!isUpdate" type="button" class="btn btn-primary"
+                                    (click)="saveAction()"> Save </button>
+                                <button *ngIf="isUpdate" type="button" class="btn btn-primary"
+                                    (click)="updateAction()"> Update </button>    
                             </div>
                         </div>
                         <div class="col-md-12 p-0 martsascl form-group">

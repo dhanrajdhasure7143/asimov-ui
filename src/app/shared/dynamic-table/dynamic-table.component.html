@@ -75,7 +75,7 @@
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <span *ngIf="!col.multi && col.ColumnName!='action'">
                         <span *ngIf="screenTable !='environment_table'">
-                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount' && col.ColumnName!='connectionLogo'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
+                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'"> {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }} </span>
                             <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
                             <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
                             <span *ngIf="col.ColumnName == 'amount'">${{rowData[col.ColumnName]}}</span>
@@ -86,6 +86,9 @@
                                     height:'100px',width:'100px',
                                     'background-image': 'url(' + rowData[col.ColumnName] + ')'
                                   }" ></div> -->
+                            </span>
+                            <span *ngIf="col.ColumnName == 'actionLogo'">
+                                <img [src]="'data:image/png;base64,'+rowData['actionLogo']" style="height:40px;" alt="img">
                             </span>
                         </span>
                         <span *ngIf="screenTable =='environment_table'">

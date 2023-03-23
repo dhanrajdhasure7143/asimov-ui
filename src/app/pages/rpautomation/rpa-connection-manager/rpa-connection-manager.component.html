@@ -53,20 +53,10 @@
     </div>
     <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid">
-            <app-dynamic-table 
-                [representatives]="representatives" 
-                [columns_list]="columns_list"
-                [table_data]="connectorTable" 
-                (viewDetails)="viewDetails($event)" 
-                (deleteItem)="deleteById($event)"
-                [screenTable]="'common'" 
-                [checkBoxShow]="true" 
-                (selectedData)="readSelectedData($event)" 
-                [dataKeyId]="'id'"
-                [show_search_field]="true"
-                [show_column_filter]="true"
-                [show_clear_filter]="true"
-                >
+            <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list" [table_data]="connectorTable"
+                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)" [screenTable]="'common'" [checkBoxShow]="true"
+                (selectedData)="readSelectedData($event)" [dataKeyId]="'id'" [show_search_field]="true" [show_column_filter]="true"
+                [show_clear_filter]="true" [search_fields]="table_searchFields">
             </app-dynamic-table>
         </div>
     </div>
@@ -122,54 +112,3 @@
             </div>
         </app-split-overlay>
 </div>
-
-    <!-- <div [hidden]="!isAuthOverlay">
-        <app-split-overlay (closeOverlay)="closeAuthOverlay($event)">
-            <h5 class="create-title"> Configuration Options </h5>
-            <div class="container modal-body col-lg-12">
-                <form [formGroup]="configurationOptions">
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="garnt_type"> Grant Type <span class="star">*</span></label>
-                         <p-dropdown [options]="grantType" formControlName="GrantType" autoWidth="false"
-                          [(ngModel)]="optionValue1" [style]="{'width':'100%'}" placeholder="Select Authorization"
-                         (onChange)="changeAuth($event)" required></p-dropdown>
-                            <span *ngIf="configurationOptions.get('GrantType').invalid && configurationOptions.get('GrantType').touched" class="required"> Grant Type Required* </span>
-                        </div>
-                    <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="access_token"> Access Token <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}"  formControlName="accessToken" placeholder="Enter Access Token">
-                        <span *ngIf="configurationOptions.get('accessToken').invalid && configurationOptions.get('accessToken').touched" class="required"> Access Token Required* </span>
-                    </div>
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="client_id"> Client ID <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}" formControlName="clienId" placeholder="Enter Client ID">
-                        <span *ngIf="configurationOptions.get('clienId').invalid && configurationOptions.get('clienId').touched" class="required"> Client ID Required* </span>
-                    </div>
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="client_secret"> Client Secret <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}"  formControlName="clientSecret" placeholder="Enter Client Secret">
-                        <span *ngIf="configurationOptions.get('clientSecret').invalid && configurationOptions.get('clientSecret').touched" class="required"> Client Secret Required* </span>
-                    </div>
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="user_name"> User Name <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}" formControlName="userName" placeholder="Enter User Name">
-                        <span *ngIf="configurationOptions.get('userName').invalid && configurationOptions.get('userName').touched" class="required"> User Name Required* </span>
-                    </div>
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="password"> Password <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}" formControlName="password" placeholder="Enter Password">
-                        <span *ngIf="configurationOptions.get('password').invalid && configurationOptions.get('password').touched" class="required"> Password Required* </span>
-                    </div>
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="scope"> Scope <span class="star">*</span></label>
-                        <input type="text" pInputText [style]="{'width':'100%'}" formControlName="scope" placeholder="Enter Scope">
-                        <span *ngIf="configurationOptions.get('scope').invalid && configurationOptions.get('scope').touched" class="required"> Scope Required* </span>
-                    </div>
-                    <div class="form-footer">
-                        <button class="btn btn-default btn-test">Reset</button> 
-                        <button class="btn btn-primary" [disabled]="configurationOptions.invalid" (click)="saveConfigurations()"> Submit </button>
-                    </div>
-                </form>
-            </div>
-        </app-split-overlay>
-    </div> -->

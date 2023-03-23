@@ -54,24 +54,26 @@
                             </div>
                         </div>
                     </div>
+                    <div>
                         <app-dynamic-table
-                         [representatives]="representatives" 
-                         [columns_list]="columns_list"
-                         [table_data]="actionTable" 
-                         (viewDetails)="viewDetails($event)" 
-                         (deleteItem)="deleteById($event)"
-                         [screenTable]="'common'" 
-                         [checkBoxShow]="checkBoxShow" 
-                         (selectedData)="readSelectedData($event)"
-                         [dataKeyId]="'id'" 
-                         [show_search_field]="true" 
-                         [show_column_filter]="true"
-                         [show_clear_filter]="true"
-                         >
-                        </app-dynamic-table>
+                        [representatives]="representatives" 
+                        [columns_list]="columns_list"
+                        [table_data]="actionTable" 
+                        (viewDetails)="viewDetails($event)" 
+                        (deleteItem)="deleteById($event)"
+                        [screenTable]="'common'" 
+                        [checkBoxShow]="checkBoxShow" 
+                        (selectedData)="readSelectedData($event)"
+                        [dataKeyId]="'id'" 
+                        [show_search_field]="true" 
+                        [show_column_filter]="true"
+                        [show_clear_filter]="true"
+                        [search_fields]="table_searchFields"
+                        >
+                       </app-dynamic-table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-   
