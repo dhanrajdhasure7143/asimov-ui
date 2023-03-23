@@ -925,6 +925,7 @@ connectToWebSocket() {
 
 urlify(text) {
   var urlRegex = /(https?:\/\/[^\s]+)/g;
+  if(urlRegex)
   return text.replace(urlRegex, function(url) {
     return '<a href="' + url + '" target="_blank">' + url + '</a>';
   })
@@ -1343,7 +1344,7 @@ onFilteredUsers(usernames: string[]) {
 addUserInChat(user:any)
 {
     const messageInput = document.getElementById('message-input') as HTMLInputElement;
-    // messageInput.value = messageInput.value.replace(/@\w+/, `<span class="icon-color">${user.fullName}</span>`);
+    // messageInput.value = messageInput.value.replace(/@\w+/, `<strong class="icon-color">${user.fullName}</strong>`);
     messageInput.value = messageInput.value.replace(/@\w+/, `${user.fullName}`);
     this.showUserList=false;
 }
