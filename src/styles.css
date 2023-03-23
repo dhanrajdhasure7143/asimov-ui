@@ -2798,8 +2798,9 @@ span.tabscount {
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
 }
-.bps-approvalgrid .p-datatable-wrapper {
-  height: calc(100vh - 195px); /* for bps approval grid */
+.bps-approvalgrid .p-datatable-wrapper,
+.credential-tablegrid .p-datatable-wrapper {
+  height: calc(100vh - 195px); /* for bps-approval,view connection manager grid */
 }
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
@@ -2807,9 +2808,7 @@ span.tabscount {
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
 }
-.credential-tablegrid .p-datatable-wrapper {
-  height: calc(100vh - 192px); /* for view connection manager grid */
-}
+
 .p-datatable .p-datatable-header,
 th {
   border: unset !important;
