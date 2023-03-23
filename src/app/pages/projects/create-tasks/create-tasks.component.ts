@@ -248,7 +248,7 @@ taskDescriptionMaxLength(value){
      // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
-      message: 'This user not in this project, Are you sure that you want to Invite him to this project?',
+      message: 'This user not in this project, Are you sure that you want to Invite them to this project?',
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
