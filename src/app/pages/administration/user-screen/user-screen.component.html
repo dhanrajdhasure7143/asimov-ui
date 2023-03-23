@@ -1,42 +1,55 @@
-<div class="container-fluid">
-  <div class="row no-gutter">
-    <div class="col-12">
-      <div class="header">
-        <div class="module-heading">
-          <span class="module-back-button" routerLink="/pages/admin/admin-screen-list">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
-          </span>
-          <span class="h6 text-title"> {{ selectedScreen.Screen_Name }} </span>
+<div class="maincontent">
+  <div class="h-100">
+        <!-- <div class="row main-content-head">
+                  <div class="col-md-4 pl-0">
+                  
+                    <label id="popup_title">
+                        <a  routerLink="/pages/admin/admin-screen-list">
+                          <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                        </a>
+                    </label>
+                    <span class="text-title"> {{ selectedScreen.Screen_Name }} </span>
+                
         </div>
-        <div class="page-bg">
-          <div class="padding-20">
-            <div class="page-body box-shadow">
+        <div class="col-md-8 pr-0 text-right">
+        <div  class="text-right px-2" *ngIf="selectedScreen.Screen_Name" >
+          <button
+            [disabled]="!selectedScreen.Allow_Insert"
+            (click)="createForm()"
+            class="">
+            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
+          </button>
+        </div>
+      </div>
+        </div> -->
+        <div class="main-content-body tablist-cont">
               <div *ngIf="displayFlag == 'DisplayTable'">
                 <div class="page-header">
-                  <div class="row py-2">
-                    <div class="col screen">
-                      <div
-                        class="text-left px-3 w-100 h6"
-                        *ngIf="selectedScreen.Screen_Name"
-                      >
-                        View {{ selectedScreen.Screen_Name }} Details
-                      </div>
+                  <!-- <div class="row py-2">
+                      <div class="text-left">
+                       <a  routerLink="/pages/admin/admin-screen-list">
+                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                          </a>
+                         <span class="text-title"> {{ selectedScreen.Screen_Name }} </span>
+                          </div>
+                    </div> -->
+                  <div class="row main-content-head " style="padding-bottom: 13px;">
+                    <div class="col-md-4 pl-0">
+                      <h3>
+                        <label id="popup_title">
+                          <a routerLink="/pages/admin/admin-screen-list">
+                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                          </a>
+                        </label>
+                        <span class="title_text"> {{ selectedScreen.Screen_Name }} </span>
+                      </h3>
                     </div>
-                    <div class="col screen">
-                      <div
-                        class="text-right px-2"
-                        *ngIf="selectedScreen.Screen_Name"
-                      >
-                        <div>
-                          <button
-                            [disabled]="!selectedScreen.Allow_Insert"
-                            (click)="createForm()"
-                            class="btn btn-sm btn-primary"
-                          >
-                            Add
-                          </button>
-                        </div>
-                      </div>
+                    <div class="col-md-8 pr-0 text-right">
+                      <div class="text-right px-2" *ngIf="selectedScreen.Screen_Name">
+                        <button [disabled]="!selectedScreen.Allow_Insert" (click)="createForm()" class="">
+                          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
+                        </button>
+                       </div>
                     </div>
                   </div>
                   <app-dynamic-table
@@ -101,10 +114,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
   </div>
-</div>
