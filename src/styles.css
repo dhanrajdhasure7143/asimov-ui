@@ -3039,6 +3039,9 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 2.8rem !important;
   margin: 0px !important
 }
+.p-tieredmenu .p-menuitem-link {
+  box-shadow: none !important;
+}
 .space {
   position: relative !important;
 }

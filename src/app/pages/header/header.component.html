@@ -83,7 +83,7 @@
     <div class="space d-flex">
       <button #btn type="button" pButton (click)="menu.toggle($event)">
         <img src="./../../../../assets/images-n/common/headerimg/Demo.svg" alt="Actions">{{navigationTenantName}}
-        <span class="d-flex"><i class="pi pi-angle-down"></i></span></button>
+        <span class="d-flex ml-3"><i class="pi pi-angle-down"></i></span></button>
       <p-tieredMenu #menu [model]="tenantsList" [popup]="true"></p-tieredMenu>
     </div>
 
