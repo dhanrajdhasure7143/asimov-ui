@@ -339,13 +339,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
   }
 
-  methodChange(event){
-    if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
-     this.isRequest = false;
-    } else {
-      this.isRequest = true;    
-    }
-  }
+  // methodChange(event){
+  //   if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
+  //    this.isRequest = false;
+  //   } else {
+  //     this.isRequest = true;    
+  //   }
+  // }
 
   authChange(event) {
     if (event == "OAUTH2") {
@@ -516,11 +516,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRefreshToken = true;
       }
 
-      if (this.actionData["actionType"] == "APIRequest" && this.actionData["methodType"] == "GET") { 
-        this.isRequest = false;
-      } else {
-        this.isRequest = true;    
-      }
+      // if (this.actionData["actionType"] == "APIRequest" && this.actionData["methodType"] == "GET") { 
+      //   this.isRequest = false;
+      // } else {
+      //   this.isRequest = true;    
+      // }
 
       this.connectorForm.get("actionName").setValue(this.actionData["name"]);
       this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
