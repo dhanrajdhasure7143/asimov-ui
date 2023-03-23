@@ -5,63 +5,13 @@
     position: absolute;
     z-index: 2;
   }
-  .example-spacer {
-    flex: 1 1 auto;
-  }
+
   .txt-wh{
     color: #fff;
     line-height: 18px;
     margin-left: 13px;
   }
-  .abrand_div img{
-      width:160px;
-  }
-  .main-header{
-      padding: 0px !important;
-  }
-  
-  .header{
-      height: 60px !important;
-  }
-  .abrand{
-      height: 80px;
-      color: #001c47 !important;
-  }
-  .abrand_div{
-      cursor: pointer;
-      outline: none !important;
-  }
-  .notification-icon{
-      margin-top: 0px !important;
-      margin-right: 20px;
-      cursor: pointer;
-  }
-  .icon_middle label{
-      margin-top: 5px;
-      line-height: 1.4 !important;
-  }
-  .drop_down a{
-      padding: 10px 4px !important;
-      color: #287ad6 !important;
-      font-size: 14px;
-      float: left;
-  }
-  .drop_down a:hover{
-      color: #287ad6 !important;
-      font-weight: bold !important;
-  }
-  .dropdown-menu{
-      border: 1px solid #287ad6;
-  }
-  .header_icon{
-      padding-right: 7px !important;
-  }
-  .hd_icon{
-      padding-right: 5px;
-  }
-  .dropdown-menu {
-      min-width: 170px !important;
-  }
+
   .res-circle {
     width: 38px;
     border-radius: 100%;
@@ -96,69 +46,9 @@
       font-weight: bold;
       font-size: 11px;
     }
-    .user-name .user-fName{
-      padding-left: 12px !important;
-    }
-    .user-name h6{
-      padding-left: 12px !important;  
-    }
-    .user-info-dropdwn{
-        padding-left: 15px;
-        margin-top: 20px;
-    }
-    .header-bottom {
-      margin-top: 10px;
-    }
-    .nav-header-content{
-        padding:0px 15px !important;
-    }
-    .header-bottom .icon_middle{
-      text-align: center;
-    }
-  
-    .icon_middle:hover label{
-      color: white;
-    }
-    .icon_middle:hover img{
-      filter: invert(1) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
-    }
-    .icon_middle:hover{
-      background-color: #0062cf !important;
-    }
-    .icon_middle{
-      padding: 5px;
-    }
-    .active p label{
-        color: white;
-    }
-    .notification-icon img{
-      filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2) !important;
-    }
-    .abrand_div img{
-        margin-top: 3px;
-    }
-    .borderRight{
-        height: 30px !important;
-        border-right: 2px solid white;
-        margin-right: 20px;
-    }
-  
-  .breadcrumb-home{
-      padding-left: 3px;
-  }
+
   .ep-pad{
     padding:10px !important;
-  }
-  .bread-crumb span{
-   cursor: pointer;
-  }
-  .bread-crumb span:hover{
-    font-weight: 600 !important;
-  }
-
-
-  ::ng-deep mat-toolbar.ep-header-new{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
   }
 
   /* New Styles */
@@ -174,10 +64,7 @@
   span.txt-wh.bread-crumb {
     font-size: 15px;
   }  
-  span.headerlogo img { 
-    height: 34px;  
-    margin: 0px 80px 0px 0px; 
-  }
+
   .header-rgttext {
     font-weight: 400;
     display: block;
@@ -189,16 +76,7 @@
   .header-seperator {
     color: #ddd !important;
     margin: 0px 10px 0px 0px;
-  }
-  .mat-icon.header-dropicon {
-    position: relative;
-    right: -5px;
-    opacity:1;
-  }
-  span.header-demotxt .txt-u {
-    font-size: 15px;
-    font-weight: 400;
-    margin-left: 10px;
+    font-size: 24px;
   }
 
   .header-logdiv {
@@ -217,15 +95,6 @@ button.example-icon.txt-wh.mat-icon-button.mat-button-base:hover {
 
 span.txt-wh.bread-crumb {
   display: none;
-}
-.text-white button.txt-wh.mat-menu-trigger.mat-icon-button.mat-button-base {
-  width: auto;
-  height: auto;
-}
-
-.text-white button.txt-wh.mat-menu-trigger.mat-icon-button.mat-button-base mat-icon.menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
-  width: auto;
-  height: auto;
 }
 
 button.ep-pad {
@@ -456,11 +325,28 @@ border-radius:4px;
 }
 
 
-.space{
-  margin-right: 15px;
+/* header new css */
+.space button.p-element.p-button.p-component {
+  background-color: transparent !important;
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
-.space p-dropdown.form-control.data {
-  /* background: transparent; */
-  border: none !important;
-  /* color: #fff !important; */
+.space img {
+  margin-right: 10px;
 }
+.pi.pi-angle-down, span.p-button-icon.pi.pi-angle-down {
+  font-size: 1.25rem !important;
+}
+.space span.ar {
+  margin-left: 10px;
+  display: contents;
+}
+button.p-element.p-button.p-component.p-button-icon-only {
+  background-color: transparent;
+  border: none;
+  margin-left: 10px;
+  box-shadow: none;
+  outline:none;
+}
+/* header new css */

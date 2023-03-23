@@ -153,10 +153,10 @@
             </div>
         </form>
         <div class="createform-footer">
-            <button class="btn btn-default" (click)="resetDBForm()">Reset</button>&nbsp;
-            <button class="btn btn-primary btn-test" [disabled]="dbForm.invalid"
-                (click)="testConnection('insert')">Test Connection</button>&nbsp;
-            <button class="btn btn-primary" [disabled]="dbForm.invalid" (click)="saveDBConnection()">
+            <button class="btn new-cancelbtn" (click)="resetDBForm()">Reset</button>
+            <button class="btn bluebg-button btn-test" [disabled]="dbForm.invalid"
+                (click)="testConnection('insert')">Test Connection</button>
+            <button class="btn bluebg-button" [disabled]="dbForm.invalid" (click)="saveDBConnection()">
                 <span *ngIf="isDatabase">Save</span>
                 <span *ngIf="!isDatabase">Update</span>
             </button>

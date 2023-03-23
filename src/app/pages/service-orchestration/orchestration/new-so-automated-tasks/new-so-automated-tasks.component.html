@@ -1240,7 +1240,7 @@
                         </div>
                             <div class="modal-body addTasksBlock">
                                 <form [formGroup]="addTaskForm" #addtask="ngForm" (ngSubmit)="addexistingtasks()">
-                                    <div class="col-md-12 p-0 form-fields">
+                                    <div class="col-md-12 p-0 form-group">
                                         <label class="label-control">Task(s)<span class="star">*</span></label>
                                         <ng-select formControlName="tasks" [multiple]="true" placeholder="Select tasks" [(ngModel)]="tasks" required>
                                             <ng-option *ngFor="let task of taskslist" [value]="task.taskId">{{task.taskName}}</ng-option>

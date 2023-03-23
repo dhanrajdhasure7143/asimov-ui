@@ -511,11 +511,11 @@ mat-paginator button:disabled{
 .con-envr {
   padding: 10px 10px 0px !important;
 }
-.environment-tablegrid, .credential-tablegrid {
+/* .environment-tablegrid, .credential-tablegrid {
   width: 100%;
   overflow: auto;
   height: calc(100vh - 209px);
-}
+} */
 
 /* New Styles for Scheduler Overlay  */
 

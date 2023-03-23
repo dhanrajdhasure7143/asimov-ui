@@ -28,12 +28,6 @@ th.checkboxth:before {
     font-weight: 600;
 }
 
-
-.p-input-icon-right{
-    float: right;
-    margin-right: 5px;
-}
-
 .editButton{
     border : none !important;
 }
