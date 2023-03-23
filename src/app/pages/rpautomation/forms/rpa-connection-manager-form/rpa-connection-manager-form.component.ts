@@ -547,7 +547,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         ));
         this.selectedOne = this.headerForm;
       }
-      this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"]);
+      this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"].data);
       this.connectorForm.get("response").setValue(this.actionData["response"]);
       this.connectorForm.get("scope").setValue(this.actionData["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData["refreshToken"]);
