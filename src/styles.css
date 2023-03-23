@@ -3031,6 +3031,23 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   float: right;
   margin-right: 5px;
 }
+/* headercss */
+.p-avatar.p-avatar-circle {
+  background-color: #fff !important;
+  color: #098de6 !important;
+  width: 2.8rem !important;
+  height: 2.8rem !important;
+  margin: 0px !important
+}
+.space {
+  position: relative !important;
+}
+.space .p-tieredmenu.p-component.p-tieredmenu-overlay {
+  position: absolute !important;
+  top: 45px !important;
+  left: -80px !important;
+}
+/* headercss */
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */

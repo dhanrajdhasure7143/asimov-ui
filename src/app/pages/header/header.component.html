@@ -24,7 +24,6 @@
     <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i
         class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
   </span> -->
-  <span class="example-spacer"></span>
   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/search.svg">
   </button>
@@ -79,53 +78,56 @@
       </div>
     </button>
   </mat-menu> -->
-  <!-- <span class="txt-wh header-seperator">|</span> -->
-  <div class="space">
-    <div class="">
-    <button #btn type="button" pButton (click)="menu.toggle($event)">
-      <img src="./../../../../assets/images-n/common/headerimg/Demo.svg" alt="Actions">{{navigationTenantName}} <span><i class="pi pi-angle-down" style="font-size: 1.5rem"></i></span></button>
-    <p-tieredMenu #menu [model]="tenantsList" [popup]="true"></p-tieredMenu>
-    </div>
-  </div>
-  <!-- <div class="space">
-    <div class="">
-      <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
-    </div>
-  </div> -->
-  <span>
-    <div *ngIf="profilePicture==true && user_fName!='null'">
-      <img class="res-circle-img" [src]="retrievedImage">
-    </div>
-    <span *ngIf="profilePicture==false && user_fName!='null'">
-      <p-avatar [label]="user_firstletter|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
-    </span>
-    <!-- <div class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
-      <span>{{user_firstletter|uppercase}}</span>
-    </div> -->
-    <div *ngIf="user_fName =='null'">
-      <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
-    </div>
-  </span>
-  <div class="txt-wh">
-    <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span>
-    <span class="header-rgttext" *ngIf="user_fName == null">-</span>
-    <span class="header-userrole">{{userRole}}</span>
-  </div>
   
-  <span class="text-wh">
-    <button type="button" pButton icon="pi pi-angle-down" (click)="menu1.toggle($event)"></button>
-<p-menu #menu1 [popup]="true" [model]="items"></p-menu>
-    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
-      aria-label="Example icon-button with a menu">
-      <mat-icon class="menu-button" >&#xe5cf;
-      </mat-icon>
-    </button> -->
-  </span>
-  <!-- <mat-menu #menu="matMenu">
-    <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
-    <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
-    <button class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
-  </mat-menu> -->
+  <div class="ml-auto d-flex align-items-center">
+    <div class="space d-flex">
+      <button #btn type="button" pButton (click)="menu.toggle($event)">
+        <img src="./../../../../assets/images-n/common/headerimg/Demo.svg" alt="Actions">{{navigationTenantName}}
+        <span class="d-flex"><i class="pi pi-angle-down"></i></span></button>
+      <p-tieredMenu #menu [model]="tenantsList" [popup]="true"></p-tieredMenu>
+    </div>
+
+    <!-- <div class="space">
+      <div class="">
+        <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
+      </div>
+    </div> -->
+    <span class="txt-wh header-seperator">|</span>
+    <span>
+      <div *ngIf="profilePicture==true && user_fName!='null'">
+        <img class="res-circle-img" [src]="retrievedImage">
+      </div>
+      <span *ngIf="profilePicture==false && user_fName!='null'">
+        <p-avatar [label]="user_firstletter|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
+      </span>
+      <!-- <div class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
+        <span>{{user_firstletter|uppercase}}</span>
+      </div> -->
+      <div *ngIf="user_fName =='null'">
+        <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
+      </div>
+    </span>
+    <div class="txt-wh">
+      <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span>
+      <span class="header-rgttext" *ngIf="user_fName == null">-</span>
+      <span class="header-userrole">{{userRole}}</span>
+    </div>
+    
+    <span class="text-wh">
+      <button type="button" pButton icon="pi pi-angle-down"  (click)="menu1.toggle($event)"></button>
+  <p-menu #menu1 [popup]="true" [model]="items"></p-menu>
+      <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
+        aria-label="Example icon-button with a menu">
+        <mat-icon class="menu-button" >&#xe5cf;
+        </mat-icon>
+      </button> -->
+    </span>
+    <!-- <mat-menu #menu="matMenu">
+      <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
+      <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
+      <button class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
+    </mat-menu> -->
+  </div>
 </mat-toolbar>
 <!-- <ng-template #shareTemplate>
   <div class="notification-heading">
