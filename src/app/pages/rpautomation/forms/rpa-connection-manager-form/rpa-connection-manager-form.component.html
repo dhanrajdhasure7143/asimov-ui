@@ -40,6 +40,7 @@
                                         <option value="undefined" hidden disabled>Select Action</option>
                                         <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
                                     </select>
+                                    <!-- <p-dropdown [options]="actionItems.type" formControlName = "actionType" [style]="{'width':'100%'}" (change)="actionChange($event.target.value)" placeholder="Select Action"></p-dropdown> -->
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
                                         class="errspan required"> Action Type Required*

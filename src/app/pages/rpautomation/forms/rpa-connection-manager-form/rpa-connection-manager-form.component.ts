@@ -342,6 +342,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   methodChange(event){
     if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
      this.isRequest = false;
+    } else {
+      this.isRequest = true;    
     }
   }
 
@@ -516,86 +518,45 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       if (this.actionData["actionType"] == "APIRequest" && this.actionData["methodType"] == "GET") { 
         this.isRequest = false;
+      } else {
+        this.isRequest = true;    
       }
 
       this.connectorForm.get("actionName").setValue(this.actionData["name"]);
-      this.connectorForm
-        .get("endPoint")
-        .setValue(this.actionData.configurationAsJson["endPoint"]);
-      this.connectorForm
-        .get("actionType")
-        .setValue(this.actionData["actionType"]);
-      this.connectorForm
-        .get("methodType")
-        .setValue(this.actionData.configurationAsJson["methodType"]);
+      this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
+      this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
+      this.connectorForm.get("methodType").setValue(this.actionData.configurationAsJson["methodType"]);
       this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
-      this.connectorForm
-        .get("authType")
-        .setValue(this.actionData.configurationAsJson["type"]);
-      this.connectorForm
-        .get("grantType")
-        .setValue(this.actionData.configurationAsJson["grant_type"]);
-      this.connectorForm
-        .get("code")
-        .setValue(this.actionData.configurationAsJson["code"]);
-      this.connectorForm
-        .get("redirect_uri")
-        .setValue(this.actionData.configurationAsJson["redirect_uri"]);
-      this.connectorForm
-        .get("userName")
-        .setValue(this.actionData.configurationAsJson["userName"]);
-      this.connectorForm
-        .get("password")
-        .setValue(this.actionData.configurationAsJson["password"]);
-      this.connectorForm
-        .get("clientId")
-        .setValue(this.actionData.configurationAsJson["clientId"]);
-      this.connectorForm
-        .get("clientSecret")
-        .setValue(this.actionData.configurationAsJson["clientSecret"]);
-      this.connectorForm
-        .get("verifier")
-        .setValue(this.actionData.configurationAsJson["verifier"]);
-      // this.connectorForm
-      //   .get("headerKey")
-      //   .setValue(this.actionData["headerKey"]);
-      // this.connectorForm
-      //   .get("headerValue")
-      //   .setValue(this.actionData["headerValue"]);
-      // this.connectorForm
-      //   .get("headerCheck")
-      //   .setValue(this.actionData["headerCheck"]);
-      // this.actionData.configurationAsJson["httpHeaders"].forEach((element,index) => {
-        
-      // });
-      let headers_data = this.actionData.configurationAsJson["httpHeaders"]
-      Object.keys(headers_data).map((key,i) => (
-      this.headerForm.push({
-        index: i,
-        encodedKey: key,
-        encodedValue: headers_data[key],
-      })
-      ));
-      this.selectedOne = this.headerForm;
+      this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
+      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grant_type"]);
+      this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
+      this.connectorForm.get("redirect_uri").setValue(this.actionData.configurationAsJson["redirect_uri"]);
+      this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
+      this.connectorForm.get("password").setValue(this.actionData.configurationAsJson["password"]);
+      this.connectorForm.get("clientId").setValue(this.actionData.configurationAsJson["clientId"]);
+      this.connectorForm.get("clientSecret").setValue(this.actionData.configurationAsJson["clientSecret"]);
+      this.connectorForm.get("verifier").setValue(this.actionData.configurationAsJson["verifier"]);
+      if(this.actionData.configurationAsJson["httpHeaders"]){
+        let headers_data = this.actionData.configurationAsJson["httpHeaders"]
+        Object.keys(headers_data).map((key,i) => (
+        this.headerForm.push({
+          index: i,
+          encodedKey: key,
+          encodedValue: headers_data[key],
+        })
+        ));
+        this.selectedOne = this.headerForm;
+      }
       this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"]);
       this.connectorForm.get("response").setValue(this.actionData["response"]);
       this.connectorForm.get("scope").setValue(this.actionData["scope"]);
-      this.connectorForm
-        .get("refreshToken")
-        .setValue(this.actionData["refreshToken"]);
+      this.connectorForm.get("refreshToken").setValue(this.actionData["refreshToken"]);
       this.spinner.hide();
     });
   }
 
-selectRow(){
-  // this.requestJson_body=[]
-  // let obj={}
-  // this.selectedOne.forEach(ele=>{
-  //   obj[ele["encodedKey"]]=ele["encodedValue"]
-  // })
-  // this.requestJson_body.push(obj);
-  // this.connectorForm.get("request").setValue(JSON.stringify(this.requestJson_body))
-}
+  selectRow(){
+  }
 
   onDelete(index) {
     this.headerForm.splice(index, 1);
