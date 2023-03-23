@@ -1,4 +1,4 @@
-import { Component, OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter,ViewChild,Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem,ConfirmationService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
@@ -10,7 +10,9 @@ import { Inplace } from 'primeng/inplace';
   templateUrl: './configure-dashboard.component.html',
   styleUrls: ['./configure-dashboard.component.css']
 })
+
 export class ConfigureDashboardComponent implements OnInit {
+  
   public panelSizes = [70, 30];
   isShowExpand: boolean = false;
   @Output() closeOverlay:any= new EventEmitter<boolean>();
@@ -44,12 +46,15 @@ export class ConfigureDashboardComponent implements OnInit {
   isCreate:any
   screenId: any;
   isdefaultDashboard:any;
-  
+ 
+  @Input()
+ngClass: string
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private rest_api: RestApiService,
     private loader : LoaderService, private confirmationService: ConfirmationService) {
+    
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
       this.screenId=params.dashboardId

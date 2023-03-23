@@ -154,7 +154,10 @@
                             </span>
                         </span>
                         <span *ngIf="show_download_btn" class="editButton" >
-                            <button pButton pRipple class="p-button-secondary" label="Download" icon="pi pi-download" type="button"  (click)="downloadRow(rowData)"></button>
+                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="bottom">
+                                <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
+                                class="default-img testplus">
+                            </a>
                         </span>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">

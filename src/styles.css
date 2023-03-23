@@ -2711,8 +2711,8 @@ input.p-inputtext {
 }
 .actionspopmenu .p-menu-overlay {
   position: absolute;
-    top: 33px !important;
-    right: 13px !important;
+    top: 37px !important;
+    right: 0px !important;
     left: unset !important;
     width: max-content;
 }
@@ -2734,13 +2734,20 @@ input.p-inputtext {
 /* Tabs NEW Styles Start */
 .p-tabview .p-tabview-nav {
   border: none !important;
-  background: transparent !important;
+  background: #ffffff !important;
   height: 70px;
+}
+.p-tabview-nav-container {
+  
+  position: sticky !important;
+  top: 0;
+  z-index: 999;
+  padding-right:7px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
   color: var(--main-txtcolor) !important;
-  padding: 15px 0px 0px !important;
+  padding: 15px 7px 0px 0px !important;
   height: 100%;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -3101,6 +3108,11 @@ button.btn.bluebg-button {
   color: #fff;
   padding: 6px 30px;
 }
+button.btn.update {
+ 
+  padding: 5px 12px !important;
+}
+
 .btn-p-align .p-button:enabled:active {
   background-color: var(--main-bluecolor);
   color: #fff;
@@ -3129,6 +3141,7 @@ button.btn.new-cancelbtn {
   border: transparent !important;
   color: var(--main-bluecolor) !important;
   font-size: 16px !important;
+  padding:5px 12px !important;
 }
 .p-new-cancelbtn:focus {
   background-color: transparent !important;
@@ -3551,7 +3564,7 @@ button.custom-popupbtn.mat-button {
   position: absolute;
   top: 59px !important;
     width: 120px;
-    height: 70px;
+    height: 75px;
     right: 35px !important;
   }
   .btn-dots {
@@ -3607,10 +3620,10 @@ button.custom-popupbtn.mat-button {
 }
 
 .tab-primest .p-tabview {
-	margin: 0px 15px;
+	margin: 0px 8px 0px 15px;
   position:fixed;
   overflow-y: auto;
-    height: auto;
+    height: 100%;
 }
 
 .dashboardnamerow input.p-inputtext{height: 35px;
@@ -3653,6 +3666,39 @@ font-size: 20px;
 line-height: 28px;
 color:#222222
 }
+
+
+
+
+
+/*new styles dropdown*/
+.custom-ms .p-multiselect{width: 180px;
+  height: 32px;
+  top:10px;
+  border: 1px solid #979797;
+  border-radius: 6px;}
+
+  .custom-ms .p-multiselect-panel .p-multiselect-header{display: none;}
+  .custom-ms .p-multiselect-item{display: block;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item>span{float:left;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox{float:right;}
+  .custom-ms .p-checkbox .p-checkbox-box{
+    background-image: url(./assets/images-n/dashboard/Vector.svg);
+    border:0px;
+  }
+  .custom-ms .p-checkbox .p-checkbox-box.p-highlight{
+    background: transparent !important;
+    border-color:transparent !important;
+    background-image: url(./assets/images-n/dashboard/star1.svg) !important;
+  }
+  .custom-ms .p-checkbox .p-checkbox-box.p-highlight, .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover{ background: transparent !important;
+    border-color:transparent !important;
+    background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
+  .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
+  .custom-ms .p-multiselect .p-multiselect-label{float: left;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
+  
+/*new styles dropdown*/
 
 
 

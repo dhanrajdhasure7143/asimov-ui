@@ -1,17 +1,19 @@
 <p-splitter [style]="{'height': 'auto'}" [panelSizes]="panelSizes" layout="horizontal">
   <ng-template pTemplate>
     <div class="container-fluid">
-      <div class="col-md-12 sec-1 p-0">
+      <div class="header-fix">
+      <div class="col-md-12 sec-new">
          <div class="row main-content-head">
             <div class="col-md-4 pl-0">
                <h3>
                   <span class="title_text">{{_paramsData.dashboardName}} </span>
                </h3>
             </div>
-            <div class="col-md-8 pr-0 text-right">
+            <div class="col-md-8 pr-0 text-right ">
+              
               <button pButton *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
-              <button pButton *ngIf="isCreate==0" class="p-button p-new-cancelbtn"(click)="canelUpdate()">Cancel</button>
-              <button pButton  *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
+              <button pButton *ngIf="isCreate==0" class="p-button p-new-cancelbtn update"(click)="canelUpdate()">Cancel</button>
+              <button pButton  *ngIf="isCreate==0" class="btn bluebg-button update"(click)="Updatedconfiguration()">Update</button>
               <button class="btn" type="button" class="btn-dots eiap-btn " (click)="menu.toggle($event)">
                 <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions" >
               </button>
@@ -20,10 +22,10 @@
             </div>
          </div>
 
-        </div>
+        </div></div>
       
         <div class="col-md-12 sec-1 p-0">
-          <div class="well flex-container">
+          <div class="well flex-container mt-0">
              <div class="img-div">
                 <img src="..\assets\images-n\dashboard\warning2.svg"  class="warng-img"/>
              </div>
@@ -80,6 +82,7 @@
         <div class="row">
           <div class="col-md-6 sec-1"  *ngFor="let widget of addedWidgets; let j=index" >
             <div class="well1-dynmic graphs-align" >
+              <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> 
                <span class="h5">{{widget.name}}</span> 
                <i class="pi pi-times right overlay-icon"
                   (click)="onDeactivate(widget,j, 'widgets')"></i>
@@ -220,14 +223,17 @@
             <input type="text" pInputText  placeholder="Search">         
         </span> -->
           <div class="row">
-            <div class="col-md-6 pl-0" >
+            <div class="col-md-6 pl-0" style="padding-right:10px;">
               <input class="form-control toolbar-search" type="text" placeholder="Search">
               <mat-icon matSuffix style="font-size: 1.2em">
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
               </mat-icon>
             </div>
-            <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
-             
+            <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right;padding-left:10px;">
+              <select class="form-control data">
+                  <option value="">All Metrics</option>
+                </select>
+              
               <!-- <select class="form-control data">
                 <option value="">All metrics</option>
               </select> -->
@@ -235,8 +241,8 @@
           </div>
         </div>
         <div *ngFor="let item of metrics_list; let i=index">
-          <div class="col-md-12 mb-2 p-0" pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
-            (onDragEnd)="dragEnd()" (click)="onSelectMetric(item,i)">
+          <div class="col-md-12 mb-2 metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
+            (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
             <div class="flex-container">
               
               <!-- <div class="img-div">
@@ -246,62 +252,56 @@
               <div>
                 <h5>{{item.name}}</h5>
                 <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
-                <p style="font-size: 14px; color: #808080cc;">{{item.description}}</p>
+                <p class="metricwidget-tabP">{{item.description}}</p>
               </div>
             </div>
           </div>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
-        <div class="col-md-12 mb-2" style="height:50px;">
+        <div class="col-md-12 p-0"  style="height:50px;">
          <div class="row">
-            <div class="col-md-6 pl-0" >
+            <div class="col-md-6 pl-0 pr-0" >
               <input class="form-control toolbar-search" type="text" placeholder="Search">
               <mat-icon matSuffix style="font-size: 1.2em">
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
               </mat-icon>
             </div>
           
-          <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right">
-            <select class="form-control data">
-              <option value="">All Widgets</option>
-            </select>
-          </div>
+         
         </div>
         </div>
         <div *ngFor="let widget of widgetslist; let i=index"  >
-          <div class="col-md-12 mb-2 p-0"  (click)="addWidget(widget,i)" >
+          <div class="col-md-12   metricalign" [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'" (click)="addWidget(widget,i)" >
           <div class="flex-container">
             <div class="img-div" style="margin-right:20px;" *ngIf="widget.widget_type =='pie' || widget.widget_type =='doughnut'">
               <!-- <img src="..\assets\images-n\dashboard\chart1.png" width="60px" height="55px" /> -->
               <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions" height="55px" width="60px"></p-chart>
             </div>
-            <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='table'">
-              <img src="../../../../assets/images-n/dashboard/table-chart.svg" alt="">
-            </div>
-            <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='bar'">
-              <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="">
-            </div>
-            <!-- <div *ngIf="widget.widget_type=='table'">
-              <p-table #myTab [value]="widget.widgetData">
-              <ng-template pTemplate="header" let-columns>
+            <div class="widicon" *ngIf="widget.widget_type =='table'">
+               <img src="../../../../assets/images-n/dashboard/table1.png" width="60px;" alt="">
+              <!-- <table>
+                <thead>
                   <tr>
                     <th>Name</th>
                     <th>Next Run</th>
                   </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-people>
-                  <tr>
-                      <td>{{ people.name }}</td>
-                      <td>{{ people.value }}</td>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let each of widget.widgetData">
+                    <td>{{ each.name }}</td>
                   </tr>
-              </ng-template>
-          </p-table>
-             </div> -->
+                </tbody>
+              </table> -->
+            </div>
+            <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='bar'">
+              <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
+            </div>
+           
             <div>
               <h5>{{widget.name}}</h5>
               <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
-              <p style="font-size: 14px; color: #808080cc;">{{widget.description}}</p>
+              <p class="metricwidget-tabP">{{widget.description}}</p>
             </div>
           </div>
           </div>

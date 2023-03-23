@@ -7,7 +7,10 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { Inplace } from "primeng/inplace";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ChartDataset, ChartOptions, TooltipItem } from "chart.js";
-
+interface City {
+  name: string,
+  code: string
+}
 interface People {
   firstname?: string;
   lastname?: string;
@@ -20,6 +23,9 @@ interface People {
   styleUrls: ["./dynamic-dashboard.component.css"],
 })
 export class DynamicDashboardComponent implements OnInit {
+  cities: City[];
+
+    selectedCities: City[];
   tableData: People[] = [];
   cols: any[] = [];
   @ViewChild("inplace") inplace!: Inplace;
@@ -59,6 +65,13 @@ export class DynamicDashboardComponent implements OnInit {
     private loader: LoaderService,
     private confirmationService: ConfirmationService
   ) {
+    this.cities = [
+      {name: 'New York', code: 'NY'},
+      {name: 'Rome', code: 'RM'},
+      {name: 'London', code: 'LDN'},
+      {name: 'Istanbul', code: 'IST'},
+      {name: 'Paris', code: 'PRS'}
+  ];
     this.activeRoute.queryParams.subscribe((res) => {
       this._paramsData = res;
       // this.selectedDashBoardName= this._paramsData.dashboardName
