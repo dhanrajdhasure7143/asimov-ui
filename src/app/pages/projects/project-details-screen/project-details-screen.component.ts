@@ -28,6 +28,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 @ViewChild("inplace3") inplace3!: Inplace;
 @ViewChild("inplace4") inplace4!: Inplace;
 @ViewChild("inplace5") inplace5!: Inplace;
+//@ViewChild("op") messageUsersList:any;
 projectDetails: any={};
 lastname: string;
 firstname: string;
@@ -225,6 +226,8 @@ entered_folder_name:string='';
 _pinnedMessage:any[]=[];
 filteredUsers:any;
 interval:any;
+showUserList:boolean= false;
+
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -920,6 +923,14 @@ connectToWebSocket() {
 // });
 };
 
+urlify(text) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function(url) {
+    return '<a href="' + url + '" target="_blank">' + url + '</a>';
+  })
+  // or alternatively
+  // return text.replace(urlRegex, '<a href="$1">$1</a>')
+}
 
 sendMessage(item,type) {
   let message
@@ -1302,17 +1313,39 @@ truncateValue(replyMessage) {
 }
 
 onFilteredUsers(usernames: string[]) {
+  // this.messageUsersList.toggle({});
   this.filteredUsers = this.existingUsersList.filter(user => {
     if(usernames.length>0)
-      if((usernames[0].toLowerCase()).includes(user.firstName.toLowerCase()))
+    {
+      console.log(usernames[0])
+      let username= user.firstName.toLowerCase()+" "+user.lastName.toLowerCase();
+      console.log(username)
+      if(username.toLocaleLowerCase().startsWith(usernames[0].toLocaleLowerCase()))
       {
-        return user;
+        console.log(username)
+        return username;
       } 
+    }
   });
+  console.log(this.filteredUsers)
   if(this.filteredUsers.length>0){
-    const messageInput = document.getElementById('message-input') as HTMLInputElement;
-    messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
+    this.showUserList = true;
+  }else{
+    this.showUserList = false;
   }
+  // if(this.filteredUsers.length>0){
+  //   const messageInput = document.getElementById('message-input') as HTMLInputElement;
+  //   messageInput.value = messageInput.value.replace(/@\w+/, `${this.filteredUsers[0].fullName}`);
+  // }
+}
+
+
+addUserInChat(user:any)
+{
+    const messageInput = document.getElementById('message-input') as HTMLInputElement;
+    // messageInput.value = messageInput.value.replace(/@\w+/, `<span class="icon-color">${user.fullName}</span>`);
+    messageInput.value = messageInput.value.replace(/@\w+/, `${user.fullName}`);
+    this.showUserList=false;
 }
 
 onCancel(){
@@ -1327,6 +1360,17 @@ truncatemessage(data){
   if(data && data.length > 66)
     return data.substr(0,65)+'...';
   return data;
+}
+
+onKeyUp(event: KeyboardEvent) {
+  // const inputText = (event.target as HTMLInputElement).value;
+  // const atIndex = inputText.lastIndexOf('@');
+  // if (atIndex !== -1) {
+  //   this.filteredUsers = this.existingUsersList;
+  //   this.showUserList = true;
+  // } else {
+  //   this.showUserList = false;
+  // }
 }
 
 }

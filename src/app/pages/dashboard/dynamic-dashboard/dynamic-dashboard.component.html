@@ -1,8 +1,9 @@
 
 <div class="maincontent">
-   <div  class="h-100">
-      <div class="row main-content-head">
-         <div class="col-md-4">
+  
+      <div class="header-fix">
+      <div class="row main-content-head sec-new">
+         <div class="col-md-4 align-headright">
            
             <div class="row align-items-center dashboardnamerow">
                <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
@@ -25,10 +26,10 @@
           
          </div>
          </div>
-         <div class="col-md-8 text-right">
+         <div class="col-md-8 text-right align-headleft">
          
             <div class="row">
-               <div class="col-md-8 text-right pr-0">
+               <div class="col-md-12 text-right pr-0">
                   <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
                      [style]="{'width':'220px','height' :'35px'}">
                      <ng-template let-item pTemplate="selectedItem">
@@ -43,12 +44,11 @@
                         </span>
                      </ng-template>
                   </p-dropdown> -->
-                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'35px'}" autoWidth="false"
+                  <p-multiSelect class="custom-ms" [selectionLimit]="1" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect>
+                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'32px','top' : '2px'}" autoWidth="false"
                      (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown>
-               </div>
-               <div class="col-md-4 text-right">
-                  <span (click)="navigateToCreateDashboard()" class="pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+                  <span (click)="navigateToCreateDashboard()" class="eiap-btn pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
                      <span class="plus">Create</span>
                   </span>
                   <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
@@ -58,14 +58,16 @@
                   </button>
                   <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
                </div>
+               
             </div>
          </div>
        </div>
-       <div class="main-content-body ">
+      </div>
+       
          <div class="col-md-12 p-0">
             <div class="row">
 
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 ">
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 set-pad">
                   <div class="well1-dynmic">
                      <div class="flex-container">
                         <div class="img-div">
@@ -82,9 +84,9 @@
             </div>
          </div>
          <div class="col-md-12 p-0">
-            <div class="row">
+            <div class="row set-pad1">
 
-               <div class="col-md-6 " *ngFor="let widget of dashboardData.widgets;let i = index">
+               <div class="col-md-6 set-pad" *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
                      <div class="mt-2 align-menubtn">
@@ -242,8 +244,8 @@
             
             </div>
          </div>
-     </div>
-      </div>
+     
+     
    </div>
 
 <p-confirmDialog [style]="{width: '20vw'}" key="positionDialog2" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

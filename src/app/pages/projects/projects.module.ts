@@ -63,6 +63,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProjectDocumentEditorComponent } from './project-details-screen/project-document-editor/project-document-editor.component';
 import { ScrollIntoViewDirective } from './directives/scroll-into-view.directive';
 import { UserFilterDirective } from './directives/user-filter.directive';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 const materialModules: any[] = [
     
     
@@ -78,7 +79,8 @@ const materialModules: any[] = [
      ProjectTaskDetailsComponent,
      ProjectsDocumentComponent,
      ProjectDocumentEditorComponent,
-     UserFilterDirective],
+     UserFilterDirective,
+     SanitizeHtmlPipe],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

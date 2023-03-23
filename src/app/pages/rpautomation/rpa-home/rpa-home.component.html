@@ -491,21 +491,21 @@
     <div class="modal-body modelprbody">
         <div class="container p-0" style="width:100%">
             <div class="row">
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
                     <label>Select Environment</label>
                     <select class="form-control" value="" [(ngModel)]="importenv">                        
                       <option value="">Select Environment</option>
                       <option *ngFor="let env of environments" [value]="env.environmentId">{{env.environmentName}}</option>
                   </select>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
                     <label>Select Category</label>
                     <select class="form-control" value="" [(ngModel)]="importcat">                        
                     <option value="">Select Category</option>
                     <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
                   </select>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
                     <label>Browse File</label>
                     <div class="text-center">
                         <input class="form-control custom-file-input" (change)="upload($event.target.files[0])" type="file">

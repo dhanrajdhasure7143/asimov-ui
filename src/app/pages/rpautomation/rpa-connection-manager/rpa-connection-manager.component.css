@@ -1,8 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  top: 90px;
-  right: 225px;
+  right: 210px;
   z-index: 2;
 }
 
@@ -67,20 +66,15 @@ span.testtooltip:before {
   transform: rotate(45deg);
 }
 
-.create-title {
-  padding: 19px;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.modal-body {
+/* .modal-body {
   max-height: calc(100vh - 180px);
   overflow-y: auto;
-}
+} */
 
 input[type=file]::file-selector-button {
   margin-right: 20px;
   border: none;
-  background: #084cdf;
+  background: #098de6;
   margin-bottom: 10px !important;
   border-radius: 4px;
   color: #fff;
@@ -89,5 +83,5 @@ input[type=file]::file-selector-button {
 }
 
 input[type=file]::file-selector-button:hover {
-  background: #0d45a5;
+  background: #098de6;
 }

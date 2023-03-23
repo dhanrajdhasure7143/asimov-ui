@@ -365,7 +365,7 @@
                           <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">{{element.State}}
                       </span>
                           <span class="text-warning" *ngIf="element.State=='Pending'">
-                        <i class="fa fa-clock"></i>&nbsp;{{element.State}}
+                        <i class="fa fa-clock"></i>{{element.State}}
                       </span>
                       <span class="text-primary" *ngIf="element.State=='Running'">
                           <img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus">{{element.State}}
@@ -611,8 +611,8 @@
                     </div>                      
                   </form>
                   <div class="createform-footer">
-                    <button class="btn" (click)="resetsla()">Reset</button>&nbsp;
-                    <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
+                    <button class="btn new-cancelbtn" (click)="resetsla()">Reset</button>
+                    <button class="btn bluebg-button" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
                   </div>
               </div>
 

@@ -153,3 +153,7 @@ span.testtooltip:before {
 .no-item-img{
   height:calc(100vh - 430px)
 }
+
+.btn-test {
+  margin-right: 10px;
+}
