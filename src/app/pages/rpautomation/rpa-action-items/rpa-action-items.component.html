@@ -1,72 +1,79 @@
-<div class="module-heading title">
-    <span class="module-back-button">
-        <i class="fas fa-arrow-left" aria-hidden="true" (click)="backToConnection()"></i>
-    </span>
-    <span class="module-header-title">
-        <span class="module-parent-title">Connection Manager - {{ selectedName }} </span>
-    </span>
-</div>
-
-<div class="">
-    <div class="row credential-search-tools">
-        <div class="env-data-tool credential-tools">
-            <div *ngIf="addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewAction()">
-                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
-                    <span class="testtooltip">New</span>
-                </button>
+<div class="maincont">
+    <div class="maincont-contentarea">
+        <div class="h-100">
+            <div class="row main-content-head">
+                <h3>
+                    <label id="popup_title">
+                        <a (click)="backToConnection()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                    </label>
+                    <span class="title_text">
+                        <span>Connection Manager | </span>
+                        <span class="sub_title_text">{{ selectedName }}</span>
+                    </span>
+                </h3>
             </div>
-            <div *ngIf="!addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="addbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
-                    <span class="testtooltip">New</span>
-                </button>
-            </div>
-            <div *ngIf="updateflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" (click)="updateAction()">
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
-                    <span class="testtooltip"> Edit</span>
-                </button>
-            </div>
-            <div *ngIf="!updateflag" class="env-btn credential-btntool">
-                <button id="updateenvbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
-                    <span class="testtooltip"> Edit</span>
-                </button>
-            </div>
-            <div class="env-btn credential-btntool" *ngIf="delete_flag">
-                <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteAction()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
-                    <span class="testtooltip">Delete</span>
-                </button>
-            </div>
-            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
-                <button data-placement="top" id="deletebtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'>
-                    <span class="testtooltip">Delete</span>
-                </button>
+            <div class="main-content-body">
+                <div class="credential-tablegrid">
+                    <div class="row credential-search-tools">
+                        <div class="env-data-tool credential-tools">
+                            <div *ngIf="addflag" class="env-btn credential-btntool">
+                                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewAction()" pTooltip="New" tooltipPosition="bottom">
+                                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
+                                    <!-- <span class="testtooltip">New</span> -->
+                                </button>
+                            </div>
+                            <div *ngIf="!addflag" class="env-btn credential-btntool">
+                                <button class="tsttooltipbtn" id="addbtn" disabled>
+                                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
+                                    <!-- <span class="testtooltip">New</span> -->
+                                </button>
+                            </div>
+                            <div *ngIf="updateflag" class="env-btn credential-btntool">
+                                <button class="tsttooltipbtn" id="updateenvbtn" (click)="updateAction()" pTooltip="Edit" tooltipPosition="bottom">
+                                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
+                                    <!-- <span class="testtooltip"> Edit</span> -->
+                                </button>
+                            </div>
+                            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                                <button id="updateenvbtn" disabled>
+                                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
+                                    <!-- <span class="testtooltip"> Edit</span> -->
+                                </button>
+                            </div>
+                            <div class="env-btn credential-btntool" *ngIf="delete_flag">
+                                <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteAction()" pTooltip="Delete" tooltipPosition="bottom">
+                                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
+                                    <!-- <span class="testtooltip">Delete</span> -->
+                                </button>
+                            </div>
+                            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
+                                <button data-placement="top" id="deletebtn" disabled>
+                                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
+                                    <!-- <span class="testtooltip">Delete</span> -->
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <app-dynamic-table
+                        [representatives]="representatives" 
+                        [columns_list]="columns_list"
+                        [table_data]="actionTable" 
+                        (viewDetails)="viewDetails($event)" 
+                        (deleteItem)="deleteById($event)"
+                        [screenTable]="'common'" 
+                        [checkBoxShow]="checkBoxShow" 
+                        (selectedData)="readSelectedData($event)"
+                        [dataKeyId]="'id'" 
+                        [show_search_field]="true" 
+                        [show_column_filter]="true"
+                        [show_clear_filter]="true"
+                        [search_fields]="table_searchFields"
+                        >
+                       </app-dynamic-table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>    
-
-<div class="col-md-12 con-envr">
-   <div class="credential-tablegrid">
-        <app-dynamic-table
-         [representatives]="representatives" 
-         [columns_list]="columns_list"
-         [table_data]="actionTable" 
-         (viewDetails)="viewDetails($event)" 
-         (deleteItem)="deleteById($event)"
-         [screenTable]="'common'" 
-         [checkBoxShow]="checkBoxShow" 
-         (selectedData)="readSelectedData($event)"
-         [dataKeyId]="'id'" 
-         [show_search_field]="true" 
-         [show_column_filter]="true"
-         [show_clear_filter]="true"
-         [search_fields]="table_searchFields"
-         >
-        </app-dynamic-table>
-    </div>
-</div>    
+</div>

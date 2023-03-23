@@ -135,3 +135,7 @@ button:disabled {
   text-decoration: underline !important;
   font-size: small;
 }
+
+.btn-test {
+  margin-right: 10px;
+}

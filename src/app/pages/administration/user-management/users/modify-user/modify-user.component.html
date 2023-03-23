@@ -19,13 +19,13 @@
             <div class="maindivfoprm">
                 <form #update_form="ngForm">
                     <div class="row fcont">
-                        <div class="col-md-12 p-0 form-fields">
+                        <div class="col-md-12 p-0 form-group">
                             <label class="label-control">Username<span class="star">*</span></label>
                             <input type="text" name="email_id" disabled [(ngModel)]="email" placeholder="Enter Email"
                                 maxlength="256" class="form-control data">
                         </div>
 
-                        <div class="col-md-12 p-0 form-fields">
+                        <div class="col-md-12 p-0 form-group">
                             <label class="label-control">Add Role<span class="star">*</span></label>
 
                             <select name="roles" #roles="ngModel" [(ngModel)]="role" class="form-control data"
@@ -33,7 +33,7 @@
                                 <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
                             </select>
                         </div>
-                        <div class="col-md-12 p-0 form-fields update_department">
+                        <div class="col-md-12 p-0 form-group update_department">
                             <label class="label-control">Add Department(s)<span class="star">*</span></label>
                             <!-- <ng-select [disabled]="isdprtDisabled"  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
                                 <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
@@ -43,9 +43,9 @@
                                 [(ngModel)]="departments" [disabled]="isdprtDisabled">
                             </ng-select>
                             <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
-                                                class='errspan required'>Departments is required </span>
-                                                <span *ngIf="errShow" class='errspan required'> Departments is required </span>
-                            <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="errspan required">Departments Required*</span> -->
+                                                class='required'>Departments is required </span>
+                                                <span *ngIf="errShow" class='required'> Departments is required </span>
+                            <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="required">Departments Required*</span> -->
                         </div>
 
                     </div>

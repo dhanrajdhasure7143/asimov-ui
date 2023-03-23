@@ -1,30 +1,31 @@
 <div class="h-100">
+    <div class="row main-content-head">
+        <div class="col-md-4 pl-0">
+            <h3>
+                <label id="popup_title">
+                    <a (click)="userManagementUrl()">
+                        <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    </a>
+                </label>
+                <span class="title_text">Invite User</span>
+            </h3>
+        </div>
+        <!-- //uncomment if buttons needed in header//
+             <div class="col-md-8 pr-0 text-right">
+            <button class="btn btn-default" type="button" (click)="resetUserInvite(inviteUser_form)">Reset</button>
+            <button class="btn btn-primary btn-update" type="submit" [disabled]="inviteUser_form.invalid">Invite</button>
+        </div> -->
+    </div>
     <!-- <mat-card class="h-100"> -->
     <form #inviteUser_form="ngForm" autocomplete="off" (ngSubmit)="inviteUser(inviteUser_form)" class="h-100">
-        <div class="row main-content-head">
-            <div class="col-md-4 pl-0">
-                <h3>
-                    <label id="popup_title">
-                        <a (click)="userManagementUrl()">
-                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                        </a>
-                    </label>
-                    <span class="title_text">Invite User</span>
-                </h3>
-            </div>
-            <!-- //uncomment if buttons needed in header//
-                 <div class="col-md-8 pr-0 text-right">
-                <button class="btn btn-default" type="button" (click)="resetUserInvite(inviteUser_form)">Reset</button>
-                <button class="btn btn-primary btn-update" type="submit" [disabled]="inviteUser_form.invalid">Invite</button>
-            </div> -->
-        </div>
+
         <!-- <div class="container-fluid  h-scroll"> -->
             <div class="maindivfoprm">
                 <!-- <div class="create-heading">Invite User</div> -->
                 <!-- <form #inviteUser_form="ngForm" autocomplete="off"> -->
                     <!-- <div class="row fcont"> -->
 
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Email<span class="star">*</span></label>
                         <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
                             (change)="onEmailChange()" class="form-control data" (keyup)="myemailFunction()"
@@ -37,7 +38,7 @@
                         <!-- <span class='required' *ngIf="!inviteeMail"> Email is Required</span> -->
                     </div>
                     <!-- </div> -->
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Role<span class="star">*</span></label>
                         <select [(ngModel)]="role" class="form-control data" (change)="onchangeRole($event.target.value)" name="user_role" #user_role="ngModel" required>
                             <option [value]="null" disabled hidden>Select Role</option>
@@ -59,7 +60,7 @@
                         <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="required">Role Required*</span> -->
                     </div>
 
-                    <div class="form-group col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-group">
                         <label class="label-control">Department(s)<span class="star">*</span></label>
                         <!-- <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
                                           [(ngModel)]="departments"  required>

@@ -9,11 +9,11 @@
 }
 
 .well {
-	padding: 10px 20px;
-	margin: 20px 0px;
-	border: 0px;
-	background-color: #ffffff6e;
-	box-shadow: 2px 2px 3px 0px hsl(0, 4%, 83%);
+	padding: 10px 13px;
+    margin: 20px 0px;
+    border: 0px;
+    background-color: #FBFAFA;
+    box-shadow: 0px 0px 2px 0px #d6d3d3;
 }
 
 .well1-dynmic {
@@ -62,7 +62,7 @@
 }
 
 .metrics-space {
-	margin-top: 15px;
+	margin-top: 20px;
 }
 
 .flex-container {
@@ -86,12 +86,14 @@ h5 {
 }
 
 .form-control {
-	border: 1px solid #7a7777 !important;
-	box-shadow: unset !important;
-	color: #292a2a !important;
-	border-radius: 4px !important;
-	padding: 6px 10px !important;
+	border: 1px solid #979797 !important;
+    box-shadow: unset !important;
+    color: #292a2a !important;
+    border-radius: 4px !important;
+    padding: 6px 10px !important;
+    height: 34px;
 }
+.toolbar-search{margin-bottom:15px !important;}
 
 .search-align {
 	position: absolute;
@@ -103,7 +105,9 @@ h5 {
 
 .container-fluid {
 	background-color: #f5f5f5;
-	padding-top:20px;
+	padding-right: 20px;
+    padding-left: 20px;
+	
 }
 
 .eiap-btn {
@@ -141,8 +145,8 @@ ul.ui-p-tabview {
 }
 
 .sec-1 {
-	padding-right: 7px !important;
-	padding-left: 7px !important;
+	padding-right: 10px !important;
+	padding-left: 10px !important;
 	
 }
 
@@ -199,17 +203,6 @@ ul.ui-p-tabview {
 	margin-right: 9px;
 	width: 95%;
 }
-
-
-
-.well {
-	padding: 10px 13px;
-	margin: 15px 0px;
-	border: 0px;
-	background-color: #ffffff8f;
-	box-shadow: 0px 0px 2px 0px #d6d3d3;
-}
-
 
 .flex-container {
 	display: flex;
@@ -272,8 +265,8 @@ h5 {
 
 .pi-check {
 	position: absolute;
-	right: -8px;
-	top: 0px;
+	right: 7px;
+	top: 9px;
 }
 
 .pi-times {
@@ -281,6 +274,8 @@ h5 {
 	right: 12px;
 	top: 6px;
 }
+.widicon{margin-right:20px;
+display:flex;align-items: center;}
 
 .new-dynamic h3 {
 	margin-bottom: 0px;
@@ -317,9 +312,25 @@ h5 {
 	width: 48px;
 	height: 48px;
 }
-
+.vertcl-img {
+	width: 11px !important;
+	margin: 5px;
+	margin-right: 11px !important;
+	margin-top: 0px !important
+}
 .graphs-align {
 	height: 400px;
-	padding: 20px !important;
-	margin-bottom:15px;
+	padding: 16px 16px !important;
+	margin-bottom:20px;
 }
+.graphs-align .h5{font-size:16px;}
+.metricalign{padding:10px 22px 10px 4px;}
+
+.first{box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);}
+.class1{box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);}
+.metricwidget-tabP{font-size: 14px; color: #808080cc;margin-bottom:0rem !important;}
+.header-fix{position: sticky;
+    top: 0;
+    background-color: whitesmoke;
+    z-index: 999;}
+.sec-new{padding: 20px 10px 15px;}

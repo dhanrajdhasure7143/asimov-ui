@@ -1,8 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 230px;
-  top: 63px;
+  right: 210px;
   z-index: 2;
 }
 
@@ -75,8 +74,4 @@ span.testtooltip:before {
 .modal-body {
   max-height: calc(100vh - 180px);
   overflow-y: auto;
-}
-
-.con-envr{
-  background-color: white;
 }

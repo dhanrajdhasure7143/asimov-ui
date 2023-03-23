@@ -6,39 +6,39 @@
         </div> -->
         <div class="env-data-tool credential-tools">
             <div *ngIf="!addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()">
+                <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()"  pTooltip="New" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add" class="testplus">
-                    <span class="testtooltip">New</span>
+                    <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
             <div *ngIf="addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add" class="testplus">
-                    <span class="testtooltip">New</span>
+                    <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
             <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()">
+                <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()"  pTooltip="Edit" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit" class="testplus">
-                    <span class="testtooltip">Edit</span>
+                    <!-- <span class="testtooltip">Edit</span> -->
                 </button>
             </div>
             <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
                 <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit" class="testplus">
-                    <span class="testtooltip">Edit</span>
+                    <!-- <span class="testtooltip">Edit</span> -->
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
+                <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()"  pTooltip="Delete" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete" class="testplus">
-                    <span class="testtooltip">Delete</span>
+                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==false" class="env-btn credential-btntool">
                 <button id="deletedbbtn" title="Delete Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete" class="testplus">
-                    <span class="testtooltip">Delete</span>
+                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
         </div>

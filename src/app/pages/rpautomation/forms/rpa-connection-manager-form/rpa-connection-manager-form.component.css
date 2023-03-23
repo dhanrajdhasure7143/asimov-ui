@@ -1,86 +1,28 @@
-.prj-crt-form {
-    margin: 0 -15px 0 -15px !important;
-}
-
-label.label-control {
-    border: 1px solid transparent;
-    border-bottom: medium none;
-    margin: 0px !important;
-    border-radius: 2px;
-    color: black;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 3px !important;
-    white-space: nowrap;
-    width: 100%;
-    text-overflow: ellipsis;
-}
-
-.raw {
-    margin: 5px 0 0 0;
-}
-
-.textresponse {
-    margin: 10px 0 0 0;
-}
-
-.text-right {
-    top: 25px;
-    right: 15px;
-    width: 95%;
-}
-
-.api {
-    width: 780px;
-}
-
-.maindivfoprm input,
-.maindivfoprm select,
-.maindivfoprm textarea {
-    background-color: #f6f6f6 !important;
-    border: 1px solid #D1D1D1;
-    box-shadow: unset !important;
-    color: #7B8694 !important;
-    border-radius: 2px;
-    padding: 6px 10px !important;
-}
-
-.maindivfoprm input:focus,
-.maindivfoprm select:focus,
-.maindivfoprm textarea:focus {
-    border-color: #00a0e3 !important;
-    color: #001c47 !important;
-    background-color: #fff !important;
-}
-
-.check {
-    margin: 10px 5px;
-}
-
-.container-fluid.h-scroll {
-    height: 100%;
-}
-
 input[type=file]::file-selector-button {
     margin-right: 20px;
     border: none;
-    background: #00a0e3;
+    background: #098de6;
     margin-bottom: 10px !important;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
     transition: background .2s ease-in-out;
 }
-
 input[type=file]::file-selector-button:hover {
-    background: #0d45a5;
+    background: #098de6;
 }
-
-.maincont{
-    overflow: scroll;
+span.userhint {
+    display: block;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0px 0px 5px rgb(0 0 0 / 10%);
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
 }
-
-.note{
-    margin: 0 0 0 20rem;
-    position: static;
+.headercheckbox {
+    vertical-align: middle !important;
+    text-align: center;
+}
+button.btn.new-cancelbtn:disabled {
+    background-color: transparent !important;
 }
