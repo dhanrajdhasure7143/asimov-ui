@@ -6,8 +6,7 @@
         <span class="module-header-title">
             <span class="module-parent-title" *ngIf="!istoolSet" >Connection Manager - {{ selectedConnector }} - {{ selectedToolsetName }} </span>
             <span class="module-parent-title" *ngIf="istoolSet" >Connection Manager - {{ selectedConnector }} - Create New </span>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <span> Note : To add attribute dynamically use format --> [@client_id|string|********************@]\" </span>
+            <span class="note"> Note : To add attribute dynamically use format --> [@client_id|string|1000.****************0001@] </span>
         </span>
     </div>
     <div class="container-fluid h-scroll">
@@ -34,7 +33,7 @@
                                     <label class="label-control" for="programname"> Action Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="actionType"
+                                    <select name="" id="" class="form-control data" formControlName="actionType" [disabled] = "isDisabled"
                                         (change)="actionChange($event.target.value)">
                                         <option value="" hidden disabled>Select Action</option>
                                         <option value="null" hidden disabled>Select Action</option>
@@ -52,7 +51,8 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="methodType">
+                                    <select name="" id="" class="form-control data" formControlName="methodType" [disabled] = "isCreate"
+                                      (change)="methodChange($event.target.value)">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>
@@ -227,7 +227,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-12" *ngIf="isRequest">
+                            <div class="col-md-12" *ngIf="isHeader">
                                 <div class="form-fields pl-0">
                                     <label class="label-control"> Header <span class="star">*</span> </label>
                                     <table class="table table-bordered mt-2 api">
@@ -253,7 +253,7 @@
                                             <td> 
                                                 <input type="text" name="" id="" class="form-control" placeholder="Value" [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}"> </td>
                                             <td>
-                                                <span *ngIf="headerForm.length>1"> 
+                                                <span> 
                                                     <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="" (click)="onDelete(i)">
                                                 </span>
                                             </td>        
@@ -288,7 +288,7 @@
                                 <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 martsascl api" *ngIf="isRequest">
-                                <label class="label-control"> Request <span> Hint - {{ '{' }}"Company":"[@AmeripriseDummy|string|AmeripriseDummy@]"{{'}'}}</span> </label> 
+                                <label class="label-control"> Request </label> 
                                 <textarea class="form-control api" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
                                     placeholder="Request Body">
                                 </textarea>
@@ -296,13 +296,13 @@
                                 <span *ngIf="!validateJSON && connectorForm.get('request').value" class="text-success"> Valid JSON Format </span>
                             </div>
                             <div class="col-md-12 text-right">
-                                <button type="button" class="btn btn-primary" [disabled]="isRequest"
-                                    (click)="testForm()"> Test </button>
+                                <button type="button" class="btn btn-primary" [disabled]="isRequest || isUpdate"
+                                    (click)="testAction()"> Test </button>
                                 &nbsp;
                                 <button *ngIf="!isUpdate" type="button" class="btn btn-primary"
-                                    (click)="saveForm()"> Save </button>
+                                    (click)="saveAction()"> Save </button>
                                 <button *ngIf="isUpdate" type="button" class="btn btn-primary"
-                                    (click)="updateForm()"> Update </button>    
+                                    (click)="updateAction()"> Update </button>    
                             </div>
                         </div>
                     </form>
