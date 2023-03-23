@@ -20,6 +20,7 @@ export class RpaActionItemsComponent implements OnInit {
   updateflag: boolean = false;
   selectedData:any;
   selectedName: any;
+  table_searchFields:any[]=[];
 
   constructor(
     private router:Router,
@@ -85,27 +86,18 @@ export class RpaActionItemsComponent implements OnInit {
         sort: true,
         multi: false,
       },
-      // {
-      //   ColumnName: "actionLogo",
-      //   DisplayName: "Action Logo",
-      //   ShowGrid: true,
-      //   ShowFilter: true,
-      //   filterWidget: "normal",
-      //   filterType: "text",
-      //   sort: true,
-      //   multi: false,
-      // }
-      // {
-      //   ColumnName: "attribute",
-      //   DisplayName: "Attributes",
-      //   ShowGrid: true,
-      //   ShowFilter: true,
-      //   filterWidget: "normal",
-      //   filterType: "text",
-      //   sort: true,
-      //   multi: false,
-      // },
+      {
+        ColumnName: "actionLogo",
+        DisplayName: "Action Logo",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      }
     ];
+    this.table_searchFields=["name","actionType","endPoint","methodType"];
   })
 
   }
