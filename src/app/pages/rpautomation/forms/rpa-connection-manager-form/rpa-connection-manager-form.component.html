@@ -28,7 +28,7 @@
                                     <label class="label-control" for="programname"> Action Name
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="actionName"
                                         [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
                                         placeholder="Enter Action Name">
@@ -41,14 +41,17 @@
                                     <label class="label-control" for="programname"> Action Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="actionType" [disabled] = "isDisabled"
+                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled"
+                                    [style]="{'width':'100%'}" placeholder="Select Action" 
+                                    optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
+
+                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="actionType" [disabled] = "isDisabled"
                                         (change)="actionChange($event.target.value)">
                                         <option value="" hidden disabled>Select Action</option>
                                         <option value="null" hidden disabled>Select Action</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
                                         <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
-                                    </select>
-                                    <!-- <p-dropdown [options]="actionItems.type" formControlName = "actionType" [style]="{'width':'100%'}" (change)="actionChange($event.target.value)" placeholder="Select Action"></p-dropdown> -->
+                                    </select> -->
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
                                         class="required"> Action Type Required*
@@ -58,12 +61,15 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="methodType" [disabled] = "isCreate">
+                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="methodType" [disabled] = "isCreate">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Method</option>
                                         <option *ngFor="let method of methodItems"> {{method.value}}</option>
-                                    </select>
+                                    </select> -->
+                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled"
+                                    [style]="{'width':'100%'}" placeholder="Select Method" 
+                                    optionLabel="value" optionValue="value"></p-dropdown>
                                     <span
                                         *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
                                         class="required"> Method Type Required*
@@ -71,8 +77,9 @@
                             </div>
                             <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Action Icon
-                                        <span class="star" *ngIf="!isCreate">*</span>                                    </label>
-                                    <input type="file" class="form-control" accept="image/png, image/svg" (change)="imageUpload($event)"
+                                        <span class="star" *ngIf="!isCreate">*</span>                                    
+                                    </label>
+                                    <input type="file" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg" (change)="imageUpload($event)"
                                         formControlName="" placeholder="Upload Icon">
                                     <!-- <span
                                         *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
@@ -80,7 +87,7 @@
                             </div>
                             <div class="col-md-12 form-group p-0">
                                 <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea class="form-control api" row="3" formControlName="endPoint" placeholder="Enter API"
+                                <textarea pInputText [style]="{'width':'100%'}" row="3" formControlName="endPoint" placeholder="Enter API"
                                     style=" resize: none;" maxlength="256">
                                 </textarea>
                                 <span
@@ -92,13 +99,16 @@
                                     <label class="label-control" for="programname"> Authentication Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="authType"
+                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="authType"
                                         (change)="authChange($event.target.value)">
                                         <option value="" hidden disabled>Select Authentication</option>
                                         <option value="null" hidden disabled>Select Authentication</option>
                                         <option value="undefined" hidden disabled>Select Authentication</option>
                                         <option *ngFor="let auth of authItems" [value]="auth.type"> {{auth.value}}</option>
-                                    </select>
+                                    </select> -->
+                                    <p-dropdown [options]="authItems" formControlName="authType"
+                                    [style]="{'width':'100%'}" placeholder="Select Authentication" 
+                                    optionLabel="value" optionValue="type" (onChange)="authChange($event.value)"></p-dropdown>
                                     <span
                                         *ngIf="connectorForm.get('authType').invalid && connectorForm.get('authType').touched && !connectorForm.get('authType').hasError('pattern')"
                                         class="required"> Authentication Type Required*
@@ -108,13 +118,16 @@
                                     <label class="label-control" for="programname"> Grant Type
                                         <span class="star">*</span>
                                     </label>
-                                    <select name="" id="" class="form-control data" formControlName="grantType"
+                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="grantType"
                                         (change)="grantChange($event.target.value)">
                                         <option value="" hidden disabled>Select Method</option>
                                         <option value="null" hidden disabled>Select Method</option>
                                         <option value="undefined" hidden disabled>Select Action</option>
                                         <option *ngFor="let grant of grantItems" [value]="grant.type"> {{grant.value}}</option>
-                                    </select>
+                                    </select> -->
+                                    <p-dropdown [options]="grantItems" formControlName="grantType"
+                                    [style]="{'width':'100%'}" placeholder="Select Grant Type" 
+                                    optionLabel="value" optionValue="type" (onChange)="grantChange($event.value)"></p-dropdown>
                                     <span
                                         *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
                                         class="required"> Grant Type Required*
@@ -125,7 +138,7 @@
                                     <label class="label-control" for="programname"> Code
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="code" placeholder="Enter Code">
                                     <span
                                         *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
@@ -136,7 +149,7 @@
                                     <label class="label-control" for="programname"> Redirect URL
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="redirect_uri" placeholder="Enter Redirect URL">
                                     <span
                                         *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
@@ -149,7 +162,7 @@
                                     <label class="label-control" for="programname"> Username
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="userName" placeholder="Enter Username">
                                     <span
                                         *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
@@ -160,7 +173,7 @@
                                     <label class="label-control" for="programname"> Password
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="password" maxlength="256" class="form-control data" value=""
+                                    <input type="password" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="password" placeholder="Enter Password">
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
@@ -173,7 +186,7 @@
                                     <label class="label-control" for="programname"> Client ID
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="clientId" placeholder="Enter Client ID">
                                     <span
                                         *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
@@ -184,7 +197,7 @@
                                     <label class="label-control" for="programname"> Client Secret
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="clientSecret" placeholder="Enter Client Secret">
                                     <span
                                         *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
@@ -196,7 +209,7 @@
                                     <label class="label-control" for="programname"> Code Verifier
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="verifier" placeholder="Enter Code Verifier">
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
@@ -208,7 +221,7 @@
                                     <label class="label-control" for="programname"> Scope
                                         <!-- <span class="star">*</span> -->
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="scope" placeholder="Enter Scope ">
                                     <!-- <span
                                         *ngIf="connectorForm.get('scope').invalid && connectorForm.get('scope').touched && !connectorForm.get('scope').hasError('pattern')"
@@ -219,7 +232,7 @@
                                     <label class="label-control" for="programname"> Refresh Token
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" class="form-control data" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="refreshToken" placeholder=" Refresh Token">
                                     <span
                                         *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"
@@ -282,7 +295,7 @@
                             </div> -->
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
-                                <textarea class="form-control api" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                <textarea pInputText [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
                                     placeholder="Response">
                                 </textarea>
                                 <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
@@ -299,7 +312,7 @@
                         </div>
                     </form>
                     <div class="row justify-content-end">
-                        <button type="button" class="btn new-cancelbtn" [disabled]="isRequest || isUpdate"
+                        <button type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()">Test</button>
                         <button *ngIf="!isUpdate" type="button" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>

@@ -55,6 +55,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe((data) => {
       this.isDisabled = data.formDisabled;
+      console.log("data",data)
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
@@ -321,7 +322,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isRequest = false;
       this.isHeader = false
       this.isResponse = false;
+      this.connectorForm.get('methodType').setValue("POST")
     } else if (event == "APIRequest") {
+      this.connectorForm.get('methodType').setValue("")
       this.isRequest = true;
       this.isHeader = true;
       this.isAction = false;

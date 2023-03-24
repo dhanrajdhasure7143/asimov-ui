@@ -43,7 +43,8 @@ export class RpaActionItemsComponent implements OnInit {
 
   getAllActionItems() {
     this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
-    this.actionTable = res.data;    
+    this.actionTable = res.data; 
+    this.readSelectedData([]); 
     this.loader.hide();
     this.columns_list = [
       {
