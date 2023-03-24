@@ -89,13 +89,12 @@
                                 <span *ngIf="createConnectorForm.get('authorization_Type').invalid && createConnectorForm.get('authorization_Type').touched" class="required"> Authorization Type Required* </span>
                             </div> -->
                             <div class="form-group col p-0">
-                                <label class="" for="task_icon"> Task Icon <span class="star">*</span></label>
-                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
-                                <input class="form-control" accept="image/png, image/svg" (change)="imageUpload($event)"
+                                <label class="label-control" for="task_icon"> Connector Logo <span class="star" *ngIf="isCreate">*</span></label>                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
+                                <input pInputText [style]="{'width':'100%'}" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
                                 <span
                                     *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched"
-                                    class="required"> Task Icon Required* </span>
+                                    class="required">  Connector Logo Required* </span>
                             </div>
                             <!-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFileLang" lang="es">

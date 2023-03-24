@@ -53,6 +53,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getConnectionslist().subscribe((res: any) => {
       this.connectorTable = res.data;
+      this.readSelectedData([]); 
       this.spinner.hide();
       this.columns_list = [
         {
@@ -101,6 +102,7 @@ export class RpaConnectionManagerComponent implements OnInit {
       (err) => {
         Swal.fire("Error", "Unable to delete Connector", "error");
         this.spinner.hide();
+        this.getAllConnections();
       }
     );
   }

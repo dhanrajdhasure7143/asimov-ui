@@ -22,6 +22,7 @@ import { RedirectionComponent } from './rediraction/redirection.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { TitleCasePipe } from '@angular/common';
+import { MentionModule } from 'angular-mentions';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { TitleCasePipe } from '@angular/common';
     NgxSpinnerModule,
     ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
       positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
+    MentionModule
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },

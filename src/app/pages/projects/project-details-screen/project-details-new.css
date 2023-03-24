@@ -467,3 +467,4 @@ button span {
     list-style-type: none
 }
 
+  ng-highlighter .highlighted {font-weight: bold;}
