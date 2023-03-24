@@ -316,44 +316,22 @@
                         </button>
                     </div>
                     <div class="row acresources" *ngIf="!isCreate">
-                        <h4 class="colheads">Recent Activities</h4>
+                        <div class="col-12">
+                            <h4 class="colheads">Recent Activities</h4>
+                        </div>
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
-                        <table class="table imgInFirstCol">
-                            <thead>
-                                <tr>
-                                    <th>Activity</th>
-                                    <th>Resource</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Procure work environment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick
-                                    </td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Select necessary work equipment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
-                                        James</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Setup access rights</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg">
-                                        Johnson</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Latest task completed</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
-                                        William</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
+                        <div class="col">
+                        <app-dynamic-table 
+                            [columns_list]="columns_list_activities" 
+                            [table_data]="recentActivityList"
+                            [show_search_field]="true"
+                            [show_column_filter]="true" 
+                            [show_clear_filter]="true" 
+                            [screenTable]="'recentActivityList'"
+                            [search_fields]="['activity','lastModifiedUsername','lastModifiedTimestamp_new']"
+                            >
+                        </app-dynamic-table>
+                    </div>
                     </div>
                     <div class="row quick-actionscards" *ngIf="isCreate">
                         <div class="col-sm-4 text-center">

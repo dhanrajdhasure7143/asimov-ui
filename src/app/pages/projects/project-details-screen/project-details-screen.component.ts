@@ -227,6 +227,8 @@ _pinnedMessage:any[]=[];
 filteredUsers:any;
 interval:any;
 showUserList:boolean= false;
+recentActivityList:any=[];
+columns_list_activities:any[]=[];
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -462,6 +464,7 @@ this.getTheExistingUsersList(null);
 
 })
 this.snapShotDetails();
+this.getRecentactivities();
 }
 profileName() {
 setTimeout(() => {
@@ -1417,6 +1420,46 @@ selectEnd() {
 
 onKeyUpDiv(){
   console.log(document.getElementById("my-content").innerHTML)
+}
+
+getRecentactivities() {
+  this.columns_list_activities = [
+    {
+      ColumnName: "activity",
+      DisplayName: "Activity",
+      ShowGrid: true,
+      ShowFilter: true,
+      filterWidget: "normal",
+      filterType: "text",
+      sort: true,
+    },
+    {
+      ColumnName: "lastModifiedUsername",
+      DisplayName: "Resource Name",
+      ShowFilter: true,
+      ShowGrid: true,
+      filterWidget: "normal",
+      filterType: "text",
+      sort: true,
+    },
+    {
+      ColumnName: "lastModifiedTimestamp_new",
+      DisplayName: "Priority",
+      ShowGrid: true,
+      ShowFilter: true,
+      filterWidget: "normal",
+      filterType: "date",
+      sort: true,
+    }
+  ];
+
+this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
+  this.recentActivityList=data;
+  this.recentActivityList.map(item =>{
+    item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll")
+    return item
+  })
+}) 
 }
 
 }

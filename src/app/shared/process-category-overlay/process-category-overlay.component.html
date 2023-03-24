@@ -36,7 +36,7 @@
                             class='required'> Please select notation type </span>
                         </div>
                     </div>
-                    <div *ngIf="isBpmnModule && freetrail=='false'">
+                    <div *ngIf="isBpmnModule">
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control">Process Owner<span class="star">*</span></label>
                             <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
@@ -51,7 +51,7 @@
                             class='required'> Please Select Process Owner </span>
                         </div>
                     </div>
-                    <div *ngIf="isBpmnModule && freetrail=='true'">
+                    <!-- <div *ngIf="isBpmnModule && freetrail=='true'">
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control">Process Owner</label>
                             <select name="powner" [disabled]="true" #powner="ngModel" [(ngModel)]="process_owner"  class="form-control">
@@ -65,7 +65,7 @@
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
                             class='required'> Please Select Process Owner </span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-12 p-0 form-group"> <!-- pattern="^[a-zA-Z0-9_-].{3,25}$" -->
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
