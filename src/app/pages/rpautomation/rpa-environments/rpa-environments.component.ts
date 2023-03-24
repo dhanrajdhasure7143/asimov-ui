@@ -91,6 +91,7 @@ export class RpaenvironmentsComponent implements OnInit {
         } else {
           this.checkeddisabled = true;
         }
+       this.readSelectedData([]);
        
         // this.environments.sort((a, b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments = response.map(item => {

@@ -43,7 +43,8 @@ export class RpaActionItemsComponent implements OnInit {
 
   getAllActionItems() {
     this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
-    this.actionTable = res.data;    
+    this.actionTable = res.data; 
+    this.readSelectedData([]); 
     this.loader.hide();
     this.columns_list = [
       {
@@ -129,8 +130,8 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Action Deleted Successfully !!",
         heightAuto: false,
       });
-      this.getAllActionItems();
       this.loader.hide();
+      this.getAllActionItems();
     },(err) => {
       Swal.fire({
         icon: "error",
@@ -138,8 +139,8 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Something went wrong!",
         heightAuto: false,
       });
-      this.getAllActionItems();
       this.loader.hide();
+      this.getAllActionItems();
     })
   }
   
