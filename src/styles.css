@@ -2822,6 +2822,27 @@ span.tabscount {
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
 }
+/* for RecentActivities  grid */
+.acresources .p-datatable-wrapper {
+  height: calc(100vh - 365px); 
+}
+.acresources .p-datatable .p-datatable-header {
+  background-color: transparent !important;
+}
+.acresources th.p-element.p-sortable-column.p-resizable-column {
+  background-color: #fff !important;
+}
+/* chat mention styles */
+mention-list {
+  top: -150px !important;
+  width: 95% !important;
+  left: 0px !important;
+}
+mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
+  width: 100% !important;
+}
+/* chat mention styles */
+/* for RecentActivities  grid */
 
 .p-datatable .p-datatable-header,
 th {

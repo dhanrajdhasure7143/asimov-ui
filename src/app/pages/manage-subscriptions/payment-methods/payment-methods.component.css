@@ -4,6 +4,7 @@
 }
 .cardsBox {
   border: 1px solid #b5b5b5;
+  background-color: #fff;
   border-radius: 6px;
   height: 100%;
 }

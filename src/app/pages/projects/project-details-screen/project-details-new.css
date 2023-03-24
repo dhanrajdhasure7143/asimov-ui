@@ -202,7 +202,8 @@ h4.colheads.chatheader {
     align-items: center;
 }
 #message-body {
-    height: 88%;
+    /* height: 88%; */
+    height: calc(100% - -60px);
     overflow: auto;
     padding: 15px 20px 5px;
 }
@@ -329,7 +330,6 @@ input.msgip {
     border: 1px solid #dbdbdb;
     padding: 20px !important;
     border-radius: 6px;
-    padding-bottom: 5px !important;
     background-color: #fff;
 }
 .acresources .blue-btntext {
@@ -466,5 +466,3 @@ button span {
 .usersOverLay ul{
     list-style-type: none
 }
-
-  ng-highlighter .highlighted {font-weight: bold;}

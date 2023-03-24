@@ -1,88 +1,88 @@
-
+.packagecontentdiv {
+  height: calc(100vh - 210px);
+  overflow: auto;
+}
+.plandetailscont {
+  height: 315px;
+}
+#planHeading{
+  font-size: 20px;
+}
 #ctr{
-    display: block;
-    margin-top:10px;
-    color: #006ed5;
-  
-  }
-  .selectplanbtn{
-    background-color: #006ed5;
-    border-radius:20px;
-    width: 8em;
-    margin-left: 80px;
-    height: 35px;
-    padding-top: 3px;
-  }
-  .processes .fa-check-circle{
-  padding:10px;
-  }
-  .processes .fa-times-circle{
-    padding:10px;
-    color:rgb(255, 0, 0);
-  }
-  
-  #planName{
-    color:#006ed5;
-  }
-  .plansBox h5{
-   padding-left: 10px;
-  }
-  .plansBox h6{
-    padding-bottom: 0px !important;
-    padding-top: 0px !important;
-  }
-  .plansBox:hover{
-    border:1px solid gray;
-    border-radius: 20px;
-  }
-  .processes label {
+    color: #098de6;
+    font-size: 16px;
+}
+.plansBox{
+  border: 1px solid #b5b5b5;
+  border-radius: 6px;
+  /* height: 100%; */
+  padding: 15px;
+  background-color: #fff;
+  margin-right: 15px;
+  width: 290px;
+  margin-bottom: 15px;
+}
+.plansBox:hover{
+  border: 1px solid #098de6;
+}
+.processes .fa-check-circle{
+  color: green;
+  margin-right: 10px;
+}
+.processes .fa-times-circle{
+  margin-right: 10px;
+  color:red;
+}
+.plandetailscont h4 {
+  margin-bottom: 15px;
+}
+h4 .planName {
+  color: #098de6;
+  font-size: 20px;
+  font-weight: 600;
+}
+.current-plan{
+  background-color: red;
+  color: white;
+  border-radius: 3px;
+  font-size: 11px !important;
+  padding: 5px;
+  float: right;
+}
+.requested-plan{
+  background-color: green;
+  color: white;
+  border-radius: 3px !important;
+  font-size: 11px !important;
+  padding: 5px;
+  float: right;
+}
+.selectplanbtn{
+  border-radius: 50px;
+  width: 100px;
+  padding: 5px !important;
+  position: absolute;
+  bottom: 15px;
+}
+.enterprice{
+  color: #098de6;
+  position: absolute;
+  bottom: 45px;
+}
+.processes .limited {
     position: absolute;
     right: 0px;
     font-size: 9px;
     color: rgb(173, 167, 167);
-  }
-  .processes span {
-    position: relative;
-  }
-  .plansBox h5{
-    font-size: 19px;
-  }
-  #planHeading{
-    display: block;
-    margin-top: 10px;
-  }
-  .plansBox{
-    margin-top: 10px;
-    padding: 5px;
-    padding-left: 10px !important;
-    border: 1px solid gray;
-    border-radius: 0px;
-    box-shadow: #01061199 0px 1px 6px;
-    height: 363px;
-  }
-  .enterprice{
-    color:#006ed5;
-    margin-top: 12px;
-    text-align: center;
-    font-size: 19px !important;
-    font-weight: bold;
-  }
-  .current-plan{
-    background-color: red;
-    color: white;
-    border-radius: 20px !important;
-    font-size: 13px !important;
-    padding: 5px;
-    float: right;
-  }
-  .requested-plan{
-    background-color: green;
-    color: white;
-    border-radius: 20px !important;
-    font-size: 13px !important;
-    padding: 5px;
-    float: right;
-  }
+}
+.plandetailscont h5 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+
+
+/* 
   .conditions span a{
     font-size: 12px;
     font-weight: bold;
@@ -101,9 +101,7 @@
     margin-top: 110px;
     margin-bottom: 170px;
   }
-  .plansBox h6{
-  margin-bottom: 6px !important;
-  }
+
   .bottom_line{
     text-decoration-line: underline;
   }
@@ -111,16 +109,10 @@
     text-decoration: underline;
     color: #0061cf;
   }
- 
-  
-  
-
-
-  .review-heading{
+    .review-heading{
     margin-top: 20px;
     }
     #paymnt-subheding{
-      /* margin-left:20px; */
       color: #006ed5;
     }
     .pay_titles{
@@ -147,17 +139,7 @@
       font-weight: bold;
     }
     
-    /* // .plan_label .plan{
-    //   border: 1px solid #006ed5;
-    //   border-radius: 50%;
-    //   padding: 3px 5px;
-    //   color : #006ed5;
-    //   font-weight: bold;
-    // } */
     .plan_label .plan{
-      /* // border: 1px solid #26c9EE;
-      // border-radius: 50%;
-      // padding: 3px 5px; */
       color : #006ed5;
       font-weight: bold;
     }
@@ -273,12 +255,7 @@
   .modal-title{  
     padding-top: 10px !important;
   }
-  
-  /* need to remove
-   .model-content ::-webkit-scrollbar{
-    width:13px !important;
-    height: 0px !important;
-  } */
+
   .model-content p,.model-content li{
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -322,12 +299,5 @@
   }
   .bottom_line{
     text-decoration-line: underline;
-  }
-  
-  .h-scroll {
-    height: calc(100vh - 110px);
-    overflow: auto;
-  }
-  
-  
+  } */
   
