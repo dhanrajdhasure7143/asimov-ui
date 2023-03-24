@@ -183,8 +183,7 @@ mat-tab-body {
   top: 10px;
   left: 40px;
   color: white;
-  background-color: #E58600;
-  /* background-color: #F99D1C; */
+  background-color: #F99D1C;
 }
 
 div[class^='diagram_container'] svg {
@@ -202,12 +201,13 @@ div[class^='diagram_container'] {
 
 .readOnly svg {
   position: relative;
-  z-index: -10;
+  /* z-index: -10; */
 }
 
 .bps_overlay {
-  /* z-index: 30; */
   cursor: pointer;
+}
+.bps_overlay.grid_bps_overlay {
   position:relative;
 }
 
@@ -391,7 +391,7 @@ mat-tab-body {
 .changesContainer {
   position: absolute;
   width: 40%;
-  bottom: -5px;
+  bottom: 5px;
   left: 30%;
 }
 
@@ -853,6 +853,9 @@ mat-tab-body {
 .djs-minimap .viewport-dom {
   border: solid 1px #a0a0a0;
   border-radius: 4px;
+  left: 10px !important;
+    top: 30px !important;
+    width: 90% !important;
 }
 
 .djs-minimap svg {
@@ -868,7 +871,7 @@ mat-tab-body {
   position: absolute;
   width: 20px;
   height: 20px;
-  top: 5px;
+  top: 2px;
   left: 5px;
   color: black;
 }
@@ -941,7 +944,9 @@ mat-panel-title.mat-expansion-panel-header-title {
   height: calc(100% - 80px);
   background-color: #fff;
   overflow: auto;
+  overflow-y: hidden;
   padding: 0px 0px;
+  position: relative;
 }
 
 .djs-minimap {
@@ -996,20 +1001,21 @@ mat-panel-title.mat-expansion-panel-header-title {
   line-height: 16px;
 }
 
-.canvas2propcontainer {
+/*.canvas2propcontainer {
   top: 68px;
-  height: calc(100vh - 155px);
+  height: calc(100vh - 150px);
 }
-.propertiesContainer.propertiesContainerClosed.canvas2propcontainer {
-  /* top: 68px; */
+ .propertiesContainer.propertiesContainerClosed.canvas2propcontainer {
   top: 85px;
-  height: calc(100vh - 155px);
-}
+  height: calc(100vh - 150px);
+} */
 .canvas2 .bjs-powered-by {
-  bottom: 30px !important;
+  bottom: 45px !important;
+  right: 100px !important;
 }
 .canvas2 .djs-minimap {
-  bottom: 30px;
+  /* bottom: 30px; */
+  bottom: 50px;
 }
 .dragicons mat-panel-title.mat-expansion-panel-header-title {
   padding: 5px 0px;

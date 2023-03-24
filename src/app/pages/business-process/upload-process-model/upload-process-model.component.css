@@ -43,17 +43,6 @@
     cursor: pointer;
     }
 
-    .modal-header {
-    padding: 2px 16px;
-    background-color: #e5e5e5;
-    color: #000;
-    }
-    .modal-header .close {
-    margin-top: 5px;
-   }
-
-    .modal-body {padding: 2px 16px;}
-
 
     /* Add Animation */
     @-webkit-keyframes slideIn {
@@ -390,7 +379,8 @@ textarea.msgip {
     margin-bottom: 20px;
 }
 .bps-c2-height {
-    height: 95% !important;
+    /* height: 95% !important; */
+    height: 94% !important;
 }
 .menuicons-disable{
     cursor: no-drop !important;

@@ -72,7 +72,7 @@
 .bjs-powered-by {
   position: absolute;
   bottom: 5px !important;
-  right: 10px !important;
+  right: 100px !important;
   opacity: 0.1;
   width: max-content;
 }
@@ -1911,13 +1911,15 @@ button.btn.btn-primary:first-child {
 
 .bpm-notation-fields {
   position: absolute !important;
-  bottom: 8px;
-  right: 35px;
+  bottom: 15px;
+  right: 45px;
   width: auto;
   top: auto;
   z-index: 100;
 }
-
+as-split-area.as-split-area {
+  overflow-y: hidden !important;
+}
 
 
 .custom-content .mat-menu-content {
@@ -2711,10 +2713,10 @@ input.p-inputtext {
 }
 .actionspopmenu .p-menu-overlay {
   position: absolute;
-    top: 37px !important;
-    right: 0px !important;
-    left: unset !important;
-    width: max-content;
+  right: 0px !important;
+  top: 40px !important;
+  left: unset !important;
+  width: max-content;
 }
 .editfields i {
   padding: 6px;
@@ -2734,20 +2736,13 @@ input.p-inputtext {
 /* Tabs NEW Styles Start */
 .p-tabview .p-tabview-nav {
   border: none !important;
-  background: #ffffff !important;
+  background: transparent !important;
   height: 70px;
-}
-.p-tabview-nav-container {
-  
-  position: sticky !important;
-  top: 0;
-  z-index: 999;
-  padding-right:7px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
   color: var(--main-txtcolor) !important;
-  padding: 15px 7px 0px 0px !important;
+  padding: 15px 0px 0px !important;
   height: 100%;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -2772,6 +2767,12 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li {
   width: 225px !important;
+}
+.subscrip_tabs .p-tabview .p-tabview-nav li{
+  width: auto !important;
+}
+.subscrip_tabs .p-tabview .p-tabview-nav li a {
+  padding-right: 40px !important;
 }
 .tabs_screen .p-tabview-nav-content {
   border: 1px solid #D0D0D0 !important;
@@ -2804,6 +2805,12 @@ span.tabscount {
 }
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
+}
+.generatedgrid .p-datatable-wrapper {
+  height: calc(100vh - 150px); /* for generated screen grid */
+}
+.maindivfoprm .columnlistgrid .p-datatable-wrapper {
+  height: 100% !important; /* for add-screen form grid */
 }
 .bps-approvalgrid .p-datatable-wrapper,
 .credential-tablegrid .p-datatable-wrapper {
@@ -2990,6 +2997,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
+  color: #232832 !important;
 }
 .p-inputtext:enabled:focus {
   border: 1px solid var(--main-bluecolor) !important;
@@ -3031,7 +3039,25 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   float: right;
   margin-right: 5px;
 }
-/* headercss */
+/* new styles for ng select */
+.ng-select .ng-select-container {
+  min-height: 40px !important;
+  background-color: transparent !important;
+  border: 1px solid #979797 !important;
+  box-shadow: none !important;
+}
+.ng-select.ng-select-opened>.ng-select-container{
+  border: 1px solid var(--main-bluecolor) !important;
+}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  background: transparent !important;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 10px !important;
+  color: #7d7d7d !important;
+}
+/* new styles for ng select */
+/* headercss start*/
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
   color: #098de6 !important;
@@ -3050,7 +3076,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   top: 45px !important;
   left: -80px !important;
 }
-/* headercss */
+/* headercss end*/
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -3070,13 +3096,11 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   animation-name: fadeIn;
   animation-duration: 0.4s;
 }
-
 .splitoverlaydiv .p-tabview.p-component,
 .commentBox .p-tabview.p-component {
   height: 100%;
 }
 .splitoverlaycontent {
-  /* height: calc(100% - 160px); */
   height: calc(100% - 95px);
 }
 .splitoverlaycontent .p-dropdown {
@@ -3102,77 +3126,15 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
-.bluebg-button{
-  background-color: var(--main-bluecolor);
-  color: hsl(0, 0%, 100%);
-  padding: 6px 30px;}
-  .bluebg-button:hover{
-    background-color: var(--main-bluecolor);
-    color: hsl(0, 0%, 100%);
-    padding: 6px 30px;}
-    .bluebg-button:active{
-      background: var(--main-bluecolor) !important;
-      background-color: var(--main-bluecolor) !important;
-      color: hsl(0, 0%, 100%);
-      padding: 6px 30px;}
-    .bluebg-button:focus{
-      background-color: var(--main-bluecolor);
-      color: hsl(0, 0%, 100%);
-      padding: 6px 30px;box-shadow:none;}
-.btn-p-align .p-button {
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;}
 button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 30px;
 }
-button.btn.update {
- 
-  padding: 5px 12px !important;
-}
-
-.btn-p-align .p-button:enabled:active {
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;
-  
-}
-.btn-p-align .p-button:enabled:hover{
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;
-}
-.btn-p-align .p-button:focus{
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;
-  box-shadow: none;
-}
 button.btn.canlrst-btn,
 button.btn.new-cancelbtn {
   color: var(--main-bluecolor) !important;
-  font-size: 16px;
- 
-}
-.p-new-cancelbtn {
-  background-color: transparent !important;
-  border: transparent !important;
-  color: var(--main-bluecolor) !important;
-  font-size: 16px !important;
-  padding:5px 12px !important;
-}
-.p-new-cancelbtn:focus {
-  background-color: transparent !important;
-  border: transparent !important;
-  color: var(--main-bluecolor) !important;
-  font-size: 16px !important;
-  box-shadow:0 0 0 0rem #a6d5fa00 !important;
-}
-.btn-p-align.btn.new-cancelbtn {
-  color: var(--main-bluecolor) !important;
-  font-size: 16px;
+  font-size: 16px; 
 }
 .commentBox .p-tabview-panels {
   height: calc(100% - 45px) !important;
@@ -3223,7 +3185,9 @@ button.btn.new-cancelbtn {
 .createform-overlay input.p-inputtext,
 .createform-overlay .p-dropdown,
 .splitoverlaycontent .p-dropdown,
-.splitoverlaycontent input.p-inputtext {
+.splitoverlaycontent input.p-inputtext,
+.maindivfoprm input.p-inputtext,
+.maindivfoprm  .p-dropdown {
   border-color: #979797 !important;
   color: #232832;
   height: 40px;
@@ -3235,7 +3199,10 @@ button.btn.new-cancelbtn {
 .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
 .createform-overlay .p-dropdown.p-dropdown-open,
 .splitoverlaycontent .p-dropdown.p-dropdown-open,
-.splitoverlaycontent input.p-inputtext:focus {
+.splitoverlaycontent input.p-inputtext:focus,
+.maindivfoprm input.p-inputtext:focus,
+.maindivfoprm .p-dropdown:focus,
+.maindivfoprm .p-dropdown.p-dropdown-open {
   border-color: var(--main-bluecolor) !important;
   background-color: #fff;
 }
@@ -3248,7 +3215,6 @@ button.btn.new-cancelbtn {
   border: 1px solid #979797;
   box-shadow: none;
   width: 100%;
-  /* height: auto !important; */
   overflow: hidden;
 }
 .createform-footer {
@@ -3258,23 +3224,21 @@ button.btn.new-cancelbtn {
   bottom: 10px;
   right: 20px;
 }
-
 /* Overlay  Screen Styles End */
 
-/* Document-Tree  Screen Styles */
+/* Document Screens Styles Start */
 
+/* Tree Styles Start */
 .doctree .p-treenode .p-treenode-content {
   width: 25%;
+  padding: 10px 0px !important;
+  align-items: flex-start;
 }
 .doctree .p-tree {
   border: unset !important;
   background: transparent !important;
   padding: 0px !important;
   border-radius: unset !important;
-}
-.doctree .p-treenode .p-treenode-content {
-  padding: 10px 0px !important;
-  align-items: flex-start;
 }
 .doctree .p-treenode .p-treenode-content .p-tree-toggler {
   margin-right: 0px !important;
@@ -3298,8 +3262,7 @@ button.btn.new-cancelbtn {
   right: 35px;
   width: 199px;
 }
-
-/* Document-Tree  Screen Styles */
+/* Tree Styles End */
 
 .docfolder .p-card {
   height: 160px;
@@ -3332,8 +3295,7 @@ button.btn.new-cancelbtn {
   padding: 15px !important;
 }
 
-/* Document Overlay Styles */
-
+/* Document Overlay Styles Start */
 .fldrovrlay {
   height: calc(100% - 50px);
   display: grid;
@@ -3372,11 +3334,8 @@ button.btn.new-cancelbtn {
   display: block;
   padding: 0px !important
 }
-
-
-/* Document FolderName Popup Styles */
-
-
+/* Document Overlay Styles End */
+/* Document FolderName Popup Styles Start */
 .docfldnam .p-dialog {
 width: 400px;
 border-radius: 8px !important;
@@ -3398,25 +3357,10 @@ background-color: #fff;
 .docfldnam .p-float-label {
   text-align: right;
 }
+/* Document FolderName Popup Styles End */
 
-/* new styles for ng select */
-.ng-select .ng-select-container {
-  min-height: 40px !important;
-  background-color: transparent !important;
-  border: 1px solid #979797 !important;
-  box-shadow: none !important;
-}
-.ng-select.ng-select-opened>.ng-select-container{
-  border: 1px solid var(--main-bluecolor) !important;
-}
-.ng-select .ng-select-container .ng-value-container .ng-input>input {
-  background: transparent !important;
-}
-.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
-  top: 10px !important;
-  color: #7d7d7d !important;
-}
-/* new styles for ng select */
+/* Document Screens Styles End */
+
 
 /* ----------------------NEW STYLES END------------------------- */
 
@@ -3511,6 +3455,12 @@ button.custom-popupbtn.mat-button {
 .p-card .p-card-content {
   margin-top: 20px !important;
 } need to remove */
+
+
+
+
+
+
 .icon-color{
   color:var(--main-bluecolor) !important;
 }
@@ -3650,7 +3600,86 @@ button.custom-popupbtn.mat-button {
  border: 1px solid #787a7c !important;
   border-radius: 7px}
 
+  button:disabled {
+    cursor: no-drop !important;
+    background-color: #d1d1d1;
+    border-color:#d1d1d1;
+  
+  }
+  .dialogue-check .p-dialog .p-dialog-footer button{margin:0 0rem 0 0!important;}
+  .dialogue-check .p-dialog .p-dialog-header .p-dialog-title{
+    font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  color:#222222
+  }
+  
+  .bluebg-button{
+    background-color: var(--main-bluecolor);
+    color: hsl(0, 0%, 100%);
+    padding: 6px 30px;}
+    .bluebg-button:hover{
+      background-color: var(--main-bluecolor);
+      color: hsl(0, 0%, 100%);
+      padding: 6px 30px;}
+      .bluebg-button:active{
+        background: var(--main-bluecolor) !important;
+        background-color: var(--main-bluecolor) !important;
+        color: hsl(0, 0%, 100%);
+        padding: 6px 30px;}
+      .bluebg-button:focus{
+        background-color: var(--main-bluecolor);
+        color: hsl(0, 0%, 100%);
+        padding: 6px 30px;box-shadow:none;}
+  .btn-p-align .p-button {
+    background-color: var(--main-bluecolor);
+    color: #fff;
+    padding: 6px 30px;}
+    .pluscreate{cursor:pointer;}
+    .btn-p-align .p-button:enabled:active {
+      background-color: var(--main-bluecolor);
+      color: #fff;
+      padding: 6px 30px;
+      
+    }
+    .btn-p-align .p-button:enabled:hover{
+      background-color: var(--main-bluecolor);
+      color: #fff;
+      padding: 6px 30px;
+    }
+    .btn-p-align .p-button:focus{
+      background-color: var(--main-bluecolor);
+      color: #fff;
+      padding: 6px 30px;
+      box-shadow: none;
+    }
+    .p-new-cancelbtn {
+      background-color: transparent !important;
+      border: transparent !important;
+      color: var(--main-bluecolor) !important;
+      font-size: 16px !important;
+    }
+    .p-new-cancelbtn:focus {
+      background-color: transparent !important;
+      border: transparent !important;
+      color: var(--main-bluecolor) !important;
+      font-size: 16px !important;
+      box-shadow:0 0 0 0rem #a6d5fa00 !important;
+    }
+    .btn-p-align.btn.new-cancelbtn {
+      color: var(--main-bluecolor) !important;
+      font-size: 16px;
+    }
 
+    .p-tabview-nav-container {
+  
+      position: sticky !important;
+      top: 0;
+      z-index: 999;
+      padding-right:7px;
+    }
     /* .editfields .check1{color: #28a745;
       font-size: 12px;
       font-weight: bold;
@@ -3668,30 +3697,16 @@ button.custom-popupbtn.mat-button {
         right: 77px !important;
         top: 15px !important;} */
 
-        .pluscreate{cursor:pointer;}
+     
 /* dynamic dashbord prime styles */
-
-button:disabled {
-  cursor: no-drop !important;
-  background-color: #d1d1d1;
-  border-color:#d1d1d1;
-
-}
-.dialogue-check .p-dialog .p-dialog-footer button{margin:0 0rem 0 0!important;}
-.dialogue-check .p-dialog .p-dialog-header .p-dialog-title{
-  font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 28px;
-color:#222222
-}
 
 
 
 
 
 /*new styles dropdown*/
+/*
+commenting since its reflecting all the checkboxesstyles
 .custom-ms .p-multiselect{width: 180px;
   height: 32px;
   top:10px;
@@ -3716,7 +3731,7 @@ color:#222222
     background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
   .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
   .custom-ms .p-multiselect .p-multiselect-label{float: left;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;} */
   
 /*new styles dropdown*/
 

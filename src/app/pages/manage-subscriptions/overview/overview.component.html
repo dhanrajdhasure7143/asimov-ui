@@ -1,69 +1,63 @@
-<div class="container h-scroll">
-    <span class="module-header-title">
+<div class="col-md-12">
+    <div class="row">
         <h4>Plan Details</h4>
-    </span>
-    <div *ngIf='error'>
-        <h6><b> - {{error}}</b></h6>
-    </div>
-    <div *ngIf='!error'>
-        <div *ngFor="let planlist of plansList">
-            <div class="col p-0" *ngIf="planlist.subscribed">
-                <h6 id="planName" *ngIf="planlist.nickName =='Standard'">- Your EZFLOW is on <b>Free Tier(Monthly)</b>
-                    <button (click)="onChangePlan()">
-                        <a class="link">Change Plan</a></button></h6>
-                <h6 id="planName" *ngIf="planlist.nickName !='Standard'">- Your EZFLOW is on <b> {{planlist.nickName}}
-                        Plan(Yearly).</b> <button (click)="onChangePlan()">
-                        <a class="link">Change Plan</a></button></h6>
-                <div *ngIf="planlist.nickName =='Professional'">
-                    <h6 id="planName">- Your Plan Will Renew On <b>{{due_timestamp}}</b>, charging your Credit
-                        Card
-                        <b>${{planlist.amount}}.</b>
-                    </h6>
-                </div>
-                <div *ngIf="planlist.nickName!='Professional'">
-                    <h6 id="planName">- Your Plan Will Renew On <b>{{due_timestamp1}}</b>, charging your Credit
-                        Card
-                        <b>${{planlist.amount}}.</b>
-                    </h6>
-                </div>
-            </div>
-
+        <div *ngIf='error' class="row">
+            <h6><b> - {{error}}</b></h6>
         </div>
-    </div>
-
-
-</div>
-<br>
-
-<div div class="container">
-    <span class="module-header-title pt-5">
+        <div *ngIf='!error' class="row">
+            <div *ngFor="let planlist of plansList">
+                <div class="col p-0" *ngIf="planlist.subscribed">
+                    <p id="planName" *ngIf="planlist.nickName =='Standard'">- Your EZFLOW is on <b>Free Tier(Monthly)</b>
+                        <button (click)="onChangePlan()">
+                            <a class="link">Change Plan</a>
+                        </button>
+                    </p>
+                    <p id="planName" *ngIf="planlist.nickName !='Standard'">- Your EZFLOW is on <b> {{planlist.nickName}}
+                            Plan(Yearly).</b> <button (click)="onChangePlan()">
+                            <a class="link">Change Plan</a></button></p>
+                    <div *ngIf="planlist.nickName =='Professional'">
+                        <p id="planName">- Your Plan Will Renew On <b>{{due_timestamp}}</b>, charging your Credit
+                            Card
+                            <b>${{planlist.amount}}.</b>
+                        </p>
+                    </div>
+                    <div *ngIf="planlist.nickName!='Professional'">
+                        <p id="planName">- Your Plan Will Renew On <b>{{due_timestamp1}}</b>, charging your Credit
+                            Card
+                            <b>${{planlist.amount}}.</b>
+                        </p>
+                    </div>
+                </div>
+    
+            </div>
+        </div>  
+    </div>  
+    
+    <div div class="row">
         <h4>Billing Actions</h4>
-    </span>
-    <span *ngIf="error1">
-        <h6><b>- {{error1}}</b></h6>
-    </span>
-    <div *ngIf="!error1">
-        <h6>- Your future Charges Will be billed to the Card
-            <span *ngFor="let payment of paymentMode">
-                <span *ngIf="payment.defaultSource == true"><b>***{{payment.cardLast4}}.&nbsp;</b></span>
-            </span>
-            <button (click)="onChangePaymentMethod()"> <a class="link">Change Payment Method</a></button>
-        </h6>
+        <div *ngIf="error1"  class="row">
+            <h6><b>- {{error1}}</b></h6>
+        </div>
+        <div *ngIf="!error1"  class="row">
+            <p>- Your future Charges Will be billed to the Card
+                <span *ngFor="let payment of paymentMode">
+                    <span *ngIf="payment.defaultSource == true"><b>***{{payment.cardLast4}}.</b></span>
+                </span>
+                <button (click)="onChangePaymentMethod()"> <a class="link">Change Payment Method</a></button>
+            </p>
+        </div>
+        <p>- Billing Emails are sent to <b>{{email}}.</b> 
+            <button (click)="onChangeEmail()">
+                <a class="link">Change Email</a></button>
+        </p>
     </div>
-    <h6>- Billing Emails are sent to <b>{{email}}.</b> &nbsp;
-        <button (click)="onChangeEmail()">
-            <a class="link">Change Email</a></button>
-    </h6>
+    <button class="cancel-subscrip" (click)="subscriptionCancel()">
+            <a class="link">Cancel Subscription</a>
+    </button>
+    <p class="userhint">
+        <b>Note:</b> Your Account Will Be Inactivated For 60 days, then it will be deleted completely
+    </p>
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
+        rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 </div>
-<br>
-
-<div>
-    <button (click)="subscriptionCancel()">
-        <a class="link">Cancel Subscription</a></button>
-</div><br>
-<p>
-    <b>Note:</b> Your Account Will Be Inactivated For 60 days, then it will be deleted completely
-</p>
-<p-toast></p-toast>
-<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
-    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

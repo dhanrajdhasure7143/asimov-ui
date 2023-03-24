@@ -1,0 +1,28 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 238 192" width="238" height="192">
+	<title>AddCard-svg</title>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #ffffff } 
+		.s1 { fill: none } 
+		.s2 { fill: none;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 2 } 
+		.t3 { font-size: 15px;fill: #3d3d3d;font-weight: 400;font-family: "OpenSans-Regular", "Open Sans" } 
+	</style>
+	<g id="Add_New">
+		<g id="Rectangle_2310">
+			<path id="Layer" class="s0" d="m0 3c0-1.7 1.3-3 3-3h232c1.7 0 3 1.3 3 3v186c0 1.7-1.3 3-3 3h-232c-1.7 0-3-1.3-3-3z"/>
+		</g>
+		<g id="Group_2797">
+			<g id="Black-plus">
+				<path id="Path_823" class="s1" d="m107 71.3h23.6v23.7h-23.6z"/>
+				<g id="plus">
+					<path id="Line_86" class="s2" d="m118.8 71v23.9"/>
+					<path id="Line_87" class="s2" d="m107.3 83.3h23.7"/>
+				</g>
+			</g>
+			<text id="Add New" style="transform: matrix(1,0,0,1,88,117.634)" >
+				<tspan x="0" y="0" class="t3">Add New
+</tspan>
+			</text>
+		</g>
+	</g>
+</svg>

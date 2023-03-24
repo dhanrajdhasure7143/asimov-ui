@@ -1,58 +1,26 @@
 <div class="maincontent">
-  <div class="h-100">
-        <!-- <div class="row main-content-head">
-                  <div class="col-md-4 pl-0">
-                  
-                    <label id="popup_title">
-                        <a  routerLink="/pages/admin/admin-screen-list">
-                          <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                        </a>
-                    </label>
-                    <span class="text-title"> {{ selectedScreen.Screen_Name }} </span>
-                
-        </div>
-        <div class="col-md-8 pr-0 text-right">
-        <div  class="text-right px-2" *ngIf="selectedScreen.Screen_Name" >
-          <button
-            [disabled]="!selectedScreen.Allow_Insert"
-            (click)="createForm()"
-            class="">
-            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-          </button>
-        </div>
+  <div *ngIf="displayFlag == 'DisplayTable'">
+    <div class="row main-content-head" >
+      <div class="col-md-4 pl-0">
+        <h3>
+          <label id="popup_title">
+            <a routerLink="/pages/admin/admin-screen-list">
+              <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+            </a>
+          </label>
+          <span class="title_text"> {{ selectedScreen.Screen_Name }} </span>
+        </h3>
       </div>
-        </div> -->
-        <div class="main-content-body tablist-cont">
-              <div *ngIf="displayFlag == 'DisplayTable'">
-                <div class="page-header">
-                  <!-- <div class="row py-2">
-                      <div class="text-left">
-                       <a  routerLink="/pages/admin/admin-screen-list">
-                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                          </a>
-                         <span class="text-title"> {{ selectedScreen.Screen_Name }} </span>
-                          </div>
-                    </div> -->
-                  <div class="row main-content-head " style="padding-bottom: 13px;">
-                    <div class="col-md-4 pl-0">
-                      <h3>
-                        <label id="popup_title">
-                          <a routerLink="/pages/admin/admin-screen-list">
-                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                          </a>
-                        </label>
-                        <span class="title_text"> {{ selectedScreen.Screen_Name }} </span>
-                      </h3>
-                    </div>
-                    <div class="col-md-8 pr-0 text-right">
-                      <div class="text-right px-2" *ngIf="selectedScreen.Screen_Name">
-                        <button [disabled]="!selectedScreen.Allow_Insert" (click)="createForm()" class="">
-                          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-                        </button>
-                       </div>
-                    </div>
-                  </div>
-                  <app-dynamic-table
+      <div class="col-md-8 pr-0 text-right">
+        <div *ngIf="selectedScreen.Screen_Name">
+          <button class="btn" [disabled]="!selectedScreen.Allow_Insert" (click)="createForm()" pTooltip="Create" tooltipPosition="bottom">
+            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="create">
+          </button>
+        </div>        
+      </div>
+    </div>
+    <div class="main-content-body generatedgrid">
+      <app-dynamic-table
                     [table_data]="tableData"
                     [screenTable]="'common'"
                     [columns_list]="columns_list"
@@ -63,57 +31,52 @@
                     [isdisabled_edit]="!selectedScreen.Allow_Edit"
                     [isdisabled_delete]="!selectedScreen.Allow_Delete"
                   >
-                  </app-dynamic-table>
-                </div>
-              </div>
-              <div *ngIf="displayFlag == 'EditForm'">
-                <div class="page-header">
-                  <div class="row py-2">
-                    <div class="col">
-                      <div class="text-left px-3 w-100 h6">
-                        <span
-                          (click)="displayTable()"
-                          class="clickable color-primary primary-icon"
-                          ><em class="ri-arrow-left-s-line"></em></span
-                        >&nbsp;Edit {{ selectedScreen.screenName }}
-                      </div>
-                    </div>
-                    <!-- <div class="col">
-                                            <div class="text-right px-2">
-                                                <button (click)="createForm()" class="btn btn-sm btn-primary">Add</button>
-                                            </div>
-                                        </div> -->
-                  </div>
-                </div>
-                <app-screen-generation-dynamic-form
+      </app-dynamic-table>
+    </div>
+  </div>
+  <div *ngIf="displayFlag == 'EditForm'">
+    <div class="row main-content-head" >
+      <h3>
+        <label id="popup_title">
+          <a (click)="displayTable()">
+            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+          </a>
+        </label>
+        <span class="title_text">
+          <span>Edit </span>
+          <span class="sub_title_text">{{ selectedScreen.screenName }}</span>
+        </span>
+      </h3>      
+    </div>
+    <div class="main-content-body">
+      <app-screen-generation-dynamic-form
                   [details]="updateDetails"
                   (emitFormValue)="caputreFormValues($event)"
                   [inputFieldData]="formDetails"
                   [dash_board_list]="dash_board_list"
-                ></app-screen-generation-dynamic-form>
-              </div>
-              <div *ngIf="displayFlag == 'CreateForm'">
-                <div class="page-header">
-                  <div class="row py-2">
-                    <div class="col">
-                      <div class="text-left px-3 w-100 h6">
-                        <span
-                          (click)="displayTable()"
-                          class="clickable color-primary primary-icon"
-                          ><em class="ri-arrow-left-s-line"></em></span
-                        >&nbsp;Create {{ selectedScreen.Screen_Name }}
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <app-screen-generation-dynamic-form
+      ></app-screen-generation-dynamic-form>
+    </div>
+  </div>
+  <div *ngIf="displayFlag == 'CreateForm'">
+    <div class="row main-content-head" >
+      <h3>
+        <label id="popup_title">
+          <a (click)="displayTable()">
+            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+          </a>
+        </label>
+        <span class="title_text">
+          <span>{{ selectedScreen.Screen_Name }} | </span>
+          <span class="sub_title_text"> Create</span>
+        </span>
+      </h3>      
+    </div>
+    <div class="main-content-body">
+      <app-screen-generation-dynamic-form
                       (emitFormValue)="caputreFormValues($event)"
                       [inputFieldData]="formDetails"
                       [dash_board_list]="dash_board_list"
-                    ></app-screen-generation-dynamic-form>
-                  </div>
-                </div>
-              </div>
-        </div>
-      </div>
+      ></app-screen-generation-dynamic-form>
+    </div>
   </div>
+</div>

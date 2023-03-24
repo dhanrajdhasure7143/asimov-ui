@@ -1,121 +1,110 @@
-<div class="billing-form  h-scroll">
-<form [formGroup]="billingForm" class="">
-    <div class="row">
-        <div class="form-fields col p-0">
-            <label class="">First Name<span class="star">*</span></label>
-            <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
-                placeholder="Enter First Name" required>
-            <span
-                *ngIf="billingForm.get('firstName').invalid && billingForm.get('firstName').touched &&  !billingForm.controls['firstName'].hasError('maxlength')"
-                class="errspan required">First Name Required*</span>
-            <span *ngIf="billingForm.controls['firstName'].hasError('maxlength')" class="errspan required">
-                Maximum of 50 characters
-            </span>
-        </div>
-        <div class="form-fields col pl-3">
-            <label class="" for="taskCategory">Last Name<span class="star">*</span></label>
-            <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
-                formControlName="lastName">
-            <span
-                *ngIf="billingForm.get('lastName').invalid && billingForm.get('lastName').touched &&  !billingForm.controls['lastName'].hasError('maxlength')"
-                class="errspan required">Last Name Required*</span>
-            <span *ngIf="billingForm.controls['lastName'].hasError('maxlength')" class="errspan required">
-                Maximum of 50 characters
-            </span>
-        </div>
-    </div>
-    <div class="">
+<div class="maindivfoprm billingformdiv">
+    <form [formGroup]="billingForm" class="">
         <div class="row">
-            <div class="form-fields col p-0">
-                <label class="" for="taskCategory">Country<span class="star">*</span></label>
-                <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
-                    emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)" 
-                    [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName" optionValue="CountryName"></p-dropdown>
+            <div class="form-group col-md-6 pl-0">
+                <label class="">First Name<span class="star">*</span></label>
+                <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
+                    placeholder="Enter First Name" required>
+                <span
+                    *ngIf="billingForm.get('firstName').invalid && billingForm.get('firstName').touched &&  !billingForm.controls['firstName'].hasError('maxlength')"
+                    class="required">First Name Required *</span>
+                <span *ngIf="billingForm.controls['firstName'].hasError('maxlength')" class="required">
+                    Maximum of 50 characters
+                </span>
             </div>
-            <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
-                class="errspan required">Country is Required*</span>
-            <div class="form-fields col pl-3">
+            <div class="form-group col-md-6 pr-0">
+                <label class="" for="taskCategory">Last Name<span class="star">*</span></label>
+                <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
+                    formControlName="lastName">
+                <span
+                    *ngIf="billingForm.get('lastName').invalid && billingForm.get('lastName').touched &&  !billingForm.controls['lastName'].hasError('maxlength')"
+                    class="required">Last Name Required *</span>
+                <span *ngIf="billingForm.controls['lastName'].hasError('maxlength')" class="required">
+                    Maximum of 50 characters
+                </span>
+            </div>
+            <div class="form-group col-md-6 pl-0">
+                    <label class="" for="taskCategory">Country<span class="star">*</span></label>
+                    <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
+                        emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
+                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName" optionValue="CountryName"></p-dropdown>
+                    <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
+                        class="required">Country is Required *</span>
+            </div>
+            <div class="form-group col-md-3 pr-0">
                 <label class="" for="resources">State/Region<span class="star">*</span></label>
-                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionLabel="StateName" 
+                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionLabel="StateName"
                     [autoDisplayFirst]="false" placeholder="Select State/Region" formControlName="state"
                     (onChange)="onChangeState($event.value)">
                 </p-dropdown>
                 <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
-                    class="errspan required">State is Required*</span>
+                    class="required">State is Required *</span>
             </div>
+            <div class="form-group col-md-3 pr-0">
+                <label class="" for="priority">City <span class="star">*</span></label>
+                <span>
+                    <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}"
+                        [autoDisplayFirst]="false" placeholder="Select City" formControlName="city">
+                    </p-dropdown>
+                </span>
+                <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
+                class="required">City is Required *</span>
+            </div>
+            <div class="form-group col-md-3 pl-0">
+                <label class="" for="approvers">Postal Code<span class="star">*</span></label>
+                <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
+                    placeholder="Enter Postal Code">
+                <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched"
+                    class="required">Postal Code is Required *</span>
+            </div>
+            <div class="form-group col-md-3 pl-0">
+                <span> <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
+                    <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
+                        placeholder="Enter Phone Number" (keydown)="onKeydown($event)">
+                </span>
+                <span
+                     *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
+                        !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
+                    class="required">Phone Nmber is Required *</span>
+                <span
+                     *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
+                    class="required">Phone number should be 10 digits *</span>
+            </div>
+            <div class="form-group col-md-6 pr-0">
+                <label class="" for="approvers">Email<span class="star">*</span></label>
+                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
+                <span
+                    *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
+                    class="required">Email is Required *</span>
+                <span *ngIf="billingForm.controls['email'].hasError('pattern')" class="required">Enter Correct Email
+                    Address *</span>
 
+            </div>
+            <div class="form-group col-md-6 pl-0">
+                <label class="" for="approvers">Address Line1<span class="star">*</span></label>
+                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
+                    placeholder="Enter Address Line 1">
+                <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched"
+                    class="required">Address Line1 is Required *</span>
+            </div>
+            <div class="form-group col-md-6 pr-0">
+                <label class="">Address Line2 <span class="star">*</span></label>
+                <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
+                    placeholder="Enter Address Line 2">
+                <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched"
+                    class="required">Address Line2 is Required *</span>
+            </div>
         </div>
+        <!-- <div>
+            <p-button *ngIf="!editButton" [disabled]="billingForm.invalid" class="float-right" label="Save"
+                (onClick)="saveBillingInfo()"></p-button>
+            <p-button *ngIf="editButton" [disabled]="billingForm.invalid" class="float-right" label="Update"
+                (onClick)="saveBillingInfo()"></p-button>
+        </div> -->
+    </form>
+    <div class="row justify-content-end">
+        <button *ngIf="!editButton" [disabled]="billingForm.invalid" (onClick)="saveBillingInfo()" class="btn bluebg-button">Save</button>
+        <button *ngIf="editButton" [disabled]="billingForm.invalid" (onClick)="saveBillingInfo()" class="btn bluebg-button">Update</button>
     </div>
-    <div class="row">
-        <div class="form-fields col p-0">
-            <label class="" for="priority">City <span class="star">*</span></label>
-            <span>
-                <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}" 
-                    [autoDisplayFirst]="false" placeholder="Select City" formControlName="city">
-                </p-dropdown>
-            </span>
-            <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
-                class="errspan required">City is Required*</span>
-
-
-        </div>
-        <div class="form-fields col pl-4">
-            <label class="" for="approvers">Postal Code<span class="star">*</span></label>
-            <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
-                placeholder="Enter Postal Code">
-            <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched"
-                class="errspan required">Postal Code is Required*</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-fields col p-0">
-            <label class="" for="approvers">Address Line1<span class="star">*</span></label>
-            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
-                placeholder="Enter Address Line 1">
-            <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched"
-                class="errspan required">Address Line1 is Required*</span>
-        </div>
-        <div class="form-fields col pl-3">
-            <label class="">Address Line2 <span class="star">*</span></label>
-            <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
-                placeholder="Enter Address Line 2">
-            <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched"
-                class="errspan required">Address Line2 is Required*</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-fields col p-0">
-            <span> <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
-                <input pInputText type="text" [style]="{'width':'97%'}" maxlength="10" formControlName="phoneNumber"
-                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)">
-            </span>
-        </div>
-        <span
-            *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched && 
-        !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
-            class="errspan required">Phone Nmber is Required*</span>
-        <span
-            *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
-            class="errspan required">Phone number should be 10 digits*</span>
-
-        <div class="form-fields col p-0">
-            <label class="" for="approvers">Email<span class="star">*</span></label>
-            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
-            <span
-                *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
-                class="errspan required">Email is Required*</span>
-            <span *ngIf="billingForm.controls['email'].hasError('pattern')" class="errspan required">Enter Correct Email
-                Address*</span>
-
-        </div>
-    </div>
-    <div>
-        <p-button *ngIf="!editButton" [disabled]="billingForm.invalid" class="float-right" label="Save"
-            (onClick)="saveBillingInfo()"></p-button>
-        <p-button *ngIf="editButton" [disabled]="billingForm.invalid" class="float-right" label="Update"
-            (onClick)="saveBillingInfo()"></p-button>
-    </div>
-
-</form>
 <p-toast></p-toast>
 </div>

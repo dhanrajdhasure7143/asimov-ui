@@ -1,8 +1,6 @@
 
 <div class="maincont">
   <div class="maincont-contentarea">
-
-    <div class="p-tabview-panels">
     <div class="row main-content-head">
       <h3>
         <label id="popup_title">
@@ -13,8 +11,6 @@
         <span class="title_text">Manage Subscriptions</span>
       </h3>
     </div>
-  </div>
-    <!-- <div> -->
     <!-- <section class="tp-section">
           <mat-nav-list class="">
             <a
@@ -151,9 +147,8 @@
               <span class="side-menu-font">Order Details</span>
             </a>
           </mat-nav-list>
-        </section> -->
-    <!-- </div> -->
-    <!-- <div class="col subscription-content-area">
+        </section> 
+        <div class="col subscription-content-area">
         <div class="section one" id="section1" *ngIf="currentplansection">
           <app-currentplan></app-currentplan>
         </div>
@@ -174,61 +169,60 @@
         <div class="section one" id="section1" *ngIf="orderdetailssection">
           <app-order-details></app-order-details>
         </div>
-      </div> -->
-   
-
-  <!-- </div>
+      </div> 
+    </div>
 </div> -->
 
-<div class="main-content-body tablist-cont">
-  <div id="" class="tabs_screen config_tabs h-100">
-  <p-tabView #tabView [(activeIndex)]="activeIndex" styleClass="tabview-custom" (onChange)="handleChange($event,tabView)"  >
-    <p-tabPanel header="Overview">
-      <ng-template pTemplate = "header">
-        <i class="pi pi-eject  icon-color tab_icons"></i>
-        <span class="tab_title ng-star-inserted">Overview</span>
-
-      </ng-template>
-      <span *ngIf="check_tab == 0">
-        <app-overview></app-overview>
-      </span>
-    </p-tabPanel>
-    <p-tabPanel header="Invoices" >
-      <ng-template pTemplate = "header">
-        <i class="pi pi-file-pdf   icon-color tab_icons"></i>
-        <span class="tab_title">Invoices</span>
-      </ng-template>
-      <span *ngIf="check_tab == 1">
-        <app-payment-history></app-payment-history>
-      </span>
-    </p-tabPanel>
-    <p-tabPanel header="Billing Information">
-      <ng-template pTemplate = "header">
-        <i class="pi pi-dollar  icon-color tab_icons"></i>
-        <span class="tab_title">Billing Information</span>
-      </ng-template>
-      <span  *ngIf="check_tab == 2">
-        <app-billing-address></app-billing-address>
-      </span>
-    </p-tabPanel>
-    <p-tabPanel header="Payment Methods" >
-      <ng-template pTemplate = "header">
-        <i class="pi pi-credit-card  icon-color tab_icons"></i>
-        <span class="tab_title">Payment Methods</span>
-      </ng-template>
-      <span *ngIf="check_tab == 3">
-        <app-payment-methods></app-payment-methods>
-      </span>
-    </p-tabPanel>
-    <p-tabPanel header="Package Options" >
-      <ng-template pTemplate = "header">
-        <i class="pi pi-money-bill  icon-color tab_icons"></i>
-        <span class="tab_title">Package Options</span>
-      </ng-template>
-      <span *ngIf="check_tab == 4" >
-        <app-currentplan></app-currentplan>
-      </span>
-    </p-tabPanel>
-  </p-tabView>
-</div>
+    <div class="main-content-body tablist-cont">
+      <div id="" class="tabs_screen subscrip_tabs h-100">
+        <p-tabView #tabView [(activeIndex)]="activeIndex" styleClass="tabview-custom" (onChange)="handleChange($event,tabView)"  >
+          <p-tabPanel header="Overview">
+            <ng-template pTemplate = "header">
+              <i class="pi pi-eject icon-color tab_icons"></i>
+              <span class="tab_title">Overview</span>
+            </ng-template>
+            <span *ngIf="check_tab == 0">
+                <app-overview></app-overview>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Invoices" >
+            <ng-template pTemplate = "header">
+              <i class="pi pi-file-pdf icon-color tab_icons"></i>
+              <span class="tab_title">Invoices</span>
+            </ng-template>
+            <span *ngIf="check_tab == 1">
+              <app-payment-history></app-payment-history>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Billing Information">
+            <ng-template pTemplate = "header">
+              <i class="pi pi-dollar icon-color tab_icons"></i>
+              <span class="tab_title">Billing Information</span>
+            </ng-template>
+            <span  *ngIf="check_tab == 2">
+              <app-billing-address></app-billing-address>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Payment Methods" >
+            <ng-template pTemplate = "header">
+              <i class="pi pi-credit-card icon-color tab_icons"></i>
+              <span class="tab_title">Payment Methods</span>
+            </ng-template>
+            <span *ngIf="check_tab == 3">
+              <app-payment-methods></app-payment-methods>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Package Options" >
+            <ng-template pTemplate = "header">
+              <i class="pi pi-money-bill icon-color tab_icons"></i>
+              <span class="tab_title">Package Options</span>
+            </ng-template>
+            <span *ngIf="check_tab == 4" >
+              <app-currentplan></app-currentplan>
+            </span>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
 </div>
