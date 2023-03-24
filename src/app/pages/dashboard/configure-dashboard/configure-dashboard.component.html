@@ -147,11 +147,7 @@
           </div>
                   </div> -->
                </div>
-             
             </div>
-           
-           
-          
           </div>
           <!-- <div class="col-md-6 sec-1" >
             <div class="well1-dynmic" >
@@ -208,11 +204,9 @@
               </div>
             </div>
           </div>
-         
         </div>
       </div>
     </div>
-
   </ng-template>
   <ng-template pTemplate>
     <p-tabView class="tab-primest">
@@ -230,13 +224,9 @@
               </mat-icon>
             </div>
             <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right;padding-left:10px;">
-              <select class="form-control data">
-                  <option value="">All Metrics</option>
-                </select>
-              
               <!-- <select class="form-control data">
-                <option value="">All metrics</option>
-              </select> -->
+                  <option value="">All Metrics</option>
+                </select> -->
             </div>
           </div>
         </div>
@@ -267,8 +257,12 @@
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
               </mat-icon>
             </div>
-          
-         
+            <div class="col-md-6 form-group pr-0 bps-labcls" style="float:right;padding-left:10px;">
+              <select class="form-control data">
+                  <option value="">All Widgets</option>
+                  <option value="">Operational</option>
+                </select>
+            </div>
         </div>
         </div>
         <div *ngFor="let widget of widgetslist; let i=index"  >
@@ -280,24 +274,10 @@
             </div>
             <div class="widicon" *ngIf="widget.widget_type =='table'">
                <img src="../../../../assets/images-n/dashboard/table1.png" width="60px;" alt="">
-              <!-- <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Next Run</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let each of widget.widgetData">
-                    <td>{{ each.name }}</td>
-                  </tr>
-                </tbody>
-              </table> -->
             </div>
             <div class="widicon" style="margin-right:20px;" *ngIf="widget.widget_type =='bar'">
               <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
             </div>
-           
             <div>
               <h5>{{widget.name}}</h5>
               <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
@@ -306,7 +286,6 @@
           </div>
           </div>
         </div>
-      
       </p-tabPanel>
     </p-tabView>
     <!-- <span class="splitter-headers">

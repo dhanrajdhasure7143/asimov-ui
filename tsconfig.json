@@ -23,6 +23,10 @@
     ]
   },
   "angularCompilerOptions": {
+    "enableIvy": false,
+    "compilerOptions": {
+      "module": "esnext"
+    },
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   }

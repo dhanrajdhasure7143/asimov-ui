@@ -37,6 +37,7 @@
     "@types/ckeditor": "^4.9.10",
     "angular-datatables": "^8.1.0",
     "angular-disable-browser-back-button": "^1.0.1",
+    "angular-mentions": "^1.4.0",
     "angular-notifier": "^6.0.1",
     "angular-resizable-element": "^3.3.0",
     "angular-split": "^3.0.3",
