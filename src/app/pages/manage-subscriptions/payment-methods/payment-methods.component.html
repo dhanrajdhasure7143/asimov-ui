@@ -1,41 +1,49 @@
-<div class="container">
-    <div class="row" *ngIf="!showcarddetails">
+<div class="paymentcontent_div" *ngIf="!showcarddetails">
         <!-- <div class="col-md-12">
                 <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div> -->
-        <div class="col-12 errordiv" *ngIf='error'>
+        <div class="col-md-12 row errordiv" *ngIf='error'>
             <h2>{{error}}</h2>
         </div>
-        <span *ngIf='!error' class="col-12 row">
-            <div class="col-3 cardsBox" style="margin: 1%;"
-                *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
-
-                <img src="../../../assets/images/subscription/card.svg"><br><br>
-                <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
-                    <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
-
-                </span>
-                <span id="cardName"><b>Card Holder's Name : {{cardData.name}}</b></span><br><br>
-                <span id=""><b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b></span>
-                <h4> <span *ngIf='cardData.defaultSource === true' class="inactive-card">Default</span></h4>
-                <h4> <span *ngIf='!cardData.defaultSource' class="active-card"
-                        (click)="setAsDefaultCard(cardData)">Make Default</span></h4>
-                <h4> <span *ngIf='!cardData.defaultSource' class="delete-card"
-                        (click)="confrmDeleteCard(cardData)">Remove</span></h4>
+        <div *ngIf='!error' class="col-md-12 pr-0 row">
+            <div class="col-3 form-group pl-0" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
+                <div class="cardsBox">
+                    <img src="../../../assets/images/subscription/card.svg" alt="">
+                    <div class="cardbox_cont">
+                        <p id="">
+                            <b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
+                            <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
+                        </p>
+                        <p class="cardholderName">
+                            <b>Card Holder's Name : {{cardData.name}}</b>
+                        </p>
+                        <p id="">
+                            <b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b>
+                        </p>
+                        <div class="row justify-content-end">
+                            <button class="btn inactive-card" *ngIf='cardData.defaultSource === true' >Default</button>
+                            <button class="btn new-cancelbtn" *ngIf='!cardData.defaultSource' (click)="confrmDeleteCard(cardData)">Remove</button>
+                            <button class="btn bluebg-button" *ngIf='!cardData.defaultSource' (click)="setAsDefaultCard(cardData)">Make Default</button>
+                        </div>                        
+                    </div>                  
+    
+                    <!-- <span *ngIf='cardData.defaultSource === true' class="inactive-card">Default</span>
+                    <span *ngIf='!cardData.defaultSource' class="active-card"
+                            (click)="setAsDefaultCard(cardData)">Make Default</span>
+                    <span *ngIf='!cardData.defaultSource' class="delete-card"
+                            (click)="confrmDeleteCard(cardData)">Remove</span> -->
+                </div>
             </div>
 
 
-            <div class="col-3 cardsBox add-new">
-                <img src="../../../assets/images/subscription/AddCard.svg"
-                    style="height: 202px;margin-left: -2.5%;margin-top: 18%" (click)="addNew()">
+            <div class="col-3 form-group pl-0">
+                <div class="cardsBox add-new">
+                    <img src="../../../../assets/images-n/common/AddCreditCard.svg" (click)="addNew()" alt="">
+                </div>                
             </div>
-        </span>
-    </div>
-    <div class="row" *ngIf="showcarddetails">
-
-        <app-addcard (onBack)="onBack()"></app-addcard>
-
-
-    </div>
+        </div>
+</div>
+<div class="" *ngIf="showcarddetails">
+    <app-addcard (onBack)="onBack()"></app-addcard>
 </div>

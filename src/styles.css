@@ -2713,10 +2713,10 @@ input.p-inputtext {
 }
 .actionspopmenu .p-menu-overlay {
   position: absolute;
-    top: 37px !important;
-    right: 0px !important;
-    left: unset !important;
-    width: max-content;
+  right: 0px !important;
+  top: 40px !important;
+  left: unset !important;
+  width: max-content;
 }
 .editfields i {
   padding: 6px;
@@ -2736,20 +2736,13 @@ input.p-inputtext {
 /* Tabs NEW Styles Start */
 .p-tabview .p-tabview-nav {
   border: none !important;
-  background: #ffffff !important;
+  background: transparent !important;
   height: 70px;
-}
-.p-tabview-nav-container {
-  
-  position: sticky !important;
-  top: 0;
-  z-index: 999;
-  padding-right:7px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
   color: var(--main-txtcolor) !important;
-  padding: 15px 7px 0px 0px !important;
+  padding: 15px 0px 0px !important;
   height: 100%;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -3464,6 +3457,10 @@ button.custom-popupbtn.mat-button {
 } need to remove */
 
 
+
+
+
+
 .icon-color{
   color:var(--main-bluecolor) !important;
 }
@@ -3675,6 +3672,14 @@ button.custom-popupbtn.mat-button {
       color: var(--main-bluecolor) !important;
       font-size: 16px;
     }
+
+    .p-tabview-nav-container {
+  
+      position: sticky !important;
+      top: 0;
+      z-index: 999;
+      padding-right:7px;
+    }
     /* .editfields .check1{color: #28a745;
       font-size: 12px;
       font-weight: bold;
@@ -3700,6 +3705,8 @@ button.custom-popupbtn.mat-button {
 
 
 /*new styles dropdown*/
+/*
+commenting since its reflecting all the checkboxesstyles
 .custom-ms .p-multiselect{width: 180px;
   height: 32px;
   top:10px;
@@ -3724,7 +3731,7 @@ button.custom-popupbtn.mat-button {
     background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
   .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
   .custom-ms .p-multiselect .p-multiselect-label{float: left;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;} */
   
 /*new styles dropdown*/
 

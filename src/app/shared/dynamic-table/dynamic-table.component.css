@@ -19,12 +19,12 @@ th.checkboxth:before {
     padding: 10px 8px;
     margin-right: 3px;
 }
-.inactive {
-    color: #ea3d3d;
+.red {
+    color: red;
     font-weight: 600;
 }
-.active {
-    color: #27AD74;
+.green {
+    color: green;
     font-weight: 600;
 }
 
