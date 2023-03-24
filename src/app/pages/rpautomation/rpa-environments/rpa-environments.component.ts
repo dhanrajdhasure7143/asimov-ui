@@ -221,10 +221,10 @@ export class RpaenvironmentsComponent implements OnInit {
   }
 
   deploybotenvironment() {
-    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
-    if (selectedEnvironments.length != 0) {
+    // const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    if (this.selected_list.length != 0) {
       this.spinner.show();
-      this.rest_api.deployenvironment(selectedEnvironments).subscribe(res => {
+      this.rest_api.deployenvironment(this.selected_list).subscribe(res => {
         let data: any = res
         this.spinner.hide();
         if (data[0].errorMessage == undefined) {
