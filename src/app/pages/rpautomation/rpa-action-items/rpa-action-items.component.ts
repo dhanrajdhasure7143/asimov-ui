@@ -129,8 +129,8 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Action Deleted Successfully !!",
         heightAuto: false,
       });
-      this.getAllActionItems();
       this.loader.hide();
+      this.getAllActionItems();
     },(err) => {
       Swal.fire({
         icon: "error",
@@ -138,8 +138,8 @@ export class RpaActionItemsComponent implements OnInit {
         text: "Something went wrong!",
         heightAuto: false,
       });
-      this.getAllActionItems();
       this.loader.hide();
+      this.getAllActionItems();
     })
   }
   

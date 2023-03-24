@@ -101,6 +101,7 @@ export class RpaConnectionManagerComponent implements OnInit {
       (err) => {
         Swal.fire("Error", "Unable to delete Connector", "error");
         this.spinner.hide();
+        this.getAllConnections();
       }
     );
   }

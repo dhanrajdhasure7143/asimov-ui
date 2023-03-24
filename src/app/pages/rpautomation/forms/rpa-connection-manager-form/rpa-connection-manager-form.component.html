@@ -71,8 +71,7 @@
                             </div>
                             <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Action Icon
-                                        <span class="star">*</span>
-                                    </label>
+                                        <span class="star" *ngIf="!isCreate">*</span>                                    </label>
                                     <input type="file" class="form-control" accept="image/png, image/svg" (change)="imageUpload($event)"
                                         formControlName="" placeholder="Upload Icon">
                                     <!-- <span
