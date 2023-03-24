@@ -318,7 +318,16 @@
                     <div class="row acresources" *ngIf="!isCreate">
                         <h4 class="colheads">Recent Activities</h4>
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
-                        <table class="table imgInFirstCol">
+                        <app-dynamic-table 
+                        [columns_list]="columns_list" 
+                        [table_data]="recentActivityList"
+                        [show_search_field]="true"
+                        [show_column_filter]="true" 
+                        [show_clear_filter]="true" 
+                        >
+                      </app-dynamic-table>
+
+                        <!-- <table class="table imgInFirstCol">
                             <thead>
                                 <tr>
                                     <th>Activity</th>
@@ -353,7 +362,7 @@
                                 </tr>
 
                             </tbody>
-                        </table>
+                        </table> -->
                     </div>
                     <div class="row quick-actionscards" *ngIf="isCreate">
                         <div class="col-sm-4 text-center">

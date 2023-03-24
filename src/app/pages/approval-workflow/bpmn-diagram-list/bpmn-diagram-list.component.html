@@ -75,7 +75,7 @@
                     <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="bottom">{{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
                     <td [pTooltip]=each_past_process.userName tooltipPosition="bottom">{{fitTableView(each_past_process.userName)}}</td>
                     <td>{{"V 1."+each_past_process.version}}</td>
-                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span>{{pendingStatus}}</span></div> <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
+                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span>{{pendingStatus}}</span></div><ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
                     <td [matTooltip]="each_past_process.reviewComments"><input type="text"  [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
                     <td class="aprwkfl_actions">
                       <div class="aprwkfl_actions_icons">
