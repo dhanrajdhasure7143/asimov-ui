@@ -136,6 +136,11 @@
                                       <td>{{people.value}}</td>
                                   </tr>
                               </ng-template>
+                              <ng-template pTemplate="emptymessage">
+                                 <tr>
+                                     <td style="justify-content: center;" colspan="7">No data Found</td>
+                                 </tr>
+                             </ng-template>
                           </p-table>
                           </div>
                         <!-- <div *ngIf="widget.widget_type=='pie'">
@@ -221,7 +226,7 @@
                           
                            <div style="text-align: left;">
                            <label>{{each.label}}</label>
-                              <p-dropdown [formControlName]="each.name" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                              <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                            </div>
                         </div>
                         <!-- <div class="col-6 form-group mb-4 bps-labcls">
