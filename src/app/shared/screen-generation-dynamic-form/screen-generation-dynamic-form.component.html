@@ -1,150 +1,142 @@
-<div class="container-fluid">
+<div class="maindivfoprm">
   <div *ngIf="!isEditForm">
-    <form [formGroup]="generatedForm" class="row">
-      <div class="col-md-6 px-4 py-2" *ngFor="let field of inputFieldData">
-        <div *ngIf="
-            field.widget_type == 'textbox' ||
-            field.widget_type == null ||
-            field.widget_type == ''
-          ">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
-            [placeholder]="field.placeholder" [maxlength]="field.length" />
-        </div>
-        <div *ngIf="field.widget_type == 'file'">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
-            [placeholder]="field.placeholder" [maxlength]="field.length" />
-        </div>
-        <div *ngIf="
-            field.widget_type == 'select' && !(field.ColumnName == 'PortalName')
-          ">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
-            <option value="" hidden disabled>Select Chart Type</option>
-            <option value="null" hidden disabled>Select Option</option>
-            <option value="undefined" hidden disabled>Select Option</option>
-            <option *ngFor="let type of chartType">{{ type.Type }}</option>
-          </select>
-        </div>
+    <form [formGroup]="generatedForm">
+      <div class="row">
+        <div class="col-md-6 form-group" *ngFor="let field of inputFieldData">
+          <div *ngIf="
+              field.widget_type == 'textbox' ||
+              field.widget_type == null ||
+              field.widget_type == ''
+            ">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
+              [placeholder]="field.placeholder" [maxlength]="field.length" />
+          </div>
+          <div *ngIf="field.widget_type == 'file'">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
+              [placeholder]="field.placeholder" [maxlength]="field.length" />
+          </div>
+          <div *ngIf="
+              field.widget_type == 'select' && !(field.ColumnName == 'PortalName')
+            ">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
+              <option value="" hidden disabled>Select Chart Type</option>
+              <option value="null" hidden disabled>Select Option</option>
+              <option value="undefined" hidden disabled>Select Option</option>
+              <option *ngFor="let type of chartType">{{ type.Type }}</option>
+            </select>
+          </div>
 
-        <div *ngIf="
-            field.widget_type == 'select' && field.ColumnName == 'PortalName'
-          ">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
-            <option value="" hidden disabled>Select Screen Name</option>
-            <option *ngFor="let portal of portalnames">
-              {{ portal.screen_Name }}
-            </option>
-          </select>
-        </div>
-        <div *ngIf="field.widget_type == 'checkbox'">
-          <input type="checkbox" [formControlName]="field.ColumnName" [required]="field.mandatory" />
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star">*</span>
-          </label>
-        </div>
-        <div *ngIf="field.widget_type == 'radio'">
-          <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory" />
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star">*</span>
-          </label>
+          <div *ngIf="
+              field.widget_type == 'select' && field.ColumnName == 'PortalName'
+            ">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
+              <option value="" hidden disabled>Select Screen Name</option>
+              <option *ngFor="let portal of portalnames">
+                {{ portal.screen_Name }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="field.widget_type == 'checkbox'">
+            <input type="checkbox" [formControlName]="field.ColumnName" [required]="field.mandatory" />
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div *ngIf="field.widget_type == 'radio'">
+            <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory" />
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star">*</span>
+            </label>
+          </div>
         </div>
       </div>
     </form>
-    <br />
-    <div class="w-100 py-2 px-3">
+    <div class="row col-md-12 justify-content-end">
+      <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
       <button (click)="emitFormValue()" *ngIf="details == undefined" [disabled]="generatedForm.invalid"
-        class="btn btn-primary">
-        Save
-      </button>
-      &nbsp;
+        class="btn bluebg-button">Save</button>      
       <button (click)="emitFormValue()" *ngIf="details != undefined" [disabled]="generatedForm.invalid"
-        class="btn btn-primary">
-        Update
-      </button>
-      &nbsp;
-      <button (click)="resetForm()" class="btn btn-primary">Reset</button>
+        class="btn bluebg-button">Update</button>
     </div>
   </div>
 
   <div *ngIf="isEditForm">
-    <form [formGroup]="generatedForm" class="row">
-      <div class="col-md-6 px-4 py-2" *ngFor="let field of inputFieldData">
-        <div *ngIf="
-            field.widget_type == 'textbox' ||
-            field.widget_type == null ||
-            field.widget_type == ''
-          ">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <input type="text" [formControlName]="field.ColumnName" [attr.disabled]="
-              field.read_only ? '' : null && details != undefined
-            " class="form-control" [required]="field.mandatory" [placeholder]="field.placeholder"
-            [maxlength]="field.length" />
-        </div>
-        <div *ngIf="field.widget_type == 'file'">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
-            [placeholder]="field.placeholder" [maxlength]="field.length" />
-        </div>
-        <div *ngIf="field.widget_type == 'select'">
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star" *ngIf="field.mandatory">*</span>
-          </label>
-          <select class="form-select" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
-            [required]="field.mandatory">
-            <option value="" hidden disabled>Select Chart Type</option>
-            <option value="Donut">Donut</option>
-            <option value="column">Column</option>
-            <option value="Bar">Bar</option>
-            <option value="line">Line</option>
-            <option value="Area">Area</option>
-            <option value="Pie">Pie</option>
-            <option value="timeseries">Timeseries</option>
-            <option value="waterfall">Waterfall</option>
-          </select>
-        </div>
-        <div *ngIf="field.widget_type == 'checkbox'">
-          <input type="checkbox" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
-            [required]="field.mandatory" />
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
-            <span class="star">*</span>
-          </label>
-        </div>
-        <div *ngIf="field.widget_type == 'radio'">
-          <input type="radio" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
-            [required]="field.mandatory" />
-          <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase
-            }}<span class="star">*</span>
-          </label>
+    <form [formGroup]="generatedForm">
+      <div class="row">
+        <div class="col-md-6 form-group" *ngFor="let field of inputFieldData">
+          <div *ngIf="
+              field.widget_type == 'textbox' ||
+              field.widget_type == null ||
+              field.widget_type == ''
+            ">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <input type="text" [formControlName]="field.ColumnName" [attr.disabled]="
+                field.read_only ? '' : null && details != undefined
+              " class="form-control" [required]="field.mandatory" [placeholder]="field.placeholder"
+              [maxlength]="field.length" />
+          </div>
+          <div *ngIf="field.widget_type == 'file'">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
+              [placeholder]="field.placeholder" [maxlength]="field.length" />
+          </div>
+          <div *ngIf="field.widget_type == 'select'">
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star" *ngIf="field.mandatory">*</span>
+            </label>
+            <select class="form-select" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
+               [required]="field.mandatory">
+               <option value="" hidden disabled>Select Chart Type</option>
+               <option value="Donut">Donut</option>
+               <option value="column">Column</option>
+               <option value="Bar">Bar</option>
+               <option value="line">Line</option>
+               <option value="Area">Area</option>
+               <option value="Pie">Pie</option>
+               <option value="timeseries">Timeseries</option>
+               <option value="waterfall">Waterfall</option>
+            </select>
+          </div>
+          <div *ngIf="field.widget_type == 'checkbox'">
+            <input type="checkbox" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
+              [required]="field.mandatory" />
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div *ngIf="field.widget_type == 'radio'">
+            <input type="radio" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
+              [required]="field.mandatory" />
+            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase
+              }}<span class="star">*</span>
+            </label>
+          </div>
         </div>
       </div>
     </form>
-    <div class="w-100 py-2 px-3">
+    <div class="row col-md-12 justify-content-end">
+      <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
       <button (click)="emitFormValue()" *ngIf="details == undefined" [disabled]="generatedForm.invalid"
-        class="btn btn-primary">
-        Save
-      </button>
-      &nbsp;
+        class="btn bluebg-button">Save</button> 
       <button (click)="emitFormValue()" *ngIf="details != undefined"
-        [disabled]="!(generatedForm.valid && (generatedForm.touched ||  generatedForm.dirty))" class="btn btn-primary">
-        Update
-      </button>
-      &nbsp;
-      <button (click)="resetForm()" class="btn btn-primary">Reset</button>
+        [disabled]="!(generatedForm.valid && (generatedForm.touched ||  generatedForm.dirty))" 
+        class="btn bluebg-button">Update</button>
     </div>
   </div>
 </div>

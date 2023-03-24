@@ -2813,6 +2813,12 @@ span.tabscount {
 .rpaauditsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa audit logs grid */
 }
+.generatedgrid .p-datatable-wrapper {
+  height: calc(100vh - 150px); /* for generated screen grid */
+}
+.maindivfoprm .columnlistgrid .p-datatable-wrapper {
+  height: 100% !important; /* for add-screen form grid */
+}
 .bps-approvalgrid .p-datatable-wrapper,
 .credential-tablegrid .p-datatable-wrapper {
   height: calc(100vh - 195px); /* for bps-approval,view connection manager grid */
