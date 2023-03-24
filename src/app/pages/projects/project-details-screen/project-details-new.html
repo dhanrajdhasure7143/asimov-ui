@@ -464,21 +464,30 @@
                         </div>
                         <div class="row collabottom">
                             <div class="col-sm-11 pl-0">
-                                <!-- <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" ></textarea> -->
-                                    <textarea [style]="{'width':'100%'}" [rows]="2" (keyup)="onKeyUp($event)" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)" ></textarea>
+
+                                <!-- // TODO enable for user mention -->
+                            <!-- <div style="border:1px solid #333;height:100px;width:100%;padding:10px;"
+                                [mentionConfig]="{labelKey:'fullName',mentionSelect: this.onMentionSelect}" (itemSelected)="itemSelected($event)"
+                                [mention]="existingUsersList" contenteditable="true" id="my-content" (keyup)="onKeyUpDiv()"></div> -->
+
+                                <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [mention]="existingUsersList" [mentionConfig]="{labelKey:'fullName'}" [autoResize]="false" (keydown.enter)="$event.preventDefault()" (keyup.enter)="sendMessage(null,'save')" (keydown)="Space($event)"></textarea>
+
+                                    <!-- <input type="text" [mention]="test_items"> -->
+                                    <!-- <textarea [style]="{'width':'100%'}" [rows]="2" (keyup)="onKeyUp($event)" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)" ></textarea> -->
                                     <!-- (keyup)="$event.keyCode == 13 && sendMessage(null,'save')" (keyup.enter)="sendMessage(null,'save')"-->
                             </div>
 
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn" (click)="sendMessage(null,'save')"><img alt="send"
-                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
-                                    <div *ngIf="showUserList" class="usersOverLay"> 
+                            <button class="btn" (click)="sendMessage(null,'save')" [disabled]="!(typedMessage.length>0)">
+                                <img alt="send" src="./../../../../assets/images-n/projects/send.svg" />
+                            </button>
+                                    <!-- <div *ngIf="showUserList" class="usersOverLay"> 
                                         <ul>
                                             <li *ngFor="let user of filteredUsers" (click)="addUserInChat(user)">{{user.firstName}} {{user.lastName}}</li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                         </div>
                     </div>
 

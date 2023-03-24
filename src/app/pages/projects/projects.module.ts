@@ -64,6 +64,7 @@ import { ProjectDocumentEditorComponent } from './project-details-screen/project
 import { ScrollIntoViewDirective } from './directives/scroll-into-view.directive';
 import { UserFilterDirective } from './directives/user-filter.directive';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+import { MentionModule } from 'angular-mentions';
 const materialModules: any[] = [
     
     
@@ -108,6 +109,7 @@ const materialModules: any[] = [
     AngularSplitModule.forRoot(),
     PrimengCustomModule,
     Ng2SearchPipeModule,
+    MentionModule
   ],
   providers:[
     BsModalRef, NotifierService,
