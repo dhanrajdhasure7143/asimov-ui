@@ -316,44 +316,22 @@
                         </button>
                     </div>
                     <div class="row acresources" *ngIf="!isCreate">
-                        <h4 class="colheads">Recent Activities</h4>
+                        <div class="col-12">
+                            <h4 class="colheads">Recent Activities</h4>
+                        </div>
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
-                        <table class="table imgInFirstCol">
-                            <thead>
-                                <tr>
-                                    <th>Activity</th>
-                                    <th>Resource</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Procure work environment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick
-                                    </td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Select necessary work equipment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
-                                        James</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Setup access rights</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg">
-                                        Johnson</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Latest task completed</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
-                                        William</td>
-                                    <td>09th Jan, 12 pm</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
+                        <div class="col">
+                        <app-dynamic-table 
+                            [columns_list]="columns_list_activities" 
+                            [table_data]="recentActivityList"
+                            [show_search_field]="true"
+                            [show_column_filter]="true" 
+                            [show_clear_filter]="true" 
+                            [screenTable]="'recentActivityList'"
+                            [search_fields]="['activity','lastModifiedUsername','lastModifiedTimestamp_new']"
+                            >
+                        </app-dynamic-table>
+                    </div>
                     </div>
                     <div class="row quick-actionscards" *ngIf="isCreate">
                         <div class="col-sm-4 text-center">
@@ -455,21 +433,30 @@
                         </div>
                         <div class="row collabottom">
                             <div class="col-sm-11 pl-0">
-                                <!-- <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" ></textarea> -->
-                                    <textarea [style]="{'width':'100%'}" [rows]="2" (keyup)="onKeyUp($event)" pInputTextarea placeholder="Type a new message" id="message-input"
-                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)" ></textarea>
+
+                                <!-- // TODO enable for user mention -->
+                            <!-- <div style="border:1px solid #333;height:100px;width:100%;padding:10px;"
+                                [mentionConfig]="{labelKey:'fullName',mentionSelect: this.onMentionSelect}" (itemSelected)="itemSelected($event)"
+                                [mention]="existingUsersList" contenteditable="true" id="my-content" (keyup)="onKeyUpDiv()"></div> -->
+
+                                <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [mention]="existingUsersList" [mentionConfig]="{labelKey:'fullName'}" [autoResize]="false" (keydown.enter)="$event.preventDefault()" (keyup.enter)="sendMessage(null,'save')" (keydown)="Space($event)"></textarea>
+
+                                    <!-- <input type="text" [mention]="test_items"> -->
+                                    <!-- <textarea [style]="{'width':'100%'}" [rows]="2" (keyup)="onKeyUp($event)" pInputTextarea placeholder="Type a new message" id="message-input"
+                                    [(ngModel)]="typedMessage" [autoResize]="false" appUserFilter (filteredUsers)="onFilteredUsers($event)" ></textarea> -->
                                     <!-- (keyup)="$event.keyCode == 13 && sendMessage(null,'save')" (keyup.enter)="sendMessage(null,'save')"-->
                             </div>
 
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn" (click)="sendMessage(null,'save')"><img alt="send"
-                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
-                                    <div *ngIf="showUserList" class="usersOverLay"> 
+                            <button class="btn" (click)="sendMessage(null,'save')" [disabled]="!(typedMessage.length>0)">
+                                <img alt="send" src="./../../../../assets/images-n/projects/send.svg" />
+                            </button>
+                                    <!-- <div *ngIf="showUserList" class="usersOverLay"> 
                                         <ul>
                                             <li *ngFor="let user of filteredUsers" (click)="addUserInChat(user)">{{user.firstName}} {{user.lastName}}</li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                         </div>
                     </div>
 

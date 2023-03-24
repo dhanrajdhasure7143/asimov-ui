@@ -1763,5 +1763,8 @@ updateWidgetInDashboard(body:any){
 updateAction(id:any,body:any){
   return this.http.put('/rpa-service/action/'+id,body)
 }
+recentActivities(id:any){
+ return this.http.get('/platform-service/project/get-list-of-recentActivities?projectId='+id) 
+}
 
 }

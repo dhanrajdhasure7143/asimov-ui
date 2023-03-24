@@ -467,3 +467,4 @@ button span {
   .usersOverLay li{
     font-size: 16px;
   }
+  ng-highlighter .highlighted {font-weight: bold;}

@@ -47,7 +47,7 @@ selectedvalue: any;
 categaoriesList: any;
 selected_process_names: any;
 att:any;
-typedMessage:any;
+typedMessage:string='';
 responsedata: any;
 bot_list: any = [];
 automatedtask: any;
@@ -227,6 +227,8 @@ _pinnedMessage:any[]=[];
 filteredUsers:any;
 interval:any;
 showUserList:boolean= false;
+recentActivityList:any=[];
+columns_list_activities:any[]=[];
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -462,6 +464,7 @@ this.getTheExistingUsersList(null);
 
 })
 this.snapShotDetails();
+this.getRecentactivities();
 }
 profileName() {
 setTimeout(() => {
@@ -925,19 +928,29 @@ connectToWebSocket() {
 
 urlify(text) {
   var urlRegex = /(https?:\/\/[^\s]+)/g;
+  if(text)
   return text.replace(urlRegex, function(url) {
     return '<a href="' + url + '" target="_blank">' + url + '</a>';
   })
+
+  // let pattern = /\b[\w.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g;
+  // if(text)
+  // return text.replace(pattern, function(url) {
+  //   return '<span class="icon-color">' + url + '</span>';
+  // })
   // or alternatively
-  // return text.replace(urlRegex, '<a href="$1">$1</a>')
+  // return text.replace(pattern, '<span class="icon-color">' + text + '</span>')
 }
 
 sendMessage(item,type) {
   let message
+  // var details= document.getElementById("my-content").innerHTML;
+  if(this.typedMessage.length ==0) return
   if(type == 'save'){
   message={
       userId:this.logged_userId,
       message:this.typedMessage,
+      // message:details,
       projectId:this.project_id,
       rmId:0,
       firstName:this.userDetails.firstName,
@@ -963,7 +976,6 @@ sendMessage(item,type) {
       message.rmId = this.replay_msg.id;
       message.replyMessage = this.replay_msg.message;
     }
-
 // console.log("calling logout api via web socket",message);
 // this.typedMessage='';
 // this.replay_msg = null;
@@ -971,6 +983,7 @@ sendMessage(item,type) {
   this.rest_api.sendMessagesByProjectId(message).subscribe(res=>{
     this.typedMessage='';
     this.replay_msg="";
+    // document.getElementById("my-content").innerHTML='';
     this.getMessagesList();
   })
 }
@@ -1343,7 +1356,7 @@ onFilteredUsers(usernames: string[]) {
 addUserInChat(user:any)
 {
     const messageInput = document.getElementById('message-input') as HTMLInputElement;
-    // messageInput.value = messageInput.value.replace(/@\w+/, `<span class="icon-color">${user.fullName}</span>`);
+    // messageInput.value = messageInput.value.replace(/@\w+/, `<strong class="icon-color">${user.fullName}</strong>`);
     messageInput.value = messageInput.value.replace(/@\w+/, `${user.fullName}`);
     this.showUserList=false;
 }
@@ -1371,6 +1384,82 @@ onKeyUp(event: KeyboardEvent) {
   // } else {
   //   this.showUserList = false;
   // }
+}
+
+onMentionSelect(item: any) {
+  // return `<strong class="chip">${item["fullName"]}</strong>`;
+  return  item["fullName"] ;
+}
+
+public htmlCode: string;
+public htmlDoc: HTMLElement;
+
+itemSelected(event: any) {
+  setTimeout(() => {
+    this.htmlDoc = document.getElementById('my-content');
+    this.htmlDoc.innerHTML = this.htmlDoc.innerHTML.replace(
+       event["fullName"],
+      //  '<a href="">'+ event["fullName"] + '</a>'
+      // '<span class="icon-color">' + event["fullName"] + '</span>&nbsp;'
+      '<b>'+ event["fullName"]+'</b>&nbsp;'
+    );
+    // put the cursor to the end of field again...
+    this.selectEnd();
+  }, 10);
+}
+
+selectEnd() {
+  let range, selection;
+  range = document.createRange();
+  range.selectNodeContents(this.htmlDoc);
+  range.collapse(false);
+  selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+onKeyUpDiv(){
+  console.log(document.getElementById("my-content").innerHTML)
+}
+
+getRecentactivities() {
+  this.columns_list_activities = [
+    {
+      ColumnName: "activity",
+      DisplayName: "Activity",
+      ShowGrid: true,
+      ShowFilter: true,
+      filterWidget: "normal",
+      filterType: "text",
+      sort: true,
+    },
+    {
+      ColumnName: "lastModifiedUsername",
+      DisplayName: "Resource Name",
+      ShowFilter: true,
+      ShowGrid: true,
+      filterWidget: "normal",
+      filterType: "text",
+      sort: true,
+    },
+    {
+      ColumnName: "lastModifiedTimestamp_new",
+      DisplayName: "Priority",
+      ShowGrid: true,
+      ShowFilter: true,
+      filterWidget: "normal",
+      filterType: "date",
+      sort: true,
+    }
+  ];
+
+this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
+  this.recentActivityList=data;
+  this.recentActivityList.map(item =>{
+    item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll")
+    return item
+  })
+}) 
 }
 
 }
