@@ -101,6 +101,7 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   convertToTreeView(res_data){
+    this.breadcrumbItems=[];
     res_data.map(data=> {
       if(data.dataType=='folder'){
         data["children"]=[{
@@ -883,6 +884,7 @@ addParentFolder() {
     }
 
     onchangesCheckBox(){
+    this.breadcrumbItems=[];
       if(this.selectedOne.length>0){
         this.files=[];
       let filteredData:any=[];

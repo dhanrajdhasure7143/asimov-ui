@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import Swal from "sweetalert2";
 import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
@@ -141,7 +140,7 @@ export class ProjectTaskListComponent implements OnInit {
       this.all_tasks_list = data;
       this.all_tasks_list.map((item) => {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
-        item["endDate_converted"] = moment(item.endDate).format("lll");
+        item["endDate_converted"] = moment(item.endDate).format("ll");
         item["assignedTo"] = this.getUserName(item.resources);
         item["representative"] = { name: item.priority };
         return item;
@@ -236,44 +235,6 @@ export class ProjectTaskListComponent implements OnInit {
       reject: (type) => {},
       key: "positionDialog1",
     });
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.value) {
-    //     this.spinner.show();
-    //     this.rest_api.deleteTask(deletetask).subscribe(
-    //       (res) => {
-    //         let status: any = res;
-    //         this.spinner.hide();
-    //         Swal.fire({
-    //           title: "Success",
-    //           text: "" + status.message,
-    //           position: "center",
-    //           icon: "success",
-    //           showCancelButton: false,
-    //           confirmButtonColor: "#007bff",
-    //           cancelButtonColor: "#d33",
-    //           confirmButtonText: "Ok",
-    //         });
-    //         this.getTasksList();
-    //       },
-    //       (err) => {
-    //         this.spinner.hide();
-    //         Swal.fire({
-    //           icon: "error",
-    //           title: "Oops...",
-    //           text: "Something went wrong!",
-    //         });
-    //       }
-    //     );
-    //   }
-    // });
   }
 
   onCreateTask() {

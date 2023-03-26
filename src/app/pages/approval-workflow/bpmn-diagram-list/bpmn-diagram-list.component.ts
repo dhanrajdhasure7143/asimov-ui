@@ -43,7 +43,7 @@ export class BpmnDiagramListComponent implements OnInit {
   sortIndex:number=2;
   approval_msg: string="";
   selected_processInfo;
-  pendingStatus="PENDING APPROVAL";
+  pendingStatus="PENDING...";
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
