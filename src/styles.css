@@ -848,8 +848,9 @@ foreignObject {
   justify-content: center;
 }
 
-#sidenav .mat-drawer-inner-container {
-  overflow: hidden;
+#sidenav .mat-drawer-inner-container,
+.mat-drawer-content {
+  overflow: hidden !important;
 }
 
 .active .mat-list-item-content .side-menu-font {
@@ -1698,7 +1699,7 @@ span.star {
   background-color: #fff !important;
 }
 input.form-control, select.form-control {
-  height: 40px;
+  height: 40px !important;
 }
 input.form-control::placeholder, select.form-control::placeholder,
 select.form-control.ng-untouched.ng-pristine.ng-invalid,
@@ -2692,7 +2693,7 @@ input.p-inputtext {
 .actionspopmenu .p-menu-overlay {
   position: absolute;
   right: 0px !important;
-  top: 40px !important;
+  top: 38px !important;
   left: unset !important;
   width: max-content;
 }
@@ -3014,15 +3015,41 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .createtask-dialog .p-dialog-right {
   justify-content: center !important;
 }
-.selectfoldername .p-dialog-header {
-  padding: 15px 15px 15px 22px !important;
+.docfldnam .p-dialog,
+.selectfoldername .p-dialog,
+.createdashboardname .p-dialog {
+  width: 400px;
+  border-radius: 8px !important;
+  padding: 20px;
+  background-color: #fff;
 }
-.selectfoldername .p-dialog-content {
-  padding: 0px 22px 15px !important;
+.docfldnam .p-dialog .p-dialog-content,
+.selectfoldername .p-dialog-content,
+.createdashboardname .p-dialog-content {
+  padding: 0px !important;
+  margin-top: 15px;
 }
-.selectfoldername .p-dialog .p-dialog-header .p-dialog-title {
-  font-size: 16px !important;
+.docfldnam .p-float-label {
+    text-align: right;
+}
+.selectfoldername .p-dialog-header,
+.createdashboardname .p-dialog-header,
+.docfldnam .p-dialog .p-dialog-header {
+  color: #222222 !important;
+  padding: 0px !important;
+}
+.selectfoldername .p-dialog .p-dialog-header .p-dialog-title,
+.createdashboardname .p-dialog .p-dialog-header .p-dialog-title,
+.docfldnam .p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 500 !important;
+  font-size: 18px !important;
   color: #232832 !important;
+}
+.createdashboardname .p-dialog-footer {
+  padding: 0px !important;
+}
+.createdashboardname .p-dialog .p-dialog-footer button {
+  margin: 0px !important;
 }
 .selectfoldername .p-dialog {
   top: 4%;
@@ -3114,10 +3141,12 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   margin: 0px !important;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link,
-.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 0px 15px !important;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav {
+.splitoverlaydiv .p-tabview .p-tabview-nav,
+.configtabs .p-tabview .p-tabview-nav {
   height: 45px;
   border-bottom: 1px solid #e0e0e0 !important;
 }
@@ -3333,244 +3362,28 @@ button.btn.new-cancelbtn {
   display: block;
   padding: 0px !important
 }
-/* Document Overlay Styles End */
-/* Document FolderName Popup Styles Start */
-.docfldnam .p-dialog {
-width: 400px;
-border-radius: 8px !important;
-padding: 20px;
-background-color: #fff;
-}
-.docfldnam .p-dialog .p-dialog-header {
-  color: #222222 !important;
-  padding: 0px !important;
-}
-.docfldnam .p-dialog .p-dialog-header .p-dialog-title {
-  font-weight: 500 !important;
-  font-size: 18px !important;
-}
-.docfldnam .p-dialog .p-dialog-content {
-  padding: 0px !important;
-  margin-top: 15px;
-}
-.docfldnam .p-float-label {
-  text-align: right;
-}
-/* Document FolderName Popup Styles End */
-
-/* Document Screens Styles End */
-
-/* New Dashboard Styles Start */
-
-/* New Dashboard Styles End */
-
-/* ----------------------NEW STYLES END------------------------- */
-
-
-
 .icon-color{
   color:var(--main-bluecolor) !important;
 }
 
-.attribute.p-chips.p-component {
-  width: 100% !important;
-  display: block;
+/* New Dashboard Styles Start */
+.dropdown-primeng .p-dropdown {    
+  border: 1px solid #979797 !important;
+  border-radius: 6px;
+  box-shadow: none !important;
+  width: 180px;
+  height: 34px;
 }
-.attribute ul.p-inputtext.p-chips-multiple-container {
-  background-color: #f9f9f9 !important;
+.p-dropdown:not(.p-disabled).p-focus {
+  border: 1px solid #098de6 !important;
 }
-
-.attribute input[type="text"]:not(.mat-input-element){
-  border-bottom: none !important;
-  background-color: #f6f6f6 !important;
+.configtabs .p-tabview {
+  height: 100%;
+  padding: 15px 20px 10px;
 }
-/* dynamic dashbord prime styles */
+/* New Dashboard Styles End */
 
-.dropdown-primeng .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll){
-	text-align: left;
-
-}
-.dropdown-primeng .p-dropdown {
-    
-    border: 1px solid #787a7c !important;
-   
-    border-radius: 7px;
-}
-.dropdown-primeng .p-dropdown .p-dropdown-panel {
-    min-width: 260px;
-}
-.dropdown-primeng .p-dropdown-panel {
-  
-    left: -37px !important;
-}
-
-.dropdown-primeng .p-dropdown-label {text-align:left;color:#000;}
-.dropdown-icon{right: 4px;
-  position: absolute;
-  top: 7px;}
-
-.dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item{padding: 0.5rem 1rem;}
-.dropdown-primeng .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
-    text-align: left;
-    margin: 5px 9px;
-}
-
- .p-menu-graph .p-menu-overlay {
-  position: absolute;
-  top: 59px !important;
-    width: 120px;
-    height: 75px;
-    right: 35px !important;
-  }
-  .btn-dots {
-    width: 32px;
-     height: 32px;
-     background-color: #E9E9E9;
-     border-radius: 4px;
-      min-width: 0px;
-  }
-  .eiap-btn {
-
-    margin-top: 0px !important;
-  
-  }
- .btn-grphs-horztal {
-    float: right;
-    line-height: 14px !important;
-    margin-left: 9px;
-  }
-
-.btn-cancel1 {
-	color: #2196F3 !important;
-	padding: 0.5rem 1rem !important;
-	background-color: transparent !important;
-	border-color: transparent !important;
-	font-size: 16px;
-
-
-}
-
-.p-dialogue-btn {
-	padding: 8px 40px !important;
-
-
-}
-.p-dialogue-btn1 {
-	padding: 9px 63px !important;
-	border-radius: 4px;
-
-
-}
-.p-dialogue-btn {
-	padding: 5px 30px !important;
-	border-radius: 4px;
-	font-size: 16px;
-}
-
-.tab-primest .prime-slider-override .p-tabview-nav-container {
-	border-bottom: 2px solid #DDD
-}
-.tab-primest .p-tabview-nav-content {
-	border-bottom: 1.5px solid #e1e0e0;
-}
-
-.tab-primest .p-tabview {
-	margin: 0px 8px 0px 15px;
-  position:fixed;
-  overflow-y: auto;
-    height: 100%;
-}
-
-.dashboardnamerow input.p-inputtext{height: 35px;
- border: 1px solid #787a7c !important;
-  border-radius: 7px}
-
-  button:disabled {
-    cursor: no-drop !important;
-    background-color: #d1d1d1;
-    border-color:#d1d1d1;
-  
-  }
-  .dialogue-check .p-dialog .p-dialog-footer button{margin:0 0rem 0 0!important;}
-  .dialogue-check .p-dialog .p-dialog-header .p-dialog-title{
-    font-family: 'Source Sans 3';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  color:#222222
-  }
-  
-  .bluebg-button{
-    background-color: var(--main-bluecolor);
-    color: hsl(0, 0%, 100%);
-    padding: 6px 30px;}
-    .bluebg-button:hover{
-      background-color: var(--main-bluecolor);
-      color: hsl(0, 0%, 100%);
-      padding: 6px 30px;}
-      .bluebg-button:active{
-        background: var(--main-bluecolor) !important;
-        background-color: var(--main-bluecolor) !important;
-        color: hsl(0, 0%, 100%);
-        padding: 6px 30px;}
-      .bluebg-button:focus{
-        background-color: var(--main-bluecolor);
-        color: hsl(0, 0%, 100%);
-        padding: 6px 30px;box-shadow:none;}
-  .btn-p-align .p-button {
-    background-color: var(--main-bluecolor);
-    color: #fff;
-    padding: 6px 30px;}
-    .pluscreate{cursor:pointer;}
-    .btn-p-align .p-button:enabled:active {
-      background-color: var(--main-bluecolor);
-      color: #fff;
-      padding: 6px 30px;
-      
-    }
-    .btn-p-align .p-button:enabled:hover{
-      background-color: var(--main-bluecolor);
-      color: #fff;
-      padding: 6px 30px;
-    }
-    .btn-p-align .p-button:focus{
-      background-color: var(--main-bluecolor);
-      color: #fff;
-      padding: 6px 30px;
-      box-shadow: none;
-    }
-    .p-new-cancelbtn {
-      background-color: transparent !important;
-      border: transparent !important;
-      color: var(--main-bluecolor) !important;
-      font-size: 16px !important;
-    }
-    .p-new-cancelbtn:focus {
-      background-color: transparent !important;
-      border: transparent !important;
-      color: var(--main-bluecolor) !important;
-      font-size: 16px !important;
-      box-shadow:0 0 0 0rem #a6d5fa00 !important;
-    }
-    .btn-p-align.btn.new-cancelbtn {
-      color: var(--main-bluecolor) !important;
-      font-size: 16px;
-    }
-
-    .p-tabview-nav-container {
-  
-      position: sticky !important;
-      top: 0;
-      z-index: 999;
-      padding-right:7px;
-    }
-
-     
-/* dynamic dashbord prime styles */
-
-
-
+/* ----------------------NEW STYLES END------------------------- */
 
 
 /* commenting since they are reflecting all the checkboxesstyles */

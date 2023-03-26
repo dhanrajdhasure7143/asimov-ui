@@ -1,44 +1,26 @@
-<div class="dashboard-main">
-   <img src="..\assets\images\Projects\illustration-Letstart.svg" class="dashboard-img"/>
-   <h2 class="dashboard-header" >Design your own dashboard</h2>
-   <div class="btn-p-align" style="text-align: center;">
-      <button pButton placement="bottom"  styleClass="btn bluebg-button "
-         (click)="showModalDialog()">Let's Start
-   </button>
-   </div>
-</div>
-<div  class="dialogue-check" style="text-align: center">
-   <p-dialog header=" Create Dashboard" [(visible)]="displayModal" [modal]="true"  [baseZIndex]="10000" styleClass="my-style-class" 
- 
-   [style]="{width: '30vw'}"
-   [draggable]="false" 
-   [resizable]="false">
-   <div  class="h-100">
-      <div>
-         <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
-         <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
+<div class="maincont">  
+   <div class="maincont-contentarea">
+      <div class="maincontent">
+         <div class="dashboard-main">
+            <img src="../../../../assets/images-n/dashboard/LetsStart.svg" class="dashboard-img" alt="" />
+            <h2 class="dashboard-header" >Design your own dashboard</h2>
+            <button class="btn bluebg-button" (click)="showModalDialog()">Let's Start</button>
+         </div>
+         
+         <!-- <div  class="dialogue-check"> -->
+            <p-dialog header=" Create Dashboard"  class="createdashboardname" [(visible)]="displayModal" [modal]="true"  [baseZIndex]="10000" 
+               [style]="{width: '30vw'}" [draggable]="false" [resizable]="false">
+               <div class="form-group">
+                  <label for="" class="label-control">Name<span class="star">*</span></label>
+                  <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
+               </div>
+               <ng-template pTemplate="footer">                  
+                  <button class="btn new-cancelbtn" (click)="displayModal = false">Cancel</button>
+                  <button class="btn bluebg-button" (click)="navigateconfigure()" [disabled]="!(entered_name.length >= 5)">Save</button>
+               </ng-template>
+            </p-dialog>
+         <!-- </div> -->
       </div>
    </div>
-   <ng-template pTemplate="footer" class="pfooter">
-      
-      
-      <button pButton
-         (click)="displayModal = false"
-         label="Cancel"
-         class="p-button p-new-cancelbtn">
-      </button>
-   
-  
-      <button pButton
-         (click)="navigateconfigure()"
-         label="Save"
-         class="btn bluebg-button "
-         [disabled]="!(entered_name.length >= 5)">
-      </button>
-    
-   </ng-template>
-   </p-dialog>
 </div>
-
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
-

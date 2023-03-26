@@ -196,7 +196,7 @@
 
     <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
+            <input type="text" class="form-control" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
             <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn btn-primary" (click)="addParentFolder()" [disabled]="folder_name.length < 4 || folder_name.length == 51">Save</button>
         </span>
@@ -204,7 +204,7 @@
 
     <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <input type="text" class="form-control" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn btn-primary" (click)="treeChildFolderSave()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>
@@ -213,7 +213,7 @@
     <!-- add sub folder in folder structure -->
     <p-dialog header="Folder Name" [(visible)]="isDialog1" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <input type="text" class="form-control" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn btn-primary" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>

@@ -1,43 +1,36 @@
 
-<div class="maincontent">
-  
-      <div class="header-fix">
-      <div class="row main-content-head sec-new">
-         <div class="col-md-4 align-headright">
-           
-            <div class="row align-items-center dashboardnamerow">
+
+
+<div class="maincont">  
+   <div class="maincont-contentarea">
+      <div class="maincontent">
+         <div class="row main-content-head align-items-center">
+            <div class="col-md-6 pl-0 projectnamerow">
                <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
-                  <ng-template pTemplate="display">
-                    <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3>
-                  </ng-template>
-                  
-                  <ng-template pTemplate="content">
-                      <input type="text" [style]="{'width':'220px'}" pInputText
-                          [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
-                      <span class="editfields">
-                          <i class="pi pi-check" *ngIf="_dashboardName"
-                              (click)="updateDashboardName()"></i>
-                          <i class="pi pi-times " (click)="onDeactivate()"></i>
-                      </span>
-                  </ng-template>
-              </p-inplace>
-             
-           
-          
-         </div>
-         </div>
-         <div class="col-md-8 text-right align-headleft">
-         
-            <div class="row">
-               <div class="col-md-12 text-right pr-0">
-                  <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
+                     <ng-template pTemplate="display">
+                       <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3>
+                     </ng-template>
+                     
+                     <ng-template pTemplate="content">
+                         <input type="text" [style]="{'width':'220px'}" pInputText
+                             [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
+                         <span class="editfields">
+                             <i class="pi pi-check" *ngIf="_dashboardName"
+                                 (click)="updateDashboardName()"></i>
+                             <i class="pi pi-times " (click)="onDeactivate()"></i>
+                         </span>
+                     </ng-template>
+               </p-inplace>
+            </div>
+            <div class="col-md-6 pr-0 row justify-content-end align-items-center">
+                <!-- <p-dropdown [options]="dashbordlist" class="dropdown-primeng" [(ngModel)]="selecteddashboard"  (onChange)="onDropdownChange($event)"
                      [style]="{'width':'220px','height' :'35px'}">
                      <ng-template let-item pTemplate="selectedItem">
                         <span>{{item.dashboardName}}</span>
                      </ng-template>
                      <ng-template let-item pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height:25px;">
-                           <div style="font-size:14px;float:left;margin-top:4px">{{item.dashboardName}}</div>
+                        <div class="ui-helper-clearfix" >
+                           <div >{{item.dashboardName}}</div>
                         </div>
                         <span class="dropdown-icon"  (click)="setDefaultDashboard()">
                            <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
@@ -45,213 +38,206 @@
                      </ng-template>
                   </p-dropdown> -->
                   <!-- <p-multiSelect class="custom-ms" [selectionLimit]="1" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name"></p-multiSelect> -->
-                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" [style]="{'width':'220px','height' :'32px','top' : '2px'}" autoWidth="false"
+                  <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" autoWidth="false"
                      (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown>
-                  <span (click)="navigateToCreateDashboard()" class="eiap-btn pluscreate"> <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
+
+                  <button (click)="navigateToCreateDashboard()" class="btn"> 
+                     <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
                      <span class="plus">Create</span>
-                  </span>
-                  <button (click)="navigateToConfigure()" class="btn btn-secondary eiap-btn">Configure </button>
-                  <button class="btn" type="button" (click)="menu.toggle($event)"
-                     class="btn-dots eiap-btn ">
-                     <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions">
+                  </button>
+                  <button (click)="navigateToConfigure()" class="btn btn-secondary">Configure </button>
+                  <button class="btn btn-dots" type="button" (click)="menu.toggle($event)">
+                     <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions">
                   </button>
                   <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
-               </div>
-               
             </div>
          </div>
-       </div>
-      </div>
-       
-         <div class="col-md-12 p-0">
+     
+         <div class="main-content-body mt-4">
             <div class="row">
-
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 set-pad">
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0">
                   <div class="well1-dynmic">
-                     <div class="flex-container">
-                        <div class="img-div">
-                           <!-- <img [src]="icons" style="width:100%"/> -->
-                           <!-- <i class="pi pi-1 pi-times right overlay-icon" ></i> -->
-                        </div>
-                        <div class="new-dynamic">
-                           <h3>{{item.metricValue}}</h3>
-                           <p>{{item.name}}</p>
-                        </div>
+                     <div class="new-dynamic">
+                        <h3>{{item.metricValue}}</h3>
+                        <p>{{item.name}}</p>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
-         <div class="col-md-12 p-0">
-            <div class="row set-pad1">
-
-               <div class="col-md-6 set-pad" *ngFor="let widget of dashboardData.widgets;let i = index">
+            <div class="row">
+               <div class="col-md-6 pl-0" *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
-                     <div class="mt-2 align-menubtn">
-                        <img src="..\assets\images-n\dashboard\2 line vertical dots.svg" class="vertcl-img" /> <span
-                           class="h5 graph-text">{{widget.name}}</span>
-
-                        <button class="btn" type="button" pButton 
+                     <div class="row align-menubtn">
+                        <div class="col-10 p-0 d-flex">
+                           <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
+                           <h5 class="graph-text">{{widget.name}}</h5>   
+                        </div>
+                        <div class="col-2 p-0 text-right">
+                           <button class="btn btn-dots widgetactions" type="button" (click)="menu1.toggle($event)" >
+                              <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
+                              <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
+                           </button>
+                           <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" 
+                              [model]="items">
+                           </p-menu>
+                        </div>
+                        <!-- <button class="btn" type="button" pButton 
                            (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                           <!-- <img src="./../../../../assets/images-n/dashboard/horizontaldots.svg" alt="Actions"> -->
-                        </button>
-                        <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" [model]="items">
-                        </p-menu>
+                        </button> -->
+                       
 
                         <!-- <p-menu [model]="items" #menu1 [popup]="true" class="actionspopmenu p-menu-graph">
-                           <ng-template let-item pTemplate="menuItem">
-                             <span (click)="getItemActionDetails($event,widget,item)">{{item.label}}</span>
-                           </ng-template>
-                         </p-menu> -->
+                        <ng-template let-item pTemplate="menuItem">
+                          <span (click)="getItemActionDetails($event,widget,item)">{{item.label}}</span>
+                        </ng-template>
+                      </p-menu> -->
                      </div>
-                    
-                     <!-- <i class="pi pi-times right overlay-icon"
-                      (click)="onDeactivate(widget,i, 'widgets')"></i> -->
-                     <div style="text-align: center;margin:10px 0px;">
-                        <br>
+                 
+                        <!-- <i class="pi pi-times right overlay-icon"
+                           (click)="onDeactivate(widget,i, 'widgets')"></i> -->
+                     <div>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                        <div *ngIf="widget.widget_type!='table'" class="graph-set">
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" [options]="widget.chartOptions"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='table'">
-                           <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll">
-                              <ng-template pTemplate="header" let-columns>
-                                           <tr>
-                                            <th>Name
-                                              <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-                                              <p-sortIcon field="name"></p-sortIcon>
-                                            </th>
-                                            <th>Next Run
-                                              <p-columnFilter type="date" field="value" display="menu"></p-columnFilter>
-                                              <p-sortIcon field="value"></p-sortIcon>
-                                            </th>
-                                          </tr>
-                              </ng-template>
-                              <ng-template pTemplate="body" let-people>
-                                  <tr>
-                                      <td>{{people.name}}</td>
-                                      <td>{{people.value}}</td>
-                                  </tr>
-                              </ng-template>
-                              <ng-template pTemplate="emptymessage">
-                                 <tr>
-                                     <td style="justify-content: center;" colspan="7">No data Found</td>
-                                 </tr>
-                             </ng-template>
-                          </p-table>
-                          </div>
-                        <!-- <div *ngIf="widget.widget_type=='pie'">
-                           <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                        </div> -->
-                      
-                        <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                          
-                            <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
-                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
-                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions"
-                              height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
-                           <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='LINE_CHART'">
-                           <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='TABLE'">
-                        </div> -->
-                     </div>
-
-                     <div  *ngIf="configuration_id == widget.id">
-                        <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
-                           <label>Project Type</label>
-                           <div class="row">
-                              <div class="col-md-3">
-                                 <input class="form-check-input" formControlName="allow_Insert" type="checkbox"
-                                    name="inlineRadioOptions" value="option1" />&nbsp;
-                                 <label class="label-control" for="screenname" class="check-label">In
-                                    Progress</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div>
-                              <div class="col-md-3">
-                                 <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                    name="inlineRadioOptions" value="option1" />&nbsp;
-                                 <label class="label-control" for="screenname"
-                                    class="check-label">Hold</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div>
-                              <div class="col-md-3">
-                                 <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                    name="inlineRadioOptions" value="option1" />&nbsp;
-                                 <label class="label-control" for="screenname"
-                                    class="check-label">Deployed</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div>
+                           <div *ngIf="widget.widget_type!='table'" class="graph-set">
+                              <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" 
+                                 [options]="widget.chartOptions"></p-chart>
                            </div>
-
-                        </div> -->
-
-                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                           <label>Department</label>
-                           <select class="form-control data">
-                              <option value="">Engineering</option>
-                           </select>
-                        </div> -->
-                        <!-- <div class="col-md-6 form-group  bps-labcls">
-                           <label>Refresh Interval</label>
-                           <select class="form-control data">
-                              <option value="">30 Min</option>
-                           </select>
-                        </div> -->
-                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                           <label>Department</label>
-                           <select class="form-control data">
-                              <option value="">Engineering</option>
-                           </select>
-                        </div> -->
-                        <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                           <label>Refresh Interval</label>
-                           <select class="form-control data">
-                              <option value="">30 Min</option>
-                           </select>
-                        </div> -->
-                     <form [formGroup]="dynamicFormConfiure" class="row">
-                        <div class="col-6 form-group mb-4 bps-labcls" *ngFor="let each of widget.filterOptions">
-                           <!-- <select class="form-control data">
-                              <option value="">Pie Chart</option>
-                           </select> -->
-                          
-                           <div style="text-align: left;">
-                           <label>{{each.label}}</label>
-                              <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"[style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                           <div *ngIf="widget.widget_type=='table'">
+                              <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true">
+                                 <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                       <th>Name
+                                           <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                           <p-sortIcon field="name"></p-sortIcon>
+                                       </th>
+                                       <th>Next Run
+                                           <p-columnFilter type="date" field="value" display="menu"></p-columnFilter>
+                                           <p-sortIcon field="value"></p-sortIcon>
+                                       </th>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="body" let-people>
+                                    <tr>
+                                       <td>{{people.name}}</td>
+                                       <td>{{people.value}}</td>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                       <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                    </tr>
+                                 </ng-template>
+                              </p-table>
                            </div>
-                        </div>
-                        <!-- <div class="col-6 form-group mb-4 bps-labcls">
-                           <label>Number of Category</label>
-                           <input type="text" placeholder="05" class="form-control">
-                        </div> -->
+                           <!-- <div *ngIf="widget.widget_type=='pie'">
+                               <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                           </div> -->
+                   
+                           <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                       
+                                 <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                              </div>
+                              <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                                 <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                              </div>
+                              <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                                 <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions"
+                                    height="270"></p-chart>
+                              </div>
+                              <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                                 <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                              </div>
+                              <div *ngIf="widget.widget_type=='LINE_CHART'">
+                                 <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                              </div>
+                              <div *ngIf="widget.widget_type=='TABLE'">
+                              </div> -->
                         
-                        <div class="col-12">
-                           <div class="mt-4 mb-4" style="float:right">
-                              <button class="btn-cancel1" (click)="cancelEdit()">Cancel</button>
-                              <button class="btn-save " (click)="saveConfigure(i)">Save</button>
-                           </div>
                         </div>
-                     </form>
+
+                        <div  *ngIf="configuration_id == widget.id">
+                           <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
+                              <label>Project Type</label>
+                              <div class="row">
+                                 <div class="col-md-3">
+                                    <input class="form-check-input" formControlName="allow_Insert" type="checkbox"
+                                       name="inlineRadioOptions" value="option1" />
+                                    <label class="label-control" for="screenname" class="check-label">In
+                                       Progress</label>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
+                                       name="inlineRadioOptions" value="option1" />
+                                    <label class="label-control" for="screenname"
+                                       class="check-label">Hold</label>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
+                                       name="inlineRadioOptions" value="option1" />
+                                    <label class="label-control" for="screenname"
+                                       class="check-label">Deployed</label>
+                                 </div>
+                              </div>
+
+                           </div> -->
+
+                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
+                              <label>Department</label>
+                              <select class="form-control data">
+                                 <option value="">Engineering</option>
+                              </select>
+                           </div> -->
+                              <!-- <div class="col-md-6 form-group  bps-labcls">
+                              <label>Refresh Interval</label>
+                              <select class="form-control data">
+                                 <option value="">30 Min</option>
+                              </select>
+                           </div> -->
+                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
+                              <label>Department</label>
+                              <select class="form-control data">
+                                 <option value="">Engineering</option>
+                              </select>
+                           </div> -->
+                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
+                              <label>Refresh Interval</label>
+                              <select class="form-control data">
+                                 <option value="">30 Min</option>
+                              </select>
+                           </div> -->
+                           <form [formGroup]="dynamicFormConfiure" class="row">
+                              <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
+                                    <!-- <select class="form-control data">
+                                       <option value="">Pie Chart</option>
+                                    </select> -->
+                                 <label class="label-control">{{each.label}}</label>
+                                 <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"
+                                    [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                              </div>
+                              <!-- <div class="col-6 form-group mb-4 bps-labcls">
+                                 <label>Number of Category</label>
+                                 <input type="text" placeholder="05" class="form-control">
+                              </div> -->
+                     
+                              <div class="col-12 row justify-content-end">
+                                 <button class="btn new-cancelbtn" (click)="cancelEdit()">Cancel</button>
+                                 <button class="btn bluebg-button" (click)="saveConfigure(i)">Save</button>
+                              </div>
+                           </form>
+                        </div>
                      </div>
                   </div>
-</div>
-                  
-             </div>
-            
+               
+               </div>
+         
             </div>
          </div>
-     
-     
+      </div>
    </div>
+</div>
+
 
 <p-confirmDialog [style]="{width: '20vw'}" key="positionDialog2" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <p-confirmDialog [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
@@ -259,28 +245,16 @@
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
-<p-dialog header=" Create Dashboard" styleClass="my-style-class" 
-[(visible)]="isDialogShow"
-[style]="{width: '30vw'}"
-[draggable]="false" 
-[resizable]="false">
-<div  class="h-100">
-   <div>
-      <label for="" class="label-control" style="float:left;"> Name<span class="star">*</span></label>
+<p-dialog header=" Create Dashboard" class="createdashboardname" 
+   [(visible)]="isDialogShow"
+   [style]="{width: '30vw'}"
+   [draggable]="false" [resizable]="false">
+   <div class="form-group">
+      <label for="" class="label-control" > Name<span class="star">*</span></label>
       <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
    </div>
-</div>
-<ng-template pTemplate="footer">
-   <p-button
-      (click)="isDialogShow = false"
-      label="Cancel"
-      styleClass="btn-cancel1">
-   </p-button>
-   <p-button
-      (click)="navigateconfigure()"
-      label="Save"
-      styleClass="p-button p-dialogue-btn "
-      [disabled]="!(entered_name.length >= 5)">
-   </p-button>
-</ng-template>
+   <ng-template pTemplate="footer">
+      <button class="btn new-cancelbtn" (click)="isDialogShow = false">Cancel</button>
+      <button class="btn bluebg-button" (click)="navigateconfigure()" [disabled]="!(entered_name.length >= 5)">Save</button>
+   </ng-template>
 </p-dialog>

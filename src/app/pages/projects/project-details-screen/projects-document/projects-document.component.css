@@ -60,6 +60,7 @@
 /* ----- Folder Name Popup Styles ----- */
 .docfldnam input.p-inputtext {
   width: 100%;
+  border: 1px solid #979797 !important;
 }
 .docfldnam input.p-inputtext:focus {
   box-shadow: none !important;
