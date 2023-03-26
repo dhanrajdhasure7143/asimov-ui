@@ -27,10 +27,7 @@ export class ConfigureDashboardComponent implements OnInit {
     dashboardName: '',
     widgets: [],
     metrics: [],
-
-
   }
-
   chartOptions: { legend: { position: string; }; };
   metricslist: any;
   widgetslist: any;
@@ -46,6 +43,8 @@ export class ConfigureDashboardComponent implements OnInit {
   isCreate:any
   screenId: any;
   isdefaultDashboard:any;
+  searchText_metrics:any;
+  searchText:any;
  
   @Input()
 ngClass: string
@@ -88,146 +87,6 @@ ngClass: string
       { src: "Thumbup.svg" },
     ]
 
-    // this.result = this.metricslist.map(metricslists => {
-    //   this.metricsitem = this.metricslistimg.find(name => name)
-
-    //   this.result.address = this.metricsitem
-    //   ? this.metricsitem.address
-    //   : null
-
-    //   return this.result
-    // })
-    // console.log(this.result)
-
-    // this.metrics_list=[
-    //   {metricId:"01",metric_name:"Process Execution Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"process.svg",metricAdded:false,value:10},
-    //   {metricId:"02",metric_name:"Automation Rate",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"round-settings.svg",metricAdded:false,value:10},
-    //   {metricId:"03",metric_name:"Schedules Failed",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"schedules.svg",metricAdded:false,value:10},
-    //   {metricId:"04",metric_name:"Pending Approvals",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"Thumbup.svg",metricAdded:false,value:10},
-    //   {metricId:"05",metric_name:"Tasks Overdue",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"tasksoverdue.svg",metricAdded:false,value:10},
-    //   {metricId:"06",metric_name:"Process On Hold",metric_desc:"Lists Recent activity in a single project, or in all projects",src:"processonhold.svg",metricAdded:false,value:10}
-    // ]
-    // this.widgets = [
-    //   { widgetId: "01", widget_type: "DONUT_WITHOUT_LEGENDS", widget_title: 'Process Exectuin Rate', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart1.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "02", widget_type: "HORIZANTAL_BAR_CHART", widget_title: 'Automation Rate', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart2.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "03", widget_type: "VERTICAL_BAR_CHART", widget_title: 'Scheduled Fields', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart3.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "04", widget_type: "TABLE", widget_title: 'Pending Approvals', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart4.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "05", widget_type: "DONUT_WITH_LEGENDS_CHART", widget_title: 'Task Overdue', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart5.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "06", widget_type: "LINE_CHART", widget_title: 'Process on hold', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart6.png', chartOptions: {}, widgetAdded: false, api: 'none' },
-    //   { widgetId: "07", widget_type: "DONUT_WITHOUT_LEGENDS", widget_title: 'Bot Status', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart1.png', chartOptions: {}, widgetAdded: false, api: '/rpa-service/management/all-bots' },
-    //   { widgetId: "08", widget_type: "DONUT_WITH_LEGENDS_CHART", widget_title: 'Environments', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart1.png', chartOptions: {}, widgetAdded: false, api: '/rpa-service/agent/get-environments' },
-    //   { widgetId: "09", widget_type: "DONUT_WITHOUT_LEGENDS", widget_title: 'Total Automations', widget_description: 'Lists Recent activity in a single project, or in all projects', sampleData: [], chartSrc: 'chart1.png', chartOptions: {}, widgetAdded: false, api: '/rpa-service/management/get-automations' },
-    //   // {widgetId:"10", widget_type:"HORIZANTAL_BAR_CHART", widget_title:'Long Running Bots', widget_description:'Lists Recent activity in a single project, or in all projects', sampleData:[], chartSrc:'chart2.png', chartOptions:{}, widgetAdded:false, api:'get-bot-runtimes'},
-    // ]
-    // this.widgets[0].sampleData = {
-    //   labels: ['A', 'B', 'C'],
-    //   datasets: [
-    //     {
-    //       data: [300, 50, 100],
-    //       backgroundColor: [
-    //         "#FF6384",
-    //         "#36A2EB",
-    //         "#FFCE56"
-    //       ],
-    //       hoverBackgroundColor: [
-    //         "#FF6384",
-    //         "#36A2EB",
-    //         "#FFCE56"
-    //       ]
-    //     }
-    //   ]
-    // };
-    // this.widgets[1].sampleData = {
-    //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //   datasets: [
-    //     {
-    //       label: 'My First dataset',
-    //       backgroundColor: '#42A5F5',
-    //       data: [65, 59, 80, 81, 56, 55, 40]
-    //     },
-    //     {
-    //       label: 'My Second dataset',
-    //       backgroundColor: '#FFA726',
-    //       data: [28, 48, 40, 19, 86, 27, 90]
-    //     }
-    //   ]
-    // };
-
-    // this.widgets[1].chartOptions = {
-    //   indexAxis: 'y',
-    //   plugins: {
-    //     legend: {
-    //       labels: {
-    //         color: '#495057'
-    //       }
-    //     }
-    //   },
-    //   scales: {
-    //     x: {
-    //       ticks: {
-    //         color: '#495057'
-    //       },
-    //       grid: {
-    //         color: '#ebedef'
-    //       }
-    //     },
-    //     y: {
-    //       ticks: {
-    //         color: '#495057'
-    //       },
-    //       grid: {
-    //         color: '#ebedef'
-    //       }
-    //     }
-    //   }
-    // };
-    // this.widgets[2].sampleData = {
-    //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //   datasets: [
-    //     {
-    //       label: 'My First dataset',
-    //       backgroundColor: '#42A5F5',
-    //       data: [65, 59, 80, 81, 56, 55, 40]
-    //     },
-    //     {
-    //       label: 'My Second dataset',
-    //       backgroundColor: '#FFA726',
-    //       data: [28, 48, 40, 19, 86, 27, 90]
-    //     }
-    //   ]
-    // };
-
-    // this.widgets[4].sampleData = {
-    //   labels: ['A', 'B', 'C'],
-    //   datasets: [
-    //     {
-    //       data: [300, 50, 100],
-    //       backgroundColor: [
-    //         "#FF6384",
-    //         "#36A2EB",
-    //         "#FFCE56"
-    //       ],
-    //       hoverBackgroundColor: [
-    //         "#FF6384",
-    //         "#36A2EB",
-    //         "#FFCE56"
-    //       ]
-    //     }
-    //   ]
-    // };
-    // this.widgets[5].sampleData = {
-    //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //   datasets: [
-    //     {
-    //       label: 'First Dataset',
-    //       data: [65, 59, 80, 81, 56, 55, 40]
-    //     },
-    //     {
-    //       label: 'Second Dataset',
-    //       data: [28, 48, 40, 19, 86, 27, 90]
-    //     }
-    //   ]
-    // }
     this.defaultEmpty_metrics = [
       { metricId: "00", metric_name: "Drag And Drop", src: "process.svg", metricAdded: false },
       { metricId: "00", metric_name: "Drag And Drop", src: "round-settings.svg", metricAdded: false },
@@ -321,112 +180,12 @@ ngClass: string
     }
   }
 
-
-
-  // getChartData(widget: any) {
-  //   let methodType: any = ""
-  //   if (widget.widget_title == 'Bot Status')
-  //     methodType = "POST"
-  //   else
-  //     methodType = "GET"
-  //   this.rest.getWidgetData(widget.api, methodType).subscribe((response: any) => {
-  //     if (response.errorMessage == undefined) {
-  //       if (widget.widget_title == 'Bot Status') {
-  //         widget.sampleData = {
-  //           datasets: [{
-  //             data: [
-  //               response.filter(bot => bot.botStatus == "Failure").length,
-  //               response.filter(bot => bot.botStatus == "New").length,
-  //               response.filter(bot => bot.botStatus == "Stopped" || bot.botStatus == "Stop").length,
-  //               response.filter(bot => bot.botStatus == "Success").length,
-  //             ],
-  //             backgroundColor: [
-  //               "#bc1d28",
-  //               "#00a0e3",
-  //               "#ff0000",
-  //               "#62c849"
-  //             ],
-  //           }],
-  //           labels: ["Failure", "New", "Stopped", "Success"],
-  //         }
-  //         this.dynamicDashBoard.widgets.push(widget);
-  //         console.log(this.dynamicDashBoard);
-  //       }
-  //       else if (widget.widget_title == 'Environments') {
-  //         widget.sampleData = {
-  //           labels: ["Mac", "Windows", "Linux"],
-  //           datasets: [{
-  //             data: [
-  //               response.filter(Environment => Environment.environmentType == "Mac").length,
-  //               response.filter(Environment => Environment.environmentType == "Windows").length,
-  //               response.filter(Environment => Environment.environmentType == "Linux").length,
-
-
-  //             ],
-  //             backgroundColor: [
-  //               "#c2b280",
-  //               "#838381",
-  //               "#be0032"
-
-  //             ],
-  //           }]
-  //         }
-  //         console.log(response)
-  //         this.dynamicDashBoard.widgets.push(widget);
-  //       }
-
-  //       else if (widget.widget_title == 'Automation') {
-  //         widget.sampleData = {
-  //           labels: ["Approved Processes", "Bots"],
-  //           datasets: [{
-  //             data: [
-  //               response.filter(automation => automation.automationStatus == "Approved Processes").length,
-  //               response.filter(automation => automation.automationStatu == "Bots").length,
-  //             ],
-  //             backgroundColor: [
-  //               "#ce3779",
-  //               "#575fcd"
-
-
-  //             ],
-  //           }]
-  //         }
-  //         console.log(response)
-  //         this.dynamicDashBoard.widgets.push(widget);
-  //       }
-  //       //  else if(widget.widget_title=='Long Running Bots')
-  //       //  {
-  //       //    widget.sampleData={
-  //       //      labels:["Approved Processes", "Bots"],
-  //       //      datasets:[{
-  //       //        data:[
-  //       //          response.filter(bots=>bots.longrunningbotstype=="Approved Processes").length,
-  //       //         response.filter(Environment=>Environment.environmentType=="Bots").length,
-  //       //        ],
-  //       //        backgroundColor:[
-  //       //          "#ce3779",
-  //       //          "#575fcd"
-
-
-  //       //        ],
-  //       //      }]
-  //       //    } 
-  //       //    console.log(response)
-  //       //    this.dynamicDashBoard.widgets.push(widget);
-  //       // }
-
-  //     }
-  //   })
-  // }
-
-
   get defaultMetricsData(): any[] {
     return this.defaultEmpty_metrics.filter(item => item.metricAdded == false);
   }
 
   saveDashBoard() {
     let req_array: any = [];
-    //this.loader.show();
     this.addedMetrics.forEach(item => {
       let req_body = {
         childId: item.id,
@@ -500,16 +259,43 @@ ngClass: string
         item["widgetAdded"] = false
         if(item["widget_type"] != "table")
         // item["chartOptions"]["plugins"]["legend"]["display"]=false;
-        item["chartOptions"]= {
-                       "plugins": {
-                             "legend": {
-                            "position": "bottom",
-                            "display" : false
-                        }
-                    }
-                  }
+        if(item.id != 2){
+              item["chartOptions"] = {
+                "plugins": {
+                      "legend": {
+                    "position": "bottom",
+                    "display" : false
+                }
+            }
+          }
+        }else{
+            item["chartOptions"] = {
+              "plugins": {
+                    "legend": {
+                  "position": "bottom",
+                  "display" : false
+              },
+              tooltip: {
+                callbacks: {
+                  label: (tooltipItem, data) => {
+                    let str
+                      if(tooltipItem.formattedValue.includes(',')){
+                        str = tooltipItem.formattedValue.replace(',','')
+                      }else{
+                        str = tooltipItem.formattedValue
+                      }
+                      return (
+                        tooltipItem.label + ": " + Math.floor(Number(str) / 60) +"Min"
+                      );
+                  },
+                },
+              },
+          }
+        }
+      }
         return item
       })
+    
       // this.widgetslist.forEach(element => {
       //   console.log(element.chartOptions.plugins.legend)
       //   element.chartOptions.plugins.legend["display"]=false;
@@ -542,6 +328,23 @@ ngClass: string
       this.addedWidgets = this.dynamicDashBoard.widgets
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
+        if(item.childId == 2){
+          item.chartOptions.plugins["tooltip"] = {
+            callbacks: {
+              label: (tooltipItem, data) => {
+                let str
+                if(tooltipItem.formattedValue.includes(',')){
+                  str = tooltipItem.formattedValue.replace(',','')
+                }else{
+                  str = tooltipItem.formattedValue
+                }
+                return (
+                  tooltipItem.label + ": " + Math.floor(Number(str) / 60) +"Min"
+                );
+              },
+            },
+          }
+        }
       })
 
       this.loader.hide();

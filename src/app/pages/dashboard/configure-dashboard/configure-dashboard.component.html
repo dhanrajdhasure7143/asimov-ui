@@ -223,7 +223,7 @@
         </span> -->
           <div class="row">
             <div class="col-md-6 pl-0" style="padding-right:10px;">
-              <input class="form-control toolbar-search" type="text" placeholder="Search">
+              <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics" type="text" placeholder="Search">
               <mat-icon matSuffix style="font-size: 1.2em">
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
               </mat-icon>
@@ -235,7 +235,7 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let item of metrics_list; let i=index">
+        <div *ngFor="let item of metrics_list|myFilter:searchText_metrics:['name', 'description']; let i=index">
           <div class="col-md-12 mb-2 metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
             (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
             <div class="flex-container">
@@ -257,7 +257,7 @@
         <div class="col-md-12 p-0"  style="height:50px;">
          <div class="row">
             <div class="col-md-6 pl-0 pr-0" >
-              <input class="form-control toolbar-search" type="text" placeholder="Search">
+              <input class="form-control toolbar-search" type="text" [(ngModel)]="searchText" placeholder="Search">
               <mat-icon matSuffix style="font-size: 1.2em">
                 <img src="../../../../assets/images/search.svg" alt="" class="search-align">
               </mat-icon>
@@ -270,7 +270,7 @@
             </div>
         </div>
         </div>
-        <div *ngFor="let widget of widgetslist; let i=index"  >
+        <div *ngFor="let widget of widgetslist|myFilter:searchText:['name', 'description']; let i=index"  >
           <div class="col-md-12   metricalign" [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'" (click)="addWidget(widget,i)" >
           <div class="flex-container">
             <div class="img-div" style="margin-right:20px;" *ngIf="widget.widget_type =='pie' || widget.widget_type =='doughnut'">

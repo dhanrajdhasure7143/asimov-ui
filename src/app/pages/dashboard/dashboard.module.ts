@@ -8,8 +8,7 @@ import { ConfigureDashboardComponent} from './configure-dashboard/configure-dash
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
-
-
+import { MyFilterPipe } from './pipe/my-filter.pipe';
 
 
 @NgModule({
@@ -17,24 +16,16 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardComponent,
     DynamicDashboardComponent,
     ConfigureDashboardComponent,
-    CreateDashboardComponent
+    CreateDashboardComponent,
+    MyFilterPipe
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
    PrimengCustomModule,
    FormsModule,
-   ReactiveFormsModule ,
-   NgChartsModule
-
- 
- 
- 
- 
-  
-  
-   
-  
+   ReactiveFormsModule,
+   NgChartsModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

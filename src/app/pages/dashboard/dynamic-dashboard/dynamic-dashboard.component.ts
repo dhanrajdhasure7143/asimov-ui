@@ -79,105 +79,14 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //     this.cols =[
-    //     {
-    //       field: 'firstname',
-    //       header: 'First Name'
-    //   },
-    //   {
-    //       field: 'lastname',
-    //       header: 'Last Name'
-    //   },
-    //   {
-    //       field: 'age',
-    //       header: 'Age'
-    //   },
-    // ];
-    // this.tableData = [
-    //   {
-    //       firstname: 'David',
-    //       lastname: 'ace',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'AJne',
-    //       lastname: 'west',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Mak',
-    //       lastname: 'Lame',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Peter',
-    //       lastname: 'raw',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Kane',
-    //       lastname: 'James',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Peter',
-    //       lastname: 'raw',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Kane',
-    //       lastname: 'James',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Peter',
-    //       lastname: 'raw',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Kane',
-    //       lastname: 'James',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Peter',
-    //       lastname: 'raw',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Kane',
-    //       lastname: 'James',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Peter',
-    //       lastname: 'raw',
-    //       age: '40',
-    //   },
-    //   {
-    //       firstname: 'Kane',
-    //       lastname: 'James',
-    //       age: '40',
-    //   },
-    // ];
     this.getDashBoardData(this._paramsData.dashboardId);
     this.primengConfig.ripple = true;
     this.menuItems = [
       {label: "Delete",command: () => { this.deletedashbord()}},
     ];
     this.items = [
-      {
-        label: "Remove",
-        command: (e) => {
-          this.onRmoveWidget();
-        },
-      },
-      {
-        label: "Configure",
-        command: (e) => {
-          this.toggleConfigure(e);
-        },
-      },
+      {label: "Remove",command: (e) => {this.onRmoveWidget();}},
+      {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
     ];
 
     // this.datatransfer.dynamicscreenObservable.subscribe((response: any) => {
@@ -288,40 +197,6 @@ export class DynamicDashboardComponent implements OnInit {
     //     //     ]
 
     //     //   }
-    //     //   ],
-    //     //   "metrics": [
-    //     //     {
-    //     //       "id": 1,
-    //     //       "name": "Total Number of Resources",
-    //     //       "description": "Display the total count of resources onboarded into EZFlow for the tenant",
-    //     //       "metricAdded": true,
-    //     //       "metricValue": 29,
-    //     //       "src": "process.svg"
-    //     //     },
-    //     //     {
-    //     //       "id": 2,
-    //     //       "name": "Total Processes Documented",
-    //     //       "description": "Displays the count of processes across all departments",
-    //     //       "metricAdded": true,
-    //     //       "metricValue": 38,
-    //     //       "src": "process.svg"
-    //     //     },
-    //     //     {
-    //     //       "id": 3,
-    //     //       "name": "Total Processes Automated",
-    //     //       "description": "Displays the count of processes that has RPA assigned to any of the step",
-    //     //       "metricAdded": true,
-    //     //       "metricValue": 47,
-    //     //       "src": "process.svg"
-    //     //     },
-    //     //     {
-    //     //       "id": 4,
-    //     //       "name": "Processes pending approval",
-    //     //       "description": "Total list of processes for which approval is pending",
-    //     //       "metricAdded": true,
-    //     //       "metricValue": 56,
-    //     //       "src": "process.svg"
-    //     //     }
     //     //   ],
     //     // }
 
@@ -542,6 +417,23 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.getDashBoardItems(screenId).subscribe((data: any) => {
       this.dashboardData.metrics = data.metrics;
       this.dashboardData.widgets = data.widgets;
+      this.dashboardData.widgets.forEach(element => {
+        if(element.childId == 2){
+          element.chartOptions.plugins["tooltip"] = {
+            callbacks: {
+              label: (tooltipItem, data) => {
+                let str
+                if(tooltipItem.formattedValue.includes(',')){
+                  str = tooltipItem.formattedValue.replace(',','')
+                }else{
+                  str = tooltipItem.formattedValue
+                }
+                return ( tooltipItem.label + ": " + Math.floor(Number(str) / 60) +"Min");
+              },
+            },
+          }
+        }
+      });
       let array = {
         id: 5,
         widget_type: "doughnut",
