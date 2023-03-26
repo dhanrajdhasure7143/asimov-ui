@@ -6,3 +6,9 @@
   font-weight: 600;
   margin-bottom: 15px;
 }
+.reset-btn {
+  border: 1px solid #098de6 !important;
+  border-radius: 4px;
+  color: #098de6;
+  margin-right: 10px;
+}

@@ -2951,7 +2951,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   background-color: #fff !important;
 }
 .p-button-outlined {
-  margin: 0 0 0 10px !important;
+  margin: 0 10px !important;
   color: #098de6 !important;
 }
 .p-button-outlined.only_clearbtn {

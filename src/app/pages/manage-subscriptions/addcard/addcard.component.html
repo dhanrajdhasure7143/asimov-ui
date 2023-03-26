@@ -51,7 +51,7 @@
     </form>
     <div class="row justify-content-end">
       <button class="btn new-cancelbtn" (click)="Back()">Back</button>
-      <button type="button" class="btn new-cancelbtn" (click)="resetForm(paymentform)" >Reset</button>
+      <button type="button" class="btn reset-btn" (click)="resetForm(paymentform)" >Reset</button>
       <button class="btn bluebg-button" type="submit" [disabled] = "paymentform.invalid" >Save</button>
     </div>
   <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
