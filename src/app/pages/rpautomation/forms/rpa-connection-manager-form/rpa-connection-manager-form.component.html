@@ -67,7 +67,7 @@
                                         <option value="undefined" hidden disabled>Select Method</option>
                                         <option *ngFor="let method of methodItems"> {{method.value}}</option>
                                     </select> -->
-                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled"
+                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled" (onChange)="methodChange($event.value)"
                                     [style]="{'width':'100%'}" placeholder="Select Method" 
                                     optionLabel="value" optionValue="value"></p-dropdown>
                                     <span
@@ -79,15 +79,15 @@
                                     <label class="label-control" for="programname"> Action Logo
                                         <span class="star" *ngIf="!isCreate">*</span>                                    
                                     </label>
-                                    <input type="file" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg" (change)="imageUpload($event)"
-                                        formControlName="" placeholder="Upload Icon">
+                                    <input type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                        formControlName="">
                                     <!-- <span
                                         *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
                                         class="required"> Method Type Required* </span> -->
                             </div>
                             <div class="col-md-12 form-group p-0">
                                 <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea pInputText [style]="{'width':'100%'}" row="3" formControlName="endPoint" placeholder="Enter API"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint" placeholder="Enter API"
                                     style=" resize: none;" maxlength="256">
                                 </textarea>
                                 <span
@@ -295,7 +295,7 @@
                             </div> -->
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
-                                <textarea pInputText [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
                                     placeholder="Response">
                                 </textarea>
                                 <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
@@ -303,7 +303,7 @@
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isRequest">
                                 <label class="label-control"> Request </label> 
-                                <textarea class="form-control api" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()" [disabled] = "isReqDisable"
                                     placeholder="Request Body">
                                 </textarea>
                                 <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>

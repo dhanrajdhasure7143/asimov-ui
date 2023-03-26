@@ -599,6 +599,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
   if (response.errorMessage == undefined) {
     this.getTheExistingUsersList(0);
     this.checktodelete();
+    this.getRecentactivities();
     this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !!'});
     this.checkBoxselected =[];
     // this.onUsersTab(0);
@@ -1444,7 +1445,7 @@ getRecentactivities() {
     },
     {
       ColumnName: "lastModifiedTimestamp_new",
-      DisplayName: "Priority",
+      DisplayName: "Last Modified",
       ShowGrid: true,
       ShowFilter: true,
       filterWidget: "normal",

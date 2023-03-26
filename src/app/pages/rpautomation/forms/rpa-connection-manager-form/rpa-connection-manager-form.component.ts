@@ -45,6 +45,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   action_logo: any;
   isUpdate: boolean = false;
   isHeader : boolean = false;
+  isReqDisable : boolean = false;
+  isRefresh: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -134,7 +136,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       let object = {
         endPoint: this.connectorForm.value.endPoint,
-        grant_type: this.connectorForm.value.grantType,
+        grantType: this.connectorForm.value.grantType,
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         // "actionType": this.connectorForm.value.actionType,
@@ -161,7 +163,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
         object["verifier"] = this.connectorForm.value.verifier;
-      } else if (this.connectorForm.value.grantType == "RefreshToken") {
+      } else if (this.connectorForm.value.grantType == "refresh_token") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -194,7 +196,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
         "httpHeaders": obj,
-        // "type":"API",
+        "type":"API",
         "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
     }
     // console.log(this.connectorForm.get("request").value.replace(/\n|\t/g, ''))
@@ -250,7 +252,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     } else if (this.connectorForm.value.grantType == "ClientCredentials") {
       req_body["grantType"] = this.connectorForm.value.grantType;
       req_body["scope"] = this.connectorForm.value.scope;
-    } else if (this.connectorForm.value.grantType == "RefreshToken") {
+    } else if (this.connectorForm.value.grantType == "refresh_token") {
       req_body["grantType"] = "refresh_token";
       req_body["refreshToken"] = this.connectorForm.value.refreshToken;
       req_body["scope"] = this.connectorForm.value.scope;
@@ -338,16 +340,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
   }
 
-  // methodChange(event){
-  //   if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
-  //    this.isRequest = false;
-  //   } else if (event == "GET" && this.connectorForm.value.actionType == "Authenticated") {
-  //     this.isRequest = false;    
-  //   } else {
-  //     this.isRequest = true;    
-
-  //   }
-  // }
+  methodChange(event){
+    if(event === "GET" && this.connectorForm.value.actionType === "APIRequest"){
+     this.isReqDisable = true;
+    }
+  }
 
   authChange(event) {
     if (event == "OAUTH2") {
@@ -364,6 +361,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
+      this.connectorForm.get('code').setValue("")
+      this.connectorForm.get('redirect_uri').setValue("")
+      this.connectorForm.get('clientId').setValue("")
+      this.connectorForm.get('clientSecret').setValue("")
     } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
@@ -372,6 +373,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
+      this.connectorForm.get('userName').setValue("")
+      this.connectorForm.get('password').setValue("")
+      this.connectorForm.get('clientId').setValue("")
+      this.connectorForm.get('clientSecret').setValue("")
+      this.isRefresh = true;
     } else if (event == "ClientCredentials") {
       this.isClient = true;
       this.isResponse = true;
@@ -380,6 +386,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = true;
       this.isRefreshToken = false;
+      this.connectorForm.get('clientId').setValue("")
+      this.connectorForm.get('clientSecret').setValue("")
+      this.connectorForm.get('scope').setValue("")
+      this.isRefresh = true;
     } else if (event == "AuthorizationCodeWithPKCE") {
       this.isAuthorization = true;
       this.isClient = true;
@@ -388,7 +398,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = true;
       this.isScopeField = false;
       this.isRefreshToken = false;
-    } else if (event == "RefreshToken") {
+      this.connectorForm.get('code').setValue("")
+      this.connectorForm.get('redirect_uri').setValue("")
+      this.connectorForm.get('clientId').setValue("")
+      this.connectorForm.get('clientSecret').setValue("")
+      this.connectorForm.get('verifier').setValue("")
+      this.isRefresh = true;
+    } else if (event == "refresh_token") {
       this.isAuthorization = false;
       this.isClient = true;
       this.isResponse = true;
@@ -396,6 +412,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = true;
       this.isRefreshToken = true;
+      this.connectorForm.get('clientId').setValue("")
+      this.connectorForm.get('clientSecret').setValue("")
+      this.connectorForm.get('scope').setValue("")
+      this.connectorForm.get('refreshToken').setValue("")
+      this.isRefresh = true;
     }
   }
 
@@ -467,7 +488,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isAuthenticated = true;
       }
       if (
-        this.actionData.configurationAsJson["grant_type"] == "AuthorizationCode"
+        this.actionData.configurationAsJson["grantType"] == "AuthorizationCode"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -477,7 +498,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] ==
+        this.actionData.configurationAsJson["grantType"] ==
         "PasswordCredentials"
       ) {
         this.isPassword = true;
@@ -488,7 +509,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] == "ClientCredentials"
+        this.actionData.configurationAsJson["grantType"] == "ClientCredentials"
       ) {
         this.isClient = true;
         this.isResponse = true;
@@ -498,7 +519,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = true;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] ==
+        this.actionData.configurationAsJson["grantType"] ==
         "AuthorizationCodeWithPKCE"
       ) {
         this.isAuthorization = true;
@@ -509,7 +530,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] == "RefreshToken"
+        this.actionData.configurationAsJson["grantType"] == "refresh_token"
       ) {
         this.isAuthorization = false;
         this.isClient = true;
@@ -532,7 +553,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("methodType").setValue(this.actionData.configurationAsJson["methodType"]);
       this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
       this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
-      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grant_type"]);
+      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grantType"]);
       this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
       this.connectorForm.get("redirect_uri").setValue(this.actionData.configurationAsJson["redirect_uri"]);
       this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
@@ -599,7 +620,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       let object = {
         endPoint: this.connectorForm.value.endPoint,
-        grant_type: this.connectorForm.value.grantType,
+        grantType: this.connectorForm.value.grantType,
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         // "actionType": this.connectorForm.value.actionType,
@@ -626,7 +647,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
         object["verifier"] = this.connectorForm.value.verifier;
-      } else if (this.connectorForm.value.grantType == "RefreshToken") {
+      } else if (this.connectorForm.value.grantType == "refresh_token") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -655,7 +676,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestMethod":this.connectorForm.value.methodType,
         contentType: "application/json",
         httpHeaders: obj,
-        // "type":"API",
+        "type":"API",
         "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         // requestPayload: {
         //   data: this.requestJson_body,

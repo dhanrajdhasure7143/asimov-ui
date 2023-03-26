@@ -179,7 +179,7 @@
       <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}" >
         <div class="row">
           <div class="col-md-6 pl-0 form-group">
-            <input class="form-control toolbar-search" type="text" placeholder="Search">
+            <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics"  type="text" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align">
           </div>
           <!-- <div class="col-md-6 pr-0 form-group bps-labcls">
@@ -189,7 +189,7 @@
           </div>-->
         </div>
         <div class="configtabslists">
-          <div *ngFor="let item of metrics_list; let i=index">
+          <div *ngFor="let item of metrics_list|myFilter:searchText_metrics:['name', 'description']; let i=index" >
             <div class="row metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
               (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
               <div class="col-10 p-0">
@@ -206,22 +206,22 @@
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
         <div class="row">
           <div class="col-md-6 pl-0 form-group" >
-            <input class="form-control toolbar-search" type="text" placeholder="Search">
+            <input class="form-control toolbar-search" type="text" [(ngModel)]="searchText" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align">
-          </div>
-          <div class="col-md-6 pr-0 form-group">
-            <select class="form-control data">
-                <option value="">All Widgets</option>
-                <option value="">Operational</option>
-              </select>
-          </div>
-        </div>
+            </div>
+            <div class="col-md-6 form-group pr-0">
+              <select class="form-control data">
+                  <option value="">All Widgets</option>
+                  <option value="">Operational</option>
+                </select>
+            </div>
+        </div>          
         <div class="configtabslists">
-          <div *ngFor="let widget of widgetslist; let i=index"  >
+          <div *ngFor="let widget of widgetslist|myFilter:searchText:['name', 'description']; let i=index" >
             <div class="row metricalign" [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'" (click)="addWidget(widget,i)" >
               <div class="col-3 pl-0 align-self-center">
                 <div *ngIf="widget.widget_type =='pie' || widget.widget_type =='doughnut'">
-                  <p-chart [type]="widget.widget_type" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart>
+                  <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart>
                 </div>
                 <div *ngIf="widget.widget_type =='table'">
                    <img src="../../../../assets/images-n/dashboard/table1.png" width="60px;" alt="">
