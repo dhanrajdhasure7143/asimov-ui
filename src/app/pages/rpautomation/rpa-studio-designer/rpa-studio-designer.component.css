@@ -543,19 +543,10 @@ select.versions.form-control
 }
 
 .rpa-custom-slider {
-  /* height: 200px;
-  position: absolute;
-  bottom: -80px;
-  right: 15px; */
   height: auto;
   position: absolute;
   bottom: 15px;
   right: 15px;
-}
-
-.action-item img {
-  height: 17px;
-  width: 17px;
 }
 
 .modal-body.createenv-mbody {

@@ -682,7 +682,6 @@ foreignObject {
 
 .canvas-container .mat-tab-label {
   min-width: 90px !important;
-  /* height: 36px !important; */
   height: 45px !important;
   padding: 5px;
   font-weight: normal !important;
@@ -916,15 +915,6 @@ foreignObject {
   font-size: 18px;
 }
 
-/* app-home,
-app-bussiness-process,
-app-bpshome,
-app-create-projects,
-app-projects-list-screen,
-app-projects-programs-table {
-  height: 100%;
-} */
-
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: var(--main-bluecolor) !important;
@@ -1151,10 +1141,6 @@ img.testplus1 {
 
 .maindivfoprm .label-control,
 .modelprbody label {
-  /* color: #001c47 !important;
-  font-weight: normal !important;
-  font-size: 15px !important;
-  margin-bottom: 5px; */
   font-size: 14px;
   /* color: #7d7d7d; */
   margin-bottom: 2px;
@@ -1628,7 +1614,6 @@ button.action-button.clear {
 }
 
 .bpmnCreate .modal-content {
-  /* top: 51px; */
   top: 60px;
   width: 400px !important;
   right: 0px;
@@ -1652,7 +1637,6 @@ button.action-button.clear {
 }
 
 .bpmnCreate form {
-  /* height: 100%; */
   height: 97%;
 }
 
@@ -1708,12 +1692,6 @@ span.star {
   border-radius: 3px !important;
   padding: 0.5rem !important;
   background-color: transparent !important;
-  /* old styles remove later
-  border: 1px solid #D1D1D1 !important;
-  box-shadow: unset !important;
-  color: #7B8694 !important;
-  border-radius: 2px !important;
-  padding: 6px 10px !important; */
 }
 .form-control:focus {
   border-color: var(--main-bluecolor) !important;
@@ -3382,103 +3360,11 @@ background-color: #fff;
 
 /* Document Screens Styles End */
 
+/* New Dashboard Styles Start */
+
+/* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
-
-
-
-/* need to remove
-body,
-html {
-
-  font-family: 'Open Sans', sans-serif !important;
-  user-select: none;
-  color: #001c47;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-ul,
-li,
-ol,
-span,
-button,
-th,
-td,
-div {
-  margin: 0;
-  padding: 0;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none !important;
-  list-style: none;
-  color: inherit;
-  font-family: 'Open Sans', sans-serif;
-
-} 
-
- html,
-body {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  margin: 0;
-} 
-
-#sidenav {
-   z-index: 2 !important;
-  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; 
-}
- #sidenav.menu-close .side-icon {
-  text-align: center !important;
-} 
- .row {
-  margin: 0px !important;
-} 
- 
-.bpp-properties-entry, .dpp-properties-entry {
-  margin-bottom: 0px !important;
-} 
-
-.mat-form-field-infix {
-  padding: 0px 0px !important;
-} 
-button.custom-popupbtn.mat-button {
-  padding: 0px !important;
-  min-width: auto !important;
-  line-height: unset !important;
-  width: auto !important;
-} 
-.action-btn {
-  width: 30px;
-  height: 30px;
-  color: #0162cb;
-  border: 1px solid lightgray !important;
-  cursor: pointer;
-  outline: none;
-  background-color: white;
-  box-shadow: none !important;
-} 
- .eiap_tooltip {
-  background-color: var(--main-bluecolor);
-} 
-.p-card .p-card-body{
-  height: 160px !important;
-} 
-.p-card .p-card-content {
-  margin-top: 20px !important;
-} need to remove */
-
-
-
 
 
 
@@ -3522,29 +3408,7 @@ button.custom-popupbtn.mat-button {
 .dropdown-icon{right: 4px;
   position: absolute;
   top: 7px;}
-/* .dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-   border-bottom: 1px solid #cbc9c9;
-   background-color: transparent;
-   background-image: url("./assets/images-n/dashboard/star1.svg");
-   background-repeat: no-repeat;
-   background-position: 96% 53%;
- 
-   
-   
-}
-.dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
-	background-image: url("./assets/images-n/dashboard/Vector.svg");
-	background-repeat: no-repeat;
-	background-position: 96% 53%;
- 
-}
-.dropdown-primeng .p-dropdown-panel .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-  color: #495057;
-  background: #e9ecef;
-  background-image: url("./assets/images-n/dashboard/Vector.svg") !important;
-  background-repeat: no-repeat !important;
-  background-position: 96% 53% !important;
-} */
+
 .dropdown-primeng .p-dropdown-panel .p-dropdown-items .p-dropdown-item{padding: 0.5rem 1rem;}
 .dropdown-primeng .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
     text-align: left;
@@ -3701,22 +3565,6 @@ button.custom-popupbtn.mat-button {
       z-index: 999;
       padding-right:7px;
     }
-    /* .editfields .check1{color: #28a745;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 5px;
-      border: 2px solid #28a745;
-      border-radius: 50%;
-      right: 121px !important;
-      top: 14px !important;}
-      .editfields .close1{color: #ec1a1a;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 5px;
-        border: 2px solid #ec1a1a;
-        border-radius: 50%;
-        right: 77px !important;
-        top: 15px !important;} */
 
      
 /* dynamic dashbord prime styles */
@@ -3725,9 +3573,8 @@ button.custom-popupbtn.mat-button {
 
 
 
-/*new styles dropdown*/
+/* commenting since they are reflecting all the checkboxesstyles */
 /*
-commenting since its reflecting all the checkboxesstyles
 .custom-ms .p-multiselect{width: 180px;
   height: 32px;
   top:10px;
@@ -3752,9 +3599,5 @@ commenting since its reflecting all the checkboxesstyles
     background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
   .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
   .custom-ms .p-multiselect .p-multiselect-label{float: left;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;} */
-  
-/*new styles dropdown*/
-
-
-
+  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
+*/

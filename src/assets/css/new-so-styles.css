@@ -104,8 +104,6 @@
     position: relative;
     background: transparent !important;
 }
-/* #cheader .noactive a.nav-link:hover {
-} */
 .noactive a.nav-link:hover img {
     filter: unset;
 }

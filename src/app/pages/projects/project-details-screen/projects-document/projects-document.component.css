@@ -73,13 +73,6 @@
   display: inline-block;
 }
 
-/* .btn {
-  background-color: white;
-  padding: 25px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-} */
-
 .upload-btn-wrapper input[type=file] {
   font-size: 110px;
   position: absolute;

@@ -239,13 +239,3 @@ h4.col-heads {
 .botpreviewtr td {
    display: block !important;
 }
-
-/* 
-.new-bps-layout {
-    overflow: auto;
-    height: calc(100% - 50px);
-    position:relative;
-    padding: 15px 10px;
-} 
-
-*/

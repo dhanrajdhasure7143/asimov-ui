@@ -66,10 +66,6 @@ span.testtooltip:before {
   transform: rotate(45deg);
 }
 
-/* .modal-body {
-  max-height: calc(100vh - 180px);
-  overflow-y: auto;
-} */
 
 input[type=file]::file-selector-button {
   margin-right: 20px;

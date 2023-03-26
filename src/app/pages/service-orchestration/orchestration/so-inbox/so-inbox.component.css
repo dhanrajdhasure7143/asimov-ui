@@ -27,12 +27,6 @@ button#inboxrefresh img {
   height: auto;
 }
 
-/* .inbox-tablegrid {
-  width: 100%;
-  overflow: auto;
-  height: calc(100vh - 265px);
-} */
-
 .inbox-tablegrid table td span{
   font-size: 13px !important;
 }
