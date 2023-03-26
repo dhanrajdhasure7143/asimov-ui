@@ -1207,7 +1207,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-size: 12px;
   background-repeat: no-repeat;
   color: rgba(204, 204, 204, 0);
-  opacity: 0.1;
+  opacity: 0.01;
   text-align: center;
   cursor: pointer;
 }
