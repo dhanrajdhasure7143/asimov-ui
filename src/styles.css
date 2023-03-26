@@ -2999,6 +2999,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   font-size: var(--main-fontsize) !important;
   color: #232832 !important;
 }
+textarea.p-inputtextarea {
+  border: 1px solid #979797 !important;
+  background-color: transparent;
+}
 .p-inputtext:enabled:focus {
   border: 1px solid var(--main-bluecolor) !important;
   box-shadow: none !important;
