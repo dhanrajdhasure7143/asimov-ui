@@ -488,7 +488,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isAuthenticated = true;
       }
       if (
-        this.actionData.configurationAsJson["grant_type"] == "AuthorizationCode"
+        this.actionData.configurationAsJson["grantType"] == "AuthorizationCode"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -498,7 +498,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] ==
+        this.actionData.configurationAsJson["grantType"] ==
         "PasswordCredentials"
       ) {
         this.isPassword = true;
@@ -509,7 +509,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] == "ClientCredentials"
+        this.actionData.configurationAsJson["grantType"] == "ClientCredentials"
       ) {
         this.isClient = true;
         this.isResponse = true;
@@ -519,7 +519,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = true;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] ==
+        this.actionData.configurationAsJson["grantType"] ==
         "AuthorizationCodeWithPKCE"
       ) {
         this.isAuthorization = true;
@@ -530,7 +530,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grant_type"] == "refresh_token"
+        this.actionData.configurationAsJson["grantType"] == "refresh_token"
       ) {
         this.isAuthorization = false;
         this.isClient = true;
@@ -553,7 +553,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("methodType").setValue(this.actionData.configurationAsJson["methodType"]);
       this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
       this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
-      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grant_type"]);
+      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grantType"]);
       this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
       this.connectorForm.get("redirect_uri").setValue(this.actionData.configurationAsJson["redirect_uri"]);
       this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
