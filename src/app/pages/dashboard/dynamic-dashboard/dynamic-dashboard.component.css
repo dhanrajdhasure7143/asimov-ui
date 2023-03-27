@@ -18,7 +18,7 @@
 	padding: 8px 16px !important;
 	margin-bottom: 20px;
 	background: #FFFFFF;
-    border: 1px solid #B3BAC5;    
+    border: 1px solid #dbdbdb;    
     border-radius: 5px;
 }
 .graph {
@@ -60,6 +60,7 @@
     position: relative;
     align-items: center;
     display: flex;
+    text-transform: capitalize;
 }
 .editfields {
     display: flex;
