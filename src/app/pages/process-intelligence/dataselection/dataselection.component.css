@@ -180,10 +180,15 @@
 }
 .PI.table thead tr {
     height: 24px !important;
+    border-bottom: unset !important;
+}
+.PI.table thead tr th::before {
+    border-bottom: unset !important;
 }
 .PI.table th select {
     margin-bottom: 10px !important;
 }
+
 
 
 /* .new-PI-layout {

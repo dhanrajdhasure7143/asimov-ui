@@ -60,6 +60,7 @@
     position: relative;
     align-items: center;
     display: flex;
+    text-transform: capitalize;
 }
 .editfields {
     display: flex;
