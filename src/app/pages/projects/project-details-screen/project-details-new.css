@@ -203,7 +203,7 @@ h4.colheads.chatheader {
 }
 #message-body {
     /* height: 88%; */
-    height: calc(100% - -60px);
+    height: inherit;
     overflow: auto;
     padding: 15px 20px 5px;
 }
