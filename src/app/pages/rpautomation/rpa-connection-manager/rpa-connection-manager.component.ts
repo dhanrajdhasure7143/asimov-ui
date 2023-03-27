@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 
@@ -37,6 +37,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     private router: Router,
     private hints: Rpa_Hints,
     private spinner: LoaderService,
+    private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -90,17 +91,20 @@ export class RpaConnectionManagerComponent implements OnInit {
     let selectedId = this.selectedData[0].id;
     this.rest_api.deleteConnectorbyId(selectedId).subscribe(
       (resp) => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Connector Deleted Successfully !!",
-          heightAuto: false,
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Connector Deleted Successfully !!",
         });
         this.spinner.hide();
         this.getAllConnections();
       },
       (err) => {
-        Swal.fire("Error", "Unable to delete Connector", "error");
+        this.messageService.add({
+          severity:'error', 
+          summary: 'Error', 
+          detail: "Unable to delete Connector !!"
+        });
         this.spinner.hide();
         this.getAllConnections();
       }
@@ -135,7 +139,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.selectedData.length > 0
       ? (this.addflag = false)
       : (this.addflag = true);
-    this.selectedData.length > 0
+    this.selectedData.length == 1
       ? (this.delete_flag = true)
       : (this.delete_flag = false);
     this.selectedData.length == 1
@@ -177,18 +181,21 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.rest_api.saveConnector(req_body).subscribe(
       (res: any) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Connector Added Successfully !!",
-          heightAuto: false,
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Connector Added Successfully !!",
         });
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.getAllConnections();
       },
       (err: any) => {
-        Swal.fire("Error", "Unable to Add Connector", "error")
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable to Save Connector !!",
+        });        
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.spinner.hide();
@@ -201,24 +208,27 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     let connectorName1 = this.createConnectorForm.get("name").value;
     let data = {
-      connectionLogo: this.conn_logo.split(",")[1],
+      connectionLogo: this.conn_logo==undefined?"":new String(this.conn_logo.split(",")[1]),
       id: this.selectedData[0].id,
       name: connectorName1,
     };
     this.rest_api.updateConnection(data).subscribe(
       (res: any) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Connector Updated Successfully !!",
-          heightAuto: false,
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Connector Updated Successfully !!",
         });
         this.isFormOverlay = false;
         this.getAllConnections();
       },
       (err: any) => {
-        Swal.fire("Error", "Unable to Update connector", "error");
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable to Update Connector !!",
+        });        
         this.spinner.hide();
         this.isFormOverlay = false;
         this.getAllConnections();

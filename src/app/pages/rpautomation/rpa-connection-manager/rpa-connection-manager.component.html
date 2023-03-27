@@ -93,7 +93,7 @@
                                 <input pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
                                 <span
-                                    *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched"
+                                    *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched && isCreate"
                                     class="required">  Connector Logo Required* </span>
                             </div>
                             <!-- <div class="custom-file">
@@ -111,3 +111,5 @@
             </div>
         </app-split-overlay>
 </div>
+
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
