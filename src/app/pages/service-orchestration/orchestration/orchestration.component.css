@@ -65,31 +65,6 @@ span.titlelabel {
   padding-left: 35px;
 }
 
-
-
-/* newstyles */
-/* th{
-  background-color: #e8f7fd !important;
-    color: #00a0e3 !important;
-    font-size: 14px !important;
-    text-align: left !important;
-    border-top: none !important;
-    border-bottom: 1px solid #4a4a4a33 !important;
-    padding: 8px 10px;
-}
-td {
-  font-size: 13px;
-}
-tr.mat-header-row {
-  height: 45px !important;
-}
-.pr-0 {
-  padding-right: 0px;
-}
-.pl-0 {
-  padding-left: 0px;
-} */
-
 .orches_new .mat-ink-bar {
   transition: unset;
 }
@@ -226,22 +201,9 @@ body .leftfporm select {
   margin-bottom: 8px !important;
 }
 
-/* .schedule-table-container{
-  height: calc(100vh - 320px);
-  overflow: auto;
-  width: 100%;
-} */
 .so-bot-graph .mat-tab-body-content {
   overflow: auto !important;
 }
-
-
-/* #Orchestration-tabs .mat-tab-body.mat-tab-body-active, #Orchestration-tabs .mat-tab-body-content {
-  overflow-y: hidden !important;
-}
-#Orchestration-tabs .p-datatable-resizable>.p-datatable-wrapper {
-  overflow-x: hidden !important;
-} */
 
 .SO-scheduletimer .card-header {
   background-color: transparent;

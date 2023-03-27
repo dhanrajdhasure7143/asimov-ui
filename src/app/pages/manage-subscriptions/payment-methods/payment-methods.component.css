@@ -4,6 +4,7 @@
 }
 .cardsBox {
   border: 1px solid #b5b5b5;
+  background-color: #fff;
   border-radius: 6px;
   height: 100%;
 }
@@ -34,41 +35,7 @@
   color:#098de6;
 }
 
-
-  .errordiv{
-    text-align: center;
-    color: lightgray;
-    margin-top: 110px;
-    margin-bottom: 170px;
-  }  
- 
-  .inactive-card{
+.inactive-card{
     background-color:#757575;
     color: #fff;
-  } 
-  /*
-   .active-card{
-    background-color: #2196F3;
-    color: white;
-    border-radius: 14px !important;
-    font-size: 15px !important;
-    padding: 8px;
-    float: right;
-    cursor: pointer;
-  } 
- 
-    .delete-card{
-    background-color:red;
-    color: white;
-    border-radius: 14px !important;
-    font-size: 15px !important;
-    padding: 8px;
-    float: left;
-    height: 33px;
-    width: 30%;
-    margin-left:32%
-  }
-  */
-
-
-   
+} 

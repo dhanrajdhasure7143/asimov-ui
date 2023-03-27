@@ -169,12 +169,6 @@ sup {
   text-align: center;
 }
 
-/* need to remove
-label {
-  font-size: 11px;
-  margin: 0px;
-} */
-
 .abrand_div {
   display: inline-block;
 }
@@ -183,12 +177,6 @@ label {
   position: relative;
   top: -12px;
   color: #00a0e3;
-}
-
-li a:hover,
-li a:active {
-  /* background-color: #00a0e3 !important;
-  color: white !important; */
 }
 
 li a:hover label,

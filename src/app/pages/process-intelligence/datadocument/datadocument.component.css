@@ -1,17 +1,3 @@
-/* .new-PI-layout {
-    padding: 15px 10px 10px;
-}
-.PI-srh-graph {
-    width: 24%;
-    float: right;
-}
-.PI-select-data {
-    color: unset !important;
-    margin: 0px !important;
-    width: 70%;
-} */
-
-
 .PI-srh-graph {
     display: flex;
     align-items: center;

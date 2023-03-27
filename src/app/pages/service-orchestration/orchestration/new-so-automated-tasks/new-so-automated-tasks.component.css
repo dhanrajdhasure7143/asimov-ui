@@ -107,10 +107,6 @@ table tr .display_hover:hover {
     box-shadow: 0 2px 10px -5px #000;
 }
 
-/* .orchestration-table-container {
-    height: calc(100vh - 265px);
-    overflow: auto;
-} */
 .orchestration-table-container th.p-element.p-sortable-column.p-resizable-column {
     width: 160px !important;
 } 
@@ -171,19 +167,6 @@ span.logrefresh {
 button:disabled {
     cursor: not-allowed !important;
 }
-
-
-
-/* ::ng-deep .addTasksBlock .ng-dropdown-panel .ng-dropdown-panel-items {
-    display: block;
-    height: auto;
-    box-sizing: border-box;
-    max-height: 120px !important;
-    z-index: 99999 !important;
-    overflow-y: auto;
-} */
-
-
 
 .cell1 {
     width: 10%

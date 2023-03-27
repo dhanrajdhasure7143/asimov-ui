@@ -60,6 +60,7 @@
 /* ----- Folder Name Popup Styles ----- */
 .docfldnam input.p-inputtext {
   width: 100%;
+  border: 1px solid #979797 !important;
 }
 .docfldnam input.p-inputtext:focus {
   box-shadow: none !important;
@@ -72,13 +73,6 @@
   overflow: hidden;
   display: inline-block;
 }
-
-/* .btn {
-  background-color: white;
-  padding: 25px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-} */
 
 .upload-btn-wrapper input[type=file] {
   font-size: 110px;
