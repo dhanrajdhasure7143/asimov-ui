@@ -946,7 +946,7 @@ urlify(text) {
 sendMessage(item,type) {
   let message
   // var details= document.getElementById("my-content").innerHTML;
-  if(this.typedMessage.length ==0) return
+  if(type != 'pinned' && this.typedMessage.length ==0) return
   if(type == 'save'){
   message={
       userId:this.logged_userId,

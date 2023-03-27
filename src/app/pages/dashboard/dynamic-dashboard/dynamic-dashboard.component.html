@@ -41,6 +41,29 @@
                   <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" autoWidth="false"
                      (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown>
+                  
+                  <div class="btn-group" dropdown [insideClick]="true" [autoClose]="true">
+                     <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                             aria-controls="dropdown-basic">
+                       {{selectedDashBoardName}} <span class="caret"></span>
+                     </button>
+                     <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                       <li role="menuitem" *ngFor="let each of dashbordlist">
+                        <span (click)="onDropdownChange(each)">{{each.dashboardName}}</span>
+                        <!-- <span><p-checkbox [value]="each" (onChange)="setDefaultDashboard(each)"></p-checkbox>
+                        </span> -->
+                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon"  (click)="setDefaultDashboard(each)">
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
+                        </span>
+                        <span *ngIf="each.defaultDashboard" class="dropdown-icon">
+                           set
+                        </span>
+                        </li>
+                       <!-- <li class="divider dropdown-divider"></li>
+                       <li role="menuitem"><span class="dropdown-item" href>Separated link</span></li> -->
+                     </ul>
+                   </div>
+
 
                   <button (click)="navigateToCreateDashboard()" class="btn"> 
                      <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
