@@ -26,7 +26,7 @@
 	padding: 8px 16px !important;
 	margin-bottom: 20px;
 	background: #FFFFFF;
-    border: 1px solid #B3BAC5;    
+    border: 1px solid #dbdbdb;    
     border-radius: 5px;
 }
 .graph {
@@ -142,6 +142,9 @@ button.btn.bluebg-button {
 .metricalign{
 	padding: 10px 15px;
     margin-bottom: 12px !important;
+}
+.sercmetric {
+    right: 15px !important;
 }
 .search-align {
 	position: absolute;
