@@ -34,6 +34,7 @@ export class AdminAddScreenComponent implements OnInit {
   display: boolean = false;
   table_searchFields: any = [];
   hiddenPopUp: boolean = false;
+  myValue: number = 0;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -45,32 +46,30 @@ export class AdminAddScreenComponent implements OnInit {
       this.screen_id = res.id;
     });
   }
+  
 
   ngOnInit(): void {
     this.updateColumnForm = this.formBuilder.group({
       ColumnName: [
         { value: "", disabled: true },
-        Validators.compose([Validators.required]),
       ],
       DisplayName: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9_-]*$'),Validators.maxLength(255)])],
-      widget_type: ["", Validators.compose([Validators.required])],
+      widget_type: [""],
       ShowGrid: [false],
       ShowSearch: [false],
       ShowForm: [false],
       read_only: [false],
       mandatory: [false],
-      length: ["", Validators.compose([Validators.required,Validators.pattern('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')])],
-      default_type: ["", Validators.compose([Validators.required])],
+      length: [""],
+      default_type: [""],
       data_type: [
-        { value: "", disabled: true },
-        Validators.compose([Validators.required]),
-      ],
+        { value: "", disabled: true }],
       DefaultValue: [""],
-      ColumnOrder: ["", Validators.compose([Validators.required])],
-      text_align: ["", Validators.compose([Validators.required])],
-      width: ["", Validators.compose([Validators.required])],
-      tooltip: ["", Validators.compose([Validators.required])],
-      placeholder: ["", Validators.compose([Validators.required])],
+      ColumnOrder: [""],
+      text_align: [""],
+      width: [""],
+      tooltip: [""],
+      placeholder: [""],
     });
 
     this.insertForm = this.formBuilder.group({
@@ -364,4 +363,22 @@ export class AdminAddScreenComponent implements OnInit {
     }
     return true;
   }
+
+  validateInput(event: Event) {
+    const inputValue = Number((<HTMLInputElement>event.target).value);
+    if (isNaN(inputValue) || inputValue < 0 || inputValue > 255 || (inputValue.toString().length > 3)) {
+    this.myValue = null;
+    }
+    const validators = [
+      (value: number) => !isNaN(value), // Check if value is a number
+      (value: number) => value >= 0 && value <= 255, // Check if value is in range [0, 255]
+      (value: number) => value.toString().length <= 3, // Check if value has at most 3 digits
+    ];
+    const isValid = validators.every((validator) => validator(inputValue));
+    if (isValid) {
+      this.myValue = inputValue;
+    } else {
+      this.myValue = null;
+  }
+}
 }

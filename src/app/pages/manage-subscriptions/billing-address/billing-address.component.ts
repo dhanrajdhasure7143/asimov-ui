@@ -1,11 +1,8 @@
-import { Component, OnInit, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService } from "primeng/api";
-import { element } from "protractor";
 import countries from "src/app/../assets/jsons/countries.json";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -59,22 +56,12 @@ export class BillingAddressComponent implements OnInit {
   
 
   onChangeCountry(countryValue) {
-    this.stateInfo = [];
-    for (var i = 0; i < this.countryInfo.length; i++) {
-      if (this.countryInfo[i].CountryName == countryValue) {
-        this.stateInfo = this.countryInfo[i].States;
-      }
-    }
+    this.stateInfo=[...(this.countryInfo.find((item:any)=>item.CountryName==countryValue)!=undefined?this.countryInfo.find((item:any)=>item.CountryName==countryValue).States:[])];
     this.cityInfo = [];
   }
 
   onChangeState(stateValue) {
-    this.cityInfo = [];
-    for (var i = 0; i < this.stateInfo.length; i++) {
-      if (this.stateInfo[i].StateName == stateValue.StateName) {
-        this.cityInfo = this.stateInfo[i].Cities;
-      }
-    }
+    this.cityInfo=[...(this.stateInfo.find((item:any)=>item.StateName==stateValue)!=undefined?(this.stateInfo.find((item:any)=>item.StateName==stateValue).Cities):[])];
   }
 
   onKeydown(event) {
@@ -101,60 +88,68 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
-    if (!this.editButton) {
-      if (this.billingForm.valid) {
-        payload["country"] = this.countryName;
-        payload["state"] = this.stateName;
-        this.api.saveBillingInfo(payload).subscribe((data) => {
-          this.billingInfo = data;
-          this.spinner.hide();
-          this.id = this.billingInfo.id;
-          if(data){
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Saved Successfully !!",
-            });
-          }
-          this.billingForm.reset();
-          this.getBillingInfo();
-        })
+    this.api.saveBillingInfo(payload).subscribe((data) => {        
+      if(data && !this.editButton){
+        this.billingInfo = data;
+        this.spinner.hide();
+        this.id = this.billingInfo.id;
+        this.editButton=true;
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Saved Successfully !!",
+        });
       }
-    } else {
-      this.updateForm();
-    }
-  }
-
-  updateForm() {
-    let payload = this.billingForm.value;
-    if (this.billingForm.valid) {
-      payload["country"] = this.countryName;
-      payload["state"] = this.stateName;
-      this.api.updateInfo(this.id, payload).subscribe();
+      if(this.editButton) {
+        payload={...{id:this.id},...payload}
         this.messageService.add({
           severity: "success",
           summary: "Success",
           detail: "Updated Successfully !!",
         });
-  }
+      }
+      this.billingForm.reset();
+      this.getBillingInfo();
+    }, err=>{
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Please Save Again !!",
+        });
+      this.spinner.hide()
+    })
   }
 
   getBillingInfo() {
     this.spinner.show();
-    this.api.getBillingInfo().subscribe(data => {
-      this.billingContactData = data;
+    this.api.getBillingInfo().subscribe((data:any) => {
       this.spinner.hide();
       if(data){
-      this.billingForm.get("firstName").setValue(this.billingContactData["firstName"]);
-      this.billingForm.get("lastName").setValue(this.billingContactData["lastName"]);
-      this.billingForm.get("state").setValue(this.billingContactData["state"]);
-      this.billingForm.get("city").setValue(this.billingContactData["city"]);
-      this.billingForm.get("postalcode").setValue(this.billingContactData["postalcode"]);
-      this.billingForm.get("addressLine1").setValue(this.billingContactData["addressLine1"]);
-      this.billingForm.get("addressLine2").setValue(this.billingContactData["addressLine2"]);
-      this.billingForm.get("phoneNumber").setValue(this.billingContactData["phoneNumber"]);
-      this.billingForm.get("email").setValue(this.billingContactData["email"]);
+        this.billingContactData = data;
+        this.editButton=true;
+        this.id=data.id;
+        this.onChangeCountry(data.country);
+        this.onChangeState(data.state);
+        this.billingForm.get("firstName").setValue(this.billingContactData["firstName"]);
+        this.billingForm.get("lastName").setValue(this.billingContactData["lastName"]);
+        setTimeout(()=>{
+          this.billingForm.get("country").setValue(data.country)
+          this.billingForm.get("state").setValue(this.billingContactData["state"]);
+          this.billingForm.get("city").setValue(this.billingContactData["city"]);
+        },300);
+        this.billingForm.get("postalcode").setValue(this.billingContactData["postalcode"]);
+        this.billingForm.get("addressLine1").setValue(this.billingContactData["addressLine1"]);
+        this.billingForm.get("addressLine2").setValue(this.billingContactData["addressLine2"]);
+        this.billingForm.get("phoneNumber").setValue(this.billingContactData["phoneNumber"]);
+        this.billingForm.get("email").setValue(this.billingContactData["email"]);
       }
+    },err=>{
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable Get The Data !!",
+        });
+      this.spinner.hide();
     });
   }
 }

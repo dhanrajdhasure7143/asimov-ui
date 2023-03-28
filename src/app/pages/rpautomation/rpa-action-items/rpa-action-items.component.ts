@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -27,6 +27,8 @@ export class RpaActionItemsComponent implements OnInit {
     private loader:LoaderService,
     private rest_api:RestApiService,
     private route:ActivatedRoute,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
     ) 
     {
       this.route.queryParams.subscribe((data)=>{
@@ -112,7 +114,7 @@ export class RpaActionItemsComponent implements OnInit {
   readSelectedData(data) {
     this.selectedData =data;
     this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
-    this.selectedData.length > 0 ? (this.delete_flag = true) : (this.delete_flag = false);
+    this.selectedData.length == 1 ? (this.delete_flag = true) : (this.delete_flag = false);
     this.selectedData.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
 
@@ -123,25 +125,36 @@ export class RpaActionItemsComponent implements OnInit {
   deleteAction() {
     this.loader.show();
     let selectedId = this.selectedData[0].id;
-    this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Action Deleted Successfully !!",
-        heightAuto: false,
-      });
-      this.loader.hide();
-      this.getAllActionItems();
-    },(err) => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-        heightAuto: false,
-      });
-      this.loader.hide();
-      this.getAllActionItems();
-    })
+    this.confirmationService.confirm({
+      message: "Are you sure?, You won't be able to revert this!",
+      header: 'Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.loader.show();
+        this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Action Deleted Successfully !!",
+          })
+          this.loader.hide();
+          this.getAllActionItems();
+        },(err) => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Something Went Wrong !!",
+          })
+          this.loader.hide();
+          this.getAllActionItems();
+        })
+      },
+      reject: (type) => {
+        this.loader.hide();
+      },
+      key: "positionDialog"
+    });
+
   }
   
   backToConnection() {
