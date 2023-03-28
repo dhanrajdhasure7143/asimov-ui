@@ -191,7 +191,8 @@
               </span>
             </div>
             <div class="form-group col p-0">
-              <label for="" class="label-control">Widget Type <span class="star">*</span></label>
+              <label for="" class="label-control">Widget Type </label>
+              <!-- <span class="star">*</span> -->
               <select class="form-control data" formControlName="widget_type">
                 <option value="">Select Option</option>
                 <option value="textbox">Text Box</option>
@@ -219,10 +220,8 @@
 
             <div class="form-group col p-0">
               <label for="" class="label-control">Length</label>
-              <input type="text" (keypress)="numberOnly($event)" formControlName="length" class="form-control" placeholder="Enter Length" />
-              <span *ngIf="updateColumnForm.get('length').hasError('pattern')" class="required">
-                Enter a number between 0 and 255
-              </span>
+              <input type="number"  min="0" max="255" [(ngModel)]="myValue" (input)="validateInput($event)"
+              (keypress)="numberOnly($event)"  formControlName="length" class="form-control" placeholder="Enter Length" />
             </div>
 
             <div class="form-group col p-0">
@@ -275,8 +274,8 @@
             </div>
           </form>
           <div class="createform-footer">
-            <button type="button" class="btn new-cancelbtn" (click)="display = false"> Cancel</button>
-            <button type="button" class="btn bluebg-button" (click)="updateColumn()">
+            <button type="button" class="btn new-cancelbtn" (click)="hiddenPopUp = false"> Cancel</button>
+            <button type="button" class="btn bluebg-button" (click)="updateColumn()"  [disabled]="!(updateColumnForm.valid && (updateColumnForm.touched ||  updateColumnForm.dirty))" >
               Update
             </button>
           </div>

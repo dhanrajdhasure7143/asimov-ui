@@ -1767,4 +1767,9 @@ recentActivities(id:any){
  return this.http.get('/platform-service/project/get-list-of-recentActivities?projectId='+id) 
 }
 
+checkTenantName(tenantName)
+{
+  let data="";
+  return this.http.post("/platform-service/screenGenerator/check-tenant?tenant_name="+tenantName,data)
+}
 }

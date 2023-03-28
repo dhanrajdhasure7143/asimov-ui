@@ -1,11 +1,8 @@
-import { Component, OnInit, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
 import { MessageService } from "primeng/api";
-import { element } from "protractor";
 import countries from "src/app/../assets/jsons/countries.json";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -91,10 +88,8 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
-    if(this.editButton) 
-      payload={...{id:this.id},...payload}
     this.api.saveBillingInfo(payload).subscribe((data) => {        
-      if(data){
+      if(data && !this.editButton){
         this.billingInfo = data;
         this.spinner.hide();
         this.id = this.billingInfo.id;
@@ -105,14 +100,24 @@ export class BillingAddressComponent implements OnInit {
           detail: "Saved Successfully !!",
         });
       }
+      if(this.editButton) {
+        payload={...{id:this.id},...payload}
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Updated Successfully !!",
+        });
+      }
       this.billingForm.reset();
       this.getBillingInfo();
     }, err=>{
-      console.log(err);
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Please Save Again !!",
+        });
       this.spinner.hide()
     })
-
-  
   }
 
   getBillingInfo() {
@@ -137,9 +142,13 @@ export class BillingAddressComponent implements OnInit {
         this.billingForm.get("addressLine2").setValue(this.billingContactData["addressLine2"]);
         this.billingForm.get("phoneNumber").setValue(this.billingContactData["phoneNumber"]);
         this.billingForm.get("email").setValue(this.billingContactData["email"]);
-    
       }
     },err=>{
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable Get The Data !!",
+        });
       this.spinner.hide();
     });
   }
