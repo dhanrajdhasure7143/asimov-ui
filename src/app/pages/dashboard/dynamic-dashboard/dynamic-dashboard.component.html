@@ -28,7 +28,7 @@
                      (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
                   </p-dropdown> -->
                   
-                  <div class="btn-group" dropdown [insideClick]="true" [autoClose]="true">
+                  <div class="btn-group defaltdrpdwn" dropdown [insideClick]="true" [autoClose]="true">
                      <button pButton pRipple id="button-basic" dropdownToggle type="button" class="p-button-outlined dropdown-toggle"
                              aria-controls="dropdown-basic">
                        {{selectedDashBoardName}} <span class="caret"></span>
@@ -36,11 +36,12 @@
                      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                        <li role="menuitem" *ngFor="let each of dashbordlist">
                         <span (click)="onDropdownChange(each)">{{each.dashboardName}}</span>
-                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon"  (click)="setDefaultDashboard(each)">
+                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  (click)="setDefaultDashboard(each)">
                            <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
+                           <span class="testtooltip">Set as Default Dashoard</span>
                         </span>
                         <span *ngIf="each.defaultDashboard" class="dropdown-icon">
-                           set
+                           <img src="../../../../assets/images-n/dashboard/Filled-Star.svg"/>
                         </span>
                         </li>
                        <!-- <li class="divider dropdown-divider"></li> -->
