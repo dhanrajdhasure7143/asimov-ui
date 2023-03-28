@@ -20,7 +20,7 @@ span.userhint {
     box-shadow: 0px 0px 5px rgb(0 0 0 / 10%);
     border: 1px solid #dbdbdb;
     border-radius: 4px;
-    /* text-align: center; */
+    text-align: center;
 }
 
 .headercheckbox {

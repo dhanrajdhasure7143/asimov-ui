@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-rpa-connection-manager-form",
@@ -53,6 +54,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private rest_api: RestApiService,
     private router: Router,
     private route: ActivatedRoute,
+    private messageService: MessageService,
     private spinner: LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
@@ -118,8 +120,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   saveAction() {
     this.spinner.show();
     let req_body
-    if(this.connectorForm.value.actionType == "Authenticated"){
-    
+    if(this.connectorForm.value.actionType == "Authenticated"){    
     req_body=
       {
         "id": "",
@@ -128,7 +129,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -172,7 +173,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id":"",
         "name" : this.connectorForm.value.actionName,
-        "actionLogo": new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
         "actionType" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
@@ -204,7 +205,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           title: "Success",
           text: "Action Saved Successfully !!",
           heightAuto: false,
-        }).then((result) => {
+        })
+        // this.messageService.add({
+        //   severity: "success",
+        //   summary: "Success",
+        //   detail: "Action Saved Successfully !!"
+        // })
+        .then((result) => {
           this.connectorForm.reset();
           this.router.navigate(["/pages/rpautomation/action-item"], {
             queryParams: { id: this.selectedId, name: this.selectedConnector },
@@ -213,11 +220,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       } else {
         this.spinner.hide();
         (err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong !!",
-            heightAuto: false,
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Something Went Wrong !!",
           });
         };
       }
@@ -255,15 +261,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         if (res.data)
           this.connectorForm.get("response").setValue(JSON.stringify(res.data));
         this.spinner.hide();
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: res.message,
-          heightAuto: false,
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: res.message,
         });
       },
       (err: any) => {
-        Swal.fire("Error", "Unable to generate access token", "error");
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable to generate Access Token !!",
+        });        
         this.spinner.hide();
       }
     );
@@ -605,8 +614,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        // "actionLogo" : ""
-        actionLogo: new String(this.action_logo.split(",")[1]),
+         actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -650,7 +658,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         id: this.action_id,
         name: this.connectorForm.value.actionName,
-        actionLogo: new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
         description: "",
@@ -680,7 +688,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             title: "Success",
             text: "Action Updated Successfully !!",
             heightAuto: false,
-          }).then((result) => {
+          })
+          // this.messageService.add({
+          //   severity: "success",
+          //   summary: "Success",
+          //   detail: "Action Updated Successfully !!",
+          // })
+          .then((result) => {
             this.connectorForm.reset();
             this.router.navigate(["/pages/rpautomation/action-item"], {
               queryParams: {
@@ -692,12 +706,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         } else {
           this.spinner.hide();
           (err) => {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong !!",
-              heightAuto: false,
-            });
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Something Went Wrong !!",
+            })
           };
         }
       });
