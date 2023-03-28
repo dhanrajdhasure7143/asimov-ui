@@ -312,9 +312,9 @@
                         </div>
                     </form>
                     <div class="row justify-content-end">
-                        <button type="button" class="btn new-cancelbtn" [disabled]="isRequest"
+                        <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()">Test</button>
-                        <button *ngIf="!isUpdate" type="button" class="btn bluebg-button"
+                        <button *ngIf="!isUpdate"  type="button" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
                         <button *ngIf="isUpdate" type="button" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   

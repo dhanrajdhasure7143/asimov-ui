@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
@@ -38,6 +38,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     private hints: Rpa_Hints,
     private spinner: LoaderService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -89,26 +90,38 @@ export class RpaConnectionManagerComponent implements OnInit {
   deleteConnection() {
     this.spinner.show();
     let selectedId = this.selectedData[0].id;
-    this.rest_api.deleteConnectorbyId(selectedId).subscribe(
-      (resp) => {
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Connector Deleted Successfully !!",
-        });
-        this.spinner.hide();
-        this.getAllConnections();
+    this.confirmationService.confirm({
+      message: "Are you sure?, You won't be able to revert this!",
+      header: 'Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deleteConnectorbyId(selectedId).subscribe(
+          (resp) => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Connector Deleted Successfully !!",
+            });
+            this.spinner.hide();
+            this.getAllConnections();
+          },
+          (err) => {
+            this.messageService.add({
+              severity:'error', 
+              summary: 'Error', 
+              detail: "Unable to delete Connector !!"
+            });
+            this.spinner.hide();
+            this.getAllConnections();
+          }
+        );
       },
-      (err) => {
-        this.messageService.add({
-          severity:'error', 
-          summary: 'Error', 
-          detail: "Unable to delete Connector !!"
-        });
+      reject: (type) => {
         this.spinner.hide();
-        this.getAllConnections();
-      }
-    );
+      },
+      key: "positionDialog"
+    });
   }
 
   viewConnector() {
