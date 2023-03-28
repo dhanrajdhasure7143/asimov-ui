@@ -4,6 +4,7 @@ import {CryptoService} from '../../../services/crypto.service'
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-addcard',
@@ -29,7 +30,7 @@ export class AddcardComponent implements OnInit {
   cards:any;
   @Output() onBack = new EventEmitter<any>();
  
-  constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:NgxSpinnerService) { }
+  constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:LoaderService) { }
 
   ngOnInit(): void {
   }
