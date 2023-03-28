@@ -223,9 +223,13 @@ export class RpaenvironmentsComponent implements OnInit {
 
   deploybotenvironment() {
     // const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    const selectedEnvironments=[];
+    this.selected_list.forEach(item=>{
+      selectedEnvironments.push(item.environmentId)
+    })
     if (this.selected_list.length != 0) {
       this.spinner.show();
-      this.rest_api.deployenvironment(this.selected_list).subscribe(res => {
+      this.rest_api.deployenvironment(selectedEnvironments).subscribe(res => {
         let data: any = res
         this.spinner.hide();
         if (data[0].errorMessage == undefined) {

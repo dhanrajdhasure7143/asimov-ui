@@ -9,6 +9,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
 import { MyFilterPipe } from './pipe/my-filter.pipe';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MyFilterPipe } from './pipe/my-filter.pipe';
    PrimengCustomModule,
    FormsModule,
    ReactiveFormsModule,
-   NgChartsModule,
+   NgChartsModule,  
+   BsDropdownModule.forRoot()
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

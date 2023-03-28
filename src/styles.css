@@ -2637,6 +2637,7 @@ cursor: pointer;
   align-items: center;
   height: 100%;
   margin:0px;
+  text-transform: capitalize;
 }
 .main-content-head h3 .title_text{
   font-size: 16px;
@@ -2813,11 +2814,13 @@ span.tabscount {
 }
 /* chat mention styles */
 mention-list {
-  top: -150px !important;
+  /* top: -150px !important; */
   width: 95% !important;
   left: 0px !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
+  top: -150px !important;
+  left: 0px !important;
   width: 100% !important;
 }
 /* chat mention styles */
@@ -3069,6 +3072,9 @@ textarea.p-inputtextarea {
   float: right;
   margin-right: 5px;
 }
+.p-breadcrumb ul li .p-menuitem-link:focus {
+  box-shadow: unset;
+}
 /* new styles for ng select */
 .ng-select .ng-select-container {
   min-height: 40px !important;
@@ -3106,6 +3112,10 @@ textarea.p-inputtextarea {
   top: 45px !important;
   left: -80px !important;
 }
+.p-inplace.p-component span.task-descwords {
+  overflow-wrap: break-word;
+  }
+  
 /* headercss end*/
 /* primeNg components Styles End */
 
@@ -3309,6 +3319,20 @@ button.btn.new-cancelbtn {
 .docfolder .p-card:hover {
   border: 1px solid var(--main-bluecolor);
 }
+.docfolder .cards:first-child .p-card {
+  background: #e9e9e9;
+  border: unset;
+}
+.docscrnchngs .p-breadcrumb ul li:last-child .p-menuitem-text {
+  color: #232832;
+  font-weight: 600;
+}
+.docscrnchngs .p-breadcrumb {
+  background: transparent;
+  padding: 0px 10px;
+  border: unset;
+}
+
 
 .docfolder .pi-folder, .docfolder .pi-file , .docfolder .pi-image{
   color: var(--main-bluecolor) !important;
@@ -3373,13 +3397,15 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles Start */
 .dropdown-primeng .p-dropdown {    
   border: 1px solid #979797 !important;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   box-shadow: none !important;
   width: 180px;
   height: 34px;
+  background-color: transparent;
 }
 .p-dropdown:not(.p-disabled).p-focus {
   border: 1px solid #098de6 !important;
+  background-color: #fff !important;
 }
 .configtabs .p-tabview {
   height: 100%;

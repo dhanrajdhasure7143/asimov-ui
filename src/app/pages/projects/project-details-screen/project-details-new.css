@@ -203,7 +203,7 @@ h4.colheads.chatheader {
 }
 #message-body {
     /* height: 88%; */
-    height: calc(100% - -60px);
+    height: inherit;
     overflow: auto;
     padding: 15px 20px 5px;
 }
@@ -310,12 +310,13 @@ input.msgip {
     font-weight: 500;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext {
-    border-radius: 10px;
+    border-radius: 6px;
     border-color: #979797;
     color: #232832;
     resize: none;
     box-shadow: none;
     height: 100%;
+    background-color: #fff;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext:focus {
     border-color: #098de6;

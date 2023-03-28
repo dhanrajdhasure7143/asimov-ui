@@ -39,3 +39,10 @@
     background-color:#757575;
     color: #fff;
 } 
+
+.errordiv{
+  text-align: center;
+  color: #a5a5a5;
+  margin-top: 110px;
+  margin-bottom: 170px;
+}

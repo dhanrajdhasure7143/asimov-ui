@@ -267,6 +267,17 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest
       .updateDashBoardNamed(this.selectedDashBoard)
       .subscribe((response: any) => {
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Updated Successfully !!",
+        });
+      },err=>{
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to Update !",
+        });
       });
     this.inplace.deactivate();
   }
@@ -317,7 +328,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onDropdownChange(event) {
-    this.selectedDashBoard = event.value;
+    this.selectedDashBoard = event;
     this.selectedDashBoardName = this.selectedDashBoard.dashboardName;
     let params1 = {
       dashboardId: this.selectedDashBoard.id,
@@ -327,13 +338,13 @@ export class DynamicDashboardComponent implements OnInit {
       relativeTo: this.activeRoute,
       queryParams: params1,
     });
-    if(this.menuItems.length == 2)this.menuItems.splice(1,1)
-    if(!this.selectedDashBoard.defaultDashboard){
-    let obj = {label: "Set as Default",command: () => { this.setDefaultDashboard()}}
-    this.menuItems.push(obj);
-    }else{
-      this.menuItems.splice(1,1)
-    }
+    // if(this.menuItems.length == 2)this.menuItems.splice(1,1)
+    // if(!this.selectedDashBoard.defaultDashboard){
+    // let obj = {label: "Set as Default",command: () => { this.setDefaultDashboard()}}
+    // this.menuItems.push(obj);
+    // }else{
+    //   this.menuItems.splice(1,1)
+    // }
     this.getDashBoardData(this.selectedDashBoard.id);
   }
 
@@ -351,12 +362,24 @@ export class DynamicDashboardComponent implements OnInit {
     this.inplace.deactivate();
   }
 
-  setDefaultDashboard() {
-    this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
+  setDefaultDashboard(dashboard) {
+    console.log(dashboard)
+    // this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
+    console.log(this.selectedDashBoard)
+    dashboard["defaultDashboard"] = true;
+    this.rest
+      .updateDashBoardNamed(dashboard)
+      .subscribe((response: any) => {
+        console.log(response)
+        this.getListOfDashBoards();
+        this.messageService.add({severity: "success",summary: "Success",detail: "Updated Successfully !!"});
+      },err=>{
+        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to Update !"});
+      });
   }
 
   deletedashbord() {
-    if (this.selectedDashBoard.defaultDashboard) {
+    if (this.selectedDashBoard.defaultDashboard && this.dashbordlist.length > 1) {
       this.confirmationService.confirm({
         message: "Change the default dashboard",
         header: "Info",
@@ -368,8 +391,10 @@ export class DynamicDashboardComponent implements OnInit {
       });
       return;
     }
+    let confrmMessage=""
+    this.dashbordlist.length > 1? confrmMessage="Are you sure that you want to proceed?": confrmMessage="Are you sure that you are deleting default dashboard?"
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
+      message: confrmMessage,
       header: "Confirmation",
       icon: "pi pi-info-circle",
       accept: () => {
@@ -393,6 +418,7 @@ export class DynamicDashboardComponent implements OnInit {
   changeToDefaultDashBoard() {
     this.rest.getDashBoardsList().subscribe((res: any) => {
       this.dashbordlist = res.data;
+      if(this.dashbordlist.length>=1){
       this.selectedDashBoard = this.dashbordlist.find(
         (item) => item.defaultDashboard == true
       );
@@ -409,6 +435,10 @@ export class DynamicDashboardComponent implements OnInit {
       }, 100);
       this.selectedDashBoardName = this.selectedDashBoard.dashboardName
       this.getDashBoardData(this.selectedDashBoard.id);
+    }else{
+      this.loader.hide();
+      this.router.navigate(["/pages/dashboard/create-dashboard"])
+    }
     });
   }
 

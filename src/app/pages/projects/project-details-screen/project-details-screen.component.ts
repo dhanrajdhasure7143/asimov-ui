@@ -600,6 +600,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.getTheExistingUsersList(0);
     this.checktodelete();
     this.getRecentactivities();
+    this.snapShotDetails();
     this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !!'});
     this.checkBoxselected =[];
     // this.onUsersTab(0);
@@ -651,6 +652,7 @@ this.confirmationService.confirm({
     //   this.onUsersTab(1);
     // }, 500);
       this.checktodelete();
+      this.snapShotDetails();
       this.spinner.hide();
     }, err => {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong!'});
@@ -928,29 +930,31 @@ connectToWebSocket() {
 };
 
 urlify(text) {
+  let replacedText = text
   var urlRegex = /(https?:\/\/[^\s]+)/g;
   if(text)
   return text.replace(urlRegex, function(url) {
     return '<a href="' + url + '" target="_blank">' + url + '</a>';
   })
-
-  // let pattern = /\b[\w.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g;
-  // if(text)
-  // return text.replace(pattern, function(url) {
-  //   return '<span class="icon-color">' + url + '</span>';
-  // })
   // or alternatively
   // return text.replace(pattern, '<span class="icon-color">' + text + '</span>')
 }
 
 sendMessage(item,type) {
   let message
-  // var details= document.getElementById("my-content").innerHTML;
-  if(this.typedMessage.length ==0) return
+  if(type != 'pinned' && this.typedMessage.length ==0) return
   if(type == 'save'){
+    const regex = /@(\w+)\s(\w+)/g;
+    let messageInput1= new String(this.typedMessage);
+    const matches = messageInput1.match(regex);
+    if (matches) 
+    matches.forEach(tag => {
+      const user = this.existingUsersList.find(u => u.fullName === tag.replace('@','') );
+      messageInput1=messageInput1.replace(tag, "${"+user.user_email+"}");
+    })
   message={
       userId:this.logged_userId,
-      message:this.typedMessage,
+      message:messageInput1,
       // message:details,
       projectId:this.project_id,
       rmId:0,
@@ -984,7 +988,6 @@ sendMessage(item,type) {
   this.rest_api.sendMessagesByProjectId(message).subscribe(res=>{
     this.typedMessage='';
     this.replay_msg="";
-    // document.getElementById("my-content").innerHTML='';
     this.getMessagesList();
   })
 }
@@ -1389,7 +1392,7 @@ onKeyUp(event: KeyboardEvent) {
 
 onMentionSelect(item: any) {
   // return `<strong class="chip">${item["fullName"]}</strong>`;
-  return  item["fullName"] ;
+  return  "@"+item["fullName"]+" ";
 }
 
 public htmlCode: string;
@@ -1425,33 +1428,9 @@ onKeyUpDiv(){
 
 getRecentactivities() {
   this.columns_list_activities = [
-    {
-      ColumnName: "activity",
-      DisplayName: "Activity",
-      ShowGrid: true,
-      ShowFilter: true,
-      filterWidget: "normal",
-      filterType: "text",
-      sort: true,
-    },
-    {
-      ColumnName: "lastModifiedUsername",
-      DisplayName: "Resource Name",
-      ShowFilter: true,
-      ShowGrid: true,
-      filterWidget: "normal",
-      filterType: "text",
-      sort: true,
-    },
-    {
-      ColumnName: "lastModifiedTimestamp_new",
-      DisplayName: "Last Modified",
-      ShowGrid: true,
-      ShowFilter: true,
-      filterWidget: "normal",
-      filterType: "date",
-      sort: true,
-    }
+    {ColumnName: "activity",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+    {ColumnName: "lastModifiedUsername",DisplayName: "Resource Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
+    {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Last Modified", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
   ];
 
 this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{

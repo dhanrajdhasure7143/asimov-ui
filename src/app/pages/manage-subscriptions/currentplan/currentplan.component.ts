@@ -87,11 +87,11 @@ export class CurrentplanComponent implements OnInit {
 
         if (this.plansList == undefined || this.plansList == null) {
           this.error =
-            "Sorry for inconvenience we will get back to you shortly";
+            "Sorry for the inconvenience. We will get back to you shortly.";
         }
         if (plans.subscribed == undefined) {
           this.error =
-            "Sorry for inconvenience you don't have any active plans";
+            "Sorry for the inconvenience. You don't have any active plans.";
         }
         if (this.plansList.length > 1) {
           this.plansList = this.plansList.reverse();
@@ -118,7 +118,7 @@ export class CurrentplanComponent implements OnInit {
         this.plansList[2].term = "year";
       },
       (error) => {
-        this.error = "Sorry for inconvenience we will get back to you shortly";
+        this.error = "Sorry for the inconvenience. We will get back to you shortly.";
       }
     );
   }

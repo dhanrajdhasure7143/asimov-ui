@@ -1,5 +1,4 @@
 <div class="h-100">
-    <!-- <mat-card class="h-100"> -->
         <div class="row main-content-head">
             <div class="col-md-4 pl-0">
                 <h3>
@@ -16,9 +15,8 @@
                 <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn btn-primary btn-update">Save</button>
             </div> -->
         </div>
-        <!-- <div class="container-fluid  h-scroll"> -->
+        <div class="main-content-body">
             <div class="maindivfoprm">
-                <!-- <div class="create-heading">Create Department</div> -->
                 <form [formGroup]="createDepartmentForm"  #adddept="ngForm" (ngSubmit)="savedepartments()">
                     <div class="row fcont">
                             <div class="form-group col-md-12 p-0">
@@ -56,11 +54,10 @@
                        
                     </div>
                 </form>
-                <div class="usersfooterbtns">
+                <div class="row justify-content-end">
                     <button (click)="resetdepartment()" class="btn new-cancelbtn">Reset</button>
                     <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn bluebg-button">Save</button>
                 </div>
             </div>
-        <!-- </div> -->
-    <!-- </mat-card> -->
+        </div>
 </div>
