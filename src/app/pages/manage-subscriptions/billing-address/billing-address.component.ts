@@ -91,44 +91,27 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
-    if(!this.editButton) {
-        this.api.saveBillingInfo(payload).subscribe((data) => {        
-          if(data){
-            this.billingInfo = data;
-            this.spinner.hide();
-            this.id = this.billingInfo.id;
-            this.editButton=true;
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Saved Successfully !!",
-            });
-          }
-          this.billingForm.reset();
-          this.getBillingInfo();
-        }, err=>{
-          console.log(err);
-          this.spinner.hide()
-        })
+    if(this.editButton) 
+      payload={...{id:this.id},...payload}
+    this.api.saveBillingInfo(payload).subscribe((data) => {        
+      if(data){
+        this.billingInfo = data;
+        this.spinner.hide();
+        this.id = this.billingInfo.id;
+        this.editButton=true;
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Saved Successfully !!",
+        });
       }
-     else {
-      payload={...{id:this.id,}, ...payload}
-        this.api.updateInfo(this.id, payload).subscribe((res:any)=>{
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Updated Successfully !!",
-          })
-        }, err=>{
-            console.log(err);
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Updated Successfully !!",
-            })
-            this.spinner.hide()
-          })
-      }
+      this.billingForm.reset();
+      this.getBillingInfo();
+    }, err=>{
+      console.log(err);
+      this.spinner.hide()
+    })
+
   
   }
 
