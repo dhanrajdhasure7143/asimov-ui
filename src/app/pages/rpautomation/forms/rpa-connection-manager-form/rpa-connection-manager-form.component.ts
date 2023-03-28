@@ -59,7 +59,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe((data) => {
       this.isDisabled = data.formDisabled;
-      console.log("data",data)
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
@@ -130,7 +129,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        // "actionLogo" : ""
         actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
@@ -186,10 +184,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.selectedOne.forEach(ele=>{
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
-        // this.requestJson_body.push(obj1);
-      // this.requestJson_body.push(this.connectorForm.get("request").value)
-      // let obj={};
-      // obj[this.connectorForm.value.headerKey]=this.connectorForm.value.headerValue
+       
       let object={
         "endPoint" : this.connectorForm.value.endPoint,
         "methodType" : this.connectorForm.value.methodType,
@@ -200,10 +195,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "type":"API",
         "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
     }
-    // console.log(this.connectorForm.get("request").value.replace(/\n|\t/g, ''))
     req_body["configuration"]=JSON.stringify(object);
     }
-    console.log("req_body",req_body)
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
       if (res.message === "Successfully saved configured action") {
@@ -265,8 +258,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     this.rest_api.testActions(req_body).subscribe(
       (res: any) => {
-        if (res.data.access_token)
-          this.connectorForm.get("response").setValue(res.data.access_token);
+        if (res.data)
+          this.connectorForm.get("response").setValue(JSON.stringify(res.data));
         this.spinner.hide();
         this.messageService.add({
           severity: "success",
@@ -472,7 +465,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getActionById(this.action_id).subscribe((res) => {
       this.actionData = res["data"];      
-      console.log(this.actionData, "this.actionData");
       if (this.actionData["actionType"] == "APIRequest") {
         this.isDisabled = true;
         this.isRequest = true;
@@ -661,7 +653,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"]=this.connectorForm.value.refreshToken
       }
-      // "refreshToken" : \"1000.ca5e3c4bc17652d3c6458f2ccb913572.05a4a81c4e8e05baa2eedad22759d28f\" // dont have refresh token
       req_body["configuration"] = JSON.stringify(object);
     } else {
       req_body = {
@@ -686,9 +677,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         httpHeaders: obj,
         "type":"API",
         "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
-        // requestPayload: {
-        //   data: this.requestJson_body,
-        // },
       };
       req_body["configuration"] = JSON.stringify(object);
     }
