@@ -379,7 +379,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   deletedashbord() {
-    if (this.selectedDashBoard.defaultDashboard) {
+    if (this.selectedDashBoard.defaultDashboard && this.dashbordlist.length > 1) {
       this.confirmationService.confirm({
         message: "Change the default dashboard",
         header: "Info",
@@ -391,8 +391,10 @@ export class DynamicDashboardComponent implements OnInit {
       });
       return;
     }
+    let confrmMessage=""
+    this.dashbordlist.length > 1? confrmMessage="Are you sure that you want to proceed?": confrmMessage="Are you sure that you are deleting default dashboard?"
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
+      message: confrmMessage,
       header: "Confirmation",
       icon: "pi pi-info-circle",
       accept: () => {
@@ -416,6 +418,7 @@ export class DynamicDashboardComponent implements OnInit {
   changeToDefaultDashBoard() {
     this.rest.getDashBoardsList().subscribe((res: any) => {
       this.dashbordlist = res.data;
+      if(this.dashbordlist.length>=1){
       this.selectedDashBoard = this.dashbordlist.find(
         (item) => item.defaultDashboard == true
       );
@@ -432,6 +435,10 @@ export class DynamicDashboardComponent implements OnInit {
       }, 100);
       this.selectedDashBoardName = this.selectedDashBoard.dashboardName
       this.getDashBoardData(this.selectedDashBoard.id);
+    }else{
+      this.loader.hide();
+      this.router.navigate(["/pages/dashboard/create-dashboard"])
+    }
     });
   }
 
