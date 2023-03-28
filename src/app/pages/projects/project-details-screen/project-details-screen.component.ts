@@ -947,6 +947,7 @@ sendMessage(item,type) {
     const regex = /@(\w+)\s(\w+)/g;
     let messageInput1= new String(this.typedMessage);
     const matches = messageInput1.match(regex);
+    if (matches) 
     matches.forEach(tag => {
       const user = this.existingUsersList.find(u => u.fullName === tag.replace('@','') );
       messageInput1=messageInput1.replace(tag, "${"+user.user_email+"}");
