@@ -6,12 +6,12 @@
           <div *ngIf="
               field.widget_type == 'textbox' ||
               field.widget_type == null ||
-              field.widget_type == ''
+              field.widget_type == '' || field.ColumnName == 'tenant_name'
             ">
             <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
-            <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
+            <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
               [placeholder]="field.placeholder" [maxlength]="field.length" />
           </div>
           <div *ngIf="field.widget_type == 'file'">
@@ -131,7 +131,7 @@
       </div>
     </form>
     <div class="row col-md-12 justify-content-end">
-      <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
+      <!-- <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button> -->
       <button (click)="emitFormValue()" *ngIf="details == undefined" [disabled]="generatedForm.invalid"
         class="btn bluebg-button">Save</button> 
       <button (click)="emitFormValue()" *ngIf="details != undefined"
@@ -140,3 +140,4 @@
     </div>
   </div>
 </div>
+<p-toast></p-toast>

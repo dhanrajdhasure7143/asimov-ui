@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { MessageService } from "primeng/api";
 
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
@@ -20,10 +21,12 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   public generatedForm: any = new FormGroup({});
   tableData: any;
   portalnames: any;
+  formvalue: any;
 
   constructor(
     private rest: RestApiService,
-    private datatransfer: DataTransferService
+    private datatransfer: DataTransferService,
+    private messageService:MessageService
   ) {}
 
   ngOnInit(): void {
@@ -81,4 +84,17 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   }
 
   onChangetype() {}
+  
+  checkTenantName() {
+    let tenantName = this.generatedForm.get("tenant_name").value;
+    this.rest.checkTenantName(tenantName).subscribe((data) => {
+      if(data == false){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Tenant Already Exists !!",
+        });
+      }
+    });
+  }
 }
