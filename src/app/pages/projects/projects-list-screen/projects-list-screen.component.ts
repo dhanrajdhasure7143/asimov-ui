@@ -342,6 +342,9 @@ export class ProjectsListScreenComponent implements OnInit {
             Swal.fire("Success", "Project Deleted Successfully !!", "success");
             this.getallProjects(this.userRoles, this.name, this.email);
           }
+          if(response.warningMessage == "Project can't be deleted with status In Progress"){
+            Swal.fire("Success", "Project can't be deleted with status In Progress", "info");
+          }
         });
       },
       reject: (type) => {},

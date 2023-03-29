@@ -521,67 +521,42 @@ addParentFolder() {
 
   singleFileUpload(e){
     this.loader.show()
-    let object = { ...{}, ...this.sampleNode_object };
-    object.label = this.entered_folder_name;
-    let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
-    object.key = this.selectedFile.parent.key + "-" + objectKey;
-
+    let objectKey = this.selectedFile.parent.key
     var fileData = new FormData();
-    var selectedFile = e.target.files[0];
-
-    fileData.append("filePath", e.target.files[0]);
+    const selectedFile = e.target.files;
+    let fileKeys=[]
+    for (let i = 0; i < selectedFile.length; i++) {
+      fileData.append("filePath", selectedFile[i]);
+      fileKeys.push(String(objectKey+'-'+(i+1)))
+  }
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')
 
-    let obj=object.key
-    
-    fileData.append("fileUniqueIds",JSON.stringify([obj]))
+    // let obj=object.key
+    fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
     this.rest_api.uploadfilesByProject(fileData).subscribe((res:any)=>{
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
-    let obj = res_data.data[0]
-  if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-    obj['icon']=  "pi pi-image"
-  }else{
-    obj["collapsedIcon"]= "pi pi-file"
-
-  }
-
-    // let obj={
-    //   key: object.key,
-    //   label: selectedFile.name,
-    //   data: "file",
-    //   collapsedIcon: "pi pi-file",
-    //   dataType:selectedFile.name.split('.')[1],
-    //   project_id:this.project_id,
-    //   task_id:"",
-    //   fileSize:this.project_id
-    // }
-    this.loader.hide();
-    this.selectedFile.parent.children.push(obj)
-
+    // let obj = res_data.data[0]
+    res_data.data.forEach(item=>{
+      let obj = item
+      if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+        obj['icon']=  "pi pi-image"
+      }else{
+        obj["collapsedIcon"]= "pi pi-file"
+      }
+      this.selectedFile.parent.children.push(obj);
     })
-      // for (var i = 0; i < files.length; i++) {
-  //   fileData.append("filePath", files[i]);
-  // }
-  //   if(this.file_Category == "Template"){
-  //     this.fileList=[];
-  //     this.listOfFiles=[];
-  //   }
-  // for (var i = 0; i <= e.target.files.length - 1; i++) {
-  //   var selectedFile = e.target.files[i];
-  //   this.fileList.push(selectedFile);
-  //   var value = {
-  //     // File Name 
-  //     name: selectedFile.name,
-  //     //File Size 
-  //     size: selectedFile.size,
-  //   }
-  //   this.listOfFiles.push(value)
-  // }
+
+    this.loader.hide();
+    // this.selectedFile.parent.children.push(obj)
+    },err=>{
+      this.loader.hide();
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !!'});
+    })
   }
 
   onRightClick(event,node){
@@ -643,56 +618,56 @@ addParentFolder() {
   singleFileUploadFolder(e){
     let object = { ...{}, ...this.sampleNode_object };
     object.label = this.entered_folder_name;
-    let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
-    object.key = this.selectedFolder.key + "-" + objectKey;
+    // let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
+    // object.key = this.selectedFolder.key + "-" + objectKey;
+    let objectKey = this.selectedFolder.key
+    // console.log(objectKey)
+    // return
     this.loader.show();
     const fileData = new FormData();
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files;
 
-    fileData.append("filePath", e.target.files[0]);
+    let fileKeys=[]
+    for (let i = 0; i < selectedFile.length; i++) {
+      fileData.append("filePath", selectedFile[i]);
+      fileKeys.push(String(objectKey+'-'+(i+1)))
+  }
+    // fileData.append("filePath", e.target.files[0]);
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')
     let obj=object.key
    
-    fileData.append("fileUniqueIds",JSON.stringify([obj]))
+    fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
 
     this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
       this.loader.hide();
       this.createFolderPopUP=false;
       let res_data:any = res
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
-    let obj = res_data.data[0];
-    // obj["collapsedIcon"] = "pi pi-file"
-    if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-      obj['icon']=  "pi pi-image"
-    }else{
-      obj["collapsedIcon"]= "pi pi-file"
-  
-    }
-      // let obj={
-      //   key: object.key,
-      //   label: selectedFile.name,
-      //   data: "file",
-      //   collapsedIcon: "pi pi-file",
-      //   dataType:selectedFile.name.split('.')[1],
-      //   project_id:this.project_id,
-      //   task_id:"",
-      //   fileSize:this.project_id
-      // }
+    // let obj = res_data.data[0];
+    res_data.data.forEach(item=>{
+      let obj = item
+      if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+        obj['icon']=  "pi pi-image"
+      }else{
+        obj["collapsedIcon"]= "pi pi-file"
+      }
       this.selectedFolder.children.push(obj);
+    })
       this.entered_folder_name = "";
       this.isDialog1 = false;
     })
   }
   onDeleteItem(type){
-    let req_body=[]
+    let req_body=[];
     if(type =='folderView'){
       this.model2.hide();
       req_body=[this.selectedItem]
     }else{
       this.model.hide();
       req_body=[this.selected_folder_rename]
+      delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",

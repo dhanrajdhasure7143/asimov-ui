@@ -1697,12 +1697,15 @@ sendMessagesByProjectId(body){
 saveBillingInfo(data,){
   return this.http.post('/subscriptionservice/v1/billingContact/saveBillingContactData',data)
 }
-updateInfo(id,data){
-  return this.http.post(`/subscriptionservice/v1/billingContact/saveBillingContactData/${id}`, data);
+
+updateBillingInfo(id,data){
+  return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
 }
+
 getBillingInfo(){
   return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
 }
+
 createDashBoard(body){
   return this.http.post('/platform-service/dashboard/createDashboard',body);
 }
@@ -1710,8 +1713,8 @@ createDashBoard(body){
 getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
-updateConnection(data){
-  return this.http.post('/rpa-service/connection',data)
+updateConnection(id:any,data:any){
+  return this.http.put('/rpa-service/connection/'+id,data)
 }
 getMetricsList(){
   return this.http.get('/platform-service/dashboard/findDashboardMetricsList');

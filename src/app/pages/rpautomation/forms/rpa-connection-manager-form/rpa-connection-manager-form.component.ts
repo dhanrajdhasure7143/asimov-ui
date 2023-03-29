@@ -88,7 +88,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       endPoint: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
       icon: ["", Validators.compose([])],
-      // attribute: ["", Validators.compose([Validators.required])],
       grantType: ["", Validators.compose([Validators.required])],
       code: ["", Validators.compose([Validators.required])],
       redirect_uri: ["", Validators.compose([Validators.required])],
@@ -150,7 +149,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -248,7 +247,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       (req_body["grantType"] = "password"),
       (req_body["password"] = this.connectorForm.value.password);
       req_body["userName"] = this.connectorForm.value.userName;
-    } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+    } else if (this.connectorForm.value.grantType == "client_credentials") {
       req_body["grantType"] = this.connectorForm.value.grantType;
       req_body["scope"] = this.connectorForm.value.scope;
     } else if (this.connectorForm.value.grantType == "refresh_token") {
@@ -271,7 +270,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to generate Access Token !!",
+          detail: "Unable to Generate Access Token !!",
         });        
         this.spinner.hide();
       }
@@ -343,14 +342,25 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   methodChange(event){
-    if(event === "GET" && this.connectorForm.value.actionType === "APIRequest"){
+    if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
      this.isReqDisable = true;
+    }else{
+      this.isReqDisable = false;
     }
   }
 
   authChange(event) {
     if (event == "OAUTH2") {
       this.isAuthenticated = true;
+      } else {
+      this.isAuthenticated = false;
+      this.isAuthorization = false;
+      this.isClient = false;
+      this.isResponse = false;
+      this.isPassword = false;
+      this.isVerifier = false;
+      this.isScopeField = false;
+      this.isRefreshToken = false;
     }
   }
 
@@ -380,7 +390,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
       this.isRefresh = true;
-    } else if (event == "ClientCredentials") {
+    } else if (event == "client_credentials") {
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
@@ -455,6 +465,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedValue: "",
     });
   }
+
   backToaction() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
       queryParams: { id: this.selectedId, name: this.selectedConnector },
@@ -478,6 +489,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRefreshToken = false;
         this.isScopeField = false;
       }
+
       if (this.actionData["actionType"] == "Authenticated") {
         this.isDisabled = true;
         this.isAction = true;
@@ -485,9 +497,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isHeader = false;
         this.isResponse = false;
       }
+
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
+      } else {
+        this.isAuthenticated = false;
+        this.isAuthorization = false;
+        this.isClient = false;
+        this.isResponse = false;
+        this.isPassword = false;
+        this.isVerifier = false;
+        this.isScopeField = false;
+        this.isRefreshToken = false;
       }
+
       if (
         this.actionData.configurationAsJson["grantType"] == "AuthorizationCode"
       ) {
@@ -510,7 +533,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "ClientCredentials"
+        this.actionData.configurationAsJson["grantType"] == "client_credentials"
       ) {
         this.isClient = true;
         this.isResponse = true;
@@ -562,7 +585,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("clientId").setValue(this.actionData.configurationAsJson["clientId"]);
       this.connectorForm.get("clientSecret").setValue(this.actionData.configurationAsJson["clientSecret"]);
       this.connectorForm.get("verifier").setValue(this.actionData.configurationAsJson["verifier"]);
-      this.connectorForm.get("scope").setValue(this.actionData["scope"]);
+      this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       if(this.actionData.configurationAsJson["httpHeaders"]){
         let headers_data = this.actionData.configurationAsJson["httpHeaders"]
@@ -614,7 +637,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-         actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
+         actionLogo: this.action_logo == undefined ? this.actionData["actionLogo"] : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -635,7 +658,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "ClientCredentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;

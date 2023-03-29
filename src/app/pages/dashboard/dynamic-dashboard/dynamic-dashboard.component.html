@@ -12,7 +12,7 @@
                      </ng-template>
                      
                      <ng-template pTemplate="content">
-                         <input type="text" [style]="{'width':'220px'}" pInputText
+                         <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                              [(ngModel)]="_dashboardName" (keydown)="Space($event)" />
                          <span class="editfields">
                              <i class="pi pi-check" *ngIf="_dashboardName"
@@ -107,11 +107,11 @@
                      <div>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                           <div *ngIf="widget.widget_type!='table'" class="graph-set">
-                              <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.widgetData" height="270" 
+                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" class="graph-set">
+                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
                                  [options]="widget.chartOptions"></p-chart>
                            </div>
-                           <div *ngIf="widget.widget_type=='table'">
+                           <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
                               <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true">
                                  <ng-template pTemplate="header" let-columns>
                                     <tr>
@@ -216,9 +216,6 @@
                            </div> -->
                            <form [formGroup]="dynamicFormConfiure" class="row">
                               <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
-                                    <!-- <select class="form-control data">
-                                       <option value="">Pie Chart</option>
-                                    </select> -->
                                  <label class="label-control">{{each.label}}</label>
                                  <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"
                                     [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
@@ -258,7 +255,7 @@
    [draggable]="false" [resizable]="false">
    <div class="form-group">
       <label for="" class="label-control" > Name<span class="star">*</span></label>
-      <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
+      <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50" />
    </div>
    <ng-template pTemplate="footer">
       <button class="btn new-cancelbtn" (click)="isDialogShow = false">Cancel</button>

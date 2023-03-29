@@ -92,9 +92,9 @@
                                 <label class="label-control" for="task_icon"> Connector Logo <span class="star" *ngIf="isCreate">*</span></label>                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
                                 <input pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
-                                <span
+                                <!-- <span
                                     *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched && isCreate"
-                                    class="required">  Connector Logo Required* </span>
+                                    class="required">  Connector Logo Required* </span> -->
                             </div>
                             <!-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFileLang" lang="es">
