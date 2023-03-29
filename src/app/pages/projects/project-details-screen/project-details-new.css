@@ -20,6 +20,7 @@
     background-color: rgb(9 141 230 / 10%);
     border-radius: 6px 0px 0px 0px;
     height: 100%;
+    width: 75px;
     padding: 30px 10px !important;
     justify-content: center;
     align-items: center;
@@ -51,6 +52,11 @@ span.lowimp {
 }
 .pinf {
     position: relative;
+    width: 18% !important;
+}
+.pinf.prjowner p, .pinf.prjlastupdated p {
+    height: 28px;
+    margin-bottom: 0px;
 }
 .projectnamerow p-inplace.p-element {
     position: relative;
@@ -63,10 +69,25 @@ span.lowimp {
 .pinf label {
     color: #535353;
 }
+.projectnamerow .p-inplace-content, .projectnamerow .editfields {
+    width: 80px !important;
+  }
+  .prjinfo-headerblk {
+    width: 85%;
+  }
+.prjdetfields {
+    display: flex;
+    align-items: center;
+    margin-top: 26px;
+}
 .kpipercent {
     border-left: 1px solid #e0e0e0;
     padding-left:15px !important;
     text-align: center;
+    width: 15%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
 }
 .kpipercent p {
     font-size: 44px !important;
@@ -76,7 +97,7 @@ span.lowimp {
 .row.project-description {
     background-color: #fff;
     border-top: 1px solid #e0e0ee;
-    padding: 15px 10px 15px 20px !important;
+    padding: 20px 10px 20px 8px !important;
     border-radius: 0px 0px 6px 6px;
     width: 100%;
     /* height: 100px; */
@@ -84,7 +105,9 @@ span.lowimp {
 .project-description label {
     margin: 0px 10px 0px 0px !important;
     border-right: 1px solid #dbdbdb;
-    padding-right: 10px;
+    padding-right: 5px;
+    font-size: 12px;
+    line-height: 25px;
 }
 .project-description p {
     margin: 0px;
@@ -99,10 +122,10 @@ span.lowimp {
 .editfields {
     display: flex;
     align-items: center;
-    position: absolute;
+    /* position: absolute; */
     justify-content: flex-end;
     margin-top: 5px;
-    width: 100%;
+    width: 150px !important;
 }
 .editfields.prjdescef{
    position: unset;
