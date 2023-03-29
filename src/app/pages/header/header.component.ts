@@ -349,6 +349,9 @@ getTenantLists(){
       item["command"]= (e) => { this.onChangeTenant(e)}
       return item
     })
+  this.tenantName= [...this.tenantsList.filter((item:any)=>item.role=="Admin")];
+   if(!localStorage.getItem("tenantSwitchName"))
+   this.navigationTenantName = this.tenantName[0].tenant_name
   })
 }
 

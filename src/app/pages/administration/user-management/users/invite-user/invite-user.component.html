@@ -71,7 +71,7 @@
             </form>
             <div class="row justify-content-end">
                 <button class="btn new-cancelbtn" type="button" (click)="resetUserInvite(inviteUser_form)">Reset</button>
-                <button class="btn bluebg-button" type="submit" [disabled]="inviteUser_form.invalid">Invite</button>
+                <button class="btn bluebg-button" type="button" [disabled]="inviteUser_form.invalid" (click)="inviteUser(inviteUser_form)">Invite</button>
             </div>
         </div>
     </div>
