@@ -14,13 +14,13 @@
                             <span class="sub_title_text">{{ selectedToolsetName }}</span>
                         </span>
                         <span *ngIf="istoolSet" >
-                            <span>Connection Manager | </span><span class="sub_title_text">{{ selectedConnector }} - Create New</span>
+                            <span>Connection Manager | </span><span class="sub_title_text">{{ selectedConnector }} | Create New</span>
                         </span>
                     </span>
                 </h3>
             </div>
             <div class="main-content-body">
-                <span class="userhint"><b>Note :</b> To add attributes dynamically use this format -- Ex: [@client_id|string|1000.****************0001@] </span>
+                  <span class="userhint"> Note : To make attributes dynamic follow this pattern - eg : [@client_id|string|1000.****************0001@] </span>
                 <div class="maindivfoprm">
                     <form [formGroup]="connectorForm">
                         <div class="row">
@@ -301,9 +301,9 @@
                                 <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
                                 <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
-                            <div class="col-md-12 form-group p-0" *ngIf="isRequest">
+                            <div class="col-md-12 form-group p-0" *ngIf="isRequest && !isReqDisable">
                                 <label class="label-control"> Request </label> 
-                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()" [disabled] = "isReqDisable"
+                                <textarea  pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()" 
                                     placeholder="Request Body">
                                 </textarea>
                                 <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>
@@ -314,7 +314,7 @@
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()">Test</button>
-                        <button *ngIf="!isUpdate"  type="button" class="btn bluebg-button"
+                        <button *ngIf="!isUpdate" type="button" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
                         <button *ngIf="isUpdate" type="button" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
