@@ -84,7 +84,7 @@
     <div *ngIf='!error' class="col-12 p-0 row">
       <div  *ngFor="let planlist of plansList | orderBy:'amount'; let i=index ;trackBy:loopTrackBy">
         <div class="col plansBox" 
-            *ngIf="(planlist.subscribed ||  planlist.active) && (planlist.nickName=='Standard' || planlist.nickName=='Professional' || planlist.nickName=='Enterprise')">
+            *ngIf="(planlist.subscribed ||  planlist.active)">
             <div class="plandetailscont">
               <h4>
                 <span  class="planName" *ngIf="planlist.nickName =='Standard'">Free Tier</span>
