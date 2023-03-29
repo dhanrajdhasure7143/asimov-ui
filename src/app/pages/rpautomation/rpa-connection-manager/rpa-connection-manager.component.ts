@@ -31,6 +31,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   connectorName: any;
   conn_logo: any;
   table_searchFields:any[]=[];
+  connector_id:any;
 
   constructor(
     private rest_api: RestApiService,
@@ -220,13 +221,12 @@ export class RpaConnectionManagerComponent implements OnInit {
   updateConnector() {
     this.spinner.show();
     let connectorName1 = this.createConnectorForm.get("name").value;
+    this.connector_id = this.selectedData[0].id
     let data = {
       connectionLogo: this.conn_logo==undefined?"":new String(this.conn_logo.split(",")[1]),
-      id: this.selectedData[0].id,
       name: connectorName1,
     };
-    this.rest_api.updateConnection(data).subscribe(
-      (res: any) => {
+    this.rest_api.updateConnection(this.connector_id,data).subscribe((res: any) =>{        
         this.spinner.hide();
         this.messageService.add({
           severity: "success",
@@ -234,6 +234,7 @@ export class RpaConnectionManagerComponent implements OnInit {
           detail: "Connector Updated Successfully !!",
         });
         this.isFormOverlay = false;
+        this.createConnectorForm.reset();
         this.getAllConnections();
       },
       (err: any) => {
