@@ -1,5 +1,5 @@
 .row.project-Information {
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     border-radius: 6px;
     margin-bottom: 25px !important;
 }
@@ -83,7 +83,7 @@ span.lowimp {
 }
 .project-description label {
     margin: 0px 10px 0px 0px !important;
-    border-right: 1px solid #dbdbdb;
+    border-right: 1px solid #d0d0d0;
     padding-right: 10px;
 }
 .project-description p {
@@ -127,7 +127,7 @@ span.lowimp {
 .activecollaboration {
     padding: 0px;
     height: 100%;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     border-radius: 6px;
     background-color: #fff;
     position: relative;
@@ -192,7 +192,7 @@ span.lowimp {
 }
 h4.colheads.chatheader {
     padding: 10px 20px;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #d0d0d0;
     margin-bottom: 0px;
 }
 .pinnedmsgs {
@@ -220,7 +220,7 @@ h4.colheads.chatheader {
 }
 .rply-msg {
     background-color: #fff;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     color: #232832;
     border-radius: 5px;
     padding: 0px 5px;
@@ -319,7 +319,7 @@ input.msgip {
     background-color: #fff;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext:focus {
-    border-color: #098de6;
+    border-color: #4AB0F5;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext::placeholder {
     color: #7D7D7D;
@@ -328,7 +328,7 @@ input.msgip {
 /* Collaboration Styles End */
 
 .acresources {
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     padding: 20px !important;
     border-radius: 6px;
     background-color: #fff;
@@ -350,7 +350,7 @@ button.btn.new-cancelbtn {
 }
 .row.quick-actionscards {
     background: #fff;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     border-radius: 6px;
     padding: 10px;
     height: 285px;
@@ -382,7 +382,7 @@ p.text {
 .row.quicksnapshot-cards {
     background-color: #fff;
     border-radius: 6px;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #d0d0d0;
     padding: 10px 15px !important;
     margin: 0px 0px 25px 0px !important;
 }

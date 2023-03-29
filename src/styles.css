@@ -1164,7 +1164,7 @@ img.testplus1 {
 .modelprbody input:focus,
 .modelprbody select:focus,
 .modelprbody textarea:focus {
-  border-color: var(--main-bluecolor) !important;
+  border-color: var(--secondary-bluecolor) !important;
   color: var(--main-txtcolor) !important;
   background-color: #fff !important;
 }
@@ -1515,7 +1515,7 @@ select.small-input {
 .dpp-properties-panel select:focus,
 .dpp-properties-panel textarea:focus,
 .dpp-properties-panel [contenteditable]:focus {
-  border-color: var(--main-bluecolor) !important;
+  border-color: var(--secondary-bluecolor) !important;
   color: var(--main-txtcolor) !important;
   background-color: #fff !important;
   box-shadow: none;
@@ -1695,7 +1695,7 @@ span.star {
   background-color: transparent !important;
 }
 .form-control:focus {
-  border-color: var(--main-bluecolor) !important;
+  border-color: var(--secondary-bluecolor) !important;
   background-color: #fff !important;
 }
 input.form-control, select.form-control {
@@ -2526,8 +2526,9 @@ button.custom-popupbtn.mat-button {
   --main-fontsize: 14px;
   --main-fontweight: 400;
   --main-bluecolor: #098de6;
+  --secondary-bluecolor: #4AB0F5;
   --main-bgcolor: #f9f9f9;
-  --main-bordercolor: #dbdbdb;
+  --main-bordercolor: #d0d0d0;
   --main-borderradius: 6px;
   --high-importance: #ea3d3d;
   --medium-importance: #E58600;
@@ -2637,7 +2638,7 @@ cursor: pointer;
   align-items: center;
   height: 100%;
   margin:0px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .main-content-head h3 .title_text{
   font-size: 16px;
@@ -2789,8 +2790,9 @@ span.tabscount {
 .generatedgrid .p-datatable-wrapper {
   height: calc(100vh - 150px); /* for generated screen grid */
 }
-.maindivfoprm .columnlistgrid .p-datatable-wrapper {
-  height: 100% !important; /* for add-screen form grid */
+.maindivfoprm .columnlistgrid .p-datatable-wrapper,
+.well1-dynmic.graph .p-datatable-wrapper {
+  height: 100% !important; /* for add-screen form & widget grid */
 }
 .bps-approvalgrid .p-datatable-wrapper,
 .credential-tablegrid .p-datatable-wrapper {
@@ -3007,7 +3009,7 @@ textarea.p-inputtextarea {
   background-color: transparent;
 }
 .p-inputtext:enabled:focus {
-  border: 1px solid var(--main-bluecolor) !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
   box-shadow: none !important;
 }
 .p-overlaypanel-content {
@@ -3083,7 +3085,7 @@ textarea.p-inputtextarea {
   box-shadow: none !important;
 }
 .ng-select.ng-select-opened>.ng-select-container{
-  border: 1px solid var(--main-bluecolor) !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
 }
 .ng-select .ng-select-container .ng-value-container .ng-input>input {
   background: transparent !important;
@@ -3110,7 +3112,7 @@ textarea.p-inputtextarea {
 .space .p-tieredmenu.p-component.p-tieredmenu-overlay {
   position: absolute !important;
   top: 45px !important;
-  left: -80px !important;
+  left: 0px !important;
 }
 .p-inplace.p-component span.task-descwords {
   overflow-wrap: break-word;
@@ -3188,7 +3190,7 @@ button.btn.new-cancelbtn {
   box-shadow: none;
 }
 .create-body .prjoverlay .p-card.p-component:hover {
-  border: 1px solid var(--main-bluecolor);
+  border: 1px solid var(--secondary-bluecolor);
 }
 .create-body .prjoverlay .p-card .p-card-body{
   height: 230px !important;
@@ -3245,7 +3247,7 @@ button.btn.new-cancelbtn {
 .maindivfoprm input.p-inputtext:focus,
 .maindivfoprm .p-dropdown:focus,
 .maindivfoprm .p-dropdown.p-dropdown-open {
-  border-color: var(--main-bluecolor) !important;
+  border-color: var(--secondary-bluecolor) !important;
   background-color: #fff;
 }
 .createform-overlay input.p-inputtext::placeholder,
@@ -3317,7 +3319,7 @@ button.btn.new-cancelbtn {
   margin: 10px;
 }
 .docfolder .p-card:hover {
-  border: 1px solid var(--main-bluecolor);
+  border: 1px solid var(--secondary-bluecolor);
 }
 .docfolder .cards:first-child .p-card {
   background: #e9e9e9;
@@ -3366,7 +3368,7 @@ button.btn.new-cancelbtn {
   box-shadow: none;
 }
 .fldrovrlay .p-card.p-component:hover {
-  border: 1px solid var(--main-bluecolor);
+  border: 1px solid var(--secondary-bluecolor);
 }
 .fldrovrlay .p-card-body {
   height: 180px !important;

@@ -1,5 +1,5 @@
 .row.project-Information {
-  border: 1px solid #dbdbdb;
+  border: 1px solid #d0d0d0;
   border-radius: 6px;
   margin-bottom: 25px !important;
 }
@@ -107,7 +107,7 @@ button span {
   margin-left: 5px;
 }
 .commentBox {
-  border: 1px solid #dbdbdb;
+  border: 1px solid #d0d0d0;
   border-radius: 6px;
   background-color: #fff;
   padding: 0px 15px 10px;
@@ -141,7 +141,7 @@ button span {
   padding: 10px;
 }
 ul.historydiv li {
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid #d0d0d0;
   padding: 10px;
 }
 ul.historydiv li:first-child {
@@ -159,7 +159,7 @@ ul.historydiv li:last-child {
   overflow: auto;
 }
 .commentBox .addcomment {
-  border-top: 1px solid #dbdbdb;
+  border-top: 1px solid #d0d0d0;
   padding-top: 5px; 
 }
 .historyContent {
