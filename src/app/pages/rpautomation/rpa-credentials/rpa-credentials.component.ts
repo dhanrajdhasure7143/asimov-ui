@@ -97,14 +97,32 @@ inputNumberOnly(event){
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
               item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll');
               item["password_new"]=("*").repeat(10);
+              if(item["clientId"]!=null && item["clientId"]!="")
+              item["clientId"]= item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length);
+              if(item["clientSecret"]!=null && item["clientSecret"]!="")
+              item["clientSecret"]= item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length);
+              if(item["officeTenant"]!=null && item["officeTenant"]!="")
+              item["officeTenant"]= item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length);
+              
               return item;
             })
+            this.readSelectedData([]);
            }
          }
          this.columns_list = [
           {
             ColumnName: "userName",
             DisplayName: "Email",
+            ShowGrid: true,
+            ShowFilter: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "serverName",
+            DisplayName: "Server Type",
             ShowGrid: true,
             ShowFilter: true,
             filterWidget: "normal",
@@ -123,10 +141,30 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "serverName",
-            DisplayName: "Server Type",
-            ShowGrid: true,
+            ColumnName: "clientId",
+            DisplayName: "Client Id",
             ShowFilter: true,
+            ShowGrid: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "secretKey",
+            DisplayName: "Secret Key",
+            ShowFilter: true,
+            ShowGrid: true,
+            filterWidget: "normal",
+            filterType: "text",
+            sort: true,
+            multi: false,
+          },
+          {
+            ColumnName: "officeTenant",
+            DisplayName: "Tenant Id",
+            ShowFilter: true,
+            ShowGrid: true,
             filterWidget: "normal",
             filterType: "text",
             sort: true,
@@ -246,6 +284,7 @@ inputNumberOnly(event){
 
   refreshCredentialList(event){
     if(event){
+      this.hiddenPopUp=false;
       this.getallCredentials();
     }
   }
@@ -258,6 +297,6 @@ inputNumberOnly(event){
   }
   closeOverlay(event)
   {
-    this.hiddenPopUp=event;
+    this.hiddenPopUp=false;
   }
 }
