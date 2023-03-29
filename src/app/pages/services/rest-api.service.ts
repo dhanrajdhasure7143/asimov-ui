@@ -1697,12 +1697,15 @@ sendMessagesByProjectId(body){
 saveBillingInfo(data,){
   return this.http.post('/subscriptionservice/v1/billingContact/saveBillingContactData',data)
 }
-updateInfo(id,data){
-  return this.http.post(`/subscriptionservice/v1/billingContact/saveBillingContactData/${id}`, data);
+
+updateBillingInfo(id,data){
+  return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
 }
+
 getBillingInfo(){
   return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
 }
+
 createDashBoard(body){
   return this.http.post('/platform-service/dashboard/createDashboard',body);
 }

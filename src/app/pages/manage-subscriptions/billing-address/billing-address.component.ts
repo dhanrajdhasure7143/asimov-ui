@@ -29,39 +29,78 @@ export class BillingAddressComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private api: RestApiService,
-    private messageService:MessageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.billingForm = this.formBuilder.group({
-      firstName: ["",Validators.compose([Validators.required, Validators.maxLength(50)]),],
-      lastName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+      firstName: [
+        "",
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
+      lastName: [
+        "",
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
       country: ["India", Validators.compose([Validators.required])],
-      city: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      state: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+      city: [
+        "",
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
+      state: [
+        "",
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
       postalcode: ["", Validators.compose([Validators.required])],
       addressLine1: ["", Validators.compose([Validators.required])],
-      addressLine2: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      phoneNumber: ["", Validators.compose([Validators.required,Validators.maxLength(10),Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])],
-      email: ["", Validators.compose([Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])],
+      addressLine2: [
+        "",
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
+      phoneNumber: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),
+        ]),
+      ],
+      email: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"),
+        ]),
+      ],
     });
     this.getCountries();
-    this.getBillingInfo()
-    
+    this.getBillingInfo();
   }
 
   getCountries() {
     this.countryInfo = countries.Countries;
   }
-  
 
   onChangeCountry(countryValue) {
-    this.stateInfo=[...(this.countryInfo.find((item:any)=>item.CountryName==countryValue)!=undefined?this.countryInfo.find((item:any)=>item.CountryName==countryValue).States:[])];
+    this.stateInfo = [
+      ...(this.countryInfo.find(
+        (item: any) => item.CountryName == countryValue
+      ) != undefined
+        ? this.countryInfo.find((item: any) => item.CountryName == countryValue)
+            .States
+        : []),
+    ];
     this.cityInfo = [];
   }
 
   onChangeState(stateValue) {
-    this.cityInfo=[...(this.stateInfo.find((item:any)=>item.StateName==stateValue)!=undefined?(this.stateInfo.find((item:any)=>item.StateName==stateValue).Cities):[])];
+    this.cityInfo = [
+      ...(this.stateInfo.find((item: any) => item.StateName == stateValue) !=
+      undefined
+        ? this.stateInfo.find((item: any) => item.StateName == stateValue)
+            .Cities
+        : []),
+    ];
   }
 
   onKeydown(event) {
@@ -88,37 +127,48 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
-    this.api.saveBillingInfo(payload).subscribe((data) => {        
-      if(data && !this.editButton){
-        this.billingInfo = data;
-        this.spinner.hide();
-        this.id = this.billingInfo.id;
-        this.editButton=true;
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Saved Successfully !!",
-        });
-      }
-      if(this.editButton) {
-        payload={...{id:this.id},...payload}
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Updated Successfully !!",
-        });
-      }
+   if(!this.editButton) { 
+    this.api.saveBillingInfo(payload).subscribe((data) => {
+    if (data) {
+      this.billingInfo = data;
+      this.editButton = true;
+      this.spinner.hide();
+      this.id = this.billingInfo.id;
+      this.messageService.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Saved Successfully !!",
+      });
       this.billingForm.reset();
       this.getBillingInfo();
-    }, err=>{
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Please Save Again !!",
-        });
-      this.spinner.hide()
-    })
-  }
+      this.spinner.hide();
+    }
+  })}
+    else {
+      this.editButton = true;
+      this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
+        if (data) {
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Updated Successfully !!",
+          });
+          this.billingForm.reset();
+          this.getBillingInfo();
+          this.spinner.hide();
+        }
+      }),(err) => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Please Update Again !!",
+          });
+          
+         this.spinner.hide();
+        };
+    }
+
+}
 
   getBillingInfo() {
     this.spinner.show();
@@ -143,13 +193,15 @@ export class BillingAddressComponent implements OnInit {
         this.billingForm.get("phoneNumber").setValue(this.billingContactData["phoneNumber"]);
         this.billingForm.get("email").setValue(this.billingContactData["email"]);
       }
-    },err=>{
+      },
+      (err) => {
         this.messageService.add({
           severity: "error",
           summary: "Error",
           detail: "Unable Get The Data !!",
         });
-      this.spinner.hide();
-    });
+        this.spinner.hide();
+      }
+    );
   }
 }
