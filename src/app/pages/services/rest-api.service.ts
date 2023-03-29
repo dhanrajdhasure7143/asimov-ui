@@ -1710,8 +1710,8 @@ createDashBoard(body){
 getDashBoardsList(){
   return this.http.get('/platform-service/dashboard/findDashboardListByUser');
 }
-updateConnection(data){
-  return this.http.post('/rpa-service/connection',data)
+updateConnection(id:any,data:any){
+  return this.http.put('/rpa-service/connection/'+id,data)
 }
 getMetricsList(){
   return this.http.get('/platform-service/dashboard/findDashboardMetricsList');
