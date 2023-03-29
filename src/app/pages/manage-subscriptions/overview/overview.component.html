@@ -2,7 +2,7 @@
     <div class="row">
         <h4>Plan Details</h4>
         <div *ngIf='error' class="row">
-            <h6><b> - {{error}}</b></h6>
+            <p style="color:red">- {{error}}</p>
         </div>
         <div *ngIf='!error' class="row">
             <div *ngFor="let planlist of plansList">
@@ -36,7 +36,7 @@
     <div div class="row">
         <h4>Billing Actions</h4>
         <div *ngIf="error1"  class="row">
-            <h6><b>- {{error1}}</b></h6>
+            <p style="color:red">- {{error1}}</p>
         </div>
         <div *ngIf="!error1"  class="row">
             <p>- Your future Charges Will be billed to the Card

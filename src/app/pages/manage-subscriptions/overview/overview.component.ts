@@ -53,15 +53,15 @@ export class OverviewComponent implements OnInit {
         }
       });
       if (this.plansList == undefined || this.plansList == null) {
-        this.error = "Sorry for inconvenience we will get back to you shortly";
+        this.error = "Sorry for the inconvenience. We will get back to you shortly.";
       }
       if (plans.subscribed == undefined) {
-        this.error = "Sorry for inconvenience you don't have any active plans";
+        this.error = "Sorry for the inconvenience. You don't have any active plans. ";
       }
       this.spinner.hide();
     }),
       (error) => {
-        this.error = "Sorry for inconvenience we will get back to you shortly";
+        this.error = "Sorry for the inconvenience. We will get back to you shortly.";
       };
   }
 

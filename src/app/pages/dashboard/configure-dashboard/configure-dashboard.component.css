@@ -26,7 +26,7 @@
 	padding: 8px 16px !important;
 	margin-bottom: 20px;
 	background: #FFFFFF;
-    border: 1px solid #B3BAC5;    
+    border: 1px solid #dbdbdb;    
     border-radius: 5px;
 }
 .graph {
@@ -121,7 +121,7 @@ button.btn.bluebg-button {
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.06);
     border-radius: 5px;
     display: flex;
-    padding: 20px 10px;
+    padding: 21px 10px;
 	margin-bottom: 15px;
 }
 .well1.emptywidget {
@@ -142,6 +142,9 @@ button.btn.bluebg-button {
 .metricalign{
 	padding: 10px 15px;
     margin-bottom: 12px !important;
+}
+.sercmetric {
+    right: 15px !important;
 }
 .search-align {
 	position: absolute;

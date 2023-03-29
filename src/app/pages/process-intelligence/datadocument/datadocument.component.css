@@ -45,15 +45,23 @@
 }
 .PI.table thead tr {
     height: 24px !important;
+    border-bottom: unset !important;
+}
+.PI.table thead tr th::before {
+    border-bottom: unset !important;
 }
 .PI.table th select {
     margin-bottom: 10px !important;
 }
 
-
+.modal-header.modelprhead, .modelprfooter {
+    padding: 15px !important;
+}
 .modal-body.modelprbody.datadocmodal {
     height: calc(100vh - 280px);
+    padding: 15px !important;
 }
+
 .vewmore-btn{
     margin-left: 15px;
     color: black;

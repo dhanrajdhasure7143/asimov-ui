@@ -3,7 +3,7 @@
                 <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div> -->
-    <div class="col-12 errordiv" *ngIf='error'>
+    <div class="col-12 p-0 errordiv" *ngIf='error'>
       <h2>{{error}}</h2>
     </div>
     <div *ngIf='!error' class="col-md-12 p-0 row">
@@ -12,10 +12,10 @@
           <div class="plandetailscont">
             <h4>
               <span *ngIf="expiry>=0">
-                <h6 style="color:red">Current plan expires in {{expiry}} days</h6>
+                <p style="color:red">Current plan expires in {{expiry}} days</p>
               </span>
               <span *ngIf="expiry<0">
-                <h6 style="color:red">Current plan has expired. Please Upgrade</h6>
+                <p style="color:red">Current plan has expired. Please Upgrade</p>
               </span>
               <span class="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
               </span>
@@ -78,7 +78,7 @@
           <button *ngIf='!error' class="btn btn-primary selectplanbtn"
             (click)="currentplan()">Back</button>
         </div> -->
-    <div class="col-12 errordiv" *ngIf='error'>
+    <div class="col-12 p-0 errordiv" *ngIf='error'>
       <h2>{{error}}</h2>
     </div>
     <div *ngIf='!error' class="col-12 p-0 row">

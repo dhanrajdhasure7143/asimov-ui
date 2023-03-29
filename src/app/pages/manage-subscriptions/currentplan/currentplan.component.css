@@ -96,3 +96,9 @@ h4 .planName {
   cursor: pointer;
   margin-left: 8px;
 }
+.errordiv{
+  text-align: center;
+  color: #a5a5a5;
+  margin-top: 110px;
+  margin-bottom: 170px;
+}
