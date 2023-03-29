@@ -29,12 +29,12 @@ export class RpaCredentialFormComponent implements OnInit {
 
       this.credentialForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         clientSecret:[""],
         clientId:[""],
-        tenantId:[""],
+        officeTenant:[""],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -69,13 +69,16 @@ export class RpaCredentialFormComponent implements OnInit {
           {
             this.credentialForm.get("clientId").setValue(this.credupdatedata["clientId"]);
             this.credentialForm.get("clientSecret").setValue(this.credupdatedata["clientSecret"]);
-            this.credentialForm.get("tenantId").setValue(this.credupdatedata["tenantId"]);
+            this.credentialForm.get("officeTenant").setValue(this.credupdatedata["officeTenant"]);
           }else
           {
             this.credentialForm.get("clientId").setValue("");
             this.credentialForm.get("clientSecret").setValue("");
-            this.credentialForm.get("tenantId").setValue("");
+            this.credentialForm.get("officeTenant").setValue("");
           }
+          
+          this.credentialForm.get("password").setValidators([]);
+          this.credentialForm.get("password").updateValueAndValidity();
         }
       },100)
       this.credentialForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
@@ -85,10 +88,10 @@ export class RpaCredentialFormComponent implements OnInit {
     }else{
       this.credentialForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([ Validators.maxLength(50)])],
         clientSecret:[""],
         clientId:[""],
-        tenantId:[""],
+        officeTenant:[""],
         categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -116,7 +119,13 @@ export class RpaCredentialFormComponent implements OnInit {
         this.spinner.show();
         this.submitted = true;
         let Credentials = this.credentialForm.value;
-        Credentials["categoryId"]=parseInt(Credentials["categoryId"])
+        Credentials["categoryId"]=parseInt(Credentials["categoryId"]);
+        if(Credentials["serverName"]!='Office365')
+        {
+          Credentials["clientId"]="";
+          Credentials["secretKey"]="";
+          Credentials["officeTenant"]="";
+        }
         this.api.save_credentials(Credentials).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
@@ -153,6 +162,12 @@ resetCredForm(){
       let credupdatFormValue = this.credentialForm.value;
       credupdatFormValue["credentialId"] = this.credupdatedata.credentialId;
       credupdatFormValue["categoryId"]=parseInt(credupdatFormValue["categoryId"]);
+      if(credupdatFormValue["serverName"]!='Office365')
+      {
+        credupdatFormValue["clientId"]="";
+        credupdatFormValue["secretKey"]="";
+        credupdatFormValue["officeTenant"]="";
+      }
       this.api.update_Credentials(credupdatFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();
@@ -186,25 +201,21 @@ resetCredForm(){
     this.resetCredForm();
   }
 
-
-  onChangeServer(event)
+  onChangeServer(serverName)
   {
-    let selectedServer:any=(event.target.value);
-    if(selectedServer=="Office365")
-      this.credentialForm.get("password").setValidators([]);
-    else
-      this.credentialForm.get("password").setValidators([Validators.required]);
+    setTimeout(()=>{
+      this.credentialForm.get("password").clearValidators();
+      if(serverName=="Office365")
+        this.credentialForm.get("password").setValidators([]);
+      else
+        this.credentialForm.get("password").setValidators([Validators.required]);
       this.credentialForm.updateValueAndValidity();
+    },100)
   }
-
-
-
 
   get selectedMailServer()
   {
-    console.log(this.credentialForm.get("serverName").value);
     return this.credentialForm.get("serverName").value;
   }
-
 
 }
