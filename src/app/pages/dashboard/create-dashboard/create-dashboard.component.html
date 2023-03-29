@@ -12,7 +12,7 @@
                [style]="{width: '30vw'}" [draggable]="false" [resizable]="false">
                <div class="form-group">
                   <label for="" class="label-control">Name<span class="star">*</span></label>
-                  <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" />
+                  <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50"/>
                </div>
                <ng-template pTemplate="footer">                  
                   <button class="btn new-cancelbtn" (click)="displayModal = false">Cancel</button>

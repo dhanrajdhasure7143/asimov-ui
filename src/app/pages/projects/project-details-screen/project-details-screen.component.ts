@@ -1426,21 +1426,38 @@ onKeyUpDiv(){
   console.log(document.getElementById("my-content").innerHTML)
 }
 
-getRecentactivities() {
-  this.columns_list_activities = [
-    {ColumnName: "activity",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-    {ColumnName: "lastModifiedUsername",DisplayName: "Resource Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
-    {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Last Modified", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
-  ];
+  getRecentactivities() {
+    this.columns_list_activities = [
+      {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "lastModifiedUsername",DisplayName: "Resource Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Last Modified", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
+    ];
+  this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
+    this.recentActivityList=data;
+    this.recentActivityList.map(item =>{
+      item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll")
+      item["replacedText"] = this.replaceEmailsWithNames(item["activity"], this.users_list);
+      return item
+    })
+  }) 
+  }
 
-this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
-  this.recentActivityList=data;
-  this.recentActivityList.map(item =>{
-    item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll")
-    return item
-  })
-}) 
-}
+  replaceEmailsWithNames(message, users): string {
+    let replacedText = message;
+    // Find all email addresses in the message text
+    const regex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+    const emails = message.match(regex);
+    if (emails) {
+      // Replace each email address with the associated user's name
+      for (const email of emails) {
+        const user = users.find(u => u.user_email === email);
+        if (user) {
+          replacedText = replacedText.replace(email, `${user.fullName} `);
+        }
+      }
+    }
+    return replacedText;
+  }
 
 }
 
