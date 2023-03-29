@@ -2996,9 +2996,18 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inplace .p-inplace-display {
   display: contents !important;
 }
+.projectnamerow .p-inplace-content {
+  position: absolute;
+  top: -10px;
+}
+
 .project-ninfo .pinf .p-inplace.p-component {
-  height: 37px;
+  height: 28px;
+  width: 150px !important;
   margin-bottom: 1px;
+}
+.project-overview .p-dropdown .p-inputtext {
+  padding: 4px !important;
 }
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
@@ -3408,6 +3417,7 @@ button.btn.new-cancelbtn {
 .p-dropdown:not(.p-disabled).p-focus {
   border: 1px solid #098de6 !important;
   background-color: #fff !important;
+  box-shadow: none !important;
 }
 .configtabs .p-tabview {
   height: 100%;

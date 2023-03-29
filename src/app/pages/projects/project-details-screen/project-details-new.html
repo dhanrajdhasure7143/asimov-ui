@@ -36,121 +36,125 @@
                     </div>
                     <div class="col-sm-12 p-0" style="flex:auto;">
                         <div class="row project-ninfo">
-                            <div class="row align-items-center projectnamerow">
-                                <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')"
-                                    class="project-name">
-                                    <ng-template pTemplate="display">
-                                        <span class="">{{projectDetails.projectName}}</span>
-                                    </ng-template>
-                                    <ng-template pTemplate="content">
-                                        <input type="text" [style]="{'width':'100%'}" pInputText
-                                            [(ngModel)]="projectName" (keydown)="Space($event)" />
-                                        <span class="editfields">
-                                            <i class="pi pi-check" *ngIf="projectName"
-                                                (click)="onUpdateDetails('projectName')"></i>
-                                            <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
-                                        </span>
-                                    </ng-template>
-                                </p-inplace>
-                                <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')">
-                                    <ng-template pTemplate="display">
-                                        <span>
-                                            <img src="./../../../../assets/images-n/projects/low_priority.svg"
-                                                alt="importance" *ngIf="projectDetails.priority == 'Low'">
-                                            <span class="lowimp"
-                                                *ngIf="projectDetails.priority == 'Low'">{{projectDetails.priority}}</span>
-                                            <img src="./../../../../assets/images-n/projects/medium_priority.svg"
-                                                alt="importance" *ngIf="projectDetails.priority == 'Medium'">
-                                            <span class="mediumimp"
-                                                *ngIf="projectDetails.priority == 'Medium'">{{projectDetails.priority}}</span>
-                                            <img src="./../../../../assets/images-n/projects/high_priority.svg"
-                                                alt="importance" *ngIf="projectDetails.priority == 'High'">
-                                            <span class="highimp"
-                                                *ngIf="projectDetails.priority == 'High'">{{projectDetails.priority}}</span>
-                                        </span>
-                                    </ng-template>
-                                    <ng-template pTemplate="content">
-                                        <p-dropdown [options]="priority_list" [(ngModel)]="priority" optionLabel="name"
-                                            optionValue="name"></p-dropdown>
-                                        <span class="editfields">
-                                            <i class="pi pi-check" (click)="onUpdateDetails('priority')"></i>
-                                            <i class="pi pi-times" (click)="onDeactivate('inplace1')"></i>
-                                        </span>
-                                    </ng-template>
-                                </p-inplace>
-                            </div>
-                            <div class="row pr-2 align-items-center justify-content-between">
-                                <div class="pinf procowner">
-                                    <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
+                            
+                            <div class="prjinfo-headerblk pr-2 align-items-end">
+                                <div class="row align-items-center projectnamerow">
+                                    <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')"
+                                        class="project-name">
                                         <ng-template pTemplate="display">
-                                            <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
+                                            <span class="">{{projectDetails.projectName}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <p-dropdown [options]="users_list" [filter]="true"
-                                                [style]="{'width':'100%'}" filterBy="user_email,fullName" required
-                                                [autoDisplayFirst]="false" placeholder="Select Assignee"
-                                                [(ngModel)]="processOwner" optionValue="user_email"
-                                                optionLabel="fullName">
-                                            </p-dropdown>
+                                            <input type="text" [style]="{'width':'100%'}" pInputText
+                                                [(ngModel)]="projectName" (keydown)="Space($event)" />
                                             <span class="editfields">
-                                                <i class="pi pi-check" (click)="onUpdateDetails('processOwner')"></i>
-                                                <i class="pi pi-times" (click)="onDeactivate('inplace2')"></i>
+                                                <i class="pi pi-check" *ngIf="projectName"
+                                                    (click)="onUpdateDetails('projectName')"></i>
+                                                <i class="pi pi-times" (click)="onDeactivate('inplace')"></i>
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Process Owner</label>
-                                </div>
-                                <div class="pinf prjdept">
-                                    <p-inplace #inplace3 (onActivate)="inplaceActivate('mapValueChain','inplace3')">
+                                    <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')">
                                         <ng-template pTemplate="display">
-                                            <p class="">{{projectDetails.mapValueChain}}</p>
+                                            <span>
+                                                <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'Low'">
+                                                <span class="lowimp"
+                                                    *ngIf="projectDetails.priority == 'Low'">{{projectDetails.priority}}</span>
+                                                <img src="./../../../../assets/images-n/projects/medium_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'Medium'">
+                                                <span class="mediumimp"
+                                                    *ngIf="projectDetails.priority == 'Medium'">{{projectDetails.priority}}</span>
+                                                <img src="./../../../../assets/images-n/projects/high_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'High'">
+                                                <span class="highimp"
+                                                    *ngIf="projectDetails.priority == 'High'">{{projectDetails.priority}}</span>
+                                            </span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <p-dropdown [options]="categories_list" [style]="{'width':'100%'}"
-                                                [autoDisplayFirst]="false" placeholder="Select Department"
-                                                [(ngModel)]="mapValueChain" optionValue="categoryName"
-                                                optionLabel="categoryName">
-                                            </p-dropdown>
+                                            <p-dropdown [options]="priority_list" [(ngModel)]="priority" optionLabel="name"
+                                                optionValue="name"></p-dropdown>
                                             <span class="editfields">
-                                                <i class="pi pi-check" (click)="onUpdateDetails('mapValueChain')"></i>
-                                                <i class="pi pi-times" (click)="onDeactivate('inplace3')"></i>
+                                                <i class="pi pi-check" (click)="onUpdateDetails('priority')"></i>
+                                                <i class="pi pi-times" (click)="onDeactivate('inplace1')"></i>
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <label>Departments</label>
                                 </div>
-                                <div class="pinf prjstatus">
-                                    <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
-                                        <ng-template pTemplate="display">
-                                            <p>{{projectDetails.status}}</p>
-                                        </ng-template>
-                                        <ng-template pTemplate="content">
-                                            <p-dropdown [options]="status_list" [(ngModel)]="status" autoWidth="false"
-                                                optionLabel="name" optionValue="name"></p-dropdown>
-                                            <span class="editfields">
-                                                <i class="pi pi-check" (click)="onUpdateDetails('status')"></i>
-                                                <i class="pi pi-times" (click)="onDeactivate('inplace4')"></i>
-                                            </span>
-                                        </ng-template>
-                                    </p-inplace>
-                                    <label>Status</label>
-                                </div>
-                                <div class="pinf prjowner">
-                                    <p>{{projectDetails.owner| userPipe : users_list}}</p>
-                                    <label>Created By</label>
-                                </div>
-                                <div class="pinf prjlastupdated">
-                                    <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
-                                    <label>Last Updated</label>
-                                </div>
-                                <div class="">
-                                    <div class="d-flex">
-                                        <span class="kpipercent">
-                                            <p-knob [(ngModel)]="projectDetails.projectPercentage" [size]="70"
-                                                valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
-                                            <label>Completed</label>
-                                        </span>
+                                <div class="prjdetfields">
+                                    <div class="pinf procowner">
+                                        <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
+                                            <ng-template pTemplate="display">
+                                                <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
+                                            </ng-template>
+                                            <ng-template pTemplate="content">
+                                                <p-dropdown [options]="users_list" [filter]="true"
+                                                    [style]="{'width':'100%'}" filterBy="user_email,fullName" required
+                                                    [autoDisplayFirst]="false" placeholder="Select Assignee"
+                                                    [(ngModel)]="processOwner" optionValue="user_email"
+                                                    optionLabel="fullName">
+                                                </p-dropdown>
+                                                <span class="editfields">
+                                                    <i class="pi pi-check" (click)="onUpdateDetails('processOwner')"></i>
+                                                    <i class="pi pi-times" (click)="onDeactivate('inplace2')"></i>
+                                                </span>
+                                            </ng-template>
+                                        </p-inplace>
+                                        <label>Process Owner</label>
                                     </div>
+                                    <div class="pinf prjdept">
+                                        <p-inplace #inplace3 (onActivate)="inplaceActivate('mapValueChain','inplace3')">
+                                            <ng-template pTemplate="display">
+                                                <p class="">{{projectDetails.mapValueChain}}</p>
+                                            </ng-template>
+                                            <ng-template pTemplate="content">
+                                                <p-dropdown [options]="categories_list" [style]="{'width':'100%'}"
+                                                    [autoDisplayFirst]="false" placeholder="Select Department"
+                                                    [(ngModel)]="mapValueChain" optionValue="categoryName"
+                                                    optionLabel="categoryName">
+                                                </p-dropdown>
+                                                <span class="editfields">
+                                                    <i class="pi pi-check" (click)="onUpdateDetails('mapValueChain')"></i>
+                                                    <i class="pi pi-times" (click)="onDeactivate('inplace3')"></i>
+                                                </span>
+                                            </ng-template>
+                                        </p-inplace>
+                                        <label>Departments</label>
+                                    </div>
+                                    <div class="pinf prjstatus">
+                                        <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
+                                            <ng-template pTemplate="display">
+                                                <p>{{projectDetails.status}}</p>
+                                            </ng-template>
+                                            <ng-template pTemplate="content">
+                                                <p-dropdown [options]="status_list" [(ngModel)]="status" autoWidth="false"
+                                                    optionLabel="name" optionValue="name"></p-dropdown>
+                                                <span class="editfields">
+                                                    <i class="pi pi-check" (click)="onUpdateDetails('status')"></i>
+                                                    <i class="pi pi-times" (click)="onDeactivate('inplace4')"></i>
+                                                </span>
+                                            </ng-template>
+                                        </p-inplace>
+                                        <label>Status</label>
+                                    </div>
+                                    <div class="pinf prjowner">
+                                        <p>{{projectDetails.owner| userPipe : users_list}}</p>
+                                        <label>Created By</label>
+                                    </div>
+                                    <div class="pinf prjlastupdated">
+                                        <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                        <label>Last Updated</label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="kpipercent">
+                                <div class="">
+                                    <span class="">
+                                        <p-knob [(ngModel)]="projectDetails.projectPercentage" [size]="70"
+                                            valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
+                                        <label>Completed</label>
+                                    </span>
                                 </div>
                             </div>
                         </div>
