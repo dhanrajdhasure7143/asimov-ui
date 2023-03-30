@@ -4,7 +4,7 @@
   margin-bottom: 25px !important;
 }
 .row.project-overview {
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 100%);
+  background: linear-gradient(178.65deg, #FFFFFF 30.35%, #F1F1F1 118.7%);
   border-radius: 6px;
   flex-wrap: initial;
 }
@@ -12,6 +12,7 @@
   background-color: rgb(9 141 230 / 10%);
   border-radius: 6px 0px 0px 0px;
   height: 100%;
+  width: 75px;
   padding: 30px 10px !important;
   justify-content: center;
   align-items: center;
@@ -22,11 +23,12 @@
   margin:0px;
 }
 .task-status img {
-  width: 35px;
+  width: 40px;
   /* height: 55px; */
 }
 .project-ninfo {
   padding: 15px !important;
+  align-items: end;
 }
 .project-ninfo .col-md-10.pl-0 ,.project-ninfo .col-md-10.pl-0 .row {
   align-items: center;
@@ -34,8 +36,8 @@
 }
 .task-name span{
   font-size: 32px;
-  font-weight: 600;
-  margin-right: 10px;
+  font-weight: 400;
+  color: #222;
 }
 span.highimp {
   color: #EA3D3D;
@@ -49,25 +51,45 @@ span.lowimp {
   color: #27AD74;
   margin-left: 5px;
 }
+.taskinfo-headerblk {
+  width: 85%;
+}
+.prjdetfields {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 26px;
+}
 .pinf {
   position: relative;
+  width: 20% !important;
 }
 .projectnamerow p-inplace.p-element {
   position: relative;
   margin-right: 8px;
 }
+.projectnamerow .taskname-priority {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+}
 .pinf p {
-  /* margin-bottom: 5px; */
-  font-weight: 500;
+  margin-bottom: 0px;
+  font-weight: 400;
   font-size: 16px !important;
+  color: #222;
+  height: 28px;
 }
 .pinf label {
   color: #535353;
 }
 .kpipercent {
   border-left: 1px solid #e0e0e0;
-  padding-left:15px !important;
+  padding-left: 15px !important;
   text-align: center;
+  width: 15%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
 }
 .kpipercent p {
   font-size: 44px !important;
@@ -77,25 +99,21 @@ span.lowimp {
 .projectnamerow {
   height: 36px;
 }
-.pinf.taskassignby,
 .pinf.taskresource {
-  width: 18%;
+  width: 25% !important;
 }
-.pinf.taskduedate,
-.pinf.tasklastupdated {
-  width: 15%;
-}
-.pinf.taskstatus {
-  width: 11%;
+.taskduedate .p-inplace-content input.form-control {
+  padding: 4px !important;
+  height: 30px !important;
+  background-color: #fff !important;
+  border: 1px solid #d0d0d0 !important;
 }
 
 .editfields {
   display: flex;
   align-items: center;
-  position: absolute;
   justify-content: flex-end;
   margin-top: 5px;
-  width: 100%;
 }
 .taskdescription span.editfields {
   text-align: right;

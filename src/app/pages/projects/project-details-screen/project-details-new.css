@@ -10,6 +10,7 @@
 }
 .project-ninfo {
     padding: 15px !important;
+    align-items: end;
 }
 .project-ninfo .col-md-10.pl-0,
 .project-ninfo .col-md-10.pl-0 .row {
@@ -84,7 +85,7 @@ span.lowimp {
   }
 .prjdetfields {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 26px;
 }
 .kpipercent {
