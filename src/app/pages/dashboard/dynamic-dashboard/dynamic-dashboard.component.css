@@ -76,32 +76,33 @@
 }
 
 .defaltdrpdwn button {
-    width: 150px;
+    width: 230px;
     border-color: #979797 !important;
     color: #232832 !important;
 }
 .defaltdrpdwn ul#dropdown-basic {
-    width: 200px;
+    width: 230px;
     inset: 100% auto auto 10px !important;
     padding: 0px !important;
     margin-top: 5px;
 }
 .defaltdrpdwn ul#dropdown-basic li {
     display: flex;
+    cursor:pointer;
 }
 .defaltdrpdwn ul#dropdown-basic li .dname {
     padding: 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 85%;
+    font-size: 14px;
 }
 .defaltdrpdwn ul#dropdown-basic li:hover {
     background-color: #e9ecef;
 }
 .defaltdrpdwn ul#dropdown-basic li span.dropdown-icon {
     width: 15%;
-    padding: 10px 6px;
-    cursor:pointer;
+    padding: 5px 10px;
 }
 .defaltdrpdwn .p-button:focus {
      box-shadow: none;
