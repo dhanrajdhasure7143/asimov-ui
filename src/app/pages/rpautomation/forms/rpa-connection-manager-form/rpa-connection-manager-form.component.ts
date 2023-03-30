@@ -199,23 +199,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
       if (res.message === "Successfully saved configured action") {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Action Saved Successfully !!",
-          heightAuto: false,
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Action Saved Successfully !!"
         })
-        // this.messageService.add({
-        //   severity: "success",
-        //   summary: "Success",
-        //   detail: "Action Saved Successfully !!"
-        // })
-        .then((result) => {
-          this.connectorForm.reset();
-          this.router.navigate(["/pages/rpautomation/action-item"], {
-            queryParams: { id: this.selectedId, name: this.selectedConnector },
+          setTimeout(() =>{
+            this.router.navigate(["/pages/rpautomation/action-item"], {
+              queryParams: {
+              id: this.selectedId,
+              name: this.selectedConnector },
           });
-        });
+          },3500)
       } else {
         this.spinner.hide();
         (err) => {
@@ -565,11 +560,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRefreshToken = true;
       }
 
-      // if (this.actionData["actionType"] == "APIRequest" && this.actionData["methodType"] == "GET") { 
-      //   this.isRequest = false;
-      // } else {
-      //   this.isRequest = true;    
-      // }
+      if(this.actionData.configurationAsJson["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){
+        this.isReqDisable = true;
+       }else{
+         this.isReqDisable = false;
+       }
 
       this.connectorForm.get("actionName").setValue(this.actionData["name"]);
       this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
@@ -706,26 +701,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.rest_api.updateAction(this.action_id, req_body).subscribe((res: any) => {
         this.spinner.hide();
         if (res.message === "Successfully updated configured action") {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "Action Updated Successfully !!",
-            heightAuto: false,
-          })
-          // this.messageService.add({
-          //   severity: "success",
-          //   summary: "Success",
-          //   detail: "Action Updated Successfully !!",
-          // })
-          .then((result) => {
-            this.connectorForm.reset();
-            this.router.navigate(["/pages/rpautomation/action-item"], {
-              queryParams: {
-                id: this.selectedId,
-                name: this.selectedConnector,
-              },
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Action Updated Successfully !!",
+          })            
+            setTimeout(()=>{
+              this.router.navigate(["/pages/rpautomation/action-item"], {
+                queryParams: {
+                  id: this.selectedId,
+                  name: this.selectedConnector,
+                },
             });
-          });
+            },3500)
+        
         } else {
           this.spinner.hide();
           (err) => {
@@ -737,6 +726,5 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           };
         }
       });
-    this.connectorForm.reset();
   }
 }
