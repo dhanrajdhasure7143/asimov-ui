@@ -1143,7 +1143,7 @@ img.testplus1 {
 .maindivfoprm .label-control,
 .modelprbody label {
   font-size: 14px;
-  /* color: #7d7d7d; */
+  color: #7d7d7d;
   margin-bottom: 2px;
   line-height: 18px;
 }
@@ -1687,7 +1687,7 @@ span.star {
 }
 
 .form-control {
-  border: 1px solid #979797 !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: unset !important;
   color: #232832 !important;
   border-radius: 3px !important;
@@ -2209,7 +2209,7 @@ td.mat-cell span {
 
 .Admin-countrylist .iti.iti--allow-dropdown {
   display: flex;
-  border: 1px solid #979797;
+  border: 1px solid var(--formfield-bordercolor);
   border-radius: 3px;
   /* display: flex;
   background-color: #f6f6f6 !important;
@@ -2218,7 +2218,7 @@ td.mat-cell span {
   width: 385px; */
 }
 .Admin-countrylist .iti__flag-container {
-  border-right: 1px solid #979797;
+  border-right: 1px solid var(--formfield-bordercolor);
 }
 .Admin-countrylist .iti__country-list {
   left: 0px;
@@ -2528,7 +2528,8 @@ button.custom-popupbtn.mat-button {
   --main-bluecolor: #098de6;
   --secondary-bluecolor: #4AB0F5;
   --main-bgcolor: #f9f9f9;
-  --main-bordercolor: #d0d0d0;
+  --card-bordercolor: #d0d0d0;
+  --formfield-bordercolor: #979797;
   --main-borderradius: 6px;
   --high-importance: #ea3d3d;
   --medium-importance: #E58600;
@@ -2689,7 +2690,7 @@ button.btn:focus {
 }
 input.p-inputtext {
   height: 34px;
-  border: 1px solid var(--main-bordercolor) !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: none !important;
 }
 .actionspopmenu .p-menu-overlay {
@@ -2941,7 +2942,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-button-outlined {
   margin: 0 10px !important;
-  color: #098de6 !important;
+  color: var(--secondary-bluecolor) !important;
 }
 .p-button-outlined.only_clearbtn {
   margin:0px !important;
@@ -2979,9 +2980,19 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-menu .p-menuitem-link:focus {
   box-shadow: none !important;
 }
+.p-multiselect {
+  border: 1px solid var(--formfield-bordercolor) !important;
+  background: transparent !important;
+}
+.p-multiselect.p-component.p-multiselect-open {
+  background: #fff !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
+}
 .p-checkbox .p-checkbox-box {
   width: 18px !important;
   height: 18px !important;
+  border: 1.5px solid #979797 !important;
+  border-radius: 2px !important;
 }
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
@@ -2992,8 +3003,16 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   border-color: var(--main-bluecolor) !important;
 }
 .p-dropdown {
-  border: 1px solid var(--main-bordercolor) !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   width: 100%;
+  background-color: transparent !important;
+}
+.p-dropdown.p-component.p-dropdown-open {
+  background-color: #fff !important;
+  border: 1px solid #4AB0F5 !important;
+}
+.p-multiselect:not(.p-disabled):hover {
+  border-color: none !important;
 }
 .listdropdown .p-dropdown{
   margin-right: 15px;
@@ -3001,14 +3020,14 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inplace .p-inplace-display {
   display: contents !important;
 }
-.projectnamerow .p-inplace-content {
+/* .projectnamerow .p-inplace-content {
   position: absolute;
   top: -10px;
-}
+} */
 
 .project-ninfo .pinf .p-inplace.p-component {
   height: 28px;
-  width: 150px !important;
+  width: 88% !important;
   margin-bottom: 1px;
 }
 .project-overview .p-dropdown .p-inputtext {
@@ -3017,14 +3036,16 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
   color: #232832 !important;
+  background-color: transparent !important;
 }
 textarea.p-inputtextarea {
-  border: 1px solid #979797 !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   background-color: transparent;
 }
 .p-inputtext:enabled:focus {
   border: 1px solid var(--secondary-bluecolor) !important;
   box-shadow: none !important;
+  background-color: #fff !important;
 }
 .p-overlaypanel-content {
   padding: 12px 16px !important;
@@ -3095,7 +3116,7 @@ textarea.p-inputtextarea {
 .ng-select .ng-select-container {
   min-height: 40px !important;
   background-color: transparent !important;
-  border: 1px solid #979797 !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: none !important;
 }
 .ng-select.ng-select-opened>.ng-select-container{
@@ -3246,7 +3267,7 @@ button.btn.new-cancelbtn {
 .splitoverlaycontent input.p-inputtext,
 .maindivfoprm input.p-inputtext,
 .maindivfoprm  .p-dropdown {
-  border-color: #979797 !important;
+  border-color: var(--formfield-bordercolor) !important;
   color: #232832;
   height: 40px;
   background: transparent;
@@ -3270,7 +3291,7 @@ button.btn.new-cancelbtn {
 }
 .createform-overlay textarea.p-inputtextarea.p-inputtext {
   background: transparent;
-  border: 1px solid #979797;
+  border: 1px solid var(--formfield-bordercolor);
   box-shadow: none;
   width: 100%;
   overflow: hidden;
@@ -3412,7 +3433,7 @@ button.btn.new-cancelbtn {
 
 /* New Dashboard Styles Start */
 .dropdown-primeng .p-dropdown {    
-  border: 1px solid #979797 !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   /* border-radius: 6px; */
   box-shadow: none !important;
   width: 180px;
@@ -3438,7 +3459,7 @@ button.btn.new-cancelbtn {
 .custom-ms .p-multiselect{width: 180px;
   height: 32px;
   top:10px;
-  border: 1px solid #979797;
+  border: 1px solid var(--formfield-bordercolor);
   border-radius: 6px;}
 
   .custom-ms .p-multiselect-panel .p-multiselect-header{display: none;}

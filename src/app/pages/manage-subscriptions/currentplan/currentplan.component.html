@@ -152,19 +152,19 @@
     <div class="carddetail row">
       <div class="col-sm-6 pl-0 row">
         <div class="col-6 pl-0">
-          <label for="cardHolder">Cardholder Name</label>
+          <label  class="label-control" for="cardHolder">Cardholder Name</label>
           <p>{{cardDetails[0].name}}</p>
         </div>
         <div class="col-6 pr-0">
-          <label for="cardNumber">Card Number </label>
+          <label  class="label-control" for="cardNumber">Card Number </label>
           <p>XXXX-XXXX-XXXX-{{cardDetails[0].cardLast4.slice(-3)}}</p>
         </div>
         <div class="col-6 pl-0 month">
-          <label for="month">Month (MM)</label>
+          <label  class="label-control" for="month">Month (MM)</label>
             <p>{{cardDetails[0].cardExpMonth}}</p>
         </div>
         <div class="col-6 pr-0">
-          <label for="year">Year (YYYY)</label>
+          <label  class="label-control" for="year">Year (YYYY)</label>
           <p>{{cardDetails[0].cardExpYear}}</p>
         </div>
         <!-- <div class='col-sm-12 apply-coupon'>
@@ -184,17 +184,17 @@
           <h5 class="select_label">Subscription Details</h5>
         </div>
         <div class="col-4 pl-0">
-          <label class="plan_label">Plan</label>
+          <label  class="label-control" class="plan_label">Plan</label>
           <p>{{name}}
             <button class="backbtn" (click)="chooseplan()"><a class="link">Change plan</a></button>
           </p>
         </div>
         <div class="col-4 p-0">
-          <label>Billing Period</label>
+          <label  class="label-control">Billing Period</label>
           <p>{{selected_plans.term}}</p>
         </div>
         <div class="col-4 pr-0">
-          <label>Plan Amount</label>
+          <label  class="label-control">Plan Amount</label>
           <p>${{selected_plans.amount}}</p>
         </div>
         <!-- <p>No. of Users : {{noOfusers}}</p>

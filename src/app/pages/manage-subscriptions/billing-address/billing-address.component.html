@@ -2,7 +2,7 @@
     <form [formGroup]="billingForm" class="">
         <div class="row">
             <div class="form-group col-md-6 pl-0">
-                <label class="">First Name<span class="star">*</span></label>
+                <label  class="label-control">First Name<span class="star">*</span></label>
                 <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
                     placeholder="Enter First Name" required>
                 <span
@@ -13,7 +13,7 @@
                 </span>
             </div>
             <div class="form-group col-md-6 pr-0">
-                <label class="" for="taskCategory">Last Name<span class="star">*</span></label>
+                <label  class="label-control" for="taskCategory">Last Name<span class="star">*</span></label>
                 <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
                     formControlName="lastName">
                 <span
@@ -24,7 +24,7 @@
                 </span>
             </div>
             <div class="form-group col-md-6 pl-0">
-                    <label class="" for="taskCategory">Country<span class="star">*</span></label>
+                    <label  class="label-control" for="taskCategory">Country<span class="star">*</span></label>
                     <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
                         [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName" optionValue="CountryName"></p-dropdown>
@@ -32,7 +32,7 @@
                         class="required">Country is Required *</span>
             </div>
             <div class="form-group col-md-3 pr-0">
-                <label class="" for="resources">State/Region<span class="star">*</span></label>
+                <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
                 <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionValue="StateName" optionLabel="StateName"
                     [autoDisplayFirst]="false" placeholder="Select State/Region" formControlName="state"
                     (onChange)="onChangeState($event.value)">
@@ -41,7 +41,7 @@
                     class="required">State is Required *</span>
             </div>
             <div class="form-group col-md-3 pr-0">
-                <label class="" for="priority">City <span class="star">*</span></label>
+                <label  class="label-control" for="priority">City <span class="star">*</span></label>
                 <span>
                     <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}"
                         [autoDisplayFirst]="false" placeholder="Select City" formControlName="city">
@@ -51,17 +51,16 @@
                 class="required">City is Required *</span>
             </div>
             <div class="form-group col-md-3 pl-0">
-                <label class="" for="approvers">Postal Code<span class="star">*</span></label>
+                <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
                 <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
                     placeholder="Enter Postal Code">
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched"
                     class="required">Postal Code is Required *</span>
             </div>
             <div class="form-group col-md-3 pl-0">
-                <span> <label class="" for="approvers">Phone Number<span class="star">*</span></label><br>
-                    <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
+                <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
+                <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
                         placeholder="Enter Phone Number" (keydown)="onKeydown($event)">
-                </span>
                 <span
                      *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
                         !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
@@ -71,7 +70,7 @@
                     class="required">Phone number should be 10 digits *</span>
             </div>
             <div class="form-group col-md-6 pr-0">
-                <label class="" for="approvers">Email<span class="star">*</span></label>
+                <label  class="label-control" for="approvers">Email<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
                 <span
                     *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
@@ -81,14 +80,14 @@
 
             </div>
             <div class="form-group col-md-6 pl-0">
-                <label class="" for="approvers">Address Line1<span class="star">*</span></label>
+                <label  class="label-control" for="approvers">Address Line1<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
                     placeholder="Enter Address Line 1">
                 <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched"
                     class="required">Address Line1 is Required *</span>
             </div>
             <div class="form-group col-md-6 pr-0">
-                <label class="">Address Line2 <span class="star">*</span></label>
+                <label  class="label-control">Address Line2 <span class="star">*</span></label>
                 <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
                     placeholder="Enter Address Line 2">
                 <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched"

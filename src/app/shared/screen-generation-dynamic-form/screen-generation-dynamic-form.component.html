@@ -8,14 +8,14 @@
               field.widget_type == null ||
               field.widget_type == '' || field.ColumnName == 'tenant_name'
             ">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
               [placeholder]="field.placeholder" [maxlength]="field.length" />
           </div>
           <div *ngIf="field.widget_type == 'file'">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
@@ -24,7 +24,7 @@
           <div *ngIf="
               field.widget_type == 'select' && !(field.ColumnName == 'PortalName')
             ">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
@@ -38,7 +38,7 @@
           <div *ngIf="
               field.widget_type == 'select' && field.ColumnName == 'PortalName'
             ">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
@@ -50,13 +50,13 @@
           </div>
           <div *ngIf="field.widget_type == 'checkbox'">
             <input type="checkbox" [formControlName]="field.ColumnName" [required]="field.mandatory" />
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star">*</span>
             </label>
           </div>
           <div *ngIf="field.widget_type == 'radio'">
             <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory" />
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star">*</span>
             </label>
           </div>
@@ -81,7 +81,7 @@
               field.widget_type == null ||
               field.widget_type == ''
             ">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" [attr.disabled]="
@@ -90,14 +90,14 @@
               [maxlength]="field.length" />
           </div>
           <div *ngIf="field.widget_type == 'file'">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="file" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
               [placeholder]="field.placeholder" [maxlength]="field.length" />
           </div>
           <div *ngIf="field.widget_type == 'select'">
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <select class="form-select" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
@@ -116,14 +116,14 @@
           <div *ngIf="field.widget_type == 'checkbox'">
             <input type="checkbox" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
               [required]="field.mandatory" />
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star">*</span>
             </label>
           </div>
           <div *ngIf="field.widget_type == 'radio'">
             <input type="radio" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
               [required]="field.mandatory" />
-            <label class="over-lay">{{ field.DisplayName | removeUnderscore | titlecase
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase
               }}<span class="star">*</span>
             </label>
           </div>

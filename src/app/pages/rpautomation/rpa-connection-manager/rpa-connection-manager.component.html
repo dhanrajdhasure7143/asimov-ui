@@ -73,7 +73,7 @@
                     <div class="createform-overlay">
                         <form [formGroup]="createConnectorForm">
                             <div class="form-group col p-0">
-                                <label class="" for="connection"> Connector Name <span class="star">*</span></label>
+                                <label class="label-control" for="connection"> Connector Name <span class="star">*</span></label>
                                 <input type="text" pInputText [style]="{'width':'100%'}"  maxlength="51" formControlName="name"
                                     placeholder="Enter Connector Name">
                                 <span *ngIf="createConnectorForm.get('name').invalid && createConnectorForm.get('name').touched && !createConnectorForm.get('name').hasError('pattern')" class="required"> Connector Name Required* </span>
@@ -82,7 +82,7 @@
                                 </span>
                             </div> 
                             <!-- <div class="col-md-12 p-0 form-group">
-                                <label class="" for="userName"> Authorization Type <span class="star">*</span></label>
+                                <label class="label-control" for="userName"> Authorization Type <span class="star">*</span></label>
                                 <p-dropdown [options]="authorizationType" formControlName="authorization_Type" autoWidth="false"
                               [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Authorization"
                              (onChange)="changeAuth($event)" required></p-dropdown>
