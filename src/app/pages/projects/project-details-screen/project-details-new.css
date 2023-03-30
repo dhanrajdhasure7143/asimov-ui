@@ -4,7 +4,7 @@
     margin-bottom: 25px !important;
 }
 .row.project-overview {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 241, 241, 1) 100%);
+    background: linear-gradient(178.65deg, #FFFFFF 30.35%, #F1F1F1 118.7%);
     border-radius: 6px;
     flex-wrap: initial;
 }
@@ -36,7 +36,8 @@
 }
 .project-name span {
     font-size: 32px;
-    font-weight: 600;
+    font-weight: 400;
+    color: #222;
 }
 span.highimp {
     color: #EA3D3D;
@@ -52,7 +53,7 @@ span.lowimp {
 }
 .pinf {
     position: relative;
-    width: 18% !important;
+    width: 20% !important;
 }
 .pinf.prjowner p, .pinf.prjlastupdated p {
     height: 28px;
@@ -62,16 +63,20 @@ span.lowimp {
     position: relative;
     margin-right: 8px;
 }
+.projectnamerow .prjname-priority {
+    margin-top: 10px;
+}
 .pinf p {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 16px !important;
+    color: #222;
 }
 .pinf label {
     color: #535353;
 }
-.projectnamerow .p-inplace-content, .projectnamerow .editfields {
+/* .projectnamerow .p-inplace-content, .projectnamerow .editfields {
     width: 80px !important;
-  }
+  } */
   .prjinfo-headerblk {
     width: 85%;
   }
@@ -96,15 +101,14 @@ span.lowimp {
 }
 .row.project-description {
     background-color: #fff;
-    border-top: 1px solid #e0e0ee;
+    border-top: 1px solid #dbdbdb;
     padding: 20px 10px 20px 8px !important;
     border-radius: 0px 0px 6px 6px;
     width: 100%;
+    align-items: center;
     /* height: 100px; */
 }
 .project-description label {
-    margin: 0px 10px 0px 0px !important;
-    border-right: 1px solid #d0d0d0;
     padding-right: 5px;
     font-size: 12px;
     line-height: 25px;
@@ -113,6 +117,8 @@ span.lowimp {
     margin: 0px;
     width: 92%;
     font-size: 16px;
+    border-left: 1px solid #d0d0d0;
+    padding-left: 10px;
 }
 .project-description span.readmore {
     color: #098de6;
@@ -125,7 +131,7 @@ span.lowimp {
     /* position: absolute; */
     justify-content: flex-end;
     margin-top: 5px;
-    width: 150px !important;
+    /* width: 150px !important; */
 }
 .editfields.prjdescef{
    position: unset;
@@ -134,9 +140,8 @@ span.lowimp {
 .projectnamerow {
     height: 36px;
 }
-.pinf.procowner,
-.pinf.prjdept {
-    width: 18%;
+.pinf.procowner {
+    width: 25% !important;
 }
 .pinf.prjowner,
 .pinf.prjlastupdated {

@@ -2996,14 +2996,14 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-inplace .p-inplace-display {
   display: contents !important;
 }
-.projectnamerow .p-inplace-content {
+/* .projectnamerow .p-inplace-content {
   position: absolute;
   top: -10px;
-}
+} */
 
 .project-ninfo .pinf .p-inplace.p-component {
   height: 28px;
-  width: 150px !important;
+  width: 88% !important;
   margin-bottom: 1px;
 }
 .project-overview .p-dropdown .p-inputtext {

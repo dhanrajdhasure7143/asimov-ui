@@ -38,7 +38,7 @@
                         <div class="row project-ninfo">
                             
                             <div class="prjinfo-headerblk pr-2 align-items-end">
-                                <div class="row align-items-center projectnamerow">
+                                <div class="row align-items-flex-start projectnamerow">
                                     <p-inplace #inplace (onActivate)="inplaceActivate('projectName','inplace')"
                                         class="project-name">
                                         <ng-template pTemplate="display">
@@ -54,7 +54,8 @@
                                             </span>
                                         </ng-template>
                                     </p-inplace>
-                                    <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')">
+                                    <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')"
+                                    class="prjname-priority">
                                         <ng-template pTemplate="display">
                                             <span>
                                                 <img src="./../../../../assets/images-n/projects/low_priority.svg"
