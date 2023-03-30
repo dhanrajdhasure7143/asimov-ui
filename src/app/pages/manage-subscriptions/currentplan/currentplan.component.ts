@@ -112,7 +112,7 @@ export class CurrentplanComponent implements OnInit {
         }
         this.plansList[2].features[2].limited = true;
         this.plansList[2].features[3].limited = true;
-        this.plansList[0].amount = 0;
+       // this.plansList[0].amount = 0;
         this.plansList[0].term = "month";
         this.plansList[1].term = "month";
         this.plansList[2].term = "year";

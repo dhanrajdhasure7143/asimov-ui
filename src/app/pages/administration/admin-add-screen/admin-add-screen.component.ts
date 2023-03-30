@@ -216,30 +216,33 @@ export class AdminAddScreenComponent implements OnInit {
       let filterData = screenList.find(
         (data: any) => data.Screen_ID == this.screen_id
       );
-      this.insertForm = this.formBuilder.group({
-        screen_Name: [
-          filterData.Screen_Name,
-          Validators.compose([Validators.required,,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')]),
-        ],
-        table_Name: [filterData.Table_Name],
-        allow_Insert: [filterData.Allow_Insert],
-        allow_Edit: [filterData.Allow_Edit],
-        allow_Delete: [filterData.Allow_Delete],
-        show_As_Child: [filterData.Show_As_Child],
-        default_Sort: [""],
-        default_Filter_Clause: [""],
-        preferences: [""],
-        row_Count: [filterData.Row_Count],
-        insights: [""],
-        //  Role: ["", Validators.compose([Validators.required])],
-        formType: [""],
-        screenType: [filterData.ScreenType],
-      });
+      setTimeout(() => {
+       this.spinner.show()
+        this.insertForm = this.formBuilder.group({
+          screen_Name: [
+            filterData.Screen_Name,
+            Validators.compose([Validators.required,,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')]),
+          ],
+          table_Name: [filterData.Table_Name],
+          allow_Insert: [filterData.Allow_Insert],
+          allow_Edit: [filterData.Allow_Edit],
+          allow_Delete: [filterData.Allow_Delete],
+          show_As_Child: [filterData.Show_As_Child],
+          default_Sort: [""],
+          default_Filter_Clause: [""],
+          preferences: [""],
+          row_Count: [filterData.Row_Count],
+          insights: [""],
+          //  Role: ["", Validators.compose([Validators.required])],
+          formType: [""],
+          screenType: [filterData.ScreenType],
+        });
+      }, 100);
+      this.spinner.hide();
       this.tablehide = true;
       this.rest.getElementTable(this.screen_id).subscribe((data) => {
         this.elementData = data;
         this.tableData = this.elementData;
-        console.log(this.elementData);
         this.columns_list = [
           {
             ColumnName: "ColumnName",
@@ -323,7 +326,6 @@ export class AdminAddScreenComponent implements OnInit {
     this.rest.saveScreenData(payload).subscribe((data) => {
       this.savedata = data;
       this.columns_list = this.savedata;
-      console.log(this.savedata);
       this.tableData = this.savedata;
       this.columns_list = [
         {ColumnName: "ColumnName",DisplayName: "Column Name",ShowGrid: true,sort: true,ShowFilter:true},
@@ -342,6 +344,9 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       })
       this.spinner.hide();
       this.buttonDisable = true;
