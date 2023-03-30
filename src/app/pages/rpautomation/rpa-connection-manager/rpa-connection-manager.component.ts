@@ -92,7 +92,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     let selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
-      message: "Are you sure?, You won't be able to revert this!",
+      message: "Are you sure? You won't be able to revert this!",
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {

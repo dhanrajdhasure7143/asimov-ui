@@ -2794,9 +2794,14 @@ span.tabscount {
 .well1-dynmic.graph .p-datatable-wrapper {
   height: 100% !important; /* for add-screen form & widget grid */
 }
-.bps-approvalgrid .p-datatable-wrapper,
+.bps-approvalgrid .p-datatable-wrapper {
+  height: calc(100vh - 195px); /* for bps-approval grid */
+}
 .credential-tablegrid .p-datatable-wrapper {
-  height: calc(100vh - 195px); /* for bps-approval,view connection manager grid */
+  height: calc(100vh - 275px); /* for view connection manager grid */
+}
+.actionitems-grid .p-datatable-wrapper {
+  height: calc(100vh - 180px); /* for action items - connection manager grid */
 }
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
