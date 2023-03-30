@@ -151,8 +151,8 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "secretKey",
-            DisplayName: "Secret Key",
+            ColumnName: "clientSecret",
+            DisplayName: "Client Secret",
             ShowFilter: true,
             ShowGrid: true,
             filterWidget: "normal",
