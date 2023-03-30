@@ -102,11 +102,11 @@ span.lowimp {
 .pinf.taskresource {
   width: 25% !important;
 }
-.taskduedate .p-inplace-content input.form-control {
+.taskduedate input.form-control {
   padding: 4px !important;
   height: 30px !important;
-  background-color: #fff !important;
-  border: 1px solid #d0d0d0 !important;
+  /* background-color: #fff !important;
+  border: 1px solid #d0d0d0 !important; */
 }
 
 .editfields {

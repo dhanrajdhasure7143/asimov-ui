@@ -3,14 +3,14 @@
     <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="addNewCard()">
       <div class="row">
         <div class="col-md-6 form-group pl-0">
-          <label for="cardHolder">Cardholder Name<span class="star">*</span></label>
+          <label  class="label-control" for="cardHolder">Cardholder Name<span class="star">*</span></label>
           <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
           <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
                       class='required'>Cardholder Name is Required *</span> 
         </div>
         <div class="col-md-6 form-group pr-0">
-          <label for="cardNumber">Card Number</label>
+          <label  class="label-control" for="cardNumber">Card Number</label>
           <div class="d-flex">
             <input  type="text" class="cc-number form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
                     required/>
@@ -22,14 +22,14 @@
           </div>
         </div>
         <div class="col-md-6 form-group pl-0">
-          <label for="month">Month (MM)</label>
+          <label  class="label-control" for="month">Month (MM)</label>
           <select id="month" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
             <option  [value]="undefined" disabled hidden>Select Month</option>
             <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
           </select>
         </div>
         <div class="col-md-6 form-group pr-0">
-          <label for="year">Year (YYYY)</label>
+          <label  class="label-control" for="year">Year (YYYY)</label>
           <select id="year" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
             <option  [value]="undefined" disabled hidden>Select Year</option>
             <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
@@ -37,7 +37,7 @@
           </select>
         </div>
         <div class="col-md-6 form-group pl-0">
-          <label for="cvv">CVV<span class="star">*</span></label>
+          <label  class="label-control" for="cvv">CVV<span class="star">*</span></label>
           <input type="password" class="form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
           <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
           class='required'>CVV is Required *</span> 
