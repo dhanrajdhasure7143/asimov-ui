@@ -82,27 +82,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectorForm = this.formBuilder.group({
-      actionName: ["", Validators.compose([Validators.required])],
+      actionName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),Validators.maxLength(50)])],
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
-      endPoint: ["", Validators.compose([Validators.required])],
+      endPoint: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
       authType: ["", Validators.compose([Validators.required])],
       icon: ["", Validators.compose([])],
       grantType: ["", Validators.compose([Validators.required])],
-      code: ["", Validators.compose([Validators.required])],
-      redirect_uri: ["", Validators.compose([Validators.required])],
-      userName: ["", Validators.compose([Validators.required])],
-      password: ["", Validators.compose([Validators.required])],
-      clientId: ["", Validators.compose([Validators.required])],
-      clientSecret: ["", Validators.compose([Validators.required])],
-      verifier: ["", Validators.compose([Validators.required])],
-      headerKey: ["", Validators.compose([Validators.required])],
-      headerValue: ["", Validators.compose([Validators.required])],
-      headerCheck: ["", Validators.compose([Validators.required])],
-      request: ["", Validators.compose([])],
+      code: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      redirect_uri: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      userName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      password: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      clientId: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      clientSecret: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      verifier: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      request: ["", Validators.compose([Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
       response: ["", Validators.compose([])],
-      scope: ["", Validators.compose([])],
-      refreshToken: ["", Validators.compose([Validators.required])],
+      scope: ["", Validators.compose([Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      refreshToken: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
     });
 
     this.methodTypes();
@@ -210,7 +207,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
               id: this.selectedId,
               name: this.selectedConnector },
           });
-          },3500)
+          },1500)
       } else {
         this.spinner.hide();
         (err) => {
@@ -713,7 +710,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
                   name: this.selectedConnector,
                 },
             });
-            },3500)
+            },1500)
         
         } else {
           this.spinner.hide();

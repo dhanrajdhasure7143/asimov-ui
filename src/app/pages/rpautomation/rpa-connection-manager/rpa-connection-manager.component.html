@@ -80,6 +80,9 @@
                                 <span *ngIf="createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Maximum of 50 characters
                                 </span>
+                                <span *ngIf="createConnectorForm.get('name').hasError('pattern')" class="required">Only spaces
+                                    between words are allowed.
+                                </span>
                             </div> 
                             <!-- <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="userName"> Authorization Type <span class="star">*</span></label>
