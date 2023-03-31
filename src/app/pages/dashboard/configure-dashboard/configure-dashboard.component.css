@@ -27,7 +27,7 @@
 	margin-bottom: 20px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
-    border-radius: 5px;
+    border-radius: 6px;
 }
 .graph {
 	height: 380px;
@@ -123,7 +123,7 @@ button.btn.bluebg-button {
     background: #F9F9F9;
     border: 1px dashed #979797;
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.06);
-    border-radius: 5px;
+    border-radius: 6px;
     display: flex;
     padding: 12px 10px;
 	margin-bottom: 15px;

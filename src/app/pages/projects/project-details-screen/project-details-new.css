@@ -223,7 +223,7 @@ span.lowimp {
 }
 h4.colheads.chatheader {
     padding: 10px 20px;
-    border-bottom: 1px solid #d0d0d0;
+    /* border-bottom: 1px solid #d0d0d0; */
     margin-bottom: 0px;
 }
 .pinnedmsgs {
@@ -253,7 +253,7 @@ h4.colheads.chatheader {
     background-color: #fff;
     border: 1px solid #d0d0d0;
     color: #232832;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 0px 5px;
     margin: 10px 0px 5px;
     padding-left: 0px;
@@ -347,7 +347,7 @@ input.msgip {
     resize: none;
     box-shadow: none;
     height: 100%;
-    background-color: #fff;
+    background-color: #fff !important;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext:focus {
     border-color: #4AB0F5;

@@ -24,11 +24,11 @@
                 </div>
                 <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" />
                 <div class="rpa-home" style="display:none">
-                    <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
+                    <div class="rpa-home-block" id="createbot-Home" style="border-radius: 6px;" *ngIf="this.isButtonVisible || enablecreatebot">
                         <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;">
                         <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                     </div>
-                    <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
+                    <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 6px;" *ngIf="this.isButtonVisible || enableConfiguration">
                         <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;">
                         <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
                     </div>

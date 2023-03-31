@@ -45,7 +45,7 @@ border: 1px solid #979797 !important;
   margin-bottom: 30px !important;
   padding: 15px 15px 20px !important;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #e5e5e5;
 }
 .input-fields label{
@@ -60,7 +60,7 @@ border: 1px solid #979797 !important;
   color: #232832;
   height: 40px;
   /* background: transparent; */
-  border-radius: 3px !important;
+  border-radius: 6px !important;
   width: 90%;
 }
 .input-fields i{
@@ -117,7 +117,7 @@ border: 1px solid #979797 !important;
 .box_shadw{
   border: 1px solid #e5e5e5;
   background: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 15px;
 }
 .box_shadw h2{
@@ -286,7 +286,7 @@ border: 1px solid #979797 !important;
 }
 .hrsInput input{
   border: 1px solid lightgray !important;
-  border-radius: 5px !important;
+  border-radius: 6px !important;
   padding: 3px !important;
 }
 .hrsDropdwn{

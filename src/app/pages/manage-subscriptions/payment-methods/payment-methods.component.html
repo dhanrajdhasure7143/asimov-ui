@@ -15,12 +15,18 @@
                             <b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
                             <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
                         </p>
-                        <p class="cardholderName">
-                            <b>Card Holder's Name : {{cardData.name}}</b>
-                        </p>
-                        <p id="">
-                            <b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b>
-                        </p>
+                        <div>
+                            <label class="label-control">Card Holder's Name :</label>
+                            <p class="cardholderName">
+                                <b>{{cardData.name}}</b>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="label-control">Expires : </label>
+                            <span>
+                                <b> {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b>
+                            </span>
+                        </div>
                         <div class="row justify-content-end">
                             <button class="btn inactive-card" *ngIf='cardData.defaultSource === true' >Default</button>
                             <button class="btn new-cancelbtn" *ngIf='!cardData.defaultSource' (click)="confrmDeleteCard(cardData)">Remove</button>
