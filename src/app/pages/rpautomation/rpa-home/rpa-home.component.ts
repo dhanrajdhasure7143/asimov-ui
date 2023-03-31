@@ -616,6 +616,7 @@ importBot()
     isPredefined:this.importBotJson.isPredefined,
     categoryId:this.importBotForm.get("categoryId").value
   }
+  this.modalRef.hide();
   this.spinner.show();
   this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
     if(response.errorMessage==undefined)
@@ -624,7 +625,7 @@ importBot()
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
       this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
-        this.modalRef.hide();
+        
         Swal.fire("Success","Bot imported successfully","success");
         this.getallbots();
       })
