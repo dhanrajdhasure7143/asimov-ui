@@ -95,7 +95,12 @@ export class RpaHomeComponent implements OnInit {
     { field: '', header: 'Actions' }
   ];
   EdithiddenPopUp:boolean=false;
-
+  importBotForm=new FormGroup({
+    botName:new FormControl("", Validators.compose([Validators.required,, Validators.pattern("^[a-zA-Z0-9_-]*$")])),
+    categoryId:new FormControl("", Validators.compose([Validators.required])),
+    environmentId:new FormControl("", Validators.compose([Validators.required]))
+  })
+  importBotJson:any= undefined;
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
@@ -385,13 +390,28 @@ export class RpaHomeComponent implements OnInit {
   }
 
   upload(file) {
-    var extarr = file.name.split('.')
-    var ext = extarr.reverse()[0]
+    var reader = new FileReader();
+    var extarr = file.name.split('.');
+    var ext = extarr.reverse()[0];
+    console.log(ext)
     this.file_error = "";
-    if (ext == "sql")
-      this.importfile = file
+    if (ext == "json")
+    {
+      reader.readAsText(file);
+      this.spinner.show();
+      reader.onload = (e) => {
+        let botDetails=(JSON.parse(reader.result.toString()));
+        console.log(botDetails)
+        this.importBotJson=botDetails;
+        this.importBotForm.get("botName").setValue(botDetails.botName);
+        this.validateBotName();
+      }
+      
+    }
     else
       this.file_error = "Invalid file format, only it allows .sql format"
+
+
   }
 
   exportbot(bot) {
@@ -538,6 +558,109 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
+  exportBot(botId)
+  {
+    this.rest.getbotdata(botId).subscribe((response:any)=>{
+      if(response.errorMessage==undefined)
+      {
+        let botDetails:any={
+          botName:response.botName,
+          botDescription:response.description,
+          department:response.department,
+          tasks:[...response.tasks.map((item:any)=>{
+            delete item.botTId;
+            delete item.version;
+            delete item.botId;
+            delete item.versionNew;
+            item.attributes=item.attributes.map((attrItem)=>{
+              delete attrItem.botTaskId;
+              delete attrItem.attrId;
+              delete attrItem.botId;
+              return attrItem;
+            })
+            return item;
+          })],
+          sequences:[...response.sequences.map((item:any)=>{
+            delete item.botId;
+            delete item.version;
+            delete item.sequenceId;
+            return item;
+          })],
+          envIds:[],
+          versionType:'',
+          botType:0,
+          botMainSchedulerEntity:null,
+          comments:""        
+        };
+        this.downloadJson(botDetails)
+      } else {
+
+      }
+    })
+  }
+
+  filteredEnvironments:any=[];
+  filterEnvironments(categoryId)
+  {
+    this.importBotForm.get("environmentId").setValue("");
+    console.log(categoryId)
+    this.filteredEnvironments=this.environments.filter(item=>item.categoryId==categoryId);
+    console.log(this.filteredEnvironments)
+  }
+importBot()
+{
+  let basicBotDetails={
+    botName:this.importBotForm.get("botName").value,
+    botDescription:this.importBotJson.botDescription,
+    department:this.importBotForm.get("categoryId").value,
+    isPredefined:this.importBotJson.isPredefined,
+    categoryId:this.importBotForm.get("categoryId").value
+  }
+  this.modalRef.hide();
+  this.spinner.show();
+  this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
+    if(response.errorMessage==undefined)
+    {
+      this.importBotJson["botId"]=response.botId;
+      this.importBotJson["botName"]=this.importBotForm.get("botName").value;
+      this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+      (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
+        
+        Swal.fire("Success","Bot imported successfully","success");
+        this.getallbots();
+      })
+    }
+  })
+}
+
+
+  validateBotName() {
+    let botname = this.importBotForm.get("botName").value;
+    this.rest.checkbotname(botname).subscribe(data => {
+      this.spinner.hide()
+      if (data == true) {
+        this.checkbotname = false;
+      } else {
+        this.checkbotname = true;
+      }
+    })
+  }
+
+  downloadJson(payload:any)
+  {
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
+    let dlAnchorElem = document.createElement('a');
+    dlAnchorElem.setAttribute("href",dataStr);
+    dlAnchorElem.setAttribute("download", payload.botName+".json");
+    dlAnchorElem.click();
+  }
+
+
+
+  get importedBotName()
+  {
+    return this.importBotForm.get("botName").value;
+  }
 }
 
 

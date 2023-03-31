@@ -202,3 +202,5 @@ button:disabled {
 .cursor:hover{
   cursor: default;
 }
+
+input[type=file]::file-selector-button { margin-right: 20px; border: none; background: #098de6; margin-bottom: 10px !important; border-radius: 4px; color: #fff; cursor: pointer; transition: background .2s ease-in-out; } input[type=file]::file-selector-button:hover { background: #098de6; }
