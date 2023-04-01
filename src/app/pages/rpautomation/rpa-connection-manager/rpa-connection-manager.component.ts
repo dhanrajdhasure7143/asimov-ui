@@ -111,7 +111,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity:'error', 
               summary: 'Error', 
-              detail: "Unable to delete Connector !!"
+              detail: "Please Delete the Action Items !!"
             });
             this.spinner.hide();
             this.getAllConnections();
@@ -127,7 +127,7 @@ export class RpaConnectionManagerComponent implements OnInit {
 
   viewConnector() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name },
+      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name, icon : this.selectedData[0].connectionLogo },
     });
   }
 

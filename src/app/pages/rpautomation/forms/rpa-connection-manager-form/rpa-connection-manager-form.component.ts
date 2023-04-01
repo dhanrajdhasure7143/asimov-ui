@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators,} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
-import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { MessageService } from "primeng/api";
 
@@ -48,6 +47,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isHeader : boolean = false;
   isReqDisable : boolean = false;
   isRefresh: boolean = false;
+  icon: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,6 +62,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
+      this.icon = data.logo
       if(this.isCreate == false){
         this.isDisabled = true;
       } else {
@@ -125,7 +126,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo==undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -169,7 +170,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id":"",
         "name" : this.connectorForm.value.actionName,
-        "actionLogo":this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo==undefined ? this.icon :new String(this.action_logo.split(",")[1]),
         "actionType" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
@@ -673,7 +674,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         id: this.action_id,
         name: this.connectorForm.value.actionName,
-        actionLogo: this.action_logo==undefined?"":new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo==undefined ? this.actionData["actionLogo"] :new String(this.action_logo.split(",")[1]),
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
         description: "",
