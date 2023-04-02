@@ -21,6 +21,7 @@ export class RpaActionItemsComponent implements OnInit {
   selectedData:any;
   selectedName: any;
   table_searchFields:any[]=[];
+  selectedIcon: any;
 
   constructor(
     private router:Router,
@@ -34,6 +35,7 @@ export class RpaActionItemsComponent implements OnInit {
       this.route.queryParams.subscribe((data)=>{
         this.selectedId = data.id;
         this.selectedName = data.name
+        this.selectedIcon = data.icon
       })
     }
 
@@ -164,6 +166,6 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   addNewAction(){
-    this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, connector_name : this.selectedName, create:true}})
+    this.router.navigate(['/pages/rpautomation/connection'],{queryParams:{id:this.selectedId, connector_name : this.selectedName, logo : this.selectedIcon ,create:true}})
   }
 }

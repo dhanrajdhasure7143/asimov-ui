@@ -58,7 +58,7 @@ span.testtooltip:before {
   }  
   .hrsInput input{
     border: 1px solid lightgray !important;
-    border-radius: 5px !important;
+    border-radius: 6px !important;
     padding: 3px !important;
   }
   .hrsDropdwn{
@@ -123,8 +123,8 @@ span.testtooltip:before {
   width: auto;
 }
 .bps-float button:hover {
-  background-color: #00a0e3;
-  border-radius: 3px;
+  background-color: #098de6;
+  border-radius: 6px;
 }
 .bps-float button:hover img {
   -webkit-filter: brightness(10) !important;

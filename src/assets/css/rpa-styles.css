@@ -539,7 +539,7 @@ cron-editor > div > div.card-header > ul > li > a.nav-link
 .ngx-timepicker {
   height: 40px !important;
   border: 1px solid #979797 !important;
-  border-radius: 3px !important;
+  border-radius: 6px !important;
 }
 /* New Styles for Scheduler Overlay  */
 

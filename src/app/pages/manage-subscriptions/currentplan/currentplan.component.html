@@ -141,16 +141,15 @@
 
 
 <div class="col-md-12 pr-0 packagecontentdiv" *ngIf="revieworder">
-  <div class="">
-    <h4 id="planHeading">Features will be enabled based on the selected plan</h4>
-    <h5 id="ctr">Review your order to proceed payment</h5>
-    <!-- <p class="pay_titles" >Card Details<button class="btn"
-                (click)="editCardDetails()" title="Edit card"></button>
-            </p> -->
-  </div>
-  <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
+  <div class="maindivfoprm">
+    <div class="form-group">
+      <h4 id="planHeading">Features will be enabled based on the selected plan</h4>
+      <h5 id="ctr">Review your order to proceed payment</h5>
+      <!-- <p class="pay_titles" >Card Details<button class="btn"
+                  (click)="editCardDetails()" title="Edit card"></button>
+              </p> -->
+    </div>
     <div class="carddetail row">
-      <div class="col-sm-6 pl-0 row">
         <div class="col-6 pl-0">
           <label  class="label-control" for="cardHolder">Cardholder Name</label>
           <p>{{cardDetails[0].name}}</p>
@@ -178,22 +177,20 @@
                               <span *ngIf="error" class="alert-danger text-center coupon_alert">{{error}}</span>
                               </div>
           </div> -->
-      </div>
-      <div class="col-6 pr-0 row">
         <div class="col-12 p-0">
           <h5 class="select_label">Subscription Details</h5>
         </div>
-        <div class="col-4 pl-0">
+        <div class="col-6 pl-0">
           <label  class="label-control" class="plan_label">Plan</label>
           <p>{{name}}
             <button class="backbtn" (click)="chooseplan()"><a class="link">Change plan</a></button>
           </p>
         </div>
-        <div class="col-4 p-0">
+        <div class="col-3 pr-0">
           <label  class="label-control">Billing Period</label>
           <p>{{selected_plans.term}}</p>
         </div>
-        <div class="col-4 pr-0">
+        <div class="col-3 pl-0">
           <label  class="label-control">Plan Amount</label>
           <p>${{selected_plans.amount}}</p>
         </div>
@@ -207,17 +204,12 @@
               <div class="col-md-1" >
                     <button class="btn buybtn" (click)="buyProductPlan(template); clicked = true;" [disabled]="isdiable || clicked">Buy Now</button>
               </div> -->
-      </div>
     </div>
-  <!-- </form> -->
-    <!-- <div class="pull-right">
-        <button class="btn buybtn"  (click)="buyProductPlan(template); clicked = true;"
-          [disabled]="isdiable || clicked">Buy Now</button>
-      </div> -->
     <div class="row justify-content-end">
-        <!-- <button class="btn buybtn"  (click)="chooseplan()">Choose Plan</button> -->
+      <!-- <button class="btn buybtn"  (click)="chooseplan()">Choose Plan</button> -->
       <button class="btn bluebg-button buybtn" [disabled]="isdiable" (click)="buyProductPlan(template)">Buy Now</button>
     </div>
+  </div>
 </div>
 
 
@@ -229,27 +221,23 @@
       </button> -->
   </div>
 
-  <div class="modal-body modelprbody resourcescreen">
+  <div class="modal-body modelprbody">
     <table class="sub-confirmation">
       <tr>
-        <td>Product</td>
-        <td> : </td>
+        <td><b>Product : </b></td>
         <td>{{productId}} </td>
       </tr>
       <tr>
-        <td>Plan</td>
-        <td> : </td>
+        <td><b>Plan : </b></td>
         <td *ngIf="selected_plans.nickName=='Standard'">Free Tier</td>
         <td *ngIf="selected_plans.nickName=='Professional'">{{selected_plans.nickName}}</td>
       </tr>
       <tr>
-        <td>Order Id</td>
-        <td> :</td>
+        <td><b>Order Id : </b></td>
         <td>{{subscriptionDetails.id}} </td>
       </tr>
       <tr>
-        <td>Subscription Id</td>
-        <td> :</td>
+        <td><b>Subscription Id : </b></td>
         <td>{{subscriptionDetails.subscriptionId[0]}}</td>
       </tr>
       <!-- <tr>
@@ -258,16 +246,13 @@
               <td></td>
             </tr> -->
       <tr>
-        <td>Period</td>
-        <td> :</td>
+        <td><b>Period : </b></td>
         <td> {{selected_plans.term}}</td>
       </tr>
     </table>
     <!-- </div> -->
   </div>
   <div class="modal-footer modelprfooter">
-    <div class="col-md-12 confirmationmsg">
-      <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
-    </div>
+    <button class="btn bluebg-button" (click)='close_modal()'>Ok</button>
   </div>
 </ng-template>
