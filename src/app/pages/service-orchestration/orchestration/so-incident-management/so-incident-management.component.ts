@@ -37,9 +37,7 @@ export class SoIncidentManagementComponent implements OnInit {
           this.incidentFlag = response.configuration;
           if (response.configuration == true) {
             let modifiedResponse = response.incidents.map((item: any) => {
-              item["convertedCreatedTime"] = moment(item.createdAt).format(
-                "MMM, DD, yyyy, hh:mm A"
-              );
+              item["convertedCreatedTime"] = new Date(item.createdAt)
               return item;
             }).sort((a,b)=>Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0,50);
             let statusBasedPieData:any=[{
@@ -108,7 +106,7 @@ export class SoIncidentManagementComponent implements OnInit {
               ShowGrid: true,
               ShowFilter: true,
               filterWidget: "normal",
-              filterType: "text",
+              filterType: "date",
               sort: true,
               multi: false,
             },
@@ -161,6 +159,7 @@ export class SoIncidentManagementComponent implements OnInit {
             }, 100);
           }
         }
+        this.spinner.hide();
       },
       (err) => {
         this.loadingFlag = false;

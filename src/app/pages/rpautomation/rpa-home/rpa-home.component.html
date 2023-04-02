@@ -112,9 +112,10 @@
                                     <td *ngFor="let col of columns">
                                         <span *ngIf="col.field =='description'">{{rowData[col.field]?fitTableView(rowData['description']):'-'}}</span>
 
-                                        <span *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'&& col.field !='description'">
+                                        <span *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'&& col.field !='description' && col.field != 'last_modified_date'">
                                             {{rowData[col.field]?rowData[col.field]:'-'}}
                                         </span>
+                                        <span *ngIf="col.field == 'last_modified_date'">{{rowData[col.field]| date:'MMM d, y H:mm'}}</span>
                                         <span *ngIf="col.header == 'Status'">
                                             <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
                                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">

@@ -14,9 +14,6 @@ import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
@@ -64,9 +61,6 @@ export class UploadComponent implements OnInit {
   tableList:any = [];
   isTableEnable:boolean=false;
   sortIndex:number=2;
-  dataSource:MatTableDataSource<any>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ["piId","createdTime","piName","categoryName" ,"status","action"];
   customUserRole: any;
   enableuploadbuttons: boolean=false;
@@ -84,11 +78,18 @@ export class UploadComponent implements OnInit {
   @ViewChild('database') mytemplateForm : NgForm;
   modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
   noDataMessage: boolean;
-  columns_list:any[];
   table_searchFields:any[]=[];
   categories_list_new:any[]=[];
   hiddenPopUp:boolean=false;
   hiddenPopUp1: boolean=false;
+  columns_list:any=[] = [
+    {ColumnName: "piId",DisplayName: "Process ID",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+    {ColumnName: "convertedTime_new",DisplayName: "Created Date",ShowFilter: true, ShowGrid: true,filterWidget: "normal",filterType: "date",sort: true},
+    {ColumnName: "piName",DisplayName: "Process Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+    {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:this.categories_list_new},
+    {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
+  ];
 
 
   constructor(private router: Router,
@@ -137,65 +138,6 @@ export class UploadComponent implements OnInit {
       }
     })
 
-    this.columns_list = [
-      {
-        ColumnName: "piId",
-        DisplayName: "Process ID",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-      },
-      {
-        ColumnName: "convertedTime_new",
-        DisplayName: "Created Date",
-        ShowFilter: true,
-        ShowGrid: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-      },
-      {
-        ColumnName: "piName",
-        DisplayName: "Process Name",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "categoryName",
-        DisplayName: "Category",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "dropdown",
-        filterType: "text",
-        sort: true,
-        multi: false,
-        dropdownList:this.categories_list_new
-      },
-      {
-        ColumnName: "status",
-        DisplayName: "Status",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "action",
-        DisplayName: "Action",
-        ShowGrid: true,
-        ShowFilter: false,
-        sort: false,
-        multi: false,
-      },
-    ];
     this.table_searchFields=["piId","convertedTime_new","piName","categoryName","status"]
    
   }
@@ -583,11 +525,8 @@ export class UploadComponent implements OnInit {
       });
       this.process_graph_list = this.process_List.data
       this.process_graph_list.forEach(element => {
-        element['convertedTime_new']= moment(new Date(element.convertedTime)).format('lll')
+        element['convertedTime_new']= new Date(element.convertedTime)
       });
-      this.dataSource= new MatTableDataSource(this.process_graph_list);
-      this.dataSource.sort=this.sort;
-      this.dataSource.paginator=this.paginator;
       this.loader.hide();
       this.getAllCategories();
     })
@@ -643,24 +582,7 @@ export class UploadComponent implements OnInit {
       }else{
         this.categoryName=selected_category?selected_category:'allcategories';
       }
-      this.searchByCategory(this.categoryName);
     })
-  }
-
-  searchByCategory(category) {      // Filter table data based on selected categories
-    localStorage.setItem("pi_search_category",category)
-    if (category == "allcategories") {
-      var fulldata='';
-      this.dataSource.filter = fulldata;
-      // this.dataSource.paginator.firstPage();
-    }else{  
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        return data.categoryName === category;
-       };
-       this.dataSource.filter = category;
-      //  this.dataSource.paginator=this.paginator;
-      //  this.dataSource.paginator.firstPage();
-    }
   }
 
   onsearchSelect() {
@@ -942,25 +864,6 @@ getDBTables(){      //get DB tables list
     this.dbDetails.hostName=''
     this.mytemplateForm.controls["hostname"].markAsUntouched();
     this.onChangeValues();
-  }
-
-  applyFilter(event: Event) {       // search entered process ids from search input
-    if(this.categories_list.length > 1)
-    this.categoryName = 'allcategories';
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource= new MatTableDataSource(this.process_graph_list);
-    this.dataSource.filter = filterValue.trim().toString();
-    this.dataSource.paginator=this.paginator;
-    this.dataSource.sort=this.sort;
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-    if(this.dataSource.filteredData.length == 0){
-      this.noDataMessage = true;
-    }
-    else{
-      this.noDataMessage=false;
-    }
   }
 
   onRetryGraphGenerate(processDt){

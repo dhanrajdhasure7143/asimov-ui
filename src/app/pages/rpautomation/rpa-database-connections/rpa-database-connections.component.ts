@@ -94,7 +94,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.dbconnections.sort((a, b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dbconnections = this.dbconnections.map(item => {
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
+          item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp?item.createdTimeStamp:item.modifiedTimestamp)
           return item;
         })
       }      
@@ -146,7 +146,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           ShowGrid: true,
           ShowFilter: true,
           filterWidget: "normal",
-          filterType: "date",
+          filterType: "text",
           sort: true,
           multi: false,
         },
@@ -216,7 +216,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           ShowGrid: true,
           ShowFilter: true,
           filterWidget: "normal",
-          filterType: "text",
+          filterType: "date",
           sort: true,
           multi: false,
         },

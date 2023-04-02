@@ -91,6 +91,7 @@ export class RpaHomeComponent implements OnInit {
     { field: 'description', header: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true},
     { field: 'categoryName', header: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true },
     { field: 'version_new', header: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    // { field: 'last_modified_date', header: 'Last Modified',filterType:"date",filterWidget:"normal",ShowFilter:true },
     { field: 'botStatus', header: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
     { field: '', header: 'Actions' }
   ];
@@ -221,6 +222,7 @@ export class RpaHomeComponent implements OnInit {
           item["version_new"] = parseFloat(item.version_new)
           item["version_new"] = item.version_new.toFixed(1)
         }
+        item["last_modified_date"] = new Date(item.createdAt)
       })
       this.botlistitems = botlist;
       this.bot_list = botlist
@@ -229,7 +231,7 @@ export class RpaHomeComponent implements OnInit {
       this.spinner.hide();
     })
     this._selectedColumns = this.columns_list;
-    this.search_fields =['botName',"description","categoryName","version_new","botStatus","createdBy"]
+    this.search_fields =['botName',"description","categoryName","version_new","last_modified_date","botStatus","createdBy"]
   }
 
   createoverlay() {

@@ -72,8 +72,9 @@ export class BpsHomeComponent implements OnInit {
       field: "ntype",
       header: "Type",
       filterType: "text",
-      filterWidget: "normal",
+      filterWidget: "dropdown",
       ShowFilter: true,
+      dropdownList: ["BPMN", "CMMN","DMN"],
     },
     {
       field: "category",
@@ -81,6 +82,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
+      dropdownList:this.categories_list_new
     },
     {
       field: "processOwnerName",
@@ -111,11 +113,12 @@ export class BpsHomeComponent implements OnInit {
       ShowFilter: true,
     },
     {
-      field: "bpmnProcessStatus",
+      field: "status",
       header: "Status",
       filterType: "text",
-      filterWidget: "normal",
+      filterWidget: "dropdown",
       ShowFilter: true,
+      dropdownList: ["In Progress", "Pending","Approved"],
     },
     { field: "", header: "Message" },
     { field: "", header: "Actions" },
@@ -188,7 +191,7 @@ export class BpsHomeComponent implements OnInit {
       "version_new",
       "convertedModifiedTime_new",
       "approverName",
-      "bpmnProcessStatus",
+      "status",
     ];
   }
 
@@ -200,12 +203,12 @@ export class BpsHomeComponent implements OnInit {
         this.saved_diagramsList = res;
         this.saved_diagrams.map((item) => {
           item.xpandStatus = false;
-          item.convertedModifiedTime_new = moment(
-            new Date(item.convertedModifiedTime * 1000)
-          ).format("lll");
-          item.version_new = " V1." + item.version;
+          item.convertedModifiedTime_new = new Date(item.convertedModifiedTime * 1000);
+          item.version_new = "V1." + String(item.version);
+          item["status"] = this.getNotationStatus(item.bpmnProcessStatus)
           return item;
         });
+        console.log(this.saved_diagrams)
         // this.saved_diagrams.forEach(ele => {
         //   ele['eachObj']={
         //     // "bpmnXmlNotation":ele.bpmnXmlNotation,
@@ -297,13 +300,13 @@ export class BpsHomeComponent implements OnInit {
 
   getColor(status) {
     switch (status) {
-      case "PENDING":
+      case "PENDING APPROVAL":
         return "#E58600";
       case "REJECTED":
         return "red";
       case "APPROVED":
         return "green";
-      case "INPROGRESS":
+      case "In Progress":
         return "#E58600";
     }
   }

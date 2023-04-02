@@ -1435,10 +1435,13 @@ onKeyUpDiv(){
   this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
     this.recentActivityList=data;
     this.recentActivityList.map(item =>{
-      item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll")
+      // item["lastModifiedTimestamp_new"] = moment(item["lastModifiedTimestamp"]).format("lll");
+      // const formattedDate  = new Date(item["lastModifiedTimestamp"]);
+      item["lastModifiedTimestamp_new"] = new Date(item["lastModifiedTimestamp"]);
       item["replacedText"] = this.replaceEmailsWithNames(item["activity"], this.users_list);
       return item
     })
+    console.log(this.recentActivityList)
   }) 
   }
 

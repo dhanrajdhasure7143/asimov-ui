@@ -16,7 +16,6 @@ export class ProjectTaskListComponent implements OnInit {
   tasks_list: any[] = [];
   all_tasks_list: any[] = [];
   project_id: any;
-  columns_list: any[] = [];
   representatives: any[] = [];
   users_list: any = [];
   project_details: any;
@@ -33,6 +32,14 @@ export class ProjectTaskListComponent implements OnInit {
   project_name: any;
   params_data:any;
   existingUsersList:any[]=[];
+  columns_list:any[] = [
+    {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+    {ColumnName: "taskCategory",DisplayName: "Type",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "multiSelect",filterType: "text",sort: true,multi: false },
+    {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+    {ColumnName: "endDate_converted",DisplayName: "Due Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
+    { ColumnName: "action",DisplayName: "",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
+  ];
 
   constructor(
     private rest_api: RestApiService,
@@ -59,6 +66,7 @@ export class ProjectTaskListComponent implements OnInit {
     this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         this.users_list = res;
+        this.spinner.show();
         this.getTasksList();
       }
     });
@@ -75,72 +83,12 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   getTasksList() {
-    this.columns_list = [
-      {
-        ColumnName: "taskName",
-        DisplayName: "Task Name",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "taskCategory",
-        DisplayName: "Type",
-        ShowFilter: true,
-        ShowGrid: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "priority",
-        DisplayName: "Priority",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "multiSelect",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "assignedTo",
-        DisplayName: "Assigned To",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "endDate_converted",
-        DisplayName: "Due Date",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "action",
-        DisplayName: "",
-        ShowGrid: true,
-        ShowFilter: false,
-        sort: false,
-        multi: false,
-      },
-    ];
     this.getTheExistingUsersList();
     this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
       this.all_tasks_list = data;
       this.all_tasks_list.map((item) => {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
-        item["endDate_converted"] = moment(item.endDate).format("ll");
+        item["endDate_converted"] = new Date(item.endDate);
         item["assignedTo"] = this.getUserName(item.resources);
         item["representative"] = { name: item.priority };
         return item;
@@ -217,7 +165,6 @@ export class ProjectTaskListComponent implements OnInit {
       header: "Confirmation",
       icon: "pi pi-info-circle",
       accept: () => {
-        this.spinner.show();
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
           (res) => {

@@ -34,7 +34,18 @@
         <th style="flex:0.2 1 0;" class="arrowcol"></th>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
             {{col.header}}
-            <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
+            <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter> -->
+            <p-columnFilter *ngIf="col.filterWidget == 'normal'"
+            [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
+            display="menu"></p-columnFilter>
+        <p-columnFilter *ngIf="col.filterWidget == 'dropdown'"
+        [field]="col.field" matchMode="equals" [showMatchModes]="false"
+            [showOperator]="false" [showAddButton]="false" display="menu">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-dropdown [ngModel]="value" [options]="col.dropdownList"
+                    (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+            </ng-template>
+        </p-columnFilter>
             <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
       </tr>
@@ -47,7 +58,10 @@
           </a>
         </td>
         <td *ngFor="let col of columns">
-          <span>{{rowData[col.field]?rowData[col.field]:'-'}}</span>
+          <span [ngStyle]="{'color':getColor(rowData[col.field])}"*ngIf="col.field == 'bpmnProcessStatus'">{{rowData[col.field]}}</span>
+          <span *ngIf="col.field != 'bpmnProcessStatus'">
+            {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
+          </span>
         </td>
       </tr>
     </ng-template>
@@ -80,12 +94,12 @@
                     <td class="aprwkfl_actions">
                       <div class="aprwkfl_actions_icons">
                         <button  class="btn" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1" pTooltip="Approve" tooltipPosition="bottom">
                         </button><!-- approval_msg.length==0 ||  -->
                         <button  class="btn" id="btn_deny" (click)="denyDiagram(each_past_process, rowData)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1" pTooltip="Reject" tooltipPosition="bottom">
                         </button><!-- approval_msg.length==0 || -->
-                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process,expanded)">
+                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="bottom">
                       </div>  
                     </td>
                   </tr>
