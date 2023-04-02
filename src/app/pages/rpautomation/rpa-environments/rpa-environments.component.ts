@@ -97,7 +97,8 @@ export class RpaenvironmentsComponent implements OnInit {
         this.environments = response.map(item => {
           item["checked"] = false;
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
+          // item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
+          item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp)
           item["deploy_status_new"] = item.deployStatus == true?"Yes":"No"
           item["activeStatus_new"] = item.activeStatus == 7? "Active":"Inactive"
           item["password_new"] = "******"
@@ -117,6 +118,7 @@ export class RpaenvironmentsComponent implements OnInit {
           b = new Date(b.activeTimeStamp);
           return a > b ? -1 : a < b ? 1 : 0;
         });
+        console.log(this.environments)
         this.spinner.hide();
       });
   }

@@ -95,7 +95,7 @@ inputNumberOnly(event){
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll');
+              item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp);
               item["password_new"]=("*").repeat(10);
               if(item["clientId"]!=null && item["clientId"]!="")
               item["clientId"]= item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length);
@@ -187,7 +187,7 @@ inputNumberOnly(event){
             ShowGrid: true,
             ShowFilter: true,
             filterWidget: "normal",
-            filterType: "date",
+            filterType: "text",
             sort: true,
             multi: false,
           },
@@ -197,7 +197,7 @@ inputNumberOnly(event){
             ShowGrid: true,
             ShowFilter: true,
             filterWidget: "normal",
-            filterType: "text",
+            filterType: "date",
             sort: true,
             multi: false,
           },
