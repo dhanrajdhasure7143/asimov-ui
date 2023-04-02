@@ -141,8 +141,8 @@ input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calen
   font-weight: 500;
 }
 body .leftfporm select {
-  border: 1px solid #D1D1D1 !important;
-  border-radius: 2px !important;
+  border: 1px solid #979797 !important;
+  border-radius: 6px !important;
   width: 100% !important;
 }
 .leftfporm {
@@ -163,10 +163,10 @@ body .leftfporm select {
 }
 
 .RPA.table select.form-control {
-  border: 1px solid #ddd !important;
+  border: 1px solid #979797 !important;
   width: 100%;
   padding-right: 30px !important;
-  border-radius: 2px !important;
+  border-radius: 6px !important;
 }
 
 .sosearchfield {
