@@ -69,10 +69,10 @@
                                         [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
                                         display="menu"></p-columnFilter>
                                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
-                                        field="category" matchMode="equals" [showMatchModes]="false"
+                                    [field]="col.field" matchMode="equals" [showMatchModes]="false"
                                         [showOperator]="false" [showAddButton]="false" display="menu">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                            <p-dropdown [ngModel]="value" [options]="categories_list_new"
+                                            <p-dropdown [ngModel]="value" [options]="col.dropdownList"
                                                 (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
@@ -92,12 +92,12 @@
 
                                     <span
                                         *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'">
-                                        {{rowData[col.field]?rowData[col.field]:'-'}}
+                                        {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
                                     </span>
                                     <span *ngIf="col.header == 'Status'">
                                         <div [ngStyle]="{'color':getColor(rowData[col.field])}"
                                             [class.pending_value_properties]="rowData[col.field]=='PENDING'">
-                                            {{getNotationStatus(rowData[col.field])}}</div>
+                                            {{rowData[col.field]}}</div>
                                     </span>
                                     <span *ngIf="col.header == 'Message'">
                                         <div>
