@@ -942,7 +942,7 @@ urlify(text) {
 
 sendMessage(item,type) {
   let message
-  if(type != 'pinned' && this.typedMessage.length ==0) return
+  if(type == 'save' && this.typedMessage.length ==0) return
   if(type == 'save'){
     const regex = /@(\w+)\s(\w+)/g;
     let messageInput1= new String(this.typedMessage);
