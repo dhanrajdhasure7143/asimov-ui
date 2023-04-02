@@ -53,12 +53,12 @@ export class BpmnDiagramListComponent implements OnInit {
   _selectedColumns: any[];
   categories_list_new:any[]=[];
   columns_list = [
-  { field: 'processIntelligenceId', header: 'Process ID'},
-  { field: 'bpmnProcessName', header: 'Process Name'},
-  { field: 'convertedModifiedTime', header: 'Modified Time'},
-  { field: 'userName', header: 'Resource'},
-  { field: 'role', header: 'Role'},
-  { field: 'bpmnProcessStatus', header: 'Status'},
+    { field: 'processIntelligenceId', header: 'Process ID', filterType: "text",filterWidget: "normal"},
+    { field: 'bpmnProcessName', header: 'Process Name',filterType: "text",filterWidget: "normal"},
+    { field: 'convertedModifiedTime', header: 'Modified Time',filterType: "date",filterWidget: "normal"},
+    { field: 'userName', header: 'Resource',filterType: "text",filterWidget: "normal"},
+    { field: 'role', header: 'Role',filterType: "text",filterWidget: "normal"},
+    { field: 'bpmnProcessStatus', header: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Pending","Approved"]},
 ];
 
   constructor(private dt: DataTransferService,
@@ -103,10 +103,7 @@ export class BpmnDiagramListComponent implements OnInit {
   }
   expandPanel(i, each,expanded): void {
     if(!expanded){
-      console.log(each)
     let eachBPMN = each.bpmnProcessInfo[0];
-    console.log(eachBPMN)
-
     this.selected_processInfo = eachBPMN;
     let bpmnXmlNotation = this.selected_processInfo["bpmnXmlNotation"];
     let approval_msg = this.selected_processInfo["reviewComments"];
@@ -214,21 +211,20 @@ this.selectedrow =i;
     }
   }
    bpmnlist() {
+    this._selectedColumns = this.columns_list;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.loader.hide();
       this.griddata = data;
-      console.log(data,"responsedata")
       this.griddata.forEach(ele=>{
         ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
         ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;
         ele["bpmnProcessStatus"]=ele.bpmnProcessInfo[0].bpmnProcessStatus;
-        ele["convertedModifiedTime"]=moment(new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000)).format('lll');
+        ele["convertedModifiedTime"]=new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000);
         ele["userName"]=ele.bpmnProcessInfo[0].userName;
         // ele["role"]=ele.role;
       })
       // this.assignPagenation(this.griddata);
       // this.griddata.map(item => {item.xpandStatus = false;return item;})
-      this._selectedColumns = this.columns_list;
       this.search_fields =['processIntelligenceId',"bpmnProcessName","bpmnProcessStatus","convertedModifiedTime","userName","role"]
       this.disable_panels();
      });

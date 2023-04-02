@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
     this.rest_api.getDashBoardsList().subscribe((res:any)=>{
       let dashbordlist:any=res.data;
       let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
-      if(dashbordlist.length == 0){
+      if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
         this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
       }else{
         const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});

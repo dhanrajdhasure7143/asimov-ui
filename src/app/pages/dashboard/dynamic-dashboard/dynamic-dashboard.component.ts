@@ -7,15 +7,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { Inplace } from "primeng/inplace";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ChartDataset, ChartOptions, TooltipItem } from "chart.js";
-interface City {
-  name: string,
-  code: string
-}
-interface People {
-  firstname?: string;
-  lastname?: string;
-  age?: string;
-}
+
 
 @Component({
   selector: "app-dynamic-dashboard",
@@ -23,10 +15,6 @@ interface People {
   styleUrls: ["./dynamic-dashboard.component.css"],
 })
 export class DynamicDashboardComponent implements OnInit {
-  cities: City[];
-
-    selectedCities: City[];
-  tableData: People[] = [];
   cols: any[] = [];
   @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
@@ -55,6 +43,7 @@ export class DynamicDashboardComponent implements OnInit {
   dynamicFormConfiure: any;
   isDialogShow:boolean=false;
   entered_name:string='';
+  chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -65,13 +54,6 @@ export class DynamicDashboardComponent implements OnInit {
     private loader: LoaderService,
     private confirmationService: ConfirmationService
   ) {
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-  ];
     this.activeRoute.queryParams.subscribe((res) => {
       this._paramsData = res;
       // this.selectedDashBoardName= this._paramsData.dashboardName
@@ -357,12 +339,10 @@ export class DynamicDashboardComponent implements OnInit {
 
   setDefaultDashboard(dashboard) {
     // this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
-    console.log(this.selectedDashBoard)
     dashboard["defaultDashboard"] = true;
     this.rest
       .updateDashBoardNamed(dashboard)
       .subscribe((response: any) => {
-        console.log(response)
         this.getListOfDashBoards();
         this.messageService.add({severity: "success",summary: "Success",detail: "Updated Successfully !!"});
       },err=>{
@@ -440,6 +420,19 @@ export class DynamicDashboardComponent implements OnInit {
       this.dashboardData.metrics = data.metrics;
       this.dashboardData.widgets = data.widgets;
       this.dashboardData.widgets.forEach(element => {
+        console.log(element)
+        if(element.widget_type!= "Table"){
+          element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+          element.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
+          element.widgetData.datasets[0]["fillColor"] = this.chartColors
+          element.widgetData.datasets[0]["strokeColor"] = this.chartColors
+          element.widgetData.datasets[0]["highlightFill"] = this.chartColors
+          element.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+        }
+        if(element.widget_type == "Bar"){
+          element["chartOptions"].plugins.legend["display"]=false
+        }
+        
         if(element.childId == 2){
           element.chartOptions.plugins["tooltip"] = {
             callbacks: {
@@ -461,13 +454,20 @@ export class DynamicDashboardComponent implements OnInit {
         widget_type: "doughnut",
         name: "Bot Execution Status",
         widgetData: {
-          labels: ["Mac", "Windows", "Linux"],
-          datasets: [
-            {
-              data: [30, 70, 60, 8, 9, 9, 7, 6, 4, 3, 4, 6, 8],
-              label: "Dataset 1",
-            },
-          ],
+          labels: ["Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux"],
+          datasets : [
+              {
+                label: "My First dataset",
+                // backgroundColor: this.poolColors(20),
+                // // "hoverBackgroundColor": this.poolColors(10),
+                // fillColor: this.poolColors(20), 
+                // strokeColor: this.poolColors(20), 
+                // highlightFill: this.poolColors(20),
+                // highlightStroke: this.poolColors(20),
+                backgroundColor: ['#3B55E6', '#EB4E36', '#43D29E', '#32CBD8', '#E8C63B', '#28C63B', '#38C63B', '#48C63B', '#58C63B', '#68C63B', '#78C63B'],
+                  data : [28,48,40,19,96,87,66,97,92,85,28,48,40,19,96,87,66,97,92,85]
+              }
+          ]
         },
         chartOptions: {
           plugins: {
@@ -558,7 +558,7 @@ export class DynamicDashboardComponent implements OnInit {
         let res_data = response.data
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
       }
-      if(response.errorCode == 8010){
+      if(response.code == 8010){
         this.messageService.add({
           severity: "error",
           summary: "Error",

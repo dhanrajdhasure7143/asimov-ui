@@ -45,6 +45,8 @@ export class ConfigureDashboardComponent implements OnInit {
   isdefaultDashboard:any;
   searchText_metrics:any;
   searchText:any;
+  chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
+
  
   @Input()
 ngClass: string
@@ -257,9 +259,16 @@ ngClass: string
       this.widgetslist = data.widgetData;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-        if(item["widget_type"] != "table")
+        console.log(item)
+        if(item["widget_type"] != "Table"){
         // item["chartOptions"]["plugins"]["legend"]["display"]=false;
-        if(item.id != 2){
+        item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+        item.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
+        item.widgetData.datasets[0]["fillColor"] = this.chartColors
+        item.widgetData.datasets[0]["strokeColor"] = this.chartColors
+        item.widgetData.datasets[0]["highlightFill"] = this.chartColors
+        item.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+        if(item.widget_type != "Bar"){
               item["chartOptions"] = {
                 "plugins": {
                       "legend": {
@@ -293,6 +302,7 @@ ngClass: string
           }
         }
       }
+    }
         return item
       })
     
@@ -328,6 +338,14 @@ ngClass: string
       this.addedWidgets = this.dynamicDashBoard.widgets
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
+        if(item["widget_type"] != "Table"){
+          item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+          item.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
+          item.widgetData.datasets[0]["fillColor"] = this.chartColors
+          item.widgetData.datasets[0]["strokeColor"] = this.chartColors
+          item.widgetData.datasets[0]["highlightFill"] = this.chartColors
+          item.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+        }
         if(item.childId == 2){
           item.chartOptions.plugins["tooltip"] = {
             callbacks: {
@@ -352,7 +370,6 @@ ngClass: string
   }
   minimizeFullScreen(){
     this.isShowExpand = false;
-   
     this.panelSizes = [70, 30];
   }
   expandFullScreen(){

@@ -79,7 +79,7 @@
   height: calc(100vh - 320px);
 }
 .data_values{
-    border-radius: 3px;
+    border-radius: 6px;
     font-weight: normal;
     border: 1px solid #e0e0e0;
     cursor: pointer;

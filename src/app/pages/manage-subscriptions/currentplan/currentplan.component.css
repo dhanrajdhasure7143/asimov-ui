@@ -47,7 +47,7 @@ h4 .planName {
 .current-plan{
   background-color: red;
   color: white;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 11px !important;
   padding: 5px;
   float: right;
@@ -55,13 +55,13 @@ h4 .planName {
 .requested-plan{
   background-color: green;
   color: white;
-  border-radius: 3px !important;
+  border-radius: 6px !important;
   font-size: 11px !important;
   padding: 5px;
   float: right;
 }
 .selectplanbtn{
-  border-radius: 50px;
+  border-radius: 6px;
   width: 100px;
   padding: 5px !important;
   position: absolute;
@@ -74,9 +74,10 @@ h4 .planName {
 }
 .processes .limited {
     position: absolute;
-    right: 0px;
-    font-size: 9px;
-    color: rgb(173, 167, 167);
+    right: 15px;
+    font-size: 12px;
+    color: #535353;
+    font-weight: 700;
 }
 .plandetailscont h5 {
   font-weight: 700;
@@ -95,6 +96,7 @@ h4 .planName {
   color: #098de6 !important;
   cursor: pointer;
   margin-left: 8px;
+  font-size: 14px;
 }
 .errordiv{
   text-align: center;
