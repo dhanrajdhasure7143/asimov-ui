@@ -46,7 +46,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      name: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'), Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();
@@ -111,7 +111,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity:'error', 
               summary: 'Error', 
-              detail: "Unable to delete Connector !!"
+              detail: "Please Delete the Action Items !!"
             });
             this.spinner.hide();
             this.getAllConnections();
@@ -127,7 +127,7 @@ export class RpaConnectionManagerComponent implements OnInit {
 
   viewConnector() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name },
+      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name, icon : this.selectedData[0].connectionLogo },
     });
   }
 
