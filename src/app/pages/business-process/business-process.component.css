@@ -1,6 +1,6 @@
 .main-content-head .btn {
     min-width: auto;
-    padding-right: 0px !important;
+    /* padding-right: 0px !important; */
 }
 .module-heading-buttons .btn img {
     width: 20px;
@@ -49,15 +49,15 @@
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
-    border-radius: 3px;
+    border-radius: 6px;
     background-color: #098de6 !important;
     padding: 8px 12px !important;
     color: #fff;
     font-size: 15px !important;
 }
-.bps-upload:hover {
+/* .bps-upload:hover {
     background-color: #001c47 !important;
-}
+} */
 .bps-upload img {
     padding-right: 8px;
 }
@@ -80,12 +80,11 @@ span.label_icon.inpro-label {
     margin-left: 8px;
 }
 .upload_again_btn {
-    /* background-color: #f3f3f3 !important; */
-    background-color: #f9f9f9 !important;
+    background-color: #f3f3f3 !important;
 }
 .bps-float button:hover, button.editprimary:disabled {
     background-color: #098de6;
-    border-radius: 3px;
+    border-radius: 6px;
 }
 .bps-float button:hover img, button.editprimary:disabled img {
     filter: brightness(2.5) !important;

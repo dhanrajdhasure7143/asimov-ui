@@ -6,9 +6,12 @@
 }
 .btn-secondary {
 	height: 32px;
-    background-color: #E9E9E9;
+    height: 32px;
+    background-color: #E9E9E9 !important;
     margin-right: 10px;
     color: #232832 !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 .btn-dots {
 	background-color: #E9E9E9;
@@ -19,7 +22,7 @@
 	margin-bottom: 20px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
-    border-radius: 5px;
+    border-radius: 6px;
 }
 .graph {
 	height: 380px;

@@ -105,9 +105,9 @@ div[class^='diagram_container'] .djs-palette {
   color: var(--main-bluecolor) !important;
 }
 
-div[class^='diagram_container'] .djs-container svg {
-  /* margin-left: 75px; */
-}
+/* div[class^='diagram_container'] .djs-container svg {
+  margin-left: 75px;
+} */
 
 .spincenter {
   position: absolute;
@@ -178,7 +178,7 @@ button:disabled {
 }
 
 .eiap-btn {
-  border-radius: 4px !important;
+  border-radius: var(--main-borderradius) !important;
   margin-left: 10px;
  
   min-width: 90px;
@@ -1019,20 +1019,20 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin-left: -13px;
 }
 
-.table tbody tr:hover {
-  /* background: #fdf6d4 !important; */
+/* .table tbody tr:hover {
+  background: #fdf6d4 !important;
 }
 
 .table thead {
- /* background-color: #e8f7fd !important;
+ background-color: #e8f7fd !important;
   color: var(--main-bluecolor) !important;
   font-size: 14px !important;
   text-align: left !important;
   border-top: none !important;
   font-weight: 600;
   border-bottom: 1px solid #4a4a4a33 !important;
-  padding: 8px 10px; */
-} 
+  padding: 8px 10px;
+}  */
 
 .mat-table tbody,
 .mat-table tfoot,
@@ -1237,10 +1237,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #FFF !important;
 }
 
-.modelprhead,
+/* .modelprhead,
 .modelprbody {
   padding: 10px !important;
-}
+} */
 
 .required,
 .star {
@@ -1504,7 +1504,7 @@ select.small-input {
 .dpp-properties-panel [contenteditable] {
   border: 1px solid #ddd !important;
   padding: 6px 20px 6px 10px !important;
-  border-radius: 4px;
+  border-radius: var(--main-borderradius);
 }
 
 .bpp-properties-panel input:focus,
@@ -1548,7 +1548,7 @@ select.small-input {
   background: var(--main-bluecolor);
   border: medium none;
   color: #ffffff;
-  border-radius: 4px;
+  border-radius: var(--main-borderradius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1680,6 +1680,7 @@ span.star {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 2px;
+  color: #7d7d7d;
 }
 
 .form-group,.form-fields {
@@ -1690,7 +1691,7 @@ span.star {
   border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: unset !important;
   color: #232832 !important;
-  border-radius: 3px !important;
+  border-radius: var(--main-borderradius) !important;
   padding: 0.5rem !important;
   background-color: transparent !important;
 }
@@ -1795,7 +1796,7 @@ button.btn {
   border: medium none !important;
   font-size: 15px;
   /* margin-right: 10px !important; */
-  border-radius: 3px;
+  border-radius: var(--main-borderradius);
   color: var(--main-txtcolor);
   min-width: 75px;
   display: inline-flex;
@@ -1815,10 +1816,10 @@ button.btn.btn-primary[disabled] {
   color: #fff;
 }
 
-button.btn:hover {
-  /* background: #001c47 !important;
-  color: #fff !important; */
-}
+/* button.btn:hover {
+  background: #001c47 !important;
+  color: #fff !important; 
+} */
 
 .newpaginationdiv mat-form-field {
   margin: 0px 0px 0px 5px;
@@ -2210,7 +2211,7 @@ td.mat-cell span {
 .Admin-countrylist .iti.iti--allow-dropdown {
   display: flex;
   border: 1px solid var(--formfield-bordercolor);
-  border-radius: 3px;
+  border-radius: var(--main-borderradius);
   /* display: flex;
   background-color: #f6f6f6 !important;
   border: 1px solid #D1D1D1;
@@ -2376,7 +2377,7 @@ span.pdicon {
   background-color: #fff !important;
   margin-left: 13px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: var(--main-borderradius);
 }
 .custom-popup-content .mat-menu-content ngx-dropzone {
   height: 25px !important;
@@ -2423,7 +2424,7 @@ button.custom-popupbtn.mat-button {
   background-color: #fff !important;
   margin-right: 13px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: var(--main-borderradius);
 }
 .fulledit-custom-popup-content .mat-menu-content ngx-dropzone {
   height: 25px !important;
@@ -2528,7 +2529,6 @@ button.custom-popupbtn.mat-button {
   --main-bluecolor: #098de6;
   --secondary-bluecolor: #4AB0F5;
   --main-bgcolor: #f9f9f9;
-  --card-bordercolor: #d0d0d0;
   --formfield-bordercolor: #979797;
   --main-borderradius: 6px;
   --high-importance: #ea3d3d;
@@ -2658,7 +2658,7 @@ cursor: pointer;
   padding: 0px 30px 10px; */ 
   overflow: auto;
   position: relative;
-  margin-top: 10px;
+  margin-top: 15px;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -2759,7 +2759,7 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .tabs_screen .p-tabview-nav-content {
   border: 1px solid #D0D0D0 !important;
   background-color: #fff;
-  border-radius: 6px;
+  border-radius: var(--main-borderradius);
   height: 70px;
   width: 100%;
 }
@@ -3349,7 +3349,7 @@ button.btn.new-cancelbtn {
   align-items: center;
   justify-content: center;
   box-shadow: unset !important;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #d0d0d0;
   margin: 10px;
 }
@@ -3434,7 +3434,6 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles Start */
 .dropdown-primeng .p-dropdown {    
   border: 1px solid var(--formfield-bordercolor) !important;
-  /* border-radius: 6px; */
   box-shadow: none !important;
   width: 180px;
   height: 34px;
@@ -3452,33 +3451,3 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
-
-
-/* commenting since they are reflecting all the checkboxesstyles */
-/*
-.custom-ms .p-multiselect{width: 180px;
-  height: 32px;
-  top:10px;
-  border: 1px solid var(--formfield-bordercolor);
-  border-radius: 6px;}
-
-  .custom-ms .p-multiselect-panel .p-multiselect-header{display: none;}
-  .custom-ms .p-multiselect-item{display: block;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item>span{float:left;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox{float:right;}
-  .custom-ms .p-checkbox .p-checkbox-box{
-    background-image: url(./assets/images-n/dashboard/Vector.svg);
-    border:0px;
-  }
-  .custom-ms .p-checkbox .p-checkbox-box.p-highlight{
-    background: transparent !important;
-    border-color:transparent !important;
-    background-image: url(./assets/images-n/dashboard/star1.svg) !important;
-  }
-  .custom-ms .p-checkbox .p-checkbox-box.p-highlight, .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover{ background: transparent !important;
-    border-color:transparent !important;
-    background-image: url(./assets/images-n/dashboard/star1.svg) !important;}
-  .custom-ms .p-checkbox .p-checkbox-box .p-checkbox-icon{display:none !important;}
-  .custom-ms .p-multiselect .p-multiselect-label{float: left;}
-  .custom-ms .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{border-bottom: 1px solid grey;}
-*/
