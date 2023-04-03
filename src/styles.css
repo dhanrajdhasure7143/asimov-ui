@@ -3431,6 +3431,52 @@ button.btn.new-cancelbtn {
   color:var(--main-bluecolor) !important;
 }
 
+/* collaboration - user tagged styles start  */
+.usertaggedprofile {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px #ccc;
+  display: none;
+  position: absolute;
+  width: 295px;
+  z-index: 1;
+  padding: 10px;
+  align-items: center;
+  bottom: 25px;
+  left: 0px;
+}
+.icon-color:hover .usertaggedprofile {
+  display: flex;
+}
+.userstagged {
+  cursor: pointer;
+}
+.icon-color.userstagged {
+  position: relative;
+}
+.usrtag {
+  background-color: #098de6;
+  color: #fff;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 18px;
+}
+.usrtaginfo p {
+  margin-bottom: 0px !important;
+  color: #232832;
+}
+.usrtaginfo p.usrtagname {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 5px !important;
+}
+/* collaboration - user tagged styles end */
+
 /* New Dashboard Styles Start */
 .dropdown-primeng .p-dropdown {    
   border: 1px solid var(--formfield-bordercolor) !important;
