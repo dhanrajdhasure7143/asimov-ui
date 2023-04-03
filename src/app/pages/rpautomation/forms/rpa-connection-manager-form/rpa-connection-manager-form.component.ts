@@ -86,21 +86,21 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       actionName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),Validators.maxLength(50)])],
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
-      endPoint: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      endPoint: ["", Validators.compose([Validators.required])],
       authType: ["", Validators.compose([Validators.required])],
       icon: ["", Validators.compose([])],
       grantType: ["", Validators.compose([Validators.required])],
-      code: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      redirect_uri: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      userName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      password: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      clientId: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      clientSecret: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      verifier: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      request: ["", Validators.compose([Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      code: ["", Validators.compose([Validators.required])],
+      redirect_uri: ["", Validators.compose([Validators.required])],
+      userName: ["", Validators.compose([Validators.required])],
+      password: ["", Validators.compose([Validators.required])],
+      clientId: ["", Validators.compose([Validators.required])],
+      clientSecret: ["", Validators.compose([Validators.required])],
+      verifier: ["", Validators.compose([Validators.required])],
+      request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
-      scope: ["", Validators.compose([Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
-      refreshToken: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$')])],
+      scope: ["", Validators.compose([])],
+      refreshToken: ["", Validators.compose([Validators.required])],
     });
 
     this.methodTypes();
@@ -126,7 +126,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: this.action_logo==undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo == undefined ? "" : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -170,7 +170,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id":"",
         "name" : this.connectorForm.value.actionName,
-        "actionLogo":this.action_logo==undefined ? this.icon :new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo == undefined ? "" : new String(this.action_logo.split(",")[1]),
         "actionType" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
