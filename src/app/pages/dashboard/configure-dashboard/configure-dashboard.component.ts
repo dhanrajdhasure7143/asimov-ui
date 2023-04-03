@@ -121,9 +121,9 @@ ngClass: string
   dropWidget() {
     if (this.draggedProduct1) {
       this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
-      this.addedMetrics.push(this.draggedProduct1);
+      this.addedWidgets.push(this.draggedProduct1);
       if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
-        this.widgetslist.find(item => item.widgetAdded == false).widgetAdded = true
+        this.defaultEmpty_widgets.find(item => item.widgetAdded == false).widgetAdded = true
     }
   }
 
