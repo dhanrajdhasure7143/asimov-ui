@@ -3130,6 +3130,10 @@ textarea.p-inputtextarea {
   color: #7d7d7d !important;
 }
 /* new styles for ng select */
+.p-column-filter-menu-button.p-column-filter-menu-button-open,
+.p-column-filter-menu-button.p-column-filter-menu-button-open:hover {
+  color: var(--secondary-bluecolor) !important;
+}
 /* headercss start*/
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
