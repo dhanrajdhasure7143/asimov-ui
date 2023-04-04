@@ -45,7 +45,8 @@ export class ConfigureDashboardComponent implements OnInit {
   isdefaultDashboard:any;
   searchText_metrics:any;
   searchText:any;
-  chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
+  chartColors:any[] = ["#50ADEB","#B7A4ED","#EE96D8","#FCA186","#FCBE4A","#CD9D64","#94C34D","#CD6D6D","#6F92B5","#E77459","#6DB08F", "#7375C2","#59E060","#C1C156","#5A8795"];
+  charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
 
  
   @Input()
@@ -177,7 +178,7 @@ ngClass: string
         // this.tabledata = this.addedWidgets[0].sampleData;
 
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-        if(widget["widget_type"] != "table")
+        if(widget["widget_type"] != "Table" && widget["widget_type"] != "table")
         widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
       }
@@ -261,15 +262,10 @@ ngClass: string
       this.widgetslist = data.widgetData;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
-        console.log(item)
-        if(item["widget_type"] != "Table"){
+        if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
         // item["chartOptions"]["plugins"]["legend"]["display"]=false;
         item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-        item.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
-        item.widgetData.datasets[0]["fillColor"] = this.chartColors
-        item.widgetData.datasets[0]["strokeColor"] = this.chartColors
-        item.widgetData.datasets[0]["highlightFill"] = this.chartColors
-        item.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+        item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         if(item.widget_type != "Bar"){
               item["chartOptions"] = {
                 "plugins": {
@@ -309,7 +305,6 @@ ngClass: string
       })
     
       // this.widgetslist.forEach(element => {
-      //   console.log(element.chartOptions.plugins.legend)
       //   element.chartOptions.plugins.legend["display"]=false;
       // });
       if(this._paramsData.isCreate==0){
@@ -340,13 +335,9 @@ ngClass: string
       this.addedWidgets = this.dynamicDashBoard.widgets
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
-        if(item["widget_type"] != "Table"){
+        if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
           item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          item.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
-          item.widgetData.datasets[0]["fillColor"] = this.chartColors
-          item.widgetData.datasets[0]["strokeColor"] = this.chartColors
-          item.widgetData.datasets[0]["highlightFill"] = this.chartColors
-          item.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+          item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         }
         if(item.childId == 2){
           item.chartOptions.plugins["tooltip"] = {
