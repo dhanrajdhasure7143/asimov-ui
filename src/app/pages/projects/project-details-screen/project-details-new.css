@@ -418,9 +418,15 @@ p.text {
     padding: 10px 15px !important;
     margin: 0px 0px 25px 0px !important;
 }
+.qcard-infoimg {
+    width: 25%;
+}
 .qcard-info {
     margin-left: 15px;
-    width: 70%;
+    width: 75%;
+}
+img.qcard-img {
+    width: 100% !important;
 }
 label.qcard-count {
     font-weight: 500;
@@ -498,4 +504,8 @@ button span {
 }
 .usersOverLay ul{
     list-style-type: none
+}
+
+.row.main-content-head button.p-element.btn img {
+    height: 16px;
 }
