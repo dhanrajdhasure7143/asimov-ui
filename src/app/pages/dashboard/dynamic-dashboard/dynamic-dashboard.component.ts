@@ -43,7 +43,9 @@ export class DynamicDashboardComponent implements OnInit {
   dynamicFormConfiure: any;
   isDialogShow:boolean=false;
   entered_name:string='';
-  chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
+  // chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
+  chartColors:any[] = ["#50ADEB","#B7A4ED","#EE96D8","#FCA186","#FCBE4A","#CD9D64","#94C34D","#CD6D6D","#6F92B5","#E77459","#6DB08F", "#7375C2","#59E060","#C1C156","#5A8795"];
+  charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -246,8 +248,7 @@ export class DynamicDashboardComponent implements OnInit {
   updateDashboardName() {
     this.selectedDashBoardName = this._dashboardName;
     this.selectedDashBoard["dashboardName"] = this.selectedDashBoardName;
-    this.rest
-      .updateDashBoardNamed(this.selectedDashBoard)
+    this.rest.updateDashBoardNamed(this.selectedDashBoard)
       .subscribe((response: any) => {
         this.messageService.add({
           severity: "success",
@@ -419,15 +420,15 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.getDashBoardItems(screenId).subscribe((data: any) => {
       this.dashboardData.metrics = data.metrics;
       this.dashboardData.widgets = data.widgets;
+      this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
-        console.log(element)
-        if(element.widget_type!= "Table"){
+        if(element.widget_type!= "Table" && element.widget_type!= "table"){
           element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          element.widgetData.datasets[0]["hoverBackgroundColor"] = this.chartColors
-          element.widgetData.datasets[0]["fillColor"] = this.chartColors
-          element.widgetData.datasets[0]["strokeColor"] = this.chartColors
-          element.widgetData.datasets[0]["highlightFill"] = this.chartColors
-          element.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+          element.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
+          // element.widgetData.datasets[0]["fillColor"] = this.chartColors
+          // element.widgetData.datasets[0]["strokeColor"] = this.chartColors
+          // element.widgetData.datasets[0]["highlightFill"] = this.chartColors
+          // element.widgetData.datasets[0]["highlightStroke"] = this.chartColors
         }
         if(element.widget_type == "Bar"){
           element["chartOptions"].plugins.legend["display"]=false
@@ -508,7 +509,6 @@ export class DynamicDashboardComponent implements OnInit {
       };
       // this.dashboardData.widgets.push(array);
       this.primengConfig.ripple = true;
-      this.loader.hide();
     });
   }
 
@@ -562,7 +562,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: response.errorMessage+' !',
+          detail: response.message+' !',
         });
       }
     })
