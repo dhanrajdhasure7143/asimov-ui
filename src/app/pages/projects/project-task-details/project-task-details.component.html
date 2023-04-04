@@ -141,7 +141,7 @@
                                         <!-- <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p> -->
                                         <p-inplace #inplace4 (onActivate)="inplaceActivate('endDate','inplace4')">
                                             <ng-template pTemplate="display">
-                                                <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                                <p>{{task_details.endDate | date:'MMM dd, y, HH:mm'}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
                                                 <!-- <p-calendar inputId="basic" [(ngModel)]="due_date"></p-calendar> -->
@@ -162,7 +162,7 @@
                                         </div> -->
                                        </div>
                                     <div class="pinf tasklastupdated">
-                                        <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                        <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</p>
                                         <label>Last Updated</label>
                                     </div>                                
                                 </div>
@@ -248,7 +248,7 @@
 
                                             <div class="comment-name">
                                                 <h5> {{item.createdBy}} </h5>
-                                                <div>{{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}</div>
+                                                <div>{{item.createdTimestamp | date :'MMM dd, y, HH:mm'}}</div>
                                                 <!-- {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}} -->
                                                 <div class="commentsadded">{{item.comments}} </div>
                                             </div>
@@ -281,8 +281,7 @@
                                 <ul class="historydiv mb-0">
                                     <li *ngFor="let history of taskhistory_list">
                                         <span>
-                                            {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y,
-                                                HH:mm:ss'}}
+                                            {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y,HH:mm'}}
                                         </span>
                                     </li>
                                 </ul>
@@ -335,7 +334,7 @@
                                 <tr>
                                     <td> <p-tableCheckbox (click)="selectRow()" [value]="rowData"></p-tableCheckbox></td>
                                     <td>{{rowData.label}}</td>
-                                    <td>{{rowData.uploadedDate | date: 'medium'}}</td>
+                                    <td>{{rowData.uploadedDate | date: 'MMM d, y H:mm'}}</td>
                                     <td>
                                         <span class="" [hidden]="!(selectedItem == rowData.id && checkBoxselected.length == 1)">
                                             <a (click)="onDownloadDocument()" pTooltip="Download" tooltipPosition="bottom">
