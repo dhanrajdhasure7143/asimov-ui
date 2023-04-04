@@ -186,8 +186,12 @@ export class DynamicDashboardComponent implements OnInit {
 
     //   //}
     // })
+    if (this._paramsData.dashboardId === undefined) {
+         this.changeToDefaultDashBoard();
 
-    this.getListOfDashBoards();
+    } else {
+         this.getListOfDashBoards();
+    }
   }
 
   openConfiguration(widget: any) {

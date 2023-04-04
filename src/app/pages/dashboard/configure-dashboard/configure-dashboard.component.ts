@@ -1,6 +1,6 @@
 import { Component, OnInit,Output,EventEmitter,ViewChild,Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuItem,ConfirmationService  } from 'primeng/api';
+import { MenuItem,ConfirmationService,MessageService  } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { Inplace } from 'primeng/inplace';
@@ -54,7 +54,9 @@ ngClass: string
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
     private rest_api: RestApiService,
-    private loader : LoaderService, private confirmationService: ConfirmationService) {
+    private loader : LoaderService, 
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) {
     
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params
@@ -433,9 +435,14 @@ ngClass: string
       accept: () => {
         this.loader.show();
         this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
-          this.inplace.deactivate();
-          this.loader.hide();
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Deleted Successfully !!",
+          });
         });
+        this.loader.hide();
+        this.router.navigate(['/pages/dashboard/dynamicdashboard'])
       },
       key: "positionDialog",
     });
