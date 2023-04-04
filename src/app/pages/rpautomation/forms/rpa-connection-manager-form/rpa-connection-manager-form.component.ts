@@ -83,7 +83,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectorForm = this.formBuilder.group({
-      actionName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),Validators.maxLength(50)])],
+      actionName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z_]+( [a-zA-Z_]+)*$'),Validators.maxLength(50)])],
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       endPoint: ["", Validators.compose([Validators.required])],
@@ -126,7 +126,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: this.action_logo == undefined ? "" : new String(this.action_logo.split(",")[1]),
+        actionLogo: this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -208,7 +208,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
               id: this.selectedId,
               name: this.selectedConnector },
           });
-          },1500)
+          },1000)
       } else {
         this.spinner.hide();
         (err) => {
@@ -711,7 +711,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
                   name: this.selectedConnector,
                 },
             });
-            },1500)
+            },1000)
         
         } else {
           this.spinner.hide();

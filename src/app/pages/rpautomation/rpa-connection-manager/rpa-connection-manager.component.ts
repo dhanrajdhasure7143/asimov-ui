@@ -32,6 +32,9 @@ export class RpaConnectionManagerComponent implements OnInit {
   conn_logo: any;
   table_searchFields:any[]=[];
   connector_id:any;
+  userRole: any = [];
+  connectorVisible: boolean = true;
+  isVisible: boolean = true;
 
   constructor(
     private rest_api: RestApiService,
@@ -46,10 +49,15 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'), Validators.maxLength(50)])],
+      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z_]+( [a-zA-Z_]+)*$'), Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userRole = this.userRole.split(',');
+    this.connectorVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
+    this.isVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ||this.userRole.includes("System Admin")
   }
 
   getAllConnections() {
@@ -92,7 +100,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     let selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
-      message: "Are you sure? You won't be able to revert this!",
+      message: "Are you sure? Do you want to delete this connector!",
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
