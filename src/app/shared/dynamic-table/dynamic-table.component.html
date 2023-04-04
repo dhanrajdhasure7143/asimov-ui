@@ -77,7 +77,7 @@
                         <span *ngIf="screenTable !='environment_table'">
                             <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'">
                                 <span *ngIf="screenTable == 'recentActivityList' && col.ColumnName == 'lastModifiedUsername' " class="prjlastupdateprofile">{{rowData['lastModifiedByEmail']|userLetters:users_list}}</span>
-                                <span> {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM d, y H:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                                <span> {{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
                             </span>
                             <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
                             <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
