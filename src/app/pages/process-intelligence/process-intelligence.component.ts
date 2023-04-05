@@ -89,7 +89,7 @@ export class ProcessIntelligenceComponent implements OnInit {
       };
     } else {
       this.isPIHeaderShow = true;
-      if (localStorage.getItem("project_id") != "null") {
+      if (localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
         this.isProjDetails = true;
         this.isPIHeaderShow = false;
       }

@@ -25,8 +25,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     DashboardRoutingModule,
    PrimengCustomModule,
    FormsModule,
-   ReactiveFormsModule,
-   NgChartsModule,  
+   ReactiveFormsModule, 
    BsDropdownModule.forRoot()
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

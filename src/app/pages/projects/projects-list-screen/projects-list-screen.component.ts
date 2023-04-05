@@ -112,12 +112,13 @@ export class ProjectsListScreenComponent implements OnInit {
         };
         data["type"] = data.type == null ? "Project" : data.type;
         data["department"] = data.mapValueChain? data.mapValueChain: data.programValueChain;
-        data["createdDate"] = moment(data.createdTimestamp).format("lll");
-        data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll");
+        data["createdDate"] = new Date(data.createdTimestamp);
+        data["updatedDate"] = moment(data.lastModifiedTimestamp).format("MMM DD YYYY HH:mm");
         data["lastModifiedBy"] = data.lastModifiedBy? data.lastModifiedBy: data.createdBy;
         data["lastModifiedByEmail"] = data.lastModifiedByEmail? data.lastModifiedByEmail: data.owner;
         return data;
       });
+
       this.projects_list = [];
       this.all_projectslist = res_list;
       this.spinner.hide();
@@ -339,12 +340,26 @@ export class ProjectsListScreenComponent implements OnInit {
           this.spinner.hide();
           let response: any = res;
           if (response.errorMessage == undefined && response.warningMessage == undefined) {
-            Swal.fire("Success", "Project Deleted Successfully !!", "success");
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Project Deleted Successfully !!",
+            });
             this.getallProjects(this.userRoles, this.name, this.email);
           }
-          if(response.warningMessage == "Project can't be deleted with status In Progress"){
-            Swal.fire("Success", "Project can't be deleted with status In Progress", "info");
+          if(response.warningMessage){
+            this.messageService.add({
+              severity: "info",
+              summary: "Info",
+              detail: response.warningMessage+" !",
+            });
           }
+        },err=>{
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Failed to delete !"
+          });
         });
       },
       reject: (type) => {},
