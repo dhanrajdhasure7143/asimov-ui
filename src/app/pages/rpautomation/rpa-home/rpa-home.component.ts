@@ -627,11 +627,17 @@ importBot()
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
       this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
-        
+        this.spinner.hide();
         Swal.fire("Success","Bot imported successfully","success");
         this.getallbots();
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to bot task configurations","error");
       })
     }
+  },err=>{
+    this.spinner.hide();
+    Swal.fire("Error","Unable to import bot","error");
   })
 }
 
