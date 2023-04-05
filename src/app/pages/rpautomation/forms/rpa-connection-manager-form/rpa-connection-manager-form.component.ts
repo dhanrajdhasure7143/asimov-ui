@@ -170,7 +170,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id":"",
         "name" : this.connectorForm.value.actionName,
-        "actionLogo":this.action_logo == undefined ? "" : new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         "actionType" : this.connectorForm.value.actionType,
         "configuredConnectionId" : this.selectedId,
         "description" : "",
