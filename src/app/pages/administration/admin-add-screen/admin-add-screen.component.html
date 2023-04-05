@@ -41,8 +41,8 @@
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
                   class="required">Maximum of 255 characters *</span>
-                <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="required">Only spaces
-                  between words are allowed.
+                <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
+                  between words are allowed*
                 </span>
               </div>
               <div class="form-group col-sm-12 pl-0">

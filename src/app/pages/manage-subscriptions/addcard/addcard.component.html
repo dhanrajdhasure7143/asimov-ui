@@ -4,10 +4,10 @@
       <div class="row">
         <div class="col-md-6 form-group pl-0">
           <label  class="label-control" for="cardHolder">Cardholder Name<span class="star">*</span></label>
-          <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+          <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required  pattern="[a-zA-Z\s]+" required />
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
           <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                      class='required'>Cardholder Name is Required *</span> 
+                      class='required'>Please enter only letters (A-Z) and spaces between words are only allowed for Cardholder Name  *</span> 
         </div>
         <div class="col-md-6 form-group pr-0">
           <label  class="label-control" for="cardNumber">Card Number</label>
