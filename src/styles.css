@@ -2637,7 +2637,8 @@ cursor: pointer;
   align-items: center;
 }
 .row.main-content-head button.p-element.btn {
-  padding: 0px 1px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 .main-content-head h3 {
   font-weight: var(--main-fontweight);
@@ -3501,9 +3502,12 @@ button.btn.new-cancelbtn {
   background-color: #fff !important;
   box-shadow: none !important;
 }
+.p-splitter .p-splitter-gutter {
+  background: #f5f6f7;
+}
 .configtabs .p-tabview {
   height: 100%;
-  padding: 15px 20px 10px;
+  padding: 10px 20px;
 }
 /* New Dashboard Styles End */
 

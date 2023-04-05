@@ -11,8 +11,18 @@
     box-shadow: none !important;
 }
 .btn-dots {
-	background-color: #E9E9E9;
+	background-color: transparent;
     height: 32px;
+}
+.btn-dots-header {
+    background-color: #E9E9E9;
+    height: 32px;
+}
+.btn-dots-header:hover {
+    background-color: #ebebeb;
+}
+.btn-dots-header:active {
+    background-color: #098de6;
 }
 .well1-dynmic {	
 	padding: 10px 12px !important;
@@ -28,6 +38,7 @@
 .new-dynamic h3 {
 	margin-bottom: 0px;
 	font-size: 44px;
+    font-weight: 400;
 	color: #232832;
     line-height: 42px;
 }
@@ -45,6 +56,9 @@
     display: block;
 }
 .widgetactions:hover {
+    background-color: #E9E9E9;
+}
+.widgetactions:active {
     background-color: #098de6;
 }
 .vertcl-img {
@@ -77,10 +91,10 @@
     width: 230px;
     border-color: #979797 !important;
     color: #232832 !important;
+    height: 32px !important;
 }
 .defaltdrpdwn ul#dropdown-basic {
-    width: 230px;
-    height: 32px !important;
+    width: 230px;    
     inset: 100% auto auto 10px !important;
     padding: 0px !important;
     margin-top: 5px;
