@@ -11,19 +11,19 @@
     box-shadow: none !important;
 }
 .btn-dots {
-	background-color: transparent;
+	background-color: #E9E9E9;
     height: 32px;
 }
 .btn-dots-header {
     background-color: #E9E9E9;
     height: 32px;
 }
-.btn-dots-header:hover {
+/* .btn-dots-header:hover {
     background-color: #ebebeb;
 }
 .btn-dots-header:active {
     background-color: #098de6;
-}
+} */
 .well1-dynmic {	
 	padding: 10px 12px !important;
 	margin-bottom: 15px;
@@ -48,7 +48,7 @@
 .widgetactions {
     min-width: auto;
 }
-.widgetactions .hover-img,
+/* .widgetactions .hover-img,
 .widgetactions:hover .default-img {
     display: none;
 }
@@ -58,9 +58,9 @@
 .widgetactions:hover {
     background-color: #E9E9E9;
 }
-.widgetactions:active {
+.widgetactions.active {
     background-color: #098de6;
-}
+} */
 .vertcl-img {
 	width: 12px ;
     margin-right: 11px;
