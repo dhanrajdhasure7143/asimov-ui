@@ -131,11 +131,4 @@ setScreenList(module:any){
   this.screenlist.next(module);
 }
 
-private dynamicscreen:BehaviorSubject<any> = new BehaviorSubject<any>({});
-
-dynamicscreenObservable = this.dynamicscreen.asObservable();
-
-setdynamicscreen(module:any){
-  this.dynamicscreen.next(module);
-}
 }

@@ -28,12 +28,9 @@ export class ConfigureDashboardComponent implements OnInit {
     widgets: [],
     metrics: [],
   }
-  chartOptions: { legend: { position: string; }; };
+  chartOptions: any;
   metricslist: any;
   widgetslist: any;
-  tablelist: any;
-  metricslistimg: { src: string; }[];
-  result: any;
   metricsitem: any;
   addedMetrics: any[] = [];
   addedWidgets: any[] = [];
@@ -47,10 +44,6 @@ export class ConfigureDashboardComponent implements OnInit {
   searchText:any;
   chartColors:any[] = ["#50ADEB","#B7A4ED","#EE96D8","#FCA186","#FCBE4A","#CD9D64","#94C34D","#CD6D6D","#6F92B5","#E77459","#6DB08F", "#7375C2","#59E060","#C1C156","#5A8795"];
   charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
-
- 
-  @Input()
-ngClass: string
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -70,27 +63,18 @@ ngClass: string
 
   ngOnInit(): void {
     this.loader.show();
-    this.items = [
-      { 
-        label: 'Delete',
-        command: () => {
-          this.deletedashbord();
-      }
-     },
-    ]
+    this.items = [{label: 'Delete',command: () => {this.deletedashbord()}}]
     // this.loader.show();
     this.chartOptions = {
-      legend: { position: "bottom" },
-
-    };
+      "plugins": {
+            "legend": {
+          "position": "bottom",
+          "display" : false
+      }
+  }
+};
     this.getListOfWidgets();
     this.getListOfMetrics();
-    this.metricslistimg = [
-      { src: "process.svg" },
-      { src: "round-settings.svg" },
-      { src: "schedules.svg" },
-      { src: "Thumbup.svg" },
-    ]
 
     this.defaultEmpty_metrics = [
       { metricId: "00", metric_name: "Drag And Drop", src: "process.svg", metricAdded: false },
@@ -98,7 +82,6 @@ ngClass: string
       { metricId: "00", metric_name: "Drag And Drop", src: "schedules.svg", metricAdded: false },
       { metricId: "00", metric_name: "Drag And Drop", src: "Thumbup.svg", metricAdded: false }
     ]
-
   }
 
   dragStart(item) {
@@ -215,38 +198,7 @@ ngClass: string
     this.rest_api.SaveDashBoardData(req_array).subscribe(res => {
       this.loader.hide();
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
-    })
-
-    // this.datatransfer.dynamicscreenObservable.subscribe((response:any)=>{
-    // if(this.dynamicDashBoard.dashboardId==undefined)
-    // {
-    //   this.dynamicDashBoard.dashboardId=(new Date()).getTime();
-    //   if(!Array.isArray(response))
-    //     response=[this.dynamicDashBoard];
-    //   else
-    //   {
-    //     response.push(this.dynamicDashBoard)
-    //   }
-    //   this.datatransfer.setdynamicscreen(JSON.stringify(response));
-    //   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
-    // }
-    // else
-    // {
-    //   if(typeof(response)=="string")
-    //   {
-    //     response=JSON.parse(response)
-    //   }
-    //   let index=response.findIndex((item:any)=>item.dashboardId==this.dynamicDashBoard.dashboardId);
-    //   response[index]=this.dynamicDashBoard;
-    //   this.datatransfer.setdynamicscreen(JSON.stringify(response)); 
-    //   this.router.navigate(['/pages/dashboard/dynamicdashboard'])
-    // }
-    // console.log(this.addedMetrics);
-    // this.dynamicDashBoard.metrics = this.addedMetrics;
-
-    // this.datatransfer.setdynamicscreen(this.dynamicDashBoard);
-    // this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
-    //})
+    });
   }
   getListOfMetrics() {
     this.rest_api.getMetricsList().subscribe((data: any) => {
@@ -257,24 +209,17 @@ ngClass: string
       })
     })
   }
+
   getListOfWidgets() {
     this.rest_api.getWidgetsList().subscribe((data: any) => {
       this.widgetslist = data.widgetData;
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
-        // item["chartOptions"]["plugins"]["legend"]["display"]=false;
         item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
         item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         if(item.widget_type != "Bar"){
-              item["chartOptions"] = {
-                "plugins": {
-                      "legend": {
-                    "position": "bottom",
-                    "display" : false
-                }
-            }
-          }
+              item["chartOptions"] = this.chartOptions
         }else{
             item["chartOptions"] = {
               "plugins": {
@@ -302,11 +247,7 @@ ngClass: string
       }
     }
         return item
-      })
-    
-      // this.widgetslist.forEach(element => {
-      //   element.chartOptions.plugins.legend["display"]=false;
-      // });
+      });
       if(this._paramsData.isCreate==0){
         this.getDashBoardData(this._paramsData.dashboardId)
       }else{
@@ -357,23 +298,10 @@ ngClass: string
           }
         }
       })
-
       this.loader.hide();
     });
   }
-  minimizeFullScreen(){
-    this.isShowExpand = false;
-    this.panelSizes = [70, 30];
-  }
-  expandFullScreen(){
-    this.isShowExpand = true;
-   
-    this.panelSizes = [30, 70];
-  }
-  closeSplitOverlay(){
-    this.minimizeFullScreen();
-   this.closeOverlay.emit(false)
-  }
+
   Updatedconfiguration(){
     let req_array: any = [];
     this.loader.show();
@@ -406,7 +334,7 @@ ngClass: string
     )}
   
     deletedashbord(){
-     
+    
       if (this.isdefaultDashboard == "true") {
         this.confirmationService.confirm({
           message: "Change the default dashboard",

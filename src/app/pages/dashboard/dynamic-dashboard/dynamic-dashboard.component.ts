@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DataTransferService } from "../../services/data-transfer.service";
 import { MenuItem, SelectItem, MessageService, PrimeNGConfig, ConfirmationService} from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
@@ -15,35 +14,21 @@ import { ChartDataset, ChartOptions, TooltipItem } from "chart.js";
   styleUrls: ["./dynamic-dashboard.component.css"],
 })
 export class DynamicDashboardComponent implements OnInit {
-  cols: any[] = [];
   @ViewChild("inplace") inplace!: Inplace;
   items: MenuItem[];
   menuItems: MenuItem[];
-  dynamicDashBoard: any;
-  metrics_list: any;
-  defaultEmpty_metrics: any;
-  widgets: any;
-  selectedCar: string;
-  dataTransfer: any;
-  public allbots: any;
-  dashboardName: String = "";
   dashbordlist: any;
   dashboardData: any = {};
   _paramsData: any;
   _dashboardName: any;
-  isEditDesc: boolean = false;
-  editdashbordnamedata: any;
-  active_inplace: any;
   selectedDashBoardName: any;
   selectedDashBoard: any;
   selecteddashboard: any;
-  selectedIcon: any;
   configuration_id: any;
   selected_widget: any;
   dynamicFormConfiure: any;
   isDialogShow:boolean=false;
   entered_name:string='';
-  // chartColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#003870","#773f89","#cc3f7c","#fe6350","#ffa600","#232832","#3a3752","#62426b","#934876","#ff7d3e"]
   chartColors:any[] = ["#50ADEB","#B7A4ED","#EE96D8","#FCA186","#FCBE4A","#CD9D64","#94C34D","#CD6D6D","#6F92B5","#E77459","#6DB08F", "#7375C2","#59E060","#C1C156","#5A8795"];
   charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
 
@@ -72,122 +57,6 @@ export class DynamicDashboardComponent implements OnInit {
       {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
     ];
-
-    // this.datatransfer.dynamicscreenObservable.subscribe((response: any) => {
-    //   // response=JSON.parse(response);
-    //   // console.log(response)
-    //   // if(response.find((item:any)=>item.dashboardId==item.dashboardId)!=undefined)
-    //   // {
-    //   //  let dashboardData=response.find((item:any)=>item.dashboardId==item.dashboardId)
-
-    //   this.dashboardName = response.dashboardName
-    //   this.dashboardData = response;
-    //   console.log(this.dashboardData)
-
-    //   if (response.widgets) {
-    //     this.dashboardData.widgets = response.widgets.map((item: any) => {
-    //       item["edit"] = false;
-    //       return item;
-    //     })
-    //     console.log(this.dashboardData)
-    //   } else {
-    //     // this.dashboardData = {
-    //     //   "widgets": [
-    //     //     {"id": 1,
-    //     //       "widget_type": "pie",
-    //     //       "department":"All",
-    //     //       "name": "Bot Execution Status",
-    //     //       "SampleData": {
-    //     //         "labels": ["Success","New","Failure","Stopped"],
-    //     //         "datasets": [{
-    //     //             "label": 'Bot Execution Status',
-    //     //             "data": [79,187,106,2],
-    //     //             "backgroundColor": ["#FF6384","#36A2EB","#FFCE56"],
-    //     //             "hoverBackgroundColor": ["#FF6384","#36A2EB","#FFCE56"]
-    //     //           }
-    //     //         ]
-    //     //       },
-    //     //       "chartOptions": {
-    //     //         "plugins": {
-    //     //           "legend": {
-    //     //             "position": "bottom"
-    //     //           }
-    //     //         }
-    //     //       },
-    //     //       "filterOptions": [
-    //     //         {"filter":"widget",name:'widget_type',fieldType:"dropdown","types": ["bar","pie","doughnut","line"],label:"Chart Type"},
-    //     //         {"filter":"department",name:'department',fieldType:"dropdown","types": ["All","Engineering","QA","Finance"],label:"Department"}
-    //     //     ]
-    //     //     },
-    //     //     {
-    //     //       "id": 99,
-    //     //       "widget_type": "pie",
-    //     //       "name": "Bot Execution Status In Table",
-    //     //       "description": "Display the Table Data",
-    //     //       "sampleData": {
-    //     //           "labels": [
-    //     //               {
-    //     //                   "field": "firstname",
-    //     //                   "header": "First Name"
-    //     //               },
-    //     //               {
-    //     //                   "field": "lastname",
-    //     //                   "header": "Last Name"
-    //     //               },
-    //     //               {
-    //     //                   "field": "age",
-    //     //                   "header": "Age"
-    //     //               }
-    //     //           ],
-    //     //           "datasets": [
-    //     //               {
-    //     //                   "data": [
-    //     //                       {
-    //     //                           "firstname": "David",
-    //     //                           "lastname": "ace",
-    //     //                           "age": "40"
-    //     //                       },
-    //     //                       {
-    //     //                           "firstname": "AJne",
-    //     //                           "lastname": "west",
-    //     //                           "age": "40"
-    //     //                       }
-
-    //     //                   ],
-    //     //                   "backgroundColor": [
-    //     //                       "#FF6384",
-    //     //                       "#36A2EB",
-    //     //                       "#FFCE56"
-    //     //                   ],
-    //     //                   "hoverBackgroundColor": [
-    //     //                       "#FF6384",
-    //     //                       "#36A2EB",
-    //     //                       "#FFCE56"
-    //     //                   ]
-    //     //               }
-    //     //           ]
-    //     //       },
-    //     //       "chartOptions": {
-    //     //           "plugins": {
-    //     //               "legend": {
-    //     //               "position": "bottom"
-    //     //           }
-    //     //       }
-    //     //       },
-    //     //       "widgetAdded": true,
-    //     //       "edit": false,
-    //     //       "filterOptions": [{"filter":"widget","widget_type": ["bar","pie","doughnut"]},
-    //     //       {"filter":"department","department": ["Engineering","QA","Finance"]},
-    //     //     ]
-
-    //     //   }
-    //     //   ],
-    //     // }
-
-    //   }
-
-    //   //}
-    // })
     if (this._paramsData.dashboardId === undefined) {
          this.changeToDefaultDashBoard();
 
@@ -250,23 +119,36 @@ export class DynamicDashboardComponent implements OnInit {
     );
   }
   updateDashboardName() {
+    let existingdashboard =this.selectedDashBoardName;
     this.selectedDashBoardName = this._dashboardName;
     this.selectedDashBoard["dashboardName"] = this.selectedDashBoardName;
     this.rest.updateDashBoardNamed(this.selectedDashBoard)
       .subscribe((response: any) => {
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Updated Successfully !!",
-        });
+        if (response.code == 4200) {
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: response.message + '!',
+          });
+        this.inplace.deactivate();
+        }
+        if (response.code == 8010) {
+          this.selectedDashBoardName = existingdashboard;
+          this.selectedDashBoard["dashboardName"] = existingdashboard;
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: response.message + ' !',
+          });
+        }
       },err=>{
+    this.inplace.deactivate();
         this.messageService.add({
           severity: "error",
           summary: "Error",
           detail: "Failed to Update !",
         });
       });
-    this.inplace.deactivate();
   }
 
   navigateToConfigure() {
@@ -282,6 +164,8 @@ export class DynamicDashboardComponent implements OnInit {
 
   navigateToCreateDashboard() {
     // this.router.navigate(["pages/dashboard/create-dashboard"]);
+    this.inplace.deactivate();
+    this.entered_name="";
     this.isDialogShow=true;
   }
 
