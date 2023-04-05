@@ -96,7 +96,6 @@ export class MyAccountComponent implements OnInit {
     this.api.getUserDetails(this.useremail).subscribe((data) => {
       this.formOne = data;
       this.dt.userDetails(data);
-      console.log(data)
       this.getAllDepartments();
       this.getAllStates();
       this.gatAllCities();
