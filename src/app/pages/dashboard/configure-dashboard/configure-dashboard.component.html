@@ -177,8 +177,8 @@
   <ng-template pTemplate>
     <p-tabView class="configtabs">
       <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}" >
-        <div class="row">
-          <div class="col-md-12 p-0 form-group">
+        <div class="row configtabssearch">
+          <div class="col-md-12 p-0">
             <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics"  type="text" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align sercmetric">
           </div>
@@ -192,24 +192,25 @@
           <div *ngFor="let item of metrics_list|myFilter:searchText_metrics:['name', 'description']; let i=index" >
             <div class="row metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
               (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
-              <div class="col-10 p-0">
+              <div class="col-11 p-0">
                 <h5>{{item.name}}</h5>
                 <p class="metricwidget-tabP">{{item.description}}</p>
               </div>
-              <div class="col-2 p-0 text-right">
-                <i class="pi pi-check" *ngIf="item.metricAdded==true"></i>
+              <div class="col-1 p-0 text-right">
+                <!-- <i class="pi pi-check" *ngIf="item.metricAdded==true"></i> -->
+                <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="item.metricAdded==true" />
               </div>   
             </div>
           </div>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
-        <div class="row">
-          <div class="col-md-6 pl-0 form-group" >
+        <div class="row configtabssearch">
+          <div class="col-md-6 pl-0" >
             <input class="form-control toolbar-search" type="text" [(ngModel)]="searchText" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align">
             </div>
-            <div class="col-md-6 form-group pr-0">
+            <div class="col-md-6 pr-0">
               <select class="form-control data">
                   <option value="">All Widgets</option>
                   <option value="">Operational</option>
@@ -236,7 +237,8 @@
                 <p class="metricwidget-tabP">{{widget.description}}</p>
               </div>
               <div class="col-1 p-0 text-right">
-                <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i>
+                <!-- <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i> -->
+                <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="widget.widgetAdded==true" />
               </div>
             </div>
           </div>

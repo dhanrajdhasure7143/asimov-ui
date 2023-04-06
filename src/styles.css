@@ -444,7 +444,7 @@ div#tooltip_template span ul div:first-child,
   display: inline-block;
   word-break: break-word;
   font-size: 13px;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 div#tooltip_template span ul div:last-child,
@@ -453,7 +453,7 @@ div#tooltip_template span ul div:last-child,
   width: 30%;
   word-break: break-word;
   font-size: 13px;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 div#tooltip_template.tooltip-panel p,
@@ -467,7 +467,7 @@ div#tooltip_template.tooltip-panel p,
 .tipsy-inner .metrics-name {
   margin-bottom: 5px;
   border-bottom: 1px solid #e5e5e5;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 .tipsy-inner .node-name {
@@ -1690,7 +1690,7 @@ span.star {
 .form-control {
   border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: unset !important;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
   border-radius: var(--main-borderradius) !important;
   padding: 0.5rem !important;
   background-color: transparent !important;
@@ -2953,6 +2953,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-button-outlined {
   margin: 0 10px !important;
   color: var(--secondary-bluecolor) !important;
+  box-shadow: none !important;
 }
 .p-button-outlined.only_clearbtn {
   margin:0px !important;
@@ -2973,9 +2974,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   border: 1px solid var(--main-bluecolor) !important;
   padding: 4px 12px;
   margin: 0px !important;
+  box-shadow: none !important;
 }
 button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
-  color: var(--main-bluecolor);
+  color: var(--main-bluecolor);  /* filter applied icon highlight */
 }
 /* grid-filter Overlay Styles End */
 /* Grid NEW Styles End */
@@ -3208,10 +3210,19 @@ textarea.p-inputtextarea {
   font-size: 16px;
   margin: 0px !important;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link,
-.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link,
-.configtabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+.splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link {
   padding: 0px 15px !important;
+  margin-left: 15px !important;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link {
+    padding: 0px !important;
+}
+.configtabs .p-tabview-nav-container {
+  padding: 10px 20px 0px;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav,
 .configtabs .p-tabview .p-tabview-nav {
@@ -3512,7 +3523,7 @@ button.btn.new-cancelbtn {
 }
 .configtabs .p-tabview {
   height: 100%;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
 }
 /* New Dashboard Styles End */
 
