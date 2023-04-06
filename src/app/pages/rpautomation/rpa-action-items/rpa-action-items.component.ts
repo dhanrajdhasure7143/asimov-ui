@@ -22,6 +22,8 @@ export class RpaActionItemsComponent implements OnInit {
   selectedName: any;
   table_searchFields:any[]=[];
   selectedIcon: any;
+  userRole: any = [];
+  actionVisible: boolean = true;
 
   constructor(
     private router:Router,
@@ -43,6 +45,10 @@ export class RpaActionItemsComponent implements OnInit {
   ngOnInit(): void {
     this.loader.show();
     this.getAllActionItems();
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userRole = this.userRole.split(',');
+    this.actionVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
   }
 
   getAllActionItems() {

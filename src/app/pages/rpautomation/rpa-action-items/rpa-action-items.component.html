@@ -16,37 +16,37 @@
                 <div class="actionitems-grid">
                     <div class="row credential-search-tools">
                         <div class="env-data-tool credential-tools">
-                            <div *ngIf="addflag" class="env-btn credential-btntool">
+                            <div *ngIf="addflag && actionVisible" class="env-btn credential-btntool">
                                 <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewAction()" pTooltip="New" tooltipPosition="bottom">
                                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
                                     <!-- <span class="testtooltip">New</span> -->
                                 </button>
                             </div>
-                            <div *ngIf="!addflag" class="env-btn credential-btntool">
+                            <div *ngIf="!addflag && actionVisible" class="env-btn credential-btntool">
                                 <button class="tsttooltipbtn" id="addbtn" disabled>
                                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
                                     <!-- <span class="testtooltip">New</span> -->
                                 </button>
                             </div>
-                            <div *ngIf="updateflag" class="env-btn credential-btntool">
+                            <div *ngIf="updateflag && actionVisible" class="env-btn credential-btntool">
                                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="updateAction()" pTooltip="Edit" tooltipPosition="bottom">
                                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
                                     <!-- <span class="testtooltip"> Edit</span> -->
                                 </button>
                             </div>
-                            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                            <div *ngIf="!updateflag && actionVisible" class="env-btn credential-btntool">
                                 <button id="updateenvbtn" disabled>
                                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
                                     <!-- <span class="testtooltip"> Edit</span> -->
                                 </button>
                             </div>
-                            <div class="env-btn credential-btntool" *ngIf="delete_flag">
+                            <div *ngIf="delete_flag && actionVisible" class="env-btn credential-btntool">
                                 <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteAction()" pTooltip="Delete" tooltipPosition="bottom">
                                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
                                     <!-- <span class="testtooltip">Delete</span> -->
                                 </button>
                             </div>
-                            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
+                            <div *ngIf="!delete_flag && actionVisible" class="env-btn credential-btntool">
                                 <button data-placement="top" id="deletebtn" disabled>
                                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
                                     <!-- <span class="testtooltip">Delete</span> -->
