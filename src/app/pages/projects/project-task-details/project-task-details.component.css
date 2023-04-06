@@ -226,3 +226,7 @@ button.btn.btn-primary.savefoldername {
 .header-delete{
   margin-left : 90%;
 }
+.commentaddedby {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0px;
+}

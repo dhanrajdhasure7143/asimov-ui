@@ -16,7 +16,7 @@
                 <!-- <button class="btn" pTooltip="Workspace" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                 </button> -->
-                <button class="btn" (click)="taskAttachments()" pTooltip="Attachments" tooltipPosition="left">
+                <button class="btn" (click)="taskAttachments()" pTooltip="Attachments" tooltipPosition="bottom">
                     <img src="./../../../../assets/images-n/projects/Attach Documents- Icon.svg" alt="Attachments">
                 </button>
             </div>
@@ -238,8 +238,8 @@
                         <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
                                 <div class="content"  *ngIf="taskcomments_list.length != 0" >
-                                    <div class="pb-2" *ngFor=" let item of taskcomments_list">
-                                        <div class="row">
+                                    <div class="" *ngFor=" let item of taskcomments_list">
+                                        <div class="row commentaddedby">
                                             <div class="userimage">
                                                 <div class="res-circle">
                                                     <span>{{item.createdUserEmail|userImagePipe:users_list}}</span>

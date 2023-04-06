@@ -3252,6 +3252,7 @@ button.btn.new-cancelbtn {
 }
 .commentBox .p-tabview-panels {
   height: calc(100% - 45px) !important;
+  padding-top: 0px !important;
 }
 
 .create-body .prjoverlay .p-card.p-component {
