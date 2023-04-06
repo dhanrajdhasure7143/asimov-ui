@@ -105,6 +105,7 @@ span.lowimp {
 .taskduedate input.form-control {
   padding: 4px !important;
   height: 30px !important;
+  border-radius: 3px !important;
   /* background-color: #fff !important;
   border: 1px solid #d0d0d0 !important; */
 }
@@ -171,6 +172,7 @@ ul.historydiv li:last-child {
 .colheads {
   font-weight: 600;
   font-size: 20px !important;
+  margin-bottom: 15px;
 }
 .commentBox .content {
   height: calc(100vh - 435px);

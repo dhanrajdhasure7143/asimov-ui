@@ -2743,7 +2743,7 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 4px 0 !important;
+    border-width: 0 0 3px 0 !important;
     box-shadow: none !important;
     height: 100%;
 }
@@ -3127,6 +3127,9 @@ textarea.p-inputtextarea {
 .p-breadcrumb ul li .p-menuitem-link:focus {
   box-shadow: unset;
 }
+.p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
+  border: 1px solid #d0d0d0;
+}
 /* new styles for ng select */
 .ng-select .ng-select-container {
   min-height: 40px !important;
@@ -3168,9 +3171,12 @@ textarea.p-inputtextarea {
   top: 45px !important;
   left: 0px !important;
 }
+.taskdescription span.task-descwords p {
+  margin: 0px;
+}
 .p-inplace.p-component span.task-descwords {
   overflow-wrap: break-word;
-  }
+}
   
 /* headercss end*/
 /* primeNg components Styles End */
@@ -3209,6 +3215,7 @@ textarea.p-inputtextarea {
 .commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
   font-size: 16px;
   margin: 0px !important;
+  font-weight: 600;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
 .commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
