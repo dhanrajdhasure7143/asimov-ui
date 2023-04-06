@@ -1010,7 +1010,7 @@ public slaupdate : boolean = false;
   }
   getusersList()
   {
-    let tenant=localStorage.getItem("tenantName");
+    let tenant=localStorage.getItem("masterTenant");
     this.rest.getuserslist(tenant).subscribe((data:any)=>
     {
       if(data.errorMessage==undefined)

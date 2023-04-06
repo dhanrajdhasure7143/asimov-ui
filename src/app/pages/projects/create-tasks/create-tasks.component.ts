@@ -188,7 +188,7 @@ export class CreateTasksComponent implements OnInit {
   }
 
   getallusers(){
-    let tenantid=localStorage.getItem("tenantName")
+    let tenantid=localStorage.getItem("masterTenant")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
      // this.userslist=users.sort((a,b) => (a.userId.firstName.toLowerCase() > b.userId.firstName.toLowerCase() ) ? 1 : ((b.userId.firstName.toLowerCase() > a.userId.firstName.toLowerCase() ) ? -1 : 0));
