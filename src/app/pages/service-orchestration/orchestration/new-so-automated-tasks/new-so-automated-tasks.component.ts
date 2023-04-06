@@ -995,7 +995,7 @@ resetsla(){
   }
 
   getUserslist() {
-    let tenant = localStorage.getItem("tenantName");
+    let tenant = localStorage.getItem("masterTenant");
     this.rest.getuserslist(tenant).subscribe(data => {
       this.isHumanLoading = "Success"
       let users: any = data;

@@ -1513,7 +1513,7 @@ getTenantnameslist() {
     return this.http.get('/platform-service/screenGenerator/getdatabytable/' + tableName + '/' + screenId)
   }
 
-  postUserscreenData(tablename: any, data: any) {
+  postUserscreenData(tablename: any, data: any,) {
     return this.http.post(`/platform-service/screenGenerator/savetabledata/${tablename}`, data, { responseType: 'text' });
   }
 
@@ -1770,9 +1770,10 @@ recentActivities(id:any){
  return this.http.get('/platform-service/project/get-list-of-recentActivities?projectId='+id) 
 }
 
-checkTenantName(tenantName)
+checkTenantName(tenantName,master_tenant)
 {
   let data="";
-  return this.http.post("/platform-service/screenGenerator/check-tenant?tenant_name="+tenantName,data)
+  return this.http.post("/platform-service/screenGenerator/check-tenant/"+master_tenant+"?tenant_name="+tenantName,data)
+  
 }
 }

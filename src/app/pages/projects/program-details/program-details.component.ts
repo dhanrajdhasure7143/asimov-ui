@@ -404,7 +404,7 @@ export class ProgramDetailsComponent implements OnInit {
 
   getallusers()
   {
-    let tenantid=localStorage.getItem("tenantName")
+    let tenantid=localStorage.getItem("masterTenant")
     this.rest.getuserslist(tenantid).subscribe(data=>{
        this.users_list=data;
     })

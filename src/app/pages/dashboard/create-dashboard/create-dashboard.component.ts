@@ -16,16 +16,7 @@ export class CreateDashboardComponent implements OnInit {
   constructor(private primengConfig: PrimeNGConfig,
     private router: Router,
     private rest:RestApiService,
-    private messageService : MessageService) 
-    {
-      // this.rest.getDashBoardsList().subscribe((data:any)=>{
-      //   this.dashbordlist=data.dataList;
-      //   let defaultDashBoard = this.dashbordlist.find(item=>item.defaultDashboard == true);
-      //   console.log( "this.dashbordlist",this.dashbordlist)
-      //   console.log( "defaultDashBoard",defaultDashBoard)
-      //   this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: {dashboardId:defaultDashBoard.id,dashboardName:defaultDashBoard.dashboardName}})
-      // })
-     }
+    private messageService : MessageService) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -48,11 +39,11 @@ export class CreateDashboardComponent implements OnInit {
         let res_data = response.data
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
       }
-      if(response.errorCode == 8010){
+      if(response.code == 8010){
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: response.errorMessage+' !',
+          detail: response.message+' !',
         });
       }
     })

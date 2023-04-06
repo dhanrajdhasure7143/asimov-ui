@@ -194,7 +194,7 @@ export class EditTaskComponent implements OnInit {
   }
 
   getallusers() {
-    let tenantid = localStorage.getItem("tenantName");
+    let tenantid = localStorage.getItem("masterTenant");
     this.rest.getuserslist(tenantid).subscribe((response) => {
       this.users_list = response;
       let user = this.users_list.find(

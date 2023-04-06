@@ -318,7 +318,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   }
 
   getallusers(){
-    let tenantid=localStorage.getItem("tenantName")
+    let tenantid=localStorage.getItem("masterTenant")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;

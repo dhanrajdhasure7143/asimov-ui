@@ -37,8 +37,8 @@ export class RpaCredentialsComponent implements OnInit {
     selectedData: any;
     categories_list: any =[];
     table_searchFields: any[]=[];
-  hiddenPopUp:boolean=false;
-    
+    hiddenPopUp:boolean=false;
+    originalCredentialsList:any[]=[];
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
@@ -97,12 +97,15 @@ inputNumberOnly(event){
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
               item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp);
               item["password_new"]=("*").repeat(10);
+              item["tableClientId"]="";
+              item["tableClientSecret"]="";
+              item["tableOfficeTenant"]="";
               if(item["clientId"]!=null && item["clientId"]!="")
-              item["clientId"]= item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length);
+              item["tableClientId"]= item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length);
               if(item["clientSecret"]!=null && item["clientSecret"]!="")
-              item["clientSecret"]= item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length);
+              item["tableClientSecret"]= item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length);
               if(item["officeTenant"]!=null && item["officeTenant"]!="")
-              item["officeTenant"]= item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length);
+              item["tableOfficeTenant"]= item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length);
               
               return item;
             })
@@ -141,7 +144,7 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "clientId",
+            ColumnName: "tableClientId",
             DisplayName: "Client Id",
             ShowFilter: true,
             ShowGrid: true,
@@ -151,7 +154,7 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "clientSecret",
+            ColumnName: "tableClientSecret",
             DisplayName: "Client Secret",
             ShowFilter: true,
             ShowGrid: true,
@@ -161,7 +164,7 @@ inputNumberOnly(event){
             multi: false,
           },
           {
-            ColumnName: "officeTenant",
+            ColumnName: "tableOfficeTenant",
             DisplayName: "Tenant Id",
             ShowFilter: true,
             ShowGrid: true,
@@ -219,12 +222,9 @@ inputNumberOnly(event){
 
   openUpdateCredential() {
     this.hiddenPopUp=true;
-
     document.getElementById('createcredentials');
-
     this.isCreateForm = false;
     this.credupdatedata = this.selectedData[0];
-
   }
 
   deleteCredentials(){
