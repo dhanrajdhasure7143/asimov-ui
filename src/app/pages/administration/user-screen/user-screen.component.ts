@@ -161,11 +161,12 @@ export class UserScreenComponent implements OnInit {
       }
     } else {
       let val: any;
+      let tenantId=localStorage.getItem("masterTenant")
       if (this.updateDetails == undefined) {
         this.spinner.show();
         this.rest
           .postUserscreenData(
-            this.selectedScreen.Table_Name,
+            this.selectedScreen.Table_Name,tenantId,
             (val = { objects: [values] })
           )
           .subscribe((data) => {
