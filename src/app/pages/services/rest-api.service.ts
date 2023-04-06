@@ -1513,8 +1513,8 @@ getTenantnameslist() {
     return this.http.get('/platform-service/screenGenerator/getdatabytable/' + tableName + '/' + screenId)
   }
 
-  postUserscreenData(tablename: any, master_tenant:any, data: any,) {
-    return this.http.post(`/platform-service/screenGenerator/savetabledata/${tablename}/${master_tenant}`, data, { responseType: 'text' });
+  postUserscreenData(tablename: any, data: any,) {
+    return this.http.post(`/platform-service/screenGenerator/savetabledata/${tablename}`, data, { responseType: 'text' });
   }
 
   getTabledataAdmin(tablename: any) {
