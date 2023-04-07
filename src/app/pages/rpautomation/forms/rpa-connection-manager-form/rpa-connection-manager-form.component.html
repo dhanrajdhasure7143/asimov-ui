@@ -153,9 +153,6 @@
                                         *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
                                         class="required"> Code Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('code').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span>  -->
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Redirect URL
@@ -167,9 +164,6 @@
                                         *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
                                         class="required"> Redirect URL Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('redirect_uri').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span>  -->
                                 </div>
                             </div>
                             <div class="row" *ngIf="isPassword">
@@ -183,23 +177,19 @@
                                         *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
                                         class="required"> Username Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('userName').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Password
                                         <span class="star">*</span>
                                     </label>
                                     <input type="password" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
-                                        formControlName="password" placeholder="Enter Password">
+                                        formControlName="password" placeholder="Enter Password">                                        
+                                    <!-- <p-password pInputText [style]="{'width':'100%'}" value=""
+                                    formControlName="password" placeholder="Enter Password"></p-password> -->
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
                                         class="required"> Password Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('password').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
                                 </div>
                             </div>
                             <div class="row" *ngIf="isClient">
@@ -213,9 +203,7 @@
                                         *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
                                         class="required"> Client ID Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
+
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Client Secret
@@ -227,9 +215,6 @@
                                         *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
                                         class="required"> Client Secret Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
                                 </div>
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isVerifier">
@@ -242,9 +227,6 @@
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
                                         class="required"> Code Verifier Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('verifier').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group pl-0"  *ngIf="isScopeField">
@@ -253,13 +235,6 @@
                                     </label>
                                     <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="scope" placeholder="Enter Scope ">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('scope').invalid && connectorForm.get('scope').touched && !connectorForm.get('scope').hasError('pattern')"
-                                        class="required"> Scope Required*
-                                    </span> -->
-                                    <!-- <span *ngIf="connectorForm.get('scope').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
                                 </div>
                                 <div class="col-md-6 form-group pr-0" *ngIf="isRefreshToken">
                                     <label class="label-control" for="programname"> Refresh Token
@@ -271,9 +246,7 @@
                                         *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"
                                         class="required"> Refresh Token Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('refreshToken').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
-                                    </span> -->
+
                                 </div>
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isHeader">
@@ -326,27 +299,17 @@
                                         </tbody> -->
                                 </table>                               
                             </div>
-                            <!-- <div class="col-md-12 martsascl form-group api" *ngIf="isRequest">
-                                <label class="label-control"> Attributes <span class="star">*</span> </label>
-                                <p-chips formControlName="attribute" styleClass="attribute" separator=","
-                                    placeholder="Enter Attributes"></p-chips>
-                            </div> -->
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
                                 <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
                                     placeholder="Response">
                                 </textarea>
-                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
-                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isRequest && !isReqDisable">
                                 <label class="label-control"> Request </label> 
                                 <textarea  pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="request" (keyup)="isJsonData()" 
                                     placeholder="Request Body">
                                 </textarea>
-                                <!-- <span *ngIf="connectorForm.get('request').hasError('pattern')" class="required">
-                                    Only spaces between words are allowed.
-                                </span> -->
                                 <span *ngIf="validateJSON && connectorForm.get('request').value" class="text-danger"> Invalid JSON Format </span>
                                 <span *ngIf="!validateJSON && connectorForm.get('request').value" class="text-success"> Valid JSON Format </span>
                             </div>

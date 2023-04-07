@@ -32,6 +32,9 @@ export class RpaConnectionManagerComponent implements OnInit {
   conn_logo: any;
   table_searchFields:any[]=[];
   connector_id:any;
+  userRole: any = [];
+  connectorVisible: boolean = true;
+  isVisible: boolean = true;
 
   constructor(
     private rest_api: RestApiService,
@@ -46,10 +49,15 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'), Validators.maxLength(50)])],
+      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z_]+( [a-zA-Z_]+)*$'), Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userRole = this.userRole.split(',');
+    this.connectorVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
+    this.isVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ||this.userRole.includes("System Admin")
   }
 
   getAllConnections() {
@@ -92,7 +100,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     let selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
-      message: "Are you sure? You won't be able to revert this!",
+      message: "Are you sure? Do you want to delete this connector!",
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
@@ -218,37 +226,46 @@ export class RpaConnectionManagerComponent implements OnInit {
     );
   }
 
-  updateConnector() {
-    this.spinner.show();
-    let connectorName1 = this.createConnectorForm.get("name").value;
-    this.connector_id = this.selectedData[0].id
-    let data = {
-      connectionLogo: this.conn_logo==undefined?"":new String(this.conn_logo.split(",")[1]),
-      name: connectorName1,
-    };
-    this.rest_api.updateConnection(this.connector_id,data).subscribe((res: any) =>{        
-        this.spinner.hide();
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Connector Updated Successfully !!",
-        });
-        this.isFormOverlay = false;
-        this.createConnectorForm.reset();
-        this.getAllConnections();
-      },
-      (err: any) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Unable to Update Connector !!",
-        });        
-        this.spinner.hide();
-        this.isFormOverlay = false;
-        this.getAllConnections();
-      }
-    );
-  }
+updateConnector() {
+  this.spinner.show();
+  const { id } = this.selectedData[0];
+  const connectionLogo = this.conn_logo ? new String(this.conn_logo.split(",")[1]) : this.selectedData[0].connectionLogo;
+  const name = this.createConnectorForm.get("name").value;
+  const data = { connectionLogo, name };
+  this.updateConnection(id, data);
+}
+
+updateConnection(id: string, data: any) {
+  this.rest_api.updateConnection(id, data).subscribe(
+    () => {
+      this.showSuccessMessage("Connector Updated Successfully !!");
+      this.isFormOverlay = false;
+      this.createConnectorForm.reset();
+      this.getAllConnections();
+    },
+    () => {
+      this.showErrorMessage("Unable to Update Connector !!");
+      this.isFormOverlay = false;
+      this.getAllConnections();
+    }
+  ).add(() => this.spinner.hide());
+}
+
+showSuccessMessage(message: string) {
+  this.messageService.add({
+    severity: "success",
+    summary: "Success",
+    detail: message,
+  });
+}
+
+showErrorMessage(message: string) {
+  this.messageService.add({
+    severity: "error",
+    summary: "Error",
+    detail: message,
+  });
+}
 
   imageUpload(e) {
     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];

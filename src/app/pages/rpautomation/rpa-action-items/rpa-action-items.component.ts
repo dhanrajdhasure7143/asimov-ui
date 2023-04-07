@@ -22,6 +22,8 @@ export class RpaActionItemsComponent implements OnInit {
   selectedName: any;
   table_searchFields:any[]=[];
   selectedIcon: any;
+  userRole: any = [];
+  actionVisible: boolean = true;
 
   constructor(
     private router:Router,
@@ -43,6 +45,10 @@ export class RpaActionItemsComponent implements OnInit {
   ngOnInit(): void {
     this.loader.show();
     this.getAllActionItems();
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userRole = this.userRole.split(',');
+    this.actionVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
   }
 
   getAllActionItems() {
@@ -126,37 +132,38 @@ export class RpaActionItemsComponent implements OnInit {
 
   deleteAction() {
     this.loader.show();
-    let selectedId = this.selectedData[0].id;
+    const selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
-      message: "Are you sure? You won't be able to revert this!",
+      message: "Are you sure? Do you want to delete this Action-Item !",
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.loader.show();
-        this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Action Deleted Successfully !!",
-          })
-          this.loader.hide();
-          this.getAllActionItems();
-        },(err) => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Something Went Wrong !!",
-          })
-          this.loader.hide();
-          this.getAllActionItems();
-        })
+        this.rest_api.deleteActionById(selectedId).subscribe(
+          () => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Action Deleted Successfully !!",
+            });
+            this.loader.hide();
+            this.getAllActionItems();
+          },
+          () => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Something Went Wrong !!",
+            });
+            this.loader.hide();
+            this.getAllActionItems();
+          }
+        );
       },
-      reject: (type) => {
+      reject: () => {
         this.loader.hide();
       },
       key: "positionDialog"
     });
-
   }
   
   backToConnection() {

@@ -1,49 +1,49 @@
 <div class="rpa-content-div">
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
-            <div *ngIf="addflag" class="env-btn credential-btntool">
+            <div *ngIf="addflag && connectorVisible" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
                     <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
-            <div *ngIf="!addflag" class="env-btn credential-btntool">
+            <div *ngIf="!addflag && connectorVisible" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="addbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
                     <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
-            <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
+            <div *ngIf="viewConnetorflag && isVisible" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()" pTooltip="View" tooltipPosition="bottom">
                     <img src='../../../../assets/images-n/projects/eye-show-blue.svg' alt="view">
                     <!-- <span class="testtooltip"> View</span> -->
                 </button>
             </div>
-            <div *ngIf="!viewConnetorflag" class="env-btn credential-btntool">
+            <div *ngIf="!viewConnetorflag && isVisible" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images-n/projects/eye-show dis.svg' alt="view">
                     <!-- <span class="testtooltip"> View</span> -->
                 </button>
             </div>
-            <div *ngIf="updateflag" class="env-btn credential-btntool">
+            <div *ngIf="updateflag && connectorVisible" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateOverlay()" pTooltip="Edit" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
                     <!-- <span class="testtooltip"> Edit</span> -->
                 </button>
             </div>
-            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+            <div *ngIf="!updateflag && connectorVisible" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
                     <!-- <span class="testtooltip"> Edit</span> -->
                 </button>
             </div>
-            <div class="env-btn credential-btntool" *ngIf="delete_flag">
+            <div class="env-btn credential-btntool" *ngIf="delete_flag && connectorVisible">
                 <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteConnection()" pTooltip="Delete" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
                     <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
-            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
+            <div *ngIf="!delete_flag && connectorVisible" class="env-btn credential-btntool">
                 <button data-placement="top" id="deletebtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
                     <!-- <span class="testtooltip">Delete</span> -->
