@@ -203,19 +203,22 @@
               </select>
             </div>
             <div class="form-group col p-0 checkboxes">
-              <label class="label-control"><input type="checkbox" formControlName="ShowGrid" />
-                <span class="span">Show grid</span></label>
-              <label class="label-control"><input type="checkbox" formControlName="ShowSearch" />
-                <span class="span">Show in Search</span></label>
-              <label class="label-control"><input type="checkbox" formControlName="ShowForm" /></label>
-              <span class="span">Show in Form</span>
-
-              <label class="label-control">
-                <input type="checkbox" formControlName="read_only" />
-                <span class="span">Read Only</span>
-              </label>
-              <label class="label-control"><input type="checkbox" formControlName="mandatory" />
-                <span class="span">Mandatory</span></label>
+              <span>
+                <input type="checkbox" formControlName="ShowGrid" />
+                <label class="label-control"><span class="span">Show grid</span></label>
+              </span>
+              
+              <input type="checkbox" formControlName="ShowSearch" />
+              <label class="label-control"><span class="span">Show in Search</span></label>
+              
+              <input type="checkbox" formControlName="ShowForm" />
+              <label class="label-control"><span class="span">Show in Form</span></label>
+              
+              <input type="checkbox" formControlName="read_only" />
+              <label class="label-control"><span class="span">Read Only</span></label>
+              
+              <input type="checkbox" formControlName="mandatory" />
+              <label class="label-control"><span class="span">Mandatory</span></label>
             </div>
 
             <div class="form-group col p-0">
@@ -225,7 +228,7 @@
             </div>
 
             <div class="form-group col p-0">
-              <label for="" class="label-control">Defualt Type</label>
+              <label for="" class="label-control">Default Type</label>
               <select class="form-control data" formControlName="default_type">
                 <option value="">Select Option</option>
                 <option>Text</option>
@@ -243,7 +246,7 @@
             </div>
 
             <div class="form-group col p-0">
-              <label for="" class="label-control">Coloumn Order</label>
+              <label for="" class="label-control">Column Order</label>
               <select class="form-control data" formControlName="ColumnOrder">
                 <option value="">Select Option</option>
                 <option>Text</option>
