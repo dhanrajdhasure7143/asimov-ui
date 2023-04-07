@@ -444,7 +444,7 @@ div#tooltip_template span ul div:first-child,
   display: inline-block;
   word-break: break-word;
   font-size: 13px;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 div#tooltip_template span ul div:last-child,
@@ -453,7 +453,7 @@ div#tooltip_template span ul div:last-child,
   width: 30%;
   word-break: break-word;
   font-size: 13px;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 div#tooltip_template.tooltip-panel p,
@@ -467,7 +467,7 @@ div#tooltip_template.tooltip-panel p,
 .tipsy-inner .metrics-name {
   margin-bottom: 5px;
   border-bottom: 1px solid #e5e5e5;
-  color: #232832;
+  color: var(--main-txtcolor);
 }
 
 .tipsy-inner .node-name {
@@ -1143,7 +1143,7 @@ img.testplus1 {
 .maindivfoprm .label-control,
 .modelprbody label {
   font-size: 14px;
-  color: #7d7d7d;
+  color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
 }
@@ -1680,7 +1680,7 @@ span.star {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 2px;
-  color: #7d7d7d;
+  color: var(--formlabel-color);
 }
 
 .form-group,.form-fields {
@@ -1690,7 +1690,7 @@ span.star {
 .form-control {
   border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: unset !important;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
   border-radius: var(--main-borderradius) !important;
   padding: 0.5rem !important;
   background-color: transparent !important;
@@ -1705,7 +1705,7 @@ input.form-control, select.form-control {
 input.form-control::placeholder, select.form-control::placeholder,
 select.form-control.ng-untouched.ng-pristine.ng-invalid,
 select.form-control.ng-pristine.ng-invalid.ng-touched {
-  color: #7d7d7d !important;
+  color: var(--formlabel-color) !important;
 }
 
 #projectfavourites .mat-tab-label-content {
@@ -1747,7 +1747,7 @@ input.bps-home-fileds {
   left: 6px !important;
   z-index: 99 !important;
   padding-bottom: 0px !important;
-  color: #7d7d7d !important
+  color: var(--formlabel-color) !important
 }
 
 .addrespopup .ng-dropdown-panel,
@@ -2530,6 +2530,8 @@ button.custom-popupbtn.mat-button {
   --secondary-bluecolor: #4AB0F5;
   --main-bgcolor: #f9f9f9;
   --formfield-bordercolor: #979797;
+  --cards-bordercolor: #D0D0D0;
+  --formlabel-color: #7d7d7d;
   --main-borderradius: 6px;
   --high-importance: #ea3d3d;
   --medium-importance: #E58600;
@@ -2632,6 +2634,14 @@ cursor: pointer;
 /* .main-content-head {
   padding: 15px 30px 0px;
 } */
+
+.row.main-content-head {
+  align-items: center;
+}
+.row.main-content-head button.p-element.btn {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 .main-content-head h3 {
   font-weight: var(--main-fontweight);
   line-height: 30px;
@@ -2733,7 +2743,7 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 4px 0 !important;
+    border-width: 0 0 3px 0 !important;
     box-shadow: none !important;
     height: 100%;
 }
@@ -2757,7 +2767,7 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
   padding-right: 40px !important;
 }
 .tabs_screen .p-tabview-nav-content {
-  border: 1px solid #D0D0D0 !important;
+  border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
   border-radius: var(--main-borderradius);
   height: 70px;
@@ -2838,7 +2848,7 @@ mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
 th {
   border: unset !important;
   border: none !important;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
   border-width: unset !important;
   border-color: transparent !important;
   padding: 5px 10px !important;
@@ -2924,7 +2934,7 @@ th.p-element.p-sortable-column.p-resizable-column {
 } 
 
 tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
-  border: 1.5px solid #4AB0F5;
+  border: 1.5px solid var(--secondary-bluecolor);
   box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
   border-radius: 8px;
   outline: none;
@@ -2943,6 +2953,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-button-outlined {
   margin: 0 10px !important;
   color: var(--secondary-bluecolor) !important;
+  box-shadow: none !important;
 }
 .p-button-outlined.only_clearbtn {
   margin:0px !important;
@@ -2963,6 +2974,10 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   border: 1px solid var(--main-bluecolor) !important;
   padding: 4px 12px;
   margin: 0px !important;
+  box-shadow: none !important;
+}
+button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
+  color: var(--main-bluecolor);  /* filter applied icon highlight */
 }
 /* grid-filter Overlay Styles End */
 /* Grid NEW Styles End */
@@ -2991,7 +3006,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-checkbox .p-checkbox-box {
   width: 18px !important;
   height: 18px !important;
-  border: 1.5px solid #979797 !important;
+  border: 1.5px solid var(--formfield-bordercolor) !important;
   border-radius: 2px !important;
 }
 .p-checkbox .p-checkbox-box.p-highlight,
@@ -3009,7 +3024,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-dropdown.p-component.p-dropdown-open {
   background-color: #fff !important;
-  border: 1px solid #4AB0F5 !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
 }
 .p-multiselect:not(.p-disabled):hover {
   border-color: none !important;
@@ -3035,7 +3050,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 }
 .p-inputtext {
   font-size: var(--main-fontsize) !important;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
   background-color: transparent !important;
 }
 textarea.p-inputtextarea {
@@ -3087,7 +3102,7 @@ textarea.p-inputtextarea {
 .docfldnam .p-dialog .p-dialog-header .p-dialog-title {
   font-weight: 500 !important;
   font-size: 18px !important;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
 }
 .createdashboardname .p-dialog-footer {
   padding: 0px !important;
@@ -3112,6 +3127,9 @@ textarea.p-inputtextarea {
 .p-breadcrumb ul li .p-menuitem-link:focus {
   box-shadow: unset;
 }
+.p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
+  border: 1px solid #d0d0d0;
+}
 /* new styles for ng select */
 .ng-select .ng-select-container {
   min-height: 40px !important;
@@ -3127,13 +3145,17 @@ textarea.p-inputtextarea {
 }
 .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
   top: 10px !important;
-  color: #7d7d7d !important;
+  color: var(--formlabel-color) !important;
 }
 /* new styles for ng select */
+.p-column-filter-menu-button.p-column-filter-menu-button-open,
+.p-column-filter-menu-button.p-column-filter-menu-button-open:hover {
+  color: var(--secondary-bluecolor) !important;
+}
 /* headercss start*/
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
-  color: #098de6 !important;
+  color: var(--main-bluecolor) !important;
   width: 2.8rem !important;
   height: 2.8rem !important;
   margin: 0px !important
@@ -3149,9 +3171,12 @@ textarea.p-inputtextarea {
   top: 45px !important;
   left: 0px !important;
 }
+.taskdescription span.task-descwords p {
+  margin: 0px;
+}
 .p-inplace.p-component span.task-descwords {
   overflow-wrap: break-word;
-  }
+}
   
 /* headercss end*/
 /* primeNg components Styles End */
@@ -3188,13 +3213,23 @@ textarea.p-inputtextarea {
 }
 .splitoverlaydiv h4,
 .commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
-  font-size: 16px;
+  font-size: 18px;
   margin: 0px !important;
+  font-weight: 600;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link,
-.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link,
-.configtabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+.splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link {
   padding: 0px 15px !important;
+  margin-left: 15px !important;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link {
+    padding: 0px !important;
+}
+.configtabs .p-tabview-nav-container {
+  padding: 10px 20px 0px;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav,
 .configtabs .p-tabview .p-tabview-nav {
@@ -3217,11 +3252,12 @@ button.btn.new-cancelbtn {
 }
 .commentBox .p-tabview-panels {
   height: calc(100% - 45px) !important;
+  padding-top: 0px !important;
 }
 
 .create-body .prjoverlay .p-card.p-component {
   border-radius: 8px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--cards-bordercolor);
   box-shadow: none;
 }
 .create-body .prjoverlay .p-card.p-component:hover {
@@ -3257,7 +3293,7 @@ button.btn.new-cancelbtn {
 }
 .createform-overlay label {
   font-size: 14px;
-  color: #7d7d7d;
+  color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
 }
@@ -3268,7 +3304,7 @@ button.btn.new-cancelbtn {
 .maindivfoprm input.p-inputtext,
 .maindivfoprm  .p-dropdown {
   border-color: var(--formfield-bordercolor) !important;
-  color: #232832;
+  color: var(--main-txtcolor);
   height: 40px;
   background: transparent;
   box-shadow: none !important;
@@ -3287,7 +3323,7 @@ button.btn.new-cancelbtn {
 }
 .createform-overlay input.p-inputtext::placeholder,
 .p-dropdown .p-dropdown-label.p-placeholder {
-  color: #7d7d7d !important;
+  color: var(--formlabel-color) !important;
 }
 .createform-overlay textarea.p-inputtextarea.p-inputtext {
   background: transparent;
@@ -3330,7 +3366,7 @@ button.btn.new-cancelbtn {
 }
 .doctree span.p-treenode-label {
   font-size: 16px;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
 }
 .doctree span.p-treenode-label b {
   font-weight: 400 !important;
@@ -3339,7 +3375,11 @@ button.btn.new-cancelbtn {
   position: fixed;
   top: 75px;
   right: 35px;
-  width: 199px;
+  width: auto;
+}
+.doctree .p-tree-filter-container .p-tree-filter {
+  padding-left: 18px !important;
+    padding-right: 17px !important;
 }
 /* Tree Styles End */
 
@@ -3350,7 +3390,7 @@ button.btn.new-cancelbtn {
   justify-content: center;
   box-shadow: unset !important;
   border-radius: 8px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--cards-bordercolor);
   margin: 10px;
 }
 .docfolder .p-card:hover {
@@ -3361,13 +3401,18 @@ button.btn.new-cancelbtn {
   border: unset;
 }
 .docscrnchngs .p-breadcrumb ul li:last-child .p-menuitem-text {
-  color: #232832;
+  color: var(--main-txtcolor);
   font-weight: 600;
 }
 .docscrnchngs .p-breadcrumb {
   background: transparent;
   padding: 0px 10px;
   border: unset;
+}
+.docscrnchngs .p-breadcrumb ul li.p-breadcrumb-chevron {
+  margin: 0px 5px;
+  color: #232832;
+  font-size: 12px;
 }
 
 
@@ -3377,7 +3422,7 @@ button.btn.new-cancelbtn {
 }
 .docfolder .p-card-content span {
   font-size: 16px;
-  color: #232832 !important;
+  color: var(--main-txtcolor) !important;
   display: block;
   margin-top: 20px;
 }  
@@ -3399,7 +3444,7 @@ button.btn.new-cancelbtn {
 }
 .fldrovrlay .p-card.p-component {
   border-radius: 8px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--cards-bordercolor);
   box-shadow: none;
 }
 .fldrovrlay .p-card.p-component:hover {
@@ -3422,7 +3467,7 @@ button.btn.new-cancelbtn {
 }
 .fldrovrlay .p-card-content span, .fldrovrlay .p-card-content button {
   font-size: 16px;
-  color: #232832;
+  color: var(--main-txtcolor);
   margin-top: 10px;
   display: block;
   padding: 0px !important
@@ -3430,6 +3475,52 @@ button.btn.new-cancelbtn {
 .icon-color{
   color:var(--main-bluecolor) !important;
 }
+
+/* collaboration - user tagged styles start  */
+.usertaggedprofile {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px #ccc;
+  display: none;
+  position: absolute;
+  width: 295px;
+  z-index: 1;
+  padding: 10px;
+  align-items: center;
+  bottom: 25px;
+  left: 0px;
+}
+.icon-color:hover .usertaggedprofile {
+  display: flex;
+}
+.userstagged {
+  cursor: pointer;
+}
+.icon-color.userstagged {
+  position: relative;
+}
+.usrtag {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 18px;
+}
+.usrtaginfo p {
+  margin-bottom: 0px !important;
+  color: var(--main-txtcolor);
+}
+.usrtaginfo p.usrtagname {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 5px !important;
+}
+/* collaboration - user tagged styles end */
 
 /* New Dashboard Styles Start */
 .dropdown-primeng .p-dropdown {    
@@ -3440,13 +3531,16 @@ button.btn.new-cancelbtn {
   background-color: transparent;
 }
 .p-dropdown:not(.p-disabled).p-focus {
-  border: 1px solid #098de6 !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
   background-color: #fff !important;
   box-shadow: none !important;
 }
+.p-splitter .p-splitter-gutter {
+  background: #f5f6f7 !important;
+}
 .configtabs .p-tabview {
   height: 100%;
-  padding: 15px 20px 10px;
+  /* padding: 10px 20px; */
 }
 /* New Dashboard Styles End */
 
