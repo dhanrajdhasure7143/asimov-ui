@@ -92,6 +92,7 @@
     border-color: #979797 !important;
     color: #232832 !important;
     height: 32px !important;
+    padding: 10px;
 }
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    

@@ -129,7 +129,7 @@ button span {
   border: 1px solid #d0d0d0;
   border-radius: 6px;
   background-color: #fff;
-  padding: 0px 15px 10px;
+  padding: 5px 15px 10px;
   height: 100%;
 } 
 .commentBox button {
@@ -137,7 +137,7 @@ button span {
   float: right;
 }
 .userimage {
-  margin-right: 10px;
+  margin-right: 6px;
   width: 10%;
 }
 .comment-name {
@@ -151,6 +151,10 @@ button span {
 .comment-name p {
   margin: 0;
 }
+.comntdate {
+  color: #7D7D7D;
+  margin-bottom: 5px;
+}
 .res-circle {
   width: 40px;
   border-radius: 100%;
@@ -160,14 +164,15 @@ button span {
   padding: 10px;
 }
 ul.historydiv li {
-  border-bottom: 1px solid #d0d0d0;
-  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0px;
 }
-ul.historydiv li:first-child {
+/* ul.historydiv li:first-child {
   padding-top: 0px;
-}
+} */
 ul.historydiv li:last-child {
   border-bottom: 1px solid transparent !important;
+  padding-bottom: 0px !important;
 }
 .colheads {
   font-weight: 600;
@@ -179,8 +184,15 @@ ul.historydiv li:last-child {
   overflow: auto;
 }
 .commentBox .addcomment {
-  border-top: 1px solid #d0d0d0;
+  /* border-top: 1px solid #d0d0d0; */
   padding-top: 5px; 
+}
+.addcomment label {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.addcomment textarea {
+  border-radius: 6px;
 }
 .historyContent {
   height: calc(100vh - 300px);
@@ -229,4 +241,7 @@ button.btn.btn-primary.savefoldername {
 .commentaddedby {
   border-bottom: 1px solid #e0e0e0;
   padding: 15px 0px;
+}
+.content div:last-child .commentaddedby {
+  border-bottom: unset;
 }

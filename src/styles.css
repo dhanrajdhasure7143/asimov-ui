@@ -3213,7 +3213,7 @@ textarea.p-inputtextarea {
 }
 .splitoverlaydiv h4,
 .commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
-  font-size: 16px;
+  font-size: 18px;
   margin: 0px !important;
   font-weight: 600;
 }
@@ -3375,7 +3375,11 @@ button.btn.new-cancelbtn {
   position: fixed;
   top: 75px;
   right: 35px;
-  width: 199px;
+  width: auto;
+}
+.doctree .p-tree-filter-container .p-tree-filter {
+  padding-left: 18px !important;
+    padding-right: 17px !important;
 }
 /* Tree Styles End */
 
@@ -3404,6 +3408,11 @@ button.btn.new-cancelbtn {
   background: transparent;
   padding: 0px 10px;
   border: unset;
+}
+.docscrnchngs .p-breadcrumb ul li.p-breadcrumb-chevron {
+  margin: 0px 5px;
+  color: #232832;
+  font-size: 12px;
 }
 
 

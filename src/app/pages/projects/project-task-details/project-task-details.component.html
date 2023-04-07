@@ -248,7 +248,7 @@
 
                                             <div class="comment-name">
                                                 <h5> {{item.createdBy}} </h5>
-                                                <div>{{item.createdTimestamp | date :'MMM dd, y, HH:mm'}}</div>
+                                                <div class="comntdate">{{item.createdTimestamp | date :'MMM dd, y, HH:mm'}}</div>
                                                 <!-- {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}} -->
                                                 <div class="commentsadded">{{item.comments}} </div>
                                             </div>
@@ -272,7 +272,7 @@
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
-                                        [(ngModel)]="add_comment" [autoResize]="true" maxlength="100"></textarea>
+                                        [(ngModel)]="add_comment" [autoResize]="true" maxlength="100" placeholder="Type comment here"></textarea>
                                     <button [disabled]="add_comment == undefined" type="button" class="btn btn-primary btn-sm" (click)='postcomments()'>Add</button>
                                 </div>
                             </p-tabPanel>
