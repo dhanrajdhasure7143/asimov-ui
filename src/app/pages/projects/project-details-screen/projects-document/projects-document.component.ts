@@ -51,7 +51,8 @@ export class ProjectsDocumentComponent implements OnInit {
   documents_resData:any[]=[];
   taskList:[]=[];
   selectedOne:any;
-  breadcrumbItems:any[]=[]
+  breadcrumbItems:any[]=[];
+  istaskFilterApplied:boolean = false;
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -608,7 +609,6 @@ addParentFolder() {
   }
 
   backToSelectedFolder(){
-    console.log(this.opened_folders)
     this.folder_files = this.opened_folders[this.opened_folders.length-1];
     this.opened_folders.pop();
     this.breadcrumbItems.splice(-1)
@@ -621,7 +621,6 @@ addParentFolder() {
     // let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
     // object.key = this.selectedFolder.key + "-" + objectKey;
     let objectKey = this.selectedFolder.key
-    // console.log(objectKey)
     // return
     this.loader.show();
     const fileData = new FormData();
@@ -861,13 +860,13 @@ addParentFolder() {
     onchangesCheckBox(){
     this.breadcrumbItems=[];
       if(this.selectedOne.length>0){
-        this.files=[];
       let filteredData:any=[];
+      let filteredData1:any=[];
       this.selectedOne.forEach((element,index) => {
         this.documents_resData.forEach((ele,i) =>{
-          if(index == 0 && ele.dataType =="folder"){
-            filteredData.push(ele)
-          }
+          // if(index == 0 && ele.dataType =="folder"){
+          //   filteredData.push(ele)
+          // }
           if(element.id == ele.taskId){
             filteredData.push(ele)
           }
@@ -875,19 +874,23 @@ addParentFolder() {
 
       });
       setTimeout(() => {
-        this.files=[
-          {
-            key: "0",
-            label: "Add Folder",
-            data: "Add Folder",
-            data_type:"addfolder",
-            collapsedIcon: 'pi pi-folder',
-            expandedIcon: 'pi pi-folder'
-          },
-        ];
-        this.convertToTreeView(filteredData)
+        this.files=[];
+        filteredData.forEach(element => {
+         this.documents_resData.forEach(ele=>{
+          let splitKey =ele.key.includes("-")?ele.key.split("-")[0]:ele.key
+          if(splitKey == element.key.split("-")[0]){
+            filteredData1.push(ele)
+          }
+         })
+          // filteredData1.push(element)
+        });
+        setTimeout(() => {
+          this.convertToTreeView1(filteredData1);
+          this.istaskFilterApplied = true;
+        }, 100);
       }, 100);
     }else{
+      this.istaskFilterApplied = false;
       this.files=[];
       this.files=[
         {
@@ -902,6 +905,55 @@ addParentFolder() {
       this.convertToTreeView(this.documents_resData)
     }
     }
+
+    
+  convertToTreeView1(res_data){
+    this.breadcrumbItems=[];
+    this.files=[];
+    res_data.map(data=> {
+      if(data.dataType=='folder'){
+        data["children"]=[]
+      }
+      return data
+    })
+
+    for (let obj of res_data) {
+      let node = {
+        key: obj.key,
+        label: obj.label,
+        data: obj.data,
+        type:"default",
+        uploadedBy:obj.uploadedBy,
+        projectId:obj.projectId,
+        id: obj.id,
+        dataType:obj.dataType,
+        children:obj.children,
+        uploadedDate:obj.uploadedDate
+      };
+        if(obj.dataType == 'folder'){
+          node['collapsedIcon']=  "pi pi-folder"
+          node["expandedIcon"]  ="pi pi-folder-open"
+        }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+          node['icon']=  "pi pi-image"
+      }else{
+        node['icon']=  "pi pi-file"
+      }
+      this.nodeMap[obj.key] = node;
+      if (obj.key.indexOf('-') === -1) {
+        this.files.push(node);
+      } else {
+        let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+        let parent = this.nodeMap[parentKey];
+        if (parent) {
+          if(parent.children)
+          parent.children.push(node);
+        }
+      }
+    }
+    this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+    this.folder_files = this.files
+    this.loader.hide();
+  }
 
     truncateDesc(data){
       if(data && data.length > 51)

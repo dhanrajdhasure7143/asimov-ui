@@ -30,7 +30,7 @@
                     <div *ngIf="isFolder && breadcrumbItems.length>0">
                         <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
                     </div>
-            <div *ngIf="isFolder" class="row docfolder">
+            <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" (contextmenu)="onRightClick($event,item)">  
                 
                 <span *ngIf="item.label == 'Add Folder' || item.label == 'Add Folder / Document'">
