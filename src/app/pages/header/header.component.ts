@@ -93,6 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           var refreshToken = atob(refToken);
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem("masterTenant", this.tenantName);
           localStorage.setItem("firstName", this.firstName);
           localStorage.setItem("lastName", this.lastName);
           localStorage.setItem("ProfileuserId", this.ProfileuserId);

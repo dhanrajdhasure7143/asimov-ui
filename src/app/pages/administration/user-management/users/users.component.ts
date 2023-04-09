@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
     this.loader.show();
     this.loggedinUser = localStorage.getItem("ProfileuserId");
     this.rest_api
-      .getuserslist(localStorage.getItem("tenantName"))
+      .getuserslist(localStorage.getItem("masterTenant"))
       .subscribe((resp) => {
         this.users = resp;
         this.loader.hide();

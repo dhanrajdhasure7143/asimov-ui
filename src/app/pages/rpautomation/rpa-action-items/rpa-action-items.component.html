@@ -36,7 +36,7 @@
                                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
                                 </button>
                             </div>
-                            <div *ngIf="!updateflag" class="env-btn credential-btntool">
+                            <div *ngIf="!updateflag && actionVisible" class="env-btn credential-btntool">
                                 <button id="updateenvbtn" disabled>
                                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
                                 </button>
@@ -46,7 +46,7 @@
                                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
                                 </button>
                             </div>
-                            <div *ngIf="!delete_flag" class="env-btn credential-btntool">
+                            <div *ngIf="!delete_flag && actionVisible" class="env-btn credential-btntool">
                                 <button data-placement="top" id="deletebtn" disabled>
                                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
                                 </button>

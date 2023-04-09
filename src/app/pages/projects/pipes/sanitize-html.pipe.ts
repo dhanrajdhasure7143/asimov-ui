@@ -17,7 +17,17 @@ export class SanitizeHtmlPipe implements PipeTransform {
       const emails = matches.map(m => m.replace(regex, "$1"));
       emails.forEach((email:any)=>{
           let user=usersList.find((userItem:any)=>userItem.user_email==email);
-          message=message.replace("${"+email+"}", `<span class='icon-color'>${user.fullName}</span>`);
+          message=message.replace("${"+email+"}", `<span class='icon-color userstagged'>${user.fullName}
+            <div class="usertaggedprofile">
+              <div class="usrtag">
+                <span>${user.firstName.charAt(0)} ${user.lastName.charAt(0)}</span>
+              </div>
+              <div class="usrtaginfo">
+                <p class="usrtagname">${user.fullName}</p>
+                <p>${user.user_role}</p>
+              </div>
+            </div>
+          </span>`);
       })
     }
     var urlRegex = /(https?:\/\/[^\s]+)/g;

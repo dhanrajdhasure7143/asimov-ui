@@ -86,8 +86,9 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   onChangetype() {}
   
   checkTenantName() {
+    let tenantId=localStorage.getItem("masterTenant")
     let tenantName = this.generatedForm.get("tenant_name").value;
-    this.rest.checkTenantName(tenantName).subscribe((data) => {
+    this.rest.checkTenantName(tenantName,tenantId).subscribe((data) => {
       if(data == false){
         this.messageService.add({
           severity: "error",

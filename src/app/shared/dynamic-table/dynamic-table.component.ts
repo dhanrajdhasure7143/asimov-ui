@@ -46,6 +46,11 @@ export class DynamicTableComponent implements OnInit {
   loading: boolean = true;
   loggedInUser:String;
   users_list:any=[];
+  statusColors = {
+    Medium: 'orange',
+    High: 'red',
+    Low: 'green'
+  }
   
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
@@ -98,14 +103,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   getColor(status) {
-    switch (status) {
-      case 'Medium':
-        return 'orange';
-      case 'High':
-        return 'red';
-      case 'Low':
-        return 'green';
-    }
+    return this.statusColors[status];
   }
 
   editRowBy_Id(rowData:any){
