@@ -22,8 +22,9 @@ export class RpaActionItemsComponent implements OnInit {
   selectedName: any;
   table_searchFields:any[]=[];
   selectedIcon: any;
-  userRole: any = [];
-  actionVisible: boolean = true;
+  action_Id:any;
+  userRole:any=[]
+  // actionVisible:boolean=true;
 
   constructor(
     private router:Router,
@@ -45,10 +46,8 @@ export class RpaActionItemsComponent implements OnInit {
   ngOnInit(): void {
     this.loader.show();
     this.getAllActionItems();
-
-    this.userRole = localStorage.getItem("userRole");
-    this.userRole = this.userRole.split(',');
-    this.actionVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
+     this.userRole = localStorage.getItem("userRole");
+    // this.userRole = this.userRole.split(','); this.actionVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
   }
 
   getAllActionItems() {
@@ -106,16 +105,59 @@ export class RpaActionItemsComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: false,
-      }
+      },
+      {
+        ColumnName: "action",
+        DisplayName: "",
+        ShowGrid: true,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
     ];
     this.table_searchFields=["name","actionType","endPoint","methodType"];
   })
 
   }
 
-  viewDetails(event) {}
+  viewDetails(event) {
+    let actionID = event.id
+    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, create:false, formDisabled : true}});
+  }
 
-  deleteById(event) {}
+    deleteById(event) {
+      this.loader.show();
+      let selectedId = event.id;
+      this.confirmationService.confirm({
+        message: "Are you sure? You won't be able to revert this!",
+        header: 'Confirmation',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+          this.loader.show();
+          this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Action Deleted Successfully !!",
+            })
+            this.loader.hide();
+            this.getAllActionItems();
+          },(err) => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Something Went Wrong !!",
+            })
+            this.loader.hide();
+            this.getAllActionItems();
+          })
+        },
+        reject: (type) => {
+          this.loader.hide();
+        },
+        key: "positionDialog"
+      });
+    }
 
   deleteConnection() {}
 
@@ -126,9 +168,9 @@ export class RpaActionItemsComponent implements OnInit {
     this.selectedData.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
   }
 
-  updateAction() {
-      this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false, formDisabled : true}});
-  }
+  // updateAction() {
+  //     this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false, formDisabled : true}});
+  // }
 
   deleteAction() {
     this.loader.show();

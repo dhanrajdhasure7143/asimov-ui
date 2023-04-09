@@ -32,9 +32,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   conn_logo: any;
   table_searchFields:any[]=[];
   connector_id:any;
-  userRole: any = [];
-  connectorVisible: boolean = true;
-  isVisible: boolean = true;
+  userRole:any=[]
 
   constructor(
     private rest_api: RestApiService,
@@ -53,11 +51,7 @@ export class RpaConnectionManagerComponent implements OnInit {
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();
-
     this.userRole = localStorage.getItem("userRole");
-    this.userRole = this.userRole.split(',');
-    this.connectorVisible =  this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
-    this.isVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ||this.userRole.includes("System Admin")
   }
 
   getAllConnections() {
@@ -87,18 +81,29 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: true,
           multi: false,
         },
+        {
+          ColumnName: "action",
+          DisplayName: "",
+          ShowGrid: true,
+          ShowFilter: false,
+          sort: false,
+          multi: false,
+        },
       ];
       this.table_searchFields=["name"]
     });
   }
 
-  viewDetails(event) {}
+  viewDetails(event) {
+    this.router.navigate(["/pages/rpautomation/action-item"], {
+      queryParams: { id: event.id, name : event.name, icon : event.connectionLogo },
+    });
+  }
 
-  deleteById(event) {}
+  deleteById(event) {
 
-  deleteConnection() {
     this.spinner.show();
-    let selectedId = this.selectedData[0].id;
+    let selectedId = event.id;
     this.confirmationService.confirm({
       message: "Are you sure? Do you want to delete this connector!",
       header: 'Confirmation',
@@ -133,27 +138,60 @@ export class RpaConnectionManagerComponent implements OnInit {
     });
   }
 
-  viewConnector() {
-    this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name, icon : this.selectedData[0].connectionLogo },
-    });
-  }
+  // deleteConnection() {
+  //   this.spinner.show();
+  //   let selectedId = this.selectedData[0].id;
+  //   this.confirmationService.confirm({
+  //     message: "Are you sure? You won't be able to revert this!",
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-info-circle',
+  //     accept: () => {
+  //       this.spinner.show();
+  //       this.rest_api.deleteConnectorbyId(selectedId).subscribe(
+  //         (resp) => {
+  //           this.messageService.add({
+  //             severity: "success",
+  //             summary: "Success",
+  //             detail: "Connector Deleted Successfully !!",
+  //           });
+  //           this.spinner.hide();
+  //           this.getAllConnections();
+  //         },
+  //         (err) => {
+  //           this.messageService.add({
+  //             severity:'error', 
+  //             summary: 'Error', 
+  //             detail: "Please Delete the Action Items !!"
+  //           });
+  //           this.spinner.hide();
+  //           this.getAllConnections();
+  //         }
+  //       );
+  //     },
+  //     reject: (type) => {
+  //       this.spinner.hide();
+  //     },
+  //     key: "positionDialog"
+  //   });
+  // }
+
+  // viewConnector() {
+  //   this.router.navigate(["/pages/rpautomation/action-item"], {
+  //     queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name, icon : this.selectedData[0].connectionLogo },
+  //   });
+  // }
 
   addNewConnection() {
     this.isCreate = true;
     this.isFormOverlay = true;
   }
 
-  openUpdateOverlay() {
+  openUpdateOverlay(event) {
     this.isCreate = false;
     this.isFormOverlay = true;
-    this.connctionupdatedata = this.selectedData[0];
-    this.createConnectorForm
-      .get("name")
-      .setValue(this.connctionupdatedata["name"]);
-    this.createConnectorForm
-      .get("taskIcon")
-      .setValue(this.connctionupdatedata["taskIcon"]);
+    this.connctionupdatedata = event;
+    this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
+    this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
   }
 
   readSelectedData(data) {

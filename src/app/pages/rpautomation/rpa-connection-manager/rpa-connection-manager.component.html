@@ -1,62 +1,54 @@
 <div class="rpa-content-div">
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
-            <div *ngIf="addflag && connectorVisible" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="bottom">
+            <div class="env-btn credential-btntool">
+                <button [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="btn" class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
-                    <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
-            <div *ngIf="!addflag && connectorVisible" class="env-btn credential-btntool">
+            <!-- <div *ngIf="!addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="addbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
-                    <!-- <span class="testtooltip">New</span> -->
                 </button>
-            </div>
-            <div *ngIf="viewConnetorflag && isVisible" class="env-btn credential-btntool">
+            </div> -->
+            <!-- <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()" pTooltip="View" tooltipPosition="bottom">
                     <img src='../../../../assets/images-n/projects/eye-show-blue.svg' alt="view">
-                    <!-- <span class="testtooltip"> View</span> -->
                 </button>
             </div>
             <div *ngIf="!viewConnetorflag && isVisible" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images-n/projects/eye-show dis.svg' alt="view">
-                    <!-- <span class="testtooltip"> View</span> -->
                 </button>
             </div>
             <div *ngIf="updateflag && connectorVisible" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateOverlay()" pTooltip="Edit" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
-                    <!-- <span class="testtooltip"> Edit</span> -->
                 </button>
             </div>
             <div *ngIf="!updateflag && connectorVisible" class="env-btn credential-btntool">
                 <button id="updateenvbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
-                    <!-- <span class="testtooltip"> Edit</span> -->
                 </button>
             </div>
             <div class="env-btn credential-btntool" *ngIf="delete_flag && connectorVisible">
                 <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteConnection()" pTooltip="Delete" tooltipPosition="bottom">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
-                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
             <div *ngIf="!delete_flag && connectorVisible" class="env-btn credential-btntool">
                 <button data-placement="top" id="deletebtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
-                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid">
             <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list" [table_data]="connectorTable"
-                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)" [screenTable]="'common'" [checkBoxShow]="true"
+                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)" [screenTable]="'connectionsList'" [checkBoxShow]="false"
                 (selectedData)="readSelectedData($event)" [dataKeyId]="'id'" [show_search_field]="true" [show_column_filter]="true"
-                [show_clear_filter]="true" [search_fields]="table_searchFields">
+                [show_clear_filter]="true" [search_fields]="table_searchFields" [selectionMode]="'single'" (openUpdateOverlay)="openUpdateOverlay($event)">
             </app-dynamic-table>
         </div>
     </div>
@@ -107,7 +99,7 @@
                         <div class="createform-footer">
                             <button class="btn new-cancelbtn" (click)="resetForm()"> Reset </button> 
                             <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()" class="btn bluebg-button"> Save </button>
-                            <button *ngIf="!isCreate" (click)="updateConnector()"p class="btn bluebg-button"> Update </button> 
+                            <button *ngIf="!isCreate" (click)="updateConnector()" class="btn bluebg-button"> Update </button> 
                         </div>
                     </div>
                 </div>

@@ -201,6 +201,32 @@
                             </a>
                         </div>
                     </span>
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable' && selectedItem != null" class="w-100 text-center">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <span class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
+                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                            </span>
+                            <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                                <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
+                            </span>
+                        </div>
+                    </span>
+
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList' && selectedItem != null" class="w-100 text-center">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
+                                <button>
+                                    <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
+                                </button>
+                            </span>
+                            <span class="" (click)="openUpdateOverlayById(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
+                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                            </span>
+                            <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                                <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
+                            </span>
+                        </div>
+                    </span>
                 </td>
             </tr>
         </ng-template>
