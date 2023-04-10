@@ -12,7 +12,7 @@
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
-              [placeholder]="field.placeholder" [maxlength]="field.length" />
+              [placeholder]="field.placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
           </div>
           <div *ngIf="field.widget_type == 'file'">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
