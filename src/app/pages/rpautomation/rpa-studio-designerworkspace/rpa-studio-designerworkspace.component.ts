@@ -538,9 +538,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         name: nodename,
         selectedNodeTask: element.taskName,
         selectedNodeId: element.tMetaId,
-        path: this.toolset.find((data) => data.name == nodename).path,
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
+        path:""
       };
+      if(node.tasks.find((item)=>item.taskId==element.tMetaId))
+      {
+        let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
+        if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
+          node.path=this.toolset.find((data) => data.name == nodename).path
+        else
+          node.path='data:image/png;base64,'+selectedTask.taskIcon;
+      }
       let checkFlag: any = [];
       checkFlag = this.savedGroupsData.filter((groupData: any) => {
         if (groupData.nodeIds.find((item) => item == nodeid) != undefined)
