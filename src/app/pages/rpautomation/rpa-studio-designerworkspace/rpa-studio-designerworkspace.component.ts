@@ -136,7 +136,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   draggableHandle: any;
 
   @ViewChild("template") template: TemplateRef<any>;
-
   @ViewChild("checkBotTemplate")
   checkBotTemplate: TemplateRef<any>;
   public nodedata: any;
