@@ -291,8 +291,6 @@ export class RpaConnectionManagerComponent implements OnInit {
         });        
         this.spinner.hide();
         this.isFormOverlay = false;
-        this.createConnectorForm.reset();
-        this.getAllConnections();
       }
     );
   }
