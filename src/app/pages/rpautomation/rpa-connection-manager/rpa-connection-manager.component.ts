@@ -290,7 +290,6 @@ export class RpaConnectionManagerComponent implements OnInit {
           detail: "Unable to Update Connector !!",
         });        
         this.spinner.hide();
-        this.isFormOverlay = false;
       }
     );
   }
