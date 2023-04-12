@@ -82,6 +82,16 @@ export class RpaConnectionManagerComponent implements OnInit {
           multi: false,
         },
         {
+          ColumnName: "actionCount",
+          DisplayName: "Action Count",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
           ColumnName: "action",
           DisplayName: "",
           ShowGrid: true,

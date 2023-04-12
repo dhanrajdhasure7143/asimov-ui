@@ -1776,4 +1776,8 @@ checkTenantName(tenantName,master_tenant)
   return this.http.post("/platform-service/screenGenerator/check-tenant/"+master_tenant+"?tenant_name="+tenantName,data)
   
 }
+
+getIcon(id){
+  return this.http.get(`/rpa-service/action/icon/${id}`)
+}
 }

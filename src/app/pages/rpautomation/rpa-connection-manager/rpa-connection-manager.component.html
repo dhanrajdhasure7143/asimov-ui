@@ -6,54 +6,31 @@
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
                 </button>
             </div>
-            <!-- <div *ngIf="!addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="addbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
-                </button>
-            </div> -->
-            <!-- <div *ngIf="viewConnetorflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" (click)="viewConnector()" pTooltip="View" tooltipPosition="bottom">
-                    <img src='../../../../assets/images-n/projects/eye-show-blue.svg' alt="view">
-                </button>
-            </div>
-            <div *ngIf="!viewConnetorflag && isVisible" class="env-btn credential-btntool">
-                <button id="updateenvbtn" disabled>
-                    <img src='../../../../assets/images-n/projects/eye-show dis.svg' alt="view">
-                </button>
-            </div>
-            <div *ngIf="updateflag && connectorVisible" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateOverlay()" pTooltip="Edit" tooltipPosition="bottom">
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
-                </button>
-            </div>
-            <div *ngIf="!updateflag && connectorVisible" class="env-btn credential-btntool">
-                <button id="updateenvbtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
-                </button>
-            </div>
-            <div class="env-btn credential-btntool" *ngIf="delete_flag && connectorVisible">
-                <button class="tsttooltipbtn" value="Delete" id="deletebtn" (click)="deleteConnection()" pTooltip="Delete" tooltipPosition="bottom">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
-                </button>
-            </div>
-            <div *ngIf="!delete_flag && connectorVisible" class="env-btn credential-btntool">
-                <button data-placement="top" id="deletebtn" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
-                </button>
-            </div> -->
         </div>
     </div>
     <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid">
-            <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list" [table_data]="connectorTable"
-                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)" [screenTable]="'connectionsList'" [checkBoxShow]="false"
-                (selectedData)="readSelectedData($event)" [dataKeyId]="'id'" [show_search_field]="true" [show_column_filter]="true"
-                [show_clear_filter]="true" [search_fields]="table_searchFields" [selectionMode]="'single'" (openUpdateOverlay)="openUpdateOverlay($event)">
+            <app-dynamic-table
+             [representatives]="representatives" 
+             [columns_list]="columns_list" 
+             [table_data]="connectorTable"
+             (viewDetails)="viewDetails($event)" 
+             (deleteItem)="deleteById($event)" 
+             [screenTable]="'connectionsList'" 
+             [checkBoxShow]="false"
+             (selectedData)="readSelectedData($event)" 
+             [dataKeyId]="'id'" 
+             [show_search_field]="true" 
+             [show_column_filter]="true"
+             [show_clear_filter]="true" 
+             [search_fields]="table_searchFields" 
+             [selectionMode]="'single'" 
+             (openUpdateOverlay)="openUpdateOverlay($event)">
             </app-dynamic-table>
         </div>
     </div>
 </div>    
-<!-- <app-rpa-connection-manager-form [isConnectorForm]="isConnectorForm"> </app-rpa-connection-manager-form> -->
+
 <div [hidden]="!isFormOverlay">
         <app-split-overlay (closeOverlay)="closeFormOverlay($event)">
             <div class="h-100">
@@ -76,25 +53,11 @@
                                     between words are allowed.
                                 </span>
                             </div> 
-                            <!-- <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="userName"> Authorization Type <span class="star">*</span></label>
-                                <p-dropdown [options]="authorizationType" formControlName="authorization_Type" autoWidth="false"
-                              [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Authorization"
-                             (onChange)="changeAuth($event)" required></p-dropdown>
-                                <span *ngIf="createConnectorForm.get('authorization_Type').invalid && createConnectorForm.get('authorization_Type').touched" class="required"> Authorization Type Required* </span>
-                            </div> -->
                             <div class="form-group col p-0">
                                 <label class="label-control" for="task_icon"> Connector Logo <span class="star" *ngIf="isCreate">*</span></label>                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
                                 <input pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
-                                <!-- <span
-                                    *ngIf="createConnectorForm.get('taskIcon').invalid && createConnectorForm.get('taskIcon').touched && isCreate"
-                                    class="required">  Connector Logo Required* </span> -->
                             </div>
-                            <!-- <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFileLang" lang="es">
-                                <label class="custom-filfe-label" for="customFileLang">Seleccionar Archivo</label>
-                            </div> -->
                         </form>
                         <div class="createform-footer">
                             <button class="btn new-cancelbtn" (click)="resetForm()"> Reset </button> 
