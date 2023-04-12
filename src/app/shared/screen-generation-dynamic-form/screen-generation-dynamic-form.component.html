@@ -13,6 +13,9 @@
             </label>
             <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
               [placeholder]="field.placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
+              <span
+                  *ngIf="generatedForm.get('tenant_name').invalid && generatedForm.get('tenant_name').touched"
+                  class="errspan required"> Only spaces are allowed between words* </span>
           </div>
           <div *ngIf="field.widget_type == 'file'">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
