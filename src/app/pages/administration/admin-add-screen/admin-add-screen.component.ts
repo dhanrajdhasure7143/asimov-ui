@@ -278,10 +278,10 @@ export class AdminAddScreenComponent implements OnInit {
             ColumnName: "action",
             DisplayName: "Actions",
             ShowGrid: true,
-            ShowFilter: true,
+            ShowFilter: false,
             filterWidget: "normal",
             filterType: "text",
-            sort: true,
+            sort: false,
             multi: false,
           },
         ];
