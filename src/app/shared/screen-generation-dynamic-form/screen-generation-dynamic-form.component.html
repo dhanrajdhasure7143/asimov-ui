@@ -24,6 +24,9 @@
               <div *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value" class="required">
                 Tenant Name is already exists*
             </div>
+              <span
+                  *ngIf="generatedForm.get('tenant_name').invalid && generatedForm.get('tenant_name').touched"
+                  class="errspan required"> Only spaces are allowed between words* </span>
           </div>
 
           <div *ngIf="field.widget_type == 'file'">
