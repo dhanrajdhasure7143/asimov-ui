@@ -267,7 +267,6 @@ export class RpaConnectionManagerComponent implements OnInit {
   updateConnector() {
     this.spinner.show();
     let connectorName1 = this.createConnectorForm.get("name").value;
-    console.log(this.connctionupdatedata,"connctionupdatedata");
     let id = this.connctionupdatedata.id
     let data = {
       connectionLogo: this.conn_logo == undefined ? this.connctionupdatedata.connectionLogo  : new String(this.conn_logo.split(",")[1]),
