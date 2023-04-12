@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { log } from "console";
 import { MessageService } from "primeng/api";
-
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -32,7 +30,6 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.inputFieldData)
     if (this.details == undefined) {
       this.isEditForm = false;
       this.inputFieldData.forEach((item: any) => {
@@ -94,11 +91,6 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
       if(data == false){
         this.tenantNameCheck = true;
       }else{
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Tenant Already Exists !!",
-        });
         this.tenantNameCheck = false;
       }
     });
