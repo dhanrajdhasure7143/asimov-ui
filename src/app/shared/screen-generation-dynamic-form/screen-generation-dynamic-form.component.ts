@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { log } from "console";
 import { MessageService } from "primeng/api";
 
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
@@ -22,6 +23,7 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   tableData: any;
   portalnames: any;
   formvalue: any;
+  tenantNameCheck: boolean;
 
   constructor(
     private rest: RestApiService,
@@ -30,6 +32,7 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.inputFieldData)
     if (this.details == undefined) {
       this.isEditForm = false;
       this.inputFieldData.forEach((item: any) => {
@@ -84,17 +87,19 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   }
 
   onChangetype() {}
-  
   checkTenantName() {
     let tenantId=localStorage.getItem("masterTenant")
     let tenantName = this.generatedForm.get("tenant_name").value;
     this.rest.checkTenantName(tenantName,tenantId).subscribe((data) => {
       if(data == false){
+        this.tenantNameCheck = true;
+      }else{
         this.messageService.add({
           severity: "error",
           summary: "Error",
           detail: "Tenant Already Exists !!",
         });
+        this.tenantNameCheck = false;
       }
     });
   }
