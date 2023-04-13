@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { MessageService } from "primeng/api";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -26,8 +25,7 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
 
   constructor(
     private rest: RestApiService,
-    private datatransfer: DataTransferService,
-    private messageService:MessageService
+    private datatransfer: DataTransferService
   ) {}
 
   ngOnInit(): void {
