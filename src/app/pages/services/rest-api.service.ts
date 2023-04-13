@@ -1780,4 +1780,8 @@ checkTenantName(tenantName,master_tenant)
 getIcon(id){
   return this.http.get(`/rpa-service/action/icon/${id}`)
 }
+
+getIconForConnector(id){
+  return this.http.get(`/rpa-service/connection/icon/${id}`)
+}
 }

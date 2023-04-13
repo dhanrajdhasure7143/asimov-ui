@@ -55,8 +55,13 @@
                             </div> 
                             <div class="form-group col p-0">
                                 <label class="label-control" for="task_icon"> Connector Logo <span class="star" *ngIf="isCreate">*</span></label>                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
-                                <input pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
+                                <div class="row">
+                                    <input *ngIf="isCreate" pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
+                                    <input *ngIf="!isCreate" pInputText [style]="{'width':'94%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
+                                    formControlName="taskIcon" id="formFileLg" type="file" />
+                                    <img *ngIf="!isCreate" class="logo" [src]="'data:image/png;base64,'+connector_icon" alt="connector_icon"> 
+                                </div>   
                             </div>
                         </form>
                         <div class="createform-footer">
