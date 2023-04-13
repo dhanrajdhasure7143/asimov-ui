@@ -3545,3 +3545,19 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
+/* ----------------------Editable noneditable and text-editor styles------------------------- */
+.ck.ck-editor__editable_inline {
+  width: 100% !important;
+  height: 405px !important;
+  padding: 5px 20px 5px 20px !important;
+  margin: 0px auto !important;
+}
+.ck.ck-toolbar {
+  background: #DEDEDE !important;
+}
+.non-editablefield{cursor: not-allowed;}
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  border-color: #e0e0e0 !important;
+  box-shadow: none !important;
+}
+/* ----------------------Editable noneditable and text-editor styles------------------------- */

@@ -139,11 +139,11 @@
                                         <label>Status</label>
                                     </div>
                                     <div class="pinf prjowner">
-                                        <p>{{projectDetails.owner| userPipe : users_list}}</p>
+                                        <p class="non-editablefield">{{projectDetails.owner| userPipe : users_list}}</p>
                                         <label>Created By</label>
                                     </div>
                                     <div class="pinf prjlastupdated">
-                                        <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</p>
+                                        <p class="non-editablefield">{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</p>
                                         <label>Last Updated</label>
                                     </div>
                                 </div>
