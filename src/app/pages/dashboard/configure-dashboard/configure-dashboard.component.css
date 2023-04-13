@@ -84,7 +84,10 @@
 }
 button.btn.bluebg-button {
     height: 32px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
+}
+.delete-dbtn img {
+    height: 20px;
 }
 .warng-img {
 	margin-right: 10px;

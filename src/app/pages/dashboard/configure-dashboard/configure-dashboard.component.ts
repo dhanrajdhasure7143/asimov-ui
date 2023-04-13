@@ -63,7 +63,7 @@ export class ConfigureDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader.show();
-    this.items = [{label: 'Delete',command: () => {this.deletedashbord()}}]
+    // this.items = [{label: 'Delete',command: () => {this.deletedashbord()}}]
     // this.loader.show();
     this.chartOptions = {
       "plugins": {

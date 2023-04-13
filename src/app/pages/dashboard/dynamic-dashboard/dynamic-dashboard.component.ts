@@ -50,9 +50,9 @@ export class DynamicDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getDashBoardData(this._paramsData.dashboardId);
     this.primengConfig.ripple = true;
-    this.menuItems = [
-      {label: "Delete",command: () => { this.deletedashbord()}},
-    ];
+    // this.menuItems = [
+    //   {label: "Delete",command: () => { this.deletedashbord()}},
+    // ];
     this.items = [
       {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       {label: "Configure",command: (e) => {this.toggleConfigure(e)}},

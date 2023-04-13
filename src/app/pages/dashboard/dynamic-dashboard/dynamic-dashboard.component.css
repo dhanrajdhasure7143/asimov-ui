@@ -5,18 +5,22 @@
 .btn-secondary {
 	height: 32px;
     background-color: #E9E9E9 !important;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     color: #232832 !important;
     outline: none !important;
     box-shadow: none !important;
 }
 .btn-dots {
 	background-color: #E9E9E9;
-    height: 32px;
+    /* height: 32px; */
+    padding: 12px 8px !important;
 }
 .btn-dots-header {
     background-color: #E9E9E9;
     height: 32px;
+}
+.delete-dbtn img {
+    height: 20px;
 }
 /* .btn-dots-header:hover {
     background-color: #ebebeb;
@@ -86,13 +90,16 @@
     width: 80%;
     margin: auto;
 }
-
+.delete-dbtn {
+    padding-left: 0px !important;
+}
 .defaltdrpdwn button {
     width: 230px;
     border-color: #979797 !important;
     color: #232832 !important;
     height: 32px !important;
     padding: 10px;
+    margin: 0px 12px !important;
 }
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
