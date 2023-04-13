@@ -22,6 +22,7 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   portalnames: any;
   formvalue: any;
   tenantNameCheck: boolean;
+  placeholder ="Enter"
 
   constructor(
     private rest: RestApiService,

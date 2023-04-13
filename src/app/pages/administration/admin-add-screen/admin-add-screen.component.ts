@@ -35,6 +35,7 @@ export class AdminAddScreenComponent implements OnInit {
   table_searchFields: any = [];
   hiddenPopUp: boolean = false;
   myValue: number = 0;
+  screenNameCheck: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -385,5 +386,15 @@ export class AdminAddScreenComponent implements OnInit {
     } else {
       this.myValue = null;
   }
+}
+checkScreenName() {
+  let screenName = this.insertForm.get("screen_Name").value;
+  this.rest.checkScreenName(screenName).subscribe((data) => {
+    if(data == false){
+      this.screenNameCheck = true;
+    }else{
+      this.screenNameCheck = false;
+    }
+  });
 }
 }
