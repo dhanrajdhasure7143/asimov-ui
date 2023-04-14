@@ -2659,7 +2659,6 @@ cursor: pointer;
 .main-content-head h3 .title_text_haspath {
   font-size: 16px;
   font-weight: 500;
-  line-height: 30px;
 }
 .main-content-head .btn {
   min-width: auto;
@@ -2692,6 +2691,7 @@ label#popup_title {
 #popup_title a {
   cursor: pointer;
   margin-right: 8px;
+  display: flex;
 }
 #popup_title a:hover {
   color: var(--main-bluecolor);
