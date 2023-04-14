@@ -830,6 +830,7 @@ foreignObject {
 #sidenav .mat-list-base .mat-list-item .mat-list-item-content,
 .mat-list-base .mat-list-option .mat-list-item-content {
   padding: 0 20px;
+  column-gap: 12px;
 }
 
 .h-100 {
@@ -866,7 +867,7 @@ foreignObject {
 #sidenav.menu-close .mat-list-item-content .menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
   right: 50%;
   bottom: -10px;
-  transform: translate(8px, 0px);
+  transform: translate(10px, 0px);
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
@@ -2736,6 +2737,7 @@ input.p-inputtext {
   color: var(--main-txtcolor) !important;
   padding: 15px 0px 0px !important;
   height: 100%;
+  position: relative;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     border-color: transparent !important; 
@@ -3129,6 +3131,13 @@ textarea.p-inputtextarea {
 }
 .p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
   border: 1px solid #d0d0d0;
+}
+.p-editor-container .p-editor-content .ql-editor {
+  overflow: hidden;
+}
+.taskdescription .p-inplace.p-component {
+  height: 450px;
+  overflow: auto;
 }
 /* new styles for ng select */
 .ng-select .ng-select-container {
