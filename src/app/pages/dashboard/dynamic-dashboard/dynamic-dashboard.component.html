@@ -43,18 +43,22 @@
                         </li>
                        <!-- <li class="divider dropdown-divider"></li> -->
                      </ul>
-                   </div>
+                  </div>
 
-
-                  <button (click)="navigateToCreateDashboard()" class="btn"> 
-                     <img src="./../../../../assets/images-n/dashboard/plus-square_blue.svg" />
-                     <span class="plus">Create</span>
+                  <button (click)="navigateToCreateDashboard()" class="btn delete-dbtn"  pTooltip="Create" tooltipPosition="bottom"> 
+                     <img src="../../../../assets/images-n/dashboard/plus-square_blue.svg" alt="Create"/>
+                     <!-- <span class="plus">Create</span> -->
                   </button>
-                  <button (click)="navigateToConfigure()" class="btn btn-secondary">Configure </button>
-                  <button class="btn btn-dots-header" type="button" (click)="menu.toggle($event)">
+                  <button (click)="navigateToConfigure()" class="btn delete-dbtn" pTooltip="Configure" tooltipPosition="bottom">
+                     <img src="../../../../assets/images-n/dashboard/dash-Configure.svg" alt="Configure"/>
+                  </button>               
+                  <button (click)="deletedashbord()" class="btn delete-dbtn" pTooltip="Delete" tooltipPosition="bottom">
+                     <img src="../../../../assets/images-n/dashboard/dash-delete.svg" alt="Delete" />
+                  </button>
+                  <!-- <button class="btn btn-dots-header" type="button" (click)="menu.toggle($event)">
                      <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions">
                   </button>
-                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu>
+                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu> -->
             </div>
          </div>
      
@@ -64,7 +68,7 @@
                   <div class="well1-dynmic">
                      <div class="new-dynamic">
                         <h3>{{item.metricValue}}</h3>
-                        <p>{{item.name}}</p>
+                        <p>{{item.name}}</p>                       
                      </div>
                   </div>
                </div>
