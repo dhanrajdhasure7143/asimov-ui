@@ -1776,4 +1776,10 @@ checkTenantName(tenantName,master_tenant)
   return this.http.post("/platform-service/screenGenerator/check-tenant/"+master_tenant+"?tenant_name="+tenantName,data)
   
 }
+checkScreenName(Screen_Name)
+{
+  let data="";
+  return this.http.post("/platform-service/screenGenerator/check-ScreenName?Screen_Name="+Screen_Name,data)
+}
+
 }
