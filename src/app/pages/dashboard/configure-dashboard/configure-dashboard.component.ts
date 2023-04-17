@@ -91,9 +91,9 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   widgetDragStart(widget){
-    // if (widget.widgetAdded == false) {
+    if (widget.widgetAdded == false) {
       this.draggedProduct1 = widget;
-    // }
+    }
   }
 
   drop() {
@@ -108,7 +108,7 @@ export class ConfigureDashboardComponent implements OnInit {
     if (this.draggedProduct1) {
       this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
       this.addedWidgets.push(this.draggedProduct1);
-      if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
+      if (this.defaultEmpty_widgets.find(item => item.widgetAdded == false) != undefined)
         this.defaultEmpty_widgets.find(item => item.widgetAdded == false).widgetAdded = true
     }
   }
