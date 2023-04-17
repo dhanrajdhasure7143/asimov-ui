@@ -17,7 +17,7 @@ th.checkboxth:before {
     display: inline-block;
     line-height: 13px;
     padding: 10px 8px;
-    margin-right: 3px;
+    margin-right: 8px;
 }
 .red {
     color: red;
