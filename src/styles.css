@@ -3563,3 +3563,28 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
+/* ----------------------Editable noneditable and text-editor styles------------------------- */
+.editor-container.editor-body .ck.ck-editor__editable_inline {
+  width: 100% !important;
+  height: calc(100vh - 190px) !important;
+  padding: 20px 20px 20px 20px !important;
+  margin: 0px auto !important;
+}
+#toolbar-container .ck.ck-toolbar {
+  background: #eee !important;
+}
+.non-editablefield{cursor: not-allowed;}
+.editor-container.editor-body .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  border-color: #e0e0e0 !important;
+  box-shadow: none !important;
+}
+.editor-container.editor-body .ck.ck-editor__editable_inline p{margin-bottom: 0rem !important;
+  margin-top: 0rem !important;}
+  #toolbar-container .ck-toolbar__items .ck.ck-button.ck-on{background-color: #eee;color:#000}
+  #toolbar-container .ck-toolbar__items .ck.ck-button:focus{
+    box-shadow: 0px 0px !important;} 
+  #toolbar-container .ck-toolbar__items .ck.ck-button.ck-on:not(.ck-disabled):hover{
+      background: #eee;} 
+  #toolbar-container .ck.ck-button:active{border:1px solid #eee;}
+  #toolbar-container .ck.ck-button:active{border:1px solid #eee}
+/* ----------------------Editable noneditable and text-editor styles------------------------- */
