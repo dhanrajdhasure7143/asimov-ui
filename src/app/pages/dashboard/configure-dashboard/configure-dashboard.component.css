@@ -28,7 +28,7 @@
     border-radius: 6px;
 }
 .graph {
-	height: 360px;
+	height: 350px;
 	padding: 15px !important;
 }
 .new-dynamic h3 {
@@ -84,7 +84,10 @@
 }
 button.btn.bluebg-button {
     height: 32px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
+}
+.delete-dbtn img {
+    height: 20px;
 }
 .warng-img {
 	margin-right: 10px;

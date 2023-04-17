@@ -12,22 +12,22 @@
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
-              [placeholder]="field.placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
+              [placeholder]="field.placeholder=='undefined'?field.placeholder:placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
             </div>
               <div *ngIf="field.ColumnName == 'tenant_name'">
                 <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
                   <span class="star" *ngIf="field.mandatory">*</span> 
                 </label>
                 <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
-                  [placeholder]="field.placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
+                  [placeholder]="field.placeholder" [maxlength]="field.length" />
+                  <div *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')" class="required">
+                    Tenant Name is already exists*
+                </div>
+                  <span
+                      *ngIf="!tenantNameCheck && generatedForm.get('tenant_name').hasError('pattern')"
+                      class="errspan required"> Only spaces are allowed between words* </span>
               </div>
-              <div *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value" class="required">
-                Tenant Name is already exists*
-            </div>
-              <span
-                  *ngIf="generatedForm.get('tenant_name').invalid && generatedForm.get('tenant_name').touched"
-                  class="errspan required"> Only spaces are allowed between words* </span>
-          </div>
+                </div>
 
           <div *ngIf="field.widget_type == 'file'">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
