@@ -86,3 +86,8 @@ input[type=file]::file-selector-button:hover {
   height: 35px;
   text-align: center;
 }
+
+.custom::before{
+  content: 'Replace?    ';
+  display: inline-block;
+}
