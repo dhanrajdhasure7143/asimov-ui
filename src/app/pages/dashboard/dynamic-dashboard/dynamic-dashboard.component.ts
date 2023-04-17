@@ -60,7 +60,7 @@ export class DynamicDashboardComponent implements OnInit {
     if (this._paramsData.dashboardId === undefined) {
       setTimeout(() => {
         this.changeToDefaultDashBoard();
-      }, 300);
+      }, 500);
 
     } else {
          this.getListOfDashBoards();
