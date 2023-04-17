@@ -180,12 +180,15 @@ ul.historydiv li:last-child {
   margin-bottom: 15px;
 }
 .commentBox .content {
-  height: calc(100vh - 435px);
+  height: calc(100vh - 375px);
   overflow: auto;
 }
 .commentBox .addcomment {
   /* border-top: 1px solid #d0d0d0; */
   padding-top: 5px; 
+  /* position: absolute;
+  bottom: 0px;
+  width: 100%; */
 }
 .addcomment label {
   font-size: 16px;
