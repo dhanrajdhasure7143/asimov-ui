@@ -31,3 +31,17 @@ span.userhint {
 button.btn.new-cancelbtn:disabled {
     background-color: transparent !important;
 }
+
+.cross-mark{
+    cursor: pointer;
+}
+
+.logo{
+    height: 35px;
+    text-align: center;
+}
+
+.custom::before{
+    content: 'Replace?    ';
+    display: inline-block;
+}

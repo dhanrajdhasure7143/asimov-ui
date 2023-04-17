@@ -6,16 +6,11 @@
                     <label id="popup_title">
                         <a (click)="backToConnection()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                         <span>Connection Manager | </span>
                         <span class="sub_title_text">{{ selectedName }}</span>
                     </span>
                 </h3>
-                <!-- <div class="col-md-8 pr-0 text-right">
-                    <button [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="btn" (click)="addNewAction()" pTooltip="Create" tooltipPosition="bottom">
-                      <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-                    </button>
-                </div> -->
             </div>
             <div class="main-content-body">
                 <div class="actionitems-grid">
@@ -26,31 +21,6 @@
                                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
                                 </button>
                             </div>
-                            <!-- <div *ngIf="!addflag" class="env-btn credential-btntool">
-                                <button class="tsttooltipbtn" id="addbtn" disabled>
-                                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add">
-                                </button>
-                            </div> -->
-                            <!-- <div *ngIf="updateflag" class="env-btn credential-btntool">
-                                <button class="tsttooltipbtn" id="updateenvbtn" pTooltip="Edit" tooltipPosition="bottom">
-                                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit">
-                                </button>
-                            </div>
-                            <div *ngIf="!updateflag && actionVisible" class="env-btn credential-btntool">
-                                <button id="updateenvbtn" disabled>
-                                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit">
-                                </button>
-                            </div>
-                            <div class="env-btn credential-btntool" *ngIf="delete_flag">
-                                <button class="tsttooltipbtn" value="Delete" id="deletebtn" pTooltip="Delete" tooltipPosition="bottom">
-                                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete">
-                                </button>
-                            </div>
-                            <div *ngIf="!delete_flag && actionVisible" class="env-btn credential-btntool">
-                                <button data-placement="top" id="deletebtn" disabled>
-                                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete">
-                                </button>
-                            </div> -->
                         </div>
                     </div>
                     <div>

@@ -33,6 +33,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   table_searchFields:any[]=[];
   connector_id:any;
   userRole:any=[]
+  connector_icon: any;
 
   constructor(
     private rest_api: RestApiService,
@@ -79,6 +80,16 @@ export class RpaConnectionManagerComponent implements OnInit {
           filterWidget: "normal",
           filterType: "text",
           sort: false,
+          multi: false,
+        },
+        {
+          ColumnName: "actionCount",
+          DisplayName: "Action Count",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
           multi: false,
         },
         {
@@ -190,6 +201,10 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isCreate = false;
     this.isFormOverlay = true;
     this.connctionupdatedata = event;
+    let id = event.id
+    this.rest_api.getIconForConnector(id).subscribe((res:any) =>{
+      this.connector_icon = res["data"]
+    })
     this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
   }
