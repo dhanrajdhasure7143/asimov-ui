@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
   expiry: any;
   showProjectsSubmenu: boolean = false;
   screensList:any=[];
+  role: any;
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -88,6 +89,7 @@ export class SidebarComponent implements OnInit {
   }
   
   selection(){
+    this.role = localStorage.getItem("role")
      this.obj.sideBarOpen=true;
      this.obj.contentMargin=260;
    }

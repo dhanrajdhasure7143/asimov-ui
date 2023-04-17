@@ -160,7 +160,7 @@
             <span class="side-menu-font">User Management</span>
           </a>
           <a mat-list-item class="link" id='subscriptions'
-          *ngIf="this.userRoles.includes('System Admin')" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
+          *ngIf="this.userRoles.includes('System Admin') && role =='Admin'" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
             [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
             <span class="side-icon">
@@ -174,7 +174,7 @@
                 <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Normal.svg">
               </span>
             </span>
-            <span class="side-menu-font">Manage Subscriptions</span>
+            <span  class="side-menu-font">Manage Subscriptions</span>
           </a>
           <!-- <a mat-list-item  class="link" id="bps" (click)="hightlight('settings','expand_admin')"  >
       <span class="side-icon">

@@ -37,7 +37,7 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
           new FormControl(item.DefaultValue)
         );
         if(item.ColumnName=='tenant_name'){
-          this.generatedForm.get(item.ColumnName).setValidators([Validators.compose([Validators.pattern("[a-zA-Z ]+"),Validators.required])])
+          this.generatedForm.get(item.ColumnName).setValidators([Validators.compose([Validators.pattern("^[a-zA-Z]+(\\s[a-zA-Z]+)*$"),Validators.required])])
           this.generatedForm.get(item.ColumnName).updateValueAndValidity();
         }
       });
