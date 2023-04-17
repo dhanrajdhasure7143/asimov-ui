@@ -885,7 +885,16 @@ addParentFolder() {
           // filteredData1.push(element)
         });
         setTimeout(() => {
-          this.convertToTreeView1(filteredData1);
+          const uniqueIds = [];
+          const unique = filteredData1.filter(element => {
+            const isDuplicate = uniqueIds.includes(element.id);
+            if (!isDuplicate) {
+              uniqueIds.push(element.id);
+              return true;
+            }
+            return false;
+          });
+          this.convertToTreeView1(unique);
           this.istaskFilterApplied = true;
         }, 100);
       }, 100);
