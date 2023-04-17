@@ -830,6 +830,7 @@ foreignObject {
 #sidenav .mat-list-base .mat-list-item .mat-list-item-content,
 .mat-list-base .mat-list-option .mat-list-item-content {
   padding: 0 20px;
+  column-gap: 12px;
 }
 
 .h-100 {
@@ -866,7 +867,7 @@ foreignObject {
 #sidenav.menu-close .mat-list-item-content .menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
   right: 50%;
   bottom: -10px;
-  transform: translate(8px, 0px);
+  transform: translate(10px, 0px);
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
@@ -919,6 +920,7 @@ foreignObject {
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: var(--main-bluecolor) !important;
+  height: 3px !important;
 }
 
 .innersform .mat-tab-body.mat-tab-body-active,
@@ -1105,7 +1107,7 @@ mat-card {
 img.testplus {
   width: 16px;
   height: 16px;
-  margin-right: 5px;
+  margin-right: 12px;
   cursor: pointer;
 }
 
@@ -2644,7 +2646,7 @@ cursor: pointer;
 }
 .main-content-head h3 {
   font-weight: var(--main-fontweight);
-  line-height: 30px;
+  /* line-height: 30px; */
   display: flex;
   align-items: center;
   height: 100%;
@@ -2652,6 +2654,10 @@ cursor: pointer;
   /* text-transform: capitalize; */
 }
 .main-content-head h3 .title_text{
+  font-size: 18px;
+  font-weight: 500;
+}
+.main-content-head h3 .title_text_haspath {
   font-size: 16px;
   font-weight: 500;
 }
@@ -2686,6 +2692,7 @@ label#popup_title {
 #popup_title a {
   cursor: pointer;
   margin-right: 8px;
+  display: flex;
 }
 #popup_title a:hover {
   color: var(--main-bluecolor);
@@ -2736,6 +2743,7 @@ input.p-inputtext {
   color: var(--main-txtcolor) !important;
   padding: 15px 0px 0px !important;
   height: 100%;
+  position: relative;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     border-color: transparent !important; 
@@ -2743,7 +2751,7 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 3px 0 !important;
+    border-width: 0 0 5px 0 !important;
     box-shadow: none !important;
     height: 100%;
 }
@@ -2756,6 +2764,9 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 }
 .tabs_screen .p-tabview .p-tabview-nav li{
   width: 200px !important;
+}
+.tabs_screen .p-tabview .p-tabview-nav {
+  padding: 0px 20px;
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li {
   width: 225px !important;
@@ -3129,6 +3140,13 @@ textarea.p-inputtextarea {
 }
 .p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
   border: 1px solid #d0d0d0;
+}
+.p-editor-container .p-editor-content .ql-editor {
+  overflow: hidden;
+}
+.taskdescription .p-inplace.p-component {
+  height: 450px;
+  overflow: auto;
 }
 /* new styles for ng select */
 .ng-select .ng-select-container {
@@ -3545,3 +3563,28 @@ button.btn.new-cancelbtn {
 /* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
+/* ----------------------Editable noneditable and text-editor styles------------------------- */
+.editor-container.editor-body .ck.ck-editor__editable_inline {
+  width: 100% !important;
+  height: calc(100vh - 190px) !important;
+  padding: 20px 20px 20px 20px !important;
+  margin: 0px auto !important;
+}
+#toolbar-container .ck.ck-toolbar {
+  background: #eee !important;
+}
+.non-editablefield{cursor: not-allowed;}
+.editor-container.editor-body .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  border-color: #e0e0e0 !important;
+  box-shadow: none !important;
+}
+.editor-container.editor-body .ck.ck-editor__editable_inline p{margin-bottom: 0rem !important;
+  margin-top: 0rem !important;}
+  #toolbar-container .ck-toolbar__items .ck.ck-button.ck-on{background-color: #eee;color:#000}
+  #toolbar-container .ck-toolbar__items .ck.ck-button:focus{
+    box-shadow: 0px 0px !important;} 
+  #toolbar-container .ck-toolbar__items .ck.ck-button.ck-on:not(.ck-disabled):hover{
+      background: #eee;} 
+  #toolbar-container .ck.ck-button:active{border:1px solid #eee;}
+  #toolbar-container .ck.ck-button:active{border:1px solid #eee}
+/* ----------------------Editable noneditable and text-editor styles------------------------- */

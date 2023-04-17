@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
-import { MessageService } from "primeng/api";
-
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -22,11 +20,12 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   tableData: any;
   portalnames: any;
   formvalue: any;
+  tenantNameCheck: boolean;
+  placeholder ="Enter"
 
   constructor(
     private rest: RestApiService,
-    private datatransfer: DataTransferService,
-    private messageService:MessageService
+    private datatransfer: DataTransferService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +36,10 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
           item.ColumnName,
           new FormControl(item.DefaultValue)
         );
+        if(item.ColumnName=='tenant_name'){
+          this.generatedForm.get(item.ColumnName).setValidators([Validators.compose([Validators.pattern("[a-zA-Z ]+"),Validators.required])])
+          this.generatedForm.get(item.ColumnName).updateValueAndValidity();
+        }
       });
     } else {
       this.isEditForm = true;
@@ -84,17 +87,14 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   }
 
   onChangetype() {}
-  
   checkTenantName() {
     let tenantId=localStorage.getItem("masterTenant")
     let tenantName = this.generatedForm.get("tenant_name").value;
     this.rest.checkTenantName(tenantName,tenantId).subscribe((data) => {
       if(data == false){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Tenant Already Exists !!",
-        });
+        this.tenantNameCheck = true;
+      }else{
+        this.tenantNameCheck = false;
       }
     });
   }

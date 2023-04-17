@@ -1776,4 +1776,18 @@ checkTenantName(tenantName,master_tenant)
   return this.http.post("/platform-service/screenGenerator/check-tenant/"+master_tenant+"?tenant_name="+tenantName,data)
   
 }
+
+getIcon(id){
+  return this.http.get(`/rpa-service/action/icon/${id}`)
+}
+
+getIconForConnector(id){
+  return this.http.get(`/rpa-service/connection/icon/${id}`)
+}
+checkScreenName(Screen_Name)
+{
+  let data="";
+  return this.http.post("/platform-service/screenGenerator/check-ScreenName?Screen_Name="+Screen_Name,data)
+}
+
 }

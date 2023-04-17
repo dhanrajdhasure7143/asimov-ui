@@ -33,6 +33,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   table_searchFields:any[]=[];
   connector_id:any;
   userRole:any=[]
+  connector_icon: any;
 
   constructor(
     private rest_api: RestApiService,
@@ -74,6 +75,16 @@ export class RpaConnectionManagerComponent implements OnInit {
         {
           ColumnName: "connectionLogo",
           DisplayName: "Connector Logo",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "actionCount",
+          DisplayName: "Action Count",
           ShowGrid: true,
           ShowFilter: true,
           filterWidget: "normal",
@@ -190,6 +201,10 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isCreate = false;
     this.isFormOverlay = true;
     this.connctionupdatedata = event;
+    let id = event.id
+    this.rest_api.getIconForConnector(id).subscribe((res:any) =>{
+      this.connector_icon = res["data"]
+    })
     this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
   }
@@ -264,46 +279,35 @@ export class RpaConnectionManagerComponent implements OnInit {
     );
   }
 
-updateConnector() {
-  this.spinner.show();
-  const { id } = this.selectedData[0];
-  const connectionLogo = this.conn_logo ? new String(this.conn_logo.split(",")[1]) : this.selectedData[0].connectionLogo;
-  const name = this.createConnectorForm.get("name").value;
-  const data = { connectionLogo, name };
-  this.updateConnection(id, data);
-}
-
-updateConnection(id: string, data: any) {
-  this.rest_api.updateConnection(id, data).subscribe(
-    () => {
-      this.showSuccessMessage("Connector Updated Successfully !!");
-      this.isFormOverlay = false;
-      this.createConnectorForm.reset();
-      this.getAllConnections();
-    },
-    () => {
-      this.showErrorMessage("Unable to Update Connector !!");
-      this.isFormOverlay = false;
-      this.getAllConnections();
-    }
-  ).add(() => this.spinner.hide());
-}
-
-showSuccessMessage(message: string) {
-  this.messageService.add({
-    severity: "success",
-    summary: "Success",
-    detail: message,
-  });
-}
-
-showErrorMessage(message: string) {
-  this.messageService.add({
-    severity: "error",
-    summary: "Error",
-    detail: message,
-  });
-}
+  updateConnector() {
+    this.spinner.show();
+    let connectorName1 = this.createConnectorForm.get("name").value;
+    let id = this.connctionupdatedata.id
+    let data = {
+      connectionLogo: this.conn_logo == undefined ? this.connctionupdatedata.connectionLogo  : new String(this.conn_logo.split(",")[1]),
+      name: connectorName1
+    };
+    this.rest_api.updateConnection(id,data).subscribe((res: any) =>{    
+        this.spinner.hide();
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Connector Updated Successfully !!",
+        });
+        this.isFormOverlay = false;
+        this.createConnectorForm.reset();
+        this.getAllConnections();
+      },
+      (err: any) => {
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Unable to Update Connector !!",
+        });        
+        this.spinner.hide();
+      }
+    );
+  }
 
   imageUpload(e) {
     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];

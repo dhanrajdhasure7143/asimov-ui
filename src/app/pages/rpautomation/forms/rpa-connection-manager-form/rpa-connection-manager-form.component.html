@@ -8,7 +8,7 @@
                             <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
                         </a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                         <span *ngIf="!istoolSet" >
                             <span>Connection Manager | {{ selectedConnector }} | Update - </span>
                             <span class="sub_title_text">{{ selectedToolsetName }}</span>
@@ -50,14 +50,6 @@
                                     <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled"
                                     [style]="{'width':'100%'}" placeholder="Select Action" 
                                     optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
-
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="actionType" [disabled] = "isDisabled"
-                                        (change)="actionChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Action</option>
-                                        <option value="null" hidden disabled>Select Action</option>
-                                        <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
-                                    </select> -->
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
                                         class="required"> Action Type Required*
@@ -67,12 +59,6 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="methodType" [disabled] = "isCreate">
-                                        <option value="" hidden disabled>Select Method</option>
-                                        <option value="null" hidden disabled>Select Method</option>
-                                        <option value="undefined" hidden disabled>Select Method</option>
-                                        <option *ngFor="let method of methodItems"> {{method.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled" (onChange)="methodChange($event.value)"
                                     [style]="{'width':'100%'}" placeholder="Select Method" 
                                     optionLabel="value" optionValue="value"></p-dropdown>
@@ -82,14 +68,14 @@
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0">
-                                    <label class="label-control" for="programname"> Action Logo
-                                        <span class="star" *ngIf="!isCreate">*</span>                                    
-                                    </label>
-                                    <input type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
-                                        formControlName="">
-                                    <!-- <span
-                                        *ngIf="connectorForm.get('httpMethodType').invalid && connectorForm.get('httpMethodType').touched && !connectorForm.get('httpMethodType').hasError('pattern')"
-                                        class="required"> Method Type Required* </span> -->
+                                    <label class="label-control" for="programname"> Action Logo</label>
+                                    <div class="row">
+                                        <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
+                                        <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                            formControlName="">
+                                        <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'90%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                            formControlName="">
+                                    </div>
                             </div>
                             <div class="col-md-12 form-group p-0">
                                 <label class="label-control"> API <span class="star">*</span> </label>
@@ -100,21 +86,11 @@
                                     *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
                                     class="required"> API / URL Required*
                                 </span>
-                                <!-- <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
-                                    Only spaces between words are allowed.
-                                </span> -->
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isAction">
                                     <label class="label-control" for="programname"> Authentication Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="authType"
-                                        (change)="authChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Authentication</option>
-                                        <option value="null" hidden disabled>Select Authentication</option>
-                                        <option value="undefined" hidden disabled>Select Authentication</option>
-                                        <option *ngFor="let auth of authItems" [value]="auth.type"> {{auth.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="authItems" formControlName="authType"
                                     [style]="{'width':'100%'}" placeholder="Select Authentication" 
                                     optionLabel="value" optionValue="type" (onChange)="authChange($event.value)"></p-dropdown>
@@ -127,13 +103,6 @@
                                     <label class="label-control" for="programname"> Grant Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="grantType"
-                                        (change)="grantChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Method</option>
-                                        <option value="null" hidden disabled>Select Method</option>
-                                        <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let grant of grantItems" [value]="grant.type"> {{grant.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="grantItems" formControlName="grantType"
                                     [style]="{'width':'100%'}" placeholder="Select Grant Type" 
                                     optionLabel="value" optionValue="type" (onChange)="grantChange($event.value)"></p-dropdown>
@@ -182,10 +151,8 @@
                                     <label class="label-control" for="programname"> Password
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="password" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="password" placeholder="Enter Password">                                        
-                                    <!-- <p-password pInputText [style]="{'width':'100%'}" value=""
-                                    formControlName="password" placeholder="Enter Password"></p-password> -->
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
                                         class="required"> Password Required*
@@ -248,56 +215,86 @@
                                     </span>
 
                                 </div>
-                            </div>
+                            </div>                        
                             <div class="col-md-12 form-group p-0" *ngIf="isHeader">
-                                <label class="label-control"> Header 
-                                    <!-- <span class="star">*</span> -->
-                                 </label>
-                                <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th scope="col">Key</th>
-                                                <th scope="col">Value</th>
-                                                <th class="headercheckbox">
-                                                    <button mat-mini-fab color="primary" (click)="addHeader()">
+                                <p-tabView>
+                                    <p-tabPanel header="Headers">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th scope="col">Key</th>
+                                                    <th scope="col">Value</th>
+                                                    <th class="headercheckbox">
+                                                      <button mat-mini-fab color="primary" (click)="addHeader()">
                                                         <mat-icon> add </mat-icon>
-                                                    </button>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let each of headerForm; let i = index">
-                                                <td class="headercheckbox">
-                                                    <p-checkbox [value]="each" [(ngModel)]="selectedOne" (click)="selectRow()" [ngModelOptions]="{standalone: true}"></p-checkbox>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="test+i" id="" class="form-control"
-                                                    placeholder="Key" [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                            <td> 
-                                                <input type="text" name="" id="" class="form-control" placeholder="Value" [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}">
-                                            </td>
-                                            <td class="headercheckbox">
-                                                <span> 
-                                                    <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="" (click)="onDelete(i)">
-                                                </span>
-                                            </td>        
-                                        </tr>
-                                        </tbody>
-                                        <!-- <tbody [formGroup]="addInputForm">
-                                            <tr formArrayName="addInputField" *ngFor="let addInpuGroup of addInputField?.controls; let i = index" [formGroupName]="i">
-                                                <td>
-                                                    <p-checkbox [value]="addInpuGroup" [(ngModel)]="selectedOne" (click)="selectRow()"></p-checkbox>
-                                                </td>
-                                                <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Key" formControlName="encodedKey"> </td>
-                                                <td> <input type="text" name="" id="" class="form-control"
-                                                        placeholder="Value" formControlName="encodedValue"> </td>
-                                                <td> <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""></td>        
-                                            </tr>
-                                        </tbody> -->
-                                </table>                               
+                                                      </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let each of headerForm; let i = index">
+                                                    <td class="headercheckbox">
+                                                        <p-checkbox [value]="each" [(ngModel)]="selectedOne"
+                                                        [ngModelOptions]="{standalone: true}"></p-checkbox>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key"
+                                                        [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value"
+                                                        [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td class="headercheckbox">
+                                                        <span>
+                                                            <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
+                                                            (click)="onDelete(i)">
+                                                            </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p-tabPanel>
+                                    <p-tabPanel header="Params">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th scope="col">Key</th>
+                                                    <th scope="col">Value</th>
+                                                    <th class="headercheckbox">
+                                                      <button mat-mini-fab color="primary" (click)="addParams()">
+                                                        <mat-icon> add </mat-icon>
+                                                      </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let each of paramForm; let i = index">
+                                                    <td class="headercheckbox">
+                                                        <p-checkbox [value]="each" [(ngModel)]="selectedParam"
+                                                        [ngModelOptions]="{standalone: true}"></p-checkbox>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key"
+                                                        [(ngModel)]="each.paramKey" [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value"
+                                                        [(ngModel)]="each.paramValue" [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td class="headercheckbox">
+                                                        <span>
+                                                            <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
+                                                            (click)="paramsDelete(i)">
+                                                            </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p-tabPanel>
+                                </p-tabView>                             
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
