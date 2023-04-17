@@ -7,7 +7,7 @@
                         <a routerLink="/pages/projects/listOfProjects"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                         <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span
                             class="sub_title_text"> {{projectDetails.projectName}}</span>
                     </span>
@@ -139,11 +139,11 @@
                                         <label>Status</label>
                                     </div>
                                     <div class="pinf prjowner">
-                                        <p>{{projectDetails.owner| userPipe : users_list}}</p>
+                                        <p><span class="non-editablefield">{{projectDetails.owner| userPipe : users_list}}</span></p>
                                         <label>Created By</label>
                                     </div>
                                     <div class="pinf prjlastupdated">
-                                        <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</p>
+                                        <p><span class="non-editablefield">{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</span></p>
                                         <label>Last Updated</label>
                                     </div>
                                 </div>
