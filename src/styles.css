@@ -1107,7 +1107,7 @@ mat-card {
 img.testplus {
   width: 16px;
   height: 16px;
-  margin-right: 12px;
+  margin-right: 15px;
   cursor: pointer;
 }
 
@@ -1322,7 +1322,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
 .newinntalx a {
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .editmodelprbody .ng5-slider .ng5-slider-pointer {
@@ -2876,7 +2876,7 @@ th {
 thead.p-datatable-thead tr,
 thead tr {
   border-top: none !important;
-  border-bottom: 3px solid var(--main-bluecolor) !important;
+  border-bottom: 2px solid var(--main-bluecolor) !important;
   position: relative;
   height: 50px;
 }
@@ -2903,7 +2903,7 @@ th.arrowcol:before {  /* for arrow / checkbox columns header */
   left: 0px;
   right: 0px;
   bottom: 0px;  
-  border-bottom: 5px solid rgb(9 141 230 / 20%);
+  border-bottom: 4px solid rgb(9 141 230 / 20%);
 }
 thead tr th:before,
 .usersgrid .p-datatable .p-datatable-thead > tr > th:before,
@@ -2913,7 +2913,7 @@ thead tr th:before,
   left: 0px;
   right: 0px;
   bottom: -2px;  
-  border-bottom: 5px solid rgb(9 141 230 / 4%);
+  border-bottom: 4px solid rgb(9 141 230 / 4%);
 }
 
 /* for sortable th */
@@ -2924,7 +2924,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
  left: 0px;
  right: 0px;
  bottom: 0px;
- border-bottom: 5px solid rgb(9 141 230 / 20%);
+ border-bottom: 4px solid rgb(9 141 230 / 20%);
 }
 
 th.p-element.p-sortable-column.p-resizable-column {
@@ -3141,10 +3141,9 @@ textarea.p-inputtextarea {
 .p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
   border: 1px solid #d0d0d0;
 }
-.p-editor-container .p-editor-content .ql-editor {
-  overflow: hidden;
-}
-.taskdescription .p-inplace.p-component {
+
+.taskdescription span.task-descwords {
+  display: block;
   height: 450px;
   overflow: auto;
 }
@@ -3363,7 +3362,7 @@ button.btn.new-cancelbtn {
 
 /* Tree Styles Start */
 .doctree .p-treenode .p-treenode-content {
-  width: 25%;
+  width: 38%;
   padding: 10px 0px !important;
   align-items: flex-start;
 }
