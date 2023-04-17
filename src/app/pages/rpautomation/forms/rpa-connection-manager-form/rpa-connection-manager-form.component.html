@@ -51,13 +51,7 @@
                                     [style]="{'width':'100%'}" placeholder="Select Action" 
                                     optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
 
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="actionType" [disabled] = "isDisabled"
-                                        (change)="actionChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Action</option>
-                                        <option value="null" hidden disabled>Select Action</option>
-                                        <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let action of actionItems" [value]="action.type"> {{action.value}}</option>
-                                    </select> -->
+                                   
                                     <span
                                         *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
                                         class="required"> Action Type Required*
@@ -67,12 +61,6 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="methodType" [disabled] = "isCreate">
-                                        <option value="" hidden disabled>Select Method</option>
-                                        <option value="null" hidden disabled>Select Method</option>
-                                        <option value="undefined" hidden disabled>Select Method</option>
-                                        <option *ngFor="let method of methodItems"> {{method.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled" (onChange)="methodChange($event.value)"
                                     [style]="{'width':'100%'}" placeholder="Select Method" 
                                     optionLabel="value" optionValue="value"></p-dropdown>
@@ -108,13 +96,6 @@
                                     <label class="label-control" for="programname"> Authentication Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="authType"
-                                        (change)="authChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Authentication</option>
-                                        <option value="null" hidden disabled>Select Authentication</option>
-                                        <option value="undefined" hidden disabled>Select Authentication</option>
-                                        <option *ngFor="let auth of authItems" [value]="auth.type"> {{auth.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="authItems" formControlName="authType"
                                     [style]="{'width':'100%'}" placeholder="Select Authentication" 
                                     optionLabel="value" optionValue="type" (onChange)="authChange($event.value)"></p-dropdown>
@@ -127,13 +108,6 @@
                                     <label class="label-control" for="programname"> Grant Type
                                         <span class="star">*</span>
                                     </label>
-                                    <!-- <select name="" id="" pInputText [style]="{'width':'100%'}" formControlName="grantType"
-                                        (change)="grantChange($event.target.value)">
-                                        <option value="" hidden disabled>Select Method</option>
-                                        <option value="null" hidden disabled>Select Method</option>
-                                        <option value="undefined" hidden disabled>Select Action</option>
-                                        <option *ngFor="let grant of grantItems" [value]="grant.type"> {{grant.value}}</option>
-                                    </select> -->
                                     <p-dropdown [options]="grantItems" formControlName="grantType"
                                     [style]="{'width':'100%'}" placeholder="Select Grant Type" 
                                     optionLabel="value" optionValue="type" (onChange)="grantChange($event.value)"></p-dropdown>
@@ -317,10 +291,10 @@
                     </form>
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
-                                    (click)="testAction()">Test</button>
-                        <button *ngIf="!isUpdate" type="button" class="btn bluebg-button"
+                                    (click)="testAction()" [disabled]="connectorForm.invalid">Test</button>
+                        <button *ngIf="!isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
                 </div>

@@ -87,20 +87,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       endPoint: ["", Validators.compose([Validators.required])],
-      authType: ["", Validators.compose([Validators.required])],
+      authType: [""],
       icon: ["", Validators.compose([])],
-      grantType: ["", Validators.compose([Validators.required])],
-      code: ["", Validators.compose([Validators.required])],
-      redirect_uri: ["", Validators.compose([Validators.required])],
-      userName: ["", Validators.compose([Validators.required])],
-      password: ["", Validators.compose([Validators.required])],
-      clientId: ["", Validators.compose([Validators.required])],
-      clientSecret: ["", Validators.compose([Validators.required])],
-      verifier: ["", Validators.compose([Validators.required])],
+      grantType: [""],
+      code: [""],
+      redirect_uri: [""],
+      userName: [""],
+      password: [""],
+      clientId: [""],
+      clientSecret: [""],
+      verifier: [""],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       scope: ["", Validators.compose([])],
-      refreshToken: ["", Validators.compose([Validators.required])],
+      refreshToken: [""],
     });
 
     this.methodTypes();
@@ -112,7 +112,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.getActionById();
     }
   }
-
 
   saveAction() {
     this.spinner.show();
@@ -319,7 +318,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isHeader = false
       this.isResponse = false;
       this.connectorForm.get('methodType').setValue("POST")
-    } else if (event == "APIRequest") {
+      this.connectorForm.get('authType').setValidators([Validators.required]); 
+      this.connectorForm.get('authType').updateValueAndValidity();
+      this.connectorForm.get('grantType').setValidators([Validators.required]); 
+      this.connectorForm.get('grantType').updateValueAndValidity();
+    }
+    else if (event == "APIRequest") {
       this.connectorForm.get('methodType').setValue("")
       this.isRequest = true;
       this.isHeader = true;
@@ -331,9 +335,28 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAuthorization = false;
       this.isRefreshToken = false;
       this.isScopeField = false;
+      this.connectorForm.get('authType').clearValidators(); 
+      this.connectorForm.get('authType').updateValueAndValidity();
+      this.connectorForm.get('grantType').clearValidators(); 
+      this.connectorForm.get('grantType').updateValueAndValidity();
+      this.connectorForm.get('code').clearValidators(); 
+      this.connectorForm.get('code').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').clearValidators(); 
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+      this.connectorForm.get('userName').clearValidators(); 
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').clearValidators(); 
+      this.connectorForm.get('password').updateValueAndValidity();
+      this.connectorForm.get('clientId').clearValidators(); 
+      this.connectorForm.get('clientId').updateValueAndValidity();
+      this.connectorForm.get('clientSecret').clearValidators(); 
+      this.connectorForm.get('clientSecret').updateValueAndValidity();
+      this.connectorForm.get('verifier').clearValidators(); 
+      this.connectorForm.get('verifier').updateValueAndValidity();
+      this.connectorForm.get('refreshToken').clearValidators(); 
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
     }
   }
-
   methodChange(event){
     if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
      this.isReqDisable = true;
@@ -358,6 +381,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   grantChange(event) {
+      this.connectorForm.get('clientId').setValidators([Validators.required]);
+      this.connectorForm.get('clientId').updateValueAndValidity();
+      this.connectorForm.get('clientSecret').setValidators([Validators.required]);
+      this.connectorForm.get('clientSecret').updateValueAndValidity();
     if (event == "AuthorizationCode") {
       this.isAuthorization = true;
       this.isClient = true;
@@ -370,6 +397,19 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get('redirect_uri').setValue("")
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
+      this.connectorForm.get('code').setValidators([Validators.required]);
+      this.connectorForm.get('code').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').setValidators([Validators.required]);
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+
+      this.connectorForm.get('userName').clearValidators(); 
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').clearValidators(); 
+      this.connectorForm.get('password').updateValueAndValidity();
+      this.connectorForm.get('verifier').clearValidators(); 
+      this.connectorForm.get('verifier').updateValueAndValidity();
+      this.connectorForm.get('refreshToken').clearValidators(); 
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
     } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
@@ -378,11 +418,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
+      this.isRefresh = true;
       this.connectorForm.get('userName').setValue("")
       this.connectorForm.get('password').setValue("")
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
-      this.isRefresh = true;
+      this.connectorForm.get('userName').setValidators([Validators.required]);
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').setValidators([Validators.required]);
+      this.connectorForm.get('password').updateValueAndValidity();
+
+      this.connectorForm.get('code').clearValidators(); 
+      this.connectorForm.get('code').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').clearValidators(); 
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+      this.connectorForm.get('verifier').clearValidators(); 
+      this.connectorForm.get('verifier').updateValueAndValidity();
+      this.connectorForm.get('refreshToken').clearValidators(); 
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
     } else if (event == "client_credentials") {
       this.isClient = true;
       this.isResponse = true;
@@ -394,6 +447,19 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
       this.connectorForm.get('scope').setValue("")
+      this.connectorForm.get('code').clearValidators(); 
+      this.connectorForm.get('code').updateValueAndValidity();
+      
+      this.connectorForm.get('userName').clearValidators(); 
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').clearValidators(); 
+      this.connectorForm.get('password').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').clearValidators(); 
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+      this.connectorForm.get('verifier').clearValidators(); 
+      this.connectorForm.get('verifier').updateValueAndValidity();
+      this.connectorForm.get('refreshToken').clearValidators(); 
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
       this.isRefresh = true;
     } else if (event == "AuthorizationCodeWithPKCE") {
       this.isAuthorization = true;
@@ -403,12 +469,25 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = true;
       this.isScopeField = false;
       this.isRefreshToken = false;
+      this.isRefresh = true;
       this.connectorForm.get('code').setValue("")
       this.connectorForm.get('redirect_uri').setValue("")
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
       this.connectorForm.get('verifier').setValue("")
-      this.isRefresh = true;
+      this.connectorForm.get('code').setValidators([Validators.required]);
+      this.connectorForm.get('code').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').setValidators([Validators.required]);
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+      this.connectorForm.get('verifier').setValidators([Validators.required]);
+      this.connectorForm.get('verifier').updateValueAndValidity();
+
+      this.connectorForm.get('refreshToken').clearValidators(); 
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
+      this.connectorForm.get('userName').clearValidators(); 
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').clearValidators(); 
+      this.connectorForm.get('password').updateValueAndValidity();
     } else if (event == "refresh_token") {
       this.isAuthorization = false;
       this.isClient = true;
@@ -417,11 +496,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = true;
       this.isRefreshToken = true;
+      this.isRefresh = true;
       this.connectorForm.get('clientId').setValue("")
       this.connectorForm.get('clientSecret').setValue("")
       this.connectorForm.get('scope').setValue("")
       this.connectorForm.get('refreshToken').setValue("")
-      this.isRefresh = true;
+      this.connectorForm.get('refreshToken').setValidators([Validators.required]);
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
+
+      this.connectorForm.get('code').clearValidators(); 
+      this.connectorForm.get('code').updateValueAndValidity();
+      this.connectorForm.get('redirect_uri').clearValidators(); 
+      this.connectorForm.get('redirect_uri').updateValueAndValidity();
+      this.connectorForm.get('userName').clearValidators(); 
+      this.connectorForm.get('userName').updateValueAndValidity();
+      this.connectorForm.get('password').clearValidators(); 
+      this.connectorForm.get('password').updateValueAndValidity();
+      this.connectorForm.get('verifier').clearValidators(); 
+      this.connectorForm.get('verifier').updateValueAndValidity();
     }
   }
 
@@ -489,10 +581,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRequest = false;
         this.isHeader = false;
         this.isResponse = false;
+        this.connectorForm.get('clientId').setValidators([Validators.required]);
+        this.connectorForm.get('clientId').updateValueAndValidity();
+        this.connectorForm.get('clientSecret').setValidators([Validators.required]);
+        this.connectorForm.get('clientSecret').updateValueAndValidity();
       }
 
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
+        this.connectorForm.get('grantType').setValidators([Validators.required]); 
+        this.connectorForm.get('grantType').updateValueAndValidity();
       } else {
         this.isAuthenticated = false;
         this.isAuthorization = false;
@@ -514,9 +612,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        this.connectorForm.get('code').setValidators([Validators.required]);
+        this.connectorForm.get('code').updateValueAndValidity();
+        this.connectorForm.get('redirect_uri').setValidators([Validators.required]);
+        this.connectorForm.get('redirect_uri').updateValueAndValidity();
       } else if (
-        this.actionData.configurationAsJson["grantType"] ==
-        "PasswordCredentials"
+        this.actionData.configurationAsJson["grantType"] == "PasswordCredentials"
       ) {
         this.isPassword = true;
         this.isClient = true;
@@ -525,6 +626,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        this.connectorForm.get('userName').setValidators([Validators.required]);
+        this.connectorForm.get('userName').updateValueAndValidity();
+        this.connectorForm.get('password').setValidators([Validators.required]);
+        this.connectorForm.get('password').updateValueAndValidity();
       } else if (
         this.actionData.configurationAsJson["grantType"] == "client_credentials"
       ) {
@@ -536,8 +641,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = true;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grantType"] ==
-        "AuthorizationCodeWithPKCE"
+        this.actionData.configurationAsJson["grantType"] == "AuthorizationCodeWithPKCE"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -546,6 +650,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = true;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        this.connectorForm.get('code').setValidators([Validators.required]);
+        this.connectorForm.get('code').updateValueAndValidity();
+        this.connectorForm.get('redirect_uri').setValidators([Validators.required]);
+        this.connectorForm.get('redirect_uri').updateValueAndValidity();
+        this.connectorForm.get('verifier').setValidators([Validators.required]);
+        this.connectorForm.get('verifier').updateValueAndValidity();
       } else if (
         this.actionData.configurationAsJson["grantType"] == "refresh_token"
       ) {
@@ -556,6 +666,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = true;
         this.isRefreshToken = true;
+        this.connectorForm.get('refreshToken').setValidators([Validators.required]);
+        this.connectorForm.get('refreshToken').updateValueAndValidity();
       }
 
       if(this.actionData.configurationAsJson["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){
