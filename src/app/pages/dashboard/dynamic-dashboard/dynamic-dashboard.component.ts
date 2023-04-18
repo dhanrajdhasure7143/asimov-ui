@@ -58,7 +58,9 @@ export class DynamicDashboardComponent implements OnInit {
       {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
     ];
     if (this._paramsData.dashboardId === undefined) {
-         this.changeToDefaultDashBoard();
+      setTimeout(() => {
+        this.changeToDefaultDashBoard();
+      }, 500);
 
     } else {
          this.getListOfDashBoards();

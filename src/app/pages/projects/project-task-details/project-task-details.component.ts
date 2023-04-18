@@ -294,9 +294,9 @@ export class ProjectTaskDetailsComponent implements OnInit {
     //   alert("please fill all details");
     // }
   }
-  chnagefileUploadForm(event) {
+  changefileUploadForm(event) {
     this.isFile_upload_dialog = true;
-    this.uploaded_file = event.target.files[0];
+    this.uploaded_file = event.target.files;
   }
 
   Space(event: any) {
@@ -370,14 +370,12 @@ export class ProjectTaskDetailsComponent implements OnInit {
       return;
     }
     this.isFile_upload_dialog = false;
-    // this.spinner.show();
+    this.spinner.show();
 
     let objectKey;
     let fileKey;
     if (this.selected_folder.parent) {
-      objectKey = this.selected_folder.parent.children.length
-        ? this.selected_folder.parent.children.length
-        : 0;
+      objectKey = this.selected_folder.parent.children.length ? this.selected_folder.parent.children.length: 1;
       fileKey = this.selected_folder.key + "-" + Number(objectKey);
     } else {
       objectKey = this.selected_folder.children.length
@@ -385,12 +383,18 @@ export class ProjectTaskDetailsComponent implements OnInit {
         : 0;
       fileKey = this.selected_folder.key + "-" + Number(objectKey + 1);
     }
+    let fileKeys=[];
     var fileData = new FormData();
-    fileData.append("filePath", this.uploaded_file);
+    for (let i = 0; i < this.uploaded_file.length; i++) {
+      fileData.append("filePath", this.uploaded_file[i]);
+      this.selected_folder.parent ? fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+i))):fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+(i+1))))
+    }
+
+    // fileData.append("filePath", this.uploaded_file);
     fileData.append("projectId", this.project_id);
     fileData.append("taskId", this.params_data.task_id);
     fileData.append("ChildId", "1");
-    fileData.append("fileUniqueIds", JSON.stringify([String(fileKey)]));
+    fileData.append("fileUniqueIds", JSON.stringify(fileKeys));
     this.rest_api.uploadfilesByProject(fileData).subscribe(
       (res) => {
         this.spinner.hide();
@@ -398,7 +402,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Uploaded Successfully !!",
+          detail: "File Uploaded Successfully !!",
         });
         this.getTaskAttachments();
       },

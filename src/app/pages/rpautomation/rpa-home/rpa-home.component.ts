@@ -395,7 +395,6 @@ export class RpaHomeComponent implements OnInit {
     var reader = new FileReader();
     var extarr = file.name.split('.');
     var ext = extarr.reverse()[0];
-    console.log(ext)
     this.file_error = "";
     if (ext == "json")
     {
@@ -403,7 +402,6 @@ export class RpaHomeComponent implements OnInit {
       this.spinner.show();
       reader.onload = (e) => {
         let botDetails=(JSON.parse(reader.result.toString()));
-        console.log(botDetails)
         this.importBotJson=botDetails;
         this.importBotForm.get("botName").setValue(botDetails.botName);
         this.validateBotName();
@@ -605,9 +603,7 @@ export class RpaHomeComponent implements OnInit {
   filterEnvironments(categoryId)
   {
     this.importBotForm.get("environmentId").setValue("");
-    console.log(categoryId)
     this.filteredEnvironments=this.environments.filter(item=>item.categoryId==categoryId);
-    console.log(this.filteredEnvironments)
   }
 importBot()
 {

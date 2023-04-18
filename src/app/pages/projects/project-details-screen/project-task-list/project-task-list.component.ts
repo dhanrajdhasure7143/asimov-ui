@@ -234,4 +234,8 @@ export class ProjectTaskListComponent implements OnInit {
       this.existingUsersList = res
     })
   }
+
+  ngOnDestroy(){
+    this.spinner.hide();
+  }
 }
