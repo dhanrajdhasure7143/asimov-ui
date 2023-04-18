@@ -7,7 +7,7 @@
                         <a (click)="onNavigate()"><img src="./../../../../assets/images-n/projects/backarrow.svg"
                                 alt="back-arrow" /></a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                         Projects | {{ projectName }} | <strong> Create Document </strong>
                     </span>
                 </h3>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<p-dialog header="Enter File Name" [(visible)]="isDialog" class="docfldnam">
+<p-dialog header="Enter File Name" [(visible)]="isDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folderName" name="folder"
             maxlength="50" />

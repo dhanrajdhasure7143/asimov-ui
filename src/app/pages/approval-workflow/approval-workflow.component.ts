@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
                             <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
                           </a>
                         </label>
-                        <span class="title_text">
+                        <span class="title_text_haspath">
                           <span>Business Process Studio</span> | <span
                             class="sub_title_text">Approval Workflow</span>
                         </span>
