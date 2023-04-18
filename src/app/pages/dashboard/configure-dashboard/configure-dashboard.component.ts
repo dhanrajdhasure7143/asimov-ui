@@ -278,7 +278,7 @@ export class ConfigureDashboardComponent implements OnInit {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
           item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
+          // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         }
         if(item.childId == 2){
           item.chartOptions.plugins["tooltip"] = {

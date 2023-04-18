@@ -251,7 +251,7 @@
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
 <p-dialog header=" Create Dashboard" class="createdashboardname" 
-   [(visible)]="isDialogShow"
+   [(visible)]="isDialogShow" [modal]="true" [baseZIndex]="10000"
    [style]="{width: '30vw'}"
    [draggable]="false" [resizable]="false">
    <div class="form-group">

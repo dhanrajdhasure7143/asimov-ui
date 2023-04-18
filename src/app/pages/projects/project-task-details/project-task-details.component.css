@@ -69,8 +69,13 @@ span.lowimp {
 }
 .projectnamerow .taskname-priority {
   margin-top: 8px;
+  /* display: flex;
+  align-items: center; */
+}
+.taskname-priority span.priorlabels {
+  align-items: flex-start;
   display: flex;
-  align-items: center;
+  margin-top: 8px;
 }
 .pinf p {
   margin-bottom: 0px;
