@@ -50,7 +50,6 @@ export class RpaAuditlogsComponent implements OnInit {
         Swal.fire("Error", response.errorMessage, "error")
       }
     },err=>{
-      console.log(err)
       this.spinner.hide();
     })
   }
@@ -60,7 +59,6 @@ export class RpaAuditlogsComponent implements OnInit {
     this.rest.getAuditLogs(this.botId).subscribe((data: any) => {
       // let response: any = data
       this.logsData = data.Status
-      console.log(this.logsData)
       this.spinner.hide()
       // this.search_fields =["versionNew","changedDate","taskName","changedBy","comments"];
       if (this.logsData.errorMessage == undefined) {

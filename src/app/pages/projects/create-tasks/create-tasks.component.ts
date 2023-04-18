@@ -252,6 +252,7 @@ taskDescriptionMaxLength(value){
       header: 'Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
+        this.confirmationService.close();
       },
       reject: (type) => {
         this.createtaskForm.get("resources").setValue("");
