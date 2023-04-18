@@ -2680,7 +2680,7 @@ cursor: pointer;
 .main-content-body.tablist-cont {
   overflow: hidden;
 }
-span.sub_title_text {
+span.sub_title_text, .p-datatable .p-datatable-thead > tr > th > span {
   font-weight: 600;
 }
 label#popup_title {
@@ -2817,6 +2817,12 @@ span.tabscount {
 }
 .well1-dynmic.graph .p-datatable-wrapper {
   height: calc(100vh - 380px) !important;
+}
+ /* Media queries */
+ @media screen and (min-width: 1600px) {
+  .well1-dynmic.graph .p-datatable-wrapper {
+    height: calc(100vh - 530px) !important;
+  }
 }
 .bps-approvalgrid .p-datatable-wrapper {
   height: calc(100vh - 195px); /* for bps-approval grid */
