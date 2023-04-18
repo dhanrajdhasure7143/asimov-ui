@@ -61,7 +61,6 @@ export class BusinessProcessComponent implements AfterViewChecked {
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params["projectId"]){
-        console.log(params)
         localStorage.setItem("projectId", params.projectId);
         localStorage.setItem("projectName", params.projectName);
       }
@@ -188,7 +187,6 @@ export class BusinessProcessComponent implements AfterViewChecked {
       let projectName=localStorage.getItem("projectName")
       localStorage.removeItem("projectId");
       localStorage.removeItem("projectName")
-      console.log(localStorage.getItem("navigateTo"))
       if(localStorage.getItem("navigateTo")){
         this.router.navigate(["/pages/projects/projectdetails"], 
         {queryParams:{"project_id":projectId, "project_name":projectName}})

@@ -119,7 +119,6 @@ export class DepartmentsComponent implements OnInit {
     this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         this.users_list = res;
-        console.log(res)
         this.getAllDepartments();
       }
     });

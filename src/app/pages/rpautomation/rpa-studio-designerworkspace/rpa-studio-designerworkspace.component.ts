@@ -147,16 +147,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   multiformdata: any = [];
   multiarray;
   any = [];
-  spilt_size = 70;
-  spilt_size1 = 30;
-  public areas = [
-    { size: 70, order: 1 },
-    { size: 30, order: 2 },
-  ];
   public groupsData: any = [];
   botDetailsForm: FormGroup;
   botNameCheck: boolean = false;
-  @ViewChild("splitEl") splitEl: SplitComponent;
   area_splitSize: any = {};
   private formAttributes: Map<Number, any> = new Map<Number, any>();
   isBotUpdated: boolean = false;
@@ -1027,8 +1020,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
       } else {
-        this.rest.attribute(node.selectedNodeId).subscribe((data) => {
+        this.rest.attribute(node.selectedNodeId).subscribe((data:any) => {
           let attr_response: any = data;
+          if(data.errorCode == 3001){
+            Swal.fire("Error","Failed to get configuration form","error");
+            return;
+          }
           this.multiformdata = data;
           //if(attr_response.length==1 && attr_response[0].type=="multiform")
           if (
@@ -1129,21 +1126,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.unsubcribe = this.form.valueChanges.subscribe((update) => {
         this.fields = JSON.parse(update.fields);
       });
-      this.areas = [
-        { size: 70, order: 1 },
-        { size: 30, order: 2 },
-      ];
-      setTimeout(() => {
-        this.splitEl.dragProgress$.subscribe((x) => {
-          this.ngZone.run(() => {
-            this.area_splitSize = x;
-            this.isShowExpand = false;
-            if (x.sizes[1] < 30) {
-              this.splitAreamin_size = "200";
-            }
-          });
-        });
-      }, 1000);
     }
   }
 
@@ -1571,8 +1553,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async uploadfile(envids, tasks) {
-    console.log(this.files_data)
-    console.log(tasks)
     this.files_data.forEach(async(item:any)=>{
       if(tasks.find(item2=>item2.nodeId.split("__")[1]==item.nodeId))
       {
@@ -2213,7 +2193,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (
         actualTasks.find((item2) => item.nodeId == item2.nodeId) == undefined
       ) {
-       // console.log(this.auditLogs)
         if(this.auditLogs.find((auditLog:any)=>auditLog.nodeId==item.nodeId)==undefined)
           this.auditLogs.push({
             botId: this.finalbot.botId,
@@ -2511,36 +2490,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //     }
   //   })
   // }
-
-  minimizeFullScreen() {
-    this.isShowExpand = false;
-    this.splitAreamin_size = "200";
-    this.isShowExpand_icon = false;
-    this.areas = [
-      { size: 70, order: 1 },
-      { size: 30, order: 2 },
-    ];
-  }
-
-  expandFullScreen() {
-    this.isShowExpand_icon = true;
-    this.isShowExpand = true;
-    this.splitAreamin_size = "null";
-    this.areas = [
-      { size: 0, order: 1 },
-      { size: 100, order: 2 },
-    ];
-  }
-
-  onDragEnd(e: { gutterNum: number; sizes: number[] }) {
-    this.areas[0].size = e.sizes[0];
-    this.areas[1].size = e.sizes[1];
-    if (e.sizes[1] < 30) {
-      this.splitAreamin_size = "200";
-    } else {
-      this.splitAreamin_size = "null";
-    }
-  }
 
   addGroup() {
     let GroupData: any = {

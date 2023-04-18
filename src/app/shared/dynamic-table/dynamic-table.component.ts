@@ -123,7 +123,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   filter1(e){
-    console.log(e)
   }
 
   downloadRow(row) {

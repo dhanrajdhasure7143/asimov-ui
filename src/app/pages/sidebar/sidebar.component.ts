@@ -146,7 +146,6 @@ this.router.navigate(["/pages/subscriptions"],{
 navigateToDashBoard(){
         this.rest_service.getDashBoardsList().subscribe((res:any)=>{
         let dashbordlist:any=res.data;
-        console.log(dashbordlist)
         let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
         if(dashbordlist.length == 0){
           this.router.navigate(["/pages/dashboard/create-dashboard"])

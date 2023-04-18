@@ -130,7 +130,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -210,7 +210,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             this.router.navigate(["/pages/rpautomation/action-item"], {
               queryParams: {
               id: this.selectedId,
-              name: this.selectedConnector },
+              name: this.selectedConnector,
+              icon : this.icon  },
           });
           },1000)
       } else {
@@ -465,7 +466,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   backToaction() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedId, name: this.selectedConnector },
+      queryParams: { id: this.selectedId, name: this.selectedConnector, icon : this.icon },
     });
   }
 
@@ -713,6 +714,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
                 queryParams: {
                   id: this.selectedId,
                   name: this.selectedConnector,
+                  icon : this.icon
                 },
             });
             },1000)
@@ -742,11 +744,31 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.paramForm.splice(index, 1);
   }
 
+  paramsCheck(event){
+    let api = this.connectorForm.value.endPoint
+    let queryParams = "?";
+    for(const [key, value] of Object.entries(event.checked)){ 
+      queryParams = queryParams + key + "=" + value + "&"; 
+    }
+    if(this.connectorForm.value.actionType == "APIRequest"){
+       api = api + queryParams
+    }
+  }
+
   getIconbyId(){
     this.rest_api.getIcon(this.action_id).subscribe((res) => {
       this.action_icon = res["data"]
     })
 
+  }
+
+  onKeyEntered(){
+    let queryParams = "?";
+    for(const each of this.paramForm){
+        queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
+    }
+    let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
+    this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
 
 }

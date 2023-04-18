@@ -36,7 +36,6 @@ export class ProjectDocumentEditorComponent implements OnInit {
       this.navigarteURL = this.paramsData.url;
       this.project_id = this.paramsData.projectId;
       this.projectName = this.paramsData.projectName;
-      console.log(this.paramsData);
       // this.ckeConfig = {
       //   allowedContent: false,
       //   extraPlugins: 'divarea',

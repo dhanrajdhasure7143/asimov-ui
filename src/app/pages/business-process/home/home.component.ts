@@ -208,7 +208,6 @@ export class BpsHomeComponent implements OnInit {
           item["status"] = this.getNotationStatus(item.bpmnProcessStatus)
           return item;
         });
-        console.log(this.saved_diagrams)
         // this.saved_diagrams.forEach(ele => {
         //   ele['eachObj']={
         //     // "bpmnXmlNotation":ele.bpmnXmlNotation,
@@ -343,7 +342,6 @@ export class BpsHomeComponent implements OnInit {
   }
 
   getSelectedNotation(eachBPMN, id, isExpanded) {
-    console.log(eachBPMN, id, isExpanded);
     if (!isExpanded) {
       this.isLoaderShow = true;
       this.selected_notation = {};
@@ -584,7 +582,6 @@ export class BpsHomeComponent implements OnInit {
 
   onEdit(obj) {
     // e.stopPropagation();
-    console.log(obj);
     this.isEdit = true;
     this.selectedObj = {
       category: obj.category,
@@ -608,16 +605,13 @@ export class BpsHomeComponent implements OnInit {
   }
 
   onRowExpand() {
-    console.log(this.expandedRows);
-    console.log("row expanded", Object.keys(this.expandedRows).length);
     // if(Object.keys(this.expandedRows).length > 1){
     //   // this.isExpanded = true;
     // }
   }
 
   onRowCollapse() {
-    console.log(this.expandedRows);
-    console.log("row collapsed", Object.keys(this.expandedRows).length);
+    // console.log("row collapsed", Object.keys(this.expandedRows).length);
     if (Object.keys(this.expandedRows).length === 0) {
       // this.isExpanded = false;
     }
