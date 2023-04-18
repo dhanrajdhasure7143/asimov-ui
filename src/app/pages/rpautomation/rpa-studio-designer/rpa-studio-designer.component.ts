@@ -68,9 +68,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.freetrail=localStorage.getItem('freetrail')
     this.getToolsetItems();
     // this.getAllBots();
-    this.getAllEnvironments();
     this.getAllCategories();
     this.getPredefinedBots();
+    setTimeout(() => {
+    this.getAllEnvironments();
+    }, 1000);
   }
 
   getToolsetItems()
@@ -162,19 +164,15 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
 
-  getAllEnvironments()
-  {
+  getAllEnvironments(){
       this.rest.listEnvironments().subscribe((response:any)=>{
-        if(response.errorMessage==undefined)
-        {
+        if(response.errorMessage==undefined){
           this.environmentsList=response;
         }
-        else
-        {
-          
+        else{
           Swal.fire("Error",response.errorMessage,"error");
         }
-      })
+      });
   }
 
 
