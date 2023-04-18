@@ -13,7 +13,7 @@ import { Inplace } from 'primeng/inplace';
 
 export class ConfigureDashboardComponent implements OnInit {
   
-  public panelSizes = [70, 30];
+  public panelSizes = [75, 25];
   isShowExpand: boolean = false;
   @Output() closeOverlay:any= new EventEmitter<boolean>();
   @ViewChild("inplace") inplace!: Inplace;
@@ -42,7 +42,7 @@ export class ConfigureDashboardComponent implements OnInit {
   isdefaultDashboard:any;
   searchText_metrics:any;
   searchText:any;
-  chartColors:any[] = ["#50ADEB","#B7A4ED","#EE96D8","#FCA186","#FCBE4A","#CD9D64","#94C34D","#CD6D6D","#6F92B5","#E77459","#6DB08F", "#7375C2","#59E060","#C1C156","#5A8795"];
+  chartColors:any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169", "#085081","#095F9A","#0A6EB2","#0A7DCB"];
   charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
 
   constructor(private activeRoute: ActivatedRoute,
@@ -63,7 +63,7 @@ export class ConfigureDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader.show();
-    this.items = [{label: 'Delete',command: () => {this.deletedashbord()}}]
+    // this.items = [{label: 'Delete',command: () => {this.deletedashbord()}}]
     // this.loader.show();
     this.chartOptions = {
       "plugins": {
@@ -217,7 +217,7 @@ export class ConfigureDashboardComponent implements OnInit {
         item["widgetAdded"] = false
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
         item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-        item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
+        // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         if(item.widget_type != "Bar"){
               item["chartOptions"] = this.chartOptions
         }else{

@@ -29,7 +29,7 @@
             <div class="col-6 p-0">
               <div class="form-group col-sm-12 pl-0">
                 <label class="label-control">Screen Name <span class="star">*</span></label>
-                <input type="text" formControlName="screen_Name" maxlength="256" placeholder="Enter Screen Name"
+                <input type="text" formControlName="screen_Name" maxlength="256" (input)="checkScreenName()" placeholder="Enter Screen Name"
                   class="form-control" />
                 <span *ngIf="
                   insertForm.get('screen_Name')!.invalid &&
@@ -41,9 +41,12 @@
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
                   class="required">Maximum of 255 characters *</span>
-                <span *ngIf="insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
+                <span *ngIf="!screenNameCheck && insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
                   between words are allowed*
                 </span>
+                <div *ngIf="screenNameCheck && insertForm.get('screen_Name').value" class="required">
+                  Screen Name is already exists*
+              </div>
               </div>
               <div class="form-group col-sm-12 pl-0">
                 <input class="form-check-input inp-align" formControlName="allow_Insert" type="checkbox" name="inlineRadioOptions"
@@ -151,7 +154,7 @@
         </form>
         <div class="row justify-content-end">
           <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Back</button>
-          <button *ngIf="!screen_id" [disabled]="insertForm.invalid" class="btn bluebg-button" (click)="saveScreen()">Save</button>
+          <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
           <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">Update</button>
         </div>
       </div>

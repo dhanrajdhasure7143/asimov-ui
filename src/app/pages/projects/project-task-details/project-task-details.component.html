@@ -7,7 +7,7 @@
                         <a (click)="backToTaskList()"><img src="./../../../../assets/images-n/projects/backarrow.svg"
                                 alt="back-arrow"></a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                         Projects | <span>{{project_name}}</span> | <span class="sub_title_text">{{task_details.taskName}}</span>
                     </span>
                 </h3>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="prjdetfields">
                                     <div class="pinf taskassignby">
-                                        <p>{{task_details.createdBy}}</p>
+                                       <p> <span class="non-editablefield">{{task_details.createdBy}}</span></p>
                                         <label>Assigned By</label>
                                     </div>
                                     <div class="pinf taskresource">
@@ -162,7 +162,7 @@
                                         </div> -->
                                        </div>
                                     <div class="pinf tasklastupdated">
-                                        <p>{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</p>
+                                        <p><span class="non-editablefield">{{task_details.lastModifiedTimestamp | date:'MMM dd, y, HH:mm'}}</span></p>
                                         <label>Last Updated</label>
                                     </div>                                
                                 </div>
@@ -211,7 +211,7 @@
                                     <i class="pi pi-check" (click)="onUpdateDesc()"></i>
                                     <i class="pi pi-times" (click)="onDeactivate('inplace3')"></i>
                                 </span> 
-                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'320px'}">
+                                <p-editor [(ngModel)]="task_desc" [style]="{'height':'375px'}">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
                                             <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -358,9 +358,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="" (change)="chnagefileUploadForm($event)">
+                    <div class="" (change)="changefileUploadForm($event)">
                         <div class="fileupsec">
-                            <input type="file" name="myfile" multiple id="">
+                            <input type="file" name="myfile" multiple id="file-input">
                             <span>Attach Documents</span>
                             <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt="Attach Documents" class="testplus">                            
                         </div>

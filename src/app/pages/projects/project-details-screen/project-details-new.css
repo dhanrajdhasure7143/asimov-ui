@@ -510,3 +510,22 @@ button span {
 .row.main-content-head button.p-element.btn img {
     height: 18px;
 }
+
+.fileupsec {
+    position: relative;
+  }
+  input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+    width: 140px;
+    z-index: 1;
+    position: relative;
+  }
+  .fileupsec span {
+    position: absolute;
+    color: #098de6;
+    padding: 3px 5px;
+    left: 0px;
+    cursor: pointer;
+  }
+    
