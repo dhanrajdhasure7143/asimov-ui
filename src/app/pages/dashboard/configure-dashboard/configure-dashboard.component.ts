@@ -267,7 +267,7 @@ export class ConfigureDashboardComponent implements OnInit {
         return item
       })
 
-
+      this.loader.hide();
       this.addedMetrics.forEach((item: any) => {
         this.metrics_list.find((metric_item: any) => metric_item.id == item.childId).metricAdded = true;
         if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
@@ -298,7 +298,6 @@ export class ConfigureDashboardComponent implements OnInit {
           }
         }
       })
-      this.loader.hide();
     });
   }
 
