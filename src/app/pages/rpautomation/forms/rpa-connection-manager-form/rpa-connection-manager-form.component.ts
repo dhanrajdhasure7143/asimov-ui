@@ -193,7 +193,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "contentType":"application/json",
         "httpHeaders": obj,
         "type":"API",
-        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
+        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
     }
     req_body["configuration"]=JSON.stringify(object);
     }
@@ -288,7 +288,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       let filterData = res;
-      console.log("authTypes",res)
       this.authItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
@@ -366,7 +365,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   authChange(event) {
-    console.log(event)
     const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType"];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
