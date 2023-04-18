@@ -13,7 +13,7 @@ import { Inplace } from 'primeng/inplace';
 
 export class ConfigureDashboardComponent implements OnInit {
   
-  public panelSizes = [70, 30];
+  public panelSizes = [75, 25];
   isShowExpand: boolean = false;
   @Output() closeOverlay:any= new EventEmitter<boolean>();
   @ViewChild("inplace") inplace!: Inplace;
