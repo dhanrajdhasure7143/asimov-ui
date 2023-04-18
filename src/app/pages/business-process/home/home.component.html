@@ -102,25 +102,25 @@
                                     <span *ngIf="col.header == 'Message'">
                                         <div>
                                             <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"
-                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="right">
+                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="top">
                                         </div>
                                     </span>
                                     <span *ngIf="col.header == 'Actions'">
                                         <div class="cell cell11">
                                             <span (click)="onEdit(rowData)">
-                                                <img pTooltip="Edit" tooltipPosition="right" alt="Edit" class="testplus"
+                                                <img pTooltip="Edit" tooltipPosition="top" alt="Edit" class="testplus"
                                                     src="../../../../../assets/images/Projects/Edit-blue.svg">
                                             </span>
                                             <img src="../../../../assets/images/BPMS/Envelop.svg" alt="Envelop"
                                                 (click)="sendReminderMail(rowData)"
                                                 *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
                                                 pTooltip="Click to send reminder mail to Approver"
-                                                tooltipPosition="right" class="testplus1">
+                                                tooltipPosition="top" class="testplus1">
                                             <span (click)="deleteProcess(rowData)"
                                                 *ngIf="(rowData['bpmnProcessStatus']!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (rowData['userEmail']==userEmail) ))"
                                                 class="delete-icon">
                                                 <img src="../../../../assets/images-n/common/delete-blue.svg"
-                                                    pTooltip="Delete Notation" tooltipPosition="left" alt="Delete">
+                                                    pTooltip="Delete Notation" tooltipPosition="top" alt="Delete">
                                             </span>
                                         </div>
                                     </span>
