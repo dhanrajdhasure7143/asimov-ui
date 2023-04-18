@@ -106,7 +106,6 @@ export class UserScreenComponent implements OnInit {
           )
           .subscribe(
             (resp: any) => {
-              console.log("resp", resp);
               if (resp.Code == 8011) {
                 Swal.fire({
                   title: "Error",
@@ -140,7 +139,6 @@ export class UserScreenComponent implements OnInit {
             }
           );
       }
-
       this.spinner.hide();
     });
   }
