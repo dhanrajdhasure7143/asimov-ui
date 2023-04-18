@@ -33,7 +33,7 @@ export class UserScreenComponent implements OnInit {
       localStorage.setItem("screenId", res.Screen_ID);
       this.getUserScreen_List(res.Screen_ID);
     });
-  //  this.getDashboardScreens();
+    //  this.getDashboardScreens();
   }
 
   getUserScreen_List(screen_id: any) {
@@ -112,50 +112,84 @@ export class UserScreenComponent implements OnInit {
                   text: resp.message,
                   position: "center",
                   icon: "error",
-                  showCancelButton: false,
-                  confirmButtonColor: "#007bff",
-                  cancelButtonColor: "#d33",
                   heightAuto: false,
                   confirmButtonText: "Ok",
                 });
+                this.spinner.hide();
               } else {
                 Swal.fire({
                   title: "Success",
                   text: resp.message,
                   position: "center",
                   icon: "success",
-                  showCancelButton: false,
-                  confirmButtonColor: "#007bff",
-                  cancelButtonColor: "#d33",
                   heightAuto: false,
-                  confirmButtonText: "Ok",
-                }).then(() => {
-                  this.getUserScreenData();
-                });
+                })
+                  this.getUserScreenData(); 
               }
             },
             (err: any) => {
               Swal.fire("Error", "Unable to delete record", "error");
+              this.spinner.hide();
             }
           );
-      }
-      this.spinner.hide();
+          }
     });
   }
 
   caputreFormValues(values: any) {
-      let val: any;
-      if (this.updateDetails == undefined) {
-        this.spinner.show();
-        this.rest
-          .postUserscreenData(
-            this.selectedScreen.Table_Name,
-            (val = { objects: [values] })
-          )
-          .subscribe((data) => {
+    let val: any;
+    if (this.updateDetails == undefined) {
+      this.spinner.show();
+      this.rest
+        .postUserscreenData(
+          this.selectedScreen.Table_Name,
+          (val = { objects: [values] })
+        )
+        .subscribe((data) => {
+          Swal.fire({
+            title: "Success",
+            text: "Record Saved successfully !!",
+            position: "center",
+            icon: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#007bff",
+            cancelButtonColor: "#d33",
+            heightAuto: false,
+            confirmButtonText: "Ok",
+          })
+          this.getUserScreenData();
+          this.displayFlag = DisplayEnum.DISPLAYTABLE;
+        });
+    } else {
+      let payload = {
+        objects: [values],
+      };
+      this.spinner.show();
+      this.rest
+        .updateFormDetails(
+          this.selectedScreen.Table_Name,
+          this.primaryKey,
+          this.updateDetails[this.primaryKey],
+          payload
+        )
+        .subscribe((response: any) => {
+          if (response.Code == 8012) {
+            Swal.fire({
+              title: "Error",
+              text: response.message,
+              position: "center",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonColor: "#007bff",
+              cancelButtonColor: "#d33",
+              heightAuto: false,
+              confirmButtonText: "Ok",
+            })
+            this.getUserScreenData();
+          } else {
             Swal.fire({
               title: "Success",
-              text: "Record Saved successfully !!",
+              text: response.message,
               position: "center",
               icon: "success",
               showCancelButton: false,
@@ -165,54 +199,11 @@ export class UserScreenComponent implements OnInit {
               confirmButtonText: "Ok",
             }).then(() => {
               this.getUserScreenData();
-            })
-            this.displayFlag = DisplayEnum.DISPLAYTABLE;
-          });
-      } else {
-        let payload = {
-          objects: [values],
-        };
-        this.spinner.show();
-        this.rest
-          .updateFormDetails(
-            this.selectedScreen.Table_Name,
-            this.primaryKey,
-            this.updateDetails[this.primaryKey],
-            payload
-          )
-          .subscribe((response: any) => {
-            if (response.Code == 8012) {
-              Swal.fire({
-                title: "Error",
-                text: response.message,
-                position: "center",
-                icon: "error",
-                showCancelButton: false,
-                confirmButtonColor: "#007bff",
-                cancelButtonColor: "#d33",
-                heightAuto: false,
-                confirmButtonText: "Ok",
-              }).then(()=>{
-                this.getUserScreenData();
-              })
-            } else {
-              Swal.fire({
-                title: "Success",
-                text: response.message,
-                position: "center",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonColor: "#007bff",
-                cancelButtonColor: "#d33",
-                heightAuto: false,
-                confirmButtonText: "Ok",
-              }).then(() => {
-                this.getUserScreenData();
-              });
-            }
-            this.displayFlag = DisplayEnum.DISPLAYTABLE;
-          });
-      }
+            });
+          }
+          this.displayFlag = DisplayEnum.DISPLAYTABLE;
+        });
+    }
   }
 
   getUserScreenData() {
