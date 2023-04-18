@@ -1453,6 +1453,10 @@ selectEnd() {
     return replacedText;
   }
 
+  onDialogHide()
+  {
+    this.entered_folder_name='';
+   }
   onUploadDocument(event) {
     this.isFile_upload_dialog = true;
     this.uploaded_file = event.target.files;
