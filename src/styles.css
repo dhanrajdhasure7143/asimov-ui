@@ -55,12 +55,24 @@ button.btn.bluebg-button {
   height:36px !important;
   border-radius:4px !important;
 }
+.btn.bluebg-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 22px !important;
+  height:36px !important;
+  border-radius:4px !important;
+}
 button.btn.bluebg-button.savefoldername {
   margin-top: 15px;
   float: right;
 }
+
 /* button.btn.bluebg-button img{padding-right:8px;} */
 button.btn.bluebg-button:hover {
+  background: #209AED;
+  /* box-shadow: 3px 3px 7px rgba(91, 128, 234, 0.45);  */
+}
+.btn.bluebg-button:hover {
   background: #209AED;
   /* box-shadow: 3px 3px 7px rgba(91, 128, 234, 0.45);  */
 }
