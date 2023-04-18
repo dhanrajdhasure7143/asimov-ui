@@ -273,7 +273,7 @@
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
                                         [(ngModel)]="add_comment" [autoResize]="true" maxlength="100" placeholder="Type comment here"></textarea>
-                                    <button [disabled]="add_comment == undefined" type="button" class="btn btn-primary btn-sm" (click)='postcomments()'>Add</button>
+                                    <button [disabled]="add_comment == undefined" type="button" class="btn bluebg-button" (click)='postcomments()'>Add</button>
                                 </div>
                             </p-tabPanel>
                             <p-tabPanel header="Audit">
@@ -379,7 +379,7 @@
             <!-- </ng-template> -->
             </p-tree>
         </span>
-        <button type="button" class="btn btn-primary savefoldername" (click)='uploadFile()'>Save</button>
+        <button type="button" class="btn bluebg-button savefoldername" (click)='uploadFile()'>Save</button>
     </p-dialog>
     <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
     <p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

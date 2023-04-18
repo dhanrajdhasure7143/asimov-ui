@@ -14,9 +14,9 @@
             </span>
         </div>
         <div class="Edittask-btns ml-auto">
-            <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails" [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
+            <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails" [queryParams]="{id:project_id}" class="btn new-cancelbtn">Cancel</button>
             <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
-            <button [disabled]="updatetaskForm.invalid || taskSummaryFlag || taskDescriptionFlag" (click)="updatetask()" class="btn btn-primary">Update</button>
+            <button [disabled]="updatetaskForm.invalid || taskSummaryFlag || taskDescriptionFlag" (click)="updatetask()" class="btn bluebg-button">Update</button>
         </div>
 
         <!-- <span class="pull-right" style="font-size:20px;">
@@ -230,10 +230,10 @@
                                         </div>
                                         <div class="modal-footer modelprfooter">
                                             <div class="pull-right">
-                                                <button id="updatecancelcomment" type="button" class="btn btn-default" (click)="posteditcancelcomment()">
+                                                <button id="updatecancelcomment" type="button" class="btn new-cancelbtn" (click)="posteditcancelcomment()">
                                 Cancel
                               </button>
-                                                <button id="updatesavecomment" type="button" class="btn btn-primary btn-update" (click)="updatecomment(c.id)">
+                                                <button id="updatesavecomment" type="button" class="btn bluebg-button" (click)="updatecomment(c.id)">
                                 Save
                               </button>
                                                 <!-- <div class="col-md-6" >

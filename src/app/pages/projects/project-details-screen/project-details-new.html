@@ -570,16 +570,16 @@
             [style]="{'max-height':'auto','overflow':'auto'}" [(selection)]="selected_folder">
         </p-tree>
     </span>
-    <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='createFolder' " type="button" class="btn bluebg-button savefoldername"
         (click)='createFolder()'>Ok</button>
-    <button *ngIf="selectedType !='createFolder' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType !='createFolder' " type="button" class="btn bluebg-button savefoldername"
         (click)='navigateToCreateDocument()'>Ok</button>
 </p-dialog>
 
 <p-dialog header="Enter Folder Name" [(visible)]="isDialog" class="docfldnam">
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder">
-        <button type="button" class="btn btn-primary" (click)="saveFolder()"
+        <button type="button" class="btn bluebg-button" (click)="saveFolder()"
             [disabled]="!(entered_folder_name.length > 4)">Save</button>
     </span>
 </p-dialog>

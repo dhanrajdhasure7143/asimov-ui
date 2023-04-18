@@ -12,16 +12,16 @@
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
                         <div class="rpa-home-block" id="createbot-Home">
-                            <button  class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="openModal(template)" aria-hidden="true" placement="bottom">Import</button>
+                            <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openModal(template)" aria-hidden="true" placement="bottom">Import</button>
                         </div>
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
-                            <button [disabled]="true" class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
+                            <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
-                            <button  class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
+                            <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
                         <div class="rpa-home-block" id="Configuration_Home">
-                            <button class="btn btn-primary rpa-home-btn-title" id="create_Configuration"(click)="cofigurationList()" placement="bottom">Configurations</button>
+                            <button class="btn bluebg-button rpa-home-btn-title" id="create_Configuration"(click)="cofigurationList()" placement="bottom">Configurations</button>
                         </div>
                     </div>
                 </div>
@@ -29,11 +29,11 @@
                 <div class="rpa-home" style="display:none">
                     <div class="rpa-home-block" id="createbot-Home" style="border-radius: 6px;" *ngIf="this.isButtonVisible || enablecreatebot">
                         <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;">
-                        <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                        <button class="btn bluebg-button rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                     </div>
                     <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 6px;" *ngIf="this.isButtonVisible || enableConfiguration">
                         <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;">
-                        <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+                        <button class="btn bluebg-button rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
                     </div>
                 </div>
 
@@ -595,8 +595,8 @@
     </div>
     <div  class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="importBotForm.reset();importBotJson=undefined;file_error='';modalRef.hide()" class="btn btn-default">Cancel</button>
-            <button class="btn btn-primary btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importBot()">Import</button>
+            <button (click)="importBotForm.reset();importBotJson=undefined;file_error='';modalRef.hide()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importBot()">Import</button>
         </div>
     </div>
 

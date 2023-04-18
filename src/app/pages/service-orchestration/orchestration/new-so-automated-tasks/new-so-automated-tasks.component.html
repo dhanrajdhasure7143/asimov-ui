@@ -896,11 +896,11 @@
                                 </div>
                                 <div class="col-md-12">
 
-                                    <button *ngIf="addBPconfigstatus == true" class='btn btn-primary' (click)="save_blue_prism_config()" tooltip="Save">Save</button>
-                                    <button *ngIf="BluePrismFlag == true" class='btn btn-primary' (click)="save_blue_prism_config()" tooltip="Update">Update</button>
+                                    <button *ngIf="addBPconfigstatus == true" class='btn bluebg-button' (click)="save_blue_prism_config()" tooltip="Save">Save</button>
+                                    <button *ngIf="BluePrismFlag == true" class='btn bluebg-button' (click)="save_blue_prism_config()" tooltip="Update">Update</button>
 
-                                    <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection">Test Connection</button>
-                                    <button class="btn btn-primary" tooltip="Cancel" (click)="addBPconfigstatus = false;BluePrismFlag=false">Cancel</button>
+                                    <button class="btn bluebg-button" (click)="testBluePrismconnection()" tooltip="Test Connection">Test Connection</button>
+                                    <button class="btn new-cancelbtn" tooltip="Cancel" (click)="addBPconfigstatus = false;BluePrismFlag=false">Cancel</button>
 
                                 </div>
                             </div>
@@ -1044,9 +1044,9 @@
                             </div>
                             <div class="col-md-12">
 
-                                <button class='btn btn-primary' (click)="saveconfiguration()">Save</button>
-                                <button class="btn btn-primary" tooltip="Test Connection">Test Connection</button>
-                                <button class="btn btn-primary" (click)="addconfigstatus=false">Cancel</button>
+                                <button class='btn bluebg-button' (click)="saveconfiguration()">Save</button>
+                                <button class="btn bluebg-button" tooltip="Test Connection">Test Connection</button>
+                                <button class="btn new-cancelbtn" (click)="addconfigstatus=false">Cancel</button>
 
                             </div>
                         </div>
@@ -1251,8 +1251,8 @@
                                 </form>
                                 
                                 <div class="right mt-3">
-                                    <button (click)="logs_modal.hide()" class="btn">Cancel</button>
-                                    <button (click)="addexistingtasks()" class="btn btn-primary btn-update">Submit</button>
+                                    <button (click)="logs_modal.hide()" class="btn new-cancelbtn ">Cancel</button>
+                                    <button (click)="addexistingtasks()" class="btn bluebg-button">Submit</button>
                                     
                                 </div>
                                

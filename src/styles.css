@@ -22,7 +22,66 @@
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
+/* entire application buttons */
+button.btn {
+  padding: 8px 12px !important;
+  line-height: normal !important;
+  border: medium none !important;
+  font-size: 15px;
+  /* margin-right: 10px !important; */
+  border-radius: var(--main-borderradius);
+  color: var(--main-txtcolor);
+  min-width: 75px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
+button.btn.btn-default {
+  background: #eeeeee;
+  margin-right: 10px;
+
+}
+
+button.btn.btn-primary,
+button.btn.btn-primary[disabled] {
+  background: var(--main-bluecolor);
+  color: #fff;
+}
+button.btn.bluebg-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 22px !important;
+  height:36px !important;
+  border-radius:4px !important;
+}
+button.btn.bluebg-button.savefoldername {
+  margin-top: 15px;
+  float: right;
+}
+/* button.btn.bluebg-button img{padding-right:8px;} */
+button.btn.bluebg-button:hover {
+  background: #209AED;
+  /* box-shadow: 3px 3px 7px rgba(91, 128, 234, 0.45);  */
+}
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
+  color: #535353;
+  font-size: 16px; 
+  padding: 6px 22px !important;
+  height:36px !important;
+}
+button.btn.new-cancelbtn:hover {
+  color: var(--main-bluecolor) ;
+ }
+ button:disabled {
+  cursor: no-drop;
+  background: #e0e0e0 !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;
+}
+
+/* entire application buttons */
 .breadcrumb {
   background-color: white !important;
   padding: 4px 22px;
@@ -172,10 +231,7 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 
-button:disabled {
-  cursor: no-drop;
-  background-color: #d1d1d1;
-}
+
 
 .eiap-btn {
   border-radius: var(--main-borderradius) !important;
@@ -1792,31 +1848,7 @@ input.bps-home-fileds {
   font-weight: 600;
 }
 
-button.btn {
-  padding: 8px 12px !important;
-  line-height: normal !important;
-  border: medium none !important;
-  font-size: 15px;
-  /* margin-right: 10px !important; */
-  border-radius: var(--main-borderradius);
-  color: var(--main-txtcolor);
-  min-width: 75px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
 
-button.btn.btn-default {
-  background: #eeeeee;
-  margin-right: 10px;
-
-}
-
-button.btn.btn-primary,
-button.btn.btn-primary[disabled] {
-  background: var(--main-bluecolor);
-  color: #fff;
-}
 
 /* button.btn:hover {
   background: #001c47 !important;
@@ -3258,16 +3290,7 @@ textarea.p-inputtextarea {
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
-button.btn.bluebg-button {
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;
-}
-button.btn.canlrst-btn,
-button.btn.new-cancelbtn {
-  color: var(--main-bluecolor) !important;
-  font-size: 16px; 
-}
+
 .commentBox .p-tabview-panels {
   height: calc(100% - 45px) !important;
   padding-top: 0px !important;

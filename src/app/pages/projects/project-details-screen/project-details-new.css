@@ -369,12 +369,12 @@ input.msgip {
     padding: 0px 10px !important;
     margin-bottom: 20px;
 }
-button.btn.blue-btntext a,
+/* button.btn.blue-btntext a,
 button.btn.blue-btntext,
 button.btn.new-cancelbtn {
     color: #098de6 !important;
     font-size: 16px;
-}
+} */
 .imgInFirstCol td img {
     border: 2px solid #098de6;
     border-radius: 10px;
@@ -468,10 +468,7 @@ p-image.p-element.crtprgm {
 /* Form Overlay New Styles End */
 
 /* Folderpopover New Styles Start */
-button.btn.btn-primary.savefoldername {
-    margin-top: 15px;
-    float: right;
-}
+
 .docfldnam input.p-inputtext {
     width: 100%;
 }

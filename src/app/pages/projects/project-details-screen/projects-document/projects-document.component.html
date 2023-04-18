@@ -198,7 +198,7 @@
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
             <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
-            <button type="button" class="btn btn-primary" (click)="addParentFolder()" [disabled]="folder_name.length < 4 || folder_name.length == 51">Save</button>
+            <button type="button" class="btn bluebg-button" (click)="addParentFolder()" [disabled]="folder_name.length < 4 || folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
@@ -206,7 +206,7 @@
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
-            <button type="button" class="btn btn-primary" (click)="treeChildFolderSave()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
+            <button type="button" class="btn bluebg-button" (click)="treeChildFolderSave()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
@@ -215,7 +215,7 @@
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
-            <button type="button" class="btn btn-primary" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
+            <button type="button" class="btn bluebg-button" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 4 || entered_folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
     
