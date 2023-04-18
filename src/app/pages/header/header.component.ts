@@ -351,8 +351,10 @@ getTenantLists(){
       return item
     })
   this.tenantName= [...this.tenantsList.filter((item:any)=>item.role=="Admin")];
-   if(!localStorage.getItem("tenantSwitchName"))
-   this.navigationTenantName = this.tenantName[0].tenant_name
+   if(!localStorage.getItem("tenantSwitchName")){
+    this.navigationTenantName = this.tenantName[0].tenant_name
+    localStorage.setItem("role", this.tenantName[0].role);
+   }
   })
 }
 
@@ -363,7 +365,11 @@ onChangeTenant(event:any){
   await localStorage.setItem("accessToken", data.accessToken);
   await localStorage.setItem("tenantName",value.tenant_id);
   await localStorage.setItem("tenantSwitchName", value.tenant_name);
+  await localStorage.removeItem("role");
   setTimeout(()=>{
+    if(value.role =='Admin'){
+      localStorage.setItem("role",value.role)
+    }
     let url=(window.location.href)
     if(url.includes("home?accessToken")){
       window.location.href=window.location.href.split("?accessToken")[0];

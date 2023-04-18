@@ -26,9 +26,9 @@
           </div>
         </div>
       <div class="col-md-2 p-0 env-data-tool text-right">
-          <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
+          <button (click)="reset()" id="bmreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
-      <span class="testtooltip">Reset</span>
+      <!-- <span class="testtooltip">Reset</span> -->
     </button >
       </div>
       </div>
@@ -195,11 +195,11 @@
                 <ng-template pTemplate="body" let-element>
                   <tr>
                     <td> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span
-                          *ngIf="element.botName!=null" [pTooltip]="element.botName">{{(element.botName.length > 8) ?
+                          *ngIf="element.botName!=null" [pTooltip]="element.botName" tooltipPosition="top">{{(element.botName.length > 8) ?
                           ((element.botName).slice(0, 8) + '...') : element.botName}}</span>
                         <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
                     <td>
-                      <span *ngIf="element.description!=null" [pTooltip]="element.description">{{(element.description.length > 10) ?
+                      <span *ngIf="element.description!=null" [pTooltip]="element.description" tooltipPosition="top">{{(element.description.length > 10) ?
                         ((element.description).slice(0, 10) + '...') : element.description}}</span>
                       <span *ngIf="element.description==null || element.description==''">-</span>
                     </td>
@@ -216,31 +216,31 @@
                     <td>
                       <div>
                         <span [id]="element.botId+'__status'">
-                          <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" class="text-primary">
+                          <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span>
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
                             </span>
                           </span>
               
-                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'" [pTooltip]="element.botStatus">
+                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'" [pTooltip]="element.botStatus" tooltipPosition="top">
                             <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
                           </span>
               
-                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'" [pTooltip]="element.botStatus"
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'" [pTooltip]="element.botStatus" tooltipPosition="top"
                             class="text-danger">
                             <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
                           </span>
-                          <span *ngIf="element.botStatus=='New'" [pTooltip]="element.botStatus" class="text-primary">
+                          <span *ngIf="element.botStatus=='New'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
                           </span>
                           <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'">
-                            <span [pTooltip]="element.botStatus">
+                            <span [pTooltip]="element.botStatus" tooltipPosition="top">
                               <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
                             </span>
                           </span>
               
                           <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'">
-                            <span class="text-primary" [pTooltip]="element.botStatus">
+                            <span class="text-primary" [pTooltip]="element.botStatus" tooltipPosition="top">
                               <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus">
                             </span>
                           </span>
@@ -249,29 +249,29 @@
                       </div>
                     </td>
                     <td>
-                      <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" style="cursor: pointer;">
+                      <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" tooltipPosition="top">
                         <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus">
                       </span>
-                      <span (click)="stopBot(element.botId)" pTooltip="Stop Bot" style="cursor: pointer;">
+                      <span (click)="stopBot(element.botId)" pTooltip="Stop Bot" tooltipPosition="top">
                         <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus">
                       </span>
                       <span>
-                        <button (click)="SelectSLACon(element)" pTooltip="SLA Configuration" style="cursor: pointer;">
+                        <button (click)="SelectSLACon(element)" pTooltip="SLA Configuration" tooltipPosition="top">
                           <img src="../../../../../assets/images/SO/configuration.svg" class="testplus">
                         </button>
                       </span>
                     </td>
                     <td>
-                      <span (click)="openscheduler(element)" pTooltip="Scheduler" style="cursor: pointer;">
+                      <span (click)="openscheduler(element)" pTooltip="Scheduler" tooltipPosition="top">
                         <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus">
                       </span>
                     </td>
                     <td>
-                      <a class="text-primary clickable" *ngIf="element.sourceType=='EPSoft'" pTooltip="View Logs"
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='EPSoft'" pTooltip="View Logs" tooltipPosition="top"
                         (click)="getBotVerions(element.botId,element.version,epsoft_logs_modal_ref)">View</a>
-                      <a class="text-primary clickable" *ngIf="element.sourceType=='UiPath'" pTooltip="View Logs"
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='UiPath'" pTooltip="View Logs" tooltipPosition="top"
                         (click)="getuipathlogs(uiPathLogsModal,element.botName,'closed')">View</a>
-                      <a class="text-primary clickable" *ngIf="element.sourceType=='BluePrism'" pTooltip="View Logs"
+                      <a class="text-primary clickable" *ngIf="element.sourceType=='BluePrism'" pTooltip="View Logs" tooltipPosition="top"
                         (click)="getBluePrismlogs(element.botName)">View</a>
                     </td>
                   </tr>
@@ -410,7 +410,7 @@
           </div>
           <div class="modal-body">
               <div class="container m-contanier form-body">
-                  <button (click)="getBluePrismlogs(blueprismbotname)" pTooltip="Refresh" style='float:right;'>
+                  <button (click)="getBluePrismlogs(blueprismbotname)" pTooltip="Refresh" tooltipPosition="top" style='float:right;'>
               <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
             </button>
                   <div class="">
@@ -420,7 +420,7 @@
                           <!-- Run Id Column -->
                           <ng-container matColumnDef="bluePrismBotSessionid">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header>Session Id </th>
-                              <td mat-cell *matCellDef="let element" [pTooltip]="element.bluePrismBotSessionid">
+                              <td mat-cell *matCellDef="let element" [pTooltip]="element.bluePrismBotSessionid" tooltipPosition="top">
                                   <span *ngIf="element.bluePrismBotSessionid != null">{{(element.bluePrismBotSessionid.length > 30) ? ((element.bluePrismBotSessionid).slice(0, 30) + '...') : element.bluePrismBotSessionid}}
                           </span>
                                   <span *ngIf="element.bluePrismBotSessionid == null">-</span>

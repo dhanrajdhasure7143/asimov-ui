@@ -39,8 +39,9 @@ export class ProjectsDocumentComponent implements OnInit {
   folder_files:any=[];
   selectedFolder: any;
   selectedItem:any;
-  @ViewChild('op', {static: false}) model;
+  // @ViewChild('op', {static: false}) model;
   @ViewChild('op2', {static: false}) model2;
+  @ViewChild('cm', {static: false}) cm;
   term:any;
   params_data:any;
   project_id:any;
@@ -53,6 +54,7 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedOne:any;
   breadcrumbItems:any[]=[];
   istaskFilterApplied:boolean = false;
+  items:any[];
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -445,14 +447,37 @@ addParentFolder() {
   nodeUnselect(){
   }
 
-  onNodeClick(event,node){
-    this.selected_folder_rename = node;
-    event.preventDefault();
-    this.model.hide();
-    if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
-      setTimeout(() => {
-        this.model.show(event)
-        }, 200);
+  onNodeClick(event){
+    this.selected_folder_rename?this.selected_folder_rename.type = 'default':undefined;
+    setTimeout(() => {
+      this.selected_folder_rename = event.node;
+  }, 100);
+    // event.preventDefault();
+    // this.model.hide();
+    if(event.node.label != "Add Folder" && event.node.label != "Add Folder / Document"){
+      // setTimeout(() => {
+      //   this.model.show(event)
+      //   }, 200);
+        this.items=[
+          {
+            label: "Rename",
+            command: event => this.onFolderRename("treeView")
+          },
+          {
+            label: "Delete",
+            command: event => this.onDeleteItem('treeView')
+          },
+          {
+            label: "Download",
+            command: event => this.onDownloadDocument('treeView')
+          }
+        ]
+      if(event.node.dataType !='folder')
+      this.items.splice(0,1)
+
+    }else{
+      this.items=[];
+      this.cm.hide();
     }
   }
 
@@ -464,8 +489,7 @@ addParentFolder() {
       this.model2.hide();
     }else{
       this.entered_folder_name = this.selected_folder_rename.label
-      this.selectedItem.node.type ='textBox'
-      this.model.hide();
+      this.selected_folder_rename.type ='textBox'
     }
   }
 
@@ -576,7 +600,7 @@ addParentFolder() {
     if(type == 'folderView'){
       this.selectedItem.type ='default';
     }else{
-      this.selectedItem.node.type ='default';
+      this.selected_folder_rename.type ='default';
     }
     this.entered_folder_name='';
   }
@@ -588,7 +612,7 @@ addParentFolder() {
       // this.selectedItem.label = this.entered_folder_name;
       req_body.label = this.entered_folder_name;
     }else{
-      req_body = this.selectedItem.node
+      req_body = this.selected_folder_rename
       // this.selectedItem.node.label = this.entered_folder_name;
       req_body.label = this.entered_folder_name;
       // this.selectedItem.node.type ='default';
@@ -664,7 +688,6 @@ addParentFolder() {
       this.model2.hide();
       req_body=[this.selectedItem]
     }else{
-      this.model.hide();
       req_body=[this.selected_folder_rename]
       delete req_body[0]["parent"]; 
     }
@@ -809,13 +832,12 @@ addParentFolder() {
         req_body.push(this.selected_folder_rename.id)
       }
       folderName = this.selected_folder_rename.label.split('.')[0]
-        this.model.hide();
       }
       if(req_body.length == 0){
         this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
         return
       }
-            this.loader.show();
+      this.loader.show();
       this.rest_api.dwnloadDocuments(req_body).subscribe((response: any) => {
       this.loader.hide();
         let resp_data = [];
@@ -885,7 +907,16 @@ addParentFolder() {
           // filteredData1.push(element)
         });
         setTimeout(() => {
-          this.convertToTreeView1(filteredData1);
+          const uniqueIds = [];
+          const unique = filteredData1.filter(element => {
+            const isDuplicate = uniqueIds.includes(element.id);
+            if (!isDuplicate) {
+              uniqueIds.push(element.id);
+              return true;
+            }
+            return false;
+          });
+          this.convertToTreeView1(unique);
           this.istaskFilterApplied = true;
         }, 100);
       }, 100);
