@@ -1534,7 +1534,7 @@ getTenantnameslist() {
   }
 
   updateFormDetails(tablename: any, fieldname: any, rowId: any, data: any) {
-    return this.http.put(`/platform-service/screenGenerator/update_table_row/${tablename}/${fieldname}/${rowId}`, data, { responseType: 'text' });
+    return this.http.put(`/platform-service/screenGenerator/update_table_row/${tablename}/${fieldname}/${rowId}`, data);
   }
 
   updateScreenData(data: any, id: any) {
