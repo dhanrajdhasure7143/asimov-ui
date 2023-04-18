@@ -116,7 +116,7 @@ table tr .display_hover:hover {
     margin-right: 5px;
 }
 
-.roghtform button.tsttooltipbtn {
+.roghtform .tsttooltipbtn {
     position: relative;
     /* padding: 0px 5px; */
 }
@@ -124,7 +124,7 @@ table tr .display_hover:hover {
 span.testtooltip {
     position: absolute;
     top: 35px;
-    right: 0px;
+    right: -10px;
     background-color: #001c47;
     color: #fff;
     width: max-content;
@@ -229,4 +229,14 @@ button:hover img.testplus1.hover-img {
 }
 .process-logs.modal-body {
     padding-top: 0px !important;
+}
+
+.orchactions button {
+    background-color: unset !important;
+    width: auto;
+    margin-right: 15px;
+}
+.orchactions button img.testplus {
+    margin-right: 0px;
+    cursor: unset;
 }

@@ -6,5 +6,8 @@
   padding: 6px;
 }
 .depart-btns span {
-  margin-left: 6px;
+  margin-right: 15px;
+}
+.depart-btns span img {
+  margin-right: 0px;
 }
