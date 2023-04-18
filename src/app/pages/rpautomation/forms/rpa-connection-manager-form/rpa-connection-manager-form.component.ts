@@ -121,7 +121,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   saveAction() {
     this.spinner.show();
     let req_body
-    console.log(this.action_logo,"action_logo");
     if(this.connectorForm.value.actionType == "Authenticated"){    
     req_body=
       {
@@ -746,7 +745,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   paramsCheck(event){
-    console.log(event.checked,"selectedParam");
     let api = this.connectorForm.value.endPoint
     let queryParams = "?";
     for(const [key, value] of Object.entries(event.checked)){ 
@@ -769,7 +767,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     for(const each of this.paramForm){
         queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
     }
-    console.log(queryParams)
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
