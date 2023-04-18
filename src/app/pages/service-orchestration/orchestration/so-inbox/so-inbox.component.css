@@ -20,7 +20,7 @@
   z-index: 9;
 }
 .Inboxtab-btns button:first-child {
-  padding-right: 15px;
+  /* padding-right: 15px; */
 }
 button#inboxrefresh img {
   width: 19px;
@@ -94,4 +94,8 @@ span.testtooltip:before {
 .noDataMessage{
   text-align: center;
   margin-top: 100px;
+}
+
+.inboxactions button {
+  margin-right: 15px;
 }

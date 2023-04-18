@@ -48,6 +48,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isReqDisable : boolean = false;
   isRefresh: boolean = false;
   icon: any;
+  paramForm = [];
+  selectedParam: any[] = [];
+  action_icon : any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -110,6 +113,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     if (this.isCreate == "false") {
       this.isUpdate = true;
       this.getActionById();
+      this.getIconbyId();
     }
   }
 
@@ -725,4 +729,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
       });
   }
+
+  addParams(){
+    this.paramForm.push({
+      index: this.paramForm.length,
+      paramKey: "",
+      paramValue: "",
+    });
+  }
+
+  paramsDelete(index) {
+    this.paramForm.splice(index, 1);
+  }
+
+  getIconbyId(){
+    this.rest_api.getIcon(this.action_id).subscribe((res) => {
+      this.action_icon = res["data"]
+    })
+
+  }
+
 }
