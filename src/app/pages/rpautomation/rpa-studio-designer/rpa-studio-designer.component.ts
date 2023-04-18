@@ -274,8 +274,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.current_instance=undefined;
     this.toolsetSideNav=false;
     this.spinner.show();
-    console.log("hided")
-    console.log(event)  
     this.designerInstances.forEach((instance,index)=>{
         if(index==event.index)
         {
