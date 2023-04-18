@@ -229,7 +229,6 @@ interval:any;
 showUserList:boolean= false;
 recentActivityList:any=[];
 columns_list_activities:any[]=[];
-entered_folder_nameFlag: boolean=false;
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -1463,12 +1462,9 @@ onKeyUpDiv(){
     return replacedText;
   }
 
-  entered_folder_nameMaxLength(value) {
-    if (value < 51) {
-      this.entered_folder_nameFlag = false;
-    } else {
-      this.entered_folder_nameFlag = true;
-    }
-  }
+  onDialogHide()
+  {
+    this.entered_folder_name='';
+   }
 }
 

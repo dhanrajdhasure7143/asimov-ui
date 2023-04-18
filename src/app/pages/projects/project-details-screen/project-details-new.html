@@ -576,11 +576,11 @@
         (click)='navigateToCreateDocument()'>Ok</button>
 </p-dialog>
 
-<p-dialog header="Enter Folder Name" [(visible)]="isDialog" class="docfldnam">
+<p-dialog header="Enter Folder Name" [(visible)]="isDialog" (onHide)="onDialogHide()" class="docfldnam">
     <span class="p-float-label">
     <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" [maxlength]="51"
-        name="folder" (keyup)="entered_folder_nameMaxLength($event.target.value.length)">
-    <span *ngIf="entered_folder_nameFlag" class="errspan required">
+        name="folder" >
+    <span *ngIf="entered_folder_name.length > 50" class="errspan required">
         Maximum of 50 characters
     </span>
     <button type="button" class="btn btn-primary" (click)="saveFolder()"
