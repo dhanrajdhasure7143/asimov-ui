@@ -100,10 +100,10 @@ export class RpaActionItemsComponent implements OnInit {
         ColumnName: "actionLogo",
         DisplayName: "Action Logo",
         ShowGrid: true,
-        ShowFilter: true,
+        ShowFilter: false,
         filterWidget: "normal",
         filterType: "text",
-        sort: true,
+        sort: false,
         multi: false,
       },
       {
