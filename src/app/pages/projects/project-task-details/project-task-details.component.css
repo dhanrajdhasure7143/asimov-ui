@@ -83,9 +83,12 @@ span.lowimp {
   font-size: 16px !important;
   color: #222;
   height: 28px;
+  cursor: pointer;
+  display: inline-block;
 }
 .pinf label {
   color: #535353;
+  width: 100%;
 }
 .kpipercent {
   border-left: 1px solid #e0e0e0;

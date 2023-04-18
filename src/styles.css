@@ -2812,9 +2812,11 @@ span.tabscount {
 .generatedgrid .p-datatable-wrapper {
   height: calc(100vh - 150px); /* for generated screen grid */
 }
-.maindivfoprm .columnlistgrid .p-datatable-wrapper,
-.well1-dynmic.graph .p-datatable-wrapper {
+.maindivfoprm .columnlistgrid .p-datatable-wrapper {
   height: 100% !important; /* for add-screen form & widget grid */
+}
+.well1-dynmic.graph .p-datatable-wrapper {
+  height: calc(100vh - 380px) !important;
 }
 .bps-approvalgrid .p-datatable-wrapper {
   height: calc(100vh - 195px); /* for bps-approval grid */
@@ -3045,6 +3047,7 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 }
 .p-inplace .p-inplace-display {
   display: contents !important;
+  cursor: unset !important;
 }
 /* .projectnamerow .p-inplace-content {
   position: absolute;
@@ -3198,7 +3201,9 @@ textarea.p-inputtextarea {
 .p-inplace.p-component span.task-descwords {
   overflow-wrap: break-word;
 }
-  
+.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(3) {
+  white-space: inherit !important;
+}
 /* headercss end*/
 /* primeNg components Styles End */
 

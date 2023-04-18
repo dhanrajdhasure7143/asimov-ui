@@ -78,9 +78,12 @@ span.lowimp {
     font-weight: 400;
     font-size: 16px !important;
     color: #222;
+    cursor: pointer;
+    display: inline-block;
 }
 .pinf label {
     color: #535353;
+    width: 100%;
 }
 /* .projectnamerow .p-inplace-content, .projectnamerow .editfields {
     width: 80px !important;
@@ -127,7 +130,7 @@ span.lowimp {
     width: 92%;
     font-size: 16px;
     border-left: 1px solid #d0d0d0;
-    padding-left: 10px;
+    padding-left: 15px;
 }
 .project-description p span {
     width: 100%;
