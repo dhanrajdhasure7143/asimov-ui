@@ -350,7 +350,13 @@
                                     alt="Active-Tasks" class="qcard-img">
                             </div>
                             <p class="text">You can start upload document related to the process</p>
-                            <a class="link-primary linkss">Upload document</a>
+                            <!-- <a class="link-primary linkss" (click)="onUploadDocument($event)">Upload document</a> -->
+                            <div class="" (change)="onUploadDocument($event)">
+                                <div class="fileupsec">
+                                    <input type="file" name="myfile" multiple id="file-input">
+                                    <span>Upload document</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -572,8 +578,10 @@
     </span>
     <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername"
         (click)='createFolder()'>Ok</button>
-    <button *ngIf="selectedType !='createFolder' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='document' " type="button" class="btn btn-primary savefoldername"
         (click)='navigateToCreateDocument()'>Ok</button>
+        <button *ngIf="selectedType =='uploadFile' " type="button" class="btn btn-primary savefoldername"
+        (click)='uploadFile()'>Ok</button>
 </p-dialog>
 
 <p-dialog header="Enter Folder Name" [(visible)]="isDialog" (onHide)="onDialogHide()" class="docfldnam">

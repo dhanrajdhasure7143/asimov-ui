@@ -6,13 +6,13 @@
               <img src="../../../../assets/images/search.svg" alt="" class="testplus">
           </div> -->
           <div class="">
-              <button (click)="reset()" id="inboxreset" class="tsttooltipbtn">
+              <button (click)="reset()" id="inboxreset" class="tsttooltipbtn" pTooltip="Reset"  tooltipPosition="top">
                 <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
-                <span class="testtooltip">Reset</span>
+                <!-- <span class="testtooltip">Reset</span> -->
               </button >
-              <button (click)="refresh()" id="inboxrefresh" class="tsttooltipbtn">
+              <button (click)="refresh()" id="inboxrefresh" class="tsttooltipbtn" pTooltip="Refresh"  tooltipPosition="top">
                 <img src='../../../../../assets/images/RPA/icon_latest/repeat-blue.svg' class="testplus">
-                <span class="testtooltip">Refresh</span>
+                <!-- <span class="testtooltip">Refresh</span> -->
               </button >
             </div>          
       </div>
@@ -216,25 +216,19 @@
                       </span>
                       <span *ngIf="element.status==null">---</span>
                     </td>
-                    <td>
-                      <span>
+                    <td class="inboxactions">
                         <button [disabled]="element.status=='Approved' || element.status=='Rejected'"
                           [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''"
                           (click)="getapproved(element.processId,'Approved', element.taskId,element.processRunId,element.envId)"
-                          pTooltip="Approve">
+                          pTooltip="Approve" tooltipPosition="top">
                           <i class="fas fa-check text-success"></i>
                         </button>
-              
-                      </span>&nbsp;&nbsp;&nbsp;
-                      <span>
                         <button [disabled]="element.status=='Approved' || element.status=='Rejected'"
                           [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''"
                           (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"
-                          pTooltip="Reject">
+                          pTooltip="Reject"  tooltipPosition="top">
                           <i class="fas fa-times text-danger"></i>
                         </button>
-              
-                      </span>
                     </td>
                   </tr>
                 </ng-template>

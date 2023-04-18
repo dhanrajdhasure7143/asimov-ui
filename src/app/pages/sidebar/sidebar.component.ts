@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
   expiry: any;
   showProjectsSubmenu: boolean = false;
   screensList:any=[];
+  role: any;
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -88,6 +89,7 @@ export class SidebarComponent implements OnInit {
   }
   
   selection(){
+    this.role = localStorage.getItem("role")
      this.obj.sideBarOpen=true;
      this.obj.contentMargin=260;
    }
@@ -144,7 +146,6 @@ this.router.navigate(["/pages/subscriptions"],{
 navigateToDashBoard(){
         this.rest_service.getDashBoardsList().subscribe((res:any)=>{
         let dashbordlist:any=res.data;
-        console.log(dashbordlist)
         let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
         if(dashbordlist.length == 0){
           this.router.navigate(["/pages/dashboard/create-dashboard"])

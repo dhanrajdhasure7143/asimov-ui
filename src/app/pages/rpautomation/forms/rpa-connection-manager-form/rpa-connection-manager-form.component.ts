@@ -90,20 +90,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       endPoint: ["", Validators.compose([Validators.required])],
-      authType: ["", Validators.compose([Validators.required])],
+      authType: [""],
       icon: ["", Validators.compose([])],
-      grantType: ["", Validators.compose([Validators.required])],
-      code: ["", Validators.compose([Validators.required])],
-      redirect_uri: ["", Validators.compose([Validators.required])],
-      userName: ["", Validators.compose([Validators.required])],
-      password: ["", Validators.compose([Validators.required])],
-      clientId: ["", Validators.compose([Validators.required])],
-      clientSecret: ["", Validators.compose([Validators.required])],
-      verifier: ["", Validators.compose([Validators.required])],
+      grantType: [""],
+      code: [""],
+      redirect_uri: [""],
+      userName: [""],
+      password: [""],
+      clientId: [""],
+      clientSecret: [""],
+      verifier: [""],
       request: ["", Validators.compose([])],
       response: ["", Validators.compose([])],
       scope: ["", Validators.compose([])],
-      refreshToken: ["", Validators.compose([Validators.required])],
+      refreshToken: [""],
     });
 
     this.methodTypes();
@@ -117,7 +117,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
   }
 
-
   saveAction() {
     this.spinner.show();
     let req_body
@@ -130,7 +129,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        actionLogo: this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo":this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
 
@@ -210,7 +209,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             this.router.navigate(["/pages/rpautomation/action-item"], {
               queryParams: {
               id: this.selectedId,
-              name: this.selectedConnector },
+              name: this.selectedConnector,
+              icon : this.icon  },
           });
           },1000)
       } else {
@@ -288,6 +288,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
       let filterData = res;
+      console.log("authTypes",res)
       this.authItems = Object.keys(filterData).map((key) => ({
         type: key,
         value: filterData[key],
@@ -317,13 +318,31 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   actionChange(event) {
+    const exclude: string[] = ['actionName', 'actionType'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (exclude.findIndex(q => q === key) === -1) {
+            this.connectorForm.get(key).reset();
+            if(key !='methodType'&& key !='endPoint')
+            this.connectorForm.get(key).clearValidators();
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
+
     if (event == "Authenticated") {
       this.isAction = true;
       this.isRequest = false;
       this.isHeader = false
       this.isResponse = false;
-      this.connectorForm.get('methodType').setValue("POST")
-    } else if (event == "APIRequest") {
+      this.connectorForm.get('methodType').setValue("POST");
+      const setValidators: string[] = ['authType', 'grantType'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (setValidators.findIndex(q => q === key) != -1) {
+            this.connectorForm.get(key).setValidators([Validators.required]);
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
+    }
+    else if (event == "APIRequest") {
       this.connectorForm.get('methodType').setValue("")
       this.isRequest = true;
       this.isHeader = true;
@@ -335,9 +354,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAuthorization = false;
       this.isRefreshToken = false;
       this.isScopeField = false;
+      this.isVerifier = false;
     }
   }
-
   methodChange(event){
     if(event == "GET" && this.connectorForm.value.actionType == "APIRequest"){
      this.isReqDisable = true;
@@ -347,6 +366,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   authChange(event) {
+    console.log(event)
+    const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType"];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (exclude.findIndex(q => q === key) === -1) {
+            this.connectorForm.get(key).reset();
+            // this.connectorForm.get(key).clearValidators();
+            // this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
     if (event == "OAUTH2") {
       this.isAuthenticated = true;
       } else {
@@ -362,6 +390,25 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   grantChange(event) {
+    const setValidators: string[] = ['clientId', 'clientSecret'];
+    const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType","grantType"]
+    Object.keys(this.connectorForm.controls).forEach(key => {
+      if (exclude.findIndex(q => q === key) === -1) {
+        this.connectorForm.get(key).reset();
+        this.connectorForm.get(key).clearValidators();
+        this.connectorForm.get(key).updateValueAndValidity();
+      }
+      if (setValidators.findIndex(q => q === key) != -1) {
+          // this.connectorForm.get(key).reset();
+          this.connectorForm.get(key).setValidators([Validators.required]);
+          this.connectorForm.get(key).updateValueAndValidity();
+      }
+     
+    });
+      // this.connectorForm.get('clientId').setValidators([Validators.required]);
+      // this.connectorForm.get('clientId').updateValueAndValidity();
+      // this.connectorForm.get('clientSecret').setValidators([Validators.required]);
+      // this.connectorForm.get('clientSecret').updateValueAndValidity();
     if (event == "AuthorizationCode") {
       this.isAuthorization = true;
       this.isClient = true;
@@ -370,10 +417,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
-      this.connectorForm.get('code').setValue("")
-      this.connectorForm.get('redirect_uri').setValue("")
-      this.connectorForm.get('clientId').setValue("")
-      this.connectorForm.get('clientSecret').setValue("")
+
+      const setValidators: string[] = ['code', 'redirect_uri'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (setValidators.findIndex(q => q === key) != -1) {
+            this.connectorForm.get(key).setValidators([Validators.required]);
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
+
     } else if (event == "PasswordCredentials") {
       this.isPassword = true;
       this.isClient = true;
@@ -382,11 +434,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
-      this.connectorForm.get('userName').setValue("")
-      this.connectorForm.get('password').setValue("")
-      this.connectorForm.get('clientId').setValue("")
-      this.connectorForm.get('clientSecret').setValue("")
       this.isRefresh = true;
+      const setValidators: string[] = ['userName', 'password'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (setValidators.findIndex(q => q === key) != -1) {
+            this.connectorForm.get(key).setValidators([Validators.required]);
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
+      
     } else if (event == "client_credentials") {
       this.isClient = true;
       this.isResponse = true;
@@ -395,9 +451,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = true;
       this.isRefreshToken = false;
-      this.connectorForm.get('clientId').setValue("")
-      this.connectorForm.get('clientSecret').setValue("")
-      this.connectorForm.get('scope').setValue("")
       this.isRefresh = true;
     } else if (event == "AuthorizationCodeWithPKCE") {
       this.isAuthorization = true;
@@ -407,12 +460,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = true;
       this.isScopeField = false;
       this.isRefreshToken = false;
-      this.connectorForm.get('code').setValue("")
-      this.connectorForm.get('redirect_uri').setValue("")
-      this.connectorForm.get('clientId').setValue("")
-      this.connectorForm.get('clientSecret').setValue("")
-      this.connectorForm.get('verifier').setValue("")
       this.isRefresh = true;
+      const setValidators: string[] = ['code', 'redirect_uri','verifier'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (setValidators.findIndex(q => q === key) != -1) {
+            this.connectorForm.get(key).setValidators([Validators.required]);
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
+      
     } else if (event == "refresh_token") {
       this.isAuthorization = false;
       this.isClient = true;
@@ -421,11 +477,14 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = true;
       this.isRefreshToken = true;
-      this.connectorForm.get('clientId').setValue("")
-      this.connectorForm.get('clientSecret').setValue("")
-      this.connectorForm.get('scope').setValue("")
-      this.connectorForm.get('refreshToken').setValue("")
       this.isRefresh = true;
+      const setValidators: string[] = ['refreshToken'];
+      Object.keys(this.connectorForm.controls).forEach(key => {
+        if (setValidators.findIndex(q => q === key) != -1) {
+            this.connectorForm.get(key).setValidators([Validators.required]);
+            this.connectorForm.get(key).updateValueAndValidity();
+        }
+      });
     }
   }
 
@@ -465,7 +524,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   backToaction() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
-      queryParams: { id: this.selectedId, name: this.selectedConnector },
+      queryParams: { id: this.selectedId, name: this.selectedConnector, icon : this.icon },
     });
   }
 
@@ -493,10 +552,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isRequest = false;
         this.isHeader = false;
         this.isResponse = false;
+        const setValidators: string[] = ['clientId','clientSecret'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       }
 
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
+        const setValidators: string[] = ['grantType'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       } else {
         this.isAuthenticated = false;
         this.isAuthorization = false;
@@ -518,9 +591,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        const setValidators: string[] = ['code','redirect_uri'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       } else if (
-        this.actionData.configurationAsJson["grantType"] ==
-        "PasswordCredentials"
+        this.actionData.configurationAsJson["grantType"] == "PasswordCredentials"
       ) {
         this.isPassword = true;
         this.isClient = true;
@@ -529,6 +608,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        const setValidators: string[] = ['userName','password'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       } else if (
         this.actionData.configurationAsJson["grantType"] == "client_credentials"
       ) {
@@ -540,8 +626,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isScopeField = true;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grantType"] ==
-        "AuthorizationCodeWithPKCE"
+        this.actionData.configurationAsJson["grantType"] == "AuthorizationCodeWithPKCE"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -550,6 +635,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = true;
         this.isScopeField = false;
         this.isRefreshToken = false;
+        const setValidators: string[] = ['code','redirect_uri','verifier'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       } else if (
         this.actionData.configurationAsJson["grantType"] == "refresh_token"
       ) {
@@ -560,6 +652,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = true;
         this.isRefreshToken = true;
+        const setValidators: string[] = ['refreshToken'];
+        Object.keys(this.connectorForm.controls).forEach(key => {
+          if (setValidators.findIndex(q => q === key) != -1) {
+              this.connectorForm.get(key).setValidators([Validators.required]);
+              this.connectorForm.get(key).updateValueAndValidity();
+          }
+        });
       }
 
       if(this.actionData.configurationAsJson["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){
@@ -713,6 +812,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
                 queryParams: {
                   id: this.selectedId,
                   name: this.selectedConnector,
+                  icon : this.icon
                 },
             });
             },1000)
@@ -742,11 +842,31 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.paramForm.splice(index, 1);
   }
 
+  paramsCheck(event){
+    let api = this.connectorForm.value.endPoint
+    let queryParams = "?";
+    for(const [key, value] of Object.entries(event.checked)){ 
+      queryParams = queryParams + key + "=" + value + "&"; 
+    }
+    if(this.connectorForm.value.actionType == "APIRequest"){
+       api = api + queryParams
+    }
+  }
+
   getIconbyId(){
     this.rest_api.getIcon(this.action_id).subscribe((res) => {
       this.action_icon = res["data"]
     })
 
+  }
+
+  onKeyEntered(){
+    let queryParams = "?";
+    for(const each of this.paramForm){
+        queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
+    }
+    let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
+    this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
 
 }
