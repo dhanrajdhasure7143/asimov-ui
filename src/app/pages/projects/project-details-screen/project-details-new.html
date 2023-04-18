@@ -57,7 +57,7 @@
                                     <p-inplace #inplace1 (onActivate)="inplaceActivate('priority','inplace1')"
                                     class="prjname-priority">
                                         <ng-template pTemplate="display">
-                                            <span>
+                                            <span class="priorlabels">
                                                 <img src="./../../../../assets/images-n/projects/low_priority.svg"
                                                     alt="importance" *ngIf="projectDetails.priority == 'Low'">
                                                 <span class="lowimp"
@@ -329,7 +329,7 @@
                         <div class="col-sm-4 text-center">
                             <div class="qactionscard-info">
                                 <img src="./../../../../assets/images-n/projects/AutomationRate.svg"
-                                    alt="AutomationRate" class="qcard-img">
+                                    alt="AutomationRate" class="">
                             </div>
                             <p class="text">Start onboarding users,who will be responsible forthe project.</p>
                             <a class="link-primary linkss" (click)='openUsersOverlay()'>Users</a>
@@ -337,8 +337,8 @@
                         <div class="col-sm-4 text-center qamiddlecard">
                             <div class="vertical-line"></div>
                             <div class="qactionscard-info">
-                                <img src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks"
-                                    class="qcard-img">
+                                <img src="./../../../../assets/images-n/projects/CreateTasks.svg" alt="Active-Tasks"
+                                    class="">
                             </div>
                             <p class="text">Start creating and assigning tasks to get the work started.</p>
                             <a class="link-primary linkss" (click)="onCreateTask()">Create Tasks</a>
@@ -347,7 +347,7 @@
                             <div class="vertical-line"></div>
                             <div class="qactionscard-info">
                                 <img src="../../../../assets/images-n/projects/prj-upload-document.svg"
-                                    alt="Active-Tasks" class="qcard-img">
+                                    alt="Active-Tasks" class="">
                             </div>
                             <p class="text">You can start upload document related to the process</p>
                             <!-- <a class="link-primary linkss" (click)="onUploadDocument($event)">Upload document</a> -->
@@ -569,7 +569,7 @@
     </app-split-overlay>
 </div>
 
-<p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}"
+<p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '25vw'}"
     (onHide)="onCloseFolderOverlay()">
     <span class="p-float-label">
         <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single"
@@ -584,7 +584,7 @@
         (click)='uploadFile()'>Ok</button>
 </p-dialog>
 
-<p-dialog header="Enter Folder Name" [(visible)]="isDialog" (onHide)="onDialogHide()" class="docfldnam">
+<p-dialog header="Enter Folder Name" [(visible)]="isDialog" [modal]="true" [baseZIndex]="10000" (onHide)="onDialogHide()" class="docfldnam">
     <span class="p-float-label">
     <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" [maxlength]="51"
         name="folder" >
