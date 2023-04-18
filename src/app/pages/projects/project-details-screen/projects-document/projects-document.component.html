@@ -52,16 +52,10 @@
             </p-card>
            </div>
            <div *ngIf = "!isFolder" class="doctree">
-            <p-tree [value]="files" [filter]="true" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
-                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile"> 
+            <p-tree [value]="files" [filter]="true" [contextMenu]="cm" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile" (onNodeContextMenuSelect)="onNodeClick($event)"> 
                 <ng-template let-node pTemplate="default">
-                    <!-- <div class="node-content" *ngIf="node.label=='Add Folder'">
-                        <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="test" class="node-icon">
-                    </div> -->
-                    <b (contextmenu)="onNodeClick($event,node)">
-                        <span [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
-                        <!-- {{node.label}} -->
-                    </b>
+                    <span [ngClass]="{ 'has-changes' : node.hasChanges }" [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
                     <input [(ngModel)]="entered_folder_name" type="text" style="width:100%" maxlength='50' pInputText>
@@ -219,16 +213,15 @@
         </span>
     </p-dialog>
     
-    <p-overlayPanel #op>
+    <!-- <p-overlayPanel #op>
         <ng-template pTemplate>
             <div class="docritclk">
                 <div class="" *ngIf="selected_folder_rename.dataType=='folder'" (click)="onFolderRename('treeView')">Rename</div>
                 <div (click)="onDeleteItem('treeView')">Delete</div>
-                <!-- <div *ngIf="selected_folder_rename.dataType != 'folder'" (click)="onDownloadDocument('treeView')">Download</div> -->
                 <div (click)="onDownloadDocument('treeView')">Download</div>
             </div>
         </ng-template>
-    </p-overlayPanel>
+    </p-overlayPanel> -->
 
     <p-overlayPanel #op1>
         <ng-template pTemplate>
@@ -259,3 +252,5 @@
 
     <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
     <p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+
+    <p-contextMenu #cm [model]="items" appendTo="body"></p-contextMenu>

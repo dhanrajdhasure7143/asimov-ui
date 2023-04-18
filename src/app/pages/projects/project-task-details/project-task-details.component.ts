@@ -294,7 +294,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     //   alert("please fill all details");
     // }
   }
-  chnagefileUploadForm(event) {
+  changefileUploadForm(event) {
     this.isFile_upload_dialog = true;
     this.uploaded_file = event.target.files;
   }
