@@ -55,21 +55,22 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
-                <button (click)="addtasks(addTask)" class="tsttooltipbtn">
+                <button (click)="addtasks(addTask)" class="tsttooltipbtn" pTooltip="Add Task" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
-      <span class="testtooltip">Add Task</span>
+      <!-- <span class="testtooltip">Add Task</span> -->
     </button>
-                <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn">
+                <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
-      <span class="testtooltip">Reset</span>
+      <!-- <span class="testtooltip">Reset</span> -->
     </button>
-                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+    <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
       <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
-      <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
+      <!-- <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span> -->
     </button>
-                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+    <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" 
+        (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
-      <span  class="testtooltip">Run Process</span>
+      <!-- <span  class="testtooltip">Run Process</span> -->
     </button>
                 <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
@@ -80,22 +81,23 @@
       </span>
       -->
 
-                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
+    <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
       <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
     
     </button>
-                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" (click)="startscheduler()">
+    <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" 
+        (click)="startscheduler()" pTooltip="Open Scheduler" tooltipPosition="top">
      <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
-      <span class="testtooltip">Open Scheduler</span>
+      <!-- <span class="testtooltip">Open Scheduler</span> -->
     </button>
 
     <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
       <img src="../../../../../assets/images/file.svg" alt="" class="testplus"> 
     </button>
 
-                <button *ngIf="selectedvalue!=''" id="autoViewLogs" class="tsttooltipbtn" (click)="getprocesslogs(process_logs)">
+    <button *ngIf="selectedvalue!=''" id="autoViewLogs" class="tsttooltipbtn" (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
       <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
-      <span class="testtooltip">View Logs</span>
+      <!-- <span class="testtooltip">View Logs</span> -->
     </button>
             </div>
 
@@ -266,7 +268,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span [pTooltip]="element.status">
+                                    <span [pTooltip]="element.status" tooltipPosition="top">
                                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
                                             <span *ngIf="element.status=='Pending'" class="text-warning">
                                                 <i class="fa fa-clock"></i>
@@ -314,41 +316,41 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <div *ngIf="element.taskType=='Automated'">
+                                    <div *ngIf="element.taskType=='Automated'" class="orchactions">
                                         <span>
                                             <button [disabled]="element.taskType=='Human' || element.taskType==null"
                                                 [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''"
-                                                (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource">
+                                                (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="assignbot(element.taskId, element.processId)"
-                                                *ngIf="element.taskType == 'Automated'" pTooltip="Assign">
+                                                *ngIf="element.taskType == 'Automated'" pTooltip="Assign" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                             <button (click)="assignbot(element.taskId, element.processId)"
-                                                *ngIf="element.taskType == 'Human'" pTooltip="Assign Resource">
+                                                *ngIf="element.taskType == 'Human'" pTooltip="Assign Resource" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset">
+                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.sourceType == 'EPSoft'"
-                                                pTooltip="View Bot">
-                                                <img src="../../../../../assets/images/Projects/eye-show.svg"
-                                                    class="testplus default-img" />
+                                                pTooltip="View Bot" tooltipPosition="top">
+                                                <!-- <img src="../../../../../assets/images/Projects/eye-show.svg"
+                                                    class="testplus" /> -->
                                                 <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
-                                                    class="testplus hover-img" />
+                                                    class="testplus" />
                                             </button>
                                             <button *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
-                                                <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus default-img" />
-                                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
-                                                    class="testplus hover-img" />
+                                                <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" />
+                                                <!-- <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
+                                                    class="testplus hover-img" /> -->
                                             </button>
                                             <button *ngIf="element.taskType !='Automated'" class="undobtn">
                                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
@@ -356,34 +358,34 @@
                     
                                         </span>
                                         <span>
-                                            <button pTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId)">
-                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                                    class="testplus1 default-img" />
-                                                <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img" />
+                                            <button pTooltip="Delete Task" tooltipPosition="top" class="undobtn" (click)="delete(element.taskId)">
+                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg"
+                                                    class="testplus" />
+                                                <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img" /> -->
                                             </button>
                                         </span>
                                     </div>
-                                    <div *ngIf="element.taskType=='Human'">
+                                    <div *ngIf="element.taskType=='Human'" class="orchactions">
                                         <span>
                                             <button [disabled]="element.taskType=='Human' || element.taskType==null"
                                                 [class]="(element.taskType=='Human' || element.                taskType==null)?'undobtn':''"
-                                                (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource">
+                                                (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="assignhuman(element)" pTooltip="Assign Resource">
+                                            <button (click)="assignhuman(element)" pTooltip="Assign Resource" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset">
+                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)"
-                                                *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" pTooltip="View Bot">
+                                                *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" pTooltip="View Bot" tooltipPosition="top">
                                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
                                             </button>
                                             <button *ngIf="element.taskType !='Automated'">
@@ -391,10 +393,10 @@
                                             </button>
                                         </span>
                                         <span>
-                                            <button pTooltip="Delete Task" (click)="delete(element.taskId)">
-                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                                    class="testplus default-img" />
-                                                <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" />
+                                            <button pTooltip="Delete Task" tooltipPosition="top" (click)="delete(element.taskId)">
+                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg"
+                                                    class="testplus" />
+                                            <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" /> -->
                                             </button>
                                         </span>
                                     </div>

@@ -157,6 +157,11 @@ body .leftfporm select {
 .roghtform button {
   background-color: unset !important;
   width: auto;
+  margin-right: 15px;
+}
+.roghtform button img.testplus {
+  margin-right: 0px;
+  cursor: unset;
 }
 .roghtform {
   line-height: 30px;
