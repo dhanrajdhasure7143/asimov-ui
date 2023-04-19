@@ -153,8 +153,13 @@ export class RestApiService{
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }
-  attribute(data:any){
-  return this.http.get('/rpa-service/get-attributes/'+data)
+  attribute(data:any,uuid:any){
+    if(uuid=="null" || uuid==""){
+      return this.http.get('/rpa-service/get-attributes/'+data);
+    }
+    else{
+      return this.http.get('/rpa-service/get-attributes/'+data+"?uuid="+uuid)
+    }
   }
 
   getAllAttributes(){
