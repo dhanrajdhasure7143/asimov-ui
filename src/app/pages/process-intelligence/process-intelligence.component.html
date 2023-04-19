@@ -3,13 +3,22 @@
       <div class="row main-content-head">
           <div class="col-md-5 new-bps-header-title p-0">
             <h3>
-              <span class="bps-header-title">
-                <span *ngIf="isBackbutton" class="module-back-button" (click)='gotoProcessgraph()'><i aria-hidden="true" class="fas fa-chevron-left"></i></span>
-                <span *ngIf="isPIHeaderShow" class="module-back-button" (click)='backtoWorkspace()'><i aria-hidden="true" class="fas fa-chevron-left"></i></span>
-                <span *ngIf="isProjDetails" class="module-back-button" (click)='gotoProjectDetails()'><i aria-hidden="true" class="fas fa-chevron-left"></i></span>
+              <!-- <span class="bps-header-title"> -->
+                <label id="popup_title">
+                  <a *ngIf="isBackbutton" (click)='gotoProcessgraph()'>
+                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  </a>
+                  <a *ngIf="isPIHeaderShow" (click)='backtoWorkspace()'>
+                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  </a>
+                  <a *ngIf="isProjDetails" (click)='gotoProjectDetails()'>
+                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  </a>
+                </label>
+                
                 <span class="title_text">Process Intelligence
                 </span>
-              </span>
+              <!-- </span> -->
             </h3>
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="isPIHeaderShow || isProjDetails">
@@ -176,7 +185,7 @@
             </div>  
           </div>
       </div>    
-        <div class="module-body">
+        <div class="main-content-body">
             <router-outlet></router-outlet>
         </div>
   </div>

@@ -737,13 +737,13 @@ hiddenPopUp:boolean=false;
 
 
     openVariantListNav() {   //variant list open
-      // document.getElementById("mySidenav").style.width = "310px";
-      this.hiddenPopUp=true;
+      document.getElementById("mySidenav").style.width = "340px";
+    //   this.hiddenPopUp=true;
     }
 
     closeNav() { // Variant list Close
-        // document.getElementById("mySidenav").style.width = "0px";
-        this.hiddenPopUp=false;
+        document.getElementById("mySidenav").style.width = "0px";
+        // this.hiddenPopUp=false;
     }
 
     getAllVariantList() {
