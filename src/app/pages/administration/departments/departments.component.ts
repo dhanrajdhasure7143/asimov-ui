@@ -82,9 +82,12 @@ export class DepartmentsComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
-      cancelButtonColor: '#d33',
+      
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {

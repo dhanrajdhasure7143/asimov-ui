@@ -501,6 +501,10 @@ export class BpsHomeComponent implements OnInit {
         " status will be deleted",
       icon: "warning",
       showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",

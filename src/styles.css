@@ -53,14 +53,14 @@ button.btn.bluebg-button {
   color: #fff;
   padding: 6px 22px !important;
   height:36px !important;
-  border-radius:4px !important;
+  border-radius:3px !important;
 }
 .btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 22px !important;
   height:36px !important;
-  border-radius:4px !important;
+  border-radius:3px !important;
 }
 .btn.reset-btn {
   border: 1px solid #098DE6 !important;
@@ -68,7 +68,7 @@ button.btn.bluebg-button {
   background-color: transparent;
   padding: 6px 22px !important;
   height:36px !important;
-  border-radius:4px !important;
+  border-radius:3px !important;
 }
 button.btn.bluebg-button.savefoldername {
   margin-top: 15px;
@@ -107,6 +107,16 @@ button.btn.new-cancelbtn:hover {
 }
 
 /* entire application buttons */
+/* Swal buttons */
+.swal2-styled.swal2-cancel {
+  
+  background-color: transparent !important;
+ 
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
+}
+/* Swal buttons */
 .breadcrumb {
   background-color: white !important;
   padding: 4px 22px;

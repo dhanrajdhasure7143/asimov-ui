@@ -927,8 +927,10 @@ getDBTables(){      //get DB tables list
       icon: 'warning',
       showCancelButton: true,
       heightAuto: false,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
