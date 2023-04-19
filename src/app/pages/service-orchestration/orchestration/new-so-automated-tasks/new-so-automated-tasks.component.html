@@ -56,11 +56,11 @@
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
                 <button (click)="addtasks(addTask)" class="tsttooltipbtn" pTooltip="Add Task" tooltipPosition="top">
-      <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
+      <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
       <!-- <span class="testtooltip">Add Task</span> -->
     </button>
                 <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
-      <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
+      <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
       <!-- <span class="testtooltip">Reset</span> -->
     </button>
     <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
@@ -121,30 +121,30 @@
                     <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
-                                    <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="processName" display="menu"></p-columnFilter>
                                      <p-sortIcon field="processName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task
-                                    <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="taskName" display="menu"></p-columnFilter>
                                      <p-sortIcon field="taskName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="ProcessOwner" pReorderableColumn pResizableColumn>Process Owner
-                                    <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="createdBy" display="menu"></p-columnFilter>
                                      <p-sortIcon field="createdBy"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="TaskOwner" pReorderableColumn pResizableColumn>Task Owner</th>
                                 <th pSortableColumn="taskType" pReorderableColumn pResizableColumn>Task Type
-                                    <p-columnFilter type="text" field="taskType" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="taskType" display="menu"></p-columnFilter>
                                      <p-sortIcon field="taskType"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="category" pReorderableColumn pResizableColumn>Category
-                                    <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="category" display="menu"></p-columnFilter>
                                      <p-sortIcon field="category"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="BotSource" pReorderableColumn pResizableColumn>Bot Source</th>
                                 <th pSortableColumn="AssignResource" pReorderableColumn pResizableColumn>Assign Resource</th>
                                 <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
-                                    <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="status" display="menu"></p-columnFilter>
                                      <p-sortIcon field="status"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
