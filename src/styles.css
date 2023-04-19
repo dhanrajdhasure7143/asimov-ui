@@ -2841,7 +2841,8 @@ span.tabscount {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: calc(100vh - 365px); 
+  /* height: calc(100vh - 365px);  */
+  height: auto;
 }
 .acresources .p-datatable .p-datatable-header {
   background-color: transparent !important;
