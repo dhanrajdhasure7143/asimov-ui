@@ -378,6 +378,7 @@ span.PI-frpr-spin {
   height: calc(100vh - 240px);
   display: inline-block;
   overflow: hidden auto;
+  width: 100%;
 }
 .PI-sliderspath {
   position: absolute;
