@@ -1216,10 +1216,10 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
 }
 
   openVariantListNav(){   //variant list open
-    // document.getElementById("mySidenav").style.width = "310px";
-    // document.getElementById("main").style.marginRight = "310px";
-    // this.isvariantListOpen=false;
-    this.hiddenPopUp=true;
+    document.getElementById("mySidenav").style.width = "340px";
+    document.getElementById("main").style.marginRight = "340px";
+    this.isvariantListOpen=false;
+    // this.hiddenPopUp=true;
   }
 
   closeNav() { // Variant list Close
