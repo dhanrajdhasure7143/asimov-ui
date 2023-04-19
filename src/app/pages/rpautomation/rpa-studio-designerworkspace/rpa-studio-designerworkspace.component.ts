@@ -734,7 +734,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   autoSaveLoopEnd(node) {
     if (node.selectedNodeTask == "Loop-End") {
-      this.rest.attribute(node.selectedNodeId).subscribe((res: any) => {
+      let  uuid=this.getTaskUUID(node.selectedNodeId);
+      this.rest.attribute(node.selectedNodeId,uuid).subscribe((res: any) => {
         let data = res;
         let obj = {};
         data.map((ele) => {
@@ -929,7 +930,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (taskdata != undefined) {
         if (taskdata.tMetaId == selectedNodeId) {
           let finalattributes: any = [];
-          this.rest.attribute(node.selectedNodeId).subscribe((data) => {
+          let uuid=this.getTaskUUID(node.selectedNodeId); 
+          this.rest.attribute(node.selectedNodeId, uuid).subscribe((data) => {
             finalattributes = data;
             this.formAttributes.set(Number(selectedNodeId), data);
             //if(finalattributes.length==1 && finalattributes[0].type=="multiform")
@@ -1015,12 +1017,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           });
         } else {
-          this.rest.attribute(node.selectedNodeId).subscribe((data) => {
+          let uuid=this.getTaskUUID(node.selectedNodeId);
+          this.rest.attribute(node.selectedNodeId,uuid).subscribe((data) => {
             this.response(data, node);
           });
         }
       } else {
-        this.rest.attribute(node.selectedNodeId).subscribe((data:any) => {
+        let uuid=this.getTaskUUID(node.selectedNodeId)
+        this.rest.attribute(node.selectedNodeId, uuid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
             Swal.fire("Error","Failed to get configuration form","error");
@@ -1678,7 +1682,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             this.isBotCompiled = flag
             );
         } else {
-          await this.rest.attribute(node["tMetaId"]).subscribe( (response: any) => {
+          let uuid=this.getTaskUUID(node["tMetaId"]);
+          await this.rest.attribute(node["tMetaId"],uuid).subscribe( (response: any) => {
             this.formAttributes.set(node["tMetaId"], response);
             this.validateNode(node["tMetaId"], attributes).then(flag => 
               this.isBotCompiled = flag
@@ -2731,7 +2736,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
     }
     this.selectedNode = nodeData;
-    this.rest.attribute(nodeData.selectedNodeId).subscribe((res: any) => {
+    let uuid=this.getTaskUUID(nodeData.selectedNodeId);
+    this.rest.attribute(nodeData.selectedNodeId, uuid).subscribe((res: any) => {
       this.formVales = res;
       let data = res;
       let obj = {};
@@ -2771,6 +2777,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   closeCredentailOverlay(event)
   {
     this.credentialsFormFlag=false;
+  }
+  
+  getTaskUUID(taskId:any)
+  {
+    for(let toolsetItem of this.toolset)
+    {
+      if(toolsetItem.tasks.find((taskItem:any)=>taskId==taskItem.taskId))
+        return toolsetItem.tasks.find((taskItem:any)=>taskId==taskItem.taskId).action_uid;
+    }
+    return "null";
+  
   }
   // stopBot() {
   //   let data="";
