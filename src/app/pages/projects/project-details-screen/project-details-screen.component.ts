@@ -1495,7 +1495,7 @@ selectEnd() {
 
     // fileData.append("filePath", this.uploaded_file);
     fileData.append("projectId", this.project_id);
-    fileData.append("taskId", this.params_data.task_id);
+    fileData.append("taskId",'');
     fileData.append("ChildId", "1");
     fileData.append("fileUniqueIds", JSON.stringify(fileKeys));
     this.rest_api.uploadfilesByProject(fileData).subscribe(
