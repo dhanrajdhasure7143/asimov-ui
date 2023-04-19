@@ -369,7 +369,6 @@ export class ProjectsListScreenComponent implements OnInit {
 
   tabViewChange(event, tabView: TabView) {
     const headerValue = tabView.tabs[event.index].header;
-    console.log(headerValue);
   }
 
   closeOverlay(event) {

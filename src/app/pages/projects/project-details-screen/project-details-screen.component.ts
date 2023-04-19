@@ -1081,7 +1081,6 @@ this.replay_msg=message;
 }
 
 scrollTomain(message,type){
-  console.log(message)
   type == "replyMessage"? this.selectedItem = message.rmId: this.selectedItem = message.id
 // this.selectedItem = message.rmId
 setTimeout(()=>{
@@ -1335,17 +1334,13 @@ onFilteredUsers(usernames: string[]) {
   this.filteredUsers = this.existingUsersList.filter(user => {
     if(usernames.length>0)
     {
-      console.log(usernames[0])
       let username= user.firstName.toLowerCase()+" "+user.lastName.toLowerCase();
-      console.log(username)
       if(username.toLocaleLowerCase().startsWith(usernames[0].toLocaleLowerCase()))
       {
-        console.log(username)
         return username;
       } 
     }
   });
-  console.log(this.filteredUsers)
   if(this.filteredUsers.length>0){
     this.showUserList = true;
   }else{
@@ -1423,10 +1418,6 @@ selectEnd() {
   selection.addRange(range);
 }
 
-onKeyUpDiv(){
-  console.log(document.getElementById("my-content").innerHTML)
-}
-
   getRecentactivities() {
     this.columns_list_activities = [
       {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
@@ -1462,6 +1453,10 @@ onKeyUpDiv(){
     return replacedText;
   }
 
+  onDialogHide()
+  {
+    this.entered_folder_name='';
+   }
   onUploadDocument(event) {
     this.isFile_upload_dialog = true;
     this.uploaded_file = event.target.files;

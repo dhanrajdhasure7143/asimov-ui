@@ -91,9 +91,9 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   widgetDragStart(widget){
-    // if (widget.widgetAdded == false) {
+    if (widget.widgetAdded == false) {
       this.draggedProduct1 = widget;
-    // }
+    }
   }
 
   drop() {
@@ -108,7 +108,7 @@ export class ConfigureDashboardComponent implements OnInit {
     if (this.draggedProduct1) {
       this.widgetslist.find(item => item.id == this.draggedProduct1.id).widgetAdded = true;
       this.addedWidgets.push(this.draggedProduct1);
-      if (this.widgetslist.find(item => item.widgetAdded == false) != undefined)
+      if (this.defaultEmpty_widgets.find(item => item.widgetAdded == false) != undefined)
         this.defaultEmpty_widgets.find(item => item.widgetAdded == false).widgetAdded = true
     }
   }
@@ -267,7 +267,7 @@ export class ConfigureDashboardComponent implements OnInit {
         return item
       })
 
-
+      this.loader.hide();
       this.addedMetrics.forEach((item: any) => {
         this.metrics_list.find((metric_item: any) => metric_item.id == item.childId).metricAdded = true;
         if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
@@ -278,7 +278,7 @@ export class ConfigureDashboardComponent implements OnInit {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
           item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
+          // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         }
         if(item.childId == 2){
           item.chartOptions.plugins["tooltip"] = {
@@ -298,7 +298,6 @@ export class ConfigureDashboardComponent implements OnInit {
           }
         }
       })
-      this.loader.hide();
     });
   }
 

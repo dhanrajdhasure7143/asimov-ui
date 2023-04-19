@@ -277,11 +277,11 @@
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox>
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key"
+                                                        <input type="text" (keyup)="onKeyEntered()" name="test+i" id="" class="form-control" placeholder="Key"
                                                         [(ngModel)]="each.paramKey" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="" id="" class="form-control" placeholder="Value"
+                                                        <input type="text" name="" id="" (keyup)="onKeyEntered()" class="form-control" placeholder="Value"
                                                         [(ngModel)]="each.paramValue" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td class="headercheckbox">
@@ -314,10 +314,10 @@
                     </form>
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
-                                    (click)="testAction()">Test</button>
-                        <button *ngIf="!isUpdate" type="button" class="btn bluebg-button"
+                                    (click)="testAction()" [disabled]="connectorForm.invalid">Test</button>
+                        <button *ngIf="!isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
                 </div>

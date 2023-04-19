@@ -66,16 +66,24 @@ span.lowimp {
 }
 .projectnamerow .prjname-priority {
     margin-top: 8px;
+    /* display: flex;
+    align-items: center; */
+}
+.prjname-priority span.priorlabels {
+    align-items: flex-start;
     display: flex;
-    align-items: center;
+    margin-top: 8px;
 }
 .pinf p {
     font-weight: 400;
     font-size: 16px !important;
     color: #222;
+    cursor: pointer;
+    display: inline-block;
 }
 .pinf label {
     color: #535353;
+    width: 100%;
 }
 /* .projectnamerow .p-inplace-content, .projectnamerow .editfields {
     width: 80px !important;
@@ -108,7 +116,7 @@ span.lowimp {
     padding: 20px 10px 20px 8px !important;
     border-radius: 0px 0px 6px 6px;
     width: 100%;
-    align-items: center;
+    align-items: top;
     /* height: 100px; */
 }
 .project-description label {
@@ -122,7 +130,12 @@ span.lowimp {
     width: 92%;
     font-size: 16px;
     border-left: 1px solid #d0d0d0;
-    padding-left: 10px;
+    padding-left: 15px;
+}
+.project-description p span {
+    width: 100%;
+    display: inline-block;
+    word-break: break-word;
 }
 .project-description span.readmore {
     color: #098de6;
@@ -392,11 +405,14 @@ button.btn.new-cancelbtn {
     width: 75px;
     background: #fff;
     text-align: center;
-    border-radius: 100%;
+    border-radius: 50%;
     height: 75px;
     margin: 0 auto 20px auto;
-    padding: 16px 0px;
+    /* padding: 16px 0px; */
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .quick-actionscards .qamiddlecard {
     border-left: 1px solid #d0d0d0;
@@ -426,7 +442,8 @@ p.text {
     width: 75%;
 }
 img.qcard-img {
-    width: 100% !important;
+    width: 46px !important;
+    height: auto;
 }
 label.qcard-count {
     font-weight: 500;
@@ -513,6 +530,8 @@ button span {
 
 .fileupsec {
     position: relative;
+    display: flex;
+    justify-content: center;
   }
   input[type="file"] {
     opacity: 0;
@@ -525,7 +544,6 @@ button span {
     position: absolute;
     color: #098de6;
     padding: 3px 5px;
-    left: 0px;
+    /* left: 0px; */
     cursor: pointer;
   }
-    

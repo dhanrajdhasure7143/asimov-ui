@@ -8,18 +8,18 @@
                         <a *ngIf="opened_folders.length >0" (click)="backToSelectedFolder()"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
-                    <span class="title_text">
+                    <span class="title_text_haspath">
                        <span routerLink="/pages/projects/listOfProjects">Projects</span> | {{project_name}} | <strong> Document </strong>
                     </span>
                 </h3>
             </div>
-            <div class="col-md-8 pr-0 text-right">
+            <div class="col-md-8 pr-0 text-right head-ritfilter">
                 <span class="p-input-icon-right">
-                    <i class="pi pi-search"></i>
+                    <i class="pi pi-search" [ngClass]="{'treeviewsearchicon': !isFolder}"></i>
                     <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
-                    <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search">
+                    <!-- <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search"> -->
                 </span>
-                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="bottom">
+                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="bottom" [ngClass]="{'treeviewfilter': !isFolder}">
                     <i (click)="op1.toggle($event)" class="pi pi-filter icon-color"></i>
                 </span>
             </div>
@@ -31,7 +31,9 @@
                         <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
                     </div>
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-            <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" (contextmenu)="onRightClick($event,item)">  
+            <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  
+            (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" 
+            (contextmenu)="onRightClick($event,item)" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 
                 <span *ngIf="item.label == 'Add Folder' || item.label == 'Add Folder / Document'">
                     <img src="./../../../../assets/images-n/projects/AddFolder.svg" alt="Create">
@@ -188,7 +190,7 @@
         </app-split-overlay>
     </div>
 
-    <p-dialog header="Folder Name" [(visible)]="isDialogBox" class="docfldnam">
+    <p-dialog header="Folder Name" [(visible)]="isDialogBox" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
             <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
@@ -196,7 +198,7 @@
         </span>
     </p-dialog>
 
-    <p-dialog header="Folder Name" [(visible)]="isDialog" class="docfldnam">
+    <p-dialog header="Folder Name" [(visible)]="isDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
@@ -205,7 +207,7 @@
     </p-dialog>
 
     <!-- add sub folder in folder structure -->
-    <p-dialog header="Folder Name" [(visible)]="isDialog1" class="docfldnam">
+    <p-dialog header="Folder Name" [(visible)]="isDialog1" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>

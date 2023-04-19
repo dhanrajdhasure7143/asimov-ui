@@ -45,7 +45,7 @@
 
 .main{
   width:100%;
-  /* overflow: auto; */
+  overflow: auto;
   height: calc(100vh - 194px);
   padding:10px;
 }

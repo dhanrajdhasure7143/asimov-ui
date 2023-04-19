@@ -2680,7 +2680,7 @@ cursor: pointer;
 .main-content-body.tablist-cont {
   overflow: hidden;
 }
-span.sub_title_text {
+span.sub_title_text, .p-datatable .p-datatable-thead > tr > th > span {
   font-weight: 600;
 }
 label#popup_title {
@@ -2812,9 +2812,17 @@ span.tabscount {
 .generatedgrid .p-datatable-wrapper {
   height: calc(100vh - 150px); /* for generated screen grid */
 }
-.maindivfoprm .columnlistgrid .p-datatable-wrapper,
-.well1-dynmic.graph .p-datatable-wrapper {
+.maindivfoprm .columnlistgrid .p-datatable-wrapper {
   height: 100% !important; /* for add-screen form & widget grid */
+}
+.well1-dynmic.graph .p-datatable-wrapper {
+  height: calc(100vh - 380px) !important;
+}
+ /* Media queries */
+ @media screen and (min-width: 1600px) {
+  .well1-dynmic.graph .p-datatable-wrapper {
+    height: calc(100vh - 530px) !important;
+  }
 }
 .bps-approvalgrid .p-datatable-wrapper {
   height: calc(100vh - 195px); /* for bps-approval grid */
@@ -3045,6 +3053,7 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 }
 .p-inplace .p-inplace-display {
   display: contents !important;
+  cursor: unset !important;
 }
 /* .projectnamerow .p-inplace-content {
   position: absolute;
@@ -3141,6 +3150,10 @@ textarea.p-inputtextarea {
 .p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
   border: 1px solid #d0d0d0;
 }
+.p-editor-content.ql-container.ql-snow p {
+  font-size: 14px;
+  color: #232832;
+}
 
 .taskdescription span.task-descwords {
   display: block;
@@ -3194,7 +3207,9 @@ textarea.p-inputtextarea {
 .p-inplace.p-component span.task-descwords {
   overflow-wrap: break-word;
 }
-  
+.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(3) {
+  white-space: inherit !important;
+}
 /* headercss end*/
 /* primeNg components Styles End */
 
@@ -3391,11 +3406,11 @@ button.btn.new-cancelbtn {
 .doctree .p-tree-filter-container {
   position: fixed;
   top: 75px;
-  right: 35px;
-  width: auto;
+  right: 75px;
+  width: 196px;
 }
 .doctree .p-tree-filter-container .p-tree-filter {
-  padding-left: 18px !important;
+  /* padding-left: 18px !important; */
     padding-right: 17px !important;
 }
 /* Tree Styles End */
@@ -3413,7 +3428,7 @@ button.btn.new-cancelbtn {
 .docfolder .p-card:hover {
   border: 1px solid var(--secondary-bluecolor);
 }
-.docfolder1 .cards:first-child .p-card {
+.docfolder1 .addpcard .p-card {
   background: #e9e9e9;
   border: unset;
 }
@@ -3570,7 +3585,11 @@ button.btn.new-cancelbtn {
   margin: 0px auto !important;
 }
 #toolbar-container .ck.ck-toolbar {
-  background: #eee !important;
+  background: #f8f9fa !important;
+  border: 1px solid #dee2e6 !important;
+  border-bottom: unset !important;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 .non-editablefield{cursor: not-allowed;}
 .editor-container.editor-body .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {

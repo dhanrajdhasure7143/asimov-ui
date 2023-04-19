@@ -38,7 +38,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_download_btn") public show_download_btn:boolean;
   @Output() downloadItem = new EventEmitter<any[]>();
   @Output() openUpdateOverlay = new EventEmitter<any[]>();
-  public loggedUserRole: string;
+  public loggedUserRole: any[]=[];
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -64,7 +64,7 @@ export class DynamicTableComponent implements OnInit {
     if(usersDatausers_list.length>0){
     // this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
     this.users_list = usersDatausers_list;
-    this.loggedUserRole = localStorage.getItem("userRole");
+    this.loggedUserRole = [localStorage.getItem("userRole")];
     }
   })
   }
@@ -123,7 +123,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   filter1(e){
-    console.log(e)
   }
 
   downloadRow(row) {

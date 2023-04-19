@@ -116,12 +116,15 @@
                               <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true">
                                  <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                       <th>Name
-                                           <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                       <th pSortableColumn="name">Name
+                                           <!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
                                            <p-sortIcon field="name"></p-sortIcon>
                                        </th>
-                                       <th>Next Run
-                                           <p-columnFilter type="date" field="value" display="menu"></p-columnFilter>
+                                       <th pSortableColumn="value">
+                                          <span *ngIf="widget.name == 'Upcoming Executions'">Next Run</span>
+                                          <span *ngIf="widget.name != 'Upcoming Executions'">Users</span>
+                                          
+                                           <!-- <p-columnFilter type="date" field="value" display="menu"></p-columnFilter> -->
                                            <p-sortIcon field="value"></p-sortIcon>
                                        </th>
                                     </tr>
@@ -251,7 +254,7 @@
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
 <p-dialog header=" Create Dashboard" class="createdashboardname" 
-   [(visible)]="isDialogShow"
+   [(visible)]="isDialogShow" [modal]="true" [baseZIndex]="10000"
    [style]="{width: '30vw'}"
    [draggable]="false" [resizable]="false">
    <div class="form-group">
