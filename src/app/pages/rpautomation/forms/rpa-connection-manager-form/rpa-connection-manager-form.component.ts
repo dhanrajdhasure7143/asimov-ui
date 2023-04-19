@@ -476,13 +476,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isScopeField = true;
       this.isRefreshToken = true;
       this.isRefresh = true;
-      const setValidators: string[] = ['refreshToken'];
-      Object.keys(this.connectorForm.controls).forEach(key => {
-        if (setValidators.findIndex(q => q === key) != -1) {
-            this.connectorForm.get(key).setValidators([Validators.required]);
-            this.connectorForm.get(key).updateValueAndValidity();
-        }
-      });
+      this.connectorForm.get('refreshToken').setValidators([Validators.required]);
+      this.connectorForm.get('refreshToken').updateValueAndValidity();
     }
   }
 
@@ -650,13 +645,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = true;
         this.isRefreshToken = true;
-        const setValidators: string[] = ['refreshToken'];
-        Object.keys(this.connectorForm.controls).forEach(key => {
-          if (setValidators.findIndex(q => q === key) != -1) {
-              this.connectorForm.get(key).setValidators([Validators.required]);
-              this.connectorForm.get(key).updateValueAndValidity();
-          }
-        });
+        this.connectorForm.get('refreshToken').setValidators([Validators.required]);
+        this.connectorForm.get('refreshToken').updateValueAndValidity();
       }
 
       if(this.actionData.configurationAsJson["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){

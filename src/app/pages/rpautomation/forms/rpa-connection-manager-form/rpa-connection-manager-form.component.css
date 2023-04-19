@@ -41,7 +41,7 @@ button.btn.new-cancelbtn:disabled {
     text-align: center;
 }
 
-.custom::before{
+/* .custom::before{
     content: 'Replace?    ';
     display: inline-block;
-}
+} */

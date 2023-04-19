@@ -68,13 +68,14 @@
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0">
-                                    <label class="label-control" for="programname"> Action Logo</label>
+                                    <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
+                                    <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo?</label>
                                     <div class="row">
-                                        <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
                                         <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
                                             formControlName="">
-                                        <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'90%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
-                                            formControlName="">
+                                        <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'89%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                            formControlName=""> &nbsp;
+                                        <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
                                     </div>
                             </div>
                             <div class="col-md-12 form-group p-0">
