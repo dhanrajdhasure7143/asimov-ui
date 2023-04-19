@@ -87,7 +87,7 @@
         </div>
       </mat-tab> -->
 
-              <mat-tab label="Bots">
+              <!-- <mat-tab label="Bots">
                   <ng-template mat-tab-label>
                       <mat-icon>android</mat-icon>
                       <span class="titlelabel">Bots</span>
@@ -95,7 +95,8 @@
                   <div class="h-100" *ngIf="check_tab==0">
                       <app-new-so-bots></app-new-so-bots>
                   </div>
-              </mat-tab>
+              </mat-tab> -->
+              
              <!-- <mat-tab label="Bot Management">
 
                   <ng-template mat-tab-label>
@@ -112,7 +113,7 @@
                   <ng-template mat-tab-label>
                       <i class="material-icons">inbox</i><span class="titlelabel">Incident Management</span>
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==1">
+                  <div class="h-100" *ngIf="check_tab==0">
                       <app-so-incident-management></app-so-incident-management>
                       <!-- <app-new-so-management></app-new-so-management> -->
                   </div>
@@ -123,7 +124,7 @@
                       <mat-icon>control_camera</mat-icon>
                       <span class="titlelabel">Orchestration</span>
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==2">
+                  <div class="h-100" *ngIf="check_tab==1">
                       <app-new-so-automated-tasks></app-new-so-automated-tasks>
                   </div>
               </mat-tab>
@@ -133,7 +134,7 @@
                       <mat-icon>android</mat-icon>
                       <span class="titlelabel">Bot Management</span>
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==3">
+                  <div class="h-100" *ngIf="check_tab==2">
                       <app-new-so-bot-management></app-new-so-bot-management>
                   </div>
               </mat-tab>
@@ -153,7 +154,7 @@
             <button mat-menu-item (click)="option(1);selectedTab=6;check_Tab=6">Metrics</button>
           </mat-menu> -->
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==4">
+                  <div class="h-100" *ngIf="check_tab==3">
                       <app-so-monitoring></app-so-monitoring>
                   </div>
                   <!-- <div *ngIf="options==0">
@@ -203,7 +204,7 @@
                       <mat-icon>inbox</mat-icon>
                       <span class="titlelabel">Inbox</span>
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==5">
+                  <div class="h-100" *ngIf="check_tab==4">
                       <app-so-inbox></app-so-inbox>
                   </div>
               </mat-tab>
@@ -215,7 +216,7 @@
                       <mat-icon>event_note</mat-icon>
                       <span class="titlelabel">Scheduled Info</span>
                   </ng-template>
-                  <div class="h-100" *ngIf="check_tab==6">
+                  <div class="h-100" *ngIf="check_tab==5">
                       <app-scheduled-bots></app-scheduled-bots>
                   </div>
               </mat-tab>

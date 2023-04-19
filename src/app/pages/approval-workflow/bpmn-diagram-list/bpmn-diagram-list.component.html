@@ -16,10 +16,10 @@
       <div class="table-header">
         <!-- <h4 class="box-heading">Approved List</h4> -->
         <div class="p-d-flex">
-          <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
+          <!-- <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
               selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
                   placeholder="Choose Columns">
-          </p-multiSelect>
+          </p-multiSelect> -->
           <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
           <span class="p-input-icon-right float-right">
               <i class="pi pi-search"></i>
@@ -35,7 +35,7 @@
         <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
             {{col.header}}
             <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter> -->
-            <p-columnFilter *ngIf="col.filterWidget == 'normal'"
+            <p-columnFilter *ngIf="col.filterWidget == 'normal'" [showOperator]="false" [showMatchModes]="false"
             [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
             display="menu"></p-columnFilter>
         <p-columnFilter *ngIf="col.filterWidget == 'dropdown'"
