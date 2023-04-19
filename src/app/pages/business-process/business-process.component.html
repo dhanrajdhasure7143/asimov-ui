@@ -146,8 +146,8 @@
                   </button>
               <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING' || (isUploaded && rejectedOrApproved !='PENDING')" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
-                  <button class="btn bluebg-button" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
-                  <button class="btn bluebg-button" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload Again</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload</button>  
                 </ngx-dropzone-label>
               </ngx-dropzone>
             </div>  

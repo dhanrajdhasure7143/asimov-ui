@@ -129,8 +129,11 @@ export class RpaHomeComponent implements OnInit {
           position: 'center',
           icon: 'error',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           heightAuto: false,
           confirmButtonText: 'Ok'
         })
@@ -244,8 +247,11 @@ export class RpaHomeComponent implements OnInit {
           position: 'center',
           icon: 'error',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           heightAuto: false,
           confirmButtonText: 'Ok'
         })

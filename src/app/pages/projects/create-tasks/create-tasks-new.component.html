@@ -197,4 +197,9 @@
 
 <!-- <p-confirmPopup></p-confirmPopup> -->
 
-<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000" rejectButtonStyleClass="btn bluebg-button">
+  <ng-template pTemplate="footer">
+    <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+    <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+</ng-template>
+</p-confirmDialog>

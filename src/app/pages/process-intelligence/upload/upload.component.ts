@@ -156,8 +156,11 @@ export class UploadComponent implements OnInit {
           position: 'center',
           icon: 'error',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           heightAuto: false,
           confirmButtonText: 'Ok'
         })
@@ -318,8 +321,11 @@ export class UploadComponent implements OnInit {
            position: 'center',
            icon: 'error',
            showCancelButton: false,
-           confirmButtonColor: '#007bff',
-           cancelButtonColor: '#d33',
+           customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
            heightAuto: false,
            confirmButtonText: 'Ok'
        })
@@ -876,8 +882,11 @@ getDBTables(){      //get DB tables list
           icon: 'success',
           showCancelButton: false,
           heightAuto: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           confirmButtonText: 'Ok'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -933,8 +942,11 @@ getDBTables(){      //get DB tables list
             icon: 'success',
             showCancelButton: false,
             heightAuto: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+    
             confirmButtonText: 'Ok'
           })
           this.loader.hide();

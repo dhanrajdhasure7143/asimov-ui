@@ -358,8 +358,11 @@ export class ViewTicketComponent implements OnInit {
             icon: 'success',
             showCancelButton: false,
             heightAuto: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+    
             confirmButtonText: 'Ok'
           })
           this.isLoading = false;

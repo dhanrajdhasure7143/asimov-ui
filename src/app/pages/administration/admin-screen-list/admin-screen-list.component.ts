@@ -73,8 +73,10 @@ export class AdminScreenListComponent implements OnInit {
             position: "center",
             icon: "success",
             showCancelButton: false,
-            confirmButtonColor: "#007bff",
-            cancelButtonColor: "#d33",
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
             heightAuto: false,
             confirmButtonText: "Ok",
           }).then(()=>{

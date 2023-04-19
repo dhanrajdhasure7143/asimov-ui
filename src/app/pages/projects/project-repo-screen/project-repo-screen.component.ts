@@ -150,8 +150,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
             position: 'center',
             icon: 'success',
             showCancelButton: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+    
             confirmButtonText: 'Ok'
           }) 
           this.getFileDetails();
@@ -194,8 +197,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
           position: 'center',
           icon: 'success',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           confirmButtonText: 'Ok'
       }).then((result) => {
        // this.resettask();
@@ -247,7 +253,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
        position: 'center',
        icon: 'success',
        showCancelButton: false,
-       confirmButtonColor: '#007bff',
+       customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+
        confirmButtonText: 'Ok',
        heightAuto: false
    }).then((result) => {
@@ -352,6 +362,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
           text: "File Uploaded Successfully",
           position: 'center',
           icon: 'success',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           confirmButtonText: 'Ok',
           heightAuto: false,
         }).then((result) => {
@@ -522,8 +537,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
               position: 'center',
               icon: 'success',
               showCancelButton: false,
-              confirmButtonColor: '#007bff',
-              cancelButtonColor: '#d33',
+              customClass: {
+                confirmButton: 'btn bluebg-button',
+                cancelButton:  'btn new-cancelbtn',
+              },
+      
               confirmButtonText: 'Ok'
             }) 
             this.getFileDetails();

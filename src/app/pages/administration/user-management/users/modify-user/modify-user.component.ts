@@ -114,9 +114,12 @@ export class ModifyUserComponent implements OnInit {
           position: "center",
           icon: "success",
           showCancelButton: false,
-          confirmButtonColor: "#007bff",
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
           heightAuto: false,
-          cancelButtonColor: "#d33",
+         
           confirmButtonText: "Ok",
         }).then((result) => {
           // this.router.navigate(["/pages/admin/user-management"]);

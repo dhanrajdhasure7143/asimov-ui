@@ -125,14 +125,18 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         let status: any= response;
         //this.createtaskmodalref.hide();
+       
         Swal.fire({
           title: 'Success',
           text: "Task Created Successfully !!",
           position: 'center',
           icon: 'success',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+         
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
