@@ -9,6 +9,7 @@ import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TitleCasePipe } from '@angular/common';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({
@@ -73,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
     private rest_api: RestApiService,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     private jwtHelper: JwtHelperService,private route: ActivatedRoute,
     @Inject(APP_CONFIG) private config,
     private titlecasePipe:TitleCasePipe) {
@@ -366,6 +367,7 @@ onChangeTenant(event:any){
   await localStorage.setItem("tenantName",value.tenant_id);
   await localStorage.setItem("tenantSwitchName", value.tenant_name);
   await localStorage.removeItem("role");
+  this.spinner.show();
   setTimeout(()=>{
     if(value.role =='Admin'){
       localStorage.setItem("role",value.role)
@@ -379,6 +381,7 @@ onChangeTenant(event:any){
       window.location.reload();
     }
   }, 1000)  
+  this.spinner.hide();
   });
 }
 }

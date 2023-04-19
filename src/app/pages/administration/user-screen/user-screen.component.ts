@@ -123,8 +123,10 @@ export class UserScreenComponent implements OnInit {
                   position: "center",
                   icon: "success",
                   heightAuto: false,
-                })
+                }).then(()=>{
                   this.getUserScreenData(); 
+                  window.location.reload();
+                })
               }
             },
             (err: any) => {
@@ -156,8 +158,10 @@ export class UserScreenComponent implements OnInit {
             cancelButtonColor: "#d33",
             heightAuto: false,
             confirmButtonText: "Ok",
+          }).then(()=>{
+            this.getUserScreenData(); 
+            window.location.reload();
           })
-          this.getUserScreenData();
           this.displayFlag = DisplayEnum.DISPLAYTABLE;
         });
     } else {
