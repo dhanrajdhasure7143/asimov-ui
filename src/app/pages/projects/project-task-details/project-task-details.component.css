@@ -69,8 +69,13 @@ span.lowimp {
 }
 .projectnamerow .taskname-priority {
   margin-top: 8px;
+  /* display: flex;
+  align-items: center; */
+}
+.taskname-priority span.priorlabels {
+  align-items: flex-start;
   display: flex;
-  align-items: center;
+  margin-top: 8px;
 }
 .pinf p {
   margin-bottom: 0px;
@@ -78,9 +83,12 @@ span.lowimp {
   font-size: 16px !important;
   color: #222;
   height: 28px;
+  cursor: pointer;
+  display: inline-block;
 }
 .pinf label {
   color: #535353;
+  width: 100%;
 }
 .kpipercent {
   border-left: 1px solid #e0e0e0;
@@ -222,7 +230,7 @@ input[type="file"] {
 }
 .fileupsec img {
   position: absolute;
-  right: 0px;
+  right: -10px;
   top: 5px;
 }
 .emptycomments img {

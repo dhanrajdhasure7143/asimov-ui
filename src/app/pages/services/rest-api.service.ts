@@ -153,8 +153,13 @@ export class RestApiService{
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }
-  attribute(data:any){
-  return this.http.get('/rpa-service/get-attributes/'+data)
+  attribute(data:any,uuid:any){
+    if(uuid=="null" || uuid==""){
+      return this.http.get('/rpa-service/get-attributes/'+data);
+    }
+    else{
+      return this.http.get('/rpa-service/get-attributes/'+data+"?uuid="+uuid)
+    }
   }
 
   getAllAttributes(){
@@ -1534,7 +1539,7 @@ getTenantnameslist() {
   }
 
   updateFormDetails(tablename: any, fieldname: any, rowId: any, data: any) {
-    return this.http.put(`/platform-service/screenGenerator/update_table_row/${tablename}/${fieldname}/${rowId}`, data, { responseType: 'text' });
+    return this.http.put(`/platform-service/screenGenerator/update_table_row/${tablename}/${fieldname}/${rowId}`, data);
   }
 
   updateScreenData(data: any, id: any) {
@@ -1775,6 +1780,14 @@ checkTenantName(tenantName,master_tenant)
   let data="";
   return this.http.post("/platform-service/screenGenerator/check-tenant/"+master_tenant+"?tenant_name="+tenantName,data)
   
+}
+
+getIcon(id){
+  return this.http.get(`/rpa-service/action/icon/${id}`)
+}
+
+getIconForConnector(id){
+  return this.http.get(`/rpa-service/connection/icon/${id}`)
 }
 checkScreenName(Screen_Name)
 {

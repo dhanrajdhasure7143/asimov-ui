@@ -1,35 +1,19 @@
 <div [id]="dragareaid">
   <div class="main">
-    <div
-      class="drag-area"
-      dndDropzone
-      (dndDrop)="onDrop($event, $event)"
-      (click)="closemenu()"
-      [ngClass]="{
+    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
         workspace: disable,
         dndDropzoneDisabled: false,
         lightTheme: lightTheme
-      }"
-    >
+      }">
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div
-          id="{{ node.id }}"
-          class="dndDropzone"
-          (mouseover)="openoutputmenu(node)"
-          (dblclick)="getTaskForm(node)"
-          (contextmenu)="onRightClick(node, $event, i); ($event.prevent)"
-          [ngStyle]="{
+        <div id="{{ node.id }}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+          (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
             left: node.x,
             top: node.y,
             'background-image': 'url(' + node.path + ')'
-          }"
-        >
-          <span
-            *ngIf="node.name != 'START' && node.name != 'STOP'"
-            class="node-delete"
-            (click)="deletenode(node)"
-            ><img src="../../../../assets/images/RPA/close-circle-fill.svg"
-          /></span>
+          }">
+          <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)"><img
+              src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /></span>
           <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
             {{ node.name }}
           </div>
@@ -46,24 +30,16 @@
                         </div>
                     </nav>
                 </div> -->
-          <div
-            [id]="'output_' + node.id"
-            *ngIf="
+          <div [id]="'output_' + node.id" *ngIf="
               finalbot.botId != undefined &&
               node.selectedNodeTask == 'Output Box' &&
               (node | Checkoutputbox: finalbot)
-            "
-            style="display: none"
-            class="node_tooltip"
-          >
+            " style="display: none" class="node_tooltip">
             <nav id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item">
-                  <a
-                    class="context-menu__link"
-                    (click)="outputbox(node, outputboxModalRef)"
-                    data-action="View"
-                    >Open Output Box
+                  <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open
+                    Output Box
                   </a>
                 </div>
               </div>
@@ -73,68 +49,40 @@
       </ng-container>
       <!--Added Grouping Task in RPA Designer-->
       <ng-container *ngFor="let group of groupsData; let i = index">
-        <div
-          [id]="group.id"
-          mwlResizable
-          [enableGhostResize]="true"
-          (resizeEnd)="onResizeEnd($event, group.id)"
-          [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
-          [ngStyle]="{
+        <div [id]="group.id" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, group.id)"
+          [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
             left: group.x,
             top: group.y,
             height: group.height,
             width: group.width,
             'border-color': group.color
-          }"
-          class="groupElement"
-        >
+          }" class="groupElement">
           <div class="groupHeader">
             <span class="groupTitle" *ngIf="group.edit == false">{{
               group.groupName
-            }}</span>
-            <span
-              class="groupTitle clickable"
-              (click)="removeGroup(group.id)"
-              *ngIf="group.edit == false"
-            >
+              }}</span>
+            <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
               <i class="ri-delete-bin-line text-danger"></i>
             </span>
-            <span
-              class="groupTitle clickable"
-              (click)="group.edit = true"
-              *ngIf="group.edit == false"
-            >
+            <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
               <i class="ri-pencil-line text-primary"></i>
             </span>
             <span class="groupTitle clickable" *ngIf="group.edit == true">
-              <input
-                type="text"
-                (keyup)="group.groupName = $event.target.value"
-                [value]="group.groupName"
-              />
+              <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
             </span>
             <span class="groupTitle clickable" *ngIf="group.edit == true">
               &nbsp;
-              <input
-                type="color"
-                (change)="group.color = $event.target.value"
-                [value]="group.color"
-                class="custom-color-picker"
-              />
+              <input type="color" (change)="group.color = $event.target.value" [value]="group.color"
+                class="custom-color-picker" />
               &nbsp;
             </span>
-            <span
-              class="text-suuccess groupTitle clickable"
-              *ngIf="group.edit == true"
-              (click)="group.edit = false"
-              ><i class="ri-check-line"></i
-            ></span>
+            <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
+                class="ri-check-line"></i></span>
           </div>
         </div>
       </ng-container>
       <div *ngIf="nodes.length == 0" class="dragactionsdiv">
-        <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> -->
-        <img src="../../../../assets/images/RPA/dragarea.png" />
+        <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
         <span>Drag an action here...</span>
       </div>
     </div>
@@ -144,45 +92,26 @@
 <ng-template #checkBotTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Check Bot Details</h4>
-    <button
-      type="button"
-      class="btn-close close pull-right"
-      aria-label="Close"
-      (click)="modalRef?.hide()"
-    >
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="botDetailsForm">
       <label>Bot Name</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Enter Bot Name"
-        (input)="validateBotName()"
-        formControlName="botName"
-      />
-      <div
-        *ngIf="
+      <input type="text" class="form-control" placeholder="Enter Bot Name" (input)="validateBotName()"
+        formControlName="botName" />
+      <div *ngIf="
           botDetailsForm.get('botName').hasError('required') &&
           botDetailsForm.get('botName').touched &&
           !botDetailsForm.controls['botName'].hasError('maxlength')
-        "
-        class="required"
-      >
+        " class="required">
         Bot Name Required*
       </div>
-      <div
-        *ngIf="botNameCheck && botDetailsForm.get('botName').value"
-        class="required"
-      >
+      <div *ngIf="botNameCheck && botDetailsForm.get('botName').value" class="required">
         Bot Name is already exists*
       </div>
-      <div
-        *ngIf="botDetailsForm.get('botName').hasError('pattern')"
-        class="required"
-      >
+      <div *ngIf="botDetailsForm.get('botName').hasError('pattern')" class="required">
         Spaces and special characters are not allowed Excluding( _ & - )
       </div>
       <br />
@@ -191,7 +120,8 @@
       <br />
       <label><input type="checkbox" formControlName="isPredefined" /> Is Predefined</label>
       <div class="text-right">
-        <button (click)="saveBotDetailsAndUpdate(null,null,null)" [disabled]="botDetailsForm.invalid" class="btn bluebg-button eiap-btn">
+        <button (click)="saveBotDetailsAndUpdate(null,null,null)" [disabled]="botDetailsForm.invalid"
+          class="btn bluebg-button eiap-btn">
           Continue
         </button>
       </div>
@@ -201,16 +131,16 @@
 
 <div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block">
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
-      <div class="h-100">
-        <div class="create-header">
-          <h3>{{ formHeader }}</h3>
-        </div>
-        <div class="h-100" *ngIf="form_change">
-          <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
+    <div class="h-100">
+      <div class="create-header">
+        <h3>{{ formHeader }}</h3>
+      </div>
+      <div class="h-100" *ngIf="form_change">
+        <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
           [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"
           (onSubmit)="onFormSubmit($event, true)"></app-dynamic-forms>
-        </div>
       </div>
+    </div>
   </app-split-overlay>
 </div>
 
@@ -218,32 +148,17 @@
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
-    <div
-      ngb-modal-draggable
-      [ngbModalDraggableHandle]="draggableHandle"
-      class="cursor-all-scroll"
-    >
+    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
       <div #draggableHandle class="modal-header modelprhead">
-        <!-- <div  class="modal-header modelprhead">             -->
         <h4 class="modal-title pull-left">
-          <span
-            *ngIf="outputboxresult != undefined"
-            class="module-back-button"
-            (click)="outputlayoutback()"
-          >
+          <span *ngIf="outputboxresult != undefined" class="module-back-button" (click)="outputlayoutback()">
             <i class="fas fa-arrow-left" aria-hidden="true"></i>
           </span>
           Output Box
         </h4>
-        <button
-          (click)="closeoutputbox(); modalRef.hide()"
-          class="close pull-right"
-        >
+        <button (click)="closeoutputbox(); modalRef.hide()" class="close pull-right">
           <span>
-            <img
-              src="../../../../assets/images/Projects/circle-close.svg"
-              alt=""
-            />
+            <img src="../../../../assets/images/Projects/circle-close.svg" alt="" />
           </span>
         </button>
       </div>
@@ -259,20 +174,13 @@
           </select>
         </div>
         <div class="col-md-12">
-          <button
-            class="btn bluebg-button eiap-btn"
-            style="float: right"
-            (click)="getoutput()"
-          >
+          <button class="btn bluebg-button eiap-btn" (click)="getoutput()">
             Submit
           </button>
         </div>
       </div>
 
-      <div
-        class="row"
-        *ngIf="SelectedOutputType == 'Table' && outputboxresult != undefined"
-      >
+      <div class="row" *ngIf="SelectedOutputType == 'Table' && outputboxresult != undefined">
         <!-- <div class="col-md-12">
                     <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
@@ -299,42 +207,22 @@
         </div>
       </div>
 
-      <div
-        class="row"
-        *ngIf="SelectedOutputType == 'Text' && outputboxresult != undefined"
-      >
+      <div class="row" *ngIf="SelectedOutputType == 'Text' && outputboxresult != undefined">
         <!-- <div class="col-md-12">
                     <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()">
                         <i class="fa fa-arrow-left"></i>&nbsp;back
                     </button>
                 </div> -->
         <div class="col-md-12 form-group">
-          <textarea
-            [id]="'text_' + outputboxid"
-            disabled
-            class="form-control"
-            rows="6"
-            style="resize: none"
-          ></textarea>
+          <textarea [id]="'text_' + outputboxid" disabled class="form-control" rows="6" style="resize: none"></textarea>
         </div>
       </div>
 
-      <div
-        class="row"
-        *ngIf="SelectedOutputType == 'Image' && outputboxresult != undefined"
-      >
+      <div class="row" *ngIf="SelectedOutputType == 'Image' && outputboxresult != undefined">
         <div class="col-md-12">
-          <a
-            [href]="Image"
-            download
-            data-placement="bottom"
-            tooltip="Download"
-            style="float: right; margin-bottom: 5px"
-          >
-            <img
-              src="../../../../assets/images/Projects/Download.svg"
-              class="testplus"
-            />
+          <a [href]="Image" download data-placement="bottom" tooltip="Download"
+            style="float: right; margin-bottom: 5px">
+            <img src="../../../../assets/images/Projects/Download.svg" class="testplus" alt="" />
           </a>
           <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
                          <i class="fa fa-arrow-left" aria-hidden="true"></i> back
@@ -342,7 +230,7 @@
         </div>
 
         <div class="col-md-12 text-center">
-          <img [src]="Image" style="filter: none; height: 400px" />
+          <img [src]="Image" style="filter: none; height: 400px" alt="" />
         </div>
       </div>
     </div>
@@ -352,37 +240,24 @@
 <div id="recordandplay" class="rpa-modal">
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
-      <span class="rpa-modal-close" (click)="close_record_play()"
-        ><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""
-      /></span>
+      <span class="rpa-modal-close" (click)="close_record_play()"><img
+          src="../../../../assets/images/RPA/icon_latest/close.svg" alt="" /></span>
       <h4>Web Automation - Record and Play</h4>
     </div>
     <div class="modal-body">
-      <div
-        class="container m-contanier form-body"
-        *ngIf="recordedcode == undefined"
-      >
+      <div class="container m-contanier form-body" *ngIf="recordedcode == undefined">
         <div class="col-md-12 p-0 form-group">
           <label class="label-control">Url</label>
           <input type="url" [(ngModel)]="rp_url" class="form-control" />
         </div>
         <div class="col-md-12 p-0 form-group">
           <label class="label-control"></label>
-          <textarea
-            id="record_n_play"
-            name="codeSnippet"
-            [(ngModel)]="finalcode"
-            class="form-control"
-            rows="3"
-          ></textarea>
+          <textarea id="record_n_play" name="codeSnippet" [(ngModel)]="finalcode" class="form-control"
+            rows="3"></textarea>
         </div>
       </div>
       <div class="form-footer" style="right: 0px">
-        <button
-          class="btn btn-default"
-          [disabled]="rp_url == ''"
-          (click)="recording('start')"
-        >
+        <button class="btn btn-default" [disabled]="rp_url == ''" (click)="recording('start')">
           Start Recording
         </button>
         <button class="btn bluebg-button" (click)="recording('stop')">
@@ -423,7 +298,7 @@
         <h3>Scheduler</h3>
       </div>
       <div class="h-100">
-        <app-rpa-scheduler [data]="schedulerComponentInput"  (closeOverlay)="closeOverlay($event)"></app-rpa-scheduler>
+        <app-rpa-scheduler [data]="schedulerComponentInput" (closeOverlay)="closeOverlay($event)"></app-rpa-scheduler>
       </div>
     </div>
 
@@ -432,18 +307,9 @@
 
 
 <ng-template #logspopup>
-  <div
-    ngb-modal-draggable
-    [ngbModalDraggableHandle]="draggableHandle"
-    class="cursor-all-scroll"
-  >
-    <app-rpa-so-logs
-      (close)="closeLogsOverlay()"
-      [logsbotid]="finalbot.botId"
-      [logsmodalref]="logsOverlayRef"
-      [AllVersionsList]="VersionsList"
-      [selectedversion]="finalbot.version"
-    ></app-rpa-so-logs>
+  <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
+      [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version"></app-rpa-so-logs>
   </div>
 </ng-template>
 
@@ -453,6 +319,7 @@
 
 <div *ngIf="credentialsFormFlag">
   <app-split-overlay (closeOverlay)="closeCredentailOverlay($event)">
-    <app-rpa-credential-form [isCreateForm]="isCreateForm" [credupdatedata]="credupdatedata" (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>
+    <app-rpa-credential-form [isCreateForm]="isCreateForm" [credupdatedata]="credupdatedata"
+      (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>
   </app-split-overlay>
-  </div>
+</div>

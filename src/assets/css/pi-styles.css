@@ -928,10 +928,11 @@ img.hover-img {
 
 
 .tracking_detsils1{
-  border-left:1px solid #e5e5e5;
+  /* border-left:1px solid #e5e5e5; */
   border-radius: 0px;
   padding-right: 0px;
   background-color: #F3F3F3;
+  height: 100%;
 }
 .select_drpdwnone {
   margin-top: 15px;
@@ -945,9 +946,9 @@ img.hover-img {
 }
 .variants_slider h3 {
   margin: 0px !important;
-  font-size: 18px !important;
-  font-weight: 600;
-  color: #001c47;
+  font-size: 16px !important;
+  font-weight: 500;
+  color: #232832;
   width: 80%;
 }
 .variants-header .closebtn {
@@ -965,7 +966,7 @@ img.hover-img {
 }
 .event2 {
   margin-left: auto !important;
-  width: 26%;
+  width: 21%;
 }
 .variant_border {
   border-top: 1px solid #e0e0e0;
@@ -981,13 +982,13 @@ img.hover-img {
   color: #098de6;
 }
 .event3 {
-  width: 30%;
+  width: 23%;
 }
 .variant_parcent {
-  width: 45%;
+  width: 56%;
 }
 .varaint-days {
-  width: 25%;
+  width: 21%;
 }
 .event3 span, .variant_parcent span {
   font-size: 14px;

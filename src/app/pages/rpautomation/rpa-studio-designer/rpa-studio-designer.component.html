@@ -1,17 +1,15 @@
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+  <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" alt=""/>
 </ngx-spinner>
 
 <div class="container-fluid main-content1 main-content">
   <div class="content-area RPA-Layout">
       <div class="rpa-layout-header">
           <div class="row main-content-head">
-            <!-- module-heading title -->
               <div class="col-md-6 rpa-header-data p-0">
                   <h3>
                     <span>
                       <button [disabled]="current_instance == undefined" class="clickable module-back-button"  (click)="removenodes()">
-                        <!-- <i class="fas fa-chevron-left"></i> -->
                         <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
                       </button>
                     </span>
@@ -26,70 +24,69 @@
         </div> -->
               </div>
               <div class="col-md-6 p-0">
-              
                 <div class="actionsmenu-right" *ngIf="!isActionsShow && current_instance == undefined">
                   <div class="action-item">
                     <button id="Environments" placement="bottom">
-                      <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
+                      <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" alt=""/>
                       <span>Environment</span>
                       <span class="caret"></span>
                     </button>
                   </div>
                   <div class="action-item hovericon bvcsave">
                     <button class="clr-hvr">
-                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1" alt="">
                     </button>
                   </div>
                   <div class="action-item hovericon">
                     <button >
-                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
                     </button>
                   </div>
               
                   <div class="action-item hovericon">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1" alt="">
                       <span class="caret"></span>
                     </button>
               
                   </div>
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1" alt="">
                     </button>
                   </div>
               
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2">
+                      <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2" alt="">
                     </button>
                   </div>
               
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2">
+                      <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2" alt="">
                     </button>
                   </div>
               
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1" alt="">
                     </button>
                   </div>
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn" type="button">
-                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="">
                     </button>
                   </div>
               
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1" alt="">
                     </button>
                   </div>
                   <div class="action-item hovericon">
                     <button class="tsttooltipbtn">
-                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1" alt="">
                     </button>
                   </div>
                 </div>
@@ -98,7 +95,7 @@
                   <div class="action-item" *ngIf="current_instance != undefined" dropdown #dropdown="bs-dropdown"
                     [insideClick]="true">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
-                      <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
+                      <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" alt=""/>
                       <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
                       <span *ngIf="getSelectedEnvironments().length>=1">{{getSelectedEnvironments()[0].environmentName}}<span
                           *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
@@ -112,7 +109,7 @@
                           (change)=" current_instance.checkUncheckEnvironments(env.environmentId,inputEl.checked)">  {{env.environmentName}}
                       </li>
                       <li role="menuitem" class="clickable" (click)="createEnvironment()">
-                        <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus" />New
+                        <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus" alt=""/>New
                       </li>
                     </ul>
                   </div>
@@ -120,7 +117,7 @@
                   <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
                     <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
                       (click)="clear()"  #versionControlPopup="bs-popover" [popover]="popTemplate" placement="bottom">
-                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1" alt="">
                       <span class="testtooltip">Save Bot</span>
                     </button>
                   </div>
@@ -130,7 +127,7 @@
                       [disabled]="current_instance.finalbot.botId==undefined || current_instance.filteredEnvironments.length==0
                       || current_instance.actualTaskValue.length == 0"
                       (click)=" current_instance.executeBot()">
-                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
                       <span class="testtooltip">Start Bot</span>
                     </button>
                   </div>
@@ -144,7 +141,7 @@
                     dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle
                       type="button" aria-controls="predefinedBotDropdown">
-                      <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1" alt="">
                       <span class="caret"></span>
                       <span class="testtooltip">Predefined Bots</span>
                     </button>
@@ -161,14 +158,14 @@
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
                       (click)="current_instance.openLogs()">
-                      <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1" alt="">
                       <span class="testtooltip">View Logs</span>
                     </button>
                   </div>
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" (click)="auditLogs()">
-                      <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2">
+                      <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2" alt="">
                       <span class="testtooltip">Audit Logs</span>
                     </button>
                   </div>
@@ -184,14 +181,14 @@
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot.botId==undefined || freetrail=='true'"
                       (click)=" current_instance.openScheduler()">
-                      <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1" alt="">
                       <span class="testtooltip">Scheduler</span>
                     </button>
                   </div>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined"
                       id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="">
                       <span class="testtooltip">Download</span>
                     </button>
                     <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
@@ -208,13 +205,13 @@
                     <button class="tsttooltipbtn"
                       [disabled]="current_instance.finalbot == undefined || isProcessAnalyst == true"
                       (click)=" current_instance.deleteBot()">
-                      <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1" alt="">
                       <span class="testtooltip">Delete</span>
                     </button>
                   </div>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" (click)=" current_instance.resetDesigner()">
-                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
+                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1" alt="">
                       <span class="testtooltip">Reset Bot</span>
                     </button>
                   </div>
@@ -225,7 +222,7 @@
               <span class="module-sub-header-title clickable">
                 <span class="module-sub-header-title clickable">
                   <button  class="toolset-text"  (click)="toolsetSideNav=!(toolsetSideNav)">
-                    <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />
+                    <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" alt=""/>
                   </button>
                 </span>
               </span>
@@ -246,16 +243,13 @@
       <div class="toolset-mainheader">
 
           <mat-tab-group *ngIf="loadedBotsList.length!=0" class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="loadedBotsList.length -1 ">
-              <!-- <span class="clickable">Toolset & Actions</span>  -->
-
               <mat-tab  *ngFor="let tab of loadedBotsList; let i=index;">
                   <ng-template mat-tab-label>
-                      <span><img src="../../../../assets/images/Projects/bot.svg" class="bot-img"></span>
+                      <span><img src="../../../../assets/images/Projects/bot.svg" class="bot-img" alt=""></span>
                       <span class="tab-botname">{{tab.botName}}</span>
                       <div class="text-right">
                           <button [id]="'close_bot_'+tab.botName" class="bot-close"   (click)="removetab(tab)">
-              <img src="../../../../assets/images/RPA/icon_latest/close.svg" />
-              <!-- <i class="fa fa-times"  ></i> -->
+              <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""/>
             </button>
                       </div>
                   </ng-template>
@@ -281,14 +275,14 @@
               <mat-tab [disabled]="true">
                   <ng-template mat-tab-label>
                       <span [matMenuTriggerFor]="menu" class="clickable text-primary" *ngIf="userRole!='User'" (click)="openTabOptions()">
-          <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
+          <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new" alt=""/>
         </span>
                       <mat-menu #menu="matMenu">
                           <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail" *ngIf="userRole.includes('Process Owner') || userRole.includes('RPA Developer')">
-              <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> Create New</button>
+              <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon" alt=""/> Create New</button>
                           <hr>
                           <button mat-menu-item (click)="loadBotFormOverlay()" [disabled]="freetrail">
-              <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> Load</button>
+              <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon" alt=""/> Load</button>
                       </mat-menu>
 
                   </ng-template>
@@ -337,8 +331,6 @@
   <app-split-overlay   (closeOverlay)="closeLoadBotFormOverlay()">
   <div class="h-100">
     <div class="create-header">
-      <!-- <span class="rpa-modal-close" (click)="closeLoadBotFormOverlay()"><img
-          src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
       <h3>Load Bot</h3>
     </div>
     <div class="createform-overlay">
@@ -378,34 +370,14 @@
 </div>
 
 
-<div   *ngIf="botFormVisibility" id="bot-form">
+<div *ngIf="botFormVisibility" id="bot-form">
   <app-split-overlay (closeOverlay)="closeOverlay1($event)">
     <app-rpa-bot-form  (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
   </app-split-overlay>
 </div>
 
-<!-- <div id="createenvironment" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-          <h4>Create Environment</h4>
-      </div> -->
-  <!-- </div> -->
   <div *ngIf="isOpenSideOverlay">
     <app-split-overlay (closeOverlay)="closeSideOverlay($event)">
-        <!-- <div class="">
-            <div class="rpa-modal-header">
-                <h3>Create Task</h3>
-            </div>
-            <div class="modal-body actions-mbody actionsoverlay-mbody">
-                <div>
-                    <app-create-tasks [users_list]="users_list" [params_data]="params_data"
-                        [hiddenPopUp]="createTaskOverlay" [existingUsersList]="existingUsersList"
-                        [project_name]="projectDetails.projectName"></app-create-tasks>
-                </div>
-            </div>
-        </div> -->
         <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
-
     </app-split-overlay>
 </div>

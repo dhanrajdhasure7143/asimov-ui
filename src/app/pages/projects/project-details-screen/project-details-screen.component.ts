@@ -229,6 +229,7 @@ interval:any;
 showUserList:boolean= false;
 recentActivityList:any=[];
 columns_list_activities:any[]=[];
+uploaded_file:any[]=[];
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -1080,7 +1081,6 @@ this.replay_msg=message;
 }
 
 scrollTomain(message,type){
-  console.log(message)
   type == "replyMessage"? this.selectedItem = message.rmId: this.selectedItem = message.id
 // this.selectedItem = message.rmId
 setTimeout(()=>{
@@ -1334,17 +1334,13 @@ onFilteredUsers(usernames: string[]) {
   this.filteredUsers = this.existingUsersList.filter(user => {
     if(usernames.length>0)
     {
-      console.log(usernames[0])
       let username= user.firstName.toLowerCase()+" "+user.lastName.toLowerCase();
-      console.log(username)
       if(username.toLocaleLowerCase().startsWith(usernames[0].toLocaleLowerCase()))
       {
-        console.log(username)
         return username;
       } 
     }
   });
-  console.log(this.filteredUsers)
   if(this.filteredUsers.length>0){
     this.showUserList = true;
   }else{
@@ -1422,10 +1418,6 @@ selectEnd() {
   selection.addRange(range);
 }
 
-onKeyUpDiv(){
-  console.log(document.getElementById("my-content").innerHTML)
-}
-
   getRecentactivities() {
     this.columns_list_activities = [
       {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
@@ -1441,7 +1433,6 @@ onKeyUpDiv(){
       item["replacedText"] = this.replaceEmailsWithNames(item["activity"], this.users_list);
       return item
     })
-    console.log(this.recentActivityList)
   }) 
   }
 
@@ -1460,6 +1451,72 @@ onKeyUpDiv(){
       }
     }
     return replacedText;
+  }
+
+  onDialogHide()
+  {
+    this.entered_folder_name='';
+   }
+  onUploadDocument(event) {
+    this.isFile_upload_dialog = true;
+    this.uploaded_file = event.target.files;
+    this.selectedType="uploadFile"
+  }
+
+  uploadFile() {
+    if (this.selected_folder.dataType != "folder") {
+      this.messageService.add({
+        severity: "info",
+        summary: "Info",
+        detail: "Please select Folder",
+      });
+      return;
+    }
+    this.isFile_upload_dialog = false;
+    this.spinner.show();
+
+    let objectKey;
+    let fileKey;
+    if (this.selected_folder.parent) {
+      objectKey = this.selected_folder.parent.children.length ? this.selected_folder.parent.children.length: 1;
+      fileKey = this.selected_folder.key + "-" + Number(objectKey);
+    } else {
+      objectKey = this.selected_folder.children.length
+        ? this.selected_folder.children.length
+        : 0;
+      fileKey = this.selected_folder.key + "-" + Number(objectKey + 1);
+    }
+    let fileKeys=[];
+    var fileData = new FormData();
+    for (let i = 0; i < this.uploaded_file.length; i++) {
+      fileData.append("filePath", this.uploaded_file[i]);
+      this.selected_folder.parent ? fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+i))):fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+(i+1))))
+    }
+
+    // fileData.append("filePath", this.uploaded_file);
+    fileData.append("projectId", this.project_id);
+    fileData.append("taskId",'');
+    fileData.append("ChildId", "1");
+    fileData.append("fileUniqueIds", JSON.stringify(fileKeys));
+    this.rest_api.uploadfilesByProject(fileData).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.getTheListOfFolders()
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "File Uploaded Successfully !!",
+        });
+      },
+      (err) => {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to upload !",
+        });
+      }
+    );
   }
 
 }

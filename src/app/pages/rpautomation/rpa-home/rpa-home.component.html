@@ -71,10 +71,10 @@
                                 <div class="table-header">
                                     <h4 class="col-heads">My Workspace</h4>
                                 <div class="p-d-flex">
-                                    <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
+                                    <!-- <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
                                         selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
                                             placeholder="Choose Columns">
-                                    </p-multiSelect>
+                                    </p-multiSelect> -->
                                     <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
                                     </button>
                                     <span class="p-input-icon-right float-right">
@@ -90,7 +90,7 @@
                                     <th style="flex:0.2 1 0;" class="arrowcol"></th>
                                     <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                         {{col.header}}
-                                        <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
+                                        <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
                                         <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" field="categoryName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                                         [showAddButton]="false" display="menu">
                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">

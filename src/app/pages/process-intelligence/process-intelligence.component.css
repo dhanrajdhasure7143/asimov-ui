@@ -90,12 +90,18 @@ span.testtooltip:before {
   background-color: #F3F3F3;
   padding: 12px 15px 8px !important;
 }
-.main-content1 .module-body {
+.main-content1 .module-body,
+.main-content1 .main-content-body {
   background-color: #fff;
 }
-.module-body {
+/* .module-body {
   height: calc(100% - 32px) !important;
   padding: 10px 0px 0px !important;
+} */
+.main-content1 .main-content-body {
+  margin-top: 0;
+  width: 100%;
+  overflow: hidden;
 }
 .module-back-button {
   border-right: unset !important;

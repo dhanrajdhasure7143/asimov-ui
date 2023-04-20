@@ -9,6 +9,7 @@ import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TitleCasePipe } from '@angular/common';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({
@@ -73,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
     private rest_api: RestApiService,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     private jwtHelper: JwtHelperService,private route: ActivatedRoute,
     @Inject(APP_CONFIG) private config,
     private titlecasePipe:TitleCasePipe) {
@@ -356,8 +357,10 @@ getTenantLists(){
       return item
     })
   this.tenantName= [...this.tenantsList.filter((item:any)=>item.role=="Admin")];
-   if(!localStorage.getItem("tenantSwitchName"))
-   this.navigationTenantName = this.tenantName[0].tenant_name
+   if(!localStorage.getItem("tenantSwitchName")){
+    this.navigationTenantName = this.tenantName[0].tenant_name
+    localStorage.setItem("role", this.tenantName[0].role);
+   }
   })
 }
 
@@ -368,7 +371,12 @@ onChangeTenant(event:any){
   await localStorage.setItem("accessToken", data.accessToken);
   await localStorage.setItem("tenantName",value.tenant_id);
   await localStorage.setItem("tenantSwitchName", value.tenant_name);
+  await localStorage.removeItem("role");
+  this.spinner.show();
   setTimeout(()=>{
+    if(value.role =='Admin'){
+      localStorage.setItem("role",value.role)
+    }
     let url=(window.location.href)
     if(url.includes("home?accessToken")){
       window.location.href=window.location.href.split("?accessToken")[0];
@@ -378,6 +386,7 @@ onChangeTenant(event:any){
       window.location.reload();
     }
   }, 1000)  
+  this.spinner.hide();
   });
 }
 }

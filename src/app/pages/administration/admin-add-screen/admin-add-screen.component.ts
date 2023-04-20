@@ -313,9 +313,6 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
       })  
       this.spinner.hide();
     },(err: any) => {
@@ -351,9 +348,6 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
       })
       this.spinner.hide();
       this.buttonDisable = true;

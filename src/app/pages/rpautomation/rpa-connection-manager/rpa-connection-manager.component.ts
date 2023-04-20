@@ -33,6 +33,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   table_searchFields:any[]=[];
   connector_id:any;
   userRole:any=[]
+  connector_icon: any;
 
   constructor(
     private rest_api: RestApiService,
@@ -75,10 +76,20 @@ export class RpaConnectionManagerComponent implements OnInit {
           ColumnName: "connectionLogo",
           DisplayName: "Connector Logo",
           ShowGrid: true,
-          ShowFilter: true,
+          ShowFilter: false,
           filterWidget: "normal",
           filterType: "text",
-          sort: true,
+          sort: false,
+          multi: false,
+        },
+        {
+          ColumnName: "actionCount",
+          DisplayName: "Action Count",
+          ShowGrid: true,
+          ShowFilter: false,
+          filterWidget: "normal",
+          filterType: "text",
+          sort: false,
           multi: false,
         },
         {
@@ -138,49 +149,6 @@ export class RpaConnectionManagerComponent implements OnInit {
     });
   }
 
-  // deleteConnection() {
-  //   this.spinner.show();
-  //   let selectedId = this.selectedData[0].id;
-  //   this.confirmationService.confirm({
-  //     message: "Are you sure? You won't be able to revert this!",
-  //     header: 'Confirmation',
-  //     icon: 'pi pi-info-circle',
-  //     accept: () => {
-  //       this.spinner.show();
-  //       this.rest_api.deleteConnectorbyId(selectedId).subscribe(
-  //         (resp) => {
-  //           this.messageService.add({
-  //             severity: "success",
-  //             summary: "Success",
-  //             detail: "Connector Deleted Successfully !!",
-  //           });
-  //           this.spinner.hide();
-  //           this.getAllConnections();
-  //         },
-  //         (err) => {
-  //           this.messageService.add({
-  //             severity:'error', 
-  //             summary: 'Error', 
-  //             detail: "Please Delete the Action Items !!"
-  //           });
-  //           this.spinner.hide();
-  //           this.getAllConnections();
-  //         }
-  //       );
-  //     },
-  //     reject: (type) => {
-  //       this.spinner.hide();
-  //     },
-  //     key: "positionDialog"
-  //   });
-  // }
-
-  // viewConnector() {
-  //   this.router.navigate(["/pages/rpautomation/action-item"], {
-  //     queryParams: { id: this.selectedData[0].id, name : this.selectedData[0].name, icon : this.selectedData[0].connectionLogo },
-  //   });
-  // }
-
   addNewConnection() {
     this.isCreate = true;
     this.isFormOverlay = true;
@@ -190,6 +158,10 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.isCreate = false;
     this.isFormOverlay = true;
     this.connctionupdatedata = event;
+    let id = event.id
+    this.rest_api.getIconForConnector(id).subscribe((res:any) =>{
+      this.connector_icon = res["data"]
+    })
     this.createConnectorForm.get("name").setValue(this.connctionupdatedata["name"]);
     this.createConnectorForm.get("taskIcon").setValue(this.connctionupdatedata["taskIcon"]);
   }

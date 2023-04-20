@@ -87,43 +87,42 @@
                       <td class="" mat-cell *matCellDef="let element">
                               <span *ngIf="element.bot_status=='Running'" class="text-primary" >
                                 <span>
-                                  <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                                  <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                                 </span>
                                 {{element.bot_status}}&nbsp;&nbsp;&nbsp;
                                 <span class="btn btn-xs bluebg-button clickable1" (click)="updateLog(element)" >Kill</span> 
                               </span>
                               <span *ngIf="element.bot_status=='Success'" >
                                 <span>
-                                  <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                                  <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                                 </span>
                                 <span>{{element.bot_status}}</span>
                               </span>
   
                               <span *ngIf="element.bot_status=='Failure'" >
                                 <span>
-                                  <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                                  <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                                 </span>
                                 <span>{{element.bot_status}}</span>
                               </span>
                               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                               <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons">
                                 <span >
-                                <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                                <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
                                 </span>
                                 <span>{{element.bot_status}}</span>
                               </span>
   
                               <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  "  >
                                 <span  >
-                                  <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                                  <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                 </span>
                                 <span>{{element.bot_status}}</span>
                               </span>
   
                               <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" >
                                 <span >
-                                  <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
-                                  <!-- <i class="fas fa-pause-circle text-primary"></i> -->
+                                  <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
                                 </span>
                                 <span>{{element.bot_status}}</span>
                               </span>
@@ -292,37 +291,37 @@
               <td mat-cell *matCellDef="let element" style="width:18%">
                   <span *ngIf="element.status == 1">
                     <span>
-                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
                     </span>  
                     New
                   </span>
                   <span *ngIf="element.status == 2">
                     <span>
-                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                     </span>
                     Running
                   </span>
                   <span *ngIf="element.status == 3">
                     <span>
-                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
                     </span>
                     Paused
                   </span>
                   <span *ngIf="element.status == 4">
                     <span  >
-                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                     </span>
                     Stopped
                   </span>
                   <span *ngIf="element.status == 5">
                     <span>
-                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                     </span>
                     Success
                   </span>
                   <span *ngIf="element.status == 6">  
                     <span>
-                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                     </span>
                     Failed
                   </span>
@@ -349,7 +348,7 @@
 
 
       <div *ngIf="logsLoading==false && logsDisplayFlag=='AUTOMATION-LOGS'  && isDataEmpty==false " class="logs-bg"  >
-        <table mat-table class="logs-table"   *ngIf=" isDataEmpty==false" [dataSource]="automationLogsTable" #sortAutomationLogsTable="matSort" matSort style="width:100%;">
+        <table mat-table class="logs-table"  *ngIf="isDataEmpty==false" [dataSource]="automationLogsTable" #sortAutomationLogsTable="matSort" matSort style="width:100%;">
           <ng-container matColumnDef="internaltaskName">
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
@@ -368,7 +367,7 @@
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
                 <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
-                <span *ngIf="element.endTS == undefined">--</span>
+                <span *ngIf="element.endTS == undefined">-</span>
             </td>
           </ng-container>
             <ng-container matColumnDef="status">
@@ -376,42 +375,42 @@
               <td mat-cell *matCellDef="let element" style="width:18%">
                   <span *ngIf="element.status == 1">
                     <span>
-                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
                     </span>  
                     New
                   </span>
                   <span *ngIf="element.status == 2">
                     <span>
-                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                     </span>
                     Running
                   </span>
                   <span *ngIf="element.status == 3">
                     <span>
-                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
                     </span>
                     Paused
                   </span>
                   <span *ngIf="element.status == 4">
                     <span  >
-                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                     </span>
                     Stopped
                   </span>
                   <span *ngIf="element.status == 5">
                     <span>
-                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                     </span>
                     Success
                   </span>
                   <span *ngIf="element.status == 6">  
                     <span>
-                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                     </span>
                     Failed
                   </span>
                 
-                  <span *ngIf="element.status == undefined">--</span>
+                  <span *ngIf="element.status == undefined">-</span>
               </td>
           </ng-container>
           <ng-container matColumnDef="errorMsg">
@@ -426,7 +425,6 @@
       </table>
       </div>
       <div *ngIf="isDataEmpty==true && logsLoading==false" class="text-center">
-        <!-- <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px"> -->
           <div class="no-records">
             <h4>No Records Found</h4>
           </div>
@@ -434,7 +432,7 @@
       <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
     <div class="logs-container" *ngIf="logsLoading==true">
       <div class="logs-loader">
-        <img src="../../../../assets/images/EZFlow_Loader.gif">
+        <img src="../../../../assets/images/EZFlow_Loader.gif" alt="">
       </div>
     </div>
   </div>

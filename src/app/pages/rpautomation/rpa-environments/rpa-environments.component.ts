@@ -118,7 +118,6 @@ export class RpaenvironmentsComponent implements OnInit {
           b = new Date(b.activeTimeStamp);
           return a > b ? -1 : a < b ? 1 : 0;
         });
-        console.log(this.environments)
         this.spinner.hide();
       });
   }
