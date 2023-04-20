@@ -28,7 +28,6 @@ button.btn {
   line-height: normal !important;
   border: medium none !important;
   font-size: 15px;
-  /* margin-right: 10px !important; */
   border-radius: var(--main-borderradius);
   color: var(--main-txtcolor);
   min-width: 75px;
@@ -43,18 +42,18 @@ button.btn.btn-default {
 
 }
 
-button.btn.btn-primary,
+/* button.btn.btn-primary,
 button.btn.btn-primary[disabled] {
   background: var(--main-bluecolor);
   color: #fff;
-}
-button.btn.bluebg-button {
+} */
+ button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 22px !important;
   height:36px !important;
   border-radius:3px !important;
-}
+} 
 .btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
@@ -75,14 +74,15 @@ button.btn.bluebg-button.savefoldername {
   float: right;
 }
 
-/* button.btn.bluebg-button img{padding-right:8px;} */
-button.btn.bluebg-button:hover {
+
+ button.btn.bluebg-button:hover {
   background: #209AED;
-  /* box-shadow: 3px 3px 7px rgba(91, 128, 234, 0.45);  */
-}
+  
+} 
 .btn.bluebg-button:hover {
   background: #209AED;
-  /* box-shadow: 3px 3px 7px rgba(91, 128, 234, 0.45);  */
+ 
+  
 }
 .btn.reset-btn:hover {
   border: 1px solid #098DE6 !important;
@@ -105,6 +105,7 @@ button.btn.new-cancelbtn:hover {
   color: #7D7D7D !important;
   opacity: 1 !important;
 }
+button.p-element.button-bot{background-color:transparent!important;}
 
 /* entire application buttons */
 /* Swal buttons */

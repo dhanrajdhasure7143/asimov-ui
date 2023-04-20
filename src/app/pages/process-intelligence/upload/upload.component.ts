@@ -998,6 +998,10 @@ getDBTables(){      //get DB tables list
           Swal.fire({
             icon: 'success',
             title: 'Success',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
             text: 'Process Deleted Successfully !!',
             heightAuto: false
           })

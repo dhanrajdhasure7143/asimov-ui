@@ -1,5 +1,5 @@
 <div class="maindivfoprm">       
-  <h4 class="paymnt-subheding">Complete the below card details</h4>
+  <h4 class="paymnt-subheding"><span (click)="Back()" class="back-arw"><img src="../../../../assets/images-n/projects/backarrow.svg"/></span>Complete the below card details</h4>
     <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="addNewCard()">
       <div class="row">
         <div class="col-md-6 form-group pl-0">
@@ -50,7 +50,7 @@
       </div>
     </form>
     <div class="row justify-content-end">
-      <button class="btn new-cancelbtn" (click)="Back()">Back</button>
+      <!-- <button class="btn new-cancelbtn" (click)="Back()">Back</button> -->
       <button type="button" class="btn new-cancelbtn" (click)="resetForm(paymentform)" >Reset</button>
       <button class="btn bluebg-button" type="submit" [disabled] = "paymentform.invalid" (click)="addNewCard()">Save</button>
     </div>
