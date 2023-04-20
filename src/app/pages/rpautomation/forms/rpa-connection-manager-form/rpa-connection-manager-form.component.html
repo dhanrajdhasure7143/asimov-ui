@@ -28,19 +28,19 @@
                                     <label class="label-control" for="programname"> Action Name
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" maxlength="51" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="actionName"
                                         [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
                                         placeholder="Enter Action Name">
                                     <span
-                                        *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched && !connectorForm.get('actionName').hasError('pattern')"
+                                        *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched && !connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')"
                                         class="required"> Action Name Required*
                                     </span>
-                                    <span *ngIf="connectorForm.controls['actionName'].hasError('maxlength')" class="required">
+                                    <span *ngIf="connectorForm.controls['actionName'].hasError('maxlength') && !connectorForm.get('actionName').hasError('pattern')" class="required">
                                         Maximum of 50 characters
                                     </span>
-                                    <span *ngIf="connectorForm.get('actionName').hasError('pattern')" class="required">
-                                        Only spaces between words are allowed.
+                                    <span *ngIf="connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')" class="required">
+                                        Only space between words are allowed & Numbers are not allowed.
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0">
@@ -70,12 +70,19 @@
                             <div class="col-md-6 form-group pr-0">
                                     <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
                                     <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo?</label>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
                                             formControlName="">
                                         <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'89%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
                                             formControlName=""> &nbsp;
                                         <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
+                                    </div> -->
+                                    <div class="input-group">
+                                        <input type="file" pInputText class="form-control" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                          aria-label="Upload" /> &nbsp;
+                                        <span  id="inputGroupFileAddon04">
+                                            <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
+                                        </span>
                                     </div>
                             </div>
                             <div class="col-md-12 form-group p-0">
