@@ -34,15 +34,9 @@
             <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  
             (dblclick)="openAddFolderOverlay(item,'dblclick')" (click)="openAddFolderOverlay(item,'singleclick')" 
             (contextmenu)="onRightClick($event,item)" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
-                
-                <span *ngIf="item.label == 'Add Folder' || item.label == 'Add Folder / Document'">
-                    <img src="./../../../../assets/images-n/projects/AddFolder.svg" alt="Create">
+                <span >
+                    <img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">
                 </span>
-                <span *ngIf="item.label != 'Add Folder'&& item.label != 'Add Folder / Document'">
-                <i [class]="item.collapsedIcon"> </i>
-                <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon"> </i>
-            </span>
-                <!-- <span *ngIf="item.type !='textBox'"> {{ item.label }} </span> -->
                 <span *ngIf="item.type !='textBox'" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top"> {{truncateDesc(item.label)}} </span>
                 <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
@@ -54,9 +48,21 @@
             </p-card>
            </div>
            <div *ngIf = "!isFolder" class="doctree">
-            <p-tree [value]="files" [filter]="true" [contextMenu]="cm" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+            <p-tree [value]="files" [filter]="true" [filterPlaceholder]="'Type to search'" [contextMenu]="cm" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile" (onNodeContextMenuSelect)="onNodeClick($event)"> 
                 <ng-template let-node pTemplate="default">
+                    <span *ngIf="node.label == 'Add Folder' || node.label == 'Add Folder / Document'">
+                        <img src="./../../../../assets/images-n/projects/folderadd.svg" alt="Create">
+                    </span>
+                    <span *ngIf="node.label != 'Add Folder' && node.label != 'Add Folder / Document' && node.dataType =='folder'">
+                        <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon">
+                    </span>
+                    <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType=='txt'">
+                        <img src="./../../../../assets/images-n/projects/document-file.svg" alt="Create">
+                    </span>
+                    <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType !='txt'&& node.dataType=='jpg'||node.dataType=='gif'||node.dataType=='svg'||node.dataType=='png'">
+                        <img src="./../../../../assets/images-n/projects/img-file.svg" alt="Create">
+                    </span>
                     <span [ngClass]="{ 'has-changes' : node.hasChanges }" [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
                 </ng-template>
                 <ng-template let-node pTemplate="textBox">
@@ -68,15 +74,6 @@
                 </ng-template>
             </p-tree>
 
-            <!-- <p-tree [value]="files">
-                <ng-template let-node pTemplate="default">
-                    <input [(ngModel)]="node.label" type="text" style="width:100%">
-                </ng-template>
-                <ng-template let-node pTemplate="test">
-                    <h3>{{node.label}}</h3>
-                </ng-template>
-            </p-tree> -->
-
            </div>
         </div>
                 
@@ -86,11 +83,11 @@
             <div class="docfootbtns">
                 <button type="button" class="btn btn-primary" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top">
                     <!-- <i class="pi pi-folder"></i> -->
-                    <img src="../../../../../assets/images-n/projects/FolderView.svg" alt="Tree View" />
+                    <img src="../../../../../assets/images-n/projects/Footer-folder.svg" alt="Tree View" />
                 </button>
                 <button type="button" class="btn btn-primary" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top">
                     <!-- <i class="pi pi-sitemap"></i>  -->
-                    <img src="../../../../../assets/images-n/projects/TreeView.svg" alt="Tree View" />
+                    <img src="../../../../../assets/images-n/projects/Footer treefile.svg" alt="Tree View" />
                 </button>                                        
             </div>
         </div>
