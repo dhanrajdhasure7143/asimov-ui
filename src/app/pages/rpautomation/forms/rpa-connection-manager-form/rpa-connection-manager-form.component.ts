@@ -86,7 +86,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectorForm = this.formBuilder.group({
-      actionName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z_]+( [a-zA-Z_]+)*$'),Validators.maxLength(50)])],
+      actionName: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z]+(\\s[a-zA-Z]+)*$"),Validators.maxLength(50)])],
       methodType: ["", Validators.compose([Validators.required])],
       actionType: ["", Validators.compose([Validators.required])],
       endPoint: ["", Validators.compose([Validators.required])],
