@@ -12,14 +12,14 @@
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
-              [placeholder]="field.placeholder=='undefined'?field.placeholder:placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
+              [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
             </div>
               <div *ngIf="field.ColumnName == 'tenant_name'">
                 <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
                   <span class="star" *ngIf="field.mandatory">*</span> 
                 </label>
                 <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
-                  [placeholder]="field.placeholder" [maxlength]="field.length" />
+                [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [maxlength]="field.length" />
                   <div *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')" class="required">
                     Tenant Name is already exists*
                 </div>
