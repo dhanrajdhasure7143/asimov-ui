@@ -21,7 +21,7 @@ export class SplitOverlayComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.splitEl.dragProgress$.subscribe((x) => {
+      this.splitEl.dragProgress$.subscribe((x:any) => {
         this.ngZone.run(() => {
           this.area_splitSize = x;
           this.isShowExpand = false;
