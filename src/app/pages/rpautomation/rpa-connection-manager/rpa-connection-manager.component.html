@@ -49,8 +49,8 @@
                                 <span *ngIf="createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Maximum of 50 characters
                                 </span>
-                                <span *ngIf="createConnectorForm.get('name').hasError('pattern')" class="required">Only spaces
-                                    between words are allowed.
+                                <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required">Only space
+                                    between words are allowed & Numbers are not allowed.
                                 </span>
                             </div> 
                             <div class="form-group col p-0">
