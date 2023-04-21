@@ -170,7 +170,7 @@
                             <span class="readmore icon-color" (click)="onReadMoreHide()"
                             *ngIf="project_desc.length > 150">Read more</span>
                         </p> -->
-                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()">{{project_desc}}</span>
+                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()" class='proj-desc'>{{project_desc}}</span>
                         <!-- <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="project_desc"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()">Hide</span></p> -->
                         <!-- <p>{{projectDetails.projectPurpose}}</p> -->
@@ -285,7 +285,7 @@
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
-                                            <label class="qcard-count">0</label>
+                                            <label class="qcard-count">{{snapshotDatails.Folders}}</label>
                                             <p class="qcard-name">Folders</p>
                                         </div>
                                     </div>

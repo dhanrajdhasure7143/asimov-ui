@@ -74,7 +74,7 @@ export class AdminAddScreenComponent implements OnInit {
     });
 
     this.insertForm = this.formBuilder.group({
-      screen_Name: ["", Validators.compose([Validators.required,Validators.pattern('[a-zA-Z ]+'),Validators.maxLength(255)])],
+      screen_Name: ["", Validators.compose([Validators.required,Validators.pattern('[a-zA-Z ]+'),Validators.maxLength(50)])],
       table_Name: ["", Validators.compose([Validators.required])],
       allow_Insert: [false],
       allow_Edit: [false],
@@ -342,6 +342,10 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
+        setTimeout(()=>{
+          window.location.reload()
+        },700)
+        
       })
       this.spinner.hide();
       this.buttonDisable = true;
