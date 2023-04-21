@@ -234,7 +234,10 @@ button:hover img.testplus1.hover-img {
 .orchactions button {
     background-color: unset !important;
     width: auto;
-    margin-right: 15px;
+    margin-right: 17px;
+}
+.orchactions span:last-child button {
+    margin-right: 0px;
 }
 .orchactions button img.testplus {
     margin-right: 0px;

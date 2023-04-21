@@ -38,6 +38,7 @@
   font-size: 32px;
   font-weight: 400;
   color: #222;
+  cursor: pointer;
 }
 span.highimp {
   color: #EA3D3D;
@@ -76,6 +77,7 @@ span.lowimp {
   align-items: flex-start;
   display: flex;
   margin-top: 8px;
+  cursor: pointer;
 }
 .pinf p {
   margin-bottom: 0px;
