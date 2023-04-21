@@ -118,7 +118,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure? Do you want to delete this connector!",
       header: 'Confirmation',
-      icon: 'pi pi-info-circle',
+      
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteConnectorbyId(selectedId).subscribe(

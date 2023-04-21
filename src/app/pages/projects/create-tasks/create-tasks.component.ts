@@ -254,7 +254,7 @@ taskDescriptionMaxLength(value){
     this.confirmationService.confirm({
       message: 'This user not in this project, Are you sure that you want to Invite them to this project?',
       header: 'Confirmation',
-      icon: 'pi pi-info-circle',
+      
       accept: () => {
         this.confirmationService.close();
       },

@@ -111,7 +111,7 @@ export class OverviewComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: "Confirmation",
-      icon: "pi pi-info-circle",
+      
       key: "positionDialog",
       accept: (result) => {
         this.spinner.show();

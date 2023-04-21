@@ -338,7 +338,7 @@ export class ConfigureDashboardComponent implements OnInit {
         this.confirmationService.confirm({
           message: "Change the default dashboard",
           header: "Info",
-          icon: "pi pi-info-circle",
+          
           rejectVisible: false,
           acceptLabel: "Ok",
           accept: () => {},
@@ -349,7 +349,7 @@ export class ConfigureDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: "Confirmation",
-      icon: "pi pi-info-circle",
+     
       accept: () => {
         this.loader.show();
         this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
