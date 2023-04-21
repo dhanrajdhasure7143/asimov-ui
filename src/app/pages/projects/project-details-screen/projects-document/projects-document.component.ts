@@ -227,7 +227,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         this.loader.hide();
         let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
       obj['expandedIcon'] = "pi pi-folder-open"
       obj['collapsedIcon'] = "pi pi-folder";
@@ -350,7 +350,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.loader.hide();
       let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
       obj['expandedIcon'] = "pi pi-folder-open"
       obj['collapsedIcon'] = "pi pi-folder";
@@ -392,7 +392,7 @@ addParentFolder() {
   this.rest_api.createFolderByProject(req_body).subscribe(res=>{
     this.loader.hide();
     let res_data:any = res;
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
     let obj = res_data.data[0];
     obj['expandedIcon'] = "pi pi-folder-open"
     obj['collapsedIcon'] = "pi pi-folder";
@@ -564,7 +564,7 @@ addParentFolder() {
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
     // let obj = res_data.data[0]
     res_data.data.forEach(item=>{
       let obj = item
@@ -580,7 +580,7 @@ addParentFolder() {
     // this.selectedFile.parent.children.push(obj)
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !!'});
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !'});
     })
   }
 
@@ -619,7 +619,7 @@ addParentFolder() {
     }
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
       if(type == 'folderView'){
         this.selectedItem.label = this.entered_folder_name;
         this.selectedItem.type ='default';
@@ -667,7 +667,7 @@ addParentFolder() {
       this.loader.hide();
       this.createFolderPopUP=false;
       let res_data:any = res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
     // let obj = res_data.data[0];
     res_data.data.forEach(item=>{
       let obj = item
@@ -692,12 +692,12 @@ addParentFolder() {
       delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: 'Confirmation',
+      message: "Do you really want to delete this? This process cannot be undone.",
+      header: 'Are you Sure?',
      
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
           this.getTheListOfFolders();
         },err=>{
           this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
@@ -769,7 +769,7 @@ addParentFolder() {
         this.loader.hide();
         this.getTheListOfFolders();
         this.createFolderPopUP=false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !!'});
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
         this.loader.hide();
         this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
@@ -797,7 +797,7 @@ addParentFolder() {
     //   this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
     //     this.loader.hide();
     //     this.getTheListOfFolders();
-    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
     //   },err=>{
     //     this.loader.hide();
     //     this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});

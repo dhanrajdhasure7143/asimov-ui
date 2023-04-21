@@ -109,8 +109,8 @@ export class OverviewComponent implements OnInit {
 
   subscriptionCancel() {
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
+      message: "Do you really want to cancel your subscription?",
+      header: "Are you Sure?",
       
       key: "positionDialog",
       accept: (result) => {
@@ -121,7 +121,7 @@ export class OverviewComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Subscription Cancelled Successfully !!",
+              detail: "Subscription Cancelled Successfully !",
             });
           }
         });

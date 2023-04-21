@@ -269,8 +269,13 @@
   </ng-template>
 </p-confirmDialog>
 
-<p-confirmDialog [style]="{width: '30vw'}" key="positionDialog3" position="center" [baseZIndex]="10000"
- rejectButtonStyleClass="btn bluebg-button" [closable]="false"></p-confirmDialog>
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" key="positionDialog3" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd2.accept()"></button>
+   </ng-template>
+</p-confirmDialog>
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 

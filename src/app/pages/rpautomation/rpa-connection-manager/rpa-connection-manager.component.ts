@@ -116,8 +116,8 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     let selectedId = event.id;
     this.confirmationService.confirm({
-      message: "Are you sure? Do you want to delete this connector!",
-      header: 'Confirmation',
+      message: "Do you want to delete this connector?",
+      header: 'Are you Sure?',
       
       accept: () => {
         this.spinner.show();
@@ -126,7 +126,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Connector Deleted Successfully !!",
+              detail: "Connector Deleted Successfully !",
             });
             this.spinner.hide();
             this.getAllConnections();
@@ -135,7 +135,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity:'error', 
               summary: 'Error', 
-              detail: "Please Delete the Action Items !!"
+              detail: "Please Delete the Action Items !"
             });
             this.spinner.hide();
             this.getAllConnections();
@@ -216,7 +216,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Connector Added Successfully !!",
+          detail: "Connector Added Successfully !",
         });
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
@@ -226,7 +226,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to Save Connector !!",
+          detail: "Unable to Save Connector !",
         });        
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
@@ -249,7 +249,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Connector Updated Successfully !!",
+          detail: "Connector Updated Successfully !",
         });
         this.isFormOverlay = false;
         this.createConnectorForm.reset();
@@ -259,7 +259,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to Update Connector !!",
+          detail: "Unable to Update Connector !",
         });        
         this.spinner.hide();
       }

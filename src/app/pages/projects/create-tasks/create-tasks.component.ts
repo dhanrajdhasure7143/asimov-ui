@@ -128,7 +128,7 @@ export class CreateTasksComponent implements OnInit {
        
         Swal.fire({
           title: 'Success',
-          text: "Task Created Successfully !!",
+          text: "Task Created Successfully !",
           position: 'center',
           icon: 'success',
           showCancelButton: false,
@@ -252,8 +252,8 @@ taskDescriptionMaxLength(value){
      // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
-      message: 'This user not in this project, Are you sure that you want to Invite them to this project?',
-      header: 'Confirmation',
+      message: 'This user is not in this project, Do you want to Invite them?',
+      header: 'Are you Sure?',
       
       accept: () => {
         this.confirmationService.close();

@@ -331,8 +331,8 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
+      message: "Do you really want to delete this project? This process cannot be undone.",
+      header: "Are you Sure?",
       
       accept: () => {
         this.spinner.show();
@@ -343,7 +343,7 @@ export class ProjectsListScreenComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Project Deleted Successfully !!",
+              detail: "Project Deleted Successfully !",
             });
             this.getallProjects(this.userRoles, this.name, this.email);
           }

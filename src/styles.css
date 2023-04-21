@@ -3020,7 +3020,7 @@ button.p-element.button-bot{
 
 /* Swal buttons */
 .swal2-styled.swal2-cancel {  
-  background-color: transparent !important; 
+  /* background-color: transparent !important;  */
 }
 .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
   background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
@@ -3668,9 +3668,11 @@ textarea.p-inputtextarea {
   font-size: 16px !important;
   color: #333 !important;
 }
+.p-dialog .p-dialog-footer button:last-child {
+  margin: 0px !important;
+}
 .p-dialog .p-dialog-footer button {
-  margin: 0 0 0 0 !important; 
- 
+  margin: 0 1rem 0 0 !important;
 }
 /* .p-dialog.p-confirm-dialog .p-confirm-dialog-icon {
   font-size: 1.6rem !important;

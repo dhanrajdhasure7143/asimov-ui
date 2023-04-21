@@ -161,8 +161,8 @@ export class ProjectTaskListComponent implements OnInit {
     ];
 
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
+      message: "Do you really want to delete this task? This process cannot be undone.",
+      header: "Are you Sure?",
       
       accept: () => {
         this.spinner.show();
@@ -170,7 +170,7 @@ export class ProjectTaskListComponent implements OnInit {
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+' !!'});
+            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+' !'});
             this.getTasksList();
           },
           (err) => {
