@@ -103,13 +103,15 @@
                     <div class="row">
                         <div class="">
                             <button>
-                                <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder icon-color"></i>
+                                <p-card class="cards side" (click)="onCreateFolder()"> 
+                                    <img src="../../../../../assets/images-n/projects/folderadd.svg" alt="">
                                     <span>Create folder</span> </p-card>
                             </button>
                         </div>
                         <div class="" *ngIf="createFolderPopUP">
                             <div class="upload-btn-wrapper" (change)="folderUpload($event,'folderView')" >
-                                <p-card class="cards side"> <i class="pi pi-folder icon-color"></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/upload-folder.svg" alt="">
                                     <button class="btn">Upload folder</button>
                                     <!-- <input type="file" name="myfile" multiple/> -->
                                         <input type="file" webkitdirectory directory multiple>
@@ -120,14 +122,16 @@
                     <div class="row" *ngIf="hiddenPopUp1">
                         <div class="">
                             <button  (click)="navigateToCreateDocument('folderView')">
-                                <p-card class="cards side"> <i class="pi pi-file icon-color"></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/create-document.svg" alt="">
                                     <span>Create Document</span> </p-card>
                             </button>
                         </div>
                         <div class="">
                             <button>
                                 <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" >
-                                <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUploadFolder($event)" ></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/upload-document.svg" alt="">
                                     <button class="btn">Upload Document</button>
                                     <input type="file" name="myfile" multiple/>
                                 </p-card>
@@ -151,13 +155,15 @@
                     <div class="row">
                         <div class="">
                             <button>
-                                <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder icon-color"></i>
+                                <p-card class="cards side" (click)="onCreateTreeFolder()"> 
+                                    <img src="../../../../../assets/images-n/projects/folderadd.svg" alt="">
                                     <span>Create folder</span> </p-card>
                             </button>
                         </div>
                         <div class="">
                             <div class="upload-btn-wrapper" (change)="folderUpload($event,'treeView')" *ngIf="createTreeFolderOverlay">
-                                <p-card class="cards side"> <i class="pi pi-folder icon-color" ></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/upload-folder.svg" alt="">
                                     <button class="btn">Upload folder</button>
                                     <input type="file" webkitdirectory directory multiple>
                                   </p-card>
@@ -167,14 +173,16 @@
                     <div class="row" *ngIf="hiddenPopUp1">
                         <div class="">
                             <button  (click)="navigateToCreateDocument('treeView')">
-                                <p-card class="cards side"> <i class="pi pi-file icon-color"></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/create-document.svg" alt="">
                                     <span>Create Document</span> </p-card>
                             </button>
                         </div>
                         <div class="">
                             <button>
                                 <div class="upload-btn-wrapper" (change)="singleFileUpload($event)" >
-                                <p-card class="cards side"> <i class="pi pi-file icon-color" (change)="singleFileUpload($event)" ></i>
+                                <p-card class="cards side"> 
+                                    <img src="../../../../../assets/images-n/projects/upload-document.svg" alt="">
                                     <button class="btn">Upload Document</button>
                                     <input type="file" name="myfile" multiple/>
                                   </p-card>

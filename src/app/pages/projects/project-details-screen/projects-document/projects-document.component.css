@@ -6,6 +6,9 @@
   z-index: 1040;
 }
 
+.head-ritfilter {
+  height: 34px;
+}
 .docfilt-icon .pi-filter-slash {
   font-size: 20px;
   margin-left: 10px;
@@ -16,7 +19,7 @@
   text-align: center;
   word-break: break-word;
 }
-.docfolder img {
+.docfolder img, .fldrovrlay img {
   width: 76px;
 }
 .doctree img {

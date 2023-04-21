@@ -3146,7 +3146,7 @@ textarea.p-inputtextarea {
   margin-right: 5px;
 }
 .p-breadcrumb ul li .p-menuitem-link:focus {
-  box-shadow: unset;
+  box-shadow: unset !important;
 }
 .p-editor-container .p-editor-toolbar.ql-snow, .p-editor-container .p-editor-content.ql-snow {
   border: 1px solid #d0d0d0;
@@ -3418,7 +3418,7 @@ button.btn.new-cancelbtn {
 }
 /* Tree Styles End */
 
-.docfolder .p-card {
+.docfolder .p-card, .fldrovrlay .p-card.p-component {
   height: 176px;
   width: 176px;
   display: flex;
@@ -3480,19 +3480,15 @@ button.btn.new-cancelbtn {
   justify-content: space-evenly;  
 }
 .fldrovrlay .p-card.p-component {
-  border-radius: 8px;
-  border: 1px solid var(--cards-bordercolor);
-  box-shadow: none;
+  border: 1px solid #eee;
+  margin: 0px !important;
 }
 .fldrovrlay .p-card.p-component:hover {
   border: 1px solid var(--secondary-bluecolor);
 }
 .fldrovrlay .p-card-body {
-  height: 180px !important;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0px !important;
+  
 }
 .fldrovrlay .p-card-content {
   padding: 0px !important;
@@ -3503,7 +3499,7 @@ button.btn.new-cancelbtn {
   font-size: 40px;
 }
 .fldrovrlay .p-card-content span, .fldrovrlay .p-card-content button {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--main-txtcolor);
   margin-top: 10px;
   display: block;
