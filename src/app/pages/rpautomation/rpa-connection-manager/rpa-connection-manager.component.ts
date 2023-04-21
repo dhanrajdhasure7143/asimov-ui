@@ -34,6 +34,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   connector_id:any;
   userRole:any=[]
   connector_icon: any;
+  isIconSize: boolean;
 
   constructor(
     private rest_api: RestApiService,
@@ -272,6 +273,11 @@ export class RpaConnectionManagerComponent implements OnInit {
     var reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
+    if(e.target.files[0].size > 200000){
+      this.isIconSize =true;
+       }else{
+      this.isIconSize=false;
+    }
   }
 
   _handleReaderLoaded(e) {
