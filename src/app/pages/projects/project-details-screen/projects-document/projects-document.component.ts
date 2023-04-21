@@ -180,7 +180,7 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   }
   this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  this.folder_files = this.files
+  this.folder_files = this.files;
   this.getTaskList();
   this.loader.hide();
   }
@@ -552,8 +552,8 @@ addParentFolder() {
     let fileKeys=[]
     for (let i = 0; i < selectedFile.length; i++) {
       fileData.append("filePath", selectedFile[i]);
-      fileKeys.push(String(objectKey+'-'+(i+1)))
-  }
+      fileKeys.push(String(objectKey+'-'+(i+this.selectedFile.parent.children.length)))
+    }
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')

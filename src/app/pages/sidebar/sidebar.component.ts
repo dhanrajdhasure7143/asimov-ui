@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit {
   showProjectsSubmenu: boolean = false;
   screensList:any=[];
   role: any;
+  _selectedModule:any;
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -42,6 +43,7 @@ export class SidebarComponent implements OnInit {
     let active_module=localStorage.getItem('selectedModule')
     if(active_module){
     let selected_module=active_module.split('&')
+      this._selectedModule = selected_module[0];
         $('.link').removeClass('active');
         $('#'+selected_module[0]).addClass("active");
         if(selected_module[1]){
@@ -50,6 +52,7 @@ export class SidebarComponent implements OnInit {
     }else{
       localStorage.setItem('selectedModule','eiap-home&'+ null);
       $('#eiap-home').addClass("active");
+      this._selectedModule ='eiap-home';
     }
 
     setTimeout(() => {

@@ -261,7 +261,7 @@ taskDescriptionMaxLength(value){
       reject: (type) => {
         this.createtaskForm.get("resources").setValue("");
       },
-      key: "positionDialog"
+      key: "assigneeDialog"
   });
    }
 }
