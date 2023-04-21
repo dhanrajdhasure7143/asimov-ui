@@ -7,18 +7,14 @@
           <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="50" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required  pattern="^[a-zA-Z][a-zA-Z\s]*"  />
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
           <span class='required'
-            *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern) && !(cardHolder.errors.maxlength))">Card
+            *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern))">Card
             Holder Name is required *</span>
-          <span *ngIf="cardHolder.errors && cardHolder.invalid && ! (cardHolder.errors.maxlength) ">
+          <span *ngIf="cardHolder.errors && cardHolder.invalid">
             <span *ngIf="cardHolder.errors.pattern" class='required'>Please enter only letters
               (A-Z) and spaces between words are
               only allowed for Cardholder Name *</span>
-              
           </span>
-          <span *ngIf="cardHolder.errors.maxlength" class='required'>Cardholder Name cannot exceed 30 characters *</span>
-         
-          
-        </div>
+          </div>
         <div class="col-md-6 form-group pr-0">
           <label  class="label-control" for="cardNumber">Card Number <span class="star">*</span></label>
           <div class="d-flex">
@@ -32,19 +28,23 @@
           </div>
         </div>
         <div class="col-md-6 form-group pl-0">
-          <label  class="label-control" for="month">Month (MM)</label>
+          <label  class="label-control" for="month">Month (MM)<span class="star">*</span></label>
           <select id="month" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
             <option  [value]="undefined" disabled hidden>Select Month</option>
             <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
           </select>
+          <span *ngIf="((month.invalid && paymentform.submitted) || (month.errors && month.touched) )" 
+          class='required'>Month is Required *</span> 
         </div>
         <div class="col-md-6 form-group pr-0">
-          <label  class="label-control" for="year">Year (YYYY)</label>
+          <label  class="label-control" for="year">Year (YYYY)<span class="star">*</span></label>
           <select id="year" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
             <option  [value]="undefined" disabled hidden>Select Year</option>
             <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
             <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
           </select>
+          <span *ngIf="((year.invalid && paymentform.submitted) || (year.errors && year.touched) )" 
+          class='required'>Year is Required *</span> 
         </div>
         <div class="col-md-6 form-group pl-0">
           <label  class="label-control" for="cvv">CVV<span class="star">*</span></label>
