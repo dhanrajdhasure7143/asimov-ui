@@ -2947,6 +2947,107 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   background-color: #fff !important;
 }
+
+/* Entire application buttons */
+button.btn {
+  padding: 8px 12px !important;
+  line-height: normal !important;
+  border: medium none !important;
+  font-size: 15px;
+  border-radius: var(--main-borderradius);
+  color: var(--main-txtcolor);
+  min-width: 75px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  box-shadow: none !important;
+}
+
+button.btn.btn-default {
+  background: #eeeeee;
+  margin-right: 10px;
+}
+ 
+.btn.bluebg-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 22px !important;
+  border-radius: var(--main-borderradius) !important;
+  height: 36px !important;
+}
+button.btn.bluebg-button.savefoldername {
+  margin-top: 15px;
+  float: right;
+} 
+.btn.bluebg-button:hover,
+.p-column-filter-buttonbar .p-button:hover {
+  background: #209AED !important;
+  color: #fff  !important;
+}
+.btn.reset-btn {
+  border: 1px solid #098DE6 !important;
+  color: #098de6 !important;
+  background-color: transparent;
+  border-radius: var(--main-borderradius) !important;
+  height: 36px !important;
+}
+.btn.reset-btn:hover,
+.p-column-filter-buttonbar .p-button.p-button-outlined:hover {
+  background: linear-gradient(0deg, rgba(9, 141, 230, 0.1), rgba(9, 141, 230, 0.1)), #FFFFFF !important;
+  color: #098de6;
+}
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
+  color: #535353;
+  font-size: 16px; 
+  padding: 6px 22px !important;
+  height:36px !important;
+}
+button.btn.new-cancelbtn:hover {
+  color: var(--main-bluecolor) ;
+}
+button:disabled,
+.btn.bluebg-button:disabled {
+  cursor: no-drop;
+  background: #e0e0e0 !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;
+}
+button.p-element.button-bot{
+  background-color: transparent !important;
+}
+
+/* Swal buttons */
+.swal2-styled.swal2-cancel {  
+  background-color: transparent !important; 
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
+}
+/* Swal buttons */
+/* grid-filter Overlay Styles Start */
+.p-column-filter-buttonbar .p-button.p-button-outlined {
+  color: var(--main-bluecolor) !important;
+  background: transparent !important;
+  margin-right: 10px !important;
+  height: 28px !important;
+}
+.p-column-filter-buttonbar {
+  justify-content: right !important;
+  padding: 0px 16px 10px !important;
+}
+.p-column-filter-buttonbar .p-button {
+  background: var(--main-bluecolor) !important;
+  border: 1px solid var(--main-bluecolor) !important;
+  padding: 3px 12px;
+  margin: 0px !important;
+  box-shadow: none !important;
+}
+button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
+  color: var(--main-bluecolor);  /* filter applied icon highlight */
+}
+/* grid-filter Overlay Styles End */
 .p-button-outlined {
   /* margin: 0 10px !important; */
   color: var(--secondary-bluecolor) !important;
@@ -2956,28 +3057,6 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-button-outlined.only_clearbtn {
   margin:0px !important;
 }
-
-/* grid-filter Overlay Styles Start */
-.p-column-filter-buttonbar .p-button.p-button-outlined {
-  color: var(--main-bluecolor) !important;
-  background: transparent !important;
-  margin-right: 10px !important;
-}
-.p-column-filter-buttonbar {
-  justify-content: right !important;
-  padding: 0px 16px 10px !important;
-}
-.p-column-filter-buttonbar .p-button {
-  background: var(--main-bluecolor) !important;
-  border: 1px solid var(--main-bluecolor) !important;
-  padding: 4px 12px;
-  margin: 0px !important;
-  box-shadow: none !important;
-}
-button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
-  color: var(--main-bluecolor);  /* filter applied icon highlight */
-}
-/* grid-filter Overlay Styles End */
 /* Grid NEW Styles End */
 
 /* primeNg components Styles Start */
@@ -3548,83 +3627,6 @@ textarea.p-inputtextarea {
   /* padding: 10px 20px; */
 }
 /* New Dashboard Styles End */
-
-/* Entire application buttons */
-button.btn {
-  padding: 8px 12px !important;
-  line-height: normal !important;
-  border: medium none !important;
-  font-size: 15px;
-  border-radius: var(--main-borderradius);
-  color: var(--main-txtcolor);
-  min-width: 75px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  box-shadow: none !important;
-}
-
-button.btn.btn-default {
-  background: #eeeeee;
-  margin-right: 10px;
-}
- 
-.btn.bluebg-button {
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 22px !important;
-  border-radius: var(--main-borderradius) !important;
-  height: 36px !important;
-}
-button.btn.bluebg-button.savefoldername {
-  margin-top: 15px;
-  float: right;
-} 
-.btn.bluebg-button:hover {
-  background: #209AED !important;
-  color: #fff  !important;
-}
-.btn.reset-btn {
-  border: 1px solid #098DE6 !important;
-  color: #098de6 !important;
-  background-color: transparent;
-  border-radius: var(--main-borderradius) !important;
-  height: 36px !important;
-}
-.btn.reset-btn:hover {
-  background: linear-gradient(0deg, rgba(9, 141, 230, 0.1), rgba(9, 141, 230, 0.1)), #FFFFFF !important;
-  color: #098de6;
-}
-button.btn.canlrst-btn,
-button.btn.new-cancelbtn {
-  color: #535353;
-  font-size: 16px; 
-  padding: 6px 22px !important;
-  height:36px !important;
-}
-button.btn.new-cancelbtn:hover {
-  color: var(--main-bluecolor) ;
-}
-button:disabled {
-  cursor: no-drop;
-  background: #e0e0e0 !important;
-  color: #7D7D7D !important;
-  opacity: 1 !important;
-}
-button.p-element.button-bot{
-  background-color: transparent !important;
-}
-
-
-/* Swal buttons */
-.swal2-styled.swal2-cancel {  
-  background-color: transparent !important; 
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-  background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
-}
-/* Swal buttons */
 
 /* ----------------------NEW STYLES END------------------------- */
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
