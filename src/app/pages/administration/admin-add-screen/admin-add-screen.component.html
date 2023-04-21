@@ -29,7 +29,7 @@
             <div class="col-6 p-0">
               <div class="form-group col-sm-12 pl-0">
                 <label class="label-control">Screen Name <span class="star">*</span></label>
-                <input type="text" formControlName="screen_Name" maxlength="256" (input)="checkScreenName()" placeholder="Enter Screen Name"
+                <input type="text" formControlName="screen_Name" maxlength="51" (input)="checkScreenName()" placeholder="Enter Screen Name"
                   class="form-control" />
                 <span *ngIf="
                   insertForm.get('screen_Name')!.invalid &&
@@ -40,7 +40,7 @@
                 </span>
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
-                  class="required">Maximum of 255 characters *</span>
+                  class="required">Maximum of 50 characters*</span>
                 <span *ngIf="!screenNameCheck && insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
                   between words are allowed*
                 </span>
