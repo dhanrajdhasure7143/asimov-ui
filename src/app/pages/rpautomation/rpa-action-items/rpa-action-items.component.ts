@@ -122,7 +122,7 @@ export class RpaActionItemsComponent implements OnInit {
 
   viewDetails(event) {
     let actionID = event.id
-    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, create:false, formDisabled : true}});
+    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
   }
 
     deleteById(event) {
