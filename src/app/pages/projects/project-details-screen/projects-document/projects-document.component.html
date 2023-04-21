@@ -57,7 +57,7 @@
                     <span *ngIf="node.label != 'Add Folder' && node.label != 'Add Folder / Document' && node.dataType =='folder'">
                         <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon">
                     </span>
-                    <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType=='txt'">
+                    <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType=='txt'|| node.dataType == 'docx'">
                         <img src="./../../../../assets/images-n/projects/document-file.svg" alt="Create">
                     </span>
                     <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType !='txt'&& node.dataType=='jpg'||node.dataType=='gif'||node.dataType=='svg'||node.dataType=='png'">
