@@ -351,6 +351,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;
+    this.tenantsList.sort((a, b) => (a.tenant_name.toLowerCase() > b.tenant_name.toLowerCase()) ? 1 : ((b.tenant_name.toLowerCase() > a.tenant_name.toLowerCase()) ? -1 : 0));
     this.tenantsList.map(item=>{
       item["label"] = item.tenant_name,
       item["command"]= (e) => { this.onChangeTenant(e)}

@@ -56,13 +56,20 @@
                             <div class="form-group col p-0">
                                 <label *ngIf="isCreate"class="label-control" for="task_icon"> Connector Logo <span class="star" *ngIf="isCreate">*</span></label>                                <!-- <input type="file" pInputText [style]="{'width':'100%'}" formControlName="taskIcon" placeholder="Upload Icon"> -->
                                 <label *ngIf="!isCreate"class="label-control" for="task_icon"> Replace Connector Logo?</label> 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <input *ngIf="isCreate" pInputText [style]="{'width':'100%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
                                     <input *ngIf="!isCreate" class="custom" pInputText [style]="{'width':'94%'}" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)"
                                     formControlName="taskIcon" id="formFileLg" type="file" />
                                     <img *ngIf="!isCreate" class="logo" [src]="'data:image/png;base64,'+connector_icon" alt="connector_icon"> 
-                                </div>   
+                                </div>    -->
+                                <div class="input-group">
+                                    <input type="file" pInputText class="form-control" formControlName="taskIcon" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                      aria-label="Upload" /> &nbsp;
+                                    <span  id="inputGroupFileAddon04">
+                                    <img *ngIf="!isCreate" class="logo" [src]="'data:image/png;base64,'+connector_icon" alt="connector_icon"> 
+                                    </span>
+                                </div>
                             </div>
                         </form>
                         <div class="createform-footer">
