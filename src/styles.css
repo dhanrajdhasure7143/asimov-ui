@@ -3481,6 +3481,7 @@ textarea.p-inputtextarea {
   margin: 10px;
   padding: 10px 15px;
   background: #fff;
+  cursor: pointer;
 }
 .docfolder .p-card:hover {
   border: 1px solid var(--secondary-bluecolor);

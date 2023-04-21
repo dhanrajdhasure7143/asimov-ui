@@ -352,8 +352,17 @@ input.msgip {
 .collabottom button:last-child {
     padding: 0px 0px 0px 4px !important;
 }
+.emptychat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
 .emptychat img {
-    margin-top: 10%;
+    /* margin-top: 10%; */
+    width: 200px;
+    height: auto;
 }
 .emptychat p {
     margin-top: 10px;
