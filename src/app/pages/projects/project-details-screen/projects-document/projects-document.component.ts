@@ -32,8 +32,9 @@ export class ProjectsDocumentComponent implements OnInit {
     key :"",
     label: "",
     data: "Folder",
-    expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder",
+    // expandedIcon: "pi pi-folder-open",
+    // collapsedIcon: "pi pi-folder",
+    icon:"folder.svg",
     dataType:'folder'
   };
   folder_files:any=[];
@@ -95,8 +96,7 @@ export class ProjectsDocumentComponent implements OnInit {
             label: "Add Folder",
             data: "Add Folder",
             data_type:"addfolder",
-            collapsedIcon: 'pi pi-folder',
-            expandedIcon: 'pi pi-folder'
+            icon:"folderadd.svg"
           },
         ];
         this.convertToTreeView(res_data)
@@ -111,8 +111,7 @@ export class ProjectsDocumentComponent implements OnInit {
           key: data.key+'-0',
           label: "Add Folder / Document",
           dataType:"folder",
-          collapsedIcon: 'pi pi-folder',
-          expandedIcon: 'pi pi-folder'
+          icon: 'folderadd.svg'
         }]
       }
       return data
@@ -132,12 +131,15 @@ export class ProjectsDocumentComponent implements OnInit {
       uploadedDate:obj.uploadedDate
     };
       if(obj.dataType == 'folder'){
-        node['collapsedIcon']=  "pi pi-folder"
-        node["expandedIcon"]  ="pi pi-folder-open"
+        node['icon'] = "folder.svg"
+        // node['collapsedIcon']=  "pi pi-folder"
+        // node["expandedIcon"]  ="pi pi-folder-open"
       }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        node['icon']=  "pi pi-image"
+        // node['icon']=  "pi pi-image"
+        node['icon'] = "img-file.svg"
     }else{
-      node['icon']=  "pi pi-file"
+      // node['icon']=  "pi pi-file"
+      node['icon'] = "document-file.svg"
     }
     this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
@@ -180,7 +182,7 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   }
   this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  this.folder_files = this.files
+  this.folder_files = this.files;
   this.getTaskList();
   this.loader.hide();
   }
@@ -229,16 +231,18 @@ export class ProjectsDocumentComponent implements OnInit {
         let res_data:any = res
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
       let obj = res_data.data[0];
-      obj['expandedIcon'] = "pi pi-folder-open"
-      obj['collapsedIcon'] = "pi pi-folder";
+      // obj['expandedIcon'] = "pi pi-folder-open"
+      // obj['collapsedIcon'] = "pi pi-folder";
+      obj['icon'] = "folder.svg"
       obj["children"]= [
         {
           key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
           data: "Folder",
           dataType:"folder",
-          expandedIcon: "pi pi-folder",
-          collapsedIcon: "pi pi-folder",
+          // expandedIcon: "pi pi-folder",
+          // collapsedIcon: "pi pi-folder",
+          icon: 'folderadd.svg'
         }
       ]
         this.selectedFile.parent.children.push(obj);
@@ -352,16 +356,18 @@ export class ProjectsDocumentComponent implements OnInit {
       let res_data:any = res
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
       let obj = res_data.data[0];
-      obj['expandedIcon'] = "pi pi-folder-open"
-      obj['collapsedIcon'] = "pi pi-folder";
+      // obj['expandedIcon'] = "pi pi-folder-open"
+      // obj['collapsedIcon'] = "pi pi-folder";
+      obj['icon'] = "folder.svg"
       obj["children"]= [
         {
           key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
           data: "Folder",
           dataType:"folder",
-          expandedIcon: "pi pi-folder",
-          collapsedIcon: "pi pi-folder",
+          // expandedIcon: "pi pi-folder",
+          // collapsedIcon: "pi pi-folder",
+          icon: 'folderadd.svg'
         }
       ]
 
@@ -394,16 +400,18 @@ addParentFolder() {
     let res_data:any = res;
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
     let obj = res_data.data[0];
-    obj['expandedIcon'] = "pi pi-folder-open"
-    obj['collapsedIcon'] = "pi pi-folder";
+    // obj['expandedIcon'] = "pi pi-folder-open"
+    // obj['collapsedIcon'] = "pi pi-folder";
+    obj['icon'] = "folder.svg"
     obj["children"]= [
       {
         key: String(obj.key)+"-0" ,
         label: "Add Folder / Document",
         data: "Folder",
         dataType:"folder",
-        expandedIcon: "pi pi-folder",
-        collapsedIcon: "pi pi-folder",
+        // expandedIcon: "pi pi-folder",
+        // collapsedIcon: "pi pi-folder",
+        icon: 'folderadd.svg'
       }
     ]
     this.files.push(obj);
@@ -552,8 +560,8 @@ addParentFolder() {
     let fileKeys=[]
     for (let i = 0; i < selectedFile.length; i++) {
       fileData.append("filePath", selectedFile[i]);
-      fileKeys.push(String(objectKey+'-'+(i+1)))
-  }
+      fileKeys.push(String(objectKey+'-'+(i+this.selectedFile.parent.children.length)))
+    }
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')
@@ -569,9 +577,11 @@ addParentFolder() {
     res_data.data.forEach(item=>{
       let obj = item
       if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        obj['icon']=  "pi pi-image"
+        // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        obj["collapsedIcon"]= "pi pi-file"
+        // obj["collapsedIcon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.selectedFile.parent.children.push(obj);
     })
@@ -672,9 +682,11 @@ addParentFolder() {
     res_data.data.forEach(item=>{
       let obj = item
       if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        obj['icon']=  "pi pi-image"
+      // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        obj["collapsedIcon"]= "pi pi-file"
+        // obj["collapsedIcon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.selectedFolder.children.push(obj);
     })
@@ -929,8 +941,9 @@ addParentFolder() {
           label: "Add Folder",
           data: "Add Folder",
           data_type:"addfolder",
-          collapsedIcon: 'pi pi-folder',
-          expandedIcon: 'pi pi-folder'
+          // collapsedIcon: 'pi pi-folder',
+          // expandedIcon: 'pi pi-folder'
+          icon:"folderadd.svg",
         },
       ];
       this.convertToTreeView(this.documents_resData)
@@ -962,12 +975,15 @@ addParentFolder() {
         uploadedDate:obj.uploadedDate
       };
         if(obj.dataType == 'folder'){
-          node['collapsedIcon']=  "pi pi-folder"
-          node["expandedIcon"]  ="pi pi-folder-open"
+          // node['collapsedIcon']=  "pi pi-folder"
+          // node["expandedIcon"]  ="pi pi-folder-open"
+          node["icon"]="folder.svg"
         }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-          node['icon']=  "pi pi-image"
+          // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        node['icon']=  "pi pi-file"
+        // obj["icon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.nodeMap[obj.key] = node;
       if (obj.key.indexOf('-') === -1) {

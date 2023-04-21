@@ -154,7 +154,7 @@ export class RestApiService{
     return this.http.get("/rpa-service/load-toolset");
   }
   attribute(data:any,uuid:any){
-    if(uuid=="null" || uuid==""){
+    if(uuid=="null" || uuid=="" || uuid==null){
       return this.http.get('/rpa-service/get-attributes/'+data);
     }
     else{
