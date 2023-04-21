@@ -930,7 +930,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (taskdata != undefined) {
         if (taskdata.tMetaId == selectedNodeId) {
           let finalattributes: any = [];
-          console.log(node);
           this.rest.attribute(node.selectedNodeId, node.action_uuid).subscribe((data) => {
             finalattributes = data;
             this.formAttributes.set(Number(selectedNodeId), data);
@@ -1464,7 +1463,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     });
-    console.log(this.selectedNode.action_uid)
     let cutedata = {
       taskName: this.selectedTask.name,
       tMetaId: parseInt(this.selectedTask.id),
