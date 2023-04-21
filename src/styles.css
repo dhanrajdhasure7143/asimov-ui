@@ -2819,11 +2819,11 @@ span.tabscount {
   height: calc(100vh - 380px) !important;
 }
  /* Media queries */
- @media screen and (min-width: 1600px) {
+ /* @media screen and (min-width: 1600px) {
   .well1-dynmic.graph .p-datatable-wrapper {
     height: calc(100vh - 530px) !important;
   }
-}
+} */
 .bps-approvalgrid .p-datatable-wrapper {
   height: calc(100vh - 195px); /* for bps-approval grid */
 }
@@ -3379,8 +3379,8 @@ button.btn.new-cancelbtn {
 /* Tree Styles Start */
 .doctree .p-treenode .p-treenode-content {
   width: 38%;
-  padding: 10px 0px !important;
-  align-items: flex-start;
+  padding: 6px !important;
+  align-items: center;
 }
 .doctree .p-tree {
   border: unset !important;
@@ -3391,14 +3391,16 @@ button.btn.new-cancelbtn {
 .doctree .p-treenode .p-treenode-content .p-tree-toggler {
   margin-right: 0px !important;
   justify-content: flex-start !important;
+  width: auto !important;
+  height: auto !important;
 }
 .doctree .p-treenode-icon {
-  margin-right: 1rem !important;
+  /* margin-right: 1rem !important;
   font-size: 22px;
-  color: var(--main-bluecolor) !important;
+  color: var(--main-bluecolor) !important; */
 }
 .doctree span.p-treenode-label {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--main-txtcolor) !important;
 }
 .doctree span.p-treenode-label b {
@@ -3417,20 +3419,23 @@ button.btn.new-cancelbtn {
 /* Tree Styles End */
 
 .docfolder .p-card {
-  height: 160px;
+  height: 176px;
+  width: 176px;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* border: 1px solid #eee; */
   box-shadow: unset !important;
-  border-radius: 8px;
-  border: 1px solid var(--cards-bordercolor);
+  border-radius: 3px;  
   margin: 10px;
+  padding: 10px 15px;
+  background: #fff;
 }
 .docfolder .p-card:hover {
   border: 1px solid var(--secondary-bluecolor);
 }
 .docfolder1 .addpcard .p-card {
-  background: #e9e9e9;
+  background: #eee;
   border: unset;
 }
 .docscrnchngs .p-breadcrumb ul li:last-child .p-menuitem-text {
@@ -3453,17 +3458,16 @@ button.btn.new-cancelbtn {
   color: var(--main-bluecolor) !important;
   font-size: 40px;
 }
+.docfolder .p-card-content div {  
+  margin-bottom: 10px;
+}
 .docfolder .p-card-content span {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--main-txtcolor) !important;
   display: block;
-  margin-top: 20px;
 }  
-.docfolder .p-card-body {
+.docfolder .p-card-body, .docfolder .p-card-content {
   padding: 0px !important;
-}
-.docfolder .p-card-content {
-  padding: 15px !important;
 }
 
 /* Document Overlay Styles Start */

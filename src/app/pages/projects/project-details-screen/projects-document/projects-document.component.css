@@ -12,12 +12,20 @@
   vertical-align: middle;
 }
 .docfolder .cards {
-  width: 20%;
+  /* width: 20%; */
   text-align: center;
   word-break: break-word;
 }
-
-
+.docfolder img {
+  width: 76px;
+}
+.doctree img {
+  width: 36px;
+  margin-right: 5px;
+}
+.docfolder input.p-inputtext {
+  width: 100% !important;
+}
 
 /* ----- Document Footer Tree/Folder Icon Styles ----- */
 .docfootbtns {
@@ -27,6 +35,9 @@
   right: 15px;
   /* bottom: 4px;
   right: 0px; */
+}
+.docfootbtns img {
+  width: 36px !important;
 }
 .docfootbtns button.btn {
   background: #fff!important;
