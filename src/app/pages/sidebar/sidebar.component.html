@@ -3,18 +3,18 @@
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
   
-        <a mat-list-item *ngIf="!freetrail" class="link" id="eiap-home" (click)="hightlight('eiap-home',null)"
+        <a mat-list-item *ngIf="!freetrail" class="link" [ngClass]="_selectedModule=='eiap-home'?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
           routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
           matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Active.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Active.svg" alt="">
             </span>
             <span class="hover-img" id="eiap-home-icon-white">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Hover.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Hover.svg" alt="">
             </span>
             <span class="default-img" id="eiap-home-icon-gray">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Normal.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Dashboard-Normal.svg" alt="">
             </span>
           </span>
           <span class="side-menu-font">Dashboard</span>
@@ -43,13 +43,13 @@
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Active.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Active.svg" alt="">
             </span>
             <span class="hover-img" id="eiap-home-icon-white">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Hover.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Hover.svg" alt="">
             </span>
             <span class="default-img" id="eiap-home-icon-gray">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Normal.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Projects-Normal.svg" alt="">
             </span>
           </span>
           <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
@@ -88,13 +88,13 @@
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Active.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Active.svg" alt="">
             </span>
             <span class="hover-img" id="eiap-home-icon-white">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Hover.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Hover.svg" alt="">
             </span>
             <span class="default-img" id="eiap-home-icon-gray">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Normal.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Orchestration-Normal.svg" alt="">
             </span>
           </span>
           <span class="side-menu-font">Orchestration</span>
@@ -104,13 +104,13 @@
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Active.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Active.svg" alt="">
             </span>
             <span class="hover-img" id="eiap-home-icon-white">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Hover.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Hover.svg" alt="">
             </span>
             <span class="default-img" id="eiap-home-icon-gray">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Normal.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Workspace-Normal.svg" alt="">
             </span>
           </span>
           <span class="side-menu-font">Workspace</span>
@@ -138,13 +138,13 @@
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Active.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Active.svg" alt="">
             </span>
             <span class="hover-img" id="eiap-home-icon-white">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Hover.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Hover.svg" alt="">
             </span>
             <span class="default-img" id="eiap-home-icon-gray">
-              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Normal.svg">
+              <img src="../../../assets/images/dashboard_icons/New-Icons/Administration-Normal.svg" alt="">
             </span>
           </span>
           <span class="side-menu-font">Administration</span>
@@ -165,13 +165,13 @@
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
             <span class="side-icon">
               <span class="active-img" id="eiap-home-icon-active">
-                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Active.svg">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Active.svg" alt="">
               </span>
               <span class="hover-img" id="eiap-home-icon-white">
-                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Hover.svg">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Hover.svg" alt="">
               </span>
               <span class="default-img" id="eiap-home-icon-gray">
-                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Normal.svg">
+                <img src="../../../assets/images/dashboard_icons/New-Icons/Subscription-Normal.svg" alt="">
               </span>
             </span>
             <span  class="side-menu-font">Manage Subscriptions</span>

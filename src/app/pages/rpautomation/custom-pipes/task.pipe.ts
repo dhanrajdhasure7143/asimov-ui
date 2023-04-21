@@ -14,6 +14,7 @@ export class TaskPipe implements PipeTransform {
           path:nodedata.path,
           selectedNodeTask:task.name,
           selectedNodeId:task.taskId,
+          action_uid:task.action_uid,
           tasks:nodedata.tasks
         };
         if(task.taskIcon!="null" && task.taskIcon !="")

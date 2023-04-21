@@ -58,11 +58,54 @@ export class DropDownComponent implements OnInit {
           }
         }
       }
+      if(this.field.name=="username")
+      {
+        let email=this.field.options.find((item:any)=>item.key==this.field.value).label;
+        let emailRef=this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef");
+        if(!(this.isEmail(email)))
+        {
+          this.form.get("emailRef_"+emailRef.id).clearValidators();
+          this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").visibility=true;
+          this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").required=true;
+          this.form.get("emailRef_"+emailRef.id).updateValueAndValidity();
+        }
+        else
+        {
+          this.form.get("emailRef_"+emailRef.id).clearValidators();
+          this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").visibility=false;  
+          this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").required=false;
+          this.form.get("emailRef_"+emailRef.id).updateValueAndValidity();
+        
+        }
+      }
     }
 
       onChangeEmail(event, options , field) {
         if (event.target.value == 'New') {
           this.designer.openCreateCredential();
+        }
+        if(field.name=="username")
+        {
+          let email=this.field.options.find((item:any)=>item.key==event.target.value).label;
+          let emailRef=this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef");
+          if(!(this.isEmail(email)))
+          {
+
+            this.form.get("emailRef_"+emailRef.id).reset();
+            this.form.get("emailRef_"+emailRef.id).clearValidators();
+            this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").visibility=true;
+            this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").required=true;
+            this.form.get("emailRef_"+emailRef.id).updateValueAndValidity();
+          }
+          else
+          {
+            this.form.get("emailRef_"+emailRef.id).reset();
+            this.form.get("emailRef_"+emailRef.id).clearValidators();
+            this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").visibility=false;  
+            this.fields.find((fieldItem:any)=>fieldItem.name=="emailRef").required=false;
+            this.form.get("emailRef_"+emailRef.id).updateValueAndValidity();
+          
+          }
         }
         if (event.target.value == 'fill' || event.target.value == 'click') {
           this.fieldsWithoutRef = [...this.designer.fields];
@@ -114,6 +157,14 @@ export class DropDownComponent implements OnInit {
           }
         }
       }
+
+      isEmail(email:any)
+      {
+        var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
+      }
    
     }
+
+
 
