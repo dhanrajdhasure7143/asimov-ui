@@ -181,7 +181,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
   this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
   this.folder_files = this.files;
-  console.log(this.files)
   this.getTaskList();
   this.loader.hide();
   }
