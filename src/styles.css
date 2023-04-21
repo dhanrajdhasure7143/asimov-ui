@@ -799,7 +799,7 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 9999 !important;
+  z-index: 1 !important;
 }
 
 #sidenav.menu-open {
@@ -2534,7 +2534,7 @@ button.custom-popupbtn.mat-button {
   --formfield-bordercolor: #979797;
   --cards-bordercolor: #D0D0D0;
   --formlabel-color: #7d7d7d;
-  --main-borderradius: 6px;
+  --main-borderradius: 3px;
   --high-importance: #ea3d3d;
   --medium-importance: #E58600;
   --low-importance: #27AD74;
@@ -3099,7 +3099,7 @@ textarea.p-inputtextarea {
 .selectfoldername .p-dialog,
 .createdashboardname .p-dialog {
   width: 400px;
-  border-radius: 8px !important;
+  border-radius: 3px !important;
   padding: 20px;
   background-color: #fff;
 }
@@ -3607,3 +3607,32 @@ button.btn.new-cancelbtn {
   #toolbar-container .ck.ck-button:active{border:1px solid #eee;}
   #toolbar-container .ck.ck-button:active{border:1px solid #eee}
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
+/* ----------------------popup changes------------------------- */
+.p-component-overlay {
+  background-color: #091e42ab !important;
+  transition-duration: 0.2s;
+}
+.p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+  margin-left: 0rem !important; 
+  font-size: 16px !important;
+  color: #333 !important;
+}
+.p-dialog .p-dialog-footer button {
+  margin: 0 0 0 0 !important; 
+ 
+}
+/* .p-dialog.p-confirm-dialog .p-confirm-dialog-icon {
+  font-size: 1.6rem !important;
+  margin-right: 10px;
+  color: #ffff;
+  background-color: #ff9f1a;
+  border-radius: 12px;
+} */
+.swal2-popup {
+ border-radius: 3px !important;
+ }
+ .swal2-container.swal2-backdrop-show {
+  background: #091e42ab !important;
+}
+/* ----------------------popup changes------------------------- */
+

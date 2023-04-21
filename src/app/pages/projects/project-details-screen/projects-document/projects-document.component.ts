@@ -694,7 +694,7 @@ addParentFolder() {
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: 'Confirmation',
-      icon: 'pi pi-info-circle',
+     
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
           this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !!'});

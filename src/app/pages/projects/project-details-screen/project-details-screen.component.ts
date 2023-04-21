@@ -643,7 +643,7 @@ const selectedresource = [
 this.confirmationService.confirm({
   message: "Are you sure?, You won't be able to revert this!",
   header: 'Confirmation',
-  icon: 'pi pi-info-circle',
+  
   accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
@@ -999,7 +999,7 @@ pinMessage(item){
   this.confirmationService.confirm({
     message: 'Want to replace the currently pinned message with this one?',
     header: 'Confirmation',
-    icon: 'pi pi-info-circle',
+   
     accept: () => {
       this.sendMessage(item,'pinned')
     },

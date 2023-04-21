@@ -163,7 +163,7 @@ export class ProjectTaskListComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure that you want to proceed?",
       header: "Confirmation",
-      icon: "pi pi-info-circle",
+      
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
