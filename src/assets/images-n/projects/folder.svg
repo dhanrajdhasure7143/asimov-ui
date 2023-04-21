@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_287_11158)">
+<path d="M40.625 14.6877H26.0417L20.5625 8.06273C20.3687 7.82374 20.1243 7.63067 19.8469 7.49739C19.5695 7.36411 19.2661 7.29393 18.9584 7.29189H9.37502C8.01379 7.27518 6.7014 7.79855 5.72522 8.74739C4.74905 9.69624 4.18863 10.9932 4.16669 12.3544V37.6461C4.18863 39.0072 4.74905 40.3042 5.72522 41.2531C6.7014 42.2019 8.01379 42.7253 9.37502 42.7086H40.625C41.9863 42.7253 43.2986 42.2019 44.2748 41.2531C45.251 40.3042 45.8114 39.0072 45.8334 37.6461V19.7502C45.8114 18.3891 45.251 17.0921 44.2748 16.1432C43.2986 15.1944 41.9863 14.671 40.625 14.6877Z" fill="#098DE6" fill-opacity="0.68"/>
+</g>
+<defs>
+<clipPath id="clip0_287_11158">
+<rect width="50" height="50" fill="white"/>
+</clipPath>
+</defs>
+</svg>
