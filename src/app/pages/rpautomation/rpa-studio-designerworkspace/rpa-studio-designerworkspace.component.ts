@@ -1498,6 +1498,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (notifierflag) this.notifier.notify("info", "Data Saved Successfully");
   }
 
+  
   // async saveBotFun(botProperties, env) {
   //   this.checkorderflag=true;
   //   this.addsquences();
