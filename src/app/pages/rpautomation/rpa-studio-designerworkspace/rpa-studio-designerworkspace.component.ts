@@ -1858,7 +1858,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     })
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
-      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId);
+      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
       item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
       return item;
     })]
