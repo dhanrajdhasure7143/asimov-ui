@@ -41,6 +41,7 @@ import {ChartModule} from 'primeng/chart';
 import {TieredMenuModule} from 'primeng/tieredmenu';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {AvatarModule} from 'primeng/avatar';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 @NgModule({
   declarations: [],
   imports: [
@@ -84,7 +85,8 @@ import {AvatarModule} from 'primeng/avatar';
     TieredMenuModule,
     RippleModule,
     BreadcrumbModule,
-    AvatarModule
+    AvatarModule,
+    ToggleButtonModule
   ],
   exports: [
     CommonModule,
@@ -127,7 +129,8 @@ import {AvatarModule} from 'primeng/avatar';
     ChartModule,
     TieredMenuModule,
     BreadcrumbModule,
-    AvatarModule
+    AvatarModule,
+    ToggleButtonModule
   ],
   providers: [ConfirmationService, MessageService]
 })
