@@ -134,6 +134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isShowExpand: boolean = false;
   splitAreamin_size = "200";
   draggableHandle: any;
+  executionMode:any="v2";
 
   @ViewChild("template") template: TemplateRef<any>;
   @ViewChild("checkBotTemplate")
@@ -1765,7 +1766,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         scheduler: null,
         svg: this.svg,
         sequences: this.getsequences(),
-        isBotCompiled: this.isBotCompiled
+        isBotCompiled: this.isBotCompiled,
+        executionMode: this.executionMode
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
