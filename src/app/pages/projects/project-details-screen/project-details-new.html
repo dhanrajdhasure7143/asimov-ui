@@ -493,7 +493,7 @@
                 </p-tabPanel>
                 <p-tabPanel>
                     <ng-template pTemplate="header">
-                        <h4>Existing Users</h4>
+                        <h4>Existing Users <span>({{existingUsersList.length}})</span></h4>
                     </ng-template>
                 </p-tabPanel>
 
@@ -576,11 +576,11 @@
             [style]="{'max-height':'auto','overflow':'auto'}" [(selection)]="selected_folder">
         </p-tree>
     </span>
-    <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='createFolder' " type="button" class="btn bluebg-button savefoldername"
         (click)='createFolder()'>Ok</button>
-    <button *ngIf="selectedType =='document' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='document' " type="button" class="btn bluebg-button savefoldername"
         (click)='navigateToCreateDocument()'>Ok</button>
-        <button *ngIf="selectedType =='uploadFile' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='uploadFile' " type="button" class="btn bluebg-button savefoldername"
         (click)='uploadFile()'>Ok</button>
 </p-dialog>
 
@@ -591,11 +591,16 @@
     <div *ngIf="entered_folder_name.length > 50" class="errspan required">
         Maximum of 50 characters
     </div>
-    <button type="button" class="btn btn-primary" (click)="saveFolder()"
+    <button type="button" class="btn bluebg-button" (click)="saveFolder()"
         [disabled]="!(entered_folder_name.length > 4 && entered_folder_name.length < 51 )">Save</button>
     </span>
     </p-dialog>
 
 <p-toast [style]="{marginTop: '50px'}"></p-toast>
-<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
-    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" 
+rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

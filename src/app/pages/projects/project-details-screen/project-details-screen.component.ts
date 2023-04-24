@@ -602,7 +602,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.checktodelete();
     this.getRecentactivities();
     this.snapShotDetails();
-    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !'});
     this.checkBoxselected =[];
     // this.onUsersTab(0);
     this.spinner.hide();
@@ -641,13 +641,13 @@ const selectedresource = [
 ]
 
 this.confirmationService.confirm({
-  message: "Are you sure?, You won't be able to revert this!",
-  header: 'Confirmation',
-  icon: 'pi pi-info-circle',
+  message: "Do you really want to delete this user? This process cannot be undone.",
+  header: 'Are you sure?',
+  
   accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !'});
     this.getTheExistingUsersList(1);
     // setTimeout(() => {
     //   this.onUsersTab(1);
@@ -731,7 +731,7 @@ this.rest_api.update_project(this.projectDetails).subscribe(res => {
   // this.spinner.hide();
   let response: any = res;
   if (response.errorMessage == undefined)
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !!'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !'});
   else
   this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
   this.getProjectdetails()
@@ -998,8 +998,8 @@ pinMessage(item){
   if(this._pinnedMessage.length>0){
   this.confirmationService.confirm({
     message: 'Want to replace the currently pinned message with this one?',
-    header: 'Confirmation',
-    icon: 'pi pi-info-circle',
+    header: 'Are you sure?',
+   
     accept: () => {
       this.sendMessage(item,'pinned')
     },
@@ -1316,7 +1316,7 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
   this.spinner.hide();
   this.isDialog=false;
   this.entered_folder_name=''
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
 },err=>{
   this.spinner.hide();
   this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
@@ -1505,7 +1505,7 @@ selectEnd() {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File Uploaded Successfully !!",
+          detail: "File Uploaded Successfully !",
         });
       },
       (err) => {

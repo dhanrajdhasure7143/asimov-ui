@@ -10,11 +10,11 @@
             <span class="module-header-title">Properties</span>
         </div>
         <div class="ml-auto submit" *ngIf="!isEdit">
-            <button class="btn btn-default" (click)="resetProperties()">Reset</button>
-            <button class="btn btn-primary" (click)="saveProperties()">Save</button>
+            <button class="btn new-cancelbtn" (click)="resetProperties()">Reset</button>
+            <button class="btn bluebg-button" (click)="saveProperties()">Save</button>
         </div>
         <div class="ml-auto submit" *ngIf="isEdit">
-            <button class="btn btn-primary" (click)="updateProperties()">Update</button>
+            <button class="btn bluebg-button" (click)="updateProperties()">Update</button>
         </div>
     </div>
 
@@ -451,8 +451,8 @@
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-            <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+            <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button" (click)="onSubmitUpload()">Submit</button>
         </div>
     </div>
 </div>

@@ -336,9 +336,9 @@ export class ConfigureDashboardComponent implements OnInit {
     
       if (this.isdefaultDashboard == "true") {
         this.confirmationService.confirm({
-          message: "Change the default dashboard",
+          message: "Change your default dashboard before deleting.",
           header: "Info",
-          icon: "pi pi-info-circle",
+          
           rejectVisible: false,
           acceptLabel: "Ok",
           accept: () => {},
@@ -347,16 +347,17 @@ export class ConfigureDashboardComponent implements OnInit {
         return;
       }
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
-      icon: "pi pi-info-circle",
+      message: "Do you really want to delete this dashboard? This process cannot be undone.",
+      header: "Are you Sure?",
+     
       accept: () => {
         this.loader.show();
         this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe(data=>{
           this.messageService.add({
             severity: "success",
             summary: "Success",
-            detail: "Deleted Successfully !!",
+            
+            detail: "Deleted Successfully !",
           });
         });
         this.loader.hide();

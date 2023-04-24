@@ -180,9 +180,9 @@ export class ProjectTaskDetailsComponent implements OnInit {
   deleteDocuments() {
     let req_body = [];
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
-      icon: "pi pi-info-circle",
+      message: "Do you really want to delete this document? This process cannot be undone.",
+      header: "Are you Sure?",
+      
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(
@@ -190,7 +190,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !!",
+              detail: "Deleted Successfully !",
             });
             this.getTheListOfFolders();
             this.getTaskAttachments();
@@ -272,12 +272,12 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task Updated Successfully !!",
+          detail: "Task Updated Successfully !",
         });
         this.gettask();
         // let status: any = res;
         // if (status.errorMessage == undefined) {
-        //   Swal.fire("Success", "Task Updated Successfully !!", "success");
+        //   Swal.fire("Success", "Task Updated Successfully !", "success");
         // } else {
         //   Swal.fire("Error", status.errorMessage, "error");
         // }
@@ -402,7 +402,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File Uploaded Successfully !!",
+          detail: "File Uploaded Successfully !",
         });
         this.getTaskAttachments();
       },

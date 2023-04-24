@@ -319,8 +319,10 @@ export class DataselectionComponent implements OnInit {
         text: "Are you sure want to use this as caseID!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
         confirmButtonText: 'Yes',
         allowOutsideClick:false
       }).then((result) => {

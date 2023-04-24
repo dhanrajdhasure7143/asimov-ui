@@ -167,8 +167,10 @@ export class ViewPropertiesComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       heightAuto: false,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
@@ -184,8 +186,11 @@ export class ViewPropertiesComponent implements OnInit {
             icon: 'success',
             showCancelButton: false,
             heightAuto: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+    
             confirmButtonText: 'Ok'
           })
           this.isLoading = false;
