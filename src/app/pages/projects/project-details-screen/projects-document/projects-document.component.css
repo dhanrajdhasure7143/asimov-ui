@@ -6,18 +6,29 @@
   z-index: 1040;
 }
 
+.head-ritfilter {
+  height: 34px;
+}
 .docfilt-icon .pi-filter-slash {
   font-size: 20px;
   margin-left: 10px;
   vertical-align: middle;
 }
 .docfolder .cards {
-  width: 20%;
+  /* width: 20%; */
   text-align: center;
   word-break: break-word;
 }
-
-
+.docfolder img, .fldrovrlay img {
+  width: 70px;
+}
+.doctree img {
+  width: 34px;
+  margin-right: 5px;
+}
+.docfolder input.p-inputtext {
+  width: 100% !important;
+}
 
 /* ----- Document Footer Tree/Folder Icon Styles ----- */
 .docfootbtns {
@@ -27,6 +38,9 @@
   right: 15px;
   /* bottom: 4px;
   right: 0px; */
+}
+.docfootbtns img {
+  width: 36px !important;
 }
 .docfootbtns button.btn {
   background: #fff!important;

@@ -121,7 +121,7 @@
       <label><input type="checkbox" formControlName="isPredefined" /> Is Predefined</label>
       <div class="text-right">
         <button (click)="saveBotDetailsAndUpdate(null,null,null)" [disabled]="botDetailsForm.invalid"
-          class="btn btn-primary eiap-btn">
+          class="btn bluebg-button eiap-btn">
           Continue
         </button>
       </div>
@@ -174,7 +174,7 @@
           </select>
         </div>
         <div class="col-md-12">
-          <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">
+          <button class="btn bluebg-button eiap-btn" (click)="getoutput()">
             Submit
           </button>
         </div>
@@ -260,10 +260,10 @@
         <button class="btn btn-default" [disabled]="rp_url == ''" (click)="recording('start')">
           Start Recording
         </button>
-        <button class="btn btn-primary" (click)="recording('stop')">
+        <button class="btn bluebg-button" (click)="recording('stop')">
           Stop Recording
         </button>
-        <button class="btn btn-primary" (click)="submitcode()">
+        <button class="btn bluebg-button" (click)="submitcode()">
           Save code
         </button>
       </div>

@@ -125,14 +125,18 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         let status: any= response;
         //this.createtaskmodalref.hide();
+       
         Swal.fire({
           title: 'Success',
-          text: "Task Created Successfully !!",
+          text: "Task Created Successfully !",
           position: 'center',
           icon: 'success',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+         
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
@@ -248,16 +252,16 @@ taskDescriptionMaxLength(value){
      // this.existingUsersList.find(data=>data.user_email == event.value)?this.isExist_user= true:this.isExist_user = false
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
-      message: 'This user not in this project, Are you sure that you want to Invite them to this project?',
-      header: 'Confirmation',
-      icon: 'pi pi-info-circle',
+      message: 'This user is not in this project, Do you want to Invite them?',
+      header: 'Are you Sure?',
+      
       accept: () => {
         this.confirmationService.close();
       },
       reject: (type) => {
         this.createtaskForm.get("resources").setValue("");
       },
-      key: "positionDialog"
+      key: "assigneeDialog"
   });
    }
 }

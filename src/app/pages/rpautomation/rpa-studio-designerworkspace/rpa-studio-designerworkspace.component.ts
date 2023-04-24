@@ -531,7 +531,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         selectedNodeTask: element.taskName,
         selectedNodeId: element.tMetaId,
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
-        path:""
+        path:"",
+        action_uid:element.actionUUID
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -734,8 +735,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   autoSaveLoopEnd(node) {
     if (node.selectedNodeTask == "Loop-End") {
-      let  uuid=this.getTaskUUID(node.selectedNodeId);
-      this.rest.attribute(node.selectedNodeId,uuid).subscribe((res: any) => {
+      this.rest.attribute(node.selectedNodeId,node.action_uuid).subscribe((res: any) => {
         let data = res;
         let obj = {};
         data.map((ele) => {
@@ -930,8 +930,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (taskdata != undefined) {
         if (taskdata.tMetaId == selectedNodeId) {
           let finalattributes: any = [];
-          let uuid=this.getTaskUUID(node.selectedNodeId); 
-          this.rest.attribute(node.selectedNodeId, uuid).subscribe((data) => {
+          this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data) => {
             finalattributes = data;
             this.formAttributes.set(Number(selectedNodeId), data);
             //if(finalattributes.length==1 && finalattributes[0].type=="multiform")
@@ -1017,14 +1016,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           });
         } else {
-          let uuid=this.getTaskUUID(node.selectedNodeId);
-          this.rest.attribute(node.selectedNodeId,uuid).subscribe((data) => {
+          this.rest.attribute(node.selectedNodeId,node.action_uuid).subscribe((data) => {
             this.response(data, node);
           });
         }
       } else {
-        let uuid=this.getTaskUUID(node.selectedNodeId)
-        this.rest.attribute(node.selectedNodeId, uuid).subscribe((data:any) => {
+        this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
             Swal.fire("Error","Failed to get configuration form","error");
@@ -1184,7 +1181,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     );
   }
-
+// Record and play submit
   submitcode() {
     let data = {
       codeSnippet: $("#record_n_play").val(),
@@ -1192,7 +1189,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.close_record_play();
     this.onFormSubmit(data, true);
   }
-
+// close record and play form
   close_record_play() {
     document.getElementById("recordandplay").style.display = "none";
   }
@@ -1466,7 +1463,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     });
-
     let cutedata = {
       taskName: this.selectedTask.name,
       tMetaId: parseInt(this.selectedTask.id),
@@ -1478,6 +1474,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       x: this.selectedNode.x,
       y: this.selectedNode.y,
       attributes: obj,
+      actionUUID:this.selectedNode.action_uid
     };
     let index = this.finaldataobjects.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
@@ -1501,6 +1498,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (notifierflag) this.notifier.notify("info", "Data Saved Successfully");
   }
 
+  
   // async saveBotFun(botProperties, env) {
   //   this.checkorderflag=true;
   //   this.addsquences();
@@ -1682,8 +1680,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             this.isBotCompiled = flag
             );
         } else {
-          let uuid=this.getTaskUUID(node["tMetaId"]);
-          await this.rest.attribute(node["tMetaId"],uuid).subscribe( (response: any) => {
+          await this.rest.attribute(node["tMetaId"],node["actionUUID"]).subscribe( (response: any) => {
             this.formAttributes.set(node["tMetaId"], response);
             this.validateNode(node["tMetaId"], attributes).then(flag => 
               this.isBotCompiled = flag
@@ -1861,7 +1858,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     })
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
-      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId);
+      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
       item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
       return item;
     })]
@@ -2736,8 +2733,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
     }
     this.selectedNode = nodeData;
-    let uuid=this.getTaskUUID(nodeData.selectedNodeId);
-    this.rest.attribute(nodeData.selectedNodeId, uuid).subscribe((res: any) => {
+    this.rest.attribute(nodeData.selectedNodeId,nodeData.action_uid).subscribe((res: any) => {
       this.formVales = res;
       let data = res;
       let obj = {};
@@ -2778,17 +2774,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   {
     this.credentialsFormFlag=false;
   }
-  
-  getTaskUUID(taskId:any)
-  {
-    for(let toolsetItem of this.toolset)
-    {
-      if(toolsetItem.tasks.find((taskItem:any)=>taskId==taskItem.taskId))
-        return toolsetItem.tasks.find((taskItem:any)=>taskId==taskItem.taskId).action_uid;
-    }
-    return "null";
-  
-  }
+
   // stopBot() {
   //   let data="";
   //   if(this.savebotrespose!=undefined)

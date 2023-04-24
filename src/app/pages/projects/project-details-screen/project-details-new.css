@@ -21,7 +21,8 @@
     background-color: rgb(9 141 230 / 10%);
     border-radius: 6px 0px 0px 0px;
     height: 100%;
-    width: 75px;
+    /* width: 75px; */
+    width: 88px;
     padding: 30px 10px !important;
     justify-content: center;
     align-items: center;
@@ -39,6 +40,7 @@
     font-size: 32px;
     font-weight: 400;
     color: #222;
+    cursor: pointer;
 }
 span.highimp {
     color: #EA3D3D;
@@ -73,6 +75,7 @@ span.lowimp {
     align-items: flex-start;
     display: flex;
     margin-top: 8px;
+    cursor: pointer;
 }
 .pinf p {
     font-weight: 400;
@@ -121,7 +124,9 @@ span.lowimp {
 }
 .project-description label {
     padding-right: 5px;
-    font-size: 12px;
+    /* font-size: 12px; */
+    font-size: 14px;
+    color: #535353;
     line-height: 25px;
     margin-bottom: 0px;
 }
@@ -136,6 +141,7 @@ span.lowimp {
     width: 100%;
     display: inline-block;
     word-break: break-word;
+    cursor: pointer;
 }
 .project-description span.readmore {
     color: #098de6;
@@ -184,7 +190,7 @@ span.lowimp {
 }
 .lftusermsg {
     background: #EDF6FD;
-    border-radius: 0px 15px 15px 15px !important;
+    border-radius: 0px 8px 8px 8px !important;
     padding: 25px 6px 10px 30px !important;
     margin: 25px 10px 30px !important;
     position: relative;
@@ -198,7 +204,7 @@ span.lowimp {
 }
 .rgtusermsg {
     background: #eeeeee;
-    border-radius: 15px 0px 15px 15px;
+    border-radius: 8px 0px 8px 8px;
     padding: 25px 10px 2px !important;
     margin: 10px 0px 30px 0px !important;
     width: 90%;
@@ -236,7 +242,7 @@ span.lowimp {
     margin-bottom: 15px;
 }
 h4.colheads.chatheader {
-    padding: 10px 20px;
+    padding: 15px 20px 10px;
     /* border-bottom: 1px solid #d0d0d0; */
     margin-bottom: 0px;
 }
@@ -346,8 +352,17 @@ input.msgip {
 .collabottom button:last-child {
     padding: 0px 0px 0px 4px !important;
 }
+.emptychat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
 .emptychat img {
-    margin-top: 10%;
+    /* margin-top: 10%; */
+    width: 200px;
+    height: auto;
 }
 .emptychat p {
     margin-top: 10px;
@@ -383,8 +398,7 @@ input.msgip {
     margin-bottom: 20px;
 }
 button.btn.blue-btntext a,
-button.btn.blue-btntext,
-button.btn.new-cancelbtn {
+button.btn.blue-btntext {
     color: #098de6 !important;
     font-size: 16px;
 }
@@ -435,11 +449,11 @@ p.text {
     margin: 0px 0px 25px 0px !important;
 }
 .qcard-infoimg {
-    width: 25%;
+    /* width: 25%; */
 }
 .qcard-info {
     margin-left: 15px;
-    width: 75%;
+    /* width: 75%; */
 }
 img.qcard-img {
     width: 46px !important;
@@ -485,10 +499,7 @@ p-image.p-element.crtprgm {
 /* Form Overlay New Styles End */
 
 /* Folderpopover New Styles Start */
-button.btn.btn-primary.savefoldername {
-    margin-top: 15px;
-    float: right;
-}
+
 .docfldnam input.p-inputtext {
     width: 100%;
 }

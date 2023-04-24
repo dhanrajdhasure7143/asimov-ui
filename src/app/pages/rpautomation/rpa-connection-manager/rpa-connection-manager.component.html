@@ -64,18 +64,21 @@
                                     <img *ngIf="!isCreate" class="logo" [src]="'data:image/png;base64,'+connector_icon" alt="connector_icon"> 
                                 </div>    -->
                                 <div class="input-group">
-                                    <input type="file" pInputText class="form-control" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                    <input type="file" formControlName="taskIcon" pInputText class="form-control" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
                                       aria-label="Upload" /> &nbsp;
                                     <span  id="inputGroupFileAddon04">
                                     <img *ngIf="!isCreate" class="logo" [src]="'data:image/png;base64,'+connector_icon" alt="connector_icon"> 
                                     </span>
                                 </div>
+                                <span *ngIf="isIconSize" class="required">
+                                    File size must be less then 200kb 
+                                </span>
                             </div>
                         </form>
                         <div class="createform-footer">
                             <button class="btn new-cancelbtn" (click)="resetForm()"> Reset </button> 
-                            <button *ngIf="isCreate" [disabled]="createConnectorForm.invalid" (click)="saveConnector()" class="btn bluebg-button"> Save </button>
-                            <button *ngIf="!isCreate" (click)="updateConnector()" class="btn bluebg-button"> Update </button> 
+                            <button *ngIf="isCreate" [disabled]="isIconSize || createConnectorForm.invalid" (click)="saveConnector()" class="btn bluebg-button"> Save </button>
+                            <button *ngIf="!isCreate" [disabled]="isIconSize || createConnectorForm.get('name').invalid" (click)="updateConnector()" class="btn bluebg-button"> Update </button> 
                         </div>
                     </div>
                 </div>
@@ -85,5 +88,10 @@
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
-<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
-    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
+    rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

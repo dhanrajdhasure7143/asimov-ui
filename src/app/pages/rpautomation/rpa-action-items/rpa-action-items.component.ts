@@ -122,7 +122,7 @@ export class RpaActionItemsComponent implements OnInit {
 
   viewDetails(event) {
     let actionID = event.id
-    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, create:false, formDisabled : true}});
+    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
   }
 
     deleteById(event) {
@@ -131,7 +131,7 @@ export class RpaActionItemsComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Are you sure? You won't be able to revert this!",
         header: 'Confirmation',
-        icon: 'pi pi-info-circle',
+       
         accept: () => {
           this.loader.show();
           this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
@@ -163,6 +163,46 @@ export class RpaActionItemsComponent implements OnInit {
     this.selectedData.length > 0 ? (this.addflag = false) : (this.addflag = true);
     this.selectedData.length == 1 ? (this.delete_flag = true) : (this.delete_flag = false);
     this.selectedData.length == 1 ? (this.updateflag = true) : (this.updateflag = false);
+  }
+
+  // updateAction() {
+  //     this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:this.selectedData[0].id,id:this.selectedId, name:this.selectedData[0].name, connector_name : this.selectedName, create:false, formDisabled : true}});
+  // }
+
+  deleteAction() {
+    this.loader.show();
+    const selectedId = this.selectedData[0].id;
+    this.confirmationService.confirm({
+      message: "Are you sure? Do you want to delete this Action-Item !",
+      header: 'Confirmation',
+     
+      accept: () => {
+        this.rest_api.deleteActionById(selectedId).subscribe(
+          () => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Action Deleted Successfully !!",
+            });
+            this.loader.hide();
+            this.getAllActionItems();
+          },
+          () => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Something Went Wrong !!",
+            });
+            this.loader.hide();
+            this.getAllActionItems();
+          }
+        );
+      },
+      reject: () => {
+        this.loader.hide();
+      },
+      key: "positionDialog"
+    });
   }
   
   backToConnection() {
