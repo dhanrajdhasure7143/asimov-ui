@@ -39,7 +39,7 @@
               <button class="btn btn-default" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
             </span>
             <span>
-              <button  class="btn btn-primary" (click)="uploadFile(uploadFilemodal)">
+              <button  class="btn bluebg-button" (click)="uploadFile(uploadFilemodal)">
                 <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload"> Upload File
               </button>
             </span>
@@ -418,7 +418,7 @@
         <div class="modal-footer modelprfooter">
           <div class="pull-right">
             <button (click)="clearMsg()" class="btn btn-default">Clear</button>
-            <button [disabled]="denyFileRequestForm.invalid" (click)="sendDenyFileReq()" class="btn btn-primary">Send</button>
+            <button [disabled]="denyFileRequestForm.invalid" (click)="sendDenyFileReq()" class="btn bluebg-button">Send</button>
           </div>
         </div>
       </ng-template>
@@ -526,8 +526,8 @@
         </div>
         <div class="modal-footer modelprfooter">
           <div class="pull-right">
-              <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-              <button [disabled]="uploadFileForm.invalid || uploadFileDescriptionFlag" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+              <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
+              <button [disabled]="uploadFileForm.invalid || uploadFileDescriptionFlag" (click)="submitUploadFileForm()" class="btn bluebg-button">Submit</button>
               </div>
         </div>
       </ng-template>

@@ -142,7 +142,7 @@ input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calen
 }
 body .leftfporm select {
   border: 1px solid #979797 !important;
-  border-radius: 6px !important;
+  border-radius: 3px !important;
   width: 100% !important;
 }
 .leftfporm {
@@ -171,7 +171,7 @@ body .leftfporm select {
   border: 1px solid #979797 !important;
   width: 100%;
   padding-right: 30px !important;
-  border-radius: 6px !important;
+  border-radius: 3px !important;
 }
 
 .sosearchfield {

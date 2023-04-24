@@ -10,7 +10,7 @@
             <!-- <button class="btn btn-default" (click)="editVcm()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />QuickEdit
             </button> -->
-            <button class="btn btn-primary" (click)="fullEditVCM()">
+            <button class="btn bluebg-button" (click)="fullEditVCM()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
             </button>
 
@@ -59,9 +59,9 @@
                                                 <textarea class="form-control" rows="5" [disabled]="isPropDisabled" placeholder="Enter Process Description" [(ngModel)]="processDesc"></textarea>
                                             </div>
                                             <div class="propfooter col-md-12 p-0 text-right" *ngIf="!isPropDisabled">
-                                               <button class="btn btn-primary" (click)="saveProperties('L1')" *ngIf="selectedPropNode.level == 'L1'">Save</button>
-                                               <button class="btn btn-primary" (click)="saveProperties('L2')" *ngIf="selectedPropNode.level == 'L2'">Save</button>
-                                               <button class="btn btn-primary" (click)="saveProperties('L3')" *ngIf="selectedPropNode.level == 'L3'">Save</button>
+                                               <button class="btn bluebg-button" (click)="saveProperties('L1')" *ngIf="selectedPropNode.level == 'L1'">Save</button>
+                                               <button class="btn bluebg-button" (click)="saveProperties('L2')" *ngIf="selectedPropNode.level == 'L2'">Save</button>
+                                               <button class="btn bluebg-button" (click)="saveProperties('L3')" *ngIf="selectedPropNode.level == 'L3'">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -473,8 +473,8 @@
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-            <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+            <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button" (click)="onSubmitUpload()">Submit</button>
         </div>
     </div>
 </ng-template>

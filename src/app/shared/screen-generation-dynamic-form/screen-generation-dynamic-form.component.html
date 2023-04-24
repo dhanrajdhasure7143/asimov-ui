@@ -42,12 +42,12 @@
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
-            <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
+            <!-- <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
               <option value="" hidden disabled>Select Chart Type</option>
               <option value="null" hidden disabled>Select Option</option>
               <option value="undefined" hidden disabled>Select Option</option>
               <option *ngFor="let type of chartType">{{ type.Type }}</option>
-            </select>
+            </select> -->
           </div>
 
           <div *ngIf="
@@ -96,13 +96,30 @@
               field.widget_type == null ||
               field.widget_type == ''
             ">
+            <div *ngIf="field.ColumnName !='tenant_name'">
+              <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
+                <span class="star" *ngIf="field.mandatory">*</span>
+              </label>
+              <input type="text" [formControlName]="field.ColumnName" [attr.disabled]="
+                  field.read_only ? '' : null && details != undefined
+                " class="form-control" [required]="field.mandatory" [placeholder]="field.placeholder"
+                [maxlength]="field.length" />
+            </div>
+          </div>
+          <div *ngIf="field.ColumnName == 'tenant_name'">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
-            <input type="text" [formControlName]="field.ColumnName" [attr.disabled]="
-                field.read_only ? '' : null && details != undefined
-              " class="form-control" [required]="field.mandatory" [placeholder]="field.placeholder"
+            <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()" class="form-control"
+              [required]="field.mandatory" [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder"
               [maxlength]="field.length" />
+            <div
+              *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')"
+              class="required">
+              Tenant Name is already exists*
+            </div>
+            <span *ngIf="!tenantNameCheck && generatedForm.get('tenant_name').hasError('pattern')"
+              class="errspan required"> Only spaces are allowed between words* </span>
           </div>
           <div *ngIf="field.widget_type == 'file'">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
@@ -115,7 +132,7 @@
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
-            <select class="form-select" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
+            <!-- <select class="form-select" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
                [required]="field.mandatory">
                <option value="" hidden disabled>Select Chart Type</option>
                <option value="Donut">Donut</option>
@@ -126,7 +143,7 @@
                <option value="Pie">Pie</option>
                <option value="timeseries">Timeseries</option>
                <option value="waterfall">Waterfall</option>
-            </select>
+            </select> -->
           </div>
           <div *ngIf="field.widget_type == 'checkbox'">
             <input type="checkbox" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
@@ -150,7 +167,7 @@
       <button (click)="emitFormValue()" *ngIf="details == undefined" [disabled]="generatedForm.invalid"
         class="btn bluebg-button">Save</button> 
       <button (click)="emitFormValue()" *ngIf="details != undefined"
-        [disabled]="!(generatedForm.valid && (generatedForm.touched ||  generatedForm.dirty))" 
+        [disabled]="!(generatedForm.valid && (generatedForm.touched ||  generatedForm.dirty)) || tenantNameCheck" 
         class="btn bluebg-button">Update</button>
     </div>
   </div>

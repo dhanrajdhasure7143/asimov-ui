@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="col p-0 form-group">
-        <button class="btn btn-primary" [disabled]="beforetime==true || aftertime==true" (click)="add_sch()">Add</button>
+        <button class="btn bluebg-button" [disabled]="beforetime==true || aftertime==true" (click)="add_sch()">Add</button>
     </div>
     <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
