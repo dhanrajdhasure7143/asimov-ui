@@ -215,6 +215,9 @@
                       <span class="testtooltip">Reset Bot</span>
                     </button>
                   </div>
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                    <p-toggleButton [style]="{width: '0.5em',height: '0.5em', padding: '9px', paddingRight: '17px', fontSize: '9px', textAlign: 'center' }" onLabel="V1" offLabel="V2" [(ngModel)]="current_instance.executionMode" (onChange)="changeEcexutionMode($event)"></p-toggleButton>
+                  </div>
                 </div>
               </div>
           </div>
@@ -317,7 +320,7 @@
             <textarea class="form-control" maxlength="255"  [(ngModel)]="comments"></textarea>
           </div>
           <div class="custom-footer-content">
-            <button class="btn btn-primary" (click)="SaveBot()">Save</button>
+            <button class="btn bluebg-button" (click)="SaveBot()">Save</button>
           </div>
         </div>
       </ng-template>
@@ -362,7 +365,7 @@
         </div>
       </form>
       <div class="createform-footer">
-        <button class="btn btn-primary" [disabled]="loadBotForm.invalid">Submit</button>
+        <button class="btn bluebg-button" [disabled]="loadBotForm.invalid">Submit</button>
       </div>
     </div>
   </div>

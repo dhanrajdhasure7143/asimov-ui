@@ -271,11 +271,11 @@
                                     </div>
                                 
                                 <div class="form-footer">
-                                    <input type="button" class="btn btn-default" value="Reset" (click)="resetEnvForm()">
+                                    <input type="button" class="btn new-cancelbtn" value="Reset" (click)="resetEnvForm()">
 
-                                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+                                    <input type="button" class="btn bluebg-button" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
 
-                                    <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
+                                    <input type="button" class="btn bluebg-button" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
                                 </div>
 
                             </form>
@@ -386,11 +386,11 @@
                                         <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                                     </div>
                                 <div class="form-footer">
-                                    <input type="button" class="btn btn-default" value="Reset" (click)="reset_UpdateEpsoft()">
+                                    <input type="button" class="btn new-cancelbtn" value="Reset" (click)="reset_UpdateEpsoft()">
 
-                                    <input type="button" class="btn btn-primary" value="Test Connection" [disabled]="updateForm.invalid"  (click)="testConnection('update')">
+                                    <input type="button" class="btn bluebg-button" value="Test Connection" [disabled]="updateForm.invalid"  (click)="testConnection('update')">
                                     
-                                    <input type="button" class="btn btn-primary" value="Modify" [disabled]="updateForm.invalid || updatesubmitted" (click)="updateEnvironment()">
+                                    <input type="button" class="btn bluebg-button" value="Modify" [disabled]="updateForm.invalid || updatesubmitted" (click)="updateEnvironment()">
                                     
                                 
                                 </div>

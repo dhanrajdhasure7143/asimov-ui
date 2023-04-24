@@ -39,8 +39,10 @@ export class PaymentMethodsComponent implements OnInit {
       title: 'Confirmation',
       text: "Do you want to Remove this card?",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
       confirmButtonText: 'Yes!'
     }).then((result)=>{
@@ -68,8 +70,10 @@ export class PaymentMethodsComponent implements OnInit {
         title: 'Confirmation',
         text: "Do you want to set this card as default?",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
         heightAuto: false,
         confirmButtonText: 'Yes!'
       }).then((result) => {
@@ -83,8 +87,11 @@ export class PaymentMethodsComponent implements OnInit {
               position: 'center',
               icon: 'success',
               showCancelButton: false,
-              confirmButtonColor: '#007bff',
-              cancelButtonColor: '#d33',
+              customClass: {
+                confirmButton: 'btn bluebg-button',
+                cancelButton:  'btn new-cancelbtn',
+              },
+      
               heightAuto: false,
               confirmButtonText: 'Ok'
             })

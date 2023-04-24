@@ -92,9 +92,12 @@ export class UserScreenComponent implements OnInit {
       text: "You Delete the Record!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
-      cancelButtonColor: "#d33",
+      
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
@@ -154,8 +157,10 @@ export class UserScreenComponent implements OnInit {
             position: "center",
             icon: "success",
             showCancelButton: false,
-            confirmButtonColor: "#007bff",
-            cancelButtonColor: "#d33",
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
             heightAuto: false,
             confirmButtonText: "Ok",
           }).then(()=>{
@@ -197,8 +202,10 @@ export class UserScreenComponent implements OnInit {
               position: "center",
               icon: "success",
               showCancelButton: false,
-              confirmButtonColor: "#007bff",
-              cancelButtonColor: "#d33",
+              customClass: {
+                confirmButton: 'btn bluebg-button',
+                cancelButton:  'btn new-cancelbtn',
+              },
               heightAuto: false,
               confirmButtonText: "Ok",
             }).then(() => {

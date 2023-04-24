@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MessageService, TreeNode } from "primeng/api";
+import { ConfirmationService, MenuItem, MessageService, TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
@@ -32,15 +32,16 @@ export class ProjectsDocumentComponent implements OnInit {
     key :"",
     label: "",
     data: "Folder",
-    expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder",
+    // expandedIcon: "pi pi-folder-open",
+    // collapsedIcon: "pi pi-folder",
+    icon:"folder.svg",
     dataType:'folder'
   };
   folder_files:any=[];
   selectedFolder: any;
   selectedItem:any;
   // @ViewChild('op', {static: false}) model;
-  @ViewChild('op2', {static: false}) model2;
+  @ViewChild('cm2', {static: false}) model2;
   @ViewChild('cm', {static: false}) cm;
   term:any;
   params_data:any;
@@ -55,6 +56,7 @@ export class ProjectsDocumentComponent implements OnInit {
   breadcrumbItems:any[]=[];
   istaskFilterApplied:boolean = false;
   items:any[];
+  items2:any[];
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -95,8 +97,7 @@ export class ProjectsDocumentComponent implements OnInit {
             label: "Add Folder",
             data: "Add Folder",
             data_type:"addfolder",
-            collapsedIcon: 'pi pi-folder',
-            expandedIcon: 'pi pi-folder'
+            icon:"folderadd.svg"
           },
         ];
         this.convertToTreeView(res_data)
@@ -111,8 +112,7 @@ export class ProjectsDocumentComponent implements OnInit {
           key: data.key+'-0',
           label: "Add Folder / Document",
           dataType:"folder",
-          collapsedIcon: 'pi pi-folder',
-          expandedIcon: 'pi pi-folder'
+          icon: 'folderadd.svg'
         }]
       }
       return data
@@ -132,12 +132,15 @@ export class ProjectsDocumentComponent implements OnInit {
       uploadedDate:obj.uploadedDate
     };
       if(obj.dataType == 'folder'){
-        node['collapsedIcon']=  "pi pi-folder"
-        node["expandedIcon"]  ="pi pi-folder-open"
+        node['icon'] = "folder.svg"
+        // node['collapsedIcon']=  "pi pi-folder"
+        // node["expandedIcon"]  ="pi pi-folder-open"
       }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        node['icon']=  "pi pi-image"
+        // node['icon']=  "pi pi-image"
+        node['icon'] = "img-file.svg"
     }else{
-      node['icon']=  "pi pi-file"
+      // node['icon']=  "pi pi-file"
+      node['icon'] = "document-file.svg"
     }
     this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
@@ -227,18 +230,20 @@ export class ProjectsDocumentComponent implements OnInit {
       this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         this.loader.hide();
         let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
-      obj['expandedIcon'] = "pi pi-folder-open"
-      obj['collapsedIcon'] = "pi pi-folder";
+      // obj['expandedIcon'] = "pi pi-folder-open"
+      // obj['collapsedIcon'] = "pi pi-folder";
+      obj['icon'] = "folder.svg"
       obj["children"]= [
         {
           key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
           data: "Folder",
           dataType:"folder",
-          expandedIcon: "pi pi-folder",
-          collapsedIcon: "pi pi-folder",
+          // expandedIcon: "pi pi-folder",
+          // collapsedIcon: "pi pi-folder",
+          icon: 'folderadd.svg'
         }
       ]
         this.selectedFile.parent.children.push(obj);
@@ -350,18 +355,20 @@ export class ProjectsDocumentComponent implements OnInit {
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.loader.hide();
       let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
-      obj['expandedIcon'] = "pi pi-folder-open"
-      obj['collapsedIcon'] = "pi pi-folder";
+      // obj['expandedIcon'] = "pi pi-folder-open"
+      // obj['collapsedIcon'] = "pi pi-folder";
+      obj['icon'] = "folder.svg"
       obj["children"]= [
         {
           key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
           data: "Folder",
           dataType:"folder",
-          expandedIcon: "pi pi-folder",
-          collapsedIcon: "pi pi-folder",
+          // expandedIcon: "pi pi-folder",
+          // collapsedIcon: "pi pi-folder",
+          icon: 'folderadd.svg'
         }
       ]
 
@@ -392,18 +399,20 @@ addParentFolder() {
   this.rest_api.createFolderByProject(req_body).subscribe(res=>{
     this.loader.hide();
     let res_data:any = res;
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
     let obj = res_data.data[0];
-    obj['expandedIcon'] = "pi pi-folder-open"
-    obj['collapsedIcon'] = "pi pi-folder";
+    // obj['expandedIcon'] = "pi pi-folder-open"
+    // obj['collapsedIcon'] = "pi pi-folder";
+    obj['icon'] = "folder.svg"
     obj["children"]= [
       {
         key: String(obj.key)+"-0" ,
         label: "Add Folder / Document",
         data: "Folder",
         dataType:"folder",
-        expandedIcon: "pi pi-folder",
-        collapsedIcon: "pi pi-folder",
+        // expandedIcon: "pi pi-folder",
+        // collapsedIcon: "pi pi-folder",
+        icon: 'folderadd.svg'
       }
     ]
     this.files.push(obj);
@@ -564,14 +573,16 @@ addParentFolder() {
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
     // let obj = res_data.data[0]
     res_data.data.forEach(item=>{
       let obj = item
       if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        obj['icon']=  "pi pi-image"
+        // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        obj["collapsedIcon"]= "pi pi-file"
+        // obj["collapsedIcon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.selectedFile.parent.children.push(obj);
     })
@@ -580,19 +591,39 @@ addParentFolder() {
     // this.selectedFile.parent.children.push(obj)
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !!'});
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !'});
     })
   }
 
   onRightClick(event,node){
+    const newEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      clientX: event.clientX - 50,
+      clientY: event.clientY - 50,
+    });
     event.preventDefault();
     if(this.selectedItem)this.selectedItem.type='default';
     this.selectedItem=node;
-    this.model2.hide();
+    // this.model2.hide();
     if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
-      setTimeout(() => {
-        this.model2.show(event)
-        }, 200);
+      this.items2=[
+        {
+          label: "Rename",
+          command: event => this.onFolderRename("folderView")
+        },
+        {
+          label: "Delete",
+          command: event => this.onDeleteItem('folderView')
+        },
+        {
+          label: "Download",
+          command: event => this.onDownloadDocument('folderView')
+        }
+      ]
+    if(node.dataType !='folder')
+    this.items2.splice(0,1)
+    this.model2.show(newEvent)
   }
 }
 
@@ -619,7 +650,7 @@ addParentFolder() {
     }
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
       if(type == 'folderView'){
         this.selectedItem.label = this.entered_folder_name;
         this.selectedItem.type ='default';
@@ -667,14 +698,16 @@ addParentFolder() {
       this.loader.hide();
       this.createFolderPopUP=false;
       let res_data:any = res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
     // let obj = res_data.data[0];
     res_data.data.forEach(item=>{
       let obj = item
       if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        obj['icon']=  "pi pi-image"
+      // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        obj["collapsedIcon"]= "pi pi-file"
+        // obj["collapsedIcon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.selectedFolder.children.push(obj);
     })
@@ -692,12 +725,12 @@ addParentFolder() {
       delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: 'Confirmation',
-      icon: 'pi pi-info-circle',
+      message: "Do you really want to delete this? This process cannot be undone.",
+      header: 'Are you Sure?',
+     
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
           this.getTheListOfFolders();
         },err=>{
           this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
@@ -769,7 +802,7 @@ addParentFolder() {
         this.loader.hide();
         this.getTheListOfFolders();
         this.createFolderPopUP=false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !!'});
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
         this.loader.hide();
         this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
@@ -797,7 +830,7 @@ addParentFolder() {
     //   this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
     //     this.loader.hide();
     //     this.getTheListOfFolders();
-    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !!'});
+    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
     //   },err=>{
     //     this.loader.hide();
     //     this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
@@ -929,8 +962,9 @@ addParentFolder() {
           label: "Add Folder",
           data: "Add Folder",
           data_type:"addfolder",
-          collapsedIcon: 'pi pi-folder',
-          expandedIcon: 'pi pi-folder'
+          // collapsedIcon: 'pi pi-folder',
+          // expandedIcon: 'pi pi-folder'
+          icon:"folderadd.svg",
         },
       ];
       this.convertToTreeView(this.documents_resData)
@@ -962,12 +996,15 @@ addParentFolder() {
         uploadedDate:obj.uploadedDate
       };
         if(obj.dataType == 'folder'){
-          node['collapsedIcon']=  "pi pi-folder"
-          node["expandedIcon"]  ="pi pi-folder-open"
+          // node['collapsedIcon']=  "pi pi-folder"
+          // node["expandedIcon"]  ="pi pi-folder-open"
+          node["icon"]="folder.svg"
         }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-          node['icon']=  "pi pi-image"
+          // obj['icon']=  "pi pi-image"
+        obj['icon']=  "img-file.svg"
       }else{
-        node['icon']=  "pi pi-file"
+        // obj["icon"]= "pi pi-file"
+        obj["icon"]= "document-file.svg"
       }
       this.nodeMap[obj.key] = node;
       if (obj.key.indexOf('-') === -1) {

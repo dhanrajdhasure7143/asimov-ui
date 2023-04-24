@@ -7,7 +7,7 @@
             <span class="module-header-title">{{propertiesLevel=='level1'?"Process Hierarchy":"Process Group"}} - Properties</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-primary" (click)="updateProperties()">Update</button>
+            <button class="btn bluebg-button" (click)="updateProperties()">Update</button>
         </div>
     </div>
     <div class="module-body">
@@ -368,8 +368,8 @@
         </div>
         <div class="modal-footer modelprfooter">
             <div class="pull-right">
-                <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-                <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+                <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
+                <button class="btn bluebg-button" (click)="onSubmitUpload()">Submit</button>
             </div>
         </div>
     </div>

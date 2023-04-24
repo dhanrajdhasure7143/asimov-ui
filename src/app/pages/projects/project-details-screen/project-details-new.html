@@ -281,7 +281,7 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/PendingApprovals.svg"
+                                            <img src="./../../../../assets/images-n/projects/Foldercount.svg"
                                                 alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
@@ -385,8 +385,9 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
                                                 (click)="pinMessage(each)" class="testplus">
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
                                                 (click)="replyMessage(each)" class="testplus">
                                         </div>
@@ -404,8 +405,9 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
                                                 class="testplus" (click)="pinMessage(each)">
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
                                                 (click)="replyMessage(each)" class="testplus">
                                             <!-- <i class="pi pi-tag"></i>
@@ -493,7 +495,7 @@
                 </p-tabPanel>
                 <p-tabPanel>
                     <ng-template pTemplate="header">
-                        <h4>Existing Users</h4>
+                        <h4>Existing Users <span>({{existingUsersList.length}})</span></h4>
                     </ng-template>
                 </p-tabPanel>
 
@@ -576,11 +578,11 @@
             [style]="{'max-height':'auto','overflow':'auto'}" [(selection)]="selected_folder">
         </p-tree>
     </span>
-    <button *ngIf="selectedType =='createFolder' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='createFolder' " type="button" class="btn bluebg-button savefoldername"
         (click)='createFolder()'>Ok</button>
-    <button *ngIf="selectedType =='document' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='document' " type="button" class="btn bluebg-button savefoldername"
         (click)='navigateToCreateDocument()'>Ok</button>
-        <button *ngIf="selectedType =='uploadFile' " type="button" class="btn btn-primary savefoldername"
+    <button *ngIf="selectedType =='uploadFile' " type="button" class="btn bluebg-button savefoldername"
         (click)='uploadFile()'>Ok</button>
 </p-dialog>
 
@@ -591,11 +593,16 @@
     <div *ngIf="entered_folder_name.length > 50" class="errspan required">
         Maximum of 50 characters
     </div>
-    <button type="button" class="btn btn-primary" (click)="saveFolder()"
+    <button type="button" class="btn bluebg-button" (click)="saveFolder()"
         [disabled]="!(entered_folder_name.length > 4 && entered_folder_name.length < 51 )">Save</button>
     </span>
     </p-dialog>
 
 <p-toast [style]="{marginTop: '50px'}"></p-toast>
-<p-confirmDialog [style]="{width: '40vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
-    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" 
+rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

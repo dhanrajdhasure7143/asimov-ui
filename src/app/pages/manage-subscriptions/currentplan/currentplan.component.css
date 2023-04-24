@@ -62,7 +62,7 @@ h4 .planName {
 }
 .selectplanbtn{
   border-radius: 6px;
-  width: 100px;
+  /* width: 100px; */
   padding: 5px !important;
   position: absolute;
   bottom: 15px;

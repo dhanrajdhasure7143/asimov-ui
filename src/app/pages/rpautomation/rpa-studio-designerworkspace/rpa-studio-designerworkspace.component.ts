@@ -134,6 +134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isShowExpand: boolean = false;
   splitAreamin_size = "200";
   draggableHandle: any;
+  executionMode:any="v2";
 
   @ViewChild("template") template: TemplateRef<any>;
   @ViewChild("checkBotTemplate")
@@ -532,7 +533,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         selectedNodeId: element.tMetaId,
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
-        action_uuid:element.actionUUID
+        action_uid:element.actionUUID
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -930,7 +931,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (taskdata != undefined) {
         if (taskdata.tMetaId == selectedNodeId) {
           let finalattributes: any = [];
-          this.rest.attribute(node.selectedNodeId, node.action_uuid).subscribe((data) => {
+          this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data) => {
             finalattributes = data;
             this.formAttributes.set(Number(selectedNodeId), data);
             //if(finalattributes.length==1 && finalattributes[0].type=="multiform")
@@ -1765,7 +1766,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         scheduler: null,
         svg: this.svg,
         sequences: this.getsequences(),
-        isBotCompiled: this.isBotCompiled
+        isBotCompiled: this.isBotCompiled,
+        executionMode: this.executionMode
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
@@ -1858,7 +1860,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     })
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
-      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId);
+      let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
       item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
       return item;
     })]
