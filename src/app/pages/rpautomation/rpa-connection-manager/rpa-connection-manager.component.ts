@@ -49,7 +49,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.createConnectorForm = this.formBuilder.group({
-      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z_]+( [a-zA-Z_]+)*$'), Validators.maxLength(50)])],
+      name: ["",Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)])],
       taskIcon: ["", Validators.compose([Validators.required])],
     });
     this.getAllConnections();

@@ -135,13 +135,13 @@ export class RpaActionItemsComponent implements OnInit {
         accept: () => {
           this.loader.show();
           this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
+            this.getAllActionItems();
             this.messageService.add({
               severity: "success",
               summary: "Success",
               detail: "Action Deleted Successfully !!",
             })
             this.loader.hide();
-            this.getAllActionItems();
           },(err) => {
             this.messageService.add({
               severity: "error",
@@ -149,7 +149,6 @@ export class RpaActionItemsComponent implements OnInit {
               detail: "Something Went Wrong !!",
             })
             this.loader.hide();
-            this.getAllActionItems();
           })
         },
         reject: (type) => {
@@ -158,8 +157,6 @@ export class RpaActionItemsComponent implements OnInit {
         key: "positionDialog"
       });
     }
-
-  deleteConnection() {}
 
   readSelectedData(data) {
     this.selectedData =data;
