@@ -88,7 +88,7 @@ export class SidebarComponent implements OnInit {
      this.obj.sidebar.showprocessesSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
       this.obj.sidebar.showProjectsSubmenu=false;
-      this.obj.contentMargin = 60;
+      this.obj.contentMargin = 62;
   }
   
   selection(){

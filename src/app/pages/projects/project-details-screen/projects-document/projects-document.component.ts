@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MessageService, TreeNode } from "primeng/api";
+import { ConfirmationService, MenuItem, MessageService, TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
@@ -41,7 +41,7 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedFolder: any;
   selectedItem:any;
   // @ViewChild('op', {static: false}) model;
-  @ViewChild('op2', {static: false}) model2;
+  @ViewChild('cm2', {static: false}) model2;
   @ViewChild('cm', {static: false}) cm;
   term:any;
   params_data:any;
@@ -56,6 +56,7 @@ export class ProjectsDocumentComponent implements OnInit {
   breadcrumbItems:any[]=[];
   istaskFilterApplied:boolean = false;
   items:any[];
+  items2:any[];
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -595,14 +596,34 @@ addParentFolder() {
   }
 
   onRightClick(event,node){
+    const newEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      clientX: event.clientX - 50,
+      clientY: event.clientY - 50,
+    });
     event.preventDefault();
     if(this.selectedItem)this.selectedItem.type='default';
     this.selectedItem=node;
-    this.model2.hide();
+    // this.model2.hide();
     if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
-      setTimeout(() => {
-        this.model2.show(event)
-        }, 200);
+      this.items2=[
+        {
+          label: "Rename",
+          command: event => this.onFolderRename("folderView")
+        },
+        {
+          label: "Delete",
+          command: event => this.onDeleteItem('folderView')
+        },
+        {
+          label: "Download",
+          command: event => this.onDownloadDocument('folderView')
+        }
+      ]
+    if(node.dataType !='folder')
+    this.items2.splice(0,1)
+    this.model2.show(newEvent)
   }
 }
 
