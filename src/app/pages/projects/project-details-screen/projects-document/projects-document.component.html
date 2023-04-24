@@ -55,7 +55,7 @@
                         <img src="./../../../../assets/images-n/projects/folderadd.svg" alt="Create">
                     </span>
                     <span *ngIf="node.label != 'Add Folder' && node.label != 'Add Folder / Document' && node.dataType =='folder'">
-                        <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon">
+                        <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon" alt="">
                     </span>
                     <span *ngIf="node.label != 'Add Folder'&& node.label != 'Add Folder / Document' && node.dataType=='txt'|| node.dataType == 'docx'">
                         <img src="./../../../../assets/images-n/projects/document-file.svg" alt="Create">
@@ -247,7 +247,7 @@
         </ng-template>
     </p-overlayPanel>
 
-    <p-overlayPanel #op2>
+    <!-- <p-overlayPanel #op2>
         <ng-template pTemplate>
             <div class="docritclk">
                 <div *ngIf="selectedItem.dataType=='folder'" class="" (click)="onFolderRename('folderView')">Rename</div>
@@ -255,7 +255,7 @@
                 <div (click)="onDownloadDocument('folderView')">Download</div>
             </div>
         </ng-template>
-    </p-overlayPanel>
+    </p-overlayPanel> -->
 
     <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
     <p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" 
@@ -267,3 +267,4 @@
     </p-confirmDialog>
     
     <p-contextMenu #cm [model]="items" appendTo="body"></p-contextMenu>
+    <p-contextMenu #cm2 [model]="items2"></p-contextMenu>
