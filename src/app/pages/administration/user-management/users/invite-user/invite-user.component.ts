@@ -132,9 +132,12 @@ export class InviteUserComponent implements OnInit {
                 position: "center",
                 icon: "success",
                 showCancelButton: false,
-                confirmButtonColor: "#007bff",
+                customClass: {
+                  confirmButton: 'btn bluebg-button',
+                  cancelButton:  'btn new-cancelbtn',
+                },
                 heightAuto: false,
-                cancelButtonColor: "#d33",
+               
                 confirmButtonText: "Ok",
               }).then((result) => {
                 this.resetUserInvite(form);

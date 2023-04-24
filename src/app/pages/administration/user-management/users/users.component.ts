@@ -86,8 +86,10 @@ export class UsersComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -104,8 +106,10 @@ export class UsersComponent implements OnInit {
                 position: "center",
                 icon: "success",
                 showCancelButton: false,
-                confirmButtonColor: "#007bff",
-                cancelButtonColor: "#d33",
+                customClass: {
+                  confirmButton: 'btn bluebg-button',
+                  cancelButton:  'btn new-cancelbtn',
+                },
                 heightAuto: false,
                 confirmButtonText: "Ok",
               });
@@ -132,8 +136,10 @@ export class UsersComponent implements OnInit {
           position: "center",
           icon: "error",
           showCancelButton: false,
-          confirmButtonColor: "#007bff",
-          cancelButtonColor: "#d33",
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
           heightAuto: false,
           confirmButtonText: "Ok",
         });

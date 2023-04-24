@@ -6,8 +6,8 @@
                 </div>
         
                 <div class="col-md-12 p-0 form-group" *ngIf="isMultiForm==true">            
-                    <button class="btn btn-primary" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
-                    <button class="btn btn-primary" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
+                    <button class="btn bluebg-button" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
+                    <button class="btn bluebg-button" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
                 </div>
 
             <div class="col-md-12 p-0 tablmacl " *ngIf="isMultiForm==true"  #scrollContainer>
@@ -55,8 +55,8 @@
             </div>
         </div>
         <div class="createform-footer">
-          <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
-          <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
-          <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0 || !(otherAttributesForm.valid)"   class="btn btn-primary">Save</button>
+          <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn bluebg-button">Save</button>
+          <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn bluebg-button">Save</button>
+          <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0 || !(otherAttributesForm.valid)"   class="btn bluebg-button">Save</button>
         </div>
 </div>
