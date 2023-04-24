@@ -1,16 +1,20 @@
 <div class="maindivfoprm">       
-  <h4 class="paymnt-subheding">Complete the below card details</h4>
+  <h4 class="paymnt-subheding"><span (click)="Back()" class="back-arw"><img src="../../../../assets/images-n/projects/backarrow.svg"/></span>Complete the below card details</h4>
     <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="addNewCard()">
       <div class="row">
         <div class="col-md-6 form-group pl-0">
           <label  class="label-control" for="cardHolder">Cardholder Name<span class="star">*</span></label>
-          <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required  pattern="[a-zA-Z\s]+" required />
+          <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="50" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required  pattern="^[a-zA-Z][a-zA-Z\s]*"  />
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
-          <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                      class='required'>Please enter only letters (A-Z) and spaces between words are only allowed for Cardholder Name  *</span> 
-        </div>
+          <span class='required'
+            *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern))">Card
+            Holder Name is required *</span>
+          <span *ngIf="cardHolder.errors && cardHolder.invalid">
+            <span *ngIf="cardHolder.errors.pattern" class='required'>Enter only Alphabets and spaces between the words are allowed *</span>
+          </span>
+          </div>
         <div class="col-md-6 form-group pr-0">
-          <label  class="label-control" for="cardNumber">Card Number</label>
+          <label  class="label-control" for="cardNumber">Card Number <span class="star">*</span></label>
           <div class="d-flex">
             <input  type="text" class="cc-number form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
                     required/>
@@ -22,19 +26,23 @@
           </div>
         </div>
         <div class="col-md-6 form-group pl-0">
-          <label  class="label-control" for="month">Month (MM)</label>
+          <label  class="label-control" for="month">Month (MM)<span class="star">*</span></label>
           <select id="month" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
             <option  [value]="undefined" disabled hidden>Select Month</option>
             <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
           </select>
+          <span *ngIf="((month.invalid && paymentform.submitted) || (month.errors && month.touched) )" 
+          class='required'>Month is Required *</span> 
         </div>
         <div class="col-md-6 form-group pr-0">
-          <label  class="label-control" for="year">Year (YYYY)</label>
+          <label  class="label-control" for="year">Year (YYYY)<span class="star">*</span></label>
           <select id="year" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
             <option  [value]="undefined" disabled hidden>Select Year</option>
             <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
             <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
           </select>
+          <span *ngIf="((year.invalid && paymentform.submitted) || (year.errors && year.touched) )" 
+          class='required'>Year is Required *</span> 
         </div>
         <div class="col-md-6 form-group pl-0">
           <label  class="label-control" for="cvv">CVV<span class="star">*</span></label>
@@ -50,8 +58,8 @@
       </div>
     </form>
     <div class="row justify-content-end">
-      <button class="btn new-cancelbtn" (click)="Back()">Back</button>
-      <button type="button" class="btn reset-btn" (click)="resetForm(paymentform)" >Reset</button>
+      <!-- <button class="btn new-cancelbtn" (click)="Back()">Back</button> -->
+      <button type="button" class="btn new-cancelbtn" (click)="resetForm(paymentform)" >Reset</button>
       <button class="btn bluebg-button" type="submit" [disabled] = "paymentform.invalid" (click)="addNewCard()">Save</button>
     </div>
   <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->

@@ -323,8 +323,8 @@
         </form>
     <div class="modal-footer1">
         <div class="pull-right footer-btns">
-            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
-            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+            <button class="btn new-cancelbtn" (click)="cancelProcess()">Cancel</button>
+            <button class="btn bluebg-button" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
             </div>
       </div>
     </div>
@@ -359,7 +359,7 @@
                 </form>
             </div>
             <div class="modelprfooter text-right">
-                <button class="btn btn-primary" [disabled]='!process_owner' (click)='saveprocess(null)'>Save</button>           
+                <button class="btn bluebg-button" [disabled]='!process_owner' (click)='saveprocess(null)'>Save</button>           
             </div>
         </div>
       </ng-template>
