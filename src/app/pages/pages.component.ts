@@ -68,7 +68,7 @@ export class PagesComponent{
       this.sidebar.showSubmenu=false
       this.sidebar.showprocessesSubmenu=false
       this.sidebar.showadminSubmenu=false
-      this.contentMargin = 60;
+      this.contentMargin = 62;
     } else {
       this.contentMargin = 260;
     }

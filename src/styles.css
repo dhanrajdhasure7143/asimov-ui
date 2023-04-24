@@ -797,14 +797,14 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 1 !important;
+  /* z-index: 1 !important; */
 }
 
 #sidenav.menu-open {
   width: 260px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 9999 !important;
+  /* z-index: 9999 !important; */
 }
 
 #sidenav.menu-close .side-icon {
@@ -2731,6 +2731,11 @@ input.p-inputtext {
     border-width: 0 0 5px 0 !important;
     box-shadow: none !important;
     height: 100%;
+    justify-content: center;
+}
+.tabs_screen .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  margin: 0px 10px !important;
+  padding: 16px 20px 6px !important;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
 cron-editor > div > div.card-header > ul > li > a.nav-link.active {
@@ -2739,9 +2744,9 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
   border-color: transparent;
 }
-.tabs_screen .p-tabview .p-tabview-nav li{
+/* .tabs_screen .p-tabview .p-tabview-nav li{
   width: 200px !important;
-}
+} */
 .tabs_screen .p-tabview .p-tabview-nav {
   padding: 0px 20px;
 }
