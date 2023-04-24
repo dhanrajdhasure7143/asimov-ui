@@ -474,7 +474,7 @@ setTimeout(() => {
   var firstnameFirstLetter = this.firstname.charAt(0)
   var lastnameFirstLetter = this.lastname.charAt(0)
   this.firstletter = firstnameFirstLetter + lastnameFirstLetter
-}, 2000);
+}, 3000);
 }
 
 getImage() {

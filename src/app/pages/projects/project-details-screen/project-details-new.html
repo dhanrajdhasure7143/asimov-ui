@@ -385,8 +385,9 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
                                                 (click)="pinMessage(each)" class="testplus">
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
                                                 (click)="replyMessage(each)" class="testplus">
                                         </div>
@@ -404,8 +405,9 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
                                                 class="testplus" (click)="pinMessage(each)">
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
                                             <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
                                                 (click)="replyMessage(each)" class="testplus">
                                             <!-- <i class="pi pi-tag"></i>
