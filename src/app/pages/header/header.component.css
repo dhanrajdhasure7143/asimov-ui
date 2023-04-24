@@ -3,7 +3,7 @@
     height: 60px;
     box-shadow: none !important;
     position: absolute;
-    z-index: 1;
+    /* z-index: 1; */
   }
 
   .txt-wh{

@@ -21,7 +21,7 @@ export class ProjectTaskListComponent implements OnInit {
   project_details: any;
   task_id: any;
   _tabsList: any = [
-    { tabName: "All", count: "0", img_src: "all-tasks.svg" },
+    { tabName: "All", count: "0", img_src: "ActiveTasks.svg" },
     { tabName: "New", count: "0", img_src: "NewStatus.svg" },
     { tabName: "In Progress", count: "0", img_src: "inprogress-tasks.svg" },
     { tabName: "In Review", count: "0", img_src: "inreview-tasks.svg" },
