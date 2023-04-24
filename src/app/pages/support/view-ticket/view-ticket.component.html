@@ -33,8 +33,8 @@
                                             <span *ngIf="requestKey != undefined && createRequestData != undefined">
                                                 <div class="CreateTkt-buttons"
                                                     *ngIf="createRequestData.summary != summary && summary.length != 0">
-                                                    <button class="btn btn-default" (click)="cancelSummary()">Cancel</button>
-                                                    <button class="btn btn-primary" (click)="editSummary()">Save</button>
+                                                    <button class="btn new-cancelbtn" (click)="cancelSummary()">Cancel</button>
+                                                    <button class="btn bluebg-button" (click)="editSummary()">Save</button>
                                                 </div>
                                             </span>
                                         </div>
@@ -45,8 +45,8 @@
                                             <textarea type="text" id="text_new" (keyup)="autoGrowTextZone('x')" name="description_field" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
                                             <span *ngIf="requestKey != undefined && createRequestData != undefined">
                                                 <div class="CreateTkt-buttons" id="CreateTkt-btns1" *ngIf="createRequestData.description != description && description.length != 0">
-                                                    <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
-                                                    <button class="btn btn-primary" (click)="editDescription()">Save</button>
+                                                    <button class="btn new-cancelbtn" (click)="cancelDescription()">Cancel</button>
+                                                    <button class="btn bluebg-button" (click)="editDescription()">Save</button>
                                                 </div>
                                             </span>
                                         </div>
@@ -172,8 +172,8 @@
                                             <div>
                                             <textarea type="text" id="text_new1" (keyup)="autoGrowcommentsBox()" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment" class="form-control"></textarea>
                                                 <span *ngIf="isAddInputenable" class="comments-box-icons" >    
-                                                    <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
-                                                    <button class="btn btn-primary" (click)="addNewComment(newComment_data)" id="actn_div">Save</button>
+                                                    <button class="btn new-cancelbtn" (click)="cancelCreateComment()">Cancel</button>
+                                                    <button class="btn bluebg-button" (click)="addNewComment(newComment_data)" id="actn_div">Save</button>
                                                 </span>
                                             </div>
                                         </div>
@@ -200,7 +200,7 @@
                                                                 <img src="../../../../assets/images/Admin/delete-comment-red.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="hover-img"> -->
                                                             </span>
                                                             <span class="comment-date-icons" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
-                                                                <button class="btn btn-primary" (click)="editComment1(i,each_comment)">Edit</button>
+                                                                <button class="btn bluebg-button" (click)="editComment1(i,each_comment)">Edit</button>
                                                                 <!-- <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
                                                                 <img  src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img"> -->
                                                                 
@@ -215,8 +215,8 @@
                                                        
                                                         <div class="comments-box-icons">
                                                         
-                                                            <button class="btn btn-default" (click)="cancelCommentupdate()">Cancel</button>
-                                                            <button class="btn btn-primary" (click)="updateComment(comment_data,each_comment)">Save</button>
+                                                            <button class="btn new-cancelbtn" (click)="cancelCommentupdate()">Cancel</button>
+                                                            <button class="btn bluebg-button" (click)="updateComment(comment_data,each_comment)">Save</button>
                                                         </div>
                                                     </div>
                                                 </div>

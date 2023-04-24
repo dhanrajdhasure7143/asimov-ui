@@ -146,8 +146,8 @@
                   </button>
               <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING' || (isUploaded && rejectedOrApproved !='PENDING')" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
-                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
-                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload Again</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload</button>  
                 </ngx-dropzone-label>
               </ngx-dropzone>
             </div>  
@@ -194,7 +194,7 @@
     </select>
     </div>
     <div class="custom-footer-content">
-      <button class="btn btn-primary" (click)="saveandSubmit()">Save & Submit for Approval</button>
+      <button class="btn bluebg-button" (click)="saveandSubmit()">Save & Submit for Approval</button>
     </div>  
   </div>
 </ng-template>
@@ -208,8 +208,8 @@
     </select>
     </div>
     <div class="custom-footer-content">
-      <button class="btn btn-default">Cancel</button>
-      <button class="btn btn-primary">Share</button>
+      <button class="btn new-cancelbtn">Cancel</button>
+      <button class="btn bluebg-button">Share</button>
     </div>  
   </div>
 </ng-template>

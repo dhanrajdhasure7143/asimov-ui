@@ -47,7 +47,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 icon: 'error',
                 showCancelButton: false,
                 allowOutsideClick: false,
-                confirmButtonColor: '#3085d6',
+                customClass: {
+                    confirmButton: 'btn bluebg-button',
+                    cancelButton:  'btn new-cancelbtn',
+                  },
+            
                 confirmButtonText: 'Ok'
             }).then((result) => {
                 this.authenticationService.logout();

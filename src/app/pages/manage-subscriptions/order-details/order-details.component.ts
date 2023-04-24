@@ -73,8 +73,10 @@ export class OrderDetailsComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       confirmButtonText: 'Yes, unsubscribe it!'
     }).then((result) => {
       if (result.value) {
@@ -102,8 +104,11 @@ export class OrderDetailsComponent implements OnInit {
         position: 'center',
         icon: 'success',
         showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
+
         heightAuto: false,
         confirmButtonText: 'Ok'
     }).then((result) => {
@@ -122,8 +127,11 @@ export class OrderDetailsComponent implements OnInit {
         position: 'center',
         icon: 'warning',
         showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
+
         heightAuto: false,
         confirmButtonText: 'Ok'
     }).then((result) => {

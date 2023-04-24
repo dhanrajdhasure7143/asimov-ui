@@ -409,9 +409,14 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
         text: 'Your current changes will be lost on changing notation.',
         icon: 'warning',
         showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
         heightAuto: false,
         confirmButtonText: 'Save and Continue',
         cancelButtonText: 'Discard'
+        
       }).then((res) => {
         if(res.value){
           _self.isDiagramChanged = false;

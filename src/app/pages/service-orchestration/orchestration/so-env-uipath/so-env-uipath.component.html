@@ -154,11 +154,11 @@
                         <input type="checkbox" checked formControlName="active"> Active
                     </div>
                     <div class="form-footer">
-                        <button class="btn btn-default" (click)="reset_createUiPath()" tooltip="Reset">Reset
+                        <button class="btn new-cancelbtn" (click)="reset_createUiPath()" tooltip="Reset">Reset
                             </button>
                         <!-- <button class="btn btn-primary btn-test" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
                             </button> -->
-                        <button class='btn btn-primary' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
+                        <button class='btn bluebg-button' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
                     </div>
                 </form>
 
@@ -219,12 +219,12 @@
                     </div>
 
                     <div class="form-footer">
-                        <button class="btn btn-default" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
+                        <button class="btn new-cancelbtn" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
                             </button>
 
                         <!-- <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
                             </button> -->
-                        <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UpdateUipathForm.invalid || updatesubmitted ">Update</button>
+                        <button class='btn bluebg-button' (click)="Update_UiPath()" tooltip="Save" [disabled]="UpdateUipathForm.invalid || updatesubmitted ">Update</button>
                     </div>
 
 

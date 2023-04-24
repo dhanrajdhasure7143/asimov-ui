@@ -499,6 +499,10 @@ export class BpsHomeComponent implements OnInit {
         " status will be deleted",
       icon: "warning",
       showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       heightAuto: false,
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
@@ -525,6 +529,10 @@ export class BpsHomeComponent implements OnInit {
               Swal.fire({
                 icon: "success",
                 title: "Success",
+                customClass: {
+                  confirmButton: 'btn bluebg-button',
+                  cancelButton:  'btn new-cancelbtn',
+                },
                 text:
                   bpmNotation.bpmnProcessName +
                   " V1." +
@@ -541,6 +549,10 @@ export class BpsHomeComponent implements OnInit {
             Swal.fire({
               icon: "error",
               title: "Oops...",
+              customClass: {
+                confirmButton: 'btn bluebg-button',
+                cancelButton:  'btn new-cancelbtn',
+              },
               text: "Something went wrong!",
               heightAuto: false,
             });
