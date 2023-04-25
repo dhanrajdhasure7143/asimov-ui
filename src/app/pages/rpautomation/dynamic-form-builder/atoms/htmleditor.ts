@@ -43,8 +43,6 @@ export class HtmlEditor implements OnInit {
   constructor() {
   }
 
-
-
   ngOnInit(): void {
     setTimeout(()=>{
       
