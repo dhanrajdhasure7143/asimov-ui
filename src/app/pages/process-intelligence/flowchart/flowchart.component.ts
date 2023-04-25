@@ -867,7 +867,7 @@ pi_fullGraph_data:any=[];
       var label = this.nodeArray[i].name;
       for(var j=0; j< datalink.length; j++){
         var obj = {};
-        if ( this.nodeArray.some(e => e.name === datalink[j].linkNode)) {​​
+        if ( this.nodeArray.some(e => e.name === label)) {​​
           /* vendors contains the element we're looking for */
         
           obj['from'] = label;
