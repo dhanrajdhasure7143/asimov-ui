@@ -11,7 +11,7 @@ template:`
     <div class="editor-container">
         <div id="editor_{{field.id}}"></div>
     </div>
-    <textarea [hidden]="true" [formControlName]="field.name+'_'+field.id" name='editor1' id='editor1'></textarea>
+    <textarea [hidden]="true" [formControlName]="field.name+'_'+field.id" name='editor1' id='editor1'>{{editorValue}}</textarea>
 </div>
     </div>
   `,
@@ -58,6 +58,7 @@ export class HtmlEditor implements OnInit {
           .querySelector("#toolbar-container")
           .appendChild(editor.ui.view.toolbar.element);
           this.editorRef = editor;
+          console.log(this.field.value)
           this.editorRef.setData(this.field.value);
           this.form.get(this.field.name+"_"+this.field.id).setValue(this.field.value);
         // window = editor;
