@@ -51,6 +51,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   paramForm = [];
   selectedParam: any[] = [];
   action_icon : any;
+  isIconSize: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -703,6 +704,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     var reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
+    if(e.target.files[0].size > 200000){
+      this.isIconSize =true;
+       }else{
+      this.isIconSize=false;
+    }
   }
 
   _handleReaderLoaded(e) {

@@ -252,11 +252,6 @@ ul#versions li.clickable:hover {
     background: rgba(0, 0, 0, .04);
 }
 
-.action-item.hovericon:hover {
-    background-color: #098de6;
-    border-radius: 6px;
-}
-
 .action-item.hovericon:hover img.testplus1,
 
 .action-item.hovericon:hover img.testplus2 {

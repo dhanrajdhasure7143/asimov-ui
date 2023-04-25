@@ -156,8 +156,11 @@ export class UploadComponent implements OnInit {
           position: 'center',
           icon: 'error',
           showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           heightAuto: false,
           confirmButtonText: 'Ok'
         })
@@ -318,8 +321,11 @@ export class UploadComponent implements OnInit {
            position: 'center',
            icon: 'error',
            showCancelButton: false,
-           confirmButtonColor: '#007bff',
-           cancelButtonColor: '#d33',
+           customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
            heightAuto: false,
            confirmButtonText: 'Ok'
        })
@@ -876,8 +882,11 @@ getDBTables(){      //get DB tables list
           icon: 'success',
           showCancelButton: false,
           heightAuto: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+	
           confirmButtonText: 'Ok'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -918,8 +927,10 @@ getDBTables(){      //get DB tables list
       icon: 'warning',
       showCancelButton: true,
       heightAuto: false,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
@@ -933,8 +944,11 @@ getDBTables(){      //get DB tables list
             icon: 'success',
             showCancelButton: false,
             heightAuto: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+    
             confirmButtonText: 'Ok'
           })
           this.loader.hide();
@@ -984,6 +998,10 @@ getDBTables(){      //get DB tables list
           Swal.fire({
             icon: 'success',
             title: 'Success',
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
             text: 'Process Deleted Successfully !!',
             heightAuto: false
           })

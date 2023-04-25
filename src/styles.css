@@ -22,6 +22,7 @@
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
+/* entire application buttons */
 
 .breadcrumb {
   background-color: white !important;
@@ -172,10 +173,7 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 
-button:disabled {
-  cursor: no-drop;
-  background-color: #d1d1d1;
-}
+
 
 .eiap-btn {
   border-radius: var(--main-borderradius) !important;
@@ -799,14 +797,14 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 9999 !important;
+  /* z-index: 1 !important; */
 }
 
 #sidenav.menu-open {
   width: 260px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 9999 !important;
+  /* z-index: 9999 !important; */
 }
 
 #sidenav.menu-close .side-icon {
@@ -965,7 +963,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 .mat-form-field-flex {
   border: 1px solid #d6ddf2;
   padding: 0px 5px;
-  border-radius: 3px;
+  border-radius: var(--main-borderradius);
   height: 30px;
 }
 
@@ -1107,7 +1105,7 @@ mat-card {
 img.testplus {
   width: 16px;
   height: 16px;
-  margin-right: 15px;
+  margin-right: 17px;
   cursor: pointer;
 }
 
@@ -1322,7 +1320,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
 .newinntalx a {
-  margin-right: 15px;
+  margin-right: 17px;
+}
+.newinntalx a:last-child {
+  margin-right: 0px !important;
 }
 
 .editmodelprbody .ng5-slider .ng5-slider-pointer {
@@ -1767,7 +1768,7 @@ input.bps-home-fileds {
   padding: 5px 0px 10px;
   margin: 0px !important;
   border-top: none;
-  border-radius: 3px;
+  border-radius: var(--main-borderradius);
 }
 
 .backslash {
@@ -1792,31 +1793,7 @@ input.bps-home-fileds {
   font-weight: 600;
 }
 
-button.btn {
-  padding: 8px 12px !important;
-  line-height: normal !important;
-  border: medium none !important;
-  font-size: 15px;
-  /* margin-right: 10px !important; */
-  border-radius: var(--main-borderradius);
-  color: var(--main-txtcolor);
-  min-width: 75px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
 
-button.btn.btn-default {
-  background: #eeeeee;
-  margin-right: 10px;
-
-}
-
-button.btn.btn-primary,
-button.btn.btn-primary[disabled] {
-  background: var(--main-bluecolor);
-  color: #fff;
-}
 
 /* button.btn:hover {
   background: #001c47 !important;
@@ -2141,7 +2118,7 @@ th.mat-header-cell {
   padding-top: 2px;
 } 
 .resuractivity-header .multiselect-dropdown .dropdown-btn {
-  border-radius: 3px !important;
+  border-radius: var(--main-borderradius) !important;
   background-color: #fff !important;
   opacity: unset !important;
   line-height: 18px !important;
@@ -2534,7 +2511,7 @@ button.custom-popupbtn.mat-button {
   --formfield-bordercolor: #979797;
   --cards-bordercolor: #D0D0D0;
   --formlabel-color: #7d7d7d;
-  --main-borderradius: 6px;
+  --main-borderradius: 3px;
   --high-importance: #ea3d3d;
   --medium-importance: #E58600;
   --low-importance: #27AD74;
@@ -2713,7 +2690,7 @@ input.p-inputtext {
 .actionspopmenu .p-menu-overlay {
   position: absolute;
   right: 0px !important;
-  top: 38px !important;
+  top: 30px !important;
   left: unset !important;
   width: max-content;
 }
@@ -2721,7 +2698,7 @@ input.p-inputtext {
   padding: 6px;
   background: #F5F6F7;
   border: 1px solid #CFD2D9;
-  border-radius: 3px;
+  border-radius: var(--main-borderradius);
   box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
   margin-left: 3px;
   cursor: pointer;
@@ -2754,6 +2731,11 @@ input.p-inputtext {
     border-width: 0 0 5px 0 !important;
     box-shadow: none !important;
     height: 100%;
+    justify-content: center;
+}
+.tabs_screen .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  margin: 0px 10px !important;
+  padding: 16px 20px 6px !important;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
 cron-editor > div > div.card-header > ul > li > a.nav-link.active {
@@ -2762,9 +2744,9 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
   border-color: transparent;
 }
-.tabs_screen .p-tabview .p-tabview-nav li{
+/* .tabs_screen .p-tabview .p-tabview-nav li{
   width: 200px !important;
-}
+} */
 .tabs_screen .p-tabview .p-tabview-nav {
   padding: 0px 20px;
 }
@@ -2780,7 +2762,7 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .tabs_screen .p-tabview-nav-content {
   border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
-  border-radius: var(--main-borderradius);
+  border-radius: 6px;
   height: 70px;
   width: 100%;
 }
@@ -2970,20 +2952,91 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   background-color: #fff !important;
 }
-.p-button-outlined {
-  margin: 0 10px !important;
-  color: var(--secondary-bluecolor) !important;
+
+/* Entire application buttons */
+button.btn {
+  padding: 8px 12px !important;
+  line-height: normal !important;
+  border: medium none !important;
+  font-size: 15px;
+  border-radius: var(--main-borderradius);
+  color: var(--main-txtcolor);
+  min-width: 75px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
   box-shadow: none !important;
 }
-.p-button-outlined.only_clearbtn {
-  margin:0px !important;
+
+button.btn.btn-default {
+  background: #eeeeee;
+  margin-right: 10px;
+}
+ 
+.btn.bluebg-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 22px !important;
+  border-radius: var(--main-borderradius) !important;
+  height: 36px !important;
+}
+button.btn.bluebg-button.savefoldername {
+  margin-top: 15px;
+  float: right;
+} 
+.btn.bluebg-button:hover,
+.p-column-filter-buttonbar .p-button:hover {
+  background: #209AED !important;
+  color: #fff  !important;
+}
+.btn.reset-btn {
+  border: 1px solid #098DE6 !important;
+  color: #098de6 !important;
+  background-color: transparent;
+  border-radius: var(--main-borderradius) !important;
+  height: 36px !important;
+}
+.btn.reset-btn:hover,
+.p-column-filter-buttonbar .p-button.p-button-outlined:hover {
+  background: linear-gradient(0deg, rgba(9, 141, 230, 0.1), rgba(9, 141, 230, 0.1)), #FFFFFF !important;
+  color: #098de6;
+}
+button.btn.canlrst-btn,
+button.btn.new-cancelbtn {
+  color: #535353;
+  font-size: 16px; 
+  padding: 6px 22px !important;
+  height:36px !important;
+}
+button.btn.new-cancelbtn:hover {
+  color: var(--main-bluecolor) ;
+}
+button:disabled,
+.btn.bluebg-button:disabled {
+  cursor: no-drop;
+  background: #e0e0e0 !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;
+}
+button.p-element.button-bot{
+  background-color: transparent !important;
 }
 
+/* Swal buttons */
+.swal2-styled.swal2-cancel {  
+  /* background-color: transparent !important;  */
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
+}
+/* Swal buttons */
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
   background: transparent !important;
   margin-right: 10px !important;
+  height: 28px !important;
 }
 .p-column-filter-buttonbar {
   justify-content: right !important;
@@ -2992,7 +3045,7 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .p-column-filter-buttonbar .p-button {
   background: var(--main-bluecolor) !important;
   border: 1px solid var(--main-bluecolor) !important;
-  padding: 4px 12px;
+  padding: 3px 12px;
   margin: 0px !important;
   box-shadow: none !important;
 }
@@ -3000,6 +3053,15 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   color: var(--main-bluecolor);  /* filter applied icon highlight */
 }
 /* grid-filter Overlay Styles End */
+.p-button-outlined {
+  /* margin: 0 10px !important; */
+  color: var(--secondary-bluecolor) !important;
+  box-shadow: none !important;
+  height: 36px !important;
+}
+.p-button-outlined.only_clearbtn {
+  margin:0px !important;
+}
 /* Grid NEW Styles End */
 
 /* primeNg components Styles Start */
@@ -3099,7 +3161,7 @@ textarea.p-inputtextarea {
 .selectfoldername .p-dialog,
 .createdashboardname .p-dialog {
   width: 400px;
-  border-radius: 8px !important;
+  border-radius: 3px !important;
   padding: 20px;
   background-color: #fff;
 }
@@ -3155,11 +3217,14 @@ textarea.p-inputtextarea {
   font-size: 14px;
   color: #232832;
 }
-
+.p-knob.p-component {
+  cursor: pointer;
+}
 .taskdescription span.task-descwords {
   display: block;
   height: 450px;
   overflow: auto;
+  cursor: pointer;
 }
 /* new styles for ng select */
 .ng-select .ng-select-container {
@@ -3273,16 +3338,7 @@ textarea.p-inputtextarea {
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
 }
-button.btn.bluebg-button {
-  background-color: var(--main-bluecolor);
-  color: #fff;
-  padding: 6px 30px;
-}
-button.btn.canlrst-btn,
-button.btn.new-cancelbtn {
-  color: var(--main-bluecolor) !important;
-  font-size: 16px; 
-}
+
 .commentBox .p-tabview-panels {
   height: calc(100% - 45px) !important;
   padding-top: 0px !important;
@@ -3430,6 +3486,7 @@ button.btn.new-cancelbtn {
   margin: 10px;
   padding: 10px 15px;
   background: #fff;
+  cursor: pointer;
 }
 .docfolder .p-card:hover {
   border: 1px solid var(--secondary-bluecolor);
@@ -3607,3 +3664,34 @@ button.btn.new-cancelbtn {
   #toolbar-container .ck.ck-button:active{border:1px solid #eee;}
   #toolbar-container .ck.ck-button:active{border:1px solid #eee}
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
+/* ----------------------popup changes------------------------- */
+.p-component-overlay {
+  background-color: #091e42ab !important;
+  transition-duration: 0.2s;
+}
+.p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+  margin-left: 0rem !important; 
+  font-size: 16px !important;
+  color: #333 !important;
+}
+.p-dialog .p-dialog-footer button:last-child {
+  margin: 0px !important;
+}
+.p-dialog .p-dialog-footer button {
+  margin: 0 1rem 0 0 !important;
+}
+/* .p-dialog.p-confirm-dialog .p-confirm-dialog-icon {
+  font-size: 1.6rem !important;
+  margin-right: 10px;
+  color: #ffff;
+  background-color: #ff9f1a;
+  border-radius: 12px;
+} */
+.swal2-popup {
+ border-radius: 3px !important;
+ }
+ .swal2-container.swal2-backdrop-show {
+  background: #091e42ab !important;
+}
+/* ----------------------popup changes------------------------- */
+

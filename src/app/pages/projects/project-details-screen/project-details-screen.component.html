@@ -40,10 +40,10 @@
                     </span>
                     <span *ngIf="editdata==true" (click)="updateprojectDetails()">
                         <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag || !projectStartDate || projectStartDate > projectenddate"
-                            class="btn btn-primary">Save</button>
+                            class="btn bluebg-button">Save</button>
                     </span>
                     <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
-                        <button class="btn btn-primary" (click)="editdata=true">
+                        <button class="btn bluebg-button" (click)="editdata=true">
                             <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
                         </button>
                     </span>
@@ -608,7 +608,7 @@
                 <div class="col-md-8 pr-0">
                     <span class="pull-right">
                         <span class="">
-                            <button type="button" class="btn btn-primary" routerLink="/pages/projects/create-task"
+                            <button type="button" class="btn bluebg-button" routerLink="/pages/projects/create-task"
                                 [queryParams]="{project_id: project_id}">
                                 <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create
                                 New
@@ -759,7 +759,7 @@
                         </div>
                         <div class="col-md-6 pr-0">
                             <span class="pull-right">
-                                <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)"
+                                <button type="button" class="btn bluebg-button" (click)="addresource(addresourcemodal)"
                                     *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
                                     <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add
                                     New
@@ -768,13 +768,13 @@
                                     <div *ngIf="Resourcedeleteflag==true" class="env-btn">
                                         <button title="Delete Resource"
                                             *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')"
-                                            value="Delete" id="deletebtn" class="btn btn-primary"
+                                            value="Delete" id="deletebtn" class="btn new-cancelbtn"
                                             (click)="deleteresource()">Delete</button>
                                     </div>
                                     <div *ngIf="Resourcedeleteflag==false" class="env-btn">
                                         <button data-toggle="tooltip"
                                             *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')"
-                                            data-placement="top" id="deletebtn" class="btn btn-primary"
+                                            data-placement="top" id="deletebtn" class="btn new-cancelbtn"
                                             title="Delete Resource" disabled>Delete</button>
                                     </div>
                                 </span>
@@ -868,7 +868,7 @@
                         </div>
                         <div class="col-md-6 pr-0">
                             <span class="pull-right">
-                                <button type="button" (click)="uploadFile(uploadFilemodal)" class="btn btn-primary">
+                                <button type="button" (click)="uploadFile(uploadFilemodal)" class="btn bluebg-button">
                                     <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload">Upload
                                     New</button>
                             </span>
@@ -967,19 +967,19 @@
                                                         <span class="testtooltip">Download</span>
                                                     </span> -->
                                                     <span *ngIf="isOpenedState == 1">
-                                                        <button class="btn btn-primary" *ngIf="!isProcessEdit"
+                                                        <button class="btn bluebg-button" *ngIf="!isProcessEdit"
                                                             (click)="editBusinessProcess($event)">
                                                             <img src="../../../../assets/images/Projects/edit.svg"
                                                                 class="testplus" />Edit
                                                         </button>
-                                                        <button class="btn btn-default"
+                                                        <button class="btn new-cancelbtn"
                                                             *ngIf="businessDetails.length > 0 && isProcessEdit"
                                                             (click)="cancelEditProcess($event)">Cancel</button>
-                                                        <button class="btn btn-primary"
+                                                        <button class="btn bluebg-button"
                                                             *ngIf="businessDetails.length == 0 && isProcessEdit"
                                                             [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             (click)="saveBusinessProcess($event)">Save</button>
-                                                        <button class="btn btn-primary"
+                                                        <button class="btn bluebg-button"
                                                             style="margin-right: 0px !important;"
                                                             [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             *ngIf="businessDetails.length > 0 && isProcessEdit"
@@ -1152,7 +1152,7 @@
                                                                         </div>
                                                                         <div *ngIf="!each.answer && selected_questionId != each.questionId"
                                                                             class="col-md-7 pl-0 form-group answer-btn">
-                                                                            <button [disabled]="selectedQuestionEdit" class="btn btn-primary"
+                                                                            <button [disabled]="selectedQuestionEdit" class="btn bluebg-button"
                                                                                 (click)="answerToQuestion(each)">Answer</button>
                                                                         </div>
                                                                         <div class="col-md-1 p-0 text-right pques-actions"
@@ -1383,7 +1383,7 @@
                                                                 Cancel
                                                             </button>
                                                             <button id="updatesavecomment" type="button"
-                                                                class="btn btn-primary btn-update"
+                                                                class="btn bluebg-button"
                                                                 (click)="updatecomment(c.id)">
                                                                 Save
                                                             </button>
@@ -1499,10 +1499,10 @@
         </div>
         <div class="modal-footer modelprfooter">
             <div class="pull-right">
-                <button (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
-                <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
+                <button (click)="resetupdatetaskproject()" class="btn bluebg-button">Reset</button>
+                <button (click)="canceltaskform()" class="btn new-cancelbtn">Cancel</button>
                 <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
-                    class="btn btn-primary btn-update">Update</button>
+                    class="btn bluebg-button btn-update">Update</button>
             </div>
         </div>
 
@@ -1597,9 +1597,9 @@
         </div>
         <div class="modal-footer modelprfooter">
             <div class="pull-right">
-                <button (click)="uploadtaskFilemodalCancel()" class="btn btn-default">Cancel</button>
+                <button (click)="uploadtaskFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
                 <button [disabled]="uploadtaskFileForm.invalid || uploadFileDescriptionFlag"
-                    (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+                    (click)="submitUploadFileForm()" class="btn bluebg-button">Submit</button>
             </div>
         </div>
     </ng-template>
@@ -1695,9 +1695,9 @@
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
+            <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
             <button [disabled]="uploadFileFormDetails.invalid || uploadFileDescriptionFlag"
-                (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
+                (click)="submitUploadFileFormattachment()" class="btn bluebg-button">Submit</button>
         </div>
     </div>
 </ng-template>

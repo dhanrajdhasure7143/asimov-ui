@@ -84,6 +84,9 @@
                                             <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
                                         </span>
                                     </div>
+                                    <span *ngIf="isIconSize" class="required">
+                                        File size must be less then 200kb 
+                                    </span>
                             </div>
                             <div class="col-md-12 form-group p-0">
                                 <label class="label-control"> API <span class="star">*</span> </label>
@@ -264,7 +267,7 @@
                                             </tbody>
                                         </table>
                                     </p-tabPanel>
-                                    <p-tabPanel header="Params">
+                                    <!-- <p-tabPanel header="Params">
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -301,7 +304,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </p-tabPanel>
+                                    </p-tabPanel> -->
                                 </p-tabView>                             
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
@@ -323,9 +326,9 @@
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()" [disabled]="connectorForm.invalid">Test</button>
-                        <button *ngIf="!isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" [disabled]="connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
                 </div>

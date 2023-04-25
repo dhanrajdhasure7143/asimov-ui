@@ -150,8 +150,8 @@
                                         </div>
                                        
                                         <div class="propfooter col-md-12 p-0 text-right" *ngIf="isaddCollab">
-                                            <button (click)="cancelModel()" class="btn btn-default">Cancel</button>
-                                            <button class="btn btn-primary btn-update" (click)="saveCollabrators()">Save</button>
+                                            <button (click)="cancelModel()" class="btn new-cancelbtn">Cancel</button>
+                                            <button class="btn bluebg-button btn-update" (click)="saveCollabrators()">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -548,7 +548,7 @@
     </div>
     <div class="modal-body modelprbody">
         <div class="form-group col-md-12 text-right">
-            <button (click)="addNewcollabratorsObj($event)" class="btn btn-primary">Add New</button>
+            <button (click)="addNewcollabratorsObj($event)" class="btn bluebg-button">Add New</button>
         </div>
         <div class="col-md-12">
             <div class="collab-grid">
@@ -609,8 +609,8 @@
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="cancelModel()" class="btn btn-default">Cancel</button>
-            <button class="btn btn-primary btn-update" (click)="saveCollabrators()">Save</button>
+            <button (click)="cancelModel()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button btn-update" (click)="saveCollabrators()">Save</button>
         </div>
     </div>
 </ng-template>

@@ -10,7 +10,7 @@
             <button class="btn btn-default" (click)="resetProcess()">Reset</button>
             <!-- <button class="btn btn-primary" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button> -->
             <!-- <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button> -->
-            <button class="btn btn-primary" [disabled]="!vcmName || !selected_procName" (click)="saveVcm()">Save</button>
+            <button class="btn bluebg-button" [disabled]="!vcmName || !selected_procName" (click)="saveVcm()">Save</button>
         </div>
     </div>
 
@@ -57,8 +57,8 @@
                                         </div>
                                         <div class="propfooter col-md-12 p-0 text-right">
                                             <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="saveProperties('L1')">Save</button>
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="saveProperties('L2')">Save</button>
+                                            <button class="btn bluebg-button" *ngIf="editLevelProperties == 1" (click)="saveProperties('L1')">Save</button>
+                                            <button class="btn bluebg-button" *ngIf="editLevelProperties == 2" (click)="saveProperties('L2')">Save</button>
                                         </div>
                                     </div>
                                 </mat-panel-description>
@@ -494,8 +494,8 @@
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-            <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+            <button (click)="uploadFilemodalCancel()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button" (click)="onSubmitUpload()">Submit</button>
         </div>
     </div>
 </div>

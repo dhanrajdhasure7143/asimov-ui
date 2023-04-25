@@ -42,7 +42,10 @@ export class ProjectDocumentEditorComponent implements OnInit {
       //   forcePasteAsPlainText: true,
       //   removePlugins: 'exportpdf'
       // };
-      DecoupledEditor.create(document.querySelector("#editor"))
+      DecoupledEditor.create(document.querySelector("#editor"),{
+        // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
+        removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+      })
         .then((editor) => {
           // The toolbar needs to be explicitly appended.
           document
