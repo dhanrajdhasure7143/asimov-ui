@@ -6,7 +6,7 @@
         </div> -->
         <div class="env-data-tool credential-tools">
             <div *ngIf="!addflag" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()"  pTooltip="New" tooltipPosition="bottom">
+                <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()"  pTooltip="New" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add" class="testplus">
                     <!-- <span class="testtooltip">New</span> -->
                 </button>
@@ -18,7 +18,7 @@
                 </button>
             </div>
             <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()"  pTooltip="Edit" tooltipPosition="bottom">
+                <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()"  pTooltip="Edit" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit" class="testplus">
                     <!-- <span class="testtooltip">Edit</span> -->
                 </button>
@@ -30,7 +30,7 @@
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()"  pTooltip="Delete" tooltipPosition="bottom">
+                <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()"  pTooltip="Delete" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete" class="testplus">
                     <!-- <span class="testtooltip">Delete</span> -->
                 </button>

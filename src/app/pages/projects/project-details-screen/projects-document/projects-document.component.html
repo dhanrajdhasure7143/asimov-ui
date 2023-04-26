@@ -19,7 +19,7 @@
                     <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
                     <!-- <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search"> -->
                 </span>
-                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="bottom" [ngClass]="{'treeviewfilter': !isFolder}">
+                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="top" [ngClass]="{'treeviewfilter': !isFolder}">
                     <i (click)="op1.toggle($event)" class="pi pi-filter icon-color"></i>
                 </span>
             </div>

@@ -11,6 +11,10 @@
   padding: 6px;
   position: relative;
 }
+.credential-btntool img.testplus {
+  cursor: unset;
+  margin: 0px;
+}
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }

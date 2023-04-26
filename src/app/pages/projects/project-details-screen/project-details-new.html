@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-4 pr-0 text-right">
                 <button class="btn" type="button" (click)="menu.toggle($event)" pTooltip="Action Menu"
-                    tooltipPosition="bottom">
+                    tooltipPosition="top">
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                 </button>
                 <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
@@ -366,7 +366,7 @@
                             <h4 class="colheads chatheader">Collaborations</h4>
                             <span>
                                 <div class="pinnedmsgs selectable" *ngIf="_pinnedMessage.length > 0">
-                                    <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg"
+                                    <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" pTooltip="Unpin" tooltipPosition="top"
                                         class="testplus" (click)="sendMessage(null,'unpinned')">
                                     <span class="pinnedmsgtext"
                                         (click)="scrollTomain(_pinnedMessage[0],'pin_message')">{{truncatemessage(_pinnedMessage[0].message)}}</span>
@@ -385,10 +385,10 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" pTooltip="Pin" tooltipPosition="top"
                                                 (click)="pinMessage(each)" class="testplus">
-                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
-                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" pTooltip="Unpin" tooltipPosition="top" (click)="sendMessage(null,'unpinned')">
+                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" pTooltip="Reply" tooltipPosition="top" 
                                                 (click)="replyMessage(each)" class="testplus">
                                         </div>
                                         <!-- <p class="usermessage">{{each.message}}</p> -->
@@ -405,10 +405,10 @@
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
                                         <div class="user_keys res-reply">
-                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg"
+                                            <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" pTooltip="Pin" tooltipPosition="top"
                                                 class="testplus" (click)="pinMessage(each)">
-                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" (click)="sendMessage(null,'unpinned')">
-                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg"
+                                                <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" pTooltip="Unpin" tooltipPosition="top" (click)="sendMessage(null,'unpinned')">
+                                            <img src="../../../../assets/images-n/projects/reply.svg" alt="replymsg" pTooltip="Reply" tooltipPosition="top" 
                                                 (click)="replyMessage(each)" class="testplus">
                                             <!-- <i class="pi pi-tag"></i>
                                             <i class="pi pi-replay" (click)="replyMessage(each)"></i> -->
@@ -529,7 +529,7 @@
                                     <span *ngIf="col.ColumnName == 'action'">
                                         <div class="newinntalx">
                                             <a (click)="deleteuserById(rowData)" pTooltip="Delete"
-                                                tooltipPosition="bottom">
+                                                tooltipPosition="top">
                                                 <img src="../../../../assets/images-n/common/delete-blue.svg"
                                                     alt="delete" class="default-img">
                                             </a>
