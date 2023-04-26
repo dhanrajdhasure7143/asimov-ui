@@ -36,6 +36,7 @@ export class AdminAddScreenComponent implements OnInit {
   hiddenPopUp: boolean = false;
   myValue: number = 0;
   screenNameCheck: boolean;
+  filterData: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -91,7 +92,10 @@ export class AdminAddScreenComponent implements OnInit {
     });
 
     this.getListofTables();
-    if (this.screen_id) this.getScreenDetail();
+    if (this.screen_id) {
+      this.getScreenDetail();
+    }
+   
   }
 
   backToScreenList() {
@@ -216,31 +220,31 @@ export class AdminAddScreenComponent implements OnInit {
     this.rest.getScreenList().subscribe((data) => {
       screenList = data;
       this.isDisabled = true;
-      let filterData = screenList.find(
+      this.filterData = screenList.find(
         (data: any) => data.Screen_ID == this.screen_id
       );
       setTimeout(() => {
        this.spinner.show()
         this.insertForm = this.formBuilder.group({
           screen_Name: [
-            filterData.Screen_Name,
+            this.filterData.Screen_Name,
             Validators.compose([Validators.required,,Validators.pattern('^[a-zA-Z ]+$')]),
           ],
-          table_Name: [filterData.Table_Name],
-          allow_Insert: [filterData.Allow_Insert],
-          allow_Edit: [filterData.Allow_Edit],
-          allow_Delete: [filterData.Allow_Delete],
-          show_As_Child: [filterData.Show_As_Child],
+          table_Name: [this.filterData.Table_Name],
+          allow_Insert: [this.filterData.Allow_Insert],
+          allow_Edit: [this.filterData.Allow_Edit],
+          allow_Delete: [this.filterData.Allow_Delete],
+          show_As_Child: [this.filterData.Show_As_Child],
           default_Sort: [""],
           default_Filter_Clause: [""],
           preferences: [""],
-          row_Count: [filterData.Row_Count],
+          row_Count: [this.filterData.Row_Count],
           insights: [""],
           //  Role: ["", Validators.compose([Validators.required])],
           formType: [""],
-          screenType: [filterData.ScreenType],
+          screenType: [this.filterData.ScreenType],
         });
-      }, 100);
+      }, 150);
       this.spinner.hide();
       this.tablehide = true;
       this.rest.getElementTable(this.screen_id).subscribe((data) => {

@@ -8,7 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { TitleCasePipe } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
@@ -77,7 +77,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private spinner: LoaderService,
     private jwtHelper: JwtHelperService,private route: ActivatedRoute,
     @Inject(APP_CONFIG) private config,
-    private titlecasePipe:TitleCasePipe) {
+    private titlecasePipe:TitleCasePipe,
+    private location: Location,) {
     this.route.queryParams.subscribe(params => {
       if (params['accessToken']) {
         var acToken = params['accessToken']
@@ -366,6 +367,7 @@ getTenantLists(){
 }
 
 onChangeTenant(event:any){
+  this.spinner.show();
   let value = event.item
   // let value = this.tenantsList.find(data=>data.tenant_name == event.value);
   this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
@@ -381,13 +383,19 @@ onChangeTenant(event:any){
     let url=(window.location.href)
     if(url.includes("home?accessToken")){
       window.location.href=window.location.href.split("?accessToken")[0];
+    window.location.reload();  
+    }
+    else if(url.includes("subscriptions?index")){
+    window.location.href=window.location.href.split("?index")[0];
+     this.router.navigate(["/pages/home"]);
+     setTimeout(()=> {
       window.location.reload();
+     },100)
     }
     else{
-      window.location.reload();
+       window.location.reload();
     }
   }, 1000)  
-  this.spinner.hide();
   });
 }
 }
