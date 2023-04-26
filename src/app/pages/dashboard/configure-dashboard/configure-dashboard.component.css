@@ -20,9 +20,10 @@
 	background-color: #E9E9E9;
     height: 32px;
 }
+.pr-24{padding-right:24px;}
 .well1-dynmic {	
 	padding: 10px 12px !important;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
     border-radius: 6px;
@@ -62,13 +63,15 @@
     margin-right: 11px;
 }
 .graph-text{
-    font-size: 20px;
+    font-size: 18px;
     margin: 0px;
-    color: #232832;
+    color: #222222;
 }
 .configtabslists h5 {
     font-size: 16px;
+    color: #222222;
 }
+.class1 h5{color:#787373;}
 .projectnamerow p-inplace.p-element {
     position: relative;
     margin-right: 8px;
@@ -89,6 +92,16 @@ button.btn.bluebg-button {
     height: 32px;
     /* margin-right: 10px; */
 }
+.grey-btn {
+    background-color: #E0E8ED !important;
+    margin-left: 12px !important; 
+    padding: 8px !important;
+    height: 36px;   
+}
+.grey-btn:hover {
+background-color: #EAE9E9 !important;  
+}
+
 .delete-dbtn img {
     height: 20px;
 }
@@ -130,26 +143,43 @@ button.btn.bluebg-button {
     border-radius: 6px;
     display: flex;
     padding: 7px 10px;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
+    height:82px;
+    align-items: center;
 }
 .well1.emptywidget {
     display: block;
     text-align: center;
-	height: 95%;
+	height: 350px;
 }
 .emptywidget img {
-    margin-top: 10%;
+    top: 40%;
+    left: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .emptywidget p.drag-sec {
-    margin: 20px 0px 0px;
+    top: 60%;
+    left: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .drag-sec {
     margin-bottom: 0px;
     margin-left: 10px;
 }
 .metricalign{
-	padding: 15px 0px;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 5px;
+    border: 0.5px solid #e0e0e030;
+    margin-bottom: 5px !important;
+    border-radius: 3px;
+    box-shadow: 0px 2px 3px 0px #80808026;
+    cursor: pointer;
+}
+.metricalign:hover{
+	background-color: #f3faff !important;
 }
 .sercmetric {
     right: 15px !important;
@@ -170,7 +200,7 @@ button.btn.bluebg-button {
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
-	color: #7d7d7d;
+	color: #979797;
 }
 
 .configtabssearch {

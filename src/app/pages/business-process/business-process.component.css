@@ -46,6 +46,7 @@
     line-height: 18px;
     position: relative;
     z-index: 2;
+    border-radius: 3px;
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
@@ -82,10 +83,9 @@ span.label_icon.inpro-label {
 .upload_again_btn {
     background-color: #f3f3f3 !important;
 }
-/* .bps-float button:hover, button.editprimary:disabled {
-    background-color: #098de6;
-    border-radius: 6px;
-} */
+.bps-float button:hover, button.editprimary:disabled {
+    background-color: #098de6 !important;
+}
 .bps-float button:hover img, button.editprimary:disabled img {
     filter: brightness(2.5) !important;
 }

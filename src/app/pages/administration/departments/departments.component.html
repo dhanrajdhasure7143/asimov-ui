@@ -3,10 +3,16 @@
     <span routerLink="/pages/admin/create-department" pTooltip="Create New" tooltipPosition="top">
       <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt="Create New" />
     </span>
-    <span id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
+    <span *ngIf="Departmentdeleteflag" id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
+      <img  src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" class="testplus" alt="Delete" />
+    </span>
+    <span *ngIf="!Departmentdeleteflag" id="deletebtndis" >
+      <img  src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" class="testplus" alt="Delete" />
+    </span>
+    <!-- <span id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
       <img *ngIf="Departmentdeleteflag" src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" class="testplus" alt="Delete" />
       <img *ngIf="!Departmentdeleteflag" src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" class="testplus" alt="Delete" />
-    </span>
+    </span> -->
   </div>
       <!-- <div class=""> 
           <div class="row">-->

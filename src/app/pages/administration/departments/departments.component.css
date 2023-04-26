@@ -3,11 +3,14 @@
   position: absolute;
   right: 205px;
   z-index: 1;
-  padding: 6px;
+  padding: 7px 10px;
 }
 .depart-btns span {
-  margin-right: 17px;
+  margin-left: 17px;
 }
-.depart-btns span img {
+.depart-btns img {
   margin-right: 0px;
+}
+.depart-btns #deletebtndis img {
+  cursor: no-drop;
 }
