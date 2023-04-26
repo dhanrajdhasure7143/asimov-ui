@@ -38,7 +38,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     background-color: #d9dfe4 !important;
     z-index: 1;
     position: relative;
-    top: 60px;
+    top: 55px;
   }
 
   .eiap-main{
