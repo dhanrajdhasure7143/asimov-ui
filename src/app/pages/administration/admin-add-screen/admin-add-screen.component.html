@@ -10,8 +10,9 @@
       <span class="title_text" *ngIf="!labelupdate">
         Create Screen
       </span>
-      <span class="title_text" *ngIf="labelupdate">
-        Update Screen
+      <span class="title_text_haspath" *ngIf="labelupdate">
+        <span> Update Screen |  </span>
+        <span class="sub_title_text">{{filterData.Screen_Name}}</span>
       </span>
     </h3>
         <!-- <div class="col">

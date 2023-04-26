@@ -39,7 +39,7 @@ export const environment = {
   //RPA WebActions Action AttrId
   webActionAttrId: 580,
   //IPCTenant
-  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
+  ipcTenant: "c5611383-58c1-4677-839c-a337c9fb102c"
 };
 
 /*
