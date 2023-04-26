@@ -6,11 +6,11 @@
         <div class="right_split">
             <span class="splitter-headers">
                 <img *ngIf="isShowExpand" src="../../../assets/images-n/projects/minimize.svg" alt="Minimize"
-                    (click)="minimizeFullScreen()" class="expandsvgimg" pTooltip="Minimize" tooltipPosition="bottom"/>
+                    (click)="minimizeFullScreen()" class="expandsvgimg" pTooltip="Minimize" tooltipPosition="top"/>
                 <img *ngIf="!isShowExpand" src="../../../assets/images-n/projects/maximize.svg" alt="Maximize"
-                    (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="bottom"/>
+                    (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="top"/>
                 <a (click)="closeSplitOverlay()" class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
-                        alt="close" pTooltip="Close" tooltipPosition="bottom"></a>
+                        alt="close" pTooltip="Close" tooltipPosition="top"></a>
             </span>
             <ng-content></ng-content>
         </div>

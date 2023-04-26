@@ -1,6 +1,6 @@
   .ep-header-white{
     background-color: #098DE6 !important;
-    height: 60px;
+    height: 55px;
     box-shadow: none !important;
     position: absolute;
     /* z-index: 1; */
@@ -8,9 +8,10 @@
 
   .txt-wh{
     color: #fff;
-    line-height: 18px;
+    line-height: 15px;
     margin-left: 13px;
   }
+  .header-logosize{width:95%;}
 
   .res-circle {
     width: 38px;
