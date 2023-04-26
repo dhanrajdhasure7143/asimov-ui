@@ -142,10 +142,18 @@ button.btn.bluebg-button {
 	height: 350px;
 }
 .emptywidget img {
-    margin-top: 18%;
+    top: 40%;
+    left: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .emptywidget p.drag-sec {
-    margin: 20px 0px 0px;
+    top: 60%;
+    left: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .drag-sec {
     margin-bottom: 0px;
