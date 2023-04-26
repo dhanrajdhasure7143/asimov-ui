@@ -94,20 +94,27 @@
     width: 80%;
     margin: auto;
 }
-.delete-dbtn {
-    padding-left: 0px !important;
+.grey-btn {
+    background-color: #E0E8ED !important;
+    margin-left: 12px !important; 
+    padding: 8px !important;
+    height: 36px;   
 }
+.grey-btn:hover {
+background-color: #EAE9E9 !important;  
+}
+
 .defaltdrpdwn button {
     width: 230px;
     border-color: #979797 !important;
     color: #232832 !important;
-    height: 32px !important;
+    /* height: 32px !important; */
     padding: 10px;
-    margin: 0px 12px !important;
+    /* margin: 0px 12px !important; */
 }
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
-    inset: 100% auto auto 10px !important;
+    inset: 100% auto auto !important;
     padding: 0px !important;
     margin-top: 5px;
 }

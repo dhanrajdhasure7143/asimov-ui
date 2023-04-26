@@ -2621,18 +2621,7 @@ cursor: pointer;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
-.grey-btn {
-  background-color: #EAE9E9 !important;
-  border-radius: 3px !important;
-  margin-left: 12px !important;
- 
-  padding: 8px 10px !important;
- 
-}
-.grey-btn:hover {
-  background-color: #E0E8ED !important;
 
-}
 .main-content-head h3 {
   font-weight: var(--main-fontweight);
   /* line-height: 30px; */
