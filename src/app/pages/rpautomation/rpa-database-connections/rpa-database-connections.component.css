@@ -8,7 +8,7 @@
   background-color: transparent !important;
 }
 .credential-btntool {
-  padding: 6px;
+  padding: 6px 0px;
   position: relative;
 }
 .tsttooltipbtn:hover span.testtooltip {

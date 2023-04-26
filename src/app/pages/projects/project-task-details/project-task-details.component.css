@@ -132,6 +132,11 @@ span.lowimp {
   margin-bottom: 7px; 
   position: unset;
 }
+.taskdescription span.task-descwords {
+  display: block;
+  height: 450px;
+  overflow: auto;
+}
 button span {
   margin-left: 5px;
 }

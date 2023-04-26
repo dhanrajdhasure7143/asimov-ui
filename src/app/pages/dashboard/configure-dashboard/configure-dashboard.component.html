@@ -13,7 +13,7 @@
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
-              <button (click)="deletedashbord()" class="btn" pTooltip="Delete" tooltipPosition="bottom">
+              <button (click)="deletedashbord()" class="btn" pTooltip="Delete" tooltipPosition="top">
                 <img src="../../../../assets/images-n/dashboard/dash-delete.svg" alt="Delete" />
               </button>
               <!-- <button class="btn" type="button" class="btn btn-dots" (click)="menu.toggle($event)">
@@ -252,11 +252,11 @@
     </p-tabView>
     <!-- <span class="splitter-headers">
       <img *ngIf="isShowExpand" src="../../../assets/images-n/projects/minimize.svg"
-      (click)="minimizeFullScreen()" class="expandsvgimg" pTooltip="Minimize" tooltipPosition="bottom"/>
+      (click)="minimizeFullScreen()" class="expandsvgimg" pTooltip="Minimize" tooltipPosition="top"/>
   <img *ngIf="!isShowExpand" src="../../../assets/images-n/projects/maximize.svg"
-      (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="bottom"/>
+      (click)="expandFullScreen()" class="expandsvgimg" pTooltip="Maximize" tooltipPosition="top"/>
   <a (click)="closeSplitOverlay()" class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
-          alt="close" pTooltip="Close" tooltipPosition="bottom"></a>
+          alt="close" pTooltip="Close" tooltipPosition="top"></a>
         </span>  -->
   </ng-template>
 </p-splitter>

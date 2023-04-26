@@ -8,7 +8,7 @@
             <span class="bps-header-title" [class.gen-bpsheader]="!rejectedOrApproved">
               <h3>
                 <span class="title_text">Business Process Studio 
-                  <span  class="sub_title_text" *ngIf="isHeaderShow == 'true'" [pTooltip]=currentNotation_name tooltipPosition="bottom">
+                  <span  class="sub_title_text" *ngIf="isHeaderShow == 'true'" [pTooltip]=currentNotation_name tooltipPosition="top">
                     <span *ngIf="currentNotation_name">/ </span> {{fitTableView(currentNotation_name)}}</span>
                 </span>
                 <span class="" *ngIf="isHeaderShow == 'true'">
@@ -154,11 +154,11 @@
           </div>
           <div class="col-md-6 p-0 module-heading-buttons bps-aprwkfl" *ngIf="isHeaderShow == 'false'">
             <span>
-              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn" pTooltip="Approvals" tooltipPosition="bottom">
+              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn" pTooltip="Approvals" tooltipPosition="top">
                 <img  src="../../../assets/images/BPMS/Workflow.svg" alt="Approvals">
                 <!-- Approvals -->
               </button>
-              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()" class="btn" pTooltip="View Cockpit" tooltipPosition="bottom">
+              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()" class="btn" pTooltip="View Cockpit" tooltipPosition="top">
                 <img  src="../../../assets/images/BPMS/eye-show-blue.svg" alt="viewcockpit">
                 <!-- <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit -->
