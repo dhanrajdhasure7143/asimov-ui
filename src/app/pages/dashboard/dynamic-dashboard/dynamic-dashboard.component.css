@@ -1,3 +1,6 @@
+.main-content-head h3 .title_text {
+    cursor: pointer;
+}
 .align-menubtn {
     margin-bottom: 10px !important;
     align-items: center;
@@ -88,7 +91,7 @@
     position: absolute;
     justify-content: flex-end;
     left: 230px;
-    top: 2px;
+    top: 3px;
 }
 .graph-set{
     width: 80%;

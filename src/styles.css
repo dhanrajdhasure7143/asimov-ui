@@ -2596,7 +2596,7 @@ cursor: pointer;
 
 .maincont {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 55px);
   background: var(--main-bgcolor);
   overflow: hidden;
 }
@@ -2814,8 +2814,11 @@ span.tabscount {
 .maindivfoprm .columnlistgrid .p-datatable-wrapper {
   height: 100% !important; /* for add-screen form & widget grid */
 }
-.well1-dynmic.graph .p-datatable-wrapper {
+/* .well1-dynmic.graph .p-datatable-wrapper {
   height: 285px !important;
+} */
+.well1-dynmic.graph .p-datatable-wrapper {
+  height: 265px !important;
 }
  /* Media queries */
  /* @media screen and (min-width: 1600px) {
@@ -2843,10 +2846,12 @@ span.tabscount {
   /* height: calc(100vh - 365px);  */
   height: auto;
 }
-.acresources .p-datatable .p-datatable-header {
+.acresources .p-datatable .p-datatable-header,
+.well1-dynmic.graph .p-datatable .p-datatable-header {
   background-color: transparent !important;
 }
-.acresources th.p-element.p-sortable-column.p-resizable-column {
+.acresources th.p-element.p-sortable-column.p-resizable-column,
+.well1-dynmic.graph th.p-element.p-sortable-column.p-resizable-column {
   background-color: #fff !important;
 }
 /* chat mention styles */
@@ -3301,7 +3306,7 @@ textarea.p-inputtextarea {
   padding-left: 60px !important;
   z-index: 1000;
   left: 0;
-  top: 60px;
+  top: 55px;
   width: 100%;
   height: 100%;
   overflow: hidden;
