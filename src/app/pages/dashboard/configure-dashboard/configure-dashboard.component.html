@@ -9,12 +9,12 @@
                 <span class="title_text">{{_paramsData.dashboardName}} </span>
               </h3>
             </div>
-            <div class="col-md-6 pr-0 row justify-content-end align-items-center">
+            <div class="col-md-6 row justify-content-end align-items-center">
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
-              <button (click)="deletedashbord()" class="btn" pTooltip="Delete" tooltipPosition="top">
-                <img src="../../../../assets/images-n/dashboard/dash-delete.svg" alt="Delete" />
+              <button (click)="deletedashbord()" class="grey-btn" pTooltip="Delete" tooltipPosition="bottom">
+                <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
               </button>
               <!-- <button class="btn" type="button" class="btn btn-dots" (click)="menu.toggle($event)">
                 <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" >
@@ -44,7 +44,7 @@
       
               <div class="col-md-3 pl-0" *ngFor="let item of defaultMetricsData" >
                 <div class="well1">
-                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="40%" alt="" />
+                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="25%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Metric</b> to this column </p>
                 </div>
               </div>
@@ -160,14 +160,14 @@
               </div></div> -->
               <div class="col-md-6 pl-0" *ngIf="dynamicDashBoard.widgets.length<1" >
                 <div class="well1 emptywidget">
-                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="40%" alt="" />
+                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Widget</b> to this column </p>
                 </div>
               </div>
                 
               <div class="col-md-6 pl-0" *ngIf="dynamicDashBoard.widgets.length<2" >
                 <div class="well1 emptywidget">
-                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="40%" alt="" />
+                  <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Widget</b> to this column </p>
                 </div>
               </div>              
@@ -183,7 +183,7 @@
     <p-tabView class="configtabs">
       <p-tabPanel header="Metrics" [headerStyle]="{'font-size': '20px'}" >
         <div class="row configtabssearch">
-          <div class="col-md-12 p-0">
+          <div class="col-md-12 p-0 mb-3">
             <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics"  type="text" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align sercmetric">
           </div>
@@ -210,7 +210,7 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
-        <div class="row configtabssearch">
+        <div class="row configtabssearch mb-3">
           <div class="col-md-6 pl-0" >
             <input class="form-control toolbar-search" type="text" [(ngModel)]="searchText" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align">
@@ -231,7 +231,7 @@
                   <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart>
                 </div>
                 <div *ngIf="widget.widget_type =='Table'|| widget.widget_type =='table'">
-                   <img src="../../../../assets/images-n/dashboard/table1.png" width="60px;" alt="">
+                   <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="">
                 </div>
                 <div *ngIf="widget.widget_type =='Bar'|| widget.widget_type =='bar'">
                   <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">

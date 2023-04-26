@@ -68,7 +68,9 @@
 }
 .configtabslists h5 {
     font-size: 16px;
+    color: #222222;
 }
+.class1 h5{color:#787373;}
 .projectnamerow p-inplace.p-element {
     position: relative;
     margin-right: 8px;
@@ -131,14 +133,16 @@ button.btn.bluebg-button {
     display: flex;
     padding: 7px 10px;
 	margin-bottom: 15px;
+    height:82px;
+    align-items: center;
 }
 .well1.emptywidget {
     display: block;
     text-align: center;
-	height: 95%;
+	height: 350px;
 }
 .emptywidget img {
-    margin-top: 10%;
+    margin-top: 18%;
 }
 .emptywidget p.drag-sec {
     margin: 20px 0px 0px;
@@ -148,8 +152,15 @@ button.btn.bluebg-button {
     margin-left: 10px;
 }
 .metricalign{
-	padding: 15px 0px;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 5px;
+    border: 1px solid #e0e0e030;
+    margin-bottom: 5px !important;
+    border-radius: 3px;
+    box-shadow: 2px 3px 3px 0px #80808029;
+    cursor: pointer;
+}
+.metricalign:hover{
+	background-color: #f3faff !important;
 }
 .sercmetric {
     right: 15px !important;
@@ -170,7 +181,7 @@ button.btn.bluebg-button {
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
-	color: #7d7d7d;
+	color: #979797;
 }
 
 .configtabssearch {
