@@ -9,11 +9,11 @@
                 <span class="title_text">{{_paramsData.dashboardName}} </span>
               </h3>
             </div>
-            <div class="col-md-6 row justify-content-end align-items-center">
+            <div class="col-md-6 pr-24 row justify-content-end align-items-center">
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
-              <button (click)="deletedashbord()" class="grey-btn" pTooltip="Delete" tooltipPosition="top">
+              <button (click)="deletedashbord()" class="btn grey-btn" pTooltip="Delete" tooltipPosition="top">
                 <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
               </button>
               <!-- <button class="btn" type="button" class="btn btn-dots" (click)="menu.toggle($event)">
@@ -31,7 +31,7 @@
             </div> -->
 
             <div class="row" pDroppable="item" (onDrop)="drop()">
-              <div class="col-md-3 pl-0" *ngFor="let item of addedMetrics;let j =index">
+              <div class="col-md-3 pl-0 pr-24" *ngFor="let item of addedMetrics;let j =index">
                 <div class="well1-dynmic">
                   <!-- <img src="..\assets\images-n\dashboard\{{item.src}}" class="dashbrd-img"/> -->
                   <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
@@ -42,7 +42,7 @@
                 </div>
               </div>
       
-              <div class="col-md-3 pl-0" *ngFor="let item of defaultMetricsData" >
+              <div class="col-md-3 pl-0 pr-24" *ngFor="let item of defaultMetricsData" >
                 <div class="well1">
                   <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="25%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Metric</b> to this column </p>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="row" pDroppable="widget" (onDrop)="dropWidget()">
-              <div class="col-md-6 pl-0" *ngFor="let widget of addedWidgets; let j=index" >
+              <div class="col-md-6 pl-0 pr-24" *ngFor="let widget of addedWidgets; let j=index" >
                 <div class="well1-dynmic graph">
                   <div class="row align-menubtn">
                     <div class="col-10 p-0 d-flex">
@@ -158,14 +158,14 @@
                 </p-table>
               </div>
               </div></div> -->
-              <div class="col-md-6 pl-0" *ngIf="dynamicDashBoard.widgets.length<1" >
+              <div class="col-md-6 pl-0 pr-24" *ngIf="dynamicDashBoard.widgets.length<1" >
                 <div class="well1 emptywidget">
                   <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Widget</b> to this column </p>
                 </div>
               </div>
                 
-              <div class="col-md-6 pl-0" *ngIf="dynamicDashBoard.widgets.length<2" >
+              <div class="col-md-6 pl-0 pr-24" *ngIf="dynamicDashBoard.widgets.length<2" >
                 <div class="well1 emptywidget">
                   <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
                   <p class="drag-sec">Drag or Add a <b>Widget</b> to this column </p>
