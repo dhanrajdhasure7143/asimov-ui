@@ -2815,7 +2815,7 @@ span.tabscount {
   height: 100% !important; /* for add-screen form & widget grid */
 }
 .well1-dynmic.graph .p-datatable-wrapper {
-  height: calc(100vh - 380px) !important;
+  height: 285px !important;
 }
  /* Media queries */
  /* @media screen and (min-width: 1600px) {
