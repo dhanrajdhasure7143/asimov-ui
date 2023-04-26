@@ -17,6 +17,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkDirective } from '../../../shared/directives/cdkdirective';
 import { Secretkey } from './atoms/secretkey';
+import { HtmlEditor } from './atoms/htmleditor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { Secretkey } from './atoms/secretkey';
     FileComponent,
     IPCCheckboxComponent,
     CdkDirective,
-    Secretkey
+    Secretkey,
+    HtmlEditor
   ],
   imports: [
     CommonModule,
