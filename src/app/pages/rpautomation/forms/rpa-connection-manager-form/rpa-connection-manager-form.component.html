@@ -229,7 +229,49 @@
                             </div>                        
                             <div class="col-md-12 form-group p-0" *ngIf="isHeader">
                                 <p-tabView>
+                                    <p-tabPanel header="Params">
+                                        
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th scope="col">Key</th>
+                                                    <th scope="col">Value</th>
+                                                    <th class="headercheckbox">
+                                                      <button [disabled]="checkEndPoint" mat-mini-fab color="primary" (click)="addParams()">
+                                                        <mat-icon> add </mat-icon>
+                                                      </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let each of paramForm; let i = index">
+                                                    <td class="headercheckbox">
+                                                        <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
+                                                        [ngModelOptions]="{standalone: true}"></p-checkbox> -->
+                                                        <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" (change)="onChangeParamCheckBox(i, $event)">
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" (keyup)="onKeyEntered()" name="test+i" id="" class="form-control" placeholder="Key"
+                                                        [(ngModel)]="each.paramKey"  [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="" id="" (keyup)="onKeyEntered()" class="form-control" placeholder="Value"
+                                                        [(ngModel)]="each.paramValue"  [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td class="headercheckbox">
+                                                        <span>
+                                                            <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
+                                                            (click)="paramsDelete(i)">
+                                                            </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p-tabPanel>
                                     <p-tabPanel header="Headers">
+                                      
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -267,44 +309,7 @@
                                             </tbody>
                                         </table>
                                     </p-tabPanel>
-                                    <p-tabPanel header="Params">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th scope="col">Key</th>
-                                                    <th scope="col">Value</th>
-                                                    <th class="headercheckbox">
-                                                      <button mat-mini-fab color="primary" (click)="addParams()">
-                                                        <mat-icon> add </mat-icon>
-                                                      </button>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let each of paramForm; let i = index">
-                                                    <td class="headercheckbox">
-                                                        <p-checkbox [value]="each" [(ngModel)]="selectedParam"
-                                                        [ngModelOptions]="{standalone: true}"></p-checkbox>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" (keyup)="onKeyEntered()" name="test+i" id="" class="form-control" placeholder="Key"
-                                                        [(ngModel)]="each.paramKey" [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="" id="" (keyup)="onKeyEntered()" class="form-control" placeholder="Value"
-                                                        [(ngModel)]="each.paramValue" [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td class="headercheckbox">
-                                                        <span>
-                                                            <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
-                                                            (click)="paramsDelete(i)">
-                                                            </span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </p-tabPanel>
+                                   
                                 </p-tabView>                             
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">

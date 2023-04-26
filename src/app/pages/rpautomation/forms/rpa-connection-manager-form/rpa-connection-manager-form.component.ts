@@ -829,11 +829,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       index: this.paramForm.length,
       paramKey: "",
       paramValue: "",
+      check:true,
     });
   }
 
   paramsDelete(index) {
     this.paramForm.splice(index, 1);
+    this.onKeyEntered();
   }
 
   paramsCheck(event){
@@ -855,12 +857,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   onKeyEntered(){
-    let queryParams = "?";
+    let queryParams="?";
     for(const each of this.paramForm){
-        queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
+      if(each.check==true) queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
+  }
+
+  get checkEndPoint()
+  {
+    return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
+  }
+
+
+  onChangeParamCheckBox(index:number, event)
+  {
+    this.paramForm[index].check=event.currentTarget.checked;
+    this.onKeyEntered();
   }
 
 }
