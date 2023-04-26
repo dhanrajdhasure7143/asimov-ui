@@ -20,9 +20,10 @@
 	background-color: #E9E9E9;
     height: 32px;
 }
+.pr-24{padding-right:24px;}
 .well1-dynmic {	
 	padding: 10px 12px !important;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
     border-radius: 6px;
@@ -62,9 +63,9 @@
     margin-right: 11px;
 }
 .graph-text{
-    font-size: 20px;
+    font-size: 18px;
     margin: 0px;
-    color: #232832;
+    color: #222222;
 }
 .configtabslists h5 {
     font-size: 16px;
@@ -132,7 +133,7 @@ button.btn.bluebg-button {
     border-radius: 6px;
     display: flex;
     padding: 7px 10px;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
     height:82px;
     align-items: center;
 }
