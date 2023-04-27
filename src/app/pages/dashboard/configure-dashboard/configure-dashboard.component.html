@@ -16,10 +16,6 @@
               <button (click)="deletedashbord()" class="btn grey-btn" pTooltip="Delete" tooltipPosition="top">
                 <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
               </button>
-              <!-- <button class="btn" type="button" class="btn btn-dots" (click)="menu.toggle($event)">
-                <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" >
-              </button>
-              <p-menu class="actionspopmenu p-menu-graph1"  #menu [popup]="true"  [model]="items"></p-menu> -->
             </div>
           </div>
 
@@ -33,7 +29,7 @@
             <div class="row" pDroppable="item" (onDrop)="drop()">
               <div class="col-md-3 pl-0 pr-24" *ngFor="let item of addedMetrics;let j =index">
                 <div class="well1-dynmic">
-                  <!-- <img src="..\assets\images-n\dashboard\{{item.src}}" class="dashbrd-img"/> -->
+                  <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img" alt=""/>
                   <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
                   <div class="new-dynamic">
                     <h3>{{item.metricValue}}</h3>
@@ -98,66 +94,9 @@
                         </ng-template>
                       </p-table>
                     </div>
-                       <!-- <div *ngIf="widget.widget_type=='bar'">
-                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
-                        </div> -->
-                         <!-- <div *ngIf="widget.widget_type=='pie'">
-                           <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='bar'">
-                           <p-chart type="doughnut" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='pie'">
-                           <p-chart type="line" class="w-100"  [data]="widget.sampleData" height="270"></p-chart>
-                        </div>
-                        <div *ngIf="widget.widget_type=='TABLE'">
-                           <div *ngIf ="isShow">
-                    <p-table >
-                      <ng-template pTemplate="header">
-                          <tr>
-                              <th>Vin</th>
-                              <th>Year</th>
-                              <th>Brand</th>
-                              <th>Color</th>
-                          </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-car>
-                          <tr>
-                              <td>Test1</td>
-                              <td>Test2</td>
-                              <td>Test3</td>
-                              <td>Test4</td>
-                          </tr>
-                      </ng-template>
-                  </p-table>
-                </div>
-                        </div> -->
                   </div>
                 </div>
               </div>
-                <!-- <div class="col-md-6 sec-1" >
-                  <div class="well1-dynmic" >
-                <div *ngIf ="isShow">
-                  <p-table >
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Vin</th>
-                            <th>Year</th>
-                            <th>Brand</th>
-                            <th>Color</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-car>
-                        <tr>
-                            <td>Test1</td>
-                            <td>Test2</td>
-                            <td>Test3</td>
-                            <td>Test4</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-              </div>
-              </div></div> -->
               <div class="col-md-6 pl-0 pr-24" *ngIf="dynamicDashBoard.widgets.length<1" >
                 <div class="well1 emptywidget">
                   <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
@@ -187,22 +126,17 @@
             <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics"  type="text" placeholder="Search">
             <img src="../../../../assets/images/search.svg" alt="" class="search-align sercmetric">
           </div>
-          <!-- <div class="col-md-6 pr-0 form-group bps-labcls">
-            <select class="form-control data">
-                <option value="">All Metrics</option>
-              </select> 
-          </div>-->
         </div>
         <div class="configtabslists">
           <div *ngFor="let item of metrics_list|myFilter:searchText_metrics:['name', 'description']; let i=index" >
             <div class="row metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
               (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
               <div class="col-11 p-0">
+                <img [src]="'data:image/png;base64,'+item.metricIcon" alt=""/>
                 <h5>{{item.name}}</h5>
                 <p class="metricwidget-tabP">{{item.description}}</p>
               </div>
               <div class="col-1 p-0 text-right">
-                <!-- <i class="pi pi-check" *ngIf="item.metricAdded==true"></i> -->
                 <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="item.metricAdded==true" />
               </div>   
             </div>
@@ -228,7 +162,8 @@
             (onDragEnd)="widgetDragEnd()"  (click)="addWidget(widget,i)" >
               <div class="col-3 pl-0 align-self-center">
                 <div *ngIf="widget.widget_type =='Pie' || widget.widget_type =='Doughnut' || widget.widget_type =='pie' || widget.widget_type =='doughnut'">
-                  <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart>
+                  <!-- <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart> -->
+                  <img src="../../../../assets/images-n/dashboard/Doughnut-Chart.svg" width="60px;" alt="">
                 </div>
                 <div *ngIf="widget.widget_type =='Table'|| widget.widget_type =='table'">
                    <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="">

@@ -19,12 +19,7 @@
                      </ng-template>
                </p-inplace>
             </div>
-            <div class="col-md-6 pr-0 row justify-content-end align-items-center">
-
-                  <!-- <p-dropdown [options]="dashbordlist" [(ngModel)]="selecteddashboard" class="dropdown-primeng" autoWidth="false"
-                     (onChange)="onDropdownChange($event)" placeholder="Select" optionLabel="dashboardName" [ngValue]="true">
-                  </p-dropdown> -->
-                  
+            <div class="col-md-6 pr-0 row justify-content-end align-items-center">                
                   <div class="btn-group defaltdrpdwn" dropdown [insideClick]="true" [autoClose]="true">
                      <button pButton pRipple id="button-basic" dropdownToggle type="button" class="p-button-outlined dropdown-toggle"
                              aria-controls="dropdown-basic">
@@ -34,14 +29,13 @@
                        <li role="menuitem" *ngFor="let each of dashbordlist">
                         <span (click)="onDropdownChange(each)" class="dname">{{each.dashboardName}}</span>
                         <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  (click)="setDefaultDashboard(each)">
-                           <img src="../../../../assets/images-n/dashboard/Vector.svg"/>
+                           <img src="../../../../assets/images-n/dashboard/Vector.svg" alt=""/>
                            <span class="testtooltip">Set as Default Dashoard</span>
                         </span>
                         <span *ngIf="each.defaultDashboard" class="dropdown-icon">
-                           <img src="../../../../assets/images-n/dashboard/Filled-Star.svg"/>
+                           <img src="../../../../assets/images-n/dashboard/Filled-Star.svg" alt=""/>
                         </span>
                         </li>
-                       <!-- <li class="divider dropdown-divider"></li> -->
                      </ul>
                   </div>
 
@@ -55,10 +49,6 @@
                   <button (click)="deletedashbord()" class="btn delete-dbtn grey-btn" pTooltip="Delete" tooltipPosition="top">
                      <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
                   </button>
-                  <!-- <button class="btn btn-dots-header" type="button" (click)="menu.toggle($event)">
-                     <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions">
-                  </button>
-                  <p-menu class="actionspopmenu p-menu-grap" #menu [popup]="true" [model]="menuItems"></p-menu> -->
             </div>
          </div>
      
@@ -67,6 +57,7 @@
                <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0">
                   <div class="well1-dynmic">
                      <div class="new-dynamic">
+                        <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img" alt=""/>
                         <h3>{{item.metricValue}}</h3>
                         <p>{{item.name}}</p>                       
                      </div>
@@ -91,20 +82,7 @@
                               [model]="items">
                            </p-menu>
                         </div>
-                        <!-- <button class="btn" type="button" pButton 
-                           (click)="menu1.toggle($event)" class="btn-dots eiap-btn btn-grphs-horztal">
-                        </button> -->
-                       
-
-                        <!-- <p-menu [model]="items" #menu1 [popup]="true" class="actionspopmenu p-menu-graph">
-                        <ng-template let-item pTemplate="menuItem">
-                          <span (click)="getItemActionDetails($event,widget,item)">{{item.label}}</span>
-                        </ng-template>
-                      </p-menu> -->
                      </div>
-                 
-                        <!-- <i class="pi pi-times right overlay-icon"
-                           (click)="onDeactivate(widget,i, 'widgets')"></i> -->
                      <div>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
