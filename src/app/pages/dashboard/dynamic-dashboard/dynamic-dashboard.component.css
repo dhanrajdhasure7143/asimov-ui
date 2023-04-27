@@ -1,7 +1,8 @@
 .align-menubtn {
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     align-items: center;
 }
+.defaltdrpdwn{background-color: #fff;}
 .btn-secondary {
 	height: 32px;
     background-color: #E9E9E9 !important;
@@ -30,11 +31,13 @@
 } */
 .well1-dynmic {	
 	padding: 10px 12px !important;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
     border-radius: 6px;
 }
+.pr-24{padding-right:24px;}
+.pr-0{padding-right:0px !important;}
 .well1-dynmic.graph .p-datatable-wrapper {
   height: calc(100vh - 36px) !important;
 }
@@ -101,13 +104,13 @@
     width: 230px;
     border-color: #979797 !important;
     color: #232832 !important;
-    height: 32px !important;
+    height: 36px !important;
     padding: 10px;
-    margin: 0px 12px !important;
+    margin:0px 0px 0px 0px !important;
 }
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
-    inset: 100% auto auto 10px !important;
+    inset: 100% auto auto 0px !important;
     padding: 0px !important;
     margin-top: 5px;
 }

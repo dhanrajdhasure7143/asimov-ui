@@ -797,14 +797,14 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-  /* z-index: 1 !important; */
+   z-index: 2 !important; 
 }
 
 #sidenav.menu-open {
   width: 260px;
   min-height: 100%;
   transition: width 0.05s;
-  /* z-index: 9999 !important; */
+  z-index: 2 !important;
 }
 
 #sidenav.menu-close .side-icon {
@@ -850,6 +850,7 @@ foreignObject {
 #sidenav .mat-drawer-inner-container,
 .mat-drawer-content {
   overflow: hidden !important;
+  position:initial !important
 }
 
 .active .mat-list-item-content .side-menu-font {
@@ -869,7 +870,7 @@ foreignObject {
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
-  padding-bottom: 55px !important;
+  padding-bottom: 75px !important;
 }
 
 .pr-0 {
@@ -2663,7 +2664,7 @@ cursor: pointer;
   padding: 0px 30px 10px; */ 
   overflow: auto;
   position: relative;
-  margin-top: 15px;
+  margin-top: 24px;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -2740,7 +2741,7 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 5px 0 !important;
+    border-width: 0 0 4px 0 !important;
     box-shadow: none !important;
     height: 100%;
     justify-content: center;
@@ -3330,8 +3331,8 @@ textarea.p-inputtextarea {
 .splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
 .commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
 .configtabs .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link {
-  padding: 0px 15px !important;
-  margin-left: 15px !important;
+  padding: 0px 0px !important;
+  margin-left: 30px !important;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
 .commentBox .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
@@ -3637,8 +3638,22 @@ textarea.p-inputtextarea {
   background-color: #fff !important;
   box-shadow: none !important;
 }
+.p-splitter {
+  border: 0px solid #dee2e6 !important;
+  
+}
 .p-splitter .p-splitter-gutter {
-  background: #f5f6f7 !important;
+  background: #EAE9E9 !important;
+}
+.p-splitter .p-splitter-gutter .p-splitter-gutter-handle {
+  /* background: #A2A1A1; */
+  border: dashed;
+  /* border-radius: 50%; */
+  color: #a2a1a1a6;
+}
+.p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle {
+  height: 21px !important;
+  width: 100%;
 }
 .configtabs .p-tabview {
   height: 100%;

@@ -7,7 +7,7 @@
 	align-items: center;
 }
 .align-menubtn {
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     align-items: center;
 }
 .btn-secondary {
@@ -71,7 +71,7 @@
     font-size: 16px;
     color: #222222;
 }
-.class1 h5{color:#787373;}
+ .class1 {background-color: #f3faff !important;} 
 .projectnamerow p-inplace.p-element {
     position: relative;
     margin-right: 8px;
@@ -147,26 +147,27 @@ button.btn.bluebg-button {
     left: 50%;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-65%, -50%);
 }
 .emptywidget p.drag-sec {
     top: 60%;
     left: 50%;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-55%, -50%);
 }
-.drag-sec {
+ .drag-sec {
     margin-bottom: 0px;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 .metricalign{
     padding: 15px 5px;
     border: 0.5px solid #e0e0e030;
-    margin-bottom: 5px !important;
-    border-radius: 3px;
-    box-shadow: 0px 2px 3px 0px #80808026;
+    margin-bottom: 10px !important;
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px #80808024;
     cursor: pointer;
+    background-color: #ffffff;
 }
 .metricalign:hover{
 	background-color: #f3faff !important;
