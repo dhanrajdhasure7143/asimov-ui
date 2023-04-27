@@ -152,7 +152,7 @@ div#bpmn_list {
         white-space: nowrap;
     }
     .cell span{
-        cursor: pointer;
+        /* cursor: pointer; */
     }
 
     .bps-labcls, .bps-serwksp {

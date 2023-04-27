@@ -86,20 +86,20 @@
                   <tr *ngFor="let each_past_process of rowData['bpmnProcessInfo'] | orderBy: 'modifiedTimestamp': true; let j=index;">
                     <!-- <td>{{each_past_process.convertedModifiedTime*1000 | date:'medium'}}</td> -->
                     <!-- <td>{{formatApproverName(each_past_process.userName)}}</td> -->
-                    <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="bottom">{{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
-                    <td [pTooltip]=each_past_process.userName tooltipPosition="bottom">{{fitTableView(each_past_process.userName)}}</td>
+                    <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="top">{{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
+                    <td [pTooltip]=each_past_process.userName tooltipPosition="top">{{fitTableView(each_past_process.userName)}}</td>
                     <td>{{"V 1."+each_past_process.version}}</td>
-                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span pTooltip="PENDING APPROVAL" tooltipPosition="bottom">{{pendingStatus}}</span></div><ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
+                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span></div><ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
                     <td [matTooltip]="each_past_process.reviewComments"><input type="text"  [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
                     <td class="aprwkfl_actions">
                       <div class="aprwkfl_actions_icons">
                         <button  class="btn" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1" pTooltip="Approve" tooltipPosition="bottom">
+                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1" pTooltip="Approve" tooltipPosition="top">
                         </button><!-- approval_msg.length==0 ||  -->
                         <button  class="btn" id="btn_deny" (click)="denyDiagram(each_past_process, rowData)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1" pTooltip="Reject" tooltipPosition="bottom">
+                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1" pTooltip="Reject" tooltipPosition="top">
                         </button><!-- approval_msg.length==0 || -->
-                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="bottom">
+                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="top">
                       </div>  
                     </td>
                   </tr>

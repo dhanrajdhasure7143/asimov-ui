@@ -28,7 +28,7 @@ button:disabled {
 
 
 .createform-overlay {
-    height: calc(100% - 75px);
+    /* height: calc(100% - 75px); */
 }
 
 .SO-scheduletimer .scheduletimer-actionbtns button {
