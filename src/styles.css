@@ -2646,6 +2646,16 @@ cursor: pointer;
 .main-content-head button span {
   margin-left: 5px;
 }
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0em solid !important;
+  border-right: 0em solid transparent !important;
+  border-bottom: 0;
+  border-left: 0em solid transparent !important;
+}
 .main-content-body {
   height: calc(100% - 50px);
   /* pagescroll */

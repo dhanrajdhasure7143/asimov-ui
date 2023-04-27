@@ -111,7 +111,12 @@ background-color: #E0E8ED !important;
 }
 .configure-pad{padding:8px 12px !important;}
 .create-pad{padding:8px 14px !important;}
-
+.caret-img{    width: 20px;
+   
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
 .defaltdrpdwn button {
     width: 230px;
     border-color: #97979791 !important ;
