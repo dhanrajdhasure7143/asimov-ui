@@ -1,7 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 210px;
+  right: 295px;
   z-index: 2;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .credential-btntool {
-  padding: 6px;
+  padding: 7px 6px;
   position: relative;
 }
 

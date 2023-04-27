@@ -241,6 +241,9 @@ span.lowimp {
     font-size: 20px !important;
     margin-bottom: 15px;
 }
+.acresources .colheads {
+    margin-bottom: 0px;
+}
 h4.colheads.chatheader {
     padding: 15px 20px 10px;
     /* border-bottom: 1px solid #d0d0d0; */

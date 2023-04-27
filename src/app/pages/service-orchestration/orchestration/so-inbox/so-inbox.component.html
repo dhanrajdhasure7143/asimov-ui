@@ -126,14 +126,14 @@
                       <!-- <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
                           selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
                           placeholder="Choose Columns">
-                      </p-multiSelect> -->
+                      </p-multiSelect> -->                      
+                      <span class="p-input-icon-right gridsearch">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
+                            (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                      </span>
                       <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt1)">
                       </button>
-                      <span class="p-input-icon-right">
-                          <i class="pi pi-search"></i>
-                          <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
-                              (input)="dt1.filterGlobal($event.target.value, 'contains')">
-                      </span>
                   </div>
               </ng-template>
                 <ng-template pTemplate="header">
