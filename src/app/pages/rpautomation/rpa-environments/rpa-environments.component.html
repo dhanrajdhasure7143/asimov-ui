@@ -8,7 +8,7 @@
         </div> -->
     <div class="env-data-tool environment-tools">
       <div [hidden]="addflag" class="env-btn environment-btntool">
-        <button class="tsttooltipbtn" id="addenvbtn" (click)="openCreateEnvOverlay()"  pTooltip="New" tooltipPosition="bottom">
+        <button class="tsttooltipbtn" id="addenvbtn" (click)="openCreateEnvOverlay()"  pTooltip="New" tooltipPosition="top">
           <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" alt="add" class="testplus"/>
           <!-- <span class="testtooltip">New</span> -->
         </button>
@@ -21,7 +21,7 @@
         </button>
       </div>
       <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deleteEnvironments()"  pTooltip="Delete" tooltipPosition="bottom">
+        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deleteEnvironments()"  pTooltip="Delete" tooltipPosition="top">
           <img src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" alt="delete" class="testplus"/>
           <!-- <span class="testtooltip">Delete</span> -->
         </button>
@@ -33,7 +33,7 @@
         </button>
       </div>
       <div [hidden]="!updateflag" class="env-btn environment-btntool">
-        <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()"  pTooltip="Edit" tooltipPosition="bottom">
+        <button class="tsttooltipbtn" id="updateenvbtn" (click)="openUpdateEnvOverlay()"  pTooltip="Edit" tooltipPosition="top">
           <img src="../../../../assets/images/RPA/icon_latest/edit-blue.svg" alt="edit" class="testplus"/>
           <!-- <span class="testtooltip"> Edit</span> -->
         </button>
@@ -45,7 +45,7 @@
         </button>
       </div>
       <div [hidden]="!deleteflag" class="env-btn environment-btntool">
-        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deploybotenvironment()"  pTooltip="Deploy" tooltipPosition="bottom">
+        <button class="tsttooltipbtn" id="deleteenvbtn" (click)="deploybotenvironment()"  pTooltip="Deploy" tooltipPosition="top">
           <img src="../../../../assets/images/RPA/icon_latest/deploy-blue.svg" alt="deploy" class="testplus"/>
           <!-- <span class="testtooltip">Deploy</span> -->
         </button>

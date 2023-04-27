@@ -49,19 +49,12 @@ template:`
         <div *ngIf ="field.visibility">
         <ipc-checkbox [feilddisable]="isdisabled" *ngSwitchCase="'ipc-checkbox'" [field]="field" [form]="form"></ipc-checkbox>
       </div>
-      
       <div *ngIf ="field.visibility">
       <Secretkey [feilddisable]="isdisabled" *ngSwitchCase="'secretkey'" [field]="field" [form]="form"></Secretkey>
-    </div>
-      
+    </div>      
       <div *ngIf ="field.visibility">
-      <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
+      <html-editor [feilddisable]="isdisabled" *ngSwitchCase="'htmleditor'" [field]="field" [form]="form"></html-editor>
     </div>
-     
-       
-        <div *ngIf ="field.visibility">
-        <ipc-checkbox [feilddisable]="isdisabled" *ngSwitchCase="'ipc-checkbox'" [field]="field" [form]="form"></ipc-checkbox>
-      </div>
       
       <div *ngIf ="field.visibility">
       <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>

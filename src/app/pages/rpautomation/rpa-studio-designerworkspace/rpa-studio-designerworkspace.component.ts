@@ -134,8 +134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isShowExpand: boolean = false;
   splitAreamin_size = "200";
   draggableHandle: any;
-  executionMode:any="v2";
-
+  executionMode:boolean=false;
   @ViewChild("template") template: TemplateRef<any>;
   @ViewChild("checkBotTemplate")
   checkBotTemplate: TemplateRef<any>;
@@ -246,6 +245,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.loadGroups("load");
       this.loadnodes();
       this.getAllVersions();
+      this.executionMode=this.finalbot.executionMode=="v1"?true:false;
     }
     this.getSelectedEnvironments();
     this.dragareaid = "dragarea__" + this.finalbot.botName;
@@ -1767,7 +1767,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         svg: this.svg,
         sequences: this.getsequences(),
         isBotCompiled: this.isBotCompiled,
-        executionMode: this.executionMode
+        executionMode: this.executionMode?"v1":"v2",
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
@@ -1861,7 +1861,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
       let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
-      item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
+      if(selectedTask)
+        item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
       return item;
     })]
   }

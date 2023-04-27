@@ -489,11 +489,4 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.botFormVisibility=event
   }
 
-  changeEcexutionMode(event){
-    if(event.checked == false){
-      this.current_instance.executionMode = "v2"
-    }else{
-      this.current_instance.executionMode ="v1"
-    }
-  }
 }
