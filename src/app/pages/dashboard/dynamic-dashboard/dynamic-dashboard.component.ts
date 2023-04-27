@@ -404,7 +404,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure?, You won't be able to revert this!",
       header: "Info",
-      icon: "pi pi-info-circle",
+      
       rejectVisible: false,
       acceptLabel: "Ok",
       accept: () => {
@@ -416,7 +416,7 @@ export class DynamicDashboardComponent implements OnInit {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: "Deleted Successfully !!",
+                  detail: "Deleted Successfully !",
                 });
               }
             });

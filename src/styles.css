@@ -2653,7 +2653,7 @@ cursor: pointer;
   padding: 0px 30px 10px; */
   overflow: auto;
   position: relative;
-  margin-top: 24px;
+  margin-top: 1.5rem;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
