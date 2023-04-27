@@ -514,6 +514,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedKey: "",
       encodedValue: "",
     });
+    for(const each of this.headerForm){
+      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
+    }
   }
 
   backToaction() {
@@ -838,17 +845,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.onKeyEntered();
   }
 
-  paramsCheck(event){
-    let api = this.connectorForm.value.endPoint
-    let queryParams = "?";
-    for(const [key, value] of Object.entries(event.checked)){ 
-      queryParams = queryParams + key + "=" + value + "&"; 
-    }
-    if(this.connectorForm.value.actionType == "APIRequest"){
-       api = api + queryParams
-    }
-  }
-
   getIconbyId(){
     this.rest_api.getIcon(this.action_id).subscribe((res) => {
       this.action_icon = res["data"]
@@ -865,14 +861,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
 
-  get checkEndPoint()
-  {
+  get checkEndPoint(){
     return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
   }
 
-
-  onChangeParamCheckBox(index:number, event)
-  {
+  onChangeParamCheckBox(index:number, event){
     this.paramForm[index].check=event.currentTarget.checked;
     this.onKeyEntered();
   }
