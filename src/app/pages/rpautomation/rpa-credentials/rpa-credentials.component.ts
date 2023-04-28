@@ -225,7 +225,7 @@ inputNumberOnly(event){
             multi: false,
           },
         ];
-        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted"]
+        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted","host","port"]
         this.spinner.hide();
       });
   }

@@ -94,6 +94,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.dbconnections.sort((a, b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dbconnections = this.dbconnections.map(item => {
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
+          item["password_new"]=("*").repeat(10);
           item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp?item.createdTimeStamp:item.modifiedTimestamp)
           return item;
         })
@@ -121,7 +122,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         "dropdownList":this.categories_list
         },
         {
-          ColumnName: "password",
+          ColumnName: "password_new",
           DisplayName: "Password",
           ShowGrid: true,
           ShowFilter: true,
@@ -221,7 +222,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           multi: false,
         },
       ]
-      this.table_searchFields=["connectiontName","dataBaseType","databasename","hostAddress","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted"]
+      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted","createdBy"]
 
       this.spinner.hide();
     });
