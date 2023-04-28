@@ -55,11 +55,13 @@
          <div class="main-content-body">
             <div class="row">
                <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0 pr-24">
-                  <div class="well1-dynmic">
-                     <div class="new-dynamic">
-                        <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img" alt=""/>
+                  <div class="well1-dynmic ">
+                     <div class="new-dynamic metric-set">
+                        <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img1" alt=""/>
+                        <div>
                         <h3>{{item.metricValue}}</h3>
-                        <p>{{item.name}}</p>                       
+                        <p>{{item.name}}</p>  
+                     </div>                     
                      </div>
                   </div>
                </div>

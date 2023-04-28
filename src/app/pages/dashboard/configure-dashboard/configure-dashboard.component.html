@@ -28,9 +28,9 @@
 
             <div class="row" pDroppable="item" (onDrop)="drop()">
               <div class="col-md-3 pl-0 pr-24" *ngFor="let item of addedMetrics;let j =index">
-                <div class="well1-dynmic">
+                <div class="well1-dynmic metric-set">
                   <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img" alt=""/>
-                  <i class="pi pi-1 pi-times right overlay-icon" (click)="onDeactivate(item,j, 'metrics')" ></i>
+                  <i class="pi pi-1 pi-times right overlay-icon overlay-align" (click)="onDeactivate(item,j, 'metrics')" ></i>
                   <div class="new-dynamic">
                     <h3>{{item.metricValue}}</h3>
                     <p>{{item.name}}</p>
@@ -131,10 +131,12 @@
           <div *ngFor="let item of metrics_list|myFilter:searchText_metrics:['name', 'description']; let i=index" >
             <div class="row metricalign"  pDraggable="item" pDroppableDisabled="true" (onDragStart)="dragStart(item)"
               (onDragEnd)="dragEnd()" [ngClass]="(item.metricAdded==true) ? 'class1' : 'class2'" (click)="onSelectMetric(item,i)">
-              <div class="col-11 p-0">
-                <img [src]="'data:image/png;base64,'+item.metricIcon" alt=""/>
+              <div class="col-11 p-0 metric-set">
+                <img [src]="'data:image/png;base64,'+item.metricIcon" alt="" class="dashbrd-img1"/>
+                <div>
                 <h5>{{item.name}}</h5>
                 <p class="metricwidget-tabP">{{item.description}}</p>
+              </div>
               </div>
               <div class="col-1 p-0 text-right">
                 <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="item.metricAdded==true" />
