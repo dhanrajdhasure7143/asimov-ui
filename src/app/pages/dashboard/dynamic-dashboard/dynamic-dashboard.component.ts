@@ -5,7 +5,7 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Inplace } from "primeng/inplace";
 import { FormGroup, FormControl } from "@angular/forms";
-import { ChartDataset, ChartOptions, TooltipItem } from "chart.js";
+import { Chart, ChartDataset, ChartOptions, TooltipItem } from "chart.js";
 
 
 @Component({
@@ -30,8 +30,14 @@ export class DynamicDashboardComponent implements OnInit {
   isDialogShow:boolean=false;
   entered_name:string='';
   chartColors:any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169", "#085081","#095F9A","#0A6EB2","#0A7DCB"];
-  charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
-
+  execution_Status:any[] = ["#27A871","#DB3B21","#FF0131","#098BE3","#AD2626"];
+  charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"];
+  // Success  #27A871
+  // Running  #F2D22B
+  // New  #098BE3
+  // Failure  #DB3B21
+  // Stopped  #FF0131
+  // Killed  #AD2626
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -89,23 +95,31 @@ export class DynamicDashboardComponent implements OnInit {
     ];
 
     this.rest.updateWidgetInDashboard(req_body).subscribe(
-      (res) => {
+      (res:any) => {
         this.messageService.add({
           severity: "success",
           summary: "Success",
           detail: "Updated Successfully !!",
         });
-        this.dashboardData.widgets[index].filterOptions = [
-          ...this.dashboardData.widgets[index].filterOptions.map(
-            (item: any) => {
-              item.value = formDataValue[item.name];
-              return item;
-            }
-          ),
-        ];
+        // this.dashboardData.widgets[index].filterOptions = [
+        //   ...this.dashboardData.widgets[index].filterOptions.map(
+        //     (item: any) => {
+        //       item.value = formDataValue[item.name];
+        //       return item;
+        //     }
+        //   ),
+        // ];
+        res.data[0].widgetData.datasets[0]["backgroundColor"] = this.execution_Status
+        res.data[0].widgetData.datasets[0]["borderWidth"] = 2
+        // borderColor: 'white', // color of the stroke
+        // var options = {
+      //     cutoutPercentage: 80, // adjust the cutout to show the stroke
+      //     // additional options for the chart
+      // };
+        // borderWidth: 2 
         this.dashboardData.widgets[index] = {
           ...this.dashboardData.widgets[index],
-          ...formDataValue,
+          ...res.data[0],
         };
         this.configuration_id = null;
       },
@@ -343,7 +357,7 @@ export class DynamicDashboardComponent implements OnInit {
         widget_type: "doughnut",
         name: "Bot Execution Status",
         widgetData: {
-          labels: ["Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux","Mac", "Windows", "Linux"],
+          labels: ["Mac", "Windows", "Linux","Mac", "Windows", "Linux"],
           datasets : [
               {
                 label: "My First dataset",
@@ -354,15 +368,73 @@ export class DynamicDashboardComponent implements OnInit {
                 // highlightFill: this.poolColors(20),
                 // highlightStroke: this.poolColors(20),
                 backgroundColor: ['#3B55E6', '#EB4E36', '#43D29E', '#32CBD8', '#E8C63B', '#28C63B', '#38C63B', '#48C63B', '#58C63B', '#68C63B', '#78C63B'],
-                  data : [28,48,40,19,96,87,66,97,92,85,28,48,40,19,96,87,66,97,92,85]
+                  data : [28,48,40,19,96,87]
               }
           ]
         },
         chartOptions: {
+        //   layout: {
+        //     padding: 100
+        // },
           plugins: {
             legend: {
-              display: "false",
+              display: "true",
+              position: "right",
+              labels: {
+                generateLabels: function(chart) {
+                    var data = chart.data;
+                    const datasets = chart.data.datasets;
+                    console.log("datasets",datasets)
+                    if (data.labels.length && data.datasets.length) {
+                        return data.labels.map(function(label, i) {
+                            var ds = data.datasets[0];
+                            return {
+                                text: label + ': ' + ds.data[i],
+                                fillStyle: datasets[0].backgroundColor[i],
+                                strokeStyle: "white",
+                                lineWidth: 8,
+                                borderColor:"white",
+                                borderRadius:8,
+                                usePointStyle: true,
+                                // borderWidth: 2,
+                                // hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                index: i,
+                            };
+                        });
+                    }
+                    return [];
+                },
+                // generateLabels: (chart) => {
+                //   const datasets = chart.data.datasets;
+                //   return datasets[0].data.map((data, i) => ({
+                //     text: `${chart.data.labels[i]} ${data}`,
+                //     fillStyle: datasets[0].backgroundColor[i],
+                //   }))
+                // }
+               },
+            onClick: function(evt, legendItem) {
+                var chart = this.chart;
+                var index = legendItem.index;
+                var meta = chart.getDatasetMeta(0);
+                var arc = meta.data[index];
+                arc.hidden = !arc.hidden;
+                chart.update();
+            }
             },
+          //   beforeInit: function(chart, options) {
+          //     chart.legendCallback = function(chart) {
+          //         var text = [];
+          //         text.push('<ul class="' + chart.id + '-legend">');
+          //         for (var i = 0; i < chart.data.labels.length; i++) {
+          //             text.push('<li>');
+          //             // text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
+          //             text.push(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
+          //             text.push('</li>');
+          //         }
+          //         text.push('</ul>');
+          //         return text.join('');
+          //     };
+          // },
             tooltip: {
               callbacks: {
                 label: (tooltipItem, data) => {

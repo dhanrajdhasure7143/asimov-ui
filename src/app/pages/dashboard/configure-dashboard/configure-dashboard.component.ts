@@ -127,6 +127,12 @@ export class ConfigureDashboardComponent implements OnInit {
       // this.dynamicDashBoard.metrics.push(this.metrics_list[index]);
       if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
+    }else{
+      let itemId=metric.childId? metric.childId: metric.id
+      this.addedMetrics.splice(this.addedMetrics.findIndex(item=> item.id == itemId), 1);
+      this.metrics_list.find(item => item.id == itemId).metricAdded = false;
+      if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
+      this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
   }
 
@@ -165,6 +171,12 @@ export class ConfigureDashboardComponent implements OnInit {
         widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
       }
+    }else{
+      let itemId=widget.childId? widget.childId: widget.id
+      this.addedMetrics.splice(this.addedMetrics.findIndex(item=> item.id == itemId), 1);
+      this.widgetslist.find(item => item.id == itemId).widgetAdded = false;
+      if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
+      this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
   }
 
@@ -200,11 +212,11 @@ export class ConfigureDashboardComponent implements OnInit {
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     });
   }
-  getListOfMetrics() {
-    this.rest_api.getMetricsList().subscribe((data: any) => {
+  getListOfMetrics(): void {
+    this.rest_api.getMetricsList().subscribe((data: any): void => {
       this.metrics_list = data.data;
       this.metrics_list = this.metrics_list.map((item: any, index: number) => {
-        item["metricAdded"] = false
+        item["metricAdded"] = false;
         return item
       })
     })
