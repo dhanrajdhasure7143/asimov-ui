@@ -109,7 +109,9 @@ span.tab-botname {
 .toolset-text {
     font-weight: 600 !important;
 }
-
+.main-content1 .main-content-head {
+  padding: 0px;
+}
 .main-content1 .module-header-title {
     font-weight: 600;
     font-size: 22px;
@@ -644,7 +646,7 @@ ul#versions li:hover {
 
 .action-item.hovericon:hover {
   background-color: #098de6;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 .action-item.hovericon:hover img {
   filter: brightness(2.5) !important;

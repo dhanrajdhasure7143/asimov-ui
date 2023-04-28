@@ -2602,7 +2602,8 @@ cursor: pointer;
 }
 .maincont-contentarea {
   height: 100%;
-  padding: 15px 30px 10px; /* pagescroll */
+  /* pagescroll */
+  /* padding: 15px 30px 10px;    */
   position: relative;
 }
 .maincontent {
@@ -2610,9 +2611,9 @@ cursor: pointer;
   width: 100%;
 }
 /* pagescroll */
-/* .main-content-head {
+.main-content-head {
   padding: 15px 30px 0px;
-} */
+}
 
 .row.main-content-head {
   align-items: center;
@@ -2646,10 +2647,10 @@ cursor: pointer;
   margin-left: 5px;
 }
 .main-content-body {
-  height: calc(100% - 50px);
+  /* height: calc(100% - 50px); */
   /* pagescroll */
-  /* height: calc(100% - 65px);
-  padding: 0px 30px 10px; */
+  height: calc(100% - 52px);
+  padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
   margin-top: 15px;
@@ -3093,6 +3094,10 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+.p-disabled,.p-component:disabled {
+  background-color: #e0e0e0 !important;
+  opacity: 0.9 !important;
+}
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
   background: transparent !important;
@@ -3227,10 +3232,10 @@ textarea.p-inputtextarea {
   color: unset !important;
   background: transparent !important;
 }
-.p-input-icon-right {
+/* .p-input-icon-right {
   float: right;
   margin-right: 5px;
-}
+} */
 .p-input-icon-right.gridsearch {
   float: unset;
   margin-right: 10px;

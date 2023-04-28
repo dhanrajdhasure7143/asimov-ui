@@ -1,7 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 210px;
+  right: 295px;
   z-index: 2;
 }
 
@@ -11,7 +11,6 @@
 
 .credential-btntool {
   padding: 6px;
-  position: relative;
 }
 
 .credential-tablegrid table td span {
@@ -21,12 +20,6 @@
 .credential-tools {
   padding: 0px !important;
   display: flex;
-}
-
-.credential-btntool {
-  position: relative;
-  padding: 6px;
-  margin: 0px !important;
 }
 
 .credential-btntool img {
