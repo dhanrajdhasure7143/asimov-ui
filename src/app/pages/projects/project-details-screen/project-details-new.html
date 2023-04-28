@@ -313,11 +313,11 @@
                         </button>
                     </div>
                     <div class="row acresources" *ngIf="!isCreate">
-                        <div class="col-12 p-0">
+                        <div class="col-4 p-0">
                             <h4 class="colheads">Recent Activities</h4>
                         </div>
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
-                        <div class="col p-0">
+                        <div class="col-12 p-0">
                             <app-dynamic-table [columns_list]="columns_list_activities"
                                 [table_data]="recentActivityList" [show_search_field]="true" [show_column_filter]="true"
                                 [show_clear_filter]="true" [screenTable]="'recentActivityList'"

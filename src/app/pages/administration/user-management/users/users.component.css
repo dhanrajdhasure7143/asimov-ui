@@ -1,9 +1,10 @@
 .inviteuser-btn {
   width: fit-content;
   position: absolute;
-  right: 210px;
+  right: 295px;
   z-index: 1;
-  padding: 5px 6px;
+  padding: 6px;
+  /* right: 210px; */
 }
 .inviteuser-btn img {
   height: 24px;

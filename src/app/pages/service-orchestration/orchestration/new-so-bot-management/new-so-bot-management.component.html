@@ -1,24 +1,27 @@
 <div class="so-sub-tab-content">
   <div class="">
-
+<!-- 
       <div class="row mb-3">
         <div class="col-md-10 p-0">
           <div class="row">
-            <!-- <div class="col-md-3 form-group pl-0 sosearchfield">
+            <div class="col-md-3 form-group pl-0 sosearchfield">
               <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
               <img src="../../../../assets/images/search.svg" class="testplus">
-            </div> -->
+            </div>
             <div class="col-md-3 pl-0">
-              <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
+              <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()">
+                 (selectionChange)="applyFilter3($event.value)">
                 <option value="">Select Source</option>
-                <!-- <option value="EPSoft">EPSoft</option>
+                <option value="EPSoft">EPSoft</option>
                 <option value="BluePrism">BluePrism</option>
-                <option value="UiPath">UiPath</option> -->
+                <option value="UiPath">UiPath</option>
                 <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
               </select> 
             </div>
             <div class="col-md-3 pl-0">
-              <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
+              <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   
+              [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> 
+              (selectionChange)="applyFilter($event.value)"
                   <option  value="">Select Category</option>
                   <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
               </select>
@@ -28,10 +31,10 @@
       <div class="col-md-2 p-0 env-data-tool text-right">
           <button (click)="reset()" id="bmreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
-      <!-- <span class="testtooltip">Reset</span> -->
+      <span class="testtooltip">Reset</span>
     </button >
       </div>
-      </div>
+      </div> -->
     
     <!-- <div class="row"> -->
         <div class="botmanagement-tablelist" >
@@ -153,12 +156,24 @@
               <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','taskType','botStatus']" [scrollable]="true"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
-                <div class="flex">
-                    <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
-                    <span class="p-input-icon-right">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                    </span>
+                <div class="d-flex">
+                  <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> 
+                    <option value="">Select Source</option>
+                    <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
+                  </select> 
+                  <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"  
+                   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> 
+                    <option  value="">Select Category</option>
+                    <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                  </select>
+                  <button (click)="reset()" id="bmreset" class="env-data-tool tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
+                    <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
+                  </button >
+                  <span class="p-input-icon-right gridsearch">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                  </span>  
+                  <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                 </div>
             </ng-template>
                 <ng-template pTemplate="header">
