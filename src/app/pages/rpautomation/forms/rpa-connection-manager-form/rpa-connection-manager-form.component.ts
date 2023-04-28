@@ -334,6 +334,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isHeader = false
       this.isResponse = false;
       this.connectorForm.get('methodType').setValue("POST");
+      this.connectorForm.get('methodType').disable();
       const setValidators: string[] = ['authType', 'grantType'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
@@ -344,6 +345,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     else if (event == "APIRequest") {
       this.connectorForm.get('methodType').setValue("")
+      this.connectorForm.get('methodType').enable();
       this.isRequest = true;
       this.isHeader = true;
       this.isAction = false;
