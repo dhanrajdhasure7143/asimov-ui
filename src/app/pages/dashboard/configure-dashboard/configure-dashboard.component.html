@@ -185,7 +185,7 @@
         <div class="row configtabssearch">
           <div class="col-md-12 p-0 mb-3">
             <input class="form-control toolbar-search" [(ngModel)]="searchText_metrics"  type="text" placeholder="Search">
-            <img src="../../../../assets/images/search.svg" alt="" class="search-align sercmetric">
+            <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="search-align sercmetric">
           </div>
           <!-- <div class="col-md-6 pr-0 form-group bps-labcls">
             <select class="form-control data">
@@ -210,10 +210,23 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
-        <div class="row configtabssearch mb-3">
+        <div class="d-flex configtabssearch mb-3">
+          <div class="categselect">
+            <select class="form-control data">
+              <option value="">All</option>
+              <option value="">Operational</option>
+            </select>
+          </div>
+          <div class="categinput">
+            <input type="text" placeholder="Search" class="form-control toolbar-search ng-untouched ng-pristine ng-valid">
+            <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="search-align">
+          </div>
+        </div>
+          
+        <!-- <div class="row configtabssearch mb-3">
           <div class="col-md-6 pl-0" >
             <input class="form-control toolbar-search" type="text" [(ngModel)]="searchText" placeholder="Search">
-            <img src="../../../../assets/images/search.svg" alt="" class="search-align">
+            <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="search-align">
             </div>
             <div class="col-md-6 pr-0">
               <select class="form-control data">
@@ -221,7 +234,7 @@
                   <option value="">Operational</option>
                 </select>
             </div>
-        </div>          
+        </div>           -->
         <div class="configtabslists">
           <div *ngFor="let widget of widgetslist|myFilter:searchText:['name', 'description']; let i=index" >
             <div class="row metricalign"pDraggable="widget" pDroppableDisabled="true"  [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'"(onDragStart)="widgetDragStart(widget)"
