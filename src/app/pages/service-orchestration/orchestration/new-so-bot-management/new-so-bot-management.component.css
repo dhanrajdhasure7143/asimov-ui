@@ -79,9 +79,17 @@ select {
 .backarrcl img {
   width: 12px;
 }
-
+.botmanagement-tablelist .d-flex {
+  width: 65%;
+}
+.botmanagement-tablelist select.form-control {
+  width: 30%;
+  margin-left: 10px;
+  height: 36px !important;
+}
 .env-data-tool {
-  line-height: 30px;
+  /* line-height: 30px; */
+  margin: 0px 10px;
 }
 .env-data-tool button.tsttooltipbtn {
   position: relative;

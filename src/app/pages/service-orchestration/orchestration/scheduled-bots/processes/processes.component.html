@@ -115,7 +115,7 @@
             [globalFilterFields]="['processName','environmentName','category','environmentName','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <span class="p-input-icon-right ml-auto">
+                    <span class="p-input-icon-right gridsearch">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
                             placeholder="Search Process" />

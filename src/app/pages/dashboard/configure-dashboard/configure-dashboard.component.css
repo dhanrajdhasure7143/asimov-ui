@@ -181,12 +181,9 @@ background-color: #EAE9E9 !important;
 .metricalign:hover{
 	background-color: #f3faff !important;
 }
-.sercmetric {
-    right: 15px !important;
-}
 .search-align {
 	position: absolute;
-    right: 25px;
+    right: 15px;
     top: 10px;
     width: 18px;
 }
@@ -196,7 +193,8 @@ background-color: #EAE9E9 !important;
 .configtabslists {
     height: calc(100vh - 180px);
     overflow: auto;
-    padding: 0px 20px;
+    /* padding: 0px 20px; */
+    padding: 0px 13px 0px 20px;
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
@@ -205,4 +203,25 @@ background-color: #EAE9E9 !important;
 
 .configtabssearch {
     padding: 0px 20px;
+}
+
+.categinput {
+    position: relative;
+    width: 100%;
+}
+.configtabssearch select.form-control.data {
+    background-color: transparent !important;
+    border-color: #979797 !important;
+    border-right: none !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    cursor: pointer;
+}
+.categselect {
+    width: 75px;
+    background-color: #ededed !important;
+}
+.categinput input {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
 }
