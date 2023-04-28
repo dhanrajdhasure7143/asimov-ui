@@ -2828,6 +2828,12 @@ span.tabscount {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px); /* for action items - connection manager grid */
 }
+.actionitems-grid .p-datatable-wrapper td span {
+  width: 165px;       /* for action items - connection manager grid */
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
 }
