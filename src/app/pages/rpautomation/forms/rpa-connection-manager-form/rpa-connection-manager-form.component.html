@@ -293,11 +293,11 @@
                                                         <input type="checkbox" [(ngModel)]="selectedOne" [checked]="each.check">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key" (keyup)="addHeader()"
+                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key" (keyup)="onHeaders()"
                                                         [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="" id="" class="form-control" placeholder="Value"
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value" (keyup)="onHeaders()"
                                                         [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td class="headercheckbox">
