@@ -33,6 +33,7 @@ export class MyAccountComponent implements OnInit {
   public neweyeshow: boolean = true;
   public confeyeshow: boolean = true;
   show: boolean = false;
+  errorMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -135,11 +136,14 @@ export class MyAccountComponent implements OnInit {
   }
   onChangeCountry(countryValue) {
     this.isRefresh = !this.isRefresh;
-    // this.formOne.country = this.countryInfo[countryValue].CountryName;
+    this.formOne.country = countryValue;
     for (var i = 0; i < this.countryInfo.length; i++) {
       if (this.countryInfo[i].CountryName == countryValue) {
         this.phnCountryCode = this.countryInfo[i].CountryCode;
         this.stateInfo = this.countryInfo[i].States;
+      }
+      else{
+        this.errorMessage =""
       }
     }
   }
@@ -170,4 +174,9 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
+  OnFlagChange(event){
+    if(event.name !=this.formOne.country){
+      this.errorMessage="Please Select Appropriate Country *"
+    }
+  }
 }
