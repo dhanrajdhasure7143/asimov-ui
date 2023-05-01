@@ -249,9 +249,9 @@ body .leftfporm select {
   height: calc(100vh - 317px) !important;
 }
 .botmanagement-tablelist .p-datatable-wrapper {
-  height: calc(100vh - 316px);
+  /* height: calc(100vh - 316px); */
 }
 .orchestration-table-container .p-datatable-wrapper {
-  height: calc(100vh - 302px);
+  height: calc(100vh - 305px);
 }
 /* Grid heights */

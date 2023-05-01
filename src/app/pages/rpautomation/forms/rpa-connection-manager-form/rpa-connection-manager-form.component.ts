@@ -334,6 +334,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isHeader = false
       this.isResponse = false;
       this.connectorForm.get('methodType').setValue("POST");
+      this.connectorForm.get('methodType').disable();
       const setValidators: string[] = ['authType', 'grantType'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
@@ -344,6 +345,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     else if (event == "APIRequest") {
       this.connectorForm.get('methodType').setValue("")
+      this.connectorForm.get('methodType').enable();
       this.isRequest = true;
       this.isHeader = true;
       this.isAction = false;
@@ -514,6 +516,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedKey: "",
       encodedValue: "",
     });
+    for(const each of this.headerForm){
+      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
+    }
   }
 
   backToaction() {
@@ -829,22 +838,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       index: this.paramForm.length,
       paramKey: "",
       paramValue: "",
+      check:false,
     });
   }
 
   paramsDelete(index) {
     this.paramForm.splice(index, 1);
-  }
-
-  paramsCheck(event){
-    let api = this.connectorForm.value.endPoint
-    let queryParams = "?";
-    for(const [key, value] of Object.entries(event.checked)){ 
-      queryParams = queryParams + key + "=" + value + "&"; 
-    }
-    if(this.connectorForm.value.actionType == "APIRequest"){
-       api = api + queryParams
-    }
+    this.onKeyEntered();
   }
 
   getIconbyId(){
@@ -855,12 +855,37 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   onKeyEntered(){
-    let queryParams = "?";
+    let queryParams="?";
     for(const each of this.paramForm){
-        queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
+      if(each.check==true) {queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"}
+      if(each.paramKey.length > 0 || each.paramValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
+  }
+
+  get checkEndPoint(){
+    return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
+  }
+
+  onChangeParamCheckBox(index:number, event){
+    this.paramForm[index].check=event.currentTarget.checked;
+    this.onKeyEntered();
+  }
+
+  onHeaders(){
+    for(const each of this.headerForm){
+      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
+    }
+
   }
 
 }

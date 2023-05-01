@@ -16,13 +16,13 @@
                         </div>
                     </ng-template>
                 </p-multiSelect> -->
-                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)">
-                </button>
-                <span class="p-input-icon-right" *ngIf="show_search_field">
+                <span class="p-input-icon-right gridsearch" *ngIf="show_search_field">
                     <i class="pi pi-search"></i>
                     <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
                         (input)="dt1.filterGlobal($event.target.value, 'contains')">
                 </span>
+                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" 
+                    (click)="clear(dt1)"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -125,7 +125,7 @@
                     <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
                         {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                     </span> -->
-                    <span *ngIf="col.ColumnName == 'action'" class="newinntalx">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable !='actionsTable'" class="newinntalx">
                         <a *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                             <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </a>

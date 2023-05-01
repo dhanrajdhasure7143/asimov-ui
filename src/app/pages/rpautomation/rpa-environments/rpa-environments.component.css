@@ -1,14 +1,14 @@
 .row.environment-search-tools {
   width: auto;
   position: absolute;
-  right: 205px;
+  right: 295px;
   z-index: 2;
 }
 .env-btn>button:disabled {
   background-color: transparent !important;
 }
 .environment-btntool {
-  padding: 6px;
+  padding: 8px 6px;
   position: relative;
 }
 .environment-btntool img.testplus {

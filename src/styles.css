@@ -2684,7 +2684,7 @@ button.btn:focus {
   box-shadow: none;
 }
 input.p-inputtext {
-  height: 34px;
+  height: 36px;
   border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: none !important;
 }
@@ -2791,6 +2791,10 @@ span.tabscount {
   height: calc(100vh - 260px);
   overflow: auto;
 }
+.p-datatable-header {
+  display: flex;
+  justify-content: end;
+}
 .table-height-adj .p-datatable-wrapper {
   height: calc(100vh - 200px) !important;
 }
@@ -2824,6 +2828,12 @@ span.tabscount {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px); /* for action items - connection manager grid */
 }
+.actionitems-grid .p-datatable-wrapper td span {
+  width: 165px;       /* for action items - connection manager grid */
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
 }
@@ -2832,15 +2842,23 @@ span.tabscount {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  /* height: calc(100vh - 365px);  */
-  height: auto;
+  height: auto;  
+  margin-top: 10px;
 }
-.acresources .p-datatable .p-datatable-header,
-.well1-dynmic.graph .p-datatable .p-datatable-header {
+.acresources .p-datatable .p-datatable-header{
   background-color: transparent !important;
+  position: absolute;
+  top: -40px;
+  right: 0;
 }
-.acresources th.p-element.p-sortable-column.p-resizable-column,
-.well1-dynmic.graph th.p-element.p-sortable-column.p-resizable-column {
+.PI-workspace-table .p-datatable-header,
+.rpa-workspacegrid .p-datatable-header,
+.myworkspace-style .p-datatable-header {
+  position: absolute;
+  top: -40px;
+  right: 0;
+}
+.acresources th.p-element.p-sortable-column.p-resizable-column {
   background-color: #fff !important;
 }
 /* chat mention styles */
@@ -2896,11 +2914,11 @@ tbody tr td {
   border-bottom: 1px solid #E0E0E0 !important;
   padding: 8px 10px !important;
 }
-
-th.arrowcol {   /* for arrow / checkbox columns header */
+/* for arrow / checkbox columns header */
+th.arrowcol {   
   position: relative;
 }
-th.arrowcol:before {  /* for arrow / checkbox columns header */
+/* th.arrowcol:before {  
   content: " ";
   position: absolute;
   left: 0px;
@@ -2917,10 +2935,10 @@ thead tr th:before,
   right: 0px;
   bottom: -2px;
   border-bottom: 4px solid rgb(9 141 230 / 4%);
-}
+} */
 
 /* for sortable th */
-th.p-element.p-sortable-column.p-resizable-column:before {
+/* th.p-element.p-sortable-column.p-resizable-column:before {
   content: " ";
  position: absolute;
  top: 5px;
@@ -2928,7 +2946,7 @@ th.p-element.p-sortable-column.p-resizable-column:before {
  right: 0px;
  bottom: 0px;
  border-bottom: 4px solid rgb(9 141 230 / 20%);
-}
+} */
 
 th.p-element.p-sortable-column.p-resizable-column {
   border: none !important;
@@ -3218,6 +3236,10 @@ textarea.p-inputtextarea {
 .p-input-icon-right {
   float: right;
   margin-right: 5px;
+}
+.p-input-icon-right.gridsearch {
+  float: unset;
+  margin-right: 10px;
 }
 .p-breadcrumb ul li .p-menuitem-link:focus {
   box-shadow: unset !important;
