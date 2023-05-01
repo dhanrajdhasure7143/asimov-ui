@@ -119,10 +119,38 @@ export class DynamicDashboardComponent implements OnInit {
       //     // additional options for the chart
       // };
         // borderWidth: 2 
+        if(res.data[0].widget_type != "Bar"){
+          res.data[0]["chartOptions"].plugins.legend["labels"] ={
+            generateLabels: function(chart) {
+              var data = chart.data;
+              const datasets = chart.data.datasets;
+              if (data.labels.length && data.datasets.length) {
+                return data.labels.map(function (label, i) {
+                  var ds = data.datasets[0];
+                  return {
+                    text: label + ": " + ds.data[i],
+                    fillStyle: datasets[0].backgroundColor[i],
+                    strokeStyle: "white",
+                    lineWidth: 8,
+                    borderColor: "white",
+                    borderRadius: 8,
+                    usePointStyle: true,
+                    index: i,
+                  };
+                });
+              }
+              return [];
+            }
+
+           }
+        }
         this.dashboardData.widgets[index] = {
           ...this.dashboardData.widgets[index],
           ...res.data[0],
         };
+        if(this.dashboardData.widgets[index].widget_type == "Bar"){
+          this.dashboardData.widgets[index]["chartOptions"].plugins.legend["display"]=false
+        }
         this.configuration_id = null;
       },
       (err) => {
@@ -260,7 +288,6 @@ export class DynamicDashboardComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting.",
         header: "Info",
-        
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
@@ -327,17 +354,40 @@ export class DynamicDashboardComponent implements OnInit {
       this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
         if(element.widget_type!= "Table" && element.widget_type!= "table"){
+          if(element.childId == 1){
+            element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
+          }else{
           element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          // element.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
-          // element.widgetData.datasets[0]["fillColor"] = this.chartColors
-          // element.widgetData.datasets[0]["strokeColor"] = this.chartColors
-          // element.widgetData.datasets[0]["highlightFill"] = this.chartColors
-          // element.widgetData.datasets[0]["highlightStroke"] = this.chartColors
+          }
+          if(element.widget_type != "Bar"){
+            element["chartOptions"].plugins.legend["labels"] ={
+              generateLabels: function(chart) {
+                var data = chart.data;
+                const datasets = chart.data.datasets;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var ds = data.datasets[0];
+                    return {
+                      text: label + ": " + ds.data[i],
+                      fillStyle: datasets[0].backgroundColor[i],
+                      strokeStyle: "white",
+                      lineWidth: 8,
+                      borderColor: "white",
+                      borderRadius: 8,
+                      usePointStyle: true,
+                      index: i,
+                    };
+                  });
+                }
+                return [];
+              }
+  
+             }
+          }
         }
         if(element.widget_type == "Bar"){
           element["chartOptions"].plugins.legend["display"]=false
         }
-        
         if(element.childId == 2){
           element.chartOptions.plugins["tooltip"] = {
             callbacks: {
@@ -375,9 +425,6 @@ export class DynamicDashboardComponent implements OnInit {
           ]
         },
         chartOptions: {
-        //   layout: {
-        //     padding: 100
-        // },
           plugins: {
             legend: {
               display: "true",

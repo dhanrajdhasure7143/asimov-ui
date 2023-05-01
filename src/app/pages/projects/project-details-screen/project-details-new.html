@@ -45,7 +45,7 @@
                                             <span class="">{{projectDetails.projectName}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <input type="text" [style]="{'width':'100%'}" pInputText
+                                            <input type="text" [style]="{'width':'100%'}" pInputText maxlength="50"
                                                 [(ngModel)]="projectName" (keydown)="Space($event)" />
                                             <span class="editfields">
                                                 <i class="pi pi-check" *ngIf="projectName"
