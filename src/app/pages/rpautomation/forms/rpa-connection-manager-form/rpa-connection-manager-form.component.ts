@@ -185,10 +185,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "description" : "",
       }
       
-      console.log(this.headerForm)
         let obj={}
         this.headerForm.forEach(ele=>{
-          console.log(ele.check,"ele")
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
        
