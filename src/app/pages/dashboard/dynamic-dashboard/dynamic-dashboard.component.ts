@@ -59,10 +59,6 @@ export class DynamicDashboardComponent implements OnInit {
     // this.menuItems = [
     //   {label: "Delete",command: () => { this.deletedashbord()}},
     // ];
-    this.items = [
-      {label: "Remove",command: (e) => {this.onRmoveWidget();}},
-      {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
-    ];
     if (this._paramsData.dashboardId === undefined) {
          this.changeToDefaultDashBoard();
 
@@ -603,5 +599,18 @@ export class DynamicDashboardComponent implements OnInit {
         });
       }
     })
+  }
+
+  onOpenConfigOptoons(widget){
+    if(widget.widget_type =="Table"){
+      this.items = [
+        {label: "Remove",command: (e) => {this.onRmoveWidget();}},
+      ];
+    }else{
+      this.items = [
+        {label: "Remove",command: (e) => {this.onRmoveWidget();}},
+        {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
+      ];
+    }
   }
 }
