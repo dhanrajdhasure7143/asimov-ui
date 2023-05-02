@@ -290,7 +290,7 @@
                                                     <td class="headercheckbox">
                                                         <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox> -->
-                                                        <input type="checkbox" [(ngModel)]="selectedOne" [checked]="each.check">
+                                                        <input type="checkbox" [value]="each" [(ngModel)]="selectedOne" [checked]="each.check">
                                                     </td>
                                                     <td>
                                                         <input type="text" name="test+i" id="" class="form-control" placeholder="Key" (keyup)="onHeaders()"
