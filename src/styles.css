@@ -2853,7 +2853,7 @@ span.tabscount {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: auto;  
+  height: 270px;  
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header{
@@ -3680,10 +3680,10 @@ textarea.p-inputtextarea {
   /* border-radius: 50%; */
   color: #a2a1a1a6;
 }
-.p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle {
+/* .p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle {
   height: 21px !important;
   width: 100%;
-}
+} */
 .configtabs .p-tabview {
   height: 100%;
   /* padding: 10px 20px; */

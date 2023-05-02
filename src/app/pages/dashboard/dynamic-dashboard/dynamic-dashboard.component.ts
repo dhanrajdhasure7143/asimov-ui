@@ -30,7 +30,7 @@ export class DynamicDashboardComponent implements OnInit {
   isDialogShow:boolean=false;
   entered_name:string='';
   chartColors:any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169", "#085081","#095F9A","#0A6EB2","#0A7DCB"];
-  execution_Status:any[] = ["#27A871","#DB3B21","#FF0131","#098BE3","#AD2626"];
+  execution_Status:any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26"];
   charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"];
   // Success  #27A871
   // Running  #F2D22B
