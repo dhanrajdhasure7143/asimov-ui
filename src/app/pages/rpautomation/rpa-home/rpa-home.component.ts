@@ -102,6 +102,10 @@ export class RpaHomeComponent implements OnInit {
     environmentId:new FormControl("", Validators.compose([Validators.required]))
   })
   importBotJson:any= undefined;
+  final_tasks:any=[];
+  finaldataobjects:any=[];
+  checkorderflag:boolean=true;
+  stopNodeId:any;
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
@@ -598,7 +602,8 @@ export class RpaHomeComponent implements OnInit {
           versionType:'',
           botType:0,
           botMainSchedulerEntity:null,
-          comments:""        
+          comments:"", 
+          executionMode:response.executionMode   
         };
         this.downloadJson(botDetails)
       } else {
@@ -615,6 +620,8 @@ export class RpaHomeComponent implements OnInit {
   }
 importBot()
 {
+  this.final_tasks=[];
+  this.finaldataobjects=[];
   let basicBotDetails={
     botName:this.importBotForm.get("botName").value,
     botDescription:this.importBotJson.botDescription,
@@ -627,9 +634,15 @@ importBot()
   this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
     if(response.errorMessage==undefined)
     {
+      this.finaldataobjects=[...this.importBotJson.tasks]
+      let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
+      this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
+      this.arrange_task_order(start);
       this.importBotJson["botId"]=response.botId;
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
       this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+      this.importBotJson["tasks"]=[...this.final_tasks];
+      this.importBotJson["department"]=response.department;
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
         this.spinner.hide();
         Swal.fire("Success","Bot imported successfully","success");
@@ -660,6 +673,7 @@ importBot()
 
   downloadJson(payload:any)
   {
+    payload=this.removeDuplicateTasks(payload);
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
     let dlAnchorElem = document.createElement('a');
     dlAnchorElem.setAttribute("href",dataStr);
@@ -672,6 +686,71 @@ importBot()
   get importedBotName()
   {
     return this.importBotForm.get("botName").value;
+  }
+
+  arrange_task_order(start) {
+    this.final_tasks = [];
+    let object = this.finaldataobjects.find(
+      (object) => object.inSeqId == start
+    );
+    this.add_order(object);
+  }
+
+  add_order(object) {
+    let end = this.stopNodeId;
+    if (object != undefined) {
+      this.final_tasks.push(object);
+    }
+
+    if (object == undefined) {
+      this.checkorderflag = false;
+      return;
+    }
+    if (object.outSeqId == end) {
+      return;
+    } else {
+      object = this.finaldataobjects.find(
+        (object2) => object2.nodeId.split("__")[1] == object.outSeqId
+      );
+      if (object == undefined) {
+        this.checkorderflag = false;
+        return;
+      } else if (object.taskName == "If condition") {
+        this.final_tasks.push(object);
+        if (JSON.parse(object.outSeqId).length < 2) {
+          this.checkorderflag = false;
+          return;
+        }
+        JSON.parse(object.outSeqId).forEach((report) => {
+          if (report == end) {
+            return;
+          } else {
+            let node = this.finaldataobjects.find(
+              (process) => process.nodeId.split("__")[1] == report
+            );
+            this.add_order(node);
+          }
+        });
+        return;
+      } else {
+        this.add_order(object);
+      }
+    }
+    return;
+  }
+
+
+  removeDuplicateTasks(payload)
+  {
+    
+    payload.tasks.forEach((item:any, index:number)=>{
+      if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
+      {
+        console.log(item);
+        payload.tasks.splice(index, 1);
+      }
+    })
+    return payload;
   }
 }
 
