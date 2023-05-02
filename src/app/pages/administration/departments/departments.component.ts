@@ -52,7 +52,7 @@ export class DepartmentsComponent implements OnInit {
       {ColumnName: "createdTimeStamp_converted",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
       {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
     ];
-    this.table_searchFields=["department","owner","createdBy","createdTimeStamp_converted"]
+    this.table_searchFields=["categoryName","created_user","createdBy","createdTimeStamp_converted"]
   }
 
   getAllDepartments(){
