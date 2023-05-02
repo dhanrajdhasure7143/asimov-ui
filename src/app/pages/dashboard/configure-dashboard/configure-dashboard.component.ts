@@ -255,7 +255,7 @@ export class ConfigureDashboardComponent implements OnInit {
                         strokeStyle: "white",
                         lineWidth: 8,
                         borderColor: "white",
-                        borderRadius: 8,
+                        borderRadius: 5,
                         usePointStyle: true,
                         index: i,
                       };
@@ -335,13 +335,17 @@ export class ConfigureDashboardComponent implements OnInit {
                 if (data.labels.length && data.datasets.length) {
                   return data.labels.map(function (label, i) {
                     var ds = data.datasets[0];
-                    return {
-                      text: label + ": " + ds.data[i],
+                    let value;
+                  if(item.childId == 2){
+                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  }else value = ds.data[i];
+                  return {
+                    text: label + ": " + value,
                       fillStyle: datasets[0].backgroundColor[i],
                       strokeStyle: "white",
                       lineWidth: 8,
                       borderColor: "white",
-                      borderRadius: 8,
+                      borderRadius: 5,
                       usePointStyle: true,
                       index: i,
                     };

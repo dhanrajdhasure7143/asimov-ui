@@ -118,7 +118,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["In Progress", "Pending","Approved"],
+      dropdownList: ["In Progress", "Pending Approval","Approved"],
     },
     { field: "", header: "Message" },
     { field: "", header: "Actions" },

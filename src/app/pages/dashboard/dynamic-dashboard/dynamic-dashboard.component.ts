@@ -95,9 +95,10 @@ export class DynamicDashboardComponent implements OnInit {
         screenId: this.selectedDashBoard.id,
       },
     ];
-
+    this.loader.show();
     this.rest.updateWidgetInDashboard(req_body).subscribe(
       (res:any) => {
+        this.loader.hide()
         this.messageService.add({
           severity: "success",
           summary: "Success",
@@ -111,8 +112,13 @@ export class DynamicDashboardComponent implements OnInit {
         //     }
         //   ),
         // ];
-        res.data[0].widgetData.datasets[0]["backgroundColor"] = this.execution_Status
-        res.data[0].widgetData.datasets[0]["borderWidth"] = 2
+        if(res.data[0].childId == 1){
+          res.data[0].widgetData.datasets[0]["backgroundColor"] = this.execution_Status
+
+        }else{
+          res.data[0].widgetData.datasets[0]["backgroundColor"] = this.chartColors
+        }
+        // res.data[0].widgetData.datasets[0]["borderWidth"] = 2
         // borderColor: 'white', // color of the stroke
         // var options = {
       //     cutoutPercentage: 80, // adjust the cutout to show the stroke
@@ -127,13 +133,17 @@ export class DynamicDashboardComponent implements OnInit {
               if (data.labels.length && data.datasets.length) {
                 return data.labels.map(function (label, i) {
                   var ds = data.datasets[0];
+                  let value;
+                  if(res.data[0].childId == 2){
+                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  }else value = ds.data[i];
                   return {
-                    text: label + ": " + ds.data[i],
+                    text: label + ": " + value,
                     fillStyle: datasets[0].backgroundColor[i],
                     strokeStyle: "white",
                     lineWidth: 8,
                     borderColor: "white",
-                    borderRadius: 8,
+                    borderRadius: 5,
                     usePointStyle: true,
                     index: i,
                   };
@@ -143,6 +153,21 @@ export class DynamicDashboardComponent implements OnInit {
             }
 
            }
+        }
+        if(res.data[0].childId == 2){
+          res.data[0].chartOptions.plugins["tooltip"] = {
+            callbacks: {
+              label: (tooltipItem, data) => {
+                let str
+                if(tooltipItem.formattedValue.includes(',')){
+                  str = tooltipItem.formattedValue.replace(',','')
+                }else{
+                  str = tooltipItem.formattedValue
+                }
+                return ( tooltipItem.label + ": " + Math.floor(Number(str) / 60) +"Min");
+              },
+            },
+          }
         }
         this.dashboardData.widgets[index] = {
           ...this.dashboardData.widgets[index],
@@ -367,13 +392,17 @@ export class DynamicDashboardComponent implements OnInit {
                 if (data.labels.length && data.datasets.length) {
                   return data.labels.map(function (label, i) {
                     var ds = data.datasets[0];
-                    return {
-                      text: label + ": " + ds.data[i],
+                    let value;
+                  if(element.childId == 2){
+                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  }else value = ds.data[i];
+                  return {
+                    text: label + ": " + value,
                       fillStyle: datasets[0].backgroundColor[i],
                       strokeStyle: "white",
                       lineWidth: 8,
                       borderColor: "white",
-                      borderRadius: 8,
+                      borderRadius: 5,
                       usePointStyle: true,
                       index: i,
                     };

@@ -45,7 +45,7 @@
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folderName" name="folder"
             maxlength="50" />
-        <button type="button" class="btn bluebg-button" (click)="uploadFile()" [disabled]="!(entered_folderName.length > 4)">
+        <button type="button" class="btn bluebg-button" (click)="uploadFile()" [disabled]="!(entered_folderName.length > 0)">
             Save
         </button>
     </span>
