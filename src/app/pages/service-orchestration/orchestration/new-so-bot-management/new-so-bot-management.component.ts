@@ -509,7 +509,7 @@ public slaupdate : boolean = false;
             department:object.department,
             sourceType:object.sourceType,
             categoryName:object.categoryName,
-            version:object.version
+            version:"V" + object.version
           };
         });
 
