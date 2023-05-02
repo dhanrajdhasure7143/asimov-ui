@@ -76,8 +76,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false;
        response=[...response.map((item:any, index)=>{
-          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
-          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
           item["versionNew"]=parseFloat(item.versionNew).toFixed(1)
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
@@ -121,8 +121,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false; 
         response=[...response.map((item:any)=>{
-          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
-          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
           return item;
         }).filter((item:any)=>{
           if(item.task_name=='Loop-Start')
@@ -252,8 +252,8 @@ export class RpaSoLogsComponent implements OnInit {
       if(response.errorMessage==undefined)
       {
         response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
-          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, H:mm:ss")):item.startTS;
-          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, H:mm:ss")):item.endTS;
+          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, HH:mm:ss")):item.startTS;
+          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, HH:mm:ss")):item.endTS;
           return item;
         });
         this.selectedIterationTask=e;
