@@ -23,7 +23,7 @@
                   <div class="btn-group defaltdrpdwn" dropdown [insideClick]="true" [autoClose]="true">
                      <button pButton pRipple id="button-basic" dropdownToggle type="button" class="p-button-outlined dropdown-toggle"
                              aria-controls="dropdown-basic">
-                       {{selectedDashBoardName}} <span class="caret"></span>
+                       {{selectedDashBoardName}} <span ><img src="../../../../assets/images-n/dashboard/down-arrow.png" class="caret-img"/></span>
                      </button>
                      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                        <li role="menuitem" *ngFor="let each of dashbordlist">
@@ -39,14 +39,14 @@
                      </ul>
                   </div>
 
-                  <button (click)="navigateToCreateDashboard()" class="btn delete-dbtn grey-btn"  pTooltip="Create" tooltipPosition="top"> 
-                     <img src="../../../../assets/images-n/dashboard/plus-square_blue.svg" alt="Create"/>
-                     <span class="plus">Create</span>
+                  <button (click)="navigateToCreateDashboard()" class="grey-btn create-pad"  pTooltip="Create" tooltipPosition="top"> 
+                     <img src="../../../../assets/images-n/dashboard/create-grey.svg" alt="Create"/>
+                     <!-- <span class="plus">Create</span> -->
                   </button>
-                  <button (click)="navigateToConfigure()" class="btn delete-dbtn grey-btn" pTooltip="Configure" tooltipPosition="top">
-                     <img src="../../../../assets/images-n/dashboard/dash-configure-grey.svg" alt="Configure"/>
+                  <button (click)="navigateToConfigure()" class="grey-btn configure-pad" pTooltip="Configure" tooltipPosition="top">
+                     <img src="../../../../assets/images-n/dashboard/configure-grey.svg" alt="Configure"/>
                   </button>               
-                  <button (click)="deletedashbord()" class="btn delete-dbtn grey-btn" pTooltip="Delete" tooltipPosition="top">
+                  <button (click)="deletedashbord()" class="grey-btn " pTooltip="Delete" tooltipPosition="top">
                      <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
                   </button>
             </div>
@@ -54,18 +54,20 @@
      
          <div class="main-content-body">
             <div class="row">
-               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0">
-                  <div class="well1-dynmic">
-                     <div class="new-dynamic">
-                        <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img" alt=""/>
+               <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0 pr-24">
+                  <div class="well1-dynmic ">
+                     <div class="new-dynamic metric-set">
+                        <img [src]="'data:image/png;base64,'+item.metricIcon" class="dashbrd-img1" alt=""/>
+                        <div>
                         <h3>{{item.metricValue}}</h3>
-                        <p>{{item.name}}</p>                       
+                        <p>{{item.name}}</p>  
+                     </div>                     
                      </div>
                   </div>
                </div>
             </div>
             <div class="row">
-               <div class="col-md-6 pl-0" *ngFor="let widget of dashboardData.widgets;let i = index">
+               <div class="col-md-6 pl-0 pr-24" *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="well1-dynmic graph">
 
                      <div class="row align-menubtn">
