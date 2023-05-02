@@ -6,6 +6,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
+import { Tree } from 'primeng/tree';
 
 @Component({
   selector: "app-projects-document",
@@ -48,7 +49,6 @@ export class ProjectsDocumentComponent implements OnInit {
   project_id:any;
   project_name:any;
   nodeMap:Object = {};
-  opened_folders:any[]=[];
   selected_folder_rename:any;
   documents_resData:any[]=[];
   taskList:[]=[];
@@ -57,6 +57,7 @@ export class ProjectsDocumentComponent implements OnInit {
   istaskFilterApplied:boolean = false;
   items:any[];
   items2:any[];
+  @ViewChild('myTree') myTree: Tree;
 
   constructor(private rest_api : RestApiService,
     private route : ActivatedRoute,
@@ -183,7 +184,12 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   }
   this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  this.folder_files = this.files;
+  if(localStorage.getItem("openedFoldrerKey")){
+    this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
+    this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
+  }else{
+    this.folder_files = this.files;
+  }
   this.getTaskList();
   this.loader.hide();
   }
@@ -291,8 +297,8 @@ export class ProjectsDocumentComponent implements OnInit {
 
   treeView(){
     this.isFolder = false;
+    this.breadcrumbItems = [];
     this.folder_files = this.files;
-    this.opened_folders=[];
     const params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
     this.router.navigate([], {
         relativeTo: this.route,
@@ -325,10 +331,10 @@ export class ProjectsDocumentComponent implements OnInit {
 
     if(this.selectedItem.label =="Add Folder")
     return this.isDialogBox = true;
+    // Open folder
     this.selectedFolder = this.selectedItem
-    this.opened_folders.push(this.folder_files)
     this.folder_files = this.selectedItem.children
-    let obj = {label:this.selectedItem.label}
+    let obj = {label:this.selectedItem.label,key:this.selectedItem.key,id:this.selectedItem.id}
     this.breadcrumbItems.push(obj)
     this.breadcrumbItems = [...this.breadcrumbItems];
 
@@ -351,7 +357,7 @@ export class ProjectsDocumentComponent implements OnInit {
       task_id: "",
       projectId: this.project_id,
     }];
-  
+
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
       this.loader.hide();
       let res_data:any = res
@@ -386,7 +392,7 @@ export class ProjectsDocumentComponent implements OnInit {
 addParentFolder() {
   this.loader.show();
   let req_body = [{
-    key: String(this.files.length),
+    key: String(Number(this.files[this.files.length - 1].key)+1),
     label: this.folder_name,
     data: "Folder",
     ChildId: "1",
@@ -535,6 +541,11 @@ addParentFolder() {
     }else{
       objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
       folder_key = this.selectedFolder.key + "-" + objectKey
+
+      setTimeout(() => {
+        localStorage.setItem("openedFoldrerKey",this.selectedFolder.key)
+        localStorage.setItem("breadCrumb",JSON.stringify(this.breadcrumbItems))
+      }, 500);
     }
 
     let req_body = {
@@ -664,10 +675,12 @@ addParentFolder() {
   }
 
   backToSelectedFolder(){
-    this.folder_files = this.opened_folders[this.opened_folders.length-1];
-    this.opened_folders.pop();
+    // this.folder_files = this.opened_folders[this.opened_folders.length-1];
     this.breadcrumbItems.splice(-1)
     this.breadcrumbItems = [...this.breadcrumbItems];
+    if(this.breadcrumbItems.length >0)
+    this.folder_files = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
+    else this.folder_files = this.files
   }
 
   singleFileUploadFolder(e){
@@ -723,6 +736,7 @@ addParentFolder() {
     }else{
       req_body=[this.selected_folder_rename]
       delete req_body[0]["parent"]; 
+      console.log(req_body)
     }
     this.confirmationService.confirm({
       message: "Do you really want to delete this? This process cannot be undone.",
@@ -731,7 +745,7 @@ addParentFolder() {
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
           this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
-          this.getTheListOfFolders();
+          this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         },err=>{
           this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
         })
@@ -800,8 +814,9 @@ addParentFolder() {
         fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.loader.hide();
-        this.getTheListOfFolders();
+        this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         this.createFolderPopUP=false;
+        this.createTreeFolderOverlay =false;
         this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
         this.loader.hide();
@@ -909,6 +924,8 @@ addParentFolder() {
     getTaskList(){
       this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
         this.taskList = data;
+        localStorage.removeItem("openedFoldrerKey")
+        localStorage.removeItem("breadCrumb")
       })
     }
 
@@ -1023,9 +1040,106 @@ addParentFolder() {
     this.loader.hide();
   }
 
-    truncateDesc(data){
-      if(data && data.length > 51)
-        return data.substr(0,50)+'...';
-      return data;
+  truncateDesc(data){
+    if(data && data.length > 51)
+      return data.substr(0,50)+'...';
+    return data;
+  }
+
+  findNodeByKey(key: string, nodes: any[]) {
+    let node: any = null;
+    for (const n of nodes) {
+      if (n.key === key) {
+        node = n;
+        break;
+      } else if (n.children) {
+        node = this.findNodeByKey(key, n.children);
+        if (node) {
+          break;
+        }
+      }
     }
+    return node;
+  }
+
+  getTheListOfFolders1(){
+    let res_data:any=[];
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
+        res_data=res
+        this.documents_resData = res
+        this.loader.hide()
+        this.files=[
+          {
+            key: "0",
+            label: "Add Folder",
+            data: "Add Folder",
+            data_type:"addfolder",
+            icon:"folderadd.svg"
+          },
+        ];
+        this.convertToTreeView2(res_data)
+    })
+  }
+
+  convertToTreeView2(res_data){
+    res_data.map(data=> {
+      if(data.dataType=='folder'){
+        data["children"]=[{
+          key: data.key+'-0',
+          label: "Add Folder / Document",
+          dataType:"folder",
+          icon: 'folderadd.svg'
+        }]
+      }
+      return data
+    })
+
+  for (let obj of res_data) {
+    let node = {
+      key: obj.key,
+      label: obj.label,
+      data: obj.data,
+      type:"default",
+      uploadedBy:obj.uploadedBy,
+      projectId:obj.projectId,
+      id: obj.id,
+      dataType:obj.dataType,
+      children:obj.children,
+      uploadedDate:obj.uploadedDate
+    };
+      if(obj.dataType == 'folder'){
+        node['icon'] = "folder.svg"
+      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+        node['icon'] = "img-file.svg"
+    }else{
+      node['icon'] = "document-file.svg"
+    }
+    this.nodeMap[obj.key] = node;
+    if (obj.key.indexOf('-') === -1) {
+      this.files.push(node);
+    } else {
+      let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+      let parent = this.nodeMap[parentKey];
+      if (parent) {
+        if(parent.children)
+        parent.children.push(node);
+      }
+    }
+  }
+  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  // this.folder_files = this.files;
+  this.folder_files = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
+  this.getTaskList();
+  this.loader.hide();
+  }
+
+  onBreadcrumbItemClick(event: any) {
+    // console.log(event);
+    // add your custom logic here
+  }
+
+  ngOnDestroy(){
+    localStorage.removeItem("openedFoldrerKey");
+    localStorage.removeItem("breadCrumb");
+  }
 }
