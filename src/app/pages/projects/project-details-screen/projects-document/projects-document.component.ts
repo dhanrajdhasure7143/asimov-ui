@@ -816,6 +816,7 @@ addParentFolder() {
         this.loader.hide();
         this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         this.createFolderPopUP=false;
+        this.createTreeFolderOverlay =false;
         this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
         this.loader.hide();
