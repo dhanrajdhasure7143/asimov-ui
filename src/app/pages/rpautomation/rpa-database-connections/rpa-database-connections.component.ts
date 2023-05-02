@@ -44,6 +44,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   categories_list: any=[];
   table_searchFields: any[]=[];
   hiddenPopUp:boolean=false;
+  overlayClose:boolean = false
 
   constructor(private api: RestApiService,
     private router: Router,
@@ -88,6 +89,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   async getallDBConnection() {
     this.dbconnections = [];
+    this.addflag = false
     await this.api.listDBConnection().subscribe(data1 => {
       if (Array.isArray(data1)) {
         this.dbconnections = data1;
@@ -364,6 +366,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   refreshDataBaseList(event) {
     if (event) {
+      this.overlayClose = true;
       this.getallDBConnection()
     }
   }
