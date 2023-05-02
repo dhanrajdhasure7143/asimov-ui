@@ -4,9 +4,9 @@
       <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()"
         aria-label="Example icon-button with menu icon">
         <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false"
-          [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}"  style="filter: brightness(100);">
+          [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}"  style="filter: brightness(100);" alt="">
         <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true"
-          [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}"  style="filter: brightness(100);">
+          [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}"  style="filter: brightness(100);" alt="">
       </button>
     </span>
     <span class="headerlogo">
@@ -97,7 +97,7 @@
     <span class="txt-wh header-seperator">|</span>
     <span>
       <div *ngIf="profilePicture==true && user_fName!='null'">
-        <img class="res-circle-img" [src]="retrievedImage">
+        <img class="res-circle-img" [src]="retrievedImage" alt="">
       </div>
       <span *ngIf="profilePicture==false && user_fName!='null'">
         <p-avatar [label]="user_firstletter|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
@@ -106,7 +106,7 @@
         <span>{{user_firstletter|uppercase}}</span>
       </div> -->
       <div *ngIf="user_fName =='null'">
-        <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
+        <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" alt=""/></span>
       </div>
     </span>
     <div class="txt-wh">
