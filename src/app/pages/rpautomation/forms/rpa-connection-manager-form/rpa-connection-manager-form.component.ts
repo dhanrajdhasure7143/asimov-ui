@@ -39,7 +39,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
-  isDisabled: boolean = false;
+  isDisabled: any = {
+    AuthenticatedType:false,
+    methodType:false,
+  };
   actionUpdate: any;
   actionData: any = [];
   action_logo: any;
@@ -62,15 +65,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private spinner: LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
-      this.isDisabled = data.formDisabled;
+      //this.isDisabled = data.formDisabled;
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
       this.icon = data.logo
       if(this.isCreate == false){
-        this.isDisabled = true;
+        this.isDisabled.AuthenticatedType = true;
+        this.isDisabled.methodType=true;
       } else {
-        this.isDisabled = false
+        this.isDisabled.methodType = false;
+        this.isDisabled.AuthenticatedType=false;
       }
       this.selectedConnector = data.connector_name;
       if (data.name) {
@@ -180,9 +185,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "description" : "",
       }
       
-        this.requestJson_body=[]
         let obj={}
-        this.selectedOne.forEach(ele=>{
+        this.headerForm.forEach(ele=>{
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
        
@@ -194,7 +198,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "contentType":"application/json",
         "httpHeaders": obj,
         "type":"API",
-        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
+        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value
     }
     req_body["configuration"]=JSON.stringify(object);
     }
@@ -334,7 +338,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isHeader = false
       this.isResponse = false;
       this.connectorForm.get('methodType').setValue("POST");
-      this.connectorForm.get('methodType').disable();
+      this.isDisabled.methodType=true;
       const setValidators: string[] = ['authType', 'grantType'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
@@ -344,8 +348,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       });
     }
     else if (event == "APIRequest") {
-      this.connectorForm.get('methodType').setValue("")
-      this.connectorForm.get('methodType').enable();
+      this.connectorForm.get('methodType').setValue("");
+      this.isDisabled.methodType=false;
       this.isRequest = true;
       this.isHeader = true;
       this.isAction = false;
@@ -534,9 +538,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   getActionById() {
     this.spinner.show();
     this.rest_api.getActionById(this.action_id).subscribe((res) => {
-      this.actionData = res["data"];      
+      this.actionData = res["data"];
+      this.isDisabled.AuthenticatedType = true;
+      this.isDisabled.methodType=true;     
       if (this.actionData["actionType"] == "APIRequest") {
-        this.isDisabled = true;
         this.isRequest = true;
         this.isHeader = true;
         this.isAction = false;
@@ -550,7 +555,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
 
       if (this.actionData["actionType"] == "Authenticated") {
-        this.isDisabled = true;
+        //this.isDisabled = true;
         this.isAction = true;
         this.isRequest = false;
         this.isHeader = false;
@@ -798,7 +803,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         contentType: "application/json",
         httpHeaders: obj,
         "type":"API",
-        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
+        "requestPayload":this.connectorForm.get("request").value
       };
       req_body["configuration"] = JSON.stringify(object);
     }

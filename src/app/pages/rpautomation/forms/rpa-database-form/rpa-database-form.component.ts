@@ -18,6 +18,7 @@ export class RpaDatabaseFormComponent implements OnInit {
   @Input() isDatabase : boolean;
   @Input() dbupdatedata : any = [];
   @Output() refreshData = new EventEmitter<any>();
+  @Output() closeOverlay = new EventEmitter<any>();
   public databaselist:any;
   public toggle:boolean;
   public dbupdateflag: boolean = false;
@@ -212,6 +213,7 @@ export class RpaDatabaseFormComponent implements OnInit {
             Swal.fire("Success", status.status, "success")
             document.getElementById('createdbconnection').style.display = "none";
             this.resetDBForm();
+            this.closeOverlay.emit(false)
             this.submitted = false;
             this.dbForm.get("activeStatus").setValue(true);
           } else {

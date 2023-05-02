@@ -43,7 +43,7 @@ export class ConfigureDashboardComponent implements OnInit {
   searchText_metrics:any;
   searchText:any;
   chartColors:any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169", "#085081","#095F9A","#0A6EB2","#0A7DCB"];
-  execution_Status:any[] = ["#27A871","#DB3B21","#FF0131","#098BE3","#AD2626"];
+  execution_Status:any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26"];
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,

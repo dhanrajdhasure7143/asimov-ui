@@ -20,7 +20,7 @@
                 </h3>
             </div>
             <div class="main-content-body">
-                  <span class="userhint"> Note : To make attributes dynamic follow this pattern - eg : [@client_id|string|1000.****************0001@] </span>
+                  <span class="userhint"> Note : To make attributes dynamic follow this pattern - eg : [@Client Id|string|1000.****************0001@] </span>
                 <div class="maindivfoprm">
                     <form [formGroup]="connectorForm">
                         <div class="row">
@@ -47,7 +47,7 @@
                                     <label class="label-control" for="programname"> Action Type
                                         <span class="star">*</span>
                                     </label>
-                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled"
+                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
                                     [style]="{'width':'100%'}" placeholder="Select Action" 
                                     optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
                                     <span
@@ -59,7 +59,7 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled" (onChange)="methodChange($event.value)"
+                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled.methodType" (onChange)="methodChange($event.value)"
                                     [style]="{'width':'100%'}" placeholder="Select Method" 
                                     optionLabel="value" optionValue="value"></p-dropdown>
                                     <span
@@ -89,13 +89,17 @@
                                     </span>
                             </div>
                             <div class="col-md-12 form-group p-0">
-                                <label class="label-control"> API <span class="star">*</span> </label>
-                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint" placeholder="Enter API"
-                                    style=" resize: none;" maxlength="256">
+                                <label class="label-control"> API/URL <span class="star">*</span> </label>
+                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
+                                type="url" name="url" id="url" placeholder="Enter API/URL"
+                                pattern="^(?:[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?|\[@[a-zA-Z\s]+\|[a-zA-Z]+\|[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?@\])$">
                                 </textarea>
                                 <span
                                     *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
-                                    class="required"> API / URL Required*
+                                    class="required"> API/URL Required*
+                                </span>
+                                <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
+                                    API/URL or Dynamic Pattern Is Incorrect.
                                 </span>
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isAction">
@@ -290,7 +294,7 @@
                                                     <td class="headercheckbox">
                                                         <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox> -->
-                                                        <input type="checkbox" [(ngModel)]="selectedOne" [checked]="each.check">
+                                                        <input type="checkbox" [value]="each" [(ngModel)]="selectedOne" [checked]="each.check">
                                                     </td>
                                                     <td>
                                                         <input type="text" name="test+i" id="" class="form-control" placeholder="Key" (keyup)="onHeaders()"
