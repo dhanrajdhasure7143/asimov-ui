@@ -94,7 +94,7 @@ button.btn.bluebg-button {
 }
 .grey-btn {
     background-color: #E0E8ED !important;
-    margin-left: 12px !important; 
+    margin-left: 8px !important; 
     padding: 8px !important;
     height: 36px;   
 }
@@ -185,7 +185,7 @@ background-color: #EAE9E9 !important;
 .search-align {
 	position: absolute;
     right: 15px;
-    top: 10px;
+    top: 9px;
     width: 18px;
 }
 /* .class1{
@@ -194,8 +194,7 @@ background-color: #EAE9E9 !important;
 .configtabslists {
     height: calc(100vh - 180px);
     overflow: auto;
-    /* padding: 0px 20px; */
-    padding: 0px 13px 0px 20px;
+    padding: 0px 20px;
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
@@ -210,13 +209,18 @@ background-color: #EAE9E9 !important;
     position: relative;
     width: 100%;
 }
+.configtabssearch input.form-control {
+    border-color: #9797974a !important;
+    height: 36px !important;
+}
 .configtabssearch select.form-control.data {
     background-color: transparent !important;
-    border-color: #979797 !important;
+    border-color: #9797974a !important;
     border-right: none !important;
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
     cursor: pointer;
+    height: 36px !important;
 }
 .categselect {
     width: 75px;
