@@ -52,7 +52,7 @@
                         </ng-template>
                     </p-columnFilter>
                     <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                    [showAddButton]="false" display="menu">
+                    [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)" placeholder="Any">
                                 <!-- <ng-template let-option pTemplate="item">
@@ -150,7 +150,7 @@
                             </a>
                         </span>
                         <span *ngIf="show_download_btn" class="editButton" >
-                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
+                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="bottom">
                                 <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
                                 class="default-img testplus">
                             </a>

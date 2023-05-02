@@ -47,7 +47,7 @@
                                     <label class="label-control" for="programname"> Action Type
                                         <span class="star">*</span>
                                     </label>
-                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled"
+                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
                                     [style]="{'width':'100%'}" placeholder="Select Action" 
                                     optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
                                     <span
@@ -59,7 +59,7 @@
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
                                     </label>
-                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled" (onChange)="methodChange($event.value)"
+                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled.methodType" (onChange)="methodChange($event.value)"
                                     [style]="{'width':'100%'}" placeholder="Select Method" 
                                     optionLabel="value" optionValue="value"></p-dropdown>
                                     <span

@@ -2,9 +2,10 @@
     cursor: pointer;
 }
 .align-menubtn {
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     align-items: center;
 }
+.defaltdrpdwn{background-color: #fff;}
 .btn-secondary {
 	height: 32px;
     background-color: #E9E9E9 !important;
@@ -33,11 +34,13 @@
 } */
 .well1-dynmic {	
 	padding: 10px 12px !important;
-	margin-bottom: 15px;
+	margin-bottom: 24px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
     border-radius: 6px;
 }
+.pr-24{padding-right:24px;}
+.pr-0{padding-right:0px !important;}
 .well1-dynmic.graph .p-datatable-wrapper {
   height: calc(100vh - 36px) !important;
 }
@@ -98,19 +101,33 @@
     margin: auto;
 }
 .grey-btn {
-    background-color: #E0E8ED !important;
+    background-color: #EAE9E9 !important;
     margin-left: 12px !important; 
     padding: 8px !important;
     height: 36px;   
 }
 .grey-btn:hover {
-background-color: #EAE9E9 !important;  
+background-color: #E0E8ED !important;  
 }
-
+.configure-pad{padding:8px 12px !important;}
+.create-pad{padding:8px 14px !important;}
+.caret-img{    width: 20px;
+   
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
 .defaltdrpdwn button {
     width: 230px;
-    border-color: #979797 !important;
+    border-color: #9797974a !important ;
     color: #232832 !important;
+    margin:0px 0px 0px 0px !important;
+    height: 36px !important;
+    padding: 10px;
+}
+.defaltdrpdwn ul#dropdown-basic {
+    width: 230px;    
+    inset: 100% auto auto 0px !important;
     /* height: 32px !important; */
     padding: 10px;
     /* margin: 0px 12px !important; */
