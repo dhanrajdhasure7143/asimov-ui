@@ -170,7 +170,7 @@
                             <span class="readmore icon-color" (click)="onReadMoreHide()"
                             *ngIf="project_desc.length > 150">Read more</span>
                         </p> -->
-                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()" class='proj-desc'>{{project_desc}}</span>
+                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()" class='proj-desc desctextarea'>{{project_desc}}</span>
                         <!-- <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="project_desc"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()">Hide</span></p> -->
                         <!-- <p>{{projectDetails.projectPurpose}}</p> -->

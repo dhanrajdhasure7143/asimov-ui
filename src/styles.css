@@ -3104,7 +3104,9 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   margin:0px !important;
 }
 /* Grid NEW Styles End */
-
+.desctextarea {
+  white-space: pre-line;
+}
 /* primeNg components Styles Start */
 .p-link {
   background-color: transparent !important;
@@ -3319,6 +3321,17 @@ textarea.p-inputtextarea {
   white-space: inherit !important;
 }
 /* headercss end*/
+.p-editor-container .p-editor-content .ql-editor.ql-blank {
+  background: transparent !important;
+  color: #232832 !important;
+  border-radius: 3px;
+  border: 1px solid #979797 !important;
+}
+.p-editor-container .p-editor-content .ql-editor {
+  background: #fff !important;
+  border: 1px solid #098de6 !important;
+  border-radius: 3px !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -3756,4 +3769,8 @@ textarea.p-inputtextarea {
 .overlay-align{    position: absolute;
   top: 10px;
   right: 34px;}
+
+.task-create-desc .ql-toolbar.ql-snow{
+    display :none;
+  }
 

@@ -129,7 +129,17 @@ export class ConfigureDashboardComponent implements OnInit {
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
     }else{
       let itemId=metric.childId? metric.childId: metric.id
-      this.addedMetrics.splice(this.addedMetrics.findIndex(item=> item.id == itemId), 1);
+      let findIndex:number
+      this.addedMetrics.forEach((item,i)=> {
+       if(item.childId)
+       if(item.childId== itemId)findIndex = i
+       else{
+         if(item.id== itemId)findIndex = i
+       }
+      })
+   this.addedMetrics.splice(findIndex, 1);
+
+      // this.addedMetrics.splice(this.addedMetrics.findIndex(item=> item.id == itemId), 1);
       this.metrics_list.find(item => item.id == itemId).metricAdded = false;
       if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
       this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;

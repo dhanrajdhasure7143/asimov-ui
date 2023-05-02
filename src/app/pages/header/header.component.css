@@ -351,4 +351,16 @@ button.p-element.p-button.p-component.p-button-icon-only {
   box-shadow: none;
   outline:none;
 }
+
+span.envname {
+  color: #fff;
+  font-size: 15px;
+  line-height: 16px;
+  margin-top: 5px;
+}
+span.envsep {
+  color: #fff;
+  margin: 0px 10px 0px 6px;
+  font-size: 16px;
+}
 /* header new css */
