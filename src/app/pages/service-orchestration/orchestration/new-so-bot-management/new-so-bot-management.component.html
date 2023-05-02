@@ -153,7 +153,7 @@
               </table> -->
 
 
-              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','taskType','botStatus']" [scrollable]="true"
+              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','sourceType','botStatus','version']" [scrollable]="true"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
                 <div class="d-flex">
@@ -186,19 +186,19 @@
                       <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
                       <p-sortIcon field="description"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="Source" pReorderableColumn pResizableColumn>Source
+                    <th pSortableColumn="sourceType" pReorderableColumn pResizableColumn>Source
+                      <p-columnFilter type="text" field="sourceType" display="menu"></p-columnFilter>
+                      <p-sortIcon field="sourceType"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="department" pReorderableColumn pResizableColumn>Category
                       <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
                       <p-sortIcon field="department"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="Category" pReorderableColumn pResizableColumn>Category
-                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
-                      <p-sortIcon field="processName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="Version" pReorderableColumn pResizableColumn>Version
+                    <th pSortableColumn="version" pReorderableColumn pResizableColumn>Version
                       <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
                       <p-sortIcon field="version"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="Status" pReorderableColumn pResizableColumn>Status
+                    <th pSortableColumn="botStatus" pReorderableColumn pResizableColumn>Status
                       <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
                       <p-sortIcon field="botStatus"></p-sortIcon>
                     </th>
@@ -224,9 +224,9 @@
                       <button *ngIf="element.sourceType!='EPSoft' || element.department ==null " class="text-center">-</button>
                     </td>
                     <td>
-                      <button *ngIf="element.version!=null">V{{element.version}}
+                      <button *ngIf="element.version!=null">{{element.version}}
                       </button>
-                      <span *ngIf="element.version==''">-</span>
+                      <span *ngIf="element.version==null">-</span>
                     </td>
                     <td>
                       <div>

@@ -25,14 +25,14 @@
                         </div>
                     </div>
                 </div>
-                <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" />
+                <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" alt=""/>
                 <div class="rpa-home" style="display:none">
                     <div class="rpa-home-block" id="createbot-Home" style="border-radius: 3px;" *ngIf="this.isButtonVisible || enablecreatebot">
-                        <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;">
+                        <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;" alt="">
                         <button class="btn bluebg-button rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                     </div>
                     <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 3px;" *ngIf="this.isButtonVisible || enableConfiguration">
-                        <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;">
+                        <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;" alt="">
                         <button class="btn reset-btn rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                         {{col.header}}
                                         <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
                                         <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" field="categoryName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                                        [showAddButton]="false" display="menu">
+                                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                                 <p-dropdown [ngModel]="value" [options]="categories_list_new" (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
                                             </ng-template>

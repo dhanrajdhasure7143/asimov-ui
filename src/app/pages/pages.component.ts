@@ -16,8 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
   ::ng-deep .mat-drawer-side {
        border-right: none !important;
-      box-shadow: inset 0px 4px 8px rgb(0 0 0 / 12%);
-      background-color: #fbfbfb;
+      box-shadow:0 4px 8px 0 rgb(0 0 0 / 10%);
   }
 
   ::ng-deep .mat-drawer {

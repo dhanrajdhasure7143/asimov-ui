@@ -69,7 +69,7 @@
                                         display="menu"></p-columnFilter>
                                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
                                     [field]="col.field" matchMode="equals" [showMatchModes]="false"
-                                        [showOperator]="false" [showAddButton]="false" display="menu">
+                                        [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="col.dropdownList"
                                                 (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
@@ -101,7 +101,7 @@
                                     <span *ngIf="col.header == 'Message'">
                                         <div>
                                             <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"
-                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="top">
+                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="bottom">
                                         </div>
                                     </span>
                                     <span *ngIf="col.header == 'Actions'">

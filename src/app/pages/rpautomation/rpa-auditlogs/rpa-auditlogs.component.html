@@ -11,7 +11,7 @@
             </div>
             <div class="main-content-body rpaauditsgrid">
                 <p-table  #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true" [scrollable]="true"
-                    [reorderableColumns]="true" [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments']">
+                    [reorderableColumns]="true" [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']">
                     <ng-template pTemplate="caption">
                         <div class="flex">
                             <span class="p-input-icon-right gridsearch">
@@ -24,7 +24,7 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="versionNew" pReorderableColumn pResizableColumn>Version
-                                <p-columnFilter type ="text-danger"field="versionNew" display="menu"></p-columnFilter>
+                                <p-columnFilter type ="text"field="versionNew" display="menu"></p-columnFilter>
                                 <p-sortIcon field="versionNew"></p-sortIcon>
                             </th>
                             <th pSortableColumn="changedDate" pReorderableColumn pResizableColumn> Timestamp
@@ -35,7 +35,7 @@
                                 <p-columnFilter  type ="text" field="changeActivity" display="menu"></p-columnFilter>
                                 <p-sortIcon field="changeActivity"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="changedBy" pReorderableColumn pResizableColumn>Chanaged By
+                            <th pSortableColumn="changedBy" pReorderableColumn pResizableColumn>Changed By
                                 <p-columnFilter  type ="text"field="changedBy" display="menu"></p-columnFilter>
                                 <p-sortIcon field="changedBy"></p-sortIcon>
                 

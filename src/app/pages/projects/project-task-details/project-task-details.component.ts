@@ -46,7 +46,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   params_data: any;
   endDate: any;
   mindate: any;
-  add_comment: any;
+  add_comment: string='';
   added_comments_list: any = [];
   percentageComplete: any;
   priority: any;
