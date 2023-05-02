@@ -297,8 +297,8 @@ export class ProjectsDocumentComponent implements OnInit {
 
   treeView(){
     this.isFolder = false;
-    this.folder_files = this.files;
     this.breadcrumbItems = [];
+    this.folder_files = this.files;
     const params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
     this.router.navigate([], {
         relativeTo: this.route,
