@@ -171,7 +171,7 @@ background-color: #EAE9E9 !important;
     margin-left: 5px;
 }
 .metricalign{
-    padding: 15px 5px;
+    padding: 15px 10px;
     border: 0.5px solid #e0e0e030;
     margin-bottom: 10px !important;
     border-radius: 6px;
@@ -194,13 +194,15 @@ background-color: #EAE9E9 !important;
 .configtabslists {
     height: calc(100vh - 180px);
     overflow: auto;
-    padding: 0px 20px;
+    padding: 0px 13px 0px 20px;
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
 	color: #979797;
 }
-
+.configtabslists .metric-set {
+    align-items: start !important;
+}
 .configtabssearch {
     padding: 0px 20px;
 }
