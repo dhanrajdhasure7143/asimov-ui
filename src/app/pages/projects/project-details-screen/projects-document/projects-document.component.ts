@@ -814,7 +814,7 @@ addParentFolder() {
         fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.loader.hide();
-        this.getTheListOfFolders();
+        this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         this.createFolderPopUP=false;
         this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
