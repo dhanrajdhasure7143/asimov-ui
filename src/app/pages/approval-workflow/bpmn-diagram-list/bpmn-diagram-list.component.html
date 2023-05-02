@@ -41,7 +41,7 @@
             display="menu"></p-columnFilter>
         <p-columnFilter *ngIf="col.filterWidget == 'dropdown'"
         [field]="col.field" matchMode="equals" [showMatchModes]="false"
-            [showOperator]="false" [showAddButton]="false" display="menu">
+            [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-dropdown [ngModel]="value" [options]="col.dropdownList"
                     (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
