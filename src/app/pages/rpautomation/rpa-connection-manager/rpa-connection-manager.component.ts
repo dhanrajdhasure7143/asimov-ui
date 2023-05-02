@@ -87,10 +87,10 @@ export class RpaConnectionManagerComponent implements OnInit {
           ColumnName: "actionCount",
           DisplayName: "Action Count",
           ShowGrid: true,
-          ShowFilter: false,
+          ShowFilter: true,
           filterWidget: "normal",
           filterType: "text",
-          sort: false,
+          sort: true,
           multi: false,
         },
         {
@@ -102,7 +102,7 @@ export class RpaConnectionManagerComponent implements OnInit {
           multi: false,
         },
       ];
-      this.table_searchFields=["name"]
+      this.table_searchFields=["name","actionCount"]
     });
   }
 
