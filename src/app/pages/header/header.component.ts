@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
-import { NgxSpinnerService } from "ngx-spinner";
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
@@ -128,13 +127,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //this.error = "Please complete your registration process";
 
     })
-    this.spinner.show();    
     setTimeout(() => {
       this.userDetails();
     }, 3000);
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 900);
 
     this.dataTransfer.logged_userData.subscribe(res=>{
       if(res){

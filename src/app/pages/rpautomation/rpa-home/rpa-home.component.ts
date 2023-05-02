@@ -9,9 +9,9 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 declare var $: any;
 
 @Component({
@@ -110,7 +110,7 @@ export class RpaHomeComponent implements OnInit {
     private rest: RestApiService,
     private modalService: BsModalService,
     private router: Router,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     @Inject(APP_CONFIG) private appconfig
   ) { }
 
