@@ -51,6 +51,7 @@
                 </select>
                 <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
                   class='required'>Country is required</span>
+                  <span class="required">{{errorMessage}}</span>
               </div>
                <!--   <div class="col-md-12 p-0"> 
              <div class="form-group col-md-6 pl-0">
@@ -88,7 +89,7 @@
               </div>
               <div *ngIf ="!isRefresh && !show" class="form-group col-md-6 pl-0 Admin-countrylist">
                 <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" id="phoneNumber" name="phoneumber" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                   #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                   pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                 <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern) )"
@@ -99,7 +100,7 @@
               </div>                                              
               <div *ngIf ="isRefresh" class="form-group col-md-6 pl-0 Admin-countrylist">
                 <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                <input type="text" (keydown)="onKeydown($event)" id="phoneNumber" name="phoneumber" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                <input type="text" (keydown)="onKeydown($event)"  (countryChange)="OnFlagChange($event)" id="phoneNumber" name="phoneumber" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                   #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                   pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                   <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern))"
@@ -111,7 +112,7 @@
           </div>
         </form>
         <div class="text-right">
-          <button type="button" class="btn bluebg-button" (click)="updateAccount()"  [disabled] = "!(updateUser.valid && (updateUser.touched ||  updateUser.dirty))">Update</button>
+          <button type="button" class="btn bluebg-button" (click)="updateAccount()"  [disabled] = "!(updateUser.valid && (updateUser.touched ||  updateUser.dirty)) || errorMessage">Update</button>
         </div>
       </div>
     </div>
