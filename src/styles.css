@@ -870,7 +870,12 @@ foreignObject {
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
-  padding-bottom: 75px !important;
+  /* padding-bottom: 75px !important; */
+  padding-bottom: 60px;
+  margin-bottom: 5px;
+}
+mat-list-item.mat-list-item.activeMenu {
+  margin-bottom: 0px !important;
 }
 
 .pr-0 {
