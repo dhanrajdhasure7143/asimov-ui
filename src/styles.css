@@ -2980,8 +2980,34 @@ th.p-element.p-sortable-column.p-resizable-column {
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
 }
+tr.p-element:hover,
+.p-datatable .p-datatable-tbody > tr:hover {
+  border: 1.5px solid #4AB0F5;
+  border: 1.5px solid var(--secondary-bluecolor);
+  box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
+  border-radius: 8px;
+  outline: none;
+  background: #fff !important;
+}
+tr.p-element:hover > td:first-child, 
+.p-datatable .p-datatable-tbody > tr:hover > td:first-child {
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px; 
+}
+tr.p-element:hover > td:last-child,
+.p-datatable .p-datatable-tbody > tr:hover > td:last-child {
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px; 
+}
+.newinntalx.actionicons {
+  display: none;
+}
+.gridparentdiv tr.p-element:hover .newinntalx.actionicons {
+  display: block;
+}
 
-tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
+/*highlight of row*/
+/* tr.p-element.p-selectable-row.p-highlight {    
   border: 1.5px solid var(--secondary-bluecolor);
   box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
   border-radius: 8px;
@@ -2989,15 +3015,16 @@ tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
 }
 tr.p-element.p-selectable-row.p-highlight > td:first-child {
   border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px; /*highlight of row*/
+  border-top-left-radius: 8px; 
 }
 tr.p-element.p-selectable-row.p-highlight > td:last-child {
   border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px; /*highlight of row*/
+  border-top-right-radius: 8px; 
 }
-tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
+tr.p-element.p-selectable-row.p-highlight > td { 
   background-color: #fff !important;
-}
+} */
+/*highlight of row*/
 
 /* Entire application buttons */
 button.btn {
