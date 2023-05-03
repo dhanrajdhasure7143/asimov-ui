@@ -2982,12 +2982,18 @@ th.p-element.p-sortable-column.p-resizable-column {
 }
 tr.p-element:hover,
 .p-datatable .p-datatable-tbody > tr:hover {
-  border: 1.5px solid #4AB0F5;
   border: 1.5px solid var(--secondary-bluecolor);
   box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
   border-radius: 8px;
   outline: none;
   background: #fff !important;
+}
+tr.botpreviewtr:hover,.p-datatable .p-datatable-tbody > tr.botpreviewtr:hover {
+  border: unset !important;
+  box-shadow: unset !important;
+  border-radius: 8px;
+  outline: none;
+  background: transparent !important;
 }
 tr.p-element:hover > td:first-child, 
 .p-datatable .p-datatable-tbody > tr:hover > td:first-child {
