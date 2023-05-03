@@ -33,4 +33,7 @@ th.checkboxth:before {
     border : none !important;
     margin-right: 17px;
 }
-  
+
+.actionicons {
+    display: none;
+}

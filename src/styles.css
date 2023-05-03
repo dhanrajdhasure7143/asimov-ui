@@ -2999,11 +2999,8 @@ tr.p-element:hover > td:last-child,
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px; 
 }
-.newinntalx.actionicons {
-  display: none;
-}
-.gridparentdiv tr.p-element:hover .newinntalx.actionicons {
-  display: block;
+tr.p-element:hover .newinntalx.actionicons {
+  display: block !important;
 }
 
 /*highlight of row*/
