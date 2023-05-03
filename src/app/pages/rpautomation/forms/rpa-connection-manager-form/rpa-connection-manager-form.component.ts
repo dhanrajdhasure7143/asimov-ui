@@ -187,6 +187,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       
         let obj={}
         this.headerForm.forEach(ele=>{
+          if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
        
@@ -198,7 +199,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "contentType":"application/json",
         "httpHeaders": obj,
         "type":"API",
-        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value
+        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
     }
     req_body["configuration"]=JSON.stringify(object);
     }
@@ -803,7 +804,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         contentType: "application/json",
         httpHeaders: obj,
         "type":"API",
-        "requestPayload":this.connectorForm.get("request").value
+        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
       };
       req_body["configuration"] = JSON.stringify(object);
     }
@@ -882,15 +883,22 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.onKeyEntered();
   }
 
-  onHeaders(){
-    for(const each of this.headerForm){
-      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
-        each.check = true;
+  onHeaders(index){
+      if(this.headerForm[index].encodedKey.length > 0 || this.headerForm[index].encodedValue.length > 0){
+        this.headerForm[index].check = true;
       } else {
-        each.check = false;
+        this.headerForm[index].check = false;
+      }
+  }
+
+  onChangeCheckbox(event, fruit, index) {
+    if (event.target.checked) {
+      this.selectedOne.push(fruit);
+    } else {
+      if (index >= 0) {
+        this.selectedOne.splice(index, 1);
       }
     }
-
   }
 
 }
