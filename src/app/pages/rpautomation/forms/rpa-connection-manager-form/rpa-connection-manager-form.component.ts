@@ -694,6 +694,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           index: i,
           encodedKey: key,
           encodedValue: headers_data[key],
+          check:true
         })
         ));
         this.selectedOne = this.headerForm;
@@ -794,6 +795,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.requestJson_body.push(this.connectorForm.get("request").value);
         let obj={}
         this.selectedOne.forEach(ele=>{
+          if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
       let object = {
