@@ -1,3 +1,6 @@
+.maincont-contentarea {
+    padding: 15px 6px 10px 30px;
+}
 .main-content-head h3 .title_text {
     cursor: pointer;
 }
