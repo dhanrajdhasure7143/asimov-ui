@@ -187,7 +187,7 @@ background-color: #EAE9E9 !important;
 }
 .search-align {
 	position: absolute;
-    right: 15px;
+    right: 10px;
     top: 9px;
     width: 18px;
 }
@@ -226,9 +226,13 @@ background-color: #EAE9E9 !important;
     border-bottom-right-radius: 0px !important;
     cursor: pointer;
     height: 36px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 20px !important;
 }
 .categselect {
-    width: 75px;
+    width: 90px;
     background-color: #ededed !important;
 }
 .categinput input {
@@ -236,7 +240,7 @@ background-color: #EAE9E9 !important;
     border-bottom-left-radius: 0px !important;
 }
 
-.configtabslists .metric-set:hover span.addtooltip,
+/* .configtabslists .metric-set:hover span.addtooltip,
 .configtabslists .widget-set:hover span.addtooltip {
     display: block;
     position: absolute;
@@ -259,4 +263,4 @@ span.addtooltip::before {
     position: absolute;
     top: -4px;
     right: 12px;
-}
+} */
