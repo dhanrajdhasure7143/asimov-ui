@@ -209,6 +209,7 @@ div[class^='diagram_container'] {
 }
 .bps_overlay.grid_bps_overlay {
   position:relative;
+  background: #fff !important;
 }
 
 
