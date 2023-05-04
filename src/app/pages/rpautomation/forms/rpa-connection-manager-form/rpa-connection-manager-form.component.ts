@@ -303,7 +303,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   isJsonValid() {
-    let jsonData = this.connectorForm.get("scope").value;
+    let jsonData = this.connectorForm.get("response").value;
     try {
       JSON.parse(jsonData);
       this.validateJSON = false;
