@@ -381,7 +381,7 @@ mat-paginator button:disabled{
   overflow-y: scroll;
 }
 .open-btn-click {
-  background-color: #E58600 !important;
+  background-color: #F99D1C !important;
   color: #fff !important;
   position: absolute;
   top: 10px;

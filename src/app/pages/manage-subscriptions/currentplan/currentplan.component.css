@@ -47,7 +47,7 @@ h4 .planName {
 .current-plan{
   background-color: red;
   color: white;
-  border-radius: 6px;
+  border-radius: 3px;
   font-size: 11px !important;
   padding: 5px;
   float: right;
@@ -55,13 +55,13 @@ h4 .planName {
 .requested-plan{
   background-color: green;
   color: white;
-  border-radius: 6px !important;
+  border-radius: 3px !important;
   font-size: 11px !important;
   padding: 5px;
   float: right;
 }
 .selectplanbtn{
-  border-radius: 6px;
+  border-radius: 3px;
   /* width: 100px; */
   padding: 5px !important;
   position: absolute;

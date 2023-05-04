@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
@@ -14,6 +14,18 @@ export class BotsComponent implements OnInit {
   public tabledata: boolean = false;
   public scheduledbots: any = [];
   search:any;
+  @Input("categoriesList") public categoriesList: any[] = [];
+  columnList=[
+    {field:"botName",DisplayName:"Bot Name",ShowFilter: true,filterType:"text"},
+    {field:"botSource",DisplayName:"Bot Source",ShowFilter: true,filterType:"text"},
+    {field:"category",DisplayName:"Category",ShowFilter: true,filterType:"text"},
+    {field:"lastRunTS",DisplayName:"Previous Run",ShowFilter: true,filterType:"date"},
+    {field:"nextRunTS",DisplayName:"Next Run",ShowFilter: true,filterType:"date"},
+    {field:"scheduleInterval",DisplayName:"Schedule Interval",ShowFilter: true,filterType:"text"},
+    {field:"status",DisplayName:"Status",ShowFilter: true,filterType:"text"},
+    {field:"timezone",DisplayName:"Time Zone",ShowFilter: true,filterType:"text"},
+  ];
+
   constructor(
       private rest:RestApiService,
       private spinner:LoaderService,

@@ -3,7 +3,7 @@
 }
 
 .undobtn {
-  background-color:transparent; 
+  background-color:transparent !important; 
 }
 .undobtn:disabled i.fas {
   color: #a0a0a0 !important;

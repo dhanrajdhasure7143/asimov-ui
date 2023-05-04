@@ -34,7 +34,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   }
   .main{
     height: calc(100% - 55px);
-    background-color: #d9dfe4 !important;
+    background-color: #f9f9f9 !important;
     z-index: 1;
     position: relative;
     top: 55px;

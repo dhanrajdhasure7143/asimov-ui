@@ -74,6 +74,7 @@ span.tab-botname {
 .actionsmenu {
     padding: 20px;
     height: 40px;
+  margin-top: 5px !important;
 }
 
 .main-content1 .module-heading {
@@ -98,7 +99,7 @@ span.tab-botname {
 
 .toolsetmenuicon img.testplus {
     vertical-align: sub;
-    margin: 3px 4px;
+    margin: 3px 4px 3px 0px;
 }
 
 .toolset-close {
@@ -109,7 +110,9 @@ span.tab-botname {
 .toolset-text {
     font-weight: 600 !important;
 }
-
+.main-content1 .main-content-head {
+  padding: 0px;
+}
 .main-content1 .module-header-title {
     font-weight: 600;
     font-size: 22px;
@@ -122,21 +125,14 @@ span.tab-botname {
     border: none;
 }
 
-ul#environments {
-    width: 230px;
-    overflow: auto;
-    max-height: 315px;
-    font-size: 15px !important;
-}
-
 ul#environments li {
-    padding: 6px;
+  padding: 3px 5px; 
     display: flex;
     align-items: center;
 }
 
 ul#environments li input {
-    margin: 0px;
+    margin: -2px 17px 0px 0px;
 }
 
 ul#environments li img {
@@ -185,6 +181,8 @@ ul#other_actions {
     overflow: auto;
     left: auto;
     right: 0;
+    min-width: 120px !important;
+    padding: 0px !important;
 }
 
 ul#other_actions li {
@@ -508,13 +506,6 @@ select.versions.form-control
   height:60vh;
 }
 
-
-
-.actionsmenu{
-  /* border-bottom: 1px solid lightgray; */
-  margin-top: 5px !important;
-}
-
 .actionsmenu-left{
   display: flex;
   float:left;
@@ -558,27 +549,10 @@ ul#environments {
   max-height: 263px;
   font-size: 15px !important;
 }
-
-ul#environments li {
-  padding: 3px 5px; 
-}
-ul#environments li img {
-  vertical-align: sub;
-}
-
 .actionsmenu-right button, .actionsmenu-right span {
   font-size: 14px;
 }
-ul#other_actions {
-  min-width: 120px !important;
-  max-height: 250px;
-  overflow: auto;
-  left: auto;
-  right: 0;
-}
-ul#other_actions {
-  padding: 0px !important;
-}
+
 li.action-item-data:hover {
   background: rgba(0,0,0,.04);
 }
@@ -602,10 +576,7 @@ img.toolset-menuicon {
   overflow: hidden auto;
   font-size: 15px;
 }
-ul#versions {
-  padding: 0px !important;
-  min-width: 130px;
-}
+
 ul#versions li {
   padding: 8px 10px;
   font-size: 14px;
@@ -616,6 +587,14 @@ ul#versions li:hover {
 }
 .caret {
   color: #607088;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 12px !important;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
 }
 
 
@@ -644,7 +623,7 @@ ul#versions li:hover {
 
 .action-item.hovericon:hover {
   background-color: #098de6;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 .action-item.hovericon:hover img {
   filter: brightness(2.5) !important;

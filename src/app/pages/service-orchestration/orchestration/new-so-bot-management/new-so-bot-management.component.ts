@@ -96,7 +96,6 @@ public slaupdate : boolean = false;
     @ViewChild("sort6") sort6: MatSort;
     @ViewChild("paginator7") paginator7: MatPaginator;
     @ViewChild("sort7") sort7: MatSort;
-
     displayedColumns4: string[] = ['run_id','version','start_date','end_date' , "bot_status"];
     Viewloglist:MatTableDataSource<any>;
     displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
@@ -108,6 +107,18 @@ public slaupdate : boolean = false;
     draggableHandle:any;
     noDataMessage: boolean;
     hiddenPopUp:boolean=false;
+    columnList=[
+      {DisplayName:"Bot Name",field:"botName",ShowFilter: true},
+      {DisplayName:"Description",field:"description",ShowFilter: true},
+      {DisplayName:"Source",field:"sourceType",ShowFilter: true},
+      {DisplayName:"Category",field:"department",ShowFilter: true},
+      {DisplayName:"Version",field:"version",ShowFilter: true},
+      {DisplayName:"Status",field:"botStatus",ShowFilter: true},
+      {DisplayName:"Actions",field:"Actions",ShowFilter: false},
+      {DisplayName:"Schedule",field:"botStatus",ShowFilter: false},
+      {DisplayName:"Logs",field:"botStatus",ShowFilter: false},
+    ]
+
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -118,8 +129,7 @@ public slaupdate : boolean = false;
       private notify:NotifierService,
       private modalService:BsModalService,
       private detectChanges:ChangeDetectorRef,
-      private dataTransfer:DataTransferService
-      )
+      private dataTransfer:DataTransferService)
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required])],
@@ -475,9 +485,7 @@ public slaupdate : boolean = false;
 
 
 
-  loadbotdatadesign(botId)
-  {
-    
+  loadbotdatadesign(botId){
     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
@@ -509,7 +517,8 @@ public slaupdate : boolean = false;
             department:object.department,
             sourceType:object.sourceType,
             categoryName:object.categoryName,
-            version:"V" + object.version
+            version:object.version,
+            version_new:"V"+object.version_new
           };
         });
 
