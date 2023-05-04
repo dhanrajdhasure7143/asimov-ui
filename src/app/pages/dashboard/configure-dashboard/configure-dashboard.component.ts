@@ -346,11 +346,12 @@ export class ConfigureDashboardComponent implements OnInit {
                   return data.labels.map(function (label, i) {
                     var ds = data.datasets[0];
                     let value;
-                  if(item.childId == 2){
-                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
-                  }else value = ds.data[i];
+                  // if(item.childId == 2){
+                  //   value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  // }else value = ds.data[i];
+                  let total = ds['data'].reduce((accumulator, currentValue) => accumulator + currentValue);
                   return {
-                    text: label + ": " + value,
+                    text: label + ": " + ((ds.data[i] / total) * 100).toFixed(2)+ '%',
                       fillStyle: datasets[0].backgroundColor[i],
                       strokeStyle: "white",
                       lineWidth: 8,
@@ -408,7 +409,8 @@ export class ConfigureDashboardComponent implements OnInit {
         screenId: Number(this._paramsData.dashboardId),
         type: "widget",
         widgetType: element.widget_type,
-        name: element.name
+        name: element.name,
+        // department:element.department
       }
       req_array.push(req_body)
     });
