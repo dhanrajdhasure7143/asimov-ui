@@ -102,6 +102,7 @@ span.testtooltip:before {
   margin-top: 0;
   width: 100%;
   overflow: hidden;
+  padding: 0px;
 }
 .module-back-button {
   border-right: unset !important;
@@ -122,7 +123,7 @@ span.testtooltip:before {
 .new-bps-icons button {
   padding: 6px 8px;
   position: relative;
-  z-index: 99;
+  z-index: 999;
 }
 .bps-float button img {
   height: 17px;

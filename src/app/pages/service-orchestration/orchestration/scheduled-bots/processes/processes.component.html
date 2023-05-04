@@ -44,7 +44,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-element>
             <tr>
-                <td [pTooltip]="element.processName" style="width:200px;">
+                <td [pTooltip]="element.processName" style="width:200px;" tooltipPosition="top">
                     <span *ngIf="element.processName != null">{{element.processName}}
                     </span>
                     <span *ngIf="element.processName == null">-</span>
@@ -58,13 +58,13 @@
                     <span *ngIf="element.environmentName == null">-</span>
                 </td>
                 <td>
-                    <span *ngIf="element.lastRunTS != null" [pTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
+                    <span *ngIf="element.lastRunTS != null" [pTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'" tooltipPosition="top">
                         {{element.lastRunTS |date: 'MMM d, y, HH:mm' }}
                     </span>
                     <span *ngIf="element.lastRunTS == null">-</span>
                 </td>
                 <td>
-                    <span *ngIf="element.nextRunTS != null" [pTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
+                    <span *ngIf="element.nextRunTS != null" [pTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'" tooltipPosition="top">
                         {{element.nextRunTS |date: 'MMM d, y, HH:mm' }}
                     </span>
                     <span *ngIf="element.nextRunTS == null">-</span>
@@ -78,14 +78,14 @@
                         <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">{{element.status}}
                     </span>
                     <span *ngIf="element.status=='Success'|| element.status=='Completed' || element.status=='Started'"
-                        [pTooltip]="element.status">
+                        [pTooltip]="element.status" tooltipPosition="top">
                         <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">Success
                     </span>
-                    <span *ngIf="element.status=='Paused'" [pTooltip]="element.status">
+                    <span *ngIf="element.status=='Paused'" [pTooltip]="element.status" tooltipPosition="top">
                         <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testpause"
                             alt="">Paused
                     </span>
-                    <span *ngIf="element.status=='Failure'|| element.status=='Failed'" [pTooltip]="element.status">
+                    <span *ngIf="element.status=='Failure'|| element.status=='Failed'" [pTooltip]="element.status" tooltipPosition="top">
                         <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                     </span>
                     <span *ngIf="element.status=='New'">
@@ -97,13 +97,13 @@
                         <span>{{element.status}}</span>
                     </span>
                     <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'"
-                        [pTooltip]="element.status">
+                        [pTooltip]="element.status" tooltipPosition="top">
                         <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">Stopped
                     </span>
                     <span *ngIf="element.status == undefined">-</span>
                 </td>
                 <td>
-                    <span *ngIf="element.timezone != null" [pTooltip]="element.timezone">{{element.timezone}}</span>
+                    <span *ngIf="element.timezone != null" [pTooltip]="element.timezone" tooltipPosition="top">{{element.timezone}}</span>
                     <span *ngIf="element.timezone == null">-</span>
                 </td>
             </tr>

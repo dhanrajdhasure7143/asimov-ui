@@ -167,7 +167,7 @@
                             </a>
                         </span>
                         <span *ngIf="show_download_btn" class="editButton" >
-                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="bottom">
+                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
                                 <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
                                 class="default-img testplus">
                             </a>
@@ -195,7 +195,8 @@
                         </div>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                        <div class="newinntalx actionicons" >
+                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                             </a>
@@ -207,7 +208,8 @@
                     </span>
                     
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
-                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                        <div class="newinntalx actionicons" >
+                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </a>
@@ -220,7 +222,8 @@
                         </div>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                        <div class="newinntalx actionicons" >
+                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </a>
@@ -231,7 +234,8 @@
                     </span>
 
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                        <div class="newinntalx actionicons" >
+                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
                                 <button>
                                     <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">

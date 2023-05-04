@@ -18,7 +18,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkDirective } from '../../../shared/directives/cdkdirective';
 import { Secretkey } from './atoms/secretkey';
 import { HtmlEditor } from './atoms/htmleditor';
-
+import { SignatureUpdate } from './atoms/SignatureUpdate';
 @NgModule({
   declarations: [
     DynamicFormsComponent, 
@@ -31,7 +31,8 @@ import { HtmlEditor } from './atoms/htmleditor';
     IPCCheckboxComponent,
     CdkDirective,
     Secretkey,
-    HtmlEditor
+    HtmlEditor,
+    SignatureUpdate
   ],
   imports: [
     CommonModule,

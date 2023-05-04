@@ -9,7 +9,7 @@
                 <span class="title_text">{{_paramsData.dashboardName}} </span>
               </h3>
             </div>
-            <div class="col-md-6 pr-24 row justify-content-end align-items-center">
+            <div class="col-md-6 pr-1 row justify-content-end align-items-center">
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <div class="main-content-body mt-4">  
+          <div class="main-content-body">  
             <!-- <div class="row usermessage">
               <img src="./../../../../assets/images-n/dashboard/warning2.svg"  class="warng-img" alt="" />
               <p class="warning-p" *ngIf="isCreate==0">You are currently editing your dashboard. Changes will be saved after clicking the update button.</p>
@@ -149,13 +149,14 @@
               <div class="col-11 p-0 metric-set">
                 <img [src]="'data:image/png;base64,'+item.metricIcon" alt="" class="dashbrd-img1"/>
                 <div>
-                <h5>{{item.name}}</h5>
-                <p class="metricwidget-tabP">{{item.description}}</p>
-              </div>
+                  <h5>{{item.name}}</h5>
+                  <p class="metricwidget-tabP">{{item.description}}</p> 
+                </div>
+                <!-- <span class="addtooltip">Add Metric</span> -->
               </div>
               <div class="col-1 p-0 text-right">
                 <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="item.metricAdded==true" />
-              </div>   
+              </div>              
             </div>
           </div>
         </div>
@@ -190,21 +191,24 @@
           <div *ngFor="let widget of widgetslist|myFilter:searchText:['name', 'description']; let i=index" >
             <div class="row metricalign"pDraggable="widget" pDroppableDisabled="true"  [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'"(onDragStart)="widgetDragStart(widget)"
             (onDragEnd)="widgetDragEnd()"  (click)="addWidget(widget,i)" >
-              <div class="col-3 pl-0 align-self-start">
-                <div *ngIf="widget.widget_type =='Pie' || widget.widget_type =='Doughnut' || widget.widget_type =='pie' || widget.widget_type =='doughnut'">
-                  <!-- <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart> -->
-                  <img src="../../../../assets/images-n/dashboard/Doughnut-Chart.svg" width="60px;" alt="">
+              <div class="col-md-11 p-0 d-flex widget-set">
+                <div class="col-3 pl-0 align-self-start">
+                  <div *ngIf="widget.widget_type =='Pie' || widget.widget_type =='Doughnut' || widget.widget_type =='pie' || widget.widget_type =='doughnut'">
+                    <!-- <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart> -->
+                    <img src="../../../../assets/images-n/dashboard/Doughnut-Chart.svg" width="60px;" alt="">
+                  </div>
+                  <div *ngIf="widget.widget_type =='Table'|| widget.widget_type =='table'">
+                     <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="">
+                  </div>
+                  <div *ngIf="widget.widget_type =='Bar'|| widget.widget_type =='bar'">
+                    <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
+                  </div>
                 </div>
-                <div *ngIf="widget.widget_type =='Table'|| widget.widget_type =='table'">
-                   <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="">
+                <div class="col-8 p-0">
+                  <h5>{{widget.name}}</h5>
+                  <p class="metricwidget-tabP">{{widget.description}}</p>
                 </div>
-                <div *ngIf="widget.widget_type =='Bar'|| widget.widget_type =='bar'">
-                  <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
-                </div>
-              </div>
-              <div class="col-8 p-0">
-                <h5>{{widget.name}}</h5>
-                <p class="metricwidget-tabP">{{widget.description}}</p>
+                <!-- <span class="addtooltip">Add Widget</span> -->
               </div>
               <div class="col-1 p-0 text-right">
                 <!-- <i class="pi pi-check right" *ngIf="widget.widgetAdded==true"></i> -->

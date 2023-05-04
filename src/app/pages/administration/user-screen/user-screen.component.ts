@@ -61,7 +61,7 @@ export class UserScreenComponent implements OnInit {
       this.columns_list = res_data;
       let obj = {
         ColumnName: "action",
-        DisplayName: "Action",
+        DisplayName: "Actions",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
