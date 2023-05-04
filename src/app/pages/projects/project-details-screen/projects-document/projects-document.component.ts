@@ -187,6 +187,7 @@ export class ProjectsDocumentComponent implements OnInit {
   if(localStorage.getItem("openedFoldrerKey")){
     this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
     this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
+    this.selectedFolder = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files)
   }else{
     this.folder_files = this.files;
   }
@@ -342,13 +343,10 @@ export class ProjectsDocumentComponent implements OnInit {
 
   addSubfolder() {
   if (this.selectedFolder && this.entered_folder_name) {
-    let object = { ...{}, ...this.sampleNode_object };
-    object.label = this.entered_folder_name;
-    let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
-    object.key = this.selectedFolder.key + "-" + objectKey;
+   let finalKey=  this.getTheFileKey();
     this.loader.show();
     let req_body = [{
-      key: this.selectedFolder.key + "-" + objectKey,
+      key: this.selectedFolder.key + "-" +finalKey,
       label: this.entered_folder_name,
       data: "Folder",
       ChildId: "1",
@@ -363,22 +361,19 @@ export class ProjectsDocumentComponent implements OnInit {
       let res_data:any = res
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
-      // obj['expandedIcon'] = "pi pi-folder-open"
-      // obj['collapsedIcon'] = "pi pi-folder";
       obj['icon'] = "folder.svg"
-      obj["children"]= [
-        {
+      obj["children"]= [{
           key: String(obj.key)+"-0" ,
           label: "Add Folder / Document",
           data: "Folder",
           dataType:"folder",
-          // expandedIcon: "pi pi-folder",
-          // collapsedIcon: "pi pi-folder",
           icon: 'folderadd.svg'
         }
       ]
 
       this.selectedFolder.children.push(obj);
+      this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+
       this.entered_folder_name = "";
       this.isDialog1 = false;
     },err=>{
@@ -547,7 +542,6 @@ addParentFolder() {
         localStorage.setItem("breadCrumb",JSON.stringify(this.breadcrumbItems))
       }, 500);
     }
-
     let req_body = {
       key: folder_key,
       label: this.entered_folder_name,
@@ -684,12 +678,11 @@ addParentFolder() {
   }
 
   singleFileUploadFolder(e){
-    let object = { ...{}, ...this.sampleNode_object };
-    object.label = this.entered_folder_name;
+    let filteredkey = this.selectedFolder.children[this.selectedFolder.children.length-1].key.split("-")
+
     // let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
     // object.key = this.selectedFolder.key + "-" + objectKey;
     let objectKey = this.selectedFolder.key
-    // return
     this.loader.show();
     const fileData = new FormData();
     const selectedFile = e.target.files;
@@ -697,33 +690,29 @@ addParentFolder() {
     let fileKeys=[]
     for (let i = 0; i < selectedFile.length; i++) {
       fileData.append("filePath", selectedFile[i]);
-      fileKeys.push(String(objectKey+'-'+(i+1)))
+      let finalKey = Number(filteredkey[filteredkey.length-1])+i+1
+      fileKeys.push(String(objectKey+'-'+ finalKey))
   }
-    // fileData.append("filePath", e.target.files[0]);
     fileData.append("projectId",this.project_id);
     fileData.append("taskId",'')
     fileData.append("ChildId",'1')
-    let obj=object.key
    
     fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
-
     this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
-      this.loader.hide();
       this.createFolderPopUP=false;
       let res_data:any = res
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
-    // let obj = res_data.data[0];
     res_data.data.forEach(item=>{
       let obj = item
       if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-      // obj['icon']=  "pi pi-image"
         obj['icon']=  "img-file.svg"
       }else{
-        // obj["collapsedIcon"]= "pi pi-file"
         obj["icon"]= "document-file.svg"
       }
       this.selectedFolder.children.push(obj);
     })
+    this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+    this.loader.hide();
       this.entered_folder_name = "";
       this.isDialog1 = false;
     })
@@ -736,7 +725,6 @@ addParentFolder() {
     }else{
       req_body=[this.selected_folder_rename]
       delete req_body[0]["parent"]; 
-      console.log(req_body)
     }
     this.confirmationService.confirm({
       message: "Do you really want to delete this? This process cannot be undone.",
@@ -770,8 +758,9 @@ addParentFolder() {
       let folder_key
       if(type=='folderView'){
         if(this.selectedFolder){
-          objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
-          folder_key= this.selectedFolder.key + "-" + String(objectKey)
+          // objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+          let finalKey=  this.getTheFileKey();
+          folder_key= this.selectedFolder.key + "-" + finalKey
         }else{
           folder_key= this.files.length+1;
         }
@@ -782,7 +771,6 @@ addParentFolder() {
         }else{
           folder_key= this.files.length+1;
         }
-        
       }
 
       this.loader.show();
@@ -800,7 +788,6 @@ addParentFolder() {
         const fileData = new FormData();
         let fileKeys = [];
           const filesWithModifiedPath = Array.from(files).map((file:any) => {
-    // Create a new File object with a modified webkitRelativePath property
             return new File([file], file.name, { type: file.type, lastModified: file.lastModified });
         });
         for (let i = 0; i < filesWithModifiedPath.length; i++) {
@@ -827,32 +814,8 @@ addParentFolder() {
         this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       })
     }
-
-    //multiple files upload
-    // console.log(this.selectedFolder)
-    // let objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
-    //   let folder_key= this.selectedFolder.key + "-" + String(objectKey)
-    // const fileData = new FormData();
-    //     let fileKeys = [];
-    //     for (let i = 0; i < files.length; i++) {
-    //         fileData.append("filePath", files[i]);
-    //         fileKeys.push(String(this.selectedFolder.key + "-" + String(objectKey+i)))
-    //     }
-    //     fileData.append("projectId",this.project_id);
-    //     fileData.append("taskId",'')
-    //     fileData.append("ChildId",'1')
-    //     fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
-    //   this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
-    //     this.loader.hide();
-    //     this.getTheListOfFolders();
-    //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
-    //   },err=>{
-    //     this.loader.hide();
-    //     this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
-    //   })
-
-
   }
+
   onDownloadDocument(type){
       let req_body = [];
       let _me = this;
@@ -1134,12 +1097,17 @@ addParentFolder() {
   }
 
   onBreadcrumbItemClick(event: any) {
-    // console.log(event);
     // add your custom logic here
   }
 
   ngOnDestroy(){
     localStorage.removeItem("openedFoldrerKey");
     localStorage.removeItem("breadCrumb");
+  }
+
+  getTheFileKey(){
+    let selected_folder = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
+    let filteredkey = selected_folder[selected_folder.length-1].key.split("-");
+    return Number(filteredkey[filteredkey.length-1])+1;
   }
 }

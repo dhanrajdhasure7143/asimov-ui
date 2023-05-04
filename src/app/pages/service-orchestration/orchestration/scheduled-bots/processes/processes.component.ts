@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
@@ -16,6 +16,18 @@ export class ProcessesComponent implements OnInit {
   environment: any;
   enivornmentname: any;
   search:any;
+  @Input("categoriesList") public categoriesList: any[] = [];
+  columnList=[
+    {field:"processName",DisplayName:"Process Name",ShowFilter: true,filterType:"text"},
+    {field:"category",DisplayName:"Category",ShowFilter: true,filterType :"text"},
+    {field:"environmentName",DisplayName:"Environment",ShowFilter: true,filterType :"text"},
+    {field:"lastRunTS",DisplayName:"Previous Run",ShowFilter: true,filterType :"date"},
+    {field:"nextRunTS",DisplayName:"Next Run",ShowFilter: true,filterType :"date"},
+    {field:"scheduleInterval",DisplayName:"Schedule Interval",ShowFilter: true,filterType :"text"},
+    {field:"status",DisplayName:"Status",ShowFilter: true,filterType :"text"},
+    {field:"timezone",DisplayName:"Time Zone",ShowFilter: true,filterType :"text"},
+  ];
+
   constructor(
       private rest:RestApiService,
       private spinner:LoaderService,
@@ -24,8 +36,6 @@ export class ProcessesComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getEnvironmentlist();
-    
-  //  this.getEnvironmentlist();
     this.spinner.hide();
   }
 
@@ -34,18 +44,14 @@ export class ProcessesComponent implements OnInit {
   }
 
   applyFilter2(filterValue: string) {
-
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.processschedule.filter = filterValue;
-   
     this.tabledata = this.processschedule.filteredData.length <= '0'  ? false: true;
   }
 
   getscheduledata(){
     this.spinner.show();
-    
-
     this.rest.get_processes_scheduled().subscribe(data1=>{
    
     let response:any =[];
