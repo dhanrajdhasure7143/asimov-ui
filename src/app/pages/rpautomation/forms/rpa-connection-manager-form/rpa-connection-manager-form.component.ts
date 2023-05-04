@@ -313,7 +313,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   // }
 
   isJsonData() {
-    let jsonValidate = JSON.stringify(this.connectorForm.get("request").value);
+    let jsonValidate = this.connectorForm.get("request").value;
     try {
       JSON.parse(jsonValidate);
       this.validateJSON = false;
