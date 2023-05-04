@@ -319,11 +319,11 @@
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
-                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response"
                                     placeholder="Response">
                                 </textarea>
-                                <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
-                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span>
+                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isRequest && !isReqDisable">
                                 <label class="label-control"> Request </label> 

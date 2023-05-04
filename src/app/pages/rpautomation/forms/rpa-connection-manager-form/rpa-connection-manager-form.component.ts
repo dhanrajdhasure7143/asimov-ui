@@ -302,15 +302,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  isJsonValid() {
-    let jsonData = this.connectorForm.get("response").value;
-    try {
-      JSON.parse(jsonData);
-      this.validateJSON = false;
-    } catch (e) {
-      this.validateJSON = true;
-    }
-  }
+  // isJsonValid() {
+  //   let jsonData = this.connectorForm.get("response").value;
+  //   try {
+  //     JSON.parse(jsonData);
+  //     this.validateJSON = false;
+  //   } catch (e) {
+  //     this.validateJSON = true;
+  //   }
+  // }
 
   isJsonData() {
     let jsonValidate = JSON.stringify(this.connectorForm.get("request").value);
