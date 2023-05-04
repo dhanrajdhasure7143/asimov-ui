@@ -15,12 +15,10 @@
             <div class="main-content-body">
                 <div class="actionitems-grid">
                     <div class="row credential-search-tools">
-                        <div class="env-data-tool credential-tools">
-                            <div *ngIf="addflag" class="env-btn credential-btntool">
-                                <button class="tsttooltipbtn" [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create" id="addbtn" (click)="addNewAction()" pTooltip="New" tooltipPosition="top">
-                                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
-                                </button>
-                            </div>
+                        <div *ngIf="addflag" class="env-btn credential-btntool">
+                            <button class="tsttooltipbtn" [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create" id="addbtn" (click)="addNewAction()" pTooltip="New" tooltipPosition="top">
+                                <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
+                            </button>
                         </div>
                     </div>
                     <div class="gridparentdiv">

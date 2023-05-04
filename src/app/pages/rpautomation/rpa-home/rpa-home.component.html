@@ -121,18 +121,18 @@
                                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']=='Success'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" pTooltip="Success" tooltipPosition="right"class="testplus1" alt="">
+                                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" pTooltip="Success" tooltipPosition="top" class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Failure'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" pTooltip="Failed" tooltipPosition="right" class="testplus1" alt="">
+                                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" pTooltip="Failed" tooltipPosition="top"  class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']=='New'" class="text-primary">
-                                                <img src="../../../../assets/images/RPA/userobot.png"  pTooltip="New" tooltipPosition="right" class="testplus1" alt="">
+                                                <img src="../../../../assets/images/RPA/userobot.png"  pTooltip="New" tooltipPosition="top" class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Stop' || rowData['botStatus']=='Stopped'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" pTooltip="Stopped" tooltipPosition="right"class="testplus1" alt="">
+                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" pTooltip="Stopped" tooltipPosition="top" class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Pause'||rowData['botStatus']=='Paused'" class="text-primary">
@@ -146,23 +146,23 @@
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                                                 
                                                
-                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="true" class="button-bot">
+                                                <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="true" class="button-bot">
                                                     <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus"> </button>
-                                                <button pTooltip="Delete Bot" tooltipPosition="right" class="button-bot" [disabled]="true">
+                                                <button pTooltip="Delete Bot" tooltipPosition="top" class="button-bot" [disabled]="true">
                                                     <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                                 </button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                                                     
-                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
+                                                <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
                                                         (click)="openEditBotOverlay(rowData)">
                                                     <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus "> 
                                                 </button>                                                
-                                                <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
+                                                <button pTooltip="Delete Bot" tooltipPosition="top" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
                                                     <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus ">
                                                 </button>
 
-                                                <button pTooltip="Export Bot" tooltipPosition="right" (click)="exportBot(rowData['botId'])">
+                                                <button pTooltip="Export Bot" tooltipPosition="top" (click)="exportBot(rowData['botId'])">
                                                     <img src="../../../../assets/images/Projects/Download.svg" alt="" class="testplus"> </button>
                                                 
                                             </div>
@@ -272,18 +272,18 @@
                                                     <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">
                                                 </span>
                                                 <span *ngIf="bot.botStatus=='Success'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" matTooltip="Success" placement="right"class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" matTooltip="Success" placement="top" class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Failure'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" matTooltip="Failed" placement="right" class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" matTooltip="Failed" placement="top" class="testplus1">
                                                 </span>
                                                 <span *ngIf="bot.botStatus=='New'" class="text-primary">
-                                                    <img src="../../../../assets/images/RPA/userobot.png"  matTooltip="New" placement="right" class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/userobot.png"  matTooltip="New" placement="top" class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" matTooltip="Stopped" placement="right"class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" matTooltip="Stopped" placement="top" class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Pause'||bot.botStatus=='Paused'" class="text-primary">
@@ -559,7 +559,7 @@
     <div class="modal-body modelprbody">
         <div class="container p-0" style="width:100%">
             <form [formGroup]="importBotForm" class="row" *ngIf="(importBotJson)" >
-                <div class="form-fields col-md-12">
+                <div class="form-fields col-md-12 p-0">
                     <label>Bot Name</label>
                     <input type="text" (input)="validateBotName()" formControlName="botName" placeholder="Enter Bot Name" class="form-control" >
                     <div *ngIf="(importBotForm.get('botName').hasError('required') && importBotForm.get('botName').touched) && !importBotForm.controls['botName'].hasError('maxlength')" class="errspan required">
@@ -569,14 +569,14 @@
                         Bot Name is already exists*
                     </div>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-fields col-md-12 p-0">
                     <label>Select Category</label>
                     <select class="form-control"  formControlName="categoryId" (change)="filterEnvironments($event.target.value)">                        
                     <option value="">Select Category</option>
                     <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
                   </select>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-fields col-md-12 p-0">
                     <label>Select Environment</label>
                     <select  formControlName="environmentId" class="form-control"  >                        
                       <option value="">Select Environment</option>
@@ -585,7 +585,7 @@
                 </div>
             </form>
             <div class="row" *ngIf="!(importBotJson)" >
-                <div class="form-fields col-md-12">
+                <div class="form-fields col-md-12 p-0">
                     <label>Browse File</label>
                     <input type="file"  pInputText [style]="{'width':'100%'}"    name="file" (change)="upload($event.target.files[0])" id="file"   />
                     <span class="required">{{file_error}}</span>

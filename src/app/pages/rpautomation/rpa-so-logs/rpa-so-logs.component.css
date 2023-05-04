@@ -314,8 +314,15 @@ ul#versions li:hover {
 }
 .caret {
   color: #607088;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 12px !important;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
 }
-
 
 .newmodelcla {
   padding: 15px !important;

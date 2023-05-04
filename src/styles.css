@@ -1880,7 +1880,7 @@ button.btn.btn-primary:first-child {
   right: 45px;
   width: auto;
   top: auto;
-  z-index: 100;
+  z-index: 1;
 }
 as-split-area.as-split-area {
   overflow-y: hidden !important;
@@ -2145,9 +2145,10 @@ th.mat-header-cell {
   width:100% !important;
 }
 
-.logs-table th{
+.logs-table th, .logs-table th div{
   background-color: white !important;
   color: var(--main-bluecolor) !important;
+  font-weight: 600 !important;
 }
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
@@ -2669,7 +2670,7 @@ cursor: pointer;
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
-  margin-top: 1.3rem;
+  margin-top: 18px;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -3559,8 +3560,8 @@ textarea.p-inputtextarea {
 }
 .doctree .p-tree-filter-container {
   position: fixed;
-  top: 75px;
-  right: 75px;
+  top: 70px;
+  right: 70px;
   width: 196px;
 }
 .doctree .p-tree-filter-container .p-tree-filter {
@@ -3578,7 +3579,8 @@ textarea.p-inputtextarea {
   /* border: 1px solid #eee; */
   box-shadow: unset !important;
   border-radius: 3px;
-  margin: 10px;
+  /* margin: 10px; */
+  margin: 10px 15px 5px 0px;
   padding: 10px 15px;
   background: #fff;
   cursor: pointer;
@@ -3722,6 +3724,7 @@ textarea.p-inputtextarea {
 }
 .p-splitter {
   border: 0px solid #dee2e6 !important;
+  background: transparent !important;
   
 }
 .p-splitter .p-splitter-gutter {
@@ -3739,6 +3742,7 @@ textarea.p-inputtextarea {
 } */
 .configtabs .p-tabview {
   height: 100%;
+  background-color: #fff;
   /* padding: 10px 20px; */
 }
 /* New Dashboard Styles End */

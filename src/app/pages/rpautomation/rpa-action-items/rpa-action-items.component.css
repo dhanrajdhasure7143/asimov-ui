@@ -1,7 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 295px;
+  right: 325px;
   z-index: 2;
 }
 
@@ -9,24 +9,12 @@
   background-color: transparent !important;
 }
 
-/* .credential-btntool {
-  padding: 6px;
-  position: relative;
-} */
-
 .credential-tablegrid table td span {
   font-size: 13px !important;
 }
 
-.credential-tools {
-  padding: 0px !important;
-  display: flex;
-}
-
 .credential-btntool {
-  position: relative;
-  padding: 6px;
-  margin: 0 88px 0 0 !important;
+  padding: 7px 6px;
 }
 
 .credential-btntool img {

@@ -505,7 +505,7 @@
                 <div class="splitoverlaycontent usersgrid">
                     <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
                         [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
-                        responsiveLayout="scroll" dataKey="id">
+                        responsiveLayout="scroll" [scrollable]="true" dataKey="id">
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
                                 <p-dropdown [options]="roles_list" class="listdropdown" [(ngModel)]="selectedRole"
