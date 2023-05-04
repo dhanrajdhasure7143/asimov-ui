@@ -849,9 +849,10 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
 
   slideUp(e){
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      var modal = document.getElementById('myModal');
-      modal.style.display="block";
+      // var modal = document.getElementById('myModal');
+      // modal.style.display="block";
       this.uploadedFile = e.addedFiles[0];
+      this.uploadAgainBpmn(e)
     }else{
       this.uploadedFile = null;
       this.loader.hide();
@@ -975,6 +976,25 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       el.classList.remove("slide-right");
       el.classList.add("slide-left");
     }
+  }
+
+  uploadAgainBpmn(e){
+    this.loader.show();
+    let _self = this;
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (ev) => {
+      this.loader.show();
+      let fileString:string = myReader.result.toString();
+      try{
+        this.bpmnModeler.importXML(fileString);
+        this.oldXml = fileString.trim();
+        this.newXml = fileString.trim();
+        this.loader.hide();
+      }catch(err){
+        console.error('could not import BPMN EZFlow notation', err);
+      }
+    }
+    myReader.readAsText(e.addedFiles[0]);
   }
 
 }

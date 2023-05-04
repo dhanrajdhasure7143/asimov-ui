@@ -39,7 +39,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
-  isDisabled: boolean = false;
+  isDisabled: any = {
+    AuthenticatedType:false,
+    methodType:false,
+  };
   actionUpdate: any;
   actionData: any = [];
   action_logo: any;
@@ -62,15 +65,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private spinner: LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
-      this.isDisabled = data.formDisabled;
+      //this.isDisabled = data.formDisabled;
       this.selectedId = data.id;
       this.action_id = data.action_Id;
       this.isCreate = data.create;
       this.icon = data.logo
       if(this.isCreate == false){
-        this.isDisabled = true;
+        this.isDisabled.AuthenticatedType = true;
+        this.isDisabled.methodType=true;
       } else {
-        this.isDisabled = false
+        this.isDisabled.methodType = false;
+        this.isDisabled.AuthenticatedType=false;
       }
       this.selectedConnector = data.connector_name;
       if (data.name) {
@@ -180,9 +185,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "description" : "",
       }
       
-        this.requestJson_body=[]
         let obj={}
-        this.selectedOne.forEach(ele=>{
+        this.headerForm.forEach(ele=>{
+          if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
        
@@ -297,15 +302,15 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
-  isJsonValid() {
-    let jsonData = this.connectorForm.get("scope").value;
-    try {
-      JSON.parse(jsonData);
-      this.validateJSON = false;
-    } catch (e) {
-      this.validateJSON = true;
-    }
-  }
+  // isJsonValid() {
+  //   let jsonData = this.connectorForm.get("response").value;
+  //   try {
+  //     JSON.parse(jsonData);
+  //     this.validateJSON = false;
+  //   } catch (e) {
+  //     this.validateJSON = true;
+  //   }
+  // }
 
   isJsonData() {
     let jsonValidate = JSON.stringify(this.connectorForm.get("request").value);
@@ -334,7 +339,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isHeader = false
       this.isResponse = false;
       this.connectorForm.get('methodType').setValue("POST");
-      this.connectorForm.get('methodType').disable();
+      this.isDisabled.methodType=true;
       const setValidators: string[] = ['authType', 'grantType'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
@@ -344,8 +349,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       });
     }
     else if (event == "APIRequest") {
-      this.connectorForm.get('methodType').setValue("")
-      this.connectorForm.get('methodType').enable();
+      this.connectorForm.get('methodType').setValue("");
+      this.isDisabled.methodType=false;
       this.isRequest = true;
       this.isHeader = true;
       this.isAction = false;
@@ -516,6 +521,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedKey: "",
       encodedValue: "",
     });
+    for(const each of this.headerForm){
+      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
+    }
   }
 
   backToaction() {
@@ -527,9 +539,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   getActionById() {
     this.spinner.show();
     this.rest_api.getActionById(this.action_id).subscribe((res) => {
-      this.actionData = res["data"];      
+      this.actionData = res["data"];
+      this.isDisabled.AuthenticatedType = true;
+      this.isDisabled.methodType=true;     
       if (this.actionData["actionType"] == "APIRequest") {
-        this.isDisabled = true;
         this.isRequest = true;
         this.isHeader = true;
         this.isAction = false;
@@ -543,7 +556,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
 
       if (this.actionData["actionType"] == "Authenticated") {
-        this.isDisabled = true;
+        //this.isDisabled = true;
         this.isAction = true;
         this.isRequest = false;
         this.isHeader = false;
@@ -681,6 +694,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           index: i,
           encodedKey: key,
           encodedValue: headers_data[key],
+          check:true
         })
         ));
         this.selectedOne = this.headerForm;
@@ -781,6 +795,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.requestJson_body.push(this.connectorForm.get("request").value);
         let obj={}
         this.selectedOne.forEach(ele=>{
+          if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
       let object = {
@@ -831,22 +846,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       index: this.paramForm.length,
       paramKey: "",
       paramValue: "",
+      check:false,
     });
   }
 
   paramsDelete(index) {
     this.paramForm.splice(index, 1);
-  }
-
-  paramsCheck(event){
-    let api = this.connectorForm.value.endPoint
-    let queryParams = "?";
-    for(const [key, value] of Object.entries(event.checked)){ 
-      queryParams = queryParams + key + "=" + value + "&"; 
-    }
-    if(this.connectorForm.value.actionType == "APIRequest"){
-       api = api + queryParams
-    }
+    this.onKeyEntered();
   }
 
   getIconbyId(){
@@ -857,12 +863,44 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   onKeyEntered(){
-    let queryParams = "?";
+    let queryParams="?";
     for(const each of this.paramForm){
-        queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&";
+      if(each.check==true) {queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"}
+      if(each.paramKey.length > 0 || each.paramValue.length > 0){
+        each.check = true;
+      } else {
+        each.check = false;
+      }
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
+  }
+
+  get checkEndPoint(){
+    return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
+  }
+
+  onChangeParamCheckBox(index:number, event){
+    this.paramForm[index].check=event.currentTarget.checked;
+    this.onKeyEntered();
+  }
+
+  onHeaders(index){
+      if(this.headerForm[index].encodedKey.length > 0 || this.headerForm[index].encodedValue.length > 0){
+        this.headerForm[index].check = true;
+      } else {
+        this.headerForm[index].check = false;
+      }
+  }
+
+  onChangeCheckbox(event, fruit, index) {
+    if (event.target.checked) {
+      this.selectedOne.push(fruit);
+    } else {
+      if (index >= 0) {
+        this.selectedOne.splice(index, 1);
+      }
+    }
   }
 
 }

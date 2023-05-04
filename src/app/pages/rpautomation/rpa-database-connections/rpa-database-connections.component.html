@@ -45,7 +45,7 @@
 
     </div>
     <div class="col-md-12 con-envr p-0">
-        <div class="credential-tablegrid">
+        <div class="credential-tablegrid gridparentdiv">
             <!-- <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="listofdb">
 
                 <ng-container matColumnDef="check">
@@ -163,7 +163,8 @@
     </div>
 </div>  
 <div *ngIf="hiddenPopUp">
-    <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
-        <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"   (closeOverlay)="closeOverlay($event)"> </app-rpa-database-form>
+    <app-split-overlay (closeOverlay)="closeOverlay($event)">
+        <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"
+        (closeOverlay)="closeOverlay($event)"> </app-rpa-database-form>
     </app-split-overlay>
 </div>

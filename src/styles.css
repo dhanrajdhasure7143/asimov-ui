@@ -797,14 +797,14 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-  /* z-index: 1 !important; */
+   z-index: 2 !important; 
 }
 
 #sidenav.menu-open {
   width: 260px;
   min-height: 100%;
   transition: width 0.05s;
-  /* z-index: 9999 !important; */
+  z-index: 2 !important;
 }
 
 #sidenav.menu-close .side-icon {
@@ -850,6 +850,7 @@ foreignObject {
 #sidenav .mat-drawer-inner-container,
 .mat-drawer-content {
   overflow: hidden !important;
+  position:initial !important
 }
 
 .active .mat-list-item-content .side-menu-font {
@@ -869,7 +870,12 @@ foreignObject {
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
-  padding-bottom: 55px !important;
+  /* padding-bottom: 75px !important; */
+  padding-bottom: 60px;
+  margin-bottom: 5px;
+}
+mat-list-item.mat-list-item.activeMenu {
+  margin-bottom: 0px !important;
 }
 
 .pr-0 {
@@ -2646,6 +2652,16 @@ cursor: pointer;
 .main-content-head button span {
   margin-left: 5px;
 }
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0em solid !important;
+  border-right: 0em solid transparent !important;
+  border-bottom: 0;
+  border-left: 0em solid transparent !important;
+}
 .main-content-body {
   /* height: calc(100% - 50px); */
   /* pagescroll */
@@ -2653,7 +2669,7 @@ cursor: pointer;
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
-  margin-top: 15px;
+  margin-top: 1.3rem;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -2730,7 +2746,7 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 5px 0 !important;
+    border-width: 0 0 4px 0 !important;
     box-shadow: none !important;
     height: 100%;
     justify-content: center;
@@ -2829,6 +2845,12 @@ span.tabscount {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px); /* for action items - connection manager grid */
 }
+.actionitems-grid .p-datatable-wrapper td span {
+  width: 165px;       /* for action items - connection manager grid */
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 240px); /* for Onboard Users grid */
 }
@@ -2837,7 +2859,7 @@ span.tabscount {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: auto;  
+  height: 270px;  
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header{
@@ -2959,8 +2981,37 @@ th.p-element.p-sortable-column.p-resizable-column {
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
 }
+tr.p-element:hover,
+.p-datatable .p-datatable-tbody > tr:hover {
+  border: 1.5px solid var(--secondary-bluecolor);
+  box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
+  border-radius: 8px;
+  outline: none;
+  background: #fff !important;
+}
+tr.botpreviewtr:hover,.p-datatable .p-datatable-tbody > tr.botpreviewtr:hover {
+  border: unset !important;
+  box-shadow: unset !important;
+  border-radius: 8px;
+  outline: none;
+  background: transparent !important;
+}
+tr.p-element:hover > td:first-child, 
+.p-datatable .p-datatable-tbody > tr:hover > td:first-child {
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px; 
+}
+tr.p-element:hover > td:last-child,
+.p-datatable .p-datatable-tbody > tr:hover > td:last-child {
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px; 
+}
+tr.p-element:hover .newinntalx.actionicons {
+  display: block !important;
+}
 
-tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
+/*highlight of row*/
+/* tr.p-element.p-selectable-row.p-highlight {    
   border: 1.5px solid var(--secondary-bluecolor);
   box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
   border-radius: 8px;
@@ -2968,15 +3019,16 @@ tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
 }
 tr.p-element.p-selectable-row.p-highlight > td:first-child {
   border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px; /*highlight of row*/
+  border-top-left-radius: 8px; 
 }
 tr.p-element.p-selectable-row.p-highlight > td:last-child {
   border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px; /*highlight of row*/
+  border-top-right-radius: 8px; 
 }
-tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
+tr.p-element.p-selectable-row.p-highlight > td { 
   background-color: #fff !important;
-}
+} */
+/*highlight of row*/
 
 /* Entire application buttons */
 button.btn {
@@ -3088,7 +3140,9 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   margin:0px !important;
 }
 /* Grid NEW Styles End */
-
+.desctextarea {
+  white-space: pre-line;
+}
 /* primeNg components Styles Start */
 .p-link {
   background-color: transparent !important;
@@ -3307,6 +3361,17 @@ textarea.p-inputtextarea {
   white-space: inherit !important;
 }
 /* headercss end*/
+.p-editor-container .p-editor-content .ql-editor.ql-blank {
+  background: transparent !important;
+  color: #232832 !important;
+  border-radius: 3px;
+  border: 1px solid #979797 !important;
+}
+.p-editor-container .p-editor-content .ql-editor {
+  background: #fff !important;
+  border: 1px solid #098de6 !important;
+  border-radius: 3px !important;
+}
 /* primeNg components Styles End */
 
 /* Overlay Screen Styles Start */
@@ -3348,8 +3413,8 @@ textarea.p-inputtextarea {
 .splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
 .commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
 .configtabs .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link {
-  padding: 0px 15px !important;
-  margin-left: 15px !important;
+  padding: 0px 0px !important;
+  margin-left: 30px !important;
 }
 .splitoverlaydiv .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
 .commentBox .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
@@ -3655,9 +3720,23 @@ textarea.p-inputtextarea {
   background-color: #fff !important;
   box-shadow: none !important;
 }
-.p-splitter .p-splitter-gutter {
-  background: #f5f6f7 !important;
+.p-splitter {
+  border: 0px solid #dee2e6 !important;
+  
 }
+.p-splitter .p-splitter-gutter {
+  background: #EAE9E9 !important;
+}
+.p-splitter .p-splitter-gutter .p-splitter-gutter-handle {
+  /* background: #A2A1A1; */
+  border: dashed;
+  /* border-radius: 50%; */
+  color: #a2a1a1a6;
+}
+/* .p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle {
+  height: 21px !important;
+  width: 100%;
+} */
 .configtabs .p-tabview {
   height: 100%;
   /* padding: 10px 20px; */
@@ -3724,4 +3803,14 @@ textarea.p-inputtextarea {
   background: #091e42ab !important;
 }
 /* ----------------------popup changes------------------------- */
+.metric-set{display:flex;align-items:center;}
+.dashbrd-img{margin-right:8px;}
+.dashbrd-img1{width:50px;margin-right:15px;}
+.overlay-align{    position: absolute;
+  top: 10px;
+  right: 34px;}
+
+.task-create-desc .ql-toolbar.ql-snow{
+    display :none;
+  }
 

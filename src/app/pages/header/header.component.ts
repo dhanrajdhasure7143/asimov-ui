@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
-import { NgxSpinnerService } from "ngx-spinner";
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
@@ -128,13 +127,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //this.error = "Please complete your registration process";
 
     })
-    this.spinner.show();    
     setTimeout(() => {
       this.userDetails();
     }, 3000);
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 900);
 
     this.dataTransfer.logged_userData.subscribe(res=>{
       if(res){
@@ -384,16 +379,10 @@ onChangeTenant(event:any){
     if(url.includes("home?accessToken")){
       window.location.href=window.location.href.split("?accessToken")[0];
     window.location.reload();  
-    }
-    else if(url.includes("subscriptions?index")){
-    window.location.href=window.location.href.split("?index")[0];
-     this.router.navigate(["/pages/home"]);
-     setTimeout(()=> {
+    } else{
+      this.location.replaceState("/pages/home")
+      localStorage.setItem('selectedModule','eiap-home&'+ null);
       window.location.reload();
-     },100)
-    }
-    else{
-       window.location.reload();
     }
   }, 1000)  
   });

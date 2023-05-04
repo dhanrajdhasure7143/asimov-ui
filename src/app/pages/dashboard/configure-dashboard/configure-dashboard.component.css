@@ -1,3 +1,6 @@
+.maincont-contentarea {
+    padding: 15px 6px 10px 30px;
+}
 .usermessage {
 	background: #FBFAFA;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
@@ -7,7 +10,7 @@
 	align-items: center;
 }
 .align-menubtn {
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     align-items: center;
 }
 .btn-secondary {
@@ -22,7 +25,7 @@
 }
 .pr-24{padding-right:24px;}
 .well1-dynmic {	
-	padding: 10px 12px !important;
+	padding: 10px 10px !important;
 	margin-bottom: 24px;
 	background: #FFFFFF;
     border: 1px solid #d0d0d0;    
@@ -71,7 +74,7 @@
     font-size: 16px;
     color: #222222;
 }
-.class1 h5{color:#787373;}
+ .class1 {background-color: #f3faff !important;} 
 .projectnamerow p-inplace.p-element {
     position: relative;
     margin-right: 8px;
@@ -94,7 +97,7 @@ button.btn.bluebg-button {
 }
 .grey-btn {
     background-color: #E0E8ED !important;
-    margin-left: 12px !important; 
+    margin-left: 8px !important; 
     padding: 8px !important;
     height: 36px;   
 }
@@ -157,34 +160,35 @@ background-color: #EAE9E9 !important;
     left: 50%;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-65%, -50%);
 }
 .emptywidget p.drag-sec {
     top: 60%;
     left: 50%;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-55%, -50%);
 }
-.drag-sec {
+ .drag-sec {
     margin-bottom: 0px;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 .metricalign{
-    padding: 15px 5px;
+    padding: 15px 10px;
     border: 0.5px solid #e0e0e030;
-    margin-bottom: 5px !important;
-    border-radius: 3px;
-    box-shadow: 0px 2px 3px 0px #80808026;
+    margin-bottom: 10px !important;
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px 1px #80808024;
     cursor: pointer;
+    background-color: #ffffff;
 }
 .metricalign:hover{
 	background-color: #f3faff !important;
 }
 .search-align {
 	position: absolute;
-    right: 15px;
-    top: 10px;
+    right: 10px;
+    top: 9px;
     width: 18px;
 }
 /* .class1{
@@ -193,14 +197,15 @@ background-color: #EAE9E9 !important;
 .configtabslists {
     height: calc(100vh - 180px);
     overflow: auto;
-    /* padding: 0px 20px; */
     padding: 0px 13px 0px 20px;
 }
 .metricwidget-tabP {
 	margin-bottom: 0 !important;
 	color: #979797;
 }
-
+.configtabslists .metric-set {
+    align-items: start !important;
+}
 .configtabssearch {
     padding: 0px 20px;
 }
@@ -209,19 +214,53 @@ background-color: #EAE9E9 !important;
     position: relative;
     width: 100%;
 }
+.configtabssearch input.form-control {
+    border-color: #9797974a !important;
+    height: 36px !important;
+}
 .configtabssearch select.form-control.data {
     background-color: transparent !important;
-    border-color: #979797 !important;
+    border-color: #9797974a !important;
     border-right: none !important;
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
     cursor: pointer;
+    height: 36px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 20px !important;
 }
 .categselect {
-    width: 75px;
+    width: 90px;
     background-color: #ededed !important;
 }
 .categinput input {
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
+
+/* .configtabslists .metric-set:hover span.addtooltip,
+.configtabslists .widget-set:hover span.addtooltip {
+    display: block;
+    position: absolute;
+    background-color: #001c47;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    left: 40%;
+    top: 25px;
+}
+span.addtooltip {
+    display: none;
+}
+span.addtooltip::before {
+    content: "";
+    background: #001c47;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -4px;
+    right: 12px;
+} */

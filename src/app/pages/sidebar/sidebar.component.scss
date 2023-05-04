@@ -74,7 +74,7 @@
 }
 
 ::ng-deep mat-nav-list a:active {
-  background-color: #00a0e3 !important;
+  background-color: #098de6 !important;
   color: white !important;
 }
 
@@ -200,7 +200,7 @@ label.epsoft-label sup {
 }
 
 .mat-list-item:hover {
-  background: #00a0e3 !important;
+  background: #098de6 !important;
 }
 
 .mat-list-item:hover span.side-icon .default-img {
@@ -223,7 +223,8 @@ label.epsoft-label sup {
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
   display: block;
-  height: 50px;
+  // height: 60px;
+  margin-bottom: 10px;
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   padding: 0;
@@ -232,17 +233,18 @@ label.epsoft-label sup {
 }
 
 .submenus.expanded .mat-list-item.active {
-  border-left: 3px solid #00a0e3 !important;
+  border-left: 3px solid #098de6 !important;
   background: transparent !important;
-  color: #00a0e3;
+  color: #098de6;
 }
 
 .submenus.expanded .mat-list-item.active span.side-menu-font {
-  color: #00a0e3 !important;
+  color: #098de6 !important;
 }
 
 .submenus.expanded .mat-list-item {
   border-left: 3px solid #00a0e31c;
+  margin: 0px;
 }
 
 .submenus.expanded .mat-list-item span.side-icon {
@@ -256,7 +258,7 @@ label.epsoft-label sup {
 
 mat-list-item.mat-list-item.activeMenu .side-menu-font,
 mat-list-item.mat-list-item.activeMenu {
-  color: #00a0e3;
+  color: #098de6;
   font-weight: 600;
   background-color: #00a0e309;
 }

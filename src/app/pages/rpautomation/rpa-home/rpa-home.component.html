@@ -25,14 +25,14 @@
                         </div>
                     </div>
                 </div>
-                <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" />
+                <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" alt=""/>
                 <div class="rpa-home" style="display:none">
                     <div class="rpa-home-block" id="createbot-Home" style="border-radius: 3px;" *ngIf="this.isButtonVisible || enablecreatebot">
-                        <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;">
+                        <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;" alt="">
                         <button class="btn bluebg-button rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                     </div>
                     <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 3px;" *ngIf="this.isButtonVisible || enableConfiguration">
-                        <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;">
+                        <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;" alt="">
                         <button class="btn reset-btn rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                         {{col.header}}
                                         <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
                                         <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" field="categoryName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                                        [showAddButton]="false" display="menu">
+                                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                                 <p-dropdown [ngModel]="value" [options]="categories_list_new" (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
                                             </ng-template>
@@ -118,25 +118,25 @@
                                         <span *ngIf="col.field == 'last_modified_date'">{{rowData[col.field]| date:'MMM d, y H:mm'}}</span>
                                         <span *ngIf="col.header == 'Status'">
                                             <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
-                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">
+                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']=='Success'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" pTooltip="Success" tooltipPosition="right"class="testplus1">
+                                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" pTooltip="Success" tooltipPosition="right"class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Failure'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" pTooltip="Failed" tooltipPosition="right" class="testplus1">
+                                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" pTooltip="Failed" tooltipPosition="right" class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']=='New'" class="text-primary">
-                                                <img src="../../../../assets/images/RPA/userobot.png"  pTooltip="New" tooltipPosition="right" class="testplus1">
+                                                <img src="../../../../assets/images/RPA/userobot.png"  pTooltip="New" tooltipPosition="right" class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Stop' || rowData['botStatus']=='Stopped'">
-                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" pTooltip="Stopped" tooltipPosition="right"class="testplus1">
+                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" pTooltip="Stopped" tooltipPosition="right"class="testplus1" alt="">
                                             </span>
 
                                             <span *ngIf="rowData['botStatus']=='Pause'||rowData['botStatus']=='Paused'" class="text-primary">
-                                                <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus1">
+                                                <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']==null">-</span>
                                         </span>
@@ -146,10 +146,10 @@
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                                                 
                                                
-                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="true" (click)="openEditBotOverlay(rowData)" class="button-bot">
-                                                    <img src="../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus"> </button>
-                                                <button pTooltip="Delete Bot" tooltipPosition="right" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)" class="button-bot">
-                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus">
+                                                <button pTooltip="Edit Bot" tooltipPosition="right" [disabled]="true" class="button-bot">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus"> </button>
+                                                <button pTooltip="Delete Bot" tooltipPosition="right" class="button-bot" [disabled]="true">
+                                                    <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                                 </button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">

@@ -76,8 +76,9 @@
   }
   .header-seperator {
     color: #ddd !important;
-    margin: 0px 10px 0px 0px;
+    margin: 0px 16px 0px 0px;
     font-size: 24px;
+    opacity: 50%;
   }
 
   .header-logdiv {
@@ -349,5 +350,18 @@ button.p-element.p-button.p-component.p-button-icon-only {
   margin-left: 10px;
   box-shadow: none;
   outline:none;
+}
+
+span.envname {
+  color: #fff;
+  font-size: 15px;
+  line-height: 16px;
+  margin-top: 5px;
+  font-weight: 600;
+}
+span.envsep {
+  color: #fff;
+  margin: 0px 10px 0px 6px;
+  font-size: 16px;
 }
 /* header new css */

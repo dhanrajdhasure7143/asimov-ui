@@ -45,7 +45,7 @@
                                             <span class="">{{projectDetails.projectName}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <input type="text" [style]="{'width':'100%'}" pInputText
+                                            <input type="text" [style]="{'width':'100%'}" pInputText maxlength="50"
                                                 [(ngModel)]="projectName" (keydown)="Space($event)" />
                                             <span class="editfields">
                                                 <i class="pi pi-check" *ngIf="projectName"
@@ -120,7 +120,7 @@
                                                 </span>
                                             </ng-template>
                                         </p-inplace>
-                                        <label>Departments</label>
+                                        <label>Department</label>
                                     </div>
                                     <div class="pinf prjstatus">
                                         <p-inplace #inplace4 (onActivate)="inplaceActivate('status','inplace4')">
@@ -170,7 +170,7 @@
                             <span class="readmore icon-color" (click)="onReadMoreHide()"
                             *ngIf="project_desc.length > 150">Read more</span>
                         </p> -->
-                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()" class='proj-desc'>{{project_desc}}</span>
+                    <p *ngIf="!isEditDesc"><span (click)="onClickToEditDesc()" class='proj-desc desctextarea'>{{project_desc}}</span>
                         <!-- <p *ngIf="isReadmoreShow && !isEditDesc"><span (click)="onClickToEditDesc()" [innerHTML]="project_desc"></span> <span class="readmore icon-color"
                             (click)="onReadMoreHide()">Hide</span></p> -->
                         <!-- <p>{{projectDetails.projectPurpose}}</p> -->
@@ -369,7 +369,10 @@
                                     <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" pTooltip="Unpin" tooltipPosition="top"
                                         class="testplus" (click)="sendMessage(null,'unpinned')">
                                     <span class="pinnedmsgtext"
-                                        (click)="scrollTomain(_pinnedMessage[0],'pin_message')">{{truncatemessage(_pinnedMessage[0].message)}}</span>
+                                        (click)="scrollTomain(_pinnedMessage[0],'pin_message')">
+                                        <!-- <p [innerHTML]="(pinnedMessage[0].message) | sanitizeHtml : users_list" class="usermessage"></p> -->
+                                        
+                                        {{truncatemessage(_pinnedMessage[0].message)}}</span>
                                 </div>
                             </span>
                             <div id="message-body" class="selectable" *ngIf="messages_list.length != 0">

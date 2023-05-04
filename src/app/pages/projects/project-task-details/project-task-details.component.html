@@ -272,8 +272,10 @@
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
-                                        [(ngModel)]="add_comment" [autoResize]="true" maxlength="100" placeholder="Type comment here"></textarea>
-                                    <button [disabled]="add_comment == undefined" type="button" class="btn bluebg-button" (click)='postcomments()'>Add</button>
+                                        [(ngModel)]="add_comment" [autoResize]="true" maxlength="251" placeholder="Type comment here"></textarea>
+                                        <div *ngIf="add_comment?.length == 251" class='required' > Maximum of 250 characters</div>
+
+                                    <button [disabled]="add_comment?.length == 0 || add_comment.length == 251" type="button" class="btn bluebg-button" (click)='postcomments()'>Add</button>
                                 </div>
                             </p-tabPanel>
                             <p-tabPanel header="Audit">

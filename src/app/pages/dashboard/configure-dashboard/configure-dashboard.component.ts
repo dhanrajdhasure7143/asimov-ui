@@ -43,7 +43,7 @@ export class ConfigureDashboardComponent implements OnInit {
   searchText_metrics:any;
   searchText:any;
   chartColors:any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169", "#085081","#095F9A","#0A6EB2","#0A7DCB"];
-  charthoverColors:any[]=["#098de6","#9c81e9","#eb6dcb","#ff7d56","#ffa600","#b77322","#66aa00","#b82e2e","#316395","#dc3912","#329262", "#3B3EAC","#16D620","#AAAA11","#2D6677"]
+  execution_Status:any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26"];
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router,
@@ -127,6 +127,22 @@ export class ConfigureDashboardComponent implements OnInit {
       // this.dynamicDashBoard.metrics.push(this.metrics_list[index]);
       if (this.defaultEmpty_metrics.find(item => item.metricAdded == false) != undefined)
         this.defaultEmpty_metrics.find(item => item.metricAdded == false).metricAdded = true
+    }else{
+      let itemId=metric.childId? metric.childId: metric.id
+      let findIndex:number
+      this.addedMetrics.forEach((item,i)=> {
+       if(item.childId)
+       if(item.childId== itemId)findIndex = i
+       else{
+         if(item.id== itemId)findIndex = i
+       }
+      })
+   this.addedMetrics.splice(findIndex, 1);
+
+      // this.addedMetrics.splice(this.addedMetrics.findIndex(item=> item.id == itemId), 1);
+      this.metrics_list.find(item => item.id == itemId).metricAdded = false;
+      if (this.defaultEmpty_metrics.find((item) => item.metricAdded == true))
+      this.defaultEmpty_metrics.find((item) => item.metricAdded == true).metricAdded = false;
     }
   }
 
@@ -165,6 +181,18 @@ export class ConfigureDashboardComponent implements OnInit {
         widget.chartOptions.plugins.legend["display"]=true;
         this.addedWidgets.push(widget);
       }
+    }else{
+      let itemId=widget.childId? widget.childId: widget.id
+         let findIndex:number
+         this.addedWidgets.forEach((item,i)=> {
+          if(item.childId)
+          if(item.childId== itemId)findIndex = i
+          else{
+            if(item.id== itemId)findIndex = i
+          }
+         })
+      this.addedWidgets.splice(findIndex, 1);
+      this.widgetslist.find(item => item.id == itemId).widgetAdded = false;
     }
   }
 
@@ -200,11 +228,11 @@ export class ConfigureDashboardComponent implements OnInit {
       this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: this._paramsData })
     });
   }
-  getListOfMetrics() {
-    this.rest_api.getMetricsList().subscribe((data: any) => {
+  getListOfMetrics(): void {
+    this.rest_api.getMetricsList().subscribe((data: any): void => {
       this.metrics_list = data.data;
       this.metrics_list = this.metrics_list.map((item: any, index: number) => {
-        item["metricAdded"] = false
+        item["metricAdded"] = false;
         return item
       })
     })
@@ -216,10 +244,37 @@ export class ConfigureDashboardComponent implements OnInit {
       this.widgetslist = this.widgetslist.map((item: any, index: number) => {
         item["widgetAdded"] = false
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
-        item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+        if(item.id == 1){
+          item.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
+        }else{
+          item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+        }
         // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
         if(item.widget_type != "Bar"){
               item["chartOptions"] = this.chartOptions
+              item["chartOptions"].plugins.legend["labels"] ={
+                generateLabels: function(chart) {
+                  var data = chart.data;
+                  const datasets = chart.data.datasets;
+                  if (data.labels.length && data.datasets.length) {
+                    return data.labels.map(function (label, i) {
+                      var ds = data.datasets[0];
+                      return {
+                        text: label + ": " + ds.data[i],
+                        fillStyle: datasets[0].backgroundColor[i],
+                        strokeStyle: "white",
+                        lineWidth: 8,
+                        borderColor: "white",
+                        borderRadius: 5,
+                        usePointStyle: true,
+                        index: i,
+                      };
+                    });
+                  }
+                  return [];
+                }
+      
+               }
         }else{
             item["chartOptions"] = {
               "plugins": {
@@ -277,8 +332,40 @@ export class ConfigureDashboardComponent implements OnInit {
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
         if(item["widget_type"] != "Table" && item["widget_type"] != "table"){
-          item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
-          // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
+          if(item.childId == 1){
+            item.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
+          }else{
+            item.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+          }
+          if(item["widget_type"] != "Bar"){
+            item["chartOptions"].plugins.legend["labels"] ={
+              generateLabels: function(chart) {
+                var data = chart.data;
+                const datasets = chart.data.datasets;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var ds = data.datasets[0];
+                    let value;
+                  if(item.childId == 2){
+                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  }else value = ds.data[i];
+                  return {
+                    text: label + ": " + value,
+                      fillStyle: datasets[0].backgroundColor[i],
+                      strokeStyle: "white",
+                      lineWidth: 8,
+                      borderColor: "white",
+                      borderRadius: 5,
+                      usePointStyle: true,
+                      index: i,
+                    };
+                  });
+                }
+                return [];
+              }
+    
+             }
+            }
         }
         if(item.childId == 2){
           item.chartOptions.plugins["tooltip"] = {
