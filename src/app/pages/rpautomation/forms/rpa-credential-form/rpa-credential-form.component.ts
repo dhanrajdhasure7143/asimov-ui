@@ -36,6 +36,7 @@ export class RpaCredentialFormComponent implements OnInit {
         password: ["", Validators.compose([Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        authType:[""],
         clientSecret:[""],
         clientId:[""],
         officeTenant:[""],
@@ -70,15 +71,24 @@ export class RpaCredentialFormComponent implements OnInit {
         this.credentialForm.get("serverName").setValue(this.credupdatedata["serverName"]);
         if(this.credentialForm.get("serverName").value=="Office365")
         {        
-          this.credentialForm.get("password").setValidators([]);
-          this.credentialForm.get("password").updateValueAndValidity();
+          if(this.credupdatedata["password"]!="" && this.credupdatedata["password"] != null)
+          {
+            this.credentialForm.get("authType").setValue("password");
+            this.onChangeAuthType("password");
+
+          }
+          else
+          {
+            this.credentialForm.get("authType").setValue("secretKey");
+            this.onChangeAuthType("secretKey");
+          }
         }
       },100);
       this.credentialForm.get("host").setValue(this.credupdatedata["host"]);
       this.credentialForm.get("port").setValue(this.credupdatedata["port"]);
-      this.credentialForm.get("clientId").setValue("");
-      this.credentialForm.get("clientSecret").setValue("");
-      this.credentialForm.get("officeTenant").setValue("");
+      this.credentialForm.get("clientId").setValue(this.credupdatedata["clientId"]);
+      this.credentialForm.get("clientSecret").setValue(this.credupdatedata["clientSecret"]);
+      this.credentialForm.get("officeTenant").setValue(this.credupdatedata["officeTenant"]);
       this.credentialForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
       this.credentialForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
       this.credentialForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
@@ -88,6 +98,7 @@ export class RpaCredentialFormComponent implements OnInit {
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([ Validators.maxLength(50)])],
         clientSecret:[""],
+        authType:[""],
         clientId:[""],
         officeTenant:[""],
         host:[""],
@@ -122,9 +133,22 @@ export class RpaCredentialFormComponent implements OnInit {
         Credentials["categoryId"]=parseInt(Credentials["categoryId"]);
         if(Credentials["serverName"]!='Office365')
         {
-          Credentials["clientId"]="";
-          Credentials["secretKey"]="";
-          Credentials["officeTenant"]="";
+            Credentials["clientId"]="";
+            Credentials["clientSecret"]="";
+            Credentials["officeTenant"]="";
+        }
+        if(Credentials["serverName"]=="Office365")
+        {
+          if(Credentials["authType"]=="password")
+          {
+            Credentials["clientId"]="";
+            Credentials["clientSecret"]="";
+            Credentials["officeTenant"]="";
+          }
+          else
+          {
+            Credentials["password"]="";
+          }
         }
         if(Credentials["serverName"]!="Others")
         {
@@ -173,6 +197,7 @@ resetCredForm(){
           credupdatFormValue["secretKey"]="";
           credupdatFormValue["officeTenant"]="";
         }
+       
         if(credupdatFormValue["serverName"]!="Others")
         {
           credupdatFormValue["host"]="";
@@ -184,6 +209,20 @@ resetCredForm(){
         credupdatFormValue["clientSecret"]=this.credupdatedata["clientSecret"];
       if(credupdatFormValue["officeTenant"] =="")
         credupdatFormValue["officeTenant"]=this.credupdatedata["officeTenant"];
+
+        if(credupdatFormValue["serverName"]=="Office365")
+        {
+          if(credupdatFormValue["authType"]=="password")
+          {
+            credupdatFormValue["clientId"]="";
+            credupdatFormValue["clientSecret"]="";
+            credupdatFormValue["officeTenant"]="";
+          }
+          else
+          {
+            credupdatFormValue["password"]="";
+          }
+        }
       this.api.update_Credentials(credupdatFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();
@@ -245,6 +284,54 @@ resetCredForm(){
       }
    
     },100)
+  }
+
+
+  onChangeAuthType(selectedAuthType:String)
+  {
+    if(this.selectedMailServer=='Office365')
+    {
+      if(selectedAuthType=="password")
+      {
+        this.credentialForm.get("password").setValidators([Validators.required]);
+        this.credentialForm.get("password").updateValueAndValidity();
+                
+        this.credentialForm.get("clientId").clearValidators();
+        this.credentialForm.get("clientId").updateValueAndValidity();
+
+        this.credentialForm.get("clientSecret").clearValidators();
+        this.credentialForm.get("clientSecret").updateValueAndValidity();
+
+        this.credentialForm.get("officeTenant").clearValidators();
+        this.credentialForm.get("officeTenant").updateValueAndValidity();
+      }
+      else
+      {
+        this.credentialForm.get("password").clearValidators();
+        this.credentialForm.get("password").updateValueAndValidity();
+
+        this.credentialForm.get("clientId").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("clientId").updateValueAndValidity();
+
+        this.credentialForm.get("clientSecret").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("clientSecret").updateValueAndValidity();
+
+        this.credentialForm.get("officeTenant").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("officeTenant").updateValueAndValidity();
+      }
+    }
+  }
+
+  disableMaskedField(field)
+  {
+    this.maskedFields[field]=false;
+    this.credentialForm.get(field).setValue("");
+  }
+
+
+  get selectedAuthType()
+  {
+    return this.credentialForm.get("authType").value;
   }
 
   get selectedMailServer()
