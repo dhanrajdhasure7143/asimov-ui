@@ -80,7 +80,7 @@ export class RpaConnectionManagerComponent implements OnInit {
           ShowFilter: false,
           filterWidget: "normal",
           filterType: "text",
-          sort: false,
+          sort: true,
           multi: false,
         },
         {
