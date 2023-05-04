@@ -3464,8 +3464,9 @@ textarea.p-inputtextarea {
   justify-content: center;
 }
 .create-header {
-  padding: 10px 0px 15px !important;
+  /* padding: 10px 0px 15px !important; */
   border-bottom: 1px solid #e5e5e5;
+  padding: 15px 20px;
 }
 .create-header h3 {
   font-size: 16px;
@@ -3475,6 +3476,7 @@ textarea.p-inputtextarea {
   height: calc(100% - 115px);
   overflow: auto;
   margin: 15px 0px 5px;
+  padding: 15px 20px 0px;
 }
 .createform-overlay label {
   font-size: 14px;
