@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-6 form-group pr-0">
                                     <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
-                                    <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo?</label>
+                                    <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo</label>
                                     <!-- <div class="row">
                                         <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
                                             formControlName="">
@@ -91,8 +91,7 @@
                             <div class="col-md-12 form-group p-0">
                                 <label class="label-control"> API/URL <span class="star">*</span> </label>
                                 <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
-                                type="url" name="url" id="url" placeholder="Enter API/URL"
-                                pattern="^(?:[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?|\[@[a-zA-Z\s]+\|[a-zA-Z]+\|[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?@\])$">
+                                type="url" name="url" id="url" placeholder="Enter API/URL">
                                 </textarea>
                                 <span
                                     *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
@@ -137,6 +136,9 @@
                                         *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
                                         class="required"> Code Required*
                                     </span>
+                                    <span *ngIf="connectorForm.get('code').hasError('pattern')" class="required">
+                                        Code or Dynamic Pattern Is Incorrect.
+                                    </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Redirect URL
@@ -147,6 +149,9 @@
                                     <span
                                         *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
                                         class="required"> Redirect URL Required*
+                                    </span>
+                                    <span *ngIf="connectorForm.get('redirect_uri').hasError('pattern')" class="required">
+                                        Redirct URL or Dynamic Pattern Is Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -161,6 +166,9 @@
                                         *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
                                         class="required"> Username Required*
                                     </span>
+                                    <span *ngIf="connectorForm.get('userName').hasError('pattern')" class="required">
+                                        Username or Dynamic Pattern Is Incorrect.
+                                    </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Password
@@ -171,6 +179,9 @@
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
                                         class="required"> Password Required*
+                                    </span>
+                                    <span *ngIf="connectorForm.get('password').hasError('pattern')" class="required">
+                                        Password or Dynamic Pattern Is Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -185,7 +196,9 @@
                                         *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
                                         class="required"> Client ID Required*
                                     </span>
-
+                                    <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
+                                        Client Id or Dynamic Pattern Is Incorrect.
+                                    </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Client Secret
@@ -196,6 +209,9 @@
                                     <span
                                         *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
                                         class="required"> Client Secret Required*
+                                    </span>
+                                    <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
+                                        Client Secret or Dynamic Pattern Is Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -208,6 +224,9 @@
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
                                         class="required"> Code Verifier Required*
+                                    </span>
+                                    <span *ngIf="connectorForm.get('verifier').hasError('pattern')" class="required">
+                                        Code Verifier or Dynamic Pattern Is Incorrect.
                                     </span>
                             </div>
                             <div class="row">
@@ -228,7 +247,9 @@
                                         *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"
                                         class="required"> Refresh Token Required*
                                     </span>
-
+                                    <span *ngIf="connectorForm.get('refreshToken').hasError('pattern')" class="required">
+                                        Refresh Token or Dynamic Pattern Is Incorrect.
+                                    </span>
                                 </div>
                             </div>                        
                             <div class="col-md-12 form-group p-0" *ngIf="isHeader">
@@ -319,9 +340,11 @@
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
-                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response" (keyup)="isJsonValid()"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response"
                                     placeholder="Response">
                                 </textarea>
+                                <!-- <span *ngIf="validateJSON && connectorForm.get('response').value" class="text-danger"> Invalid JSON Format </span>
+                                <span *ngIf="!validateJSON && connectorForm.get('response').value" class="text-success"> Valid JSON Format </span> -->
                             </div>
                             <div class="col-md-12 form-group p-0" *ngIf="isRequest && !isReqDisable">
                                 <label class="label-control"> Request </label> 
