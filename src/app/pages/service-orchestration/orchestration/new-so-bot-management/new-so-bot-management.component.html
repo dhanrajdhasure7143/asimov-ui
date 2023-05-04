@@ -153,7 +153,7 @@
               </table> -->
 
 
-              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','sourceType','botStatus','version']" [scrollable]="true"
+              <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','sourceType','botStatus','version_new']" [scrollable]="true"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
                 <div class="d-flex">
@@ -195,8 +195,8 @@
                       <p-sortIcon field="department"></p-sortIcon>
                     </th>
                     <th pSortableColumn="version" pReorderableColumn pResizableColumn>Version
-                      <p-columnFilter type="text" field="version" display="menu"></p-columnFilter>
-                      <p-sortIcon field="version"></p-sortIcon>
+                      <p-columnFilter type="text" field="version_new" display="menu"></p-columnFilter>
+                      <p-sortIcon field="version_new"></p-sortIcon>
                     </th>
                     <th pSortableColumn="botStatus" pReorderableColumn pResizableColumn>Status
                       <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
@@ -224,7 +224,7 @@
                       <button *ngIf="element.sourceType!='EPSoft' || element.department ==null " class="text-center">-</button>
                     </td>
                     <td>
-                      <button *ngIf="element.version!=null">{{element.version}}
+                      <button *ngIf="element.version!=null">{{element.version_new}}
                       </button>
                       <span *ngIf="element.version==null">-</span>
                     </td>
