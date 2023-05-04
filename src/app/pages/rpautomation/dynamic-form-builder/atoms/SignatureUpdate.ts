@@ -56,8 +56,6 @@ export class SignatureUpdate implements OnInit {
     return CKEDITOR.instances["template-editor"].getData();
   }
 
-
-
   onFileUpload(event:any)
   {
     let file=(event.target.files[0]);
