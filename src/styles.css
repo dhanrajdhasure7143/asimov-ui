@@ -3103,7 +3103,7 @@ button.p-element.button-bot{
 
 /* Swal buttons */
 .swal2-styled.swal2-cancel {
-  /* background-color: transparent !important;  */
+  background-color: transparent !important; 
 }
 .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
   background-image: linear-gradient(rgb(0 0 0 / 0%),rgb(0 0 0 / 0%)) !important;
