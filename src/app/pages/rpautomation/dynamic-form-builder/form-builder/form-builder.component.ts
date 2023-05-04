@@ -55,6 +55,9 @@ template:`
       <div *ngIf ="field.visibility">
       <html-editor [feilddisable]="isdisabled" *ngSwitchCase="'htmleditor'" [field]="field" [form]="form"></html-editor>
     </div>
+    <div *ngIf ="field.visibility">
+    <template-editor [feilddisable]="isdisabled" *ngSwitchCase="'template-editor'" [field]="field" [form]="form"></template-editor>
+  </div>
       
       <div *ngIf ="field.visibility">
       <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
