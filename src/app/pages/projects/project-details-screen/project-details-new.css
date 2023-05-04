@@ -561,3 +561,7 @@ button span {
     /* left: 0px; */
     cursor: pointer;
   }
+
+.splitoverlaydiv {
+    padding: 15px 20px 0px;
+}

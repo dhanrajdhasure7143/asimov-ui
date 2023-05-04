@@ -187,6 +187,9 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+button:disabled img {
+  cursor: not-allowed;
+}
 
 .flex-col button:hover img.testplus.default-img{
   display: none;
