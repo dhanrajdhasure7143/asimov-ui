@@ -167,8 +167,8 @@
                     <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                   </select>
                   <button (click)="reset()" id="bmreset" class="env-data-tool tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
-                    <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
-                  </button >
+                    <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1" alt="">
+                  </button>
                   <span class="p-input-icon-right gridsearch">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
@@ -178,41 +178,31 @@
             </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="botName" pReorderableColumn pResizableColumn>Bot Name
-                      <p-columnFilter type="text" field="botName" display="menu"></p-columnFilter>
-                      <p-sortIcon field="botName"></p-sortIcon>
+                    <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                      <p-columnFilter *ngIf="each.ShowFilter && each.field != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
+                                display="menu" [showApplyButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="search">
+                            </ng-template>
+                      </p-columnFilter>
+
+                      <p-columnFilter  *ngIf="each.ShowFilter && each.field == 'department'" [field]="each.field" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
+                                  optionLabel="categoryName" optionValue="categoryName" placeholder="All">
+                              </p-dropdown>
+                          </ng-template>
+                      </p-columnFilter>
+                      <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="description" pReorderableColumn pResizableColumn>Description
-                      <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
-                      <p-sortIcon field="description"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="sourceType" pReorderableColumn pResizableColumn>Source
-                      <p-columnFilter type="text" field="sourceType" display="menu"></p-columnFilter>
-                      <p-sortIcon field="sourceType"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="department" pReorderableColumn pResizableColumn>Category
-                      <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
-                      <p-sortIcon field="department"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="version" pReorderableColumn pResizableColumn>Version
-                      <p-columnFilter type="text" field="version_new" display="menu"></p-columnFilter>
-                      <p-sortIcon field="version_new"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="botStatus" pReorderableColumn pResizableColumn>Status
-                      <p-columnFilter type="text" field="botStatus" display="menu"></p-columnFilter>
-                      <p-sortIcon field="botStatus"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
-                    <th pSortableColumn="Schedule" pReorderableColumn pResizableColumn>Schedule</th>
-                    <th pSortableColumn="Logs" pReorderableColumn pResizableColumn>Logs</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-element>
                   <tr>
                     <td> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span
-                          *ngIf="element.botName!=null" [pTooltip]="element.botName" tooltipPosition="top">{{(element.botName.length > 8) ?
-                          ((element.botName).slice(0, 8) + '...') : element.botName}}</span>
-                        <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
+                          *ngIf="element.botName!=null" [pTooltip]="element.botName" tooltipPosition="top">{{element.botName}}</span>
+                        <span *ngIf="element.botName==null || element.botName==''">-</span></button> </td>
                     <td>
                       <span *ngIf="element.description!=null" [pTooltip]="element.description" tooltipPosition="top">{{(element.description.length > 10) ?
                         ((element.description).slice(0, 10) + '...') : element.description}}</span>
@@ -233,30 +223,30 @@
                         <span [id]="element.botId+'__status'">
                           <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span>
-                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                             </span>
                           </span>
               
                           <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'" [pTooltip]="element.botStatus" tooltipPosition="top">
-                            <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                            <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt=" ">
                           </span>
               
                           <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'" [pTooltip]="element.botStatus" tooltipPosition="top"
                             class="text-danger">
-                            <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                            <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                           </span>
                           <span *ngIf="element.botStatus=='New'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
-                            <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
+                            <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus" alt=""></span>
                           </span>
                           <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'">
                             <span [pTooltip]="element.botStatus" tooltipPosition="top">
-                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
+                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus" alt="">
                             </span>
                           </span>
               
                           <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'">
                             <span class="text-primary" [pTooltip]="element.botStatus" tooltipPosition="top">
-                              <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                              <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
                             </span>
                           </span>
                           <span *ngIf="element.botStatus==null">---</span>
@@ -265,20 +255,20 @@
                     </td>
                     <td>
                       <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus">
+                        <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus" alt="">
                       </span>
                       <span (click)="stopBot(element.botId)" pTooltip="Stop Bot" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus">
+                        <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus" alt="">
                       </span>
                       <span>
                         <button (click)="SelectSLACon(element)" pTooltip="SLA Configuration" tooltipPosition="top">
-                          <img src="../../../../../assets/images/SO/configuration.svg" class="testplus">
+                          <img src="../../../../../assets/images/SO/configuration.svg" class="testplus" alt="">
                         </button>
                       </span>
                     </td>
                     <td>
                       <span (click)="openscheduler(element)" pTooltip="Scheduler" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus">
+                        <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus" alt="">
                       </span>
                     </td>
                     <td>
@@ -336,7 +326,7 @@
           Refresh
         </span>
           <span class="pull-right" (click)="logs_modal.hide()"style="cursor: pointer;">    
-          <img src="../../../../../assets/images/Projects/circle-close.svg">
+          <img src="../../../../../assets/images/Projects/circle-close.svg" alt="">
         </span>
 
       </div>
@@ -373,21 +363,21 @@
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.State!=null">
                       <span class="text-success" *ngIf="element.State=='Successful'">
-                        <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" >{{element.State}}
+                        <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">{{element.State}}
                       </span>
                           <span class="text-danger" *ngIf="element.State=='Stopped'">
                         
-                          <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">{{element.State}}
+                          <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus" alt="">{{element.State}}
                       </span>
                           <span class="text-warning" *ngIf="element.State=='Pending'">
                         <i class="fa fa-clock"></i>{{element.State}}
                       </span>
                       <span class="text-primary" *ngIf="element.State=='Running'">
-                          <img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus">{{element.State}}
+                          <img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus" alt="">{{element.State}}
                         </span>
 
                           <span class="text-danger" *ngIf="element.State=='Faulted'">
-                        <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" >{{element.State}}
+                        <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">{{element.State}}
                       </span>
 
                           </span>
@@ -420,13 +410,13 @@
   <div id="divblueprismlogs" class="rpa-modal">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="viewblueprismlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
+              <span class="rpa-modal-close" (click)="viewblueprismlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1" alt=""></span>
               <h4>BluePrism Logs</h4>
           </div>
           <div class="modal-body">
               <div class="container m-contanier form-body">
                   <button (click)="getBluePrismlogs(blueprismbotname)" pTooltip="Refresh" tooltipPosition="top" style='float:right;'>
-              <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
+              <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="">
             </button>
                   <div class="">
                       <table mat-table  (matSortChange)="sortLogs('BLUEPRISM', $event, 'RUNS')" [dataSource]="blueprimslogs" #sort7="matSort" matSort style="width:100%;overflow-x:scroll;">
@@ -467,18 +457,18 @@
                               <td mat-cell *matCellDef="let element" [matTooltip]="element.status">
                                   <span *ngIf="element.status != null">
                             <span *ngIf="element.status=='Running'" class="text-primary" >
-                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">{{element.status}}
                             </span>
 
                                   <span *ngIf="element.status=='Completed'" class="text-success">
                               <!-- <li class="fa fa-check-circle"style="font-size:19px"> -->
-                              <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" >
+                              <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                               <span>{{element.status}}</span>
                                   </span>
 
                                   <span *ngIf="element.status=='Failed'" class="text-danger">
                               <!-- <li class="fa fa-times-circle" style="font-size:19px"> -->
-                              <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" >
+                              <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                               <span>{{element.status}}</span>
                                   </span>
                                   </span>

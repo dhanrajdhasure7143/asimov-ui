@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import moment from 'moment';
 import { Table } from 'primeng/table';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-rpa-auditlogs',
   templateUrl: './rpa-auditlogs.component.html',
@@ -17,12 +18,22 @@ export class RpaAuditlogsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   botId: any;
   auditLogsData: any = [];
-  displayedColumns: string[] = ["versionNew", "changedDate", 'botName', "changedBy", "comments"];
+  displayedColumns: string[] = ["versionNew", "changedDate_new", 'botName', "changedBy", "comments"];
   dataSource: MatTableDataSource<any>;
   @ViewChild("paginator") paginator: MatPaginator;
   columns_list: any = [];
   logsData: any =[];
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private rest: RestApiService, private spinner: NgxSpinnerService) { }
+  columnList=[
+    {field:"versionNew",DisplayName:"Version",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text"},
+    {field:"changedDate_new",DisplayName:"Timestamp",ShowFilter: true,width:"",filterType:"date"},
+    {field:"changeActivity",DisplayName:"Actions",ShowFilter: false,width:"",filterType:"text"},
+    {field:"changedBy",DisplayName:"Changed By",ShowFilter: true,width:"",filterType:"text"},
+    {field:"comments",DisplayName:"Comments",ShowFilter: true,width:"",filterType:"text"},
+  ];
+  constructor(private activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private rest: RestApiService, 
+    private spinner: LoaderService) { }
   
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
@@ -69,9 +80,9 @@ export class RpaAuditlogsComponent implements OnInit {
         this.auditLogsData = [this.logsData.map((item: any) => {
           if (item.botName.split("|")[1] != undefined) {        
             if (item.versionNew != null) {
-              item["versionNew"] = parseFloat(item.versionNew).toFixed(1)
+              item["versionNew"] = "V"+parseFloat(item.versionNew).toFixed(1)
             }
-            item["changedDate"] = moment(new Date(item.changedDate)).format('lll')
+            item["changedDate_new"] = new Date(item.changedDate)
             item["Status"] = item.botName.split("|")[1];
             if (item["Status"] == 'AddedEnv' || item['Status'] == 'RemovedEnv') {
               let envId = parseInt(item.taskName);
@@ -107,7 +118,6 @@ export class RpaAuditlogsComponent implements OnInit {
           }
           return item;
         })].reverse();
-        
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {

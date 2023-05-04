@@ -138,35 +138,15 @@
               </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
-                      <p-columnFilter type="text" field="processName" display="menu"></p-columnFilter>
-                      <p-sortIcon field="processName"></p-sortIcon>
+                    <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                      <p-columnFilter *ngIf="each.ShowFilter" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
+                                display="menu" [showApplyButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="search">
+                            </ng-template>
+                      </p-columnFilter>
+                      <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="processRunId" pReorderableColumn pResizableColumn>Run Id
-                      <p-columnFilter type="numeric" field="processRunId" display="menu"></p-columnFilter>
-                      <p-sortIcon field="processRunId"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task Name
-                      <p-columnFilter type="text" field="taskName" display="menu"></p-columnFilter>
-                      <p-sortIcon field="taskName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="previousTask" pReorderableColumn pResizableColumn>Previous Task
-                      <p-columnFilter type="text" field="previousTask" display="menu"></p-columnFilter>
-                      <p-sortIcon field="previousTask"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="nextSuccessTask" pReorderableColumn pResizableColumn>Next Task (Upon Success)
-                      <p-columnFilter type="text" field="nextSuccessTask" display="menu"></p-columnFilter>
-                      <p-sortIcon field="nextSuccessTask"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="nextFailureTask" pReorderableColumn pResizableColumn>Next Task (Upon Failure)
-                      <p-columnFilter type="text" field="nextFailureTask" display="menu"></p-columnFilter>
-                      <p-sortIcon field="nextFailureTask"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
-                      <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
-                      <p-sortIcon field="status"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="Action" pReorderableColumn pResizableColumn >Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-element>
@@ -214,7 +194,7 @@
                         </span>&nbsp;
                         <span>{{element.status}}</span>
                       </span>
-                      <span *ngIf="element.status==null">---</span>
+                      <span *ngIf="element.status==null">-</span>
                     </td>
                     <td class="inboxactions">
                         <button [disabled]="element.status=='Approved' || element.status=='Rejected'"

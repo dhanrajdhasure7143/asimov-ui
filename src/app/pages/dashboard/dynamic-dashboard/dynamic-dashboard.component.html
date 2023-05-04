@@ -94,18 +94,37 @@
                                  [options]="widget.chartOptions"></p-chart>
                            </div>
                            <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
-                              <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true">
+                              <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                              [resizableColumns]="true" >
                                  <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                       <th pSortableColumn="name">Name
-                                           <!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="name">Name
+                                          <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                                          matchMode="contains" [showMatchModes]="false" field="name" display="menu"
+                                          [showApplyButton]="false">
+                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                                  class="p-inputtext" placeholder="search">
+                                          </ng-template>
+                                      </p-columnFilter>
                                            <p-sortIcon field="name"></p-sortIcon>
                                        </th>
-                                       <th pSortableColumn="value">
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="value">
                                           <span *ngIf="widget.name == 'Upcoming Executions'">Next Run</span>
                                           <span *ngIf="widget.name != 'Upcoming Executions'">Users</span>
                                           
-                                           <!-- <p-columnFilter type="date" field="value" display="menu"></p-columnFilter> -->
+                                          <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                                          matchMode="contains" [showMatchModes]="false" field="value" display="menu"
+                                          [showApplyButton]="false">
+                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                                  class="p-inputtext" placeholder="search">
+                                          </ng-template>
+                                      </p-columnFilter>
+                                      <!-- <p-columnFilter *ngIf="widget.childId == 4" [showAddButton]="false"
+                                          [showOperator]="false" type="date" [showMatchModes]="false" field="value"
+                                          display="menu" [showApplyButton]="true">
+                                       </p-columnFilter> -->
                                            <p-sortIcon field="value"></p-sortIcon>
                                        </th>
                                     </tr>
@@ -113,7 +132,8 @@
                                  <ng-template pTemplate="body" let-people>
                                     <tr>
                                        <td>{{people.name}}</td>
-                                       <td>{{people.value}}</td>
+                                       <td *ngIf="widget.childId != 4">{{people.value}}</td>
+                                       <td *ngIf="widget.childId == 4">{{people.value|date: 'MMM d, y, HH:mm'}}</td>
                                     </tr>
                                  </ng-template>
                                  <ng-template pTemplate="emptymessage">
