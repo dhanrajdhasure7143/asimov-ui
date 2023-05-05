@@ -194,7 +194,7 @@ resetCredForm(){
       if(credupdatFormValue["serverName"]!='Office365')
         {
           credupdatFormValue["clientId"]="";
-          credupdatFormValue["secretKey"]="";
+          credupdatFormValue["clientSecret"]="";
           credupdatFormValue["officeTenant"]="";
         }
        
@@ -203,12 +203,12 @@ resetCredForm(){
           credupdatFormValue["host"]="";
           credupdatFormValue["port"]="";
         }
-      if(credupdatFormValue["clientId"]=="")
-        credupdatFormValue["clientId"]=this.credupdatedata["clientId"];
-      if(credupdatFormValue["clientSecret"]=="")
-        credupdatFormValue["clientSecret"]=this.credupdatedata["clientSecret"];
-      if(credupdatFormValue["officeTenant"] =="")
-        credupdatFormValue["officeTenant"]=this.credupdatedata["officeTenant"];
+      // if(credupdatFormValue["clientId"]=="")
+      //   credupdatFormValue["clientId"]=this.credupdatedata["clientId"];
+      // if(credupdatFormValue["clientSecret"]=="")
+      //   credupdatFormValue["clientSecret"]=this.credupdatedata["clientSecret"];
+      // if(credupdatFormValue["officeTenant"] =="")
+      //   credupdatFormValue["officeTenant"]=this.credupdatedata["officeTenant"];
 
         if(credupdatFormValue["serverName"]=="Office365")
         {
@@ -221,6 +221,12 @@ resetCredForm(){
           else
           {
             credupdatFormValue["password"]="";
+            if(credupdatFormValue["clientId"]=="")
+              credupdatFormValue["clientId"]=this.credupdatedata["clientId"];
+            if(credupdatFormValue["clientSecret"]=="")
+              credupdatFormValue["clientSecret"]=this.credupdatedata["clientSecret"];
+            if(credupdatFormValue["officeTenant"] =="")
+              credupdatFormValue["officeTenant"]=this.credupdatedata["officeTenant"];
           }
         }
       this.api.update_Credentials(credupdatFormValue).subscribe(res => {
