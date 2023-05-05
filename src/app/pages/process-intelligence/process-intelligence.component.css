@@ -102,6 +102,7 @@ span.testtooltip:before {
   margin-top: 0;
   width: 100%;
   overflow: hidden;
+  padding: 0px;
 }
 .module-back-button {
   border-right: unset !important;

@@ -9,7 +9,7 @@
                 <span class="title_text">{{_paramsData.dashboardName}} </span>
               </h3>
             </div>
-            <div class="col-md-6 pr-24 row justify-content-end align-items-center">
+            <div class="col-md-6 pr-1 row justify-content-end align-items-center">
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <div class="main-content-body mt-4">  
+          <div class="main-content-body">  
             <!-- <div class="row usermessage">
               <img src="./../../../../assets/images-n/dashboard/warning2.svg"  class="warng-img" alt="" />
               <p class="warning-p" *ngIf="isCreate==0">You are currently editing your dashboard. Changes will be saved after clicking the update button.</p>
@@ -66,17 +66,32 @@
                     </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">
-                      <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll" [scrollable]="true">
+                      <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll" [scrollable]="true" [reorderableColumns]="true"
+                      [resizableColumns]="true">
                         <ng-template pTemplate="header" let-columns>
                           <tr>
-                            <th pSortableColumn="name">Name
-                              <!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
+                            <th pReorderableColumn pResizableColumn pSortableColumn="name">Name
+                              <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                                          matchMode="contains" [showMatchModes]="false" field="name" display="menu"
+                                          [showApplyButton]="false">
+                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                                  class="p-inputtext" placeholder="search">
+                                          </ng-template>
+                                      </p-columnFilter>
                               <p-sortIcon field="name"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="value">
+                            <th pReorderableColumn pResizableColumn pSortableColumn="value">
                               <span *ngIf="widget.name == 'Upcoming Executions'">Next Run</span>
                               <span *ngIf="widget.name != 'Upcoming Executions'">Users</span>
-                              <!-- <p-columnFilter type="date" field="value" display="menu"></p-columnFilter> -->
+                              <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                              matchMode="contains" [showMatchModes]="false" field="value" display="menu"
+                              [showApplyButton]="false">
+                              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                  <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                      class="p-inputtext" placeholder="search">
+                              </ng-template>
+                          </p-columnFilter>
                               <p-sortIcon field="value"></p-sortIcon>
                             </th>
                           </tr>

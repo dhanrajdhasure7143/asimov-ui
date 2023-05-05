@@ -103,7 +103,7 @@ export class RpaActionItemsComponent implements OnInit {
         ShowFilter: false,
         filterWidget: "normal",
         filterType: "text",
-        sort: false,
+        sort: true,
         multi: false,
       },
       {

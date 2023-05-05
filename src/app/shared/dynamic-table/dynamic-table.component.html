@@ -52,7 +52,7 @@
                         </ng-template>
                     </p-columnFilter>
                     <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                    [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
+                    [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)" placeholder="Any">
                                 <!-- <ng-template let-option pTemplate="item">
@@ -61,7 +61,24 @@
                             </p-dropdown>
                         </ng-template>
                     </p-columnFilter>
-                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'"
+                    <!-- <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
+                        type="{{col.filterType}}" field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                        [showAddButton]="false" display="menu" matchMode="contains"></p-columnFilter> -->
+
+                        <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
+                         field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                        [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input type="text"
+                                  pInputText
+                                  [ngModel]="value"
+                                  (ngModelChange)="filter($event)"
+                                  class="p-inputtext"
+                                  placeholder="search">
+                            </ng-template>
+                        </p-columnFilter>
+
+                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal' && col.filterType == 'date'"
                         type="{{col.filterType}}" field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
                         [showAddButton]="false" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.sort" field="{{col.ColumnName}}"></p-sortIcon>
@@ -95,7 +112,7 @@
                                 <span *ngIf="rowData['deploy_status_new'] == 'Yes'"class='green'>Yes</span>
                                 <span *ngIf="rowData['deploy_status_new'] == 'No'"class='red'>No</span>
                             </span>
-                            <span *ngIf="col.ColumnName == 'createdTimeStamp_converted'">{{rowData[col.ColumnName]|date:'MMM d, y H:mm'}}</span>
+                            <span *ngIf="col.ColumnName == 'createdTimeStamp_converted'">{{rowData[col.ColumnName]|date:'MMM d, y HH:mm'}}</span>
                             <span *ngIf="col.ColumnName != 'activeStatus_new' && col.ColumnName != 'deploy_status_new' && col.ColumnName != 'createdTimeStamp_converted'">
                                 {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
                             </span>
@@ -150,7 +167,7 @@
                             </a>
                         </span>
                         <span *ngIf="show_download_btn" class="editButton" >
-                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="bottom">
+                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
                                 <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
                                 class="default-img testplus">
                             </a>

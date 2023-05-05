@@ -8,11 +8,9 @@
           <div class="row main-content-head">
               <div class="col-md-6 rpa-header-data p-0">
                   <h3>
-                    <span>
-                      <button [disabled]="current_instance == undefined" class="clickable module-back-button"  (click)="removenodes()">
-                        <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
-                      </button>
-                    </span>
+                    <button [disabled]="current_instance == undefined" class="clickable module-back-button d-flex"  (click)="removenodes()">
+                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    </button>
                       <span class="rpa-main-title">RPA Studio</span>
                       <span class="rpatitsep" *ngIf="current_instance != undefined">/</span>
                       <span class="title_text" *ngIf="current_instance != undefined">{{current_instance.finalbot.botName}}</span>

@@ -1,27 +1,20 @@
 <mat-tab-group  (selectedTabChange)="onTabChanged($event)" class="h-100 so-subtab-header">
     <mat-tab label="Bots">
-  
      <ng-template mat-tab-label>
-       <!-- <mat-icon  class="text-primary">desktop_windows</mat-icon> -->
-         <!-- &nbsp;&nbsp; -->
          <span class="titlelabel">Bots</span>
        </ng-template>
      <div *ngIf="check_tab==0" class="h-100 so-sub-tab-content">
-       <app-bots></app-bots>
+       <app-bots [categoriesList]="categoriesList"></app-bots>
      </div>
    </mat-tab>
   
    <mat-tab label="Processes">
-  
      <ng-template mat-tab-label>
-       <!-- <i class="text-primary material-icons">inbox</i> -->
-         <!-- &nbsp;&nbsp; -->
          <span class="titlelabel">Processes</span>
      </ng-template>
      <div *ngIf="check_tab==1" class="h-100 so-sub-tab-content">
-      <app-processes></app-processes>
+      <app-processes [categoriesList]="categoriesList"></app-processes>
      </div>
    </mat-tab>
-  
   </mat-tab-group>
   

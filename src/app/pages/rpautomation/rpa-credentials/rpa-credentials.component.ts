@@ -96,17 +96,16 @@ inputNumberOnly(event){
             this.credentials=this.credentials.map(item=>{
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
               item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp);
-              item["password_new"]=("*").repeat(10);
+              item["password_new"]=(item["password"]!="")?("*").repeat(10):"-";
               item["tableClientId"]="";
               item["tableClientSecret"]="";
               item["tableOfficeTenant"]="";
               if(item["clientId"]!=null && item["clientId"]!="")
-              item["tableClientId"]= item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length);
+              item["tableClientId"]= item["clientId"].length>=6?(item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length)):item["clientId"];
               if(item["clientSecret"]!=null && item["clientSecret"]!="")
-              item["tableClientSecret"]= item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length);
+              item["tableClientSecret"]= item["clientSecret"].length>=6?(item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length)):item["clientSecret"];
               if(item["officeTenant"]!=null && item["officeTenant"]!="")
-              item["tableOfficeTenant"]= item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length);
-              
+              item["tableOfficeTenant"]=  item["officeTenant"].length>=6?(item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length)):item["officeTenant"]; 
               return item;
             })
             this.readSelectedData([]);
@@ -235,14 +234,14 @@ inputNumberOnly(event){
   openCreateCredential(){
     this.isCreateForm = true;
     this.hiddenPopUp=true;
-    document.getElementById("createcredentials").style.display='block';
+    // document.getElementById("createcredentials").style.display='block';
     // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     // document.getElementById("Updatecredntials").style.display='none';
   }
 
   openUpdateCredential() {
     this.hiddenPopUp=true;
-    document.getElementById('createcredentials');
+    // document.getElementById('createcredentials');
     this.isCreateForm = false;
     this.credupdatedata = this.selectedData[0];
   }

@@ -64,12 +64,27 @@
                                 <th style="flex:0.2 1 0;" class="arrowcol"></th>
                                 <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                     {{col.header}}
-                                    <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'"
+                                    <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'date'"
                                         [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.field"
                                         display="menu"></p-columnFilter>
+                                    <!-- <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
+                                        field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                                        [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false"> -->
+                                        <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'text'"
+                                        [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="col.field"
+                                                display="menu" [showApplyButton]="false">
+                                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <input type="text"
+                                                pInputText
+                                                [ngModel]="value"
+                                                (ngModelChange)="filter($event)"
+                                                class="p-inputtext"
+                                                placeholder="search">
+                                            </ng-template>
+                                        </p-columnFilter>
                                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
                                     [field]="col.field" matchMode="equals" [showMatchModes]="false"
-                                        [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
+                                        [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="col.dropdownList"
                                                 (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
@@ -101,7 +116,7 @@
                                     <span *ngIf="col.header == 'Message'">
                                         <div>
                                             <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"
-                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="bottom">
+                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="top">
                                         </div>
                                     </span>
                                     <span *ngIf="col.header == 'Actions'">

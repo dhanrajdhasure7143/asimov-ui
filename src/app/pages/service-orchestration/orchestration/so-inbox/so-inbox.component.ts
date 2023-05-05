@@ -18,6 +18,16 @@ export class SoInboxComponent implements OnInit {
     public showaction:boolean = false;
     logresponse:any=[];
     response: any=[];
+    columnList=[
+      {field:"processName",DisplayName:"Process Name",ShowFilter: true},
+      {field:"processRunId",DisplayName:"Run Id",ShowFilter: true},
+      {field:"taskName",DisplayName:"Task Name",ShowFilter: true},
+      {field:"previousTask",DisplayName:"Previous Task",ShowFilter: true},
+      {field:"nextSuccessTask",DisplayName:"Next Task (Upon Success)",ShowFilter: true},
+      {field:"nextFailureTask",DisplayName:"Next Task (Upon Failure)",ShowFilter: true},
+      {field:"status",DisplayName:"Status",ShowFilter: true},
+      {field:"Actions",DisplayName:"Actions",ShowFilter: false},
+    ];
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,

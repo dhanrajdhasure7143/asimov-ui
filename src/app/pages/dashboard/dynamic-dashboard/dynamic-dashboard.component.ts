@@ -87,6 +87,7 @@ export class DynamicDashboardComponent implements OnInit {
         widgetType: formDataValue.widget_type,
         type: "widget",
         screenId: this.selectedDashBoard.id,
+        // department: formDataValue.department
       },
     ];
     this.loader.show();
@@ -387,12 +388,13 @@ export class DynamicDashboardComponent implements OnInit {
                 if (data.labels.length && data.datasets.length) {
                   return data.labels.map(function (label, i) {
                     var ds = data.datasets[0];
-                    let value;
-                  if(element.childId == 2){
-                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
-                  }else value = ds.data[i];
+                    // let value;
+                  // if(element.childId == 2){
+                  //   value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  // }else value = ds.data[i];
+                 let total = ds['data'].reduce((accumulator, currentValue) => accumulator + currentValue);
                   return {
-                    text: label + ": " + value,
+                    text: label + ": " + ((ds.data[i] / total) * 100).toFixed(2)+ '%',
                       fillStyle: datasets[0].backgroundColor[i],
                       strokeStyle: "white",
                       lineWidth: 8,
@@ -457,7 +459,6 @@ export class DynamicDashboardComponent implements OnInit {
                 generateLabels: function(chart) {
                     var data = chart.data;
                     const datasets = chart.data.datasets;
-                    console.log("datasets",datasets)
                     if (data.labels.length && data.datasets.length) {
                         return data.labels.map(function(label, i) {
                             var ds = data.datasets[0];

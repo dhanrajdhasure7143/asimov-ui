@@ -163,7 +163,8 @@
         </button>
       </div>
     </div>
-    <div class="modal-body modelprbody">
+    <div class="modal-body newmodelbodycl">
+      <!-- modal-body modelprbody -->
       <div class="row" *ngIf="outputboxresult == undefined">
         <div class="col-md-12 form-group">
           <select class="form-control" [(ngModel)]="SelectedOutputType">
@@ -173,7 +174,7 @@
             <option value="Image">Image</option>
           </select>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 text-right">
           <button class="btn bluebg-button eiap-btn" (click)="getoutput()">
             Submit
           </button>
@@ -186,7 +187,7 @@
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
                     </button>
                 </div> -->
-        <div class="col-md-12">
+        <div class="col-md-12 outputgrid">
           <table class="table logs-table">
             <thead>
               <tr>
