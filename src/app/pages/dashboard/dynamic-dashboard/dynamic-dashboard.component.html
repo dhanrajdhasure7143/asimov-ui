@@ -38,14 +38,15 @@
                         </li>
                      </ul>
                   </div>
-
+                  <button (click)="navigateToConfigure()" class="grey-btn configure-pad" tooltipPosition="top">
+                     <img src="../../../../assets/images-n/dashboard/configure-grey.svg" alt="Configure"/>
+                      <span class="plus">Configure</span> 
+                  </button>
                   <button (click)="navigateToCreateDashboard()" class="grey-btn create-pad"  pTooltip="Create" tooltipPosition="top"> 
-                     <img src="../../../../assets/images-n/dashboard/create-grey.svg" alt="Create"/>
+                     <img src="../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Create"/>
                      <!-- <span class="plus">Create</span> -->
                   </button>
-                  <button (click)="navigateToConfigure()" class="grey-btn configure-pad" pTooltip="Configure" tooltipPosition="top">
-                     <img src="../../../../assets/images-n/dashboard/configure-grey.svg" alt="Configure"/>
-                  </button>               
+               
                   <button (click)="deletedashbord()" class="grey-btn " pTooltip="Delete" tooltipPosition="top">
                      <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" />
                   </button>

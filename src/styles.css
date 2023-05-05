@@ -3774,3 +3774,14 @@ textarea.p-inputtextarea {
     display :none;
   }
 
+.create-pad{padding:8px 10px !important;}
+.configure-pad{padding:8px 14px !important;}
+.grey-btn {
+  background-color: #EAE9E9 !important;
+  margin-left: 8px !important; 
+  padding: 8px !important;
+  height: 36px;   
+}
+.grey-btn:hover {
+background-color: #E0E8ED !important;  
+}
