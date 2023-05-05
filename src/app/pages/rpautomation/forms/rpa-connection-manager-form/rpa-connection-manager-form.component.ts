@@ -487,7 +487,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\._\\-=\\/]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'redirect_uri')
-            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?@]")]);
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'verifier')
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\._\\-=\\/]+)@\\])$")]);
@@ -631,7 +631,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\._\\-=\\/]+)@\\])$")]);
               this.connectorForm.get(key).updateValueAndValidity();
             if(key == 'redirect_uri')
-              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?@]")]);
+              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
               this.connectorForm.get(key).updateValueAndValidity();
           }
         });
@@ -683,7 +683,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\._\\-=\\/]+)@\\])$")]);
               this.connectorForm.get(key).updateValueAndValidity();
             if(key == 'redirect_uri')
-              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?@]")]);
+              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
               this.connectorForm.get(key).updateValueAndValidity();
             if(key == 'verifier')
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\._\\-=\\/]+)@\\])$")]);
