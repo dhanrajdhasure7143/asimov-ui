@@ -80,7 +80,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.auditLogsData = [this.logsData.map((item: any) => {
           if (item.botName.split("|")[1] != undefined) {        
             if (item.versionNew != null) {
-              item["versionNew"] = "V"+parseFloat(item.versionNew).toFixed(1)
+              item["versionNew"] =  "V"+ parseFloat(item.versionNew).toFixed(1) 
             }
             item["changedDate_new"] = new Date(item.changedDate)
             item["Status"] = item.botName.split("|")[1];

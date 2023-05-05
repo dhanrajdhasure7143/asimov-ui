@@ -51,19 +51,19 @@
           <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
                 <button *ngIf="rejectedOrApproved=='PENDING'" class="editprimary edit-disabled">
-                    <img class="defaul-img" src="../../../assets/images/BPMS/edit_disabled.svg">
+                    <img class="defaul-img" src="../../../assets/images/BPMS/edit_disabled.svg" alt="edit">
 
                   </button>
                   <span *ngIf="rejectedOrApproved!='PENDING'">
                     <span *ngIf="!(freetrail=='true' && rejectedOrApproved=='APPROVED')">
                     <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
-                      <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
+                      <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg" alt="">
                       <span class="testtooltip">Edit</span>
                     </button>
                 </span>
               </span>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
-                <img src="../../../assets/images/BPMS/download.svg">
+                <img src="../../../assets/images/BPMS/download.svg" alt="download">
                 <span class="testtooltip">Download</span>
               </button>
                 <mat-menu #download="matMenu">
@@ -77,7 +77,7 @@
                 <span class="testtooltip">Share</span>
               </button> -->
               <button type="button" class="icon-disabled" placement="bottom">
-                <img src="../../../assets/images/BPMS/share disable.svg" >
+                <img src="../../../assets/images/BPMS/share disable.svg" alt="disable">
               </button>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
               <!-- <button class="tsttooltipbtn">
@@ -85,23 +85,23 @@
                 <span class="testtooltip">Favorite</span>
               </button> -->
               <button class="icon-disabled">
-                <img src="../../../assets/images/BPMS/Favorite disable.svg" >
+                <img src="../../../assets/images/BPMS/Favorite disable.svg" alt="disable icon">
               </button>
               <button class="tsttooltipbtn" (click)="zoomIn()" >
-                <img src="../../../assets/images/BPMS/zoom-in.svg">
+                <img src="../../../assets/images/BPMS/zoom-in.svg" alt="zoom-in">
                 <span class="testtooltip">Zoom In</span>
               </button>
               <button class="tsttooltipbtn" (click)="zoomOut()">
-                <img src="../../../assets/images/BPMS/zoom-out.svg">
+                <img src="../../../assets/images/BPMS/zoom-out.svg" alt="zoom-out">
                 <span class="testtooltip">Zoom Out</span>
               </button>
               <button class="tsttooltipbtn" (click)="fitNotation()" >
-                <img src="../../../assets/images/BPMS/Fit to screen.svg">
+                <img src="../../../assets/images/BPMS/Fit to screen.svg" alt="fit to screen">
                 <span class="testtooltip">Fit To Screen</span>
               </button>
               <span *ngIf="rejectedOrApproved!='PENDING'" class="bpsbtnsep">|</span>
               <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" >
-                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
+                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg" alt="defaul-img">
                 <span class="testtooltip">Save</span>
               </button>
               <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcessCreate()" *ngIf="iscreate_notation" >
@@ -113,7 +113,7 @@
               </button>
             
               <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation && (freetrail != 'true')" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
-                <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+                <img src="../../../assets/images/BPMS/submit-for-approval.svg" alt="submit">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
                 <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation && (freetrail != 'true')" class="clr-hvr tsttooltipbtn"
@@ -122,32 +122,32 @@
         <span class="testtooltip">Save & Submit for approval</span>
 </button>
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation && (freetrail != 'true')">
-                <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
+                <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg" alt="">
               </button>
               <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED' && freetrail!='true'">
-                <img src="../../../assets/images/BPMS/orchestration.svg">
+                <img src="../../../assets/images/BPMS/orchestration.svg" alt="">
                 <span class="testtooltip">Orchestration</span>
               </button>
               <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
-                <img src="../../../assets/images/BPMS/Deploy.svg">
+                <img src="../../../assets/images/BPMS/Deploy.svg" alt="">
                 <span class="testtooltip">Deploy Notation</span>
               </button>
               <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
-                <img src="../../../assets/images/BPMS/Play.svg">
+                <img src="../../../assets/images/BPMS/Play.svg" alt="">
                 <span class="testtooltip">Start Process</span>
               </button>
               <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
-                  <img src="../../../assets/images/BPMS/show-differences.svg">
+                  <img src="../../../assets/images/BPMS/show-differences.svg" alt="">
                   <span class="testtooltip">Show Conformance</span>
                 </button>
                 <button class="tsttooltipbtn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">
-                    <img src="../../../assets/images/BPMS/difference.svg">
+                    <img src="../../../assets/images/BPMS/difference.svg" alt="">
                     <span class="testtooltip">Show Differences</span>
                   </button>
               <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING' || (isUploaded && rejectedOrApproved !='PENDING')" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
-                  <button class="btn bluebg-button" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload Again</button>  
-                  <button class="btn bluebg-button" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover" class="testplusupload">Upload</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" alt="" *ngIf="!isfromApprover" class="testplusupload">Upload Again</button>  
+                  <button class="btn bluebg-button" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg"  alt="" *ngIf="!isfromApprover" class="testplusupload">Upload</button>  
                 </ngx-dropzone-label>
               </ngx-dropzone>
             </div>  
