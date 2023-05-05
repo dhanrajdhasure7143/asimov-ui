@@ -40,6 +40,7 @@ export class DropDownComponent implements OnInit {
     optionfields:any=[]
     @Input('feilddisable') public feilddisable:boolean;
     @Output() newItemEvent = new EventEmitter();
+    passwordValue: any = "";
     constructor(private designer:RpaStudioDesignerworkspaceComponent) {
     }
     public fieldsWithRef:any=[];
@@ -139,6 +140,8 @@ export class DropDownComponent implements OnInit {
           if(event.target.value=="password")
           {
             this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="password"
+            let formValue= this.fieldsWithRef.find((item:any)=>item.name=="fillValue")
+            this.form.get(formValue.name + "_" + formValue.id).setValue(this.passwordValue)
           }
           else if(event.target.value=="Radio Button")
           {
@@ -153,7 +156,12 @@ export class DropDownComponent implements OnInit {
           }
           else
           {
+            let formValue= this.fieldsWithRef.find((item:any)=>item.name=="fillValue")
+            if(formValue.type == "password"){
+            this.passwordValue= this.form.get(formValue.name + "_" + formValue.id).value;
+            } 
             this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="textarea"
+            this.form.get(formValue.name + "_" + formValue.id).setValue("")
           }
         }
       }
