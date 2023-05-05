@@ -199,7 +199,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "contentType":"application/json",
         "httpHeaders": obj,
         "type":"API",
-        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
+        // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
+        "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
     }
     req_body["configuration"]=JSON.stringify(object);
     }
@@ -806,7 +807,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         contentType: "application/json",
         httpHeaders: obj,
         "type":"API",
-        "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
+        // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
+        "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       };
       req_body["configuration"] = JSON.stringify(object);
     }
