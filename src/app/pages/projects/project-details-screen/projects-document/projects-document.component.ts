@@ -134,13 +134,9 @@ export class ProjectsDocumentComponent implements OnInit {
     };
       if(obj.dataType == 'folder'){
         node['icon'] = "folder.svg"
-        // node['collapsedIcon']=  "pi pi-folder"
-        // node["expandedIcon"]  ="pi pi-folder-open"
       }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        // node['icon']=  "pi pi-image"
         node['icon'] = "img-file.svg"
     }else{
-      // node['icon']=  "pi pi-file"
       node['icon'] = "document-file.svg"
     }
     this.nodeMap[obj.key] = node;
@@ -942,8 +938,6 @@ addParentFolder() {
           label: "Add Folder",
           data: "Add Folder",
           data_type:"addfolder",
-          // collapsedIcon: 'pi pi-folder',
-          // expandedIcon: 'pi pi-folder'
           icon:"folderadd.svg",
         },
       ];
@@ -976,15 +970,11 @@ addParentFolder() {
         uploadedDate:obj.uploadedDate
       };
         if(obj.dataType == 'folder'){
-          // node['collapsedIcon']=  "pi pi-folder"
-          // node["expandedIcon"]  ="pi pi-folder-open"
           node["icon"]="folder.svg"
         }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-          // obj['icon']=  "pi pi-image"
-        obj['icon']=  "img-file.svg"
+          node['icon']=  "img-file.svg"
       }else{
-        // obj["icon"]= "pi pi-file"
-        obj["icon"]= "document-file.svg"
+        node["icon"]= "document-file.svg"
       }
       this.nodeMap[obj.key] = node;
       if (obj.key.indexOf('-') === -1) {
