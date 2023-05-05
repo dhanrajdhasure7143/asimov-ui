@@ -1,5 +1,5 @@
 <div class="main-content-body bps-approvalgrid">
-    <!-- <div class="row grid-header">
+  <!-- <div class="row grid-header">
     <div class="col-md-9 p-0">
       <span class="module-sub-header-title">Approved List</span>
     </div>
@@ -10,8 +10,9 @@
         </div>
     </div>
     </div> -->
-  <p-table #dt1 [columns]="selectedColumns" [value]="griddata" dataKey="bpmnApprovalId" [globalFilterFields]="search_fields" 
-      responsiveLayout="scroll" [resizableColumns]="true" [reorderableColumns]="true" [scrollable]="true">
+  <p-table #dt1 [columns]="selectedColumns" [value]="griddata" dataKey="bpmnApprovalId"
+    [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" [reorderableColumns]="true"
+    [scrollable]="true">
     <ng-template pTemplate="caption">
       <div class="table-header">
         <!-- <h4 class="box-heading">Approved List</h4> -->
@@ -20,13 +21,14 @@
               selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
                   placeholder="Choose Columns">
           </p-multiSelect> -->
-          
+
           <span class="p-input-icon-right gridsearch">
-              <i class="pi pi-search"></i>
-              <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
-                  (input)="dt1.filterGlobal($event.target.value, 'contains')">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="Search" class="p-inputtext-lg"
+              (input)="dt1.filterGlobal($event.target.value, 'contains')">
           </span>
-          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
         </div>
       </div>
     </ng-template>
@@ -34,20 +36,27 @@
       <tr>
         <th style="flex:0.2 1 0;" class="arrowcol"></th>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
-            {{col.header}}
-            <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter> -->
-            <p-columnFilter *ngIf="col.filterWidget == 'normal'" [showOperator]="false" [showMatchModes]="false"
-            [showAddButton]="false" type="{{col.filterType}}" [field]="col.field"
-            display="menu"></p-columnFilter>
-        <p-columnFilter *ngIf="col.filterWidget == 'dropdown'"
-        [field]="col.field" matchMode="equals" [showMatchModes]="false"
-            [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="false">
+          {{col.header}}
+          <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter> -->
+          <p-columnFilter *ngIf="col.filterWidget == 'normal'&& col.filterType == 'date'" [showOperator]="false" [showMatchModes]="false"
+            [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
+          <p-columnFilter *ngIf="col.filterWidget == 'normal'&& col.filterType == 'text'"
+            [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false"
+            [field]="col.field" display="menu" [showApplyButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-dropdown [ngModel]="value" [options]="col.dropdownList"
-                    (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext"
+                placeholder="search">
             </ng-template>
-        </p-columnFilter>
-            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </p-columnFilter>
+          <p-columnFilter *ngIf="col.filterWidget == 'dropdown'" [field]="col.field" matchMode="equals"
+            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu"
+            [showApplyButton]="false" [showClearButton]="true">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)"
+                placeholder="Any"></p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+          <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
       </tr>
     </ng-template>
@@ -59,9 +68,11 @@
           </a>
         </td>
         <td *ngFor="let col of columns">
-          <span [ngStyle]="{'color':getColor(rowData[col.field])}"*ngIf="col.field == 'bpmnProcessStatus'">{{rowData[col.field]}}</span>
+          <span [ngStyle]="{'color':getColor(rowData[col.field])}"
+            *ngIf="col.field == 'bpmnProcessStatus'">{{rowData[col.field]}}</span>
           <span *ngIf="col.field != 'bpmnProcessStatus'">
-            {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
+            {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y
+            H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
           </span>
         </td>
       </tr>
@@ -84,24 +95,40 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let each_past_process of rowData['bpmnProcessInfo'] | orderBy: 'modifiedTimestamp': true; let j=index;">
+                  <tr
+                    *ngFor="let each_past_process of rowData['bpmnProcessInfo'] | orderBy: 'modifiedTimestamp': true; let j=index;">
                     <!-- <td>{{each_past_process.convertedModifiedTime*1000 | date:'medium'}}</td> -->
                     <!-- <td>{{formatApproverName(each_past_process.userName)}}</td> -->
-                    <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="top">{{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
-                    <td [pTooltip]=each_past_process.userName tooltipPosition="top">{{fitTableView(each_past_process.userName)}}</td>
+                    <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="top">
+                      {{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
+                    <td [pTooltip]=each_past_process.userName tooltipPosition="top">
+                      {{fitTableView(each_past_process.userName)}}</td>
                     <td>{{"V 1."+each_past_process.version}}</td>
-                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span></div><ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
-                    <td [matTooltip]="each_past_process.reviewComments"><input type="text"  [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
+                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">
+                      <div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span
+                          pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span></div><ng-template
+                        #status>{{each_past_process.bpmnProcessStatus}}</ng-template>
+                    </td>
+                    <td [matTooltip]="each_past_process.reviewComments"><input type="text"
+                        [value]="each_past_process.reviewComments" name="reviewComments{{j}}"
+                        [(ngModel)]="each_past_process.reviewComments"
+                        [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled"
+                        placeholder="Enter your Message" required /></td><!-- [(ngModel)]="approval_msg" -->
                     <td class="aprwkfl_actions">
                       <div class="aprwkfl_actions_icons">
-                        <button  class="btn" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1" pTooltip="Approve" tooltipPosition="top">
+                        <button class="btn" id="btn_app" (click)="approveDiagram(each_past_process)"
+                          [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
+                          <img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1"
+                            pTooltip="Approve" tooltipPosition="top">
                         </button><!-- approval_msg.length==0 ||  -->
-                        <button  class="btn" id="btn_deny" (click)="denyDiagram(each_past_process, rowData)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
-                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1" pTooltip="Reject" tooltipPosition="top">
+                        <button class="btn" id="btn_deny" (click)="denyDiagram(each_past_process, rowData)"
+                          [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">
+                          <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1"
+                            pTooltip="Reject" tooltipPosition="top">
                         </button><!-- approval_msg.length==0 || -->
-                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="top">
-                      </div>  
+                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1"
+                          (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="top">
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -109,16 +136,19 @@
             </div>
             <div class="col-md-5 p-0 bps_overlay">
               <span class="info btn">
-                {{selected_processInfo && selected_processInfo['bpmnProcessStatus'] == 'PENDING'?'Cannot be edited till it is reviewed':'Click to open'}}</span>
+                {{selected_processInfo && selected_processInfo['bpmnProcessStatus'] == 'PENDING'?'Cannot be edited till
+                it is reviewed':'Click to open'}}</span>
               <span>
                 <button class="down-btn" (click)="downloadBpmn()" pTooltip="Download" tooltipPosition="top">
-                  <img  src="../../../../assets/images-n/common/download-blue.svg" alt="Download">
+                  <img src="../../../../assets/images-n/common/download-blue.svg" alt="Download">
                 </button>
-                <button pTooltip="Fit to the view port" tooltipPosition="top" class="fit_button approver_fit_btn" (click)="fitNotationView()">
+                <button pTooltip="Fit to the view port" tooltipPosition="top" class="fit_button approver_fit_btn"
+                  (click)="fitNotationView()">
                   <img src="..\assets\fillView.svg">
                 </button>
               </span>
-              <div id="diag_hover" [class]="'diagram_container'+rowData['bpmnApprovalId']" (click)="openDiagram()"></div>
+              <div id="diag_hover" [class]="'diagram_container'+rowData['bpmnApprovalId']" (click)="openDiagram()">
+              </div>
               <!-- <div class="row">
                 <div class="col-md-6">
                   <div class="btn-download">
@@ -129,10 +159,10 @@
                   </div>
                 </div>
               </div>                         -->
-            </div>                                
+            </div>
           </div>
         </td>
-      </tr>                            
+      </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
@@ -142,7 +172,7 @@
   </p-table>
 
 
-      
+
 
   <!-- <div class="row col-md-12 text-bold aprwkfl_bpmn_list_header" matSort>
     <div class="expan-icon"></div>
@@ -231,16 +261,3 @@
   </div> -->
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-

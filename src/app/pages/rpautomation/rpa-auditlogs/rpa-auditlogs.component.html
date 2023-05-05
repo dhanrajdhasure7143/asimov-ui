@@ -10,46 +10,46 @@
                 </h3>
             </div>
             <div class="main-content-body rpaauditsgrid">
-                <p-table  #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true" [scrollable]="true"
-                    [reorderableColumns]="true" [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']">
+                <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll"
+                    [reorderableColumns]="true" [scrollable]="true"
+                    [globalFilterFields]="['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']">
                     <ng-template pTemplate="caption">
                         <div class="flex">
                             <span class="p-input-icon-right gridsearch">
                                 <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search keyword" />
                             </span>
-                            <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                            <button pButton label="Clear" class="p-button-outlined only_clearbtn"
+                                icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                            <th pSortableColumn="versionNew" pReorderableColumn pResizableColumn>Version
-                                <p-columnFilter type ="text"field="versionNew" display="menu"></p-columnFilter>
-                                <p-sortIcon field="versionNew"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="changedDate" pReorderableColumn pResizableColumn> Timestamp
-                                <p-columnFilter  type ="text" field="changedDate" display="menu"></p-columnFilter>
-                                <p-sortIcon field="changedDate"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="changeActivity" pReorderableColumn pResizableColumn> Actions
-                                <p-columnFilter  type ="text" field="changeActivity" display="menu"></p-columnFilter>
-                                <p-sortIcon field="changeActivity"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="changedBy" pReorderableColumn pResizableColumn>Changed By
-                                <p-columnFilter  type ="text"field="changedBy" display="menu"></p-columnFilter>
-                                <p-sortIcon field="changedBy"></p-sortIcon>
-                
-                            </th>
-                            <th pSortableColumn="comments" pReorderableColumn pResizableColumn>Comments
-                                <p-columnFilter type ="text" field="comments" display="menu"></p-columnFilter>
-                                <p-sortIcon field="comments"></p-sortIcon>
+                            <th *ngFor="let each of columnList" [style]="each.width" pSortableColumn="{{each.field}}"
+                                pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                                <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" [showAddButton]="false" [showOperator]="false"
+                                    matchMode="contains" [showMatchModes]="false" [field]="each.field" display="menu"
+                                    [showApplyButton]="false">
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                            class="p-inputtext" placeholder="search">
+                                    </ng-template>
+                                </p-columnFilter>
+                                <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'" [showAddButton]="false"
+                        [showOperator]="false" type="date" [showMatchModes]="false" [field]="each.field"
+                        display="menu" [showApplyButton]="true">
+                    </p-columnFilter>
+                                <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
                             </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-logs>
                         <tr class="action-desc">
-                            <td>V{{logs.versionNew}}</td>
+                            <td>{{logs.versionNew}}</td>
                             <td>{{logs.changedDate}}</td>
+                            <td style="flex: 0 0 10rem">{{logs.versionNew}}</td>
+                            <td>{{logs.changedDate_new|date: 'MMM d, y, HH:mm'}}</td>
                             <td>
                                 <span *ngIf="logs.Status=='UpdatedConfig'">
                                     Updated <b>{{logs.taskName}}</b> task input field <b>{{logs.changeActivity}}</b> from
@@ -65,18 +65,15 @@
                                 <span *ngIf="logs.Status=='RemovedEnv'">
                                     Removed environment <b>{{logs.taskName}}</b></span>
                                 <span *ngIf="logs.Status=='UpdatedVersion'">
-                                    Version upgraded from <b>V{{logs.previousValue | number :'1.1-1'}}</b> to <b>V{{logs.newValue |
-                                        number :'1.1-1'}}</b>
+                                    Version upgraded from <b>V{{logs.previousValue | number :'1.1-1'}}</b> to
+                                    <b>V{{logs.newValue | number :'1.1-1'}}</b>
                                 </span>
                             </td>
                             <td>{{logs.changedBy}}</td>
                             <td>
-                                <span *ngIf="logs.comments != '' || logs.comments!=null">
-                                    {{logs.comments}}
-                                </span>
-                                <span *ngIf="logs.comments == '' || logs.comments == null">
-                                    -
-                                </span>
+                                <span *ngIf="logs.comments != '' || logs.comments!=null"
+                                    [pTooltip]="logs.comments">{{logs.comments}}</span>
+                                <span *ngIf="logs.comments == '' || logs.comments == null">-</span>
                             </td>
                         </tr>
                     </ng-template>
@@ -87,80 +84,6 @@
                     </ng-template>
                 </p-table>
             </div>
-                <!-- 
-                    <div class="table_responsive graph_table">
-                        <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
-                            <ng-container matColumnDef="versionNew">
-                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gconfig" >Version</th>
-                                <td mat-cell *matCellDef="let element"  class="gconfig" >
-                                  
-                                    <span *ngIf="element.versionNew!=null">V{{element.versionNew}}</span> 
-                                    <span *ngIf="element.versionNew==null">-</span> 
-                                </td>
-                            </ng-container> 
-                            <ng-container matColumnDef="changedDate">
-                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gdescrip" >Timestamp</th>
-                                <td mat-cell *matCellDef="let element"  class="gdescrip" >{{element.changedDate}}</td>
-                            </ng-container>
-        
-                         
-                           
-                            <ng-container matColumnDef="botName">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="gactions" >Actions</th>
-                                <td mat-cell *matCellDef="let element" class="gactions">
-                                
-                                    <span *ngIf="element.Status=='UpdatedConfig'">
-                                        Updated <b>{{element.taskName}}</b> task input field <b>{{element.changeActivity}}</b> from <b>{{element.previousValue}}</b> to <b>{{element.newValue}}</b></span>
-                                    <span *ngIf="element.Status=='AddedTask'">
-                                        Added task <b>{{element.taskName}}</b></span>
-                                    <span *ngIf="element.Status=='BotCreated'">
-                                        Created Bot <b>{{element.taskName}}</b></span>
-                                    <span *ngIf="element.Status=='RemovedTask'">
-                                      Removed task <b>{{element.taskName}}</b></span>
-                                    <span *ngIf="element.Status=='AddedEnv'">
-                                       Added environment <b>{{element.taskName}}</b></span>
-                                    <span *ngIf="element.Status=='RemovedEnv'">
-                                         Removed environment <b>{{element.taskName}}</b></span>        
-                                    <span *ngIf="element.Status=='UpdatedVersion'">
-                                        Version upgraded from <b>V{{element.previousValue | number :'1.1-1'}}</b> to <b>V{{element.newValue | number :'1.1-1'}}</b>
-                                    </span>        
-                           </td>
-                            </ng-container>
-                            <ng-container matColumnDef="changedBy">
-                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gchangedby" >Changed by</th>
-                                <td mat-cell *matCellDef="let element"  class="gchangedby" > 
-                                    <span *ngIf="element.changedBy!=null">{{element.changedBy}}</span> 
-                                    <span *ngIf="element.changedBy==''">-</span> 
-                                </td>
-                            </ng-container>
-                             <ng-container matColumnDef="comments">
-                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gcmnts" >Comments</th>
-                                <td mat-cell *matCellDef="let element"  class="gcmnts" >
-                                    <span *ngIf="element.comments!=null" [matTooltip]="element.comments">{{fitTableViewCategory(element.comments)}}</span> 
-                                    <span *ngIf="element.comments==null">-</span> 
-                                    <span *ngIf="element.comments==''">-</span> 
-                                </td>
-                            </ng-container> 
-                            <ng-container matColumnDef="noData">
-                                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                </td>
-                            </ng-container>
-        
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                        </table>
-                    </div>
-                    <div class="supportpaginationdiv">
-                        <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
-                            [showFirstLastButtons]="true"></mat-paginator>
-                    </div>
-            
-            </div>  -->
-        
-        </div>        
+        </div>
     </div>
 </div>
-
-<ngx-spinner bdColor="#bebcbc66" type="">
-    <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
-</ngx-spinner>

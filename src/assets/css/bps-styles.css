@@ -182,7 +182,7 @@ mat-tab-body {
   position: absolute;
   top: 10px;
   left: 40px;
-  color: white;
+  color: #fff !important;
   background-color: #F99D1C;
 }
 
@@ -197,11 +197,12 @@ div[class^='diagram_container'] {
   border-radius: 10px;
   padding: 5px;
   position: relative;
+  /* background: #fff; */
 }
 
 .readOnly svg {
   position: relative;
-  /* z-index: -10; */
+  z-index: -10;
 }
 
 .bps_overlay {
@@ -209,6 +210,7 @@ div[class^='diagram_container'] {
 }
 .bps_overlay.grid_bps_overlay {
   position:relative;
+  background: #fff !important;
 }
 
 
@@ -382,7 +384,7 @@ mat-tab-body {
   overflow: auto;
   display: -webkit-inline-box;
   display: inline-block;
-  z-index: 100;
+  /* z-index: 2; */
   box-shadow: 2px 0px 3px rgb(0 0 0 / 20%);
   border: 1px solid rgb(0 0 0 / 20%);
   background: #607088;

@@ -96,8 +96,11 @@ span.smalfon {
     width: 100%;
     height: 340px;
 }
-.chartssc, .varienanal {
+.varienanal {
     margin-top: 30px;
+}
+.chartssc {
+    margin-top: 20px;
 }
 .rightsecr {
     width: 80px;

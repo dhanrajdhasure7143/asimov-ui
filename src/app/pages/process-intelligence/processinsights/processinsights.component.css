@@ -202,8 +202,8 @@ border: 1px solid #979797 !important;
      top: 0px;
     right: 0px;  */
     position: fixed;   
-    top: 123px;
-    right: 30px;
+    top: 118px;
+    right: 35px;
     z-index: 100;
     padding-left:0px;
     transition: 0.5s;

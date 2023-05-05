@@ -90,8 +90,21 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public botSource_list:any[]=[];
   q=0;
   tasks:any;
- ExecutionTypearr:any[] =[]
+  ExecutionTypearr:any[] =[]
   resp: any =[];
+  columnList=[
+    {DisplayName:"Process Name",field:"processName",ShowFilter: true},
+    {DisplayName:"Task",field:"taskName",ShowFilter: true},
+    {DisplayName:"Process Owner",field:"ProcessOwner",ShowFilter: true},
+    {DisplayName:"TaskOwner",field:"Task Owner",ShowFilter: false},
+    {DisplayName:"taskType",field:"Task Type",ShowFilter: true},
+    {DisplayName:"category",field:"Category",ShowFilter: true},
+    {DisplayName:"BotSource",field:"Bot Source",ShowFilter: false},
+    {DisplayName:"AssignResource",field:"Assign Resource",ShowFilter: false},
+    {DisplayName:"Status",field:"status",ShowFilter: true},
+    {DisplayName:"Actions",field:"Actions",ShowFilter: false},
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -528,13 +541,6 @@ resetsla(){
     });
   }
 
-
-
-
-
-
-
-
   getautomatedtasks(process){
    this.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
@@ -582,10 +588,7 @@ resetsla(){
     })
   }
 
-
-
-  getprocessnames(processId)
-  {
+  getprocessnames(processId){
     this.spinner.show();
     // this.rest.getprocessnames().subscribe(processnames=>{
     this.rest.getprocessnamesByLatestVersion().subscribe(processnames=>{
@@ -983,8 +986,7 @@ resetsla(){
     })
   }
 
-  getCategoryList(processid)
-  {
+  getCategoryList(processid){
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data

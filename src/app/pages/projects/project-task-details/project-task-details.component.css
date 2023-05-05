@@ -213,7 +213,8 @@ ul.historydiv li:last-child {
   border-radius: 6px;
 }
 .historyContent {
-  height: calc(100vh - 300px);
+  /* height: calc(100vh - 300px); */
+  height: calc(100vh - 225px);
   overflow: auto;
 }
 

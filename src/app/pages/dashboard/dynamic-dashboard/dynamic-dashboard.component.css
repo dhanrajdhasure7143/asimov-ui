@@ -1,3 +1,10 @@
+/* .maincont-contentarea {
+    padding: 15px 6px 10px 30px;
+} */
+.main-content-body {
+    padding: 0px 6px 10px 30px;
+}
+
 .main-content-head h3 .title_text {
     cursor: pointer;
 }
@@ -103,7 +110,24 @@
 
 
 .caret-img{    width: 20px;
-   
+}
+.grey-btn {
+    background-color: #EAE9E9 !important;
+    margin-left: 8px !important; 
+    padding: 8px !important;
+    height: 36px;   
+}
+.grey-btn:hover {
+    background-color: #E0E8ED !important;  
+}
+.configure-pad{
+    padding:8px 12px !important;
+}
+.create-pad{
+    padding:8px 14px !important;
+}
+.caret-img{    
+    width: 20px;
     position: absolute;
     top: 8px;
     right: 8px;
@@ -139,6 +163,7 @@
     overflow: hidden;
     width: 85%;
     font-size: 14px;
+    white-space: nowrap;
 }
 .defaltdrpdwn ul#dropdown-basic li:hover {
     background-color: #e9ecef;
@@ -157,16 +182,21 @@
     background-color: #fff;
     border-color: #4AB0F5 !important;
 }
-
+.defaltdrpdwn button span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+}
 .tsttooltipbtn { 
     position: relative;
 }
 span.testtooltip {
     position: absolute;
-    /* top: 10px;
-    left: 32px; */
-    bottom: -25px;
-    right: 0px;
+    top: 5px;
+    left: 35px;
+    /* bottom: -25px;
+    right: 0px; */
     background-color: #001c47;
     color: #fff;
     width: max-content;
@@ -181,10 +211,10 @@ span.testtooltip:before {
     border-width: 0px 0px 2px 2px;
     position: absolute;
     padding: 4px;
-    /* left: -3px;
-    top: 10px; */
-    right: 10px;
-    top: -5px;
+    left: -3px;
+    top: 10px;
+    /* right: 10px;
+    top: -5px; */
     background: #001c47;
     transform: rotate(45deg);
 }

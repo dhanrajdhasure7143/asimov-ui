@@ -57,11 +57,9 @@
     </span>-->
                 <button (click)="addtasks(addTask)" class="tsttooltipbtn" pTooltip="Add Task" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
-      <!-- <span class="testtooltip">Add Task</span> -->
     </button>
                 <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
       <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
-      <!-- <span class="testtooltip">Reset</span> -->
     </button>
     <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
       <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
@@ -70,7 +68,6 @@
     <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" 
         (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
-      <!-- <span  class="testtooltip">Run Process</span> -->
     </button>
                 <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
@@ -88,7 +85,6 @@
     <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" 
         (click)="startscheduler()" pTooltip="Open Scheduler" tooltipPosition="top">
      <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
-      <!-- <span class="testtooltip">Open Scheduler</span> -->
     </button>
 
     <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
@@ -97,65 +93,50 @@
 
     <button *ngIf="selectedvalue!=''" id="autoViewLogs" class="tsttooltipbtn" (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
       <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
-      <!-- <span class="testtooltip">View Logs</span> -->
     </button>
             </div>
 
         </div>
         <div class="">
-            <!-- <mat-card> -->
             <div class="orchestration-table-container">
                 
                     <p-table  #dt [value]="responsedata" cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)"
                     [globalFilterFields]="['processName','taskName','createdBy','taskType','category','status']" [scrollable]="true"
                     [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
                     <ng-template pTemplate="caption">
-                        <div class="flex">
+                        <div class="d-flex">
                             <span class="p-input-icon-right gridsearch">
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                            </span>
-                            <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button> -->
-                            
+                              </span>
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="processName" pReorderableColumn pResizableColumn>Process Name
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="processName" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="processName"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="taskName" pReorderableColumn pResizableColumn>Task
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="taskName" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="taskName"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="ProcessOwner" pReorderableColumn pResizableColumn>Process Owner
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="createdBy" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="createdBy"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="TaskOwner" pReorderableColumn pResizableColumn>Task Owner</th>
-                                <th pSortableColumn="taskType" pReorderableColumn pResizableColumn>Task Type
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="taskType" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="taskType"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="category" pReorderableColumn pResizableColumn>Category
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="category" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="category"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="BotSource" pReorderableColumn pResizableColumn>Bot Source</th>
-                                <th pSortableColumn="AssignResource" pReorderableColumn pResizableColumn>Assign Resource</th>
-                                <th pSortableColumn="status" pReorderableColumn pResizableColumn>Status
-                                    <p-columnFilter type="text" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" field="status" display="menu"></p-columnFilter>
-                                     <p-sortIcon field="status"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="Actions" pReorderableColumn pResizableColumn>Actions</th>
+                                <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                                    <p-columnFilter *ngIf="each.ShowFilter && each.field != 'category'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
+                                              display="menu" [showApplyButton]="false">
+                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="search">
+                                          </ng-template>
+                                    </p-columnFilter>
+              
+                                    <p-columnFilter  *ngIf="each.ShowFilter && each.field == 'category'" [field]="each.field" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                    [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
+                                                optionLabel="categoryName" optionValue="categoryName" placeholder="All">
+                                            </p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
+                                  </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-element>
                             <tr>
-                                <!-- <td [pTooltip]="element.processName">{{(element.processName.length >10) ?
-                                    ((element.processName).slice(0, 10) + '...') : element.processName}}</td> -->
-                                    <td [pTooltip]="element.processName">{{element.processName}}</td>
+                                <td [pTooltip]="element.processName">{{element.processName}}</td>
                                 <td>
                                     <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{element.taskName}}</span>
                                         <!-- <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
@@ -276,39 +257,39 @@
                                             </span>
                     
                                             <span *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary">
-                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="(element.status=='Success' || element.status=='Executed') ">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="element.status=='Rejected' ">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="element.status=='Approved' ">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="(element.status=='Failure' || element.status=='Failed')">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="element.status=='New'" class="text-primary">
-                                                <img src='../../../../../assets/images/RPA/newicon.png' class="testplus">
+                                                <img src='../../../../../assets/images/RPA/newicon.png' class="testplus" alt="">
                                             </span>
                                             <span *ngIf="element.status=='Stop' || element.status=='Stopped'">
-                                                <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
+                                                <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus" alt="">
                                             </span>
                     
                                             <span *ngIf="element.status=='Paused' || element.status=='Pause'">
-                                                <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" alt=""/>
                                             </span>
                     
                                             <span *ngIf="element.status==null || element.status==''">
                                                 <span>
-                                                    <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" />
+                                                    <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="" />
                                                 </span>--
                                             </span>
                                         </span>
@@ -322,22 +303,22 @@
                                             <button [disabled]="element.taskType=='Human' || element.taskType==null"
                                                 [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''"
                                                 (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="assignbot(element.taskId, element.processId)"
                                                 *ngIf="element.taskType == 'Automated'" pTooltip="Assign" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/>
                                             </button>
                                             <button (click)="assignbot(element.taskId, element.processId)"
                                                 *ngIf="element.taskType == 'Human'" pTooltip="Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/>
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" />
                                             </button>
                                         </span>
                                         <span>
@@ -346,22 +327,22 @@
                                                 <!-- <img src="../../../../../assets/images/Projects/eye-show.svg"
                                                     class="testplus" /> -->
                                                 <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
-                                                    class="testplus" />
+                                                    class="testplus" alt=""/>
                                             </button>
                                             <button *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
-                                                <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" alt=""/>
                                                 <!-- <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
                                                     class="testplus hover-img" /> -->
                                             </button>
                                             <button *ngIf="element.taskType !='Automated'" class="undobtn">
-                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" alt=""/>
                                             </button>
                     
                                         </span>
                                         <span>
                                             <button pTooltip="Delete Task" tooltipPosition="top" class="undobtn" (click)="delete(element.taskId)">
                                                 <img src="../../../../../assets/images-n/dashboard/dash-delete.svg"
-                                                    class="testplus" />
+                                                    class="testplus" alt=""/>
                                                 <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img" /> -->
                                             </button>
                                         </span>
@@ -371,32 +352,31 @@
                                             <button [disabled]="element.taskType=='Human' || element.taskType==null"
                                                 [class]="(element.taskType=='Human' || element.                taskType==null)?'undobtn':''"
                                                 (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus" alt=""/>
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="assignhuman(element)" pTooltip="Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/>
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)"
                                                 *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" pTooltip="View Bot" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" alt=""/>
                                             </button>
                                             <button *ngIf="element.taskType !='Automated'">
-                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                                <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" alt=""/>
                                             </button>
                                         </span>
                                         <span>
                                             <button pTooltip="Delete Task" tooltipPosition="top" (click)="delete(element.taskId)">
-                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg"
-                                                    class="testplus" />
+                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg" class="testplus" alt="" />
                                             <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" /> -->
                                             </button>
                                         </span>
@@ -743,10 +723,10 @@
                     <div class="col-md-2" style="margin-bottom:25px;">
                     </div>
                     <div class="col-md-4 img_box_shadow" style="padding:40px;margin-bottom:25px;">
-                        <button (click)="getblueprismconfiguration()" class=""><img style="width:260px !important;height:60px !important;" src="/assets/images/blue-blue_prism_logo.png"></button>
+                        <button (click)="getblueprismconfiguration()" class=""><img style="width:260px !important;height:60px !important;" src="/assets/images/blue-blue_prism_logo.png" alt=""></button>
                     </div>
                     <div class="col-md-4 img_box_shadow" style="padding:40px;margin-bottom:25px;">
-                        <button (click)="getUIpathconfiguration()"><img style="width:180px !important;height:65px !important;" src="/assets/images/UIpath_logo.png"></button>
+                        <button (click)="getUIpathconfiguration()"><img style="width:180px !important;height:65px !important;" src="/assets/images/UIpath_logo.png" alt=""></button>
                     </div>
 
                     <div class="col-md-2" style="margin-bottom:25px;">
@@ -786,11 +766,11 @@
                                 <td>{{element.port}}</td>
                                 <td>
                                     <span *ngIf="element.status==1">
-                                  <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" >Active
+                                  <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" alt="">Active
                                 </span>
 
                                     <span *ngIf="element.status==0">
-                                 <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" >Inactive
+                                 <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" alt="" >Inactive
                               </span>
                                 </td>
                                 <td style="width:100px">
