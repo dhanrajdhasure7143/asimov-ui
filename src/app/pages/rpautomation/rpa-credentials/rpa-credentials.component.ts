@@ -234,14 +234,14 @@ inputNumberOnly(event){
   openCreateCredential(){
     this.isCreateForm = true;
     this.hiddenPopUp=true;
-    document.getElementById("createcredentials").style.display='block';
+    // document.getElementById("createcredentials").style.display='block';
     // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     // document.getElementById("Updatecredntials").style.display='none';
   }
 
   openUpdateCredential() {
     this.hiddenPopUp=true;
-    document.getElementById('createcredentials');
+    // document.getElementById('createcredentials');
     this.isCreateForm = false;
     this.credupdatedata = this.selectedData[0];
   }

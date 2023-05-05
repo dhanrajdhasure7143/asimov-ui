@@ -173,7 +173,8 @@ roles_list = [
 {name: 'Process Architect', code: 'Process Architect'},
 {name: 'RPA Developer', code: 'RPA Developer'},
 {name: 'Process Owner', code: 'Process Owner'},
-{name: 'Process Designer', code: 'Process Designer'}
+{name: 'Process Designer', code: 'Process Designer'},
+{name: 'Platform Admin', code: 'Platform Admin'}
 ];
 selectedRole:any= "All";
 users_tableList:any=[];
