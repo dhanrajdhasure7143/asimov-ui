@@ -19,7 +19,8 @@
                   <span class="star" *ngIf="field.mandatory">*</span> 
                 </label>
                 <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"
-                [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [maxlength]="field.length" />
+                [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [maxlength]="field.length" [attr.disabled]="
+                field.read_only ? '' : null && details != undefined" />
                   <div *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')" class="required">
                     Tenant Name is already exists*
                 </div>
@@ -111,7 +112,8 @@
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()" class="form-control"
-              [required]="field.mandatory" [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder"
+              [required]="field.mandatory" [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [attr.disabled]="
+              field.read_only ? '' : null && details != undefined"
               [maxlength]="field.length" />
             <div
               *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')"
