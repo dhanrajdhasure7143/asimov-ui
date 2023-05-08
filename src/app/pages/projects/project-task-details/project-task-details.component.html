@@ -8,7 +8,7 @@
                                 alt="back-arrow"></a>
                     </label>
                     <span class="title_text_haspath">
-                        Projects | <span>{{project_name}}</span> | <span class="sub_title_text">{{task_details.taskName}}</span>
+                       <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span (click)="backToProjectDetails()">{{project_name}}</span> | <span class="sub_title_text">{{task_details.taskName}}</span>
                     </span>
                 </h3>
             </div>
