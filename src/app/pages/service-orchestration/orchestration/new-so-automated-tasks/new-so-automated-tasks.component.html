@@ -136,14 +136,14 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-element>
                             <tr>
-                                <td [pTooltip]="element.processName">{{element.processName}}</td>
+                                <td [pTooltip]="element.processName" tooltipPosition="top">{{element.processName}}</td>
                                 <td>
-                                    <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{element.taskName}}</span>
+                                    <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
                                         <!-- <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
                                             5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span> -->
                                     <span *ngIf="element.taskName==null">-</span>
                                 </td>
-                                <td [pTooltip]="element.createdBy">{{element.createdBy}}</td>
+                                <td>{{element.createdBy}}</td>
                                 <td>
                                     <span *ngIf="element.taskType=='Automated'">
                                         <select class="form-control" 
@@ -160,14 +160,11 @@
                                             </option>
                                         </select>
                                     </span>
-                                    <span *ngIf="element.taskType !='Automated'">
-                                        -
-                                    </span>
+                                    <span *ngIf="element.taskType !='Automated'">-</span>
                                 </td>
                                 <td>
-                                    <span *ngIf="element.taskType!=null" [pTooltip]="element.taskType">
-                                        {{(element.taskType.length > 10) ? ((element.taskType).slice(0, 10) + '...') :
-                                        element.taskType}}
+                                    <span *ngIf="element.taskType!=null">
+                                        {{element.taskType}}
                                     </span>
                                     <span *ngIf="element.taskType==null">-</span>
                                 </td>
@@ -189,7 +186,6 @@
                                 </td>
                                 <td>
                                     <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
-                    
                                         <span *ngIf="isbotloading=='loading'">
                                             Loading...
                                         </span>

@@ -95,7 +95,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   columnList=[
     {DisplayName:"Process Name",field:"processName",ShowFilter: true},
     {DisplayName:"Task",field:"taskName",ShowFilter: true},
-    {DisplayName:"Process Owner",field:"ProcessOwner",ShowFilter: true},
+    {DisplayName:"Process Owner",field:"createdBy",ShowFilter: true},
     {DisplayName:"TaskOwner",field:"Task Owner",ShowFilter: false},
     {DisplayName:"taskType",field:"Task Type",ShowFilter: true},
     {DisplayName:"category",field:"Category",ShowFilter: true},
