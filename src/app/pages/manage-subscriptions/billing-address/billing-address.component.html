@@ -27,13 +27,13 @@
                     <label  class="label-control" for="taskCategory">Country<span class="star">*</span></label>
                     <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
-                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="CountryName" optionValue="CountryName"></p-dropdown>
+                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="name"></p-dropdown>
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
                         class="required">Country is Required *</span>
             </div>
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
-                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionValue="StateName" optionLabel="StateName"
+                <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionValue="name" optionLabel="name"
                     [autoDisplayFirst]="false" placeholder="Select State/Region" formControlName="state"
                     (onChange)="onChangeState($event.value)">
                 </p-dropdown>
@@ -44,7 +44,7 @@
                 <label  class="label-control" for="priority">City <span class="star">*</span></label>
                 <span>
                     <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}"
-                        [autoDisplayFirst]="false" placeholder="Select City" formControlName="city">
+                        [autoDisplayFirst]="false" placeholder="Select City" formControlName="city" optionLabel="name" optionValue="name">
                     </p-dropdown>
                 </span>
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
