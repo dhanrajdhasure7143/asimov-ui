@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="eye-show-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #2c4469;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <path id="Path_836" data-name="Path 836" class="cls-2" d="M0,0H24V24H0V0Z"/>
+  <g id="eye">
+    <path id="Path_853" data-name="Path 853" class="cls-1" d="M2,12s3.64-7,10-7,10,7,10,7c0,0-3.64,7-10,7S2,12,2,12Z"/>
+    <circle id="Ellipse_432" data-name="Ellipse 432" class="cls-1" cx="12" cy="12" r="3"/>
+  </g>
+</svg>

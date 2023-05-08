@@ -3820,3 +3820,16 @@ textarea.p-inputtextarea {
     display :none;
   }
 
+.create-pad{padding:8px 12px !important;}
+.configure-pad{padding:8px 14px !important;}
+.plus{color:#2C4469}
+.grey-btn {
+  background-color: #ECF1FB !important;
+  margin-left: 8px !important; 
+  padding: 8px 12px!important;
+  height: 36px;   
+}
+.grey-btn:hover {
+background-color: #D8E0EF !important;  
+}
+.imgicon-width{width:17px;}

@@ -1,6 +1,18 @@
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 4.53336H3.76667H17.9" stroke="#2E323A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M16.1323 4.53333V16.9C16.1323 17.3685 15.9462 17.8179 15.6148 18.1492C15.2835 18.4805 14.8342 18.6667 14.3656 18.6667H5.53229C5.06374 18.6667 4.61438 18.4805 4.28307 18.1492C3.95176 17.8179 3.76563 17.3685 3.76562 16.9V4.53333M6.41562 4.53333V2.76667C6.41562 2.29812 6.60176 1.84876 6.93307 1.51744C7.26438 1.18613 7.71374 1 8.18229 1H11.7156C12.1842 1 12.6335 1.18613 12.9648 1.51744C13.2962 1.84876 13.4823 2.29812 13.4823 2.76667V4.53333" stroke="#2E323A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M8.18359 8.95V14.25" stroke="#2E323A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11.7158 8.95V14.25" stroke="#2E323A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.4 19.17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #2c4469;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M.75,4.28h15.9"/>
+  <path class="cls-1" d="M14.88,4.28v12.37c0,.47-.19,.92-.52,1.25-.33,.33-.78,.52-1.25,.52H4.28c-.47,0-.92-.19-1.25-.52-.33-.33-.52-.78-.52-1.25V4.28m2.65,0v-1.77c0-.47,.19-.92,.52-1.25,.33-.33,.78-.52,1.25-.52h3.53c.47,0,.92,.19,1.25,.52,.33,.33,.52,.78,.52,1.25v1.77"/>
+  <path class="cls-1" d="M6.93,8.7v5.3"/>
+  <path class="cls-1" d="M10.47,8.7v5.3"/>
 </svg>

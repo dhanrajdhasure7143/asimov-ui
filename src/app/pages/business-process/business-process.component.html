@@ -154,12 +154,13 @@
           </div>
           <div class="col-md-6 p-0 module-heading-buttons bps-aprwkfl" *ngIf="isHeaderShow == 'false'">
             <span>
-              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn" pTooltip="Approvals" tooltipPosition="top">
-                <img  src="../../../assets/images/BPMS/Workflow.svg" alt="Approvals">
+              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home"  pTooltip="Approvals" tooltipPosition="top">
+                <img  src="../../../assets/images-n/dashboard/Workflow.svg" class="grey-btn create-pad" alt="Approvals">
                 <!-- Approvals -->
               </button>
-              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()" class="btn" pTooltip="View Cockpit" tooltipPosition="top">
-                <img  src="../../../assets/images/BPMS/eye-show-blue.svg" alt="viewcockpit">
+              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()"  class="grey-btn configure-pad">
+                <img  src="../../../assets/images-n/dashboard/eye-show-blue.svg"  alt="viewcockpit" class="imgicon-width">
+                <span class="plus">Cockpit</span>
                 <!-- <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit -->
               </button> 

@@ -103,7 +103,7 @@ button.btn.bluebg-button {
     height: 32px;
     /* margin-right: 10px; */
 }
-.grey-btn {
+/* .grey-btn {
     background-color: #E0E8ED !important;
     margin-left: 8px !important; 
     padding: 8px !important;
@@ -111,7 +111,7 @@ button.btn.bluebg-button {
 }
 .grey-btn:hover {
 background-color: #EAE9E9 !important;  
-}
+} */
 
 .delete-dbtn img {
     height: 20px;

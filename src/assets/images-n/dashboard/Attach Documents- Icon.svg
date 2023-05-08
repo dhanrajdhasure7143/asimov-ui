@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.3 18.8">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-width: 1.3px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #2c4469;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="Attach_Documents-_Icon" data-name="Attach Documents- Icon">
+    <path id="Path_1365" data-name="Path 1365" class="cls-1" d="M8.52,.65H2.4c-.97,0-1.75,.78-1.75,1.75v14c0,.97,.78,1.75,1.75,1.75H12.9c.97,0,1.75-.78,1.75-1.75V6.77L8.52,.65Z"/>
+    <path id="Path_1366" data-name="Path 1366" class="cls-1" d="M8.52,.65V6.77h6.12"/>
+    <path id="Path_1367" data-name="Path 1367" class="cls-2" d="M11.1,12.08l-3.26,3.27c-.85,.82-2.2,.79-3.02-.06-.8-.83-.8-2.13,0-2.96l3.27-3.27c.53-.58,1.43-.62,2.01-.09,.58,.53,.62,1.43,.09,2.01-.03,.03-.06,.06-.09,.09l-3.27,3.26c-.29,.27-.74,.25-1.01-.03-.26-.27-.26-.7,0-.97l3.02-3.01"/>
+  </g>
+</svg>
