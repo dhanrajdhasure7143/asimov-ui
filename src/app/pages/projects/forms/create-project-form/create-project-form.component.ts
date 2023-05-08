@@ -101,22 +101,21 @@ export class CreateProjectFormComponent implements OnInit {
       //   this.categoryName=this.categories_list[0].categoryName
       // }
     });
-  }
-  city: any;
+  };
 
   ngOnChanges() {
-    this.users_list.forEach((element) => {
-      if (element.userId.userId != this.loggedInUserId)
-        this.resources_list.push(element);
-    });
-    if(!this.hiddenPopUp)
       setTimeout(() => {
+        this.users_list.forEach((element) => {
+          if (element.user_email != this.loggedInUserId)
+            this.resources_list.push(element);
+        });
+      if(!this.hiddenPopUp)
         this.resetcreateproject();
       }, 200);
   }
 
   getprocessnames() {
-    this.rest_api.getprocessnames().subscribe((processnames) => {
+    this.rest_api.getprocessnames().subscribe((processnames:any) => {
       let response: any = processnames;
       let resp: any = [];
       //resp=processnames
