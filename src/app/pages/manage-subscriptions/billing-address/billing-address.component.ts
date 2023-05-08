@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import countries from "src/app/../assets/jsons/countries.json";
+// import countries from "src/app/../assets/jsons/countries.json";
+import { Country, State, City }  from 'country-state-city';
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 
@@ -78,29 +79,27 @@ export class BillingAddressComponent implements OnInit {
   }
 
   getCountries() {
-    this.countryInfo = countries.Countries;
+    this.countryInfo = Country.getAllCountries();
   }
 
   onChangeCountry(countryValue) {
-    this.stateInfo = [
-      ...(this.countryInfo.find(
-        (item: any) => item.CountryName == countryValue
-      ) != undefined
-        ? this.countryInfo.find((item: any) => item.CountryName == countryValue)
-            .States
-        : []),
-    ];
+    this.stateInfo = State.getAllStates();
     this.cityInfo = [];
+    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+    if (matchingCountry) {
+      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
+    }
   }
 
   onChangeState(stateValue) {
-    this.cityInfo = [
-      ...(this.stateInfo.find((item: any) => item.StateName == stateValue) !=
-      undefined
-        ? this.stateInfo.find((item: any) => item.StateName == stateValue)
-            .Cities
-        : []),
-    ];
+    this.cityInfo = City.getAllCities();
+    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
+    if (matchingState) {
+      this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+    }
+    if (this.cityInfo.length === 0) {
+      this.cityInfo = [{ name: 'NA' }];
+    }
   }
 
   onKeydown(event) {
@@ -127,6 +126,9 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
+    payload.country = this.billingForm.get('country').value;
+    payload.state =  this.billingForm.get('state').value;
+    payload.city = this.billingForm.get('city').value;
    if(!this.editButton) { 
     this.api.saveBillingInfo(payload).subscribe((data) => {
     if (data) {
