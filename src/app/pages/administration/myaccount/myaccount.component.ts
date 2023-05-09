@@ -48,6 +48,7 @@ export class MyAccountComponent implements OnInit {
   ngOnInit() {
     this.loader.show();
     this.countryInfo = countries.Countries;
+    console.log("comuntries",this.countryInfo)
     setTimeout(() => {
       this.userDetails();
     }, 500);
@@ -178,5 +179,8 @@ export class MyAccountComponent implements OnInit {
     if(event.name !=this.formOne.country){
       this.errorMessage="Please Select Appropriate Country *"
     }
-  }
+   if(event.iso2 ==this.phnCountryCode){
+      this.errorMessage =""
+    }
+}
 }
