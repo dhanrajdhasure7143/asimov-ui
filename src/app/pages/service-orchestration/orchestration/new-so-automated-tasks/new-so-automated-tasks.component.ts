@@ -97,8 +97,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     {DisplayName:"Task",field:"taskName",ShowFilter: true},
     {DisplayName:"Process Owner",field:"createdBy",ShowFilter: true},
     {DisplayName:"TaskOwner",field:"Task Owner",ShowFilter: false},
-    {DisplayName:"taskType",field:"Task Type",ShowFilter: true},
-    {DisplayName:"category",field:"Category",ShowFilter: true},
+    {DisplayName:"Task Type",field:"taskType",ShowFilter: true},
+    {DisplayName:"Category",field:"category",ShowFilter: true},
     {DisplayName:"BotSource",field:"Bot Source",ShowFilter: false},
     {DisplayName:"AssignResource",field:"Assign Resource",ShowFilter: false},
     {DisplayName:"Status",field:"status",ShowFilter: true},
@@ -1394,6 +1394,9 @@ resetsla(){
 
   clear(table: Table) {
     table.clear();
+    table.sortOrder = 0;
+    table.sortField = '';
+    table.reset();
   }
   closeOverlay(event){  //overlay close 
 
