@@ -178,5 +178,8 @@ export class MyAccountComponent implements OnInit {
     if(event.name !=this.formOne.country){
       this.errorMessage="Please Select Appropriate Country *"
     }
-  }
+   if(event.iso2 ==this.phnCountryCode){
+      this.errorMessage =""
+    }
+}
 }
