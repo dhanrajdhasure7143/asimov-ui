@@ -13,8 +13,9 @@
       </div>
       <div class="col-md-4 pr-0 text-right">
         <div *ngIf="selectedScreen.Screen_Name">
-          <button class="btn" [disabled]="!selectedScreen.Allow_Insert" (click)="createForm()" pTooltip="Create" tooltipPosition="top">
-            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="create">
+          <button  [disabled]="!selectedScreen.Allow_Insert" class="grey-btn configure-pad" (click)="createForm()">
+            <img src="./../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="create" class="imgicon-width">
+            <span class="plus">Create New</span>
           </button>
         </div>        
       </div>
