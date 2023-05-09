@@ -231,7 +231,10 @@ export class ProjectTaskListComponent implements OnInit {
 
   getTheExistingUsersList(){
     this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
-      this.existingUsersList = res
+      this.users_list.forEach(item2 => {
+        if(res.find((projectResource:any) => item2.user_email==projectResource.userId)!=undefined)
+        this.existingUsersList.push(item2);
+      })
     })
   }
 

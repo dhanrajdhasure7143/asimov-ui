@@ -1109,7 +1109,6 @@ let req_body = {
   url : this.router.url,
   projectName:this.projectDetails.projectName
 };
-// console.log(req_body)
 this.router.navigate(['pages/projects/document-editor'],
 { queryParams: { id:btoa(JSON.stringify(req_body)) } })
 }
