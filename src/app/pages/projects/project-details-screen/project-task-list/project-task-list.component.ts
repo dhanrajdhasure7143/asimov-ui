@@ -38,7 +38,7 @@ export class ProjectTaskListComponent implements OnInit {
     {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "multiSelect",filterType: "text",sort: true,multi: false },
     {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
     {ColumnName: "endDate_converted",DisplayName: "Due Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-    { ColumnName: "action",DisplayName: "",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
+    { ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
   ];
 
   constructor(

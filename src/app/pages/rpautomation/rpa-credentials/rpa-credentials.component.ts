@@ -132,16 +132,16 @@ inputNumberOnly(event){
             sort: true,
             multi: false,
           },
-          {
-            ColumnName: "password_new",
-            DisplayName: "Password",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
+          // {
+          //   ColumnName: "password_new",
+          //   DisplayName: "Password",
+          //   ShowFilter: true,
+          //   ShowGrid: true,
+          //   filterWidget: "normal",
+          //   filterType: "text",
+          //   sort: true,
+          //   multi: false,
+          // },
           {
             ColumnName: "tableClientId",
             DisplayName: "Client Id",
@@ -223,6 +223,7 @@ inputNumberOnly(event){
             sort: true,
             multi: false,
           },
+          {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:true},
         ];
         this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted","host","port"]
         this.spinner.hide();
@@ -316,8 +317,7 @@ inputNumberOnly(event){
     this.selectedData.length > 0 ?this.Creddeleteflag =true :this.Creddeleteflag =false
     this.selectedData.length == 1 ?this.Credupdateflag =true :this.Credupdateflag =false
   }
-  closeOverlay(event)
-  {
+  closeOverlay(event){
     this.hiddenPopUp=false;
   }
 }

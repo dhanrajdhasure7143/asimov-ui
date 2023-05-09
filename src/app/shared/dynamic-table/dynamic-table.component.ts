@@ -49,9 +49,12 @@ export class DynamicTableComponent implements OnInit {
   statusColors = {
     Medium: 'orange',
     High: 'red',
-    Low: 'green'
-  }
-  
+    Low: 'green',
+    Yes:"green",
+    No: 'red',
+    Active :'green',
+    Inactive:'red'
+  };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
@@ -70,6 +73,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
+    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
 
@@ -103,7 +107,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   getColor(status) {
-    return this.statusColors[status];
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 
   editRowBy_Id(rowData:any){

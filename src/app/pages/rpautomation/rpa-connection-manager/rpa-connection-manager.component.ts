@@ -101,6 +101,7 @@ export class RpaConnectionManagerComponent implements OnInit {
           sort: false,
           multi: false,
         },
+      // {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:true},
       ];
       this.table_searchFields=["name","actionCount"]
     });

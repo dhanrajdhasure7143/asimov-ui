@@ -15,7 +15,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  public databaselist: any;
+  public databaselist: any[]=[];
   public toggle: boolean;
   public dbupdateflag: boolean = false;
   public submitted: Boolean;
@@ -39,12 +39,26 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   isDatabase: boolean = false;
   h2flag: boolean = false;
   noDataMessage: boolean;
-  columns_list:any =[]
   selectedData: any;
   categories_list: any=[];
   table_searchFields: any[]=[];
   hiddenPopUp:boolean=false;
-  overlayClose:boolean = false
+  overlayClose:boolean = false;
+  statusType=["Active","Inactive"];
+  columns_list:any[] = [
+    {ColumnName: "connectiontName",DisplayName: "Connection Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
+    {ColumnName: "categoryName",DisplayName: "Category",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":this.categories_list},
+    {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":this.databaselist},
+    {ColumnName: "databasename",DisplayName: "Database Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "schemaName",DisplayName: "Schema",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+    {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":this.statusType},
+    {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false},
+    {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:true},
+  ];
 
   constructor(private api: RestApiService,
     private router: Router,
@@ -52,18 +66,12 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     private dt: DataTransferService,
     private spinner: LoaderService
   ) {
-    const ipPattern =
-      "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-
+    const ipPattern ="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     this.DBupdateflag = false;
     this.DBdeleteflag = false;
-
   }
 
   ngOnInit() {
-    this.api.getDatabaselist().subscribe(res => {
-      this.databaselist = res;
-    })
     //   //     document.getElementById("filters").style.display='block';
     //this.getallDBConnection();
     this.getCategories()
@@ -98,132 +106,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
           item["password_new"]=("*").repeat(10);
           item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp?item.createdTimeStamp:item.modifiedTimestamp)
+          item["status"] = item.activeStatus==7?"Active":"Inactive"
           return item;
         })
       }      
-      this.columns_list = [
-        {
-          ColumnName: "connectiontName",
-          DisplayName: "Connection Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "categoryName",
-          DisplayName: "Category",
-          ShowFilter: true,
-          ShowGrid: true,
-          filterWidget: "dropdown",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        "dropdownList":this.categories_list
-        },
-        {
-          ColumnName: "password_new",
-          DisplayName: "Password",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "dataBaseType",
-          DisplayName: "Database Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "databasename",
-          DisplayName: "Database Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "hostAddress",
-          DisplayName: "IP Address / Host",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "portNumber",
-          DisplayName: "Port",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "username",
-          DisplayName: "Username",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "schemaName",
-          DisplayName: "Schema",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "createdBy",
-          DisplayName: "Created By",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "activeStatus",
-          DisplayName: "Status",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "createdTimeStamp_converted",
-          DisplayName: "Created Date",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "date",
-          sort: true,
-          multi: false,
-        },
-      ]
+
       this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted","createdBy"]
 
       this.spinner.hide();
@@ -359,6 +246,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
+        this.getListofDBConnections();
         this.getallDBConnection();
       }
     })
@@ -382,8 +270,18 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.selectedData.length == 1 ?this.DBupdateflag =true :this.DBupdateflag =false
   }
 
-  closeOverlay(event)
-  {
+  closeOverlay(event){
     this.hiddenPopUp=event;
+  }
+
+  getListofDBConnections(){
+    this.api.getDatabaselist().subscribe((res:any)=>{
+      this.databaselist=res;
+      let _databaseList=[];
+      this.databaselist.forEach(e=>{
+        _databaseList.push(e.databaseName)
+      });
+      this.columns_list[2]["dropdownList"]=_databaseList;
+    })
   }
 }

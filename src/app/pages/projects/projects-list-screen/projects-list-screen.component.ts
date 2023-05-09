@@ -160,7 +160,7 @@ export class ProjectsListScreenComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: true,
-        multiOptions: ["projectName", "priority"],
+        multiOptions: ["projectName", "priority"],showTooltip:true
       },
       {
         ColumnName: "process_name",
@@ -168,9 +168,7 @@ export class ProjectsListScreenComponent implements OnInit {
         ShowGrid: true,
         ShowFilter: true,
         filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: false,
+        filterType: "text",sort: true,multi: false,showTooltip:true
       },
       {
         ColumnName: "department",
@@ -203,26 +201,11 @@ export class ProjectsListScreenComponent implements OnInit {
         sort: true,
         multi: true,
         multiOptions: ["lastModifiedBy", "updatedDate"],
+        userProfile:true,userProfileKey:"lastModifiedByEmail"
       },
-      // {
-      //   ColumnName: "updatedDate",
-      //   DisplayName: "Updated Date",
-      //   ShowGrid: false,
-      //   ShowFilter: false,
-      //   sort: false,
-      //   multi: false,
-      // },
-      // {
-      //   ColumnName: "priority",
-      //   DisplayName: "Priority",
-      //   ShowGrid: false,
-      //   ShowFilter: false,
-      //   sort: false,
-      //   multi: false,
-      // },
       {
         ColumnName: "action",
-        DisplayName: "",
+        DisplayName: "Action",
         ShowGrid: true,
         ShowFilter: false,
         sort: false,
@@ -331,7 +314,7 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
     this.confirmationService.confirm({
-      message: "Do you really want to delete this project? This process cannot be undone.",
+      message: "Do you really want to delete this project? This process cannot be undo.",
       header: "Are you Sure?",
       
       accept: () => {
