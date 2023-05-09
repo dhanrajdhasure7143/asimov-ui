@@ -38,6 +38,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_download_btn") public show_download_btn:boolean;
   @Output() downloadItem = new EventEmitter<any[]>();
   @Output() openUpdateOverlay = new EventEmitter<any[]>();
+  @Output("onRow_DoubleClick") onRow_DoubleClick:any= new EventEmitter<any>();
   public loggedUserRole: any[]=[];
   _selectedColumns: any[];
   customers: any = [];
@@ -131,5 +132,9 @@ export class DynamicTableComponent implements OnInit {
 
   downloadRow(row) {
     this.downloadItem.emit(row);
+  }
+
+  onRowDoubleClick(event: any,rowData){
+      this.onRow_DoubleClick.emit(rowData);
   }
 }

@@ -72,7 +72,7 @@ export class RpaenvironmentsComponent implements OnInit {
       {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.categories_list},
       {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
       {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
-      {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+      {ColumnName: "username",DisplayName: "User Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
       // {ColumnName: "password_new",DisplayName: "Password / Key",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
       {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.statusType},
       {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.deployedStatus},
@@ -146,12 +146,12 @@ export class RpaenvironmentsComponent implements OnInit {
     }
   }
 
-  openUpdateEnvOverlay() {
+  openUpdateEnvOverlay(data) {
     this.isCreate = false;
     document.getElementById("createenvironment")
     document.getElementById('update-popup')
         this.isOpenSideOverlay = true;
-    for (let data of this.selected_list) {
+    // for (let data of this.selected_list) {
         if (data.password.password == undefined) {
           this.isKeyValuePair = true
           this.password = ""
@@ -166,7 +166,7 @@ export class RpaenvironmentsComponent implements OnInit {
         }
         this.updateenvdata = data
       
-    }
+    // }
   }
 
   keypair(event) {
@@ -283,5 +283,36 @@ export class RpaenvironmentsComponent implements OnInit {
 
   closeSideOverlay(event){
     this.isOpenSideOverlay=event
+  }
+
+  deletebyId(data){
+    const selectedEnvironments=[data.environmentId];
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
+            this.spinner.hide();
+            if (res.errorMessage == undefined) {
+              Swal.fire("Success", res.status, "success")
+              this.getallData();
+            } else {
+              Swal.fire("Error", res.errorMessage, "error")
+            }
+          }, err => {
+            this.spinner.hide();
+            Swal.fire("Error", "Unable to delete environment", "error")
+          })
+        }
+      })
   }
 }

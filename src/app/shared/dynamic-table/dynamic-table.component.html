@@ -68,7 +68,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
+            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRowDoubleClick($event,rowData)">
                 <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
@@ -164,7 +164,7 @@
                             </span>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null" class="w-100 text-center">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'" class="w-100 text-center">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
@@ -177,7 +177,7 @@
                         </div>
                     </span>
                     
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList'" class="taskList-table-actions">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
@@ -191,7 +191,7 @@
                             </a>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable' && selectedItem != null" class="w-100 text-center">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable'" class="w-100 text-center">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
@@ -203,7 +203,7 @@
                         </div>
                     </span>
 
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList' && selectedItem != null" class="w-100 text-center">
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList'" class="w-100 text-center">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
@@ -218,13 +218,6 @@
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                             </span>
                         </div>
-                    </span>
-                    <span *ngIf="col.ColumnName == 'action' && col.freeze">
-                        <span class="" pTooltip="View" tooltipPosition="top">
-                            <button>
-                                <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
-                            </button>
-                        </span>
                     </span>
                 </td>
             </tr>
