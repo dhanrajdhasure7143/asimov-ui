@@ -48,7 +48,6 @@ export class MyAccountComponent implements OnInit {
   ngOnInit() {
     this.loader.show();
     this.countryInfo = countries.Countries;
-    console.log("comuntries",this.countryInfo)
     setTimeout(() => {
       this.userDetails();
     }, 500);
