@@ -132,10 +132,12 @@ span.lowimp {
   margin-bottom: 7px; 
   position: unset;
 }
-.taskdescription span.task-descwords {
+.taskdescription .task-descwords {
   display: block;
-  height: 450px;
+  /* height: 450px; */
+  height: calc(100vh - 220px);
   overflow: auto;
+  padding-right: 10px;
 }
 button span {
   margin-left: 5px;
@@ -144,7 +146,7 @@ button span {
   border: 1px solid #d0d0d0;
   border-radius: 6px;
   background-color: #fff;
-  padding: 5px 15px 10px;
+  /* padding: 5px 15px 10px; */
   height: 100%;
 } 
 .commentBox button {
@@ -152,8 +154,8 @@ button span {
   float: right;
 }
 .userimage {
-  margin-right: 6px;
-  width: 10%;
+  margin-right: 15px;
+  /* width: 10%; */
 }
 .comment-name {
   width: 85%;
@@ -178,9 +180,12 @@ button span {
   color: #fff;
   padding: 10px;
 }
+ul.historydiv {
+  list-style-type: none;
+}
 ul.historydiv li {
   border-bottom: 1px solid #e0e0e0;
-  padding: 15px 0px;
+  padding: 12px 0px;
 }
 /* ul.historydiv li:first-child {
   padding-top: 0px;
@@ -200,7 +205,7 @@ ul.historydiv li:last-child {
 }
 .commentBox .addcomment {
   /* border-top: 1px solid #d0d0d0; */
-  padding-top: 5px; 
+  padding: 5px 15px 10px;
   /* position: absolute;
   bottom: 0px;
   width: 100%; */
@@ -216,6 +221,7 @@ ul.historydiv li:last-child {
   /* height: calc(100vh - 300px); */
   height: calc(100vh - 225px);
   overflow: auto;
+  padding: 0px 15px 10px;
 }
 
 .fileupsec {
@@ -260,6 +266,8 @@ button.btn.btn-primary.savefoldername {
 .commentaddedby {
   border-bottom: 1px solid #e0e0e0;
   padding: 15px 0px;
+  margin: 0px 15px !important;
+  width: 95%;
 }
 .content div:last-child .commentaddedby {
   border-bottom: unset;

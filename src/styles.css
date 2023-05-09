@@ -2664,9 +2664,7 @@ cursor: pointer;
   border-left: 0em solid transparent !important;
 }
 .main-content-body {
-  /* height: calc(100% - 50px); */
-  /* pagescroll */
-  height: calc(100% - 52px);
+  height: calc(100% - 75px);
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
@@ -2905,6 +2903,7 @@ th {
   font-weight: 600 !important;
   vertical-align: middle !important;
   font-size: 14px !important;
+  text-transform: capitalize;
 }
 .p-datatable .p-datatable-header {
   padding: 0px !important;
@@ -3350,12 +3349,21 @@ textarea.p-inputtextarea {
   top: 45px !important;
   left: 0px !important;
 }
-.taskdescription span.task-descwords p {
-  margin: 0px;
+.taskdescription p-inplace.p-element {
+  height: calc(100% - 40px);
+  display: inline-block;
+}
+.taskdescription .p-inplace.p-component {
+  height: 100%;
+}
+.taskdescription .task-descwords p br {
+  display: none;
+}
+.taskdescription .task-descwords p {
   cursor: pointer;
   width: fit-content;
 }
-.p-inplace.p-component span.task-descwords {
+.p-inplace.p-component .task-descwords {
   overflow-wrap: break-word;
 }
 .rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(3) {
@@ -3433,6 +3441,8 @@ textarea.p-inputtextarea {
 .commentBox .p-tabview .p-tabview-nav {
   height: 50px !important;
   border-bottom: 1px solid #e0e0e0 !important;
+  padding-top: 5px;
+  margin: 0px 15px 10px;
 }
 
 .commentBox .p-tabview-panels {
