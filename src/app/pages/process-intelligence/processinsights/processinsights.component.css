@@ -418,10 +418,13 @@ span.testtooltip:before {
 }
 
 .activevaraint {
-  color: #ffffff;
+  color: #098de6;
+  background: #fdf6d4;
+  border-left: 2px solid #098de6 !important;
+  /* color: #ffffff;
   background-color: #00a0e3;
   border-top: 1px solid #ffffff !important;
-  border-left: medium none !important;
+  border-left: medium none !important; */
 }
 img.hover-img {
   display: none;

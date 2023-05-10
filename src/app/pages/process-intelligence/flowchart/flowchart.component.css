@@ -127,11 +127,14 @@
     background-color: #098de6
   }
   .activevaraint{
-    color: #ffffff;
+    color: #098de6;
+    background: #fdf6d4;
+    border-left: 2px solid #098de6 !important;
+    /* color: #ffffff;
     background-color: #098de6;
     opacity: 0.9;
     border-top: 1px solid #ffffff !important;
-    border-left: medium none !important;
+    border-left: medium none !important; */
   }
   .events1 p{
     font-size: 12px;
