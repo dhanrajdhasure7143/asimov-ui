@@ -203,7 +203,7 @@
                         <h4 class="colheads">Task Description</h4>
                         <p-inplace #inplace3 (onActivate)="inplaceActivateDesc('inplace3')">
                             <ng-template pTemplate="display">
-                                <span [innerHTML]="task_desc" class="task-descwords"></span>
+                                <div [innerHTML]="task_desc" class="task-descwords"></div>
                                 <!-- <div [innerHtml]="task_desc.html"></div> -->
                                 <!-- <span>{{descChanges(task_desc)}}</span> -->
                             </ng-template>
