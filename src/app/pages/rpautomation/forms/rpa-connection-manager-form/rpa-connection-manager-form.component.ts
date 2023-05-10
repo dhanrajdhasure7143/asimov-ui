@@ -190,6 +190,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
+
+        let params={}
+        this.paramForm.forEach(ele=>{
+          console.log(ele)
+          if(ele.check)
+          params[ele["paramKey"]]=ele["paramValue"];
+        })
        
       let object={
         "endPoint" : this.connectorForm.value.endPoint,
@@ -198,6 +205,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestMethod":this.connectorForm.value.methodType,
         "contentType":"application/json",
         "httpHeaders": obj,
+        "queryParams":params,
         "type":"API",
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
@@ -738,6 +746,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         ));
         this.selectedOne = this.headerForm;
       }
+      if(this.actionData.configurationAsJson["queryParams"]){
+        let params_data = this.actionData.configurationAsJson["queryParams"]
+        Object.keys(params_data).map((key,i) => (
+        this.paramForm.push({
+          index: i,
+          paramKey: key,
+          paramValue: params_data[key],
+          check:true
+        })
+        ));
+      }
       if (this.actionData["actionType"] == "APIRequest"){
         this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"]);
       }
@@ -837,6 +856,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           if(ele.check)
           obj[ele["encodedKey"]]=ele["encodedValue"];
         })
+        
+        let params={}
+        this.paramForm.forEach(ele=>{
+          if(ele.check)
+          params[ele["paramKey"]]=ele["paramValue"];
+        })
+
       let object = {
         endPoint: this.connectorForm.value.endPoint,
         methodType: this.connectorForm.value.methodType,
@@ -844,6 +870,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestMethod":this.connectorForm.value.methodType,
         contentType: "application/json",
         httpHeaders: obj,
+        queryParams: params,
         "type":"API",
         // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
@@ -933,9 +960,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
   }
 
-  onChangeCheckbox(event, fruit, index) {
+  onChangeCheckbox(event, data, index) {
     if (event.target.checked) {
-      this.selectedOne.push(fruit);
+      this.selectedOne.push(data);
     } else {
       if (index >= 0) {
         this.selectedOne.splice(index, 1);
