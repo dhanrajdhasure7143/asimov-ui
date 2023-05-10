@@ -4,11 +4,17 @@
             <div class="col-md-8 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="backToTaskList()"><img src="./../../../../assets/images-n/projects/backarrow.svg"
-                                alt="back-arrow"></a>
+                        <a (click)="backToTaskList()" class="imageBox">
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span>
+                        </a>
                     </label>
                     <span class="title_text_haspath">
-                        Projects | <span>{{project_name}}</span> | <span class="sub_title_text">{{task_details.taskName}}</span>
+                        <span  class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span class="breadcrum-back">{{project_name}}</span> <span class="breadcrum-align">/</span> <span class="sub_title_text">{{task_details.taskName}}</span>
                     </span>
                 </h3>
             </div>

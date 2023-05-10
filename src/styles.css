@@ -2682,9 +2682,9 @@ span.sub_title_text, .p-datatable .p-datatable-thead > tr > th > span {
 label#popup_title {
   margin: 0px;
 }
-#popup_title span {
+/* #popup_title span {
   margin-right: 5px;
-}
+} */
 #popup_title a {
   cursor: pointer;
   margin-right: 8px;
@@ -3833,3 +3833,27 @@ textarea.p-inputtextarea {
 background-color: #D8E0EF !important;  
 }
 .imgicon-width{width:17px;}
+.breadcrum-align {
+  padding: 0px 5px;
+  font-size: 17px;
+  color: #939090;
+}
+.back-arrow-align{background: url("./assets/images-n/projects/backarrow1.png");}
+.breadcrum-back{cursor: pointer;color:#535353}
+.breadcrum-back:hover{color:var(--main-bluecolor);}
+
+.imageBox {
+  position: relative;
+  float: left;
+}
+
+.imageBox .hover-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+
+.imageBox:hover .hover-icon{
+  display: block;
+}

@@ -8,14 +8,14 @@
               field.widget_type == null ||
               field.widget_type == ''">
             <div *ngIf="field.ColumnName !='tenant_name'">
-            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName1 				  <span class="breadcrum-align">/</span>  removeUnderscore				  <span class="breadcrum-align">/</span> titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"
               [placeholder]="field.placeholder=='undefined'? field.placeholder:placeholder" [maxlength]="field.length" pattern="^[a-zA-Z][a-zA-Z\s]*" />
             </div>
               <div *ngIf="field.ColumnName == 'tenant_name'">
-                <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
+                <label class="label-control">{{ field.DisplayName 				  <span class="breadcrum-align">/</span> removeUnderscore 				  <span class="breadcrum-align">/</span> titlecase }}
                   <span class="star" *ngIf="field.mandatory">*</span> 
                 </label>
                 <input type="text" [formControlName]="field.ColumnName" (input)="checkTenantName()"class="form-control" [required]="field.mandatory"

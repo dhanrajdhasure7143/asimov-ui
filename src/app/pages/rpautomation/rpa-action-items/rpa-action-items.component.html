@@ -4,10 +4,16 @@
             <div class="row main-content-head">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="backToConnection()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a (click)="backToConnection()" class="imageBox"> 
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span></a>
                     </label>
                     <span class="title_text_haspath">
-                        <span>Connection Manager | </span>
+                        <span class="breadcrum-back">Connection Manager  </span> <span class="breadcrum-align">/</span>
                         <span class="sub_title_text">{{ selectedName }}</span>
                     </span>
                 </h3>

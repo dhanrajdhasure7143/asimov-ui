@@ -4,17 +4,22 @@
             <div class="row main-content-head">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="backToaction()">
-                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                        <a (click)="backToaction()" class="imageBox">
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span>
                         </a>
                     </label>
                     <span class="title_text_haspath">
                         <span *ngIf="!istoolSet" >
-                            <span>Connection Manager | {{ selectedConnector }} | Update - </span>
+                            <span class="breadcrum-back">Connection Manager  <span class="breadcrum-align">/</span> {{ selectedConnector }}  <span class="breadcrum-align">/</span> Update - </span>
                             <span class="sub_title_text">{{ selectedToolsetName }}</span>
                         </span>
                         <span *ngIf="istoolSet" >
-                            <span>Connection Manager | </span><span class="sub_title_text">{{ selectedConnector }} | Create New</span>
+                            <span>Connection Manager / </span><span class="sub_title_text">{{ selectedConnector }} | Create New</span>
                         </span>
                     </span>
                 </h3>
