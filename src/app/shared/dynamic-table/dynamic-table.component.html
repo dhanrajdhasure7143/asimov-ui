@@ -207,11 +207,11 @@
                     <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList'" class="w-100 text-center">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
+                            <!-- <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
                                 <button>
                                     <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
                                 </button>
-                            </span>
+                            </span> -->
                             <span class="" (click)="openUpdateOverlayById(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>

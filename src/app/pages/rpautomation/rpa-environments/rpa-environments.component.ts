@@ -4,11 +4,13 @@ import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-environments',
   templateUrl: './rpa-environments.component.html',
-  styleUrls: ['./rpa-environments.component.css']
+  styleUrls: ['./rpa-environments.component.css'],
+  providers: [columnList]
 })
 export class RpaenvironmentsComponent implements OnInit {
   @Output()
@@ -39,12 +41,10 @@ export class RpaenvironmentsComponent implements OnInit {
   selected_list:any[]=[];
   categories_list:any[]=[];
   isOpenSideOverlay:boolean=false;
-  environmentTypes:any[]= ['Windows','Linux'];
-  statusType=["Active","Inactive"];
-  deployedStatus=["Yes","No"];
 
   constructor(private rest_api: RestApiService,
-    private spinner: LoaderService) {
+    private spinner: LoaderService,
+    private columnList: columnList) {
     this.updateflag = false;
     this.deleteflag = false;
   }
@@ -65,21 +65,7 @@ export class RpaenvironmentsComponent implements OnInit {
       }
       );
     })
-    this.columns_list = [
-      {ColumnName: "environmentName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true},
-      {ColumnName: "environmentType",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.environmentTypes},
-      {ColumnName: "agentPath",DisplayName: "Agent Path",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true},
-      {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.categories_list},
-      {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
-      {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
-      {ColumnName: "username",DisplayName: "User Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      // {ColumnName: "password_new",DisplayName: "Password / Key",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.statusType},
-      {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.deployedStatus},
-      {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:true},
-    ];
+    this.columns_list = this.columnList.environments_column
     this.table_searchFields=["environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","activeStatus_new","deploy_status_new","createdTimeStamp_converted","createdBy"]
   }
 
@@ -262,6 +248,7 @@ export class RpaenvironmentsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
+        this.columns_list[3].dropdownList = this.categories_list
         this.getallData();
       }
     })

@@ -15,16 +15,16 @@
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add" class="testplus">
                 </button>
             </div>
-            <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
+            <!-- <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()"  pTooltip="Edit" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit" class="testplus">
                 </button>
-            </div>
-            <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
+            </div> -->
+            <!-- <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
                 <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit" class="testplus">
                 </button>
-            </div>
+            </div> -->
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()"  pTooltip="Delete" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete" class="testplus">
@@ -52,7 +52,8 @@
                 [search_fields]="table_searchFields"
                 show_edit_btn="true"
                 show_delete_btn="true"
-                
+                (onRow_DoubleClick)="updatedbConnection($event)"
+                (editRowById)="updatedbConnection($event)"             
             ></app-dynamic-table>
         </div>
     </div>
