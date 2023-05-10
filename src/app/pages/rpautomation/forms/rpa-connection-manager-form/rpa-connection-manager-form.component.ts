@@ -939,6 +939,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         each.check = false;
       }
     }
+    console.log(this.paramForm)
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
@@ -948,8 +949,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   onChangeParamCheckBox(index:number, event){
-    this.paramForm[index].check=event.currentTarget.checked;
     this.onKeyEntered();
+    this.paramForm[index].check=event.currentTarget.checked;
   }
 
   onHeaders(index){
@@ -958,16 +959,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       } else {
         this.headerForm[index].check = false;
       }
-  }
-
-  onChangeCheckbox(event, data, index) {
-    if (event.target.checked) {
-      this.selectedOne.push(data);
-    } else {
-      if (index >= 0) {
-        this.selectedOne.splice(index, 1);
-      }
-    }
   }
 
 }
