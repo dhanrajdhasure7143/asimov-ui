@@ -14,12 +14,13 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 import {MessageService} from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
 selector: 'app-project-details-screen',
 templateUrl: './project-details-new.html',
 styleUrls: ['./project-details-new.css'],
-providers: [MessageService]
+providers: [MessageService,columnList]
 })
 export class ProjectDetailsScreenComponent implements OnInit {
 @ViewChild("inplace") inplace!: Inplace;
@@ -229,7 +230,8 @@ constructor(private dt: DataTransferService, private route: ActivatedRoute, priv
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
 private spinner: LoaderService,
 private messageService: MessageService,
-private confirmationService: ConfirmationService
+private confirmationService: ConfirmationService,
+private columnList: columnList
 ) {
   this.route.queryParams.subscribe((data:any)=>{​​​​​​
     this.params_data=data
@@ -1410,11 +1412,7 @@ selectEnd() {
 }
 
   getRecentactivities() {
-    this.columns_list_activities = [
-      {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "lastModifiedUsername",DisplayName: "Resource Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"lastModifiedByEmail"},
-      {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Last Modified", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
-    ];
+    this.columns_list_activities = this.columnList.recentActivities_columns
   this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
     this.recentActivityList=data;
     this.recentActivityList.map(item =>{

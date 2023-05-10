@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { statSync } from "fs";
 import { Table } from "primeng/table";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 

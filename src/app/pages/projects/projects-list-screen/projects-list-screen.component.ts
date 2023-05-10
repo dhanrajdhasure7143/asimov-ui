@@ -10,11 +10,13 @@ import { APP_CONFIG } from "src/app/app.config";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-projects-list-screen",
   templateUrl: "./projects-list-screen.component.html",
   styleUrls: ["./projects-list-screen.component.css"],
+  providers:[columnList]
 })
 export class ProjectsListScreenComponent implements OnInit {
   projects_list: any[] = [];
@@ -61,7 +63,8 @@ export class ProjectsListScreenComponent implements OnInit {
     private router: Router,
     @Inject(APP_CONFIG) private config,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private columnList: columnList,
   ) {}
 
   ngOnInit() {
@@ -93,6 +96,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.getallProjects(this.userRoles, this.name, this.email);
     this.getUsersList();
     this.freetrail = localStorage.getItem("freetrail");
+    this.columns_list = this.columnList.projectList_columns
   }
 
   getallProjects(roles, name, email) {
@@ -102,14 +106,15 @@ export class ProjectsListScreenComponent implements OnInit {
       // TODO- Enable to show programs
       // let res_list = response[0].concat(response[1]); 
       let res_list = response[1];
+      this.spinner.hide();
       res_list.map((data) => {
-        data["projectName"] = data.programName? data.programName: data.projectName;
+        // data["projectName"] = data.programName? data.programName: data.projectName;
         data["process_name"] = this.getProcessNames(data.process);
-        data["status"] = data.status == null ? "New" : data.status;
-        data["createdAt"] = moment(data.createdTimestamp).format("lll");
-        data["representative"] = {
-          name: data.type == null ? "Project" : data.type,
-        };
+        // data["status"] = data.status == null ? "New" : data.status;
+        // data["createdAt"] = moment(data.createdTimestamp).format("lll");
+        // data["representative"] = {
+        //   name: data.type == null ? "Project" : data.type,
+        // };
         data["type"] = data.type == null ? "Project" : data.type;
         data["department"] = data.mapValueChain? data.mapValueChain: data.programValueChain;
         data["createdDate"] = new Date(data.createdTimestamp);
@@ -121,7 +126,6 @@ export class ProjectsListScreenComponent implements OnInit {
 
       this.projects_list = [];
       this.all_projectslist = res_list;
-      this.spinner.hide();
       this.all_projectslist.sort(function (a, b) {
         a = new Date(a.createdDate);
         b = new Date(b.createdDate);
@@ -138,80 +142,6 @@ export class ProjectsListScreenComponent implements OnInit {
         }
       });
     });
-
-    this.columns_list = [
-      {
-        ColumnName: "type",
-        DisplayName: "Type",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "dropdown",
-        filterType: "text",
-        sort: true,
-        multi: false,
-        dropdownList: ["Project", "Program"],
-      },
-      {
-        ColumnName: "projectName",
-        DisplayName: "Project Name",
-        ShowFilter: true,
-        ShowGrid: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: true,
-        multiOptions: ["projectName", "priority"],showTooltip:true
-      },
-      {
-        ColumnName: "process_name",
-        DisplayName: "Process",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",sort: true,multi: false,showTooltip:true
-      },
-      {
-        ColumnName: "department",
-        DisplayName: "Department",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "dropdown",
-        filterType: "text",
-        sort: true,
-        multi: false,
-        dropdownList: this.categories_list,
-      },
-      {
-        ColumnName: "createdDate",
-        DisplayName: "Created Date",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "date",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "lastModifiedBy",
-        DisplayName: "Last Updated By",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "normal",
-        filterType: "text",
-        sort: true,
-        multi: true,
-        multiOptions: ["lastModifiedBy", "updatedDate"],
-        userProfile:true,userProfileKey:"lastModifiedByEmail"
-      },
-      {
-        ColumnName: "action",
-        DisplayName: "Action",
-        ShowGrid: true,
-        ShowFilter: false,
-        sort: false,
-        multi: false,
-      },
-    ];
 
     this.table_searchFields = [
       "type",
@@ -343,6 +273,7 @@ export class ProjectsListScreenComponent implements OnInit {
             summary: "Error",
             detail: "Failed to delete !"
           });
+          this.spinner.hide();
         });
       },
       reject: (type) => {},
@@ -397,6 +328,8 @@ export class ProjectsListScreenComponent implements OnInit {
       sortedList.forEach((element) => {
         this.categories_list.push(element.categoryName);
       });
+    this.columns_list[3].dropdownList = this.categories_list
+      
     });
   }
 
@@ -405,5 +338,14 @@ export class ProjectsListScreenComponent implements OnInit {
     this.router.navigate(["/pages/projects/create-projects"], {
       queryParams: { id: this.create_Tabs },
     });
+  }
+
+  getUserName(modifiedemailId,createdEmail){
+    let emailId= modifiedemailId?modifiedemailId:createdEmail
+  let user = this.users_list.find(item => item.user_email == emailId);
+  if(user)
+    return user["fullName"]
+    else
+    return '';
   }
 }
