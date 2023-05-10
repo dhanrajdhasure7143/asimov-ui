@@ -104,7 +104,8 @@
                                 <span *ngIf="!col.multi">
                                     <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
                                     <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
-                                    <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                                    <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                                        <span *ngIf="getColor(rowData[col.ColumnName])" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
                                         <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
                                         <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                     </span>

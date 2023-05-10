@@ -53,7 +53,9 @@ export class DynamicTableComponent implements OnInit {
     Yes:"green",
     No: 'red',
     Active :'green',
-    Inactive:'red'
+    Inactive:'red',
+    ACTIVE:'green',
+    INACTIVE:'red',
   };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
