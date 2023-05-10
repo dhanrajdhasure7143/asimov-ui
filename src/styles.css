@@ -2664,7 +2664,8 @@ cursor: pointer;
   border-left: 0em solid transparent !important;
 }
 .main-content-body {
-  height: calc(100% - 75px);
+  /* height: calc(100% - 75px); */
+  height: calc(100% - 55px);
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
