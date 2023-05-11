@@ -18,8 +18,16 @@ export class PaymentHistoryComponent implements OnInit {
   public tableData: any=[];
   invoiceid: any;
   errorMessage:any;
-  columns_list:any=[]
   table_searchFields: any=[];
+  columns_list:any[] = [
+    {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+    {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+    {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+    {ColumnName: "created_timestamp",DisplayName: "Issue Date",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+    {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+    {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
+  ];
+
   constructor(private rest:RestApiService,private spinner:LoaderService) { }
 
   ngOnInit(): void {
@@ -31,23 +39,17 @@ export class PaymentHistoryComponent implements OnInit {
    this.spinner.show();
     this.rest.listofinvoices().subscribe(response => { 
       this.invoicedata = response.data;
+      console.log(this.invoicedata)
       this.invoicedata.map(data=>{
         data["created_timestamp"] = moment(data.createDate).format("MMMM DD [,] yy") 
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
+        data["amount_modified"] ="$"+String(data.amount);
         return data
       })
-      this.columns_list = [
-        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "amount",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "created_timestamp",DisplayName: "Issue Date",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
-      ];
       this.table_searchFields = [
         "invoiceNumber",
         "subscriptionId",
-        "amount",
+        "amount_modified",
         "created_timestamp",
         "status_converted"
       ];

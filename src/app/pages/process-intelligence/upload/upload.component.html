@@ -99,7 +99,8 @@
                                 [categories_list]="categories_list"
                                 [show_search_field]="true"
                                 [show_column_filter]="true"
-                                [show_clear_filter]="true">
+                                [show_clear_filter]="true"
+                                (onRow_DoubleClick)="onGraphSelection($event)">
                         </app-dynamic-table>
                    <!-- <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                         <ng-container matColumnDef="piId">

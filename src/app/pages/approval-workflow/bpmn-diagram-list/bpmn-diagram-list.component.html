@@ -45,7 +45,7 @@
             [field]="col.field" display="menu" [showApplyButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext"
-                placeholder="search">
+                placeholder="Search">
             </ng-template>
           </p-columnFilter>
           <p-columnFilter *ngIf="col.filterWidget == 'dropdown'" [field]="col.field" matchMode="equals"

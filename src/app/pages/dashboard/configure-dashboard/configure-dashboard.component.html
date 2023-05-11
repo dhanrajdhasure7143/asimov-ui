@@ -13,8 +13,8 @@
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard()">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="Updatedconfiguration()">Update</button>
-              <button (click)="deletedashbord()"  pTooltip="Delete" tooltipPosition="top">
-                <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" class="grey-btn" />
+              <button (click)="deletedashbord()"  pTooltip="Delete" tooltipPosition="top" class="grey-btn">
+                <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" class="imgicon-width" />
               </button>
             </div>
           </div>
@@ -76,7 +76,7 @@
                                           [showApplyButton]="false">
                                           <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                               <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                                  class="p-inputtext" placeholder="search">
+                                                  class="p-inputtext" placeholder="Search">
                                           </ng-template>
                                       </p-columnFilter>
                               <p-sortIcon field="name"></p-sortIcon>
@@ -89,7 +89,7 @@
                               [showApplyButton]="false">
                               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                   <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                      class="p-inputtext" placeholder="search">
+                                      class="p-inputtext" placeholder="Search">
                               </ng-template>
                           </p-columnFilter>
                               <p-sortIcon field="value"></p-sortIcon>
@@ -192,19 +192,19 @@
             <div class="row metricalign"pDraggable="widget" pDroppableDisabled="true"  [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'"(onDragStart)="widgetDragStart(widget)"
             (onDragEnd)="widgetDragEnd()"  (click)="addWidget(widget,i)" >
               <div class="col-md-11 p-0 d-flex widget-set">
-                <div class="col-3 pl-0 align-self-start">
+                <div class="align-self-start">
                   <div *ngIf="widget.widget_type =='Pie' || widget.widget_type =='Doughnut' || widget.widget_type =='pie' || widget.widget_type =='doughnut'">
                     <!-- <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" [options]="widget.chartOptions"></p-chart> -->
-                    <img src="../../../../assets/images-n/dashboard/Doughnut-Chart.svg" width="60px;" alt="">
+                    <img src="../../../../assets/images-n/dashboard/Doughnut-Chart.svg" width="60px;" alt="" class="dashbrd-img1">
                   </div>
                   <div *ngIf="widget.widget_type =='Table'|| widget.widget_type =='table'">
-                     <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="">
+                     <img src="../../../../assets/images-n/dashboard/table-chart.svg" width="60px;" alt="" class="dashbrd-img1">
                   </div>
                   <div *ngIf="widget.widget_type =='Bar'|| widget.widget_type =='bar'">
-                    <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;">
+                    <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;" class="dashbrd-img1">
                   </div>
                 </div>
-                <div class="col-8 p-0">
+                <div class="">
                   <h5>{{widget.name}}</h5>
                   <p class="metricwidget-tabP">{{widget.description}}</p>
                 </div>

@@ -4,11 +4,13 @@ import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-environments',
   templateUrl: './rpa-environments.component.html',
-  styleUrls: ['./rpa-environments.component.css']
+  styleUrls: ['./rpa-environments.component.css'],
+  providers: [columnList]
 })
 export class RpaenvironmentsComponent implements OnInit {
   @Output()
@@ -41,7 +43,8 @@ export class RpaenvironmentsComponent implements OnInit {
   isOpenSideOverlay:boolean=false;
 
   constructor(private rest_api: RestApiService,
-    private spinner: LoaderService) {
+    private spinner: LoaderService,
+    private columnList: columnList) {
     this.updateflag = false;
     this.deleteflag = false;
   }
@@ -62,21 +65,8 @@ export class RpaenvironmentsComponent implements OnInit {
       }
       );
     })
-    this.columns_list = [
-      {ColumnName: "environmentName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "environmentType",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "agentPath",DisplayName: "Agent Path",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":this.categories_list},
-      {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
-      {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "number",sort: true},
-      {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "password_new",DisplayName: "Password / Key",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-    ];
-    this.table_searchFields=["environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","activeStatus_new","deploy_status_new","createdTimeStamp_converted","createdBy"]
+    this.columns_list = this.columnList.environments_column
+    this.table_searchFields=["environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","activeStatus_new","deploy_status_new","createdTimeStamp_converted","createdBy"]
   }
 
   async getallData() {
@@ -142,12 +132,12 @@ export class RpaenvironmentsComponent implements OnInit {
     }
   }
 
-  openUpdateEnvOverlay() {
+  openUpdateEnvOverlay(data) {
     this.isCreate = false;
     document.getElementById("createenvironment")
     document.getElementById('update-popup')
         this.isOpenSideOverlay = true;
-    for (let data of this.selected_list) {
+    // for (let data of this.selected_list) {
         if (data.password.password == undefined) {
           this.isKeyValuePair = true
           this.password = ""
@@ -162,7 +152,7 @@ export class RpaenvironmentsComponent implements OnInit {
         }
         this.updateenvdata = data
       
-    }
+    // }
   }
 
   keypair(event) {
@@ -258,6 +248,12 @@ export class RpaenvironmentsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
+        // this.columns_list[3].dropdownList = this.categories_list
+        this.columns_list.map(item=>{
+          if(item.ColumnName === "categoryName"){
+            item["dropdownList"]=this.categories_list
+          }
+        })
         this.getallData();
       }
     })
@@ -279,5 +275,36 @@ export class RpaenvironmentsComponent implements OnInit {
 
   closeSideOverlay(event){
     this.isOpenSideOverlay=event
+  }
+
+  deletebyId(data){
+    const selectedEnvironments=[data.environmentId];
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
+            this.spinner.hide();
+            if (res.errorMessage == undefined) {
+              Swal.fire("Success", res.status, "success")
+              this.getallData();
+            } else {
+              Swal.fire("Error", res.errorMessage, "error")
+            }
+          }, err => {
+            this.spinner.hide();
+            Swal.fire("Error", "Unable to delete environment", "error")
+          })
+        }
+      })
   }
 }

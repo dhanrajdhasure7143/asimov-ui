@@ -182,7 +182,7 @@
                       <p-columnFilter *ngIf="each.ShowFilter && each.field != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
                                 display="menu" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="search">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
                             </ng-template>
                       </p-columnFilter>
 

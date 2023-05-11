@@ -11,6 +11,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { UserPipePipe } from './../pipes/user-pipe.pipe';
 // import { UserPipePipe } from './pipes/user-pipe.pipe';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-departments',
@@ -33,12 +34,19 @@ export class DepartmentsComponent implements OnInit {
   columns_list:any[]=[];
   table_searchFields:any[]=[];
   selected_list:any[]=[];
+  hiddenPopUp:boolean= false;
+  createDepartmentForm:FormGroup;
+  hiddenUpdatePopUp:boolean = false;
+  departmentdata: any;
+  editDepartmentForm:FormGroup;
+  departmentowner: any;
 
   constructor(private rest_api: RestApiService,
     private loader: LoaderService,
     private router: Router,
-    private dataTransfer: DataTransferService) 
-    { 
+    private dataTransfer: DataTransferService,
+    private formBuilder: FormBuilder
+    ){ 
       this.getUsersList();
     }
 
@@ -53,6 +61,15 @@ export class DepartmentsComponent implements OnInit {
       {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
     ];
     this.table_searchFields=["categoryName","created_user","createdBy","createdTimeStamp_converted"]
+
+    this.createDepartmentForm=this.formBuilder.group({
+      departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      })
+      this.editDepartmentForm=this.formBuilder.group({
+        departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      })
   }
 
   getAllDepartments(){
@@ -69,6 +86,12 @@ export class DepartmentsComponent implements OnInit {
       let selected_department=localStorage.getItem("department_search");
       this.department=selected_department?selected_department:'alldepartments';
     })
+   }
+
+   onDeleteSelectedProcess(data){
+    this.selected_list=[];
+    this.selected_list.push(data);
+    this.deleteDepartment()
    }
 
   deleteDepartment() {
@@ -118,20 +141,120 @@ export class DepartmentsComponent implements OnInit {
   }
 
   editdepartment(element) {
-    this.router.navigate(['/pages/admin/edit-department'], { queryParams: {id:element.categoryId } });
+    // this.router.navigate(['/pages/admin/edit-department'], { queryParams: {id:element.categoryId } });
+    this.hiddenUpdatePopUp= true;
+   let data =  this.departments_list.find(item=>item.categoryId == element.categoryId )
+    this.departmentowner=data.owner
+      this.editDepartmentForm.get("departmentName").setValue(data.categoryName);
+      this.editDepartmentForm.get("owner").setValue(this.departmentowner);
   }
 
   getUsersList() {
+    this.users_list=[];
     this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
       if (res) {
-        this.users_list = res;
+        let users:any=res;
+        users.forEach(e=>{
+          if(e.user_role_status != "INACTIVE"){
+            this.users_list.push(e);
+          }
+        })
         this.getAllDepartments();
+        this.loader.hide();
       }
-    });
-  }
+      })
+        // this.users_list = res;
+      }
 
   readSelectedData(data) {
     this.selected_list = data
     this.selected_list.length > 0 ? this.Departmentdeleteflag =true :this.Departmentdeleteflag =false;
   }
+
+  onCreate(){
+    this.hiddenPopUp = true;
+  }
+
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+    this.hiddenUpdatePopUp= event
+  }
+
+  savedepartments(){
+    let body = {
+      "categoryName": this.createDepartmentForm.value.departmentName,
+      "owner":this.createDepartmentForm.value.owner
+    }
+    this.loader.show();
+    this.rest_api.createDepartment(body).subscribe(resp => {
+      if(resp.message === "Successfully created the category"){
+        Swal.fire({
+          title: 'Success',
+          text: "Department Created Successfully !!",
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+      })
+      this.getAllDepartments();
+      }else if(resp.message==="Category already exists"){
+        Swal.fire("Error","Department already exists","error");
+      } else {
+        Swal.fire("Error",resp.message,"error");
+      }
+      this.loader.hide();
+    },err=>{
+      Swal.fire("Error","Failed to Save","error");
+      this.loader.hide();
+    })
+  }
+
+  resetdepartment(){
+    this.createDepartmentForm.reset();
+    this.createDepartmentForm.get("departmentName").setValue("");
+    this.createDepartmentForm.get("owner").setValue("");
+  }
+
+  updateDepartment(){
+    let body = {
+      "categoryId": this.departmentdata,
+      "categoryName": this.editDepartmentForm.get("departmentName").value,
+      "owner":this.editDepartmentForm.get("owner").value
+    }
+    this.rest_api.updateDepartment(body).subscribe(resp => {
+      if(resp.message === "Successfully updated the category"){
+        Swal.fire({
+          title: 'Success',
+          text: "Department Updated Successfully !!",
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+  
+          heightAuto: false,
+         
+          confirmButtonText: 'Ok'
+      })
+      }else if(resp.message==="Category already exists"){
+        Swal.fire("Error","Department already exists","error");
+      }
+      else {
+        Swal.fire("Error",resp.message,"error");
+      }
+    })
+}
+
+reseteditdepartment(){
+  this.editDepartmentForm.reset();
+  this.editDepartmentForm.get("departmentName").setValue("");
+  this.editDepartmentForm.get("owner").setValue("");
+}
 }
