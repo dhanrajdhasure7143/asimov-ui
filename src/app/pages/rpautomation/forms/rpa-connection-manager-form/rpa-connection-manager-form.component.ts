@@ -55,6 +55,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   selectedParam: any[] = [];
   action_icon : any;
   isIconSize: boolean;
+  requestParams:any =[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -116,6 +117,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     this.authTypes();
     this.getActionType();
     this.getGrantTypes();
+    this.getHeadersParams();
     if (this.isCreate == "false") {
       this.isUpdate = true;
       this.getActionById();
@@ -957,6 +959,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       } else {
         this.headerForm[index].check = false;
       }
+  }
+  getHeadersParams() {
+    this.rest_api.getHeadersParams().subscribe((res: any) => {
+      let filterData = res;
+      this.requestParams = Object.keys(filterData).map((key) => ({
+        type: key,
+        value: filterData[key],
+      }));
+      return this.requestParams;
+    });
   }
 
 }
