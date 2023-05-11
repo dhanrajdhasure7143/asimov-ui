@@ -12,11 +12,11 @@
           [screenTable]="'users_screen'"
           [dataKeyId]="'id'"
           [search_fields]="table_searchFields"
-          (editRowById)="modifyUser($event)"
+          (updateItem)="modifyUser($event)"
           [show_search_field]="true"
           [show_column_filter]="true"
           [show_clear_filter]="true"
-          (onRow_DoubleClick)="modifyUser($event)"
+          (onRowDoubleClick)="modifyUser($event)"
         >
     </app-dynamic-table>
   </div>

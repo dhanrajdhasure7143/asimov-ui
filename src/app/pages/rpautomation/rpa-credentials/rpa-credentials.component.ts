@@ -210,4 +210,44 @@ inputNumberOnly(event){
   closeOverlay(event){
     this.hiddenPopUp=false;
   }
+
+  updateCredential(data) {
+    this.hiddenPopUp=true;
+    this.isCreateForm = false;
+    this.credupdatedata = data;
+  }
+
+  deleteEmailByRow(row){
+    // const selectedcredentials = this.selectedData.map(p => p.credentialId);
+    const selectedcredentials=[]
+    selectedcredentials.push(row.credentialId);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
+          let status:any = res;
+          this.spinner.hide();
+          if(status.errorMessage==undefined){
+            Swal.fire("Success",status.status,"success");
+            this.getallCredentials();
+          }else{
+            Swal.fire("Error",status.errorMessage,"error")
+          }              
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to delete credentails","error");
+        });
+      }
+    });
+  }
 }

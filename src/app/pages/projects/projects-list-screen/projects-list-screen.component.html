@@ -53,7 +53,7 @@
                 [columns_list]="columns_list"
                 [table_data]="projects_list" 
                 [userRoles]="userRoles" 
-                (viewDetails)="viewDetails($event)"
+                (viewItem)="viewDetails($event)"
                 (deleteItem)="deleteById($event)" 
                 [screenTable]="'projectList'" 
                 [dataKeyId]="'id'"
@@ -63,7 +63,7 @@
                 [show_column_filter]="true"
                 [show_clear_filter]="true"
                 [selectionMode]="'single'"
-                (onRow_DoubleClick)="viewDetails($event)"
+                (onRowDoubleClick)="viewDetails($event)"
                 [show_view_btn]="true"
                 >
               </app-dynamic-table>

@@ -105,7 +105,7 @@ export class columnList{
         {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,"dropdownList":""},
         {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
 
       public schedularInbox_column =[

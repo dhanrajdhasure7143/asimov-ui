@@ -56,9 +56,9 @@
         [show_clear_filter]="true"
         [checkBoxShow]="true"
         [screenTable]="'environment_table'"
-        (editRowById)="openUpdateEnvOverlay($event)"
+        (updateItem)="openUpdateEnvOverlay($event)"
         (deleteItem)="deletebyId($event)"
-        (onRow_DoubleClick)="openUpdateEnvOverlay($event)"
+        (onRowDoubleClick)="openUpdateEnvOverlay($event)"
         show_edit_btn="true"
         show_delete_btn="true"
       >
