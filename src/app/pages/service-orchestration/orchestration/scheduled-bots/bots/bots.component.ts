@@ -66,20 +66,12 @@ export class BotsComponent implements OnInit {
     this.log  = data1;
     this.tabledata = this.log.length <= '0'  ? false: true;
     this.scheduledbots = this.log
-    this.table_searchFields = [
-      "botName",
-      "botSource",
-      "category",
-      "lastRunTS",
-      "nextRunTS",
-      "scheduleInterval",
-      "status",
-      "timezone"
-    ];
-    // this.scheduledbots = new MatTableDataSource(this.log);  
-    // this.scheduledbots.paginator=this.paginator4;
-    // this.scheduledbots.sort=this.sort4;
-   //  });
+    this.scheduledbots.map(item=>{
+      item.lastRunTS=item.lastRunTS?(item.lastRunTS!= "00:00"?new Date(item.lastRunTS):null):null;
+      item.nextRunTS=item.nextRunTS?(item.nextRunTS!="00:00"?new Date(item.nextRunTS):null):null;
+      return item
+    })
+    this.table_searchFields = ["botName","botSource","category","lastRunTS","nextRunTS","scheduleInterval","status","timezone"];
      this.spinner.hide(); 
    });
   }

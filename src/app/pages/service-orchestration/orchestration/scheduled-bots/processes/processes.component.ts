@@ -53,8 +53,14 @@ export class ProcessesComponent implements OnInit {
    
     let response:any =[];
     response=data1;
+    console.log("processes",response)
     response=response.map(item=>{
-      let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
+      // let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
+      if(item.status == "Resumed")item.status= "Stopped"
+      if(item.status == "Resume")item.status= "Stopped"
+      if(item.status == "Stop")item.status= "Stopped"
+      item.lastRunTS=item.lastRunTS?item.lastRunTS.length>5?new Date(item.lastRunTS):null:null;
+      item.nextRunTS=item.nextRunTS?item.nextRunTS.length>5?new Date(item.nextRunTS):null:null;
      return item;
     })
     this.tabledata = response.length <= '0'  ? false: true;
