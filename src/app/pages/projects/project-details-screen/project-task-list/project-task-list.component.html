@@ -52,7 +52,7 @@
                           <app-dynamic-table 
                             [columns_list]="columns_list" 
                             [table_data]="tasks_list"
-                            (viewDetails)="viewDetails($event)" 
+                            (viewItem)="viewDetails($event)" 
                             (deleteItem)="deletetask($event)"
                             [representatives]="representatives" 
                             [screenTable]="'taskList'" 
@@ -63,7 +63,7 @@
                             [show_search_field]="true"
                             [show_column_filter]="true"
                             [show_clear_filter]="true"
-                            (onRow_DoubleClick)="viewDetails($event)"
+                            (onRowDoubleClick)="viewDetails($event)"
                             [show_view_btn]="true"
                             [show_delete_btn]="true"
                             >

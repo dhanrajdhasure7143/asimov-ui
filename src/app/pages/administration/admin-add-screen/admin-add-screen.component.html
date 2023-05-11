@@ -144,7 +144,7 @@
           </div>
           <div class="col form-group p-0 columnlistgrid gridparentdiv" *ngIf="tablehide">
             <app-dynamic-table [table_data]="tableData" [screenTable]="'common'" [columns_list]="columns_list"
-              (editRowById)="editColumn($event)" [show_delete_btn]="false" [show_edit_btn]="true"></app-dynamic-table>
+              (updateItem)="editColumn($event)" [show_delete_btn]="false" [show_edit_btn]="true"></app-dynamic-table>
           </div>
           <!-- <div class="row justify-content-end">
               <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">

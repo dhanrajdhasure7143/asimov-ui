@@ -52,8 +52,9 @@
                 [search_fields]="table_searchFields"
                 show_edit_btn="true"
                 show_delete_btn="true"
-                (onRow_DoubleClick)="updatedbConnection($event)"
-                (editRowById)="updatedbConnection($event)"             
+                (onRowDoubleClick)="updatedbConnection($event)"
+                (updateItem)="updatedbConnection($event)" 
+                (deleteItem)="deletedbconnectionByRow($event)"
             ></app-dynamic-table>
         </div>
     </div>

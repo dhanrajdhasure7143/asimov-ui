@@ -285,4 +285,39 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.isDatabase = false;
     this.dbupdatedata = data;
   }
+
+  deletedbconnectionByRow(row) {
+    const selecteddbconnection=[]
+    selecteddbconnection.push(row.connectionId);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.api.deleteDBConnection(selecteddbconnection).subscribe(res => {
+          let status: any = res;
+          this.spinner.hide();
+          if (status.errorMessage == undefined) {
+            Swal.fire("Success", status.status, "success")
+            this.getallDBConnection();
+          }
+          else
+            Swal.fire("Error", status.errorMessage, "error")
+
+        }, err => {
+          this.spinner.hide();
+          Swal.fire("Error", "Unable to delete database connections", "error")
+        });
+      }
+    });
+
+  }
 }

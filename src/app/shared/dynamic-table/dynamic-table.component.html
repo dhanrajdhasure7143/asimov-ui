@@ -69,7 +69,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRowDoubleClick($event,rowData)">
+            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRow_DoubleClick($event,rowData)">
                 <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
