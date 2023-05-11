@@ -66,12 +66,6 @@ export class RpaConnectionManagerComponent implements OnInit {
       this.connectorTable = res.data;
       this.readSelectedData([]); 
       this.spinner.hide();
-      this.columns_list = [
-      {ColumnName: "name", DisplayName: "Connector Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "connectionLogo", DisplayName: "Connector Logo", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "actionCount", DisplayName: "Action Count", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "action", DisplayName: "", ShowGrid: true, ShowFilter: false, sort: false, multi: false,}
-      ]
       this.table_searchFields=["name","actionCount"]
     });
   }

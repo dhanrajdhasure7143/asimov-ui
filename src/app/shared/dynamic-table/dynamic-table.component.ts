@@ -36,7 +36,6 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_clear_filter") public show_clear_filter:boolean;
   @Input("show_download_btn") public show_download_btn:boolean;
   @Output() downloadItem = new EventEmitter<any[]>();
-  @Output() openUpdateOverlay = new EventEmitter<any[]>();
   @Output("onRow_DoubleClick") onRow_DoubleClick:any= new EventEmitter<any>();
   @Input("show_approve_btn") public show_approve_btn:boolean;
   @Input("show_reject_btn") public show_reject_btn:boolean;
@@ -108,9 +107,6 @@ export class DynamicTableComponent implements OnInit {
 
   viewDetailsbyId(row) {
     this.viewDetails.emit(row);
-  }
-  openUpdateOverlayById(row){
-    this.openUpdateOverlay.emit(row)
   }
 
   clear(table: Table) {

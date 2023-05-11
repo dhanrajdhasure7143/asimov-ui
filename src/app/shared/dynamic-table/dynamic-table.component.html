@@ -28,8 +28,9 @@
                 <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" pReorderableColumn pResizableColumn [pResizableColumnDisabled]="col.freeze" pSortableColumn="{{col.ColumnName}}"
-                    [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
+                <th *ngFor="let col of columns" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" pReorderableColumn pResizableColumn 
+                    [pResizableColumnDisabled]="col.freeze" pSortableColumn="{{col.ColumnName}}"
+                    [hidden]="!col.ShowGrid" [style]="col.width">{{col.DisplayName | removeUnderscore}}
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative"
                         matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
@@ -72,7 +73,8 @@
                 <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
-                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze">
+                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze"
+                    [style]="col.width">
                     <!-- <span *ngIf="!col.multi && col.ColumnName!='action'"> -->
                         <!-- <span *ngIf="screenTable !='environment_table'">
                             <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'">
@@ -98,7 +100,7 @@
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
                                     <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
-                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]}} </span>
+                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
                                     <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
                                 </span>
                                 <span *ngIf="!col.multi">
@@ -224,7 +226,7 @@
                                     <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
                                 </button>
                             </span> -->
-                            <span class="" (click)="openUpdateOverlayById(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
+                            <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>
                             <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
