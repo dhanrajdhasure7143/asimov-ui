@@ -101,7 +101,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         })
       }      
 
-      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted","createdBy"]
+      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","activeStatus","createdTimeStamp_converted","schemaName","createdBy"]
 
       this.spinner.hide();
     });
@@ -236,7 +236,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
-    this.columns_list[1].dropdownList = this.categories_list
+    this.columns_list.map(item=>{
+      if(item.ColumnName === "categoryName"){
+        item["dropdownList"]=this.categories_list
+      }
+    })
         this.getListofDBConnections();
         this.getallDBConnection();
       }

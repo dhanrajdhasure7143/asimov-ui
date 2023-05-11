@@ -110,7 +110,7 @@ inputNumberOnly(event){
             this.readSelectedData([]);
            }
          }
-        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted","host","port"]
+        this.table_searchFields=["userName","serverName","tableClientId","tableClientSecret","tableOfficeTenant","categoryName","createdBy","createdTimeStamp_converted","host","port"]
         this.spinner.hide();
       });
   }

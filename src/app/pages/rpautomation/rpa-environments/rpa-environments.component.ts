@@ -66,7 +66,7 @@ export class RpaenvironmentsComponent implements OnInit {
       );
     })
     this.columns_list = this.columnList.environments_column
-    this.table_searchFields=["environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","activeStatus_new","deploy_status_new","createdTimeStamp_converted","createdBy"]
+    this.table_searchFields=["environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","activeStatus_new","deploy_status_new","createdTimeStamp_converted","createdBy"]
   }
 
   async getallData() {
@@ -248,7 +248,12 @@ export class RpaenvironmentsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
-        this.columns_list[3].dropdownList = this.categories_list
+        // this.columns_list[3].dropdownList = this.categories_list
+        this.columns_list.map(item=>{
+          if(item.ColumnName === "categoryName"){
+            item["dropdownList"]=this.categories_list
+          }
+        })
         this.getallData();
       }
     })
