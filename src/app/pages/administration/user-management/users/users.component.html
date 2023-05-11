@@ -16,7 +16,110 @@
           [show_search_field]="true"
           [show_column_filter]="true"
           [show_clear_filter]="true"
+          (onRow_DoubleClick)="modifyUser($event)"
         >
     </app-dynamic-table>
   </div>
+</div>
+
+<div *ngIf="hiddenPopUp">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+        <div class="create-header">
+            <h3>Update User</h3>
+        </div>
+          <div class="h-100">
+            <div class="main-content-body">
+                    <div class="maindivfoprm">
+                        <form #update_form="ngForm">
+                            <div class="row fcont">
+                                <div class="col-md-12 p-0 form-group">
+                                    <label class="label-control">Username<span class="star">*</span></label>
+                                    <input type="text" name="email_id" disabled [(ngModel)]="email" placeholder="Enter Email"
+                                        maxlength="256" class="form-control data">
+                                </div>
+                                <div class="col-md-12 p-0 form-group">
+                                    <label class="label-control">Add Role<span class="star">*</span></label>
+                                    <select name="roles" #roles="ngModel" [(ngModel)]="role" class="form-control data"
+                                        (change)="onchangeRole($event.target.value)" placeholder="Select Role" required>
+                                        <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 p-0 form-group update_department">
+                                    <label class="label-control">Add Department(s)<span class="star">*</span></label>
+                                    <ng-select [items]="categories" bindLabel="categoryName" bindValue="categoryId"
+                                        name="depart" #depart="ngModel" [multiple]="true" placeholder="Select departments"
+                                        [(ngModel)]="departments" [disabled]="isdprtDisabled">
+                                    </ng-select>
+                                    <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
+                                                        class='required'>Departments is required </span>
+                                                        <span *ngIf="errShow" class='required'> Departments is required </span>
+                                </div>
+        
+                            </div>
+        
+                        </form>
+                        <div class="row justify-content-end">
+                            <button (click)="updateUser()" class="btn bluebg-button">Update</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</app-split-overlay>
+</div>
+
+
+<div *ngIf="hideInvitePopUp">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>Invite User</h3>
+    </div>
+      <div class="main-content-body">
+          <div class="maindivfoprm">
+              <form #inviteUser_form="ngForm" autocomplete="off" (ngSubmit)="inviteUser1(inviteUser_form)" class="h-100">
+    
+                  <div class="form-group col-md-12 p-0 form-group">
+                      <label class="label-control">Email<span class="star">*</span></label>
+                      <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
+                                  (change)="onEmailChange()" class="form-control data" (keyup)="myemailFunction()"
+                                  pattern="^\S*[@]\S*[.]\S*$" email placeholder="Enter Emails Separated By Comma(,)" required/>
+      
+                      <span *ngIf="((mail_id.invalid && inviteUser_form.submitted) || (mail_id.errors && mail_id.touched) )"> 
+                          <span class='required' *ngIf="mail_id.errors.required">Email is Required</span>
+                          <span class='required' *ngIf="mail_id.errors.pattern">Enter a valid Email address</span>
+                      </span>
+                  </div>
+      
+                  <div class="form-group col-md-12 p-0 form-group">
+                      <label class="label-control">Role<span class="star">*</span></label>
+                      <select [(ngModel)]="role" class="form-control data" (change)="onchangeRole1($event.target.value)" name="user_role" #user_role="ngModel" required>
+                          <option [value]="null" disabled hidden>Select Role</option>
+                          <option value="" disabled hidden>Select Role</option>
+                          <option [value]="" disabled hidden>Select Role</option>
+                          <option value="null" disabled hidden>Select Role</option>
+                          <option [value]="undefined" disabled hidden>Select Role</option>
+                          <option value="undefined" disabled hidden>Select Role</option>
+                          <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
+                      </select>
+                      <span *ngIf="((user_role.invalid && inviteUser_form.submitted) || (user_role.errors && user_role.touched) )" class='required'> Role is Required </span>
+                  </div>
+                  <div class="form-group col-md-12 p-0 form-group">
+                      <label class="label-control">Department(s)<span class="star">*</span></label>
+                      <ng-select [items]="categories" bindLabel="categoryName" bindValue="categoryId" name="depart"
+                                  #depart="ngModel" [multiple]="true" placeholder="Select Departments"
+                                  [(ngModel)]="departments" [disabled]="isdprtDisabled" required>
+                      </ng-select>
+                      <span *ngIf="((depart.invalid && inviteUser_form.submitted) || (depart.errors && depart.touched) )" class='required'>Departments is Required </span>
+                  </div>
+              </form>
+              <div class="row justify-content-end">
+                  <button class="btn new-cancelbtn" type="button" (click)="resetUserInvite(inviteUser_form)">Reset</button>
+                  <button class="btn bluebg-button" type="button" [disabled]="inviteUser_form.invalid" (click)="inviteUser1(inviteUser_form)">Invite</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  </app-split-overlay>
 </div>

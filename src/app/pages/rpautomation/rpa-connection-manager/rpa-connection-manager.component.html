@@ -25,7 +25,10 @@
              [show_clear_filter]="true" 
              [search_fields]="table_searchFields" 
              [selectionMode]="'single'" 
-             (openUpdateOverlay)="openUpdateOverlay($event)">
+             (openUpdateOverlay)="openUpdateOverlay($event)"
+             [show_view_btn]="true"
+             (onRow_DoubleClick)="viewDetails($event)"
+             >
             </app-dynamic-table>
         </div>
     </div>

@@ -63,6 +63,7 @@
                 [show_column_filter]="true"
                 [show_clear_filter]="true"
                 [selectionMode]="'single'"
+                (onRow_DoubleClick)="viewDetails($event)"
                 >
               </app-dynamic-table>
             </div>

@@ -33,7 +33,7 @@
                                     [showApplyButton]="false">
                                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                         <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                            class="p-inputtext" placeholder="search">
+                                            class="p-inputtext" placeholder="Search">
                                     </ng-template>
                                 </p-columnFilter>
                                 <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'" [showAddButton]="false"

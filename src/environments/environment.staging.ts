@@ -35,7 +35,7 @@ export const environment = {
   //BPMN Platform URL
   bpmnplatformUrl : "https://ezworkflow.staging.epsoftinc.com",
   
-  webActionAttrId:536,
+  webActionAttrId:580,
   
   //IPCTenant
   ipcTenant:"55d76780-77f1-4f1c-8762-e0c13a0b8613"

@@ -32,15 +32,10 @@
             <div class="row">
                   <div class="form-group col pl-0">
                       <label class="">Process Owner<span class="star">*</span></label>
-                      <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
+                      <p-dropdown [options]="resources_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           filterBy="user_email,fullName" [autoDisplayFirst]="false"
                           placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
                           optionLabel="fullName">
-                          <!-- <ng-template let-group pTemplate="group">
-                          <div class="p-d-flex p-ai-center">
-                              <span>{{group.firstName|titlecase}} {{group.lastName|titlecase}}</span>
-                          </div>
-                      </ng-template> -->
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
                           class="required">Process Owner Required*</span>

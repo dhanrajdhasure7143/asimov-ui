@@ -519,7 +519,7 @@
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
                                 <p-dropdown [options]="roles_list" class="listdropdown" [(ngModel)]="selectedRole"
-                                    (onChange)="onChangeRole($event,users_tabIndex)" optionLabel="name"></p-dropdown>
+                                    (onChange)="onChangeRole($event,users_tabIndex)" optionLabel="name" optionValue="name"></p-dropdown>
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input type="text" pInputText placeholder="Search"
@@ -535,11 +535,11 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr>
-                                <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                <td *ngIf="users_tabIndex != 1"  style="flex: 0 0 5rem"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                 </td>
                                 <td *ngFor="let col of columns">
                                     <span>{{rowData[col.ColumnName]}}</span>
-                                    <span *ngIf="col.ColumnName == 'action'">
+                                    <span *ngIf="col.ColumnName == 'action' && projectDetails.owner != rowData['user_email']">
                                         <div class="newinntalx">
                                             <a (click)="deleteuserById(rowData)" pTooltip="Delete"
                                                 tooltipPosition="top">

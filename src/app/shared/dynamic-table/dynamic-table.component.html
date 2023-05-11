@@ -18,11 +18,9 @@
                 </p-multiSelect> -->
                 <span class="p-input-icon-right gridsearch" *ngIf="show_search_field">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" 
-                        (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" (input)="dt1.filterGlobal($event.target.value, 'contains')">
                 </span>
-                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" 
-                    (click)="clear(dt1)"></button>
+                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -30,19 +28,17 @@
                 <th style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}"
+                <th *ngFor="let col of columns" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" pReorderableColumn pResizableColumn [pResizableColumnDisabled]="col.freeze" pSortableColumn="{{col.ColumnName}}"
                     [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative"
-                        matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
-                        [showAddButton]="false">
+                        matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
                             <div class="px-3 pt-3 pb-0">
                                 <span class="font-bold">Type</span>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
-                                (onChange)="filter($event.value)" optionLabel="name">
+                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
                                 <ng-template let-option pTemplate="item">
                                     <div class="p-multiselect-representative-option">
                                         <span class="p-ml-1">{{option.name}}</span>
@@ -54,30 +50,16 @@
                     <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                     [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)" placeholder="Any">
-                                <!-- <ng-template let-option pTemplate="item">
-                                    <span [class]="'customer-badge status-' + option.value">{{option.categoryName}}</span>
-                                </ng-template> -->
-                            </p-dropdown>
+                            <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
                         </ng-template>
                     </p-columnFilter>
-                    <!-- <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
-                        type="{{col.filterType}}" field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
-                        [showAddButton]="false" display="menu" matchMode="contains"></p-columnFilter> -->
-
                         <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
                          field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
                         [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input type="text"
-                                  pInputText
-                                  [ngModel]="value"
-                                  (ngModelChange)="filter($event)"
-                                  class="p-inputtext"
-                                  placeholder="search">
+                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"class="p-inputtext" placeholder="Search">
                             </ng-template>
                         </p-columnFilter>
-
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal' && col.filterType == 'date'"
                         type="{{col.filterType}}" field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
                         [showAddButton]="false" display="menu"></p-columnFilter>
@@ -86,63 +68,52 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
+            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRowDoubleClick($event,rowData)">
                 <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
-                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <span *ngIf="!col.multi && col.ColumnName!='action'">
-                        <span *ngIf="screenTable !='environment_table'">
-                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName != 'amount' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'">
-                                <span *ngIf="screenTable == 'recentActivityList' && col.ColumnName == 'lastModifiedUsername' " class="prjlastupdateprofile">{{rowData['lastModifiedByEmail']|userLetters:users_list}}</span>
-                                <span> {{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze">
+                    <!-- <span *ngIf="!col.multi && col.ColumnName!='action'"> -->
+                        <!-- <span *ngIf="screenTable !='environment_table'">
+                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'">
+                                <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span>
+                                <span>{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                            </span> -->
+                            <!-- <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span> -->
+                            <!-- <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span> -->
+                            <!-- <span *ngIf="col.ColumnName =='connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span> -->
+                            <!-- <span *ngIf="col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['actionLogo']" style="height:25px;" alt="img"></span> -->
+                        <!-- </span> -->
+                        <!-- <span >
+                            <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span>
+                            <span *ngIf="col.ColumnName =='connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
+                            <span *ngIf="col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                                <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                               <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                             </span>
-                            <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span>
-                            <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
-                            <span *ngIf="col.ColumnName == 'amount'">${{rowData[col.ColumnName]}}</span>
-                            <span *ngIf="col.ColumnName =='connectionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
-                            <span *ngIf="col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['actionLogo']" style="height:25px;" alt="img"></span>
-                        </span>
-                        <span *ngIf="screenTable =='environment_table'">
-                            <span *ngIf="col.ColumnName == 'activeStatus_new'" >
-                                <span *ngIf="rowData['activeStatus_new'] == 'Active'" class='green'>Active</span>
-                                <span *ngIf="rowData['activeStatus_new'] == 'Inactive'" class='red'>Inactive</span>
-                            </span>
-                            <span *ngIf="col.ColumnName == 'deploy_status_new'">
-                                <span *ngIf="rowData['deploy_status_new'] == 'Yes'"class='green'>Yes</span>
-                                <span *ngIf="rowData['deploy_status_new'] == 'No'"class='red'>No</span>
-                            </span>
-                            <span *ngIf="col.ColumnName == 'createdTimeStamp_converted'">{{rowData[col.ColumnName]|date:'MMM d, y HH:mm'}}</span>
-                            <span *ngIf="col.ColumnName != 'activeStatus_new' && col.ColumnName != 'deploy_status_new' && col.ColumnName != 'createdTimeStamp_converted'">
-                                {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
-                            </span>
-                        </span>
-                    </span>
-                    
-                    <span *ngIf="col.multi && col.ColumnName!='action'">
-                        <div *ngIf="col.multiOptions[1] == 'priority'">
-                            <span class="prjtaskname">{{rowData[col.multiOptions[0]]}}</span>
-                            <span class="prjgridpriority"  [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
-                        </div>
-                        <div *ngIf="col.multiOptions[1] != 'priority'">
+                        </span> -->
+                    <!-- </span> -->
+                    <span *ngIf="col.ColumnName!='action'">
                             <div class="d-flex align-items-center">
-                                <span class="prjlastupdateprofile">{{rowData['lastModifiedByEmail']|userLetters:users_list}}</span>
-                                <span>
-                                    <span class="prjlastupdatename">{{rowData[col.multiOptions[0]]}}</span>
-                                    <span class="prjgridtimestamp" > {{rowData[col.multiOptions[1]]}} </span>
+                                <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
+                                <span *ngIf="col.multi">
+                                    <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
+                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]}} </span>
+                                    <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                                </span>
+                                <span *ngIf="!col.multi">
+                                    <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
+                                    <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
+                                    <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                                        <span *ngIf="getColor(rowData[col.ColumnName])" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
+                                        <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
+                                    </span>
                                 </span>
                             </div>
-                        </div>
                     </span>
-                    <!-- <span *ngIf="col.multi && col.ColumnName!='action'">{{rowData[col.multiOptions[0]]}} <br>
-                        <span class="prjgridpriority" *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
-                        <span class="prjgridtimestamp" *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
-                    </span> -->
-                    <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
-                    <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
-                        {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
-                    </span> -->
-                    <span *ngIf="col.ColumnName == 'action' && screenTable !='actionsTable'" class="newinntalx">
+
+                    <span *ngIf="col.ColumnName == 'action' && screenTable !='actionsTable'" class="newinntalx" alignFrozen="right">
                         <a *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                             <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </a>
@@ -172,6 +143,18 @@
                                 class="default-img testplus">
                             </a>
                         </span>
+                        <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
+                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
+                          (click)="getapproved(rowData)"
+                          pTooltip="Approve" tooltipPosition="top">
+                          <i class="fas fa-check text-success"></i>
+                        </button>
+                        <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
+                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
+                          (click)="getRejected(rowData)"
+                          pTooltip="Reject"  tooltipPosition="top">
+                          <i class="fas fa-times text-danger"></i>
+                        </button>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">
                         <div class="newinntalx">
@@ -194,8 +177,8 @@
                             </span>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx actionicons" >
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'" class="w-100 text-center">
+                        <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
@@ -207,8 +190,8 @@
                         </div>
                     </span>
                     
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
-                        <div class="newinntalx actionicons" >
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList'" class="taskList-table-actions">
+                        <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
@@ -221,8 +204,8 @@
                             </a>
                         </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx actionicons" >
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable'" class="w-100 text-center">
+                        <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
@@ -233,14 +216,14 @@
                         </div>
                     </span>
 
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList' && selectedItem != null" class="w-100 text-center">
-                        <div class="newinntalx actionicons" >
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList'" class="w-100 text-center">
+                        <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
+                            <!-- <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
                                 <button>
                                     <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
                                 </button>
-                            </span>
+                            </span> -->
                             <span class="" (click)="openUpdateOverlayById(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>

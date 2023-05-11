@@ -464,4 +464,10 @@ export class ProjectTaskDetailsComponent implements OnInit {
       
     });
   }
+
+  backToProjectDetails() {
+    this.router.navigate(["/pages/projects/projectdetails"], {
+      queryParams: { project_id: this.project_id },
+    });
+  }
 }

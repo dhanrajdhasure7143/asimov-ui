@@ -6,11 +6,13 @@ import { DataTransferService } from "src/app/pages/services/data-transfer.servic
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-project-task-list",
   templateUrl: "./project-task-list.component.html",
   styleUrls: ["./project-task-list.component.css"],
+  providers:[columnList]
 })
 export class ProjectTaskListComponent implements OnInit {
   tasks_list: any[] = [];
@@ -32,14 +34,8 @@ export class ProjectTaskListComponent implements OnInit {
   project_name: any;
   params_data:any;
   existingUsersList:any[]=[];
-  columns_list:any[] = [
-    {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-    {ColumnName: "taskCategory",DisplayName: "Type",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-    {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "multiSelect",filterType: "text",sort: true,multi: false },
-    {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-    {ColumnName: "endDate_converted",DisplayName: "Due Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-    { ColumnName: "action",DisplayName: "",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
-  ];
+  columns_list:any[]=[];
+  task_categoriesList:any[]=[];
 
   constructor(
     private rest_api: RestApiService,
@@ -48,8 +44,9 @@ export class ProjectTaskListComponent implements OnInit {
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
     private confirmationService : ConfirmationService,
-    private messageService : MessageService 
-  ) {
+    private messageService : MessageService,
+    private columnList: columnList
+    ) {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data
       this.project_id = data.project_id;
@@ -60,6 +57,7 @@ export class ProjectTaskListComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.getUsersList();
+    this.columns_list = this.columnList.taskList_columns
   }
 
   getUsersList() {
@@ -84,18 +82,20 @@ export class ProjectTaskListComponent implements OnInit {
 
   getTasksList() {
     this.getTheExistingUsersList();
+    this.getTaskCategoriesByProject();
     this.rest_api.gettaskandComments(this.project_id).subscribe((data: any) => {
       this.all_tasks_list = data;
       this.all_tasks_list.map((item) => {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = new Date(item.endDate);
         item["assignedTo"] = this.getUserName(item.resources);
-        item["representative"] = { name: item.priority };
+        // item["representative"] = { name: item.priority };
         return item;
       });
       this.all_tasks_list.sort(function (a, b) {
         return b.timeStamp_converted - a.timeStamp_converted;
       });
+      this.spinner.hide();
       this.tasks_list = this.all_tasks_list;
       this._tabsList.forEach((element) => {
         if (element.tabName == "All") {
@@ -107,7 +107,6 @@ export class ProjectTaskListComponent implements OnInit {
         }
       });
     });
-    this.spinner.hide();
 
     this.representatives = [
       { name: "High" },
@@ -231,11 +230,25 @@ export class ProjectTaskListComponent implements OnInit {
 
   getTheExistingUsersList(){
     this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
-      this.existingUsersList = res
+      this.users_list.forEach(item2 => {
+        if(res.find((projectResource:any) => item2.user_email==projectResource.userId)!=undefined)
+        this.existingUsersList.push(item2);
+      })
     })
   }
 
   ngOnDestroy(){
     this.spinner.hide();
   }
+
+  getTaskCategoriesByProject(){
+    this.rest_api.getTaskCategoriesByProject(this.project_id).subscribe((res:any)=>{
+      this.task_categoriesList = res;
+      let task_categories=[]
+      this.task_categoriesList.forEach(item=>{
+        task_categories.push(item.category)
+      })
+      this.columns_list['0'].dropdownList=task_categories
+    })
+   }
 }

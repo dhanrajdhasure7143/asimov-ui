@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { statSync } from "fs";
 import { Table } from "primeng/table";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 
@@ -38,6 +37,11 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_download_btn") public show_download_btn:boolean;
   @Output() downloadItem = new EventEmitter<any[]>();
   @Output() openUpdateOverlay = new EventEmitter<any[]>();
+  @Output("onRow_DoubleClick") onRow_DoubleClick:any= new EventEmitter<any>();
+  @Input("show_approve_btn") public show_approve_btn:boolean;
+  @Input("show_reject_btn") public show_reject_btn:boolean;
+  @Output() approvedItem = new EventEmitter<any[]>();
+  @Output() rejectItem = new EventEmitter<any[]>();
   public loggedUserRole: any[]=[];
   _selectedColumns: any[];
   customers: any = [];
@@ -49,9 +53,17 @@ export class DynamicTableComponent implements OnInit {
   statusColors = {
     Medium: 'orange',
     High: 'red',
-    Low: 'green'
-  }
-  
+    Low: 'green',
+    Yes:"green",
+    No: 'red',
+    Active :'green',
+    Inactive:'red',
+    ACTIVE:'green',
+    INACTIVE:'red',
+    Rejected:"red",
+    Approved:"green",
+    Pending:"orange"
+  };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
@@ -70,10 +82,13 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
+    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
 
     this._selectedColumns = this.columns_list;
+    console.log("columns",this.columns_list);
+    
     if (this.table_data.length > 0) this.loading = false;
   }
 
@@ -103,7 +118,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   getColor(status) {
-    return this.statusColors[status];
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 
   editRowBy_Id(rowData:any){
@@ -127,5 +142,18 @@ export class DynamicTableComponent implements OnInit {
 
   downloadRow(row) {
     this.downloadItem.emit(row);
+  }
+
+  onRowDoubleClick(event: any,rowData){
+      this.onRow_DoubleClick.emit(rowData);
+  }
+
+  getapproved(rowData){
+    console.log(rowData)
+    this.approvedItem.emit(rowData)
+  }
+
+  getRejected(rowData){
+    this.rejectItem.emit(rowData)
   }
 }
