@@ -4,19 +4,26 @@
             <div class="col-md-8 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="onNavigate()"><img src="./../../../../assets/images-n/projects/backarrow.svg"
-                                alt="back-arrow" /></a>
+                        <a (click)="onNavigate()" class="imageBox">
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span>
+                            </a>
                     </label>
                     <span class="title_text_haspath">
-                        Projects | {{ projectName }} | <strong> Create Document </strong>
+                        <span class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span class="breadcrum-back">{{ projectName }}</span> <span class="breadcrum-align">/</span>
+                         <span class="sub_title_text"> Create Document </span>
                     </span>
                 </h3>
             </div>
             <div class="col-md-4 pr-0 text-right">
-                <button (click)="downloadDocument()" class="btn bluebg-button">
+                <button (click)="downloadDocument()" class="btn new-cancelbtn">
                     Download
                 </button>
-                <button (click)="saveDocument()" class="btn bluebg-button ml-3">
+                <button (click)="saveDocument()" class="btn bluebg-button">
                     Save
                 </button>
             </div>
