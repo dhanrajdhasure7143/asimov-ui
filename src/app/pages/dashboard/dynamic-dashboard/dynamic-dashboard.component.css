@@ -84,6 +84,7 @@
 .vertcl-img {
 	width: 12px ;
     margin-right: 11px;
+    display:none;
 }
 .graph-text{
     font-size: 18px;
@@ -137,6 +138,7 @@
     margin:0px 0px 0px 0px !important;
     height: 36px !important;
     padding: 10px;
+    text-transform: capitalize;
 }
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
