@@ -193,7 +193,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
         let params={}
         this.paramForm.forEach(ele=>{
-          console.log(ele)
           if(ele.check)
           params[ele["paramKey"]]=ele["paramValue"];
         })
@@ -939,7 +938,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         each.check = false;
       }
     }
-    console.log(this.paramForm)
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
