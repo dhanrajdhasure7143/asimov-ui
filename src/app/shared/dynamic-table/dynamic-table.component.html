@@ -114,8 +114,22 @@
                                 </span>
                             </div>
                     </span>
-
-                    <span *ngIf="col.ColumnName == 'action' && screenTable !='actionsTable'" class="newinntalx" alignFrozen="right">
+                    
+                    <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100 text-center">
+                        <div class="newinntalx" >
+                            <span *ngIf="screenTable=='projectList'" >
+                                <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
+                                <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
+                                || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
+                                    <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="testplus default-img">
+                            </a>
+                        </span>
+                        <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
+                                <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
+                                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                                </a>
+                        </span>
+                    <span *ngIf="screenTable !='actionsTable'" class="newinntalx" >
                         <a *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                             <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </a>
@@ -131,6 +145,17 @@
                                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </a>
                         </span>
+                        <span *ngIf="show_download_btn" class="editButton" >
+                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
+                                <img src="../../../../assets/images-n/common/download-blue.svg" alt="download" class="default-img testplus">
+                            </a>
+                        </span>
+                        <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'" [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
+                          <i class="fas fa-check text-success"></i>
+                        </button>
+                        <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"[class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
+                            <i class="fas fa-times text-danger"></i>
+                        </button>
                         <span *ngIf="show_delete_btn" class="editButton" >
                             <a *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
                                 <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
@@ -139,27 +164,8 @@
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </a>
                         </span>
-                        <span *ngIf="show_download_btn" class="editButton" >
-                            <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
-                                <img src="../../../../assets/images-n/common/download-blue.svg" alt="download"
-                                class="default-img testplus">
-                            </a>
-                        </span>
-                        <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
-                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
-                          (click)="getapproved(rowData)"
-                          pTooltip="Approve" tooltipPosition="top">
-                          <i class="fas fa-check text-success"></i>
-                        </button>
-                        <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
-                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
-                          (click)="getRejected(rowData)"
-                          pTooltip="Reject"  tooltipPosition="top">
-                          <i class="fas fa-times text-danger"></i>
-                        </button>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">
-                        <div class="newinntalx">
+                    <span *ngIf="screenTable=='users_screen'">
                             <span *ngIf="loggedInUser==rowData['email']" class="editButton">
                                 <a>
                                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
@@ -175,39 +181,9 @@
                                 <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
                                     <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
                                 </a>
-                                
                             </span>
-                        </div>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'" class="w-100 text-center">
-                        <div class="newinntalx" >
-                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
-                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
-                            </a>
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
-                            || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="testplus default-img">
-                        </a>
-                        </div>
-                    </span>
-                    
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList'" class="taskList-table-actions">
-                        <div class="newinntalx" >
-                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
-                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                            </a>
-                            <a class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
-                                <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="default-img">
-                            </a>
-                            <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../assets/images-n/common/delete-blue.svg" alt="Delete" class="default-img">
-                            </a>
-                        </div>
-                    </span>
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='actionsTable'" class="w-100 text-center">
-                        <div class="newinntalx" >
+                    <span *ngIf="screenTable =='actionsTable'">
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
@@ -215,17 +191,11 @@
                             <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                             </a>
-                        </div>
                     </span>
 
-                    <span *ngIf="col.ColumnName == 'action' && screenTable =='connectionsList'" class="w-100 text-center">
+                    <span *ngIf="screenTable =='connectionsList'">
                         <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <!-- <span class="" (click)="viewDetailsbyId(rowData)"  pTooltip="View" tooltipPosition="top">
-                                <button>
-                                    <img src="../../../../assets/images-n/projects/eye-show-blue.svg" alt="Edit" class="testplus default-img">
-                                </button>
-                            </span> -->
                             <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                             </span>
@@ -234,6 +204,8 @@
                             </span>
                         </div>
                     </span>
+                        </div>
+                </span>
                 </td>
             </tr>
         </ng-template>

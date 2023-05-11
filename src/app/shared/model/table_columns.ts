@@ -57,7 +57,7 @@ export class columnList{
         {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Active","Inactive"],width:"flex: 0 0 5rem"},
         {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Yes","No"],width:"flex: 0 0 8rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "date",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
 
