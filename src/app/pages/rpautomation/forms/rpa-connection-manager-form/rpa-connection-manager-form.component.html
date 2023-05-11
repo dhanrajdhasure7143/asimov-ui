@@ -279,7 +279,7 @@
                                                     <td class="headercheckbox">
                                                         <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox> -->
-                                                        <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" (change)="onChangeParamCheckBox(i, $event)">
+                                                        <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" (change)="onChangeParamCheckBox(i, $event)" [ngModelOptions]="{standalone: true}">
                                                     </td>
 
                                                     <td>
