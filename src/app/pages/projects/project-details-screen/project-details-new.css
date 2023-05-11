@@ -17,6 +17,7 @@
     align-items: center;
     display: flex;
 }
+
 .project-status {
     background-color: rgb(9 141 230 / 10%);
     border-radius: 6px 0px 0px 0px;
