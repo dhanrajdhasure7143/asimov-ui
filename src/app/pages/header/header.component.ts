@@ -67,6 +67,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {label: "Change password",icon: 'pi pi-lock',command: (e) => {this.changepassword()}},
     {label: "Signout",icon: 'pi pi-sign-out',command: (e) => {this.logout()}},
   ];
+  ismyAccount : boolean = false;
+  isClose : boolean;
 
   constructor(
     private router: Router,
@@ -155,11 +157,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   myAccount() {
-    this.router.navigate(['/pages/admin/myaccount'])
+    this.ismyAccount = true
+    // this.router.navigate(['/pages/admin/myaccount']);
   }
 
   changepassword() {
-    this.router.navigate(['/pages/admin/changepassword'])
+    // this.router.navigate(['/pages/admin/changepassword']);
   }
 
   userManagement() {
@@ -386,5 +389,12 @@ onChangeTenant(event:any){
     }
   }, 1000)  
   });
+}
+
+closeFormOverlay() {
+  this.ismyAccount = this.isClose;
+}
+display(event){
+  this.isClose = event
 }
 }
