@@ -32,8 +32,22 @@ export class ProcessesComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getEnvironmentlist();
-    this.columns_list = this.columns.scheduler_process_column;
+    this.columns_list = this.columns.schedulerProcess_column;
     this.spinner.hide();
+  }
+
+  ngOnChanges(){
+    let categories_list=[];
+    this.categoriesList.forEach(element => {
+      categories_list.push(element.categoryName)
+    });
+    setTimeout(() => {
+      this.columns_list.map(item=>{
+        if(item.ColumnName === "category"){
+          item["dropdownList"]=categories_list;
+        }
+      });
+    }, 1000);
   }
 
   ngAfterViewInit() {
@@ -50,10 +64,8 @@ export class ProcessesComponent implements OnInit {
   getscheduledata(){
     this.spinner.show();
     this.rest.get_processes_scheduled().subscribe(data1=>{
-   
     let response:any =[];
     response=data1;
-    console.log("processes",response)
     response=response.map(item=>{
       // let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
       if(item.status == "Resumed")item.status= "Stopped"
@@ -63,22 +75,10 @@ export class ProcessesComponent implements OnInit {
       item.nextRunTS=item.nextRunTS?item.nextRunTS.length>5?new Date(item.nextRunTS):null:null;
      return item;
     })
+
     this.tabledata = response.length <= '0'  ? false: true;
     this.processschedule = response
-    this.table_searchFields =[
-      "processName",
-      "category",
-      "environmentName",
-      "lastRunTS",
-      "nextRunTS",
-      "scheduleInterval",
-      "status",
-      "timezone"
-    ]
-    // this.processschedule = new MatTableDataSource(response);  
-    // this.processschedule.paginator=this.paginator4;
-    // this.processschedule.sort=this.sort4;
-   //  });
+    this.table_searchFields =["processName","category","environmentName","lastRunTS","nextRunTS","scheduleInterval","status","timezone"]
      this.spinner.hide(); 
    });
   }

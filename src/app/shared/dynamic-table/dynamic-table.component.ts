@@ -61,7 +61,7 @@ export class DynamicTableComponent implements OnInit {
     INACTIVE:'red',
     Rejected:"red",
     Approved:"green",
-    Pending:"orange !important",
+    Pending:"orange",
     Running:'#007bff'
   };
 
