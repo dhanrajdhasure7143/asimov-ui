@@ -333,7 +333,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getAllUsers(tenantid){
   this.rest_api.getuserslist(tenantid).subscribe((res) => {
     let data =res
-    console.log(data)
     data.forEach(element => {
       element["user_email"]= element.userId.userId
       element["firstName"]= element.userId.firstName

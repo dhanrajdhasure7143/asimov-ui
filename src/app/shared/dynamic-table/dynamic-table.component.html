@@ -143,6 +143,18 @@
                                 class="default-img testplus">
                             </a>
                         </span>
+                        <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
+                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
+                          (click)="getapproved(rowData)"
+                          pTooltip="Approve" tooltipPosition="top">
+                          <i class="fas fa-check text-success"></i>
+                        </button>
+                        <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"
+                          [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"
+                          (click)="getRejected(rowData)"
+                          pTooltip="Reject"  tooltipPosition="top">
+                          <i class="fas fa-times text-danger"></i>
+                        </button>
                     </span>
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='users_screen'">
                         <div class="newinntalx">
