@@ -15,10 +15,10 @@ export class DynamicTableComponent implements OnInit {
   @Input("screenTable") public screenTable: any;
   @Input("userRoles") public userRoles: any[] = [];
   @Input("checkBoxShow") public checkBoxShow:boolean;
-  @Output() viewDetails = new EventEmitter<any[]>();
+  @Output() viewItem = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
   @Output() openTaskWorkSpace = new EventEmitter<any[]>();
-  @Output("editRowById") editRowById:any= new EventEmitter<any>();
+  @Output("updateItem") updateItem:any= new EventEmitter<any>();
   @Output() selectedData = new EventEmitter<any[]>();
   @Input("show_delete_btn") public show_delete_btn:boolean;
   @Input("dataKeyId") public dataKeyId:any
@@ -36,7 +36,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("show_clear_filter") public show_clear_filter:boolean;
   @Input("show_download_btn") public show_download_btn:boolean;
   @Output() downloadItem = new EventEmitter<any[]>();
-  @Output("onRow_DoubleClick") onRow_DoubleClick:any= new EventEmitter<any>();
+  @Output("onRowDoubleClick") onRowDoubleClick:any= new EventEmitter<any>();
   @Input("show_approve_btn") public show_approve_btn:boolean;
   @Input("show_reject_btn") public show_reject_btn:boolean;
   @Output() approvedItem = new EventEmitter<any[]>();
@@ -107,7 +107,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   viewDetailsbyId(row) {
-    this.viewDetails.emit(row);
+    this.viewItem.emit(row);
   }
 
   clear(table: Table) {
@@ -119,7 +119,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   editRowBy_Id(rowData:any){
-    this.editRowById.emit(rowData);
+    this.updateItem.emit(rowData);
   }
 
   selectRow(){
@@ -141,8 +141,8 @@ export class DynamicTableComponent implements OnInit {
     this.downloadItem.emit(row);
   }
 
-  onRowDoubleClick(event: any,rowData){
-      this.onRow_DoubleClick.emit(rowData);
+  onRow_DoubleClick(event: any,rowData){
+      this.onRowDoubleClick.emit(rowData);
   }
 
   getapproved(rowData){
