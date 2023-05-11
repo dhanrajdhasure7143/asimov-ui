@@ -62,7 +62,8 @@ export class DynamicTableComponent implements OnInit {
     INACTIVE:'red',
     Rejected:"red",
     Approved:"green",
-    Pending:"orange"
+    Pending:"orange",
+    Running:'#007bff'
   };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
