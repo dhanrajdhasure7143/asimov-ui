@@ -255,21 +255,23 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   getSelectedEnvironments() {
-    this.filteredEnvironments = [
-      ...this.environmentsList
-        .filter((item: any) => item.categoryId == this.finalbot.categoryId)
-        .map((item2: any) => {
-          if (
-            this.finalbot.envIds.find(
-              (item3: any) => item3 == item2.environmentId
-            ) != undefined
-          ) {
-            return { ...item2, ...{ check: true } };
-          } else {
-            return { ...item2, ...{ check: false } };
-          }
-        }),
-    ];
+    setTimeout(()=>{
+      this.filteredEnvironments = [
+        ...this.environmentsList
+          .filter((item: any) => item.categoryId == this.finalbot.categoryId)
+          .map((item2: any) => {
+            if (
+              this.finalbot.envIds.find(
+                (item3: any) => item3 == item2.environmentId
+              ) != undefined
+            ) {
+              return { ...item2, ...{ check: true } };
+            } else {
+              return { ...item2, ...{ check: false } };
+            }
+          }),
+      ];
+    }, 1500)
   }
 
   checkUncheckEnvironments(envId, value) {
@@ -320,6 +322,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           }, 1000);
         }
       }
+
+      //v1 if confition
       if (node_object != undefined) {
         var source_length = this.jsPlumbInstance
           .getAllConnections()
@@ -393,6 +397,82 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   .attributes.find(
                     (attrs) => attrs.metaAttrValue == "else"
                   ).attrValue = connected_node_id;
+              }
+            }
+          });
+        }
+
+
+        //v2 if
+        if (
+          node_object.taskName == "If" &&
+          source_length < 3 &&
+          this.loadflag
+        ) {
+          Swal.fire({
+            title: "Select True/False case",
+            icon: "warning",
+            showCancelButton: true,
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton: 'btn new-cancelbtn',
+              },
+            cancelButtonText: "Fasle",
+            confirmButtonText: "True",
+          }).then((result) => {
+            if (result.value) {
+              connection.addOverlay([
+                "Label",
+                {
+                  label: "<span class='bg-white text-success'>True<span>",
+                  location: 0.8,
+                  cssClass: "aLabel",
+                  id: "iflabel" + connection.id,
+                },
+              ]);
+
+              let connected_node: any = this.nodes.find(
+                (develop) => develop.id == connection.targetId
+              );
+              // let connected_node_id: any =
+              //   connected_node.name + "__" + connected_node.id;
+              let source_node_id = node_object.nodeId;
+              if (
+                this.finaldataobjects.find(
+                  (tasks) => tasks.nodeId == source_node_id
+                ) != undefined
+              ) {
+                this.finaldataobjects
+                  .find((tasks) => tasks.nodeId == source_node_id)
+                  .attributes.find(
+                    (attrs) => attrs.metaAttrValue == "true"
+                  ).attrValue = connected_node.id;
+              }
+            } else {
+              connection.addOverlay([
+                "Label",
+                {
+                  label: "<span class='bg-white text-danger'>False<span>",
+                  location: 0.8,
+                  cssClass: "aLabel",
+                  id: "iflabel" + connection.id,
+                },
+              ]);
+              let connected_node: any = this.nodes.find(
+                (develop) => develop.id == connection.targetId
+              );
+              // let connected_node_id: any =
+              //   connected_node.name + "__" + connected_node.id;
+              if (
+                this.finaldataobjects.find(
+                  (tasks) => tasks.nodeId == node_object.nodeId
+                ) != undefined
+              ) {
+                this.finaldataobjects
+                  .find((tasks) => tasks.nodeId == node_object.nodeId)
+                  .attributes.find(
+                    (attrs) => attrs.metaAttrValue == "false"
+                  ).attrValue = connected_node.id;
               }
             }
           });
@@ -577,7 +657,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       this.loadflag = false;
       sequences.forEach((element) => {
-        this.jsPlumbInstance.connect({
+        let connection=this.jsPlumbInstance.connect({
           endpoint: [
             "Dot",
             {
@@ -605,6 +685,36 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           //   connectorHoverStyle: { lineWidth: 3 },
           overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
         });
+
+        //Added label for condition connections for v2 if
+        if((this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1])?.taskName??"")=="If")
+        {
+          let taskItem=this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1]);
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true").attrValue==element.targetTaskId)
+          {
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-success'>True<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
+              },
+            ]);
+          }
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false").attrValue==element.targetTaskId)
+          {
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-danger'>False<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
+              },
+            ]);
+          }
+        }
       });
       this.loadflag = true;
       this.addTasksToGroups();
@@ -1709,12 +1819,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.spinner.show();
     this.checkorderflag = true;
     this.addsquences();
-    this.arrange_task_order(this.startNodeId);
+    if(this.executionMode){
+      this.arrange_task_order(this.startNodeId);
+    }
+    else
+    {
+      this.final_tasks=this.finaldataobjects;
+    }
     this.get_coordinates();
     await this.getsvg();
     this.rpaAuditLogs(env);
     await this.validateBotNodes();
-   
+    if(this.executionMode)
+    {
+      
       let finalTasksData=[...this.final_tasks];
       finalTasksData.forEach((item, finalIndex)=>{
         if(this.actualTaskValue.length != 0 && item.validated==undefined)
@@ -1753,6 +1871,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         
         }
       })
+    }
+
       this.saveBotdata = {
         versionType: version_type,
         comments: comments,
@@ -2119,12 +2239,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if (tasknode.nodeId.split("__")[1] == target) {
             this.finaldataobjects.find(
               (data) => data.nodeId == tasknode.nodeId
-            ).inSeqId = source;
+            ).inSeqId = String(source);
           }
           if (tasknode.nodeId.split("__")[1] == source) {
             this.finaldataobjects.find(
               (data) => data.nodeId == tasknode.nodeId
-            ).outSeqId = target;
+            ).outSeqId = String(target);
           }
         }
       });
