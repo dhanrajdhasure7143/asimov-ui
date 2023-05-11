@@ -29,7 +29,7 @@ export class BotsComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getSchedulebots();
-    this.columns_list = this.columns.scheduler_bots
+    this.columns_list = this.columns.scheduler_bots_column
     this.spinner.hide();
   }
 

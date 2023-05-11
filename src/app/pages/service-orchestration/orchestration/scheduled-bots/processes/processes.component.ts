@@ -32,7 +32,7 @@ export class ProcessesComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getEnvironmentlist();
-    this.columns_list = this.columns.scheduler_process;
+    this.columns_list = this.columns.scheduler_process_column;
     this.spinner.hide();
   }
 
