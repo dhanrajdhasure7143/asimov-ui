@@ -3872,3 +3872,8 @@ background-color: #D8E0EF !important;
 .imageBox:hover .hover-icon{
   display: block;
 }
+.p-datatable table {
+  
+  min-width: 99% !important;
+  
+}
