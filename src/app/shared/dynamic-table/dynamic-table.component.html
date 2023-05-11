@@ -105,7 +105,27 @@
                                     <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
                                     <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
                                     <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
-                                        <span *ngIf="getColor(rowData[col.ColumnName])" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
+                                        <span *ngIf="getColor(rowData[col.ColumnName] && col.ColumnName != 'status')" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
+                                        <span *ngIf="(rowData['status']=='Running' && col.ColumnName == 'status' )" class="text-primary">
+                                            <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
+                                        </span>
+                                        <span *ngIf="(rowData['status']=='Success' && col.ColumnName == 'status' )" class="text-primary">
+                                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">Saved
+                                        </span>
+                                        <span *ngIf="(rowData['status']=='Failure' && col.ColumnName == 'status' )" class="text-primary">
+                                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
+                                        </span>
+                                        <span *ngIf="(rowData['status']=='Paused' && col.ColumnName == 'status' )" class="text-primary">
+                                            <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" alt=""
+                                            class="testpause">Paused                                        </span>
+                                        <span *ngIf="(rowData['status']=='New' && col.ColumnName == 'status' )" class="text-primary">
+                                            <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
+                                        </span>
+                                        <span *ngIf="(rowData['status']=='Pending' && col.ColumnName == 'status' )" class="text-primary">
+                                            <i class="fa fa-clock"></i>&nbsp;                                        </span>
+                                        <span *ngIf="(rowData['status']=='Stop' && col.ColumnName == 'status')" class="text-primary">
+                                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">Stopped
+                                        </span>             
                                         <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
                                         <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                     </span>
