@@ -3,11 +3,13 @@ import * as moment from 'moment';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-bots',
   templateUrl: './bots.component.html',
-  styleUrls: ['./bots.component.css']
+  styleUrls: ['./bots.component.css'],
+  providers: [columnList]
 })
 export class BotsComponent implements OnInit {  
   public log:any=[];
@@ -15,25 +17,19 @@ export class BotsComponent implements OnInit {
   public scheduledbots: any = [];
   search:any;
   @Input("categoriesList") public categoriesList: any[] = [];
-  columnList=[
-    {field:"botName",DisplayName:"Bot Name",ShowFilter: true,filterType:"text"},
-    {field:"botSource",DisplayName:"Bot Source",ShowFilter: true,filterType:"text"},
-    {field:"category",DisplayName:"Category",ShowFilter: true,filterType:"text"},
-    {field:"lastRunTS",DisplayName:"Previous Run",ShowFilter: true,filterType:"date"},
-    {field:"nextRunTS",DisplayName:"Next Run",ShowFilter: true,filterType:"date"},
-    {field:"scheduleInterval",DisplayName:"Schedule Interval",ShowFilter: true,filterType:"text"},
-    {field:"status",DisplayName:"Status",ShowFilter: true,filterType:"text"},
-    {field:"timezone",DisplayName:"Time Zone",ShowFilter: true,filterType:"text"},
-  ];
+  columns_list:any[]=[];
+  table_searchFields: any=[];
 
   constructor(
       private rest:RestApiService,
       private spinner:LoaderService,
+      private columns:columnList
   ) { }
 
   ngOnInit() {
     this.spinner.show();
     this.getSchedulebots();
+    this.columns_list = this.columns.scheduler_bots
     this.spinner.hide();
   }
 
@@ -46,7 +42,6 @@ export class BotsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.scheduledbots.filter = filterValue;
-   
     this.tabledata = this.scheduledbots.filteredData.length <= '0'  ? false: true;
   }
 
@@ -71,6 +66,16 @@ export class BotsComponent implements OnInit {
     this.log  = data1;
     this.tabledata = this.log.length <= '0'  ? false: true;
     this.scheduledbots = this.log
+    this.table_searchFields = [
+      "botName",
+      "botSource",
+      "category",
+      "lastRunTS",
+      "nextRunTS",
+      "scheduleInterval",
+      "status",
+      "timezone"
+    ];
     // this.scheduledbots = new MatTableDataSource(this.log);  
     // this.scheduledbots.paginator=this.paginator4;
     // this.scheduledbots.sort=this.sort4;

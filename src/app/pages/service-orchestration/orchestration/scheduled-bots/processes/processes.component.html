@@ -1,5 +1,5 @@
 <div id="" class="schedule-table-container h-100">
-    <p-table #dt [value]="processschedule" [resizableColumns]="true" responsiveLayout="scroll"
+    <!-- <p-table #dt [value]="processschedule" [resizableColumns]="true" responsiveLayout="scroll"
         [reorderableColumns]="true" [scrollable]="true"
         [globalFilterFields]="['processName','environmentName','category','environmentName','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
         <ng-template pTemplate="caption">
@@ -113,5 +113,14 @@
                 <td style="justify-content: center;" colspan="8">No Records Found</td>
             </tr>
         </ng-template>
-    </p-table>
+    </p-table> -->
+
+    <app-dynamic-table 
+    [table_data]="processschedule" 
+    [columns_list]="columns_list"
+    [show_search_field]="true"
+    [show_column_filter]="true"
+    [show_clear_filter]="true"
+    [search_fields]="table_searchFields"
+    ></app-dynamic-table>
 </div>

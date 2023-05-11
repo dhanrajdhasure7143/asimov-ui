@@ -2,11 +2,13 @@ import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-processes',
   templateUrl: './processes.component.html',
-  styleUrls: ['./processes.component.css']
+  styleUrls: ['./processes.component.css'],
+  providers:[columnList]
 })
 export class ProcessesComponent implements OnInit {
 
@@ -16,26 +18,21 @@ export class ProcessesComponent implements OnInit {
   environment: any;
   enivornmentname: any;
   search:any;
+  columns_list:any[]=[];
+  table_searchFields: any=[];
   @Input("categoriesList") public categoriesList: any[] = [];
-  columnList=[
-    {field:"processName",DisplayName:"Process Name",ShowFilter: true,filterType:"text"},
-    {field:"category",DisplayName:"Category",ShowFilter: true,filterType :"text"},
-    {field:"environmentName",DisplayName:"Environment",ShowFilter: true,filterType :"text"},
-    {field:"lastRunTS",DisplayName:"Previous Run",ShowFilter: true,filterType :"date"},
-    {field:"nextRunTS",DisplayName:"Next Run",ShowFilter: true,filterType :"date"},
-    {field:"scheduleInterval",DisplayName:"Schedule Interval",ShowFilter: true,filterType :"text"},
-    {field:"status",DisplayName:"Status",ShowFilter: true,filterType :"text"},
-    {field:"timezone",DisplayName:"Time Zone",ShowFilter: true,filterType :"text"},
-  ];
+  
 
   constructor(
       private rest:RestApiService,
       private spinner:LoaderService,
+      private columns:columnList
   ) { }
 
   ngOnInit() {
     this.spinner.show();
     this.getEnvironmentlist();
+    this.columns_list = this.columns.scheduler_process;
     this.spinner.hide();
   }
 
@@ -58,11 +55,20 @@ export class ProcessesComponent implements OnInit {
     response=data1;
     response=response.map(item=>{
       let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
-     item["environmentName"]=(environment!=undefined?environment.environmentName:"--");
      return item;
     })
     this.tabledata = response.length <= '0'  ? false: true;
     this.processschedule = response
+    this.table_searchFields =[
+      "processName",
+      "category",
+      "environmentName",
+      "lastRunTS",
+      "nextRunTS",
+      "scheduleInterval",
+      "status",
+      "timezone"
+    ]
     // this.processschedule = new MatTableDataSource(response);  
     // this.processschedule.paginator=this.paginator4;
     // this.processschedule.sort=this.sort4;
