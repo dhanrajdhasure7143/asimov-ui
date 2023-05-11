@@ -2642,6 +2642,7 @@ cursor: pointer;
 .main-content-head h3 .title_text{
   font-size: 18px;
   font-weight: 500;
+  text-transform: capitalize;
 }
 .main-content-head h3 .title_text_haspath {
   font-size: 16px;
@@ -2651,7 +2652,7 @@ cursor: pointer;
   min-width: auto;
 }
 .main-content-head button span {
-  margin-left: 5px;
+  margin-left: 8px;
 }
 .dropdown-toggle::after {
   display: inline-block;
@@ -3837,12 +3838,14 @@ textarea.p-inputtextarea {
   background-color: #ECF1FB !important;
   margin-left: 8px !important; 
   padding: 8px 12px!important;
-  height: 36px;   
+  height:36px;
+ border-radius:3px;   
 }
+
 .grey-btn:hover {
 background-color: #D8E0EF !important;  
 }
-.imgicon-width{width:17px;}
+.imgicon-width{width:18px;}
 .breadcrum-align {
   padding: 0px 5px;
   font-size: 17px;
@@ -3851,7 +3854,9 @@ background-color: #D8E0EF !important;
 .back-arrow-align{background: url("./assets/images-n/projects/backarrow1.png");}
 .breadcrum-back{cursor: pointer;color:#535353}
 .breadcrum-back:hover{color:var(--main-bluecolor);}
-
+.configure-pad{display: flex;
+  align-items: center;
+  float: right;}
 .imageBox {
   position: relative;
   float: left;
