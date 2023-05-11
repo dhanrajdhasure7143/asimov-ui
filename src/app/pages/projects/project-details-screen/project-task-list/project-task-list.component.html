@@ -14,7 +14,7 @@
                       </a>
                   </label>
                   <span class="title_text_haspath">
-                    <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span class="breadcrum-back">{{project_name}} </span><span class="breadcrum-align">/</span> <span class="sub_title_text"> Tasks</span>
+                    <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span (click)="backToProjectDetails()" class="breadcrum-back">{{project_name}}</span> <span class="breadcrum-align">/</span> <span class="sub_title_text"> Tasks</span>
                   </span>
               </h3>
           </div>
@@ -63,6 +63,9 @@
                             [show_search_field]="true"
                             [show_column_filter]="true"
                             [show_clear_filter]="true"
+                            (onRow_DoubleClick)="viewDetails($event)"
+                            [show_view_btn]="true"
+                            [show_delete_btn]="true"
                             >
                           </app-dynamic-table>
                       </div>

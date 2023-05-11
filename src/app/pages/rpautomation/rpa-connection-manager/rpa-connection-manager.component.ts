@@ -5,11 +5,13 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-rpa-connection-manager",
   templateUrl: "./rpa-connection-manager.component.html",
   styleUrls: ["./rpa-connection-manager.component.css"],
+  providers:[columnList]
 })
 export class RpaConnectionManagerComponent implements OnInit {
   @Input() isCreate: boolean = true;
@@ -43,7 +45,8 @@ export class RpaConnectionManagerComponent implements OnInit {
     private spinner: LoaderService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private columnList: columnList
   ) {}
 
   ngOnInit() {
@@ -54,6 +57,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     });
     this.getAllConnections();
     this.userRole = localStorage.getItem("userRole");
+    this.columns_list = this.columnList.connectionsList_column
   }
 
   getAllConnections() {
@@ -62,46 +66,6 @@ export class RpaConnectionManagerComponent implements OnInit {
       this.connectorTable = res.data;
       this.readSelectedData([]); 
       this.spinner.hide();
-      this.columns_list = [
-        {
-          ColumnName: "name",
-          DisplayName: "Connector Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "connectionLogo",
-          DisplayName: "Connector Logo",
-          ShowGrid: true,
-          ShowFilter: false,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "actionCount",
-          DisplayName: "Action Count",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "action",
-          DisplayName: "",
-          ShowGrid: true,
-          ShowFilter: false,
-          sort: false,
-          multi: false,
-        },
-      ];
       this.table_searchFields=["name","actionCount"]
     });
   }

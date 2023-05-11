@@ -8,14 +8,16 @@ import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
-  styleUrls: ['./rpa-database-connections.component.css']
+  styleUrls: ['./rpa-database-connections.component.css'],
+  providers: [columnList]
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  public databaselist: any;
+  public databaselist: any[]=[];
   public toggle: boolean;
   public dbupdateflag: boolean = false;
   public submitted: Boolean;
@@ -39,34 +41,30 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   isDatabase: boolean = false;
   h2flag: boolean = false;
   noDataMessage: boolean;
-  columns_list:any =[]
   selectedData: any;
   categories_list: any=[];
   table_searchFields: any[]=[];
   hiddenPopUp:boolean=false;
-  overlayClose:boolean = false
+  overlayClose:boolean = false;
+  columns_list:any[] =[];
 
   constructor(private api: RestApiService,
     private router: Router,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private columnList : columnList
   ) {
-    const ipPattern =
-      "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-
+    const ipPattern ="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     this.DBupdateflag = false;
     this.DBdeleteflag = false;
-
   }
 
   ngOnInit() {
-    this.api.getDatabaselist().subscribe(res => {
-      this.databaselist = res;
-    })
     //   //     document.getElementById("filters").style.display='block';
     //this.getallDBConnection();
-    this.getCategories()
+    this.getCategories();
+    this.columns_list= this.columnList.databaseConnections_column
     this.spinner.show();
     this.passwordtype1 = false;
     this.passwordtype2 = false;
@@ -98,133 +96,12 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
           item["password_new"]=("*").repeat(10);
           item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp?item.createdTimeStamp:item.modifiedTimestamp)
+          item["status"] = item.activeStatus==7?"Active":"Inactive"
           return item;
         })
       }      
-      this.columns_list = [
-        {
-          ColumnName: "connectiontName",
-          DisplayName: "Connection Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "categoryName",
-          DisplayName: "Category",
-          ShowFilter: true,
-          ShowGrid: true,
-          filterWidget: "dropdown",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        "dropdownList":this.categories_list
-        },
-        {
-          ColumnName: "password_new",
-          DisplayName: "Password",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "dataBaseType",
-          DisplayName: "Database Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "databasename",
-          DisplayName: "Database Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "hostAddress",
-          DisplayName: "IP Address / Host",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "portNumber",
-          DisplayName: "Port",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "username",
-          DisplayName: "Username",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "schemaName",
-          DisplayName: "Schema",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "createdBy",
-          DisplayName: "Created By",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "activeStatus",
-          DisplayName: "Status",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "createdTimeStamp_converted",
-          DisplayName: "Created Date",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "date",
-          sort: true,
-          multi: false,
-        },
-      ]
-      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","username","activeStatus","createdTimeStamp_converted","createdBy"]
+
+      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","activeStatus","createdTimeStamp_converted","schemaName","createdBy"]
 
       this.spinner.hide();
     });
@@ -359,6 +236,12 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
+    this.columns_list.map(item=>{
+      if(item.ColumnName === "categoryName"){
+        item["dropdownList"]=this.categories_list
+      }
+    })
+        this.getListofDBConnections();
         this.getallDBConnection();
       }
     })
@@ -382,8 +265,24 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.selectedData.length == 1 ?this.DBupdateflag =true :this.DBupdateflag =false
   }
 
-  closeOverlay(event)
-  {
+  closeOverlay(event){
     this.hiddenPopUp=event;
+  }
+
+  getListofDBConnections(){
+    this.api.getDatabaselist().subscribe((res:any)=>{
+      this.databaselist=res;
+      let _databaseList=[];
+      this.databaselist.forEach(e=>{
+        _databaseList.push(e.databaseName)
+      });
+      this.columns_list[2]["dropdownList"]=_databaseList;
+    })
+  }
+
+  updatedbConnection(data){
+    this.hiddenPopUp=true;
+    this.isDatabase = false;
+    this.dbupdatedata = data;
   }
 }

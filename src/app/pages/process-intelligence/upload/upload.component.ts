@@ -17,12 +17,14 @@ import { APP_CONFIG } from 'src/app/app.config';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from "src/app/shared/model/table_columns"
 
 declare var target: any;
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.css'],
+  providers:[columnList]
 })
 export class UploadComponent implements OnInit {
   xlsx_csv_mime: string;
@@ -82,15 +84,7 @@ export class UploadComponent implements OnInit {
   categories_list_new:any[]=[];
   hiddenPopUp:boolean=false;
   hiddenPopUp1: boolean=false;
-  columns_list:any=[] = [
-    {ColumnName: "piId",DisplayName: "Process ID",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-    {ColumnName: "convertedTime_new",DisplayName: "Created Date",ShowFilter: true, ShowGrid: true,filterWidget: "normal",filterType: "date",sort: true},
-    {ColumnName: "piName",DisplayName: "Process Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-    {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:this.categories_list_new},
-    {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-    {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
-  ];
-
+  columns_list:any=[];
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -100,6 +94,7 @@ export class UploadComponent implements OnInit {
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
     private loader: LoaderService,
+    private columnList: columnList,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -114,8 +109,7 @@ export class UploadComponent implements OnInit {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
-   
-  
+    this.columns_list = this.columnList.pi_columns
     this.rest.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
@@ -582,6 +576,7 @@ export class UploadComponent implements OnInit {
     this.categories_list.forEach(element => {
       this.categories_list_new.push(element.categoryName)
     });
+    this.columns_list[3].dropdownList=this.categories_list_new;
     let selected_category=localStorage.getItem("pi_search_category");
       if(this.categories_list.length == 1){
         this.categoryName=this.categories_list[0].categoryName;

@@ -8,37 +8,31 @@
             <div *ngIf="!addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="opencreatedbconnection()"  pTooltip="New" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add" class="testplus">
-                    <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
             <div *ngIf="addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg' alt="add" class="testplus">
-                    <!-- <span class="testtooltip">New</span> -->
                 </button>
             </div>
-            <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
+            <!-- <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()"  pTooltip="Edit" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' alt="edit" class="testplus">
-                    <!-- <span class="testtooltip">Edit</span> -->
                 </button>
-            </div>
-            <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
+            </div> -->
+            <!-- <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
                 <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="edit" class="testplus">
-                    <!-- <span class="testtooltip">Edit</span> -->
                 </button>
-            </div>
+            </div> -->
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()"  pTooltip="Delete" tooltipPosition="top">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' alt="delete" class="testplus">
-                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==false" class="env-btn credential-btntool">
                 <button id="deletedbbtn" title="Delete Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="delete" class="testplus">
-                    <!-- <span class="testtooltip">Delete</span> -->
                 </button>
             </div>
         </div>
@@ -46,108 +40,6 @@
     </div>
     <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid gridparentdiv">
-            <!-- <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="listofdb">
-
-                <ng-container matColumnDef="check">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <input [disabled]="DBcheckeddisabled" type="checkbox" id="DBcheckall" [checked]="DBcheckflag"
-                            (change)="DBcheckAllCheckBox($event)">
-                    </th>
-                    <td mat-cell *matCellDef="let element; let i = index">
-                        <input type="checkbox" [checked]="element.checked"
-                            (change)="DBcheckEnableDisableBtn(element.connectionId, $event)">
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="connectiontName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span>
-                        <span *ngIf="element.connectiontName==''">-</span>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="categoryName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span>
-                        <span *ngIf="element.categoryName==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="password">
-                    <th mat-header-cell *matHeaderCellDef>Password</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span
-                            *ngIf="element.password==''">-</span> </td>
-                </ng-container>
-                <ng-container matColumnDef="dataBaseType">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span>
-                        <span *ngIf="element.dataBaseType==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="databasename">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Name</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span>
-                        <span *ngIf="element.databasename==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="hostAddress">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span>
-                        <span *ngIf="element.hostAddress==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="portNumber">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
-                    <td mat-cell *matCellDef="let element"> <span
-                            *ngIf="element.portNumber!=null">{{element.portNumber}}</span>
-                        <span *ngIf="element.portNumber==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="username">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-                    <td mat-cell *matCellDef="let element"> <span
-                            *ngIf="element.username!=null">{{element.username}}</span>
-                        <span *ngIf="element.username==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="schemaName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Schema</th>
-                    <td mat-cell *matCellDef="let element"> <span
-                            *ngIf="element.schemaName!=null">{{element.schemaName}}</span>
-                        <span *ngIf="element.schemaName==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="createdBy">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span>
-                        <span *ngIf="element.createdBy==''">-</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="activeStatus">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.activeStatus == 7"><span class='green'>Active</span></span>
-                        <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span
-                                class='red'>Inactive</span></span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="createdTimeStamp">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
-                  
-                    <td mat-cell *matCellDef="let element"> {{element.createdTimeStamp_converted}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-            </table>
-            <div class="noData" *ngIf="noDataMessage===true">No Data Found</div>
-        </div>
-        <mat-paginator #paginator4 [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]"
-            [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
             <app-dynamic-table
                 [table_data]="dbconnections"
                 [screenTable]="'common'"
@@ -157,7 +49,11 @@
                 [show_column_filter]="true"
                 [show_clear_filter]="true"
                 [show_search_field]="true"
-                [search_fields]="table_searchFields" 
+                [search_fields]="table_searchFields"
+                show_edit_btn="true"
+                show_delete_btn="true"
+                (onRow_DoubleClick)="updatedbConnection($event)"
+                (editRowById)="updatedbConnection($event)"             
             ></app-dynamic-table>
         </div>
     </div>
@@ -165,6 +61,6 @@
 <div *ngIf="hiddenPopUp">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
         <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"
-        (closeOverlay)="closeOverlay($event)"> </app-rpa-database-form>
+        (closeOverlay)="closeOverlay($event)" [databaselist]="databaselist"> </app-rpa-database-form>
     </app-split-overlay>
 </div>

@@ -31,7 +31,7 @@ export const environment = {
   dbName: "eiap_prod",
   dbPort: "5432",
   //RPA WebActions Action AttrId
-  webActionAttrId: 536,
+  webActionAttrId: 580,
   //IPCTenant
-  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
+  ipcTenant: "55d76780-77f1-4f1c-8762-e0c13a0b8613"
 };

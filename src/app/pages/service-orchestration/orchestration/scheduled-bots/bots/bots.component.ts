@@ -3,11 +3,13 @@ import * as moment from 'moment';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-bots',
   templateUrl: './bots.component.html',
-  styleUrls: ['./bots.component.css']
+  styleUrls: ['./bots.component.css'],
+  providers: [columnList]
 })
 export class BotsComponent implements OnInit {  
   public log:any=[];
@@ -15,26 +17,31 @@ export class BotsComponent implements OnInit {
   public scheduledbots: any = [];
   search:any;
   @Input("categoriesList") public categoriesList: any[] = [];
-  columnList=[
-    {field:"botName",DisplayName:"Bot Name",ShowFilter: true,filterType:"text"},
-    {field:"botSource",DisplayName:"Bot Source",ShowFilter: true,filterType:"text"},
-    {field:"category",DisplayName:"Category",ShowFilter: true,filterType:"text"},
-    {field:"lastRunTS",DisplayName:"Previous Run",ShowFilter: true,filterType:"date"},
-    {field:"nextRunTS",DisplayName:"Next Run",ShowFilter: true,filterType:"date"},
-    {field:"scheduleInterval",DisplayName:"Schedule Interval",ShowFilter: true,filterType:"text"},
-    {field:"status",DisplayName:"Status",ShowFilter: true,filterType:"text"},
-    {field:"timezone",DisplayName:"Time Zone",ShowFilter: true,filterType:"text"},
-  ];
+  columns_list:any[]=[];
+  table_searchFields: any=[];
 
   constructor(
       private rest:RestApiService,
       private spinner:LoaderService,
+      private columns:columnList
   ) { }
 
   ngOnInit() {
     this.spinner.show();
     this.getSchedulebots();
-    this.spinner.hide();
+    this.columns_list = this.columns.schedulerBots_column
+  }
+
+  ngOnChanges(){
+    let categories_list=[];
+    this.categoriesList.forEach(element => {
+      categories_list.push(element.categoryName)
+    });
+    this.columns_list.map(item=>{
+      if(item.ColumnName === "category"){
+        item["dropdownList"]=categories_list
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -46,35 +53,21 @@ export class BotsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.scheduledbots.filter = filterValue;
-   
     this.tabledata = this.scheduledbots.filteredData.length <= '0'  ? false: true;
   }
 
   getSchedulebots(){
     this.spinner.show();
-    function getdate(value,type){
-      let currentdate=new Date();
-      (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
-      return moment(currentdate).format('DD-MM-YYYY');
-    }
-
     this.rest.get_scheduled_bots().subscribe(data1=>{
-    //  let data= [
-    //   {botName:'Send_Test_Mail', botSource:'Blueprism',lastRunTS:(getdate(1,"0"))+' 11:00',nextRunTS:(getdate(1,"1"))+' 11:00',scheduleInterval:'Every 2 Days',status:'Success',timezone:'Asia/Kolkata'},
-    //    {botName:'SLA_Test_Bot', botSource:'EPSoft',lastRunTS: (getdate(0,"0"))+' 18:30',nextRunTS:(getdate(1,"1"))+' 18:30',scheduleInterval:'Every Day',status:'Success',timezone:'UTC'},
-    //    {botName:'RetryConfig', botSource:'EPSoft',lastRunTS: (getdate(2,"0"))+' 12:15',nextRunTS:(getdate(2,"1"))+' 12:15',scheduleInterval:'Every 4 Days',status:'Success',timezone:'GMT'},
-    //    {botName:'TestMail', botSource:'UiPath',lastRunTS: (getdate(1,"0"))+' 13:00',nextRunTS:(getdate(1,"1"))+' 13:00',scheduleInterval:'Every 2 Days',status:'Success',timezone:'UTC'},
-    //    {botName:'Test-Mail', botSource:'BluePrism',lastRunTS: (getdate(2,"0"))+' 07:00',nextRunTS:(getdate(2,"1"))+' 07:00',scheduleInterval:'Every 4 Days',status:'Failure',timezone:'UTC'},
-    //    {botName:'Invoice-Payment', botSource:'EPSoft',lastRunTS: (getdate(0,"0"))+' 02:00',nextRunTS:(getdate(1,"1"))+' 02:00',scheduleInterval:'Every Day',status:'Failure',timezone:'GMT'},
-    //    {botName:'Invoice-Check', botSource:'EPSoft',lastRunTS: (getdate(0,"0"))+' 21:00',nextRunTS:(getdate(1,"1"))+' 21:00',scheduleInterval:'Every Day',status:'Success',timezone:'Asia/Kolkata'},
-    //  ];
     this.log  = data1;
     this.tabledata = this.log.length <= '0'  ? false: true;
     this.scheduledbots = this.log
-    // this.scheduledbots = new MatTableDataSource(this.log);  
-    // this.scheduledbots.paginator=this.paginator4;
-    // this.scheduledbots.sort=this.sort4;
-   //  });
+    this.scheduledbots.map(item=>{
+      item.lastRunTS=item.lastRunTS?(item.lastRunTS!= "00:00"?new Date(item.lastRunTS):null):null;
+      item.nextRunTS=item.nextRunTS?(item.nextRunTS!="00:00"?new Date(item.nextRunTS):null):null;
+      return item
+    });
+    this.table_searchFields = ["botName","botSource","category","lastRunTS","nextRunTS","scheduleInterval","status","timezone"];
      this.spinner.hide(); 
    });
   }

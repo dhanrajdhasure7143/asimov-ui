@@ -14,12 +14,13 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 import {MessageService} from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
 selector: 'app-project-details-screen',
 templateUrl: './project-details-new.html',
 styleUrls: ['./project-details-new.css'],
-providers: [MessageService]
+providers: [MessageService,columnList]
 })
 export class ProjectDetailsScreenComponent implements OnInit {
 @ViewChild("inplace") inplace!: Inplace;
@@ -167,15 +168,7 @@ public hiddenPopUp: boolean = false;
 columns_list:any;
 existingUsersList:any[]=[];
 checkBoxselected:any[]=[];
-roles_list = [
-{name: 'All Roles', code: 'All'},
-{name: 'System Admin', code: 'System Admin'},
-{name: 'Process Architect', code: 'Process Architect'},
-{name: 'RPA Developer', code: 'RPA Developer'},
-{name: 'Process Owner', code: 'Process Owner'},
-{name: 'Process Designer', code: 'Process Designer'},
-{name: 'Platform Admin', code: 'Platform Admin'}
-];
+roles_list:any = [];
 selectedRole:any= "All";
 users_tableList:any=[];
 users_tabIndex:any=0;
@@ -237,7 +230,8 @@ constructor(private dt: DataTransferService, private route: ActivatedRoute, priv
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
 private spinner: LoaderService,
 private messageService: MessageService,
-private confirmationService: ConfirmationService
+private confirmationService: ConfirmationService,
+private columnList: columnList
 ) {
   this.route.queryParams.subscribe((data:any)=>{​​​​​​
     this.params_data=data
@@ -255,17 +249,16 @@ ngOnInit() {
 this.actionsitems = [
   {
     label: 'Tasks',
-    command: () => {
-      this.taskListView();
-    }
+    command: () => {this.taskListView()}
+  },
+  { 
+    label: 'Users',
+    command: () => { this.openUsersOverlay()}
   },
   {
-    label: 'Users',
-    command: () => {
-      this.openUsersOverlay();
-    }
-  },
-  {label: 'Documents', command: () => {this.openDocumentScreen();}}
+    label: 'Documents', 
+  command: () => {this.openDocumentScreen()}
+}
 ];
 // this.processOwner = false;
 localStorage.setItem('project_id', null);
@@ -453,17 +446,16 @@ this.rest_api.getRole(this.userid).subscribe(data => {
 
 async getProjectdetails(){​​​​​​
 // this.spinner.show();
-await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
-this.projectDetails=res
-this.processownername = this.projectDetails.processOwner
-this.project_desc = this.projectDetails.projectPurpose
-this.processOwnerFlag=false;
-if(this.projectDetails.endDate){
-this.projectenddate=moment(this.projectDetails.endDate).format("lll");
-}
-this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-this.getTheExistingUsersList(null);
-
+  await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
+  this.projectDetails=res
+  this.processownername = this.projectDetails.processOwner
+  this.project_desc = this.projectDetails.projectPurpose
+  this.processOwnerFlag=false;
+  if(this.projectDetails.endDate){
+  this.projectenddate=moment(this.projectDetails.endDate).format("lll");
+  }
+  this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
+  this.getTheExistingUsersList(null)
 })
 this.snapShotDetails();
 this.getRecentactivities();
@@ -542,6 +534,7 @@ this.dt.tenantBased_UsersList.subscribe(response => {
     this.getMessagesList();
   this.getAllCategories();
   this.getTheListOfFolders();
+  this.getRoles();
   this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
   }
 })
@@ -873,17 +866,17 @@ this.hiddenPopUp = event;
 
 onChangeRole(event,tab){
 if(tab == 0){
-if(event.value.code == 'All') {
+if(event.value == 'All Roles') {
 this.users_tableList = this.non_existUsers
 return
 }
-this.users_tableList = this.non_existUsers.filter(item => (item.user_role == event.value.code))
+this.users_tableList = this.non_existUsers.filter(item => (item.user_role == event.value))
 }else{
-  if(event.value.code == 'All') {
+  if(event.value == 'All Roles') {
     this.users_tableList = this.existingUsersList
     return
   }
-  this.users_tableList = this.existingUsersList.filter(item => (item.user_role == event.value.code))
+  this.users_tableList = this.existingUsersList.filter(item => (item.user_role == event.value))
 }
 
 }
@@ -1118,7 +1111,6 @@ let req_body = {
   url : this.router.url,
   projectName:this.projectDetails.projectName
 };
-// console.log(req_body)
 this.router.navigate(['pages/projects/document-editor'],
 { queryParams: { id:btoa(JSON.stringify(req_body)) } })
 }
@@ -1420,11 +1412,7 @@ selectEnd() {
 }
 
   getRecentactivities() {
-    this.columns_list_activities = [
-      {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "lastModifiedUsername",DisplayName: "Resource Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Last Modified", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
-    ];
+    this.columns_list_activities = this.columnList.recentActivities_columns
   this.rest_api.recentActivities(this.project_id).subscribe((data:any)=>{
     this.recentActivityList=data;
     this.recentActivityList.map(item =>{
@@ -1518,6 +1506,14 @@ selectEnd() {
         });
       }
     );
+  }
+
+  getRoles() {
+    this.rest_api.getAllRoles(2).subscribe((resp) => {
+      this.roles_list = resp;
+      let obj ={name: 'All Roles', code: 'All'}
+      this.roles_list.unshift(obj)
+    });
   }
 
 }

@@ -5,11 +5,14 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 import * as moment from "moment";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { columnList } from "src/app/shared/model/table_columns";
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 
 @Component({
   selector: "app-users",
   templateUrl: "./users.component.html",
   styleUrls: ["./users.component.css"],
+  providers:[columnList]
 })
 export class UsersComponent implements OnInit {
 
@@ -19,28 +22,41 @@ export class UsersComponent implements OnInit {
   freetrail: string;
   columns_list:any[]=[];
   table_searchFields:any[]=[];
+  hiddenPopUp:boolean = false;
+  userData: any;
+  categories: any;
+  allRoles: any[];
+  roles = [];
+  roleObj: any;
+  roleIds: any[] = [];
+  isdprtDisabled: boolean = false;
+  people = [{ name: "test", id: "01" }];
+  isdisabled: boolean = true;
+  departments = [];
+  email: any;
+  role: any;
+  depts: any = [];
+  errShow: boolean = false;
+  emailRequired: boolean = false;
+  inviteUserForm: FormGroup;
+  public inviteeMail: any;
+  hideInvitePopUp:boolean = false;
 
   constructor(
     private rest_api: RestApiService,
     private router: Router,
     @Inject(APP_CONFIG) private config,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private columnList: columnList
   ) {}
 
   ngOnInit(): void {
     this.getUsers();
     this.freetrail = localStorage.getItem("freetrail");
-    this.columns_list = [
-      {ColumnName: "firstName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "email",DisplayName: "Email",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "designation",DisplayName: "Designation",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "department",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "roles",DisplayName: "Roles",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "created_at_modified",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false},
-    ];
-    this.table_searchFields=["firstName","email","designation","department","roles","created_at_modified","status"]
+    this.columns_list = this.columnList.users_columns
+    this.table_searchFields=["firstName","email","designation","department","roles","created_at_modified","status"];
+    this.getAllCategories();
+    this.getRoles()
   }
   getUsers() {
     this.loader.show();
@@ -147,23 +163,238 @@ export class UsersComponent implements OnInit {
         this.router.navigate(["/pages/admin/invite-user"]);
       }
     } else {
-      this.router.navigate(["/pages/admin/invite-user"]);
+      this.hideInvitePopUp = true
+      // this.router.navigate(["/pages/admin/invite-user"]);
     }
   }
 
   modifyUser(data) {
     let depts = [];
+    var roles1: any = [];
+    this.depts = [];
     depts = data.department;
     let userroles: any;
     userroles = data.roles;
-    this.router.navigate(["/pages/admin/modify-user"], {
-      queryParams: { id: data.email, role: userroles, dept: depts },
+    this.userData=[];
+    this.userData={id:data.email,role: userroles,dept: depts}
+    this.hiddenPopUp = true;
+    this.allRoles.forEach((x) => {
+      if (x.displayName === this.userData.role) {
+        roles1.push(x.id);
+      }
     });
+    if (this.userData.dept.length == 1) {
+      this.categories.forEach((x) => {
+        if (x.categoryName === this.userData.dept[0]) {
+          this.depts.push(x.categoryId);
+        }
+      });
+    } else {
+      this.userData.dept.forEach((element) => {
+        this.categories.forEach((x) => {
+          if (x.categoryName === element) {
+            this.depts.push(x.categoryId);
+          }
+        });
+      });
+    }
+
+    if (roles1[0] == "8") {
+      this.isdprtDisabled = true;
+    }
+    this.email = this.userData.id;
+    this.departments = this.depts;
+    this.role = roles1[0];
+    // this.router.navigate(["/pages/admin/modify-user"], {
+    //   queryParams: { id: data.email, role: userroles, dept: depts },
+    // });
   }
 
   getreducedValue(value) {
     if (value.length > 15) return value.substring(0, 16) + "...";
     else return value;
+  }
+
+  closeOverlay(event) {
+    this.hiddenPopUp = event;
+    this.hideInvitePopUp= event
+  }
+
+  getAllCategories() {
+    this.rest_api.getDepartmentsList().subscribe((resp) => {
+      this.categories = resp.data;
+      this.getRoles();
+    });
+  }
+  getRoles() {
+    this.rest_api.getAllRoles(2).subscribe((resp) => {
+      this.allRoles = resp;
+    });
+  }
+
+  updateUser() {
+    let roles_list = [];
+    this.errShow = false;
+    roles_list.push(this.role);
+    if (this.departments.length == 0) {
+      this.errShow = true;
+      return;
+    }
+    let body = {
+      userId: this.email,
+      department: this.departments.toString(),
+      rolesList: roles_list,
+    };
+    this.loader.show();
+    this.rest_api.updateUserRoleDepartment(body).subscribe((resp) => {
+      if (resp.message ==="Successfuly updated role of an user for particular application") {
+        Swal.fire({
+          title: "Success",
+          text: "User details updated Successfully !!",
+          position: "center",
+          icon: "success",
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+          heightAuto: false,
+          confirmButtonText: "Ok",
+        });
+        this.hiddenPopUp = false;
+        this.getUsers();
+      } else {
+        this.loader.hide();
+        Swal.fire("Error", resp.message, "error");
+      }
+    });
+  }
+
+  onchangeRole(value) {
+    if (value == "8") {
+      this.departments = [];
+      this.categories.forEach((element) => {
+        this.departments.push(element.categoryId);
+      });
+      this.isdprtDisabled = true;
+    } else {
+      this.departments = [];
+      //this.departments=this.depts;
+      this.isdprtDisabled = false;
+    }
+  }
+
+  onEmailChange() {
+    this.emailRequired = false;
+  }
+
+  myemailFunction() {
+    this.emailRequired = false;
+    $("#email").on("input", function () {
+      $(".upload").prop("disabled", true);
+      var el = document.getElementById("email");
+      el.addEventListener("keydown", function (event) {
+        if (event.keyCode == 8) {
+          $(".upload").prop("disabled", false);
+        }
+        if (event.keyCode == 46) {
+          $(".upload").prop("disabled", false);
+        }
+      });
+    });
+  }
+
+  resetUserInvite(form: NgForm) {
+    form.resetForm();
+    form.form.markAsPristine();
+    form.form.markAsUntouched();
+  }
+
+  inviteUser1(form) {
+    this.loader.show();
+    let body = {
+      inviterMailId: localStorage.getItem("ProfileuserId"),
+      inviteeMailId: this.inviteeMail.toLowerCase(),
+      departmentId: this.departments.toString(),
+      office365User: false,
+      redirectionUrl: this.config.platform_home_url,
+      userRoles: [
+        {
+          id: this.role,
+        },
+      ],
+    };
+    var office = localStorage.getItem("officeUser");
+    if (office != undefined && office != null && office === "officeUser") {
+      body = {
+        inviterMailId: localStorage.getItem("ProfileuserId"),
+        inviteeMailId: this.inviteeMail.toLowerCase(),
+        departmentId: this.departments.toString(),
+        office365User: true,
+        redirectionUrl: this.config.platform_home_url,
+        userRoles: [
+          {
+            id: this.role,
+          },
+        ],
+      };
+    }
+
+    var domianArr = this.inviteeMail.split("@");
+    this.rest_api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe((res) => {
+        if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
+          this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
+            if (resp.message === "User invited Successfully !!") {
+              Swal.fire({
+                title: "Success",
+                text: "User Invited Successfully !!",
+                position: "center",
+                icon: "success",
+                showCancelButton: false,
+                customClass: {
+                  confirmButton: 'btn bluebg-button',
+                  cancelButton:  'btn new-cancelbtn',
+                },
+                heightAuto: false,
+                confirmButtonText: "Ok",
+              });
+              this.getUsers();
+            this.hideInvitePopUp= false;
+            } else {
+              Swal.fire(
+                "Error",
+                "Failed to invite! Check if user already exists!!",
+                "error"
+              );
+            this.loader.hide();
+            }
+          });
+        } else if (res.errorMessage) {
+          Swal.fire("Error", res.errorMessage, "error");
+          this.loader.hide();
+          return;
+        } else {
+          this.loader.hide();
+          Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
+        }
+      });
+  }
+
+  onchangeRole1(value) {
+    this.departments = [];
+    if (value == "8") {
+      this.categories.forEach((element) => {
+        this.departments.push(element.categoryId);
+      });
+      this.isdprtDisabled = true;
+    } else {
+      this.isdprtDisabled = false;
+    }
+  }
+  userManagementUrl(){
+    this.router.navigate(["/pages/admin/user-management"],{
+      queryParams:{index:0}
+    })
   }
 
 }

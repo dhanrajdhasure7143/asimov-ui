@@ -1,30 +1,29 @@
-import { Component,  OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import {FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
+import { Component,  OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {Rpa_Hints} from "../model/RPA-Hints";
-import {LoadChildren, Router} from "@angular/router";
-import { NgxSpinnerService } from "ngx-spinner";
-import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-rpa-credentials',
   templateUrl: './rpa-credentials.component.html',
-  styleUrls: ['./rpa-credentials.component.css']
+  styleUrls: ['./rpa-credentials.component.css'],
+  providers: [columnList]
 })
 export class RpaCredentialsComponent implements OnInit {
   public toggle:boolean;
   public updateflag: boolean;
-  public submitted:Boolean;
+  public submitted:boolean;
   categoryList:any;
   public button:string;
   public credentials:any[]=[];
   public credupdatedata:any;
-    public Credupdateflag:Boolean;
-    public Creddeleteflag:Boolean;
-    public passwordtype1:Boolean;
-    public passwordtype2:Boolean;
+    public Credupdateflag:boolean;
+    public Creddeleteflag:boolean;
+    public passwordtype1:boolean;
+    public passwordtype2:boolean;
     customUserRole: any;
     enableCredential: boolean=false;
     userRole: any;
@@ -43,7 +42,8 @@ export class RpaCredentialsComponent implements OnInit {
       private router:Router,
       private hints:Rpa_Hints, 
       private dt:DataTransferService,
-      private spinner: LoaderService
+      private spinner: LoaderService,
+      private columnList: columnList
       ) { 
   
       this.Credupdateflag=false;
@@ -57,7 +57,7 @@ export class RpaCredentialsComponent implements OnInit {
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
-
+    this.columns_list = this.columnList.emailList_column
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
@@ -82,12 +82,11 @@ inputNumberOnly(event){
      } 
     }
 
-  async getallCredentials(){
+  getallCredentials(){
     this.Credupdateflag = false;
     this.credentials= [];
     let role=localStorage.getItem('userRole')
-    await this.api.get_All_Credentials(role).subscribe(
-      (data1:any) => {
+    this.api.get_All_Credentials(role).subscribe((data1:any) => {
         this.credentials = data1;
         this.isLoading=false;
         if(this.credentials.length>0){ 
@@ -111,120 +110,7 @@ inputNumberOnly(event){
             this.readSelectedData([]);
            }
          }
-         this.columns_list = [
-          {
-            ColumnName: "userName",
-            DisplayName: "Email",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "serverName",
-            DisplayName: "Server Type",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "password_new",
-            DisplayName: "Password",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "tableClientId",
-            DisplayName: "Client Id",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "tableClientSecret",
-            DisplayName: "Client Secret",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "tableOfficeTenant",
-            DisplayName: "Tenant Id",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "host",
-            DisplayName: "Host",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "port",
-            DisplayName: "Port",
-            ShowFilter: true,
-            ShowGrid: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "categoryName",
-            DisplayName: "Category",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-            "dropdownList":this.categories_list
-          },
-          {
-            ColumnName: "createdBy",
-            DisplayName: "Created By",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "createdTimeStamp_converted",
-            DisplayName: "Created Date",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "date",
-            sort: true,
-            multi: false,
-          },
-        ];
-        this.table_searchFields=["userName","serverName","categoryName","createdBy","createdTimeStamp_converted","host","port"]
+        this.table_searchFields=["userName","serverName","tableClientId","tableClientSecret","tableOfficeTenant","categoryName","createdBy","createdTimeStamp_converted","host","port"]
         this.spinner.hide();
       });
   }
@@ -299,6 +185,11 @@ inputNumberOnly(event){
     sortedList.forEach(element => {
       this.categories_list.push(element.categoryName)
     });
+    this.columns_list.map(item=>{
+      if(item.ColumnName === "categoryName"){
+        item["dropdownList"]=this.categories_list
+      }
+    })
       this.getallCredentials();
     })
   }
@@ -316,8 +207,7 @@ inputNumberOnly(event){
     this.selectedData.length > 0 ?this.Creddeleteflag =true :this.Creddeleteflag =false
     this.selectedData.length == 1 ?this.Credupdateflag =true :this.Credupdateflag =false
   }
-  closeOverlay(event)
-  {
+  closeOverlay(event){
     this.hiddenPopUp=false;
   }
 }

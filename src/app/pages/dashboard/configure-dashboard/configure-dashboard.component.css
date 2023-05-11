@@ -72,6 +72,7 @@
 .vertcl-img {
 	width: 12px ;
     margin-right: 11px;
+    display:none;
 }
 .graph-text{
     font-size: 18px;
