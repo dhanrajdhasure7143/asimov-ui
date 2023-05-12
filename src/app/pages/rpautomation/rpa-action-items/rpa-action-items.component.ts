@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from "../../services/rest-api.service";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-rpa-action-items",
   templateUrl: "./rpa-action-items.component.html",
   styleUrls: ["./rpa-action-items.component.css"],
+  providers : [columnList]
 })
 export class RpaActionItemsComponent implements OnInit {
   actionTable: any = [];
@@ -32,7 +34,8 @@ export class RpaActionItemsComponent implements OnInit {
     private rest_api:RestApiService,
     private route:ActivatedRoute,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private columnList: columnList
     ) 
     {
       this.route.queryParams.subscribe((data)=>{
@@ -47,6 +50,7 @@ export class RpaActionItemsComponent implements OnInit {
     this.loader.show();
     this.getAllActionItems();
      this.userRole = localStorage.getItem("userRole");
+    this.columns_list = this.columnList.actionItemsList_column
     // this.userRole = this.userRole.split(','); this.actionVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
   }
 
@@ -55,17 +59,8 @@ export class RpaActionItemsComponent implements OnInit {
     this.actionTable = res.data; 
     this.readSelectedData([]); 
     this.loader.hide();
-    this.columns_list = [
-      {ColumnName: "name", DisplayName: "Action Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "endPoint", DisplayName: "URL/Root Domain", ShowFilter: true, ShowGrid: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "actionLogo", DisplayName: "Action Logo", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-      {ColumnName: "action", DisplayName: "", ShowGrid: true, ShowFilter: false, sort: false, multi: false,},
-    ]
     this.table_searchFields=["name","actionType","endPoint","methodType"];
-  })
-
+    });
   }
 
   viewDetails(event) {

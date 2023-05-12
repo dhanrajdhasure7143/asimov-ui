@@ -30,7 +30,7 @@
                     [table_data]="tableData"
                     [screenTable]="'common'"
                     [columns_list]="columns_list"
-                    (editRowById)="editForm($event)"
+                    (updateItem)="editForm($event)"
                     (deleteItem)="deleteRecord($event)"
                     [show_edit_btn]="true"
                     [show_delete_btn]="true"
@@ -82,7 +82,7 @@
             </span>
           </a>
         </label>
-        <span class="title_text">
+        <span class="title_text_haspath">
           <span  class="breadcrum-back">{{ selectedScreen.Screen_Name }}  </span> <span class="breadcrum-align">/</span>
           <span class="sub_title_text"> Create</span>
         </span>

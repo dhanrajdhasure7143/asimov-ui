@@ -69,32 +69,11 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRowDoubleClick($event,rowData)">
+            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRow_DoubleClick($event,rowData)">
                 <td style="flex: 0.09 1 0;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
-                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze"
-                    [style]="col.width">
-                    <!-- <span *ngIf="!col.multi && col.ColumnName!='action'"> -->
-                        <!-- <span *ngIf="screenTable !='environment_table'">
-                            <span *ngIf="col.ColumnName != 'priority' && col.ColumnName != 'department' && col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'">
-                                <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span>
-                                <span>{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                            </span> -->
-                            <!-- <span *ngIf="col.ColumnName == 'department'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"> {{rowData[col.ColumnName]}} </span> -->
-                            <!-- <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span> -->
-                            <!-- <span *ngIf="col.ColumnName =='connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span> -->
-                            <!-- <span *ngIf="col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['actionLogo']" style="height:25px;" alt="img"></span> -->
-                        <!-- </span> -->
-                        <!-- <span >
-                            <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span>
-                            <span *ngIf="col.ColumnName =='connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
-                            <span *ngIf="col.ColumnName!='connectionLogo' && col.ColumnName!='actionLogo'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
-                                <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                               <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
-                            </span>
-                        </span> -->
-                    <!-- </span> -->
+                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" [style]="col.width">
                     <span *ngIf="col.ColumnName!='action'">
                             <div class="d-flex align-items-center">
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
@@ -105,51 +84,40 @@
                                 </span>
                                 <span *ngIf="!col.multi">
                                     <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
-                                    <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData['connectionLogo']" style="height:25px;" alt="img"></span>
+                                    <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData[col.ColumnName]" style="height:25px;" alt="img"></span>
                                     <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
-                                        <span *ngIf="getColor(rowData[col.ColumnName] && col.ColumnName != 'status')"
-                                            [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
-                                        <span *ngIf="(rowData['status']=='Running' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
+                                        <span *ngIf="getColor(rowData[col.ColumnName])" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O- </span>
+                                        <!-- <span *ngIf="(rowData['status']=='Running' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
                                             <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                                         </span>
-                                        <span *ngIf="(rowData['status']=='Success' || rowData['status']=='Started' && col.ColumnName == 'status' )"
+                                        <span *ngIf="((rowData['status']=='Success' || rowData['status']=='Started' || rowData['status']=='Completed' || rowData['status']=='Approved'))&& col.ColumnName == 'status'"
                                             [pTooltip]="rowData['status']" class="text-primary">
                                             <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                                         </span>
-                                        <span *ngIf="(rowData['status']=='Completed' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
-                                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt=""
-                                                [pTooltip]="rowData['status']">
-                                        </span>
-                                        <span *ngIf="(rowData['status']=='Failure' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
+                                        <span *ngIf="(rowData['status']=='Failure' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
                                             <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                                         </span>
-                                        <span *ngIf="(rowData['status']=='Paused' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
+                                        <span *ngIf="(rowData['status']=='Paused' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
                                             <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" alt="" class="testpause"></span>
-                                        <span *ngIf="(rowData['status']=='New' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
+                                        <span *ngIf="(rowData['status']=='New' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
                                             <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
                                         </span>
-                                        <span *ngIf="(rowData['status']=='Pending' && col.ColumnName == 'status' )" class="text-primary"
-                                            [pTooltip]="rowData['status']">
-                                            <i class="fa fa-clock"></i>&nbsp;</span>
-                                        <span *ngIf="(rowData['status']=='Resume' || rowData['status']=='Stop' || rowData['status']=='Resumed' && col.ColumnName == 'status' )"
-                                            [pTooltip]="rowData['status']" tooltipPosition="top">
-                                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">Stopped
+                                        <span *ngIf="(rowData['status']=='Pending' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']"  [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">
+                                            <i class="fa fa-clock"></i>&nbsp;
                                         </span>
+                                        <span *ngIf="(rowData['status']=='Stopped' && col.ColumnName == 'status')" [pTooltip]="rowData['status']" tooltipPosition="top">
+                                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
+                                        </span> -->
                                         <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
+                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM d, y HH:mm')?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                     </span>
                                 </span>
                             </div>
                     </span>
                     
-                    <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100 text-center">
-                        <div class="newinntalx" >
-                            <span *ngIf="screenTable=='projectList'" >
+                    <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100">
+                        <div class="newinntalx">
+                            <span *ngIf="screenTable=='projectList'">
                                 <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                                 <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
                                 || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
@@ -161,7 +129,7 @@
                                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                                 </a>
                         </span>
-                    <span *ngIf="screenTable !='actionsTable'" class="newinntalx" >
+                    <span *ngIf="screenTable !='actionsTable'" >
                         <a *ngIf="show_view_btn" class="" (click)="viewDetailsbyId(rowData)" pTooltip="View" tooltipPosition="top">
                             <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                         </a>
@@ -226,7 +194,6 @@
                     </span>
 
                     <span *ngIf="screenTable =='connectionsList'">
-                        <div class="newinntalx" >
                             <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                             <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
@@ -234,7 +201,6 @@
                             <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                             </span>
-                        </div>
                     </span>
                         </div>
                 </span>
