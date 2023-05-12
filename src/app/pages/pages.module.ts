@@ -43,6 +43,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { MyaccountComponent } from './myaccount/myaccount.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 //  import { ChartModule } from 'primeng/chart';
 
 
@@ -64,6 +65,7 @@ export function jwtTokenGetter() {
     ProcessOwnerComponent,
     ProcessAnalystComponent,
     MyaccountComponent,
+    ChangePasswordComponent,
    
     
   ],
