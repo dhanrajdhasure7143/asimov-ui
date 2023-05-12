@@ -38,3 +38,10 @@ th.checkboxth:before {
 .actionicons {
     display: none;
 }
+
+.undobtn {
+    background-color:transparent !important; 
+  }
+  .undobtn:disabled i.fas {
+    color: #a0a0a0 !important;
+  }

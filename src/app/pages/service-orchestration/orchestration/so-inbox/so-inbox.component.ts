@@ -6,10 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
+import { columnList } from 'src/app/shared/model/table_columns';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
-  styleUrls: ['./so-inbox.component.css']
+  styleUrls: ['./so-inbox.component.css'],
+  providers: [columnList]
 })
 export class SoInboxComponent implements OnInit {
     public respdata1:boolean = false;
@@ -18,22 +20,16 @@ export class SoInboxComponent implements OnInit {
     public showaction:boolean = false;
     logresponse:any=[];
     response: any=[];
-    columnList=[
-      {field:"processName",DisplayName:"Process Name",ShowFilter: true},
-      {field:"processRunId",DisplayName:"Run Id",ShowFilter: true},
-      {field:"taskName",DisplayName:"Task Name",ShowFilter: true},
-      {field:"previousTask",DisplayName:"Previous Task",ShowFilter: true},
-      {field:"nextSuccessTask",DisplayName:"Next Task (Upon Success)",ShowFilter: true},
-      {field:"nextFailureTask",DisplayName:"Next Task (Upon Failure)",ShowFilter: true},
-      {field:"status",DisplayName:"Status",ShowFilter: true},
-      {field:"Actions",DisplayName:"Actions",ShowFilter: false},
-    ];
+    columns_list:any[]=[];
+    table_searchFields: any =[];
+   
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private hints: sohints,
       private dt:DataTransferService,
       private spinner:LoaderService,
+      private columnList: columnList
       )
     {}
 
@@ -42,30 +38,31 @@ export class SoInboxComponent implements OnInit {
     //document.getElementById("showaction").style.display = "none";
     this.spinner.show();
     this.getallbots();
+    this.columns_list = this.columnList.schedularInbox_column
   }
 
-  getallbots()
-  {
+  getallbots(){
     let response:any=[];
 
     //this.rpa_studio.spinner.show()
     //http://192.168.0.7:8080/rpa-service/get-all-bots
 
-    this.rest.getInbox().subscribe(data =>
-    {
-      this.response=data;
-      if(response.length >0)
-      {
+    this.rest.getInbox().subscribe(data =>{
+      this.response=data; 
+      this.table_searchFields = [
+        "processName",
+        "processRunId",
+        "taskName",
+        "previousTask",
+        "nextSuccessTask",
+        "nextFailureTask",
+        "status"
+      ];
+      if(this.response.length >0){
         this.respdata1 = false;
-      }else
-      {
+      }else{
         this.respdata1 = true;
       }
-      
-      // this.dataSource1= new MatTableDataSource(response);
-      // this.dataSource1.sort=this.sort1;
-      // this.dataSource1.paginator=this.paginator1;
-      // this.dataSource1.data = response;
       this.spinner.hide(); 
     },(err)=>{
       //this.rpa_studio.spinner.hide();
@@ -80,17 +77,17 @@ export class SoInboxComponent implements OnInit {
     document.getElementById("showaction").style.display = "none";
   }
 */
-  getapproved(processId,status, taskId,runId, envId){
+  getapproved(rowData,status){
+    this.spinner.show();
     let obj = {
-      "processId": processId,
+      "processId": rowData.processId,
       "status" : status,
-      "taskId" : taskId,
-      "processRunId":runId,
-      "envId": envId
+      "taskId" : rowData.taskId,
+      "processRunId":rowData.processRunId,
+      "envId": rowData.envId
     }
-
-    this.rest.updateInboxstatus(obj).subscribe(data =>
-      {
+    this.rest.updateInboxstatus(obj).subscribe(data =>{
+      this.spinner.hide();
         if(obj.status == "Approved"){
         Swal.fire({
           position: 'center',

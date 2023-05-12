@@ -7,14 +7,32 @@
       <div class="rpa-layout-header">
           <div class="row main-content-head">
               <div class="col-md-6 rpa-header-data p-0">
-                  <h3>
+                <h3>
+                <label id="popup_title">
+                  <button [disabled]="current_instance == undefined" class="clickable module-back-button d-flex imageBox"  (click)="removenodes()">
+                    <span class="active-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                    </span>
+                    <span class="hover-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                    </span>
+                  </button>
+              </label>
+              
+              <span *ngIf="current_instance!=undefined" class="title_text_haspath">
+                  <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">RPA Studio</span>
+                   <span class="breadcrum-align">/</span>
+                   <span  class="sub_title_text"> {{current_instance.finalbot.botName}}</span>
+              </span>
+          </h3>
+                  <!-- <h3>
                     <button [disabled]="current_instance == undefined" class="clickable module-back-button d-flex"  (click)="removenodes()">
                       <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
                     </button>
                       <span class="rpa-main-title">RPA Studio</span>
                       <span class="rpatitsep" *ngIf="current_instance != undefined">/</span>
                       <span class="title_text" *ngIf="current_instance != undefined">{{current_instance.finalbot.botName}}</span>
-                  </h3>
+                  </h3> -->
 
                   <!-- <div *ngIf="current_instance != undefined" class="rpa-subtitle">
           <span class="clickable module-back-button"  *ngIf="current_instance.botState.botId!=undefined" (click)="removenodes()"><i class="text-primary fas fa-arrow-left"></i></span>

@@ -263,8 +263,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         }
       })
     }
-    
-    
   }
 
 

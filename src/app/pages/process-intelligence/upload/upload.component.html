@@ -85,7 +85,7 @@
                         <app-dynamic-table 
                                 [columns_list]="columns_list"
                                 [table_data]="process_graph_list" 
-                                (viewDetails)="onGraphSelection($event)"
+                                (viewItem)="onGraphSelection($event)"
                                 (deleteItem)="onDeleteSelectedProcess($event)" 
                                 [screenTable]="'common'" 
                                 [dataKeyId]="'piId'"
@@ -95,11 +95,12 @@
                                 [show_edit_btn]="true" 
                                 [show_delete_btn]="true"
                                 (retryById)="onRetryGraphGenerate($event)"
-                                (editRowById)="editProcess($event)"
+                                (updateItem)="editProcess($event)"
                                 [categories_list]="categories_list"
                                 [show_search_field]="true"
                                 [show_column_filter]="true"
-                                [show_clear_filter]="true">
+                                [show_clear_filter]="true"
+                                (onRowDoubleClick)="onGraphSelection($event)">
                         </app-dynamic-table>
                    <!-- <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                         <ng-container matColumnDef="piId">

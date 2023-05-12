@@ -14,7 +14,7 @@
              [representatives]="representatives" 
              [columns_list]="columns_list" 
              [table_data]="connectorTable"
-             (viewDetails)="viewDetails($event)" 
+             (viewItem)="viewDetails($event)" 
              (deleteItem)="deleteById($event)" 
              [screenTable]="'connectionsList'" 
              [checkBoxShow]="false"
@@ -25,7 +25,10 @@
              [show_clear_filter]="true" 
              [search_fields]="table_searchFields" 
              [selectionMode]="'single'" 
-             (openUpdateOverlay)="openUpdateOverlay($event)">
+             (updateItem)="openUpdateOverlay($event)"
+             [show_view_btn]="true"
+             (onRowDoubleClick)="viewDetails($event)"
+             >
             </app-dynamic-table>
         </div>
     </div>

@@ -19,7 +19,7 @@ export class RpaDatabaseFormComponent implements OnInit {
   @Input() dbupdatedata : any = [];
   @Output() refreshData = new EventEmitter<any>();
   @Output() closeOverlay = new EventEmitter<any>();
-  public databaselist:any;
+  @Input() databaselist : any[];
   public toggle:boolean;
   public dbupdateflag: boolean = false;
   public submitted:Boolean;
@@ -71,9 +71,6 @@ export class RpaDatabaseFormComponent implements OnInit {
 
   ngOnInit(): void {
     // this.spinner.show();
-    this.api.getDatabaselist().subscribe(res=>{
-      this.databaselist=res;
-    })
     this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;

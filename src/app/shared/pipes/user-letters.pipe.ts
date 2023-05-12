@@ -5,13 +5,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UserLettersPipe implements PipeTransform {
   transform(userId: any, users_list: any[]): any {
-    
-    if(users_list.length > 0 && userId){
-      let user=users_list.find(item=>item.userId.userId==userId);
-      if(user.userId.image==null){
-        return user!=undefined?(user.userId.firstName.charAt(0)+user.userId.lastName.charAt(0)):userId;
+    const regex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+    if (regex.test(userId)) {
+      if (users_list.length > 0 && userId) {
+        let user = users_list.find(item => item.userId.userId == userId);
+        if (user.userId.image == null) {
+          return user != undefined ? (user.userId.firstName.charAt(0) + user.userId.lastName.charAt(0)) : userId;
+        }
       }
-  }
+    } else {
+      let usernames = userId.split(' ');
+      return usernames[0].charAt(0) + usernames[1].charAt(0);
+    }
 }
 
 }

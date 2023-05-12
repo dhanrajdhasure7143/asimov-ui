@@ -5,14 +5,29 @@
             <h3>
               <!-- <span class="bps-header-title"> -->
                 <label id="popup_title">
-                  <a *ngIf="isBackbutton" (click)='gotoProcessgraph()'>
-                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  <a *ngIf="isBackbutton" (click)='gotoProcessgraph()' class="imageBox">
+                    <span class="active-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                    </span>
+                    <span class="hover-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                    </span>
                   </a>
-                  <a *ngIf="isPIHeaderShow" (click)='backtoWorkspace()'>
-                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  <a *ngIf="isPIHeaderShow" (click)='backtoWorkspace()' class="imageBox">
+                    <span class="active-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                    </span>
+                    <span class="hover-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                    </span>
                   </a>
-                  <a *ngIf="isProjDetails" (click)='gotoProjectDetails()'>
-                    <img  src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  <a *ngIf="isProjDetails" (click)='gotoProjectDetails()' class="imageBox">
+                    <span class="active-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                    </span>
+                    <span class="hover-icon" >
+                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                    </span>
                   </a>
                 </label>
                 

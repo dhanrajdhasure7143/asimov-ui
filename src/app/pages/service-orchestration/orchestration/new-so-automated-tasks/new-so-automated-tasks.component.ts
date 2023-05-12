@@ -95,12 +95,12 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   columnList=[
     {DisplayName:"Process Name",field:"processName",ShowFilter: true},
     {DisplayName:"Task",field:"taskName",ShowFilter: true},
-    {DisplayName:"Process Owner",field:"ProcessOwner",ShowFilter: true},
-    {DisplayName:"TaskOwner",field:"Task Owner",ShowFilter: false},
-    {DisplayName:"taskType",field:"Task Type",ShowFilter: true},
-    {DisplayName:"category",field:"Category",ShowFilter: true},
-    {DisplayName:"BotSource",field:"Bot Source",ShowFilter: false},
-    {DisplayName:"AssignResource",field:"Assign Resource",ShowFilter: false},
+    {DisplayName:"Process Owner",field:"createdBy",ShowFilter: true},
+    {DisplayName:"Task Owner",field:"taskOwner",ShowFilter: false},
+    {DisplayName:"Task Type",field:"taskType",ShowFilter: true},
+    {DisplayName:"Category",field:"category",ShowFilter: true},
+    {DisplayName:"Bot Source",field:"BotSource",ShowFilter: false},
+    {DisplayName:"Assign Resource",field:"AssignResource",ShowFilter: false},
     {DisplayName:"Status",field:"status",ShowFilter: true},
     {DisplayName:"Actions",field:"Actions",ShowFilter: false},
   ];
@@ -1394,6 +1394,9 @@ resetsla(){
 
   clear(table: Table) {
     table.clear();
+    table.sortOrder = 0;
+    table.sortField = '';
+    table.reset();
   }
   closeOverlay(event){  //overlay close 
 

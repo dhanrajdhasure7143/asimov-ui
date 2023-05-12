@@ -4,8 +4,13 @@
       <div class="col-md-8 pl-0">
         <h3>
           <label id="popup_title">
-            <a routerLink="/pages/admin/admin-screen-list">
-              <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+            <a routerLink="/pages/admin/admin-screen-list" class="imageBox">
+              <span class="active-icon" >
+                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+              </span>
+              <span class="hover-icon" >
+                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+              </span>
             </a>
           </label>
           <span class="title_text"> {{ selectedScreen.Screen_Name }} </span>
@@ -25,7 +30,7 @@
                     [table_data]="tableData"
                     [screenTable]="'common'"
                     [columns_list]="columns_list"
-                    (editRowById)="editForm($event)"
+                    (updateItem)="editForm($event)"
                     (deleteItem)="deleteRecord($event)"
                     [show_edit_btn]="true"
                     [show_delete_btn]="true"
@@ -39,12 +44,17 @@
     <div class="row main-content-head" >
       <h3>
         <label id="popup_title">
-          <a (click)="displayTable()">
-            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+          <a (click)="displayTable()" class="imageBox">
+            <span class="active-icon" >
+              <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+            </span>
+            <span class="hover-icon" >
+              <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+            </span>
           </a>
         </label>
         <span class="title_text_haspath">
-          <span>{{ selectedScreen.Screen_Name }} | Update - </span>
+          <span  class="breadcrum-back">{{ selectedScreen.Screen_Name }} 						 <span class="breadcrum-align">/</span> Update - </span>
           <span class="sub_title_text">{{ updateDetails.tenant_name }}</span>
           <!-- <span class="sub_title_text">{{ selectedScreen.screenName }}</span> -->
         </span>
@@ -63,12 +73,17 @@
     <div class="row main-content-head" >
       <h3>
         <label id="popup_title">
-          <a (click)="displayTable()">
-            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+          <a (click)="displayTable()" class="imageBox">
+            <span class="active-icon" >
+              <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+            </span>
+            <span class="hover-icon" >
+              <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+            </span>
           </a>
         </label>
-        <span class="title_text">
-          <span>{{ selectedScreen.Screen_Name }} | </span>
+        <span class="title_text_haspath">
+          <span  class="breadcrum-back">{{ selectedScreen.Screen_Name }}  </span> <span class="breadcrum-align">/</span>
           <span class="sub_title_text"> Create</span>
         </span>
       </h3>      

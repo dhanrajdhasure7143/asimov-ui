@@ -42,6 +42,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
+import { MyaccountComponent } from './myaccount/myaccount.component';
 //  import { ChartModule } from 'primeng/chart';
 
 
@@ -62,6 +63,7 @@ export function jwtTokenGetter() {
     ProcessArchitectComponent,
     ProcessOwnerComponent,
     ProcessAnalystComponent,
+    MyaccountComponent,
    
     
   ],

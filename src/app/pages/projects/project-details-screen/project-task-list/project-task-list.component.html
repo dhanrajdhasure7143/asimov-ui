@@ -4,11 +4,17 @@
           <div class="col-md-8 pl-0">
               <h3>
                   <label id="popup_title">
-                      <a (click)="backToProjectDetails()"><img
-                              src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                      <a (click)="backToProjectDetails()" class="imageBox">
+                        <span class="active-icon" >
+                            <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                          </span>
+                          <span class="hover-icon" >
+                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                          </span>
+                      </a>
                   </label>
                   <span class="title_text_haspath">
-                    <span routerLink="/pages/projects/listOfProjects">Projects</span> | {{project_name}} | <span class="sub_title_text"> Tasks</span>
+                    <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span (click)="backToProjectDetails()" class="breadcrum-back">{{project_name}}</span> <span class="breadcrum-align">/</span> <span class="sub_title_text"> Tasks</span>
                   </span>
               </h3>
           </div>
@@ -46,7 +52,7 @@
                           <app-dynamic-table 
                             [columns_list]="columns_list" 
                             [table_data]="tasks_list"
-                            (viewDetails)="viewDetails($event)" 
+                            (viewItem)="viewDetails($event)" 
                             (deleteItem)="deletetask($event)"
                             [representatives]="representatives" 
                             [screenTable]="'taskList'" 
@@ -57,6 +63,9 @@
                             [show_search_field]="true"
                             [show_column_filter]="true"
                             [show_clear_filter]="true"
+                            (onRowDoubleClick)="viewDetails($event)"
+                            [show_view_btn]="true"
+                            [show_delete_btn]="true"
                             >
                           </app-dynamic-table>
                       </div>

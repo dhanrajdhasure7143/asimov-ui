@@ -4,11 +4,21 @@
             <div class="col-md-8 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a routerLink="/pages/projects/listOfProjects"><img
-                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a routerLink="/pages/projects/listOfProjects" class="imageBox">
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span>
+                            
+                        </a>
                     </label>
+                    
                     <span class="title_text_haspath">
-                        <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span
+                        <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span>
+                         <span class="breadcrum-align">/</span>
+                         <span
                             class="sub_title_text"> {{projectDetails.projectName}}</span>
                     </span>
                 </h3>
@@ -509,7 +519,7 @@
                         <ng-template pTemplate="caption">
                             <div class="d-flex">
                                 <p-dropdown [options]="roles_list" class="listdropdown" [(ngModel)]="selectedRole"
-                                    (onChange)="onChangeRole($event,users_tabIndex)" optionLabel="name"></p-dropdown>
+                                    (onChange)="onChangeRole($event,users_tabIndex)" optionLabel="name" optionValue="name"></p-dropdown>
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input type="text" pInputText placeholder="Search"
@@ -525,11 +535,11 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr>
-                                <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                <td *ngIf="users_tabIndex != 1"  style="flex: 0 0 5rem"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                 </td>
                                 <td *ngFor="let col of columns">
                                     <span>{{rowData[col.ColumnName]}}</span>
-                                    <span *ngIf="col.ColumnName == 'action'">
+                                    <span *ngIf="col.ColumnName == 'action' && projectDetails.owner != rowData['user_email']">
                                         <div class="newinntalx">
                                             <a (click)="deleteuserById(rowData)" pTooltip="Delete"
                                                 tooltipPosition="top">

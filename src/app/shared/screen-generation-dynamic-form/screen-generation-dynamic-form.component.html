@@ -8,7 +8,7 @@
               field.widget_type == null ||
               field.widget_type == ''">
             <div *ngIf="field.ColumnName !='tenant_name'">
-            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
+            <label class="label-control">{{ field.DisplayName1 |  removeUnderscore | titlecase }}
               <span class="star" *ngIf="field.mandatory">*</span>
             </label>
             <input type="text" [formControlName]="field.ColumnName" class="form-control" [required]="field.mandatory"

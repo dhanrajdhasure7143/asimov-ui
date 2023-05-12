@@ -1,5 +1,5 @@
 <div id="" class="schedule-table-container h-100">
-    <p-table #dt [value]="scheduledbots" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true"
+    <!-- <p-table #dt [value]="scheduledbots" [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true"
         [scrollable]="true"
         [globalFilterFields]="['botName','botSource','category','lastRunTS','nextRunTS','scheduleInterval','status','timezone']">
         <ng-template pTemplate="caption">
@@ -22,7 +22,7 @@
                         display="menu" [showApplyButton]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                class="p-inputtext" placeholder="search">
+                                class="p-inputtext" placeholder="Search">
                         </ng-template>
                     </p-columnFilter>
                     <p-columnFilter *ngIf="each.ShowFilter && each.field == 'category'" [field]="each.field"
@@ -112,5 +112,14 @@
                 <td style="justify-content: center;" colspan="8">No Records Found</td>
             </tr>
         </ng-template>
-    </p-table>
+    </p-table> -->
+
+    <app-dynamic-table 
+    [table_data]="scheduledbots" 
+    [columns_list]="columns_list"
+    [show_search_field]="true"
+    [show_column_filter]="true"
+    [show_clear_filter]="true"
+    [search_fields]="table_searchFields"
+    ></app-dynamic-table>
 </div>

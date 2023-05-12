@@ -34,6 +34,7 @@ export class ModifyUserComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe((data) => {
       this.userData = data;
+      console.log(this.userData)
     });
   }
 

@@ -17,9 +17,7 @@ export class ScheduledBotsComponent implements OnInit {
       private spinner:LoaderService,
   ) { }
 
-  ngOnInit() {
-
-     }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.getCategoryList();

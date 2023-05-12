@@ -3,13 +3,24 @@
             <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a *ngIf="breadcrumbItems.length == 0" (click)="backToProjectDetails()"><img
-                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
-                        <a *ngIf="breadcrumbItems.length >0" (click)="backToSelectedFolder()"><img
-                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a *ngIf="breadcrumbItems.length == 0" (click)="backToProjectDetails()" class="imageBox">
+                            <span class="active-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                              </span>
+                              <span class="hover-icon" >
+                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                              </span>
+                        </a>
+                        <a *ngIf="breadcrumbItems.length >0" (click)="backToSelectedFolder()" class="imageBox">
+                            <span class="active-icon" >
+                            <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                          </span>
+                          <span class="hover-icon" >
+                            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                          </span></a>
                     </label>
                     <span class="title_text_haspath">
-                       <span routerLink="/pages/projects/listOfProjects">Projects</span> | {{project_name}} | <strong> Document </strong>
+                       <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span (click)="backToProjectDetails()" class="breadcrum-back">{{project_name}}</span> <span class="breadcrum-align">/</span> <span class="sub_title_text"> Document </span>
                     </span>
                 </h3>
             </div>
