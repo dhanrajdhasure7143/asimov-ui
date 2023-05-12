@@ -92,7 +92,6 @@ export function jwtTokenGetter() {
     NgbModule,
     MatProgressBarModule,
     MatTableModule,
-    MatIconModule,
     MatSortModule,
     MatPaginatorModule,
     PopoverModule.forRoot(),
