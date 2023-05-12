@@ -69,6 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   ismyAccount : boolean = false;
   isClose : boolean;
+  isPassword : boolean;
 
   constructor(
     private router: Router,
@@ -157,11 +158,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   myAccount() {
-    this.ismyAccount = true
+    this.ismyAccount = true;
     // this.router.navigate(['/pages/admin/myaccount']);
   }
 
   changepassword() {
+    this.isPassword = true;
     // this.router.navigate(['/pages/admin/changepassword']);
   }
 
@@ -393,8 +395,10 @@ onChangeTenant(event:any){
 
 closeFormOverlay() {
   this.ismyAccount = this.isClose;
+  this.isPassword = this.isClose;
 }
 display(event){
   this.isClose = event
+  this.closeFormOverlay();
 }
 }
