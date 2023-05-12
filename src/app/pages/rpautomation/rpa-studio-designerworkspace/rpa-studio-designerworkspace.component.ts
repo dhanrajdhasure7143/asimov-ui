@@ -255,7 +255,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   getSelectedEnvironments() {
-    setTimeout(()=>{
     this.filteredEnvironments = [
         ...this.environmentsList
           .filter((item: any) => item.categoryId == this.finalbot.categoryId)
@@ -271,7 +270,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           }),
       ];
-    }, 1500)
   }
 
   checkUncheckEnvironments(envId, value) {
