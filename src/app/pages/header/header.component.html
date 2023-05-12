@@ -171,3 +171,14 @@
   <app-myaccount (valueChange)='display($event)'></app-myaccount>
 </app-split-overlay>
 </div>
+
+<div *ngIf="isPassword">
+  <app-split-overlay (closeOverlay)="closeFormOverlay()">
+    <div class="">
+    <div class="create-header">
+      <h3> Change Password </h3>
+  </div>
+    </div>
+  <app-change-password (valueChange)='display($event)'></app-change-password>
+</app-split-overlay>
+</div>
