@@ -399,5 +399,6 @@ closeFormOverlay() {
 }
 display(event){
   this.isClose = event
+  this.closeFormOverlay();
 }
 }
