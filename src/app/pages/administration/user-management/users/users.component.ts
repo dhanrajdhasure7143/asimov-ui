@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
     this.getUsers();
     this.freetrail = localStorage.getItem("freetrail");
     this.columns_list = this.columnList.users_columns
-    this.table_searchFields=["firstName","email","designation","department","roles","created_at_modified","status"];
+    this.table_searchFields=["firstName","email","designation","department","roles","created_at","status"];
     this.getAllCategories();
     this.getRoles()
   }
@@ -87,8 +87,7 @@ export class UsersComponent implements OnInit {
             designation: element.userId.designation,
             department: element.departmentsList,
             roles: roles,
-            created_at: element.created_at,
-            created_at_modified: moment(new Date(element.created_at)).format("lll"),
+            created_at: new Date(element.created_at),
             status: element.user_role_status,
           };
           this.userslist.push(userdata);
