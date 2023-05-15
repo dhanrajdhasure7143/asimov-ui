@@ -57,7 +57,7 @@ export class DepartmentsComponent implements OnInit {
     this.loader.show();
     this.Departmentdeleteflag=false;
     this.columns_list = this.columnList.department_column
-    this.table_searchFields=["categoryName","created_user","createdBy","createdTimeStamp_converted"]
+    this.table_searchFields=["categoryName","created_user","createdBy","createdAt"]
 
     this.createDepartmentForm=this.formBuilder.group({
       departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -73,7 +73,7 @@ export class DepartmentsComponent implements OnInit {
     this.rest_api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
       this.departments.data.map(item=>{
-        item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('lll')
+        item["createdAt"] = new Date(item.createdAt);
         const userPipe = new UserPipePipe();
         item["created_user"] = userPipe.transform(item.owner,this.users_list);
         return item

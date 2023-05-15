@@ -38,6 +38,7 @@ export class RpaCredentialsComponent implements OnInit {
     table_searchFields: any[]=[];
     hiddenPopUp:boolean=false;
     originalCredentialsList:any[]=[];
+    hideLables:boolean = true
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
@@ -119,6 +120,7 @@ inputNumberOnly(event){
   
   openCreateCredential(){
     this.isCreateForm = true;
+    this.hideLables = false
     this.hiddenPopUp=true;
     // document.getElementById("createcredentials").style.display='block';
     // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
