@@ -76,7 +76,7 @@ export class DepartmentsComponent implements OnInit {
     this.rest_api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
       this.departments.data.map(item=>{
-        item["createdAt"] = moment(new Date(item.createdAt))
+        item["createdAt"] = new Date(item.createdAt);
         const userPipe = new UserPipePipe();
         item["created_user"] = userPipe.transform(item.owner,this.users_list);
         return item
