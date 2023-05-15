@@ -62,16 +62,16 @@
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="flex:0.2 1 0;" class="arrowcol"></th>
-                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
-                                    {{col.header}}
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.ColumnName" pReorderableColumn pResizableColumn [style]="col.width">
+                                    {{col.DisplayName}}
                                     <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'date'"
-                                        [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.field"
+                                        [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.ColumnName"
                                         display="menu"></p-columnFilter>
                                     <!-- <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'&& col.filterType == 'text'"
                                         field="{{col.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
                                         [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false"> -->
                                         <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'text'"
-                                        [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="col.field"
+                                        [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="col.ColumnName"
                                                 display="menu" [showApplyButton]="false">
                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                                 <input type="text"
@@ -83,14 +83,14 @@
                                             </ng-template>
                                         </p-columnFilter>
                                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
-                                    [field]="col.field" matchMode="equals" [showMatchModes]="false"
+                                    [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false"
                                         [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="col.dropdownList"
                                                 (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
-                                    <p-sortIcon [field]="col.field" *ngIf="col.ShowFilter"></p-sortIcon>
+                                    <p-sortIcon [field]="col.ColumnName" *ngIf="col.ShowFilter"></p-sortIcon>
                                 </th>
                             </tr>
                         </ng-template>
@@ -102,24 +102,21 @@
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
-                                <td *ngFor="let col of columns">
-
-                                    <span
-                                        *ngIf="col.header != 'Status' && col.header != 'Message'&& col.header != 'Actions'">
-                                        {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
+                                <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
+                                    <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'">
+                                        <span *ngIf='col.ColumnName =="processOwnerName"' class="prjlastupdateprofile">
+                                            <p-avatar [label]="rowData['processOwner']|userLetters:users_list|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
+                                        <!-- {{rowData['processOwner']|userLetters:users_list|uppercase}} -->
+                                        </span>
+                                        {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?(col.ColumnName=='ntype'?(rowData[col.ColumnName]|uppercase):(rowData[col.ColumnName])):'-')}}
                                     </span>
-                                    <span *ngIf="col.header == 'Status'">
-                                        <div [ngStyle]="{'color':getColor(rowData[col.field])}"
-                                            [class.pending_value_properties]="rowData[col.field]=='PENDING'">
-                                            {{rowData[col.field]}}</div>
+                                    <span *ngIf="col.DisplayName == 'Status'">
+                                        <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div>
                                     </span>
-                                    <span *ngIf="col.header == 'Message'">
-                                        <div>
-                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"
-                                                [pTooltip]="rowData['reviewComments']" tooltipPosition="top">
-                                        </div>
+                                    <span *ngIf="col.DisplayName == 'Message'">
+                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message">
                                     </span>
-                                    <span *ngIf="col.header == 'Actions'">
+                                    <span *ngIf="col.DisplayName == 'Actions'">
                                         <div class="cell cell11">
                                             <span (click)="onEdit(rowData)">
                                                 <img pTooltip="Edit" tooltipPosition="top" alt="Edit" class="testplus"
@@ -292,10 +289,7 @@
                     </mat-accordion>
                 </div> -->
 
-                <!-- <div class="bpspaginationdiv">
-                    <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="25"
-                        [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
-                </div> -->
+
             </div>
         </div>
     </div>
