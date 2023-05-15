@@ -79,7 +79,7 @@
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
                                     <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
-                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
+                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{col.filterType=='date'?(rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'):rowData[col.multiOptions[1]]}} </span>
                                     <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
                                 </span>
                                 <span *ngIf="!col.multi">
@@ -109,7 +109,7 @@
                                             <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                         </span> -->
                                         <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM d, y HH:mm')?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
+                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                     </span>
                                 </span>
                             </div>
