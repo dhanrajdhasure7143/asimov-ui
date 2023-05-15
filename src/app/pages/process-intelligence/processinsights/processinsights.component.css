@@ -217,7 +217,7 @@ border: 1px solid #979797 !important;
     vertical-align: top !important;
   }
   button.closebtn:hover {
-    color: #00a0e3;
+    color: #098de6;
 }
   
   #main {
@@ -227,7 +227,7 @@ border: 1px solid #979797 !important;
     font-size: 12px;
   }    
   .variant2{
-    margin: 10px 0px; 
+    margin-bottom: 10px; 
   }
   .variant_parcent{
     padding: 0px !important;
@@ -414,16 +414,14 @@ span.testtooltip:before {
   color: #001c47;
 }
 .timefeed-header span.close:hover {
-  color: #00a0e3;
+  color: #098de6;
 }
 
 .activevaraint {
-  color: #098de6;
-  background: #fdf6d4;
-  /* color: #ffffff;
-  background-color: #00a0e3;
+  color: #ffffff;
+  background-color: #098de6;
   border-top: 1px solid #ffffff !important;
-  border-left: medium none !important; */
+  border-left: medium none !important;
 }
 img.hover-img {
   display: none;

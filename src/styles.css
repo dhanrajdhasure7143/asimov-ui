@@ -3402,6 +3402,9 @@ textarea.p-inputtextarea {
   animation-name: fadeIn;
   animation-duration: 0.4s;
 }
+.onb-usroverlay .splitter-headers {
+  top: 18px !important;
+}
 .splitoverlaydiv .p-tabview.p-component,
 .commentBox .p-tabview.p-component {
   height: 100%;

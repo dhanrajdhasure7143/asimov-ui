@@ -458,9 +458,6 @@ transition: 0.5s;
 }
 
 .activevaraint{
-  color: #098de6;
-  background: #fdf6d4;
-  border-left: 2px solid #098de6 !important;
   /* border-left:2px solid green !important;
   background: lightgray; */
 }
