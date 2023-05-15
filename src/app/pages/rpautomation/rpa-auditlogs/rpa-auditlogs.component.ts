@@ -71,12 +71,7 @@ export class RpaAuditlogsComponent implements OnInit {
       // let response: any = data
       this.logsData = data.Status
       this.spinner.hide()
-      // this.search_fields =["versionNew","changedDate","taskName","changedBy","comments"];
       if (this.logsData.errorMessage == undefined) {
-      // console.log('this is the data',filteredData)
-        // this.dataSource = new MatTableDataSource(response.Status);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
         this.auditLogsData = [this.logsData.map((item: any) => {
           if (item.botName.split("|")[1] != undefined) {        
             if (item.versionNew != null) {
