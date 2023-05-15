@@ -1215,8 +1215,12 @@ public slaupdate : boolean = false;
   }
 
   clear(table: Table) {
+    this.selected_source = '';
+    this.selectedcat = '';
     table.clear();
+    this.getallbots();
   }
+
   closeOverlaysche(event){
   
     $(".tour_guide").show();

@@ -109,7 +109,7 @@
                                             <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                         </span> -->
                                         <span *ngIf="screenTable == 'taskList'">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM d, y HH:mm')?(rowData[col.ColumnName]|date:'MMM d, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
+                                        <span *ngIf="screenTable != 'taskList'">{{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                     </span>
                                 </span>
                             </div>
