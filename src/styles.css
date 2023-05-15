@@ -3176,7 +3176,10 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   width: 16px !important;
   height: 16px !important;
   border: 1.5px solid var(--formfield-bordercolor) !important;
-  border-radius: 2px !important;
+  border-radius: 3px !important;
+}
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  font-size: 12px !important;
 }
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
