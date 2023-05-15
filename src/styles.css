@@ -2645,8 +2645,9 @@ cursor: pointer;
   text-transform: capitalize;
 }
 .main-content-head h3 .title_text_haspath {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 2px;
 }
 .main-content-head .btn {
   min-width: auto;
@@ -3844,7 +3845,7 @@ textarea.p-inputtextarea {
 .grey-btn {
   background-color: #ECF1FB !important;
   margin-left: 8px !important; 
-  padding: 8px 12px!important;
+  padding: 8px 10px!important;
   height:36px;
  border-radius:3px;   
 }
@@ -3878,9 +3879,4 @@ background-color: #D8E0EF !important;
 
 .imageBox:hover .hover-icon{
   display: block;
-}
-.p-datatable table {
-  
-  min-width: 99% !important;
-  
 }
