@@ -31,6 +31,7 @@
       [search_fields]="table_searchFields"
       [show_delete_btn]="true"
       (deleteItem)="onDeleteSelectedProcess($event)"
+      (onRowDoubleClick)="editdepartment($event)"
     >
     </app-dynamic-table>
   </div>
