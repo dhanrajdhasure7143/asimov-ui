@@ -172,4 +172,12 @@ export class columnList{
         {ColumnName: "DisplayName",DisplayName: "Display Name",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
+
+      public auditLogs_column = [
+        {ColumnName:"versionNew",DisplayName:"Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",width:"flex: 0 0 10rem",filterType:"text",sort: true},
+        {ColumnName:"changedDate_new",DisplayName:"Timestamp",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"date",sort: true},
+        {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
+        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy"},
+        {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
+      ];
 }
