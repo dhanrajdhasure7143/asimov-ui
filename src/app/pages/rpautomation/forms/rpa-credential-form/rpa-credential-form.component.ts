@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class RpaCredentialFormComponent implements OnInit {
   @Input() isCreateForm:boolean;
+  @Input() hideLabels:boolean;
   @Input() credupdatedata:any=[];
   @Output() refreshTable = new EventEmitter<any>();
   categoryList: any;
@@ -180,6 +181,7 @@ export class RpaCredentialFormComponent implements OnInit {
 
 resetCredForm(){
   this.credentialForm.reset();
+  this.hideLabels = false
   this.credentialForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
   this.credentialForm.get("serverName").setValue("")
   this.passwordtype1=false;
@@ -293,12 +295,10 @@ resetCredForm(){
   }
 
 
-  onChangeAuthType(selectedAuthType:String)
-  {
-    if(this.selectedMailServer=='Office365')
-    {
-      if(selectedAuthType=="password")
-      {
+  onChangeAuthType(selectedAuthType:String){
+    if(this.selectedMailServer=='Office365'){
+      if(selectedAuthType=="password"){
+        this.hideLabels = true
         this.credentialForm.get("password").setValidators([Validators.required]);
         this.credentialForm.get("password").updateValueAndValidity();
                 
@@ -310,11 +310,34 @@ resetCredForm(){
 
         this.credentialForm.get("officeTenant").clearValidators();
         this.credentialForm.get("officeTenant").updateValueAndValidity();
+
+        this.credentialForm.get("inBoundAddress").setValidators([Validators.required]);;
+        this.credentialForm.get("inBoundAddress").updateValueAndValidity();
+
+        this.credentialForm.get("inBoundAddressPort").setValidators([Validators.required]);;
+        this.credentialForm.get("inBoundAddressPort").updateValueAndValidity();
+
+        this.credentialForm.get("outBoundAddress").setValidators([Validators.required]);
+        this.credentialForm.get("outBoundAddress").updateValueAndValidity();
+
+        this.credentialForm.get("outboundAddressPort").setValidators([Validators.required]);
+        this.credentialForm.get("outboundAddressPort").updateValueAndValidity();
       }
-      else
-      {
+      else{
         this.credentialForm.get("password").clearValidators();
         this.credentialForm.get("password").updateValueAndValidity();
+
+        this.credentialForm.get("inBoundAddress").clearValidators();
+        this.credentialForm.get("inBoundAddress").updateValueAndValidity();
+
+        this.credentialForm.get("inBoundAddressPort").clearValidators();
+        this.credentialForm.get("inBoundAddressPort").updateValueAndValidity();
+
+        this.credentialForm.get("outBoundAddress").clearValidators();
+        this.credentialForm.get("outBoundAddress").updateValueAndValidity();
+
+        this.credentialForm.get("outboundAddressPort").clearValidators();
+        this.credentialForm.get("outboundAddressPort").updateValueAndValidity();
 
         this.credentialForm.get("clientId").setValidators([Validators.required, Validators.minLength(6)]);
         this.credentialForm.get("clientId").updateValueAndValidity();
