@@ -3,22 +3,25 @@ import { Router } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-admin-screen-list",
   templateUrl: "./admin-screen-list.component.html",
   styleUrls: ["./admin-screen-list.component.css"],
+  providers:[columnList]
 })
 export class AdminScreenListComponent implements OnInit {
   screenlist: any = [];
   loading: boolean = false;
   columns_list: any = [];
   table_searchFields: any=[];
-  constructor(private router: Router, private rest: RestApiService,
+  constructor(private router: Router, private rest: RestApiService, private columns:columnList,
     private spinner:LoaderService) {}
 
   ngOnInit(): void {
     this.getScreenList();
+    this.columns_list = this.columns.adminScreenlist_column;
   }
 
   addNew() {
@@ -33,11 +36,6 @@ export class AdminScreenListComponent implements OnInit {
     this.spinner.show();
     this.rest.getScreenList().subscribe((data) => {
       this.screenlist = data;
-      this.columns_list = [
-        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text", sort: true,multi: false},
-        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false,multi: false},
-      ];
       this.table_searchFields = [
         "Screen_Name",
         "Table_Name"

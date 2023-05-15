@@ -62,6 +62,8 @@
 <div *ngIf="hiddenPopUp">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
         <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"
-        (closeOverlay)="closeOverlay($event)" [databaselist]="databaselist"> </app-rpa-database-form>
+        (closeOverlay)="closeOverlay($event)" 
+        [databaselist]="databaselist"
+        (hideLables)="hideLables"> </app-rpa-database-form>
     </app-split-overlay>
 </div>
