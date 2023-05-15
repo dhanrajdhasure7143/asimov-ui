@@ -47,6 +47,6 @@ import { UserLettersPipe } from './pipes/user-letters.pipe';
     ],
     providers: [],
     exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent,
-        SplitOverlayComponent]
+        SplitOverlayComponent, UserLettersPipe]
 })
 export class SharedModule { }

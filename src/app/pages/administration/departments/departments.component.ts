@@ -12,11 +12,13 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { UserPipePipe } from './../pipes/user-pipe.pipe';
 // import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-departments',
   templateUrl: './departments.component.html',
-  styleUrls: ['./departments.component.css']
+  styleUrls: ['./departments.component.css'],
+  providers : [columnList]
 })
 export class DepartmentsComponent implements OnInit {
 
@@ -45,7 +47,8 @@ export class DepartmentsComponent implements OnInit {
     private loader: LoaderService,
     private router: Router,
     private dataTransfer: DataTransferService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public columnList : columnList
     ){ 
       this.getUsersList();
     }
@@ -53,13 +56,7 @@ export class DepartmentsComponent implements OnInit {
   ngOnInit(): void {
     this.loader.show();
     this.Departmentdeleteflag=false;
-    this.columns_list = [
-      {ColumnName: "categoryName",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "created_user",DisplayName: "Owner",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "createdBy",DisplayName: "Created By",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
-      {ColumnName: "createdAt",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-      {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
-    ];
+    this.columns_list = this.columnList.department_column
     this.table_searchFields=["categoryName","created_user","createdBy","createdAt"]
 
     this.createDepartmentForm=this.formBuilder.group({
@@ -81,7 +78,16 @@ export class DepartmentsComponent implements OnInit {
         item["created_user"] = userPipe.transform(item.owner,this.users_list);
         return item
       })
-      this.departments_list = this.departments.data  
+      this.departments_list = this.departments.data 
+      let categories_list
+      this.departments_list.forEach(element => {
+        categories_list.push(element.categoryName)
+      });
+      this.columns_list.map(item=>{
+        if(item.ColumnName === "categoryName"){
+          item["dropdownList"]=categories_list
+        }
+      })
       this.loader.hide(); 
       let selected_department=localStorage.getItem("department_search");
       this.department=selected_department?selected_department:'alldepartments';
