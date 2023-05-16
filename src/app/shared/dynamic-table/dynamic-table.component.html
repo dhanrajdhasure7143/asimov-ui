@@ -79,8 +79,9 @@
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
                                     <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
-                                    <span *ngIf="col.multiOptions[1] != 'priority'" class="prjgridtimestamp"> {{col.filterType=='date'?(rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'):rowData[col.multiOptions[1]]}} </span>
+                                    <span *ngIf="col.datePipe" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
                                     <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                                    <span *ngIf="col.multiOptions[1] == 'roles'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}}</span>
                                 </span>
                                 <span *ngIf="!col.multi">
                                     <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
@@ -145,7 +146,7 @@
                         </span>
                     <span *ngIf="screenTable !='actionsTable'" >
                         <span *ngIf="show_view_btn" (click)="viewDetailsbyId(rowData)">
-                            <a class="" pTooltip="View1" tooltipPosition="top">
+                            <a class="" pTooltip="View" tooltipPosition="top">
                                 <img src="../../../assets/images/Projects/eye-show-blue.svg" alt="View" class="testplus default-img">
                             </a>
                         </span>
@@ -181,16 +182,7 @@
                             </a>
                         </span>
                     </span>
-                    <span *ngIf="screenTable=='users_screen'">
-                            <span *ngIf="loggedInUser==rowData['email']" class="editButton">
-                                <a>
-                                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
-                                </a>
-                                <a>
-                                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
-                                </a>
-                            </span>
-                            
+                    <span>
                             <span *ngIf="screenTable=='users_screen'">
                                 <span *ngIf="loggedInUser==rowData['email']" class="editButton">
                                     <a>
@@ -229,9 +221,9 @@
                                     <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                                 </span>
                             </span>
-                            <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                            <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete4" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
-                            </span>
+                            </span> -->
                     </span>
                     <span *ngIf="screenTable=='projectList'">
                         <!-- [hidden]="!(rowData.id == selectedItem.id)" -->

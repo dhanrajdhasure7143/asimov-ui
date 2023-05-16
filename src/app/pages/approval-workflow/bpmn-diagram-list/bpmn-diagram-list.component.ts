@@ -55,9 +55,9 @@ export class BpmnDiagramListComponent implements OnInit {
   columns_list = [
     { field: 'processIntelligenceId', header: 'Process ID', filterType: "text",filterWidget: "normal"},
     { field: 'bpmnProcessName', header: 'Process Name',filterType: "text",filterWidget: "normal"},
-    { field: 'convertedModifiedTime', header: 'Modified Time',filterType: "date",filterWidget: "normal"},
     { field: 'userName', header: 'Resource',filterType: "text",filterWidget: "normal"},
     { field: 'role', header: 'Role',filterType: "text",filterWidget: "normal"},
+    { field: 'convertedModifiedTime', header: 'Modified Time',filterType: "date",filterWidget: "normal"},
     { field: 'bpmnProcessStatus', header: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Pending","Approved"]},
 ];
 

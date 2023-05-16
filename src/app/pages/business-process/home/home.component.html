@@ -105,7 +105,7 @@
                                 <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
                                     <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'">
                                         <span *ngIf='col.ColumnName =="processOwnerName"' class="prjlastupdateprofile">
-                                            <p-avatar [label]="rowData['processOwner']|userLetters:users_list|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
+                                            <span class="prjlastupdateprofile">{{rowData['processOwner']|userLetters:users_list|uppercase}}</span>
                                         <!-- {{rowData['processOwner']|userLetters:users_list|uppercase}} -->
                                         </span>
                                         {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?(col.ColumnName=='ntype'?(rowData[col.ColumnName]|uppercase):(rowData[col.ColumnName])):'-')}}

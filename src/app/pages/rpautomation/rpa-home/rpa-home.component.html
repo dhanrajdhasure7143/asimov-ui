@@ -119,7 +119,7 @@
                                         <span *ngIf="col.ColumnName =='description'">{{rowData[col.ColumnName]?fitTableView(rowData['description']):'-'}}</span>
                                         <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'&& col.ColumnName !='description' && col.ColumnName != 'last_modified_date'">
                                             <span *ngIf='col.ColumnName =="createdBy"' class="prjlastupdateprofile">
-                                                <p-avatar [label]="rowData['createdBy']|userLetters:users_list|uppercase" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar>
+                                                <span class="prjlastupdateprofile">{{rowData['createdBy']|userLetters:users_list|uppercase}}</span>
                                             </span>
                                             {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-'}}
                                         </span>

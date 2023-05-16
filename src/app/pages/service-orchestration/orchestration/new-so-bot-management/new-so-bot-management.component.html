@@ -157,17 +157,18 @@
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
                 <div class="d-flex">
-                  <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> 
+                  <!-- <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> 
                     <option value="">Select Source</option>
                     <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
-                  </select> 
-                  <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"  
+                  </select>  -->
+                  <!-- <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"  
                    [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> 
                     <option  value="">Select Category</option>
                     <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
-                  </select>
-                  <button (click)="reset()" id="bmreset" class="env-data-tool tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
-                    <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1" alt="">
+                  </select> -->
+                  <button (click)="reset()" id="bmreset" class="env-data-tool tsttooltipbtn" pTooltip="Refresh" tooltipPosition="top">
+                    <!-- <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1" alt=""> -->
+                    <img src='../../../../../assets/images/RPA/icon_latest/repeat-blue.svg' class="testplus" alt="">
                   </button>
                   <span class="p-input-icon-right gridsearch">
                     <i class="pi pi-search"></i>
@@ -178,15 +179,15 @@
             </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
-                      <p-columnFilter *ngIf="each.ShowFilter && each.field != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
+                    <th *ngFor="let each of columnList" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                      <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
                                 display="menu" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
                             </ng-template>
                       </p-columnFilter>
 
-                      <p-columnFilter  *ngIf="each.ShowFilter && each.field == 'department'" [field]="each.field" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                      <p-columnFilter  *ngIf="each.ShowFilter && each.ColumnName == 'department'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                       [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                           <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                               <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
@@ -194,7 +195,7 @@
                               </p-dropdown>
                           </ng-template>
                       </p-columnFilter>
-                      <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
+                      <p-sortIcon *ngIf="each.ShowFilter" [field]="each.ColumnName"></p-sortIcon>
                     </th>
                   </tr>
                 </ng-template>
@@ -208,7 +209,7 @@
                         ((element.description).slice(0, 10) + '...') : element.description}}</span>
                       <span *ngIf="element.description==null || element.description==''">-</span>
                     </td>
-                    <td> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                    <!-- <td> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td> -->
                     <td>
                       <button *ngIf="element.department !=null && element.sourceType=='EPSoft' ">{{element.department}}</button>
                       <button *ngIf="element.sourceType!='EPSoft' || element.department ==null " class="text-center">-</button>
@@ -219,9 +220,9 @@
                       <span *ngIf="element.version==null">-</span>
                     </td>
                     <td>
-                      <div>
                         <span [id]="element.botId+'__status'">
-                          <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
+                          <span [ngStyle]="{'color':getColor(element.botStatus)}">O-</span>{{element.botStatus}}
+                          <!-- <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span>
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                             </span>
@@ -248,10 +249,9 @@
                             <span class="text-primary" [pTooltip]="element.botStatus" tooltipPosition="top">
                               <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
                             </span>
-                          </span>
-                          <span *ngIf="element.botStatus==null">---</span>
+                          </span> -->
+                          <span *ngIf="element.botStatus==null">-</span>
                         </span>
-                      </div>
                     </td>
                     <td>
                       <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" tooltipPosition="top">
