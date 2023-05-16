@@ -60,68 +60,69 @@ export class BpsHomeComponent implements OnInit {
   _selectedColumns: any[];
   search_fields: any[] = [];
   categories_list_new: any[] = [];
+  users_list:any[]=[];
   columns_list = [
     {
-      field: "bpmnProcessName",
-      header: "Process Name",
+      ColumnName: "bpmnProcessName",
+      DisplayName: "Process Name",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,showTooltip:true
     },
     {
-      field: "ntype",
-      header: "Type",
+      ColumnName: "ntype",
+      DisplayName: "Type",
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["BPMN", "CMMN","DMN"],
+      dropdownList: ["BPMN", "CMMN","DMN"],width:"flex: 0 0 5rem"
     },
     {
-      field: "category",
-      header: "Category",
+      ColumnName: "category",
+      DisplayName: "Category",
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
       dropdownList:this.categories_list_new
     },
     {
-      field: "processOwnerName",
-      header: "Process Owner",
+      ColumnName: "processOwnerName",
+      DisplayName: "Process Owner",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,showTooltip:true
     },
     {
-      field: "version_new",
-      header: "Version",
+      ColumnName: "version_new",
+      DisplayName: "Version",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,width:"flex: 0 0 5rem"
     },
     {
-      field: "convertedModifiedTime_new",
-      header: "Last Modified",
+      ColumnName: "convertedModifiedTime_new",
+      DisplayName: "Last Modified",
       filterType: "date",
       filterWidget: "normal",
       ShowFilter: true,
     },
     {
-      field: "approverName",
-      header: "Approver",
+      ColumnName: "approverName",
+      DisplayName: "Approver",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,showTooltip:true
     },
     {
-      field: "status",
-      header: "Status",
+      ColumnName: "status",
+      DisplayName: "Status",
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
       dropdownList: ["In Progress", "Pending Approval","Approved"],
     },
-    { field: "", header: "Message" },
-    { field: "", header: "Actions" },
+    { ColumnName: "reviewComments", DisplayName: "Message",showTooltip:true,width:"flex: 0 0 5rem"},
+    { ColumnName: "", DisplayName: "Actions" },
   ];
   public expandedRows = {};
 
@@ -167,7 +168,7 @@ export class BpsHomeComponent implements OnInit {
     this.systemAdmin = this.userRole.includes("System Admin");
     this.userEmail = localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes("Process Architect");
-    this.getBPMNList();
+    this.getUsersList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
     // document.getElementById("filters").style.display = "block";
@@ -627,5 +628,14 @@ export class BpsHomeComponent implements OnInit {
     if (Object.keys(this.expandedRows).length === 0) {
       // this.isExpanded = false;
     }
+  }
+
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+      this.getBPMNList();
+      }
+    });
   }
 }
