@@ -44,13 +44,14 @@ export class RpaBotFormComponent implements OnInit {
       isPredefined: [false]
     });
     if(!this.isCreateForm && this.botDetails!=undefined){
-
-      this.botForm = this.formBuilder.group({
-        botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-        department: [this.botDetails.department, Validators.required],
-        description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
-        isPredefined: [this.botDetails.isPredefined]
-      });
+  setTimeout(()=>{
+  this.botForm = this.formBuilder.group({
+    botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+    department: [this.botDetails.department, Validators.required],
+    description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
+    isPredefined: [this.botDetails.isPredefined]
+    })
+  },300)
       
     }else{
      

@@ -4,11 +4,13 @@ import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
   selector: 'app-payment-history',
   templateUrl: './payment-history.component.html',
-  styleUrls: ['./payment-history.component.css']
+  styleUrls: ['./payment-history.component.css'],
+  providers:[columnList]
 })
 export class PaymentHistoryComponent implements OnInit {
   
@@ -19,29 +21,21 @@ export class PaymentHistoryComponent implements OnInit {
   invoiceid: any;
   errorMessage:any;
   table_searchFields: any=[];
-  columns_list:any[] = [
-    {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-    {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-    {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-    {ColumnName: "created_timestamp",DisplayName: "Issue Date",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-    {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
-    {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
-  ];
+  columns_list:any[]
 
-  constructor(private rest:RestApiService,private spinner:LoaderService) { }
+  constructor(private rest:RestApiService,private spinner:LoaderService,private columns:columnList) { }
 
   ngOnInit(): void {
-
     this.getAllSubscrptions();
+    this.columns_list = this.columns.invoice_column
   }
 
   getAllSubscrptions() {
    this.spinner.show();
     this.rest.listofinvoices().subscribe(response => { 
       this.invoicedata = response.data;
-      console.log(this.invoicedata)
       this.invoicedata.map(data=>{
-        data["created_timestamp"] = moment(data.createDate).format("MMMM DD [,] yy") 
+        data["createDate"] = new Date(data.createDate);
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
         data["amount_modified"] ="$"+String(data.amount);
         return data
@@ -50,7 +44,7 @@ export class PaymentHistoryComponent implements OnInit {
         "invoiceNumber",
         "subscriptionId",
         "amount_modified",
-        "created_timestamp",
+        "createDate",
         "status_converted"
       ];
       this.spinner.hide();
