@@ -111,7 +111,8 @@
                                         {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?(col.ColumnName=='ntype'?(rowData[col.ColumnName]|uppercase):(rowData[col.ColumnName])):'-')}}
                                     </span>
                                     <span *ngIf="col.DisplayName == 'Status'">
-                                        <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div>
+                                        <!-- <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div> -->
+                                        <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}
                                     </span>
                                     <span *ngIf="col.DisplayName == 'Message'">
                                             <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message">

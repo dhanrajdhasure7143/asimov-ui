@@ -53,13 +53,14 @@ export class BpmnDiagramListComponent implements OnInit {
   _selectedColumns: any[];
   categories_list_new:any[]=[];
   columns_list = [
-    { field: 'processIntelligenceId', header: 'Process ID', filterType: "text",filterWidget: "normal"},
-    { field: 'bpmnProcessName', header: 'Process Name',filterType: "text",filterWidget: "normal"},
-    { field: 'userName', header: 'Resource',filterType: "text",filterWidget: "normal"},
-    { field: 'role', header: 'Role',filterType: "text",filterWidget: "normal"},
-    { field: 'convertedModifiedTime', header: 'Modified Time',filterType: "date",filterWidget: "normal"},
-    { field: 'bpmnProcessStatus', header: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Pending","Approved"]},
+    { ColumnName: 'processIntelligenceId', DisplayName: 'Process ID', filterType: "text",filterWidget: "normal"},
+    { ColumnName: 'bpmnProcessName', DisplayName: 'Process Name',filterType: "text",filterWidget: "normal"},
+    { ColumnName: 'userName', DisplayName: 'Resource',filterType: "text",filterWidget: "normal"},
+    { ColumnName: 'role', DisplayName: 'Role',filterType: "text",filterWidget: "normal"},
+    { ColumnName: 'convertedModifiedTime', DisplayName: 'Last Modified',filterType: "date",filterWidget: "normal"},
+    { ColumnName: 'bpmnProcessStatus', DisplayName: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Pending","Approved"]},
 ];
+users_list:any[]=[];
 
   constructor(private dt: DataTransferService,
     private bpmnservice:SharebpmndiagramService,
@@ -84,7 +85,9 @@ export class BpmnDiagramListComponent implements OnInit {
     localStorage.setItem("isheader","false")
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
-    this.bpmnlist();
+    // this.bpmnlist();
+    this.getUsersList();
+    this._selectedColumns = this.columns_list;
   }
   getColor(status) {
     switch (status) {
@@ -211,7 +214,6 @@ this.selectedrow =i;
     }
   }
    bpmnlist() {
-    this._selectedColumns = this.columns_list;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.loader.hide();
       this.griddata = data;
@@ -433,5 +435,13 @@ this.selectedrow =i;
       return convertedModifiedTime.substr(0,12)+'...';
     return convertedModifiedTime;
   }
-}
 
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        this.bpmnlist();
+      }
+    });
+  }
+}

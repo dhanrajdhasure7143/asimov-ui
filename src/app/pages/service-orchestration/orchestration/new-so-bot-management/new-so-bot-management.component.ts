@@ -1248,7 +1248,6 @@ public slaupdate : boolean = false;
   }
 
   getColor(status) {
-    console.log()
     return this.statusColors[status]?this.statusColors[status]:'';
   }
 

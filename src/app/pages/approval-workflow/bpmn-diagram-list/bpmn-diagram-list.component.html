@@ -35,20 +35,20 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th style="flex:0.2 1 0;" class="arrowcol"></th>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
-          {{col.header}}
-          <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter> -->
+        <th *ngFor="let col of columns" [pSortableColumn]="col.ColumnName" pReorderableColumn pResizableColumn>
+          {{col.DisplayName}}
+          <!-- <p-columnFilter [showAddButton]="false" type="{{col.filterType}}" [field]="col.ColumnName" display="menu"></p-columnFilter> -->
           <p-columnFilter *ngIf="col.filterWidget == 'normal'&& col.filterType == 'date'" [showOperator]="false" [showMatchModes]="false"
-            [showAddButton]="false" type="{{col.filterType}}" [field]="col.field" display="menu"></p-columnFilter>
+            [showAddButton]="false" type="{{col.filterType}}" [field]="col.ColumnName" display="menu"></p-columnFilter>
           <p-columnFilter *ngIf="col.filterWidget == 'normal'&& col.filterType == 'text'"
             [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false"
-            [field]="col.field" display="menu" [showApplyButton]="false">
+            [field]="col.ColumnName" display="menu" [showApplyButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext"
                 placeholder="Search">
             </ng-template>
           </p-columnFilter>
-          <p-columnFilter *ngIf="col.filterWidget == 'dropdown'" [field]="col.field" matchMode="equals"
+          <p-columnFilter *ngIf="col.filterWidget == 'dropdown'" [field]="col.ColumnName" matchMode="equals"
             [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu"
             [showApplyButton]="false" [showClearButton]="true">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -56,7 +56,7 @@
                 placeholder="Any"></p-dropdown>
             </ng-template>
           </p-columnFilter>
-          <p-sortIcon [field]="col.field"></p-sortIcon>
+          <p-sortIcon [field]="col.ColumnName"></p-sortIcon>
         </th>
       </tr>
     </ng-template>
@@ -68,11 +68,13 @@
           </a>
         </td>
         <td *ngFor="let col of columns">
-          <span [ngStyle]="{'color':getColor(rowData[col.field])}"
-            *ngIf="col.field == 'bpmnProcessStatus'">{{rowData[col.field]}}</span>
-          <span *ngIf="col.field != 'bpmnProcessStatus'">
-            {{col.filterType=='date' ?(rowData[col.field]|date:'MMM d, y
-            H:mm'):(rowData[col.field]?rowData[col.field]:'-')}}
+          <!-- <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}"
+            *ngIf="col.ColumnName == 'bpmnProcessStatus'">{{rowData[col.ColumnName]}}</span> -->
+           <span  *ngIf="col.ColumnName == 'bpmnProcessStatus'">
+            <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}</span>
+          <span *ngIf="col.ColumnName != 'bpmnProcessStatus'">
+            <span *ngIf="col.ColumnName =='userName'" class="prjlastupdateprofile">{{rowData['userName']|userLetters:users_list|uppercase}}</span>
+            {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
           </span>
         </td>
       </tr>
@@ -86,7 +88,7 @@
               <table class="full_width account_pay_details_table">
                 <thead>
                   <tr>
-                    <th class="child_list_header"> Modified Time </th>
+                    <th class="child_list_header">Last Modified </th>
                     <th class="child_list_header"> Resource </th>
                     <th class="child_list_header"> Version </th>
                     <th class="child_list_header"> Status </th>
@@ -100,14 +102,15 @@
                     <!-- <td>{{each_past_process.convertedModifiedTime*1000 | date:'medium'}}</td> -->
                     <!-- <td>{{formatApproverName(each_past_process.userName)}}</td> -->
                     <td [pTooltip]="each_past_process.convertedModifiedTime*1000 | date:'medium'" tooltipPosition="top">
-                      {{fitTableViewDate(each_past_process.convertedModifiedTime*1000 | date:'medium')}}</td>
-                    <td [pTooltip]=each_past_process.userName tooltipPosition="top">
-                      {{fitTableView(each_past_process.userName)}}</td>
-                    <td>{{"V 1."+each_past_process.version}}</td>
-                    <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">
-                      <div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span
-                          pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span></div><ng-template
-                        #status>{{each_past_process.bpmnProcessStatus}}</ng-template>
+                      {{fitTableViewDate(each_past_process.convertedModifiedTime*1000 |date:'MMM dd, y HH:mm')}}</td>
+                    <td [pTooltip]=each_past_process.userName tooltipPosition="top">{{fitTableView(each_past_process.userName)}}</td>
+                    <td>{{"V1."+each_past_process.version}}</td>
+                    <td>
+                      <span [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">O-</span>
+                      <div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status">
+                        <span pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span>
+                        </div>
+                          <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template>
                     </td>
                     <td [matTooltip]="each_past_process.reviewComments"><input type="text"
                         [value]="each_past_process.reviewComments" name="reviewComments{{j}}"

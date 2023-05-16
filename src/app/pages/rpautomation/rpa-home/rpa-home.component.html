@@ -125,7 +125,9 @@
                                         </span>
                                         <span *ngIf="col.ColumnName == 'last_modified_date'">{{rowData[col.ColumnName]| date:'MMM dd, y HH:mm'}}</span>
                                         <span *ngIf="col.DisplayName == 'Status'">
-                                            <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
+                                        <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}
+
+                                            <!-- <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
                                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1" alt="">
                                             </span>
                                             <span *ngIf="rowData['botStatus']=='Success'">
@@ -143,7 +145,7 @@
                                             <span *ngIf="rowData['botStatus']=='Pause'||rowData['botStatus']=='Paused'" class="text-primary">
                                                 <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus1" alt="">
                                             </span>
-                                            <span *ngIf="rowData['botStatus']==null">-</span>
+                                            <span *ngIf="rowData['botStatus']==null">-</span> -->
                                         </span>
                                         <span  *ngIf="col.DisplayName == 'Actions'">
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
