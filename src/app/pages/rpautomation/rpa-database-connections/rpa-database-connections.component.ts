@@ -47,6 +47,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   hiddenPopUp:boolean=false;
   overlayClose:boolean = false;
   columns_list:any[] =[];
+  hideLables:boolean = true
 
   constructor(private api: RestApiService,
     private router: Router,
@@ -111,6 +112,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   opencreatedbconnection() {
     this.hiddenPopUp=true;
     this.isDatabase = true;
+    this.hideLables = false
     // document.getElementById("createdbconnection").style.display = 'block';
     // this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     // document.getElementById("Updatedbconnection").style.display='none';

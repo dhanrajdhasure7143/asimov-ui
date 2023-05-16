@@ -4,12 +4,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { columnList } from "src/app/shared/model/table_columns";
 
 
 @Component({
   selector: "app-admin-add-screen",
   templateUrl: "./admin-add-screen.component.html",
   styleUrls: ["./admin-add-screen.component.css"],
+  providers:[columnList]
 })
 export class AdminAddScreenComponent implements OnInit {
   public insertForm: FormGroup;
@@ -42,7 +44,8 @@ export class AdminAddScreenComponent implements OnInit {
     private router: Router,
     private rest: RestApiService,
     private route: ActivatedRoute,
-    private spinner:LoaderService
+    private spinner:LoaderService,
+    private columns:columnList
   ) {
     this.route.queryParams.subscribe((res: any) => {
       this.screen_id = res.id;
@@ -95,7 +98,6 @@ export class AdminAddScreenComponent implements OnInit {
     if (this.screen_id) {
       this.getScreenDetail();
     }
-   
   }
 
   backToScreenList() {
@@ -188,28 +190,7 @@ export class AdminAddScreenComponent implements OnInit {
     this.rest.getTabledataAdmin(tablename.value).subscribe((data) => {
       this.tableData = data;
       this.columns_list = this.tableData;
-      this.columns_list = [
-        {
-          ColumnName: "column_name",
-          DisplayName: "Column Name",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-        {
-          ColumnName: "data_type",
-          DisplayName: "Data Type",
-          ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
-        },
-      ];
+     this.columns_list = this.columns.adminChangeTable_column;
       this.spinner.hide();
     });
   }
@@ -250,48 +231,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.rest.getElementTable(this.screen_id).subscribe((data) => {
         this.elementData = data;
         this.tableData = this.elementData;
-        this.columns_list = [
-          {
-            ColumnName: "ColumnName",
-            DisplayName: "Column Name",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "DisplayName",
-            DisplayName: "Display Name",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "data_type",
-            DisplayName: "Data Type",
-            ShowGrid: true,
-            ShowFilter: true,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: true,
-            multi: false,
-          },
-          {
-            ColumnName: "action",
-            DisplayName: "Actions",
-            ShowGrid: true,
-            ShowFilter: false,
-            filterWidget: "normal",
-            filterType: "text",
-            sort: false,
-            multi: false,
-          },
-        ];
+        this.columns_list = this.columns.adminAddScreen_column;
         this.spinner.hide();
       });
     });
@@ -333,11 +273,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.savedata = data;
       this.columns_list = this.savedata;
       this.tableData = this.savedata;
-      this.columns_list = [
-        {ColumnName: "ColumnName",DisplayName: "Column Name",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "DisplayName",DisplayName: "Display Name",ShowGrid: true,sort: true,ShowFilter:true},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
-      ];
+      this.columns_list = this.columns.saveTable_column;
       Swal.fire({
         title: "Success",
         text: "Screen Saved successfully !!",

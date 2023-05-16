@@ -328,7 +328,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         var source_length = this.jsPlumbInstance
           .getAllConnections()
           .filter((data) => data.sourceId == connection.sourceId).length;
-        if (
+          if (
           node_object.taskName == "If condition" &&
           source_length < 3 &&
           this.loadflag
@@ -402,81 +402,81 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
 
-
-        //v2 if
-        if (
-          node_object.taskName == "If" &&
-          source_length < 3 &&
-          this.loadflag
-        ) {
-          Swal.fire({
-            title: "Select True/False case",
-            icon: "warning",
-            showCancelButton: true,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton: 'btn new-cancelbtn',
+        
+      //v2 if
+      if (
+        node_object.taskName == "If" &&
+        source_length < 3 &&
+        this.loadflag
+      ) {
+        Swal.fire({
+          title: "Select True/False case",
+          icon: "warning",
+          showCancelButton: true,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton: 'btn new-cancelbtn',
+            },
+          cancelButtonText: "Fasle",
+          confirmButtonText: "True",
+        }).then((result) => {
+          if (result.value) {
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-success'>True<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
               },
-            cancelButtonText: "Fasle",
-            confirmButtonText: "True",
-          }).then((result) => {
-            if (result.value) {
-              connection.addOverlay([
-                "Label",
-                {
-                  label: "<span class='bg-white text-success'>True<span>",
-                  location: 0.8,
-                  cssClass: "aLabel",
-                  id: "iflabel" + connection.id,
-                },
-              ]);
+            ]);
 
-              let connected_node: any = this.nodes.find(
-                (develop) => develop.id == connection.targetId
-              );
-              // let connected_node_id: any =
-              //   connected_node.name + "__" + connected_node.id;
-              let source_node_id = node_object.nodeId;
-              if (
-                this.finaldataobjects.find(
-                  (tasks) => tasks.nodeId == source_node_id
-                ) != undefined
-              ) {
-                this.finaldataobjects
-                  .find((tasks) => tasks.nodeId == source_node_id)
-                  .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "true"
-                  ).attrValue = connected_node.id;
-              }
-            } else {
-              connection.addOverlay([
-                "Label",
-                {
-                  label: "<span class='bg-white text-danger'>False<span>",
-                  location: 0.8,
-                  cssClass: "aLabel",
-                  id: "iflabel" + connection.id,
-                },
-              ]);
-              let connected_node: any = this.nodes.find(
-                (develop) => develop.id == connection.targetId
-              );
-              // let connected_node_id: any =
-              //   connected_node.name + "__" + connected_node.id;
-              if (
-                this.finaldataobjects.find(
-                  (tasks) => tasks.nodeId == node_object.nodeId
-                ) != undefined
-              ) {
-                this.finaldataobjects
-                  .find((tasks) => tasks.nodeId == node_object.nodeId)
-                  .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "false"
-                  ).attrValue = connected_node.id;
-              }
+            let connected_node: any = this.nodes.find(
+              (develop) => develop.id == connection.targetId
+            );
+            // let connected_node_id: any =
+            //   connected_node.name + "__" + connected_node.id;
+            let source_node_id = node_object.nodeId;
+            if (
+              this.finaldataobjects.find(
+                (tasks) => tasks.nodeId == source_node_id
+              ) != undefined
+            ) {
+              this.finaldataobjects
+                .find((tasks) => tasks.nodeId == source_node_id)
+                .attributes.find(
+                  (attrs) => attrs.metaAttrValue == "true"
+                ).attrValue = connected_node.id;
             }
-          });
-        }
+          } else {
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-danger'>False<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
+              },
+            ]);
+            let connected_node: any = this.nodes.find(
+              (develop) => develop.id == connection.targetId
+            );
+            // let connected_node_id: any =
+            //   connected_node.name + "__" + connected_node.id;
+            if (
+              this.finaldataobjects.find(
+                (tasks) => tasks.nodeId == node_object.nodeId
+              ) != undefined
+            ) {
+              this.finaldataobjects
+                .find((tasks) => tasks.nodeId == node_object.nodeId)
+                .attributes.find(
+                  (attrs) => attrs.metaAttrValue == "false"
+                ).attrValue = connected_node.id;
+            }
+          }
+        });
+      }   
       } else {
         let connectionNodeForSource = this.nodes.find(
           (item: any) => item.id == info.sourceId
@@ -690,6 +690,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if((this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1])?.taskName??"")=="If")
         {
           let taskItem=this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1]);
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true"))
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true").attrValue==element.targetTaskId)
           {
             connection.addOverlay([
@@ -702,6 +703,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               },
             ]);
           }
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false"))
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false").attrValue==element.targetTaskId)
           {
             connection.addOverlay([

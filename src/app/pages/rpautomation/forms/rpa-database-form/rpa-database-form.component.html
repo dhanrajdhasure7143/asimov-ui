@@ -131,22 +131,25 @@
                     Maximum of 50 characters
                 </div>
             </div>
-            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
-                <label class="label-control" for="role">Role</label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="role" value=""
-                    placeholder="Enter Role">
-                <!-- <span *ngIf="(dbForm.get('role').invalid && dbForm.get('role').touched) && !dbForm.controls['role'].hasError('maxlength')" class="required"> Schema Required*</span> -->
-                <div *ngIf="dbForm.controls['schemaName'].hasError('maxlength')" class="required">
-                    Maximum of 50 characters
+            <div [hidden]="!hideLabels">
+                <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
+                    <label class="label-control" for="role">Role</label>
+                    <input type="text" maxlength="51" class="form-control data" formControlName="role" value=""
+                        placeholder="Enter Role">
+                    <!-- <span *ngIf="(dbForm.get('role').invalid && dbForm.get('role').touched) && !dbForm.controls['role'].hasError('maxlength')" class="required"> Schema Required*</span> -->
+                    <div *ngIf="dbForm.controls['schemaName'].hasError('maxlength')" class="required">
+                        Maximum of 50 characters
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
-                <label class="label-control" for="warehouse">Warehouse</label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="warehouse" value=""
-                    placeholder="Enter Warehouse">
-                <!-- <span *ngIf="(dbForm.get('warehouse').invalid && dbForm.get('warehouse').touched) && !dbForm.controls['warehouse'].hasError('maxlength')" class="required"> Ware Required*</span> -->
-                <div *ngIf="dbForm.controls['warehouse'].hasError('maxlength')" class="required">
-                    Maximum of 50 characters
+            
+                <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
+                    <label class="label-control" for="warehouse">Warehouse</label>
+                    <input type="text" maxlength="51" class="form-control data" formControlName="warehouse" value=""
+                        placeholder="Enter Warehouse">
+                    <!-- <span *ngIf="(dbForm.get('warehouse').invalid && dbForm.get('warehouse').touched) && !dbForm.controls['warehouse'].hasError('maxlength')" class="required"> Ware Required*</span> -->
+                    <div *ngIf="dbForm.controls['warehouse'].hasError('maxlength')" class="required">
+                        Maximum of 50 characters
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 p-0 form-group">
