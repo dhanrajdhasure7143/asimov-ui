@@ -20,6 +20,7 @@ export class RpaDatabaseFormComponent implements OnInit {
   @Output() refreshData = new EventEmitter<any>();
   @Output() closeOverlay = new EventEmitter<any>();
   @Input() databaselist : any[];
+  @Input() hideLabels:boolean;
   public toggle:boolean;
   public dbupdateflag: boolean = false;
   public submitted:Boolean;
@@ -257,7 +258,8 @@ export class RpaDatabaseFormComponent implements OnInit {
         if (status.errorMessage == undefined) {
           Swal.fire("Success", status.status, "success")
           // document.getElementById('Updatedbconnection').style.display = 'none';
-          document.getElementById('createdbconnection').style.display = 'none';
+          document.getElementById('createdbconnection').style.display = "none";
+          this.closeOverlay.emit(false);
         } else {
           Swal.fire("Error", status.errorMessage, "error")
         }
@@ -278,7 +280,9 @@ export class RpaDatabaseFormComponent implements OnInit {
   }
 
   changeDatabaseType(event){
+    debugger
     if(event.target.value=='Snowflake'){
+      this.hideLabels = true
       this.snowflakeflag=true;
       this.pwdflag=false;
       this.h2flag=false;
@@ -289,6 +293,7 @@ export class RpaDatabaseFormComponent implements OnInit {
      this.pwdflag=true;
      this.h2flag=true;
      this.snowflakeflag=false;
+     this.hideLabels = false;
      //this.dbForm.controls.portNumber.clearValidators();
      //this.dbForm.controls.portNumber.updateValueAndValidity();
      this.dbForm.controls.password.clearValidators();
@@ -305,6 +310,7 @@ export class RpaDatabaseFormComponent implements OnInit {
       this.snowflakeflag=false;
       this.pwdflag=false;
       this.h2flag=false;
+      this.hideLabels = false;
       this.dbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
       this.dbForm.controls.portNumber.updateValueAndValidity();
       this.dbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)])
