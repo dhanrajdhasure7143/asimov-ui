@@ -108,16 +108,24 @@ public slaupdate : boolean = false;
     noDataMessage: boolean;
     hiddenPopUp:boolean=false;
     columnList=[
-      {DisplayName:"Bot Name",field:"botName",ShowFilter: true},
-      {DisplayName:"Description",field:"description",ShowFilter: true},
-      {DisplayName:"Source",field:"sourceType",ShowFilter: true},
-      {DisplayName:"Category",field:"department",ShowFilter: true},
-      {DisplayName:"Version",field:"version",ShowFilter: true},
-      {DisplayName:"Status",field:"botStatus",ShowFilter: true},
-      {DisplayName:"Actions",field:"Actions",ShowFilter: false},
-      {DisplayName:"Schedule",field:"botStatus",ShowFilter: false},
-      {DisplayName:"Logs",field:"botStatus",ShowFilter: false},
+      {DisplayName:"Bot Name",ColumnName:"botName",ShowFilter: true},
+      {DisplayName:"Description",ColumnName:"description",ShowFilter: true},
+      // {DisplayName:"Source",ColumnName:"sourceType",ShowFilter: true},
+      {DisplayName:"Category",ColumnName:"department",ShowFilter: true},
+      {DisplayName:"Version",ColumnName:"version",ShowFilter: true},
+      {DisplayName:"Status",ColumnName:"botStatus",ShowFilter: true},
+      {DisplayName:"Actions",ColumnName:"Actions",ShowFilter: false},
+      {DisplayName:"Schedule",ColumnName:"botStatus",ShowFilter: false},
+      {DisplayName:"Logs",ColumnName:"botStatus",ShowFilter: false},
     ]
+    statusColors = {
+      New: 'orange',
+      Failure: 'red',
+      Success: 'green',
+      Killed:"green",
+      Stopped: 'red',
+      Running:"Orange"
+    };
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
@@ -336,6 +344,9 @@ public slaupdate : boolean = false;
       // }
 
     }
+    setTimeout(() => {
+      console.log(this.bot_list);
+    }, 1000);
   }
 
   getslaconfig(){
@@ -1234,6 +1245,10 @@ public slaupdate : boolean = false;
    this.resetsla();
    this.popup=false;
    
+  }
+
+  getColor(status) {
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 
 }

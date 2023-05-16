@@ -37,6 +37,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       categoryId: ["", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
       portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(5)])],
       activeStatus: [true]
@@ -52,7 +53,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
       this.environmentForm.get("username").setValue(this.updateenvdata["username"]);
       if (this.updateenvdata.keyValue == null) {
-        this.password = (this.updateenvdata["password"].password);
+        this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
@@ -75,6 +76,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId: ["", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(5)])],
         activeStatus: [true]
