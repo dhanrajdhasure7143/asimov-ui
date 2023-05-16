@@ -21,6 +21,13 @@ th.checkboxth:before {
     margin-right: 8px;
     text-transform: uppercase;
 }
+span.statusbadge_nc {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
 .red {
     color: red;
     font-weight: 600;
