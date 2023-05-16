@@ -108,6 +108,14 @@ export class RpaHomeComponent implements OnInit {
   checkorderflag:boolean=true;
   stopNodeId:any;
   users_list:any[]=[];
+  statusColors = {
+    New: 'orange',
+    Failure: 'red',
+    Success: 'green',
+    Killed:"green",
+    Stopped: 'red',
+    Running:"Orange"
+  };
 
   constructor(
     private rest: RestApiService,
@@ -766,6 +774,10 @@ importBot()
       this.getallbots();
       }
     });
+  }
+
+  getColor(status) {
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 }
 
