@@ -4,29 +4,11 @@ th.checkboxth:before {
 }
 
 .prjgridpriority,
-.prjgridtimestamp {
+.prjgridtimestamp,
+.resourcerole {
     display: block;
     font-size: 14px;
     line-height: 14px;
-}
-.prjlastupdateprofile {
-    background-color: #e0e0e0;
-    color: #232832;
-    border-radius: 100%;
-    width: 33px;
-    height: 33px;
-    display: inline-block;
-    line-height: 13px;
-    padding: 10px 8px;
-    margin-right: 8px;
-    text-transform: uppercase;
-}
-span.statusbadge_nc {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
-    border-radius: 50%;
 }
 .red {
     color: red;

@@ -147,7 +147,7 @@ body .leftfporm select {
   height: 36px !important;
 }
 td select.form-control {
-  height: 36px !important;
+  height: 32px !important;
 }
 .leftfporm {
   display: flex !important;

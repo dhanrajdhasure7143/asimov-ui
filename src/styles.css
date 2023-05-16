@@ -2803,6 +2803,25 @@ span.tabscount {
 
 
 /* Grid NEW Styles Start */
+.prjlastupdateprofile {
+  background-color: #e0e0e0;
+  color: #232832;
+  border-radius: 100%;
+  width: 33px;
+  height: 33px;
+  display: inline-block;
+  line-height: 13px;
+  padding: 10px 8px;
+  margin-right: 8px;
+  text-transform: uppercase;
+}
+span.statusbadge_nc {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
@@ -2846,11 +2865,11 @@ span.tabscount {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px); /* for action items - connection manager grid */
 }
-.actionitems-grid .p-datatable-wrapper td span {
-  width: 165px;       /* for action items - connection manager grid */
+.actionitems-grid .p-datatable-wrapper td span {   /* for action items - connection manager grid */
+  /* width: 165px;       
   display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 230px); /* for Onboard Users grid */

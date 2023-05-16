@@ -89,7 +89,7 @@ select {
 }
 .env-data-tool {
   /* line-height: 30px; */
-  margin: 0px 10px;
+  /* margin: 0px 10px; */
 }
 .env-data-tool button.tsttooltipbtn {
   position: relative;
