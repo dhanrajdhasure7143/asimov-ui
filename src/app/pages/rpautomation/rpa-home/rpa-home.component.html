@@ -98,10 +98,12 @@
                                                 <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
                                             </ng-template>
                                         </p-columnFilter>
-                                        <p-columnFilter  *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'" field="categoryName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                                        <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
+                                        [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false"
+                                            [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                                <p-dropdown [ngModel]="value" [options]="categories_list_new" (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+                                                <p-dropdown [ngModel]="value" [options]="col.dropdownList"
+                                                    (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
                                             </ng-template>
                                         </p-columnFilter>
                                         <p-sortIcon [field]="col.ColumnName" *ngIf="col.ShowFilter"></p-sortIcon>
@@ -115,7 +117,7 @@
                                             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                         </a>
                                     </td>
-                                    <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
+                                    <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width" (dblclick)="onNavigateToWorkSpace(rowData)">
                                         <span *ngIf="col.ColumnName =='description'">{{rowData[col.ColumnName]?fitTableView(rowData['description']):'-'}}</span>
                                         <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'&& col.ColumnName !='description' && col.ColumnName != 'last_modified_date'">
                                             <span *ngIf='col.ColumnName =="createdBy"' class="prjlastupdateprofile">

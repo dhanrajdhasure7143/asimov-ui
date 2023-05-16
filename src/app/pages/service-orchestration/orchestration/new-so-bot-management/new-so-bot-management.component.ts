@@ -126,6 +126,7 @@ public slaupdate : boolean = false;
       Stopped: 'red',
       Running:"Orange"
     };
+    statusList=["Success","Running","New","Failure","Killed","Stopped"]
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
