@@ -59,6 +59,8 @@ export class RpaSoLogsComponent implements OnInit {
   public logStatus:any;
   public logsDisplayFlag:any;
   isDataEmpty:boolean=false;
+  logsData:any=[];
+  columnList=[]
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -75,17 +77,19 @@ export class RpaSoLogsComponent implements OnInit {
       {
         
        this.isDataEmpty=false;
-       response=[...response.map((item:any, index)=>{
+       this.columnList=[
+        {field:"run_id",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+        {field:"versionNew",DisplayName:"Version",ShowFilter: false,width:"",filterType:"date"},
+        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+      ];
+       this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
-          item["versionNew"]=parseFloat(item.versionNew).toFixed(1)
+          item["versionNew"]="V"+parseFloat(item.versionNew).toFixed(1);
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
-        this.runsListDataSource = new MatTableDataSource(response);
-        setTimeout(()=>{
-          this.runsListDataSource.sort=this.sortRunsTable;
-          //this.runsListDataSource.paginator=this.logsPaginator;  
-        },100)
       }
       else
       {
@@ -98,6 +102,10 @@ export class RpaSoLogsComponent implements OnInit {
     this.isDataEmpty=true;
     Swal.fire("Error","unable to get logs","error")
     });
+  }
+
+  clear(table:any) {
+    table.clear();
   }
 
   // changeLogVersion(event){
@@ -115,14 +123,82 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsDisplayFlag='LOGS'
     let flag=0;
     this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((response:any)=>{ 
-      this.logsLoading=false;
+     
       if(response.errorMessage==undefined)
       { 
         
        this.isDataEmpty=false; 
-        response=[...response.map((item:any)=>{
+       this.columnList=[
+        {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+      ];
+        this.logsData=[...response.filter((item:any)=>{
+
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
+          item["bot_status"]=item.status;
+          if(item.parent_log_id==null)
+            return item;
+        }).filter((item:any)=>{
+          if(item.task_name=='Loop-Start')
+          {
+            flag=1;
+            return item;
+          }
+          if(item.task_name=='Loop-End')
+            flag=0;
+          if(flag==0)
+            return item;
+        })]
+        this.logsLoading=false;        
+      //  this.logsListDataSource = new MatTableDataSource(response);
+      //  setTimeout(()=>{
+      //     this.logsListDataSource.sort=this.sortLogsTable
+      //  },100)
+     }
+     else
+     {
+        this.isDataEmpty=true;
+        this.logsLoading=false;
+        Swal.fire("Error",response.errorMessage,"error")
+     }    
+     }, err=>{
+       this.logsLoading=false;
+       this.isDataEmpty=true;
+       Swal.fire("Error","unable to get logs","error")       
+    })
+   }
+
+
+   getChildLogs(task_details)
+   {
+
+    // this.botrunid=runid;
+    // this.selectedLogVersion=version 
+    this.logsLoading=true;
+    this.logsDisplayFlag='LOGS'
+    let flag=0;
+    this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, task_details.log_id).subscribe((response:any)=>{ 
+     
+      if(response.errorMessage==undefined)
+      { 
+        
+       this.isDataEmpty=false;
+       this.columnList=[
+        {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+        {field:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
+        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+        {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+      ];
+        this.logsData=[...response.filter((item:any)=>{
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
+          item["bot_status"]=item.status;  
           return item;
         }).filter((item:any)=>{
           if(item.task_name=='Loop-Start')
@@ -135,11 +211,7 @@ export class RpaSoLogsComponent implements OnInit {
           if(flag==0)
             return item;
         })]
-        
-       this.logsListDataSource = new MatTableDataSource(response);
-       setTimeout(()=>{
-          this.logsListDataSource.sort=this.sortLogsTable
-       },100)
+        this.logsLoading=false;
      }
      else
      {
