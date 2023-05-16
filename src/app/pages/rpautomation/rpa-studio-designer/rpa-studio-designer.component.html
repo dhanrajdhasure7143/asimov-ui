@@ -397,6 +397,6 @@
 
   <div *ngIf="isOpenSideOverlay">
     <app-split-overlay (closeOverlay)="closeSideOverlay($event)">
-        <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
+        <app-rpa-environment-form  (closeOverlay)="closeSideOverlay($event)"[updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
     </app-split-overlay>
 </div>

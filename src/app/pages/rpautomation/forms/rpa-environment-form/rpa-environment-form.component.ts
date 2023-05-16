@@ -15,6 +15,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
   @Input() updateenvdata: any;
   @Input("categoriesList") categoriesList: any[]=[];
   @Output() refreshTable = new EventEmitter<any>();
+  @Output() closeOverlay = new EventEmitter<any>();
   public environmentName: FormControl;
   public environmentForm: FormGroup;
   public submitted: Boolean;
@@ -177,6 +178,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
         Swal.fire("Success", response.status, "success")
         document.getElementById("createenvironment").style.display = 'none';
         this.environmentForm.reset();
+        this.closeOverlay.emit(false)
         this.environmentForm.get("portNumber").setValue("22");
         this.environmentForm.get("connectionType").setValue("SSH");
         this.environmentForm.get("activeStatus").setValue(true);
@@ -314,9 +316,9 @@ export class RpaEnvironmentFormComponent implements OnInit {
     }
   }
 
-  closeOverlay() {
-    this.resetEnvForm();
-    document.getElementById('createenvironment').style.display = 'none';
-  }
+  // closeOverlay() {
+  //   this.resetEnvForm();
+  //   document.getElementById('createenvironment').style.display = 'none';
+  // }
 
 }

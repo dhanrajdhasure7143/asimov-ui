@@ -426,7 +426,7 @@
       </div>
       <div *ngIf="isDataEmpty==true && logsLoading==false" class="text-center">
           <div class="no-records">
-            <h4>No Records Found</h4>
+            <h4>{{errormsg}}</h4>
           </div>
       </div>
       <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
