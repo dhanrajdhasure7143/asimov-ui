@@ -52,12 +52,14 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("categoryId").setValue(this.updateenvdata["categoryId"]);
       this.environmentForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
       this.environmentForm.get("username").setValue(this.updateenvdata["username"]);
+     setTimeout(()=>{
       if (this.updateenvdata.keyValue == null) {
-        this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
+        this.environmentForm.get("password").setValue(this.updateenvdata["password"].password);
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
       }
+    },200)
       //this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
       this.environmentForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
       this.environmentForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
