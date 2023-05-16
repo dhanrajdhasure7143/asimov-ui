@@ -19,6 +19,7 @@ th.checkboxth:before {
     line-height: 13px;
     padding: 10px 8px;
     margin-right: 8px;
+    text-transform: uppercase;
 }
 .red {
     color: red;
@@ -29,10 +30,10 @@ th.checkboxth:before {
     font-weight: 600;
 }
 
-.editButton{
+/* .editButton{
     border : none !important;
     margin-right: 17px;
-}
+} */
 
 .actionicons {
     display: none;

@@ -12,12 +12,22 @@
     </div>
     <div class="col-md-5 pr-0">
       <div class="PI-srh-graph">
-        <div class="mr-3" id="title">
+        <div class="" id="title">
             <button class="btn btn-default" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
         </div>
         <div class="">
-            <button class="btn bluebg-button" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
-                <img src="../.././../../assets/images/PI/generate graph.svg" class="testplus">Generate Process Graph</button>
+            <!-- <button class="btn bluebg-button" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
+                <img src="../../../../assets/images/PI/generate graph.svg" alt="" class="testplus">
+                Generate Process Graph
+            </button> -->
+            <button class="btn bluebg-button" disabled *ngIf="!isgenerate" id="generateGraph1">
+              <img src="../../../../assets/images/PI/generate-processgraph.svg" alt="" class="testplus">
+              Generate Process Graph
+            </button>
+            <button class="btn bluebg-button" *ngIf="isgenerate" id="generateGraph1" (click)="slideUp()">
+              <img src="../../../../assets/images/PI/generate graph.svg" alt="" class="testplus">
+              Generate Process Graph
+            </button>
         </div>
       </div>
     </div>

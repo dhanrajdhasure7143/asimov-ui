@@ -295,7 +295,7 @@
 
 <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1">
     <div class='variants_slider'>
-       <div class="col-sm-12 select_drpdwnone">
+       <div class="col-md-12 select_drpdwnone">
             <div class="variants-header">
                 <h3>Variants List</h3>
                 <button class="closebtn" (click)="closeNav()">
@@ -303,7 +303,7 @@
                     <!-- <img src="../../../../assets/images/PI/close-blue.svg" alt="" class="hover-img"> -->
                 </button>
             </div>
-            <div class="col-md-12 p-0">
+            <div class="col-md-12 p-0 form-group">
                 <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
                     <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                 </select>
