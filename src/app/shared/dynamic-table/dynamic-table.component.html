@@ -190,29 +190,44 @@
                                     <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                                 </a>
                             </span>
-                            <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
-                                <a  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                            
+                            <span *ngIf="screenTable=='users_screen'">
+                                <span *ngIf="loggedInUser==rowData['email']" class="editButton">
+                                    <a>
+                                        <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                                    </a>
+                                    <a>
+                                        <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
+                                    </a>
+                                </span>
+                                <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
+                                    <a  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                                        <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                                    </a>
+                                    <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                        <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
+                                    </a>
+                                </span>
+                            </span>
+
+                            <span *ngIf="screenTable =='actionsTable'">
+                                <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
+                                <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                     <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                                 </a>
-                                <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/common/delete-blue.svg" class="testplus default-img" alt="delete">
+                                <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                                    <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                                 </a>
                             </span>
-                    </span>
-                    <span *ngIf="screenTable =='actionsTable'">
-                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
-                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
-                            </a>
-                            <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
-                                <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
-                            </a>
-                    </span>
 
-                    <span *ngIf="screenTable =='connectionsList'">
-                            <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                            <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
-                                <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                            <span *ngIf="screenTable =='connectionsList'">
+                                <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
+                                <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
+                                    <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
+                                </span>
+                                <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                                    <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
+                                </span>
                             </span>
                             <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
@@ -226,7 +241,7 @@
                     </a>
                 </span>
                         </div>
-                </span>
+                    </span>
                 </td>
             </tr>
         </ng-template>

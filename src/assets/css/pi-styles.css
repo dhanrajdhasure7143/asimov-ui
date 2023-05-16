@@ -24,13 +24,16 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  background-color: #098de6 !important;
+  /* background-color: #098de6 !important; 
+  color: #fff;*/
+  background-color: #fdf6d4 !important;
   cursor: no-drop;
   pointer-events:none;
-  color: #fff;
 }
 #process_data .tableRow .tableCell.invalid{
-  background-color:rgb(212, 105, 105) !important;
+  /* background-color:rgb(212, 105, 105) !important; */
+  background-color:#cdcdcd !important;
+  color: #fff;
   cursor: no-drop;
   pointer-events:none; 
 }
@@ -256,11 +259,7 @@ padding: 5px !important;
 .details_box{
   padding: 5px;
 }
-.play_button{
-  font-size: 14px;
-  color: #fff;
-  /* margin-top: 6px; */
-}
+
 .play_button span {
   padding-left: 6px;
 }
@@ -459,8 +458,8 @@ transition: 0.5s;
 }
 
 .activevaraint{
-  border-left:2px solid green !important;
-  background: lightgray;
+  /* border-left:2px solid green !important;
+  background: lightgray; */
 }
 #toolTipParagraphone,#linktoolTipParagraphone{
   float: left;
@@ -834,7 +833,7 @@ button{
 .dataTables_filter input[type=search]{
   height: 33px !important;
   padding: 0px px;
-  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  border-bottom: 1px solid #797676 !important;
   width: 60%;
   font-size: 14px !important;
   font-weight: 400 !important;
@@ -854,7 +853,7 @@ margin-top: -38px;
   border-right: 0px !important;
   border-top: 0px !important;
   box-shadow: none !important;
-  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  border-bottom: 1px solid #797676 !important;
   padding: 0px 5px;
 }
 table.dataTable {
@@ -864,7 +863,7 @@ table.dataTable {
   color: black !important;
 }
 .chart-legend .legend-label:hover{
-  background-color: #0062cf !important;
+  background-color: #098de6 !important;
 }
 .graph_table .newpaginationdiv .mat-paginator-page-size {
   left: 5px !important;
