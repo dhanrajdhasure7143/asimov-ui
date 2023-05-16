@@ -3353,7 +3353,7 @@ textarea.p-inputtextarea {
 .space .p-tieredmenu.p-component.p-tieredmenu-overlay {
   position: absolute !important;
   top: 45px !important;
-  left: 0px !important;
+  left: 14px !important;
 }
 .taskdescription p-inplace.p-element {
   height: calc(100% - 40px);
