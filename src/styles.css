@@ -1329,7 +1329,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-right: 17px;
 }
 .newinntalx a:last-child {
-  margin-right: 0px !important;
+  /* margin-right: 0px !important; */ 
 }
 
 .editmodelprbody .ng5-slider .ng5-slider-pointer {
@@ -2666,7 +2666,7 @@ cursor: pointer;
   border-left: 0em solid transparent !important;
 }
 .main-content-body {
-  height: calc(100% - 75px);
+  height: calc(100% - 65px);
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
@@ -2753,7 +2753,7 @@ input.p-inputtext {
     justify-content: center;
 }
 .tabs_screen .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  margin: 0px 10px !important;
+  /* margin: 0px 10px !important; */
   padding: 16px 20px 6px !important;
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -2772,11 +2772,11 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
   width: 200px !important;
 } */
 .tabs_screen .p-tabview .p-tabview-nav {
-  padding: 0px 20px;
+  padding: 0px 15px;
 }
-.tabs_screen.config_tabs .p-tabview .p-tabview-nav li {
+/* .tabs_screen.config_tabs .p-tabview .p-tabview-nav li {
   width: 225px !important;
-}
+} */
 .subscrip_tabs .p-tabview .p-tabview-nav li{
   width: auto !important;
 }
@@ -2806,7 +2806,7 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
-  height: calc(100vh - 260px);
+  height: calc(100vh - 275px);
   overflow: auto;
 }
 .p-datatable-header {
@@ -2853,7 +2853,10 @@ span.tabscount {
   text-overflow: ellipsis;
 }
 .usersgrid .p-datatable-wrapper {
-  height: calc(100vh - 240px); /* for Onboard Users grid */
+  height: calc(100vh - 230px); /* for Onboard Users grid */
+}
+.splitoverlaycontent.attachdocgrid {
+  padding: 5px 20px 0px;
 }
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
@@ -2918,12 +2921,12 @@ thead tr {
   border-top: none !important;
   border-bottom: 1px solid var(--main-bluecolor) !important;
   position: relative;
-  height: 50px;
+  height: 48px;
 }
 .p-datatable .p-datatable-tbody > tr,
 tbody tr {
   background: transparent !important;
-  height: 50px;
+  height: 48px;
   color: var(--main-txtcolor) !important;
   font-size: 16px;
   margin: 5px 0px 0px;
@@ -3114,7 +3117,6 @@ button.p-element.button-bot{
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
   background: transparent !important;
-  margin-right: 10px !important;
   height: 28px !important;
 }
 .p-column-filter-buttonbar {
@@ -3125,7 +3127,7 @@ button.p-element.button-bot{
   background: var(--main-bluecolor) !important;
   border: 1px solid var(--main-bluecolor) !important;
   padding: 3px 12px;
-  margin: 0px !important;
+  margin-left: 10px !important;
   box-shadow: none !important;
 }
 button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
@@ -3133,13 +3135,13 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 }
 /* grid-filter Overlay Styles End */
 .p-button-outlined {
-  /* margin: 0 10px !important; */
   color: var(--secondary-bluecolor) !important;
   box-shadow: none !important;
   height: 36px !important;
+  margin-left: 10px !important;
 }
 .p-button-outlined.only_clearbtn {
-  margin:0px !important;
+  /* margin:0px !important; */
 }
 /* Grid NEW Styles End */
 .desctextarea {
@@ -3171,10 +3173,13 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   border: 1px solid var(--secondary-bluecolor) !important;
 }
 .p-checkbox .p-checkbox-box {
-  width: 18px !important;
-  height: 18px !important;
+  width: 16px !important;
+  height: 16px !important;
   border: 1.5px solid var(--formfield-bordercolor) !important;
-  border-radius: 2px !important;
+  border-radius: 3px !important;
+}
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  font-size: 12px !important;
 }
 .p-checkbox .p-checkbox-box.p-highlight,
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
@@ -3294,7 +3299,6 @@ textarea.p-inputtextarea {
 } */
 .p-input-icon-right.gridsearch {
   float: unset;
-  margin-right: 10px;
 }
 .p-breadcrumb ul li .p-menuitem-link:focus {
   box-shadow: unset !important;
@@ -3402,6 +3406,9 @@ textarea.p-inputtextarea {
   animation-name: fadeIn;
   animation-duration: 0.4s;
 }
+.onb-usroverlay .splitter-headers {
+  top: 18px !important;
+}
 .splitoverlaydiv .p-tabview.p-component,
 .commentBox .p-tabview.p-component {
   height: 100%;
@@ -3411,9 +3418,10 @@ textarea.p-inputtextarea {
 }
 .splitoverlaycontent .p-dropdown {
   width: 200px;
+  height: 36px !important;
 }
 .splitoverlaycontent input.p-inputtext {
-  height: auto;
+  height: 36px !important;
 }
 .splitoverlaydiv h4,
 .commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
@@ -3478,7 +3486,9 @@ textarea.p-inputtextarea {
 .create-header {
   /* padding: 10px 0px 15px !important; */
   border-bottom: 1px solid #e5e5e5;
-  padding: 15px 20px;
+  /* padding: 15px 20px; */
+  padding: 15px 0px;
+  margin: 0px 20px;
 }
 .create-header h3 {
   font-size: 16px;
@@ -3487,7 +3497,7 @@ textarea.p-inputtextarea {
 .createform-overlay {
   height: calc(100% - 115px);
   overflow: auto;
-  margin: 15px 0px 5px;
+  /* margin: 15px 0px 5px; */
   padding: 15px 20px 0px;
 }
 .createform-overlay label {

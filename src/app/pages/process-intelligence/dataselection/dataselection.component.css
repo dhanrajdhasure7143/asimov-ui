@@ -187,6 +187,7 @@
 }
 .PI.table th select {
     margin-bottom: 10px !important;
+    height: 36px !important;
 }
 
 

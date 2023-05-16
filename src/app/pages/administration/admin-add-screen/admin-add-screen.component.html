@@ -159,7 +159,7 @@
           </div> -->
         </form>
         <div class="row justify-content-end">
-          <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Back</button>
+          <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Cancel</button>
           <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
           <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">Update</button>
         </div>

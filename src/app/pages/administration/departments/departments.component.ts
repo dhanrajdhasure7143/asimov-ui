@@ -79,7 +79,7 @@ export class DepartmentsComponent implements OnInit {
         return item
       })
       this.departments_list = this.departments.data 
-      let categories_list
+      let categories_list = [];
       this.departments_list.forEach(element => {
         categories_list.push(element.categoryName)
       });
@@ -89,8 +89,8 @@ export class DepartmentsComponent implements OnInit {
         }
       })
       this.loader.hide(); 
-      let selected_department=localStorage.getItem("department_search");
-      this.department=selected_department?selected_department:'alldepartments';
+      let selected_department = localStorage.getItem("department_search");
+      this.department = selected_department?selected_department:'alldepartments';
     })
    }
 
@@ -165,8 +165,8 @@ export class DepartmentsComponent implements OnInit {
             this.users_list.push(e);
           }
         })
-        this.getAllDepartments();
         this.loader.hide();
+        this.getAllDepartments();
       }
       })
         // this.users_list = res;

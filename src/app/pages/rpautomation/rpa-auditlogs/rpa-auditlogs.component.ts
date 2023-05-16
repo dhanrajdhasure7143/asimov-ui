@@ -9,10 +9,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import moment from 'moment';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { columnList } from 'src/app/shared/model/table_columns';
 @Component({
   selector: 'app-rpa-auditlogs',
   templateUrl: './rpa-auditlogs.component.html',
-  styleUrls: ['./rpa-auditlogs.component.css']
+  styleUrls: ['./rpa-auditlogs.component.css'],
+  providers:[columnList]
 })
 export class RpaAuditlogsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -23,17 +25,14 @@ export class RpaAuditlogsComponent implements OnInit {
   @ViewChild("paginator") paginator: MatPaginator;
   columns_list: any = [];
   logsData: any =[];
-  columnList=[
-    {field:"versionNew",DisplayName:"Version",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text"},
-    {field:"changedDate_new",DisplayName:"Timestamp",ShowFilter: true,width:"",filterType:"date"},
-    {field:"changeActivity",DisplayName:"Actions",ShowFilter: false,width:"",filterType:"text"},
-    {field:"changedBy",DisplayName:"Changed By",ShowFilter: true,width:"",filterType:"text"},
-    {field:"comments",DisplayName:"Comments",ShowFilter: true,width:"",filterType:"text"},
-  ];
+  table_searchFields:any=['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']
+
   constructor(private activatedRoute: ActivatedRoute, 
     private router: Router, 
     private rest: RestApiService, 
-    private spinner: LoaderService) { }
+    private spinner: LoaderService,
+    private columnList : columnList
+    ) { }
   
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
@@ -46,6 +45,7 @@ export class RpaAuditlogsComponent implements OnInit {
       }
     })
     this.spinner.show();
+    this.columns_list = this.columnList.auditLogs_column
   }
 
   getEnvironments(categoryId: number) { //to get environments
