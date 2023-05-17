@@ -3903,13 +3903,11 @@ background-color: #D8E0EF !important;
   float: right;}
 .imageBox {
   position: relative;
-  float: left;
+  /* float: left; */
 }
 
-.imageBox .hover-icon {
-  position: absolute;
-  left: 0;
-  top: 0;
+.imageBox .hover-icon,
+.imageBox:hover .active-icon  {
   display: none;
 }
 

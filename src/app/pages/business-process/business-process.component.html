@@ -26,20 +26,20 @@
                 <span *ngIf="!isShowConformance">
                   <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                   <span class="module-back-button" *ngIf="!isfromApprover && !vcm_id" (click)='backtoNavigate()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                   <span class="module-back-button" *ngIf="vcm_id" (click)='backtoVcm()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                 </span>
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'>
                   <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                  <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                 </span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{lastModified_user}}</span>
