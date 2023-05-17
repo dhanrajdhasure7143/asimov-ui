@@ -167,7 +167,6 @@ export class UsersComponent implements OnInit {
   }
 
   modifyUser(data) {
-    console.log(data)
     let department = [];
     var roles1: any = [];
     this.department = [];
@@ -274,7 +273,6 @@ export class UsersComponent implements OnInit {
 
   onchangeRole(event) {
     let value = event.value
-    console.log(value)
 
     if (value == "8") {
       this.departments = [];

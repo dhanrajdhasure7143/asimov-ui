@@ -760,7 +760,6 @@ importBot()
     payload.tasks.forEach((item:any, index:number)=>{
       if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
       {
-        console.log(item);
         payload.tasks.splice(index, 1);
       }
     })
