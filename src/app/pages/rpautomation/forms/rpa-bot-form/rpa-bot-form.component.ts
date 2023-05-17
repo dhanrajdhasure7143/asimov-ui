@@ -28,7 +28,6 @@ export class RpaBotFormComponent implements OnInit {
 
   botForm:FormGroup;
   botNameCheck:any;
-  selectedCategory: any = '';
   checkBotCategory:boolean=false;
   constructor( 
     private formBuilder:FormBuilder,

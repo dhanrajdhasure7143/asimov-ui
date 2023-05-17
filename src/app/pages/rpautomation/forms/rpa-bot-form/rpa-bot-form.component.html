@@ -10,7 +10,10 @@
                 <!-- container m-contanier form-body -->
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
-                    <select  class="form-control" [disabled]="categoriesList.length==1" formControlName="department" (change)="$event.target.value!=''?checkBotCategory=false:checkBotCategory=true;" name="botDepartment" [(ngModel)]="selectedCategory">
+                    <select  class="form-control" [disabled]="categoriesList.length==1" formControlName="department" (change)="$event.target.value!=''?checkBotCategory=false:checkBotCategory=true;" name="botDepartment">
+                        <option value="null" hidden disabled>Select Category</option>
+                        <option [value]="" hidden disabled>Select Category</option>
+                        <option [value]="null" hidden disabled>Select Category</option>
                         <option value="" hidden disabled>Select Category</option>
                         <option *ngFor="let category of categoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                     </select>
