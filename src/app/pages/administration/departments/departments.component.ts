@@ -2,15 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { UserPipePipe } from './../pipes/user-pipe.pipe';
-// import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { columnList } from 'src/app/shared/model/table_columns';
 
