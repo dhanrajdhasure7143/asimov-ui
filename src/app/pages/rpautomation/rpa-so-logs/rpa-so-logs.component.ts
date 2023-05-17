@@ -59,6 +59,7 @@ export class RpaSoLogsComponent implements OnInit {
     Stopped: 'red',
     Running:"Orange"
   };
+  errormsg: any;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
