@@ -118,7 +118,7 @@
                                     <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
                                         <span *ngIf="col.ColumnName =='description'">{{rowData[col.ColumnName]?fitTableView(rowData['description']):'-'}}</span>
                                         <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'&& col.ColumnName !='description' && col.ColumnName != 'last_modified_date'">
-                                            <span *ngIf='col.ColumnName =="createdBy"' class="prjlastupdateprofile">
+                                            <span *ngIf='col.ColumnName =="createdBy"'>
                                                 <span class="prjlastupdateprofile">{{rowData['createdBy']|userLetters:users_list|uppercase}}</span>
                                             </span>
                                             {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-'}}
@@ -345,11 +345,11 @@
 
 
         <!--Edit Bot UI Bot-->
-        <div *ngIf="EdithiddenPopUp" > 
+        <!-- <div *ngIf="EdithiddenPopUp" > 
             <app-split-overlay (closeOverlay)="closeOverlay1($event)"  >
             <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
             </app-split-overlay>
-          </div>
+          </div> -->
 
         <!-- <div id="edit-bot" class="modal rpa-modal">
             <div class="rpa-modal-content">
