@@ -38,6 +38,7 @@ export class DynamicDashboardComponent implements OnInit {
   // Failure  #DB3B21
   // Stopped  #FF0131
   // Killed  #AD2626
+  interval:any;
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -65,6 +66,7 @@ export class DynamicDashboardComponent implements OnInit {
     } else {
          this.getListOfDashBoards();
     }
+    this.getInterval()
   }
 
   openConfiguration(widget: any) {
@@ -612,6 +614,19 @@ export class DynamicDashboardComponent implements OnInit {
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
         {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
       ];
+    }
+  }
+
+  getInterval(){
+    this.interval=setInterval(()=>{
+        this.getListOfDashBoards();
+        this.getDashBoardData(this._paramsData.dashboardId);
+      },45000)
+    }
+
+  ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
     }
   }
 }
