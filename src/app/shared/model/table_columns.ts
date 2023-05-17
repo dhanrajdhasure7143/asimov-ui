@@ -10,13 +10,13 @@ export class columnList{
         ];
 
     public projectList_columns = [
-        {ColumnName: "type",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList: ["Project", "Program"]},
+        // {ColumnName: "type",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList: ["Project", "Program"]},
         {ColumnName: "projectName",DisplayName: "Project Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["projectName", "priority"],showTooltip:true},
         {ColumnName: "process_name",DisplayName: "Process",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
         {ColumnName: "department",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList: ""},
         {ColumnName: "createdDate",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false},
-        {ColumnName: "lastModifiedBy",DisplayName: "Last Updated By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["lastModifiedBy", "updatedDate"],userProfile:true,userProfileKey:"lastModifiedByEmail"},
-        {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false,multi: false},
+        {ColumnName: "lastModifiedBy",DisplayName: "Last Updated By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["lastModifiedBy", "updatedDate"],userProfile:true,userProfileKey:"lastModifiedByEmail",datePipe:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false},
       ];
 
     public recentActivities_columns = [
@@ -26,12 +26,12 @@ export class columnList{
       ];
 
     public taskList_columns = [
-        {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["taskName", "priority"]},
         {ColumnName: "taskCategory",DisplayName: "Type",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:[]},
-        {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false, dropdownList:["High","Medium","Low"]},
-        {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        // {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false, dropdownList:["High","Medium","Low"]},
+        {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,userProfile:true,userProfileKey:"assignedTo"},
         {ColumnName: "endDate_converted",DisplayName: "Due Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-        { ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
+        { ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false}
       ];
     
       public users_columns = [
@@ -57,20 +57,20 @@ export class columnList{
         {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Active","Inactive"],width:"flex: 0 0 5rem"},
         {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Yes","No"],width:"flex: 0 0 8rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
 
     public databaseConnections_column = [
         {ColumnName: "connectiontName",DisplayName: "Connection Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
         {ColumnName: "categoryName",DisplayName: "Category",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":''},
-        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":''},
         {ColumnName: "databasename",DisplayName: "Database Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":''},
         {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
         // {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
         {ColumnName: "schemaName",DisplayName: "Schema",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":["Active","Inactive"]},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
@@ -85,12 +85,12 @@ export class columnList{
       ];
       // connection manager actions table
       public actionItemsList_column= [
-        {ColumnName: "name", DisplayName: "Action Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
-        {ColumnName: "type", DisplayName: "Authentication Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["OAUTH2","API_KEY","BASIC","OAUTH","NONE"]},
+        {ColumnName: "name", DisplayName: "Action Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
         {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["Authenticated","APIRequest"]},
+        {ColumnName: "authenticationType", DisplayName: "Authentication Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["OAUTH2","API_KEY","BASIC","OAUTH","NONE"]},
         {ColumnName: "endPoint", DisplayName: "URL/Root Domain", ShowFilter: true, ShowGrid: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
-        {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["GET","POST","PUT","DELETE"]},
-        {ColumnName: "actionLogo", DisplayName: "Action Logo", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: true, multi: false,},
+        {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["GET","POST","PUT","DELETE"],width:"flex: 0 0 8rem"},
+        {ColumnName: "actionLogo", DisplayName: "Action Logo", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: false, multi: false,width:"flex: 0 0 6rem"},
         {ColumnName: "action", DisplayName: "Actions", ShowGrid: true, ShowFilter: false, sort: false, multi: false,},
       ];
     
@@ -104,7 +104,7 @@ export class columnList{
         {ColumnName: "host",DisplayName: "Host",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "port",DisplayName: "Port",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
         {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":""},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"]},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
@@ -143,9 +143,41 @@ export class columnList{
 
       public department_column = [
         {ColumnName: "categoryName",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true},
-        {ColumnName: "created_user",DisplayName: "Owner",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
+        {ColumnName: "created_user",DisplayName: "Owner",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"created_user"},
         {ColumnName: "createdBy",DisplayName: "Created By",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true},
         {ColumnName: "createdAt",DisplayName: "Created At",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
         {ColumnName: "action",DisplayName: "Action",ShowGrid: true,ShowFilter: false,sort: false},
+      ];
+
+      public adminScreenlist_column=[
+        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text", sort: true,multi: false},
+        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false,multi: false},
+      ]
+
+      public adminAddScreen_column=[
+        {ColumnName: "ColumnName",DisplayName: "Column Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "DisplayName",DisplayName: "Display Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "data_type",DisplayName: "Data Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false,multi: false}
+      ]
+
+      public adminChangeTable_column=[
+        {ColumnName: "column_name",DisplayName: "Column Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "data_type",DisplayName: "Data Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+      ]
+
+      public saveTable_column = [
+        {ColumnName: "ColumnName",DisplayName: "Column Name",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "DisplayName",DisplayName: "Display Name",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
+      ];
+
+      public auditLogs_column = [
+        {ColumnName:"versionNew",DisplayName:"Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",width:"flex: 0 0 10rem",filterType:"text",sort: true},
+        // {ColumnName:"changedDate_new",DisplayName:"Timestamp",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"date",sort: true},
+        {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
+        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"]},
+        {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
       ];
 }

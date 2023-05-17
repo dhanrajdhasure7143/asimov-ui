@@ -897,7 +897,7 @@ if(index == 0) {
     {ColumnName: "fullName",DisplayName:"Users Onboarded"},
     { ColumnName: "user_role",DisplayName:"Role"},
     { ColumnName: "taskCount",DisplayName:"Tasks Assigned"},
-    { ColumnName: "action",DisplayName:"Actions"},
+    { ColumnName: "action",DisplayName:"Action"},
   ];
 }
 
