@@ -117,7 +117,7 @@
             <div
               *ngIf="tenantNameCheck && generatedForm.get('tenant_name').value && !generatedForm.get('tenant_name').hasError('pattern')"
               class="required">
-              Tenant Name is already exists*
+              Tenant Name already exists*
             </div>
             <span *ngIf="!tenantNameCheck && generatedForm.get('tenant_name').hasError('pattern')"
               class="errspan required"> Only spaces are allowed between words* </span>

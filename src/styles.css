@@ -1179,6 +1179,8 @@ img.testplus1 {
   font-weight: normal;
   font-size: 12px;
 }
+.errspan{text-transform: lowercase;}
+.errspan::first-letter{text-transform: uppercase;}
 
 .maindivfoprm option {
   background-color: #fff !important;
@@ -1247,14 +1249,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .modelprbody {
   padding: 10px !important;
 } */
-
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
 .required,
 .star {
   color: var(--high-importance);
   font-size: 12px !important;
   line-height: 17px;
   letter-spacing: 0.2px;
+ 
 }
+
 
 .modal-header.modelprhead {
   padding: 15px 25px 10px 25px !important;

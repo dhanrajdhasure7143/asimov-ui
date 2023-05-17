@@ -50,8 +50,8 @@
                                         [(ngModel)]="departments" [disabled]="isdprtDisabled">
                                     </ng-select>
                                     <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
-                                                        class='required'>Departments is required </span>
-                                                        <span *ngIf="errShow" class='required'> Departments is required </span>
+                                                        class='required'>Departments required </span>
+                                                        <span *ngIf="errShow" class='required'> Departments required </span>
                                 </div>
         
                             </div>
@@ -84,7 +84,7 @@
                                   pattern="^\S*[@]\S*[.]\S*$" email placeholder="Enter Emails Separated By Comma(,)" required/>
       
                       <span *ngIf="((mail_id.invalid && inviteUser_form.submitted) || (mail_id.errors && mail_id.touched) )"> 
-                          <span class='required' *ngIf="mail_id.errors.required">Email is Required</span>
+                          <span class='required' *ngIf="mail_id.errors.required">Email Required</span>
                           <span class='required' *ngIf="mail_id.errors.pattern">Enter a valid Email address</span>
                       </span>
                   </div>
@@ -100,7 +100,7 @@
                           <option value="undefined" disabled hidden>Select Role</option>
                           <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
                       </select>
-                      <span *ngIf="((user_role.invalid && inviteUser_form.submitted) || (user_role.errors && user_role.touched) )" class='required'> Role is Required </span>
+                      <span *ngIf="((user_role.invalid && inviteUser_form.submitted) || (user_role.errors && user_role.touched) )" class='required'> Role Required </span>
                   </div>
                   <div class="form-group col-md-12 p-0 form-group">
                       <label class="label-control">Department(s)<span class="star">*</span></label>
@@ -108,7 +108,7 @@
                                   #depart="ngModel" [multiple]="true" placeholder="Select Departments"
                                   [(ngModel)]="departments" [disabled]="isdprtDisabled" required>
                       </ng-select>
-                      <span *ngIf="((depart.invalid && inviteUser_form.submitted) || (depart.errors && depart.touched) )" class='required'>Departments is Required </span>
+                      <span *ngIf="((depart.invalid && inviteUser_form.submitted) || (depart.errors && depart.touched) )" class='required'>Departments Required </span>
                   </div>
               </form>
               <div class="createform-footer">

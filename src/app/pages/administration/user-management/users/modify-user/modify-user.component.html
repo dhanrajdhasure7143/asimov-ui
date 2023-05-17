@@ -47,8 +47,8 @@
                                 [(ngModel)]="departments" [disabled]="isdprtDisabled">
                             </ng-select>
                             <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
-                                                class='required'>Departments is required </span>
-                                                <span *ngIf="errShow" class='required'> Departments is required </span>
+                                                class='required'>Departments required </span>
+                                                <span *ngIf="errShow" class='required'> Departments required </span>
                             <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="required">Departments Required*</span> -->
                         </div>
 
