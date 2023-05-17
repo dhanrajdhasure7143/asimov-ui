@@ -144,6 +144,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         grantType: this.connectorForm.value.grantType,
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
+        task_type:"AUTHENTICATION",
+        task_subtype:"OAUTH2"
         // "actionType": this.connectorForm.value.actionType,
       };
       if (this.connectorForm.value.grantType == "AuthorizationCode") {
@@ -174,7 +176,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"]=this.connectorForm.value.refreshToken
   }
-      req_body["configuration"] = JSON.stringify(object);
+      req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
         "id":"",
@@ -206,10 +208,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "httpHeaders": obj,
         "queryParams":params,
         "type":"API",
+        "task_type":"ACTION",
+        "task_subtype":"API",
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
     }
-    req_body["configuration"]=JSON.stringify(object);
+    req_body["configuration"]=btoa(JSON.stringify(object));
     }
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
@@ -809,6 +813,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         grantType: this.connectorForm.value.grantType,
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
+        task_type:"AUTHENTICATION",
+        task_subtype:"OAUTH2"
         // "actionType": this.connectorForm.value.actionType,
       };
       if (this.connectorForm.value.grantType == "AuthorizationCode") {
@@ -839,7 +845,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"]=this.connectorForm.value.refreshToken
       }
-      req_body["configuration"] = JSON.stringify(object);
+      req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
         id: this.action_id,
@@ -871,10 +877,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         httpHeaders: obj,
         queryParams: params,
         "type":"API",
+        "task_type":"ACTION",
+        "task_subtype":"API",
         // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       };
-      req_body["configuration"] = JSON.stringify(object);
+      req_body["configuration"] = btoa(JSON.stringify(object));
     }
     this.rest_api.updateAction(this.action_id, req_body).subscribe((res: any) => {
         this.spinner.hide();
