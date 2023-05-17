@@ -301,13 +301,13 @@ export class BpsHomeComponent implements OnInit {
   getColor(status) {
     switch (status) {
       case "PENDING APPROVAL":
-        return "#E58600";
+        return "#FED653";
       case "REJECTED":
-        return "red";
+        return "#B91C1C";
       case "APPROVED":
-        return "green";
+        return "#4BD963";
       case "In Progress":
-        return "#E58600";
+        return "#FFA033";
     }
   }
 
@@ -636,6 +636,32 @@ export class BpsHomeComponent implements OnInit {
         this.users_list = res;
       this.getBPMNList();
       }
+    });
+  }
+
+  openDiagramOndoubleClick(rowData) {
+    let binaryXMLContent = "";
+    // binaryXMLContent = rowData.bpmnXmlNotation;
+    let bpmnModelId = rowData.bpmnModelId;
+    let bpmnVersion = rowData.version;
+    let bpmnType = rowData.ntype;
+    // this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    let push_Obj = {
+      rejectedOrApproved: rowData.bpmnProcessStatus,
+      isfromApprover: false,
+      isShowConformance: false,
+      isStartProcessBtn: false,
+      autosaveTime: rowData.modifiedTimestamp,
+      isFromcreateScreen: false,
+      process_name: rowData.bpmnProcessName,
+      isEditbtn: false,
+      isSavebtn: true,
+      selectedNotation: rowData,
+    };
+    this.dt.bpsNotationaScreenValues(push_Obj);
+    this.dt.bpsHeaderValues("");
+    this.router.navigate(["/pages/businessProcess/uploadProcessModel"], {
+      queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, ntype: bpmnType },
     });
   }
 }

@@ -53,7 +53,7 @@
             [showApplyButton]="false" [showClearButton]="true">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)"
-                placeholder="Any"></p-dropdown>
+                placeholder="Select"></p-dropdown>
             </ng-template>
           </p-columnFilter>
           <p-sortIcon [field]="col.ColumnName"></p-sortIcon>
@@ -70,8 +70,8 @@
         <td *ngFor="let col of columns">
           <!-- <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}"
             *ngIf="col.ColumnName == 'bpmnProcessStatus'">{{rowData[col.ColumnName]}}</span> -->
-           <span  *ngIf="col.ColumnName == 'bpmnProcessStatus'">
-            <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}</span>
+           <span  *ngIf="col.ColumnName == 'bpmnProcessStatus'" class="d-flex align-items-center">
+            <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}</span>
           <span *ngIf="col.ColumnName != 'bpmnProcessStatus'">
             <span *ngIf="col.ColumnName =='userName'" class="prjlastupdateprofile">{{rowData['userName']|userLetters:users_list|uppercase}}</span>
             {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
@@ -105,10 +105,10 @@
                       {{fitTableViewDate(each_past_process.convertedModifiedTime*1000 |date:'MMM dd, y HH:mm')}}</td>
                     <td [pTooltip]=each_past_process.userName tooltipPosition="top">{{fitTableView(each_past_process.userName)}}</td>
                     <td>{{"V1."+each_past_process.version}}</td>
-                    <td>
-                      <span [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">O-</span>
+                    <td class="d-flex align-items-center">
+                      <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(each_past_process.bpmnProcessStatus)}"></span>
                       <div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status">
-                        <span pTooltip="PENDING APPROVAL" tooltipPosition="top">{{pendingStatus}}</span>
+                        <span pTooltip="Pending Approval" tooltipPosition="top">{{pendingStatus}}</span>
                         </div>
                           <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template>
                     </td>

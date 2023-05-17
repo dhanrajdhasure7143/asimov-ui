@@ -101,7 +101,7 @@
                     </select>            
                 </div>
             </div>
-            <div class="row">
+            <div class="row h-100">
                 <div class="col-md-12 h-100">
                  <div class="tooltip_button tooltip1" #toogleBtn>
                      <span class="PI-frpr-spin" (click)='spinnermetrics()'><img  src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1"></span>
@@ -207,7 +207,7 @@
                 <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
              </span>              -->
            </div>
-           <div class="">
+           <div class="createform-overlay">
              <div *ngIf="isFilterComponent">
                 <app-filter *ngIf="isFilterComponent" [isClearFilter]='isClearFilter' [isFilterApplied]='isFilterApplied' [dataValues]='dataValues' [isGraph_changed]="isGraph_changed" [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" [performanceFilterInput]="performanceFilterInput" (selectedNodes)="readselectedNodes1($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedFilterValues)="readSelectedFilterValues($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)" (appliedPerformanceFiterValues)="applyPerformanceFilterMethod($event)"></app-filter>
              </div>

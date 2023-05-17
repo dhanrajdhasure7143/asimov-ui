@@ -104,6 +104,17 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     {DisplayName:"Status",field:"status",ShowFilter: true},
     {DisplayName:"Actions",field:"Actions",ShowFilter: false},
   ];
+  statusColors = {
+    New: '#3CA4F3',
+    Running:"#C4B28E",
+    Failure: '#FE665D',Failed:"#FE665D",
+    Success: '#4BD963',Approved:"#4BD963",Executed:"#4BD963",
+    Killed:"#B91C1C",Rejected:"#B91C1C",
+    Stopped: '#FE665D',Stop:"#FE665D",     
+    InProgress:"#FFA033",
+    Pending:"#FED653",
+    Paused:"#FED653",Pause:"#FED653"
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -913,30 +924,30 @@ resetsla(){
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
-              if(statusdata.status=="InProgress" || statusdata.status=="Running")
-              {
-                data="<span pTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
-              }
-              else if(statusdata.status=="Success" || statusdata.status=="Approved")
-              {
-                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
-              }
-              else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
-              {
-                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
-              }
-              else if(statusdata.status=="New")
-              {
-                data="<span   pTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
-              }
-              else if(statusdata.status=="Pending")
-              {
-                data="<span  pTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
-              }
-              else if(statusdata.status=="")
-              {
-                data="---";
-              }
+              // if(statusdata.status=="InProgress" || statusdata.status=="Running")
+              // {
+              //   data="<span pTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
+              // }
+              // else if(statusdata.status=="Success" || statusdata.status=="Approved")
+              // {
+              //   data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
+              // }
+              // else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
+              // {
+              //   data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
+              // }
+              // else if(statusdata.status=="New")
+              // {
+              //   data="<span   pTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
+              // }
+              // else if(statusdata.status=="Pending")
+              // {
+              //   data="<span  pTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
+              // }
+              // else if(statusdata.status=="")
+              // {
+              //   data="-";
+              // }
               $("#"+statusdata.taskId+"__status").html(data);
 
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
@@ -1401,6 +1412,10 @@ resetsla(){
   closeOverlay(event){  //overlay close 
 
     this.schedulepopup=event;
+  }
+
+  getColor(status) {
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 
   
