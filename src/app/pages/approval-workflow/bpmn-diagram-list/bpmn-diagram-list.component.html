@@ -53,7 +53,7 @@
             [showApplyButton]="false" [showClearButton]="true">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <p-dropdown [ngModel]="value" [options]="col.dropdownList" (onChange)="filter($event.value)"
-                placeholder="Any"></p-dropdown>
+                placeholder="Select"></p-dropdown>
             </ng-template>
           </p-columnFilter>
           <p-sortIcon [field]="col.ColumnName"></p-sortIcon>

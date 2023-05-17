@@ -2857,13 +2857,22 @@ span.statusbadge_nc {
   }
 } */
 .bps-approvalgrid .p-datatable-wrapper {
-  height: calc(100vh - 195px); /* for bps-approval grid */
+  height: calc(100vh - 195px);   /* for bps-approval grid */
+}
+.graph_table.gridparentdiv .p-datatable-wrapper {
+  height: calc(100vh - 355px);   /* for pi-landing grid */
+} 
+.box-border.myworkspace-style .p-datatable-wrapper {
+  height: calc(100vh - 325px);   /* for bps-landing grid */
+}
+.rpa-workspacegrid .p-datatable-wrapper {
+  height: calc(100vh - 350px);   /* for rpa-landing grid */
 }
 .credential-tablegrid .p-datatable-wrapper {
-  height: calc(100vh - 275px); /* for view connection manager grid */
+  height: calc(100vh - 275px);   /* for view connection manager grid */
 }
 .actionitems-grid .p-datatable-wrapper {
-  height: calc(100vh - 180px); /* for action items - connection manager grid */
+  height: calc(100vh - 180px);   /* for action items - connection manager grid */
 }
 .actionitems-grid .p-datatable-wrapper td span {   /* for action items - connection manager grid */
   /* width: 165px;       
