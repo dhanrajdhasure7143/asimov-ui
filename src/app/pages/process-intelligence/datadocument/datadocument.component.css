@@ -4,7 +4,7 @@
     justify-content: end;
 }
 .PI-serwksp input {
-    height: 36px;
+    height: 36px !important;
 } 
 .err-mapping span {
     padding-right: 10px;
@@ -20,7 +20,7 @@
 
 
 .resur-value-data h5 {
-    color: #00a0e3;
+    color: #098de6;
     font-weight: 600;
     margin: 0px;
 }
@@ -52,6 +52,7 @@
 }
 .PI.table th select {
     margin-bottom: 10px !important;
+    height: 36px !important;
 }
 
 .modal-header.modelprhead, .modelprfooter {

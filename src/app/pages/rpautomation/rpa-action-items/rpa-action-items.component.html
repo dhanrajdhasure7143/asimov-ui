@@ -43,6 +43,7 @@
                         [show_clear_filter]="true"
                         [search_fields]="table_searchFields"
                         [selectionMode]="'single'"
+                        (onRowDoubleClick)="viewDetails($event)"
                         >
                        </app-dynamic-table>
                     </div>

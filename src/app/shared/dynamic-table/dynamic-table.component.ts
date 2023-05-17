@@ -62,7 +62,13 @@ export class DynamicTableComponent implements OnInit {
     Rejected:"red",
     Approved:"green",
     Pending:"orange",
-    Running:'#007bff'
+    Running:'#007bff',
+    Completed:"green",
+    Inprogress:"orange",
+    Failed:"red",
+    New:'green',
+    Started:'green',
+    Stopped:"red"
   };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
@@ -82,12 +88,10 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
 
     this._selectedColumns = this.columns_list;
-    console.log("columns",this.columns_list);
     
     if (this.table_data.length > 0) this.loading = false;
   }
@@ -146,7 +150,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   getapproved(rowData){
-    console.log(rowData)
     this.approvedItem.emit(rowData)
   }
 

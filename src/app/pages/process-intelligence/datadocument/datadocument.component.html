@@ -5,8 +5,10 @@
           <!-- <div class="resur-value-data d-flex">
           </div> -->
           <div class="err-mapping">
-            <span><img src="../../../../assets/images/PI/ErMap1.svg">Success Mapping</span>
-            <span><img src="../../../../assets/images/PI/ErMap2.svg">Error Mapping</span>
+            <span><img src="../../../../assets/images/PI/successmap.svg" alt="" >Success Mapping</span>
+            <span><img src="../../../../assets/images/PI/errormap.svg" alt="" >Error Mapping</span>
+            <!-- <span><img src="../../../../assets/images/PI/ErMap1.svg">Success Mapping</span>
+            <span><img src="../../../../assets/images/PI/ErMap2.svg">Error Mapping</span> -->
           </div>
         </div>
       </div>
@@ -208,6 +210,5 @@
     <span [innerHTML]="notificationData.message"></span>
   </div>
     <br>
-    <div *ngIf="errorsList.length > 3" (click)="viewMore()" class="vewmore-btn">View More..</div>
-    
+    <div *ngIf="errorsList.length > 3" (click)="viewMore()" class="vewmore-btn">View More..</div>   
 </ng-template>

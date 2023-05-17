@@ -407,3 +407,8 @@ ul#versions li:hover {
 .no-records{
   margin-top:20%;
 }
+
+
+.logs-container .main-content-body{
+  padding:0px !important;
+}

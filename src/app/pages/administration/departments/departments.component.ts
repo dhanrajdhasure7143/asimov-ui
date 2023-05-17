@@ -2,15 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { UserPipePipe } from './../pipes/user-pipe.pipe';
-// import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { columnList } from 'src/app/shared/model/table_columns';
 
@@ -40,8 +37,11 @@ export class DepartmentsComponent implements OnInit {
   createDepartmentForm:FormGroup;
   hiddenUpdatePopUp:boolean = false;
   departmentdata: any;
-  editDepartmentForm:FormGroup;
   departmentowner: any;
+  fullName: any;
+  userEmail: any;
+  categoryId: any;
+  isCreate:boolean=false;
 
   constructor(private rest_api: RestApiService,
     private loader: LoaderService,
@@ -62,16 +62,13 @@ export class DepartmentsComponent implements OnInit {
     this.createDepartmentForm=this.formBuilder.group({
       departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      })
-      this.editDepartmentForm=this.formBuilder.group({
-        departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      })
+      });
   }
 
   getAllDepartments(){
     this.rest_api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
+      this.selected_list=[]
       this.departments.data.map(item=>{
         item["createdAt"] = new Date(item.createdAt);
         const userPipe = new UserPipePipe();
@@ -79,7 +76,7 @@ export class DepartmentsComponent implements OnInit {
         return item
       })
       this.departments_list = this.departments.data 
-      let categories_list
+      let categories_list = [];
       this.departments_list.forEach(element => {
         categories_list.push(element.categoryName)
       });
@@ -89,8 +86,8 @@ export class DepartmentsComponent implements OnInit {
         }
       })
       this.loader.hide(); 
-      let selected_department=localStorage.getItem("department_search");
-      this.department=selected_department?selected_department:'alldepartments';
+      let selected_department = localStorage.getItem("department_search");
+      this.department = selected_department?selected_department:'alldepartments';
     })
    }
 
@@ -147,12 +144,13 @@ export class DepartmentsComponent implements OnInit {
   }
 
   editdepartment(element) {
-    // this.router.navigate(['/pages/admin/edit-department'], { queryParams: {id:element.categoryId } });
-    this.hiddenUpdatePopUp= true;
+    this.isCreate = false;
+    this.categoryId= element.categoryId
+    this.hiddenPopUp= true;
    let data =  this.departments_list.find(item=>item.categoryId == element.categoryId )
     this.departmentowner=data.owner
-      this.editDepartmentForm.get("departmentName").setValue(data.categoryName);
-      this.editDepartmentForm.get("owner").setValue(this.departmentowner);
+      this.createDepartmentForm.get("departmentName").setValue(data.categoryName);
+        this.createDepartmentForm.get("owner").setValue(element.owner);
   }
 
   getUsersList() {
@@ -160,13 +158,18 @@ export class DepartmentsComponent implements OnInit {
     this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         let users:any=res;
+        let firstName:any;
+        let lastName:any;
         users.forEach(e=>{
           if(e.user_role_status != "INACTIVE"){
             this.users_list.push(e);
+            firstName = e.userId.firstName 
+            lastName=e.userId.lastName 
+          this.fullName= firstName + lastName
           }
         })
-        this.getAllDepartments();
         this.loader.hide();
+        this.getAllDepartments();
       }
       })
         // this.users_list = res;
@@ -177,8 +180,10 @@ export class DepartmentsComponent implements OnInit {
     this.selected_list.length > 0 ? this.Departmentdeleteflag =true :this.Departmentdeleteflag =false;
   }
 
-  onCreate(){
+  openDepartmentOverlay(){
+    this.createDepartmentForm.reset()
     this.hiddenPopUp = true;
+    this.isCreate=true;
   }
 
   closeOverlay(event) {
@@ -207,6 +212,8 @@ export class DepartmentsComponent implements OnInit {
           heightAuto: false,
           confirmButtonText: 'Ok'
       })
+      this.hiddenPopUp = false;
+      this.createDepartmentForm.reset();
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
         Swal.fire("Error","Department already exists","error");
@@ -228,9 +235,9 @@ export class DepartmentsComponent implements OnInit {
 
   updateDepartment(){
     let body = {
-      "categoryId": this.departmentdata,
-      "categoryName": this.editDepartmentForm.get("departmentName").value,
-      "owner":this.editDepartmentForm.get("owner").value
+      "categoryId": this.categoryId,
+      "categoryName": this.createDepartmentForm.get("departmentName").value,
+      "owner":this.createDepartmentForm.get("owner").value
     }
     this.rest_api.updateDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully updated the category"){
@@ -244,23 +251,21 @@ export class DepartmentsComponent implements OnInit {
             confirmButton: 'btn bluebg-button',
             cancelButton:  'btn new-cancelbtn',
           },
-  
           heightAuto: false,
-         
           confirmButtonText: 'Ok'
       })
+      this.hiddenPopUp = false;
+      this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
         Swal.fire("Error","Department already exists","error");
-      }
-      else {
+      } else {
         Swal.fire("Error",resp.message,"error");
       }
     })
 }
 
-reseteditdepartment(){
-  this.editDepartmentForm.reset();
-  this.editDepartmentForm.get("departmentName").setValue("");
-  this.editDepartmentForm.get("owner").setValue("");
+onChangeDepeartment(event){
+this.userEmail = event.value.user_email
+
 }
 }

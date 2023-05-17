@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { DataTransferService } from '../../services/data-transfer.service';
 declare var $: any;
 
 @Component({
@@ -86,14 +87,14 @@ export class RpaHomeComponent implements OnInit {
   search_fields:any[]=[];
   categories_list_new:any[]=[];
   columns_list = [
-    { field: 'botName', header: 'Bot Name',filterType:"text",filterWidget:"normal",ShowFilter:true },
-    { field: 'createdBy', header: 'Created By',filterType:"text",filterWidget:"normal",ShowFilter:true },
-    { field: 'description', header: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true},
-    { field: 'categoryName', header: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true },
-    { field: 'version_new', header: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true },
-    // { field: 'last_modified_date', header: 'Last Modified',filterType:"date",filterWidget:"normal",ShowFilter:true },
-    { field: 'botStatus', header: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
-    { field: '', header: 'Actions' }
+    { ColumnName: 'botName', DisplayName: 'Bot Name',filterType:"text",filterWidget:"normal",ShowFilter:true,showTooltip:true},
+    { ColumnName: 'createdBy', DisplayName: 'Created By',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { ColumnName: 'description', DisplayName: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true,showTooltip:true},
+    { ColumnName: 'categoryName', DisplayName: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true },
+    { ColumnName: 'version_new', DisplayName: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true},
+    // { ColumnName: 'last_modified_date', DisplayName: 'Last Modified',filterType:"date",filterWidget:"normal",ShowFilter:true },
+    { ColumnName: 'botStatus', DisplayName: 'Status',filterType:"text",filterWidget:"normal",ShowFilter:true },
+    { ColumnName: '', DisplayName: 'Actions' }
   ];
   EdithiddenPopUp:boolean=false;
   importBotForm=new FormGroup({
@@ -106,12 +107,23 @@ export class RpaHomeComponent implements OnInit {
   finaldataobjects:any=[];
   checkorderflag:boolean=true;
   stopNodeId:any;
+  users_list:any[]=[];
+  statusColors = {
+    New: 'orange',
+    Failure: 'red',
+    Success: 'green',
+    Killed:"green",
+    Stopped: 'red',
+    Running:"Orange"
+  };
+
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
     private router: Router,
     private spinner: LoaderService,
-    @Inject(APP_CONFIG) private appconfig
+    @Inject(APP_CONFIG) private appconfig,
+    private dt : DataTransferService
   ) { }
 
   @Input() get selectedColumns(): any[] {
@@ -179,9 +191,12 @@ export class RpaHomeComponent implements OnInit {
       botStatus: true,
       description: true,
     }
+    this.spinner.show();
     this.getCategoryList();
     this.getenvironments();
-    this.getallbots();
+    // this.getallbots();
+    this.getUsersList();
+    this._selectedColumns = this.columns_list;
     this.freetrail = localStorage.getItem('freetrail')
   }
 
@@ -239,7 +254,6 @@ export class RpaHomeComponent implements OnInit {
     }, (err) => {
       this.spinner.hide();
     })
-    this._selectedColumns = this.columns_list;
     this.search_fields =['botName',"description","categoryName","version_new","last_modified_date","botStatus","createdBy"]
   }
 
@@ -637,7 +651,8 @@ importBot()
       this.finaldataobjects=[...this.importBotJson.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
-      this.arrange_task_order(start);
+      if(this.finaldataobjects.executionMode=="v1") this.arrange_task_order(start);
+      else this.final_tasks=[...this.finaldataobjects];
       this.importBotJson["botId"]=response.botId;
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
       this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
@@ -746,11 +761,23 @@ importBot()
     payload.tasks.forEach((item:any, index:number)=>{
       if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
       {
-        console.log(item);
         payload.tasks.splice(index, 1);
       }
     })
     return payload;
+  }
+
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+      this.getallbots();
+      }
+    });
+  }
+
+  getColor(status) {
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 }
 
