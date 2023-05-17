@@ -144,6 +144,10 @@ body .leftfporm select {
   border: 1px solid #979797 !important;
   border-radius: 3px !important;
   width: 100% !important;
+  height: 36px !important;
+}
+td select.form-control {
+  height: 36px !important;
 }
 .leftfporm {
   display: flex !important;
@@ -242,16 +246,15 @@ body .leftfporm select {
 }
 
 /* Grid heights */
-.inbox-tablegrid .p-datatable-wrapper {
-  height: calc(100vh - 262px); 
+.inbox-tablegrid .p-datatable-wrapper ,
+.botmanagement-tablelist .p-datatable-wrapper {
+  height: calc(100vh - 265px);
 }
 .schedule-table-container .p-datatable-wrapper {
   height: calc(100vh - 317px) !important;
 }
-.botmanagement-tablelist .p-datatable-wrapper {
-  /* height: calc(100vh - 316px); */
-}
+
 .orchestration-table-container .p-datatable-wrapper {
-  height: calc(100vh - 305px);
+  height: calc(100vh - 300px);
 }
 /* Grid heights */
