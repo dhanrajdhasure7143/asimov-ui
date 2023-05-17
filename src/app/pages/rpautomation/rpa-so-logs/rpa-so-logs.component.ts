@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { log } from 'console';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -14,16 +15,6 @@ import Swal from 'sweetalert2';
 })
 export class RpaSoLogsComponent implements OnInit {
   @Input('logsmodalref') public logsmodal: BsModalRef;
-  runsListDataSource:MatTableDataSource<any>;
-  @ViewChild("sortRunsTable") sortRunsTable:MatSort;
-  @ViewChild("sortLogsTable") sortLogsTable:MatSort;
-  @ViewChild("sortLoopLogsTable") sortLoopLogsTable:MatSort;
-  @ViewChild("sortAutomationLogsTable") sortAutomationLogsTable:MatSort;
- // @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
-  RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
-  LogsTableColumns: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
-  loopLogsTableColoumns:string[]=['taskName','iterationId','status','startDate','endDate',"errorMsg"];
-  automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   public selectedIterationTask:any=undefined;
   public logsLoading:boolean=false;
@@ -48,8 +39,8 @@ export class RpaSoLogsComponent implements OnInit {
   public allRuns:any=[];
   public loopIterations:any=[];
   public id:any
-  public logsListDataSource:MatTableDataSource<any>;
-  public loopLogsListDataSource:MatTableDataSource<any>;
+  // public logsListDataSource:MatTableDataSource<any>;
+  // public loopLogsListDataSource:MatTableDataSource<any>;
   public automationLogs:any=[];
   public automationLogsTable:MatTableDataSource<any>;
   public interval: any = 0;
@@ -59,8 +50,10 @@ export class RpaSoLogsComponent implements OnInit {
   public logStatus:any;
   public logsDisplayFlag:any;
   isDataEmpty:boolean=false;
+  selectedChildLog:any;
   logsData:any=[];
-  columnList=[]
+  columnList=[];
+  traversalLogs=[];
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -173,19 +166,21 @@ export class RpaSoLogsComponent implements OnInit {
    }
 
 
-   getChildLogs(task_details)
+   getChildLogs(task_details, logId, traversalType:any)
    {
 
-    // this.botrunid=runid;
-    // this.selectedLogVersion=version 
     this.logsLoading=true;
-    this.logsDisplayFlag='LOGS'
     let flag=0;
-    this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, task_details.log_id).subscribe((response:any)=>{ 
-     
+    this.selectedChildLog=task_details;
+    console.log(task_details);
+    if(traversalType=="FARWORD")
+      this.traversalLogs.push(task_details);
+    this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, logId).subscribe((response:any)=>{ 
+    
       if(response.errorMessage==undefined)
       { 
-        
+      
+      this.logsDisplayFlag="CHILD-LOGS";  
        this.isDataEmpty=false;
        this.columnList=[
         {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
@@ -224,6 +219,20 @@ export class RpaSoLogsComponent implements OnInit {
        this.isDataEmpty=true;
        Swal.fire("Error","unable to get logs","error")       
     })
+   }
+
+
+
+   logsBackTraversal()
+   {
+      let logData:any=(this.traversalLogs.pop());
+      this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
+      console.log(this.traversalLogs);
+      console.log(logData);
+      if(logData.parent_log_id!=null)
+        this.getChildLogs(logData, logData.parent_log_id, "BACKWARD");
+      else
+        this.ViewlogByrunid(logData.run_id, logData.version);
    }
 
   // sortasc(event){
@@ -323,21 +332,26 @@ export class RpaSoLogsComponent implements OnInit {
       this.isDataEmpty=false;
       if(response.errorMessage==undefined)
       {
-        response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
+        this.logsDisplayFlag="LOOP-LOGS";
+        this.columnList=[
+          {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+          {field:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
+          {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+          {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+          {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+          {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+        ];
+        this.logsData=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
+          item["task_name"]=item.taskName;
+          item["iteration_id"]=item.iterationId;
+          item["error_info"]=item.errorMsg
           item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, HH:mm:ss")):item.startTS;
           item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, HH:mm:ss")):item.endTS;
+          item["bot_status"]=item.status;
+          item["child_logs_count"]=0;
           return item;
         });
         this.selectedIterationTask=e;
-        if(response.length==0){
-          this.isDataEmpty=true;
-        }
-        else{
-          this.loopLogsListDataSource = new MatTableDataSource(response);
-          setTimeout(()=>{
-            this.loopLogsListDataSource.sort=this.sortLoopLogsTable;
-          },100)
-        }
       }
       else
       {
