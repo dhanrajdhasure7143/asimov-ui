@@ -3405,7 +3405,7 @@ textarea.p-inputtextarea {
 .p-inplace.p-component .task-descwords {
   overflow-wrap: break-word;
 }
-.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(3) {
+.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(2) {
   white-space: inherit !important;
 }
 /* headercss end*/
