@@ -1,11 +1,11 @@
-select {
+/* select {
     border-top: none;
     border-right: none;
     border-left: none;
     box-shadow: none !important;
     border-radius: 0px !important;
     border-bottom-color: grey !important;
-}
+} */
 
 .process-button:disabled {
     background: transparent !important;

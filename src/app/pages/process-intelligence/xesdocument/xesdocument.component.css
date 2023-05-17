@@ -1,5 +1,5 @@
 .PI-serwksp input {
-    height: 36px;
+    height: 36px !important;
 }
 .PI-srh-graph {
     display: flex;
