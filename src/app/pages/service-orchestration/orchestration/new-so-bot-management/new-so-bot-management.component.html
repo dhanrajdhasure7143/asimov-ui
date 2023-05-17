@@ -180,7 +180,7 @@
                 <ng-template pTemplate="header">
                   <tr>
                     <th *ngFor="let each of columnList" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
-                      <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
+                      <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'&&each.ColumnName != 'botStatus'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
                                 display="menu" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
@@ -191,7 +191,14 @@
                       [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                           <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                               <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
-                                  optionLabel="categoryName" optionValue="categoryName" placeholder="All">
+                                  optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                              </p-dropdown>
+                          </ng-template>
+                      </p-columnFilter>
+                      <p-columnFilter  *ngIf="each.ShowFilter && each.ColumnName == 'botStatus'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown [ngModel]="value" [options]='statusList' (onChange)="filter($event.value)" placeholder="Select">
                               </p-dropdown>
                           </ng-template>
                       </p-columnFilter>

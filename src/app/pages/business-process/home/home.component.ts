@@ -638,4 +638,30 @@ export class BpsHomeComponent implements OnInit {
       }
     });
   }
+
+  openDiagramOndoubleClick(rowData) {
+    let binaryXMLContent = "";
+    // binaryXMLContent = rowData.bpmnXmlNotation;
+    let bpmnModelId = rowData.bpmnModelId;
+    let bpmnVersion = rowData.version;
+    let bpmnType = rowData.ntype;
+    // this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    let push_Obj = {
+      rejectedOrApproved: rowData.bpmnProcessStatus,
+      isfromApprover: false,
+      isShowConformance: false,
+      isStartProcessBtn: false,
+      autosaveTime: rowData.modifiedTimestamp,
+      isFromcreateScreen: false,
+      process_name: rowData.bpmnProcessName,
+      isEditbtn: false,
+      isSavebtn: true,
+      selectedNotation: rowData,
+    };
+    this.dt.bpsNotationaScreenValues(push_Obj);
+    this.dt.bpsHeaderValues("");
+    this.router.navigate(["/pages/businessProcess/uploadProcessModel"], {
+      queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, ntype: bpmnType },
+    });
+  }
 }

@@ -115,7 +115,7 @@
                     <ng-template pTemplate="header">
                             <tr>
                                 <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
-                                    <p-columnFilter *ngIf="each.ShowFilter && each.field != 'category'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
+                                    <p-columnFilter *ngIf="each.ShowFilter && each.field != 'category'&& each.field != 'taskType'&& each.field != 'status'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
                                               display="menu" [showApplyButton]="false">
                                           <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                               <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
@@ -127,6 +127,20 @@
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
                                                 optionLabel="categoryName" optionValue="categoryName" placeholder="All">
+                                            </p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    <p-columnFilter  *ngIf="each.ShowFilter && each.field == 'taskType'" [field]="each.field" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown [ngModel]="value" [options]="['Automated','Human']" (onChange)="filter($event.value)" placeholder="All">
+                                            </p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    <p-columnFilter  *ngIf="each.ShowFilter && each.field == 'status'" [field]="each.field" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown [ngModel]="value" [options]="['New','Running','Success','Pending','Failure','Approved']" (onChange)="filter($event.value)" placeholder="All">
                                             </p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
@@ -248,7 +262,9 @@
                                 <td>
                                     <span [pTooltip]="element.status" tooltipPosition="top">
                                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-                                            <span *ngIf="element.status=='Pending'" class="text-warning">
+                                        <span [ngStyle]="{'color':getColor(element.status)}">O-</span> {{element.status}}
+
+                                            <!-- <span *ngIf="element.status=='Pending'" class="text-warning">
                                                 <i class="fa fa-clock"></i>
                                             </span>
                     
@@ -287,7 +303,7 @@
                                                 <span>
                                                     <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="" />
                                                 </span>--
-                                            </span>
+                                            </span> -->
                                         </span>
                     
                                         <span *ngIf="element.status=='null'">-</span>

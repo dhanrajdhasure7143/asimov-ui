@@ -87,7 +87,7 @@
                                         [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="col.dropdownList"
-                                                (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+                                                (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
                                     <p-sortIcon [field]="col.ColumnName" *ngIf="col.ShowFilter"></p-sortIcon>
@@ -102,7 +102,7 @@
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
-                                <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
+                                <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width" (dblclick)="openDiagramOndoubleClick(rowData)">
                                     <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'">
                                         <span *ngIf='col.ColumnName =="processOwnerName"' class="prjlastupdateprofile">
                                             {{rowData['processOwner']|userLetters:users_list|uppercase}}

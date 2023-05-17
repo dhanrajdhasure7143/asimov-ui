@@ -104,6 +104,16 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     {DisplayName:"Status",field:"status",ShowFilter: true},
     {DisplayName:"Actions",field:"Actions",ShowFilter: false},
   ];
+  statusColors = {
+    New: 'orange',
+    Failure: 'red',
+    Success: 'green',
+    Killed:"green",
+    Stopped: 'red',
+    Running:"blue",Pending:"red",
+    Approved:"green",Rejected:"red",Executed:"green",InProgress:"orange",Failed:"red",Stop:"red",Paused:"orange",Pause:"orange"
+
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -913,30 +923,30 @@ resetsla(){
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
-              if(statusdata.status=="InProgress" || statusdata.status=="Running")
-              {
-                data="<span pTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
-              }
-              else if(statusdata.status=="Success" || statusdata.status=="Approved")
-              {
-                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
-              }
-              else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
-              {
-                data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
-              }
-              else if(statusdata.status=="New")
-              {
-                data="<span   pTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
-              }
-              else if(statusdata.status=="Pending")
-              {
-                data="<span  pTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
-              }
-              else if(statusdata.status=="")
-              {
-                data="---";
-              }
+              // if(statusdata.status=="InProgress" || statusdata.status=="Running")
+              // {
+              //   data="<span pTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
+              // }
+              // else if(statusdata.status=="Success" || statusdata.status=="Approved")
+              // {
+              //   data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
+              // }
+              // else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
+              // {
+              //   data='<span  pTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
+              // }
+              // else if(statusdata.status=="New")
+              // {
+              //   data="<span   pTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
+              // }
+              // else if(statusdata.status=="Pending")
+              // {
+              //   data="<span  pTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
+              // }
+              // else if(statusdata.status=="")
+              // {
+              //   data="-";
+              // }
               $("#"+statusdata.taskId+"__status").html(data);
 
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
@@ -1401,6 +1411,10 @@ resetsla(){
   closeOverlay(event){  //overlay close 
 
     this.schedulepopup=event;
+  }
+
+  getColor(status) {
+    return this.statusColors[status]?this.statusColors[status]:'';
   }
 
   
