@@ -294,6 +294,10 @@ export class RestApiService{
     }
 
 
+    getChildLogs(botid,botverid,runid,logId){
+      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid+"?parentLogId="+logId);
+    }
+
 
   updateBotLog(botid,version, runid)
   {
