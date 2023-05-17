@@ -113,8 +113,8 @@ export class RpaHomeComponent implements OnInit {
     Failure: '#FE665D',
     Success: '#4BD963',
     Killed:"#B91C1C",
-    Stopped: 'red',
-    Running:"#E851FF"
+    Stopped: '#FE665D',
+    Running:"#C4B28E"
   };
 
   constructor(

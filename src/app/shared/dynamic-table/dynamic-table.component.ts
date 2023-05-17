@@ -62,12 +62,12 @@ export class DynamicTableComponent implements OnInit {
     Rejected:"#B91C1C",
     Approved:"#4BD963",
     Pending:"#FED653",
-    Running:'#E851FF',
+    Running:'#C4B28E',
     Completed:"#4BD963",
     Inprogress:"#FFA033",
     Failed:"#FE665D",
     New:'#3CA4F3',
-    Started:'green',
+    Started:'#4BD963',
     Stopped:"#FE665D"
   };
 

@@ -106,14 +106,14 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   ];
   statusColors = {
     New: '#3CA4F3',
-    Running:"#E851FF",
+    Running:"#C4B28E",
     Failure: '#FE665D',Failed:"#FE665D",
     Success: '#4BD963',Approved:"#4BD963",Executed:"#4BD963",
     Killed:"#B91C1C",Rejected:"#B91C1C",
-    Stopped: 'red',Stop:"red",     
+    Stopped: '#FE665D',Stop:"#FE665D",     
     InProgress:"#FFA033",
     Pending:"#FED653",
-    Paused:"orange",Pause:"orange"
+    Paused:"#FED653",Pause:"#FED653"
   };
 
   constructor(

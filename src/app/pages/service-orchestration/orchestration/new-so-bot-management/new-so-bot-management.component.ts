@@ -123,8 +123,8 @@ public slaupdate : boolean = false;
       Failure: '#FE665D',
       Success: '#4BD963',
       Killed:"#B91C1C",
-      Stopped: 'red',
-      Running:"#E851FF"
+      Stopped: '#FE665D',
+      Running:"#C4B28E"
     };
     statusList=["Success","Running","New","Failure","Killed","Stopped"]
 
