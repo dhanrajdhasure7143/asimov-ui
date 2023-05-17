@@ -70,7 +70,7 @@
         <td *ngFor="let col of columns">
           <!-- <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}"
             *ngIf="col.ColumnName == 'bpmnProcessStatus'">{{rowData[col.ColumnName]}}</span> -->
-           <span  *ngIf="col.ColumnName == 'bpmnProcessStatus'">
+           <span  *ngIf="col.ColumnName == 'bpmnProcessStatus'" class="d-flex align-items-center">
             <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}</span>
           <span *ngIf="col.ColumnName != 'bpmnProcessStatus'">
             <span *ngIf="col.ColumnName =='userName'" class="prjlastupdateprofile">{{rowData['userName']|userLetters:users_list|uppercase}}</span>
@@ -105,7 +105,7 @@
                       {{fitTableViewDate(each_past_process.convertedModifiedTime*1000 |date:'MMM dd, y HH:mm')}}</td>
                     <td [pTooltip]=each_past_process.userName tooltipPosition="top">{{fitTableView(each_past_process.userName)}}</td>
                     <td>{{"V1."+each_past_process.version}}</td>
-                    <td>
+                    <td class="d-flex align-items-center">
                       <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(each_past_process.bpmnProcessStatus)}"></span>
                       <div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status">
                         <span pTooltip="Pending Approval" tooltipPosition="top">{{pendingStatus}}</span>

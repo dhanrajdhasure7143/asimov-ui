@@ -125,7 +125,7 @@
                                             {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-'}}
                                         </span>
                                         <span *ngIf="col.ColumnName == 'last_modified_date'">{{rowData[col.ColumnName]| date:'MMM dd, y HH:mm'}}</span>
-                                        <span *ngIf="col.DisplayName == 'Status'">
+                                        <span *ngIf="col.DisplayName == 'Status'" class="d-flex align-items-center">
                                         <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}
 
                                             <!-- <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">

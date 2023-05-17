@@ -12,6 +12,7 @@
 #Orchestration-tabs .mat-tab-labels {
     height: 100%;
     align-items: center;
+    margin: 0px 15px;
 }
 #Orchestration-tabs .so-subtab-header mat-tab-header.mat-tab-header {
     border-top: 0px !important;

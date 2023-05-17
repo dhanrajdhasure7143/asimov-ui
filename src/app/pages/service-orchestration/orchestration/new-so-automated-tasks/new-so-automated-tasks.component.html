@@ -260,9 +260,10 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span [pTooltip]="element.status" tooltipPosition="top">
-                                        <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-                                        <span [ngStyle]="{'color':getColor(element.status)}">O-</span> {{element.status}}
+                                    <span>
+                                        <!-- [pTooltip]="element.status" tooltipPosition="top" -->
+                                        <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'" class="d-flex align-items-center">
+                                        <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(element.status)}"></span> {{element.status}}
 
                                             <!-- <span *ngIf="element.status=='Pending'" class="text-warning">
                                                 <i class="fa fa-clock"></i>

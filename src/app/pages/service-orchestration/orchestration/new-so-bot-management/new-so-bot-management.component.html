@@ -227,7 +227,7 @@
                       <span *ngIf="element.version==null">-</span>
                     </td>
                     <td>
-                        <span [id]="element.botId+'__status'">
+                        <span [id]="element.botId+'__status'" class="d-flex align-items-center">
                           <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(element.botStatus)}"></span>{{element.botStatus}}
                           <!-- <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span>
