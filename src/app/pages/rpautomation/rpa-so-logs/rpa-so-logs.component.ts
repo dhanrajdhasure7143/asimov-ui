@@ -7,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
 import Swal from 'sweetalert2';
-import { log } from 'console';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -32,10 +31,8 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
   @Output('close') public closeEvent=new EventEmitter<any>();
-  @ViewChild("paginator2") paginator2: MatPaginator;
-  @ViewChild("sort2") sort2: MatSort;
   public allLogs:any=[];
-  public botrunid:any;
+  public botrunid:any="";
   public allRuns:any=[];
   public loopIterations:any=[];
   public id:any
@@ -54,6 +51,14 @@ export class RpaSoLogsComponent implements OnInit {
   logsData:any=[];
   columnList=[];
   traversalLogs=[];
+  statusColors = {
+    New: 'orange',
+    Failure: 'red',
+    Success: 'green',
+    Killed:"green",
+    Stopped: 'red',
+    Running:"Orange"
+  };
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -65,17 +70,18 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsLoading=true;
     this.rest.getviewlogdata(this.logsbotid).subscribe((response:any) =>{
       this.logsLoading = false;
-      this.logsDisplayFlag="RUNS"
+      this.logsDisplayFlag="RUNS";
+      this.botrunid="";
       if(response.errorMessage==undefined)
       {
         
        this.isDataEmpty=false;
        this.columnList=[
-        {field:"run_id",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
-        {field:"versionNew",DisplayName:"Version",ShowFilter: false,width:"",filterType:"date"},
-        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"run_id",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"versionNew",DisplayName:"Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
       ];
        this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
@@ -122,11 +128,11 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false; 
        this.columnList=[
-        {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
-        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
-        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
       ];
         this.logsData=[...response.filter((item:any)=>{
 
@@ -183,12 +189,12 @@ export class RpaSoLogsComponent implements OnInit {
       this.logsDisplayFlag="CHILD-LOGS";  
        this.isDataEmpty=false;
        this.columnList=[
-        {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
-        {field:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
-        {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
-        {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-        {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+        {ColumnName:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
       ];
         this.logsData=[...response.filter((item:any)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
@@ -334,12 +340,12 @@ export class RpaSoLogsComponent implements OnInit {
       {
         this.logsDisplayFlag="LOOP-LOGS";
         this.columnList=[
-          {field:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
-          {field:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
-          {field:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
-          {field:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
-          {field:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-          {field:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+          {ColumnName:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
+          {ColumnName:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"date"},
+          {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
+          {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
+          {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
+          {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
         ];
         this.logsData=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
           item["task_name"]=item.taskName;
@@ -347,7 +353,18 @@ export class RpaSoLogsComponent implements OnInit {
           item["error_info"]=item.errorMsg
           item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, HH:mm:ss")):item.startTS;
           item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, HH:mm:ss")):item.endTS;
-          item["bot_status"]=item.status;
+          if(item.status==1)
+          item["bot_status"]="New";
+          if(item.status==2)
+          item["bot_status"]="Running";
+          if(item.status==3)
+          item["bot_status"]="Paused";
+          if(item.status==4)
+          item["bot_status"]="Stopped";
+          if(item.status==5)
+          item["bot_status"]="Success";
+          if(item.status==6)
+          item["bot_status"]="Failed";
           item["child_logs_count"]=0;
           return item;
         });
@@ -460,6 +477,8 @@ export class RpaSoLogsComponent implements OnInit {
 //   clearInterval(this.interval3)
 //   clearInterval(this.interval2)
 // }
-
+getColor(status) {
+  return this.statusColors[status]?this.statusColors[status]:'';
+}
   
 }

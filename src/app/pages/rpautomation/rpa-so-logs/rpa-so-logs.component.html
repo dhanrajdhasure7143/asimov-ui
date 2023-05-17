@@ -12,7 +12,6 @@
     <i class="fas fa-arrow-left" aria-hidden="true"></i>
   </span> -->
     Logs  
-   
     <span *ngIf="viewlogid1!=undefined">
       - Run ID - {{viewlogid1}}
     </span>
@@ -28,6 +27,9 @@
     <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
       Refresh
     </span>
+    &nbsp;
+    <span>{{botrunid}}</span><span *ngFor="let task of traversalLogs">/{{task.task_name}}</span>
+    
     <!-- <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
         Refresh
     </span> -->
@@ -35,7 +37,7 @@
     <span class="clickable" (click)="closeLogsOverlay()">
       <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
     </span>
-  </span>
+  </span> 
 </div>
 
   <div class="modal-body newmodelbodycl">
@@ -45,10 +47,10 @@
               [reorderableColumns]="true" [scrollable]="true">
               <ng-template pTemplate="header">
                   <tr>
-                      <th *ngFor="let each of columnList" [style]="each.width" pSortableColumn="{{each.field}}"
+                      <th *ngFor="let each of columnList" [style]="each.width" pSortableColumn="{{each.ColumnName}}"
                           pReorderableColumn pResizableColumn>{{each.DisplayName}}
                           <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" [showAddButton]="false" [showOperator]="false"
-                              matchMode="contains" [showMatchModes]="false" [field]="each.field" display="menu"
+                              matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName" display="menu"
                               [showApplyButton]="false">
                               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                   <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
@@ -56,79 +58,37 @@
                               </ng-template>
                           </p-columnFilter>
                           <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'" [showAddButton]="false"
-                  [showOperator]="false" type="date" [showMatchModes]="false" [field]="each.field"
+                  [showOperator]="false" type="date" [showMatchModes]="false" [field]="each.ColumnName"
                   display="menu" [showApplyButton]="true">
               </p-columnFilter>
-                          <p-sortIcon *ngIf="each.ShowFilter" [field]="each.field"></p-sortIcon>
+                          <p-sortIcon *ngIf="each.ShowFilter" [field]="each.ColumnName"></p-sortIcon>
                       </th>
                   </tr>
               </ng-template>
               <ng-template pTemplate="body" let-logs>
                   <tr class="action-desc">
-                      <td *ngFor="let col of columnList">     
-                        <span *ngIf="col.field=='run_id'">
-                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.field]}}</a>
+                      <td *ngFor="let col of columnList" [style]="col.width">     
+                        <span *ngIf="col.ColumnName=='run_id'">
+                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
-                        <span *ngIf="col.field!='run_id' && col.field != 'bot_status' && col.field!='task_name'">
-                          {{logs[col.field]}}
+                        <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name'">
+                          {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.field=='bot_status'">
-                          <span *ngIf="logs[col.field]=='Running'" class="text-primary" >
-                            <span>
-                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
-                            </span>
-                            {{logs[col.field]}}&nbsp;&nbsp;&nbsp;
-                            <span class="btn btn-xs bluebg-button clickable1" (click)="updateLog(logs)" >Kill</span> 
-                          </span>
-                          <span *ngIf="logs[col.field]=='Success'" >
-                            <span>
-                              <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
-                            </span>
-                            <span>{{logs[col.field]}}</span>
-                          </span>
-
-                          <span *ngIf="logs[col.field]=='Failure'" >
-                            <span>
-                              <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
-                            </span>
-                            <span>{{logs[col.field]}}</span>
-                          </span>
-                          <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                          <span *ngIf="logs[col.field]=='New'" class="text-primary tableActionsIcons">
-                            <span >
-                            <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
-                            </span>
-                            <span>{{logs[col.field]}}</span>
-                          </span>
-
-                          <span *ngIf="logs[col.field]=='Stop' ||logs[col.field]=='Stopped'  "  >
-                            <span  >
-                              <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
-                            </span>
-                            <span>{{logs[col.field]}}</span>
-                          </span>
-
-                          <span *ngIf="logs[col.field]=='Pause'||logs[col.field]=='Paused'" >
-                            <span >
-                              <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus" alt="">
-                            </span>
-                            <span>{{logs[col.field]}}</span>
-                          </span>
-
+                        <span *ngIf="col.ColumnName=='bot_status'">
+                          <span [ngStyle]="{'color':getColor(logs[col.ColumnName])}">O-</span> {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.field=='task_name'">
+                        <span *ngIf="col.ColumnName=='task_name'">
                           <span *ngIf="logs['child_logs_count']==0  && logs['task_name']!='Loop-Start'">
-                            {{logs[col.field]}}
+                            {{logs[col.ColumnName]}}
                           </span>
                           <span *ngIf="logs['task_name']=='Loop-Start'">
-                            <a (click)="getLoopIterations(logs)" class="clickable">{{logs[col.field]}}</a>
+                            <a (click)="getLoopIterations(logs)" class="clickable">{{logs[col.ColumnName]}}</a>
                           </span>
                           <span *ngIf="logs['child_logs_count']!=0 && logs['task_name']!='Loop-Start'">
-                            <a (click)="getChildLogs(logs, logs.log_id, 'FARWORD')" class="clickable">{{logs[col.field]}}</a>
+                            <a (click)="getChildLogs(logs, logs.log_id, 'FARWORD')" class="clickable">{{logs[col.ColumnName]}}</a>
                           </span>
                         </span>
-                          
-                          <span *ngIf="logs[col.field] == undefined || logs[col.field] == null || logs[col.field]==''">-</span>
+                          <span *ngIf="logs[col.ColumnName] == undefined || logs[col.ColumnName] == null || logs[col.ColumnName]==''">-</span>
                       </td>
                   </tr>
               </ng-template>
