@@ -1,6 +1,6 @@
 <div class="h-100">
   <div class="depart-btns">
-    <span (click)="onCreate()" pTooltip="Create New" tooltipPosition="top">
+    <span (click)="openDepartmentOverlay()" pTooltip="Create New" tooltipPosition="top">
       <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt="Create New" />
     </span>
     <span *ngIf="Departmentdeleteflag" id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
@@ -41,17 +41,15 @@
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
     <div class="h-100">
         <div class="create-header">
-            <h3>Create Department</h3>
+            <h3 *ngIf="isCreate">Create Department</h3>
+            <h3 *ngIf="!isCreate">Update Department</h3>
         </div>
-     
-    
     <div class="createform-overlay ">
                 <form [formGroup]="createDepartmentForm" #adddept="ngForm" class="h-100">
-                 
                     <div class="">
                             <div class="form-group col-md-12 p-0">
                                 <label class="label-control">Department<span class="star">*</span></label>
-                                <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="51" class="form-control data">
+                                <input type="text" formControlName="departmentName" pInputText placeholder="Enter Department" maxlength="51" class="form-control data">
                                 <span 
                                     *ngIf="(createDepartmentForm.get('departmentName').invalid && createDepartmentForm.get('departmentName').touched)
                                             && !createDepartmentForm.controls['departmentName'].hasError('maxlength') && createDepartmentForm.get('departmentName').value=='' && !createDepartmentForm.get('departmentName').hasError('pattern')" class="required">Department Required *</span>
@@ -71,14 +69,16 @@
                             </div>
                             <div class="form-group col-md-12 p-0">
                                 <label class="label-control">Owner<span class="star">*</span></label>
-                                <select formControlName="owner" class="form-control data"
+                                <!-- <select formControlName="owner" class="form-control data"
                                     [ngClass]="createDepartmentForm.get('owner').valid?'enteredfield-color':'inputfield-color'">
                                     <option value="" hidden disabled>Select Owner</option>
                                     <option *ngFor="let user of users_list" [value]="user.userId.userId">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                                </select>
-                                <span
-                                    *ngIf="createDepartmentForm.get('owner').invalid && createDepartmentForm.get('owner').touched"
+                                </select> -->
+                                <p-dropdown [options]="users_list" optionLabel="fullName" [filter]="true" optionValue="user_email"
+                                    formControlName="owner" filterBy="fullName" (onChange)="onChangeDepeartment($event)" placeholder="Select owner">
+                                  </p-dropdown>
+                                <span *ngIf="createDepartmentForm.get('owner').invalid && createDepartmentForm.get('owner').touched"
                                     class="required">Owner Required *</span>
                             </div>
                        
@@ -86,59 +86,10 @@
                 </form>
                 <div class="createform-footer">
                     <button (click)="resetdepartment()" class="btn new-cancelbtn">Reset</button>
-                    <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn bluebg-button">Save</button>
+                    <button *ngIf="isCreate" [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn bluebg-button">Save</button>
+                    <button *ngIf="!isCreate" [disabled]="createDepartmentForm.invalid" (click)="updateDepartment()" class="btn bluebg-button">Update</button>
                 </div>
         </div>
       </div>
-  </app-split-overlay>
-</div>
-
-
-<div *ngIf="hiddenUpdatePopUp">
-  <app-split-overlay (closeOverlay)="closeOverlay($event)">
-    <div class="h-100">
-     
-        <div class="create-header">
-            <h3>Update Department</h3>
-        </div>
-      
-     
-        <div class="createform-overlay ">
-              <form [formGroup]="editDepartmentForm"  (ngSubmit)="updateDepartment()">
-                  <div class="row fcont">
-                          <div class="form-group col-md-12 p-0">
-                              <label class="label-control">Department<span class="star">*</span></label>
-                              <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="editDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
-                              <span
-                                      *ngIf="(editDepartmentForm.get('departmentName').invalid && editDepartmentForm.get('departmentName').touched)
-                                              && !editDepartmentForm.controls['departmentName'].hasError('maxlength')" class="required">Department Required *</span>
-                              <span
-                                      *ngIf="editDepartmentForm.controls['departmentName'].hasError('maxlength')"
-                                           class="required">Maximum of 50 characters</span>
-                          </div>
-                          <div class="form-group col-md-12 p-0">
-                              <label class="label-control">Owner<span class="star">*</span></label>
-                              <select formControlName="owner" class="form-control data">
-                                  <option value="" hidden disabled>Select Owner</option>
-                                  <option value="null" hidden disabled>Select Owner</option>
-                                  <option value="undefined" hidden disabled>Select Owner</option>
-                                  <option [value]="undefined" hidden disabled>Select Owner</option>
-                                  <option [value]="null" hidden disabled>Select Owner</option>
-                                  <option *ngFor="let user of users_list" [value]="user.userId.userId">
-                                      {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                              </select>
-                              <span
-                                  *ngIf="editDepartmentForm.get('owner').invalid && editDepartmentForm.get('owner').touched"
-                                  class="required">Owner Required *</span>
-                          </div>
-                  </div>
-              </form>
-              <div class="createform-footer">
-                  <button (click)="reseteditdepartment()" class="btn new-cancelbtn">Reset</button>
-                  <button [disabled]="editDepartmentForm.invalid" (click)="updateDepartment()" class="btn bluebg-button">Update</button>
-              </div>
-         
-      </div>
-</div>
   </app-split-overlay>
 </div>
