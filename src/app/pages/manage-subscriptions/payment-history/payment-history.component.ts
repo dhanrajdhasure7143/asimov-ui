@@ -39,7 +39,6 @@ export class PaymentHistoryComponent implements OnInit {
    this.spinner.show();
     this.rest.listofinvoices().subscribe(response => { 
       this.invoicedata = response.data;
-      console.log(this.invoicedata)
       this.invoicedata.map(data=>{
         data["created_timestamp"] = moment(data.createDate).format("MMMM DD [,] yy") 
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
