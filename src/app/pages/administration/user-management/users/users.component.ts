@@ -15,25 +15,20 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
   providers:[columnList]
 })
 export class UsersComponent implements OnInit {
-
   users: any;
   userslist = [];
   loggedinUser: string;
   freetrail: string;
   columns_list:any[]=[];
   table_searchFields:any[]=[];
-  hiddenPopUp:boolean = false;
   userData: any;
-  categories: any;
+  categories: any[]=[];
   allRoles: any[];
   roles = [];
-  roleObj: any;
-  roleIds: any[] = [];
   isdprtDisabled: boolean = false;
   people = [{ name: "test", id: "01" }];
   isdisabled: boolean = true;
-  departments = [];
-  email: any;
+  departments:any[] = [];
   role: any;
   depts: any = [];
   errShow: boolean = false;
@@ -41,13 +36,16 @@ export class UsersComponent implements OnInit {
   inviteUserForm: FormGroup;
   public inviteeMail: any;
   hideInvitePopUp:boolean = false;
+  department:any
+  userRole: any;
+  isUpdate:boolean=false;
 
   constructor(
     private rest_api: RestApiService,
     private router: Router,
     @Inject(APP_CONFIG) private config,
     private loader: LoaderService,
-    private columnList: columnList
+    private columnList: columnList,
   ) {}
 
   ngOnInit(): void {
@@ -56,13 +54,12 @@ export class UsersComponent implements OnInit {
     this.columns_list = this.columnList.users_columns
     this.table_searchFields=["firstName","email","designation","department","roles","created_at","status"];
     this.getAllCategories();
-    this.getRoles()
+    this.getRoles();
   }
   getUsers() {
     this.loader.show();
     this.loggedinUser = localStorage.getItem("ProfileuserId");
-    this.rest_api
-      .getuserslist(localStorage.getItem("masterTenant"))
+    this.rest_api.getuserslist(localStorage.getItem("masterTenant"))
       .subscribe((resp) => {
         this.users = resp;
         this.loader.hide();
@@ -142,7 +139,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  inviteUser() {
+  openInviteUserOverlay(){
     if (this.freetrail == "true") {
       if (this.users.length == this.config.inviteUserfreetraillimit) {
         Swal.fire({
@@ -162,21 +159,25 @@ export class UsersComponent implements OnInit {
         this.router.navigate(["/pages/admin/invite-user"]);
       }
     } else {
-      this.hideInvitePopUp = true
+      this.hideInvitePopUp = true;
+      this.isUpdate=false;
+      this.inviteeMail=null;
       // this.router.navigate(["/pages/admin/invite-user"]);
     }
   }
 
   modifyUser(data) {
-    let depts = [];
+    console.log(data)
+    let department = [];
     var roles1: any = [];
-    this.depts = [];
-    depts = data.department;
+    this.department = [];
+    this.isUpdate=true;
+    department = data.department;
     let userroles: any;
     userroles = data.roles;
     this.userData=[];
-    this.userData={id:data.email,role: userroles,dept: depts}
-    this.hiddenPopUp = true;
+    this.userData={id:data.email,role: userroles,dept: department}
+    this.hideInvitePopUp = true;
     this.allRoles.forEach((x) => {
       if (x.displayName === this.userData.role) {
         roles1.push(x.id);
@@ -185,14 +186,14 @@ export class UsersComponent implements OnInit {
     if (this.userData.dept.length == 1) {
       this.categories.forEach((x) => {
         if (x.categoryName === this.userData.dept[0]) {
-          this.depts.push(x.categoryId);
+          this.department.push(x.categoryId);
         }
       });
     } else {
       this.userData.dept.forEach((element) => {
         this.categories.forEach((x) => {
           if (x.categoryName === element) {
-            this.depts.push(x.categoryId);
+            this.department.push(x.categoryId);
           }
         });
       });
@@ -201,8 +202,8 @@ export class UsersComponent implements OnInit {
     if (roles1[0] == "8") {
       this.isdprtDisabled = true;
     }
-    this.email = this.userData.id;
-    this.departments = this.depts;
+    this.inviteeMail = data.email;
+    this.departments = this.department;
     this.role = roles1[0];
     // this.router.navigate(["/pages/admin/modify-user"], {
     //   queryParams: { id: data.email, role: userroles, dept: depts },
@@ -215,8 +216,10 @@ export class UsersComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    this.hiddenPopUp = event;
-    this.hideInvitePopUp= event
+    this.hideInvitePopUp= event;
+    this.role='';
+    this.departments=[];
+
   }
 
   getAllCategories() {
@@ -240,7 +243,7 @@ export class UsersComponent implements OnInit {
       return;
     }
     let body = {
-      userId: this.email,
+      userId: this.inviteeMail,
       department: this.departments.toString(),
       rolesList: roles_list,
     };
@@ -260,7 +263,7 @@ export class UsersComponent implements OnInit {
           heightAuto: false,
           confirmButtonText: "Ok",
         });
-        this.hiddenPopUp = false;
+        this.hideInvitePopUp = false;
         this.getUsers();
       } else {
         this.loader.hide();
@@ -269,7 +272,10 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  onchangeRole(value) {
+  onchangeRole(event) {
+    let value = event.value
+    console.log(value)
+
     if (value == "8") {
       this.departments = [];
       this.categories.forEach((element) => {
@@ -277,7 +283,7 @@ export class UsersComponent implements OnInit {
       });
       this.isdprtDisabled = true;
     } else {
-      this.departments = [];
+      this.departments =undefined;
       //this.departments=this.depts;
       this.isdprtDisabled = false;
     }
@@ -305,6 +311,8 @@ export class UsersComponent implements OnInit {
 
   resetUserInvite(form: NgForm) {
     form.resetForm();
+    // this.departments=[];
+    // this.role=null;
     form.form.markAsPristine();
     form.form.markAsUntouched();
   }
@@ -389,11 +397,6 @@ export class UsersComponent implements OnInit {
     } else {
       this.isdprtDisabled = false;
     }
-  }
-  userManagementUrl(){
-    this.router.navigate(["/pages/admin/user-management"],{
-      queryParams:{index:0}
-    })
   }
 
 }
