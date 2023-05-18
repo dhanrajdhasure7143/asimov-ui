@@ -151,3 +151,10 @@ span.logrefresh {
   font-size: 12px;
   margin-bottom: 0px;
 }
+
+img.hover-icon, td span:hover img.default-icon {
+  display: none;
+}
+td span:hover img.hover-icon {
+  display: initial;
+}

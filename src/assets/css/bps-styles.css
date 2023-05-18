@@ -197,6 +197,7 @@ div[class^='diagram_container'] {
   border-radius: 10px;
   padding: 5px;
   position: relative;
+  overflow: scroll;
   /* background: #fff; */
 }
 
