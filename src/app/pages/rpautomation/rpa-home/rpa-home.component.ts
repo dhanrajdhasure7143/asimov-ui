@@ -525,8 +525,8 @@ export class RpaHomeComponent implements OnInit {
 
 
   openEditBotOverlay(botDetails: any) {
+    this.hiddenPopUp = true;
     this.isCreateForm = false;
-    this.EdithiddenPopUp = true;
     this.botDetails = botDetails;
     this.botFormVisibility=true;
     // document.getElementById('bot-form').style.display = 'block';

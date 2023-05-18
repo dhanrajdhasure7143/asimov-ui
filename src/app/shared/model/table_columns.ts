@@ -150,8 +150,8 @@ export class columnList{
       ];
 
       public adminScreenlist_column=[
-        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text", sort: true,multi: false},
-        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text", sort: true,multi: false},
+        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false,multi: false},
       ]
 
@@ -179,5 +179,14 @@ export class columnList{
         {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
         {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"]},
         {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
+      ];
+
+      public invoice_column=[
+        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,dropdownList:['Paid','Voided']},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
 }
