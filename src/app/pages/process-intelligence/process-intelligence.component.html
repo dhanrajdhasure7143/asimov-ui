@@ -13,7 +13,7 @@
                       <img src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                     </span>
                   </a>
-                  <a *ngIf="isPIHeaderShow" (click)='backtoWorkspace()' class="imageBox">
+                  <a *ngIf="!isBackbutton" (click)='backtoWorkspace()' class="imageBox">
                     <span class="active-icon" >
                       <img src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                     </span>
@@ -21,14 +21,14 @@
                       <img src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                     </span>
                   </a>
-                  <a *ngIf="isProjDetails" (click)='gotoProjectDetails()' class="imageBox">
+                  <!-- <a *ngIf="isProjDetails" (click)='backtoWorkspace()' class="imageBox">3
                     <span class="active-icon" >
                       <img src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                     </span>
                     <span class="hover-icon" >
                       <img src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                     </span>
-                  </a>
+                  </a> -->
                 </label>
                 
                 <span class="title_text">Process Intelligence

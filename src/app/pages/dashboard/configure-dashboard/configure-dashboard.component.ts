@@ -219,7 +219,8 @@ export class ConfigureDashboardComponent implements OnInit {
         screenId: Number(this._paramsData.dashboardId),
         type: "widget",
         widgetType: element.widget_type,
-        name: element.name
+        name: element.name,
+        department:element.department
       }
       req_array.push(req_body)
     });
@@ -410,7 +411,7 @@ export class ConfigureDashboardComponent implements OnInit {
         type: "widget",
         widgetType: element.widget_type,
         name: element.name,
-        // department:element.department
+        department:element.department
       }
       req_array.push(req_body)
     });
