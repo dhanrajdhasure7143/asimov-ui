@@ -270,7 +270,8 @@ ul#versions li.clickable:hover {
 
 .action-item.hovericon:hover img.testplus1,
 
-.action-item.hovericon:hover img.testplus2 {
+.action-item.hovericon:hover img.testplus2,
+.action-item.hovericon:hover span.caret {
     filter: brightness(2.5) !important;
 }
 
@@ -606,15 +607,14 @@ ul#versions li:hover {
   background: rgba(0,0,0,.04);
 }
 .caret {
-  color: #607088;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: 12px !important;
-    vertical-align: middle;
-    border-top: 4px dashed;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
+  color: #60708894;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  content: "";
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  vertical-align: inherit;
 }
 
 
