@@ -223,13 +223,8 @@
                            <form [formGroup]="dynamicFormConfiure" class="row">
                               <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
                                  <label class="label-control">{{each.label}}</label>
-                                 <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"
-                                    [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                                 <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                               </div>
-                              <!-- <div class="col-6 form-group mb-4 bps-labcls">
-                                 <label>Number of Category</label>
-                                 <input type="text" placeholder="05" class="form-control">
-                              </div> -->
                      
                               <div class="col-12 row justify-content-end">
                                  <button class="btn new-cancelbtn" (click)="cancelEdit()">Cancel</button>

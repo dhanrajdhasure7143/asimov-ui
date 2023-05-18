@@ -87,7 +87,7 @@ export class DynamicDashboardComponent implements OnInit {
         widgetType: formDataValue.widget_type,
         type: "widget",
         screenId: this.selectedDashBoard.id,
-        // department: formDataValue.department
+        department: formDataValue.department
       },
     ];
     this.loader.show();
@@ -121,6 +121,7 @@ export class DynamicDashboardComponent implements OnInit {
       // };
         // borderWidth: 2 
         if(res.data[0].widget_type != "Bar"){
+          res.data[0]["chartOptions"].onClick = this.handlePieChartClick.bind(this,res.data[0].widgetData.labels)
           res.data[0]["chartOptions"].plugins.legend["labels"] ={
             generateLabels: function(chart) {
               var data = chart.data;
@@ -128,12 +129,13 @@ export class DynamicDashboardComponent implements OnInit {
               if (data.labels.length && data.datasets.length) {
                 return data.labels.map(function (label, i) {
                   var ds = data.datasets[0];
-                  let value;
-                  if(res.data[0].childId == 2){
-                    value = Math.floor(Number(ds.data[i]) / 60) +"Min"
-                  }else value = ds.data[i];
+                  // let value;
+                  // if(res.data[0].childId == 2){
+                  //   value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                  // }else value = ds.data[i];
+                  let total = ds['data'].reduce((accumulator, currentValue) => accumulator + currentValue);
                   return {
-                    text: label + ": " + value,
+                    text: label + ": " + ((ds.data[i] / total) * 100).toFixed(2)+ '%',
                     fillStyle: datasets[0].backgroundColor[i],
                     strokeStyle: "white",
                     lineWidth: 8,
@@ -381,6 +383,7 @@ export class DynamicDashboardComponent implements OnInit {
           element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
           }
           if(element.widget_type != "Bar"){
+            element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels)
             element["chartOptions"].plugins.legend["labels"] ={
               generateLabels: function(chart) {
                 var data = chart.data;
@@ -612,6 +615,15 @@ export class DynamicDashboardComponent implements OnInit {
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
         {label: "Configure",command: (e) => {this.toggleConfigure(e)}},
       ];
+    }
+  }
+
+  handlePieChartClick(event: MouseEvent,data, chartElements): void {
+
+    if (chartElements && chartElements.length > 0) {
+      const clickedElementIndex = chartElements[0].index;
+      console.log('Clicked element index:',event[clickedElementIndex]);
+      // Perform any desired actions based on the clicked element
     }
   }
 }
