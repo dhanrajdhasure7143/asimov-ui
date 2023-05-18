@@ -55,7 +55,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDashBoardData(this._paramsData.dashboardId);
+    this.getDashBoardData(this._paramsData.dashboardId,true);
     this.primengConfig.ripple = true;
     // this.menuItems = [
     //   {label: "Delete",command: () => { this.deletedashbord()}},
@@ -123,7 +123,7 @@ export class DynamicDashboardComponent implements OnInit {
       // };
         // borderWidth: 2 
         if(res.data[0].widget_type != "Bar"){
-          res.data[0]["chartOptions"].onClick = this.handlePieChartClick.bind(this,res.data[0].widgetData.labels)
+          res.data[0]["chartOptions"].onClick = this.handlePieChartClick.bind(this,res.data[0].widgetData.labels,res.data[0].childId)
           res.data[0]["chartOptions"].plugins.legend["labels"] ={
             generateLabels: function(chart) {
               var data = chart.data;
@@ -277,7 +277,7 @@ export class DynamicDashboardComponent implements OnInit {
       relativeTo: this.activeRoute,
       queryParams: params1,
     });
-    this.getDashBoardData(this.selectedDashBoard.id);
+    this.getDashBoardData(this.selectedDashBoard.id,true);
   }
 
   inplaceActivate() {
@@ -363,7 +363,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.selecteddashboard = this.selectedDashBoard
       }, 100);
       this.selectedDashBoardName = this.selectedDashBoard.dashboardName
-      this.getDashBoardData(this.selectedDashBoard.id);
+      this.getDashBoardData(this.selectedDashBoard.id,true);
     }else{
       this.loader.hide();
       this.router.navigate(["/pages/dashboard/create-dashboard"])
@@ -371,21 +371,21 @@ export class DynamicDashboardComponent implements OnInit {
     });
   }
 
-  getDashBoardData(screenId) {
-    this.loader.show();
+  getDashBoardData(screenId,isLoader) {
+    isLoader?this.loader.show():this.loader.hide();
     this.rest.getDashBoardItems(screenId).subscribe((data: any) => {
       this.dashboardData.metrics = data.metrics;
       this.dashboardData.widgets = data.widgets;
       this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
         if(element.widget_type!= "Table" && element.widget_type!= "table"){
+          element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels,element.childId)
           if(element.childId == 1){
             element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
           }else{
           element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
           }
           if(element.widget_type != "Bar"){
-            element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels)
             element["chartOptions"].plugins.legend["labels"] ={
               generateLabels: function(chart) {
                 var data = chart.data;
@@ -623,7 +623,7 @@ export class DynamicDashboardComponent implements OnInit {
   getInterval(){
     this.interval=setInterval(()=>{
         this.getListOfDashBoards();
-        this.getDashBoardData(this._paramsData.dashboardId);
+        this.getDashBoardData(this._paramsData.dashboardId,false);
       },45000)
     }
 
@@ -633,12 +633,16 @@ export class DynamicDashboardComponent implements OnInit {
     }
   }
 
-  handlePieChartClick(event: MouseEvent,data, chartElements): void {
-
+  handlePieChartClick(labels,widgetId,data,chartElements): void {
     if (chartElements && chartElements.length > 0) {
       const clickedElementIndex = chartElements[0].index;
-      console.log('Clicked element index:',event[clickedElementIndex]);
-      // Perform any desired actions based on the clicked element
+      // console.log('Clicked element index:',labels[clickedElementIndex]);
+      // widgetId == 1 its shold navigate to RPA home
+      if(widgetId == 1){
+        this.router.navigate(["/pages/rpautomation/home"], {
+          queryParams: {status: labels[clickedElementIndex]},
+        });
+      }
     }
   }
 }
