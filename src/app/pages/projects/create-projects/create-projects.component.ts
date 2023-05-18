@@ -166,7 +166,7 @@ createproject(event)
         let status: any= response;
         Swal.fire({
           title: 'Success',
-          text:response.message,
+          text:response.message+"!",
           position: 'center',
           icon: 'success',
           showCancelButton: false,
