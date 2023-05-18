@@ -12,6 +12,7 @@
 #Orchestration-tabs .mat-tab-labels {
     height: 100%;
     align-items: center;
+    margin: 0px 15px;
 }
 #Orchestration-tabs .so-subtab-header mat-tab-header.mat-tab-header {
     border-top: 0px !important;
@@ -147,7 +148,7 @@ body .leftfporm select {
   height: 36px !important;
 }
 td select.form-control {
-  height: 36px !important;
+  height: 32px !important;
 }
 .leftfporm {
   display: flex !important;

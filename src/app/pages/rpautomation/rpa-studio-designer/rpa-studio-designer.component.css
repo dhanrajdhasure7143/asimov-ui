@@ -5,6 +5,9 @@
   border-right: unset !important;
   margin-right: 8px !important;
 }
+.module-back-button span{
+  margin-left: 0px !important;
+}
 
 .tabs {
     overflow: visible !important;

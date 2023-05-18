@@ -19,6 +19,9 @@
   opacity: 1;
   margin-right: 5px !important;
 }
+.aprwkfl_actions button img {
+  cursor: unset;
+}
 .list_header {
   text-align: left;
   width: 100%;
