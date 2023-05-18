@@ -4,7 +4,7 @@
             <div class="row main-content-head">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="open()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a (click)="open()"><img src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">Audit Logs</span>
                 </h3>
@@ -30,7 +30,7 @@
                             <span class="p-input-icon-right gridsearch">
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                    placeholder="Search keyword" />
+                                    placeholder="Search" />
                             </span>
                             <button pButton label="Clear" class="p-button-outlined only_clearbtn"
                                 icon="pi pi-filter-slash" (click)="clear(dt)"></button>

@@ -120,14 +120,13 @@
                                     <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width" (dblclick)="onNavigateToWorkSpace(rowData)">
                                         <span *ngIf="col.ColumnName =='description'">{{rowData[col.ColumnName]?fitTableView(rowData['description']):'-'}}</span>
                                         <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'&& col.ColumnName !='description' && col.ColumnName != 'last_modified_date'">
-                                            <span *ngIf='col.ColumnName =="createdBy"' class="prjlastupdateprofile">
-                                                <span class="prjlastupdateprofile">{{rowData['createdBy']|userLetters:users_list|uppercase}}</span>
+                                            <span *ngIf='col.ColumnName =="createdBy"' class="prjlastupdateprofile">{{rowData['createdBy']|userLetters:users_list|uppercase}}
                                             </span>
                                             {{rowData[col.ColumnName]?rowData[col.ColumnName]:'-'}}
                                         </span>
                                         <span *ngIf="col.ColumnName == 'last_modified_date'">{{rowData[col.ColumnName]| date:'MMM dd, y HH:mm'}}</span>
-                                        <span *ngIf="col.DisplayName == 'Status'">
-                                        <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}
+                                        <span *ngIf="col.DisplayName == 'Status'" class="d-flex align-items-center">
+                                        <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}
 
                                             <!-- <span *ngIf="rowData['botStatus']=='Running'" class="text-primary">
                                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1" alt="">
@@ -373,7 +372,7 @@
                                     Bot Name Required*
                                 </div>
                                 <div *ngIf="checkbotname && editbot.get('botName').touched" class="required">
-                                    Bot Name is already exists*
+                                    Bot Name already exists*
                                 </div>
                                 <div *ngIf="botNamespace" class="required">special characters are not allowed Excluding( _ & - )</div>
 
@@ -442,7 +441,7 @@
                                     Bot Name Required*
                                 </div>
                                 <div *ngIf="checkbotname && insertbot.get('botName').value" class="required">
-                                    Bot Name is already exists*
+                                    Bot Name  already exists*
                                 </div>
                                 <div *ngIf="botNamespace" class="required">special characters are not allowed Excluding( _ & - )</div>
 

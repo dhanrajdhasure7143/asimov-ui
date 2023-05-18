@@ -109,12 +109,12 @@ export class RpaHomeComponent implements OnInit {
   stopNodeId:any;
   users_list:any[]=[];
   statusColors = {
-    New: 'orange',
-    Failure: 'red',
-    Success: 'green',
-    Killed:"green",
-    Stopped: 'red',
-    Running:"Orange"
+    New: '#3CA4F3',
+    Failure: '#FE665D',
+    Success: '#4BD963',
+    Killed:"#B91C1C",
+    Stopped: '#FE665D',
+    Running:"#C4B28E"
   };
 
   constructor(
@@ -656,7 +656,8 @@ importBot()
       this.finaldataobjects=[...this.importBotJson.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
-      this.arrange_task_order(start);
+      if(this.finaldataobjects.executionMode=="v1") this.arrange_task_order(start);
+      else this.final_tasks=[...this.finaldataobjects];
       this.importBotJson["botId"]=response.botId;
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
       this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
@@ -765,7 +766,6 @@ importBot()
     payload.tasks.forEach((item:any, index:number)=>{
       if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
       {
-        console.log(item);
         payload.tasks.splice(index, 1);
       }
     })
