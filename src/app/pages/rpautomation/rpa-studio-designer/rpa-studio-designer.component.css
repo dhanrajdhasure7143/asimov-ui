@@ -129,13 +129,18 @@ span.tab-botname {
 }
 
 ul#environments li {
-  padding: 3px 5px; 
+  padding: 0.75rem 1rem; 
     display: flex;
     align-items: center;
+    color: #495057;
+}
+
+ul#environments li:hover {
+  background: #e9ecef;
 }
 
 ul#environments li input {
-    margin: -2px 17px 0px 0px;
+    margin: -2px 10px 0px 0px;
 }
 
 ul#environments li img {
@@ -144,8 +149,18 @@ ul#environments li img {
 
 .action-menu-dropdown {
     overflow: auto;
-    max-height: 315px;
+    max-height: 263px;
     font-size: 15px !important;
+    padding: 0px !important;
+    background: #fff;
+}
+
+ul#predefinedBotDropdown li.clickable {
+  padding: 0.75rem 1rem;
+  color: #495057;
+}
+ul#predefinedBotDropdown li.clickable:hover {
+  background-color: #e9ecef;
 }
 
 .rpa-layout-header {
@@ -551,6 +566,8 @@ ul#environments {
   overflow: auto;
   max-height: 263px;
   font-size: 15px !important;
+  padding: 0px !important;
+  background: #fff;
 }
 .actionsmenu-right button, .actionsmenu-right span {
   font-size: 14px;
@@ -657,3 +674,4 @@ ul#versions li:hover {
 .logsVersionFilter:focus{
   border:none !important;
 }
+

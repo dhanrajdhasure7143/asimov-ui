@@ -3346,6 +3346,18 @@ textarea.p-inputtextarea {
 .p-knob.p-component {
   cursor: pointer;
 }
+.vrsn-btn .p-togglebutton.p-button {
+  width: 16px;
+  height: 16px;
+  padding: 10px 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vrsn-btn .p-togglebutton.p-button:focus {
+  box-shadow: unset !important;
+}
 
 /* new styles for ng select */
 .ng-select .ng-select-container {

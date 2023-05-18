@@ -231,8 +231,8 @@
                       <span class="testtooltip">Reset Bot</span>
                     </button>
                   </div>
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                    <p-toggleButton [style]="{width: '0.5em',height: '0.5em', padding: '9px', paddingRight: '17px', fontSize: '9px', textAlign: 'center' }" onLabel="V1" offLabel="V2" [(ngModel)]="current_instance.executionMode"></p-toggleButton>
+                  <div class="action-item vrsn-btn" *ngIf="current_instance != undefined">
+                    <p-toggleButton onLabel="V1" offLabel="V2" [(ngModel)]="current_instance.executionMode"></p-toggleButton>
                   </div>
                 </div>
               </div>
@@ -307,18 +307,18 @@
                   </ng-template>
               </mat-tab>
           </mat-tab-group>
-           <div class="rpa-bottom-tab" headerPosition="below">
+           <!-- <div class="rpa-bottom-tab" headerPosition="below">
 
-              <!-- <div *ngIf="current_instance != undefined" class="footer-versions">
+              <div *ngIf="current_instance != undefined" class="footer-versions">
                   <select id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion==undefined?0:current_instance.selectedversion">
                 <option value=0 disabled>Select Version</option>
                 <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
                   Version {{version.vId}}
                 </option>
               </select>
-              </div> -->
+              </div> 
 
-          </div> 
+          </div> -->
       </div>
       <ng-template #popTemplate>
         <div class="custom-content Apr-cnt">
