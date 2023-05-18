@@ -1,13 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, ViewChild, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from 'js-base64';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,8 +11,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rpa-bot-form.component.css']
 })
 export class RpaBotFormComponent implements OnInit {
-
-
   @Output("output") public event= new EventEmitter<any>();
   @Input("isCreateForm") public isCreateForm:any;
   @Input("categoriesList") public categoriesList:any[];
@@ -25,62 +18,53 @@ export class RpaBotFormComponent implements OnInit {
   @Input("unsavedBot") public unsaved:boolean;
   @Output("unsavedOutput") public unsavedOutput=new EventEmitter<any>();
   @Output() closeFormOverlay = new EventEmitter<any>();
-
   botForm:FormGroup;
   botNameCheck:any;
   checkBotCategory:boolean=false;
   constructor( 
     private formBuilder:FormBuilder,
     private rest:RestApiService,
-    private spinner:NgxSpinnerService
-    ) {}
+    private spinner:LoaderService,
+    private cd: ChangeDetectorRef){
+      this.botForm = this.formBuilder.group({
+        botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+        department: ["", Validators.required],
+        description: ["", Validators.compose([Validators.maxLength(500)])],
+        isPredefined: [false]
+      });
+    }
 
 
   ngOnInit(): void {
-    this.botForm = this.formBuilder.group({
-      botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-      department: ["", Validators.required],
-      description: ["", Validators.compose([Validators.maxLength(500)])],
-      isPredefined: [false]
-    });
-    if(!this.isCreateForm && this.botDetails!=undefined){
-
-      this.botForm = this.formBuilder.group({
-        botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-        department: [this.botDetails.department, Validators.required],
-        description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
-        isPredefined: [this.botDetails.isPredefined]
-      });
-      
-    }else{
-     
-      if(this.unsaved==true)
-      {
-        this.botForm = this.formBuilder.group({
-          botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-          department: [this.botDetails.department, Validators.required],
-          description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
-          isPredefined: [this.botDetails.isPredefined]
-        });
-      }
-      else if(this.categoriesList.length==1)
-      {
-        this.botForm = this.formBuilder.group({
-          botName: ["", Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-          department: ['', Validators.required],
-          description: ['', Validators.compose([Validators.maxLength(500)])],
-          isPredefined: [false]
-        });
-        setTimeout(()=>{
-          this.botForm.get('department').setValue(this.categoriesList.length==1?this.categoriesList[0].categoryId:'');
-        },100)
-      }
-    }
- 
   }
 
   ngOnChanges(changes:SimpleChanges){
-  
+    this.cd.detectChanges();
+    if(!this.isCreateForm && this.botDetails!=undefined){
+      this.botForm.get("botName").setValue(this.botDetails["botName"]);
+      this.botForm.get("department").setValue(this.botDetails["department"]);
+      this.botForm.get("description").setValue(this.botDetails["description"]);
+      this.botForm.get("isPredefined").setValue(this.botDetails["isPredefined"]);
+      }else{
+          if(this.unsaved==true){
+            this.botForm = this.formBuilder.group({
+              botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+              department: [this.botDetails.department, Validators.required],
+              description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
+              isPredefined: [this.botDetails.isPredefined]
+            });
+          } else if(this.categoriesList.length==1){
+            this.botForm = this.formBuilder.group({
+              botName: ["", Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+              department: [this.categoriesList[0].categoryId, Validators.required],
+              description: ['', Validators.compose([Validators.maxLength(500)])],
+              isPredefined: [false]
+            });
+            // setTimeout(()=>{
+            //   this.botForm.get('department').setValue(this.categoriesList.length==1?this.categoriesList[0].categoryId:'');
+            // },100)
+          }
+        }
   
   }
 
@@ -124,6 +108,7 @@ export class RpaBotFormComponent implements OnInit {
       if (response.errorMessage == undefined) {
         Swal.fire("Success", "Bot details updated successfully!", "success");
         this.closeBotForm();
+        this.spinner.hide();
         this.event.emit({ botId: response.botId, case: "update" });
       } else {
         Swal.fire("Error", "Unable to update bot details", "error");

@@ -112,7 +112,7 @@
                                     </span>
                                     <span *ngIf="col.DisplayName == 'Status'" class="d-flex align-items-center">
                                         <!-- <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div> -->
-                                        <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}
+                                        <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]|titlecase}}
                                     </span>
                                     <span *ngIf="col.DisplayName == 'Message'">
                                             <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message">
