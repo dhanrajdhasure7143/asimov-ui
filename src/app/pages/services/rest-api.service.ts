@@ -1798,5 +1798,7 @@ checkScreenName(Screen_Name)
   let data="";
   return this.http.post("/platform-service/screenGenerator/check-ScreenName?Screen_Name="+Screen_Name,data)
 }
-
+getHeadersParams(){
+  return this.http.get("/rpa-service/getRequestParameter")
+}
 }

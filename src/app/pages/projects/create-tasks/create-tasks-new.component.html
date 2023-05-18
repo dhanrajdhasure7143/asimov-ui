@@ -29,26 +29,26 @@
                     <span class="" for="correlationID">Pick A Workspace File<span
                           class="star">*</span></span>
                     <div *ngIf="!optionValue">
-                        <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false" [appendTo]="'body'" 
+                        <p-dropdown [options]="emptyList" emptyMessage="Select Task type" autoWidth="false" [filter]="true" filterBy="processName"  
                           [style]="{'width':'100%'}" placeholder="Select Workspace File" optionLabel="processName"
                           optionValue="correlationID" required></p-dropdown>
                     </div>
                     <div
                       *ngIf="optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
                         <p-dropdown [options]="bpm_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [filter]="true" filterBy="processName" 
                           placeholder="Select Workspace File" optionLabel="processName" optionValue="correlationID"
                           required></p-dropdown>
                     </div>
                     <div *ngIf="optionValue == 'Process Mining'">
                         <p-dropdown [options]="pi_process_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [filter]="true" filterBy="piName" 
                           placeholder="Select Workspace File" optionLabel="piName" optionValue="piId"
                           required></p-dropdown>
                     </div>
                     <div *ngIf="optionValue == 'RPA Implementation'">
                         <p-dropdown [options]="bot_list" formControlName="correlationID" autoWidth="false"
-                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [appendTo]="'body'" 
+                          emptyMessage="No Records Found" [style]="{'width':'100%'}" [filter]="true" filterBy="botName"
                           placeholder="Select Workspace File" optionLabel="botName" optionValue="botId"
                           required></p-dropdown>
                     </div>

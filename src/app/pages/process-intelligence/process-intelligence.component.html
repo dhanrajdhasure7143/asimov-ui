@@ -9,14 +9,14 @@
                     <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                     <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                   </a>
-                  <a *ngIf="isPIHeaderShow" (click)='backtoWorkspace()' class="imageBox">
+                  <a *ngIf="!isBackbutton" (click)='backtoWorkspace()' class="imageBox">
                     <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
-                    <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                    <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                   </a>
-                  <a *ngIf="isProjDetails" (click)='gotoProjectDetails()' class="imageBox">
+                  <!-- <a *ngIf="isProjDetails" (click)='backtoWorkspace()' class="imageBox">3
                     <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
-                    <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
-                  </a>
+                    <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
+                  </a> -->
                 </label>
                 
                 <span class="title_text">Process Intelligence

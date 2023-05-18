@@ -90,7 +90,6 @@ export class DynamicTableComponent implements OnInit {
   ngOnChanges() {
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
-
     this._selectedColumns = this.columns_list;
     
     if (this.table_data.length > 0) this.loading = false;

@@ -338,6 +338,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getAllUsers(tenantid){
   this.rest_api.getuserslist(tenantid).subscribe((res) => {
     let data =res
+    if(Array.isArray(data)){
     data.forEach(element => {
       element["user_email"]= element.userId.userId
       element["firstName"]= element.userId.firstName
@@ -346,6 +347,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       element["fullName"] = this.titlecasePipe.transform(element.userId.firstName)+' '+this.titlecasePipe.transform(element.userId.lastName)
     });
     this.dataTransfer.tenantBasedUsersList(data)
+    }
   });
 }
 

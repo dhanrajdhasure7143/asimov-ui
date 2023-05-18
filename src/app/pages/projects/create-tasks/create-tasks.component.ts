@@ -167,9 +167,11 @@ export class CreateTasksComponent implements OnInit {
   }
 
   getallpiprocess(){
-    this.api.getAlluserProcessPiIds().subscribe(data =>{
-      let response:any=data;
-      this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
+    this.api.getAlluserProcessPiIds().subscribe((data:any) =>{
+      let response:any;
+      if(Array.isArray(data.data))
+        response=data.data.filter((item) => item.status == "Completed");
+      this.pi_process_list=response.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
     })
   }
 

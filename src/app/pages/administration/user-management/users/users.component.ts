@@ -7,6 +7,8 @@ import * as moment from "moment";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { columnList } from "src/app/shared/model/table_columns";
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { TitleCasePipe } from "@angular/common";
+import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 
 @Component({
   selector: "app-users",
@@ -46,6 +48,8 @@ export class UsersComponent implements OnInit {
     @Inject(APP_CONFIG) private config,
     private loader: LoaderService,
     private columnList: columnList,
+    private titlecasePipe:TitleCasePipe,
+    private dataTransfer: DataTransferService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +66,14 @@ export class UsersComponent implements OnInit {
     this.rest_api.getuserslist(localStorage.getItem("masterTenant"))
       .subscribe((resp) => {
         this.users = resp;
+        resp.forEach(element => {
+          element["user_email"]= element.userId.userId
+          element["firstName"]= element.userId.firstName
+          element["lastName"]= element.userId.lastName
+          element["user_role"] = element.roleID.displayName
+          element["fullName"] = this.titlecasePipe.transform(element.userId.firstName)+' '+this.titlecasePipe.transform(element.userId.lastName)
+        });
+        this.dataTransfer.tenantBasedUsersList(resp)
         this.loader.hide();
         this.userslist = [];
         this.users.forEach((element) => {
@@ -85,7 +97,7 @@ export class UsersComponent implements OnInit {
             department: element.departmentsList,
             roles: roles,
             created_at: new Date(element.created_at),
-            status: element.user_role_status,
+            status: this.titlecasePipe.transform(element.user_role_status),
           };
           this.userslist.push(userdata);
         });
