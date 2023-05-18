@@ -119,13 +119,14 @@ public slaupdate : boolean = false;
       {DisplayName:"Logs",ColumnName:"botStatus",ShowFilter: false},
     ]
     statusColors = {
-      New: 'orange',
-      Failure: 'red',
-      Success: 'green',
-      Killed:"green",
-      Stopped: 'red',
-      Running:"Orange"
+      New: '#3CA4F3',
+      Failure: '#FE665D',
+      Success: '#4BD963',
+      Killed:"#B91C1C",
+      Stopped: '#FE665D',
+      Running:"#C4B28E"
     };
+    statusList=["Success","Running","New","Failure","Killed","Stopped"]
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,

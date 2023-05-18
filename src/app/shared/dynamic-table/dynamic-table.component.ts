@@ -50,25 +50,25 @@ export class DynamicTableComponent implements OnInit {
   loggedInUser:String;
   users_list:any=[];
   statusColors = {
-    Medium: 'orange',
-    High: 'red',
-    Low: 'green',
-    Yes:"green",
-    No: 'red',
-    Active :'green',
-    Inactive:'red',
-    ACTIVE:'green',
-    INACTIVE:'red',
-    Rejected:"red",
-    Approved:"green",
-    Pending:"orange",
-    Running:'#007bff',
-    Completed:"green",
-    Inprogress:"orange",
-    Failed:"red",
-    New:'green',
-    Started:'green',
-    Stopped:"red"
+    Medium: '#E58600',
+    High: '#EA3D3D',
+    Low: '#27AD74',
+    Yes:"#4BD963",
+    No: '#FE665D',
+    Active :'#4BD963',
+    Inactive:'#FE665D',
+    ACTIVE:'#4BD963',
+    INACTIVE:'#FE665D',
+    Rejected:"#B91C1C",
+    Approved:"#4BD963",
+    Pending:"#FED653",
+    Running:'#C4B28E',
+    Completed:"#4BD963",
+    Inprogress:"#FFA033",
+    Failed:"#FE665D",
+    New:'#3CA4F3',
+    Started:'#4BD963',
+    Stopped:"#FE665D"
   };
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
@@ -88,12 +88,10 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.table_data)
     if(this.selectionMode == 'single') this.selectedItem={}
     else this.selectedItem = []
 
     this._selectedColumns = this.columns_list;
-    console.log("columns",this.columns_list);
     
     if (this.table_data.length > 0) this.loading = false;
   }
@@ -152,7 +150,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   getapproved(rowData){
-    console.log(rowData)
     this.approvedItem.emit(rowData)
   }
 

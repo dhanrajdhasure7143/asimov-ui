@@ -92,13 +92,13 @@ users_list:any[]=[];
   getColor(status) {
     switch (status) {
       case 'PENDING':
-        return 'orange';
+        return '#FED653';
       case 'REJECTED':
-        return 'red';
+        return '#B91C1C';
       case 'APPROVED':
-        return 'green';
+        return '#4BD963';
       case 'INPROGRESS':
-        return 'orange';
+        return '#FFA033';
     }
   }
   collapseExpansion(){

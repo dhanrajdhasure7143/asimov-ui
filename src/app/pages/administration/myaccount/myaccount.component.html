@@ -5,10 +5,10 @@
         <label id="popup_title">
             <a routerLink="/pages/home" class="imageBox">
               <span class="active-icon" >
-                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
+                <img src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
               </span>
               <span class="hover-icon" >
-                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
+                <img src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
               </span>
             </a>
         </label>
@@ -28,25 +28,25 @@
                 <label class="label-control" for="firstName">First Name<span class="star">*</span></label>
                 <input type="text" name="firstName" #firstName="ngModel" class="form-control" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required/>
                 <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
-                  class='required'>First Name is required </span>
+                  class='required'>First Name required </span>
               </div>
               <div class="form-group col-md-6 pl-0">
                 <label class="label-control" for="lastName">Last Name<span class="star">*</span></label>
                 <input type="text" name="lastName" #lastName="ngModel" class="form-control" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly />
                 <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
-                  class='required'> Last Name is required </span>
+                  class='required'> Last Nam required </span>
               </div>
               <div class="form-group col-md-6 pr-0">
                 <label class="label-control" for="jobTitle">Job Title<span class="star">*</span></label>
                 <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly/>
                 <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
-                  class='required'>Job Title is required </span>
+                  class='required'>Job Title required </span>
               </div>
               <div class="form-group col-md-6 pl-0">
                 <label class="label-control" for="company">Company<span class="star">*</span></label>
                 <input type="text" name="company" #company="ngModel" class="form-control" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly disabled/>
                 <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
-                class='required'> Company is required </span>                                    
+                class='required'> Company required </span>                                    
               </div>                      
               <div class="form-group col-md-6 pr-0">
                 <label class="label-control" for="country">Country<span class="star">*</span></label>
@@ -57,7 +57,7 @@
                   <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
                 </select>
                 <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
-                  class='required'>Country is required</span>
+                  class="required">Country  required</span>
                   <span class="required">{{errorMessage}}</span>
               </div>
                <!--   <div class="col-md-12 p-0"> 
@@ -70,7 +70,7 @@
                   <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
                 </select>
                 <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
-                  class='required'> State is required </span>
+                  class='required'> State required </span>
               </div>                             -->
                 <!-- <div class="form-group col-md-6 pr-0">
                 <label class="label-control" for="city">City<span class="star">*</span></label>
@@ -80,7 +80,7 @@
                   <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
                 </select>
                 <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
-                  class='required'> City is required </span>
+                  class='required'> City required </span>
               </div>
             </div> -->
             
@@ -88,7 +88,7 @@
                 <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="formOne.zipcode"
                   onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
                 <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
-                  class='required'> Zip Code is required </span>
+                  class='required'> Zip Code required </span>
               </div>  -->
               <div *ngIf="show" class="form-group col-md-6 pl-0 Admin-countrylist">
                 <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
@@ -100,7 +100,7 @@
                   #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                   pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                 <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern) )"
-                  class='required'> Phone Number is required </span>
+                  class='required'> Phone Number required </span>
                   <span *ngIf="phoneumber.errors  && phoneumber.invalid">
                   <span *ngIf="phoneumber.errors.pattern"  class="required">Phone number should be 10 digits</span>
                 </span>
@@ -111,7 +111,7 @@
                   #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                   pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                   <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern))"
-                  class='required'> Phone Number is required </span>
+                  class='required'> Phone Number required </span>
                   <span *ngIf="phoneumber.errors && phoneumber.invalid">
                   <span *ngIf="phoneumber.errors.pattern" class="required">Phone number should be 10 digits</span>
                   </span>

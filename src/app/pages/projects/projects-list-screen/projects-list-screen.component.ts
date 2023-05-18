@@ -102,6 +102,7 @@ export class ProjectsListScreenComponent implements OnInit {
   getallProjects(roles, name, email) {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
+      if(Array.isArray(res)){
       this.projectsresponse = response;
       // TODO- Enable to show programs
       // let res_list = response[0].concat(response[1]); 
@@ -141,6 +142,11 @@ export class ProjectsListScreenComponent implements OnInit {
           ).length;
         }
       });
+    }else{
+      this.spinner.hide();
+    }
+    },err=>{
+      this.spinner.hide();
     });
 
     this.table_searchFields = [
