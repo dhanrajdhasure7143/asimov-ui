@@ -136,7 +136,7 @@
                                 </label>
                                 <p-dropdown [options]="requestParams" formControlName="addTo"
                                 [style]="{'width':'100%'}" placeholder="Select" 
-                                optionLabel="value" optionValue="type" (onChange)="addToChange($event.value)"></p-dropdown>
+                                optionLabel="value" optionValue="type" (onChange)="onChangeAddTo($event.value)"></p-dropdown>
                                 <span
                                     *ngIf="connectorForm.get('addTo').invalid && connectorForm.get('addTo').touched && !connectorForm.get('addTo').hasError('pattern')"
                                     class="required"> Add To Required*

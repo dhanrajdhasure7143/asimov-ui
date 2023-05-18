@@ -60,6 +60,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isKeyValue:boolean = false;
   isKeyValueTab:boolean =false;
   requestParams:any =[];
+  payload: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -135,8 +136,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   saveAction() {
     this.spinner.show();
     let req_body
-    if(this.connectorForm.value.actionType == "Authenticated"){    
-    req_body=
+    if (this.connectorForm.value.actionType == "Authenticated") {
+      req_body =
       {
         "id": "",
         "name": this.connectorForm.value.actionName,
@@ -144,26 +145,26 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        "actionLogo":this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
-
+      this.onChangeAddTo(this.connectorForm.value.addTo);
       let object = {
         // endPoint: this.connectorForm.value.endPoint,
         // grantType: this.connectorForm.value.grantType,
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
-        task_type:"AUTHENTICATION",
-        task_subtype:"OAUTH2"
+        task_type: "AUTHENTICATION",
+        task_subtype: "OAUTH2"
         // "actionType": this.connectorForm.value.actionType,
       };
-      if(this.connectorForm.value.authType == "OAUTH2"){
+      if (this.connectorForm.value.authType == "OAUTH2") {
         object["endPoint"] = this.connectorForm.value.endPoint;
         object["grantType"] = this.connectorForm.value.grantType;
-      }else if(this.connectorForm.value.authType == "API_KEY"){
+      } else if (this.connectorForm.value.authType == "API_KEY") {
         object["addTo"] = this.connectorForm.value.addTo;
-        object["requestKey"] = this.connectorForm.value.requestKey;
-        object["requestValue"] = this.connectorForm.value.requestValue;
+        object["httpHeaders"] = this.payload.headers,
+        object["queryParams"] = this.payload.queryParams;
       };
       if (this.connectorForm.value.grantType == "AuthorizationCode") {
         object["clientId"] = this.connectorForm.value.clientId;
@@ -181,7 +182,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
       } else if (
         this.connectorForm.value.grantType == "AuthorizationCodeWithPKCE"
-      )  {
+      ) {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
@@ -191,52 +192,52 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
-        object["refreshToken"]=this.connectorForm.value.refreshToken
-  }
+        object["refreshToken"] = this.connectorForm.value.refreshToken
+      }
       req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
-        "id":"",
-        "name" : this.connectorForm.value.actionName,
-        "actionLogo":this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
-        "actionType" : this.connectorForm.value.actionType,
-        "configuredConnectionId" : this.selectedId,
-        "description" : "",
+        "id": "",
+        "name": this.connectorForm.value.actionName,
+        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionType": this.connectorForm.value.actionType,
+        "configuredConnectionId": this.selectedId,
+        "description": "",
       }
-      
-        let headers=[]
-        this.headerForm.forEach(ele=>{
-          // if(ele.check)
-          // obj[ele["encodedKey"]]=ele["encodedValue"];
-          if (ele.check) {
-            headers.push({ [ele.encodedKey]: ele.encodedValue });
-          }
-        })
 
-        let params=[]
-        this.paramForm.forEach(ele=>{
-          // if(ele.check)
-          // params[ele["paramKey"]]=ele["paramValue"];
-          if (ele.check) {
-            params.push({ [ele.paramKey]: ele.paramValue });
-          }
-        })
-       
-      let object={
-        "endPoint" : this.connectorForm.value.endPoint,
-        "methodType" : this.connectorForm.value.methodType,
+      let headers = []
+      this.headerForm.forEach(ele => {
+        // if(ele.check)
+        // obj[ele["encodedKey"]]=ele["encodedValue"];
+        if (ele.check) {
+          headers.push({ [ele.encodedKey]: ele.encodedValue });
+        }
+      })
+
+      let params = []
+      this.paramForm.forEach(ele => {
+        // if(ele.check)
+        // params[ele["paramKey"]]=ele["paramValue"];
+        if (ele.check) {
+          params.push({ [ele.paramKey]: ele.paramValue });
+        }
+      })
+
+      let object = {
+        "endPoint": this.connectorForm.value.endPoint,
+        "methodType": this.connectorForm.value.methodType,
         // "actionType": this.connectorForm.value.actionType,
         // "requestMethod":this.connectorForm.value.methodType,
-        "contentType":"application/json",
+        "contentType": "application/json",
         "httpHeaders": headers,
-        "queryParams":params,
-        "type":"API",
-        "task_type":"ACTION",
-        "task_subtype":"API",
+        "queryParams": params,
+        "type": "API",
+        "task_type": "ACTION",
+        "task_subtype": "API",
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
-    }
-    req_body["configuration"]=btoa(JSON.stringify(object));
+      }
+      req_body["configuration"] = btoa(JSON.stringify(object));
     }
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
@@ -1090,9 +1091,21 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       return this.requestParams;
     });
   }
-  addToChange(event){
-    // if(event == "HEADERS"){}
 
+  onChangeAddTo(value){
+    if (value === 'HEADERS') {
+      this.payload.headers = []
+      let obj ={}
+       obj[this.connectorForm.value.requestKey] = this.connectorForm.value.requestValue;
+      this.payload.headers.push(obj)
+      this.payload.queryParams = [];
+    } else if (value === 'QUERY_PARAMS') {
+      this.payload.queryParams = []
+      let obj ={}
+      obj[this.connectorForm.value.requestKey] = this.connectorForm.value.requestValue;
+      this.payload.queryParams.push(obj)
+      this.payload.headers =[];
+    }
   }
 
 }
