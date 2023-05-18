@@ -26,20 +26,20 @@
                 <span *ngIf="!isShowConformance">
                   <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                   <span class="module-back-button" *ngIf="!isfromApprover && !vcm_id" (click)='backtoNavigate()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                   <span class="module-back-button" *ngIf="vcm_id" (click)='backtoVcm()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                   </span>
                 </span>
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'>
                   <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                  <img src="../../../assets/images-n/projects/backarrow.svg" alt="back-arrow">
+                  <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
                 </span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{lastModified_user}}</span>
@@ -152,19 +152,20 @@
               </ngx-dropzone>
             </div>  
           </div>
-          <div class="col-md-6 p-0 module-heading-buttons bps-aprwkfl" *ngIf="isHeaderShow == 'false'">
+          <div class="col-md-6 p-0 module-heading-buttons" *ngIf="isHeaderShow == 'false'">
             <span>
-              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home"  pTooltip="Approvals" tooltipPosition="top">
-                <img  src="../../../assets/images-n/dashboard/Workflow.svg" class="grey-btn create-pad" alt="Approvals">
-                <!-- Approvals -->
-              </button>
               <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()"  class="grey-btn configure-pad">
                 <img  src="../../../assets/images-n/dashboard/eye-show-blue.svg"  alt="viewcockpit" class="imgicon-width">
                 <span class="plus">Cockpit</span>
                 <!-- <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit -->
               </button> 
-            </span>
+              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="grey-btn configure-pad">
+                <img  src="../../../assets/images-n/dashboard/Workflow.svg"  alt="Approvals" class="imgicon-width">
+                <span class="plus">Approvals</span>
+                <!-- Approvals -->
+              </button>
+             </span>
           </div>
         </div>    
         <router-outlet></router-outlet>

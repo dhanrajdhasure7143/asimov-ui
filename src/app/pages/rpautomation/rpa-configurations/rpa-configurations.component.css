@@ -29,6 +29,8 @@
     padding-right: 10px;
     line-height: 12px;
     }
+    .errspan{text-transform: lowercase;}
+    .errspan::first-letter{text-transform: uppercase;display: block;}
 
   .rpa-tablebox{
   padding-top:10px;

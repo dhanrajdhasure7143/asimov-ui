@@ -1179,6 +1179,8 @@ img.testplus1 {
   font-weight: normal;
   font-size: 12px;
 }
+.errspan{text-transform: lowercase;}
+.errspan::first-letter{text-transform: uppercase;}
 
 .maindivfoprm option {
   background-color: #fff !important;
@@ -1247,14 +1249,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .modelprbody {
   padding: 10px !important;
 } */
-
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
 .required,
 .star {
   color: var(--high-importance);
   font-size: 12px !important;
   line-height: 17px;
   letter-spacing: 0.2px;
+ 
 }
+
 
 .modal-header.modelprhead {
   padding: 15px 25px 10px 25px !important;
@@ -2803,6 +2808,25 @@ span.tabscount {
 
 
 /* Grid NEW Styles Start */
+.prjlastupdateprofile {
+  background-color: #e0e0e0;
+  color: #232832;
+  border-radius: 100%;
+  width: 33px;
+  height: 33px;
+  display: inline-block;
+  line-height: 13px;
+  padding: 10px 8px;
+  margin-right: 8px;
+  text-transform: uppercase;
+}
+span.statusbadge_nc {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
@@ -2838,19 +2862,28 @@ span.tabscount {
   }
 } */
 .bps-approvalgrid .p-datatable-wrapper {
-  height: calc(100vh - 195px); /* for bps-approval grid */
+  height: calc(100vh - 195px);   /* for bps-approval grid */
+}
+.graph_table.gridparentdiv .p-datatable-wrapper {
+  height: calc(100vh - 355px);   /* for pi-landing grid */
+} 
+.box-border.myworkspace-style .p-datatable-wrapper {
+  height: calc(100vh - 325px);   /* for bps-landing grid */
+}
+.rpa-workspacegrid .p-datatable-wrapper {
+  height: calc(100vh - 350px);   /* for rpa-landing grid */
 }
 .credential-tablegrid .p-datatable-wrapper {
-  height: calc(100vh - 275px); /* for view connection manager grid */
+  height: calc(100vh - 275px);   /* for view connection manager grid */
 }
 .actionitems-grid .p-datatable-wrapper {
-  height: calc(100vh - 180px); /* for action items - connection manager grid */
+  height: calc(100vh - 180px);   /* for action items - connection manager grid */
 }
-.actionitems-grid .p-datatable-wrapper td span {
-  width: 165px;       /* for action items - connection manager grid */
+.actionitems-grid .p-datatable-wrapper td span {   /* for action items - connection manager grid */
+  /* width: 165px;       
   display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 230px); /* for Onboard Users grid */
@@ -3353,7 +3386,7 @@ textarea.p-inputtextarea {
 .space .p-tieredmenu.p-component.p-tieredmenu-overlay {
   position: absolute !important;
   top: 45px !important;
-  left: 0px !important;
+  left: 14px !important;
 }
 .taskdescription p-inplace.p-element {
   height: calc(100% - 40px);
@@ -3372,7 +3405,7 @@ textarea.p-inputtextarea {
 .p-inplace.p-component .task-descwords {
   overflow-wrap: break-word;
 }
-.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(3) {
+.rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(2) {
   white-space: inherit !important;
 }
 /* headercss end*/
@@ -3870,13 +3903,11 @@ background-color: #D8E0EF !important;
   float: right;}
 .imageBox {
   position: relative;
-  float: left;
+  /* float: left; */
 }
 
-.imageBox .hover-icon {
-  position: absolute;
-  left: 0;
-  top: 0;
+.imageBox .hover-icon,
+.imageBox:hover .active-icon  {
   display: none;
 }
 
