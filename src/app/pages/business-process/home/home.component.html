@@ -114,7 +114,7 @@
                                         <!-- <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div> -->
                                         <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]}}
                                     </span>
-                                    <span *ngIf="col.DisplayName == 'Message'">
+                                    <span *ngIf="col.DisplayName == 'Message'" class="message_span">
                                         <img alt="Message" class="testplus default-icon" src="../../../../assets/images-n/gridicons/messages-default.svg">
                                         <img alt="Message" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/messages-hover.svg">
                                         <!-- <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"> -->
