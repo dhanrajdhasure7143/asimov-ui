@@ -64,8 +64,12 @@ export class RpaActionItemsComponent implements OnInit {
   }
 
   viewDetails(event) {
-    let actionID = event.id
-    this.router.navigate(["/pages/rpautomation/connection"],{queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
+    let actionID = event.id;
+    if (["System Admin", "User", "Process Architect", "Process Analyst", "SuperAdmin", "Admin"].includes(this.userRole)) {
+      return
+    } else if (["Process Owner", "RPA Developer"].includes(this.userRole)) {
+      this.router.navigate(["/pages/rpautomation/connection"], {queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
+    }
   }
 
     deleteById(event) {

@@ -326,17 +326,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       return this.methodItems;
     });
   }
-
+  
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
-      let filterData = res;
-      this.authItems = Object.keys(filterData).map((key) => ({
+      this.authItems = Object.keys(res).map(key => ({
         type: key,
-        value: filterData[key],
-      }));
-      return this.authItems;
+        value: res[key]
+      })).filter(item => !['BASIC', 'NONE', 'OAUTH'].includes(item.type));
     });
+    return this.authItems;
   }
+
+  // authTypes() {
+  //   this.rest_api.getAuthTypes().subscribe((res: any) => {
+  //     let filterData = res;
+  //     this.authItems = Object.keys(filterData).map((key) => ({
+  //       type: key,
+  //       value: filterData[key],
+  //     }));
+  //     return this.authItems;
+  //   });
+  // }
 
   // isJsonValid() {
   //   let jsonData = this.connectorForm.get("response").value;
@@ -1139,6 +1149,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.payload.queryParams.push(obj)
       this.payload.headers =[];
     }
+  }
+
+  backToConnection() {
+    this.router.navigate(["/pages/rpautomation/configurations"], {
+      queryParams: { index: 2 },
+    });
   }
 
 }
