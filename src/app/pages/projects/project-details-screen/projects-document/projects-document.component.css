@@ -20,7 +20,7 @@
   word-break: break-word;
 }
 .docfolder img, .fldrovrlay img {
-  width: 70px;
+  width: 100px;
 }
 .doctree img {
   width: 34px;
@@ -118,10 +118,11 @@
 }
 span.p-element.docfilt-icon {
   display: inline-block;
-  vertical-align: middle;
+  
 }
 .head-ritfilter span.p-input-icon-right {
   float: inherit;
+ 
 }
 
 i.pi.pi-search.treeviewsearchicon {
@@ -129,5 +130,33 @@ i.pi.pi-search.treeviewsearchicon {
 }
 
 span.p-element.docfilt-icon.treeviewfilter {
-  margin-top: 7px;
+  margin-top: 10px;
 }
+.well-design{border: 1px solid var(--cards-bordercolor) !important;
+  background-color: #fff;
+  border-radius: 6px;
+  height: calc(100vh - 190px) !important;
+  width: 100%;}
+  .under-line{    border-bottom: 1px solid var(--cards-bordercolor);
+    padding: 15px 20px;}
+  .right-btns{text-align: right;}
+  .p-input-icon-right{width:196px;}
+  .crt-new{margin-right:8px;margin-left:8px;}
+  .doc-btns{margin-right:15px;margin-left:15px;}
+  .icn-adj{margin-right:10px;}
+  .icn-adj1{margin-right:20px;} 
+  .docfolder1 {padding:15px 20px;}
+  .doctree{padding:15px 20px;}
+  .docmnt-btn{border-radius: var(--main-borderradius) !important;
+    height: 36px !important;
+    background-color: transparent;
+    color: #000;
+    padding:8px 14px !important;
+}
+.docmnt-btn:hover{border-radius: var(--main-borderradius) !important;
+  height: 36px !important;
+  background-color: #eeeeee;
+  color: #000;
+  padding:8px 14px !important;
+}
+  

@@ -3617,9 +3617,9 @@ textarea.p-inputtextarea {
 }
 .doctree .p-tree-filter-container {
   position: fixed;
-  top: 70px;
-  right: 70px;
-  width: 196px;
+  top: 135px;
+  right: 51px;
+  width: 195px;
 }
 .doctree .p-tree-filter-container .p-tree-filter {
   /* padding-left: 18px !important; */
@@ -3643,7 +3643,9 @@ textarea.p-inputtextarea {
   cursor: pointer;
 }
 .docfolder .p-card:hover {
-  border: 1px solid var(--secondary-bluecolor);
+  background-color: #eeeeee;
+
+  text-decoration: underline !important;
 }
 .docfolder1 .addpcard .p-card {
   background: #eee;
@@ -3653,9 +3655,12 @@ textarea.p-inputtextarea {
   color: var(--main-txtcolor);
   font-weight: 600;
 }
+.docscrnchngs .p-breadcrumb ul li:not(:last-child) .p-menuitem-text {
+  cursor:pointer;
+}
 .docscrnchngs .p-breadcrumb {
   background: transparent;
-  padding: 0px 10px;
+  padding: 15px 20px 0px 20px;
   border: unset;
 }
 .docscrnchngs .p-breadcrumb ul li.p-breadcrumb-chevron {

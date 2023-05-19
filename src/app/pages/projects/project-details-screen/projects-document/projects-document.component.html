@@ -25,18 +25,64 @@
                 </h3>
             </div>
             <div class="col-md-8 pr-0 text-right head-ritfilter">
-                <span class="p-input-icon-right">
-                    <i class="pi pi-search" [ngClass]="{'treeviewsearchicon': !isFolder}"></i>
-                    <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
-                    <!-- <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search"> -->
-                </span>
-                <span class="docfilt-icon" pTooltip="Filter" tooltipPosition="top" [ngClass]="{'treeviewfilter': !isFolder}">
-                    <i (click)="op1.toggle($event)" class="pi pi-filter icon-color"></i>
-                </span>
+                
             </div>
         </div>
         <div class="main-content-body">
-            <div class="">
+            <div class="well-design">
+                <div class="col-md-12 under-line">
+                    <div class="row">
+                        <div class="col-md-8 pl-0">
+                            
+                                <button type="button" class="btn bluebg-button creat-pluarow icn-adj">
+                                  <span><img src="../../../../../assets/images-n/add-default.svg"></span> <span class="crt-new"> Create New</span> <span><img src="../../../../../assets/images-n/chevron-down-createnew.svg"></span>
+                                </button>
+                           
+                           
+                                <button type="button" class="btn docmnt-btn icn-adj ">
+                                <img src="../../../../../assets/images-n/uploadicon.svg"/>
+                                <span class="crt-new">Upload</span>
+                            </button>
+                           
+                            <button type="button" class="btn docmnt-btn icn-adj ">
+                                <img src="../../../../../assets/images-n/downlaod.svg"/>
+                                <span class="crt-new">Download</span>
+                            </button>
+                            <button type="button" class="btn docmnt-btn icn-adj ">
+                                <img src="../../../../../assets/images-n/delete.svg"/>
+                                <span class="crt-new">Delete</span>
+                            </button>
+                                <button type="button" class="btn docmnt-btn icn-adj ">
+                                <img src="../../../../../assets/images-n/rename.svg"/>
+                                <span class="crt-new">Rename</span>
+                            </button>
+                            <button type="button" class="btn docmnt-btn">
+                                <img src="../../../../../assets/images-n/copylink.svg"/>
+                                <span class="crt-new">Copy Link</span>
+                            </button>
+
+                        </div>
+                        <div class="col-md-4 pr-0 right-btns">
+                             
+                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1">
+                                <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" />
+                            </span>
+                            <span (click)="treeView()" pTooltip="Tree View" tooltipPosition="top" class="icn-adj1">
+                                <img src="../../../../../assets/images-n/Icon feather-list.svg" alt="Tree View" />
+                            </span>
+                            <span class="docfilt-icon icn-adj1" pTooltip="Filter" tooltipPosition="top" [ngClass]="{'treeviewfilter': !isFolder}">
+                                <!-- <i  class="pi pi-filter icon-color"></i> -->
+                                <img (click)="op1.toggle($event)" src="../../../../../assets/images-n/Icon feather-filter.svg"/>
+                            </span>
+                            <span class="p-input-icon-right">
+                                <i class="pi pi-search" [ngClass]="{'treeviewsearchicon': !isFolder}"></i>
+                                <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
+                                <!-- <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search"> -->
+                            </span>
+                           
+                        </div>
+                    </div>
+                </div>
                 <div class="docscrnchngs">
                     <div *ngIf="isFolder && breadcrumbItems.length>0">
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
@@ -90,18 +136,18 @@
                 
         </div>
         </div>
-        <div class="row position-relative">
+        <!-- <div class="row position-relative">
             <div class="docfootbtns">
                 <button type="button" class="btn bluebg-button" (click)="folderView()" pTooltip="Folder View" tooltipPosition="top">
-                    <!-- <i class="pi pi-folder"></i> -->
+                   
                     <img src="../../../../../assets/images-n/projects/Footer-folder.svg" alt="Tree View" />
                 </button>
                 <button type="button" class="btn bluebg-button" (click)="treeView()" pTooltip="Tree View" tooltipPosition="top">
-                    <!-- <i class="pi pi-sitemap"></i>  -->
+                  
                     <img src="../../../../../assets/images-n/projects/Footer treefile.svg" alt="Tree View" />
                 </button>                                        
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createFolderPopUP" style="display: block">
