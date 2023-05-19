@@ -1152,6 +1152,7 @@ img.testplus1 {
   color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
+  text-transform: capitalize;
 }
 
 .modelprbody input,
@@ -1695,6 +1696,7 @@ span.star {
   font-weight: 400;
   margin-bottom: 2px;
   color: var(--formlabel-color);
+  text-transform: capitalize;
 }
 
 .form-group,.form-fields {
@@ -3561,6 +3563,7 @@ textarea.p-inputtextarea {
   color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
+  text-transform: capitalize;
 }
 .createform-overlay input.p-inputtext,
 .createform-overlay .p-dropdown,
@@ -3929,11 +3932,11 @@ background-color: #D8E0EF !important;
   /* float: left; */
 }
 
-.imageBox .hover-icon,
-.imageBox:hover .active-icon  {
+.imageBox .hover-arrow,
+.imageBox:hover .default-arrow  {
   display: none;
 }
 
-.imageBox:hover .hover-icon{
+.imageBox:hover .hover-arrow {
   display: block;
 }
