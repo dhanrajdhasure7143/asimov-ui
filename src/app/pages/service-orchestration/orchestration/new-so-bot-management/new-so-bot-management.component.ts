@@ -112,7 +112,7 @@ public slaupdate : boolean = false;
       {DisplayName:"Description",ColumnName:"description",ShowFilter: true},
       // {DisplayName:"Source",ColumnName:"sourceType",ShowFilter: true},
       {DisplayName:"Category",ColumnName:"department",ShowFilter: true},
-      {DisplayName:"Version",ColumnName:"version",ShowFilter: true},
+      {DisplayName:"Version",ColumnName:"version_new",ShowFilter: true},
       {DisplayName:"Status",ColumnName:"botStatus",ShowFilter: true},
       {DisplayName:"Actions",ColumnName:"Actions",ShowFilter: false},
       {DisplayName:"Schedule",ColumnName:"botStatus",ShowFilter: false},
