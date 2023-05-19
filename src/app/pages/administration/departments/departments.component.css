@@ -15,3 +15,9 @@
 .depart-btns #deletebtndis img {
   cursor: no-drop;
 }
+.depart-btns span:hover img.default-icon, .depart-btns img.hover-icon {
+  display: none;
+}
+.depart-btns span:hover img.hover-icon {
+  display: initial;
+}
