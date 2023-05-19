@@ -5,8 +5,8 @@
                 <h3>
                     <label id="popup_title">
                         <a (click)="backToaction()" class="imageBox">
-                            <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
-                            <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                            <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                            <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                         </a>
                     </label>
                     <span class="title_text_haspath">
@@ -159,23 +159,23 @@
                                         *ngIf="connectorForm.get('requestKey').invalid && connectorForm.get('requestKey').touched && !connectorForm.get('requestKey').hasError('pattern')"
                                         class="required"> Key Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('Key').hasError('pattern')" class="required">
+                                    <span *ngIf="connectorForm.get('requestKey').hasError('pattern')" class="required">
                                         Key or Dynamic Pattern Is Incorrect.
-                                    </span> -->
+                                    </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
                                     <label class="label-control" for="programname"> Value
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="requestValue" placeholder="Enter Value">                                        
                                     <span
                                         *ngIf="connectorForm.get('requestValue').invalid && connectorForm.get('requestValue').touched && !connectorForm.get('requestValue').hasError('pattern')"
                                         class="required"> Value Required*
                                     </span>
-                                    <!-- <span *ngIf="connectorForm.get('value').hasError('pattern')" class="required">
+                                    <span *ngIf="connectorForm.get('requestValue').hasError('pattern')" class="required">
                                         Value or Dynamic Pattern Is Incorrect.
-                                    </span> -->
+                                    </span>
                                 </div>
                             </div>
                             <div class="row" *ngIf="isAuthorization">
