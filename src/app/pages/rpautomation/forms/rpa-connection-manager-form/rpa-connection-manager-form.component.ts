@@ -846,8 +846,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
-      this.connectorForm.get("requestKey").setValue(this.actionData.configurationAsJson["requestKey"]);
-      this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["requestValue"]);
+    if(this.actionData.configurationAsJson.httpHeaders.length>0){
+     let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
+      this.connectorForm.get("requestKey").setValue(key),
+      this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["httpHeaders"][0][key])
+      ));
+     }
+     if(this.actionData.configurationAsJson.queryParams.length>0){
+      let data= Object.keys(this.actionData.configurationAsJson["queryParams"][0]).map((key) => (
+       this.connectorForm.get("requestKey").setValue(key),
+       this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["queryParams"][0][key])
+       ));
+      }
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
         Object.keys(headers_data).map((key,i) => {
@@ -1064,6 +1074,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   onKeyEntered(){
     let queryParams="?";
+    // let paramsValue = this.connectorForm.get("endPoint").value.split("?")[1]?this.connectorForm.get("endPoint").value.split("?")[1]:"?"
+    // let queryParams=paramsValue;
+    // console.log(paramsValue)
     for(const each of this.paramForm){
       if(each.check==true) {queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"}
       if(each.paramKey.length > 0 || each.paramValue.length > 0){
@@ -1073,9 +1086,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
+    // let regex=new RegExp("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)")
+    // if(regex.test(value)){
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
-
+  //   else{
+  //     let splitValue = value.split("@")
+  //     const modifiedStr = splitValue[0]+"@"+splitValue[1]+queryParams.slice(0,-1)+"@]"
+  //     this.connectorForm.get("endPoint").setValue(modifiedStr);
+  //   }
+  // }
+  // endPointKeyup(){
+  // }
   get checkEndPoint(){
     return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
   }
