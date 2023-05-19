@@ -2,7 +2,9 @@ th.checkboxth:before {
     bottom: 0px !important;
     border-bottom: 5px solid rgb(9 141 230 / 20%) !important;
 }
-
+.prjlastupdatename {
+    text-transform: capitalize;
+}
 .prjgridpriority,
 .resourcerole {
     display: block;
@@ -17,6 +19,28 @@ th.checkboxth:before {
 .resourcerole {
     opacity: 0.8;
 }
+span.deploy_no {
+    border: 1px solid #fe665d;
+    text-align: center;
+    width: 50px;
+    display: block;
+    border-radius: 50px;
+}
+span.deploy_yes {
+    border: 1px solid #4bd963;
+    text-align: center;
+    width: 50px;
+    display: block;
+    border-radius: 50px;
+}
+img.hover-icon, td a:hover img.default-icon {
+    display: none;
+}
+td a:hover img.hover-icon {
+    display: initial;
+}
+
+
 .red {
     color: red;
     font-weight: 600;
@@ -26,17 +50,10 @@ th.checkboxth:before {
     font-weight: 600;
 }
 
-/* .editButton{
-    border : none !important;
-    margin-right: 17px;
-} */
-
-.actionicons {
-    display: none;
-}
 
 .undobtn {
     background-color:transparent !important; 
+    margin-right: 17px;
   }
   .undobtn:disabled i.fas {
     color: #a0a0a0 !important;

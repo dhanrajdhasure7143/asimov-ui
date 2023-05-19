@@ -1,10 +1,13 @@
 <div class="h-100">
   <div class="depart-btns">
     <span (click)="openDepartmentOverlay()" pTooltip="Create New" tooltipPosition="top">
-      <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt="Create New" />
+      <img  src="../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt="Create New" />
+      <img  src="../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt="Create New" />
     </span>
     <span *ngIf="Departmentdeleteflag" id="deletebtn" (click)="deleteDepartment()" pTooltip="Delete" tooltipPosition="top">      
-      <img  src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" class="testplus" alt="Delete" />
+      <img  src="../../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="Create New" />
+      <img  src="../../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="Create New" />
+      <!-- <img  src="../../../../assets/images/RPA/icon_latest/delete-blue.svg" class="testplus hover-icon" alt="Delete" /> -->
     </span>
     <span *ngIf="!Departmentdeleteflag" id="deletebtndis" >
       <img  src="../../../../assets/images/RPA/icon_latest/delete-dis.svg" class="testplus" alt="Delete" />
