@@ -1,5 +1,4 @@
-<div class="">
-    <div class="createform-overlay">
+<div class="createform-overlay">
         <form autocomplete="off" #updateUser="ngForm" (ngSubmit)="updateAccount()">
             <div class="row">
                 <div class="form-group col-md-6 pl-0">
@@ -99,5 +98,4 @@
             <button type="button" class="btn bluebg-button" (click)="updateAccount()"
                 [disabled]="!(updateUser.valid && (updateUser.touched ||  updateUser.dirty)) || errorMessage">Update</button>
         </div>
-    </div>
 </div>
