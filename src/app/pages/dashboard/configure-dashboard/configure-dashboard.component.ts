@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  Input,
-} from "@angular/core";
+import {Component,OnInit,Output,EventEmitter,ViewChild,Input} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MenuItem, ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
@@ -47,32 +40,8 @@ export class ConfigureDashboardComponent implements OnInit {
   isdefaultDashboard: any;
   searchText_metrics: any;
   searchText: any;
-  chartColors: any[] = [
-    "#065B93",
-    "#076AAB",
-    "#0879C4",
-    "#0A8EE6",
-    "#0A97F5",
-    "#0B8DE4",
-    "#149AF4",
-    "#2CA5F6",
-    "#44AFF7",
-    "#5CBAF9",
-    "#074169",
-    "#085081",
-    "#095F9A",
-    "#0A6EB2",
-    "#0A7DCB",
-  ];
-  execution_Status: any[] = [
-    "#1DCD82",
-    "#FF4956",
-    "#2C97DE",
-    "#688090",
-    "#CE1919",
-    "#EC6D26",
-  ];
-
+  chartColors: any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169","#085081","#095F9A","#0A6EB2","#0A7DCB",];
+  execution_Status: any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26",];
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -103,30 +72,10 @@ export class ConfigureDashboardComponent implements OnInit {
     this.getListOfWidgets();
     this.getListOfMetrics();
     this.defaultEmpty_metrics = [
-      {
-        metricId: "00",
-        metric_name: "Drag And Drop",
-        src: "process.svg",
-        metricAdded: false,
-      },
-      {
-        metricId: "00",
-        metric_name: "Drag And Drop",
-        src: "round-settings.svg",
-        metricAdded: false,
-      },
-      {
-        metricId: "00",
-        metric_name: "Drag And Drop",
-        src: "schedules.svg",
-        metricAdded: false,
-      },
-      {
-        metricId: "00",
-        metric_name: "Drag And Drop",
-        src: "Thumbup.svg",
-        metricAdded: false,
-      },
+      {metricId: "00",metric_name: "Drag And Drop",src: "process.svg",metricAdded: false,},
+      {metricId: "00",metric_name: "Drag And Drop",src: "round-settings.svg",metricAdded: false,},
+      {metricId: "00",metric_name: "Drag And Drop",src: "schedules.svg",metricAdded: false,},
+      {metricId: "00",metric_name: "Drag And Drop",src: "Thumbup.svg",metricAdded: false,},
     ];
   }
 
