@@ -2163,7 +2163,7 @@ th.mat-header-cell {
 }
 .logs-modal td span,
 .modal-lg td span{
-  font-size: 13px !important;
+  font-size: 14px !important;
 }
 th .mat-sort-header-button {
   font-size: 14px !important;
@@ -2654,7 +2654,17 @@ cursor: pointer;
 .main-content-head h3 .title_text_haspath {
   font-size: 18px;
   font-weight: 400;
-  margin-top: 2px;
+  /* margin-top: 2px; */
+}
+.imageBox {
+  position: relative;
+}
+.imageBox .hover-arrow,
+.imageBox:hover .default-arrow  {
+  display: none;
+}
+.imageBox:hover .hover-arrow {
+  display: initial;
 }
 .main-content-head .btn {
   min-width: auto;
@@ -3927,16 +3937,3 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-.imageBox {
-  position: relative;
-  /* float: left; */
-}
-
-.imageBox .hover-arrow,
-.imageBox:hover .default-arrow  {
-  display: none;
-}
-
-.imageBox:hover .hover-arrow {
-  display: block;
-}

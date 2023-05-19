@@ -52,12 +52,12 @@ export class RpaSoLogsComponent implements OnInit {
   columnList=[];
   traversalLogs=[];
   statusColors = {
-    New: 'orange',
-    Failure: 'red',
-    Success: 'green',
-    Killed:"green",
-    Stopped: 'red',
-    Running:"Orange"
+    New: '#3CA4F3',
+    Failure: '#FE665D',
+    Success: '#4BD963',
+    Killed:"#B91C1C",
+    Stopped: '#FE665D',
+    Running:"#FFA033"
   };
   errormsg: any;
   constructor( private modalService:BsModalService,
