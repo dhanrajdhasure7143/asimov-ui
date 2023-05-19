@@ -192,7 +192,8 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   openTaskWorkSpace(data) {
-    localStorage.setItem("project_id", this.project_id.id);
+    localStorage.setItem("project_id", this.project_id);
+    localStorage.setItem("projectName", this.project_name);
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(["/pages/rpautomation/designer"], {
         queryParams: {

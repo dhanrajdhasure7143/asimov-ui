@@ -41,6 +41,7 @@ export class ProcessIntelligenceComponent implements OnInit {
   btn_obj: any;
   userRole: any;
   freetrail: string;
+  businessInsights:boolean = false;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
@@ -89,15 +90,13 @@ export class ProcessIntelligenceComponent implements OnInit {
       };
     } else {
       this.isPIHeaderShow = true;
-      if (localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
+      if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
         this.isProjDetails = true;
         this.isPIHeaderShow = false;
       }
     }
-    if (
-      windowUrl.indexOf("processIntelligence/insights") != -1 ||
-      windowUrl.indexOf("business-insights") != -1
-    ) {
+    windowUrl.indexOf("business-insights") != -1? this.businessInsights=true:this.businessInsights=false
+    if (windowUrl.indexOf("processIntelligence/insights") != -1 || windowUrl.indexOf("business-insights") != -1) {
       this.isBackbutton = true;
       this.isProjDetails = false;
     } else {
@@ -133,9 +132,11 @@ export class ProcessIntelligenceComponent implements OnInit {
   }
 
   gotoProjectDetails() {
-    this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { id: localStorage.getItem("project_id") },
-    });
+    // this.router.navigate(["/pages/projects/projectdetails"], {
+    //   queryParams: { id: localStorage.getItem("project_id") },
+    // });
+    this.router.navigate(["/pages/projects/tasks"], 
+    {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}})
   }
 
   downloadNotaton(e) {
@@ -225,11 +226,18 @@ export class ProcessIntelligenceComponent implements OnInit {
     this.workingHours1.shiftEndTime = "23:59";
   }
   backtoWorkspace() {
-    this.router.navigate(["/pages/processIntelligence/upload"]);
+    if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
+      this.router.navigate(["/pages/projects/tasks"], 
+      {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+    }else{
+      this.router.navigate(["/pages/processIntelligence/upload"]);
+    }
   }
 
   ngOnDestroy() {
     // localStorage.setItem("pi_search_category",'allcategories')
+    localStorage.removeItem("project_id");
+    localStorage.removeItem("projectName");
     let element = document.getElementById("tipsy_div");
     if (element) {
       element.style.display = "none";

@@ -165,12 +165,13 @@
   padding: 0px 10px 0px !important;
   border-radius: 3px !important;
   margin-top: 5px !important;
+  height: 36px !important;
 }
 
 .search-content img.testplus1 {
   position: absolute;
   right: 10px;
-  top: 15px;
+  top: 14px;
 }
 
 .actionsheaderdiv {

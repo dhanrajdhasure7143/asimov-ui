@@ -19,6 +19,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
+import { TitleCasePipe } from '@angular/common';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -58,7 +59,7 @@ export class BpmnDiagramListComponent implements OnInit {
     { ColumnName: 'userName', DisplayName: 'Resource',filterType: "text",filterWidget: "normal"},
     { ColumnName: 'role', DisplayName: 'Role',filterType: "text",filterWidget: "normal"},
     { ColumnName: 'convertedModifiedTime', DisplayName: 'Last Modified',filterType: "date",filterWidget: "normal"},
-    { ColumnName: 'bpmnProcessStatus', DisplayName: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Pending","Approved"]},
+    { ColumnName: 'bpmnProcessStatus', DisplayName: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Approved","Pending"]},
 ];
 users_list:any[]=[];
 
@@ -68,7 +69,8 @@ users_list:any[]=[];
     private model: DiagListData, 
     private rest_Api: RestApiService,
     private router: Router,
-    private loader: LoaderService) { }
+    private loader: LoaderService,
+    private titleCase: TitleCasePipe) { }
 
     @Input() get selectedColumns(): any[] {
       return this._selectedColumns;
@@ -91,11 +93,11 @@ users_list:any[]=[];
   }
   getColor(status) {
     switch (status) {
-      case 'PENDING':
+      case 'Pending':
         return '#FED653';
-      case 'REJECTED':
+      case 'Rejected':
         return '#B91C1C';
-      case 'APPROVED':
+      case 'Approved':
         return '#4BD963';
       case 'INPROGRESS':
         return '#FFA033';
@@ -223,6 +225,7 @@ this.selectedrow =i;
         ele["bpmnProcessStatus"]=ele.bpmnProcessInfo[0].bpmnProcessStatus;
         ele["convertedModifiedTime"]=new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000);
         ele["userName"]=ele.bpmnProcessInfo[0].userName;
+        ele["bpmnProcessStatus"]=this.titleCase.transform(ele.bpmnProcessStatus)
         // ele["role"]=ele.role;
       })
       // this.assignPagenation(this.griddata);

@@ -15,6 +15,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
   @Input() updateenvdata: any;
   @Input("categoriesList") categoriesList: any[]=[];
   @Output() refreshTable = new EventEmitter<any>();
+  @Output() closeOverlay = new EventEmitter<any>();
   public environmentName: FormControl;
   public environmentForm: FormGroup;
   public submitted: Boolean;
@@ -27,7 +28,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   constructor(private api: RestApiService,
     private formBuilder: FormBuilder,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private cd:ChangeDetectorRef
   ) {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -44,6 +46,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.cd.detectChanges();
     if (!this.isCreate && this.updateenvdata) {
       this.environmentForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
       this.environmentForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
@@ -52,7 +55,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
       this.environmentForm.get("username").setValue(this.updateenvdata["username"]);
       if (this.updateenvdata.keyValue == null) {
-        this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
+        this.environmentForm.get("password").setValue(this.updateenvdata["password"].password);
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
@@ -179,6 +182,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
         Swal.fire("Success", response.status, "success")
         document.getElementById("createenvironment").style.display = 'none';
         this.environmentForm.reset();
+        this.closeOverlay.emit(false)
         this.environmentForm.get("portNumber").setValue("22");
         this.environmentForm.get("connectionType").setValue("SSH");
         this.environmentForm.get("activeStatus").setValue(true);
@@ -315,10 +319,4 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("portNumber").setValue("22");
     }
   }
-
-  closeOverlay() {
-    this.resetEnvForm();
-    document.getElementById('createenvironment').style.display = 'none';
-  }
-
 }

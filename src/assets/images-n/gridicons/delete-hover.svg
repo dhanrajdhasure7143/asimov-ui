@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.097" height="25.5" viewBox="0 0 23.097 25.5">
+  <g id="delete-hover" transform="translate(-2.25 -1.25)">
+    <path id="Path_851" data-name="Path 851" d="M3,6H24.6" transform="translate(0 0.8)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_852" data-name="Path 852" d="M21.8,6.8V23.6a2.4,2.4,0,0,1-2.4,2.4H7.4A2.4,2.4,0,0,1,5,23.6V6.8m3.6,0V4.4a2.4,2.4,0,0,1,2.4-2.4h4.8a2.4,2.4,0,0,1,2.4,2.4v2.4" transform="translate(0.4 0)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <line id="Line_88" data-name="Line 88" y2="7.199" transform="translate(11.399 12.798)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <line id="Line_89" data-name="Line 89" y2="7.199" transform="translate(16.198 12.798)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  </g>
+</svg>

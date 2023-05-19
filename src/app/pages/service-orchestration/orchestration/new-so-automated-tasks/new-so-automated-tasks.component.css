@@ -243,3 +243,12 @@ button:hover img.testplus1.hover-img {
     margin-right: 0px;
     cursor: unset;
 }
+
+.orchactions button .hover-icon,
+.orchactions button:hover .default-icon {
+    display: none;
+}
+.orchactions button:hover .hover-icon {
+    display: initial;
+}
+
