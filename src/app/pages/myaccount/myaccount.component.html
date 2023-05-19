@@ -14,7 +14,7 @@
                         maxlength="25" required />
                     <span
                         *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )"
-                        class='required'>First Name required </span>
+                        class='required'>First Name is required </span>
                 </div>
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="lastName">Last Name<span class="star">*</span></label>
@@ -22,7 +22,7 @@
                         (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name"
                         maxlength="25" required alphabetOnly />
                     <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )"
-                        class='required'> Last Name required </span>
+                        class='required'> Last Name is required </span>
                 </div>
                 <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="jobTitle">Job Title<span class="star">*</span></label>
@@ -30,7 +30,7 @@
                         (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title"
                         maxlength="25" required alphabetOnly />
                     <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )"
-                        class='required'>Job Title required </span>
+                        class='required'>Job Title is required </span>
                 </div>
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="company">Company<span class="star">*</span></label>
@@ -38,20 +38,24 @@
                         [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly
                         disabled />
                     <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )"
-                        class='required'> Company required </span>
+                        class='required'> Company is required </span>
                 </div>
                 <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="country">Country<span class="star">*</span></label>
-                    <select id="country" name='country' class="form-control" (change)='onChangeCountry(formOne.country)'
+                    <!-- <select id="country" name='country' class="form-control" (change)='onChangeCountry(formOne.country)'
                         #country="ngModel" [(ngModel)]="formOne.country" required>
-                        <!-- <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option> -->
+                        <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option> 
                         <option [value]="undefined" disabled hidden>Country</option>
                         <option [value]="null" disabled hidden>Select Country</option>
                         <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">
                             {{country.CountryName}}</option>
-                    </select>
+                    </select> -->
+                    <p-dropdown [options]="countryInfo"  #country="ngModel" [(ngModel)]="formOne.country" name='country' 
+                    optionLabel="CountryName" optionValue="CountryName" (onChange)='onChangeCountry($event)' filter="CountryName"  placeholder="Select" required> 
+                    </p-dropdown>
+
                     <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
-                        class='required'>Country required</span>
+                        class='required'>Country is required</span>
                     <span class="required">{{errorMessage}}</span>
                 </div>
                 <div *ngIf="show" class="form-group col-md-6 pl-0 Admin-countrylist">
@@ -69,7 +73,7 @@
                         pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required />
                     <span
                         *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern) )"
-                        class='required'> Phone Number required </span>
+                        class='required'> Phone Number is required </span>
                     <span *ngIf="phoneumber.errors  && phoneumber.invalid">
                         <span *ngIf="phoneumber.errors.pattern" class="required">Phone number should be 10 digits</span>
                     </span>
@@ -84,7 +88,7 @@
                         pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required />
                     <span
                         *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern))"
-                        class='required'> Phone Number required </span>
+                        class='required'> Phone Number is required </span>
                     <span *ngIf="phoneumber.errors && phoneumber.invalid">
                         <span *ngIf="phoneumber.errors.pattern" class="required">Phone number should be 10 digits</span>
                     </span>

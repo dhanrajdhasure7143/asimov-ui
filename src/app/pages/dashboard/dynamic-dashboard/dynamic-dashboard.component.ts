@@ -310,7 +310,7 @@ export class DynamicDashboardComponent implements OnInit {
   deletedashbord() {
     if (this.selectedDashBoard.defaultDashboard && this.dashbordlist.length > 1) {
       this.confirmationService.confirm({
-        message: "Change the default dashboard",
+        message: "Change your default dashboard before deleting.",
         header: "Info",
         icon: "pi pi-info-circle",
         rejectVisible: false,
@@ -321,7 +321,7 @@ export class DynamicDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage=""
-    this.dashbordlist.length > 1? confrmMessage="Are you sure that you want to proceed?": confrmMessage="Are you sure that you are deleting default dashboard?"
+    this.dashbordlist.length > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone ?" : confrmMessage="Are you sure that you are deleting default dashboard?"
     this.confirmationService.confirm({
       message: confrmMessage,
       header: "Confirmation",
