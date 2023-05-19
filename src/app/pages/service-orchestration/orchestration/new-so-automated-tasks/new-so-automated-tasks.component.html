@@ -56,19 +56,25 @@
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
                 <button (click)="addtasks(addTask)" class="tsttooltipbtn" pTooltip="Add Task" tooltipPosition="top">
-      <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
-    </button>
+                    <!-- <img src="../../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt=""/>
+                    <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/> -->
+                    <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
+                </button>
                 <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
-      <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
-    </button>
-    <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
-      <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
-      <!-- <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span> -->
-    </button>
-    <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" 
-        (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
-      <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
-    </button>
+                    <!-- <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="">
+                    <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt=""> -->
+                    <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
+                </button>
+                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
+                    <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
+                    <!-- <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span> -->
+                </button>
+                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" 
+                    (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
+                    <!-- <img src="../../../../../assets/images-n/gridicons/startbot-default.svg" alt="" class="testplus default-icon">
+                    <img src="../../../../../assets/images-n/gridicons/startbot-hover.svg" alt="" class="testplus hover-icon"> -->
+                    <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
+                </button>
                 <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
       <span class="testtooltip">Run Process</span>
@@ -78,21 +84,25 @@
       </span>
       -->
 
-    <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
-      <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
-    
-    </button>
-    <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" 
-        (click)="startscheduler()" pTooltip="Open Scheduler" tooltipPosition="top">
-     <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
-    </button>
+                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
+                  <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
+                
+                </button>
+                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" 
+                    (click)="startscheduler()" pTooltip="Open Scheduler" tooltipPosition="top">
+                 <!-- <img src="../../../../../assets/images-n/gridicons/schedule-default.svg" alt="" class="testplus default-icon">
+                 <img src="../../../../../assets/images-n/gridicons/schedule-hover.svg" alt="" class="testplus hover-icon"> -->
+                 <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
+                </button>
 
     <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
       <img src="../../../../../assets/images/file.svg" alt="" class="testplus"> 
     </button>
 
     <button *ngIf="selectedvalue!=''" id="autoViewLogs" class="tsttooltipbtn" (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
-      <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
+        <!-- <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus default-icon">
+        <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus hover-icon"> -->
+        <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
     </button>
             </div>
 
@@ -316,31 +326,37 @@
                                             <button [disabled]="element.taskType=='Human' || element.taskType==null"
                                                 [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''"
                                                 (click)="createtaskbotoverlay(element.taskId)" pTooltip="Create and Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/>
+                                                <!-- <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/> -->
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="assignbot(element.taskId, element.processId)"
                                                 *ngIf="element.taskType == 'Automated'" pTooltip="Assign" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+                                                <!-- <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/> -->
                                             </button>
                                             <button (click)="assignbot(element.taskId, element.processId)"
                                                 *ngIf="element.taskType == 'Human'" pTooltip="Assign Resource" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+                                                <!-- <img src="../../../../../assets/images/SO/check-success.svg" class="testplus" alt=""/> -->
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" />
+                                                <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="" />
+                                                <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt="" />
+                                                <!-- <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" /> -->
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.sourceType == 'EPSoft'"
                                                 pTooltip="View Bot" tooltipPosition="top">
-                                                <!-- <img src="../../../../../assets/images/Projects/eye-show.svg"
-                                                    class="testplus" /> -->
-                                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg"
-                                                    class="testplus" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/view-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/view-hover.svg" class="testplus hover-icon" alt=""/>
                                             </button>
                                             <button *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
                                                 <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" alt=""/>
@@ -354,9 +370,8 @@
                                         </span>
                                         <span>
                                             <button pTooltip="Delete Task" tooltipPosition="top" class="undobtn" (click)="delete(element.taskId)">
-                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg"
-                                                    class="testplus" alt=""/>
-                                                <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img" /> -->
+                                                <img src="../../../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt=""/>
                                             </button>
                                         </span>
                                     </div>
@@ -375,13 +390,15 @@
                                         </span>
                                         <span>
                                             <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" />
+                                                <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="" />
+                                                <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt="" />
                                             </button>
                                         </span>
                                         <span>
                                             <button (click)="loadbotdatadesign(element.botId)"
                                                 *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" pTooltip="View Bot" tooltipPosition="top">
-                                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/view-default.svg" class="testplus default-icon" alt=""/>
+                                                <img src="../../../../../assets/images-n/gridicons/view-hover.svg" class="testplus hover-icon" alt=""/>
                                             </button>
                                             <button *ngIf="element.taskType !='Automated'">
                                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" alt=""/>
@@ -389,8 +406,8 @@
                                         </span>
                                         <span>
                                             <button pTooltip="Delete Task" tooltipPosition="top" (click)="delete(element.taskId)">
-                                                <img src="../../../../../assets/images-n/dashboard/dash-delete.svg" class="testplus" alt="" />
-                                            <!-- <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" /> -->
+                                                <img src="../../../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="" />
+                                                <img src="../../../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="" />
                                             </button>
                                         </span>
                                     </div>

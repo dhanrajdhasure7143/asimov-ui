@@ -249,6 +249,19 @@ background-color: #EAE9E9 !important;
     border-bottom-left-radius: 0px !important;
 }
 
+.oopstxt {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+}
+span.oopstxt label {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 0px;
+}
+
 /* .configtabslists .metric-set:hover span.addtooltip,
 .configtabslists .widget-set:hover span.addtooltip {
     display: block;

@@ -373,6 +373,7 @@ mat-paginator button:disabled{
 .rpa_botdiv {
   position: absolute;
   left: 10%;
+  height: 100%;
 }
 
 .rpa-home-table{
