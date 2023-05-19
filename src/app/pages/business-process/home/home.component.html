@@ -126,11 +126,18 @@
                                                 <img alt="Edit" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/edit-hover.svg">
                                                 <!-- <img alt="Edit" class="testplus" src="../../../../../assets/images/Projects/Edit-blue.svg"> -->
                                             </span>
-                                            <img src="../../../../assets/images/BPMS/Envelop.svg" alt="Envelop"
+                                            <span (click)="sendReminderMail(rowData)"
+                                                *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
+                                                pTooltip="Click to send reminder mail to Approver"
+                                                tooltipPosition="top">
+                                                <img alt="Envelop" class="testplus default-icon" src="../../../../assets/images-n/gridicons/mail-default.svg">
+                                                <img alt="Envelop" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/mail-hover.svg">
+                                            </span>
+                                            <!-- <img src="../../../../assets/images/BPMS/Envelop.svg" alt="Envelop"
                                                 (click)="sendReminderMail(rowData)"
                                                 *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
                                                 pTooltip="Click to send reminder mail to Approver"
-                                                tooltipPosition="top" class="testplus1">
+                                                tooltipPosition="top" class="testplus1"> -->
                                             <span (click)="deleteProcess(rowData)" pTooltip="Delete Notation" tooltipPosition="top"
                                                 *ngIf="(rowData['bpmnProcessStatus']!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (rowData['userEmail']==userEmail) ))"
                                                 class="delete-icon">
