@@ -29,7 +29,7 @@
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" pReorderableColumn pResizableColumn 
-                    [pResizableColumnDisabled]="col.freeze" pSortableColumn="{{col.ColumnName}}"
+                    [pResizableColumnDisabled]="col.freeze" pSortableColumn="{{col.ColumnName}}" [pSortableColumnDisabled]="!col.sort"
                     [hidden]="!col.ShowGrid" [style]="col.width">{{col.DisplayName | removeUnderscore}}
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative"
                         matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">

@@ -93,7 +93,6 @@ export class ProjectsListScreenComponent implements OnInit {
     this.getallprocesses();
     this.email = localStorage.getItem("ProfileuserId");
     this.getAllCategories();
-    this.getallProjects(this.userRoles, this.name, this.email);
     this.getUsersList();
     this.freetrail = localStorage.getItem("freetrail");
     this.columns_list = this.columnList.projectList_columns
@@ -110,7 +109,7 @@ export class ProjectsListScreenComponent implements OnInit {
       this.spinner.hide();
       res_list.map((data) => {
         // data["projectName"] = data.programName? data.programName: data.projectName;
-        data["process_name"] = this.getProcessNames(data.process);
+        // data["process_name"] = this.getProcessNames(data.process);
         // data["status"] = data.status == null ? "New" : data.status;
         // data["createdAt"] = moment(data.createdTimestamp).format("lll");
         // data["representative"] = {
@@ -120,7 +119,8 @@ export class ProjectsListScreenComponent implements OnInit {
         data["department"] = data.mapValueChain? data.mapValueChain: data.programValueChain;
         data["createdDate"] = new Date(data.createdTimestamp);
         data["updatedDate"] = moment(data.lastModifiedTimestamp).format("MMM DD YYYY HH:mm");
-        data["lastModifiedBy"] = data.lastModifiedBy? data.lastModifiedBy: data.createdBy;
+        let email = data.lastModifiedByEmail? data.lastModifiedByEmail: data.owner
+        data["lastModifiedBy"] = this.getUserName(email);
         data["lastModifiedByEmail"] = data.lastModifiedByEmail? data.lastModifiedByEmail: data.owner;
         return data;
       });
@@ -310,6 +310,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.dt.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         this.users_list = res;
+        this.getallProjects(this.userRoles, this.name, this.email);
       }
     });
   }
@@ -346,8 +347,7 @@ export class ProjectsListScreenComponent implements OnInit {
     });
   }
 
-  getUserName(modifiedemailId,createdEmail){
-    let emailId= modifiedemailId?modifiedemailId:createdEmail
+  getUserName(emailId){
   let user = this.users_list.find(item => item.user_email == emailId);
   if(user)
     return user["fullName"]

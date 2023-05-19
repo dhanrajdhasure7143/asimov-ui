@@ -59,7 +59,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         // hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")])],
-        categoryId:["0", Validators.compose([Validators.required])],
+        categoryId:["", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -132,7 +132,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
+        categoryId:["", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -234,7 +234,7 @@ export class RpaDatabaseFormComponent implements OnInit {
   resetDBForm(){
     this.dbForm.reset();
     this.dbForm.get("dataBaseType").setValue("");
-    this.dbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+    this.dbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'')
     this.dbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
