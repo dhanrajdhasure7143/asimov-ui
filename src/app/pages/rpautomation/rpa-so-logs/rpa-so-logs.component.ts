@@ -59,6 +59,7 @@ export class RpaSoLogsComponent implements OnInit {
     Stopped: 'red',
     Running:"Orange"
   };
+  errormsg: any;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -93,7 +94,7 @@ export class RpaSoLogsComponent implements OnInit {
       else
       {
         this.isDataEmpty=true;
-        Swal.fire("Error",response.errorMessage, "error")
+        this.errormsg= response.errorMessage;
       }
       
   },err=>{
@@ -162,7 +163,7 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        Swal.fire("Error",response.errorMessage,"error")
+        this.errormsg= response.errorMessage;
      }    
      }, err=>{
        this.logsLoading=false;
@@ -376,7 +377,7 @@ export class RpaSoLogsComponent implements OnInit {
        this.isDataEmpty=true;
         this.logsLoading=false;
         this.selectedIterationTask=undefined;
-        Swal.fire("Error",response.errorMessage,"error");
+        this.errormsg= response.errorMessage;
       }      
     },err=>{
       this.logsLoading=false;
@@ -403,7 +404,7 @@ export class RpaSoLogsComponent implements OnInit {
       {
         
        this.isDataEmpty==true;
-        Swal.fire("Error",response.errorMessage,"error");
+       this.errormsg= response.errorMessage;
       }
     },err=>{
       this.logsLoading=false
@@ -422,7 +423,7 @@ export class RpaSoLogsComponent implements OnInit {
       let response: any = data;
       this.logsLoading = false;
       if (response.errorMessage)
-        Swal.fire("Error", response.errorMessage, "error");
+      this.errormsg= response.errorMessage;
       else
         Swal.fire("Success", response.status, "success");
       this.viewRunsByBotId();

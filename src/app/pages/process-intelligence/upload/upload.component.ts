@@ -99,6 +99,7 @@ export class UploadComponent implements OnInit {
 
   ngOnInit() {
     this.dt.piHeaderValues('');
+    localStorage.removeItem("project_id");
     if(document.getElementById("filters"))
     document.getElementById("filters").style.display = "block";
     this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv,.xlsx,.xls';
