@@ -42,6 +42,7 @@ export class ConfigureDashboardComponent implements OnInit {
   searchText: any;
   chartColors: any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169","#085081","#095F9A","#0A6EB2","#0A7DCB",];
   execution_Status: any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26",];
+  dashaboardcount: number;
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -77,6 +78,7 @@ export class ConfigureDashboardComponent implements OnInit {
       {metricId: "00",metric_name: "Drag And Drop",src: "schedules.svg",metricAdded: false,},
       {metricId: "00",metric_name: "Drag And Drop",src: "Thumbup.svg",metricAdded: false,},
     ];
+    this.getDashBoardListData();
   }
 
   dragStart(item) {
@@ -443,21 +445,24 @@ export class ConfigureDashboardComponent implements OnInit {
   }
 
   deletedashbord() {
-    if (this.isdefaultDashboard == "true") {
+    if (this.isdefaultDashboard == "true"&&this.dashaboardcount >1) {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting.",
         header: "Info",
+        icon: "pi pi-info-circle",
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
-        key: "positionDialog",
+        key: "positionDialog2",
       });
       return;
     }
-    this.confirmationService.confirm({
-      message:
-        "Do you really want to delete this dashboard? This process cannot be undone.",
-      header: "Are you Sure?",
+    let confrmMessage="";
+    this.dashaboardcount > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undo ?" : confrmMessage= "Are you sure that you are deleting default dashboard?";  
+  this.confirmationService.confirm({
+    message: confrmMessage,
+    header: "Are you Sure?",
+    icon: "pi pi-info-circle",
       accept: () => {
         this.loader.show();
         this.rest_api
@@ -470,7 +475,13 @@ export class ConfigureDashboardComponent implements OnInit {
             });
           });
         this.loader.hide();
+       if(this.dashaboardcount==1){
+        this.loader.hide();
+        this.router.navigate(["/pages/dashboard/create-dashboard"])
+       }
+       else{
         this.router.navigate(["/pages/dashboard/dynamicdashboard"]);
+       }
       },
       key: "positionDialog",
     });
@@ -479,6 +490,11 @@ export class ConfigureDashboardComponent implements OnInit {
   canelUpdate() {
     this.router.navigate(["/pages/dashboard/dynamicdashboard"], {
       queryParams: this._paramsData,
+    });
+  }
+  getDashBoardListData() {
+    this.rest_api.getDashBoardsList().subscribe((res: any) => {
+      this.dashaboardcount = res.data.length;
     });
   }
 }

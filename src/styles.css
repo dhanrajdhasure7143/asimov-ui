@@ -2216,6 +2216,7 @@ td.mat-cell span {
   left: 0px;
   white-space: unset;
   width: 384px;
+  height: 165px !important;
 }
 .form-footer button.btn.btn-primary:last-child {
   margin-right: 0px !important;
@@ -3192,6 +3193,16 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 .p-multiselect-items-wrapper {
   max-height: 180px !important;
 }
+.p-dropdown .p-dropdown-panel {
+  max-height: 230px !important;
+  height: 230px !important;
+}
+.p-dropdown-items-wrapper {
+  max-height: 175px !important;
+}
+.p-dropdown-filter-container input {
+  height: 36px !important;
+}
 .p-link {
   background-color: transparent !important;
   box-shadow: none !important;
@@ -3551,7 +3562,7 @@ textarea.p-inputtextarea {
   margin: 0px;
 }
 .createform-overlay {
-  height: calc(100% - 115px);
+  height: calc(100% - 105px);
   overflow: auto;
   /* margin: 15px 0px 5px; */
   padding: 15px 20px 0px;
