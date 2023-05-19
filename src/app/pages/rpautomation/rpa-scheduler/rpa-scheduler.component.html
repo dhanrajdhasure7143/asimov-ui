@@ -2,10 +2,12 @@
     <div class="row">
         <div class="col-sm-11 p-0 form-group">
             <span>
-                <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone">
+                <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput="ngModel" required>
                   <option value="" disabled>Select Timezone</option>
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
                 </select>
+                <span *ngIf="timezoneInput.invalid && timezoneInput.touched" class="errspan required">
+                    Timezone is required.</span>
             </span>
             <span *ngIf="processid!='' && processid !=undefined">
                 <mat-form-field>
