@@ -656,7 +656,7 @@ importBot()
       this.finaldataobjects=[...this.importBotJson.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
-      if(this.finaldataobjects.executionMode=="v1") this.arrange_task_order(start);
+      if(this.importBotJson.executionMode=="v1") this.arrange_task_order(start);
       else this.final_tasks=[...this.finaldataobjects];
       this.importBotJson["botId"]=response.botId;
       this.importBotJson["botName"]=this.importBotForm.get("botName").value;
