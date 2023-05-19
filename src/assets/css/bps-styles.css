@@ -197,6 +197,7 @@ div[class^='diagram_container'] {
   border-radius: 10px;
   padding: 5px;
   position: relative;
+  overflow: scroll;
   /* background: #fff; */
 }
 
@@ -204,7 +205,9 @@ div[class^='diagram_container'] {
   position: relative;
   z-index: -10;
 }
-
+.bps_overlay div#canvas2 {
+ z-index: 0;  
+}
 .bps_overlay {
   cursor: pointer;
 }
@@ -384,7 +387,7 @@ mat-tab-body {
   overflow: auto;
   display: -webkit-inline-box;
   display: inline-block;
-  /* z-index: 2; */
+  z-index: 2;
   box-shadow: 2px 0px 3px rgb(0 0 0 / 20%);
   border: 1px solid rgb(0 0 0 / 20%);
   background: #607088;

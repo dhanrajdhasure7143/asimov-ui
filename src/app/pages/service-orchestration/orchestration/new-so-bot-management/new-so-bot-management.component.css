@@ -89,7 +89,7 @@ select {
 }
 .env-data-tool {
   /* line-height: 30px; */
-  margin: 0px 10px;
+  /* margin: 0px 10px; */
 }
 .env-data-tool button.tsttooltipbtn {
   position: relative;
@@ -150,4 +150,11 @@ span.logrefresh {
 .SLAconfig-filenote {
   font-size: 12px;
   margin-bottom: 0px;
+}
+
+img.hover-icon, td span:hover img.default-icon {
+  display: none;
+}
+td span:hover img.hover-icon {
+  display: initial;
 }

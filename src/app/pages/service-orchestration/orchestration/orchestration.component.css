@@ -12,6 +12,7 @@
 #Orchestration-tabs .mat-tab-labels {
     height: 100%;
     align-items: center;
+    margin: 0px 15px;
 }
 #Orchestration-tabs .so-subtab-header mat-tab-header.mat-tab-header {
     border-top: 0px !important;
@@ -147,7 +148,7 @@ body .leftfporm select {
   height: 36px !important;
 }
 td select.form-control {
-  height: 36px !important;
+  height: 32px !important;
 }
 .leftfporm {
   display: flex !important;
@@ -167,6 +168,13 @@ td select.form-control {
   margin-right: 0px;
   cursor: unset;
 }
+/* .roghtform button .hover-icon,
+.roghtform button:hover .default-icon {
+    display: none;
+}
+.roghtform button:hover .hover-icon {
+    display: initial;
+} */
 .roghtform {
   line-height: 30px;
 }
@@ -194,6 +202,7 @@ td select.form-control {
 }
 .so-sub-tab-content {
   padding-top: 15px;
+  /* background: #fff; //for grid bg white*/
 }
 
 .newexecbots_progress {

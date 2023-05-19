@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-6 p-0 text-right">
                 <button class="btn btn-default mx-3" (click)="selectAllDataValue()">Select All</button>
-                <button class="btn btn-primary" (click)="deselectAllDataValue()" [disabled]="isDeselectActivity">Deselect All</button>         
+                <button class="btn bluebg-button" (click)="deselectAllDataValue()" [disabled]="isDeselectActivity">Deselect All</button>         
                     <div class='inner-addon right-addon' *ngIf="isSearch">
                         <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
                         <input class="form-control border_bottom" placeholder="Search" type="text" name="search" [(ngModel)]="search_activity">
@@ -56,7 +56,7 @@
             </div>
              <div class="col-md-6 p-0 text-right">
                 <button class="btn btn-default mx-3" (click)="selectAllVariantList()">Select All</button>
-                <button class="btn btn-primary" (click)="deselectAllVariantList()" [disabled]="isApplyFilter">Deselect All</button>
+                <button class="btn bluebg-button" (click)="deselectAllVariantList()" [disabled]="isApplyFilter">Deselect All</button>
             </div>
         </div>
         <div class="col-sm-12 p-0 filterValueshi8">
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="col-md-6"></div>
                                 <div class="setvalue-btn">
-                                    <button class="btn btn-primary" (click)="onmaxvalueSet()">Set Value</button>
+                                    <button class="btn bluebg-button" (click)="onmaxvalueSet()">Set Value</button>
                                 </div>
                             </ng-template>
                     </div>

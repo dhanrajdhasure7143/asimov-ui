@@ -54,7 +54,7 @@
   /* Modal Content */
   .modal-content {
   left: 74px;
-  top: 70px;
+  top: 52px;
   width: 580px !important;
   height: 100%;
   background-color: #fefefe;
@@ -67,7 +67,7 @@
 }
 
 .PI-filterby {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   margin-bottom: 15px !important;
 }
 .PI-filterby p {

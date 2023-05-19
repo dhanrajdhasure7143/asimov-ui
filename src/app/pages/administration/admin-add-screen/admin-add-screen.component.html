@@ -3,12 +3,8 @@
     <h3>
       <label id="popup_title">
         <a routerLink="/pages/admin/admin-screen-list" class="imageBox">
-          <span class="active-icon" >
-            <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
-          </span>
-          <span class="hover-icon" >
-            <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
-          </span>  
+          <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+          <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
         </a>
       </label>
 
@@ -51,7 +47,7 @@
                   between words are allowed*
                 </span>
                 <div *ngIf="screenNameCheck && insertForm.get('screen_Name').value" class="required">
-                  Screen Name is already exists*
+                  Screen Name  already exists*
               </div>
               </div>
               <div class="form-group col-sm-12 pl-0">
@@ -190,7 +186,7 @@
         updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
         && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
       " class="required">
-                Column Label Name is Required *
+                Column Label Name  Required *
               </span>
               <span
                 *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"

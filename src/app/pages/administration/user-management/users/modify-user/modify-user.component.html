@@ -4,12 +4,8 @@
                 <h3>
                     <label id="popup_title">
                         <a (click)="userManagementUrl()" class="imageBox">
-                            <span class="active-icon" >
-                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
-                              </span>
-                              <span class="hover-icon" >
-                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
-                              </span>
+                            <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                            <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                         </a>
                     </label>
                     <span class="title_text">Update User</span>
@@ -47,8 +43,8 @@
                                 [(ngModel)]="departments" [disabled]="isdprtDisabled">
                             </ng-select>
                             <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
-                                                class='required'>Departments is required </span>
-                                                <span *ngIf="errShow" class='required'> Departments is required </span>
+                                                class='required'>Departments required </span>
+                                                <span *ngIf="errShow" class='required'> Departments required </span>
                             <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="required">Departments Required*</span> -->
                         </div>
 

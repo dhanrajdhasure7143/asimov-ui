@@ -156,7 +156,7 @@
               <p-table #dt [value]="bot_list" [globalFilterFields]="['botName','description','department','sourceType','botStatus','version_new']" [scrollable]="true"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
-                <div class="d-flex">
+                <div class="">
                   <!-- <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> 
                     <option value="">Select Source</option>
                     <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
@@ -172,7 +172,7 @@
                   </button>
                   <span class="p-input-icon-right gridsearch">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search" />
                   </span>  
                   <button pButton label="Clear" class="p-button-outlined only_clearbtn" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
                 </div>
@@ -180,7 +180,7 @@
                 <ng-template pTemplate="header">
                   <tr>
                     <th *ngFor="let each of columnList" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
-                      <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
+                      <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'&&each.ColumnName != 'botStatus'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
                                 display="menu" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
@@ -191,7 +191,14 @@
                       [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                           <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                               <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
-                                  optionLabel="categoryName" optionValue="categoryName" placeholder="All">
+                                  optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                              </p-dropdown>
+                          </ng-template>
+                      </p-columnFilter>
+                      <p-columnFilter  *ngIf="each.ShowFilter && each.ColumnName == 'botStatus'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown [ngModel]="value" [options]='statusList' (onChange)="filter($event.value)" placeholder="Select">
                               </p-dropdown>
                           </ng-template>
                       </p-columnFilter>
@@ -220,8 +227,8 @@
                       <span *ngIf="element.version==null">-</span>
                     </td>
                     <td>
-                        <span [id]="element.botId+'__status'">
-                          <span [ngStyle]="{'color':getColor(element.botStatus)}">O-</span>{{element.botStatus}}
+                        <span [id]="element.botId+'__status'" class="d-flex align-items-center">
+                          <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(element.botStatus)}"></span>{{element.botStatus}}
                           <!-- <span *ngIf="element.botStatus=='Running'" [pTooltip]="element.botStatus" tooltipPosition="top" class="text-primary">
                             <span>
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
@@ -255,20 +262,28 @@
                     </td>
                     <td>
                       <span (click)="executionAct(element.botId,element.sourceType)" pTooltip="Start Bot" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/startbot-default.svg" class="testplus default-icon" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/startbot-hover.svg" class="testplus hover-icon" alt="">
+                        <!-- <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus" alt=""> -->
                       </span>
                       <span (click)="stopBot(element.botId)" pTooltip="Stop Bot" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/stopbot-default.svg" class="testplus default-icon" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="">
+                        <!-- <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus" alt=""> -->
                       </span>
                       <span>
                         <button (click)="SelectSLACon(element)" pTooltip="SLA Configuration" tooltipPosition="top">
-                          <img src="../../../../../assets/images/SO/configuration.svg" class="testplus" alt="">
+                          <img src="../../../../../assets/images-n/gridicons/slaconfig-default.svg" class="testplus default-icon" alt="">
+                          <img src="../../../../../assets/images-n/gridicons/slaconfig-hover.svg" class="testplus hover-icon" alt="">
+                          <!-- <img src="../../../../../assets/images/SO/configuration.svg" class="testplus" alt=""> -->
                         </button>
                       </span>
                     </td>
                     <td>
                       <span (click)="openscheduler(element)" pTooltip="Scheduler" tooltipPosition="top">
-                        <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/schedule-default.svg" class="testplus default-icon" alt="">
+                        <img src="../../../../../assets/images-n/gridicons/schedule-hover.svg" class="testplus hover-icon" alt="">
+                        <!-- <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus" alt=""> -->
                       </span>
                     </td>
                     <td>

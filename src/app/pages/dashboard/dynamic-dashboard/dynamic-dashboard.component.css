@@ -221,3 +221,16 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
+
+.oopstxt {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+}
+span.oopstxt label {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 0px;
+}

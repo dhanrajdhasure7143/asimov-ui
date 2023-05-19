@@ -61,8 +61,11 @@
                    
                   <div  class="" >
                     <div *ngIf="widget.widget_type!='table'&& widget.widget_type!='Table'"  class="graph-set">
-                      <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270"  
-                          [options]="widget.chartOptions" ></p-chart>
+                      <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No Data Found For This Department</span>
+                              <span *ngIf="widget.message !='No Data Found For This Department'">
+                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270"  
+                                [options]="widget.chartOptions"></p-chart>
+                          </span>
                     </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">
@@ -170,7 +173,7 @@
             </select>
           </div>
           <div class="categinput">
-            <input type="text" placeholder="Search" class="form-control toolbar-search ng-untouched ng-pristine ng-valid">
+            <input type="text" placeholder="Search" [(ngModel)]="searchText" class="form-control toolbar-search ng-untouched ng-pristine ng-valid">
             <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="search-align">
           </div>
         </div>

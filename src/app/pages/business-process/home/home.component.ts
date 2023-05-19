@@ -119,7 +119,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["In Progress", "Pending Approval","Approved"],
+      dropdownList: ["Approved","In Progress", "Pending Approval"],
     },
     { ColumnName: "reviewComments", DisplayName: "Message",showTooltip:true,width:"flex: 0 0 5rem"},
     { ColumnName: "", DisplayName: "Actions" },
@@ -207,6 +207,7 @@ export class BpsHomeComponent implements OnInit {
           item.convertedModifiedTime_new = new Date(item.convertedModifiedTime * 1000);
           item.version_new = "V1." + String(item.version);
           item["status"] = this.getNotationStatus(item.bpmnProcessStatus)
+          item["processOwnerName"] =  this.getUserName(item.processOwner)
           return item;
         });
         // this.saved_diagrams.forEach(ele => {
@@ -301,13 +302,13 @@ export class BpsHomeComponent implements OnInit {
   getColor(status) {
     switch (status) {
       case "PENDING APPROVAL":
-        return "#E58600";
+        return "#FED653";
       case "REJECTED":
-        return "red";
+        return "#B91C1C";
       case "APPROVED":
-        return "green";
+        return "#4BD963";
       case "In Progress":
-        return "#E58600";
+        return "#FFA033";
     }
   }
 
@@ -637,5 +638,39 @@ export class BpsHomeComponent implements OnInit {
       this.getBPMNList();
       }
     });
+  }
+
+  openDiagramOndoubleClick(rowData) {
+    let binaryXMLContent = "";
+    // binaryXMLContent = rowData.bpmnXmlNotation;
+    let bpmnModelId = rowData.bpmnModelId;
+    let bpmnVersion = rowData.version;
+    let bpmnType = rowData.ntype;
+    // this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    let push_Obj = {
+      rejectedOrApproved: rowData.bpmnProcessStatus,
+      isfromApprover: false,
+      isShowConformance: false,
+      isStartProcessBtn: false,
+      autosaveTime: rowData.modifiedTimestamp,
+      isFromcreateScreen: false,
+      process_name: rowData.bpmnProcessName,
+      isEditbtn: false,
+      isSavebtn: true,
+      selectedNotation: rowData,
+    };
+    this.dt.bpsNotationaScreenValues(push_Obj);
+    this.dt.bpsHeaderValues("");
+    this.router.navigate(["/pages/businessProcess/uploadProcessModel"], {
+      queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, ntype: bpmnType },
+    });
+  }
+
+  getUserName(email){
+  let user = this.users_list.find(item => item.user_email == email);
+  if(user)
+    return user["fullName"]
+    else
+    return '';
   }
 }

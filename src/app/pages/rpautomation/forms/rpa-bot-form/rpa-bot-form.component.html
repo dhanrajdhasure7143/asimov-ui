@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div *ngIf="botNameCheck && botForm.get('botName').value && !botForm.get('botName').hasError('pattern')" class="required">
-                        Bot Name is already exists*
+                        Bot Name already exists*
                     </div>
                     <div *ngIf="botForm.get('botName').hasError('pattern')" class="required">Spaces and special characters are not allowed Excluding( _ & - )
                     </div>

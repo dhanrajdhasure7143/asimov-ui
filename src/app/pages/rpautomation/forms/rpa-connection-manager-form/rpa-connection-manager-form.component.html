@@ -5,23 +5,29 @@
                 <h3>
                     <label id="popup_title">
                         <a (click)="backToaction()" class="imageBox">
-                            <span class="active-icon" >
-                                <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
-                              </span>
-                              <span class="hover-icon" >
-                                <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
-                              </span>
+                            <img class="active-icon" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                            <img class="hover-icon" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                         </a>
                     </label>
                     <span class="title_text_haspath">
                         <span *ngIf="!istoolSet" >
-                            <span class="breadcrum-back">Connection Manager  <span class="breadcrum-align">/</span> {{ selectedConnector }}  <span class="breadcrum-align">/</span> Update - </span>
+                            <span class="breadcrum-back">Connection Manager </span>
+                             <span class="breadcrum-align">/</span>
+                              <span class="breadcrum-back">{{ selectedConnector }} </span> 
+                              <span class="breadcrum-align">/</span> 
+                              <span class="breadcrum-back">Update - </span>
                             <span class="sub_title_text">{{ selectedToolsetName }}</span>
                         </span>
                         <span *ngIf="istoolSet" >
-                            <span>Connection Manager / </span><span class="sub_title_text">{{ selectedConnector }} | Create New</span>
+                            <span class="breadcrum-back">Connection Manager  </span>
+                             <span class="breadcrum-align">/</span>
+                             <span class="breadcrum-back"> {{ selectedConnector }}</span> 
+                             <span class="breadcrum-align">/</span> 
+                             <span class="sub_title_text">Create New</span>
+                            </span>
+                             
                         </span>
-                    </span>
+                   
                 </h3>
             </div>
             <div class="main-content-body">
@@ -49,30 +55,6 @@
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0">
-                                    <label class="label-control" for="programname"> Action Type
-                                        <span class="star">*</span>
-                                    </label>
-                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
-                                    [style]="{'width':'100%'}" placeholder="Select Action" 
-                                    optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
-                                    <span
-                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                        class="required"> Action Type Required*
-                                    </span>
-                            </div>
-                            <div class="col-md-6 form-group pl-0">
-                                    <label class="label-control" for="programname"> Method Type
-                                        <span class="star">*</span>
-                                    </label>
-                                    <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled.methodType" (onChange)="methodChange($event.value)"
-                                    [style]="{'width':'100%'}" placeholder="Select Method" 
-                                    optionLabel="value" optionValue="value"></p-dropdown>
-                                    <span
-                                        *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
-                                        class="required"> Method Type Required*
-                                    </span>
-                            </div>
-                            <div class="col-md-6 form-group pr-0">
                                     <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
                                     <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo</label>
                                     <!-- <div class="row">
@@ -93,7 +75,31 @@
                                         File size must be less then 200kb 
                                     </span>
                             </div>
-                            <div class="col-md-12 form-group p-0">
+                            <div class="col-md-6 form-group pl-0">
+                                    <label class="label-control" for="programname"> Action Type
+                                        <span class="star">*</span>
+                                    </label>
+                                    <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
+                                    [style]="{'width':'100%'}" placeholder="Select Action" 
+                                    optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
+                                    <span
+                                        *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
+                                        class="required"> Action Type Required*
+                                    </span>
+                            </div>
+                            <div class="col-md-6 form-group pr-0">
+                                <label class="label-control" for="programname"> Method Type
+                                    <span class="star">*</span>
+                                </label>
+                                <p-dropdown [options]="methodItems" formControlName="methodType" [disabled] = "isDisabled.methodType" (onChange)="methodChange($event.value)"
+                                [style]="{'width':'100%'}" placeholder="Select Method" 
+                                optionLabel="value" optionValue="value"></p-dropdown>
+                                <span
+                                    *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
+                                    class="required"> Method Type Required*
+                                </span>
+                            </div>
+                            <div class="col-md-12 form-group p-0" *ngIf="isEndpoint">
                                 <label class="label-control"> API/URL <span class="star">*</span> </label>
                                 <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
                                 type="url" name="url" id="url" placeholder="Enter API/URL">
@@ -103,7 +109,7 @@
                                     class="required"> API/URL Required*
                                 </span>
                                 <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
-                                    API/URL or Dynamic Pattern Is Incorrect.
+                                    API/URL or Dynamic Pattern Incorrect.
                                 </span>
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isAction">
@@ -130,6 +136,48 @@
                                         class="required"> Grant Type Required*
                                     </span>
                             </div>
+                            <div class="col-md-6 form-group pr-0" *ngIf="isaddTo">
+                                <label class="label-control" for="programname"> Add To
+                                    <span class="star">*</span>
+                                </label>
+                                <p-dropdown [options]="requestParams" formControlName="addTo"
+                                [style]="{'width':'100%'}" placeholder="Select" 
+                                optionLabel="value" optionValue="type" (onChange)="onChangeAddTo($event.value)"></p-dropdown>
+                                <span
+                                    *ngIf="connectorForm.get('addTo').invalid && connectorForm.get('addTo').touched && !connectorForm.get('addTo').hasError('pattern')"
+                                    class="required"> Add To Required*
+                                </span>
+                            </div>
+                            <div class="row" *ngIf="isKeyValue">
+                                <div class="col-md-6 form-group pl-0">
+                                    <label class="label-control" for="programname"> Key
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                        formControlName="requestKey" placeholder="Enter Key">
+                                    <span
+                                        *ngIf="connectorForm.get('requestKey').invalid && connectorForm.get('requestKey').touched && !connectorForm.get('requestKey').hasError('pattern')"
+                                        class="required"> Key Required*
+                                    </span>
+                                    <!-- <span *ngIf="connectorForm.get('Key').hasError('pattern')" class="required">
+                                        Key or Dynamic Pattern Is Incorrect.
+                                    </span> -->
+                                </div>
+                                <div class="col-md-6 form-group pr-0">
+                                    <label class="label-control" for="programname"> Value
+                                        <span class="star">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                        formControlName="requestValue" placeholder="Enter Value">                                        
+                                    <span
+                                        *ngIf="connectorForm.get('requestValue').invalid && connectorForm.get('requestValue').touched && !connectorForm.get('requestValue').hasError('pattern')"
+                                        class="required"> Value Required*
+                                    </span>
+                                    <!-- <span *ngIf="connectorForm.get('value').hasError('pattern')" class="required">
+                                        Value or Dynamic Pattern Is Incorrect.
+                                    </span> -->
+                                </div>
+                            </div>
                             <div class="row" *ngIf="isAuthorization">
                                 <div class="col-md-6 form-group pl-0">
                                     <label class="label-control" for="programname"> Code
@@ -142,7 +190,7 @@
                                         class="required"> Code Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('code').hasError('pattern')" class="required">
-                                        Code or Dynamic Pattern Is Incorrect.
+                                        Code or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
@@ -156,7 +204,7 @@
                                         class="required"> Redirect URL Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('redirect_uri').hasError('pattern')" class="required">
-                                        Redirct URL or Dynamic Pattern Is Incorrect.
+                                        Redirct URL or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -172,7 +220,7 @@
                                         class="required"> Username Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('userName').hasError('pattern')" class="required">
-                                        Username or Dynamic Pattern Is Incorrect.
+                                        Username or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
@@ -186,7 +234,7 @@
                                         class="required"> Password Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('password').hasError('pattern')" class="required">
-                                        Password or Dynamic Pattern Is Incorrect.
+                                        Password or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -202,7 +250,7 @@
                                         class="required"> Client ID Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
-                                        Client Id or Dynamic Pattern Is Incorrect.
+                                        Client Id or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                                 <div class="col-md-6 form-group pr-0">
@@ -216,7 +264,7 @@
                                         class="required"> Client Secret Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
-                                        Client Secret or Dynamic Pattern Is Incorrect.
+                                        Client Secret or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
                             </div>
@@ -231,7 +279,7 @@
                                         class="required"> Code Verifier Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('verifier').hasError('pattern')" class="required">
-                                        Code Verifier or Dynamic Pattern Is Incorrect.
+                                        Code Verifier or Dynamic Pattern Incorrect.
                                     </span>
                             </div>
                             <div class="row">
@@ -253,14 +301,26 @@
                                         class="required"> Refresh Token Required*
                                     </span>
                                     <span *ngIf="connectorForm.get('refreshToken').hasError('pattern')" class="required">
-                                        Refresh Token or Dynamic Pattern Is Incorrect.
+                                        Refresh Token or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
-                            </div>                        
+                            </div>     
+                             <!-- <div class="col-md-12 form-group p-0" *ngIf="isEndpoint">
+                                <label class="label-control"> API/URL <span class="star">*</span> </label>
+                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
+                                type="url" name="url" id="url" placeholder="Enter API/URL">
+                                </textarea>
+                                <span
+                                    *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
+                                    class="required"> API/URL Required*
+                                </span>
+                                <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
+                                    API/URL or Dynamic Pattern Is Incorrect.
+                                </span>
+                            </div>-->
                             <div class="col-md-12 form-group p-0" *ngIf="isHeader">
                                 <p-tabView>
                                     <p-tabPanel header="Params">
-                                        
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -294,14 +354,13 @@
                                                         <span>
                                                             <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
                                                             (click)="paramsDelete(i)">
-                                                            </span>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </p-tabPanel>
                                     <p-tabPanel header="Headers">
-                                      
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -334,15 +393,58 @@
                                                         <span>
                                                             <img class="cross-mark" src="../../../../../assets/images-n/projects/close-circle-line.svg" alt=""
                                                             (click)="onDelete(i)">
-                                                            </span>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </p-tabPanel>
-                                   
                                 </p-tabView>                             
                             </div>
+                            <!-- <div class="col-md-12 form-group p-0" *ngIf="isKeyValueTab">
+                                <p-tabView>
+                                    <p-tabPanel header="Params">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Key</th>
+                                                    <th scope="col">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Key">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p-tabPanel>
+                                    <p-tabPanel header="Headers">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Key</th>
+                                                    <th scope="col">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Key">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p-tabPanel>
+                                </p-tabView>                             
+                            </div> -->
                             <div class="col-md-12 form-group p-0" *ngIf="isResponse">
                                 <label class="label-control"> Response </label>
                                 <textarea pInputTextarea [style]="{'width':'100%'}" cols="30" rows="10" formControlName="response"
@@ -363,7 +465,7 @@
                     </form>
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
-                                    (click)="testAction()" [disabled]="connectorForm.invalid">Test</button>
+                                    (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue">Test</button>
                         <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
                         <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"

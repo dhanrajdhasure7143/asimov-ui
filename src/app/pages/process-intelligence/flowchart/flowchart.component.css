@@ -1,12 +1,3 @@
-/* New Styles */
-
-.createform-overlay {
-  height: calc(100% - 125px);
-}
-
-/* New Styles */
-
-
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
     color:white;
     height: 130px;

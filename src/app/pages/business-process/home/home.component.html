@@ -87,7 +87,7 @@
                                         [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="col.dropdownList"
-                                                (onChange)="filter($event.value)" placeholder="Any"></p-dropdown>
+                                                (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
                                     <p-sortIcon [field]="col.ColumnName" *ngIf="col.ShowFilter"></p-sortIcon>
@@ -102,37 +102,41 @@
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
                                 </td>
-                                <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width">
+                                <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip" [style]="col.width" (dblclick)="openDiagramOndoubleClick(rowData)">
                                     <span *ngIf="col.DisplayName != 'Status' && col.DisplayName != 'Message'&& col.DisplayName != 'Actions'">
                                         <span *ngIf='col.ColumnName =="processOwnerName"' class="prjlastupdateprofile">
-                                            <span class="prjlastupdateprofile">{{rowData['processOwner']|userLetters:users_list|uppercase}}</span>
+                                            {{rowData['processOwner']|userLetters:users_list|uppercase}}
                                         <!-- {{rowData['processOwner']|userLetters:users_list|uppercase}} -->
                                         </span>
                                         {{col.filterType=='date' ?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):(rowData[col.ColumnName]?(col.ColumnName=='ntype'?(rowData[col.ColumnName]|uppercase):(rowData[col.ColumnName])):'-')}}
                                     </span>
-                                    <span *ngIf="col.DisplayName == 'Status'">
+                                    <span *ngIf="col.DisplayName == 'Status'" class="d-flex align-items-center">
                                         <!-- <div [ngStyle]="{'color':getColor(rowData[col.ColumnName])}" [class.pending_value_properties]="rowData[col.ColumnName]=='PENDING'"> {{rowData[col.ColumnName]}}</div> -->
-                                        <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">O-</span> {{rowData[col.ColumnName]}}
+                                        <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> {{rowData[col.ColumnName]|titlecase}}
                                     </span>
-                                    <span *ngIf="col.DisplayName == 'Message'">
-                                            <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message">
+                                    <span *ngIf="col.DisplayName == 'Message'" class="message_span">
+                                        <img alt="Message" class="testplus default-icon" src="../../../../assets/images-n/gridicons/messages-default.svg">
+                                        <img alt="Message" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/messages-hover.svg">
+                                        <!-- <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" alt="Message"> -->
                                     </span>
                                     <span *ngIf="col.DisplayName == 'Actions'">
                                         <div class="cell cell11">
-                                            <span (click)="onEdit(rowData)">
-                                                <img pTooltip="Edit" tooltipPosition="top" alt="Edit" class="testplus"
-                                                    src="../../../../../assets/images/Projects/Edit-blue.svg">
+                                            <span (click)="onEdit(rowData)" pTooltip="Edit" tooltipPosition="top">
+                                                <img alt="Edit" class="testplus default-icon" src="../../../../assets/images-n/gridicons/edit-default.svg">
+                                                <img alt="Edit" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/edit-hover.svg">
+                                                <!-- <img alt="Edit" class="testplus" src="../../../../../assets/images/Projects/Edit-blue.svg"> -->
                                             </span>
                                             <img src="../../../../assets/images/BPMS/Envelop.svg" alt="Envelop"
                                                 (click)="sendReminderMail(rowData)"
                                                 *ngIf="(isAdminUser && rowData['bpmnProcessStatus'] =='PENDING') || (rowData['bpmnProcessStatus']=='PENDING' && (rowData['userEmail'] == userEmail))"
                                                 pTooltip="Click to send reminder mail to Approver"
                                                 tooltipPosition="top" class="testplus1">
-                                            <span (click)="deleteProcess(rowData)"
+                                            <span (click)="deleteProcess(rowData)" pTooltip="Delete Notation" tooltipPosition="top"
                                                 *ngIf="(rowData['bpmnProcessStatus']!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (rowData['userEmail']==userEmail) ))"
                                                 class="delete-icon">
-                                                <img src="../../../../assets/images-n/common/delete-blue.svg"
-                                                    pTooltip="Delete Notation" tooltipPosition="top" alt="Delete">
+                                                <img alt="Delete" class="testplus default-icon" src="../../../../assets/images-n/gridicons/delete-default.svg">
+                                                <img alt="Delete" class="testplus hover-icon" src="../../../../assets/images-n/gridicons/delete-hover.svg">
+                                                <!-- <img src="../../../../assets/images-n/common/delete-blue.svg" alt="Delete"> -->
                                             </span>
                                         </div>
                                     </span>
