@@ -1688,7 +1688,8 @@ updateFolderNameByProject(body){
 }
 
 deleteSelectedFileFolder(body){
-  return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
+  // return this.http.post("/platform-service/document/deleteUploadedFileAndFolder",body)
+  return this.http.post("/platform-service/document/delete-uploaded-folders-files",body)
 }
 
 getDocumentsById(projectid,taskid){

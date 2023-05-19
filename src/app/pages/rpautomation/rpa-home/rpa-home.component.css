@@ -191,11 +191,12 @@ button:disabled img {
   cursor: not-allowed;
 }
 
-.flex-col button:hover img.testplus.default-img{
+.flex-col button:hover img.default-icon,
+img.hover-icon {
   display: none;
 }
 
-.flex-col button:hover img.testplus.hover-img {
+.flex-col button:hover img.hover-icon {
   display : initial;
 }
 .cursor:hover{

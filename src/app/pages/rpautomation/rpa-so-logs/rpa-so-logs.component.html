@@ -15,6 +15,8 @@
     <span *ngIf="viewlogid1!=undefined">
       - Run ID - {{viewlogid1}}
     </span>
+    &nbsp;
+    <span>{{botrunid}}</span><span *ngFor="let task of traversalLogs">/{{task.task_name}}</span>
     <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
       Refresh
     </span>
@@ -27,16 +29,13 @@
     <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
       Refresh
     </span>
-    &nbsp;
-    <span>{{botrunid}}</span><span *ngFor="let task of traversalLogs">/{{task.task_name}}</span>
-    
     <!-- <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
         Refresh
     </span> -->
     <span class="ml-auto">
-    <span class="clickable" (click)="closeLogsOverlay()">
-      <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
-    </span>
+      <span class="clickable" (click)="closeLogsOverlay()">
+        <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+      </span>
   </span> 
 </div>
 
@@ -74,8 +73,8 @@
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name'">
                           {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.ColumnName=='bot_status'">
-                          <span [ngStyle]="{'color':getColor(logs[col.ColumnName])}">O-</span> {{logs[col.ColumnName]}}
+                        <span *ngIf="col.ColumnName=='bot_status'" class="d-flex align-items-center">
+                          <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span> {{logs[col.ColumnName]}}
                         </span>
                         <span *ngIf="col.ColumnName=='task_name'">
                           <span *ngIf="logs['child_logs_count']==0  && logs['task_name']!='Loop-Start'">
@@ -94,7 +93,7 @@
               </ng-template>
               <ng-template pTemplate="emptymessage">
                   <tr>
-                      <td style="justify-content: center;" colspan="5">No Records Found</td>
+                      <td style="justify-content: center;" colspan="5">{{errormsg}}</td>
                   </tr>
               </ng-template>
           </p-table>

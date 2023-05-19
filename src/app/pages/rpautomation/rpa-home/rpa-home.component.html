@@ -151,7 +151,8 @@
                                         <span  *ngIf="col.DisplayName == 'Actions'">
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="true" class="button-bot">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus"> </button>
+                                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus"> 
+                                                </button>
                                                 <button pTooltip="Delete Bot" tooltipPosition="top" class="button-bot" [disabled]="true">
                                                     <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                                 </button>
@@ -159,13 +160,20 @@
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
                                                         (click)="openEditBotOverlay(rowData)">
-                                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus "> 
+                                                    <img src="../../../../assets/images-n/gridicons/edit-default.svg" alt="" class="testplus default-icon"> 
+                                                    <img src="../../../../assets/images-n/gridicons/edit-hover.svg" alt="" class="testplus hover-icon"> 
+                                                    <!-- <img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus ">  -->
                                                 </button>                                                
                                                 <button pTooltip="Delete Bot" tooltipPosition="top" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
-                                                    <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus ">
+                                                    <img src="../../../../assets/images-n/gridicons/delete-default.svg" alt="" class="testplus default-icon"> 
+                                                    <img src="../../../../assets/images-n/gridicons/delete-hover.svg" alt="" class="testplus hover-icon"> 
+                                                    <!-- <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus "> -->
                                                 </button>
                                                 <button pTooltip="Export Bot" tooltipPosition="top" (click)="exportBot(rowData['botId'])">
-                                                    <img src="../../../../assets/images/Projects/Download.svg" alt="" class="testplus"> </button>
+                                                    <img src="../../../../assets/images-n/gridicons/download-default.svg" alt="" class="testplus default-icon"> 
+                                                    <img src="../../../../assets/images-n/gridicons/download-hover.svg" alt="" class="testplus hover-icon"> 
+                                                    <!-- <img src="../../../../assets/images/Projects/Download.svg" alt="" class="testplus">  -->
+                                                </button>
                                             </div>
                                         </span>
                                     </td>
@@ -346,11 +354,11 @@
 
 
         <!--Edit Bot UI Bot-->
-        <div *ngIf="EdithiddenPopUp" > 
+        <!-- <div *ngIf="EdithiddenPopUp" > 
             <app-split-overlay (closeOverlay)="closeOverlay1($event)"  >
             <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
             </app-split-overlay>
-          </div>
+          </div> -->
 
         <!-- <div id="edit-bot" class="modal rpa-modal">
             <div class="rpa-modal-content">

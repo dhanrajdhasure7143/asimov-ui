@@ -12,7 +12,7 @@ export class columnList{
     public projectList_columns = [
         // {ColumnName: "type",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList: ["Project", "Program"]},
         {ColumnName: "projectName",DisplayName: "Project Name",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["projectName", "priority"],showTooltip:true},
-        {ColumnName: "process_name",DisplayName: "Process",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
+        {ColumnName: "processName",DisplayName: "Process",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
         {ColumnName: "department",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList: ""},
         {ColumnName: "createdDate",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false},
         {ColumnName: "lastModifiedBy",DisplayName: "Last Updated By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["lastModifiedBy", "updatedDate"],userProfile:true,userProfileKey:"lastModifiedByEmail",datePipe:true},
@@ -41,7 +41,7 @@ export class columnList{
         {ColumnName: "department",DisplayName: "Department",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true},
         // {ColumnName: "roles",DisplayName: "Roles",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
         {ColumnName: "created_at",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,dropdownList:["ACTIVE","INACTIVE"]},
+        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,dropdownList:["Active","Inactive"]},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false},
       ];
 
@@ -54,10 +54,10 @@ export class columnList{
         {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,width:"flex: 0 0 5rem"},
         // {ColumnName: "username",DisplayName: "User Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
         // {ColumnName: "password_new",DisplayName: "Password / Key",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-        {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Active","Inactive"],width:"flex: 0 0 5rem"},
-        {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Yes","No"],width:"flex: 0 0 8rem"},
+        {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Active","Inactive"],width:"flex: 0 0 8rem"},
+        {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Yes","No"],width:"flex: 0 0 9rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true,width:"flex: 0 0 10rem"},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
 
@@ -150,8 +150,8 @@ export class columnList{
       ];
 
       public adminScreenlist_column=[
-        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text", sort: true,multi: false},
-        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "Screen_Name",DisplayName: "Screen Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text", sort: true,multi: false},
+        {ColumnName: "Table_Name",DisplayName: "Table Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false,multi: false},
       ]
 
@@ -179,5 +179,14 @@ export class columnList{
         {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
         {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"]},
         {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
+      ];
+
+      public invoice_column=[
+        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,dropdownList:['Paid','Voided']},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
 }

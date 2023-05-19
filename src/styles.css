@@ -1122,8 +1122,8 @@ img.testplus1 {
 }
 
 .newinntalx a img {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  /* height: 16px; */
   cursor: pointer;
   margin:0px;
 }
@@ -1152,6 +1152,7 @@ img.testplus1 {
   color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
+  text-transform: capitalize;
 }
 
 .modelprbody input,
@@ -1695,6 +1696,7 @@ span.star {
   font-weight: 400;
   margin-bottom: 2px;
   color: var(--formlabel-color);
+  text-transform: capitalize;
 }
 
 .form-group,.form-fields {
@@ -2161,7 +2163,7 @@ th.mat-header-cell {
 }
 .logs-modal td span,
 .modal-lg td span{
-  font-size: 13px !important;
+  font-size: 14px !important;
 }
 th .mat-sort-header-button {
   font-size: 14px !important;
@@ -2216,6 +2218,7 @@ td.mat-cell span {
   left: 0px;
   white-space: unset;
   width: 384px;
+  height: 165px !important;
 }
 .form-footer button.btn.btn-primary:last-child {
   margin-right: 0px !important;
@@ -2652,7 +2655,17 @@ cursor: pointer;
 .main-content-head h3 .title_text_haspath {
   font-size: 18px;
   font-weight: 400;
-  margin-top: 2px;
+  /* margin-top: 2px; */
+}
+.imageBox {
+  position: relative;
+}
+.imageBox .hover-arrow,
+.imageBox:hover .default-arrow  {
+  display: none;
+}
+.imageBox:hover .hover-arrow {
+  display: initial;
 }
 .main-content-head .btn {
   min-width: auto;
@@ -2741,6 +2754,7 @@ input.p-inputtext {
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
+  /* background: #fff !important; //for grid bg white */
   color: var(--main-txtcolor) !important;
   padding: 15px 0px 0px !important;
   height: 100%;
@@ -2830,6 +2844,7 @@ span.statusbadge_nc {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 5px;
+  /* background-color: #fff !important; //for grid bg white */
   height: calc(100vh - 275px);
   overflow: auto;
 }
@@ -2864,15 +2879,18 @@ span.statusbadge_nc {
 .bps-approvalgrid .p-datatable-wrapper {
   height: calc(100vh - 195px);   /* for bps-approval grid */
 }
-.graph_table.gridparentdiv .p-datatable-wrapper {
-  height: calc(100vh - 355px);   /* for pi-landing grid */
-} 
-.box-border.myworkspace-style .p-datatable-wrapper {
-  height: calc(100vh - 325px);   /* for bps-landing grid */
-}
-.rpa-workspacegrid .p-datatable-wrapper {
-  height: calc(100vh - 350px);   /* for rpa-landing grid */
-}
+/* for pi-landing grid */
+/* .graph_table.gridparentdiv .p-datatable-wrapper {
+  height: calc(100vh - 355px);   
+}  */
+/* for bps-landing grid */
+/* .box-border.myworkspace-style .p-datatable-wrapper {
+  height: calc(100vh - 325px);   
+} */
+/* for rpa-landing grid */
+/* .rpa-workspacegrid .p-datatable-wrapper {
+  height: calc(100vh - 350px);   
+} */
 .credential-tablegrid .p-datatable-wrapper {
   height: calc(100vh - 275px);   /* for view connection manager grid */
 }
@@ -2942,6 +2960,7 @@ th {
   vertical-align: middle !important;
   font-size: 14px !important;
   text-transform: capitalize;
+  /* background-color: #fff !important; //for grid bg white */
 }
 .p-datatable .p-datatable-header {
   padding: 0px !important;
@@ -3044,9 +3063,7 @@ tr.p-element:hover > td:last-child,
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px; 
 }
-tr.p-element:hover .newinntalx.actionicons {
-  display: block !important;
-}
+
 
 /*highlight of row*/
 /* tr.p-element.p-selectable-row.p-highlight {    
@@ -3181,6 +3198,23 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
   white-space: pre-line;
 }
 /* primeNg components Styles Start */
+.p-multiselect .p-multiselect-panel {
+  max-height: 240px !important;
+  height: 240px !important;
+}
+.p-multiselect-items-wrapper {
+  max-height: 180px !important;
+}
+.p-dropdown .p-dropdown-panel {
+  max-height: 230px !important;
+  height: 230px !important;
+}
+.p-dropdown-items-wrapper {
+  max-height: 175px !important;
+}
+.p-dropdown-filter-container input {
+  height: 36px !important;
+}
 .p-link {
   background-color: transparent !important;
   box-shadow: none !important;
@@ -3345,6 +3379,18 @@ textarea.p-inputtextarea {
 }
 .p-knob.p-component {
   cursor: pointer;
+}
+.vrsn-btn .p-togglebutton.p-button {
+  width: 16px;
+  height: 16px;
+  padding: 10px 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vrsn-btn .p-togglebutton.p-button:focus {
+  box-shadow: unset !important;
 }
 
 /* new styles for ng select */
@@ -3528,7 +3574,7 @@ textarea.p-inputtextarea {
   margin: 0px;
 }
 .createform-overlay {
-  height: calc(100% - 115px);
+  height: calc(100% - 105px);
   overflow: auto;
   /* margin: 15px 0px 5px; */
   padding: 15px 20px 0px;
@@ -3538,6 +3584,7 @@ textarea.p-inputtextarea {
   color: var(--formlabel-color);
   margin-bottom: 2px;
   line-height: 18px;
+  text-transform: capitalize;
 }
 .createform-overlay input.p-inputtext,
 .createform-overlay .p-dropdown,
@@ -3901,16 +3948,3 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-.imageBox {
-  position: relative;
-  /* float: left; */
-}
-
-.imageBox .hover-icon,
-.imageBox:hover .active-icon  {
-  display: none;
-}
-
-.imageBox:hover .hover-icon{
-  display: block;
-}

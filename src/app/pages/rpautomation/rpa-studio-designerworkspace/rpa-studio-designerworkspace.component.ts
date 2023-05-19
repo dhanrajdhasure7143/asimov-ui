@@ -402,7 +402,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
 
-        
+
       //v2 if
       if (
         node_object.taskName == "If" &&
@@ -496,7 +496,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
 
-      this.setConnectionLabel(info.connection);
+        this.setConnectionLabel(info.connection);
     });
 
     this.jsPlumbInstance.bind("click", function (info) {
@@ -504,7 +504,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.detach(info);
     });
     if (this.finalbot.botId != undefined) {
-      this.addconnections(this.finalbot.sequences);
+        this.addconnections(this.finalbot.sequences);
 
       //this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector("#" + this.dragareaid);
@@ -599,9 +599,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.stopNodeId = stopnode.id;
         if (this.nodes.find((item) => item.id == stopnode.id) == undefined) {
           this.nodes.push(stopnode);
-          setTimeout(() => {
+         setTimeout(() => {
             this.populateNodes(stopnode);
-          }, 240);
+         }, 240);
         }
       }
       let templatenodes: any = [];
@@ -685,7 +685,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           //   connectorHoverStyle: { lineWidth: 3 },
           overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
         });
-
+               
         //Added label for condition connections for v2 if
         if((this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1])?.taskName??"")=="If")
         {
@@ -693,6 +693,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true"))
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true").attrValue==element.targetTaskId)
           {
+            if(connection)
             connection.addOverlay([
               "Label",
               {
@@ -706,6 +707,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false"))
           if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false").attrValue==element.targetTaskId)
           {
+            if(connection)
             connection.addOverlay([
               "Label",
               {
@@ -769,9 +771,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       connection.bind("mouseout", function (conn) {
         setTimeout(() => {
           if (!delconn) {
-            conn.getOverlay("label" + conn.id).setVisible(false);
+            if(conn)
+              conn.getOverlay("label" + conn.id).setVisible(false);
           }
-        }, 1500);
+        }, 1000);
       });
   }
 
@@ -1659,6 +1662,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
       for(let att of filteredArray){
         const value =  node.find(i => att["id"] === i["metaAttrId"]);
+        if(value)
         if (!value["attrValue"])  {
           flag = false;
           break;

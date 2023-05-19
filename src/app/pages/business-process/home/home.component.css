@@ -242,3 +242,13 @@ h4.col-heads {
 .botpreviewtr td {
    display: block !important;
 }
+
+.cell span:hover img.default-icon,
+img.hover-icon,
+.message_span:hover img.default-icon {
+    display: none;
+}
+.cell span:hover img.hover-icon,
+.message_span:hover img.hover-icon{
+    display: initial;
+}

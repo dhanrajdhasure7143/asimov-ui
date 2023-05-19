@@ -45,7 +45,6 @@
                   </button>
                   <button (click)="navigateToCreateDashboard()"   pTooltip="Create Dashboard" tooltipPosition="top" class="grey-btn create-pad"> 
                      <img src="../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Create" class="imgicon-width" />
-                     <!-- <span class="plus">Create</span> -->
                   </button>
                
                   <button (click)="deletedashbord()"  pTooltip="Delete" tooltipPosition="top" class="grey-btn">
@@ -91,8 +90,11 @@
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
                            <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" class="graph-set">
+                              <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No Data Found For This Department</span>
+                              <span *ngIf="widget.message !='No Data Found For This Department'">
                               <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
                                  [options]="widget.chartOptions"></p-chart>
+                              </span>
                            </div>
                            <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
                               <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
@@ -223,13 +225,8 @@
                            <form [formGroup]="dynamicFormConfiure" class="row">
                               <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
                                  <label class="label-control">{{each.label}}</label>
-                                 <p-dropdown [formControlName]="each.name" [disabled]="each.name == 'department'" [options]="each.types"
-                                    [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                                 <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                               </div>
-                              <!-- <div class="col-6 form-group mb-4 bps-labcls">
-                                 <label>Number of Category</label>
-                                 <input type="text" placeholder="05" class="form-control">
-                              </div> -->
                      
                               <div class="col-12 row justify-content-end">
                                  <button class="btn new-cancelbtn" (click)="cancelEdit()">Cancel</button>

@@ -119,7 +119,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["In Progress", "Pending Approval","Approved"],
+      dropdownList: ["Approved","In Progress", "Pending Approval"],
     },
     { ColumnName: "reviewComments", DisplayName: "Message",showTooltip:true,width:"flex: 0 0 5rem"},
     { ColumnName: "", DisplayName: "Actions" },
@@ -207,6 +207,7 @@ export class BpsHomeComponent implements OnInit {
           item.convertedModifiedTime_new = new Date(item.convertedModifiedTime * 1000);
           item.version_new = "V1." + String(item.version);
           item["status"] = this.getNotationStatus(item.bpmnProcessStatus)
+          item["processOwnerName"] =  this.getUserName(item.processOwner)
           return item;
         });
         // this.saved_diagrams.forEach(ele => {
@@ -663,5 +664,13 @@ export class BpsHomeComponent implements OnInit {
     this.router.navigate(["/pages/businessProcess/uploadProcessModel"], {
       queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, ntype: bpmnType },
     });
+  }
+
+  getUserName(email){
+  let user = this.users_list.find(item => item.user_email == email);
+  if(user)
+    return user["fullName"]
+    else
+    return '';
   }
 }
