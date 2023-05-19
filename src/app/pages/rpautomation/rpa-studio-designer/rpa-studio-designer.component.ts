@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
+import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
@@ -15,6 +16,8 @@ import { RestApiService } from '../../services/rest-api.service';
 export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   @ViewChildren("designerInstances") designerInstances:QueryList<any>;
   @ViewChild('versionControlPopup') versionControlPopup: PopoverDirective;
+  @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
+
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;
@@ -365,6 +368,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     }
     else{
       this.versionControlPopup.hide();
+      this.childBotWorkspace.reset('');
       this.current_instance.updateBotFun(this.version_type,this.comments);
     }
   }
