@@ -477,7 +477,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
         if (setValidators.findIndex(q => q === key) != -1) {
           // this.connectorForm.get(key).reset();
-            this.connectorForm.get(key).setValidators([Validators.required]);
+          if(key == 'requestKey')
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
+            this.connectorForm.get(key).updateValueAndValidity();
+          if(key == 'requestValue')
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
       }
       });
@@ -661,6 +665,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isAuthorization = false;
         this.isRefreshToken = false;
         this.isScopeField = false;
+        this.isEndpoint = true;
       }
 
       if (this.actionData["actionType"] == "Authenticated") {
@@ -684,6 +689,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
+        this.isEndpoint = true;
         const setValidators: string[] = ['grantType'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
@@ -705,7 +711,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             }
             if (setValidators.findIndex(q => q === key) != -1) {
               // this.connectorForm.get(key).reset();
-                this.connectorForm.get(key).setValidators([Validators.required]);
+              if(key == 'requestKey')
+                this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
+                this.connectorForm.get(key).updateValueAndValidity();
+              if(key == 'requestValue')
+                this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
                 this.connectorForm.get(key).updateValueAndValidity();
           }
       });
@@ -912,6 +922,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
          actionLogo: this.action_logo == undefined ? this.actionData["actionLogo"] : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
+      this.onChangeAddTo(this.connectorForm.value.addTo);
 
       let object = {
         // endPoint: this.connectorForm.value.endPoint,
@@ -927,8 +938,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["grantType"] = this.connectorForm.value.grantType;
       }else if(this.connectorForm.value.authType == "API_KEY"){
         object["addTo"] = this.connectorForm.value.addTo;
-        object["requestKey"] = this.connectorForm.value.requestKey;
-        object["requestValue"] = this.connectorForm.value.requestValue;
+        object["httpHeaders"] = this.payload.headers,
+        object["queryParams"] = this.payload.queryParams;
       }
       if (this.connectorForm.value.grantType == "AuthorizationCode") {
         object["clientId"] = this.connectorForm.value.clientId;
