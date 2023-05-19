@@ -52,9 +52,7 @@ export class MyaccountComponent implements OnInit {
 
   updateAccount() {
     this.loader.show();
-    let encrypt =
-      this.spacialSymbolEncryption +
-      this.cryptoService.encrypt(JSON.stringify(this.formOne));
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
     let reqObj = { enc: encrypt };
     this.api.updateUser(reqObj).subscribe(
       (data) => {
@@ -121,7 +119,9 @@ export class MyaccountComponent implements OnInit {
       }
     }
   }
-  onChangeCountry(countryValue) {
+
+  onChangeCountry(event) {
+    let countryValue= event.value
     this.isRefresh = !this.isRefresh;
     this.formOne.country = countryValue;
     for (var i = 0; i < this.countryInfo.length; i++) {

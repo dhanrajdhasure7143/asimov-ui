@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
                       </a>
                     </label>
                     <span class="title_text_haspath">
-                      <span class="breadcrum-back">Business Process Studio</span> <span class="breadcrum-align">/</span> <span
+                      <span class="breadcrum-back" routerLink="/pages/businessProcess/home">Business Process Studio</span> <span class="breadcrum-align">/</span> <span
                         class="sub_title_text">Approval Workflow</span>
                     </span>
                   </h3>
