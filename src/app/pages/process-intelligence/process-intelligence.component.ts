@@ -41,6 +41,7 @@ export class ProcessIntelligenceComponent implements OnInit {
   btn_obj: any;
   userRole: any;
   freetrail: string;
+  businessInsights:boolean = false;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
@@ -94,10 +95,8 @@ export class ProcessIntelligenceComponent implements OnInit {
         this.isPIHeaderShow = false;
       }
     }
-    if (
-      windowUrl.indexOf("processIntelligence/insights") != -1 ||
-      windowUrl.indexOf("business-insights") != -1
-    ) {
+    windowUrl.indexOf("business-insights") != -1? this.businessInsights=true:this.businessInsights=false
+    if (windowUrl.indexOf("processIntelligence/insights") != -1 || windowUrl.indexOf("business-insights") != -1) {
       this.isBackbutton = true;
       this.isProjDetails = false;
     } else {
