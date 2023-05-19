@@ -458,7 +458,7 @@ export class ConfigureDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage="";
-    this.dashaboardcount > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone ?" : confrmMessage= "Are you sure that you are deleting default dashboard?";  
+    this.dashaboardcount > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undo ?" : confrmMessage= "Are you sure that you are deleting default dashboard?";  
   this.confirmationService.confirm({
     message: confrmMessage,
     header: "Are you Sure?",
@@ -475,7 +475,13 @@ export class ConfigureDashboardComponent implements OnInit {
             });
           });
         this.loader.hide();
+       if(this.dashaboardcount==1){
+        this.loader.hide();
+        this.router.navigate(["/pages/dashboard/create-dashboard"])
+       }
+       else{
         this.router.navigate(["/pages/dashboard/dynamicdashboard"]);
+       }
       },
       key: "positionDialog",
     });
