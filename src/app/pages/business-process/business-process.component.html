@@ -24,22 +24,26 @@
             </span>
               <div class="value" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="!isShowConformance">
-                  <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'>
+                  <span class="module-back-button imageBox" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
+                    <img class="default-arrow" src="../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                   </span>
-                  <span class="module-back-button" *ngIf="!isfromApprover && !vcm_id" (click)='backtoNavigate()'>
+                  <span class="module-back-button imageBox" *ngIf="!isfromApprover && !vcm_id" (click)='backtoNavigate()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
+                    <img class="default-arrow" src="../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                   </span>
-                  <span class="module-back-button" *ngIf="vcm_id" (click)='backtoVcm()'>
+                  <span class="module-back-button imageBox" *ngIf="vcm_id" (click)='backtoVcm()'>
                     <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                    <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
+                    <img class="default-arrow" src="../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                   </span>
                 </span>
-                <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'>
+                <span class="module-back-button imageBox" *ngIf="isShowConformance" (click)='backtoPI()'>
                   <!-- <i aria-hidden="true" class="fas fa-arrow-left"></i> -->
-                  <img src="../../../assets/images-n/projects/backarrow-hover.svg" alt="back-arrow">
+                  <img class="default-arrow" src="../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                  <img class="hover-arrow" src="../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                 </span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{lastModified_user}}</span>

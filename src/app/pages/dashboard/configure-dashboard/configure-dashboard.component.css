@@ -227,6 +227,9 @@ background-color: #EAE9E9 !important;
     border-color: #9797974a !important;
     height: 36px !important;
 }
+.configtabssearch input.form-control:focus {
+    border-color: #4AB0F5 !important;
+}
 .configtabssearch select.form-control.data {
     background-color: transparent !important;
     border-color: #9797974a !important;
