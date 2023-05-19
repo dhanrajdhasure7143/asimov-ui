@@ -10,3 +10,9 @@
   height: 24px;
   width: 20px;
 }
+.inviteuser-btn span:hover img.default-icon, .inviteuser-btn img.hover-icon {
+  display: none;
+}
+.inviteuser-btn span:hover img.hover-icon {
+  display: initial;
+}
