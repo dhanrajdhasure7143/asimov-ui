@@ -15,17 +15,17 @@
                     </label>
                     <span class="title_text_haspath">
                         <span *ngIf="!istoolSet" >
-                            <span class="breadcrum-back">Connection Manager </span>
+                            <span class="breadcrum-back" (click)="backToConnection()">Connection Manager </span>
                              <span class="breadcrum-align">/</span>
-                              <span class="breadcrum-back">{{ selectedConnector }} </span> 
+                              <span class="breadcrum-back" (click)="backToaction()">{{ selectedConnector }} </span> 
                               <span class="breadcrum-align">/</span> 
                               <span class="breadcrum-back">Update - </span>
                             <span class="sub_title_text">{{ selectedToolsetName }}</span>
                         </span>
                         <span *ngIf="istoolSet" >
-                            <span class="breadcrum-back">Connection Manager  </span>
+                            <span class="breadcrum-back" (click)="backToConnection()">Connection Manager  </span>
                              <span class="breadcrum-align">/</span>
-                             <span class="breadcrum-back"> {{ selectedConnector }}</span> 
+                             <span class="breadcrum-back" (click)="backToaction()"> {{ selectedConnector }}</span> 
                              <span class="breadcrum-align">/</span> 
                              <span class="sub_title_text">Create New</span>
                             </span>

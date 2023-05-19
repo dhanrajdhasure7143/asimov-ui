@@ -207,6 +207,12 @@
                                 <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                     <img src="../../../assets/images/Projects/Edit-blue.svg" alt="Edit" class="testplus default-img">
                                 </a>
+                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
+                                </a>
+                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                    <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
+                                </a>
                                 <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                     <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-img">
                                 </a>
