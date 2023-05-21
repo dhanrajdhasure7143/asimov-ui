@@ -19,6 +19,9 @@ import { CdkDirective } from '../../../shared/directives/cdkdirective';
 import { Secretkey } from './atoms/secretkey';
 import { HtmlEditor } from './atoms/htmleditor';
 import { SignatureUpdate } from './atoms/SignatureUpdate';
+import { CronEditor } from './atoms/cron-editor';
+
+import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 @NgModule({
   declarations: [
     DynamicFormsComponent, 
@@ -32,12 +35,14 @@ import { SignatureUpdate } from './atoms/SignatureUpdate';
     CdkDirective,
     Secretkey,
     HtmlEditor,
+    CronEditor,
     SignatureUpdate
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatTableModule,
+    CronEditorModule,
     MatPaginatorModule,
     NgxPaginationModule,
     DragDropModule
