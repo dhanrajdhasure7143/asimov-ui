@@ -3919,3 +3919,8 @@ background-color: #D8E0EF !important;
 .imageBox:hover .hover-icon{
   display: block;
 }
+
+
+#pr_id_1-table > .p-datatable-tbody > tr > td:nth-child(1) {
+  flex: 0 0 px !important;
+}
