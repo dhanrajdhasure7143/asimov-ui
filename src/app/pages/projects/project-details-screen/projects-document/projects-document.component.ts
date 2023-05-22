@@ -1037,12 +1037,12 @@ addParentFolder() {
   convertToTreeView2(res_data){
     res_data.map(data=> {
       if(data.dataType=='folder'){
-        data["children"]=[{
-          key: data.key+'-0',
-          label: "Add Folder / Document",
-          dataType:"folder",
-          icon: 'folderadd.svg'
-        }]
+        // data["children"]=[{
+        //   key: data.key+'-0',
+        //   label: "Add Folder / Document",
+        //   dataType:"folder",
+        //   icon: 'folderadd.svg'
+        // }]
       }
       return data
     })

@@ -3636,8 +3636,7 @@ textarea.p-inputtextarea {
   /* border: 1px solid #eee; */
   box-shadow: unset !important;
   border-radius: 3px;
-  /* margin: 10px; */
-  margin: 10px 15px 5px 0px;
+
   padding: 10px 15px;
   background: #fff;
   cursor: pointer;
