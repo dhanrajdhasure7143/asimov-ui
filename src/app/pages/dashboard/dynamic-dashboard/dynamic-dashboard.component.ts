@@ -312,7 +312,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting.",
         header: "Info",
-        icon: "pi pi-info-circle",
+      
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
@@ -325,7 +325,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: confrmMessage,
       header: "Confirmation",
-      icon: "pi pi-info-circle",
+     
       accept: () => {
         this.loader.show();
         this.rest
