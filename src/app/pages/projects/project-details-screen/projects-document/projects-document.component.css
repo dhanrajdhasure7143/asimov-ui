@@ -19,9 +19,9 @@
   text-align: center;
   word-break: break-word;
 }
-.docfolder img, .fldrovrlay img {
+/* .docfolder img, .fldrovrlay img {
   width: 100px;
-}
+} */
 .doctree img {
   width: 34px;
   margin-right: 5px;
@@ -116,10 +116,10 @@
   font-size: 20px !important;
   margin: 0px 10px !important;
 }
-span.p-element.docfilt-icon {
+/* span.p-element.docfilt-icon {
   display: inline-block;
   
-}
+} */
 .head-ritfilter span.p-input-icon-right {
   float: inherit;
  
@@ -129,9 +129,10 @@ i.pi.pi-search.treeviewsearchicon {
   display: none;
 }
 
-span.p-element.docfilt-icon.treeviewfilter {
-  margin-top: 10px;
-}
+/* .treeviewfilter {
+  margin-top: 8px;
+}  */
+/* .treeviewfilter1{margin-top:-4px;} */
 .well-design{border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
   border-radius: 6px;
@@ -144,7 +145,7 @@ span.p-element.docfilt-icon.treeviewfilter {
   .crt-new{margin-right:8px;margin-left:8px;}
   .doc-btns{margin-right:15px;margin-left:15px;}
   .icn-adj{margin-right:10px;}
-  .icn-adj1{margin-right:20px;} 
+  .icn-adj1{margin-right:20px;vertical-align: middle;cursor:pointer;} 
   .docfolder1 {padding:15px 20px;}
   .doctree{padding:15px 20px;}
   .docmnt-btn{border-radius: var(--main-borderradius) !important;
@@ -152,6 +153,7 @@ span.p-element.docfilt-icon.treeviewfilter {
     background-color: transparent;
     color: #000;
     padding:8px 14px !important;
+    align-items: center;
 }
 .docmnt-btn:hover{border-radius: var(--main-borderradius) !important;
   height: 36px !important;
@@ -159,4 +161,10 @@ span.p-element.docfilt-icon.treeviewfilter {
   color: #000;
   padding:8px 14px !important;
 }
+#check-cls{position:absolute;top:3px;right:6px;display:none;}
+.docfolder:hover #check-cls{display: block;}
+.folder-check{position:relative}
+.right-btns{display:flex;align-items: center;justify-content: end;}
+
+
   
