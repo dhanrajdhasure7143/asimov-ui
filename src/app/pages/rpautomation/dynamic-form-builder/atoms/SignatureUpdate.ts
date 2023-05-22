@@ -11,6 +11,7 @@ template:`
     <span *ngIf="loaded">
       <span [hidden]=true>{{editorValue}}</span>
     </span>
+    <span class="errspan required">{{errorMessage}}</span>
   `,
   styles:[`
   .form-control
@@ -31,6 +32,7 @@ template:`
 export class SignatureUpdate implements OnInit {
   @Input() field:any = {};
   @Input() form:FormGroup;
+  errorMessage:any="";
   isHovering;
   toggleHover;
   getisValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
@@ -58,14 +60,21 @@ export class SignatureUpdate implements OnInit {
 
   onFileUpload(event:any)
   {
-    let file=(event.target.files[0]);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const htmlCode = reader.result.toString();
-      CKEDITOR.instances["template-editor"].setData(htmlCode);
-      this.form.get(this.field.name+"_"+this.field.id).setValue(htmlCode);
-    };
-    reader.readAsText(file);
+      let file=(event.target.files[0]);
+      if(file.type.startsWith("text/html"))
+      {
+        this.errorMessage="";
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const htmlCode = reader.result.toString();
+          CKEDITOR.instances["template-editor"].setData(htmlCode);
+          this.form.get(this.field.name+"_"+this.field.id).setValue(htmlCode);
+        };
+      reader.readAsText(file);
+    }
+    else{
+      this.errorMessage="Upload .html file";
+    }
   }
 }
 
