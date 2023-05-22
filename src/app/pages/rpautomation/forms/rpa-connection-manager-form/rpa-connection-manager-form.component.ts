@@ -445,23 +445,23 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isKeyValue = false;
       this.isEndpoint = true;
       this.isKeyValueTab = false;
-      const setValidators: string[] = ['endPoint', 'grantType'];
-      const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
+      // const setValidators: string[] = ['endPoint', 'grantType'];
+      const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType"];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
             this.connectorForm.get(key).reset();
             // this.connectorForm.get(key).clearValidators();
             // this.connectorForm.get(key).updateValueAndValidity();
         }
-        if (setValidators.findIndex(q => q === key) != -1) {
-          // this.connectorForm.get(key).reset();
-          if(key == 'endPoint')
-            this.connectorForm.get('endPoint').setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
-            this.connectorForm.get('endPoint').updateValueAndValidity();
-          if(key == 'grantType')
-            this.connectorForm.get('grantType').setValidators([Validators.required]);
-            this.connectorForm.get('grantType').updateValueAndValidity();
-      }
+      //   if (setValidators.findIndex(q => q === key) != -1) {
+      //     // this.connectorForm.get(key).reset();
+      //     if(key == 'endPoint')
+      //       this.connectorForm.get('endPoint').setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
+      //       this.connectorForm.get('endPoint').updateValueAndValidity();
+      //     if(key == 'grantType')
+      //       this.connectorForm.get('grantType').setValidators([Validators.required]);
+      //       this.connectorForm.get('grantType').updateValueAndValidity();
+      // }
       });
     } else if(event == "API_KEY"){
       this.isaddTo = true;
