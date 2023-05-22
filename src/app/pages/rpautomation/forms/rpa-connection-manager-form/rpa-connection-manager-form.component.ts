@@ -332,7 +332,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.authItems = Object.keys(res).map(key => ({
         type: key,
         value: res[key]
-      })).filter(item => !['BASIC', 'NONE', 'OAUTH'].includes(item.type));
+      })).filter(item => !['BASIC', 'NONE', 'OAUTH', 'API_KEY'].includes(item.type));
     });
     return this.authItems;
   }
@@ -622,15 +622,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
+  // getGrantTypes() {
+  //   this.rest_api.getGrantTypes().subscribe((res: any) => {
+  //     let filterData = res;
+  //     this.grantItems = Object.keys(filterData).map((key) => ({
+  //       type: key,
+  //       value: filterData[key],
+  //     }));
+  //     return this.grantItems;
+  //   });
+  // }
   getGrantTypes() {
     this.rest_api.getGrantTypes().subscribe((res: any) => {
-      let filterData = res;
-      this.grantItems = Object.keys(filterData).map((key) => ({
+      this.grantItems = Object.keys(res).map(key => ({
         type: key,
-        value: filterData[key],
-      }));
-      return this.grantItems;
+        value: res[key]
+      })).filter(item => !['Implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
     });
+    return this.authItems;
   }
 
   get addInputField(): FormArray {
@@ -856,6 +865,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
+   if(this.actionData.configurationAsJson.httpHeaders||this.actionData.configurationAsJson.queryParams){
     if(this.actionData.configurationAsJson.httpHeaders.length>0){
      let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
       this.connectorForm.get("requestKey").setValue(key),
@@ -868,6 +878,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
        this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["queryParams"][0][key])
        ));
       }
+    }
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
         Object.keys(headers_data).map((key,i) => {

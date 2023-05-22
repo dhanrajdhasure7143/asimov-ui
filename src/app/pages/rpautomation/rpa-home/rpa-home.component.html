@@ -181,7 +181,7 @@
                             </ng-template>
                             <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
                                 <tr class="botpreviewtr">
-                                    <td [attr.colspan]="columns.length + 1">
+                                    <td [attr.colspan]="columns.length + 1" style="flex:0 0 100% !important;">
                                         <div class="diagram_container">
                                             <a class="btn open-btn-click btn-xs" (click)="onNavigateToWorkSpace(rowData)">
                                                 Click to open
