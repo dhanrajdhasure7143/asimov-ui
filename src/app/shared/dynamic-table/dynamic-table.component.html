@@ -224,13 +224,13 @@
                                 <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
                                     <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
-                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                <!-- <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
                                     <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                 </a>
                                 <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                     <img src='../../../assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
                                     <img src='../../../assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
-                                </a>
+                                </a> -->
                             </span>
 
                             <span *ngIf="screenTable =='connectionsList'">
@@ -239,10 +239,10 @@
                                     <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                     <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </span>
-                                <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
+                                <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                     <img src='../../../assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
                                     <img src='../../../assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
-                                </span>
+                                </span> -->
                             </span>
                             <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete4" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
