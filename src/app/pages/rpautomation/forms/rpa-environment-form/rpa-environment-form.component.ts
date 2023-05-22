@@ -172,6 +172,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       formData.append("key", this.keyValueFile);
       this.password = "";
     } else {
+      if(formData["password"])
       formData.append("password", this.password);
     }
     this.spinner.show();
