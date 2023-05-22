@@ -56,9 +56,11 @@ template:`
       <html-editor [feilddisable]="isdisabled" *ngSwitchCase="'htmleditor'" [field]="field" [form]="form"></html-editor>
     </div>
     <div *ngIf ="field.visibility">
-    <template-editor [feilddisable]="isdisabled" *ngSwitchCase="'template-editor'" [field]="field" [form]="form"></template-editor>
-  </div>
-      
+      <template-editor [feilddisable]="isdisabled" *ngSwitchCase="'template-editor'" [field]="field" [form]="form"></template-editor>
+    </div>
+    <div *ngIf ="field.visibility">
+      <croneditor [feilddisable]="isdisabled" *ngSwitchCase="'cron-editor'" [field]="field" [form]="form"></croneditor>
+    </div>
       <div *ngIf ="field.visibility">
       <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
     </div>

@@ -326,17 +326,27 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       return this.methodItems;
     });
   }
-
+  
   authTypes() {
     this.rest_api.getAuthTypes().subscribe((res: any) => {
-      let filterData = res;
-      this.authItems = Object.keys(filterData).map((key) => ({
+      this.authItems = Object.keys(res).map(key => ({
         type: key,
-        value: filterData[key],
-      }));
-      return this.authItems;
+        value: res[key]
+      })).filter(item => !['BASIC', 'NONE', 'OAUTH', 'API_KEY'].includes(item.type));
     });
+    return this.authItems;
   }
+
+  // authTypes() {
+  //   this.rest_api.getAuthTypes().subscribe((res: any) => {
+  //     let filterData = res;
+  //     this.authItems = Object.keys(filterData).map((key) => ({
+  //       type: key,
+  //       value: filterData[key],
+  //     }));
+  //     return this.authItems;
+  //   });
+  // }
 
   // isJsonValid() {
   //   let jsonData = this.connectorForm.get("response").value;
@@ -477,7 +487,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
         if (setValidators.findIndex(q => q === key) != -1) {
           // this.connectorForm.get(key).reset();
-            this.connectorForm.get(key).setValidators([Validators.required]);
+          if(key == 'requestKey')
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
+            this.connectorForm.get(key).updateValueAndValidity();
+          if(key == 'requestValue')
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
       }
       });
@@ -608,15 +622,24 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     });
   }
 
+  // getGrantTypes() {
+  //   this.rest_api.getGrantTypes().subscribe((res: any) => {
+  //     let filterData = res;
+  //     this.grantItems = Object.keys(filterData).map((key) => ({
+  //       type: key,
+  //       value: filterData[key],
+  //     }));
+  //     return this.grantItems;
+  //   });
+  // }
   getGrantTypes() {
     this.rest_api.getGrantTypes().subscribe((res: any) => {
-      let filterData = res;
-      this.grantItems = Object.keys(filterData).map((key) => ({
+      this.grantItems = Object.keys(res).map(key => ({
         type: key,
-        value: filterData[key],
-      }));
-      return this.grantItems;
+        value: res[key]
+      })).filter(item => !['Implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
     });
+    return this.authItems;
   }
 
   get addInputField(): FormArray {
@@ -661,6 +684,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isAuthorization = false;
         this.isRefreshToken = false;
         this.isScopeField = false;
+        this.isEndpoint = true;
       }
 
       if (this.actionData["actionType"] == "Authenticated") {
@@ -684,6 +708,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
+        this.isEndpoint = true;
         const setValidators: string[] = ['grantType'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
@@ -705,7 +730,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             }
             if (setValidators.findIndex(q => q === key) != -1) {
               // this.connectorForm.get(key).reset();
-                this.connectorForm.get(key).setValidators([Validators.required]);
+              if(key == 'requestKey')
+                this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
+                this.connectorForm.get(key).updateValueAndValidity();
+              if(key == 'requestValue')
+                this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)@\\])$")]);
                 this.connectorForm.get(key).updateValueAndValidity();
           }
       });
@@ -836,8 +865,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
-      this.connectorForm.get("requestKey").setValue(this.actionData.configurationAsJson["requestKey"]);
-      this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["requestValue"]);
+   if(this.actionData.configurationAsJson.httpHeaders||this.actionData.configurationAsJson.queryParams){
+    if(this.actionData.configurationAsJson.httpHeaders.length>0){
+     let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
+      this.connectorForm.get("requestKey").setValue(key),
+      this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["httpHeaders"][0][key])
+      ));
+     }
+     if(this.actionData.configurationAsJson.queryParams.length>0){
+      let data= Object.keys(this.actionData.configurationAsJson["queryParams"][0]).map((key) => (
+       this.connectorForm.get("requestKey").setValue(key),
+       this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["queryParams"][0][key])
+       ));
+      }
+    }
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
         Object.keys(headers_data).map((key,i) => {
@@ -912,6 +953,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
          actionLogo: this.action_logo == undefined ? this.actionData["actionLogo"] : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
+      this.onChangeAddTo(this.connectorForm.value.addTo);
 
       let object = {
         // endPoint: this.connectorForm.value.endPoint,
@@ -927,8 +969,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["grantType"] = this.connectorForm.value.grantType;
       }else if(this.connectorForm.value.authType == "API_KEY"){
         object["addTo"] = this.connectorForm.value.addTo;
-        object["requestKey"] = this.connectorForm.value.requestKey;
-        object["requestValue"] = this.connectorForm.value.requestValue;
+        object["httpHeaders"] = this.payload.headers,
+        object["queryParams"] = this.payload.queryParams;
       }
       if (this.connectorForm.value.grantType == "AuthorizationCode") {
         object["clientId"] = this.connectorForm.value.clientId;
@@ -1053,6 +1095,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   onKeyEntered(){
     let queryParams="?";
+    // let paramsValue = this.connectorForm.get("endPoint").value.split("?")[1]?this.connectorForm.get("endPoint").value.split("?")[1]:"?"
+    // let queryParams=paramsValue;
+    // console.log(paramsValue)
     for(const each of this.paramForm){
       if(each.check==true) {queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"}
       if(each.paramKey.length > 0 || each.paramValue.length > 0){
@@ -1062,9 +1107,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
+    // let regex=new RegExp("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)")
+    // if(regex.test(value)){
     this.connectorForm.get("endPoint").setValue(value+queryParams.slice(0,-1));
   }
-
+  //   else{
+  //     let splitValue = value.split("@")
+  //     const modifiedStr = splitValue[0]+"@"+splitValue[1]+queryParams.slice(0,-1)+"@]"
+  //     this.connectorForm.get("endPoint").setValue(modifiedStr);
+  //   }
+  // }
+  // endPointKeyup(){
+  // }
   get checkEndPoint(){
     return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
   }
@@ -1106,6 +1160,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.payload.queryParams.push(obj)
       this.payload.headers =[];
     }
+  }
+
+  backToConnection() {
+    this.router.navigate(["/pages/rpautomation/configurations"], {
+      queryParams: { index: 2 },
+    });
   }
 
 }

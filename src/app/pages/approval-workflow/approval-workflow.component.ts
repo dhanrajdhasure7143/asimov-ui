@@ -9,16 +9,12 @@ import { Component, OnInit } from '@angular/core';
                     <h3>
                     <label id="popup_title">
                       <a routerLink="/pages/businessProcess/home" class="imageBox">
-                      <span class="active-icon" >
-                      <img src="./../../../../assets/images-n/projects/backarrow1.png" alt="">
-                    </span>
-                    <span class="hover-icon" >
-                      <img src="./../../../../assets/images-n/projects/backarrow.svg" alt="">
-                    </span>
+                        <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                        <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                       </a>
                     </label>
                     <span class="title_text_haspath">
-                      <span class="breadcrum-back">Business Process Studio</span> <span class="breadcrum-align">/</span> <span
+                      <span class="breadcrum-back" routerLink="/pages/businessProcess/home">Business Process Studio</span> <span class="breadcrum-align">/</span> <span
                         class="sub_title_text">Approval Workflow</span>
                     </span>
                   </h3>

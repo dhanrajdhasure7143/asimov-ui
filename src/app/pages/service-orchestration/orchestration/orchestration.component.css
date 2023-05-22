@@ -168,6 +168,13 @@ td select.form-control {
   margin-right: 0px;
   cursor: unset;
 }
+/* .roghtform button .hover-icon,
+.roghtform button:hover .default-icon {
+    display: none;
+}
+.roghtform button:hover .hover-icon {
+    display: initial;
+} */
 .roghtform {
   line-height: 30px;
 }
@@ -195,6 +202,7 @@ td select.form-control {
 }
 .so-sub-tab-content {
   padding-top: 15px;
+  /* background: #fff; //for grid bg white*/
 }
 
 .newexecbots_progress {
