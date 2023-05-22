@@ -239,6 +239,9 @@
                                     <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                     <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </span>
+                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
+                                </a>
                                 <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
                                     <img src='../../../assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
                                     <img src='../../../assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
