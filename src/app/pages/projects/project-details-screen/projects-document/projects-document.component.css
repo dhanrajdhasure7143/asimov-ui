@@ -176,10 +176,13 @@ input[type="checkbox"] {
   border-radius: 50%;
   background-color: #ffffff;
   border:2px solid #a9a7a7;
+  cursor: pointer;
+  
 }
 input[type="checkbox"]:checked {
   background-color: #098de6;
   border:1px solid #ffffff;
+ 
 
  
  
