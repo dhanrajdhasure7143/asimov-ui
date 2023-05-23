@@ -22,23 +22,6 @@
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
-/* entire application buttons */
-
-.breadcrumb {
-  background-color: white !important;
-  padding: 4px 22px;
-  margin-bottom: 1px;
-  list-style: none;
-  border-radius: 4px;
-}
-
-.navbar-fixed-top {
-  z-index: 1000 !important;
-}
-
-.input-group-text {
-  color: blue;
-}
 
 .enjoy_hint_label {
   color: #6b2929;
@@ -46,15 +29,6 @@
   border-radius: 20px;
   padding: 2px 10px;
   border: 1px solid #6b2929;
-}
-
-/* generic styles */
-.center {
-  text-align: center;
-}
-
-.right {
-  float: right;
 }
 
 .mat-expansion-panel-content.open {
@@ -130,35 +104,14 @@ div[class^='diagram_container'] .djs-palette {
 }
 
 /*spinner styles*/
-/* pagination styles */
-.ngx-pagination {
-  padding: 0;
-}
 
-.pagination {
-  margin: 0 !important;
-}
-
-/* pagination styles */
 
 /* button styles */
-.header_btn {
-  margin-right: 20px;
-}
-
 .header_addon {
   position: absolute !important;
   top: 100px;
   width: 100%;
   right: 20px;
-}
-
-
-.btn-thin {
-  height: 25px;
-  padding: 2px 20px !important;
-  font-size: 12px !important;
-  border-color: var(--main-bluecolor) !important;
 }
 
 .btn-primary {
@@ -172,24 +125,10 @@ div[class^='diagram_container'] .djs-palette {
   outline: none;
 }
 
-
-
-
 .eiap-btn {
   border-radius: var(--main-borderradius) !important;
   margin-left: 10px;
-
   min-width: 90px;
-}
-
-.error_msg {
-  font-size: 10px;
-  color: var(--high-importance);
-  display: none;
-}
-
-.error_msg.show {
-  display: block;
 }
 
 .label_icon {
@@ -217,24 +156,6 @@ div[class^='diagram_container'] .djs-palette {
 .bg-white{
   background-color: white;
 }
-
-.invisible {
-  visibility: hidden;
-}
-/*
-th {
-  border-top: none !important;
-  color: var(--main-bluecolor);
-  border-bottom: 1px solid #4a4a4a33 !important;
-  padding: 5px 10px !important;
-  background: #e8f7fd;
-  font-size: 14px !important;
-  vertical-align: middle !important;
-  text-align: left;
-}
-thead  tr,tbody tr {
-  height: 40px;
-} */
 
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
@@ -308,24 +229,10 @@ ul.bpp-properties-tabs-links {
 }
 
 /*RPA-Environments*/
-.env-table>thead>tr>th {
-  padding: 18px;
-  color: black;
-  font-weight: bold;
-  font-size: 15px;
-  background-color: white;
-}
-
-.env-btn-shadow {
-
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
 .env-btn {
   display: inline-block;
 }
-
-
 .card-header {
   background: #f1eeee;
   padding: 8px;
@@ -346,29 +253,6 @@ ul.bpp-properties-tabs-links {
   overflow-y: scroll;
 }
 
-.pop-up {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  background: white;
-  z-index: 1000;
-  transition: width 2s;
-  overflow-y: scroll;
-}
-
-.class-css {
-  cursor: pointer;
-  float: right;
-  font-weight: 700;
-  border: 1px solid gray;
-  padding: 1px 6px
-}
-
-.iconfont {
-  font-size: 15px;
-  color: white;
-}
-
 .icon-button {
   width: 50px;
   height: 50px;
@@ -376,26 +260,10 @@ ul.bpp-properties-tabs-links {
   border-radius: 25px;
   font-size: 10px;
   text-align: center;
-
 }
-
 
 .data>input[type=search] {
   height: 70px;
-}
-
-.formelement {
-  padding: 10px;
-}
-
-#particles-js {
-  position: absolute;
-  z-index: 0;
-  width: 50%;
-  height: 620px;
-  background-color: none;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 /*RPA-Environments*/
@@ -573,13 +441,6 @@ foreignObject {
   padding: 0px 10px;
 }
 
-.myPanelDownClass {
-  margin-top: 23px;
-}
-
-
-
-
 .inactive path {
   stroke: #c1c1c1 !important
 }
@@ -660,12 +521,6 @@ foreignObject {
   to {
     stroke-dashoffset: 0;
   }
-}
-
-.highcharts-credits {
-  display: none !important;
-  fill: white !important;
-  color: white !important;
 }
 
 .modal-header {
@@ -749,15 +604,6 @@ foreignObject {
   caret-color: var(--main-bluecolor) !important;
 }
 
-.insight-back-button {
-  float: right;
-  position: relative;
-  top: 10px;
-  font-size: 18px;
-  color: #333333;
-  text-decoration: none;
-}
-
 .shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
@@ -785,12 +631,6 @@ foreignObject {
 .pisvg {
   width: 100% !important;
   min-height: 100%;
-}
-
-
-
-#sidenavContainer {
-  margin-top: 64px;
 }
 
 #sidenav.menu-close {
@@ -1025,21 +865,6 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin-left: -13px;
 }
 
-/* .table tbody tr:hover {
-  background: #fdf6d4 !important;
-}
-
-.table thead {
- background-color: #e8f7fd !important;
-  color: var(--main-bluecolor) !important;
-  font-size: 14px !important;
-  text-align: left !important;
-  border-top: none !important;
-  font-weight: 600;
-  border-bottom: 1px solid #4a4a4a33 !important;
-  padding: 8px 10px;
-}  */
-
 .mat-table tbody,
 .mat-table tfoot,
 .mat-table thead,
@@ -1246,10 +1071,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #FFF !important;
 }
 
-/* .modelprhead,
-.modelprbody {
-  padding: 10px !important;
-} */
 .required,.star{display:inline-block;text-transform: lowercase;}
 .required::first-letter,.star::first-letter{text-transform: uppercase;}
 .required,
@@ -3953,3 +3774,149 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+
+
+
+
+/* Unwanted Code */
+.breadcrumb {
+  background-color: white !important;
+  padding: 4px 22px;
+  margin-bottom: 1px;
+  list-style: none;
+  border-radius: 4px;
+}
+.navbar-fixed-top {
+  z-index: 1000 !important;
+}
+.input-group-text {
+  color: blue;
+}
+.center {
+  text-align: center;
+}
+.right {
+  float: right;
+}
+.ngx-pagination {
+  padding: 0;
+}
+.pagination {
+  margin: 0 !important;
+}
+.header_btn {
+  margin-right: 20px;
+}
+.btn-thin {
+  height: 25px;
+  padding: 2px 20px !important;
+  font-size: 12px !important;
+  border-color: var(--main-bluecolor) !important;
+}
+.error_msg {
+  font-size: 10px;
+  color: var(--high-importance);
+  display: none;
+}
+.error_msg.show {
+  display: block;
+}
+th {
+  border-top: none !important;
+  color: var(--main-bluecolor);
+  border-bottom: 1px solid #4a4a4a33 !important;
+  padding: 5px 10px !important;
+  background: #e8f7fd;
+  font-size: 14px !important;
+  vertical-align: middle !important;
+  text-align: left;
+}
+thead  tr,tbody tr {
+  height: 40px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+.env-table>thead>tr>th {
+  padding: 18px;
+  color: black;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: white;
+}
+.env-btn-shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.pop-up {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+  transition: width 2s;
+  overflow-y: scroll;
+}
+.class-css {
+  cursor: pointer;
+  float: right;
+  font-weight: 700;
+  border: 1px solid gray;
+  padding: 1px 6px
+}
+.iconfont {
+  font-size: 15px;
+  color: white;
+}
+.formelement {
+  padding: 10px;
+}
+#particles-js {
+  position: absolute;
+  z-index: 0;
+  width: 50%;
+  height: 620px;
+  background-color: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.myPanelDownClass {
+  margin-top: 23px;
+}
+.insight-back-button {
+  float: right;
+  position: relative;
+  top: 10px;
+  font-size: 18px;
+  color: #333333;
+  text-decoration: none;
+}
+.highcharts-credits {
+  display: none !important;
+  fill: white !important;
+  color: white !important;
+}
+
+#sidenavContainer {
+  margin-top: 64px;
+}
+.table tbody tr:hover {
+  background: #fdf6d4 !important;
+}
+
+.table thead {
+ background-color: #e8f7fd !important;
+  color: var(--main-bluecolor) !important;
+  font-size: 14px !important;
+  text-align: left !important;
+  border-top: none !important;
+  font-weight: 600;
+  border-bottom: 1px solid #4a4a4a33 !important;
+  padding: 8px 10px;
+}  
+
+.modelprhead,
+.modelprbody {
+  padding: 10px !important;
+} 
+/* Unwanted Code */
