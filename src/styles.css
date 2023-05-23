@@ -2731,6 +2731,9 @@ input.p-inputtext {
   left: unset !important;
   width: max-content;
 }
+.actionspopmenu.prjactmenu .p-menu-overlay {
+  top: 40px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
