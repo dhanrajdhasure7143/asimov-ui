@@ -643,7 +643,7 @@ resetsla(){
       })
       this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
         this.spinner.hide();
-        this.responsedata=array;
+        // this.responsedata=array;
         this.reOrderedData = array;
 
         // this.dataSource2.paginator=this.paginator10;
@@ -677,6 +677,7 @@ resetsla(){
     // this.dataSource2.sort=this.automatedSort
     //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
+    this.reOrderedData=[]
   }
 
   applyFilter1(value)
@@ -689,6 +690,7 @@ resetsla(){
     // this.dataSource2.paginator=this.paginator10;
     // this.dataSource2.sort=this.automatedSort;
     this.selectedvalue="";
+    this.reOrderedData=[]
   }
 
 
