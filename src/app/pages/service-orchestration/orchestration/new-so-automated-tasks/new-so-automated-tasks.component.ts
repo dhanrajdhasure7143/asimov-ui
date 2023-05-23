@@ -663,7 +663,7 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
+    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
     this.responsedata=processes
     // this.dataSource2.paginator=this.paginator10;
     // this.dataSource2.sort=this.automatedSort
@@ -1046,6 +1046,7 @@ resetsla(){
   }
   reset_all()
   {
+    this.spinner.show();
     this.selectedEnvironment="";
     this.selectedvalue="";
     if(this.categaoriesList.length==1)
