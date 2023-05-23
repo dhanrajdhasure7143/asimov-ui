@@ -75,7 +75,7 @@
 }
 .filterValueshi8 {
   margin-top: 10px;
-  overflow: hidden auto;
+  /* overflow: hidden auto; */
   height: calc(100vh - 320px);
 }
 .data_values{

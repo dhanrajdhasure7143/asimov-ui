@@ -133,6 +133,7 @@ ul#environments li {
     display: flex;
     align-items: center;
     color: #495057;
+    cursor: default;
 }
 
 ul#environments li:hover {
@@ -141,6 +142,7 @@ ul#environments li:hover {
 
 ul#environments li input {
     margin: -2px 10px 0px 0px;
+    cursor: pointer;
 }
 
 ul#environments li img {
@@ -569,6 +571,9 @@ ul#environments {
   font-size: 15px !important;
   padding: 0px !important;
   background: #fff;
+  inset: unset !important;
+  right: 0 !important;
+  top: 100% !important;
 }
 .actionsmenu-right button, .actionsmenu-right span {
   font-size: 14px;

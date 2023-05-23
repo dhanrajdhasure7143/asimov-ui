@@ -280,13 +280,13 @@
                             <div *ngIf="loadedBotsList.length!=0" class="check">  
                               <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
-                                <button class="action-item hovericon" placement="left" tooltip="Zoom in" (click)="childBotWorkspace.zoomin('')">
+                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="left" (click)="childBotWorkspace.zoomin('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg" />
                                 </button>
-                                <button class="action-item hovericon" placement="left" tooltip="Zoom out" (click)="childBotWorkspace.zoomout('')">
+                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="left" (click)="childBotWorkspace.zoomout('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom Out.svg" />
                                 </button>
-                                <button class="action-item hovericon" placement="left" tooltip="Fit to screen"
+                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="left"
                                   (click)="childBotWorkspace.reset('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                                 </button>
