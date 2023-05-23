@@ -110,7 +110,7 @@
         <div class="">
             <div class="orchestration-table-container">
                 
-                    <p-table  #dt [value]="responsedata" cdkDropList [cdkDropListData]="responsedata" (cdkDropListDropped)="dropTable($event)"
+                    <p-table  #dt [value]="responsedata" pDroppable (onRowReorder)="dropTable($event)"
                     [globalFilterFields]="['processName','taskName','createdBy','taskType','category','status']" [scrollable]="true"
                     [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
                     <ng-template pTemplate="caption">
@@ -124,6 +124,7 @@
                     </ng-template>
                     <ng-template pTemplate="header">
                             <tr>
+                                <th style="flex: 0 0 4rem"></th>
                                 <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
                                     <p-columnFilter *ngIf="each.ShowFilter && each.field != 'category'&& each.field != 'taskType'&& each.field != 'status'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
                                               display="menu" [showApplyButton]="false">
@@ -158,16 +159,19 @@
                                   </th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-element>
-                            <tr>
-                                <td [pTooltip]="element.processName" tooltipPosition="top">{{element.processName}}</td>
-                                <td>
+                        <ng-template pTemplate="body" let-element let-index="rowIndex">
+                            <tr [pReorderableRow]="index">
+                                <td style="flex: 0 0 4rem">
+                                    <span class="pi pi-bars" pReorderableRowHandle></span>
+                                </td>
+                                <td [pTooltip]="element.processName" tooltipPosition="top" pReorderableRowHandle>{{element.processName}}</td>
+                                <td pReorderableRowHandle>
                                     <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
                                         <!-- <span *ngIf="element.taskName!=null" [pTooltip]="element.taskName">{{(element.taskName.length >
                                             5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span> -->
                                     <span *ngIf="element.taskName==null">-</span>
                                 </td>
-                                <td>{{element.createdBy}}</td>
+                                <td pReorderableRowHandle>{{element.createdBy}}</td>
                                 <td>
                                     <span *ngIf="element.taskType=='Automated'">
                                         <select class="form-control" 
@@ -186,13 +190,13 @@
                                     </span>
                                     <span *ngIf="element.taskType !='Automated'">-</span>
                                 </td>
-                                <td>
+                                <td pReorderableRowHandle>
                                     <span *ngIf="element.taskType!=null">
                                         {{element.taskType}}
                                     </span>
                                     <span *ngIf="element.taskType==null">-</span>
                                 </td>
-                                <td>
+                                <td pReorderableRowHandle>
                                     <span *ngIf="element.category!=null">{{element.category}}</span>
                                     <span *ngIf="element.category==null">-</span>
                                 </td>
@@ -269,7 +273,7 @@
                                         <span *ngIf="isHumanLoading=='Failure'">Error</span>
                                     </span>
                                 </td>
-                                <td>
+                                <td pReorderableRowHandle>
                                     <span>
                                         <!-- [pTooltip]="element.status" tooltipPosition="top" -->
                                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'" class="d-flex align-items-center">
