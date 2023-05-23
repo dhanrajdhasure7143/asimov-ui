@@ -1848,10 +1848,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
             if(actualTasks.length!=0)
             {
-              let indexList:any=[]
+              let indexList:any=[];
               this.final_tasks.forEach((tempTask, index)=>{
                 if(tempTask.nodeId==item.nodeId)
-                  indexList.push(index)
+                  indexList.push(index);
               });
               indexList.forEach((indexItem, indexmeta)=>{
                   if(finalTasksData[indexItem] && actualTasks[indexmeta])
