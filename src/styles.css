@@ -3956,3 +3956,11 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+
+  .download .p-overlaypanel-content {
+    padding: 0px 0px !important;
+  }
+  
+.download .dropdown-item{
+    font-size: 14px !important;
+  }
