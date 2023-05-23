@@ -568,43 +568,30 @@ export class SoSchedulerComponent implements OnInit {
 
 
 
-  async saveschedule()
-  
-  {
+  async saveschedule(){
     this.spinner.show();
-    if(this.botid !=undefined && this.botid != "")
-    {
-      if(this.schedule_list.length==0)
-      {
+    if(this.botid !=undefined && this.botid != ""){
+      if(this.schedule_list.length==0){
         this.botdata.botMainSchedulerEntity=null;
-      }
-      else
-      {
+      }else{
         let schedules:any=[]
         this.schedule_list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
+          if(data.save_status=="unsaved"){
             delete data.intervalId
             schedules.push(data);
-          }
-          else if(data.save_status=="saved")
-          {
+          }else if(data.save_status=="saved"){
             schedules.push(data)
           }
         })
-        if(this.botdata.botMainSchedulerEntity==null)
-        {
+        if(this.botdata.botMainSchedulerEntity==null){
           this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
-        }
-        else
-        {
+        }else{
           this.botdata.botMainSchedulerEntity.scheduleIntervals=schedules;
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
           let resp:any=data;
-          if(resp.errorMessage==undefined)
-          {
+          if(resp.errorMessage==undefined){
             this.notifier.notify("success","Schedules saved successfully")
            
             /*if(resp.botMainSchedulerEntity==null){
@@ -614,35 +601,29 @@ export class SoSchedulerComponent implements OnInit {
             }*/
             this.get_schedule();
             this.updateflags();
-           
-          }
-          else
-          {
-            
+            this.spinner.hide();
+          }else{  
             this.notifier.notify("error","Schedule failed to add")
-          }
-         
+          }      
     })
-    }
-    else if(this.processid!=undefined && this.processid!="")
-    {
+    }else if(this.processid!=undefined && this.processid!=""){
       let save_schedule_list:any=[];
       save_schedule_list=this.schedule_list.filter(item=>item.save_status=='unsaved')
-      if(save_schedule_list.length!=0)
+      if(save_schedule_list.length!=0){
       this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage==undefined)
-        {
+        if(resp.errorMessage==undefined){
           this.notifier.notify("success","Schedules saved successfully");
           this.get_schedule();
           this.updateflags();
           this.spinner.hide();
-        }
-        else
-        {
+        }else{
           this.notifier.notify("error",resp.errorMessage);
         }
       })
+    }else{
+      this.spinner.hide();
+    }
       // if(this.deletestack.length!=0)
       // {
       //   this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
