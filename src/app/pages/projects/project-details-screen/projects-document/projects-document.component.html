@@ -1,6 +1,6 @@
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-4 pl-0">
+            <div class="col-md-8 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a *ngIf="breadcrumbItems.length == 0" (click)="backToProjectDetails()" class="imageBox">
@@ -25,7 +25,7 @@
             <div class="well-design">
                 <div class="col-md-12 under-line">
                     <div class="row">
-                        <div class="col-md-8 pl-0">
+                        <div class="col-md-9 pl-0">
                             
                                 <button type="button" class="btn bluebg-button creat-pluarow icn-adj">
                                   <span><img src="../../../../../assets/images-n/add-default.svg"></span> <span class="crt-new"> Create New</span> <span><img src="../../../../../assets/images-n/chevron-down-createnew.svg"></span>
@@ -60,7 +60,7 @@
                             </button>
 
                         </div>
-                        <div class="col-md-4 pr-0 right-btns">
+                        <div class="col-md-3 pr-0 right-btns">
                              
                            <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
                                 <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" class="active-icon"/>

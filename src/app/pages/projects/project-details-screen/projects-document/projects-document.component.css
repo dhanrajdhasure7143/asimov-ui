@@ -205,6 +205,9 @@ input[type=checkbox]:checked::after {
   background: #eee;
   border: unset;
 }
+.docscrnchngs{    overflow-y: scroll;
+  height: calc(100vh - 271px);
+}
 
 
 
