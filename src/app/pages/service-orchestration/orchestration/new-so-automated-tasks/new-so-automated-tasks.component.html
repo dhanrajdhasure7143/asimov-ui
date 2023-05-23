@@ -257,7 +257,7 @@
                                     <span *ngIf="element.taskType=='Human'">
                                         <span *ngIf="isHumanLoading=='Loading'">Loading...</span>
                                         <span *ngIf="isHumanLoading=='Success'">
-                                            <select class="form-control" 
+                                            <select class="form-control" [(ngModel)]="element.assignedUserId"
                                                 [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"
                                                 [id]="element.taskId+'__select'">
                                                 <option value="0" hidden selected>Select Resource</option>
