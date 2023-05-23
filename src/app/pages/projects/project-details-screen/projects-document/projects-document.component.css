@@ -137,7 +137,7 @@ i.pi.pi-search.treeviewsearchicon {
 .well-design{border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
   border-radius: 6px;
-  height: calc(100vh - 190px) !important;
+  height: calc(100vh - 130px) !important;
   width: 100%;}
   .under-line{    border-bottom: 1px solid var(--cards-bordercolor);
     padding: 15px 20px;}
@@ -145,7 +145,8 @@ i.pi.pi-search.treeviewsearchicon {
   .p-input-icon-right{width:196px;}
   .crt-new{margin-right:8px;margin-left:8px;}
   .doc-btns{margin-right:15px;margin-left:15px;}
-  .icn-adj{margin-right:10px;}
+  /* .icn-adj{margin-right:10px;} */
+  .creat-pluarow{margin-right:10px;}
   .icn-adj1{margin-right:20px;vertical-align: middle;cursor:pointer;} 
   .docfolder1 {padding:15px 20px;}
   .doctree{padding:15px 20px;}
