@@ -115,7 +115,7 @@
                       <span class="testtooltip">Environments</span>
                     </button>
                     <ul id="environments" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                      <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.filteredEnvironments"
+                      <li role="menuitem" *ngFor="let env of  current_instance.filteredEnvironments"
                         style="white-space: nowrap;">
                         <input #inputEl type="checkbox" [checked]="env.check==true"
                           (change)=" current_instance.checkUncheckEnvironments(env.environmentId,inputEl.checked)">  {{env.environmentName}}

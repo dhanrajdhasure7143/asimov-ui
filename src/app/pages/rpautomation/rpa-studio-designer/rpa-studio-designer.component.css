@@ -146,7 +146,7 @@ ul#environments li input {
 }
 
 ul#environments li img {
-    vertical-align: sub;
+    margin-right: 10px;
 }
 
 .action-menu-dropdown {
@@ -239,16 +239,15 @@ hr {
     margin-left: -5px;
 }
 
-.d-format {
-    padding: 8px;
-}
-
 .d-format:hover {
-    background: rgba(0, 0, 0, .04);
+    background: #e9ecef;
 }
 
 .d-format a {
-    color: rgba(0, 0, 0, .87);
+  color: #232832;
+  font-size: 14px !important;
+  background-color: transparent;
+  padding: 8px 20px;
 }
 
 .RPA-download {
@@ -484,7 +483,7 @@ select.versions.form-control
 
 
 .clickable{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 
