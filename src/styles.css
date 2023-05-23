@@ -3441,7 +3441,7 @@ textarea.p-inputtextarea {
 }
 .taskdescription p-inplace.p-element {
   height: calc(100% - 40px);
-  display: inline-block;
+ display: inline-block; 
 }
 .taskdescription .p-inplace.p-component {
   height: 100%;

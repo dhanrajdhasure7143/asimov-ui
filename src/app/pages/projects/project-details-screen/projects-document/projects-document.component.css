@@ -173,12 +173,14 @@ input[type="checkbox"] {
   appearance: none;
 
   /* Styling checkbox */
-  width: 19px;
-  height: 19px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
   background-color: #ffffff;
   border:2px solid #a9a7a7;
   cursor: pointer;
+
+ 
   
 }
 input[type="checkbox"]:checked {
@@ -186,13 +188,19 @@ input[type="checkbox"]:checked {
   border:2px solid #ffffff; 
 }
 input[type=checkbox]:checked::after {
-  content: "\2714";
-  color: white;
-  padding: 1px 3px;
-  font-size: 12px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 5.2px;
+  left: 5.5px;
+  opacity: 1;
+  position: absolute;
+  top: 6px;
+  transform: rotate(-45deg);
  
+  width: 9px;
 
- 
 }
 .docfolder1 .addpcard .p-card:hover{
   background: #eee;
