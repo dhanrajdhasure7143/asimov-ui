@@ -622,12 +622,15 @@ resetsla(){
       this.spinner.hide();
     })
   }
+  onRowReorder(event){
+    console.log(event)
+  }
   dropTable(event) {
     if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
     {
       this.spinner.show();
       let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
-      moveItemInArray(filteredTasks,event.previousIndex,event.currentIndex)
+      moveItemInArray(filteredTasks,event.dragIndex,event.dropIndex)
       let array:any= filteredTasks;
       let tasksOrder=array.map(item=>{
         return {
