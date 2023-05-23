@@ -145,7 +145,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
       this.onChangeAddTo(this.connectorForm.value.addTo);
@@ -199,7 +199,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id": "",
         "name": this.connectorForm.value.actionName,
-        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         "description": "",
