@@ -3953,3 +3953,16 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+  .imageBox {
+    position: relative;
+    /* float: left; */
+  }
+  
+  .imageBox .hover-icon,
+  .imageBox:hover .active-icon  {
+    display: none;
+  }
+  
+  .imageBox:hover .hover-icon{
+    display: block;
+  }
