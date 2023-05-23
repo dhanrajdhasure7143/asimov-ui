@@ -622,9 +622,7 @@ resetsla(){
       this.spinner.hide();
     })
   }
-  onRowReorder(event){
-    console.log(event)
-  }
+  
   dropTable(event) {
     if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
     {
