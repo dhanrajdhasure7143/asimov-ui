@@ -107,6 +107,7 @@ public slaupdate : boolean = false;
     draggableHandle:any;
     noDataMessage: boolean;
     hiddenPopUp:boolean=false;
+    allBotsList:any[]=[];
     columnList=[
       {DisplayName:"Bot Name",ColumnName:"botName",ShowFilter: true},
       {DisplayName:"Description",ColumnName:"description",ShowFilter: true},
@@ -160,11 +161,13 @@ public slaupdate : boolean = false;
    this.getUserDetails();
    this.spinner.show();
     this.getCategoryList();
-    this.getallbots();
     this.getautomatedtasks();
     this.getprocessnames();
     this.get_sla_list();
     this.getusersList();
+    setTimeout(()=>{
+      this.getallbots();
+    },1000)
     this.popup=false;
   }
 
@@ -502,19 +505,15 @@ public slaupdate : boolean = false;
     this.router.navigate(["/pages/rpautomation/home"]);
   }
 
-  getallbots()
-  {
+  getallbots(){
     this.spinner.show()
     this.selected_source="";
-    this.rest.getallsobots().subscribe((botlist:any) =>
-    {
-      if(botlist.errorMessage!=undefined)
-      {
+    this.rest.getallsobots().subscribe((botlist:any) =>{
+      if(botlist.errorMessage!=undefined){
         this.spinner.hide();
         this.respdata1=true
         Swal.fire("Error",botlist.errorMessage,"error");
-      }else
-      {
+      }else {
         this.respdata1=(botlist.length >0)? false: true;
         botlist.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
         botlist=botlist.map((item:any)=>{
@@ -535,11 +534,8 @@ public slaupdate : boolean = false;
         });
 
         this.bot_list=botlist;
+        this.allBotsList=botlist;
          this.datasourcelist = this.bot_list;
-        // this.dataSource1= new MatTableDataSource(botlist);
-        // this.isDataSource = true;
-        // this.dataSource1.sort=this.sort1;
-        // this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
     }
     },(err)=>{
@@ -1048,16 +1044,14 @@ public slaupdate : boolean = false;
   }
 
 
-  getautomatedtasks()
-  {
+  getautomatedtasks(){
     this.rest.getautomatedtasks(0).subscribe(tasks=>{
       this.automatedtasks=tasks;
       this.bot_list = tasks
     })
   }
 
-    getprocessnames()
-    {
+    getprocessnames(){
       this.rest.getprocessnames().subscribe(processnames=>{
         this.processnames=processnames;
         this.bot_list = processnames

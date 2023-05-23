@@ -160,7 +160,7 @@
             <span class="side-menu-font">User Management</span>
           </a>
           <a mat-list-item class="link" id='subscriptions'
-          *ngIf="this.userRoles.includes('System Admin') && role =='Admin'" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
+          *ngIf="this.userRoles.includes('System Admin') && role =='Admin' && this.getCookie('card_enabled')=='true'" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
             [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
             <span class="side-icon">

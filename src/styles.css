@@ -3443,6 +3443,9 @@ textarea.p-inputtextarea {
   height: calc(100% - 40px);
   display: inline-block;
 }
+.task_description p-inplace.p-element {
+  width: 100%;
+}
 .taskdescription .p-inplace.p-component {
   height: 100%;
 }
@@ -3953,16 +3956,11 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-  .imageBox {
-    position: relative;
-    /* float: left; */
+
+  .download .p-overlaypanel-content {
+    padding: 0px 0px !important;
   }
   
-  .imageBox .hover-icon,
-  .imageBox:hover .active-icon  {
-    display: none;
-  }
-  
-  .imageBox:hover .hover-icon{
-    display: block;
+.download .dropdown-item{
+    font-size: 14px !important;
   }
