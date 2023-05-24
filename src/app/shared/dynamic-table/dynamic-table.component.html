@@ -250,6 +250,15 @@
                             <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete4" tooltipPosition="top">
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
                             </span> -->
+                            <span *ngIf="screenTable =='aprovalList'">
+                                <button  [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
+                                    <i class="fas fa-check text-success"></i>
+                                    <!-- <img src="../../../assets/images-n/gridicons/" alt="success" /> -->
+                                  </button>
+                                  <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
+                                      <i class="fas fa-times text-danger"></i>
+                                  </button>
+                            </span>
                     </span>
                     <span *ngIf="screenTable=='projectList'">
                         <!-- [hidden]="!(rowData.id == selectedItem.id)" -->

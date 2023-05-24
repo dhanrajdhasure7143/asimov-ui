@@ -1802,4 +1802,16 @@ checkScreenName(Screen_Name)
 getHeadersParams(){
   return this.http.get("/rpa-service/getRequestParameter")
 }
+
+//RPA Configuration Approval Apis
+getRPAApprovalsList()
+{
+  return this.http.get(`/rpa-service/rpa-inbox`);
+}
+
+updateApprovalList(data:any)
+{
+  return this.http.post(`/rpa-service/update-approval-status`, data);
+}
+
 }

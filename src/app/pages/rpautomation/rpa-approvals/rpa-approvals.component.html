@@ -1,0 +1,31 @@
+<app-dynamic-table 
+                                [columns_list]="columns_list"
+                                [table_data]="approvalsList" 
+                                [screenTable]="'aprovalList'" 
+                                [dataKeyId]="'id'"
+                                [search_fields]="table_searchFields" 
+                                [show_approve_btn]="false" 
+                                [show_reject_btn]="false" 
+                                [show_search_field]="true"
+                                [show_column_filter]="true"
+                                [show_clear_filter]="true"
+                                (approvedItem)="onApproveItem($event,'Approved')"
+                                (rejectItem)="onApproveItem($event, 'Rejected')" 
+                                >
+                        </app-dynamic-table>
+
+<p-dialog header="Add Comments" class="createdashboardname" [(visible)]="isDialogShow" [modal]="true" [baseZIndex]="10000" [style]="{width: '30vw'}"
+   [draggable]="false" [resizable]="false">
+   <div class="form-group">
+      <label for="" class="label-control"> Comments
+        <!-- <span class="star">*</span> -->
+    </label>
+      <textarea class="form-control" placeholder="Enter Comments" [(ngModel)]="comments"></textarea>
+      <!-- <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50" /> -->
+   </div>
+   <ng-template pTemplate="footer">
+      <button class="btn new-cancelbtn">Cancel</button>
+      <button [disabled]="comments==''" (click)="updateApprovalStatus()" class="btn bluebg-button">Update</button>
+   </ng-template>
+</p-dialog>
+
