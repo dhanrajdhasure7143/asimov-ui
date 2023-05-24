@@ -177,11 +177,14 @@
                             </a>
                         </span>
                         <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'" [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
-                          <i class="fas fa-check text-success"></i>
-                          <!-- <img src="../../../assets/images-n/gridicons/" alt="success" /> -->
+                            <i class="fas fa-check text-success"></i>
+                            <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                           <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
                         </button>
                         <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"[class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
                             <i class="fas fa-times text-danger"></i>
+                            <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                            <img src="../../../assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
                         </button>
                         <span *ngIf="show_delete_btn">
                             <a *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
