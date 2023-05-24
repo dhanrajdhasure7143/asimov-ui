@@ -1848,12 +1848,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
             if(actualTasks.length!=0)
             {
-              let indexList:any=[]
+              let indexList:any=[];
               this.final_tasks.forEach((tempTask, index)=>{
                 if(tempTask.nodeId==item.nodeId)
-                  indexList.push(index)
+                  indexList.push(index);
               });
               indexList.forEach((indexItem, indexmeta)=>{
+                  if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                  {
                   let task={...{},...finalTasksData[indexItem]}
                   task.botTId=actualTasks[indexmeta].botTId;
                   let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
@@ -1871,6 +1873,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   task["attributes"]=[...attributes]
                   task["validated"]=true;
                   this.final_tasks[indexItem]=task;
+                }
               })
             }
           }

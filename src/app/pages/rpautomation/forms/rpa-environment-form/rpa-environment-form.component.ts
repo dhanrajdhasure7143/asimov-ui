@@ -166,14 +166,16 @@ export class RpaEnvironmentFormComponent implements OnInit {
     let environment = this.environmentForm.value;
     let formData = new FormData();
     Object.keys(environment).forEach(key => {
-      formData.append(key, environment[key])
+      if(String(key)!="password")
+        formData.append(key, environment[key])
     });
     if (this.isKeyValuePair == true) {
       formData.append("key", this.keyValueFile);
       this.password = "";
+      formData.append("password","");
     } else {
-      if(formData["password"])
       formData.append("password", this.password);
+      formData.append("key", "");
     }
     this.spinner.show();
     this.api.addenvironmentV2(formData).subscribe((response: any) => {
@@ -229,17 +231,17 @@ export class RpaEnvironmentFormComponent implements OnInit {
       updatFormValue["createdBy"] = this.updateenvdata.createdBy;
       updatFormValue["deployStatus"] = this.updateenvdata.deployStatus;
       let updateEnvData = new FormData();
-      Object.keys(updatFormValue).map(key => {
-        return updateEnvData.append(String(key), String(updatFormValue[key]))
+      Object.keys(updatFormValue).forEach(key => {
+        if(String(key)!="password")
+           updateEnvData.append(String(key), String(updatFormValue[key]))
       });
-      updateEnvData.append("formValue", "sample")
       if (this.isKeyValuePair == false) {
         updateEnvData.append("password", this.password);
-        updateEnvData.append("key", null)
+        updateEnvData.append("key", "")
       } else {
-        updateEnvData.append("password", null)
+        updateEnvData.append("password", "")
         if (this.keyValueFile == undefined || this.keyValueFile == null)
-          updateEnvData.append("key", null)
+          updateEnvData.append("key", "")
         else
           updateEnvData.append("key", this.keyValueFile)
       }
