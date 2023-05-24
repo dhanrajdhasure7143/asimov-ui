@@ -185,7 +185,7 @@ export class RpaenvironmentsComponent implements OnInit {
     const selectedEnvironments = this.selected_list.map(p => p.environmentId);
     if (selectedEnvironments.length != 0) {
       Swal.fire({
-        title: 'Are you sure?',
+        title: 'Are you Sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
@@ -280,7 +280,7 @@ export class RpaenvironmentsComponent implements OnInit {
   deletebyId(data){
     const selectedEnvironments=[data.environmentId];
       Swal.fire({
-        title: 'Are you sure?',
+        title: 'Are you Sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,

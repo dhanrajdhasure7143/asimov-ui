@@ -567,9 +567,11 @@ button span {
     padding: 15px 20px 0px;
 }
 
-.newinntalx a:hover img.default-icon, .newinntalx img.hover-icon {
+.newinntalx a:hover img.default-icon, .newinntalx img.hover-icon,
+.actionmenu:hover img.default-icon, .actionmenu img.hover-icon {
     display: none;
 }
-.newinntalx a:hover img.hover-icon {
+.newinntalx a:hover img.hover-icon,
+.actionmenu:hover img.hover-icon {
     display: initial;
 }

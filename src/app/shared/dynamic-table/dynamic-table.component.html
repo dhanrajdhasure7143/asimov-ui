@@ -78,7 +78,7 @@
                             <div class="d-flex align-items-center">
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
-                                    <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
+                                    <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="left" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
                                     <span *ngIf="col.datePipe" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
                                     <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
                                     <span *ngIf="col.multiOptions[1] == 'roles'" class="resourcerole" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}}</span>
@@ -86,7 +86,7 @@
                                 <span *ngIf="!col.multi">
                                     <!-- <span *ngIf="col.userProfile" class="prjlastupdateprofile">{{rowData[col.ColumnName]|userLetters:users_list}}</span> -->
                                     <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData[col.ColumnName]" style="height:25px;" alt="img"></span>
-                                    <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                                    <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="left" [tooltipDisabled]="!col.showTooltip">
                                         <!-- <span *ngIf="(rowData['status']=='Running' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
                                             <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                                         </span>

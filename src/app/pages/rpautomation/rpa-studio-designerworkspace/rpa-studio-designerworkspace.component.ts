@@ -973,7 +973,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   deletenode(node) {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -1720,7 +1720,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   resetDesigner() {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -2785,7 +2785,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   deleteBot() {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,

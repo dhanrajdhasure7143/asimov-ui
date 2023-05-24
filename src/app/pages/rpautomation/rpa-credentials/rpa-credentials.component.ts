@@ -137,7 +137,7 @@ inputNumberOnly(event){
   deleteCredentials(){
     const selectedcredentials = this.selectedData.map(p => p.credentialId);
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -224,7 +224,7 @@ inputNumberOnly(event){
     const selectedcredentials=[]
     selectedcredentials.push(row.credentialId);
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,

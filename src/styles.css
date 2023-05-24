@@ -2731,6 +2731,9 @@ input.p-inputtext {
   left: unset !important;
   width: max-content;
 }
+.actionspopmenu.prjactmenu .p-menu-overlay {
+  top: 40px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
@@ -3957,10 +3960,6 @@ background-color: #D8E0EF !important;
   align-items: center;
   float: right;}
 
-  .download .p-overlaypanel-content {
-    padding: 0px 0px !important;
-  }
-  
-.download .dropdown-item{
-    font-size: 14px !important;
-  }
+.download .p-overlaypanel-content {
+  padding: 5px 0px !important;
+}
