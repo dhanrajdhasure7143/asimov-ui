@@ -189,4 +189,16 @@ export class columnList{
         {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,dropdownList:['Paid','Voided']},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
+
+      public approval_column=[
+        {ColumnName:"botId",DisplayName:"Bot Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"} ,
+        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"},
+        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"status",DisplayName:"Status",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"createdAt",DisplayName:"Created At",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, width:"", filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
+      ];
 }
