@@ -20,6 +20,7 @@ export class RpaApprovalsComponent implements OnInit {
   isDialogShow:boolean=false
   comments:String="";
   updateData:any={};
+  selectedRows:any=[];
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -49,6 +50,7 @@ export class RpaApprovalsComponent implements OnInit {
     this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo"]
     this.rest.getRPAApprovalsList().subscribe((response:any)=>{ 
       this.spinner.hide();
+      this.selectedRows=[]
       if(response.data.length!=0)
       {
         this.approvalsList=response.data.map((item:any)=>{
@@ -81,8 +83,7 @@ export class RpaApprovalsComponent implements OnInit {
     this.dt.get_username_by_email(this.users_list,emailId);
   }
 
-  updateApprovalStatus()
-  {
+  updateApprovalStatus(){
     this.spinner.show();
     this.updateData["comments"]=this.comments;
     this.updateData["modifiedBy"]=localStorage.getItem("ProfileuserId");
@@ -97,6 +98,14 @@ export class RpaApprovalsComponent implements OnInit {
       Swal.fire("Error", "Unable to update approval", "error");
       this.spinner.hide();
     })
+  }
+
+  readSelectedData(selectedRows:any){
+    this.selectedRows=selectedRows
+  }
+
+  onApproveRejectItem(ststusType){
+    console.log(ststusType,this.selectedRows)
   }
 
 }
