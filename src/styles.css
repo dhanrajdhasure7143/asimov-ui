@@ -2585,14 +2585,14 @@ div {
 }
 
 /* Scrollbar styles START */
-::-webkit-scrollbar {
+ ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
   cursor: pointer;
 }
 ::-webkit-scrollbar:hover {
-width: 8px !important;
-height: 8px !important;
+width: 10px !important;
+height: 10px !important;
 cursor: pointer;
 }
 ::-webkit-scrollbar-track {
@@ -2606,7 +2606,12 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
 background: var(--main-bluecolor) !important;
 cursor: pointer;
+width:10px;
+height:10px;
 }
+
+
+
 /* Scrollbar styles END */
 
 .maincont {
@@ -2914,7 +2919,7 @@ span.statusbadge_nc {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: 270px;  
+  height: 260px;  
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header{
@@ -3953,3 +3958,24 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+
+
+
+  /* ::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(255, 0, 0, 0);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }  */
