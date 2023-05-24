@@ -88,6 +88,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public userID: any;
   public userDetails:any={};
   public botSource_list:any[]=[];
+  reOrderedData:any=[];
   q=0;
   tasks:any;
   ExecutionTypearr:any[] =[]
@@ -622,14 +623,19 @@ resetsla(){
       this.spinner.hide();
     })
   }
-  
+
   dropTable(event) {
-    if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
-    {
+    if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) {
       this.spinner.show();
-      let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
-      moveItemInArray(filteredTasks,event.dragIndex,event.dropIndex)
-      let array:any= filteredTasks;
+      let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
+      if(this.reOrderedData.length == 0){
+        this.reOrderedData = filteredTasks
+      }
+      moveItemInArray(this.reOrderedData,event.dragIndex,event.dropIndex)
+      // const draggedItem = filteredTasks[event.dragIndex]; 
+      // filteredTasks.splice(event.dragIndex, 1); // Remove the dragged item from its previous index 
+      // filteredTasks.splice(event.dropIndex, 0, draggedItem);
+      let array:any= this.reOrderedData;
       let tasksOrder=array.map(item=>{
         return {
           "taskId":String(item.taskId)
@@ -637,7 +643,9 @@ resetsla(){
       })
       this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
         this.spinner.hide();
-        this.responsedata=array
+        // this.responsedata=array;
+        this.reOrderedData = array;
+
         // this.dataSource2.paginator=this.paginator10;
         // this.dataSource2.sort=this.automatedSort;
       },(err=>{
@@ -663,12 +671,13 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
+    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
     this.responsedata=processes
     // this.dataSource2.paginator=this.paginator10;
     // this.dataSource2.sort=this.automatedSort
     //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
+    this.reOrderedData=[]
   }
 
   applyFilter1(value)
@@ -681,6 +690,7 @@ resetsla(){
     // this.dataSource2.paginator=this.paginator10;
     // this.dataSource2.sort=this.automatedSort;
     this.selectedvalue="";
+    this.reOrderedData=[]
   }
 
 
@@ -1046,6 +1056,7 @@ resetsla(){
   }
   reset_all()
   {
+    this.spinner.show();
     this.selectedEnvironment="";
     this.selectedvalue="";
     if(this.categaoriesList.length==1)
