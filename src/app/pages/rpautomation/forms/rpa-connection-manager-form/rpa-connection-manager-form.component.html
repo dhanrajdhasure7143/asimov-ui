@@ -99,9 +99,9 @@
                                     class="required"> Method Type Required*
                                 </span>
                             </div>
-                            <div class="col-md-12 form-group p-0" >
+                            <div class="col-md-12 form-group p-0" *ngIf="isEndpoint">
                                 <label class="label-control"> API/URL <span class="star">*</span> </label>
-                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
+                                <textarea pInputTextarea [style]="{'width':'100%'}" (keyup)="onEnterEndpoint()" row="3" formControlName="endPoint"
                                 type="url" name="url" id="url" placeholder="Enter API/URL">
                                 </textarea>
                                 <span
@@ -324,7 +324,7 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
+                                                    <!-- <th></th> -->
                                                     <th scope="col">Key</th>
                                                     <th scope="col">Value</th>
                                                     <th class="headercheckbox">
@@ -336,11 +336,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let each of paramForm; let i = index">
-                                                    <td class="headercheckbox">
+                                                    <!-- <td class="headercheckbox"> -->
                                                         <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox> -->
-                                                        <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" (change)="onChangeParamCheckBox(i, $event)" [ngModelOptions]="{standalone: true}">
-                                                    </td>
+                                                        <!-- <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" (change)="onChangeParamCheckBox(i, $event)" [ngModelOptions]="{standalone: true}"> -->
+                                                    <!-- </td> -->
 
                                                     <td>
                                                         <input type="text" (keyup)="onKeyEntered()" name="test+i" id="" class="form-control" placeholder="Key"
