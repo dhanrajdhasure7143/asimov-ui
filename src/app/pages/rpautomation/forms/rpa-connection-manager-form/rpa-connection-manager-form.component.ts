@@ -145,7 +145,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         // "description": "login for zoho", //we dont have description in UI
-        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
       this.onChangeAddTo(this.connectorForm.value.addTo);
@@ -199,7 +199,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body = {
         "id": "",
         "name": this.connectorForm.value.actionName,
-        "actionLogo": this.action_logo == undefined ? this.icon : new String(this.action_logo.split(",")[1]),
+        "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
         "description": "",
@@ -445,23 +445,23 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isKeyValue = false;
       this.isEndpoint = true;
       this.isKeyValueTab = false;
-      const setValidators: string[] = ['endPoint', 'grantType'];
-      const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
+      // const setValidators: string[] = ['endPoint', 'grantType'];
+      const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType"];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
             this.connectorForm.get(key).reset();
             // this.connectorForm.get(key).clearValidators();
             // this.connectorForm.get(key).updateValueAndValidity();
         }
-        if (setValidators.findIndex(q => q === key) != -1) {
-          // this.connectorForm.get(key).reset();
-          if(key == 'endPoint')
-            this.connectorForm.get('endPoint').setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
-            this.connectorForm.get('endPoint').updateValueAndValidity();
-          if(key == 'grantType')
-            this.connectorForm.get('grantType').setValidators([Validators.required]);
-            this.connectorForm.get('grantType').updateValueAndValidity();
-      }
+      //   if (setValidators.findIndex(q => q === key) != -1) {
+      //     // this.connectorForm.get(key).reset();
+      //     if(key == 'endPoint')
+      //       this.connectorForm.get('endPoint').setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
+      //       this.connectorForm.get('endPoint').updateValueAndValidity();
+      //     if(key == 'grantType')
+      //       this.connectorForm.get('grantType').setValidators([Validators.required]);
+      //       this.connectorForm.get('grantType').updateValueAndValidity();
+      // }
       });
     } else if(event == "API_KEY"){
       this.isaddTo = true;

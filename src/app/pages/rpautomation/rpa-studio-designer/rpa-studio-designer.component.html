@@ -115,7 +115,7 @@
                       <span class="testtooltip">Environments</span>
                     </button>
                     <ul id="environments" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                      <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.filteredEnvironments"
+                      <li role="menuitem" *ngFor="let env of  current_instance.filteredEnvironments"
                         style="white-space: nowrap;">
                         <input #inputEl type="checkbox" [checked]="env.check==true"
                           (change)=" current_instance.checkUncheckEnvironments(env.environmentId,inputEl.checked)">  {{env.environmentName}}
@@ -198,7 +198,21 @@
                     </button>
                   </div>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                    <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined"
+                    <p-overlayPanel #op styleClass = download>
+                        <div class="d-format"><a class="dropdown-item clickable"
+                          (click)="current_instance.downloadJpeg()"><span>JPEG</span></a>
+                        </div>
+                        <div class="d-format"><a class="dropdown-item clickable"
+                          (click)="current_instance.downloadPng()"><span>PNG</span></a>
+                        </div>
+                        <div class="d-format"><a class="dropdown-item clickable"
+                          (click)="current_instance.downloadPdf()"><span>PDF</span></a>
+                        </div>
+                    </p-overlayPanel>
+                    <button   type="button" class="tsttooltipbtn" (click)="op.toggle($event)" [disabled]="current_instance.finalbot==undefined">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg"  pTooltip="Download" tooltipPosition="bottom" class="testplus1" alt="">
+                    </button>
+                    <!-- <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined"
                       id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="">
                       <span class="testtooltip">Download</span>
@@ -210,7 +224,7 @@
                           (click)=" current_instance.downloadPng()"><span>PNG</span></a></div>
                       <div class="d-format"><a class="dropdown-item clickable"
                           (click)=" current_instance.downloadPdf()"><span>PDF</span></a></div>
-                    </div>
+                    </div> -->
                   </div>
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined ">
@@ -280,13 +294,13 @@
                             <div *ngIf="loadedBotsList.length!=0" class="check">  
                               <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
-                                <button class="action-item hovericon" placement="left" tooltip="Zoom in" (click)="childBotWorkspace.zoomin('')">
+                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="left" (click)="childBotWorkspace.zoomin('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg" />
                                 </button>
-                                <button class="action-item hovericon" placement="left" tooltip="Zoom out" (click)="childBotWorkspace.zoomout('')">
+                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="left" (click)="childBotWorkspace.zoomout('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom Out.svg" />
                                 </button>
-                                <button class="action-item hovericon" placement="left" tooltip="Fit to screen"
+                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="left"
                                   (click)="childBotWorkspace.reset('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                                 </button>

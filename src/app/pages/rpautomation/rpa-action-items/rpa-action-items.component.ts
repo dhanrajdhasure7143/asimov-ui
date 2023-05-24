@@ -76,8 +76,8 @@ export class RpaActionItemsComponent implements OnInit {
       this.loader.show();
       let selectedId = event.id;
       this.confirmationService.confirm({
-        message: "Are you sure? You won't be able to revert this!",
-        header: 'Confirmation',
+        message: "You won't be able to revert this!",
+        header: 'Are you Sure?',
        
         accept: () => {
           this.loader.show();
@@ -120,8 +120,8 @@ export class RpaActionItemsComponent implements OnInit {
     this.loader.show();
     const selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
-      message: "Are you sure? Do you want to delete this Action-Item !",
-      header: 'Confirmation',
+      message: "Do you want to delete this Action-Item?",
+      header: 'Are you Sure?',
      
       accept: () => {
         this.rest_api.deleteActionById(selectedId).subscribe(

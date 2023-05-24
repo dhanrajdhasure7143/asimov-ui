@@ -2736,6 +2736,9 @@ input.p-inputtext {
   left: unset !important;
   width: max-content;
 }
+.actionspopmenu.prjactmenu .p-menu-overlay {
+  top: 40px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
@@ -3448,6 +3451,9 @@ textarea.p-inputtextarea {
   height: calc(100% - 40px);
   display: inline-block;
 }
+.task_description p-inplace.p-element {
+  width: 100%;
+}
 .taskdescription .p-inplace.p-component {
   height: 100%;
 }
@@ -3958,6 +3964,9 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+.download .p-overlaypanel-content {
+    padding: 5px 0px !important;
+  }
 
 
 
@@ -3979,3 +3988,4 @@ background-color: #D8E0EF !important;
   ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
   }  */
+

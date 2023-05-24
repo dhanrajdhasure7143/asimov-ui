@@ -973,7 +973,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   deletenode(node) {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -1720,7 +1720,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   resetDesigner() {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -1848,12 +1848,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
             if(actualTasks.length!=0)
             {
-              let indexList:any=[]
+              let indexList:any=[];
               this.final_tasks.forEach((tempTask, index)=>{
                 if(tempTask.nodeId==item.nodeId)
-                  indexList.push(index)
+                  indexList.push(index);
               });
               indexList.forEach((indexItem, indexmeta)=>{
+                  if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                  {
                   let task={...{},...finalTasksData[indexItem]}
                   task.botTId=actualTasks[indexmeta].botTId;
                   let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
@@ -1871,6 +1873,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   task["attributes"]=[...attributes]
                   task["validated"]=true;
                   this.final_tasks[indexItem]=task;
+                }
               })
             }
           }
@@ -2782,7 +2785,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   deleteBot() {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
