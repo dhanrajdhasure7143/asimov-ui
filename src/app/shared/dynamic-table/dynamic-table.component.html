@@ -235,10 +235,10 @@
 
                             <span *ngIf="screenTable =='connectionsList'">
                                 <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
-                                <span class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
+                                <a class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
                                     <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                     <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
-                                </span>
+                                </a>
                                 <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
                                     <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
