@@ -636,7 +636,7 @@ const selectedresource = [
 
 this.confirmationService.confirm({
   message: "Do you really want to delete this user? This process cannot be undone.",
-  header: 'Are you sure?',
+  header: 'Are you Sure?',
   
   accept: () => {
     this.spinner.show();
@@ -992,7 +992,7 @@ pinMessage(item){
   if(this._pinnedMessage.length>0){
   this.confirmationService.confirm({
     message: 'Want to replace the currently pinned message with this one?',
-    header: 'Are you sure?',
+    header: 'Are you Sure?',
    
     accept: () => {
       this.sendMessage(item,'pinned')

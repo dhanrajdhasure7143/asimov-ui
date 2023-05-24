@@ -657,7 +657,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isDiagramChanged){
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: 'Your current changes will be lost on changing notation.',
       icon: 'warning',
       showCancelButton: true,

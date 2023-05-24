@@ -329,3 +329,10 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .processesimg span.side-icon, .processesimg img {
   width: 26px !important;
 }
+
+.mat-list-item.active mat-icon.mat-icon-no-color {
+  color: #098de6 !important;
+}
+.mat-list-item.active:hover mat-icon.mat-icon-no-color {
+  color: #fff !important;
+}
