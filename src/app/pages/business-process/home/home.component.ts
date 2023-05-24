@@ -491,7 +491,7 @@ export class BpsHomeComponent implements OnInit {
         ? "PENDING APPROVAL"
         : bpmNotation.bpmnProcessStatus;
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text:
         bpmNotation.bpmnProcessName +
         " V1." +

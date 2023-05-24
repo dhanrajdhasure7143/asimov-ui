@@ -3,17 +3,17 @@
 <input class="search-input border_bottom form-control" name="search" placeholder="Search Node" #search="ngModel" [(ngModel)]="searchNode"  (keyup)="onSearch()"  (keyup)="onSearch()" (blur)="onSearch()" />
 </div>
 <div class="zoom_btns">
-  <a class="btn btn1 zoom tsttooltipbtn " id="zoom_in">
+  <a class="btn btn1 zoom tsttooltipbtn " id="zoom_in" pTooltip="Zoom In" tooltipPosition="right">
     <img src="../../../../assets/images/PI/zoom-in.svg" alt="">
-    <span class="testtooltip">Zoom in</span>
+    <!-- <span class="testtooltip">Zoom in</span> -->
   </a>
-  <a class="btn btn1 zoom-out tsttooltipbtn" id="zoom_out">
+  <a class="btn btn1 zoom-out tsttooltipbtn" id="zoom_out" pTooltip="Zoom Out" tooltipPosition="right">
     <img src="../../../../assets/images/PI/zoom-out.svg" alt="">
-    <span class="testtooltip">Zoom out</span>
+    <!-- <span class="testtooltip">Zoom out</span> -->
   </a>
-  <a class="btn btn1 zoom-init tsttooltipbtn" id="zoom_reset">
+  <a class="btn btn1 zoom-init tsttooltipbtn" id="zoom_reset" pTooltip="Fit to screen" tooltipPosition="right">
     <img src="../../../../assets/images/PI/Fit to screen.svg" alt="">
-    <span class="testtooltip">Fit to screen</span>
+    <!-- <span class="testtooltip">Fit to screen</span> -->
   </a>
 </div>
 

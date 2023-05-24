@@ -182,7 +182,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   deletedbconnection() {
     const selecteddbconnection = this.selectedData.map(p => p.connectionId);
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -292,7 +292,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     const selecteddbconnection=[]
     selecteddbconnection.push(row.connectionId);
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
