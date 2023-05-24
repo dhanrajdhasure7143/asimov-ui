@@ -34,7 +34,7 @@ export class RpaCredentialFormComponent implements OnInit {
 
       this.credentialForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         authType:[""],
@@ -97,7 +97,7 @@ export class RpaCredentialFormComponent implements OnInit {
     }else{
       this.credentialForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([ Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         clientSecret:[""],
         authType:[""],
         clientId:[""],
@@ -106,9 +106,9 @@ export class RpaCredentialFormComponent implements OnInit {
         port:[""],
         categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_-]*$")])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_-]*$")])],
         outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
     }
@@ -299,7 +299,7 @@ resetCredForm(){
     if(this.selectedMailServer=='Office365'){
       if(selectedAuthType=="password"){
         this.hideLabels = true
-        this.credentialForm.get("password").setValidators([Validators.required]);
+        this.credentialForm.get("password").setValidators([Validators.required, Validators.maxLength(50)]);
         this.credentialForm.get("password").updateValueAndValidity();
                 
         this.credentialForm.get("clientId").clearValidators();
@@ -311,13 +311,13 @@ resetCredForm(){
         this.credentialForm.get("officeTenant").clearValidators();
         this.credentialForm.get("officeTenant").updateValueAndValidity();
 
-        this.credentialForm.get("inBoundAddress").setValidators([Validators.required]);;
+        this.credentialForm.get("inBoundAddress").setValidators([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_ -]*$")]);
         this.credentialForm.get("inBoundAddress").updateValueAndValidity();
 
         this.credentialForm.get("inBoundAddressPort").setValidators([Validators.required]);;
         this.credentialForm.get("inBoundAddressPort").updateValueAndValidity();
 
-        this.credentialForm.get("outBoundAddress").setValidators([Validators.required]);
+        this.credentialForm.get("outBoundAddress").setValidators([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_ -]*$")]);
         this.credentialForm.get("outBoundAddress").updateValueAndValidity();
 
         this.credentialForm.get("outboundAddressPort").setValidators([Validators.required]);
@@ -339,13 +339,13 @@ resetCredForm(){
         this.credentialForm.get("outboundAddressPort").clearValidators();
         this.credentialForm.get("outboundAddressPort").updateValueAndValidity();
 
-        this.credentialForm.get("clientId").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("clientId").setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(50),Validators.pattern("^[^\\s][^\\s]*$")]);
         this.credentialForm.get("clientId").updateValueAndValidity();
 
-        this.credentialForm.get("clientSecret").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("clientSecret").setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(50),Validators.pattern("^[^\\s][^\\s]*$")]);
         this.credentialForm.get("clientSecret").updateValueAndValidity();
 
-        this.credentialForm.get("officeTenant").setValidators([Validators.required, Validators.minLength(6)]);
+        this.credentialForm.get("officeTenant").setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(50),Validators.pattern("^[^\\s][^\\s]*$")]);
         this.credentialForm.get("officeTenant").updateValueAndValidity();
       }
     }
