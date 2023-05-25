@@ -69,6 +69,8 @@ export class BotsComponent implements OnInit {
     });
     this.table_searchFields = ["botName","botSource","category","lastRunTS","nextRunTS","scheduleInterval","status","timezone"];
      this.spinner.hide(); 
+   },err=>{
+    this.spinner.hide();
    });
   }
   
