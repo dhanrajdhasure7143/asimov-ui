@@ -41,7 +41,7 @@
 
   <div class="modal-body newmodelbodycl">
     <div class="logs-container" >
-        <div *ngIf="!logsLoading" class="main-content-body rpaauditsgrid"> 
+        <div *ngIf="!logsLoading" class="main-content-body rpalogsgrid"> 
           <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll"
               [reorderableColumns]="true" [scrollable]="true">
               <ng-template pTemplate="header">

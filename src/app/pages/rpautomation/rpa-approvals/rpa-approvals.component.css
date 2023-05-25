@@ -1,0 +1,70 @@
+.row.credential-search-tools {
+  width: auto;
+  position: absolute;
+  right: 295px;
+  z-index: 2;
+}
+.env-btn>button:disabled {
+  background-color: transparent !important;
+}
+.credential-btntool {
+  padding: 8px 6px;
+  position: relative;
+}
+.credential-btntool img.testplus {
+  cursor: unset;
+  margin: 0px;
+}
+.disbtn {
+  cursor: no-drop;
+}
+.credential-btntool button:hover .default-icon,
+.hover-icon {
+  display: none;
+}
+.credential-btntool button:hover .hover-icon {
+  display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+span.testtooltip {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top: -5px;
+  background: #001c47;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+button:hover img.testplus.default-img{
+  display: none;
+}
+  
+button:hover img.testplus.hover-img {
+    display : initial;
+}
+.active-btn{
+    color:#01a0e2;
+}
+
+.deactive-btn{
+   color: lightgrey !important;
+}

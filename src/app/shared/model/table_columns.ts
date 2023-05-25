@@ -116,7 +116,7 @@ export class columnList{
         {ColumnName: "previousTask",DisplayName: "Previous Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextSuccessTask",DisplayName: "Next Task (Upon Success)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextFailureTask",DisplayName: "Next Task (Upon Failure)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "status",DisplayName: "status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Approved','Rejected']},
+        {ColumnName: "status",DisplayName: "status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Approved','Pending','Running','Rejected']},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 
@@ -177,7 +177,7 @@ export class columnList{
         {ColumnName:"versionNew",DisplayName:"Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",width:"flex: 0 0 10rem",filterType:"text",sort: true},
         // {ColumnName:"changedDate_new",DisplayName:"Timestamp",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"date",sort: true},
         {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
-        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"]},
+        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"],datePipe:true,width:"flex: 0 0 12rem"},
         {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
       ];
 
@@ -188,5 +188,17 @@ export class columnList{
         {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,dropdownList:['Paid','Voided']},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
+      ];
+
+      public approval_column=[
+        {ColumnName:"botId",DisplayName:"Bot Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"} ,
+        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"},
+        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"createdAt",DisplayName:"Created At",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, width:"", filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending']},
+        {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
       ];
 }

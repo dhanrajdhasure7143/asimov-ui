@@ -2585,14 +2585,14 @@ div {
 }
 
 /* Scrollbar styles START */
-::-webkit-scrollbar {
+ ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
   cursor: pointer;
 }
 ::-webkit-scrollbar:hover {
-width: 8px !important;
-height: 8px !important;
+width: 10px !important;
+height: 10px !important;
 cursor: pointer;
 }
 ::-webkit-scrollbar-track {
@@ -2606,7 +2606,12 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
 background: var(--main-bluecolor) !important;
 cursor: pointer;
+width:10px;
+height:10px;
 }
+
+
+
 /* Scrollbar styles END */
 
 .maincont {
@@ -2670,8 +2675,8 @@ cursor: pointer;
 .main-content-head .btn {
   min-width: auto;
 }
-.main-content-head button span {
-  margin-left: 8px;
+.main-content-head button span.plus {
+  margin-left: 8px !important;
 }
 .dropdown-toggle::after {
   display: inline-block;
@@ -2734,6 +2739,9 @@ input.p-inputtext {
 .actionspopmenu.prjactmenu .p-menu-overlay {
   top: 40px !important;
 }
+.download .p-overlaypanel-content {
+  padding: 5px 0px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
@@ -2780,7 +2788,7 @@ input.p-inputtext {
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   margin: 0px !important;
-  padding: 16px 16px 6px !important;
+  padding: 16px 20px 6px !important;
   justify-content: left;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
@@ -2858,8 +2866,14 @@ span.statusbadge_nc {
 .table-height-adj .p-datatable-wrapper {
   height: calc(100vh - 200px) !important;
 }
+.rpalogsgrid .p-datatable-wrapper {
+  height: calc(100% - 177px); /* for rpa so logs grid */
+}
 .rpaauditsgrid .p-datatable-wrapper {
-  height: calc(100% - 177px); /* for rpa audit logs grid */
+  height: calc(100vh - 177px); /* for rpa audit logs grid */
+}
+.rpaauditsgrid .p-datatable-wrapper tr {
+  height: unset !important; /* for rpa audit logs grid */
 }
 .generatedgrid .p-datatable-wrapper {
   height: calc(100vh - 150px); /* for generated screen grid */
@@ -2917,7 +2931,7 @@ span.statusbadge_nc {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: 270px;  
+  height: 260px;  
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header{
@@ -2939,15 +2953,19 @@ span.statusbadge_nc {
 /* chat mention styles */
 mention-list {
   /* top: -150px !important; */
+   top: -110px !important; 
   width: 95% !important;
   left: 0px !important;
+  position: inherit !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
   /* top: -150px !important; */
-  top: -165px !important;
+  /* top: -165px !important; */
   left: 0px !important;
   width: 100% !important;
+  
 }
+.scrollable-menu{max-height: 106px !important;}
 /* chat mention styles */
 /* for RecentActivities  grid */
 
@@ -3463,7 +3481,7 @@ textarea.p-inputtextarea {
   overflow-wrap: break-word;
 }
 .rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(2) {
-  white-space: inherit !important;
+  /* white-space: inherit !important; */
 }
 /* headercss end*/
 .p-editor-container .p-editor-content .ql-editor.ql-blank {
@@ -3645,7 +3663,7 @@ textarea.p-inputtextarea {
 
 /* Tree Styles Start */
 .doctree .p-treenode .p-treenode-content {
-  width: 38%;
+  width: 42%;
   padding: 6px !important;
   align-items: center;
 }
@@ -3953,13 +3971,32 @@ background-color: #D8E0EF !important;
   font-size: 17px;
   color: #939090;
 }
-.back-arrow-align{background: url("./assets/images-n/projects/backarrow1.png");}
 .breadcrum-back{cursor: pointer;color:#535353}
 .breadcrum-back:hover{color:var(--main-bluecolor);}
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
 
-.download .p-overlaypanel-content {
-  padding: 5px 0px !important;
-}
+
+
+
+
+  /* ::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(255, 0, 0, 0);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }  */
+
