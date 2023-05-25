@@ -2946,19 +2946,18 @@ span.statusbadge_nc {
 }
 /* chat mention styles */
 mention-list {
-  top: -40px !important; 
   /* top: -150px !important; */
    top: -110px !important; 
   width: 95% !important;
   left: 0px !important;
+  position: inherit !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
-  bottom: inherit !important;
-  top: inherit !important;
   /* top: -150px !important; */
   /* top: -165px !important; */
   left: 0px !important;
   width: 100% !important;
+  
 }
 .scrollable-menu{max-height: 106px !important;}
 /* chat mention styles */
