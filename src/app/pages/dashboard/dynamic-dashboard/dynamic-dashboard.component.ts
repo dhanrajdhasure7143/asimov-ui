@@ -310,9 +310,9 @@ export class DynamicDashboardComponent implements OnInit {
   deletedashbord() {
     if (this.selectedDashBoard.defaultDashboard && this.dashbordlist.length > 1) {
       this.confirmationService.confirm({
-        message: "Change your default dashboard before deleting.",
+        message: "Change your default dashboard before deleting it.",
         header: "Info",
-      
+       
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
@@ -321,10 +321,10 @@ export class DynamicDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage=""
-    this.dashbordlist.length > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undo ?" : confrmMessage="Are you sure that you are deleting default dashboard?"
+    this.dashbordlist.length > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone." : confrmMessage="Are you sure that you are deleting the default dashboard?"
     this.confirmationService.confirm({
       message: confrmMessage,
-      header: "Confirmation",
+      header: "Are you Sure?",
      
       accept: () => {
         this.loader.show();
@@ -553,8 +553,8 @@ export class DynamicDashboardComponent implements OnInit {
 
   onRmoveWidget() {
     this.confirmationService.confirm({
-      message: "Are you sure?, You won't be able to revert this!",
-      header: "Info",
+      message: "You are trying to remove the widget from the dashboard.",
+      header: "Are you Sure?",
       
       rejectVisible: false,
       acceptLabel: "Ok",

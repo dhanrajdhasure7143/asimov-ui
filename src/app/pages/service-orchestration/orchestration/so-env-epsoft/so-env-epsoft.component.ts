@@ -395,7 +395,7 @@ async deleteEnvironments(){
   if(selectedEnvironments.length!=0)
   {
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you Sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,

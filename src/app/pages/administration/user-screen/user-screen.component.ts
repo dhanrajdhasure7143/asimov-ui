@@ -88,7 +88,7 @@ export class UserScreenComponent implements OnInit {
   deleteRecord(data: any) {
     this.spinner.show();
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you Sure?",
       text: "You Delete the Record!",
       icon: "warning",
       showCancelButton: true,

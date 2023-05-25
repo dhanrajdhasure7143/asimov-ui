@@ -37,11 +37,11 @@ export class BillingAddressComponent implements OnInit {
     this.billingForm = this.formBuilder.group({
       firstName: [
         "",
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
+        Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)]),
       ],
       lastName: [
         "",
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
+        Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)]),
       ],
       country: ["India", Validators.compose([Validators.required])],
       city: [
@@ -52,12 +52,16 @@ export class BillingAddressComponent implements OnInit {
         "",
         Validators.compose([Validators.required, Validators.maxLength(50)]),
       ],
-      postalcode: ["", Validators.compose([Validators.required])],
-      addressLine1: ["", Validators.compose([Validators.required])],
-      addressLine2: [
+      postalcode: [
         "",
-        Validators.compose([Validators.required, Validators.maxLength(50)]),
+       Validators.compose([
+        Validators.required,
+        Validators.maxLength(10),
+        Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'),
+      ]),
       ],
+      addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
+      addressLine2: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)]),],
       phoneNumber: [
         "",
         Validators.compose([

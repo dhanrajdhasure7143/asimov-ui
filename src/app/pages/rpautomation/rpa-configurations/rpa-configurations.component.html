@@ -100,8 +100,27 @@
             <span *ngIf="check_tab == 3">
               <app-rpa-credentials></app-rpa-credentials>
             </span>
+          </p-tabPanel> 
+          <!-- <p-tabPanel header="Email">
+            <ng-template pTemplate = "header">
+              <i class="pi pi-envelope tab_icons icon-color"></i>
+              <span class="tab_title">Inbox</span>
+            </ng-template>
+            <span *ngIf="check_tab == 4">
+              <app-rpa-configurations-data></app-rpa-configurations-data>
+            </span>
+          </p-tabPanel> -->
+          <p-tabPanel header="Email">
+            <ng-template pTemplate = "header">
+              <i class="pi pi-check-circle tab_icons icon-color"></i>
+              <span class="tab_title">Approvals</span>
+            </ng-template>
+            <span *ngIf="check_tab == 4">
+              <app-rpa-approvals></app-rpa-approvals>
+            </span>
           </p-tabPanel>
         </p-tabView>
+        
       </div>
     </div>
   </div>  

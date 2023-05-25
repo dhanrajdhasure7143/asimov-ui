@@ -19,12 +19,14 @@
                 </h3>
             </div>
             <div class="col-md-4 pr-0 text-right">
-                <button class="btn imageBox" type="button" (click)="menu.toggle($event)" pTooltip="Action Menu"
-                    tooltipPosition="top">
-                    <img src="./../../../../assets/images-n/projects/menudots-grey.png" alt="Actions" class="active-icon">
-                    <img src="./../../../../assets/images-n/projects/menudots-blue.png" class="hover-icon"/>
+                <button class="btn actionmenu grey-btn" type="button" (click)="menu.toggle($event)">
+                    <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" >
+                    <span class="plus">Action Menu</span>
+                    <!--pTooltip="Action Menu" tooltipPosition="top" 
+                        class="default-icon"
+                        <img src="./../../../../assets/images-n/projects/menudots-hover.png" alt="Actions" class="hover-icon"> -->
                 </button>
-                <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
+                <p-menu class="actionspopmenu prjactmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
             </div>
         </div>
         <div class="main-content-body">

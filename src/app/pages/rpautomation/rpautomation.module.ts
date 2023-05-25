@@ -68,6 +68,7 @@ import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-conn
 import { CardModule } from 'primeng/card';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     SearchRpaPipe,
     RpaConnectionManagerFormComponent,
     RpaConnectionManagerComponent,
-    RpaActionItemsComponent
+    RpaActionItemsComponent,
+    RpaApprovalsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,

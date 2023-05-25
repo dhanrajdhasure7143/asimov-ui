@@ -22,12 +22,11 @@
     box-shadow: none !important;
 }
 .btn-dots {
-	background-color: #ECF1FB !important;
+	background-color: #ECF1FB;
     /* height: 32px; */
     padding: 12px 8px !important;
 }
-.btn-dots:hover{background-color: #D8E0EF !important;}
-
+.btn-dots:hover {background-color: #D8E0EF !important;}
 .btn-dots-header {
     background-color: #E9E9E9;
     height: 32px;

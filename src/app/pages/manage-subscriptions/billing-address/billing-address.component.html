@@ -5,22 +5,28 @@
                 <label  class="label-control">First Name<span class="star">*</span></label>
                 <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
                     placeholder="Enter First Name" required>
-                <span
-                    *ngIf="billingForm.get('firstName').invalid && billingForm.get('firstName').touched &&  !billingForm.controls['firstName'].hasError('maxlength')"
-                    class="required">First Name Required *</span>
+                <span *ngIf="billingForm.get('firstName').invalid && billingForm.get('firstName').touched && !billingForm.get('firstName').hasError('pattern') && !billingForm.controls['firstName'].hasError('maxlength')" class="required"> 
+                    First Name Required* 
+                </span>
                 <span *ngIf="billingForm.controls['firstName'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
+                </span>
+                <span *ngIf="billingForm.get('firstName').hasError('pattern') && !billingForm.controls['firstName'].hasError('maxlength')" class="required">Only space
+                    between words are allowed & Numbers are not allowed.
                 </span>
             </div>
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control" for="taskCategory">Last Name<span class="star">*</span></label>
                 <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
                     formControlName="lastName">
-                <span
-                    *ngIf="billingForm.get('lastName').invalid && billingForm.get('lastName').touched &&  !billingForm.controls['lastName'].hasError('maxlength')"
-                    class="required">Last Name Required *</span>
+                <span *ngIf="billingForm.get('lastName').invalid && billingForm.get('lastName').touched && !billingForm.get('lastName').hasError('pattern') && !billingForm.controls['lastName'].hasError('maxlength')" class="required"> 
+                    Last Name Required* 
+                </span>
                 <span *ngIf="billingForm.controls['lastName'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
+                </span>
+                <span *ngIf="billingForm.get('lastName').hasError('pattern') && !billingForm.controls['firstName'].hasError('maxlength')" class="required">Only space
+                    between words are allowed & Numbers are not allowed.
                 </span>
             </div>
             <div class="form-group col-md-6 pl-0">
@@ -54,8 +60,15 @@
                 <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
                 <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
                     placeholder="Enter Postal Code">
-                <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched"
-                    class="required">Postal Code Required *</span>
+                <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
+                    Postal Code Required* 
+                </span>
+                <span *ngIf="billingForm.controls['postalcode'].hasError('maxlength')" class="required">
+                    Maximum of 10 characters
+                </span>
+                <span *ngIf="billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
+                    Double Spaces are not allowed.
+                </span>
             </div>
             <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
@@ -83,15 +96,29 @@
                 <label  class="label-control" for="approvers">Address Line1<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
                     placeholder="Enter Address Line 1">
-                <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched"
-                    class="required">Address Line1 Required *</span>
+                <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched && !billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
+                    Address Line1 Required* 
+                </span>
+                <span *ngIf="billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
+                    Maximum of 50 characters
+                </span>
+                <span *ngIf="billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
+                    Double Spaces are not allowed.
+                </span>
             </div>
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control">Address Line2 <span class="star">*</span></label>
                 <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
                     placeholder="Enter Address Line 2">
-                <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched"
-                    class="required">Address Line2 Required *</span>
+                    <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched && !billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required"> 
+                        Address Line2 Required* 
+                    </span>
+                    <span *ngIf="billingForm.controls['addressLine2'].hasError('maxlength')" class="required">
+                        Maximum of 50 characters
+                    </span>
+                    <span *ngIf="billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required">
+                        Double Spaces are not allowed.
+                    </span>
             </div>
         </div>
         <!-- <div>
