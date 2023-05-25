@@ -34,8 +34,8 @@ enum VariantList {
 })
 export class FlowchartComponent implements OnInit {
   public select_varaint: any = 0;
-  public model1;
-  public model2;
+  public model1:any[]=[];
+  public model2:any[]=[];
   public filterLength: number;
   public dataValues: any=[];
   public varaint_data: any=[];
@@ -151,6 +151,8 @@ selectedActivities1:any[]=[];
 combofilterObject:any;
 pi_fullGraph_data:any=[];
   hiddenPopUp:boolean=false;
+  freetrail = localStorage.getItem("freetrail");
+  isGenerate:boolean = false;
 
 
   constructor(private dt: DataTransferService,
@@ -179,42 +181,13 @@ pi_fullGraph_data:any=[];
 
   ngAfterViewInit(){
     this.isplay=false;
-    let res_data
-    this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
-      if(res){
-        let element=document.getElementById("tipsy_div");
-        if(element){
-          element.style.display = "none";
-          element.style.visibility = "hidden";
-        }
-      }
-      if(res_data=='svg'){
-        this.downloadSvg();
-      }else if(res_data=='png'){
-        this.downloadpng();
-      }else if(res_data=='jpg'){
-        this.downloadjpeg();
-      }else if(res_data=='pdf'){
-        this.downloadPdf();
-      }else if(res_data=='working_hrs'){
-        this.openHersOverLay();
-      }else if(res_data=='play_graph'){
-        this.playAnimation();
-      }else if(res_data=='bpmn'){
-        this.generateBpmn();
-      }else if(res_data=='variant_list'){
-        this.openVariantListNav()
-      }else if(res_data instanceof Object){
-        this.workingHours=res_data
-        this.addWorkingHours();
-      }
-    });
   }
   
   ngOnInit() {   
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/flowChart", "title": "Process Graph" });
     this.dt.changeHints(this.hints.processGraphHints);
+    this.getAlluserProcessPiIds();
     this.process_graph_options = ProcessGraphList;
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
@@ -239,9 +212,10 @@ pi_fullGraph_data:any=[];
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
            }, 10*1000);
+           this.isGenerate = true;
+
       }
     });
-    this.getAlluserProcessPiIds();
   }
 
   getAlluserProcessPiIds(){ // List of Process graphs
@@ -293,7 +267,6 @@ pi_fullGraph_data:any=[];
       localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       },err=>{
-      Swal.fire("Error", "Internal server error, Please try again later", "error");
         this.spinner.hide();
       })
       const fullGraphbody= { 
@@ -396,6 +369,12 @@ pi_fullGraph_data:any=[];
         this.isGraph_changed=false;
     }
         },(err =>{
+          Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(["/pages/processIntelligence/upload"]);
+          }
+        })
           this.spinner.hide();
         }));
         const variantGraphbody= { 
@@ -407,7 +386,6 @@ pi_fullGraph_data:any=[];
              }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
         },err=>{
-          Swal.fire("Error", "Internal server error, Please try again later", "error");
             this.spinner.hide();
           })
         const sliderGraphbody= { 
@@ -418,7 +396,6 @@ pi_fullGraph_data:any=[];
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data      
         },err=>{
-          Swal.fire("Error", "Internal server error, Please try again later", "error");
             this.spinner.hide();
           })
         setTimeout(() => {
@@ -466,7 +443,14 @@ pi_fullGraph_data:any=[];
       this.onchangeVaraint("0");
       }
       },err=>{
-        Swal.fire("Error", "Internal server error, Please try again later", "error");
+        Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(["/pages/processIntelligence/upload"]);
+          }
+        })
+
+
           this.spinner.hide();
         })
       const fullGraphbody= { 
@@ -548,6 +532,12 @@ pi_fullGraph_data:any=[];
         this.filterOverlay()
     }
         },(err =>{
+          Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(["/pages/processIntelligence/upload"]);
+          }
+        })
           this.spinner.hide();
         }));
         const variantGraphbody= { 
@@ -979,7 +969,7 @@ pi_fullGraph_data:any=[];
           Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Internal server error, Please try again later !',
+              text: 'Internal server error, Please try again later6 !',
               // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
               heightAuto: false,
             });
@@ -1789,7 +1779,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }
-    this.Pi_header_functions.unsubscribe();
+    // this.Pi_header_functions.unsubscribe();
     this.isplay=false;
     this.dt.piHeaderValues(null);
     this.spinner.hide();
@@ -2147,6 +2137,15 @@ addWorkingHours(){
     // document.getElementById("mySidenav").style.width = "0px";
     document.getElementById("main").style.marginRight= "0px";
     // this.isvariantListOpen=true;
+  }
+
+  backtoWorkspace() {
+    if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
+      this.router.navigate(["/pages/projects/tasks"], 
+      {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+    }else{
+      this.router.navigate(["/pages/processIntelligence/upload"]);
+    }
   }
 
 }
