@@ -1,15 +1,30 @@
 <div class="rpa-content-div">
    <div class="row credential-search-tools">
       <div class="env-data-tool credential-tools">
+         <!-- <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approved')"pTooltip="Approve" tooltipPosition="top">
+            <i class="fas fa-check"></i>
+          </button> -->
          <div class="env-btn credential-btntool">
-            <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approved')"pTooltip="Approve" tooltipPosition="top">
-               <!-- <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" alt="add" class="testplus" /> -->
-               <i class="fas fa-check"></i>
-             </button>
-             &nbsp;&nbsp;
-             <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Rejected')"pTooltip="Reject"  tooltipPosition="top">
-                 <i class="fas fa-times"></i>
-             </button>
+            <button (click)="onApproveRejectItem('Approved')" >
+               <span *ngIf="selectedRows.length !=0" pTooltip="Approve" tooltipPosition="top">
+                  <img src="../../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                  <img src="../../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+               </span>
+               <span *ngIf="selectedRows.length == 0" class="disbtn">
+                  <img src="../../../../assets/images-n/gridicons/approve-disabled.svg" class="testplus" alt=""/>
+               </span>  
+            </button>
+         </div>
+         <div class="env-btn credential-btntool">
+            <button (click)="onApproveRejectItem('Rejected')">
+               <span *ngIf="selectedRows.length !=0" pTooltip="Reject"  tooltipPosition="top">
+                  <img src="../../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                  <img src="../../../../assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
+               </span>
+               <span *ngIf="selectedRows.length == 0" class="disbtn">
+                  <img src="../../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
+               </span> 
+            </button>
          </div>
       </div>
    </div>
