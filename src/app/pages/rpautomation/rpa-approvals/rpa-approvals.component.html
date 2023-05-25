@@ -2,17 +2,14 @@
    <div class="row credential-search-tools">
       <div class="env-data-tool credential-tools">
          <div class="env-btn credential-btntool">
-            <button [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approve')"pTooltip="Approve" tooltipPosition="top">
+            <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approved')"pTooltip="Approve" tooltipPosition="top">
                <!-- <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" alt="add" class="testplus" /> -->
-               <i class="fas fa-check text-success"></i>
+               <i class="fas fa-check"></i>
              </button>
-             <button [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('reject')"pTooltip="Reject"  tooltipPosition="top">
-                 <i class="fas fa-times text-danger"></i>
+             &nbsp;&nbsp;
+             <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Rejected')"pTooltip="Reject"  tooltipPosition="top">
+                 <i class="fas fa-times"></i>
              </button>
-            <!-- <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="openCreateCredential()" pTooltip="New" tooltipPosition="top">
-               <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" alt="add" class="testplus" />
-               <i class="fas fa-check text-success"></i>
-            </button> -->
          </div>
       </div>
    </div>

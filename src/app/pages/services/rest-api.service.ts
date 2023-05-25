@@ -1804,12 +1804,12 @@ getHeadersParams(){
 }
 
 //RPA Configuration Approval Apis
-getRPAApprovalsList()
+getRPAApprovalsList(userId:String)
 {
-  return this.http.get(`/rpa-service/rpa-inbox`);
+  return this.http.get(`/rpa-service/rpa-inbox/${userId}`);
 }
 
-updateApprovalList(data:any)
+updateApprovalList(data:any[])
 {
   return this.http.post(`/rpa-service/update-approval-status`, data);
 }

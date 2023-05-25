@@ -198,7 +198,7 @@ export class columnList{
         {ColumnName:"createdAt",DisplayName:"Created At",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, width:"", filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"status",DisplayName:"Status",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending']},
         {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
       ];
 }
