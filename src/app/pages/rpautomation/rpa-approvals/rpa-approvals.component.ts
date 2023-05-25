@@ -48,7 +48,11 @@ export class RpaApprovalsComponent implements OnInit {
   }
   getApprovalList(){
     this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo"]
-    let userId:String=localStorage.getItem("ProfileuserId");
+    let userId:String="";
+    if(localStorage.getItem("userRole")=="System Admin")
+      userId="SystemAdmin";
+    else
+      userId=localStorage.getItem("ProfileuserId");
     this.rest.getRPAApprovalsList(userId).subscribe((response:any)=>{ 
       this.spinner.hide();
       this.selectedRows=[]
@@ -72,6 +76,7 @@ export class RpaApprovalsComponent implements OnInit {
 
 
   onApproveItem(data:any, status:string){
+    
     data["status"]=status;
     this.selectedRows=[data]
     this.isDialogShow=true;
@@ -89,7 +94,7 @@ export class RpaApprovalsComponent implements OnInit {
     let data:any[]=this.selectedRows.map((item:any)=>{
       item["comments"]=this.comments;
       return item;
-    })
+    });
     this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
       Swal.fire("Success", response.status, "success");
@@ -107,11 +112,12 @@ export class RpaApprovalsComponent implements OnInit {
     this.selectedRows=selectedRows
   }
 
-  onApproveRejectItem(ststusType){
-    this.selectedRows=this.selectedRows.map((item:any)=>{
-      item["status"]=ststusType;
+  onApproveRejectItem(statusType){
+    this.selectedRows=[...this.selectedRows];
+    this.selectedRows=[...this.selectedRows.map((item:any)=>{
+      item["status"]=statusType;
       return item;
-    })
+    })];
     this.isDialogShow=true;
   }
 
