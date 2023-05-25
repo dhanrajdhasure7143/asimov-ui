@@ -2949,8 +2949,9 @@ mention-list {
   left: 0px !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
-  /* top: -150px !important;
-  bottom: -150px !important; */
+  /* top: -150px !important; 
+  bottom: -150px !important;*/
+  bottom: inherit !important;
   /* top: -165px !important; */
   top: inherit !important;
   left: 0px !important;
