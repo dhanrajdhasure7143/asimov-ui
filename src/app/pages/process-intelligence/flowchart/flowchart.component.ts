@@ -292,6 +292,9 @@ pi_fullGraph_data:any=[];
 
       localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
+      },err=>{
+      Swal.fire("Error", "Internal server error, Please try again later", "error");
+        this.spinner.hide();
       })
       const fullGraphbody= { 
         "data_type":"full_graph", 
@@ -403,7 +406,10 @@ pi_fullGraph_data:any=[];
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
              }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        })
+        },err=>{
+          Swal.fire("Error", "Internal server error, Please try again later", "error");
+            this.spinner.hide();
+          })
         const sliderGraphbody= { 
           "data_type":"slider_graph",
           "pid":selectedpiId,
@@ -411,7 +417,10 @@ pi_fullGraph_data:any=[];
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data      
-        })
+        },err=>{
+          Swal.fire("Error", "Internal server error, Please try again later", "error");
+            this.spinner.hide();
+          })
         setTimeout(() => {
           this.process_graph_list.data.forEach(e => {
           if(e.piId==selectedpiId){
@@ -456,7 +465,10 @@ pi_fullGraph_data:any=[];
       localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       }
-      })
+      },err=>{
+        Swal.fire("Error", "Internal server error, Please try again later", "error");
+          this.spinner.hide();
+        })
       const fullGraphbody= { 
         "data_type":"full_graph", 
          "pid":selectedpiId,
@@ -546,7 +558,9 @@ pi_fullGraph_data:any=[];
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
              }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        })
+        },err=>{
+            this.spinner.hide();
+          })
         const sliderGraphbody= { 
           "data_type":"slider_graph", 
            "pid":selectedpiId,
@@ -554,7 +568,9 @@ pi_fullGraph_data:any=[];
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
-        })
+        },err=>{
+            this.spinner.hide();
+          })
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -713,7 +729,9 @@ pi_fullGraph_data:any=[];
             this.model2 = this.flowchartData(this.model1);
           }
           this.spinner.hide();
-    })
+    },err=>{
+        this.spinner.hide();
+      })
          /**
        * BPMN Boolean Variables
        */
@@ -965,6 +983,7 @@ pi_fullGraph_data:any=[];
               // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
               heightAuto: false,
             });
+            this.spinner.hide();
         }))
 
     } else if (this.isSingleTraceBPMN == true) {
@@ -993,6 +1012,7 @@ pi_fullGraph_data:any=[];
             text: 'Internal server error, Please try again later !',
             heightAuto: false,
           });
+          this.spinner.hide();
         }))
 
     } else if (this.isMultiTraceBPMN == true) {
@@ -1650,7 +1670,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
               }
             });
           this.spinner.hide();
-      })
+      },err=>{
+          this.spinner.hide();
+        })
     }
   }
 
@@ -1887,7 +1909,9 @@ addWorkingHours(){
       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
     this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-    })
+    },err=>{
+        this.spinner.hide();
+      })
   this.canceladdHrs();
 }
 
