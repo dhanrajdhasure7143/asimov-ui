@@ -2739,6 +2739,9 @@ input.p-inputtext {
 .actionspopmenu.prjactmenu .p-menu-overlay {
   top: 40px !important;
 }
+.download .p-overlaypanel-content {
+  padding: 5px 0px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
@@ -2785,7 +2788,7 @@ input.p-inputtext {
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   margin: 0px !important;
-  padding: 16px 16px 6px !important;
+  padding: 16px 20px 6px !important;
   justify-content: left;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
@@ -3962,15 +3965,13 @@ background-color: #D8E0EF !important;
   font-size: 17px;
   color: #939090;
 }
-.back-arrow-align{background: url("./assets/images-n/projects/backarrow1.png");}
 .breadcrum-back{cursor: pointer;color:#535353}
 .breadcrum-back:hover{color:var(--main-bluecolor);}
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-.download .p-overlaypanel-content {
-    padding: 5px 0px !important;
-  }
+
+
 
 
 
