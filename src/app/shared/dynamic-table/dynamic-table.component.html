@@ -176,13 +176,26 @@
                                 <img src="../../../assets/images-n/gridicons/download-hover.svg" alt="download" class="hover-icon testplus">
                             </a>
                         </span>
-                        <button *ngIf="show_approve_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'" [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
-                          <i class="fas fa-check text-success"></i>
-                          <!-- <img src="../../../assets/images-n/gridicons/" alt="success" /> -->
+
+                        <button *ngIf="show_approve_btn" class="undobtn" (click)="getapproved(rowData)">
+                            <span *ngIf="rowData['status'] !='Approved' && rowData['status'] !='Rejected'" pTooltip="Approve" tooltipPosition="top">
+                                <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+                            </span>
+                            <span *ngIf="rowData['status'] =='Approved' || rowData['status'] =='Rejected'" class="disbtn">
+                                <img src="../../../assets/images-n/gridicons/approve-disabled.svg" class="testplus" alt=""/>
+                            </span>                            
                         </button>
-                        <button *ngIf="show_reject_btn" [disabled]="rowData['status']=='Approved' || rowData['status']=='Rejected'"[class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':''"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
-                            <i class="fas fa-times text-danger"></i>
+                        <button *ngIf="show_reject_btn" class="undobtn" (click)="getRejected(rowData)">
+                            <span *ngIf="rowData['status'] !='Approved' && rowData['status'] !='Rejected'" pTooltip="Reject"  tooltipPosition="top">
+                                <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                                <img src="../../../assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
+                            </span>
+                            <span *ngIf="rowData['status'] =='Approved' || rowData['status'] =='Rejected'" class="disbtn">
+                                <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
+                            </span>                               
                         </button>
+
                         <span *ngIf="show_delete_btn">
                             <a *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
                                 <img src="../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
@@ -251,12 +264,13 @@
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
                             </span> -->
                             <span *ngIf="screenTable =='aprovalList'">
-                                <button  [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
-                                    <i class="fas fa-check text-success"></i>
-                                    <!-- <img src="../../../assets/images-n/gridicons/" alt="success" /> -->
+                                <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
+                                    <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                    <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
                                   </button>
                                   <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
-                                      <i class="fas fa-times text-danger"></i>
+                                        <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                                        <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/>
                                   </button>
                             </span>
                     </span>

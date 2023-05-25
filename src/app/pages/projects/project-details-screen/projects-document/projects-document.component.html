@@ -1,6 +1,6 @@
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-4 pl-0">
+            <div class="col-md-6 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a *ngIf="breadcrumbItems.length == 0" (click)="backToProjectDetails()" class="imageBox">
@@ -17,7 +17,7 @@
                     </span>
                 </h3>
             </div>
-            <div class="col-md-8 pr-0 text-right head-ritfilter">
+            <div class="col-md-6 pr-0 text-right head-ritfilter">
                 <span class="p-input-icon-right">
                     <i class="pi pi-search" [ngClass]="{'treeviewsearchicon': !isFolder}"></i>
                     <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
