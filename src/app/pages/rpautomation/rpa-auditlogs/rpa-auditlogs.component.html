@@ -4,19 +4,24 @@
             <div class="row main-content-head">
                 <h3>
                     <label id="popup_title">
-                        <a (click)="open()" class="imageBox">
+                        <a (click)="backToWorkSpace()" class="imageBox">
                             <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                             <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
                         </a>
                     </label>
-                    <span class="title_text">Audit Logs</span>
+                    <span class="title_text_haspath">
+                        <span (click)="backToWorkSpace()"  class="breadcrum-back">RPA Studio</span>
+                        <span class="breadcrum-align">/</span>
+                        <span class="breadcrum-back">Audit Logs</span> 
+                       <span class="breadcrum-align">/</span>
+                        <span class="sub_title_text">{{botName}}</span>
+                     </span>
                 </h3>
             </div>
             <div class="main-content-body rpaauditsgrid">
                         <app-dynamic-table 
                                 [columns_list]="columns_list"
-                                [table_data]="logsData" 
-                                [screenTable]="'common'" 
+                                [table_data]="logsData"  
                                 [dataKeyId]="'auditLog'"
                                 [search_fields]="table_searchFields" 
                                 [show_search_field]="true"
