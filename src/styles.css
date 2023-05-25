@@ -2866,12 +2866,14 @@ span.statusbadge_nc {
 .table-height-adj .p-datatable-wrapper {
   height: calc(100vh - 200px) !important;
 }
-.rpaauditsgrid .p-datatable-wrapper,
 .rpalogsgrid .p-datatable-wrapper {
-  height: calc(100% - 177px); /* for rpa audit logs grid */
+  height: calc(100% - 177px); /* for rpa so logs grid */
+}
+.rpaauditsgrid .p-datatable-wrapper {
+  height: calc(100vh - 177px); /* for rpa audit logs grid */
 }
 .rpaauditsgrid .p-datatable-wrapper tr {
-  height: unset !important;
+  height: unset !important; /* for rpa audit logs grid */
 }
 .generatedgrid .p-datatable-wrapper {
   height: calc(100vh - 150px); /* for generated screen grid */
@@ -3479,7 +3481,7 @@ textarea.p-inputtextarea {
   overflow-wrap: break-word;
 }
 .rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(2) {
-  white-space: inherit !important;
+  /* white-space: inherit !important; */
 }
 /* headercss end*/
 .p-editor-container .p-editor-content .ql-editor.ql-blank {
