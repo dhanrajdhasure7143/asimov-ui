@@ -364,7 +364,7 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
+                                                    <!-- <th></th> -->
                                                     <th scope="col">Key</th>
                                                     <th scope="col">Value</th>
                                                     <th class="headercheckbox">
@@ -376,17 +376,17 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let each of headerForm; let i = index">
-                                                    <td class="headercheckbox">
+                                                    <!-- <td class="headercheckbox"> -->
                                                         <!-- <p-checkbox [value]="each" [(ngModel)]="selectedOne"
                                                         [ngModelOptions]="{standalone: true}"></p-checkbox> -->
-                                                        <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" [ngModelOptions]="{standalone: true}">
-                                                    </td>
+                                                        <!-- <input type="checkbox" [(ngModel)]="each.check" [checked]="each.check" [ngModelOptions]="{standalone: true}">
+                                                    </td> -->
                                                     <td>
-                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key" (keyup)="onHeaders(i)"
+                                                        <input type="text" name="test+i" id="" class="form-control" placeholder="Key"
                                                         [(ngModel)]="each.encodedKey" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="" id="" class="form-control" placeholder="Value" (keyup)="onHeaders(i)"
+                                                        <input type="text" name="" id="" class="form-control" placeholder="Value"
                                                         [(ngModel)]="each.encodedValue" [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td class="headercheckbox">

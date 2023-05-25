@@ -209,18 +209,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.headerForm.forEach(ele => {
         // if(ele.check)
         // obj[ele["encodedKey"]]=ele["encodedValue"];
-        if (ele.check) {
+        // if (ele.check) {
           headers.push({ [ele.encodedKey]: ele.encodedValue });
-        }
+        // }
       })
 
       let params = []
       this.paramForm.forEach(ele => {
         // if(ele.check)
         // params[ele["paramKey"]]=ele["paramValue"];
-        if (ele.check) {
+        // if (ele.check) {
           params.push({ [ele.paramKey]: ele.paramValue });
-        }
+        // }
       })
 
       let object = {
@@ -655,13 +655,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       encodedKey: "",
       encodedValue: "",
     });
-    for(const each of this.headerForm){
-      if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
-        each.check = true;
-      } else {
-        each.check = false;
-      }
-    }
+    // for(const each of this.headerForm){
+    //   if(each.encodedKey.length > 0 || each.encodedValue.length > 0){
+    //     each.check = true;
+    //   } else {
+    //     each.check = false;
+    //   }
+    // }
   }
 
   backToaction() {
@@ -891,7 +891,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             index: i,
             encodedKey: headerKey,
             encodedValue: headervalue,
-            check:true
+            // check:true
           })
       });
         this.selectedOne = this.headerForm;
@@ -905,7 +905,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             index: i,
             paramKey: paramKey,
             paramValue: paramValue,
-            check: true
+            // check: true
           });
         });
       }
@@ -1016,16 +1016,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.requestJson_body.push(this.connectorForm.get("request").value);
       let headers=[]
       this.headerForm.forEach(ele=>{
-        if (ele.check) {
+        // if (ele.check) {
           headers.push({ [ele.encodedKey]: ele.encodedValue });
-        }
+        // }
       })
         
         let params=[]
         this.paramForm.forEach(ele=>{
-          if (ele.check) {
+          // if (ele.check) {
             params.push({ [ele.paramKey]: ele.paramValue });
-          }
+          // }
         })
 
       let object = {
@@ -1080,7 +1080,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       index: this.paramForm.length,
       paramKey: "",
       paramValue: "",
-      check:false,
+      // check:false,
     });
   }
 
@@ -1104,11 +1104,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     for(const each of this.paramForm){
       // if(each.check==true) {queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"}
       queryParams  = queryParams + each.paramKey + "=" + each.paramValue + "&"
-      if(each.paramKey.length > 0 || each.paramValue.length > 0){
-        each.check = true;
-      } else {
-        each.check = false;
-      }
+      // if(each.paramKey.length > 0 || each.paramValue.length > 0){
+      //   each.check = true;
+      // } else {
+      //   each.check = false;
+      // }
     }
     let value = this.connectorForm.get("endPoint").value.includes('?')?this.connectorForm.get("endPoint").value.split("?")[0]:this.connectorForm.get("endPoint").value;
     let regex=new RegExp("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)")
@@ -1126,18 +1126,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     return ((this.connectorForm.get("endPoint")?.value?.length??0)==0)?true:false; 
   }
 
-  onChangeParamCheckBox(index:number, event){
-    this.onKeyEntered();
-    this.paramForm[index].check=event.currentTarget.checked;
-  }
+  // onChangeParamCheckBox(index:number, event){
+  //   this.onKeyEntered();
+  //   this.paramForm[index].check=event.currentTarget.checked;
+  // }
 
-  onHeaders(index){
-      if(this.headerForm[index].encodedKey.length > 0 || this.headerForm[index].encodedValue.length > 0){
-        this.headerForm[index].check = true;
-      } else {
-        this.headerForm[index].check = false;
-      }
-  }
+  // onHeaders(index){
+  //     if(this.headerForm[index].encodedKey.length > 0 || this.headerForm[index].encodedValue.length > 0){
+  //       this.headerForm[index].check = true;
+  //     } else {
+  //       this.headerForm[index].check = false;
+  //     }
+  // }
   getHeadersParams() {
     this.rest_api.getHeadersParams().subscribe((res: any) => {
       let filterData = res;
