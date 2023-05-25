@@ -2943,16 +2943,17 @@ span.statusbadge_nc {
 }
 /* chat mention styles */
 mention-list {
-  /* top: -150px !important; */
+   top: -110px !important; 
   width: 95% !important;
   left: 0px !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
   /* top: -150px !important; */
-  top: -165px !important;
+  /* top: -165px !important; */
   left: 0px !important;
   width: 100% !important;
 }
+.scrollable-menu{max-height: 106px !important;}
 /* chat mention styles */
 /* for RecentActivities  grid */
 

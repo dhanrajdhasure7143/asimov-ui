@@ -381,6 +381,7 @@ input.msgip {
     box-shadow: none;
     height: 100%;
     background-color: #fff !important;
+    position:relative;
 }
 .collabottom textarea.p-inputtextarea.p-inputtext:focus {
     border-color: #4AB0F5;
