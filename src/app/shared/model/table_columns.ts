@@ -177,7 +177,7 @@ export class columnList{
         {ColumnName:"versionNew",DisplayName:"Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",width:"flex: 0 0 10rem",filterType:"text",sort: true},
         // {ColumnName:"changedDate_new",DisplayName:"Timestamp",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"date",sort: true},
         {ColumnName:"changeActivity",DisplayName:"Actions",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType:"text"},
-        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"]},
+        {ColumnName:"changedBy",DisplayName:"Changed By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true,userProfile:true,userProfileKey:"changedBy",multi: true,multiOptions: ["changedBy", "changedDate_new"],datePipe:true,width:"flex: 0 0 12rem"},
         {ColumnName:"comments",DisplayName:"Comments",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType:"text",sort: true},
       ];
 
