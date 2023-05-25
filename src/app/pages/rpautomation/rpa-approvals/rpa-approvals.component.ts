@@ -21,6 +21,7 @@ export class RpaApprovalsComponent implements OnInit {
   comments:String="";
   updateData:any={};
   selectedRows:any=[];
+  statusType:String="";
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -76,9 +77,8 @@ export class RpaApprovalsComponent implements OnInit {
 
 
   onApproveItem(data:any, status:string){
-    
-    data["status"]=status;
-    this.selectedRows=[data]
+    this.statusType=status;
+    this.selectedRows=[data];
     this.isDialogShow=true;
   }
 
@@ -91,9 +91,14 @@ export class RpaApprovalsComponent implements OnInit {
 
   updateApprovalStatus(){
     this.spinner.show();
-    let data:any[]=this.selectedRows.map((item:any)=>{
-      item["comments"]=this.comments;
-      return item;
+    let data:any[]=[];
+    this.selectedRows.forEach((item:any)=>{
+      let obj:any={};
+      obj["id"]=item.id;
+      obj["approverName"]=item.approverName;
+      obj["comments"]=this.comments;
+      obj["status"]=this.statusType;
+      data.push(obj);
     });
     this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
@@ -109,15 +114,11 @@ export class RpaApprovalsComponent implements OnInit {
   }
 
   readSelectedData(selectedRows:any){
-    this.selectedRows=selectedRows
+   this.selectedRows=selectedRows;
   }
 
   onApproveRejectItem(statusType){
-    this.selectedRows=[...this.selectedRows];
-    this.selectedRows=[...this.selectedRows.map((item:any)=>{
-      item["status"]=statusType;
-      return item;
-    })];
+    this.statusType=statusType;
     this.isDialogShow=true;
   }
 
