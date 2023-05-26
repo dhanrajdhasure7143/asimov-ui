@@ -97,8 +97,9 @@ export class RpaApprovalsComponent implements OnInit {
     this.selectedRows.forEach((item:any)=>{
       let obj:any={};
       obj["id"]=item.id;
-      obj["approverName"]=localStorage.getItem("ProfileuserId");
+      obj["approverName"]=item.approverName;
       obj["comments"]=this.comments;
+      obj["modifiedBy"]=localStorage.getItem("ProfileuserId");
       obj["status"]=this.statusType;
       data.push(obj);
     });
