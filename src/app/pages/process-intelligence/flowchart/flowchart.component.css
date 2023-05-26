@@ -248,39 +248,6 @@
     margin-left: 5px;
  }
 
- #dropdownForm2{
-  top: 8px; 
-  left: 0px; 
-  will-change: transform; 
-  position: absolute; 
-  transform: translate(-340px, 39px);
-  position: absolute;
-  width:500px ;
-  z-index: 1000;
-  float: left;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  font-size: 14px;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0,0,0,.175);
-}
-#dropdownForm2::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 90%;
-  margin-left: -5px;
-  border-width: 8px;
-  border-style: solid;
-  border-color: transparent transparent gray transparent;
-}
-
 .hrsInput input{
   border: 1px solid lightgray !important;
   border-radius: 5px !important;
@@ -309,9 +276,7 @@
   padding: 0px 14px;
   font-size: 12px;
 }
-#dropdownForm2{
-  padding: 20px !important;
-}
+
 .top-btns{
   margin-left: 15px !important;
 }
@@ -337,7 +302,7 @@ img.hover-img {
   display: initial;
 }
 .PImodule-fileds {
-  margin-top: 10px !important;
+  padding-top: 15px !important;
 }
 .closebtn img {
   vertical-align: top !important;
@@ -403,37 +368,31 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
-#dropdownForm2{
-  top: 0px; 
-  right: 244px; 
-  will-change: transform; 
-  position: absolute; 
-  transform: translate(253px, 42px);
+ #dropdownForm2{
+  top: 40px; 
+  right: 35px; 
   position: absolute;
   width:500px ;
   z-index: 1000;
-  float: left;
-  padding: 15px;
   font-size: 14px;
   text-align: left;
   list-style: none;
   background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ccc;
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  padding: 20px !important;
 }
 #dropdownForm2::after {
   content: "";
   position: absolute;
   bottom: 100%;
-  right: 16.7%;
-  margin-left: 4px;
+  left: 90%;
+  margin-left: -5px;
   border-width: 8px;
   border-style: solid;
   border-color: transparent transparent #ccc;
-}  
+}
 .hrsInput input{
   border: 1px solid lightgray !important;
   border-radius: 3px !important;

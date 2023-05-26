@@ -899,6 +899,9 @@ mat-list-item.mat-list-item.activeMenu {
 .main-content1 {
   padding: 0px !important;
 }
+.main-content1.pi_mcont1 {
+  height: 100%;
+}
 
 .content-area {
   background: #ffffff;

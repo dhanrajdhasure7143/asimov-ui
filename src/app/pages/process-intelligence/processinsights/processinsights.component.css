@@ -329,38 +329,6 @@ padding: 10px;
    margin-right: 0px !important; 
      margin-left: 0px !important;
   }
-  #dropdownForm2{
-    top: 0px; 
-    left: 0px; 
-    will-change: transform; 
-    position: absolute; 
-    transform: translate(-340px, 39px);
-    position: absolute;
-    width:500px ;
-    z-index: 1000;
-    float: left;
-    padding: 15px;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-  #dropdownForm2::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    right: 125px;
-    margin-left: -5px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent gray transparent;
-}
-
 span.testtooltip {
   position: absolute;
   top: 45px;
@@ -455,22 +423,15 @@ span.testtooltip:before {
   display: block;
 }
 #dropdownForm2{
-  top: 0px; 
-  right: 244px; 
-  will-change: transform; 
-  position: absolute; 
-  transform: translate(253px, 42px);
+  top: 40px;
+  right: -5px;
   position: absolute;
   width:500px ;
   z-index: 1000;
-  float: left;
   padding: 15px;
   font-size: 14px;
   text-align: left;
-  list-style: none;
   background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ccc;
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -479,7 +440,7 @@ span.testtooltip:before {
   content: "";
   position: absolute;
   bottom: 100%;
-  right: 16.7%;
+  right: 9%;
   margin-left: 4px;
   border-width: 8px;
   border-style: solid;
@@ -599,13 +560,11 @@ font-size: 14px;
   margin-bottom: 2px;
   line-height: 18px;
 }
-.PI-insights-timefeed {
+/* .PI-insights-timefeed {
 transform: translate(235px, 41px) !important;
 right: 230px !important
-}
-.PI-insights-timefeed::after {
-right: 9% !important;
-}
+} */
+
 .timefeed-header span:hover img.default-img {
 display: none;
 }
