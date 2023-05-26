@@ -32,6 +32,8 @@ export class CreateProjectFormComponent implements OnInit {
   freetrail: string;
   processOwner: boolean;
   public resources_list: any[] = [];
+  activeUsersList:any[]=[];
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -105,7 +107,9 @@ export class CreateProjectFormComponent implements OnInit {
 
   ngOnChanges() {
       setTimeout(() => {
-        this.users_list.forEach((element) => {
+        this.activeUsersList = this.users_list.filter(x => x.user_role_status == 'ACTIVE')
+
+        this.activeUsersList.forEach((element) => {
           if (element.user_email != this.loggedInUserId)
             this.resources_list.push(element);
         });

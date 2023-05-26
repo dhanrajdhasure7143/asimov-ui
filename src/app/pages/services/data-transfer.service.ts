@@ -131,4 +131,12 @@ setScreenList(module:any){
   this.screenlist.next(module);
 }
 
+  get_username_by_email(users_list:any[], email:String)
+  {
+    let user = users_list.find(item => item.user_email == email);
+    if(user)
+      return user["fullName"]
+      else
+      return '';
+  }
 }

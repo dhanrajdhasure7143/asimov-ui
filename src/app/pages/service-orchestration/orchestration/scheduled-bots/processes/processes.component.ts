@@ -79,7 +79,9 @@ export class ProcessesComponent implements OnInit {
     this.tabledata = response.length <= '0'  ? false: true;
     this.processschedule = response
     this.table_searchFields =["processName","category","environmentName","lastRunTS","nextRunTS","scheduleInterval","status","timezone"]
-     this.spinner.hide(); 
+    this.spinner.hide(); 
+   },err=>{
+    this.spinner.hide(); 
    });
   }
 

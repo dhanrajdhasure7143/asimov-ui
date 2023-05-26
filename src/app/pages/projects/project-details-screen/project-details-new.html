@@ -21,7 +21,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <button class="btn actionmenu grey-btn" type="button" (click)="menu.toggle($event)">
                     <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" >
-                    <span class="plus">Action Menu</span>
+                    <span class="plus">More Actions</span>
                     <!--pTooltip="Action Menu" tooltipPosition="top" 
                         class="default-icon"
                         <img src="./../../../../assets/images-n/projects/menudots-hover.png" alt="Actions" class="hover-icon"> -->
@@ -97,7 +97,7 @@
                                                 <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
-                                                <p-dropdown [options]="users_list" [filter]="true"
+                                                <p-dropdown [options]="users_List1" [filter]="true"
                                                     [style]="{'width':'100%'}" filterBy="user_email,fullName" required
                                                     [autoDisplayFirst]="false" placeholder="Select Assignee"
                                                     [(ngModel)]="processOwner" optionValue="user_email"
@@ -370,8 +370,11 @@
                 </div>
                 <div class="col-md-4 pr-0 ">
                     <div class="activecollaboration">
-                        <div class="row collab">
+                        <div>
                             <h4 class="colheads chatheader">Collaborations</h4>
+                        </div>
+                        <div class="row collab">
+                           
                             <span>
                                 <div class="pinnedmsgs selectable" *ngIf="_pinnedMessage.length > 0">
                                     <img alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" pTooltip="Unpin" tooltipPosition="top"
