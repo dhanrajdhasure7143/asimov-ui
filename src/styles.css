@@ -2872,7 +2872,8 @@ span.statusbadge_nc {
 .rpalogsgrid .p-datatable-wrapper {
   height: calc(100% - 177px); /* for rpa so logs grid */
 }
-.rpaauditsgrid .p-datatable-wrapper {
+.rpaauditsgrid .p-datatable-wrapper,
+.rpapprovalsgrid .p-datatable-wrapper {
   height: calc(100vh - 177px); /* for rpa audit logs grid */
 }
 .rpaauditsgrid .p-datatable-wrapper tr {
