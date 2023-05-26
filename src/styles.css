@@ -2832,6 +2832,25 @@ span.tabscount {
   height: 100%;
   display: inline-block;
 }
+/* connection manager params tab styles*/
+.paramstab {
+  background-color: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  padding: 0px 10px 20px;
+}
+.paramstab .p-tabview-nav-content {
+  height: 50px !important;
+  border-bottom: 1px solid #ddd;
+}
+.paramstab .p-tabview .p-tabview-nav {
+  height: 50px !important;
+}
+.paramstab .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 2px 16px 0px !important;
+}
+/* connection manager params tab styles*/
+
 /* Tabs NEW Styles End */
 
 
