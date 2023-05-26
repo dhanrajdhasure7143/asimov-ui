@@ -224,7 +224,8 @@ showUserList:boolean= false;
 recentActivityList:any=[];
 columns_list_activities:any[]=[];
 uploaded_file:any[]=[];
-
+loggedInUserId:any;
+users_List1:any[]=[]
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -517,6 +518,7 @@ if (process != undefined) {
 
 
 getallusers() {
+this.loggedInUserId = localStorage.getItem("ProfileuserId");
 this.spinner.show();
 this.dt.logged_userData.subscribe(res=>{
   if(res){
@@ -536,6 +538,10 @@ this.dt.tenantBased_UsersList.subscribe(response => {
   this.getTheListOfFolders();
   this.getRoles();
   this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
+  this.users_list.forEach((element) => {
+    if (element.user_email != this.loggedInUserId)
+      this.users_List1.push(element);
+  });
   }
 })
 }
