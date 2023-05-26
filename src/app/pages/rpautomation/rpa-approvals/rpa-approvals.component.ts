@@ -22,6 +22,8 @@ export class RpaApprovalsComponent implements OnInit {
   updateData:any={};
   selectedRows:any=[];
   statusType:String="";
+  isApprovalInfoShow:boolean=false;
+  approvalInfo:String="";
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -95,7 +97,7 @@ export class RpaApprovalsComponent implements OnInit {
     this.selectedRows.forEach((item:any)=>{
       let obj:any={};
       obj["id"]=item.id;
-      obj["approverName"]=item.approverName;
+      obj["approverName"]=localStorage.getItem("ProfileuserId");
       obj["comments"]=this.comments;
       obj["status"]=this.statusType;
       data.push(obj);
@@ -120,6 +122,12 @@ export class RpaApprovalsComponent implements OnInit {
   onApproveRejectItem(statusType){
     this.statusType=statusType;
     this.isDialogShow=true;
+  }
+
+  showApprovalInfo(data:any)
+  {
+    this.approvalInfo=data.approvalInfo;
+    this.isApprovalInfoShow=true;
   }
 
 

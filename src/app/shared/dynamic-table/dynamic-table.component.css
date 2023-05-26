@@ -61,3 +61,8 @@ td a:hover img.hover-icon,
 .undobtn:disabled i.fas {
     color: #a0a0a0 !important;
 }
+
+
+.approveOrReject{
+    font-weight: bold;
+}
