@@ -899,6 +899,9 @@ mat-list-item.mat-list-item.activeMenu {
 .main-content1 {
   padding: 0px !important;
 }
+.main-content1.pi_mcont1 {
+  height: 100%;
+}
 
 .content-area {
   background: #ffffff;
@@ -3481,7 +3484,7 @@ textarea.p-inputtextarea {
   overflow-wrap: break-word;
 }
 .rpaauditsgrid .p-datatable-resizable .p-datatable-tbody>tr>td:nth-child(2) {
-  /* white-space: inherit !important; */
+  white-space: inherit !important;
 }
 /* headercss end*/
 .p-editor-container .p-editor-content .ql-editor.ql-blank {
