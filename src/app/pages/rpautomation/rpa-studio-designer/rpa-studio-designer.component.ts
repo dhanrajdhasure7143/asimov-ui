@@ -333,8 +333,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   auditLogs(){
     let botId=this.current_instance.finalbot.botId;
+    let botName=this.current_instance.finalbot.botName;
+    console.log(botName,this.current_instance.finalbot)
+    // return
     let catergoryId=this.current_instance.finalbot.categoryId
-    this.router.navigate(["/pages/rpautomation/auditlogs"],{queryParams:{botId:botId,catergoryId:catergoryId}})
+    this.router.navigate(["/pages/rpautomation/auditlogs"],{queryParams:{botId:botId,botName:botName,catergoryId:catergoryId}})
     //this.current_instance.getAuditLogs()
   }
 

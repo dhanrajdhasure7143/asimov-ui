@@ -33,13 +33,20 @@ span.deploy_yes {
     display: block;
     border-radius: 50px;
 }
-img.hover-icon, td a:hover img.default-icon {
+img.hover-icon, td a:hover img.default-icon,
+.undobtn:hover img.default-icon {
     display: none;
 }
-td a:hover img.hover-icon {
+td a:hover img.hover-icon,
+.undobtn:hover img.hover-icon {
     display: initial;
 }
-
+.undobtn .disbtn {
+    cursor: no-drop;
+}
+.undobtn img {
+    cursor: unset;
+}
 
 .red {
     color: red;
@@ -51,10 +58,11 @@ td a:hover img.hover-icon {
 }
 
 
-.undobtn {
-    background-color:transparent !important; 
-    margin-right: 17px;
-  }
-  .undobtn:disabled i.fas {
+.undobtn:disabled i.fas {
     color: #a0a0a0 !important;
-  }
+}
+
+
+.approveOrReject{
+    font-weight: bold;
+}

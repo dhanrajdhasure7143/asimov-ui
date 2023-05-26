@@ -1,12 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../services/rest-api.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import moment from 'moment';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
@@ -17,15 +12,12 @@ import { columnList } from 'src/app/shared/model/table_columns';
   providers:[columnList]
 })
 export class RpaAuditlogsComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
   botId: any;
   auditLogsData: any = [];
-  displayedColumns: string[] = ["versionNew", "changedDate_new", 'botName', "changedBy", "comments"];
-  dataSource: MatTableDataSource<any>;
-  @ViewChild("paginator") paginator: MatPaginator;
   columns_list: any = [];
   logsData: any =[];
-  table_searchFields:any=['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']
+  botName:string;
+  table_searchFields:any=['versionNew','changedDate_new','changeActivity','changedBy','comments','taskName','newValue','previousValue']
 
   constructor(private activatedRoute: ActivatedRoute, 
     private router: Router, 
@@ -40,6 +32,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.router.navigate(["home"])
       } else {
         this.botId = params.botId;
+        this.botName = params.botName;
         this.spinner.show();
         this.getEnvironments(params.catergoryId)
       }
@@ -125,7 +118,7 @@ export class RpaAuditlogsComponent implements OnInit {
     })
   }
 
-  open() {
+  backToWorkSpace() {
     this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: this.botId } })
   }
 

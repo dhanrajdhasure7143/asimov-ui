@@ -250,7 +250,7 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
     this.confirmationService.confirm({
-      message: "Do you really want to delete this project? This process cannot be undo.",
+      message: "Do you really want to delete this project? This process cannot be undone.",
       header: "Are you Sure?",
       
       accept: () => {
