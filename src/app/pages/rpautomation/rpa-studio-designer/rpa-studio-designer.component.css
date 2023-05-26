@@ -619,6 +619,7 @@ ul#versions li:hover {
   padding: 3px;
   transform: rotate(45deg);
   vertical-align: inherit;
+  margin-left: 8px;
 }
 
 

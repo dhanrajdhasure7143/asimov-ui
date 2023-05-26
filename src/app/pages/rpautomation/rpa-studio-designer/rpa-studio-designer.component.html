@@ -109,7 +109,7 @@
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
                       <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" alt=""/>
                       <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
-                      <span *ngIf="getSelectedEnvironments().length>=1">{{getSelectedEnvironments()[0].environmentName}}<span
+                      <span *ngIf="getSelectedEnvironments().length>=1" class="plus">{{getSelectedEnvironments()[0].environmentName}}<span
                           *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
                       <span class="caret"></span>
                       <span class="testtooltip">Environments</span>
