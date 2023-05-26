@@ -564,7 +564,13 @@ display: initial;
 .edit-disabled{
 cursor: no-drop;
 }
-
+.dis-btns button:disabled {
+  cursor: no-drop;
+  background: none !important;
+}
+.dis-btns .bps-float button:hover img {
+  filter: grayscale(10) !important;
+}
 
 button.btn.canlrst-btn:hover {
 background: transparent !important;
@@ -573,7 +579,6 @@ color: #098de6;
 .loader_generate{
   cursor: no-drop;
   position: absolute;
-  cursor: no-drop;
   width: 100%;
   z-index: 10000000;
   height: 100%;
