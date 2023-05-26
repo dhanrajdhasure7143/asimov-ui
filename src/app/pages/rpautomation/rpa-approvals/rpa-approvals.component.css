@@ -68,3 +68,8 @@ button:hover img.testplus.hover-img {
 .deactive-btn{
    color: lightgrey !important;
 }
+
+
+.display-approval-info{
+  height:300px !important
+}

@@ -784,6 +784,12 @@ importBot()
   getColor(status) {
     return this.statusColors[status]?this.statusColors[status]:'';
   }
+
+
+  approvalsList()
+  {
+    this.router.navigate(["/pages/rpautomation/approvals"])
+  }
 }
 
 
