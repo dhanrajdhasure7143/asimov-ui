@@ -1,8 +1,8 @@
 
  <ngx-spinner bdColor="rgba(255,255,255,0.9)" *ngIf="!isGenerate"> <img src='{{loaderImgSrc}}' alt=""/></ngx-spinner>
 
- <div class="main-content1">
-    <div class="">
+ <div class="main-content1 pi_mcont1">
+    <div class="h-100">
         <div class="row main-content-head">
             <div class="col-md-5 new-bps-header-title p-0">
                 <h3>
@@ -241,7 +241,7 @@
                         </div>
 
                         <div *ngIf="model1.length == 0 && isGenerate" class="loader_generate">
-                            <div class="col-12 h-100 text-center">
+                            <div class="col-12 h-100 d-flex align-items-center justify-content-center">
                                 <img [src]="loaderImgSrc" alt="">
                             </div>
                         </div>

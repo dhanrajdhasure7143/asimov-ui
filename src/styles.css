@@ -899,6 +899,9 @@ mat-list-item.mat-list-item.activeMenu {
 .main-content1 {
   padding: 0px !important;
 }
+.main-content1.pi_mcont1 {
+  height: 100%;
+}
 
 .content-area {
   background: #ffffff;
@@ -2956,14 +2959,13 @@ mention-list {
    top: -110px !important; 
   width: 95% !important;
   left: 0px !important;
-  position: inherit !important;
 }
 mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
   /* top: -150px !important; */
   /* top: -165px !important; */
   left: 0px !important;
   width: 100% !important;
-  
+  box-shadow: 1px 1px 9px rgba(0,0,0,.175) !important;
 }
 .scrollable-menu{max-height: 106px !important;}
 /* chat mention styles */
@@ -2985,6 +2987,7 @@ th {
 }
 .p-datatable .p-datatable-header {
   padding: 0px !important;
+  background: transparent !important;
 }
 .p-datatable-scrollable .p-datatable-thead {
   z-index: 999 !important;
@@ -3475,7 +3478,7 @@ textarea.p-inputtextarea {
 }
 .taskdescription .task-descwords p {
   cursor: pointer;
-  width: fit-content;
+  /* width: fit-content; */
 }
 .p-inplace.p-component .task-descwords {
   overflow-wrap: break-word;
