@@ -25,6 +25,7 @@ export class RpaAuditlogsComponent implements OnInit {
   @ViewChild("paginator") paginator: MatPaginator;
   columns_list: any = [];
   logsData: any =[];
+  botName:string;
   table_searchFields:any=['versionNew','changedDate','changeActivity','changedBy','comments','taskName','newValue','previousValue']
 
   constructor(private activatedRoute: ActivatedRoute, 
@@ -40,6 +41,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.router.navigate(["home"])
       } else {
         this.botId = params.botId;
+        this.botName = params.botName;
         this.spinner.show();
         this.getEnvironments(params.catergoryId)
       }
@@ -125,7 +127,7 @@ export class RpaAuditlogsComponent implements OnInit {
     })
   }
 
-  open() {
+  backToWorkSpace() {
     this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: this.botId } })
   }
 

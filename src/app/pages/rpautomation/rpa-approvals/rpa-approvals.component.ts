@@ -20,6 +20,8 @@ export class RpaApprovalsComponent implements OnInit {
   isDialogShow:boolean=false
   comments:String="";
   updateData:any={};
+  selectedRows:any=[];
+  statusType:String="";
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -47,8 +49,14 @@ export class RpaApprovalsComponent implements OnInit {
   }
   getApprovalList(){
     this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo"]
-    this.rest.getRPAApprovalsList().subscribe((response:any)=>{ 
+    let userId:String="";
+    if(localStorage.getItem("userRole")=="System Admin")
+      userId="SystemAdmin";
+    else
+      userId=localStorage.getItem("ProfileuserId");
+    this.rest.getRPAApprovalsList(userId).subscribe((response:any)=>{ 
       this.spinner.hide();
+      this.selectedRows=[]
       if(response.data.length!=0)
       {
         this.approvalsList=response.data.map((item:any)=>{
@@ -69,8 +77,8 @@ export class RpaApprovalsComponent implements OnInit {
 
 
   onApproveItem(data:any, status:string){
-    this.updateData=data;
-    this.updateData["status"]=status;
+    this.statusType=status;
+    this.selectedRows=[data];
     this.isDialogShow=true;
   }
 
@@ -81,15 +89,21 @@ export class RpaApprovalsComponent implements OnInit {
     this.dt.get_username_by_email(this.users_list,emailId);
   }
 
-  updateApprovalStatus()
-  {
+  updateApprovalStatus(){
     this.spinner.show();
-    this.updateData["comments"]=this.comments;
-    this.updateData["modifiedBy"]=localStorage.getItem("ProfileuserId");
-    this.rest.updateApprovalList(this.updateData).subscribe((response:any)=>{
+    let data:any[]=[];
+    this.selectedRows.forEach((item:any)=>{
+      let obj:any={};
+      obj["id"]=item.id;
+      obj["approverName"]=item.approverName;
+      obj["comments"]=this.comments;
+      obj["status"]=this.statusType;
+      data.push(obj);
+    });
+    this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
-      Swal.fire("Success", this.updateData["status"]+" Successfully", "success");
-      this.updateData={};
+      Swal.fire("Success", response.status, "success");
+      this.selectedRows=[];
       this.comments="";
       this.getApprovalList();
     }, err=>{
@@ -98,5 +112,15 @@ export class RpaApprovalsComponent implements OnInit {
       this.spinner.hide();
     })
   }
+
+  readSelectedData(selectedRows:any){
+   this.selectedRows=selectedRows;
+  }
+
+  onApproveRejectItem(statusType){
+    this.statusType=statusType;
+    this.isDialogShow=true;
+  }
+
 
 }
