@@ -87,6 +87,7 @@ export class D3flowchartComponent {
     else if (this.isdownloadsvg == true) {
       this.exportSVG('svg')
     }
+    console.log(this.model1)
   }
 
   processGraph() {

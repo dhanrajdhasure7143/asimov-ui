@@ -25,37 +25,7 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
-#dropdownForm2{
-    top: 0px; 
-    right: 244px; 
-    will-change: transform; 
-    position: absolute; 
-    transform: translate(253px, 42px);
-    position: absolute;
-    width:500px ;
-    z-index: 1000;
-    float: left;
-    padding: 15px;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-  #dropdownForm2::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    right: 16.7%;
-    margin-left: 4px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent #ccc;
-  }  
+
   .hrsInput input{
     border: 1px solid lightgray !important;
     border-radius: 3px !important;
@@ -83,6 +53,7 @@ span.testtooltip:before {
     color: red;
     font-size: 12px;
   }
+
 .main-content1 .maincont-contentarea {
   padding: 0px !important;
 }

@@ -3,12 +3,13 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { RestApiService } from '../../services/rest-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-business-insights',
   templateUrl: './business-insights.component.html',
@@ -22,11 +23,14 @@ export class BusinessInsightsComponent implements OnInit {
   variant_list:any[]=[];
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-  isLoading:boolean=false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   valueType:any;
 
-  constructor(private rest:RestApiService,private route:ActivatedRoute) { 
+  constructor(private rest:RestApiService,
+    private route:ActivatedRoute,
+    private router: Router,
+    private loader: LoaderService
+    ) { 
     let queryParamsResp
     this.route.queryParams.subscribe(res=>{queryParamsResp=res
       this.processId=queryParamsResp.wpid
@@ -42,7 +46,7 @@ export class BusinessInsightsComponent implements OnInit {
 
   getActivityData(){
     let res_data:any
-    this.isLoading=true;
+    this.loader.show()
     this.rest.getBIActivityTime(this.processId)
               .subscribe(res=>{
                     res_data=res
@@ -51,42 +55,42 @@ export class BusinessInsightsComponent implements OnInit {
                       this.activitytime_data.push(element);
                     });
                   this.ActivityTimeChart();
-                  this.isLoading=false;
+                  this.loader.hide();
                   });
   }
 
    async getThroughputTimeData(){
      let res_data:any
-     this.isLoading=true;
+     this.loader.show();
     await this.rest.getBIThroughputTime(this.processId).subscribe(res=>{res_data=res
       if(res_data.data[0].value==0){
         res_data.data.splice(0,1)
       }
       this.throughtime_data=res_data.data
       this.thoughtputTimeChart();
-      this.isLoading=false;
+      this.loader.hide();
     });
   }
 
   async getBusinessMetricsData(){
     let res_data:any;
-    this.isLoading=true;
+    this.loader.show()
     await this.rest.getBusinessMetrics(this.processId).subscribe(res=>{res_data=res
       this.b_metrics=res_data.data[0];
-      this.isLoading=false;
+      this.loader.hide()
     });
   }
 
   async getVariantsData(){
     let res_data:any
-    this.isLoading=true;
+    this.loader.show()
     await this.rest.getBIVariantsData(this.processId).subscribe(res=>{res_data=res
       for(var i=0; i<res_data.data.length; i++){
         res_data.data[i]['variantNumber']=i+1
         this.variant_list.push(res_data.data[i])
       }
       this.assignPagenation(this.variant_list);
-      this.isLoading=false;
+      this.loader.hide()
     });
   }
 
@@ -235,6 +239,12 @@ export class BusinessInsightsComponent implements OnInit {
 
   loopTrackBy(index, term) {
     return index;
+  }
+
+  gotoProcessgraph() {
+    this.router.navigate(["/pages/processIntelligence/flowChart"], {
+      queryParams: { wpiId: this.processId },
+    });
   }
 
 }
