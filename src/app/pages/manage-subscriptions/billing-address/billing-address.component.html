@@ -36,6 +36,7 @@
                         [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="name"></p-dropdown>
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
                         class="required">Country  Required *</span>
+                    <span class="required">{{errorMessage}}</span>
             </div>
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
@@ -45,16 +46,18 @@
                 </p-dropdown>
                 <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
                     class="required">State Required *</span>
+                <span class="required">{{errorMessage1}}</span>
             </div>
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="priority">City <span class="star">*</span></label>
                 <span>
                     <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}"
-                        [autoDisplayFirst]="false" placeholder="Select City" formControlName="city" optionLabel="name" optionValue="name">
+                        [autoDisplayFirst]="false" placeholder="Select City" formControlName="city" optionLabel="name" optionValue="name" (onChange)="onChangeCity($event.value)">
                     </p-dropdown>
                 </span>
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
                 class="required">City Required *</span>
+                <span class="required">{{errorMessage2}}</span>
             </div>
             <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
@@ -70,14 +73,30 @@
                     Double Spaces are not allowed.
                 </span>
             </div>
-            <div class="form-group col-md-3 pl-0">
+            <div *ngIf="!isInput" class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
-                        placeholder="Enter Phone Number" (keydown)="onKeydown($event)">
+                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: phnCountryCode}" onKeyPress="if(this.value.length==10) return false;"
+                    pattern="^((\\+91-?)|0)?[0-9]{10}$" required />
                 <span
                      *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
                         !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
-                    class="required">Phone Nmber Required *</span>
+                    class="required">Phone Number Required *</span>
+                <span
+                     *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
+                    class="required">Phone number should be 10 digits *</span>
+            </div>
+            <div *ngIf="isInput" class="form-group col-md-3 pl-0">
+                <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
+                <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
+                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: phnCountryCode}" onKeyPress="if(this.value.length==10) return false;"
+                    pattern="^((\\+91-?)|0)?[0-9]{10}$" required />
+                <span
+                     *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
+                        !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
+                    class="required">Phone Number Required *</span>
                 <span
                      *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
                     class="required">Phone number should be 10 digits *</span>

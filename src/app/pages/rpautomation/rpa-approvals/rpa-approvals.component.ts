@@ -21,6 +21,9 @@ export class RpaApprovalsComponent implements OnInit {
   comments:String="";
   updateData:any={};
   selectedRows:any=[];
+  statusType:String="";
+  isApprovalInfoShow:boolean=false;
+  approvalInfo:String="";
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -48,7 +51,11 @@ export class RpaApprovalsComponent implements OnInit {
   }
   getApprovalList(){
     this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo"]
-    let userId:String=localStorage.getItem("ProfileuserId");
+    let userId:String="";
+    if(localStorage.getItem("userRole")=="System Admin")
+      userId="SystemAdmin";
+    else
+      userId=localStorage.getItem("ProfileuserId");
     this.rest.getRPAApprovalsList(userId).subscribe((response:any)=>{ 
       this.spinner.hide();
       this.selectedRows=[]
@@ -72,8 +79,8 @@ export class RpaApprovalsComponent implements OnInit {
 
 
   onApproveItem(data:any, status:string){
-    data["status"]=status;
-    this.selectedRows=[data]
+    this.statusType=status;
+    this.selectedRows=[data];
     this.isDialogShow=true;
   }
 
@@ -86,10 +93,16 @@ export class RpaApprovalsComponent implements OnInit {
 
   updateApprovalStatus(){
     this.spinner.show();
-    let data:any[]=this.selectedRows.map((item:any)=>{
-      item["comments"]=this.comments;
-      return item;
-    })
+    let data:any[]=[];
+    this.selectedRows.forEach((item:any)=>{
+      let obj:any={};
+      obj["id"]=item.id;
+      obj["approverName"]=item.approverName;
+      obj["comments"]=this.comments;
+      obj["modifiedBy"]=localStorage.getItem("ProfileuserId");
+      obj["status"]=this.statusType;
+      data.push(obj);
+    });
     this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
       Swal.fire("Success", response.status, "success");
@@ -104,15 +117,18 @@ export class RpaApprovalsComponent implements OnInit {
   }
 
   readSelectedData(selectedRows:any){
-    this.selectedRows=selectedRows
+   this.selectedRows=selectedRows;
   }
 
-  onApproveRejectItem(ststusType){
-    this.selectedRows=this.selectedRows.map((item:any)=>{
-      item["status"]=ststusType;
-      return item;
-    })
+  onApproveRejectItem(statusType){
+    this.statusType=statusType;
     this.isDialogShow=true;
+  }
+
+  showApprovalInfo(data:any)
+  {
+    this.approvalInfo=data.approvalInfo;
+    this.isApprovalInfoShow=true;
   }
 
 
