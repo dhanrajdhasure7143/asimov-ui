@@ -369,12 +369,6 @@ pi_fullGraph_data:any=[];
         this.isGraph_changed=false;
     }
         },(err =>{
-          Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
-        .then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate(["/pages/processIntelligence/upload"]);
-          }
-        })
           this.spinner.hide();
         }));
         const variantGraphbody= { 
@@ -443,15 +437,7 @@ pi_fullGraph_data:any=[];
       this.onchangeVaraint("0");
       }
       },err=>{
-        Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
-        .then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate(["/pages/processIntelligence/upload"]);
-          }
-        })
-
-
-          this.spinner.hide();
+        this.spinner.hide();
         })
       const fullGraphbody= { 
         "data_type":"full_graph", 
@@ -532,12 +518,6 @@ pi_fullGraph_data:any=[];
         this.filterOverlay()
     }
         },(err =>{
-          Swal.fire("Error", "Failed to generate Graph, Please try again later", "error")
-        .then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate(["/pages/processIntelligence/upload"]);
-          }
-        })
           this.spinner.hide();
         }));
         const variantGraphbody= { 
@@ -969,7 +949,7 @@ pi_fullGraph_data:any=[];
           Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Internal server error, Please try again later6 !',
+              text: 'Internal server error, Please try again later !',
               // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
               heightAuto: false,
             });
