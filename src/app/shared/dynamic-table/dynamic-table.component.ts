@@ -39,6 +39,7 @@ export class DynamicTableComponent implements OnInit {
   @Output("onRowDoubleClick") onRowDoubleClick:any= new EventEmitter<any>();
   @Input("show_approve_btn") public show_approve_btn:boolean;
   @Input("show_reject_btn") public show_reject_btn:boolean;
+  @Output("viewApprovalInfo") public viewAprrovalInfo:any = new EventEmitter<any>();
   @Output() approvedItem = new EventEmitter<any[]>();
   @Output() rejectItem = new EventEmitter<any[]>();
   public loggedUserRole: any[]=[];
@@ -154,5 +155,10 @@ export class DynamicTableComponent implements OnInit {
 
   getRejected(rowData){
     this.rejectItem.emit(rowData)
+  }
+
+  getApprovalInfo(rowData)
+  {
+    this.viewAprrovalInfo.emit(rowData);
   }
 }

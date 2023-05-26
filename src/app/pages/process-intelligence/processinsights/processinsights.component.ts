@@ -192,7 +192,8 @@ hiddenPopUp:boolean=false;
         private route: ActivatedRoute,
         private dt: DataTransferService,
         private hints: PiHints,
-        private global:GlobalScript
+        private global:GlobalScript,
+        private router: Router
         // private spinner:NgxSpinnerService
     ) {
        // Object.assign(this, { multi });
@@ -1097,6 +1098,20 @@ hiddenPopUp:boolean=false;
       }
       closeOverlay(event){
         this.hiddenPopUp=event;
+      }
+
+      gotoProcessgraph() {
+        this.router.navigate(["/pages/processIntelligence/flowChart"], {
+          queryParams: { wpiId: this.graphIds },
+        });
+      }
+
+      resetworkingHours() {
+        //working hours reset in timffed
+        this.workingHours.formDay = "Mon";
+        this.workingHours.toDay = "Sun";
+        this.workingHours.shiftStartTime = "00:00";
+        this.workingHours.shiftEndTime = "23:59";
       }
   
 }

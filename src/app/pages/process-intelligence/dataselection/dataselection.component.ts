@@ -221,6 +221,8 @@ export class DataselectionComponent implements OnInit {
 
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+      },err=>{
+        Swal.fire("Error", "Internal server error, Please try again later", "error");
       })
     }else{
           const xlsxConnectorBody={
@@ -265,6 +267,8 @@ export class DataselectionComponent implements OnInit {
           }
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+        },err=>{
+        Swal.fire("Error", "Internal server error, Please try again later", "error");
         })
     }
   }

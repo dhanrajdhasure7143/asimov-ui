@@ -329,38 +329,6 @@ padding: 10px;
    margin-right: 0px !important; 
      margin-left: 0px !important;
   }
-  #dropdownForm2{
-    top: 0px; 
-    left: 0px; 
-    will-change: transform; 
-    position: absolute; 
-    transform: translate(-340px, 39px);
-    position: absolute;
-    width:500px ;
-    z-index: 1000;
-    float: left;
-    padding: 15px;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-  #dropdownForm2::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    right: 125px;
-    margin-left: -5px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent gray transparent;
-}
-
 span.testtooltip {
   position: absolute;
   top: 45px;
@@ -425,4 +393,190 @@ span.testtooltip:before {
 }
 img.hover-img {
   display: none;
+}
+
+span.testtooltip {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+}
+
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+#dropdownForm2{
+  top: 40px;
+  right: -5px;
+  position: absolute;
+  width:500px ;
+  z-index: 1000;
+  padding: 15px;
+  font-size: 14px;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+#dropdownForm2::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 9%;
+  margin-left: 4px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #ccc;
+}  
+.hrsInput input{
+  border: 1px solid lightgray !important;
+  border-radius: 3px !important;
+  padding: 3px !important;
+}
+.hrsDropdwn{
+  padding: 20px !important;
+}
+.hrsDropdwn button{
+  padding: 2px !important;
+  min-width: 80px !important;
+}
+.hrs-dropdwn .btn-cancel{
+  background-color: lightgray !important;
+  border-radius: 20px;
+  margin-top: 4px;
+  margin-left: 13px;
+  min-width: 120px;
+  border: 0px !important;
+}
+.reset-btn{
+  border: 0px !important;
+}
+.p_warning {
+  color: red;
+  font-size: 12px;
+}
+.main-content1 .maincont-contentarea {
+padding: 0px !important;
+}
+.main-content1 .main-content-head {
+background-color: #F3F3F3;
+padding: 12px 15px 8px !important;
+}
+.main-content1 .module-body,
+.main-content1 .main-content-body {
+background-color: #fff;
+}
+/* .module-body {
+height: calc(100% - 32px) !important;
+padding: 10px 0px 0px !important;
+} */
+.main-content1 .main-content-body {
+margin-top: 0;
+width: 100%;
+overflow: hidden;
+padding: 0px;
+}
+.module-back-button {
+border-right: unset !important;
+margin-right: 0px !important;
+}
+.module-back-button i {
+margin-right: 5px;
+background: transparent;
+}
+.module-back-button:hover i {
+border-radius: unset;
+background: unset !important;
+color: #098de6;
+}
+.new-bps-icons .bps-float {
+float: right;
+}
+.new-bps-icons button {
+padding: 6px 8px;
+position: relative;
+z-index: 999;
+}
+.bps-float button img {
+height: 17px;
+width: auto;
+}
+.bps-float button:hover {
+background-color: #098de6;
+border-radius: 3px;
+}
+.bps-float button:hover img {
+-webkit-filter: brightness(10) !important;
+filter: brightness(10) !important;
+}
+.timefeed-header {
+margin-bottom: 15px;
+}
+.timefeed-footer {
+float: right;
+margin-top: 20px;
+}
+.timefeed-footer .btn-primary {
+margin-right: 0px !important;
+}
+.timefeed-header h3 {
+font-size: 20px !important;
+font-weight: 600;
+}
+.timefeed-header span.close {
+margin-top: 2px;
+opacity: 1;
+font-size: 20px;
+font-weight: 600;
+}
+.timefeed-header span.close:hover {
+color: #00a0e3;
+}
+.PI-insights-headericons button img {
+width: 17px;
+height: 17px;
+}
+.timefeed-body label {
+font-size: 14px;
+  color: #7d7d7d;
+  margin-bottom: 2px;
+  line-height: 18px;
+}
+/* .PI-insights-timefeed {
+transform: translate(235px, 41px) !important;
+right: 230px !important
+} */
+
+.timefeed-header span:hover img.default-img {
+display: none;
+}
+.timefeed-header span:hover img.hover-img {
+display: initial;
+}
+.edit-disabled{
+cursor: no-drop;
+}
+
+
+button.btn.canlrst-btn:hover {
+background: transparent !important;
+color: #098de6;
 }
