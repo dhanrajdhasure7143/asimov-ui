@@ -1,60 +1,155 @@
-<div class="rpa-content-div">
-   <div class="row credential-search-tools">
-      <div class="env-data-tool credential-tools">
-         <!-- <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approved')"pTooltip="Approve" tooltipPosition="top">
+<div class="maincont">
+   <div class="maincont-contentarea">
+     <div class="row main-content-head">
+       <h3>
+         <label id="popup_title">
+             <a routerLink="/pages/rpautomation/home" class="imageBox">
+               <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+               <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+             </a>
+         </label>
+         <span class="title_text">Approvals</span>
+       </h3>
+           <!-- <span class="module-back-button" routerLink="/pages/rpautomation/home">
+               <i class="fas fa-arrow-left" aria-hidden="true"></i>
+           </span> -->
+     </div>
+    <div class="main-content-body tablist-cont">
+      <div id="" class="tabs_screen config_tabs h-100">
+        <div class="rpa-content-div">
+          <div class="row credential-search-tools"  [style]="{'right':'325px'}" >
+            <div class="env-data-tool credential-tools">
+              <!-- <button [class]="selectedRows.length==0?'deactive-btn':'active-btn'" [disabled]="selectedRows.length==0" (click)="onApproveRejectItem('Approved')"pTooltip="Approve" tooltipPosition="top">
             <i class="fas fa-check"></i>
           </button> -->
-         <div class="env-btn credential-btntool">
-            <button (click)="onApproveRejectItem('Approved')" >
-               <span *ngIf="selectedRows.length !=0" pTooltip="Approve" tooltipPosition="top">
+              <div class="env-btn credential-btntool">
+                <button
+                  [disabled]="selectedRows.length == 0"
+                  pTooltip="Approve"
+                  tooltipPosition="top"
+                  (click)="onApproveRejectItem('Approved')"
+                >
+                  <!-- <span *ngIf="selectedRows.length !=0" pTooltip="Approve" tooltipPosition="top">
                   <img src="../../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
                   <img src="../../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
                </span>
                <span *ngIf="selectedRows.length == 0" class="disbtn">
                   <img src="../../../../assets/images-n/gridicons/approve-disabled.svg" class="testplus" alt=""/>
-               </span>  
-            </button>
-         </div>
-         <div class="env-btn credential-btntool">
-            <button (click)="onApproveRejectItem('Rejected')">
-               <span *ngIf="selectedRows.length !=0" pTooltip="Reject"  tooltipPosition="top">
+               </span>   -->
+                  <i
+                    [class]="
+                      selectedRows.length != 0
+                        ? 'pi pi-check text-primary'
+                        : 'pi pi-check'
+                    "
+                  ></i>
+                </button>
+              </div>
+              <div class="env-btn credential-btntool">
+                <button
+                  [disabled]="selectedRows.length == 0"
+                  pTooltip="Reject"
+                  tooltipPosition="top"
+                  (click)="onApproveRejectItem('Rejected')"
+                >
+                  <!-- <span *ngIf="selectedRows.length !=0" pTooltip="Reject"  tooltipPosition="top">
                   <img src="../../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
                   <img src="../../../../assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
                </span>
                <span *ngIf="selectedRows.length == 0" class="disbtn">
                   <img src="../../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
-               </span> 
+               </span>  -->
+                  <i
+                    [class]="
+                      selectedRows.length != 0
+                        ? 'pi pi-times text-primary'
+                        : 'pi pi-times'
+                    "
+                  ></i>
+                </button>
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 con-envr p-0">
+            <div class="credential-tablegrid">
+              <app-dynamic-table
+                [columns_list]="columns_list"
+                [table_data]="approvalsList"
+                [screenTable]="'aprovalList'"
+                [dataKeyId]="'id'"
+                [search_fields]="table_searchFields"
+                [show_approve_btn]="false"
+                [show_reject_btn]="false"
+                [show_search_field]="true"
+                [show_column_filter]="true"
+                [show_clear_filter]="true"
+                (approvedItem)="onApproveItem($event, 'Approved')"
+                (rejectItem)="onApproveItem($event, 'Rejected')"
+                (viewApprovalInfo)="showApprovalInfo($event)"
+                [checkBoxShow]="true"
+                (selectedData)="readSelectedData($event)"
+              >
+              </app-dynamic-table>
+            </div>
+          </div>
+        </div>
+
+        <p-dialog
+          header="Add Comments"
+          class="createdashboardname"
+          [(visible)]="isDialogShow"
+          [modal]="true"
+          [baseZIndex]="10000"
+          [style]="{ width: '30vw' }"
+          [draggable]="false"
+          [resizable]="false"
+        >
+          <div class="form-group">
+            <label for="" class="label-control">
+              Comments
+              <!-- <span class="star">*</span> -->
+            </label>
+            <textarea
+              class="form-control"
+              placeholder="Enter Comments"
+              [(ngModel)]="comments"
+            ></textarea>
+            <!-- <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50" /> -->
+          </div>
+          <ng-template pTemplate="footer">
+            <button class="btn new-cancelbtn">Cancel</button>
+            <button
+              [disabled]="comments == ''"
+              (click)="updateApprovalStatus()"
+              class="btn bluebg-button"
+            >
+              Update
             </button>
-         </div>
+          </ng-template>
+        </p-dialog>
+
+        <p-dialog
+          header="Approval Info"
+          class="createdashboardname"
+          [(visible)]="isApprovalInfoShow"
+          [modal]="true"
+          [baseZIndex]="10000"
+          [style]="{ width: '30vw' }"
+          [draggable]="false"
+          [resizable]="false"
+        >
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              [style]="{ height: '200px' }"
+              placeholder="Enter Comments"
+              [disabled]="true"
+              [(ngModel)]="approvalInfo"
+            ></textarea>
+          </div>
+        </p-dialog>
       </div>
-   </div>
-   <div class="col-md-12 con-envr p-0">
-      <div class="credential-tablegrid">
-         <app-dynamic-table [columns_list]="columns_list" [table_data]="approvalsList" [screenTable]="'aprovalList'"
-            [dataKeyId]="'id'" [search_fields]="table_searchFields" [show_approve_btn]="false" [show_reject_btn]="false"
-            [show_search_field]="true" [show_column_filter]="true" [show_clear_filter]="true"
-            (approvedItem)="onApproveItem($event,'Approved')" (rejectItem)="onApproveItem($event, 'Rejected')"
-            [checkBoxShow]="true" (selectedData)="readSelectedData($event)">
-         </app-dynamic-table>
-      </div>
-   </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-
-<p-dialog header="Add Comments" class="createdashboardname" [(visible)]="isDialogShow" [modal]="true"
-   [baseZIndex]="10000" [style]="{width: '30vw'}" [draggable]="false" [resizable]="false">
-   <div class="form-group">
-      <label for="" class="label-control"> Comments
-         <!-- <span class="star">*</span> -->
-      </label>
-      <textarea class="form-control" placeholder="Enter Comments" [(ngModel)]="comments"></textarea>
-      <!-- <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50" /> -->
-   </div>
-   <ng-template pTemplate="footer">
-      <button class="btn new-cancelbtn">Cancel</button>
-      <button [disabled]="comments==''" (click)="updateApprovalStatus()" class="btn bluebg-button">Update</button>
-   </ng-template>
-</p-dialog>
