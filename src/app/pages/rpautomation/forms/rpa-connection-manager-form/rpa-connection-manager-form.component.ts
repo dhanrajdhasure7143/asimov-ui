@@ -56,7 +56,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   action_icon : any;
   isIconSize: boolean;
   isaddTo:boolean = false;
-  isEndpoint:boolean = false;
   isKeyValue:boolean = false;
   isKeyValueTab:boolean =false;
   requestParams:any =[];
@@ -131,6 +130,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.getActionById();
       this.getIconbyId();
     }
+    this.connectorForm.get('endPoint').disable();
   }
 
   saveAction() {
@@ -155,7 +155,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         task_type: "AUTHENTICATION",
-        task_subtype: "OAUTH2"
+        task_subtype: "OAUTH2",
+        outputReference: "[@Output Reference|string|@]"
         // "actionType": this.connectorForm.value.actionType,
       };
       if (this.connectorForm.value.authType == "OAUTH2") {
@@ -234,6 +235,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "type": "API",
         "task_type": "ACTION",
         "task_subtype": "API",
+        "inputReference": "[@Input Reference|string|@]",
+        "outputReference": "[@Output Reference|string|@]",
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       }
@@ -384,8 +387,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isRequest = false;
       this.isHeader = false
       this.isResponse = false;
-      this.isEndpoint = false;
       this.connectorForm.get('methodType').setValue("POST");
+      this.connectorForm.get('endPoint').disable();
       this.isDisabled.methodType=true;
       const setValidators: string[] = ['authType', 'grantType'];
       Object.keys(this.connectorForm.controls).forEach(key => {
@@ -397,6 +400,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     else if (event == "APIRequest") {
       this.connectorForm.get('methodType').setValue("");
+      this.connectorForm.get('endPoint').enable();
       this.isDisabled.methodType=false;
       this.isRequest = true;
       this.isHeader = true;
@@ -412,7 +416,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isKeyValueTab = false;
       this.isKeyValue = false;
       this.isaddTo = false;
-      this.isEndpoint = true;
       const setValidators: string[] = ['endPoint'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
@@ -443,8 +446,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isRefreshToken = false;
       this.isaddTo = false;
       this.isKeyValue = false;
-      this.isEndpoint = true;
       this.isKeyValueTab = false;
+      this.connectorForm.get('endPoint').enable();
       const setValidators: string[] = ['endPoint', 'grantType'];
       const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
       Object.keys(this.connectorForm.controls).forEach(key => {
@@ -466,7 +469,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     } else if(event == "API_KEY"){
       this.isaddTo = true;
       this.isKeyValue = true;
-      this.isEndpoint = false;
       this.isKeyValueTab = true;
     
       this.isAuthenticated = false;
@@ -477,6 +479,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isVerifier = false;
       this.isScopeField = false;
       this.isRefreshToken = false;
+      this.connectorForm.get('endPoint').disable();
       const setValidators: string[] = ['requestKey', 'requestValue', 'addTo'];
       const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
       Object.keys(this.connectorForm.controls).forEach(key => {
@@ -687,7 +690,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isAuthorization = false;
         this.isRefreshToken = false;
         this.isScopeField = false;
-        this.isEndpoint = true;
+        this.connectorForm.get('endPoint').enable();
       }
 
       if (this.actionData["actionType"] == "Authenticated") {
@@ -711,7 +714,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
       if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
         this.isAuthenticated = true;
-        this.isEndpoint = true;
+        this.connectorForm.get('endPoint').enable();
         const setValidators: string[] = ['grantType'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
@@ -723,6 +726,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           this.isaddTo = true;
           this.isKeyValue = true;
           this.isKeyValueTab =true;
+          this.connectorForm.get('endPoint').disable();
           const setValidators: string[] = ['requestKey', 'requestValue', 'addTo'];
           const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
           Object.keys(this.connectorForm.controls).forEach(key => {
@@ -964,7 +968,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         task_type:"AUTHENTICATION",
-        task_subtype:"OAUTH2"
+        task_subtype:"OAUTH2",
+        outputReference: "[@Output Reference|string|@]",
         // "actionType": this.connectorForm.value.actionType,
       };
       if(this.connectorForm.value.authType == "OAUTH2"){
@@ -1039,6 +1044,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "type":"API",
         "task_type":"ACTION",
         "task_subtype":"API",
+        "inputReference": "[@Input Reference|string|@]",
+        "outputReference": "[@Output Reference|string|@]",
         // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       };
