@@ -720,7 +720,7 @@ button{
     border-radius: 13px;
     width: 70%;
   }
-  .upload-btn-wrapper {
+  /* .upload-btn-wrapper {
     position: relative;
     overflow: hidden;
     display: inline-block;
@@ -731,7 +731,7 @@ button{
     left: 0;
     top: 0;
     opacity: 0;
-  }
+  } */
   .diagram-container {
     height: 1200px;
   }
