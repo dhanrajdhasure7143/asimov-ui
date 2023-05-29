@@ -128,10 +128,11 @@ export class MyaccountComponent implements OnInit {
       if (this.countryInfo[i].CountryName == countryValue) {
         this.phnCountryCode = this.countryInfo[i].CountryCode;
         this.stateInfo = this.countryInfo[i].States;
+        this.errorMessage=''
       }
-      else{
-        this.errorMessage =""
-      }
+      // else{
+      //   this.errorMessage =""
+      // }
     }
   }
   onChangeState(stateValue) {
@@ -165,8 +166,8 @@ export class MyaccountComponent implements OnInit {
     if(event.name !=this.formOne.country){
       this.errorMessage="Please Select Appropriate Country *"
     }
-   if(event.iso2 ==this.phnCountryCode){
-      this.errorMessage =""
-    }
+  //  if(event.iso2 ==this.phnCountryCode){
+  //     this.errorMessage =""
+  //   }
 }
 }
