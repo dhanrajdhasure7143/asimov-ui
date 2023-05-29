@@ -2849,6 +2849,19 @@ span.tabscount {
 .paramstab .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 2px 16px 0px !important;
 }
+.paramstab .p-tabview .p-tabview-panels {
+  padding: 0px !important;
+}
+.actionlogoblck .input-group {
+  display: block !important;
+  /* align-items: center !important; */
+}
+.actionlogoblck  .input-group>.form-control {
+  width: 100% !important;
+  /* width: 60% !important;
+  flex: inherit !important;
+  margin-right: 10px; */
+}
 /* connection manager params tab styles*/
 
 /* Tabs NEW Styles End */
@@ -2937,10 +2950,10 @@ span.statusbadge_nc {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px);   /* for action items - connection manager grid */
 }
-.actionitems-grid .p-datatable-wrapper td span {   /* for action items - connection manager grid */
-  /* width: 165px;       
+.actionitems-grid .p-datatable-wrapper td:nth-child(3) span {   /* for action items - connection manager grid */
+  width: 250px;       
   display: block;
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis; */
 }
 .usersgrid .p-datatable-wrapper {
@@ -3029,8 +3042,9 @@ tbody tr {
 }
 .p-datatable .p-datatable-tbody > tr > td,
 tbody tr td {
-  border-bottom: 1px solid #E0E0E0 !important;
   padding: 8px 10px !important;
+  border: none !important;
+  border-bottom: 1px solid #e0e0e0 !important;
 }
 /* for arrow / checkbox columns header */
 th.arrowcol {   
