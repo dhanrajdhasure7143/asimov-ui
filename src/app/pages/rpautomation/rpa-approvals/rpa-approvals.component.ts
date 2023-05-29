@@ -67,6 +67,7 @@ export class RpaApprovalsComponent implements OnInit {
           else
             item["approverConvertedName"]=item.approverName.split("@")[0];
           item["createdBy"]=this.dt.get_username_by_email(this.users_list,item.createdBy);
+          item["modifiedBy"]=this.dt.get_username_by_email(this.users_list,item.modifiedBy);
           return item;
         });
       }
@@ -87,7 +88,7 @@ export class RpaApprovalsComponent implements OnInit {
     }
     if(data.status=="Completed")
     {
-      Swal.fire("Warning","Status updating not allowed for completed approvals", "warning")
+      Swal.fire("Warning","Status updation not allowed for completed approvals", "warning")
       return;
     }
     this.statusType=status;
@@ -137,6 +138,7 @@ export class RpaApprovalsComponent implements OnInit {
     if(this.selectedRows.filter((item:any)=>item.status==statusType).length>0)
     {
       Swal.fire("Warning","In Selected approvals "+this.selectedRows.filter((item:any)=>item.status==statusType).length+" records are already "+statusType, "warning")
+      return;
     }
     (this.selectedRows.filter((item:any)=>item.status=='Completed').length>0)?Swal.fire("Warning", "Status will not update for completed approvals","warning"):this.isDialogShow=true;
   
