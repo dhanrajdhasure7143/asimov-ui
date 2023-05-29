@@ -1813,5 +1813,7 @@ updateApprovalList(data:any[])
 {
   return this.http.post(`/rpa-service/update-approval-status`, data);
 }
-
+checkConnectionName(connectorName){
+  return this.http.get(`/rpa-service/connection/validate/${connectorName}`)
+}
 }
