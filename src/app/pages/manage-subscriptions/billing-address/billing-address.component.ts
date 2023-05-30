@@ -26,6 +26,12 @@ export class BillingAddressComponent implements OnInit {
   billingContactData: any;
   selectedCountry: any;
   states: any;
+  phnCountryCode: any;
+  isInput: boolean = false;
+  optionValue: any;
+  errorMessage: string;
+  errorMessage1: string;
+  errorMessage2: string;
   constructor(
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
@@ -87,11 +93,14 @@ export class BillingAddressComponent implements OnInit {
   }
 
   onChangeCountry(countryValue) {
+    this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
     this.cityInfo = [];
     const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
     if (matchingCountry) {
       this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
+      this.phnCountryCode = matchingCountry.isoCode;
+      this.errorMessage='';
     }
   }
 
@@ -100,9 +109,15 @@ export class BillingAddressComponent implements OnInit {
     const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
     if (matchingState) {
       this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+      this.errorMessage1='';
     }
     if (this.cityInfo.length === 0) {
       this.cityInfo = [{ name: 'NA' }];
+    }
+  }
+  onChangeCity(cityValue){
+    if(cityValue){
+      this.errorMessage2 ='';
     }
   }
 
@@ -217,5 +232,12 @@ export class BillingAddressComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+  OnFlagChange(event){
+    if(event.name !=this.optionValue){
+      this.errorMessage="Please Select Appropriate Country *";
+      this.errorMessage1="Please Select Appropriate State *";
+      this.errorMessage2="Please Select Appropriate City *";
+    }
   }
 }
