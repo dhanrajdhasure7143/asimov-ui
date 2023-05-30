@@ -42,15 +42,15 @@
   <div class="modal-body newmodelbodycl">
     <div class="logs-container" >
         <div *ngIf="!logsLoading" class="main-content-body rpalogsgrid"> 
-          <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll"
+          <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="false" responsiveLayout="scroll"
               [reorderableColumns]="true" [scrollable]="true">
               <ng-template pTemplate="header">
                   <tr>
                       <th *ngFor="let each of columnList" [style]="each.width" pSortableColumn="{{each.ColumnName}}"
-                          pReorderableColumn pResizableColumn>{{each.DisplayName}}
-                          <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" [showAddButton]="false" [showOperator]="false"
+                          pReorderableColumn pResizableColumn>{{each.DisplayName}}<p-sortIcon [field]="each.ColumnName"></p-sortIcon>
+                          <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" [showAddButton]="false" [showOperator]="true"
                               matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName" display="menu"
-                              [showApplyButton]="false">
+                              [showApplyButton]="true">
                               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                   <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
                                       class="p-inputtext" placeholder="Search">
@@ -70,8 +70,13 @@
                         <span *ngIf="col.ColumnName=='run_id'">
                           <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
-                        <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name'">
+                        <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
                           {{logs[col.ColumnName]}}
+                        </span>
+                        <span *ngIf="col.ColumnName=='error_info'">
+                          <span *ngIf="logs[col.ColumnName]!=null && logs[col.ColumnName] != ''"   [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
+                            {{logs[col.ColumnName] | slice :0 : 10}}...
+                          </span>
                         </span>
                         <span *ngIf="col.ColumnName=='bot_status'" class="d-flex align-items-center">
                           <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span> {{logs[col.ColumnName]}}
