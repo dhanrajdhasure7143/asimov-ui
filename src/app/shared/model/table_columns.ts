@@ -197,7 +197,9 @@ export class columnList{
         {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 20rem"},
+        {ColumnName:"modfiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName:"modifiedBy",DisplayName:"Modified By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 18rem"},
         {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
         {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
       ];
