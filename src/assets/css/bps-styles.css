@@ -415,13 +415,10 @@ mat-expansion-panel {
 
 .upload_again_btn {
   display: inline !important;
-  margin: 0 !important;
+  margin-left: 10px !important;
   height: auto !important;
 }
 
-.upload_again_btn ngx-dropzone-label {
-  margin: 0 !important;
-}
 /*
 .kpis-and-submit-button-div {
   bottom: 0;
@@ -526,6 +523,9 @@ mat-expansion-panel {
     position: absolute;
     width: max-content;
     z-index: 1;
+    outline: none;
+    border: none;
+    background: transparent;
 }
 
 .create-logo {

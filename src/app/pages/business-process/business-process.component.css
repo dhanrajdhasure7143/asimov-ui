@@ -1,7 +1,3 @@
-.main-content-head .btn {
-    min-width: auto;
-    /* padding-right: 0px !important; */
-}
 .module-heading-buttons .btn img {
     width: 20px;
     height: 20px;
@@ -47,9 +43,12 @@
     position: relative;
     z-index: 3;
     border-radius: 3px;
+    outline: none;
+    border: none;
+    background: transparent;
 }
 .bps-upload {
-    margin: 0px 0px 0px 10px !important;
+    margin: 0px !important;
     border-radius: 3px;
     background-color: #098de6 !important;
     padding: 8px 12px !important;
@@ -80,9 +79,7 @@ span.label_icon.inpro-label {
     border-radius: 3px;
     margin-left: 8px;
 }
-.upload_again_btn {
-    background-color: #f3f3f3 !important;
-}
+
 .bps-float button:hover, button.editprimary:disabled {
     background-color: #098de6 !important;
 }
