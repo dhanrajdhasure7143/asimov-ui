@@ -1089,7 +1089,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="processName">Process Name<span class="star">*</span></label>
                         <input type="text" class="form-control data" maxlength="50" formControlName="processName" #processName value="" placeholder="Enter Process Name">
-                        <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
+                        <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">Process Name Required</span>
                         <div *ngIf="insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
                         </div>
@@ -1098,7 +1098,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="processName">Process Owner<span class="star">*</span></label>
                         <input type="text" class="form-control data" formControlName="processOwner" #processName value="" placeholder="Enter Process Owner">
-                        <span *ngIf="(insertslaForm_so_bot.get('processOwner').invalid && insertslaForm_so_bot.get('processOwner').touched) && !insertslaForm_so_bot.controls['processOwner'].hasError('maxlength')" class="errspan required">Required Process Owner*</span>
+                        <span *ngIf="(insertslaForm_so_bot.get('processOwner').invalid && insertslaForm_so_bot.get('processOwner').touched) && !insertslaForm_so_bot.controls['processOwner'].hasError('maxlength')" class="errspan required">Process Owner Required</span>
                         <div *ngIf="insertslaForm_so_bot.controls['processOwner'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
                         </div>
@@ -1106,8 +1106,8 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
-                        <input type="text" class="form-control data" maxlength="50" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
-                        <span *ngIf="(insertslaForm_so_bot.get('taskName').invalid && insertslaForm_so_bot.get('taskName').touched) && !insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
+                        <input type="text" class="form-control data" maxlength="50" formControlName="taskName" #processName value="" placeholder="Enter Task Name">
+                        <span *ngIf="(insertslaForm_so_bot.get('taskName').invalid && insertslaForm_so_bot.get('taskName').touched) && !insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">Task Name Required</span>
                         <div *ngIf="insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
                         </div>
@@ -1115,7 +1115,7 @@
                     <!-- <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
                 <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
-                <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">Required Bot Name*</span>
+                <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">Bot Name Required</span>
                 <div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">
                     Maximum of 50 characters
                 </div>
@@ -1123,7 +1123,7 @@
                     <!-- <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="botSource">Bot Source<span class="star">*</span></label>
                 <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
-                <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Required Bot Source*</span>
+                <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Bot Source Required</span>
                 <div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">
                     Maximum of 50 characters
                 </div>
@@ -1131,7 +1131,7 @@
                     <!-- <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
-                <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
+                <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Task Owner Required</span>
                 <div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
                     Maximum of 50 characters
                 </div>
@@ -1143,7 +1143,7 @@
               </label>
                         <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
                         <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
-              <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">Required SLA Configuration*</span> -->
+              <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">SLA Configuration Required</span> -->
                         <!--<div *ngIf="insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" class="errspan required">
                 Maximum of 2 characters
               </div>  -->
@@ -1154,13 +1154,13 @@
                 <!-- <span class="star">*</span> -->
               </label>
                         <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
-                        <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" class="errspan required">Required Threshold Limit*</span>
+                        <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" class="errspan required">Required Threshold Limit</span>
                     </div>
 
                     <div class="col-md-6 pl-0 form-group">
                         <label class="label-control" for="totalRetries">Total Retries</label>
                         <input type="number" style="width:100px" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries" value="" placeholder="0">
-                        <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
+                        <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">Breach Actual Alert Required</span>
               <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">
                   Maximum of 50 characters
               </div>-->
@@ -1169,7 +1169,7 @@
                     <div class="col-md-6 pr-0 form-group">
                         <label class="label-control" for="retriesInterval">Retry Interval</label>
                         <input type="number" maxlength="2" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval" value="" placeholder="00">
-                        <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> -->
+                        <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Retries Interval Required</span> -->
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
@@ -1195,7 +1195,7 @@
                         <option value="Warning">Warning</option>
                         <option value="All">All</option>
                       </select>
-                    <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span> -->
+                    <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Breach Actual Alert Required</span> -->
                         <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
                         Maximum of 50 characters
                     </div>-->
@@ -1228,7 +1228,7 @@
             <div class="col-md-12 p-0 form-group" *ngIf="cascadingImpactbtn == true">
               <label for="systemImpacted">System Impacted</label>
               <input type="text" maxlength="51" class="form-control data" formControlName="systemImpacted" #systemImpacted value="" placeholder="Enter system Impacted">
-              <span *ngIf="insertslaForm_so_bot.get('systemImpacted').invalid && insertslaForm_so_bot.get('systemImpacted').touched" class="errspan required">Required System Impacted*</span>
+              <span *ngIf="insertslaForm_so_bot.get('systemImpacted').invalid && insertslaForm_so_bot.get('systemImpacted').touched" class="errspan required">System Impacted Required</span>
             </div>
 
             </div>-->

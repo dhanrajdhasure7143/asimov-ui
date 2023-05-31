@@ -35,7 +35,7 @@
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
                         [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="name"></p-dropdown>
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
-                        class="required">Country  Required *</span>
+                        class="required">Country  Required</span>
                     <span class="required">{{errorMessage}}</span>
             </div>
             <div class="form-group col-md-3 pr-0">
@@ -45,7 +45,7 @@
                     (onChange)="onChangeState($event.value)">
                 </p-dropdown>
                 <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
-                    class="required">State Required *</span>
+                    class="required">State Required</span>
                 <span class="required">{{errorMessage1}}</span>
             </div>
             <div class="form-group col-md-3 pr-0">
@@ -56,7 +56,7 @@
                     </p-dropdown>
                 </span>
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
-                class="required">City Required *</span>
+                class="required">City Required</span>
                 <span class="required">{{errorMessage2}}</span>
             </div>
             <div class="form-group col-md-3 pl-0">
@@ -82,10 +82,10 @@
                 <span
                      *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
                         !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
-                    class="required">Phone Number Required *</span>
+                    class="required">Phone Number Required</span>
                 <span
                      *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
-                    class="required">Phone number should be 10 digits *</span>
+                    class="required">Phone number should be 10 digits</span>
             </div>
             <div *ngIf="isInput" class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
@@ -96,19 +96,19 @@
                 <span
                      *ngIf="billingForm.get('phoneNumber').invalid && billingForm.get('phoneNumber').touched &&
                         !billingForm.controls['phoneNumber'].hasError('pattern') && !billingForm.controls['phoneNumber'].hasError('maxlength')"
-                    class="required">Phone Number Required *</span>
+                    class="required">Phone Number Required</span>
                 <span
                      *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
-                    class="required">Phone number should be 10 digits *</span>
+                    class="required">Phone number should be 10 digits</span>
             </div>
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control" for="approvers">Email<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
                 <span
                     *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
-                    class="required">Email Required *</span>
+                    class="required">Email Required</span>
                 <span *ngIf="billingForm.controls['email'].hasError('pattern')" class="required">Enter Correct Email
-                    Address *</span>
+                    Address</span>
 
             </div>
             <div class="form-group col-md-6 pl-0">
