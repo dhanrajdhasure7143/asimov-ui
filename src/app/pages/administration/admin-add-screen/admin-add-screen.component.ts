@@ -91,7 +91,7 @@ export class AdminAddScreenComponent implements OnInit {
       insights: [""],
       //  Role: ["", Validators.compose([Validators.required])],
       formType: [""],
-      screenType: ["", Validators.compose([Validators.required])],
+      // screenType: ["", Validators.compose([Validators.required])],
     });
 
     this.getListofTables();
