@@ -39,7 +39,7 @@
                                     <label class="label-control" for="programname"> Action Name
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="51" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" maxlength="51" pInputText [style]="{'width':'100%'}" value="" (input)="checkActionName()"
                                         formControlName="actionName"
                                         [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
                                         placeholder="Enter Action Name">
@@ -52,6 +52,9 @@
                                     </span>
                                     <span *ngIf="connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')" class="required">
                                         Only space between words are allowed & Numbers are not allowed.
+                                    </span>
+                                    <span *ngIf="actionNameCheck && connectorForm.get('actionName').value && !connectorForm.get('actionName').hasError('pattern')" class="required">
+                                        Action name already exists*
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0">
@@ -466,9 +469,9 @@
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue">Test</button>
-                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
                 </div>

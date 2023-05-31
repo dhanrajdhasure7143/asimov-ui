@@ -60,6 +60,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isKeyValueTab:boolean =false;
   requestParams:any =[];
   payload: any = [];
+  actionNameCheck:boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -1212,6 +1213,18 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     console.log("testingFalse")
   }
  }
+}
+
+checkActionName(){
+  let connectorId = this.selectedId;
+  let actionName =this.connectorForm.get("actionName").value;
+  this.rest_api.checkActionName(connectorId,actionName).subscribe((data) => {
+    if(data == false){
+      this.actionNameCheck = true;
+    }else{
+      this.actionNameCheck = false;
+    }
+  });
 }
 
 }

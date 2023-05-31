@@ -1816,4 +1816,7 @@ updateApprovalList(data:any[])
 checkConnectionName(connectorName){
   return this.http.get(`/rpa-service/connection/validate/${connectorName}`)
 }
+checkActionName(connectorId:any, actionName:any) {
+  return this.http.get(`/rpa-service/action/validate/${connectorId}/${actionName}`);
+}
 }

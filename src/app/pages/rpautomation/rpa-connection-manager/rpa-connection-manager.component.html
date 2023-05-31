@@ -52,10 +52,10 @@
                                 <span *ngIf="createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Maximum of 50 characters
                                 </span>
-                                <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength') && !connectionNameCheck" class="required">
+                                <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Only space between words are allowed & Numbers are not allowed.
                                 </span>
-                                <span *ngIf="connectionNameCheck && createConnectorForm.get('name').value " class="required">
+                                <span *ngIf="connectionNameCheck && createConnectorForm.get('name').value && !createConnectorForm.get('name').hasError('pattern')" class="required">
                                     Connection Name already exists*
                                 </span>
                             </div> 
