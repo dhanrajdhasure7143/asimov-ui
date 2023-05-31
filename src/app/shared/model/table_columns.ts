@@ -86,12 +86,12 @@ export class columnList{
       // connection manager actions table
       public actionItemsList_column= [
         {ColumnName: "name", DisplayName: "Action Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
-        {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["Authenticated","APIRequest"]},
-        {ColumnName: "authenticationType", DisplayName: "Authentication Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["OAUTH2","API_KEY","BASIC","OAUTH","NONE"]},
+        {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["Authenticated","APIRequest"],width:"flex: 0 0 12rem"},
+        // {ColumnName: "authenticationType", DisplayName: "Authentication Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["OAUTH2","API_KEY","BASIC","OAUTH","NONE"]},
         {ColumnName: "endPoint", DisplayName: "URL/Root Domain", ShowFilter: true, ShowGrid: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
-        {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["GET","POST","PUT","DELETE"],width:"flex: 0 0 8rem"},
+        {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["GET","POST","PUT","DELETE"],width:"flex: 0 0 10rem"},
         {ColumnName: "actionLogo", DisplayName: "Action Logo", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: false, multi: false,width:"flex: 0 0 6rem"},
-        {ColumnName: "action", DisplayName: "Actions", ShowGrid: true, ShowFilter: false, sort: false, multi: false,},
+        {ColumnName: "action", DisplayName: "Actions", ShowGrid: true, ShowFilter: false, sort: false, multi: false,width:"flex: 0 0 10rem"},
       ];
     
       public emailList_column = [
@@ -197,7 +197,7 @@ export class columnList{
         {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"modifiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName:"modfiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"modifiedBy",DisplayName:"Modified By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 18rem"},
         {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
