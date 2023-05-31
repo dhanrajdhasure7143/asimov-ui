@@ -109,8 +109,8 @@
                                             <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                         </span> -->
                                         <span *ngIf="screenTable == 'taskList'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
-                                        <span *ngIf="screenTable != 'taskList' && col.ColumnName !='changeActivity' && col.ColumnName !='deploy_status_new'">
-                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName])" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
+                                        <span *ngIf="screenTable != 'taskList' && col.ColumnName !='changeActivity' && col.ColumnName !='deploy_status_new' && col.ColumnName!='approvalInfo'">
+                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
                                             {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
                                         </span>
                                         <span *ngIf="screenTable == 'environment_table' && col.ColumnName =='deploy_status_new'">
@@ -136,11 +136,24 @@
                                                 <b>V{{rowData.newValue | number :'1.1-1'}}</b>
                                             </span>
                                         </span>
+                                        <span *ngIf="screenTable == 'aprovalList' && col.ColumnName=='approvalInfo' ">
+                                            <span *ngIf="rowData[col.ColumnName]!=''">
+                                                <span *ngIf="rowData[col.ColumnName].length>20">
+                                                    {{(rowData[col.ColumnName] | slice : 0: 20)}}...&nbsp;<a (click)="getApprovalInfo(rowData)" class="text-primary clickable">View More</a>
+                                                </span>
+                                                <span  *ngIf="rowData[col.ColumnName].length<=20">
+                                                    {{rowData[col.ColumnName]}}
+                                                </span>
+                                            </span>                                 
+                                            <span *ngIf="rowData[col.ColumnName].length==''">
+                                                -
+                                            </span>
+                                        </span>
                                     </span>
                                 </span>
                             </div>
                     </span>
-                    
+                   
                     <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100">
                         <div class="newinntalx">
                         <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
@@ -265,13 +278,17 @@
                             </span> -->
                             <span *ngIf="screenTable =='aprovalList'">
                                 <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
-                                    <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+                                    <!-- <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                    <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/> -->
+                                    <i class="pi pi-check text-success  approveOrReject"></i>
                                   </button>
+                                  &nbsp;
                                   <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
-                                        <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
-                                        <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/>
-                                  </button>
+                                        <!-- <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                                        <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/> -->
+                                        <i class="pi pi-times text-danger   approveOrReject"></i>
+                                  
+                                    </button>
                             </span>
                     </span>
                     <span *ngIf="screenTable=='projectList'">

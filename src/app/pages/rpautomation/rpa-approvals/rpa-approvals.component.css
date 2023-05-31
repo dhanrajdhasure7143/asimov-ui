@@ -1,7 +1,7 @@
 .row.credential-search-tools {
   width: auto;
   position: absolute;
-  right: 295px;
+  right: 342px;
   z-index: 2;
 }
 .env-btn>button:disabled {
@@ -12,11 +12,11 @@
   position: relative;
 }
 .credential-btntool img.testplus {
-  cursor: unset;
   margin: 0px;
+  height: 14px;
 }
-.disbtn {
-  cursor: no-drop;
+.disbtn img {
+  cursor: no-drop !important;
 }
 .credential-btntool button:hover .default-icon,
 .hover-icon {
@@ -67,4 +67,9 @@ button:hover img.testplus.hover-img {
 
 .deactive-btn{
    color: lightgrey !important;
+}
+
+
+.display-approval-info{
+  height:300px !important
 }

@@ -33,7 +33,7 @@
         </button> -->
       </div>
     </div>
-    <div class="main-content-body tablist-cont  table-height-adj">
+    <div class="main-content-body  table-height-adj">
       <div class="tabs_screen h-100">
       
        
@@ -50,6 +50,8 @@
             [show_search_field]="true"
             [search_fields]="table_searchFields"
             [show_clear_filter]="true"
+            [show_view_btn]="true"
+            (viewItem)="viewDetails($event)" 
           ></app-dynamic-table>
           </div>
      

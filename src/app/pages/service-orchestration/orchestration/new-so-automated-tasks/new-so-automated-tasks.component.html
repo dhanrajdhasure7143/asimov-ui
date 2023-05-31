@@ -55,27 +55,27 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
-                <button (click)="addtasks(addTask)" class="tsttooltipbtn" pTooltip="Add Task" tooltipPosition="top">
+                <button (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
                     <!-- <img src="../../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt=""/>
                     <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/> -->
                     <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
                 </button>
-                <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" pTooltip="Reset" tooltipPosition="top">
+                <button (click)="reset_all()" id="autoreset"  pTooltip="Reset" tooltipPosition="top">
                     <!-- <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="">
                     <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt=""> -->
                     <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
                 </button>
-                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
+                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess"  (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
                     <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
                     <!-- <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span> -->
                 </button>
-                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" 
+                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess"  
                     (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
                     <!-- <img src="../../../../../assets/images-n/gridicons/startbot-default.svg" alt="" class="testplus default-icon">
                     <img src="../../../../../assets/images-n/gridicons/startbot-hover.svg" alt="" class="testplus hover-icon"> -->
                     <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
                 </button>
-                <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+                <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess"  (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
       <span class="testtooltip">Run Process</span>
     </button> -->
@@ -84,22 +84,22 @@
       </span>
       -->
 
-                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
+                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" >
                   <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
                 
                 </button>
-                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" 
+                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler"  
                     (click)="startscheduler()" pTooltip="Open Scheduler" tooltipPosition="top">
                  <!-- <img src="../../../../../assets/images-n/gridicons/schedule-default.svg" alt="" class="testplus default-icon">
                  <img src="../../../../../assets/images-n/gridicons/schedule-hover.svg" alt="" class="testplus hover-icon"> -->
                  <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
                 </button>
 
-    <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
+    <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" >
       <img src="../../../../../assets/images/file.svg" alt="" class="testplus"> 
     </button>
 
-    <button *ngIf="selectedvalue!=''" id="autoViewLogs" class="tsttooltipbtn" (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
+    <button *ngIf="selectedvalue!=''" id="autoViewLogs"  (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
         <!-- <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus default-icon">
         <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus hover-icon"> -->
         <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">

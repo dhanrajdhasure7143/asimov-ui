@@ -97,7 +97,7 @@
                                                 <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
-                                                <p-dropdown [options]="users_list" [filter]="true"
+                                                <p-dropdown [options]="users_List1" [filter]="true"
                                                     [style]="{'width':'100%'}" filterBy="user_email,fullName" required
                                                     [autoDisplayFirst]="false" placeholder="Select Assignee"
                                                     [(ngModel)]="processOwner" optionValue="user_email"
@@ -373,7 +373,7 @@
                         <div>
                             <h4 class="colheads chatheader">Collaborations</h4>
                         </div>
-                        <div class="row collab">
+                        <div class="collab">
                            
                             <span>
                                 <div class="pinnedmsgs selectable" *ngIf="_pinnedMessage.length > 0">

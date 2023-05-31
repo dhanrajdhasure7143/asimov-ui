@@ -22,6 +22,8 @@ export class RpaApprovalsComponent implements OnInit {
   updateData:any={};
   selectedRows:any=[];
   statusType:String="";
+  isApprovalInfoShow:boolean=false;
+  approvalInfo:String="";
   constructor(
     private rest:RestApiService,
     private columnList: columnList,
@@ -65,6 +67,7 @@ export class RpaApprovalsComponent implements OnInit {
           else
             item["approverConvertedName"]=item.approverName.split("@")[0];
           item["createdBy"]=this.dt.get_username_by_email(this.users_list,item.createdBy);
+          item["modifiedBy"]=this.dt.get_username_by_email(this.users_list,item.modifiedBy);
           return item;
         });
       }
@@ -77,6 +80,17 @@ export class RpaApprovalsComponent implements OnInit {
 
 
   onApproveItem(data:any, status:string){
+    
+    if(data.status==status)
+    {
+      Swal.fire("Warning","This is already "+status, "warning")
+      return;
+    }
+    if(data.status=="Completed")
+    {
+      Swal.fire("Warning","Status updation not allowed for completed approvals", "warning")
+      return;
+    }
     this.statusType=status;
     this.selectedRows=[data];
     this.isDialogShow=true;
@@ -97,6 +111,7 @@ export class RpaApprovalsComponent implements OnInit {
       obj["id"]=item.id;
       obj["approverName"]=item.approverName;
       obj["comments"]=this.comments;
+      obj["modifiedBy"]=localStorage.getItem("ProfileuserId");
       obj["status"]=this.statusType;
       data.push(obj);
     });
@@ -118,8 +133,23 @@ export class RpaApprovalsComponent implements OnInit {
   }
 
   onApproveRejectItem(statusType){
+    
+    
+    if(this.selectedRows.filter((item:any)=>item.status==statusType).length>0)
+    {
+      Swal.fire("Warning","In Selected approvals "+this.selectedRows.filter((item:any)=>item.status==statusType).length+" records are already "+statusType, "warning")
+      return;
+    }
+    (this.selectedRows.filter((item:any)=>item.status=='Completed').length>0)?Swal.fire("Warning", "Status will not update for completed approvals","warning"):this.isDialogShow=true;
+  
     this.statusType=statusType;
-    this.isDialogShow=true;
+
+  }
+
+  showApprovalInfo(data:any)
+  {
+    this.approvalInfo=data.approvalInfo;
+    this.isApprovalInfoShow=true;
   }
 
 
