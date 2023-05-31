@@ -97,7 +97,7 @@
                     <option value="In Review">In Review</option>
                     <option value="Done">Done</option>
                   </select>
-                        <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
+                        <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required</span>
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label id="priority" class="label-control" for="priority">Priority<span class="star">*</span></label>
@@ -107,7 +107,7 @@
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
                   </select>
-                        <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
+                        <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required</span>
                     </div>
 
                     <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design' ||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">

@@ -57,7 +57,7 @@
                                         placeholder="Enter Action Name">
                                     <span
                                         *ngIf="connectorForm.get('actionName').invalid && connectorForm.get('actionName').touched && !connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')"
-                                        class="required"> Action Name Required*
+                                        class="required"> Action Name Required
                                     </span>
                                     <span *ngIf="connectorForm.controls['actionName'].hasError('maxlength') && !connectorForm.get('actionName').hasError('pattern')" class="required">
                                         Maximum of 50 characters
@@ -75,7 +75,7 @@
                                 optionLabel="value" optionValue="value"></p-dropdown>
                                 <span
                                     *ngIf="connectorForm.get('methodType').invalid && connectorForm.get('methodType').touched && !connectorForm.get('methodType').hasError('pattern')"
-                                    class="required"> Method Type Required*
+                                    class="required"> Method Type Required
                                 </span>
                             </div>
                             <div class="row">
@@ -89,7 +89,7 @@
                                         optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
                                         <span
                                             *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                            class="required"> Action Type Required*
+                                            class="required"> Action Type Required
                                         </span>
                                     </div>
                                     <div class="col-md-12 p-0 actionlogoblck">
@@ -121,7 +121,7 @@
                                         </textarea>
                                         <span
                                             *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
-                                            class="required"> API/URL Required*
+                                            class="required"> API/URL Required
                                         </span>
                                         <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
                                             API/URL or Dynamic Pattern Incorrect.
@@ -137,7 +137,7 @@
                                     optionLabel="value" optionValue="type" (onChange)="authChange($event.value)"></p-dropdown>
                                     <span
                                         *ngIf="connectorForm.get('authType').invalid && connectorForm.get('authType').touched && !connectorForm.get('authType').hasError('pattern')"
-                                        class="required"> Authentication Type Required*
+                                        class="required"> Authentication Type Required
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0" *ngIf="isAuthenticated">
@@ -149,7 +149,7 @@
                                     optionLabel="value" optionValue="type" (onChange)="grantChange($event.value)"></p-dropdown>
                                     <span
                                         *ngIf="connectorForm.get('grantType').invalid && connectorForm.get('grantType').touched && !connectorForm.get('grantType').hasError('pattern')"
-                                        class="required"> Grant Type Required*
+                                        class="required"> Grant Type Required
                                     </span>
                             </div>
                             <div class="col-md-6 form-group pr-0" *ngIf="isaddTo">
@@ -161,7 +161,7 @@
                                 optionLabel="value" optionValue="type" (onChange)="onChangeAddTo($event.value)"></p-dropdown>
                                 <span
                                     *ngIf="connectorForm.get('addTo').invalid && connectorForm.get('addTo').touched && !connectorForm.get('addTo').hasError('pattern')"
-                                    class="required"> Add To Required*
+                                    class="required"> Add To Required
                                 </span>
                             </div>
                             <div class="row" *ngIf="isKeyValue">
@@ -173,7 +173,7 @@
                                         formControlName="requestKey" placeholder="Enter Key">
                                     <span
                                         *ngIf="connectorForm.get('requestKey').invalid && connectorForm.get('requestKey').touched && !connectorForm.get('requestKey').hasError('pattern')"
-                                        class="required"> Key Required*
+                                        class="required"> Key Required
                                     </span>
                                     <span *ngIf="connectorForm.get('requestKey').hasError('pattern')" class="required">
                                         Key or Dynamic Pattern Is Incorrect.
@@ -187,7 +187,7 @@
                                         formControlName="requestValue" placeholder="Enter Value">                                        
                                     <span
                                         *ngIf="connectorForm.get('requestValue').invalid && connectorForm.get('requestValue').touched && !connectorForm.get('requestValue').hasError('pattern')"
-                                        class="required"> Value Required*
+                                        class="required"> Value Required
                                     </span>
                                     <span *ngIf="connectorForm.get('requestValue').hasError('pattern')" class="required">
                                         Value or Dynamic Pattern Is Incorrect.
@@ -203,7 +203,7 @@
                                         formControlName="code" placeholder="Enter Code">
                                     <span
                                         *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
-                                        class="required"> Code Required*
+                                        class="required"> Code Required
                                     </span>
                                     <span *ngIf="connectorForm.get('code').hasError('pattern')" class="required">
                                         Code or Dynamic Pattern Incorrect.
@@ -217,7 +217,7 @@
                                         formControlName="redirect_uri" placeholder="Enter Redirect URL">
                                     <span
                                         *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
-                                        class="required"> Redirect URL Required*
+                                        class="required"> Redirect URL Required
                                     </span>
                                     <span *ngIf="connectorForm.get('redirect_uri').hasError('pattern')" class="required">
                                         Redirct URL or Dynamic Pattern Incorrect.
@@ -233,7 +233,7 @@
                                         formControlName="userName" placeholder="Enter Username">
                                     <span
                                         *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
-                                        class="required"> Username Required*
+                                        class="required"> Username Required
                                     </span>
                                     <span *ngIf="connectorForm.get('userName').hasError('pattern')" class="required">
                                         Username or Dynamic Pattern Incorrect.
@@ -247,7 +247,7 @@
                                         formControlName="password" placeholder="Enter Password">                                        
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
-                                        class="required"> Password Required*
+                                        class="required"> Password Required
                                     </span>
                                     <span *ngIf="connectorForm.get('password').hasError('pattern')" class="required">
                                         Password or Dynamic Pattern Incorrect.
@@ -263,7 +263,7 @@
                                         formControlName="clientId" placeholder="Enter Client ID">
                                     <span
                                         *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
-                                        class="required"> Client ID Required*
+                                        class="required"> Client ID Required
                                     </span>
                                     <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
                                         Client Id or Dynamic Pattern Incorrect.
@@ -277,7 +277,7 @@
                                         formControlName="clientSecret" placeholder="Enter Client Secret">
                                     <span
                                         *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
-                                        class="required"> Client Secret Required*
+                                        class="required"> Client Secret Required
                                     </span>
                                     <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
                                         Client Secret or Dynamic Pattern Incorrect.
@@ -292,7 +292,7 @@
                                         formControlName="verifier" placeholder="Enter Code Verifier">
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
-                                        class="required"> Code Verifier Required*
+                                        class="required"> Code Verifier Required
                                     </span>
                                     <span *ngIf="connectorForm.get('verifier').hasError('pattern')" class="required">
                                         Code Verifier or Dynamic Pattern Incorrect.
@@ -314,7 +314,7 @@
                                         formControlName="refreshToken" placeholder=" Refresh Token">
                                     <span
                                         *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"
-                                        class="required"> Refresh Token Required*
+                                        class="required"> Refresh Token Required
                                     </span>
                                     <span *ngIf="connectorForm.get('refreshToken').hasError('pattern')" class="required">
                                         Refresh Token or Dynamic Pattern Incorrect.
@@ -328,7 +328,7 @@
                                 </textarea>
                                 <span
                                     *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
-                                    class="required"> API/URL Required*
+                                    class="required"> API/URL Required
                                 </span>
                                 <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
                                     API/URL or Dynamic Pattern Is Incorrect.

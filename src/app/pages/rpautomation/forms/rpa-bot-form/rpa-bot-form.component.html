@@ -19,7 +19,7 @@
                     </select>
 
                     <div *ngIf=" (botForm.get('department').invalid && botForm.get('department').touched) || checkBotCategory" class="required">
-                        Category Required*
+                        Category Required
                     </div>
 
                 </div>
@@ -31,7 +31,7 @@
                     <div *ngIf="!(isCreateForm)">
                         <div *ngIf="(botForm.get('botName').hasError('required') && botForm.get('botName').touched) && !botForm.controls['botName'].hasError('maxlength')"
                             class="required">
-                            Bot Name Required*
+                            Bot Name Required
                         </div>
                     </div>
                     <div *ngIf="botNameCheck && botForm.get('botName').value && !botForm.get('botName').hasError('pattern')" class="required">

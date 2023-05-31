@@ -48,7 +48,7 @@
                                 <label class="label-control" for="connection"> Connector Name <span class="star">*</span></label>
                                 <input type="text" pInputText [style]="{'width':'100%'}"  maxlength="51" formControlName="name"
                                     placeholder="Enter Connector Name">
-                                <span *ngIf="createConnectorForm.get('name').invalid && createConnectorForm.get('name').touched && !createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required"> Connector Name Required* </span>
+                                <span *ngIf="createConnectorForm.get('name').invalid && createConnectorForm.get('name').touched && !createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required"> Connector Name Required </span>
                                 <span *ngIf="createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Maximum of 50 characters
                                 </span>

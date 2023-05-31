@@ -1265,7 +1265,7 @@
                                             <ng-option *ngFor="let task of taskslist" [value]="task.taskId">{{task.taskName}}</ng-option>
                                         </ng-select>
                     
-                                        <span *ngIf="addTaskForm.get('tasks').invalid && addTaskForm.get('tasks').touched" class="errspan required">Tasks Required*</span>
+                                        <span *ngIf="addTaskForm.get('tasks').invalid && addTaskForm.get('tasks').touched" class="errspan required">Tasks Required</span>
                                     </div>
                                 </form>
                                 

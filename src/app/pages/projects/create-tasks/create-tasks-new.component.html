@@ -6,7 +6,7 @@
               <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="taskName"
                   placeholder="Enter Task Name" required>
               <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
-                  class="required">Task Name Required*</span>
+                  class="required">Task Name Required</span>
               <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="required">
                   Maximum of 50 characters
               </span>
@@ -18,11 +18,11 @@
                 <div class="form-group col p-0">
                     <label class="" for="taskCategory">Type of Task<span class="star">*</span></label>
                     <p-dropdown [options]="task_categoriesList" formControlName="taskCategory" autoWidth="false"
-                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task" [appendTo]="'body'" 
+                      [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task Type" [appendTo]="'body'" 
                       optionLabel="category" optionValue="category" required></p-dropdown>
                     <span
                       *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
-                      class="required">Type of Task Required*</span>
+                      class="required">Type of Task Required</span>
                 </div>
 
                 <div class="form-group col pr-0" *ngIf="optionValue == 'RPA Implementation' || optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process' || optionValue == 'Process Mining'">
@@ -54,19 +54,19 @@
                     </div>
                     <span
                       *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
-                      class="required">Pick A Workspace File Required*</span>
+                      class="required">Pick A Workspace File Required</span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col p-0">
-                    <label class="" for="resources">Assigned To<span class="star">*</span></label>
+                    <label class="" for="resources">Assignee<span class="star">*</span></label>
 
                     <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                       filterBy="user_email,fullName" [autoDisplayFirst]="false" placeholder="Select Assignee"
                       formControlName="resources" optionValue="user_email" optionLabel="fullName" (onChange)="onAssigneeChange($event)">
                     </p-dropdown>
                     <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
-                      class="required">Assigned To Required*</span>
+                      class="required">Assignee Required</span>
                 </div>
                 <div class="form-group col pr-0">
                     <label class="" for="priority">Priority <span class="star">*</span></label>
@@ -94,7 +94,7 @@
                         </span>
                     </div>
                     <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
-                      class="required">Priority Required*</span>
+                      class="required">Priority Required</span>
                 </div>
 
             </div>
@@ -107,7 +107,7 @@
                           optionLabel="fullName" [appendTo]="'body'" >
                 </p-dropdown>
                 <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
-                  class="required">Approvers Required*</span>
+                  class="required">Approvers Required</span>
               </div>
               <div class="form-group col p-0" *ngIf="freetrail=='true'">
                 <label class="" for="approvers">Approver<span class="star">*</span></label>
@@ -132,7 +132,7 @@
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                     </select> -->
                     <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
-                      class="required">Approvers Required*</span>
+                      class="required">Approver Required</span>
                 </div> 
                 <div class="form-group col p-0" *ngIf="freetrail=='true'">
                     <label class="" for="approvers">Approver</label>
@@ -153,7 +153,7 @@
                               (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate">
                             <span
                               *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
-                              class="required">From Date Required*</span>
+                              class="required">From Date Required</span>
                               <span class="dateseparator">|</span>
                         </div>                       
                         <div class="todate">
@@ -161,7 +161,7 @@
                             <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
                               [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate">
                             <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
-                              class="required">To Date Required*</span>
+                              class="required">To Date Required</span>
                         </div>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                     </span> -->
                     <span *ngIf="(createtaskForm.get('description').invalid && createtaskForm.get('description').touched)&& 
                     !createtaskForm.controls['description'].hasError('maxlength')"
-                    class="required">Task Description Required*</span>
+                    class="required">Task Description Required</span>
                 </div>
             </div>
         </div>

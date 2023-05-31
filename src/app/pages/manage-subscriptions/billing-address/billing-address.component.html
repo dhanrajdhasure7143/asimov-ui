@@ -6,7 +6,7 @@
                 <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="firstName"
                     placeholder="Enter First Name" required>
                 <span *ngIf="billingForm.get('firstName').invalid && billingForm.get('firstName').touched && !billingForm.get('firstName').hasError('pattern') && !billingForm.controls['firstName'].hasError('maxlength')" class="required"> 
-                    First Name Required* 
+                    First Name Required 
                 </span>
                 <span *ngIf="billingForm.controls['firstName'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
@@ -20,7 +20,7 @@
                 <input type="text" placeholder="Enter Last Name" pInputText [style]="{'width':'100%'}" maxlength="51"
                     formControlName="lastName">
                 <span *ngIf="billingForm.get('lastName').invalid && billingForm.get('lastName').touched && !billingForm.get('lastName').hasError('pattern') && !billingForm.controls['lastName'].hasError('maxlength')" class="required"> 
-                    Last Name Required* 
+                    Last Name Required
                 </span>
                 <span *ngIf="billingForm.controls['lastName'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
@@ -64,7 +64,7 @@
                 <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
                     placeholder="Enter Postal Code">
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
-                    Postal Code Required* 
+                    Postal Code Required 
                 </span>
                 <span *ngIf="billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Maximum of 10 characters
@@ -116,7 +116,7 @@
                 <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
                     placeholder="Enter Address Line 1">
                 <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched && !billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
-                    Address Line1 Required* 
+                    Address Line1 Required 
                 </span>
                 <span *ngIf="billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
@@ -130,7 +130,7 @@
                 <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
                     placeholder="Enter Address Line 2">
                     <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched && !billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required"> 
-                        Address Line2 Required* 
+                        Address Line2 Required 
                     </span>
                     <span *ngIf="billingForm.controls['addressLine2'].hasError('maxlength')" class="required">
                         Maximum of 50 characters

@@ -7,7 +7,7 @@
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
                 </select>
                 <span *ngIf="timezoneInput.invalid && timezoneInput.touched" class="errspan required">
-                    Timezone is required.</span>
+                    Timezone required</span>
             </span>
             <span *ngIf="processid!='' && processid !=undefined">
                 <mat-form-field>
