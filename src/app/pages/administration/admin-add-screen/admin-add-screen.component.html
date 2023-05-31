@@ -45,16 +45,16 @@
                   insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
                   && !insertForm.controls['screen_Name'].hasError('maxlength')
                 " class="star">
-                  Screen Name is Required *
+                  Screen Name Required *
                 </span>
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
                   class="required">Maximum of 50 characters*</span>
                 <span *ngIf="!screenNameCheck && insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
-                  between words are allowed*
+                  between words are allowed *
                 </span>
                 <div *ngIf="screenNameCheck && insertForm.get('screen_Name').value" class="required">
-                  Screen Name  already exists*
+                  Screen Name  already exists *
               </div>
               </div>
               <div class="form-group col-sm-12 pl-0">
@@ -110,7 +110,7 @@
                     insertForm.get('table_Name')!.invalid &&
                     insertForm.get('table_Name')!.touched
                   " class="star">
-                    Table Name is Required *
+                    Table Name Required *
                   </span>
                 </div>
                 <!-- <div class="form-group  col-sm-12 pr-0">                  
