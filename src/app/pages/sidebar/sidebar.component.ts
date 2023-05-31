@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit {
       // this.userRoles = localStorage.getItem("userRole")
     }, 200);
   this.getAllPlans();
-  this.getUserScreenList();
+  // this.getUserScreenList();
   }
   getCookie(cname) {
     let name = cname + "=";
@@ -123,17 +123,18 @@ getexpiryInfo(){
 
   })
 }
-onClickScreen(screen:any){
-  this.dt.setScreenList(screen)
-  this.router.navigate(["/pages/admin/user"],{queryParams:{Screen_ID:screen.Screen_ID,Table_Name:screen.Table_Name}});
 
-}
+// onClickScreen(screen:any){
+//   this.dt.setScreenList(screen)
+//   this.router.navigate(["/pages/admin/user"],{queryParams:{Screen_ID:screen.Screen_ID,Table_Name:screen.Table_Name}});
 
-getUserScreenList(){
-  this.rest_service.getUserScreenList().subscribe((data:any)=>{
-    this.screensList=data;
-  });
-}
+// }
+
+// getUserScreenList(){
+//   this.rest_service.getUserScreenList().subscribe((data:any)=>{
+//     this.screensList=data;
+//   });
+// }
 userManagement(){
   this.router.navigate(["/pages/admin/user-management"],{
     queryParams:{index:0}

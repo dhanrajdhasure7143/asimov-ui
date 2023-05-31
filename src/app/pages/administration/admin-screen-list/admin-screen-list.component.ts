@@ -4,6 +4,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 import { columnList } from "src/app/shared/model/table_columns";
+import { DataTransferService } from "../../services/data-transfer.service";
 
 @Component({
   selector: "app-admin-screen-list",
@@ -17,7 +18,7 @@ export class AdminScreenListComponent implements OnInit {
   columns_list: any = [];
   table_searchFields: any=[];
   constructor(private router: Router, private rest: RestApiService, private columns:columnList,
-    private spinner:LoaderService) {}
+    private spinner:LoaderService,private dt:DataTransferService) {}
 
   ngOnInit(): void {
     this.getScreenList();
@@ -92,5 +93,10 @@ export class AdminScreenListComponent implements OnInit {
 
       // }),
     });
+  }
+  
+  viewDetails(screen){
+    this.dt.setScreenList(screen)
+    this.router.navigate(["/pages/admin/user"],{queryParams:{Screen_ID:screen.Screen_ID,Table_Name:screen.Table_Name}});
   }
 }
