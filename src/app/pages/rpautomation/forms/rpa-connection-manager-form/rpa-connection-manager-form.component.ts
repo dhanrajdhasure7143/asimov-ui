@@ -156,8 +156,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         task_type: "AUTHENTICATION",
-        task_subtype: "OAUTH2",
-        outputReference: "[@Output Reference|string|@]"
+        task_subtype: "OAUTH2"
         // "actionType": this.connectorForm.value.actionType,
       };
       if (this.connectorForm.value.authType == "OAUTH2") {
@@ -236,8 +235,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "type": "API",
         "task_type": "ACTION",
         "task_subtype": "API",
-        "inputReference": "[@Input Reference|string|@]",
-        "outputReference": "[@Output Reference|string|@]",
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       }
@@ -969,8 +966,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         methodType: this.connectorForm.value.methodType,
         type: this.connectorForm.value.authType,
         task_type:"AUTHENTICATION",
-        task_subtype:"OAUTH2",
-        outputReference: "[@Output Reference|string|@]",
+        task_subtype:"OAUTH2"
         // "actionType": this.connectorForm.value.actionType,
       };
       if(this.connectorForm.value.authType == "OAUTH2"){
@@ -1045,8 +1041,6 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "type":"API",
         "task_type":"ACTION",
         "task_subtype":"API",
-        "inputReference": "[@Input Reference|string|@]",
-        "outputReference": "[@Output Reference|string|@]",
         // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       };
