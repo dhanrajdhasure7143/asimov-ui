@@ -9,3 +9,16 @@
     font-weight: normal !important;
     letter-spacing: 0.2px;
 }
+
+.rabio-btn label.label-control {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input::file-selector-button {
+    background-color: #098de6 !important;
+    border: none;
+    color: #fff;
+    border-radius: 3px !important;
+    /* padding: 2px 10px; */
+}

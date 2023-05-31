@@ -9,7 +9,7 @@
         <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'create'" class="h-100">
             <div class="h-100">
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control">Select Category<span class="star">*</span></label>
+                        <label class="label-control">Category<span class="star">*</span></label>
                         <select  name="category" (change)="onchangeCategories(categoryName)" [disabled]="categories_list.length==1" #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
                             <option value="" disabled hidden>Select Category</option>
                             <option value="null" disabled hidden>Select Category</option>
@@ -22,7 +22,7 @@
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control">Select Notation Type<span class="star">*</span></label>
+                            <label class="label-control">Notation Type<span class="star">*</span></label>
                             <select name="notation" #notation="ngModel" [(ngModel)]="notationType" required class="form-control" [disabled]="uploadedFileExtension || overlay_data.ntype">
                                 <option value="" disabled hidden>Select Notation Type</option>
                                 <option value="null" disabled hidden>Select Notation Type</option>
@@ -67,7 +67,7 @@
                         </div>
                     </div> -->
                     <div class="col-md-12 p-0 form-group"> <!-- pattern="^[a-zA-Z0-9_-].{3,25}$" -->
-                        <label class="label-control">Enter Process Name<span class="star">*</span></label>
+                        <label class="label-control">Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
                             <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
@@ -84,7 +84,7 @@
         <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'edit'" class="h-100">
             <div class="h-100">
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control">Select Category<span class="star">*</span></label>
+                        <label class="label-control">Category<span class="star">*</span></label>
                         <select  name="category" (change)="onchangeCategories(categoryName)" disabled #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
                             <option value="" disabled hidden>Select Category</option>
                             <option value="null" disabled hidden>Select Category</option>
@@ -96,7 +96,7 @@
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control">Select Notation Type<span class="star">*</span></label>
+                            <label class="label-control">Notation Type<span class="star">*</span></label>
                             <select name="notation" #notation="ngModel" [(ngModel)]="notationType" disabled required class="form-control" [disabled]="uploadedFileExtension">
                                 <option value="" disabled hidden>Select Notation Type</option>
                                 <option value="null" disabled hidden>Select Notation Type</option>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control">Enter Process Name<span class="star">*</span></label>
+                        <label class="label-control">Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
                             <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
