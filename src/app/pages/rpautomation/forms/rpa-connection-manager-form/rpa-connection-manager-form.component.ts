@@ -257,13 +257,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           },1000)
       } else {
         this.spinner.hide();
-        (err) => {
+        // (err:any) => {
           this.messageService.add({
             severity: "error",
             summary: "Error",
             detail: "Something Went Wrong !!",
           });
-        };
+        // };
       }
     });
     this.connectorForm.reset();
@@ -884,7 +884,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
-        Object.keys(headers_data).map((key,i) => {
+        Object.keys(headers_data).forEach((key,i) => {
           let headerKey = Object.keys(headers_data[i])[0];
           let headervalue = headers_data[i][headerKey];
           this.headerForm.push({
@@ -898,7 +898,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
       if (this.actionData.configurationAsJson.queryParams) {
         let params_data = this.actionData.configurationAsJson.queryParams;
-        Object.keys(params_data).map((key, i) => {
+        Object.keys(params_data).forEach((key, i) => {
           let paramKey = Object.keys(params_data[i])[0];
           let paramValue = params_data[i][paramKey];
           this.paramForm.push({
@@ -1064,13 +1064,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         
         } else {
           this.spinner.hide();
-          (err) => {
+          // (err) => {
             this.messageService.add({
               severity: "error",
               summary: "Error",
               detail: "Something Went Wrong !!",
             })
-          };
+          // };
         }
       });
   }
