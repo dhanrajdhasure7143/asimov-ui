@@ -185,14 +185,12 @@ span.lowimp {
     position: relative;
 }
 .collab {
-    border-radius: 6px 6px 0px 0px;
     height: 460px;
-    display: block;
 }
 .lftusermsg {
     background: #EDF6FD;
     border-radius: 0px 8px 8px 8px !important;
-    padding: 25px 6px 10px 30px !important;
+    padding: 15px 6px 10px 25px !important;
     margin: 25px 10px 30px !important;
     position: relative;
     /* width: 77%; */
@@ -206,7 +204,7 @@ span.lowimp {
 .rgtusermsg {
     background: #eeeeee;
     border-radius: 8px 0px 8px 8px;
-    padding: 25px 10px 2px !important;
+    padding: 15px 10px 2px !important;
     margin: 10px 0px 30px 0px !important;
     width: 90%;
     margin-left: 10% !important;
