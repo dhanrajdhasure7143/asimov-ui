@@ -78,20 +78,6 @@
                                     class="required"> Method Type Required*
                                 </span>
                             </div>
-<<<<<<< HEAD
-                            <div class="col-md-12 form-group p-0" *ngIf="isEndpoint">
-                                <label class="label-control"> API/URL <span class="star">*</span> </label>
-                                <textarea pInputTextarea [style]="{'width':'100%'}" (keyup)="onEnterEndpoint()" row="3" formControlName="endPoint"
-                                type="url" name="url" id="url" placeholder="Enter API/URL">
-                                </textarea>
-                                <span
-                                    *ngIf="connectorForm.get('endPoint').invalid && connectorForm.get('endPoint').touched && !connectorForm.get('endPoint').hasError('pattern')"
-                                    class="required"> API/URL Required*
-                                </span>
-                                <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
-                                    API/URL or Dynamic Pattern Incorrect.
-                                </span>
-=======
                             <div class="row">
                                 <div class="col-md-6 form-group pl-0">
                                     <div class="col-md-12 form-group p-0">
@@ -141,7 +127,6 @@
                                             API/URL or Dynamic Pattern Incorrect.
                                         </span>
                                 </div>
->>>>>>> Sprint-85
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isAction">
                                     <label class="label-control" for="programname"> Authentication Type
