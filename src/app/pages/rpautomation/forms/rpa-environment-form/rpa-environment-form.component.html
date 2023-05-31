@@ -12,12 +12,15 @@
                     <input type="text" maxlength="51" class="form-control data" formControlName="environmentName"
                         #environmentName value="" placeholder="Enter Name">
                     <span
-                        *ngIf="(environmentForm.get('environmentName').invalid && environmentForm.get('environmentName').touched) && !environmentForm.controls['environmentName'].hasError('maxlength')"
+                        *ngIf="(environmentForm.get('environmentName').invalid && environmentForm.get('environmentName').touched) && !environmentForm.controls['environmentName'].hasError('maxlength') && !environmentForm.get('environmentName').hasError('pattern')"
                         class="required">Name Required*</span>
-                    <div *ngIf="environmentForm.controls['environmentName'].hasError('maxlength')"
+                    <div *ngIf="environmentForm.controls['environmentName'].hasError('maxlength') && !environmentForm.get('environmentName').hasError('pattern')"
                         class="required">
                         Maximum of 50 characters
                     </div>
+                    <span
+                        *ngIf="environmentForm.get('environmentName').hasError('pattern')"
+                        class="required">Spaces and special characters are not allowed Excluding( _ & - )*</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
@@ -41,14 +44,10 @@
                     <div *ngIf="environmentForm.controls['agentPath'].hasError('maxlength')"
                         class="required">
                         Maximum of 50 characters
-                    </div>
-                    <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && !environmentForm.controls['agentPath'].hasError('maxlength')) && environmentForm.get('agentPath').touched"
-                    class="required">
-                    Invalid Agent Path format*
                 </div>
-                <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && environmentForm.controls['agentPath'].hasError('maxlength'))"
+                <div *ngIf="environmentForm.get('agentPath').hasError('pattern') "
                     class="required">
-                    Invalid Agent Path format*
+                    Spaces are not allowed*
                 </div>
                 </div>
                 <div class="col-md-12 p-0 form-group">

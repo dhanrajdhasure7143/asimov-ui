@@ -17,7 +17,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   @ViewChildren("designerInstances") designerInstances:QueryList<any>;
   @ViewChild('versionControlPopup') versionControlPopup: PopoverDirective;
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
-
+  display:boolean = true
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;

@@ -55,6 +55,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild("logspopup") public logsOverlayRef: any;
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
+  display:boolean = false;
   filteredEnvironments: any = [];
   VersionsList: any = [];
   // @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
@@ -2771,16 +2772,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   openLogs() {
-    this.logsOverlayFlag = true;
-    this.logsOverlayModel = this.modalService.show(this.logsOverlayRef, {
-      // class: "logs-modal",
-      class: "modal-lg",
-    });
+  this.display = true;  
+    // this.display.emit(false)
+    // this.logsOverlayFlag = true;
+    // this.logsOverlayModel = this.modalService.show(this.logsOverlayRef, {
+    //   // class: "logs-modal",
+    //   class: "modal-lg",
+    // });
   }
 
-  closeLogsOverlay() {
-    this.logsOverlayModel.hide();
-    this.logsOverlayFlag = false;
+  closeLogsOverlay(event) {
+    console.log("test")
+    this.display = false;
+    console.log("test2",this.display)
+
+    // this.logsOverlayModel.hide();
+    // this.logsOverlayFlag = false;
   }
 
   deleteBot() {
@@ -2935,6 +2942,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //       })
   //   }
   // }
+
 }
 
 @Pipe({ name: "Checkoutputbox" })

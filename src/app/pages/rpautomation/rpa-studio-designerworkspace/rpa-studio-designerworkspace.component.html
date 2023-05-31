@@ -306,13 +306,12 @@
   </app-split-overlay>
 </div>
 
+<div *ngIf="display">
+  <app-rpa-so-logs [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
+  [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version" (closeEvent)="closeLogsOverlay($event)"></app-rpa-so-logs>
+</div>
 
-<ng-template #logspopup>
-  <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-    <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
-      [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version"></app-rpa-so-logs>
-  </div>
-</ng-template>
+
 
 
 <!--Credentials Form-->
