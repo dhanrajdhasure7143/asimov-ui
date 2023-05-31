@@ -242,7 +242,7 @@
                     </button>
                   </div>
                   <div class="action-item vrsn-btn" *ngIf="current_instance != undefined">
-                    <p-toggleButton onLabel="V1" offLabel="V2" [(ngModel)]="current_instance.executionMode"></p-toggleButton>
+                    <p-toggleButton onLabel="V1" offLabel="V2" (click)="onChangeExecutionMode()" [(ngModel)]="executionMode"></p-toggleButton>
                   </div>
                 </div>
               </div>

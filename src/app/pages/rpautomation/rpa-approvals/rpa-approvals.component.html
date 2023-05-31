@@ -113,7 +113,7 @@
             <!-- <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name"  maxlength="50" /> -->
           </div>
           <ng-template pTemplate="footer">
-            <button class="btn new-cancelbtn">Cancel</button>
+            <button (click)="isDialogShow=false" class="btn new-cancelbtn">Cancel</button>
             <button
               [disabled]="comments == ''"
               (click)="updateApprovalStatus()"
