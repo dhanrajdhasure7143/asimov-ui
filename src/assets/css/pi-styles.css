@@ -353,15 +353,14 @@ img.hover-img {
   margin-bottom: 10px;
 }
 .variants_slider h3 {
-  margin: 0px !important;
+  margin: 0px auto 0px 0px;
   font-size: 16px !important;
   font-weight: 500;
   color: #232832;
   width: 80%;
 }
 .variants-header .closebtn {
-  width: 20%;
-  text-align: end;
+  border: none;
 }
 .check_box span {
   margin-left: 5px;

@@ -458,9 +458,12 @@ color: #098de6;
 float: right;
 }
 .new-bps-icons button {
-padding: 6px 8px;
-position: relative;
-z-index: 999;
+  padding: 6px 8px;
+  position: relative;
+  z-index: 999;
+  border: none;
+  background: transparent;
+  outline: none;
 }
 .bps-float button img {
 height: 17px;
