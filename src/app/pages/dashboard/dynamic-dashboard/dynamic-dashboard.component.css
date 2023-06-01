@@ -1,10 +1,6 @@
-/* .maincont-contentarea {
-    padding: 15px 6px 10px 30px;
-} */
 .main-content-body {
     padding: 0px 6px 10px 30px;
 }
-
 .main-content-head h3 .title_text {
     cursor: pointer;
 }
@@ -12,21 +8,23 @@
     margin-bottom: 15px !important;
     align-items: center;
 }
-.defaltdrpdwn{background-color: #fff;}
+.defaltdrpdwn{
+    background-color: #fff;
+}
 .btn-secondary {
 	height: 32px;
     background-color: #E9E9E9 !important;
-    /* margin-right: 10px; */
     color: #232832 !important;
     outline: none !important;
     box-shadow: none !important;
 }
 .btn-dots {
 	background-color: #ECF1FB;
-    /* height: 32px; */
     padding: 12px 8px !important;
 }
-.btn-dots:hover {background-color: #D8E0EF !important;}
+.btn-dots:hover {
+    background-color: #D8E0EF !important;
+}
 .btn-dots-header {
     background-color: #E9E9E9;
     height: 32px;
@@ -34,12 +32,7 @@
 .delete-dbtn img {
     height: 20px;
 }
-/* .btn-dots-header:hover {
-    background-color: #ebebeb;
-}
-.btn-dots-header:active {
-    background-color: #098de6;
-} */
+
 .well1-dynmic {	
 	padding: 10px 12px !important;
 	margin-bottom: 24px;
@@ -47,8 +40,10 @@
     border: 1px solid #d0d0d0;    
     border-radius: 6px;
 }
-.pr-24{padding-right:24px;}
-.pr-0{padding-right:0px !important;}
+.pr-24{
+    padding-right:24px;
+}
+
 .well1-dynmic.graph .p-datatable-wrapper {
   height: calc(100vh - 36px) !important;
 }
@@ -69,19 +64,7 @@
 .widgetactions {
     min-width: auto;
 }
-/* .widgetactions .hover-img,
-.widgetactions:hover .default-img {
-    display: none;
-}
-.widgetactions:hover .hover-img {
-    display: block;
-}
-.widgetactions:hover {
-    background-color: #E9E9E9;
-}
-.widgetactions.active {
-    background-color: #098de6;
-} */
+
 .vertcl-img {
 	width: 12px ;
     margin-right: 11px;
@@ -105,23 +88,30 @@
     left: 230px;
     top: 3px;
 }
-.graph-set{
+.graph-set {
     width: 80%;
     margin: auto;
 }
-
-
-.caret-img{    width: 20px;
+.graph-set-nodata{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 215px;
 }
-/* .grey-btn {
-    background-color: #EAE9E9 !important;
-    margin-left: 8px !important; 
-    padding: 8px !important;
-    height: 36px;   
+.oopstxt {
+    /* position: absolute;
+    top: 40%;
+    left: 30%; */
+    font-size: 16px;
 }
-.grey-btn:hover {
-    background-color: #E0E8ED !important;  
-} */
+span.oopstxt label {
+    display: block;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 0px;
+}
+
 .configure-pad{
     padding:8px 12px !important;
 }
@@ -141,15 +131,12 @@
     padding: 10px;
     text-transform: capitalize;
 }
+
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
-    inset: 100% auto auto 0px !important;
-    /* height: 32px !important; */
-    padding: 10px;
-    /* margin: 0px 12px !important; */
-}
-.defaltdrpdwn ul#dropdown-basic {
-    width: 230px;    
+    max-height: 150px;
+    background: #fff;
+    overflow: auto;
     inset: 100% auto auto !important;
     padding: 0px !important;
     margin-top: 5px;
@@ -196,8 +183,6 @@ span.testtooltip {
     position: absolute;
     top: 5px;
     left: 35px;
-    /* bottom: -25px;
-    right: 0px; */
     background-color: #001c47;
     color: #fff;
     width: max-content;
@@ -214,24 +199,9 @@ span.testtooltip:before {
     padding: 4px;
     left: -3px;
     top: 10px;
-    /* right: 10px;
-    top: -5px; */
     background: #001c47;
     transform: rotate(45deg);
 }
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
-}
-
-.oopstxt {
-    position: absolute;
-    top: 40%;
-    left: 30%;
-}
-span.oopstxt label {
-    display: block;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 0px;
 }

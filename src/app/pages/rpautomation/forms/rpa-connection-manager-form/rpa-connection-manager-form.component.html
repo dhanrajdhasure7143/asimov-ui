@@ -31,7 +31,7 @@
                        
                     </h3>
                 </div>
-                <div class="col-md-5 pr-0">
+                <!-- <div class="col-md-5 pr-0">
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
                                     (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue || actionNameCheck">Test</button>
@@ -40,7 +40,7 @@
                         <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
-                </div>
+                </div> -->
             </div>
             <div class="main-content-body">
                 <div class="maindivfoprm">
@@ -490,14 +490,14 @@
                             </div>
                         </div>
                     </form>
-                    <!-- <div class="row justify-content-end">
+                    <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
-                                    (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue">Test</button>
-                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                                    (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue || actionNameCheck">Test</button>
+                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
-                    </div>   -->
+                    </div>   
                 </div>
             </div>
         </div>
