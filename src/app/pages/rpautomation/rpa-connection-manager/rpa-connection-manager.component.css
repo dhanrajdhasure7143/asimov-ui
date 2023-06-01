@@ -82,11 +82,11 @@ input[type=file]::file-selector-button:hover {
   background: #098de6;
 }
 
+
 .logo{
   height: 35px;
-  text-align: center;
+  margin-left: 15px;
 }
-
 /* .custom::before{
   content: 'Replace?    ';
   display: inline-block;

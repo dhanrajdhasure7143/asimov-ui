@@ -130,7 +130,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="configName">Name<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
-                        <span *ngIf="BluePrismConfigForm.get('configName').invalid && BluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('configName').invalid && BluePrismConfigForm.get('configName').touched" class="errspan required">Name Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
@@ -139,7 +139,7 @@
                                 <option value="0">Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>
-                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required</span>
                     </div>
 
 
@@ -147,7 +147,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
-                        <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
@@ -159,19 +159,19 @@
                         <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                        <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                        <span *ngIf="BluePrismConfigForm.get('hostAddress').invalid && BluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('hostAddress').invalid && BluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="username">Username<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                        <span *ngIf="BluePrismConfigForm.get('username').invalid && BluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('username').invalid && BluePrismConfigForm.get('username').touched" class="errspan required"> Username Required</span>
 
                     </div>
 
@@ -184,14 +184,14 @@
                         <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                        <span *ngIf="BluePrismConfigForm.get('password').invalid && BluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('password').invalid && BluePrismConfigForm.get('password').touched" class="errspan required"> Password Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="port">Port<span class="star">*</span></label>
                         <input type="text" maxlength="6" onkeypress="return (event.charCode > 48 && event.charCode < 57)" class="form-control" formControlName="port" value="" placeholder="Enter Port">
 
-                        <span *ngIf="BluePrismConfigForm.get('port').invalid && BluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('port').invalid && BluePrismConfigForm.get('port').touched" class="errspan required"> Port Required</span>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <input type="checkbox" checked formControlName="status"> Active
@@ -228,13 +228,13 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="configName">Name<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
-                        <span *ngIf="UpdateBluePrismConfigForm.get('configName').invalid && UpdateBluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('configName').invalid && UpdateBluePrismConfigForm.get('configName').touched" class="errspan required">Name Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
-                        <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
@@ -246,7 +246,7 @@
                         <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                        <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required</span>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
@@ -254,20 +254,20 @@
                                 <option value="0">Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>
-                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required*</span>
+                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                        <span *ngIf="UpdateBluePrismConfigForm.get('hostAddress').invalid && UpdateBluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('hostAddress').invalid && UpdateBluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required</span>
                     </div>
 
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="username">Username<span class="star">*</span></label>
                         <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                        <span *ngIf="UpdateBluePrismConfigForm.get('username').invalid && UpdateBluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('username').invalid && UpdateBluePrismConfigForm.get('username').touched" class="errspan required"> Username Required</span>
 
                     </div>
 
@@ -280,14 +280,14 @@
                         <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                        <span *ngIf="UpdateBluePrismConfigForm.get('password').invalid && UpdateBluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('password').invalid && UpdateBluePrismConfigForm.get('password').touched" class="errspan required"> Password Required</span>
                     </div>
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="port">Port<span class="star">*</span></label>
                         <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 48 && event.charCode < 57)" formControlName="port" value="" placeholder="Enter Port">
 
-                        <span *ngIf="UpdateBluePrismConfigForm.get('port').invalid && UpdateBluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('port').invalid && UpdateBluePrismConfigForm.get('port').touched" class="errspan required"> Port Required</span>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <input type="checkbox" [checked]="toggle" formControlName="status"> Active

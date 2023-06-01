@@ -33,7 +33,7 @@ export class RpaCredentialFormComponent implements OnInit {
     private spinner: LoaderService) {
 
       this.credentialForm=this.formBuilder.group({
-        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")])],
         password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -96,7 +96,7 @@ export class RpaCredentialFormComponent implements OnInit {
       this.credentialForm.get("outboundAddressPort").setValue(this.credupdatedata["outboundAddressPort"]);
     }else{
       this.credentialForm=this.formBuilder.group({
-        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         clientSecret:[""],
         authType:[""],

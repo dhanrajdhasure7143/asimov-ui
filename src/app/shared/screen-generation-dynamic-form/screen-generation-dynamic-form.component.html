@@ -69,11 +69,12 @@
               <span class="star">*</span>
             </label>
           </div>
-          <div *ngIf="field.widget_type == 'radio'">
-            <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory" />
+          <div *ngIf="field.widget_type == 'radio'" class="rabio-btn">
             <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase }}
               <span class="star">*</span>
             </label>
+            <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory" />
+            
           </div>
         </div>
       </div>
@@ -153,12 +154,13 @@
               <span class="star">*</span>
             </label>
           </div>
-          <div *ngIf="field.widget_type == 'radio'">
+          <div *ngIf="field.widget_type == 'radio'" class="rabio-btn">
+            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase
+            }}<span class="star">*</span>
+          </label>
             <input type="radio" [formControlName]="field.ColumnName" [attr.disabled]="field.read_only ? '' : null"
               [required]="field.mandatory" />
-            <label class="label-control">{{ field.DisplayName | removeUnderscore | titlecase
-              }}<span class="star">*</span>
-            </label>
+            
           </div>
         </div>
       </div>

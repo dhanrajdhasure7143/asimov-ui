@@ -46,7 +46,7 @@
                                                 [ngClass]="createprogram.get('programName').valid?'enteredfield-color':'inputfield-color'">
                                             <span
                                                 *ngIf="(createprogram.get('programName').invalid && createprogram.get('programName').touched) && !createprogram.controls['programName'].hasError('maxlength')"
-                                                class="errspan required">Program Name Required*</span>
+                                                class="errspan required">Program Name Required</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 255 characters exceeded
@@ -72,7 +72,7 @@
                                             </select>
                                             <span
                                                 *ngIf="(createprogram.get('initiatives').invalid && createprogram.get('initiatives').touched) && !createprogram.controls['initiatives'].hasError('maxlength')"
-                                                class="errspan required">Initiative Required*</span>
+                                                class="errspan required">Initiative Required</span>
                                             <span *ngIf="createprogram.controls['initiatives'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 50 characters exceeded
@@ -88,7 +88,7 @@
                                                 [ngClass]="createprogram.get('purpose').valid?'enteredfield-color':'inputfield-color'">
                                             <span
                                                 *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')"
-                                                class="errspan required">Program Purpose Required*</span>
+                                                class="errspan required">Program Purpose Required</span>
                                             <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 255 characters exceeded
@@ -106,7 +106,7 @@
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched"
-                                                class="errspan required">Owner Required*</span>
+                                                class="errspan required">Owner Required</span>
                                         </div>
                                         <!-- <label class="label-control" >Status<span class="star">*</span></label>
                                                             <select   formControlName="status"  class="form-control data">
@@ -118,7 +118,7 @@
                                                               <option value="Approved">Approved</option>
                                                               <option value="Rejected">Rejected</option>
                                                           </select>
-                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" class="errspan required">Status Required*</span>-->
+                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" class="errspan required">Status Required</span>-->
                                    
                                  
                                         
@@ -130,7 +130,7 @@
                                                     <input type="text" class="form-control data" placeholder="Enter  Value Chain" maxlength="51" formControlName="programValueChain"  [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'" > 
                                                 <span
                                                     *ngIf="(createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched)
-                                                    && !createprogram.controls['programValueChain'].hasError('maxlength')" class=" errspan required">Value Chain Required*</span>
+                                                    && !createprogram.controls['programValueChain'].hasError('maxlength')" class=" errspan required">Value Chain Required</span>
                                                     <span
                                                     *ngIf="createprogram.controls['programValueChain'].hasError('maxlength')"
                                                     class="errspan required">
@@ -151,7 +151,7 @@
                             
                                                 <div *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
                                                     class="errspan required">
-                                                    Department Required*
+                                                    Department Required
                                                 </div>
                                                 </div>
                                             </div>
@@ -163,7 +163,7 @@
                                                     [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                                                 <span
                                                     *ngIf="(createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched)
-                                                    && !createprogram.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">Metrics To Be Measured Required*</span>
+                                                    && !createprogram.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">Metrics To Be Measured Required</span>
                                                 <span
                                                     *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
                                                     class="errspan required">
@@ -182,7 +182,7 @@
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
-                                                class="errspan required">Process Required*</span>
+                                                class="errspan required">Process Required</span>
                                         </div> -->
                                         
                                    
@@ -203,7 +203,7 @@
                                             </select>
                                             <span
                                                 *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
-                                                class="errspan required">Program Priority Required*</span>
+                                                class="errspan required">Program Priority Required</span>
                                             <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 50 characters exceeded
@@ -218,7 +218,7 @@
                                                           <option value="Co-Editor">Co-Editor</option>
                                                           <option value="Viewer">Viewer</option>
                                                       </select>
-                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="errspan required">Access Required*</span>
+                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="errspan required">Access Required</span>
                                                     </div>                                                     -->
                                         <div class="form-fields col-6 pr-0 slt-prjts">
                                             <div class="select-project">
@@ -252,7 +252,7 @@
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
-                                                class=" errspan required">Access Required*</span>
+                                                class=" errspan required">Access Required</span>
                                         </div> -->
                                     </div>
                                     <!-- <div class="col-md-6">
@@ -285,7 +285,7 @@
                                                       </div>
                                             <span
                                                 *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
-                                                class=" errspan required">Access Required*</span>
+                                                class=" errspan required">Access Required</span>
                                         </div>
                                     </div> -->
                                     <div class="col-12 row">
@@ -301,7 +301,7 @@
                                         </select>
                                         <span
                                             *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
-                                            class="errspan required">Process Required*</span>
+                                            class="errspan required">Process Required</span>
                                             </div>
 
 
@@ -318,7 +318,7 @@
                                                 </select>
                                                 <span
                                                     *ngIf="createprogram.get('processOwner').invalid && createprogram.get('processOwner').touched"
-                                                    class="errspan required">Process Owner Required*</span>
+                                                    class="errspan required">Process Owner Required</span>
                                             </div>
                                         </div>
 
@@ -330,7 +330,7 @@
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
                                                         placeholder="Enter Description"></textarea>
-                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" class="errspan required">Description Required*</span>
+                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" class="errspan required">Description Required</span>
                                                         <span *ngIf="createprogram.controls['description'].hasError('maxlength')" class="errspan required">
                                                           Maximum of 200 characters
                                                         </span> -->
