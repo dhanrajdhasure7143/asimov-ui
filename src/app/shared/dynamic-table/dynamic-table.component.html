@@ -137,9 +137,9 @@
                                             </span>
                                         </span>
                                         <span *ngIf="screenTable == 'aprovalList' && col.ColumnName=='approvalInfo' ">
-                                            <span *ngIf="rowData[col.ColumnName]!=''">
+                                            <span  [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" *ngIf="rowData[col.ColumnName]!=''">
                                                 <span *ngIf="rowData[col.ColumnName].length>20">
-                                                    {{(rowData[col.ColumnName] | slice : 0: 20)}}...&nbsp;<a (click)="getApprovalInfo(rowData)" class="text-primary clickable">View More</a>
+                                                    <a (click)="getApprovalInfo(rowData)" class="approvalLink clickable">{{(rowData[col.ColumnName] | slice : 0: 20)}}...&nbsp;</a>
                                                 </span>
                                                 <span  *ngIf="rowData[col.ColumnName].length<=20">
                                                     {{rowData[col.ColumnName]}}

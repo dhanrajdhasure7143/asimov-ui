@@ -66,3 +66,8 @@ td a:hover img.hover-icon,
 .approveOrReject{
     font-weight: bold;
 }
+
+
+.approvalLink{
+    color:black !important;
+}
