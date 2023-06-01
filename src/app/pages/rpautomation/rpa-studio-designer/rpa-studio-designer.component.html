@@ -387,7 +387,7 @@
             </select>
             <div *ngIf="loadBotForm.get('botDepartment').invalid && loadBotForm.get('botDepartment').touched"
               class="required">
-              Category Required*
+              Category Required
             </div>
           </div>
           <div class="col-md-12 p-0 form-group">
@@ -397,7 +397,7 @@
               <option *ngFor="let bot of filteredBotsList" [value]="bot.botId">{{bot.botName}}</option>
             </select>
             <div *ngIf="loadBotForm.get('bot').invalid && loadBotForm.get('bot').touched" class="required">
-              Bot Required*
+              Bot Required
             </div>
           </div>
         </div>

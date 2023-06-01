@@ -106,10 +106,10 @@
           botDetailsForm.get('botName').touched &&
           !botDetailsForm.controls['botName'].hasError('maxlength')
         " class="required">
-        Bot Name Required*
+        Bot Name Required
       </div>
       <div *ngIf="botNameCheck && botDetailsForm.get('botName').value" class="required">
-        Bot Name already exists*
+        Bot Name already exists
       </div>
       <div *ngIf="botDetailsForm.get('botName').hasError('pattern')" class="required">
         Spaces and special characters are not allowed Excluding( _ & - )
