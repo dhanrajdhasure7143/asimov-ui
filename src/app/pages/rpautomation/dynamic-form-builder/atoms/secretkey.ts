@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
     selector: 'Secretkey',
     template: `
       <div  [formGroup]="form">
-          <input [attr.disabled]="feilddisable" [hidden]="hideInput" [required]="field.required"  [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" [value]="field.value"  [attr.placeholder]="field.placeholder" class="form-control"  [name]="field.name" [formControlName]="field.name+'_'+field.id" class="form-control" type="text">
+          <input [attr.disabled]="feilddisable" [hidden]="hideInput" [required]="field.required"  autocomplete="off" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" [value]="field.value"  [attr.placeholder]="field.placeholder" class="form-control"  [name]="field.name" [formControlName]="field.name+'_'+field.id" class="form-control" type="text">
           <input  disabled="true" [hidden]="!hideInput" class='form-control' autocomplete="off" [value]="maskedString" class="form-control" type="text">
           <span class="suffixIconButton" [hidden]="!hideInput" (click)="addNewSecretKey()"><i class="pi pi-times"></i></span>
       </div> 
