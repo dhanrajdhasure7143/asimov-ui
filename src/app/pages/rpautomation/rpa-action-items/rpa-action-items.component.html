@@ -19,8 +19,12 @@
                 <div class="actionitems-grid">
                     <div class="row credential-search-tools">
                         <div *ngIf="addflag" class="env-btn credential-btntool">
-                            <button class="tsttooltipbtn" [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create" id="addbtn" (click)="addNewAction()" pTooltip="New" tooltipPosition="top">
-                                <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
+                            <button>
+                                <a *ngIf="(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create" id="addbtn"
+                                    (click)="addNewAction()" pTooltip="New" tooltipPosition="top">
+                                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add"></a>
+                                <a *ngIf="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="disbtn">
+                                    <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" alt=""></a>
                             </button>
                         </div>
                     </div>
