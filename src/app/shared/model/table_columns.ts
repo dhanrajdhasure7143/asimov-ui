@@ -86,7 +86,7 @@ export class columnList{
       // connection manager actions table
       public actionItemsList_column= [
         {ColumnName: "name", DisplayName: "Action Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
-        {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["Authenticated","APIRequest"],width:"flex: 0 0 12rem"},
+        {ColumnName: "actionType", DisplayName: "Action Type", ShowFilter: true, ShowGrid: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["Authenticated","APIRequest"],width:"flex: 0 0 15rem"},
         {ColumnName: "authenticationType", DisplayName: "Authentication Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["OAUTH2","API_KEY","BASIC","OAUTH","NONE"]},
         {ColumnName: "endPoint", DisplayName: "URL/Root Domain", ShowFilter: true, ShowGrid: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true},
         {ColumnName: "methodType", DisplayName: "Method Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false,dropdownList:["GET","POST","PUT","DELETE"],width:"flex: 0 0 10rem"},

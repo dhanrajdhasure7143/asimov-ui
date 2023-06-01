@@ -495,7 +495,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'requestValue')
-            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)@\\])$")]);
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+(\\s[a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)@\\])$")]);
+            // this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9!@#$%^&*()-=_+{}~`;:',.<>/?]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'addTo')
             this.connectorForm.get(key).setValidators([Validators.required]);

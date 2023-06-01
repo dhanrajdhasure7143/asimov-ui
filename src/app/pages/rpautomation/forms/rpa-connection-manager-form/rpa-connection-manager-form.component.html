@@ -34,10 +34,10 @@
                 <div class="col-md-5 pr-0">
                     <div class="row justify-content-end">
                         <button *ngIf="!isRequest" type="button" class="btn new-cancelbtn" [disabled]="isRequest"
-                                    (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue">Test</button>
-                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                                    (click)="testAction()" [disabled]="connectorForm.invalid || isKeyValue || actionNameCheck">Test</button>
+                        <button *ngIf="!isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="saveAction()">Save</button>
-                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid" class="btn bluebg-button"
+                        <button *ngIf="isUpdate" type="button" [disabled]="isIconSize || connectorForm.invalid || actionNameCheck" class="btn bluebg-button"
                                     (click)="updateAction()">Update</button>   
                     </div>  
                 </div>
@@ -51,7 +51,7 @@
                                     <label class="label-control" for="programname"> Action Name
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="51" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" maxlength="51" pInputText [style]="{'width':'100%'}" value="" (input)="checkActionName()"
                                         formControlName="actionName"
                                         [ngClass]="connectorForm.get('actionName').valid?'enteredfield-color':'inputfield-color'"
                                         placeholder="Enter Action Name">
@@ -65,20 +65,44 @@
                                     <span *ngIf="connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')" class="required">
                                         Only space between words are allowed & Numbers are not allowed.
                                     </span>
+                                    <span *ngIf="actionNameCheck && connectorForm.get('actionName').value && !connectorForm.get('actionName').hasError('pattern')" class="required">
+                                        Action name already exists*
+                                    </span>
                             </div>                            
-                            <div class="col-md-6 form-group pr-0">
-                                <label class="label-control" for="programname"> Action Type
-                                    <span class="star">*</span>
-                                </label>
-                                <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
-                                [style]="{'width':'100%'}" placeholder="Select Action" 
-                                optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
-                                <span
-                                    *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
-                                    class="required"> Action Type Required
+                            <div class="col-md-6 form-group pr-0 actionlogoblck">
+                                <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
+                                <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo</label>
+                                <!-- <div class="row">
+                                    <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                        formControlName="">
+                                    <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'89%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
+                                        formControlName=""> 
+                                    <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
+                                </div> -->
+                                <div class="input-group">
+                                    <input type="file" pInputText class="form-control" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                      aria-label="Upload" /> 
+                                    <span  id="inputGroupFileAddon04">
+                                        <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
+                                    </span>
+                                </div>
+                                <span *ngIf="isIconSize" class="required">
+                                    File size must be less then 200kb 
                                 </span>
-                            </div>
-                            <div class="col-md-6 form-group pl-0">
+                        </div>
+                        <div class="col-md-6 form-group pl-0">
+                            <label class="label-control" for="programname"> Action Type
+                                <span class="star">*</span>
+                            </label>
+                            <p-dropdown [options]="actionItems" formControlName="actionType" [disabled] = "isDisabled.AuthenticatedType"
+                            [style]="{'width':'100%'}" placeholder="Select Action" 
+                            optionLabel="value" optionValue="type" (onChange)="actionChange($event.value)"></p-dropdown>
+                            <span
+                                *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')"
+                                class="required"> Action Type Required
+                            </span>
+                        </div>
+                            <div class="col-md-6 form-group pr-0">
                                 <label class="label-control" for="programname"> Method Type
                                     <span class="star">*</span>
                                 </label>
@@ -90,30 +114,10 @@
                                     class="required"> Method Type Required
                                 </span>
                             </div>
-                            <div class="col-md-6 form-group pr-0 actionlogoblck">
-                                    <label *ngIf="!isUpdate" class="label-control" for="programname"> Action Logo</label>
-                                    <label *ngIf="isUpdate" class="label-control" for="programname"> Replace Action Logo</label>
-                                    <!-- <div class="row">
-                                        <input *ngIf="!isUpdate" type="file" title="only PNG accepted" pInputText [style]="{'width':'100%'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
-                                            formControlName="">
-                                        <input *ngIf="isUpdate" type="file" class="custom" title="only PNG accepted" pInputText [style]="{'width':'89%','margin':'0 0 0 3px'}" accept="image/png, image/svg"  (change)="imageUpload($event)"
-                                            formControlName=""> 
-                                        <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
-                                    </div> -->
-                                    <div class="input-group">
-                                        <input type="file" pInputText class="form-control" title="only PNG accepted" accept="image/png, image/svg" (change)="imageUpload($event)" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-                                          aria-label="Upload" /> 
-                                        <span  id="inputGroupFileAddon04">
-                                            <img *ngIf="isUpdate" class="logo" [src]="'data:image/png;base64,'+action_icon"  alt="Action_Logo">
-                                        </span>
-                                    </div>
-                                    <span *ngIf="isIconSize" class="required">
-                                        File size must be less then 200kb 
-                                    </span>
-                            </div>
+                            
                             <div class="col-md-12 form-group p-0" >
                                     <label class="label-control"> API/URL <span class="star">*</span> </label>
-                                    <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint"
+                                    <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint" (keyup)="onEnterEndpoint()"
                                     type="url" name="url" id="url" placeholder="Enter API/URL">
                                     </textarea>
                                     <span
