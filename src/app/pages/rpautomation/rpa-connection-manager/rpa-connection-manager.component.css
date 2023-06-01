@@ -84,7 +84,8 @@ input[type=file]::file-selector-button:hover {
 
 .logo{
   height: 35px;
-  text-align: center;
+  /* text-align: center; */
+  margin-top: 5px;
 }
 
 /* .custom::before{

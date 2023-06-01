@@ -2832,6 +2832,38 @@ span.tabscount {
   height: 100%;
   display: inline-block;
 }
+/* connection manager params tab styles*/
+.paramstab {
+  background-color: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  padding: 0px 10px 20px;
+}
+.paramstab .p-tabview-nav-content {
+  height: 50px !important;
+  border-bottom: 1px solid #ddd;
+}
+.paramstab .p-tabview .p-tabview-nav {
+  height: 50px !important;
+}
+.paramstab .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 2px 16px 0px !important;
+}
+.paramstab .p-tabview .p-tabview-panels {
+  padding: 0px !important;
+}
+.actionlogoblck .input-group {
+  display: block !important;
+  /* align-items: center !important; */
+}
+.actionlogoblck  .input-group>.form-control {
+  width: 100% !important;
+  /* width: 60% !important;
+  flex: inherit !important;
+  margin-right: 10px; */
+}
+/* connection manager params tab styles*/
+
 /* Tabs NEW Styles End */
 
 
@@ -2918,10 +2950,10 @@ span.statusbadge_nc {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px);   /* for action items - connection manager grid */
 }
-.actionitems-grid .p-datatable-wrapper td span {   /* for action items - connection manager grid */
-  /* width: 165px;       
+.actionitems-grid .p-datatable-wrapper td:nth-child(3) span {   /* for action items - connection manager grid */
+  width: 250px;       
   display: block;
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis; */
 }
 .usersgrid .p-datatable-wrapper {
@@ -2968,7 +3000,9 @@ mention-list ul.dropdown-menu.scrollable-menu.mention-menu {
   width: 100% !important;
   box-shadow: 1px 1px 9px rgba(0,0,0,.175) !important;
 }
-.scrollable-menu{max-height: 106px !important;}
+.scrollable-menu{
+  max-height: 106px !important;
+}
 /* chat mention styles */
 /* for RecentActivities  grid */
 
@@ -2977,6 +3011,7 @@ th {
   border: unset !important;
   border: none !important;
   color: var(--main-txtcolor) !important;
+  background: var(--main-bgcolor) !important;
   border-width: unset !important;
   border-color: transparent !important;
   padding: 5px 10px !important;
@@ -2984,7 +3019,6 @@ th {
   vertical-align: middle !important;
   font-size: 14px !important;
   text-transform: capitalize;
-  /* background-color: #fff !important; //for grid bg white */
 }
 .p-datatable .p-datatable-header {
   padding: 0px !important;
@@ -3010,8 +3044,9 @@ tbody tr {
 }
 .p-datatable .p-datatable-tbody > tr > td,
 tbody tr td {
-  border-bottom: 1px solid #E0E0E0 !important;
   padding: 8px 10px !important;
+  border: none !important;
+  border-bottom: 1px solid #e0e0e0 !important;
 }
 /* for arrow / checkbox columns header */
 th.arrowcol {   
@@ -3057,7 +3092,7 @@ th.p-element.p-sortable-column.p-resizable-column {
 }
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover{
- background-color: #f8f9fa !important;
+ background: var(--main-bgcolor) !important;
  color: var(--main-txtcolor) !important;
 }
 .p-datatable .p-sortable-column:focus {
@@ -3808,17 +3843,15 @@ textarea.p-inputtextarea {
 .usertaggedprofile {
   background-color: #fff;
   border-radius: 6px;
-  box-shadow: 0px 0px 10px #ccc;
+  box-shadow: 0px 2px 5px #b7b7b7;
   display: none;
   position: absolute;
-  z-index: 1;
-  padding: 10px;
+  z-index: 999999;
+  padding: 5px 10px;
   align-items: center;
-  /* width: 295px;
-    bottom: 25px;
-   left: 0px; */
   width: 250px;
-  top: 25px;
+  top: 15px;
+  /* top: 25px; */
 }
 .icon-color:hover .usertaggedprofile {
   display: flex;
@@ -3828,25 +3861,30 @@ textarea.p-inputtextarea {
   cursor: pointer;
 }
 .usrtag {
-  background-color: var(--main-bluecolor);
+  background-color: #1e65d3;
   color: #fff;
   border-radius: 100%;
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-right: 15px;
-  font-size: 18px;
+  margin-right: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 .usrtaginfo p {
   margin-bottom: 0px !important;
   color: var(--main-txtcolor);
 }
+.usrtaginfo p:last-child {
+  font-size: 13px !important;
+}
 .usrtaginfo p.usrtagname {
   font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 5px !important;
+  font-size: 15px;
+  margin-bottom: 0px !important;
+  line-height: 1.5rem;
 }
 /* collaboration - user tagged styles end */
 
