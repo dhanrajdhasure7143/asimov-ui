@@ -2853,14 +2853,7 @@ span.tabscount {
   padding: 0px !important;
 }
 .actionlogoblck .input-group {
-  display: block !important;
-  /* align-items: center !important; */
-}
-.actionlogoblck  .input-group>.form-control {
-  width: 100% !important;
-  /* width: 60% !important;
-  flex: inherit !important;
-  margin-right: 10px; */
+  align-items: center !important;
 }
 /* connection manager params tab styles*/
 

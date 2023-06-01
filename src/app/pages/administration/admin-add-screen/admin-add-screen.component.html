@@ -1,28 +1,37 @@
 <div class="maincontent">
   <div class="row main-content-head">
-    <h3>
-      <label id="popup_title">
-        <a routerLink="/pages/admin/admin-screen-list" class="imageBox">
-          <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
-          <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
-        </a>
-      </label>
-
-      <span class="title_text" *ngIf="!labelupdate">
-        Create Screen
-      </span>
-      <span class="title_text_haspath" *ngIf="labelupdate">
-        <span class="breadcrum-back" routerLink="/pages/admin/admin-screen-list"> Update Screen</span><span class="breadcrum-align">/</span>
-        <span class="sub_title_text">{{filterData.Screen_Name}}</span>
-      </span>
-    </h3>
-        <!-- <div class="col">
-          <span class="module-back-button" routerLink="/pages/admin/admin-screen-list">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
-          </span>
-          <span class="module-header-title" *ngIf="!labelupdate">Create Screen</span>
-          <span class="module-header-title" *ngIf="labelupdate">Update Screen</span>
-        </div> -->
+    <div class="col-md-4 pl-0">
+      <h3>
+        <label id="popup_title">
+          <a routerLink="/pages/admin/admin-screen-list" class="imageBox">
+            <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+            <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+          </a>
+        </label>
+  
+        <span class="title_text_haspath">
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back">Screen Generation</span> 
+          <span class="breadcrum-align" *ngIf="!labelupdate">/</span> 
+          <span class="sub_title_text" *ngIf="!labelupdate">Create Screen</span> 
+          <span class="breadcrum-align" *ngIf="labelupdate">/</span>
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back" *ngIf="labelupdate">Update Screen</span> 
+          <span class="breadcrum-align" *ngIf="labelupdate">/</span> 
+          <span class="sub_title_text"*ngIf="labelupdate">{{filterData.Screen_Name}}</span>
+       </span>
+      </h3>
+          <!-- <div class="col">
+            <span class="module-back-button" routerLink="/pages/admin/admin-screen-list">
+              <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title" *ngIf="!labelupdate">Create Screen</span>
+            <span class="module-header-title" *ngIf="labelupdate">Update Screen</span>
+          </div> -->
+    </div>
+    <div class="col-md-8 pr-0 text-right">
+      <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Cancel</button>
+        <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
+        <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">Update</button>
+    </div>    
   </div>
   <div class="main-content-body">
       <div class="maindivfoprm">
@@ -38,16 +47,16 @@
                   insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
                   && !insertForm.controls['screen_Name'].hasError('maxlength')
                 " class="star">
-                  Screen Name is Required *
+                  Screen Name Required
                 </span>
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
-                  class="required">Maximum of 50 characters*</span>
+                  class="required">Maximum of 50 characters</span>
                 <span *ngIf="!screenNameCheck && insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
-                  between words are allowed*
+                  between words are allowed
                 </span>
                 <div *ngIf="screenNameCheck && insertForm.get('screen_Name').value" class="required">
-                  Screen Name  already exists*
+                  Screen Name  already exists
               </div>
               </div>
               <div class="form-group col-sm-12 pl-0">
@@ -57,8 +66,11 @@
                 <input class="form-check-input inp-align" formControlName="allow_Edit" type="checkbox" name="inlineRadioOptions"
                   value="option1" />
                 <label class="label-control inp-label" for="femaleGender" >Allow Edit</label>
+                <input class="form-check-input inp-align" formControlName="allow_Delete" type="checkbox"
+                    name="inlineRadioOptions"  value="option1"/>
+                  <label class="label-control inp-label" >Allow Delete</label>
               </div>
-              <div class="form-group col-sm-12 pl-0">
+              <!-- <div class="form-group col-sm-12 pl-0">
                 <label class="label-control" formControlName="default_Sort" ngDefaultControl>Default Sort</label>
                 <select class="form-control data">
                   <option value="">Select Option</option>
@@ -82,7 +94,7 @@
                   <option value="">Select Option</option>
                 </select>
               </div>
-              <div class="col-sm-4"></div>
+              <div class="col-sm-4"></div> -->
             </div>
 
             <div class="col-6 p-0">
@@ -100,13 +112,10 @@
                     insertForm.get('table_Name')!.invalid &&
                     insertForm.get('table_Name')!.touched
                   " class="star">
-                    Table Name is Required *
+                    Table Name Required
                   </span>
                 </div>
-                <div class="form-group  col-sm-12 pr-0">
-                  <input class="form-check-input inp-align" formControlName="allow_Delete" type="checkbox"
-                    name="inlineRadioOptions"  value="option1"/>
-                  <label class="label-control inp-label" >Allow Delete</label>
+                <!-- <div class="form-group  col-sm-12 pr-0">                  
                   <input class="form-check-input inp-align" formControlName="show_As_Child" type="checkbox"
                     name="inlineRadioOptions"  value="option1"/>
                   <label class="label-control inp-label" >Show As Child</label>
@@ -120,9 +129,9 @@
                   <label class="label-control">Row Count</label>
                   <input class="form-control data" formControlName="row_Count" type="number"
                     placeholder="Enter Count" />
-                </div>
+                </div> 
                 <div class="form-group  col-sm-12 pr-0">
-                  <label class="label-control">Select Screen Type <span class="star">*</span></label>
+                  <label class="label-control">Screen Type <span class="star">*</span></label>
                   <select class="form-control data" formControlName="screenType">
                     <option value="" hidden disabled>Select Option</option>
                     <option value="dashboard">Dashboard</option>
@@ -132,9 +141,9 @@
                     insertForm.get('screenType')!.invalid &&
                     insertForm.get('screenType')!.touched
                   " class="star">
-                    Screen Type is Required *
+                    Screen Type Required
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -154,11 +163,7 @@
               </button>
           </div> -->
         </form>
-        <div class="row justify-content-end">
-          <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Cancel</button>
-          <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
-          <button *ngIf="screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="updateData()">Update</button>
-        </div>
+        
       </div>
   </div>
 </div>
@@ -186,11 +191,11 @@
         updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
         && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
       " class="required">
-                Column Label Name  Required *
+                Column Label Name  Required
               </span>
               <span
                 *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"
-                class="required">Maximum of 255 characters *</span>
+                class="required">Maximum of 255 characters</span>
               <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="required">Spaces and
                 special characters are not allowed Excluding( _ & - )
               </span>
@@ -213,8 +218,8 @@
                 <label class="label-control"><span class="span">Show grid</span></label>
               </span>
               
-              <input type="checkbox" formControlName="ShowSearch" />
-              <label class="label-control"><span class="span">Show in Search</span></label>
+              <!-- <input type="checkbox" formControlName="ShowSearch" />
+              <label class="label-control"><span class="span">Show in Search</span></label> -->
               
               <input type="checkbox" formControlName="ShowForm" />
               <label class="label-control"><span class="span">Show in Form</span></label>
@@ -232,20 +237,20 @@
               (keypress)="numberOnly($event)"  formControlName="length" class="form-control" placeholder="Enter Length" />
             </div>
 
-            <div class="form-group col p-0">
+            <!-- <div class="form-group col p-0">
               <label for="" class="label-control">Default Type</label>
               <select class="form-control data" formControlName="default_type">
                 <option value="">Select Option</option>
                 <option>Text</option>
               </select>
-            </div>
+            </div> -->
 
             <div class="form-group col p-0">
               <label for="" class="label-control">Data Type</label>
               <input type="text" class="form-control" formControlName="data_type" placeholder="Enter Data type" />
             </div>
 
-            <div class="form-group col p-0">
+            <!-- <div class="form-group col p-0">
               <label for="" class="label-control">Default Value</label>
               <input type="text" class="form-control" formControlName="DefaultValue" placeholder="Enter Value" />
             </div>
@@ -274,7 +279,7 @@
             <div class="form-group col p-0">
               <label for="" class="label-control">Tool Tip</label>
               <input type="text" class="form-control" formControlName="tooltip" placeholder="Enter tooltip" />
-            </div>
+            </div> -->
 
             <div class="col p-0">
               <label for="" class="label-control">Placeholder</label>

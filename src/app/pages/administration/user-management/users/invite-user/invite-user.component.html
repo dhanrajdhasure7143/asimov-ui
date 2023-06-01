@@ -52,7 +52,7 @@
                         <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
                     </ng-select> -->
     
-                    <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="required">Role Required*</span> -->
+                    <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="required">Role Required</span> -->
                 </div>
     
                 <div class="form-group col-md-12 p-0 form-group">
@@ -67,7 +67,7 @@
                                 [(ngModel)]="departments" [disabled]="isdprtDisabled" required>
                     </ng-select>
                     <span *ngIf="((depart.invalid && inviteUser_form.submitted) || (depart.errors && depart.touched) )" class='required'>Departments Required </span>
-                    <!-- <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="required">Departments Required*</span> -->
+                    <!-- <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="required">Departments Required</span> -->
                 </div>
             </form>
             <div class="row justify-content-end">

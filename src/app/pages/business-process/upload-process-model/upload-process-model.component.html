@@ -354,7 +354,7 @@
                             {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
                         </select>
                         <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
-                            class='errspan required'> Please Select Process Owner </span>
+                            class='errspan required'>  Process Owner required </span>
                     </div>
                 </form>
             </div>

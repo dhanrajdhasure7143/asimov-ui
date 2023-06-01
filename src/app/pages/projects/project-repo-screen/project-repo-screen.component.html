@@ -408,7 +408,7 @@
                           
                           </textarea>
                           <span *ngIf="denyFileRequestForm.get('description').invalid && denyFileRequestForm.get('description').touched"
-                               class="errspan required">Message Required*</span>                        
+                               class="errspan required">Message Required</span>                        
 
                               <h5>This message will be notified to {{getUserName(revokeorDenyValue)}}</h5>
                       </div>                    
@@ -458,7 +458,7 @@
                         </select>
                         <span
                             *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
-                             class="errspan required">File Category Required*</span>
+                             class="errspan required">File Category Required</span>
                     </div>
                     </div>
                     <div class="form-fields col-md-12">
@@ -468,7 +468,7 @@
                         
                         </textarea>
                         <span *ngIf="uploadFileForm.get('description').invalid && uploadFileForm.get('description').touched"
-                             class="errspan required">Description Required*</span>
+                             class="errspan required">Description Required</span>
                              <span *ngIf="uploadFileDescriptionFlag" class="errspan required">
                               Maximum of 150 characters
                             </span>
@@ -518,7 +518,7 @@
                       </div>
 
                       <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
-                           class="errspan required">File Required*</span>
+                           class="errspan required">File Required</span>
                   </div>
                 
             </form>
