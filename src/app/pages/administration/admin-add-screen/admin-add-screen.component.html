@@ -9,13 +9,15 @@
           </a>
         </label>
   
-        <span class="title_text" *ngIf="!labelupdate">
-          Create Screen
-        </span>
-        <span class="title_text_haspath" *ngIf="labelupdate">
-          <span class="breadcrum-back" routerLink="/pages/admin/admin-screen-list"> Update Screen</span><span class="breadcrum-align">/</span>
-          <span class="sub_title_text">{{filterData.Screen_Name}}</span>
-        </span>
+        <span class="title_text_haspath">
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back">Screen Generation</span> 
+          <span class="breadcrum-align" *ngIf="!labelupdate">/</span> 
+          <span class="sub_title_text" *ngIf="!labelupdate">Create Screen</span> 
+          <span class="breadcrum-align" *ngIf="labelupdate">/</span>
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back" *ngIf="labelupdate">Update Screen</span> 
+          <span class="breadcrum-align" *ngIf="labelupdate">/</span> 
+          <span class="sub_title_text"*ngIf="labelupdate">{{filterData.Screen_Name}}</span>
+       </span>
       </h3>
           <!-- <div class="col">
             <span class="module-back-button" routerLink="/pages/admin/admin-screen-list">
