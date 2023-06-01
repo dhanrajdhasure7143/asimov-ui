@@ -2781,11 +2781,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     // });
   }
 
-  closeLogsOverlay(event) {
-    console.log("test")
+  closeLogsOverlay() {
     this.display = false;
-    console.log("test2",this.display)
-
     // this.logsOverlayModel.hide();
     // this.logsOverlayFlag = false;
   }
