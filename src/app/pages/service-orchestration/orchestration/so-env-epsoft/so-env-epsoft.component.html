@@ -201,7 +201,7 @@
                                         <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
                                         <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
               
-              ('environmentName').touched" class="errspan required">Name Required*</span>
+              ('environmentName').touched" class="errspan required">Name Required</span>
                                     </div>
                                     <div class="col-md-12 p-0 form-group ">
                                         <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
@@ -217,25 +217,25 @@
                     </select>
                                         <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
               
-              ('environmentType').touched" class="errspan required">Type Required*</span>
+              ('environmentType').touched" class="errspan required">Type Required</span>
               
                                     </div>
                                     <div class="col-md-12 p-0 form-group">
                                         <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                                        <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" class="errspan required"> Agent Path Required*</span>
+                                        <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" class="errspan required"> Agent Path Required</span>
               
                                     </div>
                                     <div class="col-md-12 p-0 form-group">
                                         <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                                        <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+                                        <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required</span>
                                     </div>
                                 
                                     <div class="col-md-12 p-0 form-group">
                                         <label class="label-control" for="userName">Username<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                                        <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" class="errspan required"> Username Required*</span>
+                                        <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" class="errspan required"> Username Required</span>
               
                                     </div>
               
@@ -248,13 +248,13 @@
                                         <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                             <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
                                         </span>
-                                        <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" class="errspan required"> Password Required*</span>
+                                        <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" class="errspan required"> Password Required</span>
                                     </div>
               
                                     <div class="col-md-12 p-0 form-group">
                                         <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                                        <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched" class="errspan required"> Connection Type Required*</span>
+                                        <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched" class="errspan required"> Connection Type Required</span>
               
                                     </div>
               
@@ -262,7 +262,7 @@
                                         <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
                                         <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
               
-                                        <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched" class="errspan required"> Port Required*</span>
+                                        <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched" class="errspan required"> Port Required</span>
               
                                     </div>
               
@@ -302,7 +302,7 @@
                                     <div class="col-md-12 p-0 form-group">
                                         <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
                                         <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Name">
-                                        <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" class="errspan required">Name Required*</span>
+                                        <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" class="errspan required">Name Required</span>
               
                                     </div>
                                     <div class="col-md-12 p-0 form-group ">
@@ -319,7 +319,7 @@
                           <option value="Linux" >Linux</option>
                         </select>
                                         <span *ngIf="updateForm.get('environmentType').invalid && updateForm.get
-              ('environmentType').touched" class="errspan required"> Environment Type Required*</span>
+              ('environmentType').touched" class="errspan required"> Environment Type Required</span>
                                     </div>
               
                                     <div class="col-md-12 p-0 form-group">
@@ -328,7 +328,7 @@
                                         <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter Agent Path">
                                         <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
               
-              ('agentPath').touched" class="errspan required"> Agent Path Required*</span>
+              ('agentPath').touched" class="errspan required"> Agent Path Required</span>
               
                                     </div>
                                     <div class="col-md-12 p-0 form-group">
@@ -337,7 +337,7 @@
                                         <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter IP Address/Host">
                                         <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
               
-              ('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+              ('hostAddress').touched" class="errspan required"> IP Address/Host Required</span>
                                     </div>
                                 
                                     <div class="col-md-12 p-0 form-group">
@@ -345,7 +345,7 @@
                                         <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter Username">
                                         <span *ngIf="updateForm.get('username').invalid && updateForm.get
               
-              ('username').touched" class="errspan required"> Username Required*</span>
+              ('username').touched" class="errspan required"> Username Required</span>
               
                                     </div>
               
@@ -361,7 +361,7 @@
               
                                         <span *ngIf="updateForm.get('password').invalid && updateForm.get
               
-              ('password').touched" class="errspan required"> Password Required*</span>
+              ('password').touched" class="errspan required"> Password Required</span>
                                     </div>
               
                                     <div class="col-md-12 p-0 form-group">
@@ -369,7 +369,7 @@
                                         <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type" readonly>
                                         <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
               
-              ('connectionType').touched" class="errspan required"> Connection Type Required*</span>
+              ('connectionType').touched" class="errspan required"> Connection Type Required</span>
               
                                     </div>
               
@@ -378,7 +378,7 @@
                                         <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter Port">
                                         <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
               
-              ('portNumber').touched" class="errspan required"> Port Required*</span>
+              ('portNumber').touched" class="errspan required"> Port Required</span>
               
                                     </div>
                                
