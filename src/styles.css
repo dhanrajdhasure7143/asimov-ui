@@ -3265,12 +3265,17 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 /* .p-dropdown .p-dropdown-panel {
   max-height: 230px !important;
   height: 230px !important;
-} 
-.p-dropdown-items-wrapper {
-  max-height: 175px !important;
-}*/
+} */
+.taskapprover .p-dropdown-items-wrapper {
+  max-height: 165px !important;
+}
+@media screen and (max-width:1280px) {
+  .taskapprover .p-dropdown-items-wrapper {
+    max-height: 110px !important;
+  }
+}
 .p-dropdown-filter-container input {
-  height: 36px !important;
+  height: 34px !important;
 }
 .p-link {
   background-color: transparent !important;
