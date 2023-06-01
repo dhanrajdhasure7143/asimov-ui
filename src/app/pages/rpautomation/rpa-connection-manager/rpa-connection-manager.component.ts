@@ -37,6 +37,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   userRole:any=[]
   connector_icon: any;
   isIconSize: boolean;
+  connectionNameCheck: boolean = false;
 
   constructor(
     private rest_api: RestApiService,
@@ -150,6 +151,7 @@ export class RpaConnectionManagerComponent implements OnInit {
   closeFormOverlay(event) {
     this.isFormOverlay = event;
     this.createConnectorForm.reset();
+    this.connectionNameCheck = false;
   }
 
   closeAuthOverlay(event) {
@@ -247,5 +249,16 @@ export class RpaConnectionManagerComponent implements OnInit {
   _handleReaderLoaded(e) {
     var reader = e.target;
     this.conn_logo = reader.result;
+  }
+
+  checkConnectionName() {
+    let connectionName = this.createConnectorForm.get("name").value;
+    this.rest_api.checkConnectionName(connectionName).subscribe((data) => {
+      if(data == false){
+        this.connectionNameCheck = true;
+      }else{
+        this.connectionNameCheck = false;
+      }
+    });
   }
 }

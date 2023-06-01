@@ -108,7 +108,7 @@
                     [insideClick]="true">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
                       <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" alt=""/>
-                      <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
+                      <span *ngIf="getSelectedEnvironments().length==0" class="plus">Environment</span>
                       <span *ngIf="getSelectedEnvironments().length>=1" class="plus">{{getSelectedEnvironments()[0].environmentName}}<span
                           *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
                       <span class="caret"></span>
@@ -294,13 +294,13 @@
                             <div *ngIf="loadedBotsList.length!=0" class="check">  
                               <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
-                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="left" (click)="childBotWorkspace.zoomin('')">
+                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="right" (click)="childBotWorkspace.zoomin('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg" />
                                 </button>
-                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="left" (click)="childBotWorkspace.zoomout('')">
+                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="right" (click)="childBotWorkspace.zoomout('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom Out.svg" />
                                 </button>
-                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="left"
+                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="right"
                                   (click)="childBotWorkspace.reset('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                                 </button>

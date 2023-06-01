@@ -8,12 +8,6 @@
 .env-btn>button:disabled {
   background-color: transparent !important;
 }
-
-.credential-btntool {
-  padding: 7px 6px;
-  position: relative;
-}
-
 .credential-tablegrid table td span {
   font-size: 13px !important;
 }
@@ -25,7 +19,7 @@
 
 .credential-btntool {
   position: relative;
-  padding: 6px;
+  padding: 7px 6px;
   margin: 0px !important;
 }
 
@@ -33,40 +27,6 @@
   width: 16px;
   height: 16px;
 }
-
-.tsttooltipbtn:hover span.testtooltip {
-  display: block;
-}
-
-span.testtooltip {
-  position: absolute;
-  top: 45px;
-  right: 0px;
-  background-color: #001c47;
-  color: #fff;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  padding: 3px 10px;
-  border-radius: 4px;
-  display: none;
-  z-index: 999;
-}
-
-span.testtooltip:before {
-  content: '';
-  border: 2px solid #001c47;
-  border-width: 0px 0px 2px 2px;
-  position: absolute;
-  padding: 4px;
-  right: 13px;
-  top: -5px;
-  background: #001c47;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-
 input[type=file]::file-selector-button {
   margin-right: 20px;
   border: none;
@@ -81,13 +41,10 @@ input[type=file]::file-selector-button {
 input[type=file]::file-selector-button:hover {
   background: #098de6;
 }
-
-
 .logo{
   height: 35px;
   margin-left: 15px;
 }
-/* .custom::before{
-  content: 'Replace?    ';
-  display: inline-block;
-} */
+.disbtn img {
+  cursor: no-drop !important;
+}
