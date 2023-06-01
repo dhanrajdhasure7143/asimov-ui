@@ -8,7 +8,7 @@
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control">Project Name<span class="star">*</span></label>
                         <input type="text" maxlength="51" formControlName="projectName" class="form-control data" placeholder="Enter Project Name" [ngClass]="insertForm2.get('projectName').valid?'enteredfield-color':'inputfield-color'">
-                        <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched && !insertForm2.get('projectName').hasError('pattern')" class="errspan required">Project Name Required*</span>
+                        <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched && !insertForm2.get('projectName').hasError('pattern')" class="errspan required">Project Name Required</span>
                         <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')" class="errspan required">
                         Maximum of 50 characters exceeded                       
                     </span>
@@ -29,7 +29,7 @@
                         <option *ngFor="let initiativedata of initiatives_list" [value]="initiativedata.id">
                             {{initiativedata.initiative|titlecase}}</option>
                     </select>
-                        <span *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched" class="errspan required">Initiatives Required*</span>
+                        <span *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched" class="errspan required">Initiatives Required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -47,7 +47,7 @@
                             <ng-option *ngFor="let user of resources_list" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
                         </ng-select>
 
-                        <span *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched" class="errspan required">Resources Required*</span>
+                        <span *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched" class="errspan required">Resources Required</span>
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control">Project Owner<span
@@ -57,7 +57,7 @@
                         <option *ngFor="let user of users_list" [value]="user.userId.userId">
                             {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                     </select>
-                        <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" class="errspan required">Project Owner Required*</span>
+                        <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" class="errspan required">Project Owner Required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -66,7 +66,7 @@
                             class="star">*</span></label>
                         <input type="text" formControlName="measurableMetrics" maxlength="51" placeholder="Enter Metrics To Be Measured" class="form-control data" [ngClass]="insertForm2.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="(insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched)
-                        && !insertForm2.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">Metrics To Be Measured Required*</span>
+                        && !insertForm2.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">Metrics To Be Measured Required</span>
                         <span *ngIf="insertForm2.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters exceeded
                         </span>
@@ -78,7 +78,7 @@
                      
                         <!-- <input type="text" class="form-control data" placeholder="Enter Value Chain" maxlength="51" formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="(insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched)
-                        && !insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">Value Chain Required*</span>
+                        && !insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">Value Chain Required</span>
                         <span *ngIf="insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters exceeded
                         </span> -->
@@ -97,7 +97,7 @@
 
                     <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
                         class="errspan required">
-                        Department Required*
+                        Department Required
                     </div>
                         
                     </div>
@@ -111,7 +111,7 @@
                         <option *ngFor="let process of selected_process_names"
                             [value]="process.processId">{{process.processName}}</option>
                     </select>
-                        <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" class="errspan required">Process Required*</span>
+                        <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" class="errspan required">Process Required</span>
                     </div>
                     <div class="form-group col-md-6 pl-0" *ngIf="freetrail=='true'">
                         <label class="label-control">Select Process</label>
@@ -135,7 +135,7 @@
                     </select>
                     <span
                         *ngIf="insertForm2.get('access').invalid && insertForm2.get('access').touched"
-                        class="errspan required">Access Required*</span> -->
+                        class="errspan required">Access Required</span> -->
 
                         <label class="label-control">Project Priority<span
                             class="star">*</span></label>
@@ -145,7 +145,7 @@
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
                     </select>
-                        <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" class="errspan required">Project Priority Required*</span>
+                        <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" class="errspan required">Project Priority Required</span>
                     </div>
                     <!-- <label class="label-control" >Status<span class="star">*</span></label>
                                     <select   formControlName="status"  class="form-control data">
@@ -157,7 +157,7 @@
                                       <option value="Approved">Approved</option>
                                       <option value="Rejected">Rejected</option>
                                   </select>
-                                  <span *ngIf="insertForm2.get('status').invalid && insertForm2.get('status').touched" class="errspan required">Status Required*</span>
+                                  <span *ngIf="insertForm2.get('status').invalid && insertForm2.get('status').touched" class="errspan required">Status Required</span>
                             -->
                 </div>
                 <div class="col-md-12">
@@ -165,12 +165,12 @@
                         <label class="label-control">Start Date<span class="star">*</span></label>
                         <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
                         <input class="form-control" type="date" name="daytime" max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate" [ngClass]="insertForm2.get('startDate').valid?'enteredfield-color':'inputfield-color'">
-                        <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" class="errspan required">Start Date Required*</span>
+                        <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" class="errspan required">Start Date Required</span>
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control">End Date<span class="star"></span></label>
                         <input class="form-control" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate" class="form-control data" [ngClass]="insertForm2.get('endDate').valid?'enteredfield-color':'inputfield-color'">
-                        <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" class="errspan required">End Date Required*</span>
+                        <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" class="errspan required">End Date Required</span>
                     </div>
                    
 
@@ -185,7 +185,7 @@
                                 {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                         </select>
                    
-                        <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched" class="errspan required">Process Owner Required*</span>
+                        <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched" class="errspan required">Process Owner Required</span>
                     </div>
                     
                     <div class="form-group col-md-6 pl-0" *ngIf="freetrail=='true'">
@@ -205,7 +205,7 @@
                         <textarea class="form-control data" formControlName="projectPurpose" row="3" placeholder="Enter Project Description" style=" resize: none;" maxlength="151" [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                             </textarea>
                         <span *ngIf="(insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched)
-                        && !insertForm2.controls['projectPurpose'].hasError('maxlength')" class="errspan required">Project Description Required*</span>
+                        && !insertForm2.controls['projectPurpose'].hasError('maxlength')" class="errspan required">Project Description Required</span>
                         <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')" class="errspan required">
                             Maximum of 150 characters exceeded
                         </span>

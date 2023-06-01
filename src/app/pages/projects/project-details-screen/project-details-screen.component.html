@@ -272,7 +272,7 @@
                                     <div *ngIf="editdata==true">
                                         <input type="date" class="small-input"
                                             (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
-                                            <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required*</span>
+                                            <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required</span>
                                             <span *ngIf="projectStartDate > projectenddate"
                                             class="errspan required">Start Date Should Not Be Greater Than End Date</span>
                                     </div>
@@ -1279,7 +1279,7 @@
                                 </select>
                                 <span
                                     *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
-                                    class="errspan required">Status Required*</span>
+                                    class="errspan required">Status Required</span>
                             </div>
                             <div class="form-group col-md-6 pr-0">
                                 <label id="priority" for="priority">Priority<span class="star">*</span></label>
@@ -1291,7 +1291,7 @@
                                 </select>
                                 <span
                                     *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
-                                    class="errspan required">Priority Required*</span>
+                                    class="errspan required">Priority Required</span>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -1535,7 +1535,7 @@
                             </select>
                             <span
                                 *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
-                                class="errspan required">File Category Required*</span>
+                                class="errspan required">File Category Required</span>
                         </div>
                         <div class="form-group col-md-12">
 
@@ -1548,7 +1548,7 @@
               </textarea>
                             <span
                                 *ngIf="uploadtaskFileForm.get('description').invalid && uploadtaskFileForm.get('description').touched"
-                                class="errspan required">Description Required*</span>
+                                class="errspan required">Description Required</span>
                             <span *ngIf="uploadFileDescriptionFlag" class="errspan required">
                                 Maximum of 150 characters
                             </span>
@@ -1632,7 +1632,7 @@
                         </select>
                         <span
                             *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched"
-                            class="errspan required">File Category Required*</span>
+                            class="errspan required">File Category Required</span>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
@@ -1645,7 +1645,7 @@
                   </textarea>
                     <span
                         *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
-                        class="errspan required">Description Required*</span>
+                        class="errspan required">Description Required</span>
                     <span *ngIf="uploadFileDescriptionFlag" class="errspan required">
                         Maximum of 150 characters
                     </span>
@@ -1686,7 +1686,7 @@
 
                     <span
                         *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
-                        class="errspan required">File Required*</span>
+                        class="errspan required">File Required</span>
 
                 </div>
 

@@ -8,6 +8,7 @@
             <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
           </a>
         </label>
+  
         <span class="title_text_haspath">
           <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back">Screen Generation</span> 
           <span class="breadcrum-align" *ngIf="!labelupdate">/</span> 
@@ -46,16 +47,16 @@
                   insertForm.get('screen_Name')!.touched && !insertForm.get('screen_Name').hasError('pattern')
                   && !insertForm.controls['screen_Name'].hasError('maxlength')
                 " class="star">
-                  Screen Name Required *
+                  Screen Name Required
                 </span>
                 <span
                   *ngIf="insertForm.controls['screen_Name'].hasError('maxlength') && !insertForm.get('screen_Name').hasError('pattern')"
-                  class="required">Maximum of 50 characters*</span>
+                  class="required">Maximum of 50 characters</span>
                 <span *ngIf="!screenNameCheck && insertForm.get('screen_Name').hasError('pattern')" class="required">Only Aplhabets and spaces
-                  between words are allowed *
+                  between words are allowed
                 </span>
                 <div *ngIf="screenNameCheck && insertForm.get('screen_Name').value" class="required">
-                  Screen Name  already exists *
+                  Screen Name  already exists
               </div>
               </div>
               <div class="form-group col-sm-12 pl-0">
@@ -111,7 +112,7 @@
                     insertForm.get('table_Name')!.invalid &&
                     insertForm.get('table_Name')!.touched
                   " class="star">
-                    Table Name Required *
+                    Table Name Required
                   </span>
                 </div>
                 <!-- <div class="form-group  col-sm-12 pr-0">                  
@@ -130,7 +131,7 @@
                     placeholder="Enter Count" />
                 </div> 
                 <div class="form-group  col-sm-12 pr-0">
-                  <label class="label-control">Select Screen Type <span class="star">*</span></label>
+                  <label class="label-control">Screen Type <span class="star">*</span></label>
                   <select class="form-control data" formControlName="screenType">
                     <option value="" hidden disabled>Select Option</option>
                     <option value="dashboard">Dashboard</option>
@@ -140,7 +141,7 @@
                     insertForm.get('screenType')!.invalid &&
                     insertForm.get('screenType')!.touched
                   " class="star">
-                    Screen Type is Required *
+                    Screen Type Required
                   </span>
                 </div> -->
               </div>
@@ -190,11 +191,11 @@
         updateColumnForm.get('DisplayName')!.touched && !updateColumnForm.get('DisplayName').hasError('pattern')
         && !updateColumnForm.controls['DisplayName'].hasError('maxlength')
       " class="required">
-                Column Label Name  Required *
+                Column Label Name  Required
               </span>
               <span
                 *ngIf="updateColumnForm.controls['DisplayName'].hasError('maxlength') && !updateColumnForm.get('DisplayName').hasError('pattern')"
-                class="required">Maximum of 255 characters *</span>
+                class="required">Maximum of 255 characters</span>
               <span *ngIf="updateColumnForm.get('DisplayName').hasError('pattern')" class="required">Spaces and
                 special characters are not allowed Excluding( _ & - )
               </span>
