@@ -1998,9 +1998,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
       let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
       if(selectedTask)
+      {
         item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
         item["isConnectionManagerTask"] = selectedTask.isConnectionManagerTask == undefined?"null":selectedTask.isConnectionManagerTask;
-      return item;
+      }
+        return item;
     })]
   }
 
