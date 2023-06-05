@@ -278,12 +278,11 @@
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
                             </span> -->
                             <span *ngIf="screenTable =='aprovalList'">
-                                <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" [style]="{'marginRight':'20px'}" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
+                                <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" [style]="{'marginRight':'35px'}" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
                                     <!-- <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
                                     <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/> -->
                                     <i class="pi pi-check text-success  approveOrReject"></i>
                                   </button>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;
                                   <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
                                         <!-- <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
                                         <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/> -->
