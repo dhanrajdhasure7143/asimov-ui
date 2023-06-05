@@ -144,7 +144,7 @@
                                                 <span  *ngIf="rowData[col.ColumnName].length<=20">
                                                     {{rowData[col.ColumnName]}}
                                                 </span>
-                                                <span class="testtooltip">{{rowData[col.ColumnName]}}</span>
+                                                <span class="testtooltip">{{(rowData[col.ColumnName] | slice : 0: 100)}} <span *ngIf="rowData[col.ColumnName].length>100">...</span></span>
                                             </span>                                 
                                             <span *ngIf="rowData[col.ColumnName].length==''">
                                                 -
