@@ -149,9 +149,9 @@ export class ConfigureDashboardComponent implements OnInit {
       let itemId = metric.childId ? metric.childId : metric.id;
       let findIndex: number;
       this.addedMetrics.forEach((item, i) => {
-        if (item.childId)
+        if (item.childId){
           if (item.childId == itemId) findIndex = i;
-          else {
+        }else {
             if (item.id == itemId) findIndex = i;
           }
       });
@@ -209,9 +209,9 @@ export class ConfigureDashboardComponent implements OnInit {
       let itemId = widget.childId ? widget.childId : widget.id;
       let findIndex: number;
       this.addedWidgets.forEach((item, i) => {
-        if (item.childId)
+        if (item.childId){
           if (item.childId == itemId) findIndex = i;
-          else {
+        }else {
             if (item.id == itemId) findIndex = i;
           }
       });

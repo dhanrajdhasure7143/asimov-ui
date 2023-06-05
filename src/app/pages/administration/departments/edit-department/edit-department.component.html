@@ -25,7 +25,7 @@
                                 <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="editDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
                                 <span
                                         *ngIf="(editDepartmentForm.get('departmentName').invalid && editDepartmentForm.get('departmentName').touched)
-                                                && !editDepartmentForm.controls['departmentName'].hasError('maxlength')" class="required">Department Required *</span>
+                                                && !editDepartmentForm.controls['departmentName'].hasError('maxlength')" class="required">Department Required</span>
                                 <span
                                         *ngIf="editDepartmentForm.controls['departmentName'].hasError('maxlength')"
                                              class="required">Maximum of 50 characters</span>
@@ -43,7 +43,7 @@
                                 </select>
                                 <span
                                     *ngIf="editDepartmentForm.get('owner').invalid && editDepartmentForm.get('owner').touched"
-                                    class="required">Owner Required *</span>
+                                    class="required">Owner Required</span>
                             </div>
                     </div>
                 </form>

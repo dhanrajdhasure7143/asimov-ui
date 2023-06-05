@@ -10,9 +10,9 @@
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
           <span class='required'
             *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern))">Card
-            Holder Name required *</span>
+            Holder Name required</span>
           <span *ngIf="cardHolder.errors && cardHolder.invalid">
-            <span *ngIf="cardHolder.errors.pattern" class='required'>Enter only Alphabets and spaces between the words are allowed *</span>
+            <span *ngIf="cardHolder.errors.pattern" class='required'>Enter only Alphabets and spaces between the words are allowed</span>
           </span>
           </div>
         <div class="col-md-6 form-group pr-0">
@@ -34,7 +34,7 @@
             <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
           </select>
           <span *ngIf="((month.invalid && paymentform.submitted) || (month.errors && month.touched) )" 
-          class='required'>Month Required *</span> 
+          class='required'>Month Required</span> 
         </div>
         <div class="col-md-6 form-group pr-0">
           <label  class="label-control" for="year">Year (YYYY)<span class="star">*</span></label>
@@ -44,13 +44,13 @@
             <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
           </select>
           <span *ngIf="((year.invalid && paymentform.submitted) || (year.errors && year.touched) )" 
-          class='required'>Year Required *</span> 
+          class='required'>Year Required</span> 
         </div>
         <div class="col-md-6 form-group pl-0">
           <label  class="label-control" for="cvv">CVV<span class="star">*</span></label>
           <input type="password" class="form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
           <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
-          class='required'>C<span class="CVV-CAPTL">VV</span> Required *</span> 
+          class='required'>C<span class="CVV-CAPTL">VV</span> Required</span> 
         </div>
         <div class="col-md-12 p-0">
           <div class='fset_default'>

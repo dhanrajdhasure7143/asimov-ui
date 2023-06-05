@@ -12,12 +12,15 @@
                     <input type="text" maxlength="51" class="form-control data" formControlName="environmentName"
                         #environmentName value="" placeholder="Enter Name">
                     <span
-                        *ngIf="(environmentForm.get('environmentName').invalid && environmentForm.get('environmentName').touched) && !environmentForm.controls['environmentName'].hasError('maxlength')"
-                        class="required">Name Required*</span>
+                        *ngIf="(environmentForm.get('environmentName').invalid && environmentForm.get('environmentName').touched) && !environmentForm.controls['environmentName'].hasError('maxlength') && !environmentForm.get('environmentName').hasError('pattern')"
+                        class="required">Name Required</span>
                     <div *ngIf="environmentForm.controls['environmentName'].hasError('maxlength')"
                         class="required">
                         Maximum of 50 characters
                     </div>
+                    <span
+                        *ngIf="environmentForm.get('environmentName').hasError('pattern')"
+                        class="required">Spaces and special characters are not allowed Excluding( _ & - )*</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
@@ -29,7 +32,7 @@
                     </select>
                     <span
                         *ngIf="environmentForm.get('environmentType').invalid && environmentForm.get('environmentType').touched"
-                        class="required">Type Required*</span>
+                        class="required">Type Required</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
@@ -37,18 +40,14 @@
                         placeholder="Enter Agent Path">
                     <span
                         *ngIf="(environmentForm.get('agentPath').invalid && environmentForm.get('agentPath').touched) && !environmentForm.controls['agentPath'].hasError('maxlength')&& !environmentForm.controls['agentPath'].hasError('pattern')"
-                        class="required"> Agent Path Required*</span>
+                        class="required"> Agent Path Required</span>
                     <div *ngIf="environmentForm.controls['agentPath'].hasError('maxlength')"
                         class="required">
                         Maximum of 50 characters
-                    </div>
-                    <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && !environmentForm.controls['agentPath'].hasError('maxlength')) && environmentForm.get('agentPath').touched"
-                    class="required">
-                    Invalid Agent Path format*
                 </div>
-                <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && environmentForm.controls['agentPath'].hasError('maxlength'))"
+                <div *ngIf="environmentForm.get('agentPath').hasError('pattern') "
                     class="required">
-                    Invalid Agent Path format*
+                    Spaces are not allowed*
                 </div>
                 </div>
                 <div class="col-md-12 p-0 form-group">
@@ -58,7 +57,7 @@
                         placeholder="Enter IP Address / Host">
                     <span
                         *ngIf="(environmentForm.get('hostAddress').invalid && environmentForm.get('hostAddress').touched) && !environmentForm.controls['hostAddress'].hasError('maxlength') && !environmentForm.controls['hostAddress'].hasError('pattern')"
-                        class="required"> IP Address/Host Required*</span>
+                        class="required"> IP Address/Host Required</span>
                     <div *ngIf="(environmentForm.controls['hostAddress'].hasError('pattern') && !environmentForm.controls['hostAddress'].hasError('maxlength')) && environmentForm.get('hostAddress').touched"
                         class="required">
                         Invalid IP Address format
@@ -78,7 +77,7 @@
                     </select>
                     <span
                         *ngIf="(environmentForm.get('categoryId').invalid && environmentForm.get('categoryId').touched)"
-                        class="required"> Category Required*</span>
+                        class="required"> Category Required</span>
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="userName">Username<span class="star">*</span></label>
@@ -86,7 +85,7 @@
                         placeholder="Enter Username">
                     <span
                         *ngIf="(environmentForm.get('username').invalid && environmentForm.get('username').touched) && !environmentForm.controls['username'].hasError('maxlength')"
-                        class="required"> Username Required*</span>
+                        class="required"> Username Required</span>
                     <div *ngIf="environmentForm.controls['username'].hasError('maxlength')"
                         class="required">
                         Maximum of 50 characters
@@ -111,7 +110,7 @@
                     </span>
                     <span
                         *ngIf="(environmentForm.get('password').invalid && environmentForm.get('password').touched) && !environmentForm.controls['password'].hasError('maxlength')"
-                        class="required"> Password Required*</span>
+                        class="required"> Password Required</span>
                     <div *ngIf="environmentForm.controls['password'].hasError('maxlength')" class="required">
                         Maximum of 50 characters
                     </div>
@@ -130,7 +129,7 @@
                         placeholder="Enter Connection Type" readonly>
                     <span
                         *ngIf="(environmentForm.get('connectionType').invalid && environmentForm.get('connectionType').touched) && !environmentForm.controls['connectionType'].hasError('maxlength')"
-                        class="required"> Connection Type Required*</span>
+                        class="required"> Connection Type Required</span>
                     <div *ngIf="environmentForm.controls['connectionType'].hasError('maxlength')"
                         class="required">
                         Maximum of 50 characters
@@ -143,7 +142,7 @@
                         value="" placeholder="Enter Port">
                     <span
                         *ngIf="(environmentForm.get('portNumber').invalid && environmentForm.get('portNumber').touched) && !environmentForm.controls['portNumber'].hasError('maxlength')"
-                        class="required"> Port Required*</span>
+                        class="required"> Port Required</span>
                     <div *ngIf="environmentForm.controls['portNumber'].hasError('maxlength')"
                         class="required">
                         Maximum of 4 characters

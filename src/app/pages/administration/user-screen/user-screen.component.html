@@ -9,7 +9,10 @@
               <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
             </a>
           </label>
-          <span class="title_text breadcrum-back" routerLink="/pages/admin/admin-screen-list"> {{ selectedScreen.Screen_Name }} </span>
+          <span class="title_text_haspath">
+            <span class="breadcrum-back" routerLink="/pages/admin/admin-screen-list"> Screen Generation</span><span class="breadcrum-align">/</span>  
+          <span class="sub_title_text"> {{ selectedScreen.Screen_Name }} </span>
+        </span>
         </h3>
       </div>
       <div class="col-md-4 pr-0 text-right">

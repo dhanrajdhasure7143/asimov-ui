@@ -93,6 +93,7 @@ export class RpaApprovalsComponent implements OnInit {
     }
     this.statusType=status;
     this.selectedRows=[data];
+    this.comments="";
     this.isDialogShow=true;
   }
 
@@ -140,10 +141,15 @@ export class RpaApprovalsComponent implements OnInit {
       Swal.fire("Warning","In Selected approvals "+this.selectedRows.filter((item:any)=>item.status==statusType).length+" records are already "+statusType, "warning")
       return;
     }
-    (this.selectedRows.filter((item:any)=>item.status=='Completed').length>0)?Swal.fire("Warning", "Status will not update for completed approvals","warning"):this.isDialogShow=true;
-  
-    this.statusType=statusType;
-
+    if(this.selectedRows.filter((item:any)=>item.status=='Completed').length>0){
+      Swal.fire("Warning", "Status will not update for completed approvals","warning");
+    }
+    else
+    {
+      this.statusType=statusType;
+      this.isDialogShow=true
+      this.comments="";
+    }
   }
 
   showApprovalInfo(data:any)
