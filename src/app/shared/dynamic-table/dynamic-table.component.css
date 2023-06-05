@@ -79,6 +79,8 @@ span.testtooltip {
     color: #fff;
     padding: 3px 10px;
     border-radius: 4px;
+    display:none;
+    white-space: break-spaces;
 }
 span.testtooltip:before {
     content: '';
@@ -93,4 +95,9 @@ span.testtooltip:before {
 }
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
+}
+
+
+.approvalLink{
+    color: #232832;
 }
