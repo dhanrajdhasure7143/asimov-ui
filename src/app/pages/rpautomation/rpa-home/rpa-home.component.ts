@@ -88,10 +88,10 @@ export class RpaHomeComponent implements OnInit {
   categories_list_new:any[]=[];
   columns_list = [
     { ColumnName: 'botName', DisplayName: 'Bot Name',filterType:"text",filterWidget:"normal",ShowFilter:true,showTooltip:true},
-    { ColumnName: 'createdBy', DisplayName: 'Created By',filterType:"text",filterWidget:"normal",ShowFilter:true },
     { ColumnName: 'description', DisplayName: 'Description',filterType:"text",filterWidget:"normal", ShowFilter:true,showTooltip:true},
     { ColumnName: 'categoryName', DisplayName: 'Category',filterType:"text",filterWidget:"dropdown",ShowFilter:true,dropdownList:this.categories_list_new},
     { ColumnName: 'version_new', DisplayName: 'Version',filterType:"text",filterWidget:"normal",ShowFilter:true},
+    { ColumnName: 'createdBy', DisplayName: 'Created By',filterType:"text",filterWidget:"normal",ShowFilter:true },
     // { ColumnName: 'last_modified_date', DisplayName: 'Last Modified',filterType:"date",filterWidget:"normal",ShowFilter:true },
     { ColumnName: 'botStatus', DisplayName: 'Status',filterType:"text",filterWidget:"dropdown",ShowFilter:true,dropdownList:["Success","Running","New","Failure","Killed","Stopped"] },
     { ColumnName: '', DisplayName: 'Actions' }

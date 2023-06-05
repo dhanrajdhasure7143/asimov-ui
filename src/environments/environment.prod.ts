@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
 
   pi_url: "https://ezflow.epsoftinc.com/prcintel",
   bps_url: "https://ezflow.epsoftinc.com/bpstudio",

@@ -2,9 +2,13 @@
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div class="env-btn credential-btntool">
-                <button [disabled]="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="btn" class="tsttooltipbtn" value="Create" id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="top">
-                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
-                </button>
+                    <button *ngIf="(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create"
+                        id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="top">
+                        <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
+                    </button>
+                    <button *ngIf="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="disbtn">
+                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" alt="">
+                    </button>
             </div>
         </div>
     </div>
@@ -46,14 +50,17 @@
                         <form [formGroup]="createConnectorForm">
                             <div class="form-group col p-0">
                                 <label class="label-control" for="connection"> Connector Name <span class="star">*</span></label>
-                                <input type="text" pInputText [style]="{'width':'100%'}"  maxlength="51" formControlName="name"
+                                <input type="text" pInputText [style]="{'width':'100%'}"  maxlength="51" formControlName="name"  (input)="checkConnectionName()"
                                     placeholder="Enter Connector Name">
                                 <span *ngIf="createConnectorForm.get('name').invalid && createConnectorForm.get('name').touched && !createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required"> Connector Name Required </span>
                                 <span *ngIf="createConnectorForm.controls['name'].hasError('maxlength')" class="required">
                                     Maximum of 50 characters
                                 </span>
-                                <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required">Only space
-                                    between words are allowed & Numbers are not allowed.
+                                <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required">
+                                    Only space between words are allowed & Numbers are not allowed.
+                                </span>
+                                <span *ngIf="connectionNameCheck && createConnectorForm.get('name').value && !createConnectorForm.get('name').hasError('pattern')" class="required">
+                                    Connection Name already exists*
                                 </span>
                             </div> 
                             <div class="form-group col p-0 actionlogoblck">
@@ -80,8 +87,8 @@
                         </form>
                         <div class="createform-footer">
                             <button class="btn new-cancelbtn" (click)="resetForm()"> Reset </button> 
-                            <button *ngIf="isCreate" [disabled]="isIconSize || createConnectorForm.invalid" (click)="saveConnector()" class="btn bluebg-button"> Save </button>
-                            <button *ngIf="!isCreate" [disabled]="isIconSize || createConnectorForm.get('name').invalid" (click)="updateConnector()" class="btn bluebg-button"> Update </button> 
+                            <button *ngIf="isCreate" [disabled]="isIconSize || createConnectorForm.invalid  || connectionNameCheck" (click)="saveConnector()" class="btn bluebg-button"> Save </button>
+                            <button *ngIf="!isCreate" [disabled]="isIconSize || createConnectorForm.get('name').invalid  || connectionNameCheck" (click)="updateConnector()" class="btn bluebg-button"> Update </button> 
                         </div>
                     </div>
                 </div>

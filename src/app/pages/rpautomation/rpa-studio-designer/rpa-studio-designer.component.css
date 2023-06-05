@@ -552,7 +552,7 @@ select.versions.form-control
   height: auto;
   position: absolute;
   bottom: 15px;
-  right: 15px;
+  left: 15px;
 }
 
 .modal-body.createenv-mbody {
