@@ -288,7 +288,7 @@
                     </td>
                     <td>
                       <a class="text-primary clickable" *ngIf="element.sourceType=='EPSoft'" pTooltip="View Logs" tooltipPosition="top"
-                        (click)="getBotVerions(element.botId,element.version,epsoft_logs_modal_ref)">View</a>
+                        (click)="getBotVerions(element.botId,element.version)">View</a>
                       <a class="text-primary clickable" *ngIf="element.sourceType=='UiPath'" pTooltip="View Logs" tooltipPosition="top"
                         (click)="getuipathlogs(uiPathLogsModal,element.botName,'closed')">View</a>
                       <a class="text-primary clickable" *ngIf="element.sourceType=='BluePrism'" pTooltip="View Logs" tooltipPosition="top"
@@ -307,12 +307,12 @@
   <!-- </div> -->
 
 
-  <ng-template #epsoft_logs_modal_ref>
-    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-      <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
+
+    <div *ngIf="display">
+      <app-rpa-so-logs (closeEvent)="closeLogsOverlay()" [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
         [selectedversion]="selectedversion"></app-rpa-so-logs>
     </div>
-  </ng-template>
+
 
 
 <div *ngIf="popup">
