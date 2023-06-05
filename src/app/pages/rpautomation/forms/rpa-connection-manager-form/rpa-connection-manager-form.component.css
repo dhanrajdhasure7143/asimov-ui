@@ -43,10 +43,14 @@ button.btn.new-cancelbtn:disabled {
 
 .logo{
     height: 35px;
-    /* text-align: center; */
-    margin-top: 5px;
+    margin-left: 15px;
 }
-
+.headercheckbox button:hover img.default-icon, img.hover-icon {
+    display: none;
+}
+.headercheckbox button:hover img.hover-icon, img.default-icon {
+    display: initial;
+}
 /* .custom::before{
     content: 'Replace?    ';
     display: inline-block;

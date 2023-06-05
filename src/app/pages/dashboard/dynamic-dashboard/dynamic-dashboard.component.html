@@ -89,7 +89,7 @@
                      <div>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" class="graph-set">
+                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" [ngClass]="widget.message =='No Data Found For This Department' ? 'graph-set-nodata' : 'graph-set' " >
                               <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
                               <span *ngIf="widget.message !='No Data Found For This Department'">
                               <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
@@ -172,58 +172,9 @@
                         
                         </div>
 
-                        <div  *ngIf="configuration_id == widget.id">
-                           <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
-                              <label>Project Type</label>
-                              <div class="row">
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Insert" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname" class="check-label">In
-                                       Progress</label>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname"
-                                       class="check-label">Hold</label>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname"
-                                       class="check-label">Deployed</label>
-                                 </div>
-                              </div>
-
-                           </div> -->
-
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                 <option value="">Engineering</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group  bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                 <option value="">30 Min</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                 <option value="">Engineering</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                 <option value="">30 Min</option>
-                              </select>
-                           </div> -->
+                        <div  *ngIf="configuration_id == widget.id">                            
                            <form [formGroup]="dynamicFormConfiure" class="row">
-                              <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
+                              <div class="col-6 form-group" *ngFor="let each of widget.filterOptions">
                                  <label class="label-control">{{each.label}}</label>
                                  <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                               </div>

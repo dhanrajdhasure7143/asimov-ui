@@ -30,7 +30,7 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
-  @Output('close') public closeEvent=new EventEmitter<any>();
+  @Output('closeEvent') public closeEvent=new EventEmitter<any>();
   public allLogs:any=[];
   public botrunid:any="";
   public allRuns:any=[];
@@ -60,6 +60,7 @@ export class RpaSoLogsComponent implements OnInit {
     Running:"#FFA033"
   };
   errormsg: any;
+  display:boolean = true;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -462,10 +463,9 @@ export class RpaSoLogsComponent implements OnInit {
   // }
 
 
-  closeLogsOverlay()
-  {
+  closeLogsOverlay(){
+    this.closeEvent.emit(false)
     this.selectedIterationTask==undefined;
-    this.closeEvent.emit(null)
   }
 
   showAutomatedLogs(element){

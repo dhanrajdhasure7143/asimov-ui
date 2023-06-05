@@ -22,7 +22,7 @@
                             <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                             </select>
                             <span *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
-                             class="errspan required">File Category Required*</span>
+                             class="errspan required">File Category Required</span>
                     </div>  
                     <div class="form-fields col-md-6 pr-0">
                         <label for="taskName">Request To<span class="star">*</span></label>
@@ -31,7 +31,7 @@
                             <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>   
                         </select>
                         <span *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
-                        class="errspan required">Request to Required*</span>
+                        class="errspan required">Request to Required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -39,7 +39,7 @@
                     <textarea class="form-control" formControlName="description"  maxlength="151" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description..." rows="4">
                     </textarea>
                     <span *ngIf="requestFileForm.get('description').invalid && requestFileForm.get('description').touched"
-                         class="errspan required">Description Required*</span>
+                         class="errspan required">Description Required</span>
                          <span *ngIf="uploadFileDescriptionFlag" class="errspan required">
                             Maximum of 150 characters
                           </span>
