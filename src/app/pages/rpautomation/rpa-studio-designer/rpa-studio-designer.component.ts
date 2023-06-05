@@ -45,7 +45,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isBotValidated:boolean = true;
   isOpenSideOverlay:boolean=false;
   params:any={};
-
+  executionMode:boolean=false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -277,6 +277,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         if(index==event.index)
         {
           this.current_instance=instance;
+          this.executionMode=instance.executionMode;
           this.spinner.hide();
           let url=window.location.hash;
           if(instance.finalbot.botId!=undefined)
@@ -492,6 +493,30 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
   closeOverlay1(event){  // in bot create new bot
     this.botFormVisibility=event
+  }
+
+
+  onChangeExecutionMode()
+  { 
+    Swal.fire({
+      title: 'Are you Sure?',
+      text: "You want to change version",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, change it!'
+    }).then((result) => {
+      if (result.value) {
+        this.current_instance.executionMode=this.executionMode;
+      }
+      else
+      {
+        this.executionMode=!this.executionMode;
+      }
+    })
   }
 
 }

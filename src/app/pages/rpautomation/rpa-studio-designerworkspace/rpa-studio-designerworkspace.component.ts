@@ -342,7 +342,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               confirmButton: 'btn bluebg-button',
               cancelButton: 'btn new-cancelbtn',
               },
-            cancelButtonText: "Fasle",
+            cancelButtonText: "False",
             confirmButtonText: "True",
           }).then((result) => {
             if (result.value) {
@@ -418,7 +418,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             confirmButton: 'btn bluebg-button',
             cancelButton: 'btn new-cancelbtn',
             },
-          cancelButtonText: "Fasle",
+          cancelButtonText: "False",
           confirmButtonText: "True",
         }).then((result) => {
           if (result.value) {
