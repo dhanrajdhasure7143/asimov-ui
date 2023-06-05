@@ -3195,7 +3195,8 @@ button.btn.new-cancelbtn {
   height:36px !important;
 }
 button.btn.new-cancelbtn:hover {
-  color: var(--main-bluecolor) ;
+  color: var(--main-bluecolor) ;  
+  background: transparent !important;
 }
 button:disabled,
 .btn.bluebg-button:disabled {
