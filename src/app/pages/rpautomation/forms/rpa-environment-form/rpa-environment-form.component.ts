@@ -74,7 +74,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm = this.formBuilder.group({
         environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z\/:]*$")])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9\/:._-]*$")])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId: ["", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
