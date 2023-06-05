@@ -137,13 +137,14 @@
                                             </span>
                                         </span>
                                         <span *ngIf="screenTable == 'aprovalList' && col.ColumnName=='approvalInfo' ">
-                                            <span *ngIf="rowData[col.ColumnName]!=''">
+                                            <span *ngIf="rowData[col.ColumnName]!=''" class="tsttooltipbtn">
                                                 <span *ngIf="rowData[col.ColumnName].length>20">
                                                     {{(rowData[col.ColumnName] | slice : 0: 20)}}...&nbsp;<a (click)="getApprovalInfo(rowData)" class="text-primary clickable">View More</a>
                                                 </span>
                                                 <span  *ngIf="rowData[col.ColumnName].length<=20">
                                                     {{rowData[col.ColumnName]}}
                                                 </span>
+                                                <span class="testtooltip">{{rowData[col.ColumnName]}}</span>
                                             </span>                                 
                                             <span *ngIf="rowData[col.ColumnName].length==''">
                                                 -
@@ -179,7 +180,7 @@
                                 <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                 <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                             </a>
-                            <a *ngIf="isdisabled_edit">
+                            <a *ngIf="isdisabled_edit" class="disbtn">
                                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </a>
                         </span>
@@ -214,7 +215,7 @@
                                 <img src="../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
                                 <img src="../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
                             </a>
-                            <a *ngIf="isdisabled_delete">
+                            <a *ngIf="isdisabled_delete"  class="disbtn">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </a>
                         </span>
@@ -222,10 +223,10 @@
                     <span>
                             <span *ngIf="screenTable=='users_screen'">
                                 <span *ngIf="loggedInUser==rowData['email']" class="editButton">
-                                    <a>
+                                    <a class="disbtn">
                                         <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                                     </a>
-                                    <a>
+                                    <a class="disbtn">
                                         <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                                     </a>
                                 </span>
@@ -247,10 +248,10 @@
                                     <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                     <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </a>
-                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
                                     <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
-                                <!-- <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                <!-- <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
                                     <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                 </a>
                                 <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
@@ -265,7 +266,7 @@
                                     <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                     <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </a>
-                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))">
+                                <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
                                     <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
                                 <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
