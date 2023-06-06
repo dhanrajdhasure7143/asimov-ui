@@ -2113,9 +2113,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-    document.getElementById(
-      this.dragareaid
-    ).style.transform = `scale(${this.dagvalue})`;
+    window.onload = function() {
+      var element = document.getElementById(this.dragareaid);
+      if (element) {
+        element.style.transform = `scale(${this.dagvalue})`;
+      }
+    };
     this.jsPlumbInstance.repaintEverything();
   }
 
