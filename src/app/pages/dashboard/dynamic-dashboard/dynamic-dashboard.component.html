@@ -29,9 +29,9 @@
                      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                        <li role="menuitem" *ngFor="let each of dashbordlist">
                         <span (click)="onDropdownChange(each)" class="dname">{{each.dashboardName}}</span>
-                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  (click)="setDefaultDashboard(each)">
+                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  pTooltip="Set as Default Dashoard" tooltipPosition="right" (click)="setDefaultDashboard(each)">
                            <img src="../../../../assets/images-n/dashboard/Vector.svg" alt=""/>
-                           <span class="testtooltip">Set as Default Dashoard</span>
+                           <!-- <span class="testtooltip">Set as Default Dashoard</span> -->
                         </span>
                         <span *ngIf="each.defaultDashboard" class="dropdown-icon">
                            <img src="../../../../assets/images-n/dashboard/Filled-Star.svg" alt=""/>

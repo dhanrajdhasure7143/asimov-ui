@@ -2626,7 +2626,7 @@ span.statusbadge_nc {
 .actionitems-grid .p-datatable-wrapper {
   height: calc(100vh - 180px);   /* for action items - connection manager grid */
 }
-.actionitems-grid .p-datatable-wrapper td:nth-child(3) span {   /* for action items - connection manager grid */
+.actionitems-grid .p-datatable-wrapper td:nth-child(4) span {   /* for action items - connection manager grid */
   width: 250px;
   display: block;
   /* overflow: hidden;
@@ -2825,7 +2825,8 @@ button.btn.new-cancelbtn {
   height:36px !important;
 }
 button.btn.new-cancelbtn:hover {
-  color: var(--main-bluecolor) ;
+  color: var(--main-bluecolor) ;  
+  background: transparent !important;
 }
 button:disabled,
 .btn.bluebg-button:disabled {
