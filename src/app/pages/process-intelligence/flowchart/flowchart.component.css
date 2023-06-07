@@ -318,8 +318,13 @@ span.PI-frpr-spin {
   border: 1px solid #001c47 !important;
 } */
 .caret {
-  margin-top: 6px;
   float: right;
+}
+.caret .caret-img{    
+  width: 20px;
+}
+.isactive img.caret-img {
+  filter: brightness(2);
 }
 .newmaindiv {
   height: 100%;
@@ -457,7 +462,7 @@ color: #098de6;
 .new-bps-icons .bps-float {
 float: right;
 }
-.new-bps-icons button {
+.new-bps-icons button.tsttooltipbtn {
   padding: 6px 8px;
   position: relative;
   z-index: 999;
@@ -517,10 +522,12 @@ right: 230px !important
 .PI-insights-timefeed::after {
 right: 9% !important;
 }
-.timefeed-header span:hover img.default-img {
+.timefeed-header .close:hover img.default-img, 
+.variants-header .closebtn:hover img.default-img{
 display: none;
 }
-.timefeed-header span:hover img.hover-img {
+.timefeed-header .close:hover img.hover-img, 
+.variants-header .closebtn:hover img.hover-img {
 display: initial;
 }
 .edit-disabled{

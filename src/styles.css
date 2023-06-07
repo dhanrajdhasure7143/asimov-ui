@@ -2294,7 +2294,10 @@ div {
   width: 100%;
   margin: 0 !important;
 }
-
+button {
+  border: none;
+  background: transparent;
+}
 /* Scrollbar styles START */
  ::-webkit-scrollbar {
   width: 7px;
@@ -2833,6 +2836,7 @@ button:disabled,
 }
 button.p-element.button-bot{
   background-color: transparent !important;
+  border: none !important;
 }
 
 /* Swal buttons */
