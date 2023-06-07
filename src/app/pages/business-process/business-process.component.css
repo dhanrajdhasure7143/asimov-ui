@@ -45,7 +45,6 @@
     border-radius: 3px;
     outline: none;
     border: none;
-    background: transparent;
 }
 .bps-upload {
     margin: 0px !important;
@@ -55,9 +54,6 @@
     color: #fff;
     font-size: 15px !important;
 }
-/* .bps-upload:hover {
-    background-color: #001c47 !important;
-} */
 .bps-upload img {
     padding-right: 8px;
 }
@@ -162,5 +158,5 @@ img.hover-img {
     margin-left: 10px !important;
 }
 .custom-footer-content {
-    float: right;
+    text-align: right;
 }
