@@ -3637,3 +3637,17 @@ background-color: #D8E0EF !important;
   ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
   }  */
+
+.rpasologs .p-dialog-header {
+  justify-content: inherit !important;
+}
+.rpasologs .p-dialog-header-icons {
+  margin-left: auto;
+}
+
+.rpasologs span.clickable1.refecls {
+  background-color: #098de6;
+  color:  #fff;
+  padding: 1px 10px;
+  border-radius: 50px;
+}
