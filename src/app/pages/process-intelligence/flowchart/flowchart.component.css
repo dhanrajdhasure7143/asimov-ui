@@ -440,6 +440,7 @@ margin-top: 0;
 width: 100%;
 overflow: hidden;
 padding: 0px;
+height: calc(100% - 55px);
 }
 .module-back-button {
 border-right: unset !important;

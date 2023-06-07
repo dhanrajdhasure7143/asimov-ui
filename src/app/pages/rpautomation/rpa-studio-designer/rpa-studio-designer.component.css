@@ -91,9 +91,9 @@ span.tab-botname {
     border-bottom: none !important;
 }
 
-.toolset-mainheader {
+/* .toolset-mainheader {
     background-color: #f3f3f3 !important;
-}
+} */
 
 .actionsheaderdiv img.testplus1 {
     width: 12px;
@@ -446,10 +446,10 @@ span.testtooltip::before {
   padding:10px;
 }
 
-.check{
+/* .check{
   overflow:visible !important;
   position: relative  !important;
-}
+} */
 
 .imageI{
   width: 100%;
