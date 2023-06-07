@@ -161,7 +161,7 @@
                                 <div class="">
                                     <span class="">
                                         <p-knob [(ngModel)]="projectDetails.projectPercentage" [size]="70"
-                                            valueTemplate="{value}%" (onChange)="updateprojectDetails()"></p-knob>
+                                            valueTemplate="{value}%" (mouseup)="mouseUp()" (click)="updateprojectDetails()"></p-knob>
                                         <label>Completed</label>
                                     </span>
                                 </div>
