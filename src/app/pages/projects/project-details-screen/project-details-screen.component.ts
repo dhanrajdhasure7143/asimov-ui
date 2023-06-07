@@ -226,6 +226,7 @@ columns_list_activities:any[]=[];
 uploaded_file:any[]=[];
 loggedInUserId:any;
 users_List1:any[]=[]
+mouseclick: boolean=true;
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -1521,6 +1522,7 @@ selectEnd() {
       this.roles_list.unshift(obj)
     });
   }
+mouseUp() {}
 
 }
 
