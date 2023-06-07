@@ -47,7 +47,7 @@
                 </div>
                 <div *ngIf="environmentForm.get('agentPath').hasError('pattern') "
                     class="required">
-                    Spaces are not allowed*
+                    Spaces and special characters are not allowed Excluding(_ / . : and -)*
                 </div>
                 </div>
                 <div class="col-md-12 p-0 form-group">
