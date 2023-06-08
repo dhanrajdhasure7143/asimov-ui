@@ -24,34 +24,17 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  /* background-color: #098de6 !important; 
-  color: #fff;*/
   background-color: #fdf6d4 !important;
   cursor: no-drop;
   pointer-events:none;
 }
 #process_data .tableRow .tableCell.invalid{
-  /* background-color:rgb(212, 105, 105) !important; */
   background-color:#cdcdcd !important;
   color: #fff;
   cursor: no-drop;
   pointer-events:none; 
 }
 
-
-.navbar-nav{
-float: left !important;
-}
-.svg_icons{
-  font-size:9px;
-}
-/* .columnSelection{
-  color: #0062cf;
-  margin: 5px 0;
-} */
-.sel_row{
-  width: 669px;
-}
 #search_process_data{
     border: none;
     border-bottom: 1px solid gray;
@@ -59,20 +42,7 @@ float: left !important;
 
 /* data document component styles - Ends*/
 /* filter component styles - Starts*/
-#foot, #bpmn_differences {
-    border-top: 1px solid #999999;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    height: 300px;
-    display: flex;
-    right: 0;
-    left: 0;
-    bottom:-300px;
-    background: white;
-}
-
-.slide-up
+/* .slide-up
 {
     bottom: 0px !important;
     transition: 1s;
@@ -82,33 +52,7 @@ float: left !important;
 {
     bottom: -300px !important;
     transition: 0.5s;
-}
-
-.filter_headinglabels{
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-.cross_close{
-    margin-left: 90px;
-    float:right;
-    margin-top: -30px;
-    margin-right: -85px;
-}
-
-/* .filter_typesOne{
-    font-size: 13px;
-    font-weight: bold;
 } */
-
-/* .daTyp_filter{  
-  margin-bottom: 0px !important;
-} */
-
-.type_filter, .percent_filter{
-    font-size: 13px;
-    font-weight: bold;
-}
 
 .filterSelection{
     border: none !important;
@@ -123,100 +67,13 @@ float: left !important;
     font-weight: 600;
 }
 
-.filter_slider{
-    width:70%;
-    margin-top: -20px;
-}
-
-.radio{
-    margin-left: 30px;
-    font-size: 13px;
-}
-/* .data_values{
-    background: #f4f4f4;
-    font-size: 13px;
-    font-weight: 600;
-    cursor:pointer;
-    padding: 10px;
-} */
-
-.reports{
-    margin-top: 10px;
-}
-.reports td{
-    padding: 8px;
-}
-
-.apply_button{
-    border:1px solid #0162cb !important;
-    border-radius: 25px !important;
-    background-color: #0162cb !important;
-    width: 60%;
-    margin-top: 10px;
-    margin-left: 50%;
-    font-weight: bold;
-    font-size: 12px;
-    color: white;
-
-}
 
 /* filter component styles - Ends*/
 /*flowchart component styles - Starts*/
-/* @import '../../../zoomSlider.css'; */
 
 
 /* Process Intelligance flow chart component css */
-.select_box{
-  padding-left: 130px !important;
-  font-size: 11px !important;
-  margin-top: 8px;
-}
-.varaint_select{
-  float:right;
-  font-weight:normal;
-}
-.case_heading{
-font-size: 11px;
-color: black;
-padding-bottom: 10px;
-}
-.details_one{
-  font-size: 13px;
-  padding-left: 5px;
-}
-.details_time{
-  font-size: 11px;
-  margin-right: -20px;
-  padding-top: 10px;
-}
-.details_two{
-  font-size: 11px;
-  padding-left: 5px;
-}
-.cases{
-padding-top: 5px;
-padding-bottom:5px; 
-cursor: pointer;
-}
-.details_hide{
-font-size: 13px;
-color: #0162cb;
-margin-bottom: 5px;
-display:none;
-}
-.details_hide,.details_time,.details_one,.case_heading{
-font-weight: bold;
-}
-.details_hideOne{
-cursor: pointer;
-}
-.details_hide hr{
-margin-top: 5px !important;
-border-color: white !important
-}
-.hide_detailsone{
-padding-left: 5px;
-}
+
 .select_drpdwn{
   border:none !important;
   box-shadow: none !important;
@@ -224,57 +81,9 @@ padding-left: 5px;
   border-top: 0px;
   border-bottom: 1px solid lightgray !important;
 }
-.dot {
-  height: 60px;
-  width: 60px !important;
-  background-color: white;
-  border-radius: 50%;
-  margin-left: 22px;
-  border:1px solid black;
-  padding:15px 0px;
-  margin-top:4px;
-  text-align: center !important;
-  padding-left: 8px !important;
-}
-.show_details:hover .details_hide{
-  transition: 2s !important;
-  display:block !important;
-} 
-.show_details:hover .dot{
-border:1px solid #0162cb;
-color: #0162cb;
-}
-.show_details:hover .cases span{
-  color: #0061cf;
-}
-.show_details{
-  position: relative;
-  z-index: 10;
-}
-
-.show_details:hover {
-background-color: #f4f4f4;
-padding: 5px !important;
-}
-.details_box{
-  padding: 5px;
-}
 
 .play_button span {
   padding-left: 6px;
-}
-.selectbox{
-  margin-top: 0px;
-}
-.varaint_bottom{
-margin-top: -20px;
-height: 20px;
-}
-.varaint_export{
-  font-size: 9px;
-  padding-left: 10px !important;
-  float:right;
-  margin-top: 3px;
 }
 
 .custom_tooltip hr{
@@ -282,22 +91,6 @@ height: 20px;
   margin-bottom: 5px !important;
   width: 100%;
 }
-.left_dropdwn{
-  background:none !important;
-  width: 187px !important;
-  font-size: 11px;
-  border:none !important;
-  box-shadow: none !important;
-  border-radius: 0% !important;
-  border-bottom: 1px solid gray !important;
-  padding-left: 0px !important;
-  padding-bottom: 0px !important;
-}
-.left_dropdwn1{
-  float: left;
-  margin-top: -10px;
-}
-
 .slider_label{
   margin-top: 5px;
   color: gray;
@@ -312,39 +105,12 @@ height: 20px;
   margin-top: 60px;
 }
 
-.zoom_label{
-  padding-top: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  color: gray;
-}
-.zoom_value{
-float: right;
-z-index: 1000;
-font-size: 13px;
-}
-.varient-totalcount{
-margin-left: 33px !important;
-border: 1px solid lightgray;
-border-radius: 10px;
-padding: 2px;
-}
 .tooltip_button{
   position: absolute;
   top: 20px;
   display: inline-block;
   z-index: 9;
   cursor: pointer;
-}
-.lableHide{
-  position:absolute;
-  display: inline-block;
-  z-index: 100;
-  margin-top: 10px;
-  background-color: none;
-  height: 60px;
-  width: 195px;
-  background-color: white;
 }
 
 .tooltiptext1 {
@@ -382,10 +148,7 @@ border-width: 6px;
 border-style: solid;
 border-color: transparent transparent #ccc;
 }
-.play_label,.download_label{
-  font-size: 11px;
-  padding-left: 5px;
-}
+
 .custom_tooltip{
   position: absolute; 
   background: white; 
@@ -426,19 +189,7 @@ border-color: transparent transparent #ccc;
   font-weight: bold;
   line-height: 2;
 }
-#frequency_label{
-  font-size: 8px;
-  font-weight: bold;
-  float: left;
-  margin-left: 40px;
-}
-#performance_label{
-  float: right;
-  font-size: 8px;
-  font-weight: bold;
-  margin-right: 30px;
-  padding-left: 8px;
-  }
+
 .filter_btn{
   float:right;
   margin-top: -30px;
@@ -447,20 +198,7 @@ border-color: transparent transparent #ccc;
   background: none !important;
   outline: none !important;
 }
-.slide-up{
-bottom: 0px !important;
-transition: 1s;
-}
 
-.slide-down{
-bottom: -300px !important;
-transition: 0.5s;
-}
-
-.activevaraint{
-  /* border-left:2px solid green !important;
-  background: lightgray; */
-}
 #toolTipParagraphone,#linktoolTipParagraphone{
   float: left;
   font-size: 11px;
@@ -480,32 +218,6 @@ transition: 0.5s;
   line-height: 2;
 }
 
-#performance_btn{
-  float: right;
- margin-right: 40px;
- border: none !important;
- background: none !important;
- outline: none !important;   
-}
-
-#frequency_btn{
-    margin-left: 40px;
-    border: none !important;
-    background: none !important;
-    outline: none !important;
-}
-.butnActive img{
-  filter: brightness(0.2) sepia(1) hue-rotate(180deg) saturate(5);
-}
-.butnDeactive img{
-  filter: invert(0.5);
-}
-.butnActive .isenablebtn{
-  filter: brightness(0.2) sepia(1) hue-rotate(180deg) saturate(5);
-}
-.butnDeactive .isenablebtn{
-  filter: invert(0.5);
-}
 #nodename{
     font-size: 14px !important;
     color: black;
@@ -525,135 +237,16 @@ font-size: 13px;
   background: lightgray;
 }
 
-::ng-deep #myDiagramDiv canvas {
-  outline: none;
-  }
-/*flowchart component styles - Ends*/
-/*piflowchart component styles - Starts*/
-::ng-deep #myDiagramDiv canvas {
-    outline: none;
-}
-/*piflowchart component styles - Ends*/
-
-/*pi bpmn component styles - Starts*/
-/*header related css */
-.header-navigation{
-
-    height: 95px;
-    display: inline-flex
-
-}
-.button-values{
-    margin-left: 20px;
-    margin-top: 8px;
-}
-.button-names{
-    margin-left: 1px;
-    font-size: x-small;
-  font-weight: 600;
-  color: blue
-
-}
-button{
-    background: none;
-    border: none
-}
-.button-names-second{
-  margin-left: 1px;
-  font-size: x-small;
-  margin-top: -7px;
-  font-weight: 600;
-  color: blue
-
-}
 .dropdown{
     list-style-type:none;
     margin-left: -2px
 }
-.hyperlink-navigation{
-  margin-top: 36px;
-  height: 27px;
-  width: 25%;
-  margin-left: 287px;
-}
-.buttons-to-navigate{
-  margin-left: 84px;
-  display: flex
-}
-.asimov-logo{
-  width: 14%;
-  margin-top: 10px;
-  height: 74px;
-}
+
 .notification{
   margin-left: 18px;
   width: 6%;
 }
-.dropdown-image{
-    border-radius: 1px;
-}
-.notification-image{
-  margin-left: 24px;
-  margin-top: 20px;
-}
-.img-responsive{
-    height: 157px;
-    width: 100%;
 
-}
-.bps-heading{
-  border: 1px #e6dbdb12 solid;
-  height: 51px;
-  background-color: #FAFAFA;
-  display: flex;
-
-}
-.bps-heading-image{
-  width: 4%;
-  margin-left: 42px;
-  height: 40px
-}
-.bps-heading-title{
-  width: 20%;
-  margin-left: 16px;
-  height: 40px
-}
-
-  .rpa-logo{
-    height: 44px;
-    margin-left: -8px;
-  }
-  .sharedcontent{
-      height: 542px;
-      padding: 0;
-      display: inline-flex
-  }
-  .bpmn-editor-container{
-      height: 641px;
-
-  }
-  .bpmn-options-container{
-      height: 541px;
-      display: inline-flex
-  }
-  .bpmn-editor{
-      height: 594px;
-  }
-  .button {
-    background-color: blue;
-    border: none;
-    color: white;
-    border-radius: 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  .buttons-to-resize{
-      margin-left: 20px;
-      margin-left: 84%;
-  }
   .upload{
     border: 1px solid black;
     height: 215px;
@@ -665,206 +258,30 @@ button{
     width: 332px;
 
   }
-  .create{
-    border: 1px solid black;
-    height: 215px;
-    margin-top: 153px;
-    margin-left: 27px;
-    opacity: 0.5;
-    margin-left: 70px;
-    border-radius: 25px;
-    width: 332px;
-    margin-right: 17px;
-  }
-  .options{
-    display: inline-flex;
-  }
-  .upload-image{
-    margin-top: 13px;
-    margin-left: 28px;
-    padding-left: 56px;
-    width: 84%;
-    height: 87px;
 
-  }
-  .create-image{
-    margin-top: 13px;
-    margin-left: 28px;
-    width: 84%;
-    padding-top: 11px;
-    padding-left: 28px;
-    height: 87px;
-  }
-  .option-image-label{
-    margin-top: 7px;
-    margin-left: -17px;
-    font-size: large;
-  }
-  .option-image-second-label{
-    margin-left: -18px;
-  }
-  .create-button{
-    background-color: blue;
-    color: white;
-    margin-left: 11px;
-    height: 33px;
-    margin-top: 14px;
-    border-radius: 13px;
-    width: 70%;
-  }
-  .upload-button{
-    background-color: blue;
-    color: white;
-    margin-left: 11px;
-    margin-top: 6px;
-    border-radius: 13px;
-    width: 70%;
-  }
-  .upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-  }  
-  .upload-btn-wrapper input[type=file] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  }
-  .diagram-container {
-    height: 1200px;
-  }
-  .mainDiffContainer .col-md-6{
-    padding: 2px;
-  }
-  .mainDiffContainer .left{
-    border-right:dotted 10px #d02525;
-  }
-
-.overlay{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 32px;
-  left:0;
-  bottom:0;
-  right:0;
-  background-color: transparent;
-  z-index: 2;
-}
-
-.mainDiffContainer{
-  border: 1px solid black;
-  display: inline-flex;
-}
-/*pi bpmn component styles - Ends*/
 /*upload component styles - Starts*/
-
-
-.upload_btn{
-    margin-left:-10px;
-}
 
 .preview-modal{
   width: 147%;
 }
 /*upload component styles - Ends*/
-.header-style{
-  font-size: 15px;
-  padding-left: 1px;
-  margin-top: 0px;
-  padding-top: -2px;
 
-}
-.label-style{
-  font-size: initial
-}
 .process-name{
   margin-bottom: 20px;
   font-size: initial;
   font-weight: normal;
 }
-.reports{
-  margin-left: 451px;
-}
-#name{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid black;
-  width: 278px
-}
-.apply_button{
-  margin-left: 51px;
-  width: 20%;
-  height: 33px;
-}
-.apply_button:disabled{
-  opacity: 0.6;
-  cursor: no-drop;
-}
-.resize{
-  margin-top: -45px
-}
-#category{
-  width: 41%;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
 
-
-#category:focus{
-  border-color: gray;
-  border: none
-}
 .close{
   font-size: 30px;
   margin-top: -36px;
 }
 /*data table style in upload component*/
-.dataTables_length label{
-  display: none;
-}
+
 #myTableId_filter{
   display: none;
 }
-.dataTables_filter input[type=search]{
-  height: 33px !important;
-  padding: 0px px;
-  border-bottom: 1px solid #797676 !important;
-  width: 60%;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  
-  padding-right: 20px !important;
-  width: 130px !important;
-}
-.dataTables_filter label{
-font-size: 0px !important;
-margin-bottom: 12px;
-}
-.dataTables_filter{
-margin-top: -38px;
-}
-.border_bottom,.dataTables_filter input[type=search]{
-  border-left: 0px !important;
-  border-right: 0px !important;
-  border-top: 0px !important;
-  box-shadow: none !important;
-  border-bottom: 1px solid #797676 !important;
-  padding: 0px 5px;
-}
-table.dataTable {
-  border-collapse: collapse !important;
-}
-.box_shadw34 .chart-legend .legend-label{
-  color: black !important;
-}
-.chart-legend .legend-label:hover{
-  background-color: #098de6 !important;
-}
+
 .graph_table .newpaginationdiv .mat-paginator-page-size {
   left: 5px !important;
 }
@@ -894,13 +311,6 @@ img.hover-img {
 .filter-overlayheader button:hover img.hover-img {
   display: initial;
 }
-/* .barchart_graph .ngx-charts-outer {
-  width: 100% !important;
-  overflow-x: scroll;
-} */
-/* .filter-slider {
-  margin-top: 15px;
-} */
 .filter-slider .ng5-slider .ng5-slider-pointer:after {
   width: 6px;
   height: 6px;
@@ -927,7 +337,6 @@ img.hover-img {
 
 
 .tracking_detsils1{
-  /* border-left:1px solid #e5e5e5; */
   border-radius: 0px;
   padding-right: 0px;
   background-color: #F3F3F3;
@@ -944,15 +353,14 @@ img.hover-img {
   margin-bottom: 10px;
 }
 .variants_slider h3 {
-  margin: 0px !important;
+  margin: 0px auto 0px 0px;
   font-size: 16px !important;
   font-weight: 500;
   color: #232832;
   width: 80%;
 }
 .variants-header .closebtn {
-  width: 20%;
-  text-align: end;
+  border: none;
 }
 .check_box span {
   margin-left: 5px;
@@ -996,9 +404,6 @@ img.hover-img {
 .variant_parcent div  {
   font-size: 14px;
 }
-/* .piechart_graph svg{
-  margin-top: -9px;
-} */
 
 .linechart1 g[aria-labelledby*="-title"] {
   display: none;
@@ -1014,7 +419,6 @@ img.hover-img {
   right: 10px;
 }
 .PI-serwksp {
-  /* width: 40%; */
   margin-right: 15px;
   position: relative;
 }

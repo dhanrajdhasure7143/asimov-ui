@@ -3,8 +3,8 @@
   min-height: 70vh;
   width:100%;
   position: relative;
-  float: left;
-  transform-origin:0% 0%;
+  /* float: left;
+  transform-origin:0% 0%; */
   display: inline;
 }
 
@@ -43,13 +43,19 @@
   
 }
 
-.main{
+.studio_main{
   width:100%;
   overflow: auto;
   height: calc(100vh - 150px);
   padding:10px;
 }
-
+.studio_main.zoomout_bot {
+  overflow: inherit !important;
+}
+.zoomoutbot_dragarea {
+  position: relative;
+  left: -20%;
+}
 
 .connector-name{
   text-align: center;

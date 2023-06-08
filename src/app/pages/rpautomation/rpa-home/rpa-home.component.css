@@ -115,17 +115,6 @@ mat-panel-title.mat-expansion-panel-header-title {
   border: medium none;
 }
 
-.tableActionsIcons img {
-  height: 18px;
-  width: auto;
-  margin-right: 8px;
-}
-
-.tableActionsIcons i {
-  font-size: 18px;
-  margin-right: 8px;
-}
-
 input.form-control.custom-file-input {
   padding-left: 0px !important;
 }
