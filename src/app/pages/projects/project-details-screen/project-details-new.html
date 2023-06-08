@@ -94,7 +94,7 @@
                                     <div class="pinf procowner">
                                         <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                             <ng-template pTemplate="display">
-                                                <p class="">{{projectDetails.processOwner| userPipe : users_list}}</p>
+                                                <p class="" pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}">{{projectDetails.processOwner| userPipe : users_list | slice:0:22 }}{{( projectDetails.processOwner | userPipe:users_list).length > 22 ?'...':''}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
                                                 <p-dropdown [options]="users_List1" [filter]="true"
