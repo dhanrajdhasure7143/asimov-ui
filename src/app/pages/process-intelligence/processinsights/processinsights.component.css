@@ -1,9 +1,6 @@
 .createform-overlay {
   height: calc(100% - 125px);
 }
-.nonedit input {
-  /* background-color: #ededed !important; */
-}
 
 .btm-line{
   border: 1px solid rgb(20, 20, 20);
@@ -202,7 +199,7 @@ border: 1px solid #979797 !important;
      top: 0px;
     right: 0px;  */
     position: fixed;   
-    top: 118px;
+    top: 115px;
     right: 35px;
     z-index: 100;
     padding-left:0px;
@@ -267,7 +264,7 @@ border: 1px solid #979797 !important;
 }
 .variant-body {
   height: calc(100vh - 240px);
-  display: inline;
+  display: inline-block;
   overflow: hidden auto;
   width: 100%;
 }
@@ -374,17 +371,6 @@ span.testtooltip:before {
   font-weight: 600;
   color: #001c47;
 }
-.timefeed-header span.close {
-  margin-top: -4px;
-  opacity: 1;
-  font-size: 20px;
-  font-weight: 600;
-  color: #001c47;
-}
-.timefeed-header span.close:hover {
-  color: #098de6;
-}
-
 .activevaraint {
   color: #ffffff;
   background-color: #098de6;
@@ -510,8 +496,8 @@ color: #098de6;
 .new-bps-icons .bps-float {
 float: right;
 }
-.new-bps-icons button {
-padding: 6px 8px;
+.new-bps-icons .PI-insights-headericons button.tsttooltipbtn {
+padding: 6px 8px !important;
 position: relative;
 z-index: 999;
 }
@@ -546,10 +532,9 @@ margin-top: 2px;
 opacity: 1;
 font-size: 20px;
 font-weight: 600;
+cursor: pointer;
 }
-.timefeed-header span.close:hover {
-color: #00a0e3;
-}
+
 .PI-insights-headericons button img {
 width: 17px;
 height: 17px;
@@ -565,10 +550,12 @@ transform: translate(235px, 41px) !important;
 right: 230px !important
 } */
 
-.timefeed-header span:hover img.default-img {
+.timefeed-header .close:hover img.default-img, 
+.variants-header .closebtn:hover img.default-img {
 display: none;
 }
-.timefeed-header span:hover img.hover-img {
+.timefeed-header .close:hover img.hover-img, 
+.variants-header .closebtn:hover img.hover-img {
 display: initial;
 }
 .edit-disabled{

@@ -198,6 +198,10 @@
                     </button>
                   </div>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                    <button  type="button" class="tsttooltipbtn" (click)="op.toggle($event)" [disabled]="current_instance.finalbot==undefined">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="download">
+                      <span class="testtooltip">Download</span>
+                    </button>
                     <p-overlayPanel #op styleClass = download>
                         <div class="d-format"><a class="dropdown-item clickable"
                           (click)="current_instance.downloadJpeg()"><span>JPEG</span></a>
@@ -209,9 +213,7 @@
                           (click)="current_instance.downloadPdf()"><span>PDF</span></a>
                         </div>
                     </p-overlayPanel>
-                    <button   type="button" class="tsttooltipbtn" (click)="op.toggle($event)" [disabled]="current_instance.finalbot==undefined">
-                      <img src="../../../../assets/images/RPA/icon_latest/download.svg"  pTooltip="Download" tooltipPosition="bottom" class="testplus1" alt="">
-                    </button>
+                   
                     <!-- <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined"
                       id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="">
@@ -290,8 +292,7 @@
                     </mat-drawer>
                         <mat-drawer-content>
                           <div class="row h-100">
-                          <div class="col-md-12 check p-0 h-100">
-                            <div *ngIf="loadedBotsList.length!=0" class="check">  
+                            <div class="col-md-12 check p-0 h-100" *ngIf="loadedBotsList.length!=0" >  
                               <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
                                 <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="right" (click)="childBotWorkspace.zoomin('')">
@@ -306,9 +307,8 @@
                                 </button>
                               </div>
                             </div>
-                          </div>
                         
-                        </div>
+                          </div>
                         </mat-drawer-content>
                   </mat-drawer-container>
               

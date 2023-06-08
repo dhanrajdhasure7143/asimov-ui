@@ -8,7 +8,7 @@
   color: #0062cf;
 }
 
-.drop__div {
+/* .drop__div {
   position: absolute !important;
   z-index: 10;
 }
@@ -19,7 +19,7 @@
   left: 0;
   width: 100%;
   z-index: 10;
-}
+} */
 
 #canvas {
   height: 500px;
@@ -27,33 +27,29 @@
   background-color: white;
 }
 
-.btn_row {
+/* .btn_row {
   position: absolute;
   bottom: 10px;
   width: 75%;
   right: 80px;
-}
+} */
 
-.upload-btn-wrapper input[type=file] {
+/* .upload-btn-wrapper input[type=file] {
   font-size: 100px;
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
   width: 100px;
-}
+} */
 
-/* create bpmn diagram component styles - Ends*/
-/* bps home component styles - Starts*/
 .dropdown_icon {
   margin-right: 16px;
 }
 
-/*bps home component styles - Ends */
-/* bpmn diagram list component styles - Starts*/
-.overview_icon:not([aria-disabled=true]) {
+/* .overview_icon:not([aria-disabled=true]) {
   cursor: pointer !important;
-}
+} */
 
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   cursor: default;
@@ -63,22 +59,17 @@
   padding: 0 0px !important;
 }
 
-button {
-  cursor: pointer
-}
-
-.overview_icon {
+/* .overview_icon {
   padding-left: 48px !important;
-}
+} */
 
-/* bpmn diagram list component styles - Ends*/
 /*List-of-changes component - Starts*/
-.overlay_close {
+/* .overlay_close {
   position: absolute;
   right: 10px;
   top: 10px;
   color: grey;
-}
+} */
 
 .change {
   font-size: 12px;
@@ -229,11 +220,11 @@ mat-expansion-panel {
   color: #0062cf !important;
 }
 
-.box-heading {
+/* .box-heading {
   color: #5b5b5b;
   margin: 0px;
   line-height: 2;
-}
+} */
 
 #bpmn_list_row span, #bpmn_list_row div {
   display: inline-flex;
@@ -289,69 +280,6 @@ mat-expansion-panel {
   visibility: visible;
 }
 
-/* home component styles - Ends*/
-/*List-of-changes component - Starts*/
-.overlay_close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: grey;
-}
-
-.change {
-  font-size: 12px;
-  background-color: blue;
-  padding: 2px 5px;
-  font-weight: bold;
-  color: white;
-}
-
-.added {
-  background-color: green;
-}
-
-.removed {
-  background-color: red;
-}
-
-.layout {
-  background-color: orange;
-}
-
-.mat-tab-label-active,
-.mat-tab-label:active,
-.mat-tab-label:focus {
-  background-color: transparent;
-  color: black !important;
-}
-
-.changeCount {
-  padding: 4px !important;
-  color: darkblue;
-  font-weight: bold;
-  font-size: 13px;
-}
-
-mat-tab-body {
-  overflow: scroll;
-}
-
-.changeTable {
-  width: 50%;
-  margin: 0px auto;
-  background-color: #F8F8F8;
-}
-
-.changeTable tr {
-
-  border-collapse: collapse;
-}
-
-.changeTable tr td,
-.changeTable tr th {
-  padding: 5px 5px 5px 20px;
-}
-
 .hr_line {
   border-bottom: 1px solid grey;
 }
@@ -360,16 +288,6 @@ mat-tab-body {
   padding-bottom: 10px;
   padding-top: 24px;
 }
-
-.cross_close {
-  margin-left: 90px;
-  float: right;
-  margin-top: -30px;
-  margin-right: -85px;
-}
-
-/*List-of-changes component - Ends*/
-/* upload process model component styles - Starts*/
 
 .canvasOpt {
   display: inline-block;
@@ -497,21 +415,17 @@ mat-tab-body {
 
 .upload_again_btn {
   display: inline !important;
-  margin: 0 !important;
+  margin-left: 10px !important;
   height: auto !important;
 }
 
-.upload_again_btn ngx-dropzone-label {
-  margin: 0 !important;
-}
-
-
+/*
 .kpis-and-submit-button-div {
   bottom: 0;
   position: absolute;
   right: 0;
 }
-
+ 
 .view-kpis-button {
   background-color: white;
   border-color: #0162cb;
@@ -519,7 +433,7 @@ mat-tab-body {
   border-radius: 14px;
   top: 0;
   color: #0162cb;
-}
+} 
 
 .submit-for-approval-button {
   margin-left: 20px;
@@ -528,7 +442,7 @@ mat-tab-body {
   color: white;
   border-color: #0162cb;
   border-radius: 14px;
-}
+}*/
 
 /* header related css */
 #canvas,
@@ -577,7 +491,7 @@ mat-tab-body {
   font-size: 15px;
 }
 
-.upload-btn-wrapper {
+/* .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -589,7 +503,7 @@ mat-tab-body {
   left: 0;
   top: 0;
   opacity: 0;
-}
+} */
 
 .create-container {
   height: 633px;
@@ -609,6 +523,9 @@ mat-tab-body {
     position: absolute;
     width: max-content;
     z-index: 1;
+    outline: none;
+    border: none;
+    background: transparent;
 }
 
 .create-logo {
@@ -960,9 +877,9 @@ mat-panel-title.mat-expansion-panel-header-title {
   bottom: 5px;
 }
 
-.btn_row {
+/* .btn_row {
   display: none;
-}
+} */
 
 .mat-tab-body-wrapper,
 .mat-tab-body {
