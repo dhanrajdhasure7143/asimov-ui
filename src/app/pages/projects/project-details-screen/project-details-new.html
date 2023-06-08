@@ -94,7 +94,7 @@
                                     <div class="pinf procowner">
                                         <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                             <ng-template pTemplate="display">
-                                                <p class="" pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}">{{projectDetails.processOwner| userPipe : users_list | slice:0:22 }}{{( projectDetails.processOwner | userPipe:users_list).length > 22 ?'...':''}}</p>
+                                                <p class="" pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}">{{projectDetails.processOwner| userPipe : users_list}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
                                                 <p-dropdown [options]="users_List1" [filter]="true"
@@ -303,7 +303,7 @@
                     </div>
                     <div class="row quick-actions" *ngIf="!isCreate">
                         <h6>Quick Actions</h6>
-                        <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
+                        <img class="mr-3" src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
                         <button class="btn blue-btntext" (click)="onCreateTask()">
                             <a><span>Create Task</span></a>
                         </button>
@@ -478,10 +478,12 @@
                             </div>
 
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
+                            <div class="col-sm-1 p-0 d-flex align-items-center">
                             <button class="btn" (click)="sendMessage(null,'save')"
                                 [disabled]="!(typedMessage.length>0)">
                                 <img alt="send" src="./../../../../assets/images-n/projects/send.svg" />
                             </button>
+                            </div>
                             <!-- <div *ngIf="showUserList" class="usersOverLay"> 
                                         <ul>
                                             <li *ngFor="let user of filteredUsers" (click)="addUserInChat(user)">{{user.firstName}} {{user.lastName}}</li>

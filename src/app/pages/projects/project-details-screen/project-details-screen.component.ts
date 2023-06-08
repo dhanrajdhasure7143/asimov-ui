@@ -225,8 +225,7 @@ recentActivityList:any=[];
 columns_list_activities:any[]=[];
 uploaded_file:any[]=[];
 loggedInUserId:any;
-users_List1:any[]=[]
-mouseclick: boolean=true;
+users_List1:any[]=[];
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,

@@ -577,7 +577,11 @@ export class UploadComponent implements OnInit {
     this.categories_list.forEach(element => {
       this.categories_list_new.push(element.categoryName)
     });
-    this.columns_list[2].dropdownList=this.categories_list_new;
+    this.columns_list.map(item=>{
+      if(item.ColumnName === "categoryName"){
+        item["dropdownList"]=this.categories_list_new;
+      }
+    })
     let selected_category=localStorage.getItem("pi_search_category");
       if(this.categories_list.length == 1){
         this.categoryName=this.categories_list[0].categoryName;

@@ -249,7 +249,12 @@ export class ProjectTaskListComponent implements OnInit {
       this.task_categoriesList.forEach(item=>{
         task_categories.push(item.category)
       })
-      this.columns_list[1].dropdownList=task_categories
+        this.columns_list.map(item => {
+        if (item.ColumnName === "taskCategory") {
+          item["dropdownList"] = task_categories
+        }
+      })
+
     })
    }
 }
