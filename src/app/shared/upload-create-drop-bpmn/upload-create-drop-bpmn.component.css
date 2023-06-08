@@ -24,6 +24,7 @@
 .drop_box ngx-dropzone {
     height: 145px !important;
     cursor:default;
+    color: inherit;
 }
 .drop_box {
     height: 150px;
@@ -31,6 +32,7 @@
     border: 1px solid #d0d0d0;
     border-radius: 6px;
     padding: 0px 20px;
+    color: #717386;
     background-color: #fff;
 }    
 

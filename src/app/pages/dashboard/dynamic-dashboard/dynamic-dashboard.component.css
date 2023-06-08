@@ -134,7 +134,7 @@ span.oopstxt label {
 
 .defaltdrpdwn ul#dropdown-basic {
     width: 230px;    
-    max-height: 150px;
+    max-height: 250px;
     background: #fff;
     overflow: auto;
     inset: 100% auto auto !important;
