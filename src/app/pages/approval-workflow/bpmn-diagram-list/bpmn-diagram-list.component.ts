@@ -62,7 +62,7 @@ export class BpmnDiagramListComponent implements OnInit {
     { ColumnName: 'bpmnProcessStatus', DisplayName: 'Status',filterType: "text",filterWidget: "dropdown",dropdownList:["Approved","Pending"]},
 ];
 users_list:any[]=[];
-
+searchValue:any;
   constructor(private dt: DataTransferService,
     private bpmnservice:SharebpmndiagramService,
     private global:GlobalScript, 
@@ -425,7 +425,8 @@ this.selectedrow =i;
   }
 
   clear(table: Table) {
-    table.clear();
+    this.searchValue ="";
+    table.filterGlobal("","")
   }
   
   fitTableView(userName){

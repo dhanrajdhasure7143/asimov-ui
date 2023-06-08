@@ -129,6 +129,7 @@ public slaupdate : boolean = false;
     };
     statusList=["Success","Running","New","Failure","Killed","Stopped"]
     display:boolean = false;
+    searchValue: string;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -1221,8 +1222,10 @@ this.display = false
   clear(table: Table) {
     this.selected_source = '';
     this.selectedcat = '';
-    table.clear();
-    this.getallbots();
+    this.searchValue =""
+    table.filterGlobal("","")
+    // table.clear();
+    // this.getallbots();
   }
 
   closeOverlaysche(event){

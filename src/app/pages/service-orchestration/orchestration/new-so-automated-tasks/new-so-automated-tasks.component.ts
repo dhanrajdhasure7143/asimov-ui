@@ -116,7 +116,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     Pending:"#FED653",
     Paused:"#FED653",Pause:"#FED653"
   };
-
+  searchValue:string
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -1416,10 +1416,10 @@ resetsla(){
   }
 
   clear(table: Table) {
-    table.clear();
+    this.searchValue =""
+    table.filterGlobal("","")
     table.sortOrder = 0;
     table.sortField = '';
-    table.reset();
   }
   closeOverlay(event){  //overlay close 
 

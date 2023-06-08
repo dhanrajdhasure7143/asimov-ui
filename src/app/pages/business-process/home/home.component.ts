@@ -125,6 +125,7 @@ export class BpsHomeComponent implements OnInit {
     { ColumnName: "", DisplayName: "Actions" },
   ];
   public expandedRows = {};
+  public searchValue:string;
 
   constructor(
     private router: Router,
@@ -615,7 +616,8 @@ export class BpsHomeComponent implements OnInit {
   }
 
   clear(table: Table) {
-    table.clear();
+    this.searchValue ="";
+    table.filterGlobal("","")
   }
 
   onRowExpand() {
