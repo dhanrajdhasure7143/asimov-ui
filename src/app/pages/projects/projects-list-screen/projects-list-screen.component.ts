@@ -335,8 +335,11 @@ export class ProjectsListScreenComponent implements OnInit {
       sortedList.forEach((element) => {
         this.categories_list.push(element.categoryName);
       });
-    this.columns_list[3].dropdownList = this.categories_list
-      
+      this.columns_list.map(item => {
+        if (item.ColumnName === "department") {
+          item["dropdownList"] = this.categories_list
+        }
+      })
     });
   }
 
