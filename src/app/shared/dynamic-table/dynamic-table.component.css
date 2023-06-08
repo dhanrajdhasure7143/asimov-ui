@@ -44,6 +44,10 @@ td a:hover img.hover-icon,
 .undobtn .disbtn {
     cursor: no-drop;
 }
+.disbtn img {
+    cursor: no-drop !important;
+}
+
 .undobtn img {
     cursor: unset;
 }
@@ -65,4 +69,35 @@ td a:hover img.hover-icon,
 
 .approveOrReject{
     font-weight: bold;
+}
+
+
+
+span.testtooltip {
+    position: absolute;
+    background-color: #001c47;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display:none;
+    white-space: break-spaces;
+}
+span.testtooltip:before {
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    left: 6px;
+    top:  -5px;
+    background: #001c47;
+    transform: rotate(45deg);
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+
+
+.approvalLink{
+    color: #232832;
 }

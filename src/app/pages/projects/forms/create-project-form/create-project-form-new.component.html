@@ -8,7 +8,7 @@
                           formControlName="projectName" placeholder="Enter Project Name">
                       <span
                           *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched && !insertForm2.get('projectName').hasError('pattern')"
-                          class="required">Project Name Required*</span>
+                          class="required">Project Name Required</span>
                       <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')"
                           class="required">
                           Maximum of 50 characters exceeded
@@ -18,14 +18,14 @@
                       </span>
                   </div>
                   <div class="form-group col pr-0">
-                      <label class="">Select Department<span class="star">*</span></label>
+                      <label class="">Department<span class="star">*</span></label>
                       <p-dropdown [options]="categories_list" formControlName="mapValueChain"
                           autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
-                          placeholder="Select a Department" optionLabel="categoryName"
+                          placeholder="Select Department" optionLabel="categoryName"
                           optionValue="categoryName"></p-dropdown>
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
                           class="required">
-                          Department Required*
+                          Department Required
                       </div>
                   </div>
             </div>
@@ -38,16 +38,16 @@
                           optionLabel="fullName">
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
-                          class="required">Process Owner Required*</span>
+                          class="required">Process Owner Required</span>
                   </div>
                   <div class="form-group col pr-0">
-                      <label class="">Select Process<span class="star">*</span></label>
+                      <label class="">Process<span class="star">*</span></label>
                       <p-dropdown [options]="selected_process_names" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
                           optionValue="processId" optionLabel="processName" filterBy="processName">
                       </p-dropdown>
                       <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
-                          class="required">Process Required*</span>
+                          class="required">Process Required</span>
                   </div>
             </div>
             <div class="row">
@@ -88,7 +88,7 @@
                               </span>
                           </div>
                           <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched"
-                              class="required">Project Priority Required*</span>
+                              class="required">Project Priority Required</span>
                       </div>
                   </div>
             </div>
@@ -101,7 +101,7 @@
                           </textarea> -->
                       <span *ngIf="(insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched)
                       && !insertForm2.controls['projectPurpose'].hasError('maxlength')"
-                          class="required">Project Description Required*</span>
+                          class="required">Project Description Required</span>
                       <!-- <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')"
                           class="required">
                           Maximum of 250 characters exceeded

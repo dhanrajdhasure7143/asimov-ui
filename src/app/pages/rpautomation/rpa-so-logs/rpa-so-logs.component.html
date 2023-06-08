@@ -1,48 +1,52 @@
-<div  #draggableHandle class="modal-header modelprhead newmodelcla">
-  <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="viewRunsByBotId()">
-    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-  </span>
-  <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="logsBackTraversal()">
-    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-  </span>
-  <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
-    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-  </span>
-  <!-- <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
-    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-  </span> -->
-    Logs  
-    <span *ngIf="viewlogid1!=undefined">
-      - Run ID - {{viewlogid1}}
-    </span>
-    &nbsp;
-    <span>{{botrunid}}</span><span *ngFor="let task of traversalLogs">/{{task.task_name}}</span>
-    <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
-      Refresh
-    </span>
-    <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
-      Refresh
-    </span>
-    <span (click)="getChildLogs(selectedChildLog, selectedChildLog.log_id, 'REFRESH')"  *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
-      Refresh
-    </span>
-    <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
-      Refresh
-    </span>
-    <!-- <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
-        Refresh
-    </span> -->
-    <span class="ml-auto">
-      <span class="clickable" (click)="closeLogsOverlay()">
-        <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+<p-dialog  [draggable]="true" [(visible)]="display" [style]="{width: '70vw', height:'40vw'}" (onHide)="closeLogsOverlay()" class="rpasologs">
+  <ng-template pTemplate="header">
+      <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="viewRunsByBotId()">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
-  </span> 
-</div>
+      <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="logsBackTraversal()">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span>
+      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span>
+      <!-- <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span> -->
+      <b>Logs</b>
+      &nbsp;
+        <span class="bro-code" *ngIf="botrunid!=undefined && botrunid != ''">
+          - Run ID - {{botrunid}}
+        </span>
+        &nbsp;
+        <!-- <span>{{botrunid}}</span>  -->
+        &nbsp;<span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span>
+            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >Refersh</span>
+        <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
+          Refresh
+        </span>
+       
+        <span (click)="getChildLogs(selectedChildLog, selectedChildLog.log_id, 'REFRESH')"  *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
+          Refresh
+        </span>
+       
+        <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
+          Refresh
+        </span>
+       
+        <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
+            Refresh
+        </span>
+        <!-- <span class="ml-auto">
+          <span class="clickable" (click)="closeLogsOverlay()">
+            <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+          </span>
+      </span>  -->
+  </ng-template>
 
-  <div class="modal-body newmodelbodycl">
+  <div class="modal-body newmodelbodycl" >
     <div class="logs-container" >
         <div *ngIf="!logsLoading" class="main-content-body rpalogsgrid"> 
-          <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="false" responsiveLayout="scroll"
+          <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll"
               [reorderableColumns]="true" [scrollable]="true">
               <ng-template pTemplate="header">
                   <tr>
@@ -111,3 +115,4 @@
   </div>
 
 </div>
+</p-dialog>
