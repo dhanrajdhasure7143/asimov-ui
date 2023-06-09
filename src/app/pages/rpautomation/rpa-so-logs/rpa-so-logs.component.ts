@@ -30,7 +30,7 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
-  @Output('close') public closeEvent=new EventEmitter<any>();
+  @Output('closeEvent') public closeEvent=new EventEmitter<any>();
   public allLogs:any=[];
   public botrunid:any="";
   public allRuns:any=[];
@@ -60,6 +60,7 @@ export class RpaSoLogsComponent implements OnInit {
     Running:"#FFA033"
   };
   errormsg: any;
+  display:boolean = true;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -85,8 +86,8 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
       ];
        this.logsData=[...response.map((item:any, index)=>{
-          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
-          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM DD, yyyy, HH:mm:ss"):item.end_time;
           item["versionNew"]="V"+parseFloat(item.versionNew).toFixed(1);
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
@@ -137,8 +138,8 @@ export class RpaSoLogsComponent implements OnInit {
       ];
         this.logsData=[...response.filter((item:any)=>{
 
-          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
-          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM DD, yyyy, HH:mm:ss"):item.end_time;
           item["bot_status"]=item.status;
           if(item.parent_log_id==null)
             return item;
@@ -198,8 +199,8 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
       ];
         this.logsData=[...response.filter((item:any)=>{
-          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, HH:mm:ss"):item.start_time;
-          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, HH:mm:ss"):item.end_time;
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM DD, yyyy, HH:mm:ss"):item.end_time;
           item["bot_status"]=item.status;  
           return item;
         }).filter((item:any)=>{
@@ -352,8 +353,8 @@ export class RpaSoLogsComponent implements OnInit {
           item["task_name"]=item.taskName;
           item["iteration_id"]=item.iterationId;
           item["error_info"]=item.errorMsg
-          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, HH:mm:ss")):item.startTS;
-          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, HH:mm:ss")):item.endTS;
+          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM DD, yyyy, HH:mm:ss")):item.startTS;
+          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM DD, yyyy, HH:mm:ss")):item.endTS;
           if(item.status==1)
           item["bot_status"]="New";
           if(item.status==2)
@@ -462,10 +463,9 @@ export class RpaSoLogsComponent implements OnInit {
   // }
 
 
-  closeLogsOverlay()
-  {
+  closeLogsOverlay(){
+    this.closeEvent.emit(false)
     this.selectedIterationTask==undefined;
-    this.closeEvent.emit(null)
   }
 
   showAutomatedLogs(element){

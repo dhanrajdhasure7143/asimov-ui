@@ -29,9 +29,9 @@
                      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                        <li role="menuitem" *ngFor="let each of dashbordlist">
                         <span (click)="onDropdownChange(each)" class="dname">{{each.dashboardName}}</span>
-                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  (click)="setDefaultDashboard(each)">
+                        <span *ngIf="!each.defaultDashboard" class="dropdown-icon tsttooltipbtn"  pTooltip="Set as Default Dashoard" tooltipPosition="right" (click)="setDefaultDashboard(each)">
                            <img src="../../../../assets/images-n/dashboard/Vector.svg" alt=""/>
-                           <span class="testtooltip">Set as Default Dashoard</span>
+                           <!-- <span class="testtooltip">Set as Default Dashoard</span> -->
                         </span>
                         <span *ngIf="each.defaultDashboard" class="dropdown-icon">
                            <img src="../../../../assets/images-n/dashboard/Filled-Star.svg" alt=""/>
@@ -39,15 +39,15 @@
                         </li>
                      </ul>
                   </div>
-                  <button (click)="navigateToConfigure()" class="grey-btn configure-pad" tooltipPosition="top">
+                  <button (click)="navigateToConfigure()" class="btn grey-btn configure-pad" tooltipPosition="top">
                      <img src="../../../../assets/images-n/dashboard/configure-grey.svg" alt="Configure" class="imgicon-width"/>
                       <span class="plus">Configure</span> 
                   </button>
-                  <button (click)="navigateToCreateDashboard()"   pTooltip="Create Dashboard" tooltipPosition="top" class="grey-btn create-pad"> 
+                  <button (click)="navigateToCreateDashboard()"  pTooltip="Create Dashboard" tooltipPosition="top" class="btn grey-btn create-pad"> 
                      <img src="../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Create" class="imgicon-width" />
                   </button>
                
-                  <button (click)="deletedashbord()"  pTooltip="Delete" tooltipPosition="top" class="grey-btn">
+                  <button (click)="deletedashbord()"  pTooltip="Delete" tooltipPosition="top" class="btn grey-btn">
                      <img src="../../../../assets/images-n/dashboard/dash-delete-grey.svg" alt="Delete" class="imgicon-width"/>
                   </button>
             </div>
@@ -89,7 +89,7 @@
                      <div>
                         <div *ngIf="configuration_id != widget.id">
                            <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" class="graph-set">
+                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" [ngClass]="widget.message =='No Data Found For This Department' ? 'graph-set-nodata' : 'graph-set' " >
                               <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
                               <span *ngIf="widget.message !='No Data Found For This Department'">
                               <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
@@ -172,58 +172,9 @@
                         
                         </div>
 
-                        <div  *ngIf="configuration_id == widget.id">
-                           <!-- <div class="col-md-12 form-group mb-4 mt-4  bps-labcls">
-                              <label>Project Type</label>
-                              <div class="row">
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Insert" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname" class="check-label">In
-                                       Progress</label>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname"
-                                       class="check-label">Hold</label>
-                                 </div>
-                                 <div class="col-md-3">
-                                    <input class="form-check-input" formControlName="allow_Edit" type="checkbox"
-                                       name="inlineRadioOptions" value="option1" />
-                                    <label class="label-control" for="screenname"
-                                       class="check-label">Deployed</label>
-                                 </div>
-                              </div>
-
-                           </div> -->
-
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                 <option value="">Engineering</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group  bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                 <option value="">30 Min</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Department</label>
-                              <select class="form-control data">
-                                 <option value="">Engineering</option>
-                              </select>
-                           </div> -->
-                              <!-- <div class="col-md-6 form-group mb-4 bps-labcls">
-                              <label>Refresh Interval</label>
-                              <select class="form-control data">
-                                 <option value="">30 Min</option>
-                              </select>
-                           </div> -->
+                        <div  *ngIf="configuration_id == widget.id">                            
                            <form [formGroup]="dynamicFormConfiure" class="row">
-                              <div class="col-6 form-group bps-labcls" *ngFor="let each of widget.filterOptions">
+                              <div class="col-6 form-group" *ngFor="let each of widget.filterOptions">
                                  <label class="label-control">{{each.label}}</label>
                                  <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
                               </div>

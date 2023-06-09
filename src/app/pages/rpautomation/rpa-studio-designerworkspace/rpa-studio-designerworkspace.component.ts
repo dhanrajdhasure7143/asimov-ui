@@ -55,6 +55,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild("logspopup") public logsOverlayRef: any;
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
+  display:boolean = false;
   filteredEnvironments: any = [];
   VersionsList: any = [];
   // @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
@@ -341,7 +342,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               confirmButton: 'btn bluebg-button',
               cancelButton: 'btn new-cancelbtn',
               },
-            cancelButtonText: "Fasle",
+            cancelButtonText: "False",
             confirmButtonText: "True",
           }).then((result) => {
             if (result.value) {
@@ -417,7 +418,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             confirmButton: 'btn bluebg-button',
             cancelButton: 'btn new-cancelbtn',
             },
-          cancelButtonText: "Fasle",
+          cancelButtonText: "False",
           confirmButtonText: "True",
         }).then((result) => {
           if (result.value) {
@@ -1997,9 +1998,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
       let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
       if(selectedTask)
+      {
         item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
         item["isConnectionManagerTask"] = selectedTask.isConnectionManagerTask == undefined?"null":selectedTask.isConnectionManagerTask;
-      return item;
+      }
+        return item;
     })]
   }
 
@@ -2772,16 +2775,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   openLogs() {
-    this.logsOverlayFlag = true;
-    this.logsOverlayModel = this.modalService.show(this.logsOverlayRef, {
-      // class: "logs-modal",
-      class: "modal-lg",
-    });
+  this.display = true;  
+    // this.display.emit(false)
+    // this.logsOverlayFlag = true;
+    // this.logsOverlayModel = this.modalService.show(this.logsOverlayRef, {
+    //   // class: "logs-modal",
+    //   class: "modal-lg",
+    // });
   }
 
   closeLogsOverlay() {
-    this.logsOverlayModel.hide();
-    this.logsOverlayFlag = false;
+    this.display = false;
+    // this.logsOverlayModel.hide();
+    // this.logsOverlayFlag = false;
   }
 
   deleteBot() {
@@ -2936,6 +2942,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //       })
   //   }
   // }
+
 }
 
 @Pipe({ name: "Checkoutputbox" })

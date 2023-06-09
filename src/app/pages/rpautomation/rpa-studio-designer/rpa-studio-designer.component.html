@@ -108,7 +108,7 @@
                     [insideClick]="true">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
                       <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" alt=""/>
-                      <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
+                      <span *ngIf="getSelectedEnvironments().length==0" class="plus">Environment</span>
                       <span *ngIf="getSelectedEnvironments().length>=1" class="plus">{{getSelectedEnvironments()[0].environmentName}}<span
                           *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
                       <span class="caret"></span>
@@ -198,6 +198,10 @@
                     </button>
                   </div>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                    <button  type="button" class="tsttooltipbtn" (click)="op.toggle($event)" [disabled]="current_instance.finalbot==undefined">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="download">
+                      <span class="testtooltip">Download</span>
+                    </button>
                     <p-overlayPanel #op styleClass = download>
                         <div class="d-format"><a class="dropdown-item clickable"
                           (click)="current_instance.downloadJpeg()"><span>JPEG</span></a>
@@ -209,9 +213,7 @@
                           (click)="current_instance.downloadPdf()"><span>PDF</span></a>
                         </div>
                     </p-overlayPanel>
-                    <button   type="button" class="tsttooltipbtn" (click)="op.toggle($event)" [disabled]="current_instance.finalbot==undefined">
-                      <img src="../../../../assets/images/RPA/icon_latest/download.svg"  pTooltip="Download" tooltipPosition="bottom" class="testplus1" alt="">
-                    </button>
+                   
                     <!-- <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined"
                       id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1" alt="">
@@ -242,7 +244,7 @@
                     </button>
                   </div>
                   <div class="action-item vrsn-btn" *ngIf="current_instance != undefined">
-                    <p-toggleButton onLabel="V1" offLabel="V2" [(ngModel)]="current_instance.executionMode"></p-toggleButton>
+                    <p-toggleButton onLabel="V1" offLabel="V2" (click)="onChangeExecutionMode()" [(ngModel)]="executionMode"></p-toggleButton>
                   </div>
                 </div>
               </div>
@@ -290,25 +292,23 @@
                     </mat-drawer>
                         <mat-drawer-content>
                           <div class="row h-100">
-                          <div class="col-md-12 check p-0 h-100">
-                            <div *ngIf="loadedBotsList.length!=0" class="check">  
+                            <div class="col-md-12 check p-0 h-100" *ngIf="loadedBotsList.length!=0" >  
                               <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
-                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="left" (click)="childBotWorkspace.zoomin('')">
+                                <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="right" (click)="childBotWorkspace.zoomin('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg" />
                                 </button>
-                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="left" (click)="childBotWorkspace.zoomout('')">
+                                <button class="action-item hovericon" pTooltip="Zoom Out" tooltipPosition="right" (click)="childBotWorkspace.zoomout('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom Out.svg" />
                                 </button>
-                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="left"
+                                <button class="action-item hovericon" pTooltip="Fit to screen" tooltipPosition="right"
                                   (click)="childBotWorkspace.reset('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                                 </button>
                               </div>
                             </div>
-                          </div>
                         
-                        </div>
+                          </div>
                         </mat-drawer-content>
                   </mat-drawer-container>
               
@@ -387,7 +387,7 @@
             </select>
             <div *ngIf="loadBotForm.get('botDepartment').invalid && loadBotForm.get('botDepartment').touched"
               class="required">
-              Category Required*
+              Category Required
             </div>
           </div>
           <div class="col-md-12 p-0 form-group">
@@ -397,7 +397,7 @@
               <option *ngFor="let bot of filteredBotsList" [value]="bot.botId">{{bot.botName}}</option>
             </select>
             <div *ngIf="loadBotForm.get('bot').invalid && loadBotForm.get('bot').touched" class="required">
-              Bot Required*
+              Bot Required
             </div>
           </div>
         </div>

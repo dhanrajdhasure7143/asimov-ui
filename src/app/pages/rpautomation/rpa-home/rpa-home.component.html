@@ -380,7 +380,7 @@
                                 <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
                                 <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
                                 <div *ngIf="(editbot.get('botName').hasError('required') && editbot.get('botName').touched) && !editbot.controls['botName'].hasError('maxlength')" class="required">
-                                    Bot Name Required*
+                                    Bot Name Required
                                 </div>
                                 <div *ngIf="checkbotname && editbot.get('botName').touched" class="required">
                                     Bot Name already exists*
@@ -404,7 +404,7 @@
                                     <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
                                 </div>
                                 <div *ngIf="editbot.get('department').invalid && editbot.get('department').touched" class="required">
-                                    Category Required*
+                                    Category Required
                                 </div>
 
                             </div>
@@ -449,7 +449,7 @@
                                 <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
                                 <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  ngModel maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
                                 <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="required">
-                                    Bot Name Required*
+                                    Bot Name Required
                                 </div>
                                 <div *ngIf="checkbotname && insertbot.get('botName').value" class="required">
                                     Bot Name  already exists*
@@ -473,7 +473,7 @@
                                 </select>
                               
                                 <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="required">
-                                    Category Required*
+                                    Category Required
                                 </div>
 
                             </div>
@@ -574,10 +574,10 @@
                     <label>Bot Name</label>
                     <input type="text" (input)="validateBotName()" formControlName="botName" placeholder="Enter Bot Name" class="form-control" >
                     <div *ngIf="(importBotForm.get('botName').hasError('required') && importBotForm.get('botName').touched) && !importBotForm.controls['botName'].hasError('maxlength')" class="errspan required">
-                        Bot Name Required*
+                        Bot Name Required
                     </div>
                     <div *ngIf="checkbotname && importedBotName!=''" class="errspan required">
-                        Bot Name is already exists*
+                        Bot Name is already exists
                     </div>
                 </div>
                 <div class="form-fields col-md-12 p-0">

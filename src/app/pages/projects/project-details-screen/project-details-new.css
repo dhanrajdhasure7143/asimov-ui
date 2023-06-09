@@ -485,6 +485,8 @@ p.qcard-name {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     min-width: unset !important;
+    padding-left: 0px !important;
+    padding-right: 20px !important;
 }
 /* quicksnapshot styles */
 
@@ -513,11 +515,6 @@ p-image.p-element.crtprgm {
   margin-top: 30px;
 }
 /* Folderpopover New Styles End */
-
-button span {
-    margin-left: 5px;
-}
-
 .selectable {
     user-select: text;
     cursor: text;

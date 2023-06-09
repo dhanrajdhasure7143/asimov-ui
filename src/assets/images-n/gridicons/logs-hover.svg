@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20.7" height="25.5" viewBox="0 0 20.7 25.5">
-  <g id="logs-hover" transform="translate(-3.25 -1.25)">
-    <path id="Path_238" data-name="Path 238" d="M23.2,9.05v11.7c0,3.6-2.148,4.8-4.8,4.8H8.8c-2.652,0-4.8-1.2-4.8-4.8V9.05c0-3.9,2.148-4.8,4.8-4.8a2.7,2.7,0,0,0,2.7,2.7h4.2a2.7,2.7,0,0,0,2.7-2.7C21.052,4.25,23.2,5.15,23.2,9.05Z" transform="translate(0 0.45)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-    <path id="Path_239" data-name="Path 239" d="M8,15.2h4.8M8,20h9.6m0-15.3a2.7,2.7,0,0,1-2.7,2.7H10.7a2.7,2.7,0,0,1,0-5.4h4.2a2.7,2.7,0,0,1,2.7,2.7Z" transform="translate(0.8)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-  </g>
-</svg>

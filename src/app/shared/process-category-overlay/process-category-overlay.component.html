@@ -18,7 +18,7 @@
                                 {{categories.categoryName}}</option>
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
-                        class='required'> Please select a category </span>
+                        class='required'> category required </span>
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
@@ -33,7 +33,7 @@
                                 <!-- <option value="dmn">DMN</option> -->
                             </select>
                             <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
-                            class='required'> Please select notation type </span>
+                            class='required'> notation type required </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule">
@@ -48,7 +48,7 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='required'> Please Select Process Owner </span>
+                            class='required'> Process Owner required </span>
                         </div>
                     </div>
                     <!-- <div *ngIf="isBpmnModule && freetrail=='true'">
@@ -70,7 +70,7 @@
                         <label class="label-control">Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
-                            <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
+                            <span class='required' *ngIf="process_name.errors.required"> Process Name required</span>
                         </span>
                         <span class='required' *ngIf="processName && isValidName"> Invalid Process name</span>
                     </div>
@@ -92,7 +92,7 @@
                             <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">{{categories.categoryName}}</option>
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
-                        class='required'> Please select a category </span>
+                        class='required'> category required </span>
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
@@ -106,7 +106,7 @@
                                 <option value="dmn">DMN</option>
                             </select>
                             <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
-                            class='required'> Please select notation type </span>
+                            class='required'> notation type required </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='false'">
@@ -121,7 +121,7 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='required'> Please Select Process Owner </span>
+                            class='required'> Process Owner required </span>
                         </div>
                     </div>
                     <div *ngIf="isBpmnModule && freetrail=='true'">
@@ -136,14 +136,14 @@
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
-                            class='required'> Please Select Process Owner </span>
+                            class='required'> Process Owner required </span>
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
-                            <span class='required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
+                            <span class='required' *ngIf="process_name.errors.required"> Process Name required</span>
                             <!-- <span class='required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                         </span>
                         <span class='required' *ngIf="processName && isValidName"> Invalid Process name</span>

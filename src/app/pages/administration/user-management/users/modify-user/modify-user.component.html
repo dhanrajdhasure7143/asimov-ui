@@ -11,9 +11,6 @@
                     <span class="title_text">Update User</span>
                 </h3>
             </div>
-            <!--<div class="col-sm-8 pr-0 text-right">
-                <button (click)="updateUser()" class="btn btn-primary btn-update">Update</button>
-            </div>-->
     </div>
     <div class="main-content-body">
             <div class="maindivfoprm">
@@ -45,7 +42,7 @@
                             <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
                                                 class='required'>Departments required </span>
                                                 <span *ngIf="errShow" class='required'> Departments required </span>
-                            <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="required">Departments Required*</span> -->
+                            <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="required">Departments Required</span> -->
                         </div>
 
                     </div>

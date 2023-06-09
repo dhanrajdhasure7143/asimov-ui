@@ -11,10 +11,6 @@
                     <span class="title_text">Create Department</span>
                 </h3>
             </div>
-            <!-- <div class="col-sm-8 pr-0 text-right">
-                <button (click)="resetdepartment()" class="btn btn-default">Reset</button>
-                <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn btn-primary btn-update">Save</button>
-            </div> -->
         </div>
         <div class="main-content-body">
             <div class="maindivfoprm">
@@ -25,7 +21,7 @@
                                 <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="51" class="form-control data"  [ngClass]="createDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
                                 <span 
                                     *ngIf="(createDepartmentForm.get('departmentName').invalid && createDepartmentForm.get('departmentName').touched)
-                                            && !createDepartmentForm.controls['departmentName'].hasError('maxlength') && createDepartmentForm.get('departmentName').value=='' && !createDepartmentForm.get('departmentName').hasError('pattern')" class="required">Department Required *</span>
+                                            && !createDepartmentForm.controls['departmentName'].hasError('maxlength') && createDepartmentForm.get('departmentName').value=='' && !createDepartmentForm.get('departmentName').hasError('pattern')" class="required">Department Required</span>
                                 <span *ngIf="createDepartmentForm.controls['departmentName'].hasError('maxlength') && !createDepartmentForm.get('departmentName').hasError('pattern')"
                                             class="required">Maximum of 50 characters</span>
 
@@ -50,7 +46,7 @@
                                 </select>
                                 <span
                                     *ngIf="createDepartmentForm.get('owner').invalid && createDepartmentForm.get('owner').touched"
-                                    class="required">Owner Required *</span>
+                                    class="required">Owner Required</span>
                             </div>
                        
                     </div>

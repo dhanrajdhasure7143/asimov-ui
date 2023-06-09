@@ -1,4 +1,54 @@
-.my-new-div .btn:focus {
+
+.dbichart-block {
+    border: 1px solid #e1e7ec;
+    border-radius: 4px;
+    padding: 10px 14px;
+    width: 100%;
+    margin-bottom: 25px;
+    background-color: #fff;
+}
+.dbichart-block .dbichart-head label {
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+.dbichart-block .dbichart-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0px;
+}
+.dbichart-head h2 {
+    font-size: 16px !important;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.dbichart-block .dbichart-head .dbichart-dropdown span {
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+}
+.dbichart-block .dbichart-head .dbichart-dropdown select {
+    border-image: initial;
+    border: 1px solid rgba(51, 51, 51, 0.15);
+    border-radius: 3px;
+    color: rgb(51, 51, 51);
+    font-weight: 600;
+    background: transparent;
+    width: 120px;
+    padding: 0px 0px 6px;
+}
+.dbichart-block .dbichart-head .dbichart-dropdown select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.statustablehi8 .p-datatable-wrapper {
+    height: calc(100vh - 330px) !important;
+    overflow: auto !important;
+}
+
+
+/* .my-new-div .btn:focus {
     outline: 0px;
     box-shadow: none;
 }
@@ -103,7 +153,7 @@
     display: flex;
     position: relative;
     background: transparent !important;
-}
+} 
 .noactive a.nav-link:hover img {
     filter: unset;
 }
@@ -232,47 +282,7 @@ button:focus {
 .dashboardchart_shownnxt{
     display: none;
 }
-.dbichart-block {
-    border: 1px solid #e1e7ec;
-    border-radius: 4px;
-    padding: 10px 14px;
-    width: 100%;
-    margin-bottom: 25px;
-    background-color: #fff;
-}
-.dbichart-block .dbichart-head label {
-    font-weight: 600;
-    margin-bottom: 0px;
-}
-.dbichart-block .dbichart-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 0px;
-}
-.dbichart-head h2 {
-    font-size: 16px !important;
-    font-weight: 500;
-    margin-bottom: 0px;
-}
-.dbichart-block .dbichart-head .dbichart-dropdown span {
-    color: rgb(51, 51, 51);
-    font-size: 14px;
-}
-.dbichart-block .dbichart-head .dbichart-dropdown select {
-    border-image: initial;
-    border: 1px solid rgba(51, 51, 51, 0.15);
-    border-radius: 3px;
-    color: rgb(51, 51, 51);
-    font-weight: 600;
-    background: transparent;
-    width: 120px;
-    padding: 0px 0px 6px;
-}
-.dbichart-block .dbichart-head .dbichart-dropdown select:focus {
-    outline: none;
-    box-shadow: none;
-}
+
 .botsbyprocess-sec,
 .lob-sec,.botsbyprocess-sec2 {
     padding: 10px;
@@ -327,6 +337,7 @@ button:focus {
     display: inline-block;
     vertical-align: middle;
 }
+
 .my-new-div .color1 {
     background: rgb(80, 81, 107);
     color: rgb(255, 255, 255);
@@ -683,9 +694,4 @@ span.requir {
 .my-new-div .nav-tabs>li.active>a, .my-new-div .nav-tabs>li.active>a:focus, .my-new-div .nav-tabs>li.active>a:hover {
     border: 0px !important;
 }
-
-
-.statustablehi8 .p-datatable-wrapper {
-    height: calc(100vh - 330px) !important;
-    overflow: auto !important;
-}
+*/

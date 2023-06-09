@@ -128,7 +128,7 @@ public slaupdate : boolean = false;
       Running:"#C4B28E"
     };
     statusList=["Success","Running","New","Failure","Killed","Stopped"]
-
+    display:boolean = false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -418,7 +418,7 @@ public slaupdate : boolean = false;
  }
  
  closeLogsOverlay(){
-  this.logsmodalref.hide()
+this.display = false
  }
  
  slaalerts(){
@@ -593,7 +593,7 @@ public slaupdate : boolean = false;
   getEpsoftLogs(botid ,version, template, action){
    // this.getBotVerions(botid);
     
-   
+   this.display = true
     // this.log_botid=botid;
      this.log_version=version;
     // this.detectChanges.detectChanges()
@@ -663,18 +663,16 @@ public slaupdate : boolean = false;
 
 
  public AllVersions:any=[]
- getBotVerions(botId:number,version,template)
- {
-  this.spinner.show()
+ getBotVerions(botId:number,version){
+  this.display = true;
    this.AllVersions=[];
    this.logsbotid=botId
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
-     this.spinner.hide();
       if(data.errorMessage==undefined){
         this.AllVersions=data;
         this.selectedversion=version
         // this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
-        this.logsmodalref=this.modalService.show(template, {class:"modal-lg"})
+        // this.logsmodalref=this.modalService.show(template, {class:"modal-lg"})
       }
        
       else
