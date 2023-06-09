@@ -7,6 +7,8 @@ import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { Tree } from 'primeng/tree';
+import moment from 'moment';
+import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 
 @Component({
   selector: "app-projects-document",
@@ -21,7 +23,7 @@ export class ProjectsDocumentComponent implements OnInit {
   createTreeFolderOverlay: boolean = false;
   isSidebar: boolean = false;
   isDialog: boolean = false;
-  isDialog1: boolean = false;
+  subFolderDialog: boolean = false;
   entered_folder_name: string='';
   selectedFile: any;
   text: string;
@@ -58,14 +60,27 @@ export class ProjectsDocumentComponent implements OnInit {
   items:any[];
   items2:any[];
   @ViewChild('myTree') myTree: Tree;
+  createItems:any = [{label: "Create Folder",command: (e) => {this.onCreateFolder()}}];
+  selectedItem_new:any=[];
+  selectedFolder_new:any;
+  private clickTimeout: any;
+  users_list: any = [];
+  columns_list = [
+    {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
+    {ColumnName: "uploadedDate",DisplayName: "Last Modified",ShowGrid: true,ShowFilter: false},
+    {ColumnName: "uploadedBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: false},
+    {ColumnName: "convertedTime_new",DisplayName: "File Size",ShowFilter: false, ShowGrid: false},
+];
 
-  constructor(private rest_api : RestApiService,
+  constructor(
+    private rest_api : RestApiService,
     private route : ActivatedRoute,
     private router : Router,
     private loader: LoaderService,
     private messageService: MessageService,
-    private location:Location,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private dt: DataTransferService
+    ) {
 
     this.route.queryParams.subscribe((data) => {
       this.params_data = data;
@@ -83,7 +98,8 @@ export class ProjectsDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader.show();
-    this.getTheListOfFolders();
+    this.getUsersList();
+    this.clickTimeout = null;
   }
 
   getTheListOfFolders(){
@@ -91,196 +107,184 @@ export class ProjectsDocumentComponent implements OnInit {
     this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
         res_data=res
         this.documents_resData = res
-        this.loader.hide()
-        this.files=[
-          {
-            key: "0",
-            label: "Add Folder",
-            data: "Add Folder",
-            data_type:"addfolder",
-            icon:"folderadd.svg"
-          },
-        ];
-        this.convertToTreeView(res_data)
+        this.assignData(res_data);
+        this.breadcrumbItems=[];
     })
   }
 
-  convertToTreeView(res_data){
-    this.breadcrumbItems=[];
-    res_data.map(data=> {
-      if(data.dataType=='folder'){
-        data["children"]=[{
-          key: data.key+'-0',
-          label: "Add Folder / Document",
-          dataType:"folder",
-          icon: 'folderadd.svg'
-        }]
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        this.getTheListOfFolders();
       }
-      return data
-    })
+    });
+  }
 
+  convertToTreeView(res_data){
+    this.loader.hide()
+  res_data.map(data=> {
+      if(data.dataType=='folder'){
+        data["children"]=[];
+      }
+      data["is_selected"]=false;
+      data["uploadedDate_new"]=moment(data.uploadedDate).format('lll');
+      return data;
+    })
+    let files=[];
   for (let obj of res_data) {
     let node = {
       key: obj.key,
       label: obj.label,
       data: obj.data,
       type:"default",
-      uploadedBy:obj.uploadedBy,
+      uploadedByUser:this.getUserName(obj.uploadedBy),
       projectId:obj.projectId,
       id: obj.id,
       dataType:obj.dataType,
       children:obj.children,
-      uploadedDate:obj.uploadedDate
+      uploadedDate:obj.uploadedDate,
+      is_selected:obj.is_selected,
+      uploadedDate_new:obj.uploadedDate_new,
+      fileSize: obj.fileSize
     };
       if(obj.dataType == 'folder'){
         node['icon'] = "folder.svg"
       }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
         node['icon'] = "img-file.svg"
-    }else{
-      node['icon'] = "document-file.svg"
-    }
+      }else{
+        node['icon'] = "document-file.svg"
+      }
     this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
-      // node['children']=[
-      // {
-      //   key: obj.key+'-0',
-      //   label: "Add Folder / Document",
-      //   dataType:"folder",
-      //   collapsedIcon: 'pi pi-folder',
-      //   expandedIcon: 'pi pi-folder'
-      // }]
-      this.files.push(node);
+      files.push(node);
     } else {
       let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
       let parent = this.nodeMap[parentKey];
       if (parent) {
-        if (!parent.children) {
-          // let obj1={
-          //   key: obj.key+'-0',
-          //   label: "Add Folder / Document",
-          //   dataType:"folder",
-          //   collapsedIcon: 'pi pi-folder',
-          //   expandedIcon: 'pi pi-folder'
-          // }
-          // parent.children = [obj1];
-        }else{
-          // let obj1={
-            
-          //   key: obj.key+'-0',
-          //   label: "Add Folder / Document",
-          //   dataType:"folder",
-          //   collapsedIcon: 'pi pi-folder',
-          //   expandedIcon: 'pi pi-folder'
-          // }
-          // parent.children = [obj1];
-        }
         if(parent.children)
         parent.children.push(node);
       }
     }
   }
-  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  if(localStorage.getItem("openedFoldrerKey")){
-    this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
-    this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
-    this.selectedFolder = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files)
-  }else{
-    this.folder_files = this.files;
-  }
-  this.getTaskList();
-  this.loader.hide();
-  }
-
-  getDataByParentId1(data, parent) {
-    const result = data.filter(d => d.parentId === parent);
-    if (!result && !result.length) {
-      return null;
+  files.forEach(item => {
+    if (item.dataType === 'folder') {
+      // item.size = this.formatBytes(this.calculateFolderSize(item));
+      item.size = this.calculateFolderSize(item);
     }
-  
-    return result.map(({ dataId, name, description,parentId }) => 
-      ({ dataId, name, description,parentId, children: this.getDataByParentId(data, dataId) }))
+  });
+  // return files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  return files;
   }
 
-  getDataByParentId(data, parent) {
-    const result = data.filter(d => d.parentId === parent);
-    if (!result && !result.length) {
-      return null;
-    }
-  
-    return result.map(({ dataId, name, description,parentId }) => 
-      ({ dataId, name, description,parentId, children: this.getDataByParentId(data, dataId) }))
-  }
-  
-
-  treeChildFolderSave() {
-    if (this.selectedFile && this.entered_folder_name) {
-      let object = { ...{}, ...this.sampleNode_object };
-      object.label = this.entered_folder_name;
-      let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
-      object.key = this.selectedFile.parent.key + "-" + objectKey;
-      this.loader.show()
-      let req_body = [{
-        key: this.selectedFile.parent.key + "-" + objectKey,
-        label: this.entered_folder_name,
-        data: "folder",
-        ChildId: "1",
-        dataType: "folder",
-        fileSize: "",
-        task_id: "",
-        projectId: this.project_id
-      }];
-    
-      this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-        this.loader.hide();
-        let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
-      let obj = res_data.data[0];
-      // obj['expandedIcon'] = "pi pi-folder-open"
-      // obj['collapsedIcon'] = "pi pi-folder";
-      obj['icon'] = "folder.svg"
-      obj["children"]= [
-        {
-          key: String(obj.key)+"-0" ,
-          label: "Add Folder / Document",
-          data: "Folder",
-          dataType:"folder",
-          // expandedIcon: "pi pi-folder",
-          // collapsedIcon: "pi pi-folder",
-          icon: 'folderadd.svg'
-        }
-      ]
-        this.selectedFile.parent.children.push(obj);
-        this.entered_folder_name = "";
-        this.isDialog = false;
-      },err=>{
-        this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
-      });
-    }
-  }
-
-  nodeSelect(item) {
-    this.selectedItem = item;
-    if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
-      this.createTreeFolderOverlay = true;
-      if(this.selectedItem.node.label =="Add Folder / Document")
-      return this.hiddenPopUp1 = true;
-  
-      if(this.selectedItem.node.label =="Add Folder")
-      return this.hiddenPopUp1 = false;
+  assignData(resData){
+    this.files = this.convertToTreeView(resData);
+    if(localStorage.getItem("openedFoldrerKey")){
+      this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
+      this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
+      this.selectedFolder = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files)
     }else{
+      this.folder_files = this.files;
     }
+    this.getTaskList();
+    this.loader.hide();
   }
 
-  onCreateTreeFolder(){
-    this.createTreeFolderOverlay = false;
-    if (this.selectedItem.node.label == "Add Folder") {
-      this.isDialogBox = true;
-    }
-      if (this.selectedItem.node.label == "Add Folder / Document") {
-        this.isDialog = true;
+  calculateFolderSize(folder: any): number {
+    let size = 0;
+    folder.children.forEach(child => {
+      if (child.fileSize) {
+        size += child.fileSize;
       }
+      if (child.dataType === 'folder') {
+        child.size = this.calculateFolderSize(child);
+        size += child.size;
+      }
+    });
+    return size;
   }
+
+  formatBytes(bytes: number): string {
+    if (bytes === 0) {
+      return '0 B';
+    }
+    const k = 1024;
+    const decimals = 2;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const formattedValue = parseFloat((bytes / Math.pow(k, i)).toFixed(decimals));
+    return `${formattedValue} ${sizes[i]}`;
+  }
+
+  // treeChildFolderSave() {
+  //   if (this.selectedFile && this.entered_folder_name) {
+  //     let object = { ...{}, ...this.sampleNode_object };
+  //     object.label = this.entered_folder_name;
+  //     let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
+  //     object.key = this.selectedFile.parent.key + "-" + objectKey;
+  //     this.loader.show()
+  //     let req_body = [{
+  //       key: this.selectedFile.parent.key + "-" + objectKey,
+  //       label: this.entered_folder_name,
+  //       data: "folder",
+  //       ChildId: "1",
+  //       dataType: "folder",
+  //       fileSize: "",
+  //       task_id: "",
+  //       projectId: this.project_id
+  //     }];
+    
+  //     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+  //       this.loader.hide();
+  //       let res_data:any = res
+  //     this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
+  //     let obj = res_data.data[0];
+  //     // obj['expandedIcon'] = "pi pi-folder-open"
+  //     // obj['collapsedIcon'] = "pi pi-folder";
+  //     obj['icon'] = "folder.svg"
+  //     obj["children"]= [
+  //       {
+  //         key: String(obj.key)+"-0" ,
+  //         label: "Add Folder / Document",
+  //         data: "Folder",
+  //         dataType:"folder",
+  //         // expandedIcon: "pi pi-folder",
+  //         // collapsedIcon: "pi pi-folder",
+  //         icon: 'folderadd.svg'
+  //       }
+  //     ]
+  //       this.selectedFile.parent.children.push(obj);
+  //       this.entered_folder_name = "";
+  //       this.isDialog = false;
+  //     },err=>{
+  //       this.loader.hide();
+  //       this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+  //     });
+  //   }
+  // }
+
+  // nodeSelect(item) {
+  //   this.selectedItem = item;
+  //   if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
+  //     this.createTreeFolderOverlay = true;
+  //     if(this.selectedItem.node.label =="Add Folder / Document")
+  //     return this.hiddenPopUp1 = true;
+  
+  //     if(this.selectedItem.node.label =="Add Folder")
+  //     return this.hiddenPopUp1 = false;
+  //   }else{
+  //   }
+  // }
+
+  // onCreateTreeFolder(){
+  //   this.createTreeFolderOverlay = false;
+  //   if (this.selectedItem.node.label == "Add Folder") {
+  //     this.isDialogBox = true;
+  //   }
+  //     if (this.selectedItem.node.label == "Add Folder / Document") {
+  //       this.isDialog = true;
+  //     }
+  // }
 
   showDialog() {
     this.isDialog = true;
@@ -288,14 +292,23 @@ export class ProjectsDocumentComponent implements OnInit {
 
   folderView(){
     this.isFolder = true;
+    this.folder_files = this.files;
+    this.folder_files.forEach(element => {
+      element["is_selected"] = false;
+    });
+    this.selectedItem_new = [];
     const params={project_id:this.project_id,project_name:this.project_name,"folderView":true};
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
   }
 
   treeView(){
+    this.selectedItem_new = [];
     this.isFolder = false;
     this.breadcrumbItems = [];
     this.folder_files = this.files;
+    this.folder_files.forEach(element => {
+      element["is_selected"] = false;
+    });
     const params={project_id:this.project_id,project_name:this.project_name,"treeView":true};
     this.router.navigate([], {
         relativeTo: this.route,
@@ -321,136 +334,9 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   }
 
-  onCreateFolder(){
-    this.createFolderPopUP = false;
-    if(this.selectedItem.label =="Add Folder / Document")
-    return this.isDialog1 = true;
-
-    if(this.selectedItem.label =="Add Folder")
-    return this.isDialogBox = true;
-    // Open folder
-    this.selectedFolder = this.selectedItem
-    this.folder_files = this.selectedItem.children
-    let obj = {label:this.selectedItem.label,key:this.selectedItem.key,id:this.selectedItem.id}
-    this.breadcrumbItems.push(obj)
-    this.breadcrumbItems = [...this.breadcrumbItems];
-
-  }
-
-  addSubfolder() {
-  if (this.selectedFolder && this.entered_folder_name) {
-   let finalKey=  this.getTheFileKey();
-    this.loader.show();
-    let req_body = [{
-      key: this.selectedFolder.key + "-" +finalKey,
-      label: this.entered_folder_name,
-      data: "Folder",
-      ChildId: "1",
-      dataType: "folder",
-      fileSize: "",
-      task_id: "",
-      projectId: this.project_id,
-    }];
-
-    this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-      this.loader.hide();
-      let res_data:any = res
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
-      let obj = res_data.data[0];
-      obj['icon'] = "folder.svg"
-      obj["children"]= [{
-          key: String(obj.key)+"-0" ,
-          label: "Add Folder / Document",
-          data: "Folder",
-          dataType:"folder",
-          icon: 'folderadd.svg'
-        }
-      ]
-
-      this.selectedFolder.children.push(obj);
-      this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
-
-      this.entered_folder_name = "";
-      this.isDialog1 = false;
-    },err=>{
-      this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
-    })
-
-  }
-}
-
-addParentFolder() {
-  this.loader.show();
-  let req_body = [{
-    key: String(Number(this.files[this.files.length - 1].key)+1),
-    label: this.folder_name,
-    data: "Folder",
-    ChildId: "1",
-    dataType: "folder",
-    fileSize: "",
-    task_id: "",
-    projectId: this.project_id,
-  }];
-
-  this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-    this.loader.hide();
-    let res_data:any = res;
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
-    let obj = res_data.data[0];
-    // obj['expandedIcon'] = "pi pi-folder-open"
-    // obj['collapsedIcon'] = "pi pi-folder";
-    obj['icon'] = "folder.svg"
-    obj["children"]= [
-      {
-        key: String(obj.key)+"-0" ,
-        label: "Add Folder / Document",
-        data: "Folder",
-        dataType:"folder",
-        // expandedIcon: "pi pi-folder",
-        // collapsedIcon: "pi pi-folder",
-        icon: 'folderadd.svg'
-      }
-    ]
-    this.files.push(obj);
-    this.folder_name = "";
-    this.isDialogBox = false;
-  },err=>{
-    this.loader.hide();
-    this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
-  })
-
-}
-
-  // removeRoute(node) {
-  //   const parent: any = this.findById(this.files, node.parentId);
-  //   const index = parent.children.findIndex((c) => c.id === node.id);
-  //   parent.children.splice(index, 1);
-  // }
-  // public selected: any;
-
-  // findById(data, id) {
-  //   for (const node of data) {
-  //     if (node.id === id) {
-  //       return node;
-  //     }
-
-  //     if (node.children) {
-  //       const desiredNode = this.findById(node.children, id);
-  //       if (desiredNode) {
-  //         return desiredNode;
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // }
-
   closeOverlay(event){
     this.createFolderPopUP = event;
     this.createTreeFolderOverlay = event;
-  }
-
-  nodeUnselect(){
   }
 
   onNodeClick(event){
@@ -484,18 +370,6 @@ addParentFolder() {
     }else{
       this.items=[];
       this.cm.hide();
-    }
-  }
-
-  onFolderRename(type){
-    this.entered_folder_name="";
-    if(type =='folderView'){
-      this.entered_folder_name = this.selectedItem.label
-      this.selectedItem.type ='textBox'
-      this.model2.hide();
-    }else{
-      this.entered_folder_name = this.selected_folder_rename.label
-      this.selected_folder_rename.type ='textBox'
     }
   }
 
@@ -630,7 +504,7 @@ addParentFolder() {
 
   onCancelFolderNameUpdate(type){
     if(type == 'folderView'){
-      this.selectedItem.type ='default';
+      this.selectedFolder_new[0].type ='default';
     }else{
       this.selected_folder_rename.type ='default';
     }
@@ -640,7 +514,7 @@ addParentFolder() {
   onSaveFolderNameUpdate(type){
     let req_body:any;
     if(type == 'folderView'){
-      req_body = this.selectedItem
+      req_body = this.selectedFolder_new[0]
       // this.selectedItem.label = this.entered_folder_name;
       req_body.label = this.entered_folder_name;
     }else{
@@ -653,8 +527,8 @@ addParentFolder() {
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
       if(type == 'folderView'){
-        this.selectedItem.label = this.entered_folder_name;
-        this.selectedItem.type ='default';
+        this.selectedFolder_new[0].label = this.entered_folder_name;
+        this.selectedFolder_new[0].type ='default';
       }else{
         this.selectedItem.node.label = this.entered_folder_name;
         this.selectedItem.node.type ='default';
@@ -664,55 +538,7 @@ addParentFolder() {
     })
   }
 
-  backToSelectedFolder(){
-    // this.folder_files = this.opened_folders[this.opened_folders.length-1];
-    this.breadcrumbItems.splice(-1)
-    this.breadcrumbItems = [...this.breadcrumbItems];
-    if(this.breadcrumbItems.length >0)
-    this.folder_files = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
-    else this.folder_files = this.files
-  }
 
-  singleFileUploadFolder(e){
-    let filteredkey = this.selectedFolder.children[this.selectedFolder.children.length-1].key.split("-")
-
-    // let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
-    // object.key = this.selectedFolder.key + "-" + objectKey;
-    let objectKey = this.selectedFolder.key
-    this.loader.show();
-    const fileData = new FormData();
-    const selectedFile = e.target.files;
-
-    let fileKeys=[]
-    for (let i = 0; i < selectedFile.length; i++) {
-      fileData.append("filePath", selectedFile[i]);
-      let finalKey = Number(filteredkey[filteredkey.length-1])+i+1
-      fileKeys.push(String(objectKey+'-'+ finalKey))
-  }
-    fileData.append("projectId",this.project_id);
-    fileData.append("taskId",'')
-    fileData.append("ChildId",'1')
-   
-    fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
-    this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
-      this.createFolderPopUP=false;
-      let res_data:any = res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
-    res_data.data.forEach(item=>{
-      let obj = item
-      if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        obj['icon']=  "img-file.svg"
-      }else{
-        obj["icon"]= "document-file.svg"
-      }
-      this.selectedFolder.children.push(obj);
-    })
-    this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
-    this.loader.hide();
-      this.entered_folder_name = "";
-      this.isDialog1 = false;
-    })
-  }
   onDeleteItem(type){
     let req_body=[];
     if(type =='folderView'){
@@ -823,7 +649,7 @@ addParentFolder() {
               req_body.push(element.id)
             }
           });
-        }else{
+        } else {
           req_body.push(this.selectedItem.id)
         }
         this.model2.hide();
@@ -962,12 +788,15 @@ addParentFolder() {
         label: obj.label,
         data: obj.data,
         type:"default",
-        uploadedBy:obj.uploadedBy,
+        uploadedByUser:this.getUserName(obj.uploadedBy),
         projectId:obj.projectId,
         id: obj.id,
         dataType:obj.dataType,
         children:obj.children,
-        uploadedDate:obj.uploadedDate
+        uploadedDate:obj.uploadedDate,
+        is_selected:obj.is_selected,
+        uploadedDate_new:obj.uploadedDate_new,
+        fileSize: obj.fileSize
       };
         if(obj.dataType == 'folder'){
           node["icon"]="folder.svg"
@@ -1021,73 +850,16 @@ addParentFolder() {
         res_data=res
         this.documents_resData = res
         this.loader.hide()
-        this.files=[
-          {
-            key: "0",
-            label: "Add Folder",
-            data: "Add Folder",
-            data_type:"addfolder",
-            icon:"folderadd.svg"
-          },
-        ];
-        this.convertToTreeView2(res_data)
-    })
+        this.files=[];
+        this.assignData2(res_data)
+    });
   }
 
-  convertToTreeView2(res_data){
-    res_data.map(data=> {
-      if(data.dataType=='folder'){
-        // data["children"]=[{
-        //   key: data.key+'-0',
-        //   label: "Add Folder / Document",
-        //   dataType:"folder",
-        //   icon: 'folderadd.svg'
-        // }]
-      }
-      return data
-    })
-
-  for (let obj of res_data) {
-    let node = {
-      key: obj.key,
-      label: obj.label,
-      data: obj.data,
-      type:"default",
-      uploadedBy:obj.uploadedBy,
-      projectId:obj.projectId,
-      id: obj.id,
-      dataType:obj.dataType,
-      children:obj.children,
-      uploadedDate:obj.uploadedDate
-    };
-      if(obj.dataType == 'folder'){
-        node['icon'] = "folder.svg"
-      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-        node['icon'] = "img-file.svg"
-    }else{
-      node['icon'] = "document-file.svg"
-    }
-    this.nodeMap[obj.key] = node;
-    if (obj.key.indexOf('-') === -1) {
-      this.files.push(node);
-    } else {
-      let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
-      let parent = this.nodeMap[parentKey];
-      if (parent) {
-        if(parent.children)
-        parent.children.push(node);
-      }
-    }
-  }
-  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  // this.folder_files = this.files;
-  this.folder_files = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
-  this.getTaskList();
-  this.loader.hide();
-  }
-
-  onBreadcrumbItemClick(event: any) {
-    // add your custom logic here
+  assignData2(res_data){
+    this.files = this.convertToTreeView(res_data);
+    this.folder_files = this.setFolderOrder(this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children)
+    this.getTaskList();
+    this.loader.hide();
   }
 
   ngOnDestroy(){
@@ -1096,8 +868,257 @@ addParentFolder() {
   }
 
   getTheFileKey(){
-    let selected_folder = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children
-    let filteredkey = selected_folder[selected_folder.length-1].key.split("-");
-    return Number(filteredkey[filteredkey.length-1])+1;
+    let selected_folder:any = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files)
+    let filteredkey = selected_folder.children.length >0 ? selected_folder.children[selected_folder.children.length-1].key.split("-"):"1"
+    return selected_folder.children.length >0?Number(filteredkey[filteredkey.length-1])+1:filteredkey;
   }
+
+  // New changes
+
+  onCreateFolder(){
+    this.breadcrumbItems.length > 0 ? this.subFolderDialog = true : this.isDialogBox = true;
+  }
+
+  openFolderonDblClick(item){
+    if(item.dataType === 'folder'){
+    this.selectedItem_new=[];
+    this.selectedFolder_new = item
+    this.folder_files=[];
+    this.folder_files =this.setFolderOrder(item.children)
+    let obj = {label:item.label,key:item.key,id:item.id}
+    this.breadcrumbItems.push(obj)
+    this.breadcrumbItems = [...this.breadcrumbItems];
+    this.createItems=[];
+    this.createItems = [
+        {label: "Create Folder",command: () => {this.onCreateFolder()}},
+        {label: "Create Document"},
+      ];
+    clearTimeout(this.clickTimeout);
+    console.log("this.breadcrumbItems",this.breadcrumbItems)
+    }
+  }
+
+  addParentFolder() {
+     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.folder_name.toLowerCase()) 
+     if(existValue.length > 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
+      return;
+     }
+    let req_body = [{
+      key: String(Number(this.folder_files[this.folder_files.length - 1].key)+1),
+      label: this.folder_name,
+      data: "Folder",
+      ChildId: "1",
+      dataType: "folder",
+      fileSize: "",
+      task_id: "",
+      projectId: this.project_id,
+    }];
+    this.createFolders(req_body);  
+  }
+
+  addSubfolder() {
+    console.log(this.selectedFolder_new);
+    console.log("this.breadcrumbItems",this.breadcrumbItems)
+    let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase()) 
+     if(existValue.length > 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
+      return;
+     }
+    if (this.entered_folder_name) {
+     let finalKey=  this.getTheFileKey();
+      let req_body = [{
+        key: this.selectedFolder_new.key + "-" +finalKey,
+        label: this.entered_folder_name,
+        data: "Folder",
+        ChildId: "1",
+        dataType: "folder",
+        fileSize: "",
+        task_id: "",
+        projectId: this.project_id,
+      }];  
+      this.createFolders(req_body);
+    }
+  }
+
+  createFolders(req_body){
+    console.log("createFolder req_body",req_body);
+    this.loader.show();
+    this.rest_api.createFolderByProject(req_body).subscribe(res=>{
+      this.loader.hide();
+      let res_data:any = res;
+      this.isDialogBox = false;
+      this.selectedFolder_new=[];
+      this.folder_name='';
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
+      let obj = res_data.data[0];
+      obj['icon'] = "folder.svg"
+      obj["children"]= []
+      this.folder_files.push(obj);
+      this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+      this.entered_folder_name = "";
+      this.subFolderDialog = false;
+    },err=>{
+      this.loader.hide();
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
+    })
+  }
+
+  deleteSelectedItems(type){
+      let req_body=[];
+      if(type =='folderView'){
+        this.model2.hide();
+        req_body=this.selectedItem_new
+      }else{
+        req_body=[this.selected_folder_rename]
+        delete req_body[0]["parent"];
+      }
+      this.confirmationService.confirm({
+        message: "Do you really want to delete this? This process cannot be undone.",
+        header: 'Are you Sure?',
+        accept: () => {
+          this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
+            this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
+            this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+          },err=>{
+            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+          })
+        },
+        reject: (type) => {
+        },
+        key: "positionDialog"
+    });
+    }
+
+  onChangeSelectFolder(){
+    this.selectedItem_new=[];
+    this.folder_files.forEach(element => {
+      if(element.is_selected)
+      this.selectedItem_new.push(element)
+    });
+  }
+
+  onSelectFolder(event: MouseEvent , index){
+    clearTimeout(this.clickTimeout);
+    this.clickTimeout = setTimeout(() => {
+    this.folder_files[index].is_selected == true ? this.folder_files[index].is_selected = false : this.folder_files[index].is_selected = true;
+    let selectedItems=[]
+    this.folder_files.forEach(element => {
+      if(element.is_selected)
+      selectedItems.push(element);
+    });
+    this.selectedItem_new = selectedItems;
+  }, 200);
+  }
+
+  readSelectedData(data){
+console.log(data)
+  }
+
+    singleFileUploadFolder(e){
+      // let filteredkey = this.selectedFolder.children[this.selectedFolder.children.length-1].key.split("-")
+      if(e.target.files){
+      let filteredkey = this.getTheFileKey();
+      let objectKey = this.selectedFolder_new.key
+      const fileData = new FormData();
+      const selectedFile = e.target.files;
+      let fileKeys=[];
+      for (let i = 0; i < selectedFile.length; i++) {
+        fileData.append("filePath", selectedFile[i]);
+        let finalKey = Number(filteredkey)+i;
+        fileKeys.push(String(objectKey+'-'+ finalKey))
+    }
+    console.log(fileKeys)
+      fileData.append("projectId",this.project_id);
+      fileData.append("taskId",'')
+      fileData.append("ChildId",'1')
+     
+      fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+      this.loader.show();
+      this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
+        this.createFolderPopUP=false;
+        let res_data:any = res
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
+      res_data.data.forEach(item=>{
+        let obj = item
+        if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+          obj['icon']=  "img-file.svg"
+        }else{
+          obj["icon"]= "document-file.svg"
+        }
+      })
+      this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+      this.loader.hide();
+        this.entered_folder_name = "";
+        this.subFolderDialog = false;
+      })
+    }
+    }
+
+    onFolderRename(type){
+      this.entered_folder_name="";
+      if(type =='folderView'){
+        this.entered_folder_name = this.selectedItem_new[0].label
+        this.selectedItem_new[0].type ='textBox'
+      }else{
+        this.entered_folder_name = this.selected_folder_rename.label
+        this.selected_folder_rename.type ='textBox'
+      }
+    }
+
+  backToSelectedFolder(type){
+      this.folder_files=[];
+      this.selectedItem_new=[];
+      if(type == 'main'){
+          this.folder_files = this.files;
+          this.folder_files.forEach(element => {
+            element["is_selected"]=false;
+          });
+          this.createItems = [{label: "Create Folder",command: () => {this.onCreateFolder()}},];
+          this.breadcrumbItems=[];
+      } else {
+        this.breadcrumbItems.splice(-1);
+        this.breadcrumbItems = [...this.breadcrumbItems];
+        if(this.breadcrumbItems.length >0){
+        let filteredData = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children;
+          this.folder_files = this.setFolderOrder(filteredData);
+        } else {
+          this.folder_files = this.files;
+          this.createItems = [{label: "Create Folder",command: () => {this.onCreateFolder()}}];
+        }
+      }
+  }
+  
+  onBreadcrumbItemClick(event: any, index: number) {
+    let filteredData= this.findNodeByKey(event.key,this.files).children;
+      this.folder_files=[];
+      this.folder_files = this.setFolderOrder(filteredData);
+      console.log(this.folder_files,filteredData,this.files)
+      this.breadcrumbItems.splice(index+1);
+  }
+
+  setFolderOrder(filteredData:any){
+    let folder_files =[];
+    this.selectedItem_new=[];
+    filteredData.forEach(element => {
+      element["is_selected"] = false;
+      if(element.dataType === 'folder') {
+        // element.size=this.formatBytes(element.size)
+        folder_files.push(element)
+      }
+    });
+    filteredData.forEach(element => {
+      if(element.dataType != 'folder') folder_files.push(element)
+    });
+    return folder_files
+  }
+
+  getUserName(emailId){
+    let user = this.users_list.find(item => item.user_email == emailId);
+    if(user)
+      return user["fullName"]
+      else
+      return '';
+    }
+  
 }
