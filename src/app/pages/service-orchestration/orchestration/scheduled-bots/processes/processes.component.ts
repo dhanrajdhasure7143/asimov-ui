@@ -3,6 +3,7 @@ import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-processes',
@@ -66,6 +67,7 @@ export class ProcessesComponent implements OnInit {
     this.rest.get_processes_scheduled().subscribe(data1=>{
     let response:any =[];
     response=data1;
+    this.spinner.hide();
     response=response.map(item=>{
       // let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
       if(item.status == "Resumed")item.status= "Stopped"
@@ -75,13 +77,12 @@ export class ProcessesComponent implements OnInit {
       item.nextRunTS=item.nextRunTS?item.nextRunTS.length>5?new Date(item.nextRunTS):null:null;
      return item;
     })
-
     this.tabledata = response.length <= '0'  ? false: true;
     this.processschedule = response
     this.table_searchFields =["processName","category","environmentName","lastRunTS","nextRunTS","scheduleInterval","status","timezone"]
-    this.spinner.hide(); 
    },err=>{
-    this.spinner.hide(); 
+    this.spinner.hide();
+      Swal.fire("Error", "Unable get the data", "error");
    });
   }
 
