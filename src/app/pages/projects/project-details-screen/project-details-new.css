@@ -392,7 +392,7 @@ input.msgip {
 
 .acresources {
     border: 1px solid #d0d0d0;
-    padding: 20px !important;
+    padding: 20px 20px 10px !important;
     border-radius: 6px;
     background-color: #fff;
 }
