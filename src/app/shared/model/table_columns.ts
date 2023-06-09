@@ -78,10 +78,10 @@ export class columnList{
 
         // connection manager table
       public connectionsList_column =[
-        {ColumnName: "name",DisplayName: "Connector Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "name",DisplayName: "Connector Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 20rem"},
         {ColumnName: "actionCount",DisplayName: "Action Count",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "connectionLogo",DisplayName: "Connector Logo",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        {ColumnName: "createdBy",DisplayName: "CreatedBy ",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy","createdAt"],datePipe:true,width:"flex: 0 0 10rem"},
+        {ColumnName: "createdBy",DisplayName: "Created By ",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy","createdAt"],datePipe:true,width:"flex: 0 0 20rem"},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
       // connection manager actions table
@@ -117,7 +117,7 @@ export class columnList{
         {ColumnName: "previousTask",DisplayName: "Previous Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextSuccessTask",DisplayName: "Next Task (Upon Success)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextFailureTask",DisplayName: "Next Task (Upon Failure)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "status",DisplayName: "status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Approved','Pending','Running','Rejected']},
+        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Approved','Pending','Running','Rejected']},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 
