@@ -1,11 +1,15 @@
 
 .drag-area{
-  min-height: 70vh;
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  height: calc(100vh - 162px);
+  /* min-height: 70vh;
   width:100%;
   position: relative;
-  /* float: left;
-  transform-origin:0% 0%; */
-  display: inline;
+  float: left;
+  transform-origin:0% 0%;
+  display: inline; */
 }
 
 .outputtextareastyle{
@@ -16,8 +20,6 @@
   max-height: 200px !important;
    overflow-x:auto;
 }
-
-
 
 .dndDropzone {
   cursor: pointer;
@@ -35,12 +37,11 @@
   height: 60px;
   background-color: #00a0e317;
   border: 2px solid #d7eaff;
+  margin-top: 10px;
 }
 
 .dndDropzone:hover{
- 
-  border: 2px solid #00a0e3;
-  
+  border: 2px solid #4ab0f5;  
 }
 
 .studio_main{
@@ -70,8 +71,8 @@
 }
 
 
-.node-delete{
-  float: right;
+.node-delete {
+  /* float: right;
   margin-top:-10px;
   margin-right: -7px;
   border-radius: 10px;
@@ -79,7 +80,10 @@
   width:13px;
   color:rgb(255, 255, 255);
   text-align: center;
-  font-size:10px;
+  font-size:10px; */
+  position: absolute;
+    right: -8px;
+    top: -12px;
 }
 
 .node-delete img{
@@ -140,7 +144,7 @@
 
 .dragactionsdiv {
   text-align:center;
-  position: inherit;
+  position: absolute;
     top: 20%;
     left: 0%;
     width: 100%;
