@@ -567,7 +567,9 @@ export class RpaHomeComponent implements OnInit {
 
   clear(table: Table) {
    this.searchValue=""
-    table.filterGlobal("","");
+   table.filterGlobal("","");
+   table.clear();
+
   }
   onNavigateToWorkSpace(row){
     this.router.navigate(["/pages/rpautomation/designer"], {

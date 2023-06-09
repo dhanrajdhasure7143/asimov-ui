@@ -425,6 +425,7 @@ this.selectedrow =i;
   }
 
   clear(table: Table) {
+    table.clear();
     this.searchValue ="";
     table.filterGlobal("","")
   }

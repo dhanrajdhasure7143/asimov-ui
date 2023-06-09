@@ -1420,6 +1420,7 @@ resetsla(){
     table.filterGlobal("","")
     table.sortOrder = 0;
     table.sortField = '';
+    table.clear();
   }
   closeOverlay(event){  //overlay close 
 

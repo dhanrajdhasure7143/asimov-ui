@@ -1223,9 +1223,8 @@ this.display = false
     this.selected_source = '';
     this.selectedcat = '';
     this.searchValue =""
-    table.filterGlobal("","")
-    // table.clear();
-    // this.getallbots();
+    table.filterGlobal("","",)
+    table.clear();
   }
 
   closeOverlaysche(event){
