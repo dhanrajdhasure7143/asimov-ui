@@ -2439,6 +2439,10 @@ input.p-inputtext {
 .actionspopmenu.prjactmenu .p-menu-overlay {
   top: 40px !important;
 }
+.dochead-leftbtns .p-menu-overlay {
+  top: 40px !important;
+  left: unset !important;
+}
 .download .p-overlaypanel-content {
   padding: 5px 0px !important;
 }
@@ -3077,10 +3081,10 @@ textarea.p-inputtextarea {
 .vrsn-btn .p-togglebutton.p-button:focus {
   box-shadow: unset !important;
 }
-.dochead-leftbtns .p-splitbutton.p-component {
+.dochead-upldbtn .p-splitbutton.p-component {
   height: 36px;
 }
-.dochead-leftbtns .p-card .p-card-body, .dochead-leftbtns .p-card .p-card-content {
+.dochead-upldbtn .p-card .p-card-body, .dochead-upldbtn .p-card .p-card-content {
   padding: 0px !important;
 }
 .dochead-upldbtn .p-card {

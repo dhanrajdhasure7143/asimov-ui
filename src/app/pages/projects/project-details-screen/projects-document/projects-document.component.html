@@ -44,10 +44,10 @@
             </div> -->
         </div>
         <div class="main-content-body" *ngIf="!isEditor">
-            <div class="well-design">
+            <div class="well-design h-100">
                 <div class="col-md-12 under-line">
                     <div class="row">
-                        <div class="col-md-9 pl-0">
+                        <div class="col-md-8 pl-0 dochead-leftbtns">
                             <!-- <p-splitButton label="Create New" icon="pi pi-plus" (onClick)="onCreateFolder()" [model]="createItems"></p-splitButton> -->
 
                                 <button type="button" pButton class="btn bluebg-button creat-pluarow icn-adj" (click)="createFolder.toggle($event)">
@@ -84,7 +84,7 @@
                             </button> -->
 
                         </div>
-                        <div class="col-md-3 pr-0 right-btns">
+                        <div class="col-md-4 pr-0 dochead-rightbtns">
                              
                            <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
                                 <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" class="active-icon"/>
@@ -339,13 +339,13 @@
     <p-overlayPanel #op>
         <ng-template pTemplate>
             <div class="docritclk">
-                <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" *ngIf="breadcrumbItems.length > 0">
+                <div class="dochead-upldbtn" (change)="singleFileUploadFolder($event)" *ngIf="breadcrumbItems.length > 0">
                     <p-card class="cards side">
                         <span class="crt-new">Upload File</span>
                         <input type="file" name="myfile" multiple/>
                     </p-card>
                 </div>
-                <div class="upload-btn-wrapper" (change)="folderUpload($event,'folderView')">
+                <div class="dochead-upldbtn" (change)="folderUpload($event,'folderView')">
                     <p-card class="cards side"> 
                         <button class="btn">Upload folder</button>
                         <input type="file" webkitdirectory directory multiple>

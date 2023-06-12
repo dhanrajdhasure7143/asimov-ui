@@ -294,7 +294,9 @@ input[type=checkbox]:checked::after {
   margin-top: 30px;
 }
 
-
+.p-overlaypanel-content {
+  padding: 14px !important;
+}
 
 
 
