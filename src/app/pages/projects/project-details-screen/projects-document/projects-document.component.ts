@@ -1,16 +1,16 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MenuItem, MessageService, TreeNode } from "primeng/api";
+import { ConfirmationService, MenuItem, MessageService, TreeNode, ConfirmEventType } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { Tree } from 'primeng/tree';
 import moment from 'moment';
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
-import { saveAs } from 'file-saver';
-import { IfStmt } from "@angular/compiler";
+import { asBlob } from "html-docx-js-typescript";
+import { saveAs } from "file-saver";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 
 @Component({
   selector: "app-projects-document",
@@ -67,6 +67,18 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedFolder_new:any;
   private clickTimeout: any;
   users_list: any = [];
+  isEditor: boolean =false;
+  public documentData: string;
+  public projectName: string;
+  public ckeConfig: any;
+  public editorRef: any;
+  navigarteURL: any;
+  paramsData: any;
+  enterDocumentName: string='';
+  documentCreateDialog:boolean = false;
+  selectedAction:any;
+  breadcrumbSelectedIndex:any
+
   columns_list = [
     {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
     {ColumnName: "uploadedDate",DisplayName: "Last Modified",ShowGrid: true,ShowFilter: false},
@@ -81,7 +93,7 @@ export class ProjectsDocumentComponent implements OnInit {
     private loader: LoaderService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private dt: DataTransferService
+    private dt: DataTransferService,
     ) {
 
     this.route.queryParams.subscribe((data) => {
@@ -188,7 +200,8 @@ export class ProjectsDocumentComponent implements OnInit {
     }else{
       this.folder_files = this.files;
     }
-    // console.log(JSON.stringify(this.folder_files));
+    this.selectedAction = null;
+    this.breadcrumbSelectedIndex = null;
     this.getTaskList();
     this.loader.hide();
   }
@@ -896,7 +909,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.createItems=[];
     this.createItems = [
         {label: "Create Folder",command: () => {this.onCreateFolder()}},
-        {label: "Create Document"},
+        {label: "Create Document",command: () => {this.onCreateDocument()}},
       ];
     clearTimeout(this.clickTimeout);
     console.log("this.breadcrumbItems",this.breadcrumbItems)
@@ -1125,6 +1138,8 @@ console.log(data)
   setFolderOrder(filteredData:any){
     let folder_files =[];
     this.selectedItem_new=[];
+    this.selectedAction = null;
+    this.breadcrumbSelectedIndex = null;
     filteredData.forEach(element => {
       element["is_selected"] = false;
       if(element.dataType === 'folder') {
@@ -1319,5 +1334,125 @@ async getFileDataById(fileId) {
      return isDuplicate
     }
 
+    downloadDocument() {
+      this.documentData = this.editorRef.getData();
+      asBlob(this.documentData).then((data: any) => {
+        saveAs(data, "file.docx"); // save as docx file
+      });
+    }
+
+    onCreateDocument(){
+      this.isEditor = true;
+      setTimeout(() => {
+        
+      DecoupledEditor.create(document.querySelector("#editor"),{
+        // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
+        removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+      })
+        .then((editor) => {
+          // The toolbar needs to be explicitly appended.
+          document
+            .querySelector("#toolbar-container")
+            .appendChild(editor.ui.view.toolbar.element);
+          this.editorRef = editor;
+          // window = editor;
+        })
+        .catch((error) => {
+          console.error("There was a problem initializing the editor.", error);
+        });
+      }, 250);
+
+    }
+
+    openDialogTosaveDocument() {
+      this.documentCreateDialog = true;
+      this.enterDocumentName= "";
+      this.selectedAction = null;
+      this.breadcrumbSelectedIndex = null;
+    }
+
+    uploadCreatedDocument(){
+      console.log(this.selectedAction)
+      console.log(this.folder_files)
+    let existValue = this.folder_files.filter(e=> (e.label.toLowerCase() == (this.enterDocumentName+'.docx').toLowerCase()) && (e.dataType != "folder"));
+    if(existValue.length > 0){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "File Name Already exists!" });
+      return;
+    };
+
+    let filteredkey = this.getTheFileKey();
+    let objectKey = this.selectedFolder_new.key;
+    this.documentData = this.editorRef.getData();
+    asBlob(this.documentData).then((data: any) => {
+      const formData = new FormData();
+      formData.append("filePath", data, this.enterDocumentName+'.docx');
+      formData.append("projectId", this.project_id);
+      formData.append("taskId", "");
+      formData.append("ChildId", "1");
+      formData.append("fileUniqueIds", JSON.stringify([objectKey+'-'+ filteredkey+1]));
+      console.log([objectKey+'-'+ filteredkey]);
+      this.loader.show();
+      this.rest_api.uploadfilesByProject(formData).subscribe((res) => {
+        this.loader.hide();
+        this.isDialog = false;
+        this.isEditor = false;
+        this.documentCreateDialog = false;
+        this.enterDocumentName= "";
+        console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
+
+        if(this.selectedAction == 'main' || this.selectedAction == 'subfolders'){
+          this.backToSelectedFolder(this.selectedAction);
+        }
+        if(this.breadcrumbSelectedIndex){
+          console.log("test1",this.selectedAction,this.breadcrumbSelectedIndex)
+          this.onBreadcrumbItemClick(this.selectedAction,this.breadcrumbSelectedIndex);
+        }
+
+        if(!this.selectedAction){
+          this.getTheListOfFolders1()
+          console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
+        }
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
+      },err=>{
+        this.loader.hide();
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
+      });
+    });
+  }
+
+  documentSaveConfirmation(value,index?:number){
+    if(this.isEditor){
+      this.confirmationService.confirm({
+        message: "Your changes will be lost if you don't save them.",
+        header: 'Do you want to save the changes?',
+        accept: () => {
+          this.documentCreateDialog = true;
+          this.breadcrumbSelectedIndex = index;
+          this.selectedAction = value;
+          this.enterDocumentName= "";
+        },
+        reject: (type) => {
+          switch(type) {
+            case ConfirmEventType.REJECT:
+              this.isEditor=false;
+              this.documentCreateDialog = false;
+              if(value == 'main' || value == 'subfolders'){
+                this.backToSelectedFolder(value);
+              }
+              if(index){
+                this.onBreadcrumbItemClick(value,index);
+              }
+            break;
+            case ConfirmEventType.CANCEL:
+            break;
+        }
+
+        },
+        key: "documentDialog"
+    });
+    } else{
+
+    }
+  }
   
 }

@@ -7,22 +7,31 @@
                             <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                             <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                         </a>
-                        <a *ngIf="breadcrumbItems.length >0" (click)="backToSelectedFolder('subfolders')" class="imageBox">
+                        <a *ngIf="breadcrumbItems.length >0" (click)="isEditor?documentSaveConfirmation('subfolders'):backToSelectedFolder('subfolders')" class="imageBox">
                             <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                             <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                         </a>
                     </label>
                     <span class="title_text_haspath">
                        <span routerLink="/pages/projects/listOfProjects" class="breadcrum-back">Projects</span> <span class="breadcrum-align">/</span> <span (click)="backToProjectDetails()" class="breadcrum-back">{{project_name}}</span> <span class="breadcrum-align">/</span> 
-                       <span [ngClass]="(breadcrumbItems.length==0) ? 'sub_title_text' : 'breadcrum-back'" (click)="backToSelectedFolder('main')">Manage Documents</span>
+                       <span [ngClass]="(breadcrumbItems.length==0) ? 'sub_title_text' : 'breadcrum-back'" (click)="isEditor?documentSaveConfirmation('main'):backToSelectedFolder('main')">Manage Documents</span>
                         <span *ngIf="breadcrumbItems.length>0">
                             <span *ngFor="let item of breadcrumbItems;let i=index">
-                                /<span (click)="onBreadcrumbItemClick(item,i)" [ngClass]="(breadcrumbItems.length-1 == i) ? 'sub_title_text' : 'breadcrum-back'"> {{item.label}}</span>
+                                /<span (click)="isEditor ? documentSaveConfirmation(item,i):onBreadcrumbItemClick(item,i)" [ngClass]="(breadcrumbItems.length-1 == i) && !isEditor ? 'sub_title_text' : 'breadcrum-back'"> {{item.label}}</span>
                             </span>
                         <!-- <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb> -->
                         </span>
+                        <span class="sub_title_text" *ngIf="isEditor">/ Create Document</span>
                     </span>
                 </h3>
+            </div>
+            <div class="col-md-4 pr-0 text-right" *ngIf="isEditor">
+                <button (click)="downloadDocument()" class="btn new-cancelbtn">
+                    Download
+                </button>
+                <button (click)="openDialogTosaveDocument()" class="btn bluebg-button">
+                    Save
+                </button>
             </div>
             <!-- <div class="col-md-6 pr-0 text-right head-ritfilter">
                 <span class="p-input-icon-right">
@@ -34,7 +43,7 @@
                 </span>
             </div> -->
         </div>
-        <div class="main-content-body">
+        <div class="main-content-body" *ngIf="!isEditor">
             <div class="well-design">
                 <div class="col-md-12 under-line">
                     <div class="row">
@@ -181,6 +190,17 @@
         </div>
                 
         </div>
+        </div>
+
+        <div class="main-content-body" *ngIf="isEditor">
+            <div class="">
+                <div class="document-editor">
+                    <div id="toolbar-container"></div>
+                    <div class="editor-container editor-body">
+                        <div id="editor"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- <div class="row position-relative">
             <div class="docfootbtns">
@@ -371,3 +391,19 @@
     
     <p-contextMenu #cm [model]="items" appendTo="body"></p-contextMenu>
     <p-contextMenu #cm2 [model]="items2"></p-contextMenu>
+
+    <p-confirmDialog #cd2 [style]="{width: '30vw'}" key="documentDialog" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="true">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd2.accept()"></button>
+   </ng-template>
+</p-confirmDialog>
+
+<p-dialog header="Enter File Name" [(visible)]="documentCreateDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <span class="p-float-label">
+        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="enterDocumentName" name="folder"
+            maxlength="50" />
+        <button type="button" class="btn bluebg-button" (click)="uploadCreatedDocument()" [disabled]="!(enterDocumentName.length > 0)">Save</button>
+    </span>
+</p-dialog>
