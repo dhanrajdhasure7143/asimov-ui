@@ -123,13 +123,13 @@
                 <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
                    <span *ngIf="item.dataType == 'folder'"> {{item.size | fileSizePipe}}</span>
                 </span>
-                <span *ngIf="item.type=='textBox'">
+                <!-- <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
                     <div class="editfields">
                         <i class="pi pi-check"  (click)="onSaveFolderNameUpdate('folderView')" *ngIf="entered_folder_name"></i>
                         <i class="pi pi-times" (click)="onCancelFolderNameUpdate('folderView')"></i>
                     </div>
-                </span>
+                </span> -->
             </p-card>
         </div>
            </div>
@@ -406,5 +406,14 @@
         <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="enterDocumentName" name="folder"
             maxlength="50" />
         <button type="button" class="btn bluebg-button" (click)="uploadCreatedDocument()" [disabled]="!(enterDocumentName.length > 0)">Save</button>
+    </span>
+</p-dialog>
+
+<p-dialog header="Enter File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <span class="p-float-label">
+        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder"
+            maxlength="50" />
+        <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="!(entered_folder_name.length > 0)">Save</button>
+        <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')" [disabled]="!(enterDocumentName.length > 0)">Save</button>
     </span>
 </p-dialog>

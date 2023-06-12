@@ -77,7 +77,8 @@ export class ProjectsDocumentComponent implements OnInit {
   enterDocumentName: string='';
   documentCreateDialog:boolean = false;
   selectedAction:any;
-  breadcrumbSelectedIndex:any
+  breadcrumbSelectedIndex:any;
+  renameDialog : boolean = false;
 
   columns_list = [
     {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
@@ -522,6 +523,7 @@ export class ProjectsDocumentComponent implements OnInit {
   onCancelFolderNameUpdate(type){
     if(type == 'folderView'){
       this.selectedItem_new[0].type ='default';
+      this.renameDialog = false;
     }else{
       this.selected_folder_rename.type ='default';
     }
@@ -544,6 +546,7 @@ export class ProjectsDocumentComponent implements OnInit {
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
+      this.renameDialog = false;
       if(type == 'folderView'){
         this.selectedItem_new[0].label = this.entered_folder_name;
         this.selectedItem_new[0].type ='default';
@@ -878,7 +881,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.folder_files = this.setFolderOrder(this.selectedFolder_new.children);
     this.getTaskList();
     this.loader.hide();
-  }
+  };
 
   ngOnDestroy(){
     localStorage.removeItem("openedFoldrerKey");
@@ -889,24 +892,24 @@ export class ProjectsDocumentComponent implements OnInit {
     let selected_folder:any = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files)
     let filteredkey = selected_folder.children.length >0 ? selected_folder.children[selected_folder.children.length-1].key.split("-"):"1"
     return selected_folder.children.length >0?Number(filteredkey[filteredkey.length-1])+1:filteredkey;
-  }
+  };
 
   // New changes
 
   onCreateFolder(){
     this.breadcrumbItems.length > 0 ? this.subFolderDialog = true : this.isDialogBox = true;
-  }
+  };
 
   openFolderonDblClick(item){
     if(item.dataType === 'folder'){
-    this.selectedItem_new=[];
-    this.selectedFolder_new = item
-    this.folder_files=[];
-    this.folder_files =this.setFolderOrder(item.children)
+    this.selectedItem_new = [];
+    this.selectedFolder_new = item;
+    this.folder_files = [];
+    this.folder_files = this.setFolderOrder(item.children);
     let obj = {label:item.label,key:item.key,id:item.id}
-    this.breadcrumbItems.push(obj)
+    this.breadcrumbItems.push(obj);
     this.breadcrumbItems = [...this.breadcrumbItems];
-    this.createItems=[];
+    this.createItems = [];
     this.createItems = [
         {label: "Create Folder",command: () => {this.onCreateFolder()}},
         {label: "Create Document",command: () => {this.onCreateDocument()}},
@@ -932,8 +935,8 @@ export class ProjectsDocumentComponent implements OnInit {
       task_id: "",
       projectId: this.project_id,
     }];
-    this.createFolders(req_body);  
-  }
+    this.createFolders(req_body);
+  };
 
   addSubfolder() {
     console.log(this.selectedFolder_new);
@@ -1105,13 +1108,14 @@ export class ProjectsDocumentComponent implements OnInit {
 
     onFolderRename(type){
       this.entered_folder_name="";
-      if(type =='folderView'){
-        this.entered_folder_name = this.selectedItem_new[0].label
-        this.selectedItem_new[0].type ='textBox'
-      }else{
-        this.entered_folder_name = this.selected_folder_rename.label
-        this.selected_folder_rename.type ='textBox'
-      }
+      this.renameDialog = true;
+      // if(type =='folderView'){
+      this.entered_folder_name = this.selectedItem_new[0].label;
+      //   this.selectedItem_new[0].type ='textBox'
+      // }else{
+      //   this.entered_folder_name = this.selected_folder_rename.label
+      //   this.selected_folder_rename.type ='textBox'
+      // }
     }
 
   backToSelectedFolder(type){
