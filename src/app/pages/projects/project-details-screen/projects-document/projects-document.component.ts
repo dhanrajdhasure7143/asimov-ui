@@ -1,14 +1,16 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MenuItem, MessageService, TreeNode } from "primeng/api";
+import { ConfirmationService, MenuItem, MessageService, TreeNode, ConfirmEventType } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { Location} from '@angular/common'
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { Tree } from 'primeng/tree';
 import moment from 'moment';
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
+import { asBlob } from "html-docx-js-typescript";
+import { saveAs } from "file-saver";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 
 @Component({
   selector: "app-projects-document",
@@ -65,6 +67,18 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedFolder_new:any;
   private clickTimeout: any;
   users_list: any = [];
+  isEditor: boolean =false;
+  public documentData: string;
+  public projectName: string;
+  public ckeConfig: any;
+  public editorRef: any;
+  navigarteURL: any;
+  paramsData: any;
+  enterDocumentName: string='';
+  documentCreateDialog:boolean = false;
+  selectedAction:any;
+  breadcrumbSelectedIndex:any
+
   columns_list = [
     {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
     {ColumnName: "uploadedDate",DisplayName: "Last Modified",ShowGrid: true,ShowFilter: false},
@@ -79,7 +93,7 @@ export class ProjectsDocumentComponent implements OnInit {
     private loader: LoaderService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private dt: DataTransferService
+    private dt: DataTransferService,
     ) {
 
     this.route.queryParams.subscribe((data) => {
@@ -150,7 +164,7 @@ export class ProjectsDocumentComponent implements OnInit {
     };
       if(obj.dataType == 'folder'){
         node['icon'] = "folder.svg"
-      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
+      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'||obj.dataType == 'PNG' || obj.dataType == 'JPG'){
         node['icon'] = "img-file.svg"
       }else{
         node['icon'] = "document-file.svg"
@@ -186,6 +200,8 @@ export class ProjectsDocumentComponent implements OnInit {
     }else{
       this.folder_files = this.files;
     }
+    this.selectedAction = null;
+    this.breadcrumbSelectedIndex = null;
     this.getTaskList();
     this.loader.hide();
   }
@@ -293,6 +309,7 @@ export class ProjectsDocumentComponent implements OnInit {
   folderView(){
     this.isFolder = true;
     this.folder_files = this.files;
+    this.breadcrumbItems = [];
     this.folder_files.forEach(element => {
       element["is_selected"] = false;
     });
@@ -504,7 +521,7 @@ export class ProjectsDocumentComponent implements OnInit {
 
   onCancelFolderNameUpdate(type){
     if(type == 'folderView'){
-      this.selectedFolder_new[0].type ='default';
+      this.selectedItem_new[0].type ='default';
     }else{
       this.selected_folder_rename.type ='default';
     }
@@ -514,21 +531,22 @@ export class ProjectsDocumentComponent implements OnInit {
   onSaveFolderNameUpdate(type){
     let req_body:any;
     if(type == 'folderView'){
-      req_body = this.selectedFolder_new[0]
-      // this.selectedItem.label = this.entered_folder_name;
+      if(this.checkDuplicateFolder(this.entered_folder_name)){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
+        return;
+      }
+      req_body = this.selectedItem_new[0]
       req_body.label = this.entered_folder_name;
     }else{
       req_body = this.selected_folder_rename
-      // this.selectedItem.node.label = this.entered_folder_name;
       req_body.label = this.entered_folder_name;
-      // this.selectedItem.node.type ='default';
     }
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
       if(type == 'folderView'){
-        this.selectedFolder_new[0].label = this.entered_folder_name;
-        this.selectedFolder_new[0].type ='default';
+        this.selectedItem_new[0].label = this.entered_folder_name;
+        this.selectedItem_new[0].type ='default';
       }else{
         this.selectedItem.node.label = this.entered_folder_name;
         this.selectedItem.node.type ='default';
@@ -850,14 +868,14 @@ export class ProjectsDocumentComponent implements OnInit {
         res_data=res
         this.documents_resData = res
         this.loader.hide()
-        this.files=[];
         this.assignData2(res_data)
     });
   }
 
   assignData2(res_data){
     this.files = this.convertToTreeView(res_data);
-    this.folder_files = this.setFolderOrder(this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files).children)
+    this.selectedFolder_new = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files)
+    this.folder_files = this.setFolderOrder(this.selectedFolder_new.children);
     this.getTaskList();
     this.loader.hide();
   }
@@ -891,7 +909,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.createItems=[];
     this.createItems = [
         {label: "Create Folder",command: () => {this.onCreateFolder()}},
-        {label: "Create Document"},
+        {label: "Create Document",command: () => {this.onCreateDocument()}},
       ];
     clearTimeout(this.clickTimeout);
     console.log("this.breadcrumbItems",this.breadcrumbItems)
@@ -899,13 +917,13 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   addParentFolder() {
-     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.folder_name.toLowerCase()) 
+     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.folder_name.toLowerCase() && e.dataType == "folder");
      if(existValue.length > 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
       return;
      }
     let req_body = [{
-      key: String(Number(this.folder_files[this.folder_files.length - 1].key)+1),
+      key: String(this.folder_files.length>0?Number(this.folder_files[this.folder_files.length - 1].key)+1:1),
       label: this.folder_name,
       data: "Folder",
       ChildId: "1",
@@ -920,7 +938,7 @@ export class ProjectsDocumentComponent implements OnInit {
   addSubfolder() {
     console.log(this.selectedFolder_new);
     console.log("this.breadcrumbItems",this.breadcrumbItems)
-    let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase()) 
+    let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase() && e.dataType == "folder") 
      if(existValue.length > 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
       return;
@@ -948,7 +966,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.loader.hide();
       let res_data:any = res;
       this.isDialogBox = false;
-      this.selectedFolder_new=[];
+      this.selectedFolder_new={};
       this.folder_name='';
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
@@ -1017,18 +1035,38 @@ console.log(data)
 
     singleFileUploadFolder(e){
       // let filteredkey = this.selectedFolder.children[this.selectedFolder.children.length-1].key.split("-")
-      if(e.target.files){
+      if(e.target.files.length>0){
+      const selectedFile:any[] = e.target.files;
+        let isFileExist = 0;
+        let nonExistingFiles= [];
+        let existingFiles= [];
+        for (let i = 0; i < selectedFile.length; i++) {
+          if(this.folder_files.find((ele:any) => selectedFile[i].name==ele.label && ele.dataType !='folder')==undefined)
+            nonExistingFiles.push(selectedFile[i]);
+          else{
+            existingFiles.push(selectedFile[i]);
+            isFileExist++;
+          }
+        }
+
+        if(isFileExist == 1){
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: existingFiles[0].name +" Already exists!"});
+        }
+
+        if(isFileExist > 1){
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Some files are Already exists!"});
+        };
+       if(nonExistingFiles.length == 0) return;
+
       let filteredkey = this.getTheFileKey();
-      let objectKey = this.selectedFolder_new.key
+      let objectKey = this.selectedFolder_new.key;
       const fileData = new FormData();
-      const selectedFile = e.target.files;
       let fileKeys=[];
-      for (let i = 0; i < selectedFile.length; i++) {
-        fileData.append("filePath", selectedFile[i]);
+      for (let i = 0; i < nonExistingFiles.length; i++) {
+        fileData.append("filePath", nonExistingFiles[i]);
         let finalKey = Number(filteredkey)+i;
         fileKeys.push(String(objectKey+'-'+ finalKey))
-    }
-    console.log(fileKeys)
+      }
       fileData.append("projectId",this.project_id);
       fileData.append("taskId",'')
       fileData.append("ChildId",'1')
@@ -1037,7 +1075,7 @@ console.log(data)
       this.loader.show();
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.createFolderPopUP=false;
-        let res_data:any = res
+        let res_data:any = res;
       this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
       res_data.data.forEach(item=>{
         let obj = item
@@ -1100,6 +1138,8 @@ console.log(data)
   setFolderOrder(filteredData:any){
     let folder_files =[];
     this.selectedItem_new=[];
+    this.selectedAction = null;
+    this.breadcrumbSelectedIndex = null;
     filteredData.forEach(element => {
       element["is_selected"] = false;
       if(element.dataType === 'folder') {
@@ -1119,6 +1159,300 @@ console.log(data)
       return user["fullName"]
       else
       return '';
+  }
+
+  async downloadZip() {
+    let filesCount = 0;
+    let foldersCount=0;
+    let req_body=[]
+    this.selectedItem_new.forEach(element => {
+      if(element.dataType !='folder'){
+        filesCount ++;
+        req_body.push(element.id);
+      }
+      if(element.dataType =='folder'){
+        foldersCount ++;
+      }
+    });
+
+    if(filesCount == 1 && foldersCount == 0){
+      const fileData = await this.getFileDataById([this.selectedItem_new[0].id]);
+      let fileName = this.selectedItem_new[0].label;
+      var link = document.createElement("a");
+      // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+      let extension = fileData[0].dataType;
+      link.download = fileName;
+      link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
+          ? `data:image/${extension};base64,${fileData[0].data}`
+          : `data:application/${extension};base64,${fileData[0].data}`;
+      link.click();
+      return
     }
+    var _me = this
+    if(filesCount > 1 && foldersCount == 0){
+      const fileData = await this.getFileDataById(req_body);
+      var zip1 = new JSZip();
+      fileData.forEach((value, i) => {
+        let fileName = fileData[i].label;
+        // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+        let extension = fileData[i].dataType;
+        if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+          zip1.file(fileName, value.data, { base64: true });
+        else zip1.file(fileName, value.data);
+      });
+      zip1.generateAsync({ type: "blob" }).then(function (content) {
+        FileSaver.saveAs(content,_me.project_name+'_'+_me.selectedFolder_new.label + ".zip");
+      });
+      return;
+    }
+    console.log("isFilesExist",filesCount,foldersCount);
+    const zip = new JSZip();
+    for (const folder of this.selectedItem_new) {
+      if(folder.dataType == "folder"){
+      const parentFolder = zip.folder(folder.label);
+      await this.addFilesToZip(parentFolder, folder);
+    }else{
+      const fileData = await this.getFileDataById([folder.id]); // Replace with your API call to get file data
+      let fileName = folder.label;
+      let extension = fileData[0].dataType;
+      if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+        zip.file(fileName, fileData[0].data, { base64: true });
+      else zip.file(fileName, fileData[0].data);
+    }
+    }
+    const zipContent = await zip.generateAsync({ type: 'blob' });
+    let foldername=''
+    if(filesCount>0 && foldersCount>0 || filesCount==0 && foldersCount > 1){
+      foldername = this.project_name+'_'+new Date().toISOString().substring(0,10)
+    }
+    if(filesCount == 0 && foldersCount == 1)
+    foldername = this.selectedItem_new[0].label
+    saveAs(zipContent, foldername+'.zip');
+
+  };
+
+// Function to recursively add files to the zip
+async addFilesToZip(zip, folder){
+  for (const item of folder.children) {
+    if (item.dataType !== 'folder') {
+      const fileData = await this.getFileDataById([item.id]); // Replace with your API call to get file data
+      let fileName = item.label;
+      let extension = fileData[0].dataType;
+      if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+        zip.file(fileName, fileData[0].data, { base64: true });
+      else zip.file(fileName, fileData[0].data);
+      // zip.file(item.label, fileData);
+    } else {
+      const childFolder = zip.folder(item.label);
+      await this.addFilesToZip(childFolder, item);
+    }
+  }
+  // }else{
+  //   // const fileData = await this.getFileDataById([folder.id]); // Replace with your API call to get file data
+  //   // let fileName = folder.label;
+  //   // let extension = fileData[0].dataType;
+  //   // if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+  //   //   zip.file(fileName, fileData[0].data, { base64: true });
+  //   // else zip.file(fileName, fileData[0].data);
+  // }
+};
+
+async getFileDataById(fileId) {
+  try {
+    const response:any = await this.rest_api.dwnloadDocuments(fileId).toPromise();
+    const fileData = response.data;
+    return fileData;
+  } catch (error) {
+    console.error('Error fetching file data:', error);
+    throw error;
+  }
+}
+
+    onDownloadSelctedFiles(type){
+      let req_body = [];
+      let _me = this;
+      let folderName:string
+      if(type =='folderView'){
+        if(this.selectedItem.dataType == 'folder'){
+          this.selectedItem.children.forEach(element => {
+            if(element.dataType != 'folder'){
+              req_body.push(element.id)
+            }
+          });
+        } else {
+          req_body.push(this.selectedItem.id)
+        }
+        this.model2.hide();
+        folderName = this.selectedItem.label.split('.')[0]
+      }
+
+      if(req_body.length == 0){
+        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
+        return
+      }
+      this.loader.show();
+      this.rest_api.dwnloadDocuments(req_body).subscribe((response: any) => {
+      this.loader.hide();
+        let resp_data = [];
+        if(response.code == 4200){
+        resp_data = response.data;
+        if (resp_data.length > 0) {
+          if (resp_data.length == 1) {
+            let fileName = resp_data[0].label;
+            var link = document.createElement("a");
+            // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+            let extension = resp_data[0].dataType;
+            link.download = fileName;
+            link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
+                ? `data:image/${extension};base64,${resp_data[0].data}`
+                : `data:application/${extension};base64,${resp_data[0].data}`;
+            link.click();
+          } else {
+            var zip = new JSZip();
+            resp_data.forEach((value, i) => {
+              let fileName = resp_data[i].label;
+              // let extension = fileName.toString().split("").reverse().join("").split(".")[0].split("").reverse().join("");
+              let extension = resp_data[i].dataType;
+              if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+                zip.file(fileName, value.data, { base64: true });
+              else zip.file(fileName, value.data);
+            });
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+              FileSaver.saveAs(content, folderName + ".zip");
+            });
+          }
+        }
+      }
+      });
+    }
+
+  checkDuplicateFolder(value){
+    let isDuplicate = false;
+    let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== value.toLowerCase() && e.dataType == "folder");
+    if(existValue.length > 0) isDuplicate = true
+    else isDuplicate = false;
+     return isDuplicate
+    }
+
+    downloadDocument() {
+      this.documentData = this.editorRef.getData();
+      asBlob(this.documentData).then((data: any) => {
+        saveAs(data, "file.docx"); // save as docx file
+      });
+    }
+
+    onCreateDocument(){
+      this.isEditor = true;
+      setTimeout(() => {
+        
+      DecoupledEditor.create(document.querySelector("#editor"),{
+        // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
+        removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+      })
+        .then((editor) => {
+          // The toolbar needs to be explicitly appended.
+          document
+            .querySelector("#toolbar-container")
+            .appendChild(editor.ui.view.toolbar.element);
+          this.editorRef = editor;
+          // window = editor;
+        })
+        .catch((error) => {
+          console.error("There was a problem initializing the editor.", error);
+        });
+      }, 250);
+
+    }
+
+    openDialogTosaveDocument() {
+      this.documentCreateDialog = true;
+      this.enterDocumentName= "";
+      this.selectedAction = null;
+      this.breadcrumbSelectedIndex = null;
+    }
+
+    uploadCreatedDocument(){
+      console.log(this.selectedAction)
+      console.log(this.folder_files)
+    let existValue = this.folder_files.filter(e=> (e.label.toLowerCase() == (this.enterDocumentName+'.docx').toLowerCase()) && (e.dataType != "folder"));
+    if(existValue.length > 0){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "File Name Already exists!" });
+      return;
+    };
+
+    let filteredkey = this.getTheFileKey();
+    let objectKey = this.selectedFolder_new.key;
+    this.documentData = this.editorRef.getData();
+    asBlob(this.documentData).then((data: any) => {
+      const formData = new FormData();
+      formData.append("filePath", data, this.enterDocumentName+'.docx');
+      formData.append("projectId", this.project_id);
+      formData.append("taskId", "");
+      formData.append("ChildId", "1");
+      formData.append("fileUniqueIds", JSON.stringify([objectKey+'-'+ filteredkey+1]));
+      console.log([objectKey+'-'+ filteredkey]);
+      this.loader.show();
+      this.rest_api.uploadfilesByProject(formData).subscribe((res) => {
+        this.loader.hide();
+        this.isDialog = false;
+        this.isEditor = false;
+        this.documentCreateDialog = false;
+        this.enterDocumentName= "";
+        console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
+
+        if(this.selectedAction == 'main' || this.selectedAction == 'subfolders'){
+          this.backToSelectedFolder(this.selectedAction);
+        }
+        if(this.breadcrumbSelectedIndex){
+          console.log("test1",this.selectedAction,this.breadcrumbSelectedIndex)
+          this.onBreadcrumbItemClick(this.selectedAction,this.breadcrumbSelectedIndex);
+        }
+
+        if(!this.selectedAction){
+          this.getTheListOfFolders1()
+          console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
+        }
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
+      },err=>{
+        this.loader.hide();
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
+      });
+    });
+  }
+
+  documentSaveConfirmation(value,index?:number){
+    if(this.isEditor){
+      this.confirmationService.confirm({
+        message: "Your changes will be lost if you don't save them.",
+        header: 'Do you want to save the changes?',
+        accept: () => {
+          this.documentCreateDialog = true;
+          this.breadcrumbSelectedIndex = index;
+          this.selectedAction = value;
+          this.enterDocumentName= "";
+        },
+        reject: (type) => {
+          switch(type) {
+            case ConfirmEventType.REJECT:
+              this.isEditor=false;
+              this.documentCreateDialog = false;
+              if(value == 'main' || value == 'subfolders'){
+                this.backToSelectedFolder(value);
+              }
+              if(index){
+                this.onBreadcrumbItemClick(value,index);
+              }
+            break;
+            case ConfirmEventType.CANCEL:
+            break;
+        }
+
+        },
+        key: "documentDialog"
+    });
+    } else{
+
+    }
+  }
   
 }
