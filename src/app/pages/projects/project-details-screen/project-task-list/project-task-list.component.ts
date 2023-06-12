@@ -119,7 +119,7 @@ export class ProjectTaskListComponent implements OnInit {
       "priority",
       "priority",
       "assignedTo",
-      "endDate_converted",
+      "endDate_converted",'status'
     ];
   }
 

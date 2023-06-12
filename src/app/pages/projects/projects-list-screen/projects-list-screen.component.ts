@@ -110,7 +110,7 @@ export class ProjectsListScreenComponent implements OnInit {
       res_list.map((data) => {
         // data["projectName"] = data.programName? data.programName: data.projectName;
         // data["process_name"] = this.getProcessNames(data.process);
-        // data["status"] = data.status == null ? "New" : data.status;
+        data["status"] = data.status == null ? "New" : data.status;
         // data["createdAt"] = moment(data.createdTimestamp).format("lll");
         // data["representative"] = {
         //   name: data.type == null ? "Project" : data.type,
@@ -158,6 +158,7 @@ export class ProjectsListScreenComponent implements OnInit {
       "createdDate",
       "lastModifiedBy",
       "updatedDate",
+      "status"
     ];
     this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [
@@ -355,6 +356,6 @@ export class ProjectsListScreenComponent implements OnInit {
   if(user)
     return user["fullName"]
     else
-    return '';
+    return '-';
   }
 }
