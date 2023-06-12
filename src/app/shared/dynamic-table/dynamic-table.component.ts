@@ -75,6 +75,7 @@ export class DynamicTableComponent implements OnInit {
     Started:'#4BD963',
     Stopped:"#FE665D"
   };
+  searchValue: string;
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
@@ -120,6 +121,8 @@ export class DynamicTableComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
+    this.searchValue =""
+    table.filterGlobal("","")
   }
 
   getColor(status) {

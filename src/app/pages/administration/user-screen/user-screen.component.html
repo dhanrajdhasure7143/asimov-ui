@@ -49,8 +49,11 @@
           </a>
         </label>
         <span class="title_text_haspath">
-          <span class="breadcrum-back" routerLink="/pages/admin/admin-screen-list"> Update</span><span class="breadcrum-align">/</span>
-          <span class="sub_title_text">{{ selectedScreen.Screen_Name }}</span>
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back">Screen Generation</span> 
+          <span class="breadcrum-align">/</span> 
+          <span class="breadcrum-back" (click)="displayTable()">{{selectedScreen.Screen_Name}}</span> 
+          <span class="breadcrum-align">/</span> 
+          <span class="sub_title_text">Update</span> 
         </span>
       </h3>      
     </div>
@@ -73,8 +76,11 @@
           </a>
         </label>
         <span class="title_text_haspath">
-          <span  class="breadcrum-back"  routerLink="/pages/admin/admin-screen-list">{{ selectedScreen.Screen_Name }}  </span> <span class="breadcrum-align">/</span>
-          <span class="sub_title_text"> Create</span>
+          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back">Screen Generation</span> 
+          <span class="breadcrum-align">/</span> 
+          <span  class="breadcrum-back"  (click)="displayTable()">{{ selectedScreen.Screen_Name }} 
+         </span> <span class="breadcrum-align">/</span>
+          <span class="sub_title_text">Create</span> 
         </span>
       </h3>      
     </div>

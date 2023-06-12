@@ -14,9 +14,7 @@
           <span class="breadcrum-align" *ngIf="!labelupdate">/</span> 
           <span class="sub_title_text" *ngIf="!labelupdate">Create Screen</span> 
           <span class="breadcrum-align" *ngIf="labelupdate">/</span>
-          <span routerLink="/pages/admin/admin-screen-list" class="breadcrum-back" *ngIf="labelupdate">Update Screen</span> 
-          <span class="breadcrum-align" *ngIf="labelupdate">/</span> 
-          <span class="sub_title_text"*ngIf="labelupdate">{{filterData.Screen_Name}}</span>
+          <span class="sub_title_text" *ngIf="labelupdate">Update {{filterData.Screen_Name}}</span> 
        </span>
       </h3>
           <!-- <div class="col">
@@ -30,7 +28,7 @@
     <div class="col-md-8 pr-0 text-right">
       <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Cancel</button>
         <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
-        <button *ngIf="screen_id" class="btn bluebg-button" (click)="updateData()">Update</button>
+        <button *ngIf="screen_id"  [disabled]="insertForm.invalid || screenNameCheck"class="btn bluebg-button" (click)="updateData()">Update</button>
     </div>    
   </div>
   <div class="main-content-body">
