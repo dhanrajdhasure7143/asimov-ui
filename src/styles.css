@@ -2446,6 +2446,14 @@ input.p-inputtext {
 .download .p-overlaypanel-content {
   padding: 5px 0px !important;
 }
+.docuplbtn-items {
+  margin-top: 0px !important;
+  padding: 3.5px 0px !important;
+  top: 177px !important;
+}
+.docuplbtn-items .p-overlaypanel-content {
+  padding: 0px !important;
+}
 .editfields i {
   padding: 6px;
   background: #F5F6F7;
@@ -3086,6 +3094,7 @@ textarea.p-inputtextarea {
 }
 .dochead-upldbtn .p-card .p-card-body, .dochead-upldbtn .p-card .p-card-content {
   padding: 0px !important;
+  position: relative;
 }
 .dochead-upldbtn .p-card {
   background: transparent !important;

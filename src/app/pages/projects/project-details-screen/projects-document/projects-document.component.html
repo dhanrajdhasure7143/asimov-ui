@@ -335,18 +335,18 @@
     </p-dialog> -->
 
     
-    <p-overlayPanel #op>
+    <p-overlayPanel #op styleClass = docuplbtn-items>
         <ng-template pTemplate>
-            <div class="docritclk">
-                <div class="dochead-upldbtn" (change)="singleFileUploadFolder($event)" *ngIf="breadcrumbItems.length > 0">
+            <div class="">
+                <div class="dochead-upldbtn " (change)="singleFileUploadFolder($event)" *ngIf="breadcrumbItems.length > 0">
                     <p-card class="cards side">
-                        <span class="crt-new">Upload File</span>
+                        <button class="btn">File</button>
                         <input type="file" name="myfile" multiple/>
                     </p-card>
                 </div>
                 <div class="dochead-upldbtn" (change)="folderUpload($event,'folderView')">
                     <p-card class="cards side"> 
-                        <button class="btn">Upload folder</button>
+                        <button class="btn">Folder</button>
                         <input type="file" webkitdirectory directory multiple>
                       </p-card>
                 </div>

@@ -62,7 +62,7 @@ export class ProjectsDocumentComponent implements OnInit {
   items:any[];
   items2:any[];
   @ViewChild('myTree') myTree: Tree;
-  createItems:any = [{label: "Create Folder",command: (e) => {this.onCreateFolder()}}];
+  createItems:any = [{label: "Folder",command: (e) => {this.onCreateFolder()}}];
   selectedItem_new:any=[];
   selectedFolder_new:any;
   private clickTimeout: any;
@@ -911,8 +911,8 @@ export class ProjectsDocumentComponent implements OnInit {
     this.breadcrumbItems = [...this.breadcrumbItems];
     this.createItems = [];
     this.createItems = [
-        {label: "Create Folder",command: () => {this.onCreateFolder()}},
-        {label: "Create Document",command: () => {this.onCreateDocument()}},
+        {label: "Folder",command: () => {this.onCreateFolder()}},
+        {label: "Document",command: () => {this.onCreateDocument()}},
       ];
     clearTimeout(this.clickTimeout);
     console.log("this.breadcrumbItems",this.breadcrumbItems)
@@ -1126,7 +1126,7 @@ export class ProjectsDocumentComponent implements OnInit {
           this.folder_files.forEach(element => {
             element["is_selected"]=false;
           });
-          this.createItems = [{label: "Create Folder",command: () => {this.onCreateFolder()}},];
+          this.createItems = [{label: "Folder",command: () => {this.onCreateFolder()}},];
           this.breadcrumbItems=[];
       } else {
         this.breadcrumbItems.splice(-1);
@@ -1136,7 +1136,7 @@ export class ProjectsDocumentComponent implements OnInit {
           this.folder_files = this.setFolderOrder(filteredData);
         } else {
           this.folder_files = this.files;
-          this.createItems = [{label: "Create Folder",command: () => {this.onCreateFolder()}}];
+          this.createItems = [{label: "Folder",command: () => {this.onCreateFolder()}}];
         }
       }
   }
