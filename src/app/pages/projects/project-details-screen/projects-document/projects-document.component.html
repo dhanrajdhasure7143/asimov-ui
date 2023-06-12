@@ -113,15 +113,16 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-            <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term;let i = index" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
+        <div *ngFor="let item of folder_files|filter:term;let i = index">
+            <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
+            <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
                     <img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">
                     <!-- <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" /> -->
-                    <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
                 </div>
                 <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
                    <span *ngIf="item.dataType == 'folder'"> {{item.size | fileSizePipe}}</span>
-                   </span>
+                </span>
                 <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
                     <div class="editfields">
@@ -130,6 +131,7 @@
                     </div>
                 </span>
             </p-card>
+        </div>
            </div>
            <div *ngIf = "!isFolder" class="doctree">
             <!-- <p-tree [value]="files" #myTree [filter]="true" [filterPlaceholder]="'Type to search'" [contextMenu]="cm" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
