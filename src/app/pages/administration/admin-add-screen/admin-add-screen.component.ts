@@ -83,15 +83,15 @@ export class AdminAddScreenComponent implements OnInit {
       allow_Insert: [false],
       allow_Edit: [false],
       allow_Delete: [false],
-      show_As_Child: [false],
-      default_Sort: [""],
-      default_Filter_Clause: [""],
-      preferences: [""],
-      row_Count: [0],
-      insights: [""],
-      //  Role: ["", Validators.compose([Validators.required])],
-      formType: [""],
-      // screenType: ["", Validators.compose([Validators.required])],
+      // show_As_Child: [false],
+      // default_Sort: [""],
+      // default_Filter_Clause: [""],
+      // preferences: [""],
+      // row_Count: [0],
+      // insights: [""],
+      // //  Role: ["", Validators.compose([Validators.required])],
+      // formType: [""],
+      // // screenType: ["", Validators.compose([Validators.required])],
     });
 
     this.getListofTables();
@@ -215,15 +215,15 @@ export class AdminAddScreenComponent implements OnInit {
           allow_Insert: [this.filterData.Allow_Insert],
           allow_Edit: [this.filterData.Allow_Edit],
           allow_Delete: [this.filterData.Allow_Delete],
-          show_As_Child: [this.filterData.Show_As_Child],
-          default_Sort: [""],
-          default_Filter_Clause: [""],
-          preferences: [""],
-          row_Count: [this.filterData.Row_Count],
-          insights: [""],
-          //  Role: ["", Validators.compose([Validators.required])],
-          formType: [""],
-          screenType: [this.filterData.ScreenType],
+          // show_As_Child: [this.filterData.Show_As_Child],
+          // default_Sort: [""],
+          // default_Filter_Clause: [""],
+          // preferences: [""],
+          // row_Count: [this.filterData.Row_Count],
+          // insights: [""],
+          // //  Role: ["", Validators.compose([Validators.required])],
+          // formType: [""],
+          // screenType: [this.filterData.ScreenType],
         });
       }, 150);
       this.spinner.hide();
@@ -288,10 +288,6 @@ export class AdminAddScreenComponent implements OnInit {
         confirmButtonText: "Ok",
       }).then(()=>{
         this.backToScreenList();
-        setTimeout(()=>{
-          window.location.reload()
-        },700)
-        
       })
       this.spinner.hide();
       this.buttonDisable = true;
