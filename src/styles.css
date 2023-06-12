@@ -3079,6 +3079,16 @@ textarea.p-inputtextarea {
 .vrsn-btn .p-togglebutton.p-button:focus {
   box-shadow: unset !important;
 }
+.dochead-leftbtns .p-splitbutton.p-component {
+  height: 36px;
+}
+.dochead-leftbtns .p-card .p-card-body, .dochead-leftbtns .p-card .p-card-content {
+  padding: 0px !important;
+}
+.dochead-upldbtn .p-card {
+  background: transparent !important;
+  box-shadow: unset !important
+}
 
 /* new styles for ng select */
 .ng-select .ng-select-container {
@@ -3362,7 +3372,7 @@ textarea.p-inputtextarea {
   justify-content: center;
   box-shadow: unset !important;
   border-radius: 3px;
-  margin: 10px 15px 5px 0px;
+  margin: 10px;
   padding: 10px 15px;
   background: #fff;
   cursor: pointer;
