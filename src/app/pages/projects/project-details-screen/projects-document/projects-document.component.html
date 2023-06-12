@@ -170,20 +170,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
+                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)">
                         <td><input type="checkbox" id="" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/></td>
-                        <td class="foldname"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">{{item.label}}</td>
-                        <td>{{item.uploadedDate_new}}</td>
-                        <td><span class="prjlastupdateprofile">{{item.uploadedByUser|userLetters:users_list|uppercase}}</span>{{item.uploadedByUser}}</td>
-                        <td>{{item.size?item.size:item.fileSize | fileSizePipe}}</td>
+                        <td class="foldname"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create" (click)="onSelectFolder($event,i)">{{item.label}}</td>
+                        <td (click)="onSelectFolder($event,i)">{{item.uploadedDate_new}}</td>
+                        <td><span class="prjlastupdateprofile" (click)="onSelectFolder($event,i)">{{item.uploadedByUser|userLetters:users_list|uppercase}}</span>{{item.uploadedByUser}}</td>
+                        <td (click)="onSelectFolder($event,i)">{{item.size?item.size:item.fileSize | fileSizePipe}}</td>
                     </tr>
                 </tbody>
             </table>
-
-
            </div>
-        </div>
-                
+        </div>   
         </div>
         </div>
 
@@ -396,7 +393,7 @@
     <p-contextMenu #cm [model]="items" appendTo="body"></p-contextMenu>
     <p-contextMenu #cm2 [model]="items2"></p-contextMenu>
 
-    <p-confirmDialog #cd2 [style]="{width: '30vw'}" key="documentDialog" position="center" [baseZIndex]="10000"
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" key="documentDialog" position="center" [baseZIndex]="10000"
  rejectButtonStyleClass="btn bluebg-button" [closable]="true">
    <ng-template pTemplate="footer">
       <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>

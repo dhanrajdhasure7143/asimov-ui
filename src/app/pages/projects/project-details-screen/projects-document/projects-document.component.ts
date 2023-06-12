@@ -1018,7 +1018,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   onSelectFolder(event: MouseEvent , index){
-    console.log(event.ctrlKey)
     clearTimeout(this.clickTimeout);
     this.clickTimeout = setTimeout(() => {
       if(event.ctrlKey){
@@ -1030,6 +1029,7 @@ export class ProjectsDocumentComponent implements OnInit {
     });
     this.selectedItem_new = selectedItems;
   }else{
+    this.selectedItem_new=[];
     this.folder_files.forEach(element => {
       element.is_selected = false;
     });
