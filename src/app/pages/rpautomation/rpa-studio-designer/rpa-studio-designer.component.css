@@ -115,6 +115,7 @@ span.tab-botname {
 }
 .main-content1 .main-content-head {
   padding: 0px;
+  height: auto;
 }
 .main-content1 .module-header-title {
     font-weight: 600;
