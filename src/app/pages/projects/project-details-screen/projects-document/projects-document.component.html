@@ -48,26 +48,19 @@
                 <div class="col-md-12 under-line">
                     <div class="row">
                         <div class="col-md-9 pl-0">
-                            <p-splitButton label="Create New" icon="pi pi-plus" (onClick)="onCreateFolder()" [model]="createItems"></p-splitButton>
+                            <!-- <p-splitButton label="Create New" icon="pi pi-plus" (onClick)="onCreateFolder()" [model]="createItems"></p-splitButton> -->
 
-                                <!-- <button type="button" pButton class="btn bluebg-button creat-pluarow icn-adj" (click)="createFolder.toggle($event)">
+                                <button type="button" pButton class="btn bluebg-button creat-pluarow icn-adj" (click)="createFolder.toggle($event)">
                                   <span><img src="../../../../../assets/images-n/add-default.svg" alt=""></span> 
                                   <span class="crt-new"> Create New</span> <span><img src="../../../../../assets/images-n/chevron-down-createnew.svg" alt=""></span>
                                 </button>
-                                <p-menu #createFolder [popup]="true" [model]="createItems"></p-menu> -->
+                                <p-menu #createFolder [popup]="true" [model]="createItems"></p-menu>
                            
-                                <button type="button" class="btn docmnt-btn icn-adj imageBox">
-                                <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload.svg"  class="active-icon" alt=""/>
-                                 <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload-hover.svg"  class="hover-icon" alt=""/>
-                                
-                                <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" >
-                                    <p-card class="cards side"> 
-                                        <!-- <button class="btn">Upload</button> -->
-                                        <span class="crt-new">Upload</span>
-                                        <input type="file" name="myfile" multiple/>
-                                    </p-card>
-                                      </div>
-                            </button>
+                                <button type="button" class="btn docmnt-btn icn-adj imageBox" (click)="op.toggle($event)">
+                                    <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload.svg"  class="active-icon" alt=""/>
+                                    <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload-hover.svg"  class="hover-icon" alt=""/>
+                                    Upload
+                                </button>
                            
                             <button type="button" class="btn docmnt-btn icn-adj imageBox" *ngIf="selectedItem_new.length > 0" (click)="downloadZip()">
                                 <img src="../../../../../assets/images-n/dashboard/Manage-Documents/download.svg"   class="active-icon" alt=""/>
@@ -343,15 +336,24 @@
     </p-dialog> -->
 
     
-    <!-- <p-overlayPanel #op>
+    <p-overlayPanel #op>
         <ng-template pTemplate>
             <div class="docritclk">
-                <div class="" *ngIf="selected_folder_rename.dataType=='folder'" (click)="onFolderRename('treeView')">Rename</div>
-                <div (click)="onDeleteItem('treeView')">Delete</div>
-                <div (click)="onDownloadDocument('treeView')">Download</div>
+                <div class="upload-btn-wrapper" (change)="singleFileUploadFolder($event)" *ngIf="breadcrumbItems.length > 0">
+                    <p-card class="cards side">
+                        <span class="crt-new">Upload File</span>
+                        <input type="file" name="myfile" multiple/>
+                    </p-card>
+                </div>
+                <div class="upload-btn-wrapper" (change)="folderUpload($event,'folderView')">
+                    <p-card class="cards side"> 
+                        <button class="btn">Upload folder</button>
+                        <input type="file" webkitdirectory directory multiple>
+                      </p-card>
+                </div>
             </div>
         </ng-template>
-    </p-overlayPanel> -->
+    </p-overlayPanel>
 
     <p-overlayPanel #op1>
         <ng-template pTemplate>
