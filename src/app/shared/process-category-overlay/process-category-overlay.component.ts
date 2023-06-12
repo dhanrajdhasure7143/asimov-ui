@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
 import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'process-category-overlay',
@@ -45,7 +46,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"CMMN",id:"cmmn"},{type:"DMN",id:"dmn"}];
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
-    private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
+    private cdRef: ChangeDetectorRef, private dt: DataTransferService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.overlay_data.type=="edit"){
@@ -245,16 +248,24 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }
       this.rest.updatePiData(req_body).subscribe((res:any) => {
         this.isLoading=false;
-        Swal.fire({
-          title: 'Success',
-          text: res.message,
-          icon: 'success',
-          heightAuto: false,
-        }).then((result) => {
-          if (result.value) {
-            this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-          }
-        });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: res.message
+        })
+        setTimeout(() => {
+          this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+        }, 1500);
+        // Swal.fire({
+        //   title: 'Success',
+        //   text: res.message,
+        //   icon: 'success',
+        //   heightAuto: false,
+        // }).then((result) => {
+        //   if (result.value) {
+        //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+        //   }
+        // });
         this.slideDown(null);
       });
     }else{
@@ -279,50 +290,80 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           }else{
             disply_text="Process name & Process owner"
           }
-          Swal.fire({
-            title: 'Are you sure?',
-            text: disply_text + " will be update all the versions of the bpmn",
-            icon: 'warning',
-            showCancelButton: true,
-            heightAuto: false,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton:  'btn new-cancelbtn',
-            },
-            confirmButtonText: 'Yes'
-          }).then((result) => {
-            if (result.value) {
-              this.isLoading=true;
-            this.rest.updateBpsData(req_body).subscribe((res:any)=>{
-              this.isLoading=false;
-              Swal.fire({
-                title: 'Success',
-                text: res.message,
-                icon: 'success',
-                heightAuto: false,
-              }).then((result) => {
-                if (result.value) {
+          this.confirmationService.confirm({
+            message: disply_text + " will be update all the versions of the bpmn",
+            header: "Are you Sure?",
+            
+            rejectVisible: false,
+            acceptLabel: "Ok",
+            accept: () => {
+              this.rest.updateBpsData(req_body).subscribe((res:any)=>{
+                this.isLoading=false;
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: res.message
+                })
+                setTimeout(() => {
                   this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-                }
-              });
-              this.slideDown(null);
-            })
-          }
+                }, 1500);
+                this.slideDown(null);
+              })
+            },
+            key: "positionDialog1",
           });
+          // Swal.fire({
+          //   title: 'Are you sure?',
+          //   text: disply_text + " will be update all the versions of the bpmn",
+          //   icon: 'warning',
+          //   showCancelButton: true,
+          //   heightAuto: false,
+          //   customClass: {
+          //     confirmButton: 'btn bluebg-button',
+          //     cancelButton:  'btn new-cancelbtn',
+          //   },
+          //   confirmButtonText: 'Yes'
+          // }).then((result) => {
+          //   if (result.value) {
+          //     this.isLoading=true;
+          //   this.rest.updateBpsData(req_body).subscribe((res:any)=>{
+          //     this.isLoading=false;
+          //     Swal.fire({
+          //       title: 'Success',
+          //       text: res.message,
+          //       icon: 'success',
+          //       heightAuto: false,
+          //     }).then((result) => {
+          //       if (result.value) {
+          //         this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+          //       }
+          //     });
+          //     this.slideDown(null);
+          //   })
+          // }
+          // });
         }else{
           this.isLoading=true;
           this.rest.updateBpsData(req_body).subscribe((res:any)=>{
             this.isLoading=false;
-            Swal.fire({
-              title: 'Success',
-              text: res.message,
-              icon: 'success',
-              heightAuto: false,
-            }).then((result) => {
-              if (result.value) {
-                this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-              }
-            });
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: res.message
+            })
+            setTimeout(() => {
+              this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+            }, 1500);
+            // Swal.fire({
+            //   title: 'Success',
+            //   text: res.message,
+            //   icon: 'success',
+            //   heightAuto: false,
+            // }).then((result) => {
+            //   if (result.value) {
+            //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+            //   }
+            // });
             this.slideDown(null);
           })
         }
