@@ -100,7 +100,6 @@ export class ProjectsListScreenComponent implements OnInit {
 
   getallProjects(roles, name, email) {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
-      console.log(res)
       let response: any = res;
       if(Array.isArray(res)){
       this.projectsresponse = response;
