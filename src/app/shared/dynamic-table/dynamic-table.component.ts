@@ -65,12 +65,17 @@ export class DynamicTableComponent implements OnInit {
     Pending:"#FED653",
     Running:'#C4B28E',
     Completed:"#4BD963",
+    Closed:"#4BD963",
     Inprogress:"#FFA033",
+    "In Progress":"#FFA033",
+    "In Review":"#FFA033",
+    "On Hold":"#FED653",
     Failed:"#FE665D",
     New:'#3CA4F3',
     Started:'#4BD963',
     Stopped:"#FE665D"
   };
+  searchValue: string;
 
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
@@ -116,6 +121,8 @@ export class DynamicTableComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
+    this.searchValue =""
+    table.filterGlobal("","")
   }
 
   getColor(status) {

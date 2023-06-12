@@ -636,7 +636,6 @@ export class DynamicDashboardComponent implements OnInit {
   handlePieChartClick(labels,widgetId,data,chartElements): void {
     if (chartElements && chartElements.length > 0) {
       const clickedElementIndex = chartElements[0].index;
-      // console.log('Clicked element index:',labels[clickedElementIndex]);
       // widgetId == 1 its shold navigate to RPA home
       if(widgetId == 1){
         this.router.navigate(["/pages/rpautomation/home"], {
