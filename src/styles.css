@@ -2341,9 +2341,7 @@ height:10px;
 }
 .main-content-head {
   padding: 15px 30px 0px;
-}
-
-.row.main-content-head {
+  height: 50px;
   align-items: center;
 }
 .row.main-content-head button.p-element.btn {
@@ -2643,7 +2641,7 @@ span.statusbadge_nc {
 }
 /* for RecentActivities  grid */
 .acresources .p-datatable-wrapper {
-  height: 260px;
+  height: 268px;
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header{
