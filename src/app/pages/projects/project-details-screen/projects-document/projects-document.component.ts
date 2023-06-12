@@ -1021,19 +1021,21 @@ export class ProjectsDocumentComponent implements OnInit {
     console.log(event.ctrlKey)
     clearTimeout(this.clickTimeout);
     this.clickTimeout = setTimeout(() => {
-    // this.folder_files[index].is_selected == true ? this.folder_files[index].is_selected = false : this.folder_files[index].is_selected = true;
+      if(event.ctrlKey){
+    this.folder_files[index].is_selected == true ? this.folder_files[index].is_selected = false : this.folder_files[index].is_selected = true;
     let selectedItems=[]
+    this.folder_files.forEach(element => {
+      if(element.is_selected)
+      selectedItems.push(element);
+    });
+    this.selectedItem_new = selectedItems;
+  }else{
     this.folder_files.forEach(element => {
       element.is_selected = false;
     });
-
     this.folder_files[index].is_selected = true;
-
-    // this.folder_files.forEach(element => {
-    //   if(element.is_selected)
-    //   selectedItems.push(element);
-    // });
     this.selectedItem_new.push(this.folder_files[index]);
+  }
   }, 200);
   }
 
