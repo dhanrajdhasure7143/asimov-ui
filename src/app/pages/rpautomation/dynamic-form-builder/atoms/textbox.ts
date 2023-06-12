@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
         <i *ngIf="showpassword==true" class="pi pi-eye-slash"></i>
       </span>
 
-          <input [attr.disabled]="feilddisable" [hidden]="field.type=='loggedInUser'" *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control" [name]="field.name" [formControlName]="field.name+'_'+field.id">
+          <input [attr.disabled]="feilddisable" [hidden]="field.name=='loggedUser'" *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control" [name]="field.name" [formControlName]="field.name+'_'+field.id">
           <textarea [attr.disabled]="feilddisable" [minlength]="field.attributeMin" [maxlength]="field.attributeMax"  [id]="field.id"  *ngIf="field.type=='textarea' && field.type!='password'" autocomplete="off" [formControlName]="field.name+'_'+field.id" [required]="field.required==true" rows="4" class="form-control" [placeholder]="field.placeholder">{{field.value}}</textarea>
 
       </div>
@@ -51,7 +51,10 @@ export class TextBoxComponent  implements OnInit  {
 
 
     ngOnInit(): void {
-      this.form.get(this.field.name+"_"+this.field.id).setValue(localStorage.getItem("ProfileuserId"))
+      if(this.field.name=="loggedUser")
+      {
+        this.form.get(this.field.name+"_"+this.field.id).setValue(localStorage.getItem("ProfileuserId"));
+      }
     }
     stope(event)
     {
