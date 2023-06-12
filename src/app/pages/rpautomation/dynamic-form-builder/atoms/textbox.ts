@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 // text,email,tel,textarea,password,
@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
         <i *ngIf="showpassword==true" class="pi pi-eye-slash"></i>
       </span>
 
-          <input [attr.disabled]="feilddisable" *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control" [name]="field.name" [formControlName]="field.name+'_'+field.id">
+          <input [attr.disabled]="feilddisable" [hidden]="field.type=='loggedInUser'" *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control" [name]="field.name" [formControlName]="field.name+'_'+field.id">
           <textarea [attr.disabled]="feilddisable" [minlength]="field.attributeMin" [maxlength]="field.attributeMax"  [id]="field.id"  *ngIf="field.type=='textarea' && field.type!='password'" autocomplete="off" [formControlName]="field.name+'_'+field.id" [required]="field.required==true" rows="4" class="form-control" [placeholder]="field.placeholder">{{field.value}}</textarea>
 
       </div>
@@ -38,7 +38,7 @@ import { FormGroup } from '@angular/forms';
     `
 ]
 })
-export class TextBoxComponent {
+export class TextBoxComponent  implements OnInit  {
     @Input() field:any = {};
     @Input() form:FormGroup;
     showpassword:Boolean=false;
@@ -47,6 +47,11 @@ export class TextBoxComponent {
     @Input('feilddisable') public feilddisable:boolean;
     constructor() {
 
+    }
+
+
+    ngOnInit(): void {
+      this.form.get(this.field.name+"_"+this.field.id).setValue(localStorage.getItem("ProfileuserId"))
     }
     stope(event)
     {
