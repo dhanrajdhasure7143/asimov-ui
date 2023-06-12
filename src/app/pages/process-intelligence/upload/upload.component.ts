@@ -947,8 +947,8 @@ getDBTables(){      //get DB tables list
     this.rest.retryFailedProcessGraph(processDt.piId).subscribe((res:any)=>{
       if(res.is_error == false){
         this.confirmationService.confirm({
-          message: res.display_msg.info,
-          header: "Great",
+          message: "Great" +res.display_msg.info,
+          header: "Info",
           
           rejectVisible: false,
           acceptLabel: "Ok",

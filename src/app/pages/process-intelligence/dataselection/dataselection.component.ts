@@ -12,6 +12,7 @@ import { fromMatPaginator, paginateRows } from './../../business-process/model/d
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-dataselection',
@@ -71,6 +72,8 @@ export class DataselectionComponent implements OnInit {
                 private hints:PiHints, 
                 private global:GlobalScript,
                 private rest:RestApiService,
+                private messageService: MessageService,
+                private confirmationService: ConfirmationService,
                 @Inject(APP_CONFIG) private config) {
                 
                  }
@@ -222,7 +225,12 @@ export class DataselectionComponent implements OnInit {
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       },err=>{
-        Swal.fire("Error", "Internal server error, Please try again later", "error");
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Internal server error, Please try again later"
+        });
+        // Swal.fire("Error", "Internal server error, Please try again later", "error");
       })
     }else{
           const xlsxConnectorBody={
@@ -268,7 +276,12 @@ export class DataselectionComponent implements OnInit {
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         },err=>{
-        Swal.fire("Error", "Internal server error, Please try again later", "error");
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Internal server error, Please try again later"
+          });
+        // Swal.fire("Error", "Internal server error, Please try again later", "error");
         })
     }
   }
@@ -315,45 +328,95 @@ export class DataselectionComponent implements OnInit {
     }
     else if(this.id.length == 1){
       if(v.includes('Time')){
-        Swal.fire("Oops!", "Case ID canot be Timestamp", "warning");
+        this.confirmationService.confirm({
+          message: "Case ID cannot be a Timestamp",
+          header: "Info",
+         
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog2",
+        });
+
+        // Swal.fire("Oops!", "Case ID canot be Timestamp", "warning");
         this.id=[];
       }else{
-      Swal.fire({
-        title: 'Confirmation?',
-        text: "Are you sure want to use this as caseID!",
-        icon: 'warning',
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        confirmButtonText: 'Yes',
-        allowOutsideClick:false
-      }).then((result) => {
-        if (result.value) {
-          this.name=v.trim();
-          this.step_id=1
-        obj[this.name]='caseID';
-        this.headerArray.push(obj)
-        this.headerName = 'caseID';
-        this.selected=v;
-        this.content_no +=1;
-        for(var x = 0;x < this.fileData.length;x++){
-            if(!this.validCells['row'+x])
-              this.validCells['row'+x]=[];
-              this.validCells['row'+x].push('cell'+index);
-            }
-        }else if (result.dismiss === Swal.DismissReason.cancel){
-          this.id=[];
-          this.validCells = [];
-          this.invalidCells = [];
-          this.headerArray=[];
-        }
-      })
+        this.confirmationService.confirm({
+          message: "You want to use this as Case ID!",
+          header: "Are you Sure?",
+            
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {
+            this.name=v.trim();
+            this.step_id=1
+            obj[this.name]='caseID';
+            this.headerArray.push(obj)
+            this.headerName = 'caseID';
+            this.selected=v;
+            this.content_no +=1;
+            for(var x = 0;x < this.fileData.length;x++){
+              if(!this.validCells['row'+x])
+                this.validCells['row'+x]=[];
+                this.validCells['row'+x].push('cell'+index);
+            }            
+          },
+          reject: () => {
+            this.id=[];
+            this.validCells = [];
+            this.invalidCells = [];
+            this.headerArray=[];
+          },
+          key: "positionDialog1",
+        });
+
+      // Swal.fire({
+      //   title: 'Confirmation?',
+      //   text: "Are you sure want to use this as caseID!",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   customClass: {
+      //     confirmButton: 'btn bluebg-button',
+      //     cancelButton:  'btn new-cancelbtn',
+      //   },
+      //   confirmButtonText: 'Yes',
+      //   allowOutsideClick:false
+      // }).then((result) => {
+      //   if (result.value) {
+      //     this.name=v.trim();
+      //     this.step_id=1
+      //   obj[this.name]='caseID';
+      //   this.headerArray.push(obj)
+      //   this.headerName = 'caseID';
+      //   this.selected=v;
+      //   this.content_no +=1;
+      //   for(var x = 0;x < this.fileData.length;x++){
+      //       if(!this.validCells['row'+x])
+      //         this.validCells['row'+x]=[];
+      //         this.validCells['row'+x].push('cell'+index);
+      //       }
+      //   }else if (result.dismiss === Swal.DismissReason.cancel){
+      //     this.id=[];
+      //     this.validCells = [];
+      //     this.invalidCells = [];
+      //     this.headerArray=[];
+      //   }
+      // })
     }
     }else if(this.id.length == 2){
       if(v.includes('Time')){
-        Swal.fire("Oops!", "Activity must be string!", "warning");
+        
+        this.confirmationService.confirm({
+          message: "Activity must be string!",
+          header: "Info",
+         
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog2",
+        });
+
+        // Swal.fire("Oops!", "Activity must be string!", "warning");
         this.id.pop();
         
       }else{

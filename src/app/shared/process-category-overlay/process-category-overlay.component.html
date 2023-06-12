@@ -161,3 +161,12 @@
         <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
     </div>
 </div>
+
+<!-- update all the versions of the bpmn -->
+<p-confirmDialog #cd1 [style]="{width: '30vw'}" key="positionDialog1" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="No" (click)="cd1.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd1.accept()"></button>
+   </ng-template>
+</p-confirmDialog>
