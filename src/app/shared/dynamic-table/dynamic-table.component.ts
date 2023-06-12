@@ -68,6 +68,7 @@ export class DynamicTableComponent implements OnInit {
     Closed:"#4BD963",
     Inprogress:"#FFA033",
     "In Progress":"#FFA033",
+    "In Review":"#FFA033",
     "On Hold":"#FED653",
     Failed:"#FE665D",
     New:'#3CA4F3',
