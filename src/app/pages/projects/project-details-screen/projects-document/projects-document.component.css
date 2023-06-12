@@ -217,6 +217,16 @@ i.pi.pi-search.treeviewsearchicon {
   justify-content: end;
 }
 input[type="checkbox"] {
+  appearance: none;
+  position: absolute;
+    right: 40px;
+    top: 30px;
+ 
+  
+}
+input[type="checkbox"]:checked {
+  background-color: #098de6;
+  border:2px solid #ffffff; 
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -225,16 +235,11 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #ffffff;
-  border:2px solid #a9a7a7;
   cursor: pointer;
-
- 
-  
-}
-input[type="checkbox"]:checked {
-  background-color: #098de6;
-  border:2px solid #ffffff; 
+  position: absolute;
+    right: 40px;
+    top: 30px;
+    z-index: 9;
 }
 input[type=checkbox]:checked::after {
   border: 2px solid #fff;
@@ -242,10 +247,9 @@ input[type=checkbox]:checked::after {
   border-right: none;
   content: "";
   height: 4.5px;
-  left: 4px;
-  opacity: 1;
+  left: 3px;
   position: absolute;
-  top: 5px;
+  top: 4.55px;
   transform: rotate(-45deg);
   width: 9px;
 }
@@ -305,4 +309,14 @@ input[type=checkbox]:checked::after {
 }
 .dochead-upldbtn:hover {
   background: #e9ecef !important;
+}
+
+.docfolder .p-card-content span.datsiz {
+  color: #d36303 !important;
+  text-align: left;
+  position: absolute;
+  bottom: 30px;
+  left: 6px;
+  font-size: 13px;
+  font-weight: 500;
 }

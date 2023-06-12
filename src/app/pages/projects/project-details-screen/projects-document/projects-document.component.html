@@ -113,7 +113,7 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-        <div *ngFor="let item of folder_files|filter:term;let i = index">
+        <div *ngFor="let item of folder_files|filter:term;let i = index" class="position-relative">
             <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
             <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
@@ -121,7 +121,7 @@
                     <!-- <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" /> -->
                 </div>
                 <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
-                   <span *ngIf="item.dataType == 'folder'"> {{item.size | fileSizePipe}}</span>
+                   <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
                 </span>
                 <!-- <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
