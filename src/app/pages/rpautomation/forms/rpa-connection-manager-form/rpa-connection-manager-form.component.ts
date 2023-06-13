@@ -287,7 +287,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["redirect_uri"] = this.connectorForm.value.redirect_uri;
     } else if (this.connectorForm.value.grantType == "PASSWORD") {
       // "grantType": this.connectorForm.value.grantType,
-      (req_body["grantType"] = "password"),
+      (req_body["grantType"] = "PASSWORD"),
       (req_body["password"] = this.connectorForm.value.password);
       req_body["userName"] = this.connectorForm.value.userName;
     } else if (this.connectorForm.value.grantType == "client_credentials") {
