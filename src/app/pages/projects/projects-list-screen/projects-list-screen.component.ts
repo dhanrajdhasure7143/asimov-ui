@@ -181,17 +181,28 @@ export class ProjectsListScreenComponent implements OnInit {
       } else if (
         this.projectsresponse[1].length == this.config.projectfreetraillimit
       ) {
-        Swal.fire({
-          title: "Error",
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: "center",
-          icon: "error",
-          showCancelButton: false,
-          confirmButtonColor: "#007bff",
-          cancelButtonColor: "#d33",
-          heightAuto: false,
-          confirmButtonText: "Ok",
+
+        this.confirmationService.confirm({
+          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          header: "Info",
+        
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog1",
         });
+
+        // Swal.fire({
+        //   title: "Error",
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: "center",
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   confirmButtonColor: "#007bff",
+        //   cancelButtonColor: "#d33",
+        //   heightAuto: false,
+        //   confirmButtonText: "Ok",
+        // });
         return;
       } else if (this.projectsresponse[1].length >= 1) {
         this.create_Tabs = "projects";

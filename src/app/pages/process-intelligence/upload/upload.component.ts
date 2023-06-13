@@ -1015,7 +1015,7 @@ getDBTables(){      //get DB tables list
       "piId":ele.piId
     }
     this.confirmationService.confirm({
-      message: "You won't be able to revert this!",
+      message: "Do you really want to delete this process? This process cannot be undone.",
       header: "Are you Sure?",
       
       rejectVisible: false,

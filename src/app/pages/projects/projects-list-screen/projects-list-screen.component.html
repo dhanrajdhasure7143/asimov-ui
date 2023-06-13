@@ -119,3 +119,18 @@ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
 </p-confirmDialog>
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+
+<!-- limited access to this product -->
+<p-confirmDialog #cd1 [style]="{width: '30vw'}" key="positionDialog1" position="center" [baseZIndex]="10000" 
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <p-footer>
+      <button
+        type="button"
+        pButton
+        label="Ok"
+        value="Update"
+        class="btn bluebg-button"
+        (click)="cd1.accept()"
+      ></button>     
+    </p-footer>
+</p-confirmDialog>

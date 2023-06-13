@@ -386,12 +386,22 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
     link.download = this.projectDetails.projectName;
     link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
     link.click();
-    Swal.fire("Success", response.message, "success");
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: response.message
+    })
+    // Swal.fire("Success", response.message, "success");
     this.spinner.hide();
   }
   else {
     this.spinner.hide();
-    Swal.fire("Error", response.errorMessage, "error");
+    this.messageService.add({
+      severity: "error",
+      summary: "Error",
+      detail: response.errorMessage
+    })
+    // Swal.fire("Error", response.errorMessage, "error");
   }
 })
 }
@@ -511,7 +521,12 @@ if (process != undefined) {
     this.processownername='';
     this.processOwnerFlag = true;
     //this.createprogram.get("processOwner").setValue("")
-    Swal.fire("Error", "Unable to find process owner for selected process", "error")
+    this.messageService.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Unable to find process owner for selected process."
+    })
+    // Swal.fire("Error", "Unable to find process owner for selected process", "error")
   }
 }
 }
