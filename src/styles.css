@@ -3376,21 +3376,22 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 176px;
+  height: 160px;
   width: 176px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: unset !important;
   border-radius: 3px;
-  margin: 10px;
-  padding: 10px 15px;
+  /* margin: 10px;
+  padding: 10px 15px; */
   background: #fff;
   cursor: pointer;
 }
 .docfolder .p-card:hover {
   background-color: #eeeeee;
-
+}
+.docfolder .p-card-content:hover span.foldname {
   text-decoration: underline !important;
 }
 .docfolder1 .addpcard .p-card {
@@ -3430,6 +3431,16 @@ textarea.p-inputtextarea {
 }
 .docfolder .p-card-body, .docfolder .p-card-content {
   padding: 0px !important;
+  position: relative;
+}
+.docfolder .p-card-content span.datsiz {
+  color: #d36303 !important;
+  text-align: left;
+  position: absolute;
+  bottom: 30px;
+  left: 6px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Document Overlay Styles Start */
