@@ -5,10 +5,11 @@ import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+
 @Component({
   selector: 'app-create-tasks',
   templateUrl: './create-tasks-new.component.html',
@@ -42,7 +43,8 @@ export class CreateTasksComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
     
     ) { }
 
@@ -125,34 +127,51 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         let status: any= response;
         //this.createtaskmodalref.hide();
-       
-        Swal.fire({
-          title: 'Success',
-          text: "Task Created Successfully !",
-          position: 'center',
-          icon: 'success',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
+        
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Task Created Successfully !"
+        })
+        setTimeout(() => {
+          //this.resettask();
+          this.router.navigate(["/pages/projects/taskDetails"], {
+            queryParams: {
+              project_id: this.params_data.project_id,
+              project_name: this.project_name,
+              task_id: response.taskId,
+            }
+          });
+        }, 1500);
+        
+      //   Swal.fire({
+      //     title: 'Success',
+      //     text: "Task Created Successfully !",
+      //     position: 'center',
+      //     icon: 'success',
+      //     showCancelButton: false,
+      //     customClass: {
+      //       confirmButton: 'btn bluebg-button',
+      //       cancelButton:  'btn new-cancelbtn',
+      //     },
          
-          confirmButtonText: 'Ok'
-      }).then((result) => {
-        this.resettask();
-        this.router.navigate(["/pages/projects/taskDetails"], {
-          queryParams: {
-            project_id: this.params_data.project_id,
-            project_name: this.project_name,
-            task_id: response.taskId,
-          },
-        });
-        //this.projectdetailscreen.getTaskandCommentsData();
-      })
+      //     confirmButtonText: 'Ok'
+      // }).then((result) => {
+      //   this.resettask();
+      //   this.router.navigate(["/pages/projects/taskDetails"], {
+      //     queryParams: {
+      //       project_id: this.params_data.project_id,
+      //       project_name: this.project_name,
+      //       task_id: response.taskId,
+      //     },
+      //   });
+      //   //this.projectdetailscreen.getTaskandCommentsData();
+      // })
 
       }
       else
-      Swal.fire("Error",response.message,"error");
+        this.messageService.add({ severity: "error", summary: "Error", detail: response.message});
+        // Swal.fire("Error",response.message,"error");
 
     })
   }
