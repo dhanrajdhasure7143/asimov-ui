@@ -335,6 +335,7 @@ export class UsersComponent implements OnInit {
       departmentId: this.departments.toString(),
       office365User: false,
       redirectionUrl: this.config.platform_home_url,
+      tenantId:localStorage.getItem("tenantName"),
       userRoles: [
         {
           id: this.role,
@@ -349,6 +350,7 @@ export class UsersComponent implements OnInit {
         departmentId: this.departments.toString(),
         office365User: true,
         redirectionUrl: this.config.platform_home_url,
+        tenantId:localStorage.getItem("tenantName"),
         userRoles: [
           {
             id: this.role,
@@ -356,7 +358,6 @@ export class UsersComponent implements OnInit {
         ],
       };
     }
-
     var domianArr = this.inviteeMail.split("@");
     this.rest_api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe((res) => {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
