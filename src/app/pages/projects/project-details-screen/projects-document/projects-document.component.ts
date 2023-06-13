@@ -594,30 +594,27 @@ export class ProjectsDocumentComponent implements OnInit {
   //   // Create a new File object with a modified webkitRelativePath property
   //   return new File([file], file.name, { type: file.type, lastModified: file.lastModified });
   // });
-    console.log(this.selectedFolder_new);
+
 
     if (files.length > 0) {
       const folderName = files[0].webkitRelativePath.split('/')[0];
       let objectKey
       let folder_key
       if(type=='folderView'){
-        if(this.selectedFolder){
-          // objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
+        if(this.selectedFolder_new){
           let finalKey=  this.getTheFileKey();
-          folder_key= this.selectedFolder_new.key + "-" + finalKey
+          folder_key= this.selectedFolder_new.key + "-" + finalKey;
         }else{
           folder_key= this.files.length+1;
         }
       }else{
-        if(this.selectedFile.parent){
-          let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
-          folder_key = this.selectedFile.parent.key + "-" + objectKey;
-        }else{
-          folder_key= this.files.length+1;
-        }
+        // if(this.selectedFile.parent){
+        //   let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"1";
+        //   folder_key = this.selectedFile.parent.key + "-" + objectKey;
+        // }else{
+        //   folder_key= this.files.length+1;
+        // }
       }
-
-      this.loader.show();
       let req_body = [{
         key: folder_key,
         label: folderName,
@@ -628,6 +625,8 @@ export class ProjectsDocumentComponent implements OnInit {
         task_id: "",
         projectId: this.project_id,
       }];
+
+      this.loader.show();
       this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         const fileData = new FormData();
         let fileKeys = [];
@@ -638,11 +637,10 @@ export class ProjectsDocumentComponent implements OnInit {
             fileData.append("filePath", filesWithModifiedPath[i]);
             fileKeys.push(String(folder_key+'-'+(i+1)))
         }
-        
         fileData.append("projectId",this.project_id);
         fileData.append("taskId",'')
         fileData.append("ChildId",'1')
-        fileData.append("fileUniqueIds",JSON.stringify(fileKeys))
+        fileData.append("fileUniqueIds",JSON.stringify(fileKeys));
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.loader.hide();
         this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
@@ -964,10 +962,8 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   createFolders(req_body){
-    console.log("createFolder req_body",req_body);
     this.loader.show();
     this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-      this.loader.hide();
       let res_data:any = res;
       this.isDialogBox = false;
       this.selectedFolder_new={};
@@ -978,6 +974,7 @@ export class ProjectsDocumentComponent implements OnInit {
       obj["children"]= []
       this.folder_files.push(obj);
       this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
+      this.loader.hide();
       this.entered_folder_name = "";
       this.subFolderDialog = false;
     },err=>{
@@ -999,11 +996,14 @@ export class ProjectsDocumentComponent implements OnInit {
         message: "Do you really want to delete this? This process cannot be undone.",
         header: 'Are you Sure?',
         accept: () => {
+          this.loader.show();
           this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
             this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
+            this.loader.hide();
             this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
           },err=>{
             this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+            this.loader.hide();
           })
         },
         reject: (type) => {
@@ -1055,7 +1055,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
     singleFileUploadFolder(e){
-      // let filteredkey = this.selectedFolder.children[this.selectedFolder.children.length-1].key.split("-")
       if(e.target.files.length>0){
       const selectedFile:any[] = e.target.files;
         let isFileExist = 0;
@@ -1474,6 +1473,18 @@ async getFileDataById(fileId) {
     });
     } else{
 
+    }
+  }
+
+  searchByName(searchTerm: string): void {
+    console.log(this.documents_resData);
+    const searchTermLowerCase = searchTerm.toLowerCase();
+    let searchResults = this.documents_resData.filter(item =>
+      item.label.toLowerCase().includes(searchTermLowerCase)
+    );
+    console.log(searchResults,this.term)
+    if(searchResults.length > 0){
+      this.assignData(searchResults)
     }
   }
   

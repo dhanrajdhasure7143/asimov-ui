@@ -101,7 +101,7 @@
                             </span>
                             <span class="p-input-icon-right">
                                 <i class="pi pi-search" [ngClass]="{'treeviewsearchicon': !isFolder}"></i>
-                                <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
+                                <input  *ngIf="isFolder" type="text" pInputText placeholder="Type to search" (keyup)="searchByName($event.target.value)" [(ngModel)]="term">
                                 <input  *ngIf="!isFolder" type="text" pInputText placeholder="Type to search">
                             </span>
                            
