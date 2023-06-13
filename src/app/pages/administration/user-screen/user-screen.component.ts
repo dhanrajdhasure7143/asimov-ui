@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
-
-import Swal from "sweetalert2";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-user-screen",
@@ -26,7 +25,9 @@ export class UserScreenComponent implements OnInit {
     private rest: RestApiService,
     private datatransfer: DataTransferService,
     private route: ActivatedRoute,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((res: any) => {
@@ -87,20 +88,13 @@ export class UserScreenComponent implements OnInit {
 
   deleteRecord(data: any) {
     this.spinner.show();
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You Delete the Record!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      heightAuto: false,
-      
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    this.confirmationService.confirm({
+      message: "Are You Sure ? You want to delete this record!",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      key: "positionDialog",
+      accept: () => {
+        this.spinner.show();
         this.rest
           .deleteRecord(
             this.selectedScreen.Table_Name,
@@ -110,34 +104,34 @@ export class UserScreenComponent implements OnInit {
           .subscribe(
             (resp: any) => {
               if (resp.Code == 8011) {
-                Swal.fire({
-                  title: "Error",
-                  text: resp.message,
-                  position: "center",
-                  icon: "error",
-                  heightAuto: false,
-                  confirmButtonText: "Ok",
+                this.messageService.add({
+                  severity: "error",
+                  summary: "Rejected",
+                  detail: resp.message + "" + "!!",
                 });
                 this.spinner.hide();
               } else {
-                Swal.fire({
-                  title: "Success",
-                  text: resp.message,
-                  position: "center",
-                  icon: "success",
-                  heightAuto: false,
-                }).then(()=>{
-                  this.getUserScreenData(); 
+                this.messageService.add({
+                  severity: "success",
+                  summary: "Success",
+                  detail: resp.message + "" + "!!",
+                });
+                this.spinner.hide();
+                this.getUserScreenData();
+                setTimeout(() => {
                   window.location.reload();
-                })
+                }, 1000);
               }
             },
             (err: any) => {
-              Swal.fire("Error", "Unable to delete record", "error");
-              this.spinner.hide();
+              this.messageService.add({
+                severity: "error",
+                summary: "rejected",
+                detail: "Unable to delete record",
+              });
             }
           );
-          }
+      },
     });
   }
 
@@ -151,22 +145,15 @@ export class UserScreenComponent implements OnInit {
           (val = { objects: [values] })
         )
         .subscribe((data) => {
-          Swal.fire({
-            title: "Success",
-            text: "Record Saved successfully !!",
-            position: "center",
-            icon: "success",
-            showCancelButton: false,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton:  'btn new-cancelbtn',
-            },
-            heightAuto: false,
-            confirmButtonText: "Ok",
-          }).then(()=>{
-            this.getUserScreenData(); 
-            window.location.reload();
-          })
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Record Saved successfully !!",
+          });
+            this.getUserScreenData();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           this.displayFlag = DisplayEnum.DISPLAYTABLE;
         });
     } else {
@@ -183,34 +170,20 @@ export class UserScreenComponent implements OnInit {
         )
         .subscribe((response: any) => {
           if (response.Code == 8012) {
-            Swal.fire({
-              title: "Error",
-              text: response.message,
-              position: "center",
-              icon: "error",
-              showCancelButton: false,
-              confirmButtonColor: "#007bff",
-              cancelButtonColor: "#d33",
-              heightAuto: false,
-              confirmButtonText: "Ok",
-            })
+            this.messageService.add({
+              severity: "error",
+              summary: "rejected",
+              detail: response.message + "" +"!!",
+            });
+  
             this.getUserScreenData();
           } else {
-            Swal.fire({
-              title: "Success",
-              text: response.message,
-              position: "center",
-              icon: "success",
-              showCancelButton: false,
-              customClass: {
-                confirmButton: 'btn bluebg-button',
-                cancelButton:  'btn new-cancelbtn',
-              },
-              heightAuto: false,
-              confirmButtonText: "Ok",
-            }).then(() => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: response.message + "" +"!!",
+            });         
               this.getUserScreenData();
-            });
           }
           this.displayFlag = DisplayEnum.DISPLAYTABLE;
         });
