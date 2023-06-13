@@ -94,7 +94,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   setPort() {
     if (this.environmentForm.value.environmentType == "Windows") {
-      this.environmentForm.get("portNumber").setValue("44");
+      this.environmentForm.get("portNumber").setValue("22");
     } else if (this.environmentForm.value.environmentType == "Linux") {
       this.environmentForm.get("portNumber").setValue("22");
     }
@@ -317,7 +317,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   onChangeEnvType(){
     if(this.environmentForm.value.environmentType == "Windows"){
-      this.environmentForm.get("portNumber").setValue("44");
+      this.environmentForm.get("portNumber").setValue("22");
     }else if(this.environmentForm.value.environmentType == "Linux"){
       this.environmentForm.get("portNumber").setValue("22");
     }
