@@ -115,6 +115,7 @@ span.tab-botname {
 }
 .main-content1 .main-content-head {
   padding: 0px;
+  height: auto;
 }
 .main-content1 .module-header-title {
     font-weight: 600;
@@ -446,10 +447,10 @@ span.testtooltip::before {
   padding:10px;
 }
 
-/* .check{
+.check{
   overflow:visible !important;
   position: relative  !important;
-} */
+}
 
 .imageI{
   width: 100%;

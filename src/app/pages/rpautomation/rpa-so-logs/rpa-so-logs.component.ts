@@ -180,7 +180,6 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details;
-    console.log(task_details);
     if(traversalType=="FARWORD")
       this.traversalLogs.push(task_details);
     this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, logId).subscribe((response:any)=>{ 
@@ -235,8 +234,6 @@ export class RpaSoLogsComponent implements OnInit {
    {
       let logData:any=(this.traversalLogs.pop());
       this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
-      console.log(this.traversalLogs);
-      console.log(logData);
       if(logData.parent_log_id!=null)
         this.getChildLogs(logData, logData.parent_log_id, "BACKWARD");
       else

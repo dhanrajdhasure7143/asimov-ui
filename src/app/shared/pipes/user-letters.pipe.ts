@@ -10,7 +10,7 @@ export class UserLettersPipe implements PipeTransform {
       if (users_list.length > 0 && userId) {
         let user = users_list.find(item => item.userId.userId == userId);
         // if (user.userId.image == null) {
-          return user != undefined ? (user.userId.firstName.replace(/\s/g, "").charAt(0) + user.userId.lastName.replace(/\s/g, "").charAt(0)) : userId;
+          return user != undefined ? (user.userId.firstName.replace(/\s/g, "").charAt(0) + user.userId.lastName.replace(/\s/g, "").charAt(0)) : "";
         // }
       }
     } else {

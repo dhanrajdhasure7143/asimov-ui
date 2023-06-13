@@ -5,7 +5,7 @@ declare const CKEDITOR: any;
 selector:'template-editor',
 template:`
     <div [formGroup]="form">
-      <textarea  [formControlName]="field.name+'_'+field.id"  id='template-editor'></textarea>
+      <textarea  [formControlName]="field.name+'_'+field.id"  [id]="'template-editor'+field.id"></textarea>
       <input type="file" class="form-control"  (change)="onFileUpload($event)">
     </div>
     <span *ngIf="loaded">
@@ -46,7 +46,7 @@ export class SignatureUpdate implements OnInit {
   ngOnInit(): void {
     setTimeout(()=>{
           this.form.get(this.field.name+"_"+this.field.id).setValue(this.field.value);
-          CKEDITOR.replace("template-editor");
+          CKEDITOR.replace("template-editor"+this.field.id);
           CKEDITOR.config.allowedContent = true;
           this.loaded=true;
     }, 200)
@@ -54,8 +54,8 @@ export class SignatureUpdate implements OnInit {
   }
 
   get editorValue(){
-    this.form.get(this.field.name+"_"+ this.field.id).setValue(CKEDITOR.instances["template-editor"].getData()??"");
-    return CKEDITOR.instances["template-editor"].getData();
+    this.form.get(this.field.name+"_"+ this.field.id).setValue(CKEDITOR.instances["template-editor"+this.field.id].getData()??"");
+    return CKEDITOR.instances["template-editor"+this.field.id].getData();
   }
 
   onFileUpload(event:any)
@@ -67,7 +67,7 @@ export class SignatureUpdate implements OnInit {
         const reader = new FileReader();
         reader.onload = (e) => {
           const htmlCode = reader.result.toString();
-          CKEDITOR.instances["template-editor"].setData(htmlCode);
+          CKEDITOR.instances["template-editor"+this.field.id].setData(htmlCode);
           this.form.get(this.field.name+"_"+this.field.id).setValue(htmlCode);
         };
       reader.readAsText(file);
