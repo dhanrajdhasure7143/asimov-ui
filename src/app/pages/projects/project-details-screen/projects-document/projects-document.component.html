@@ -411,9 +411,8 @@
 
 <p-dialog header="Enter File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder"
-            maxlength="50" />
-        <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="!(entered_folder_name.length > 0)">Save</button>
-        <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')" [disabled]="!(enterDocumentName.length > 0)">Save</button>
+        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
+        <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')">Cancel</button>
+        <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="(entered_folder_name.length == 0)">Save</button>
     </span>
 </p-dialog>

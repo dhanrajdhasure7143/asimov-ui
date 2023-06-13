@@ -594,7 +594,8 @@ export class ProjectsDocumentComponent implements OnInit {
   //   // Create a new File object with a modified webkitRelativePath property
   //   return new File([file], file.name, { type: file.type, lastModified: file.lastModified });
   // });
-  
+    console.log(this.selectedFolder_new);
+
     if (files.length > 0) {
       const folderName = files[0].webkitRelativePath.split('/')[0];
       let objectKey
@@ -603,7 +604,7 @@ export class ProjectsDocumentComponent implements OnInit {
         if(this.selectedFolder){
           // objectKey = this.selectedFolder.children.length ? this.selectedFolder.children.length:1;
           let finalKey=  this.getTheFileKey();
-          folder_key= this.selectedFolder.key + "-" + finalKey
+          folder_key= this.selectedFolder_new.key + "-" + finalKey
         }else{
           folder_key= this.files.length+1;
         }
@@ -1033,11 +1034,18 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedItem_new = selectedItems;
   }else{
     this.selectedItem_new=[];
-    this.folder_files.forEach(element => {
-      element.is_selected = false;
-    });
-    this.folder_files[index].is_selected = true;
-    this.selectedItem_new.push(this.folder_files[index]);
+    if(this.folder_files[index].is_selected){
+      this.folder_files.forEach(element => {
+        element.is_selected = false;
+      });
+    }else{
+      this.folder_files.forEach(element => {
+        element.is_selected = false;
+      });
+      this.folder_files[index].is_selected = true;
+      this.selectedItem_new.push(this.folder_files[index]);
+    }
+
   }
   }, 200);
   }
