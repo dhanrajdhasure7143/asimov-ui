@@ -12,6 +12,7 @@ import { SharebpmndiagramService } from "../../services/sharebpmndiagram.service
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { GlobalScript } from "src/app/shared/global-script";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs";
@@ -132,7 +133,9 @@ export class BpsHomeComponent implements OnInit {
     private dt: DataTransferService,
     private rest: RestApiService,
     private global: GlobalScript,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   @Input() get selectedColumns(): any[] {
@@ -521,43 +524,47 @@ export class BpsHomeComponent implements OnInit {
             if (
               res == "It is an ongoing project.Please contact Project Owner(s)"
             ) {
-              Swal.fire({
-                icon: "info",
-                title: "Info",
-                text: res,
-                heightAuto: false,
-              });
+              this.messageService.add({severity: "info", summary: "Info", detail: res});
+              // Swal.fire({
+              //   icon: "info",
+              //   title: "Info",
+              //   text: res,
+              //   heightAuto: false,
+              // });
             } else {
-              Swal.fire({
-                icon: "success",
-                title: "Success",
-                customClass: {
-                  confirmButton: 'btn bluebg-button',
-                  cancelButton:  'btn new-cancelbtn',
-                },
-                text:
-                  bpmNotation.bpmnProcessName +
-                  " V1." +
-                  bpmNotation.version +
-                  " deleted",
-                heightAuto: false,
-              });
+              this.messageService.add({severity: "success", summary: "Success", 
+              detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " deleted"});
+              // Swal.fire({
+              //   icon: "success",
+              //   title: "Success",
+              //   customClass: {
+              //     confirmButton: 'btn bluebg-button',
+              //     cancelButton:  'btn new-cancelbtn',
+              //   },
+              //   text:
+              //     bpmNotation.bpmnProcessName +
+              //     " V1." +
+              //     bpmNotation.version +
+              //     " deleted",
+              //   heightAuto: false,
+              // });
               this.loader.show();
               this.getBPMNList();
             }
           },
           (err) => {
             this.loader.hide();
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              customClass: {
-                confirmButton: 'btn bluebg-button',
-                cancelButton:  'btn new-cancelbtn',
-              },
-              text: "Something went wrong!",
-              heightAuto: false,
-            });
+            this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong."})
+            // Swal.fire({
+            //   icon: "error",
+            //   title: "Oops...",
+            //   customClass: {
+            //     confirmButton: 'btn bluebg-button',
+            //     cancelButton:  'btn new-cancelbtn',
+            //   },
+            //   text: "Something went wrong!",
+            //   heightAuto: false,
+            // });
             // this.global.notify('Oops! Something went wrong','error')
           }
         );

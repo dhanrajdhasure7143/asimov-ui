@@ -75,3 +75,17 @@
             <process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate" (closeOverlay)="closeOverlay($event)"></process-category-overlay>
         </app-split-overlay>
     </div>
+
+    <p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" 
+        rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+        <p-footer>
+            <button
+                type="button"
+                pButton
+                label="Ok"
+                value="Update"
+                class="btn bluebg-button"
+                (click)="cd.accept()"
+            ></button>     
+        </p-footer>
+    </p-confirmDialog>

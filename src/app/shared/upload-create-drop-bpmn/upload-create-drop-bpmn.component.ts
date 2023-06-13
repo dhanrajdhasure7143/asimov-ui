@@ -6,6 +6,7 @@ import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
 import Swal from 'sweetalert2';
+import { ConfirmationService } from 'primeng/api';
 import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
@@ -43,7 +44,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hiddenPopUp: boolean=false;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
-    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef,
+    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, 
+    private cdRef: ChangeDetectorRef, private confirmationService: ConfirmationService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -91,20 +93,29 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
-        Swal.fire({
-          title: 'Error',
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: 'center',
-          icon: 'error',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
+        this.confirmationService.confirm({
+          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          header: "Info",
+         
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog",
+        });
+        // Swal.fire({
+        //   title: 'Error',
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: 'center',
+        //   icon: 'error',
+        //   showCancelButton: false,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton:  'btn new-cancelbtn',
+        //   },
 	
-          heightAuto: false,
-          confirmButtonText: 'Ok'
-        })
+        //   heightAuto: false,
+        //   confirmButtonText: 'Ok'
+        // })
       }
       else {
         this.uploaded_file = null;
@@ -190,20 +201,29 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   onUploadClick() {
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
-        Swal.fire({
-          title: 'Error',
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: 'center',
-          icon: 'error',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-	
-          heightAuto: false,
-          confirmButtonText: 'Ok'
+        this.confirmationService.confirm({
+          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          header: "Info",
+         
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          accept: () => {},
+          key: "positionDialog",
         });
+        // Swal.fire({
+        //   title: 'Error',
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: 'center',
+        //   icon: 'error',
+        //   showCancelButton: false,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton:  'btn new-cancelbtn',
+        //   },
+	
+        //   heightAuto: false,
+        //   confirmButtonText: 'Ok'
+        // });
         return false;
       } else {
         return true;
