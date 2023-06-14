@@ -68,9 +68,29 @@ export class RpaActionItemsComponent implements OnInit {
     if (["System Admin", "User", "Process Architect", "Process Analyst", "SuperAdmin", "Admin"].includes(this.userRole)) {
       return
     } else if (["Process Owner", "RPA Developer"].includes(this.userRole)) {
-      this.router.navigate(["/pages/rpautomation/connection"], {queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
+      this.loader.show();
+        this.rest_api.checkRunningAction(actionID).subscribe((res:any) => {
+        let response = res;
+        if (response && response.error === false && Array.isArray(response.data) && response.data.length > 0) {
+          const message = `This action is already being used in running Bot's, <br>
+          <span class="bold">(${response.data.join(', ')})</span>
+          Do you want to edit?`;
+          this.loader.hide();
+          this.confirmationService.confirm({
+            // message: "This action is already being used in running Bots."+"("+response.data.join(', ')+")"+" "+ "Do you want to edit?",
+            message: message,
+            header: "Are you Sure?",
+            accept: () => {
+            this.router.navigate(["/pages/rpautomation/connection"], {queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
+            }, reject: (type) => {},
+            key: "positionDialog",
+          });
+        }else{
+            this.router.navigate(["/pages/rpautomation/connection"], {queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
+        }
     }
-  }
+  )}
+}
 
     deleteById(event) {
       this.loader.show();

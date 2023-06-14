@@ -1819,4 +1819,7 @@ checkConnectionName(connectorName){
 checkActionName(connectorId:any, actionName:any) {
   return this.http.get(`/rpa-service/action/validate/${connectorId}/${actionName}`);
 }
+checkRunningAction(actionId:any){
+  return this.http.get(`/rpa-service/action/getBotName/${actionId}`)
+}
 }
