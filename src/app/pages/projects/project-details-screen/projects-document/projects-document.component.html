@@ -113,7 +113,7 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-        <div *ngFor="let item of folder_files|filter:term;let i = index" class="position-relative">
+        <div *ngFor="let item of folder_files|filter:term;let i = index" class="position-relative dochovercheck">
             <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
             <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">

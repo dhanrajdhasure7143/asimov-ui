@@ -222,21 +222,21 @@ i.pi.pi-search.treeviewsearchicon {
 input[type="checkbox"] {
   appearance: none;
   position: absolute;  
-}
-input[type="checkbox"]:checked {
-  background-color: #098de6;
-  border:2px solid #ffffff; 
-  appearance: none;
-
-  /* Styling checkbox */
   width: 20px;
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  position: absolute;
   right: 25px;
   top: 25px;
   z-index: 9;
+  border: 2px solid #616161;
+  background-color: #fff;
+  display: none;
+}
+input[type="checkbox"]:checked {
+  background-color: #098de6;
+  border:2px solid #ffffff; 
+  display: initial;
 }
 .doctree input[type="checkbox"]:checked {
   top: 15px;
@@ -314,4 +314,13 @@ input[type=checkbox]:checked::after {
 
 .doctree table tbody tr:hover {
   background: #eeeeee !important;
+}
+
+.dochovercheck:hover input[type="checkbox"] {
+  display: initial;
+}
+
+.dochovercheck {
+  height: 160px;
+  position: relative;
 }
