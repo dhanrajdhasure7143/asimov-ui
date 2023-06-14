@@ -173,7 +173,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
-      } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      } else if (this.connectorForm.value.grantType == "password") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
@@ -285,7 +285,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["grantType"] = "authorization_code";
       req_body["code"] = this.connectorForm.value.code;
       req_body["redirect_uri"] = this.connectorForm.value.redirect_uri;
-    } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+    } else if (this.connectorForm.value.grantType == "password") {
       // "grantType": this.connectorForm.value.grantType,
       (req_body["grantType"] = "password"),
       (req_body["password"] = this.connectorForm.value.password);
@@ -550,7 +550,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
       });
 
-    } else if (event == "PasswordCredentials") {
+    } else if (event == "password") {
       this.isPassword = true;
       this.isClient = true;
       this.isResponse = true;
@@ -782,7 +782,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "PasswordCredentials"
+        this.actionData.configurationAsJson["grantType"] == "password"
       ) {
         this.isPassword = true;
         this.isClient = true;
@@ -986,7 +986,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
         object["redirect_uri"] = this.connectorForm.value.redirect_uri;
-      } else if (this.connectorForm.value.grantType == "PasswordCredentials") {
+      } else if (this.connectorForm.value.grantType == "password") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
