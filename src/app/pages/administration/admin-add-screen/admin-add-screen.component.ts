@@ -5,6 +5,7 @@ import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { columnList } from "src/app/shared/model/table_columns";
+import { MessageService } from "primeng/api";
 
 
 @Component({
@@ -45,7 +46,8 @@ export class AdminAddScreenComponent implements OnInit {
     private rest: RestApiService,
     private route: ActivatedRoute,
     private spinner:LoaderService,
-    private columns:columnList
+    private columns:columnList,
+    private messageService:MessageService
   ) {
     this.route.queryParams.subscribe((res: any) => {
       this.screen_id = res.id;
@@ -155,24 +157,10 @@ export class AdminAddScreenComponent implements OnInit {
       .subscribe((data) => {
         this.updateColumndata = data;
         this.display = false;
-        Swal.fire({
-          title: "Success",
-          text: "Column Updated Successfully !!",
-          position: "center",
-          icon: "success",
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-          heightAuto: false,
-          confirmButtonText: "Ok",
-        }).then(()=>{
-          this.getScreenDetail();
-        })  
+        this.messageService.add({severity:'success', summary:'Success', detail:'Column Updated Successfully !!'});
+        this.getScreenDetail();
         this.spinner.hide();
         this.hiddenPopUp = false;
-       
       });
   }
 
@@ -243,24 +231,13 @@ export class AdminAddScreenComponent implements OnInit {
     payload["fields"] = "";
     this.spinner.show();
     this.rest.updateScreenData(payload, this.screen_id).subscribe((data) => {
-      Swal.fire({
-        title: "Success",
-        text: "Screen Updated successfully !!",
-        position: "center",
-        icon: "success",
-        showCancelButton: false,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        heightAuto: false,
-        confirmButtonText: "Ok",
-      }).then(()=>{
-        this.backToScreenList();
-      })  
-      this.spinner.hide();
+    this.messageService.add({severity:'success', summary:'Success',detail:'Screen Updated successfully !!'});
+    setTimeout(() => {
+      this.backToScreenList();
+    }, 1000);
+    this.spinner.hide();
     },(err: any) => {
-      Swal.fire("Error", "Unable to Update Screen Details", "error");
+      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to Update Screen Details !!'});
     })  
   }
 
@@ -274,26 +251,15 @@ export class AdminAddScreenComponent implements OnInit {
       this.columns_list = this.savedata;
       this.tableData = this.savedata;
       this.columns_list = this.columns.saveTable_column;
-      Swal.fire({
-        title: "Success",
-        text: "Screen Saved successfully !!",
-        position: "center",
-        icon: "success",
-        showCancelButton: false,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        heightAuto: false,
-        confirmButtonText: "Ok",
-      }).then(()=>{
+      this.messageService.add({severity:'success', summary:'Success', detail:'Screen Saved successfully !!'});
+      setTimeout(() => {
         this.backToScreenList();
-      })
+      }, 1000);
       this.spinner.hide();
       this.buttonDisable = true;
     }),
       (err: any) => {
-        Swal.fire("Error", "Unable to Save!", "error");
+        this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to Save !!'});
       };
   }
 
