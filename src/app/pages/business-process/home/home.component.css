@@ -252,3 +252,8 @@ img.hover-icon,
 .message_span:hover img.hover-icon{
     display: initial;
 }
+
+.message_span {
+    width: 100%;
+    text-align: center;
+}
