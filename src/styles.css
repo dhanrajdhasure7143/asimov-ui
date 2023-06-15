@@ -3570,7 +3570,7 @@ textarea.p-inputtextarea {
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
 .editor-container.editor-body .ck.ck-editor__editable_inline {
   width: 100% !important;
-  height: calc(100vh - 190px) !important;
+  height: calc(100vh - 170px) !important;
   padding: 20px 20px 20px 20px !important;
   margin: 0px auto !important;
 }

@@ -332,4 +332,5 @@ input[type=checkbox]:checked::after {
 
 .docscrnchngs {
   height: calc(100vh - 200px);
+  overflow: auto;
 }
