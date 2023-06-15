@@ -79,6 +79,7 @@ export class ProjectsDocumentComponent implements OnInit {
   selectedAction:any;
   breadcrumbSelectedIndex:any;
   renameDialog : boolean = false;
+  dataSearchList:any[];
 
   columns_list = [
     {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
@@ -105,7 +106,7 @@ export class ProjectsDocumentComponent implements OnInit {
         this.isFolder=true;
       }
         if(this.params_data.treeView){
-          this.isFolder=false
+          this.isFolder=false;
         }
       
     });
@@ -121,7 +122,8 @@ export class ProjectsDocumentComponent implements OnInit {
     let res_data:any=[];
     this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
         res_data=res
-        this.documents_resData = res
+        // this.documents_resData = res
+        // console.log(JSON.stringify(this.documents_resData))
         this.assignData(res_data);
         this.breadcrumbItems=[];
     })
@@ -136,16 +138,43 @@ export class ProjectsDocumentComponent implements OnInit {
     });
   }
 
+  assignData(resData){
+    this.files = this.convertToTreeView(resData);
+    if(localStorage.getItem("openedFoldrerKey")){
+      this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
+      this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
+      this.selectedFolder = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files)
+    }else{
+      this.folder_files = this.files;
+    }
+    this.selectedAction = null;
+    this.breadcrumbSelectedIndex = null;
+    this.getTaskList();
+    this.dataFormateforSearch(resData);
+    this.loader.hide();
+  }
+
   convertToTreeView(res_data){
-    this.loader.hide()
-  res_data.map(data=> {
+    this.loader.hide();
+    this.dataSearchList =[];
+   this.documents_resData = res_data.map(data=> {
       if(data.dataType=='folder'){
         data["children"]=[];
       }
       data["is_selected"]=false;
       data["uploadedDate_new"]=moment(data.uploadedDate).format('lll');
+      data.uploadedByUser = this.getUserName(data.uploadedBy)
+
+      if(data.dataType == 'folder'){
+        data['icon'] = "folder.svg"
+      }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' || data.dataType == 'gif'||data.dataType == 'PNG' || data.dataType == 'JPG'){
+        data['icon'] = "img-file.svg"
+      }else{
+        data['icon'] = "document-file.svg"
+      }
       return data;
-    })
+    });
+
     let files=[];
   for (let obj of res_data) {
     let node = {
@@ -161,15 +190,10 @@ export class ProjectsDocumentComponent implements OnInit {
       uploadedDate:obj.uploadedDate,
       is_selected:obj.is_selected,
       uploadedDate_new:obj.uploadedDate_new,
-      fileSize: obj.fileSize
+      fileSize: obj.fileSize,
+      icon : obj.icon
     };
-      if(obj.dataType == 'folder'){
-        node['icon'] = "folder.svg"
-      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'||obj.dataType == 'PNG' || obj.dataType == 'JPG'){
-        node['icon'] = "img-file.svg"
-      }else{
-        node['icon'] = "document-file.svg"
-      }
+
     this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
       files.push(node);
@@ -189,22 +213,8 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   });
   // return files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  // console.log(JSON.stringify(files))
   return files;
-  }
-
-  assignData(resData){
-    this.files = this.convertToTreeView(resData);
-    if(localStorage.getItem("openedFoldrerKey")){
-      this.folder_files = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files).children
-      this.breadcrumbItems = JSON.parse(localStorage.getItem("breadCrumb"));
-      this.selectedFolder = this.findNodeByKey(localStorage.getItem("openedFoldrerKey"),this.files)
-    }else{
-      this.folder_files = this.files;
-    }
-    this.selectedAction = null;
-    this.breadcrumbSelectedIndex = null;
-    this.getTaskList();
-    this.loader.hide();
   }
 
   calculateFolderSize(folder: any): number {
@@ -231,6 +241,35 @@ export class ProjectsDocumentComponent implements OnInit {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     const formattedValue = parseFloat((bytes / Math.pow(k, i)).toFixed(decimals));
     return `${formattedValue} ${sizes[i]}`;
+  }
+
+  dataFormateforSearch(res_data){
+    const folders = {};
+    let dataList=[];
+    res_data.forEach(element => {
+      element["children"] = [];
+    });
+      for (const file of res_data) {
+        const key = file.key;
+        if (file.dataType === 'folder') {
+          if (!folders[key]) {
+            folders[key] = file;
+            dataList.push(file);
+          }
+        } else {
+          const parentKey = key.substring(0, key.lastIndexOf('-'));
+          if (folders[parentKey]) {
+            folders[parentKey].children.push(file);
+          }
+        }
+      };
+      dataList.forEach(item => {
+        if (item.dataType === 'folder') {
+          item.size = this.calculateFolderSize(item);
+        }
+      });
+      this.dataSearchList = [...dataList]
+      console.log(this.dataSearchList)
   }
 
   // treeChildFolderSave() {
@@ -795,12 +834,21 @@ export class ProjectsDocumentComponent implements OnInit {
   convertToTreeView1(res_data){
     this.breadcrumbItems=[];
     this.files=[];
+    this.dataSearchList =[];
     res_data.map(data=> {
-      if(data.dataType=='folder'){
-        data["children"]=[]
+      data["is_selected"]=false;
+      data["uploadedDate_new"]=moment(data.uploadedDate).format('lll')
+      data.uploadedByUser = this.getUserName(data.uploadedBy)
+      if(data.dataType == 'folder'){
+        data['icon'] = "folder.svg"
+        data["children"]=[];
+      }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' || data.dataType == 'gif'||data.dataType == 'PNG' || data.dataType == 'JPG'){
+        data['icon'] = "img-file.svg"
+      }else{
+        data['icon'] = "document-file.svg"
       }
-      return data
-    })
+      return data;
+    });
 
     for (let obj of res_data) {
       let node = {
@@ -816,14 +864,12 @@ export class ProjectsDocumentComponent implements OnInit {
         uploadedDate:obj.uploadedDate,
         is_selected:obj.is_selected,
         uploadedDate_new:obj.uploadedDate_new,
-        fileSize: obj.fileSize
+        fileSize: obj.fileSize,
+        icon: obj.icon
       };
-        if(obj.dataType == 'folder'){
-          node["icon"]="folder.svg"
-        }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
-          node['icon']=  "img-file.svg"
-      }else{
-        node["icon"]= "document-file.svg"
+
+      if(obj.dataType != 'folder'){
+        this.dataSearchList.push(obj);
       }
       this.nodeMap[obj.key] = node;
       if (obj.key.indexOf('-') === -1) {
@@ -838,7 +884,8 @@ export class ProjectsDocumentComponent implements OnInit {
       }
     }
     this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-    this.folder_files = this.files
+    this.folder_files = this.files;
+    this.dataFormateforSearch(res_data);
     this.loader.hide();
   }
 
@@ -904,14 +951,20 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedItem_new = [];
     this.selectedFolder_new = item;
     this.folder_files = [];
-    this.folder_files = this.setFolderOrder(item.children);
+    console.log(item)
+    console.log(item.children)
+      // this.folder_files = this.setFolderOrder(item.children);
+      this.folder_files = item.children;
+    setTimeout(() => {
+      console.log(this.folder_files)
+    }, 1000);
     let obj = {label:item.label,key:item.key,id:item.id}
     this.breadcrumbItems.push(obj);
     this.breadcrumbItems = [...this.breadcrumbItems];
     this.createItems = [];
     this.createItems = [
         {label: "Folder",command: () => {this.onCreateFolder()}},
-        {label: "Document",command: () => {this.onCreateDocument()}},
+        {label: "Document",command: () => {this.onCreateDocument()}}
       ];
     clearTimeout(this.clickTimeout);
     console.log("this.breadcrumbItems",this.breadcrumbItems)
@@ -1130,6 +1183,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.selectedItem_new=[];
       if(type == 'main'){
           this.folder_files = this.files;
+          console.log(this.folder_files)
           this.folder_files.forEach(element => {
             element["is_selected"]=false;
           });
@@ -1477,15 +1531,35 @@ async getFileDataById(fileId) {
   }
 
   searchByName(searchTerm: string): void {
-    console.log(this.documents_resData);
     const searchTermLowerCase = searchTerm.toLowerCase();
-    let searchResults = this.documents_resData.filter(item =>
+    let searchResults = this.dataSearchList.filter(item =>
       item.label.toLowerCase().includes(searchTermLowerCase)
     );
-    console.log(searchResults,this.term)
     if(searchResults.length > 0){
-      this.assignData(searchResults)
-    }
+      searchResults.map(data=> {
+        data["is_selected"]=false;
+      })
+      //   if(data.dataType=='folder'){
+      //     data["children"]=[];
+      //   }
+      //   data["is_selected"]=false;
+      //   data["uploadedDate_new"]=moment(data.uploadedDate).format('lll');
+      //   data.uploadedByUser=this.getUserName(data.uploadedBy)
+      //   data.type="default"
+      //   if(data.dataType == 'folder'){
+      //     data['icon'] = "folder.svg"
+      //   }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' || data.dataType == 'gif'||data.dataType == 'PNG' || data.dataType == 'JPG'){
+      //     data['icon'] = "img-file.svg"
+      //   }else{
+      //     data['icon'] = "document-file.svg"
+      //   }
+      //   return data;
+      // });
+      this.folder_files = searchResults;
+    };
+    if(searchTerm.length == 0){
+        this.folder_files = this.files;
+      }
   }
   
 }

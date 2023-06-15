@@ -60,7 +60,7 @@ export class DepartmentsComponent implements OnInit {
     this.table_searchFields=["categoryName","created_user","createdBy","createdAt"]
 
     this.createDepartmentForm=this.formBuilder.group({
-      departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+      departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       });
   }
