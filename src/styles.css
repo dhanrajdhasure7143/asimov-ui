@@ -3376,8 +3376,8 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 160px;
-  width: 176px;
+  height: 154px;
+  width: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3388,7 +3388,7 @@ textarea.p-inputtextarea {
   background: #fff;
   cursor: pointer;
 }
-.docfolder .p-card:hover {
+.dochovercheck .p-card:hover {
   background-color: #eeeeee;
 }
 .docfolder .p-card-content:hover span.foldname {
@@ -3570,7 +3570,7 @@ textarea.p-inputtextarea {
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
 .editor-container.editor-body .ck.ck-editor__editable_inline {
   width: 100% !important;
-  height: calc(100vh - 190px) !important;
+  height: calc(100vh - 170px) !important;
   padding: 20px 20px 20px 20px !important;
   margin: 0px auto !important;
 }

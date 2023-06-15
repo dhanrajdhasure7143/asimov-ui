@@ -1,6 +1,6 @@
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-12 pl-0">
+            <div class="col-md-8 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a *ngIf="breadcrumbItems.length == 0" (click)="backToProjectDetails()" class="imageBox">
@@ -113,7 +113,7 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-        <div *ngFor="let item of folder_files;let i = index" class="position-relative">
+        <div *ngFor="let item of folder_files;let i = index" class="position-relative dochovercheck">
             <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
             <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
@@ -159,7 +159,7 @@
                     </div>
                 </ng-template>
             </p-tree> -->
-            <table class="w-100">
+            <table class="w-100 h-100">
                 <thead>
                     <tr>
                         <th></th>
@@ -172,7 +172,7 @@
                 <tbody>
                     <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)">
                         <td class="position-relative"><input type="checkbox" id="" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/></td>
-                        <td class="foldname"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create" (click)="onSelectFolder($event,i)">{{item.label}}</td>
+                        <td class="filname"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create" (click)="onSelectFolder($event,i)"><span>{{item.label}}</span></td>
                         <td (click)="onSelectFolder($event,i)">{{item.uploadedDate_new}}</td>
                         <td><span class="prjlastupdateprofile" (click)="onSelectFolder($event,i)">{{item.uploadedByUser|userLetters:users_list|uppercase}}</span>{{item.uploadedByUser}}</td>
                         <td (click)="onSelectFolder($event,i)">{{item.size?item.size:item.fileSize | fileSizePipe}}</td>
@@ -322,7 +322,7 @@
         <span class="p-float-label">
             <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
-            <button type="button" class="btn bluebg-button" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 1 || entered_folder_name.length == 51">Save SubFolder</button>
+            <button type="button" class="btn bluebg-button" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 1 || entered_folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
@@ -401,7 +401,7 @@
    </ng-template>
 </p-confirmDialog>
 
-<p-dialog header="Enter File Name" [(visible)]="documentCreateDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+<p-dialog header="File Name" [(visible)]="documentCreateDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="enterDocumentName" name="folder"
             maxlength="50" />
@@ -409,10 +409,10 @@
     </span>
 </p-dialog>
 
-<p-dialog header="Enter File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+<p-dialog header="File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
         <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
-        <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')">Cancel</button>
+        <!-- <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')">Cancel</button> -->
         <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="(entered_folder_name.length == 0)">Save</button>
     </span>
 </p-dialog>
