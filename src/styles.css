@@ -3376,8 +3376,8 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 160px;
-  width: 176px;
+  height: 154px;
+  width: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3388,7 +3388,7 @@ textarea.p-inputtextarea {
   background: #fff;
   cursor: pointer;
 }
-.docfolder .p-card:hover {
+.dochovercheck .p-card:hover {
   background-color: #eeeeee;
 }
 .docfolder .p-card-content:hover span.foldname {

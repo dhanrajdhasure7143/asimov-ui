@@ -229,7 +229,7 @@ input[type="checkbox"] {
   right: 25px;
   top: 25px;
   z-index: 9;
-  border: 2px solid #616161;
+  border: 1px solid #616161;
   background-color: #fff;
   display: none;
 }
@@ -238,9 +238,9 @@ input[type="checkbox"]:checked {
   border:2px solid #ffffff; 
   display: initial;
 }
-.doctree input[type="checkbox"]:checked {
-  top: 15px;
-  right: 8px;
+.doctree input[type="checkbox"] {
+  top: 14px;
+  left: 7px;
 }
 input[type=checkbox]:checked::after {
   border: 2px solid #fff;
@@ -316,11 +316,20 @@ input[type=checkbox]:checked::after {
   background: #eeeeee !important;
 }
 
-.dochovercheck:hover input[type="checkbox"] {
-  display: initial;
+.dochovercheck:hover input[type="checkbox"], .doctree table tbody tr:hover input[type="checkbox"] {
+  display: block;
 }
 
-.dochovercheck {
-  height: 160px;
-  position: relative;
+
+.filname span {
+  width: 400px;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docscrnchngs {
+  height: calc(100vh - 200px);
 }
