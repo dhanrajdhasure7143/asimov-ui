@@ -6,6 +6,7 @@ import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { MessageService} from 'primeng/api';
 
 
 @Component({
@@ -86,7 +87,12 @@ export class RpaSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
-  constructor(private rest:RestApiService, private notifier: NotifierService, private loader:LoaderService) { }
+  constructor(
+    private rest:RestApiService, 
+    private notifier: NotifierService,
+    private loader:LoaderService,
+    private messageService:MessageService
+     ) { }
   mindate= moment().format("YYYY-MM-DD");
   ngOnInit() {
     var dtToday = new Date();
@@ -168,10 +174,12 @@ gettime(){
           }
         }
         else
-          Swal.fire("Error",response.errorMessage, "error");
-      },err=>{
+          // Swal.fire("Error",response.errorMessage, "error");
+         this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        },err=>{
         this.loader.hide()
-        Swal.fire("Error","Unable to load schedules","error");
+        // Swal.fire("Error","Unable to load schedules","error");
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load schedules'})
       })
     }
   }

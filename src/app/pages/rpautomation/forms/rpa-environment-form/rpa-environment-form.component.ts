@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-environment-form',
   templateUrl: './rpa-environment-form.component.html',
@@ -29,7 +30,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
   constructor(private api: RestApiService,
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
-    private cd:ChangeDetectorRef
+    private cd:ChangeDetectorRef,
+    private messageService:MessageService
   ) {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -128,18 +130,19 @@ export class RpaEnvironmentFormComponent implements OnInit {
         await this.api.testenvironment(connectionDetails).subscribe(res => {
           this.spinner.hide();
           if (res.errorMessage == undefined) {
-            Swal.fire("Success", "Successfully Connected", "success")
+            this.messageService.add({severity:'success',summary:'Success',detail:'Successfully Connected',key:'toast1'});
           } else {
-            Swal.fire("Error", "Connection Failed", "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:'Connection Failed',key:'toast1'})
           }
         }, err => {
           this.spinner.hide()
-          Swal.fire("Error", "Unable to test connections", "error");
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connections',key:'toast1'})
         });
         this.activestatus();
       } else {
         this.spinner.hide()
-        Swal.fire("Alert", "Test connections for key pair authentication is not configured", "warning")
+        // Swal.fire("Alert", "Test connections for key pair authentication is not configured", "warning")
+        this.messageService.add({severity:'warning',summary:'Warning',detail:'Test connections for key pair authentication is not configured'})
       }
     } else {
       this.spinner.hide();
@@ -182,7 +185,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.spinner.hide();
       this.refreshTable.emit(true);
       if (response.errorMessage == undefined) {
-        Swal.fire("Success", response.status, "success")
+        this.messageService.add({severity:'success',summary:'Success',detail:response.status})
         document.getElementById("createenvironment").style.display = 'none';
         this.environmentForm.reset();
         this.closeOverlay.emit(false)
@@ -195,11 +198,11 @@ export class RpaEnvironmentFormComponent implements OnInit {
         this.submitted = false;
       } else {
         this.submitted = false;
-        Swal.fire("Error", response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
       }
     }, err => {
       this.spinner.hide();
-      Swal.fire("Error", "Unable to add environment", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add environment'})
       this.submitted = false;
       this.refreshTable.emit(false);
     });
@@ -214,7 +217,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-      Swal.fire("Error", "Unable to download .ppk file", "error")
+     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file',key:'toast1'});
     }
   }
 
@@ -250,18 +253,18 @@ export class RpaEnvironmentFormComponent implements OnInit {
         this.spinner.hide();
       this.refreshTable.emit(true);
         if (response.errorMessage == undefined) {
-          Swal.fire("Success", res.status, "success")
+          this.messageService.add({severity:'success',summary:'Success',detail:res.status})
           document.getElementById("createenvironment").style.display = 'none';
         } else {
-          Swal.fire("Error", response.errorMessage, "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to update environment details", "error")
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update environment details'})
       });
     } else {
       this.spinner.hide();
-      Swal.fire("Alert", "Update Environment is not configured for key pair authentication", "warning");
+     this.messageService.add({severity:'warn',summary:'Alert',detail:'Update Environment is not configured for key pair authentication'})
       this.refreshTable.emit(false);
     }
   }

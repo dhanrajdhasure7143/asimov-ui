@@ -422,3 +422,9 @@
         <app-rpa-environment-form  (closeOverlay)="closeSideOverlay($event)"[updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
     </app-split-overlay>
 </div>
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="design" position="center" [baseZIndex]="10000" 
+  [closable]="false">
+
+</p-confirmDialog>
+
+<p-toast  [style]="{marginTop: '50px'}"></p-toast>

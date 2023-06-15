@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -63,7 +64,11 @@ export class RpaSoLogsComponent implements OnInit {
   display:boolean = true;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
-     private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
+     private changeDetector:ChangeDetectorRef,
+     private spinner:NgxSpinnerService,
+     private messageService:MessageService,
+     private confirmationService :ConfirmationService
+     ) { }
   ngOnInit() {
     this.viewRunsByBotId();
   }
@@ -102,6 +107,7 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsLoading=false;
     this.isDataEmpty=true;
     Swal.fire("Error","unable to get logs","error")
+    this.messageService.add({severity:'success',summary:'Success',detail:'unable to get logs'})
     });
   }
 
@@ -169,7 +175,7 @@ export class RpaSoLogsComponent implements OnInit {
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       Swal.fire("Error","unable to get logs","error")       
+       this.messageService.add({severity:'error',summary:'Error',detail:'unable to get logs'})     
     })
    }
 
@@ -220,12 +226,12 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        Swal.fire("Error",response.errorMessage,"error")
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
      }    
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       Swal.fire("Error","unable to get logs","error")       
+       this.messageService.add({severity:'error',summary:'Error',detail:'unable to get logs'})     
     })
    }
 
@@ -384,7 +390,7 @@ export class RpaSoLogsComponent implements OnInit {
       this.logsLoading=false;
       
       this.isDataEmpty=true;
-      Swal.fire("Error","Unable to open loop logs","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to open loop logs'})
     })
   }
 
@@ -410,7 +416,7 @@ export class RpaSoLogsComponent implements OnInit {
     },err=>{
       this.logsLoading=false
       this.isDataEmpty==true;
-      Swal.fire("Error","Unable to get automation Logs","error")
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get automation Logs'})
     })
   }
 
@@ -426,7 +432,7 @@ export class RpaSoLogsComponent implements OnInit {
       if (response.errorMessage)
       this.errormsg= response.errorMessage;
       else
-        Swal.fire("Success", response.status, "success");
+        this.messageService.add({severity:'success',summary:'Success',detail:response.status});
       this.viewRunsByBotId();
     });
   }

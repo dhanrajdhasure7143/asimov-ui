@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from 'js-base64';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import Swal from 'sweetalert2';
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-rpa-bot-form',
@@ -25,7 +25,10 @@ export class RpaBotFormComponent implements OnInit {
     private formBuilder:FormBuilder,
     private rest:RestApiService,
     private spinner:LoaderService,
-    private cd: ChangeDetectorRef){
+    private cd: ChangeDetectorRef,
+    private messageService:MessageService,
+    public confirmationService:ConfirmationService
+    ){
       this.botForm = this.formBuilder.group({
         botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         department: ["", Validators.required],
@@ -77,24 +80,45 @@ export class RpaBotFormComponent implements OnInit {
 
   createBot() {
     let botFormValue = this.botForm.value;
-    if(botFormValue.botName=='' || botFormValue.botName==null)
+  // var message=this.messageService.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
+
+  if(botFormValue.botName=='' || botFormValue.botName==null)
       this.skipSaveBot()
     else
     {
       this.spinner.show()
+
       this.rest.createBot(botFormValue).subscribe((response: any) => {
         this.spinner.hide()
+    //  this.messageService.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
+
         if (response.errorMessage == undefined) {
-          Swal.fire("Success", "Bot created successfully!", "success");
+                  // message.confirm({
+          //   header:'Confirmation',
+          //   message:'Bot created successfully!',
+          //   acceptButtonStyleClass: 'btn bluebg-button',
+          //   defaultFocus: 'none',
+          //   acceptIcon: 'null',
+          //   acceptLabel:'Ok',
+          //   rejectVisible:false,
+          // }) 
+          //  message.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
+        
           this.closeBotForm();
           this.event.emit({ botId: response.botId, case: "create" });
+       
+       
+        // setTimeout(() => {
+        //   message
+        // }, 2000);
+
         } else {
-          Swal.fire("Error", response.errorMessage, "error");
+          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
           this.event.emit(null);
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to create bot", "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to create bot'});
         this.event.emit(null);
       })
     }
@@ -106,16 +130,16 @@ export class RpaBotFormComponent implements OnInit {
     this.spinner.show();
     this.rest.modifybotdetails(botFormValue).subscribe((response: any) => {
       if (response.errorMessage == undefined) {
-        Swal.fire("Success", "Bot details updated successfully!", "success");
+        this.messageService.add({severity:'success',summary:'Success',detail:response.message+''+'!!'})
         this.closeBotForm();
         this.spinner.hide();
         this.event.emit({ botId: response.botId, case: "update" });
       } else {
-        Swal.fire("Error", "Unable to update bot details", "error");
+        this.messageService.add({ severity: "success",summary: "Success", detail: "Updated Successfully !!" });
         this.event.emit(null);
       }
     }, err => {
-      Swal.fire("Error", "Unable to update bot", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot'})
       this.event.emit(null)
       this.spinner.hide();
     })
@@ -163,6 +187,7 @@ export class RpaBotFormComponent implements OnInit {
       {
         botDetails.botName="Unsaved-Bot-"+((new Date()).getTime());
         this.event.emit({botId:Base64.encode(JSON.stringify(botDetails)),case:"create"});
+     
       }
     }
     else{
