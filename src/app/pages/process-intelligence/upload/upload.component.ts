@@ -433,6 +433,7 @@ export class UploadComponent implements OnInit {
     let file = e.addedFiles[0];
     let fileReader: FileReader = new FileReader();
     var _self = this;
+    let message=this.messageService;
     fileReader.onload = function (x) {
       let _xml = `${fileReader.result}`
       const parser = new DOMParser();
@@ -511,17 +512,17 @@ export class UploadComponent implements OnInit {
       }
       _self.dt.changePiData(xesData)
       if(xesData.length<=2||(xesData[0].length==0 && xesData[1].length==0)){
-        // this.messageService.add({
-        //   severity: "error",
-        //   summary: "Error",
-        //   detail: "No data found in uploaded file!",
-        // });
-        Swal.fire({
-          title: 'Error',
-          text: 'No data found in uploaded file!',
-          icon: 'error',
-          heightAuto: false,
-        })
+        message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No data found in uploaded file!",
+        });
+        // Swal.fire({
+        //   title: 'Error',
+        //   text: 'No data found in uploaded file!',
+        //   icon: 'error',
+        //   heightAuto: false,
+        // })
       }else{
         _self.router.navigateByUrl('/pages/processIntelligence/xesdocument');
       }
@@ -1026,7 +1027,7 @@ getDBTables(){      //get DB tables list
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !!",
+              detail: ele.piName+ "Deleted Successfully !!",
             });
             this.getAlluserProcessPiIds();
           },
@@ -1147,7 +1148,7 @@ getDBTables(){      //get DB tables list
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Something went wrong!'
+            detail: 'Oops! Something went wrong.'
           })
 
                   // Swal.fire({
