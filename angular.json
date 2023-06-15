@@ -99,7 +99,7 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
             "production": {
@@ -128,7 +128,7 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
             "qa": {
@@ -157,7 +157,7 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
             "dev": {
@@ -186,7 +186,7 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
             "staging": {

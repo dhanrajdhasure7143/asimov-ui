@@ -367,7 +367,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       this.versionControlPopup.hide();
       this.botFormVisibility=true;
       this.unsaved=true;
-      document.getElementById('bot-form').style.display='block'
+     // document.getElementById('bot-form').style.display='block'
       this.updateBotDetails={...{},...this.current_instance.finalbot};
     }
     else{
@@ -419,8 +419,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   openBotForm() {
     // document.getElementById("bot-form").style.display='block';
-    document.getElementById("bot-form")
-
+    //document.getElementById("bot-form")
     this.botFormVisibility=true;
     this.unsaved=false;
 

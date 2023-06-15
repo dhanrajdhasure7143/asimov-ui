@@ -465,6 +465,7 @@ padding: 0px !important;
 .main-content1 .main-content-head {
 background-color: #F3F3F3;
 padding: 12px 15px 8px !important;
+height: auto;
 }
 .main-content1 .module-body,
 .main-content1 .main-content-body {
