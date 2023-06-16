@@ -125,7 +125,7 @@ this.getEnvironments();
     },
     err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get bots list'})
+      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get the bot's list."})
     })
   }
 

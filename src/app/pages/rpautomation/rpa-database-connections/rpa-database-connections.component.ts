@@ -144,13 +144,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:'Successfully Connected'})
+          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!'})
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Connection Failed'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!'})
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.'})
       });
       this.activestatus();
     }
@@ -196,9 +196,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     //   confirmButtonText: 'Yes, delete it!'
     // }).then(
       this.confirmationService.confirm({
-        message: "You won't be able to revert this!",
-        header: 'Are you Sure?',
-        acceptLabel:'Yes, delete it!',
+        message: "Do you want to delete this connection? This can't be undone.",
+        header: 'Are you sure?',
+        acceptLabel:'Yes',
         rejectLabel:'No',
         rejectButtonStyleClass: ' btn reset-btn',
         acceptButtonStyleClass: 'btn bluebg-button',
@@ -220,7 +220,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
         });
     },
   });
@@ -317,9 +317,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     //   confirmButtonText: 'Yes, delete it!'
     // }).then(
     this.confirmationService.confirm({
-      header: 'Are you Sure?',
+      header: 'Are you sure?',
       message: "You won't be able to revert this!",
-      acceptLabel: 'Yes, delete it',
+      acceptLabel: 'Yes',
       rejectLabel: 'No',
       rejectButtonStyleClass: ' btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
@@ -342,7 +342,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           // Swal.fire("Error", "Unable to delete database connections", "error")
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
         });
       }
     

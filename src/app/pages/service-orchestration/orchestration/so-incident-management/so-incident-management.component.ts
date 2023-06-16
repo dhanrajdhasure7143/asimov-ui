@@ -167,7 +167,7 @@ export class SoIncidentManagementComponent implements OnInit {
         this.loadingFlag = false;
         this.spinner.hide();
         // Swal.fire("Error", "Unable to get incidents", "error");
-        this.messageService.add({severity:'error' , summary:'Error',detail:'Unable to get incidents'})
+        this.messageService.add({severity:'error' , summary:'Error',detail:'Unable to get incidents.'})
 
       }
     );

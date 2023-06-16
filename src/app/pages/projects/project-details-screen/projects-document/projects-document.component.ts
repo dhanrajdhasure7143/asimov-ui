@@ -609,8 +609,8 @@ export class ProjectsDocumentComponent implements OnInit {
       delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
-      message: "Do you really want to delete this? This process cannot be undone.",
-      header: 'Are you Sure?',
+      message: "Do you want to delete this? This can't be undone.",
+      header: 'Are you sure?',
      
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
@@ -1046,8 +1046,8 @@ export class ProjectsDocumentComponent implements OnInit {
         delete req_body[0]["parent"];
       }
       this.confirmationService.confirm({
-        message: "Do you really want to delete this? This process cannot be undone.",
-        header: 'Are you Sure?',
+        message: "Do you want to delete this? This can't be undone.",
+        header: 'Are you sure?',
         accept: () => {
           this.loader.show();
           this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{

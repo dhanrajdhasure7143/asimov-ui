@@ -68,7 +68,7 @@ export class AddcardComponent implements OnInit {
         this.spinner.hide()
         Swal.fire({
           title: 'Error',
-          text:"Please enter valid card details",
+          text:"Please enter valid card details.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,
@@ -85,7 +85,7 @@ export class AddcardComponent implements OnInit {
         this.spinner.hide()
         Swal.fire({
           title: 'Error',
-          text:"Card already exists",
+          text:"Card already exists.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,
@@ -108,7 +108,7 @@ export class AddcardComponent implements OnInit {
           Swal.fire({
             
             title: 'Success',
-            text: "Card added successfully!!",
+            text: "Card added successfully!",
             position: 'center',
             icon: 'success',
             showCancelButton: false,

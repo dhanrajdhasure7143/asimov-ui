@@ -151,10 +151,9 @@ inputNumberOnly(event){
     //   confirmButtonText: 'Yes, delete it!'
     // }).then((result) => {
 this.confirmationService.confirm({
-  message: "You won't be able to revert this!",
-  header: 'Are you Sure',
-  icon: 'warning',
-  acceptLabel:'Yes, delete it!',
+  message: "Do you want to delete this credential? This can't be undone.",
+  header: 'Are you sure?',
+  acceptLabel:'Yes',
  rejectLabel:'No',
  rejectButtonStyleClass: ' btn reset-btn',
  acceptButtonStyleClass: 'btn bluebg-button',
@@ -175,7 +174,7 @@ this.confirmationService.confirm({
           }              
         },err=>{
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
         });
       }
   },
@@ -252,9 +251,8 @@ this.confirmationService.confirm({
     // }).then((result) => {
       this.confirmationService.confirm({
         message: "You won't be able to revert this!",
-        header: 'Are you Sure',
-        icon: 'warning',
-      acceptLabel:'Yes, delete it!',
+        header: 'Are you sure?',
+      acceptLabel:'Yes',
       rejectLabel:'No',
       rejectButtonStyleClass: ' btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
@@ -279,7 +277,7 @@ this.confirmationService.confirm({
         },err=>{
           this.spinner.hide();
           // Swal.fire("Error","Unable to delete credentails","error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
 
         });
       }}

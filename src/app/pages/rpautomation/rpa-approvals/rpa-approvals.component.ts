@@ -75,7 +75,7 @@ export class RpaApprovalsComponent implements OnInit {
     },err=>{
       console.log(err);
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get approvals list'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the approvals list.'})
     })
   }
 
@@ -89,7 +89,7 @@ export class RpaApprovalsComponent implements OnInit {
     }
     if(data.status=="Completed")
     {
-      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status updation not allowed for completed approvals'})
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status updation is not allowed for completed approvals.'})
       return;
     }
     this.statusType=status;
@@ -139,11 +139,11 @@ export class RpaApprovalsComponent implements OnInit {
     
     if(this.selectedRows.filter((item:any)=>item.status==statusType).length>0)
     {
-      this.messageService.add({severity:'warning',summary:'Warning',detail:'In Selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType})
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'In selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType +'.'})
       return;
     }
     if(this.selectedRows.filter((item:any)=>item.status=='Completed').length>0){
-      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status will not update for completed approvals'})
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status will not update for completed approvals.'})
     }
     else
     {

@@ -121,9 +121,9 @@ export class DepartmentsComponent implements OnInit {
     // }).then((result) => {
     //   if (result.value) {
       this.confirmationService.confirm({
-        header:'Are you Sure?',
-        message:"You won't be able to revert this!",
-        acceptLabel:'Yes, delete it!',
+        header:'Are you sure?',
+        message:"Do you want to delete this department? This can't be undone.",
+        acceptLabel:'Yes',
         rejectLabel:'No',
         acceptIcon:'null',
         rejectIcon:'null',
@@ -136,7 +136,7 @@ export class DepartmentsComponent implements OnInit {
         if (value.message === "Successfully deleted the category") {
         //   Swal.fire({
         //     title: 'Success',
-        //     text: "Department Deleted Successfully!!",
+        //     text: "Department deleted successfully!",
         //     position: 'center',
         //     icon: 'success',
         //     showCancelButton: false,
@@ -150,7 +150,7 @@ export class DepartmentsComponent implements OnInit {
         // })
         this.confirmationService.confirm({
           header:'Success',
-          message:"Department Deleted Successfully!!",
+          message:"Department deleted successfully!",
           acceptLabel:'OK',
           rejectVisible:false,
           acceptIcon:'null',
@@ -225,7 +225,7 @@ export class DepartmentsComponent implements OnInit {
       if(resp.message === "Successfully created the category"){
       //   Swal.fire({
       //     title: 'Success',
-      //     text: "Department Created Successfully !!",
+      //     text: "Department created successfully!",
       //     position: 'center',
       //     icon: 'success',
       //     showCancelButton: false,
@@ -238,7 +238,7 @@ export class DepartmentsComponent implements OnInit {
       // })
       this.confirmationService.confirm({
         header:'Success',
-        message:"Department Created Successfully !!",
+        message:"Department created successfully!",
         acceptLabel:'OK',
         rejectVisible:false,
         acceptIcon:'null',
@@ -249,8 +249,8 @@ export class DepartmentsComponent implements OnInit {
       this.createDepartmentForm.reset();
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
-        // Swal.fire("Error","Department already exists","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists'})
+        // Swal.fire("Error","Department already exists..","error");
+        this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists.'})
       } else {
         // Swal.fire("Error",resp.message,"error");
         this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
@@ -258,8 +258,8 @@ export class DepartmentsComponent implements OnInit {
       }
       this.loader.hide();
     },err=>{
-      // Swal.fire("Error","Failed to Save","error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to Save'})
+      // Swal.fire("Error","Failed to save.","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to save.'})
 
       this.loader.hide();
     })
@@ -281,7 +281,7 @@ export class DepartmentsComponent implements OnInit {
       if(resp.message === "Successfully updated the category"){
       //   Swal.fire({
       //     title: 'Success',
-      //     text: "Department Updated Successfully !!",
+      //     text: "Department updated successfully!",
       //     position: 'center',
       //     icon: 'success',
       //     showCancelButton: false,
@@ -294,7 +294,7 @@ export class DepartmentsComponent implements OnInit {
       // })
       this.confirmationService.confirm({
         header:'Success',
-        message:"Department Updated Successfully !!",
+        message:"Department updated successfully!",
         acceptLabel:'OK',
         rejectVisible:false,
         acceptIcon:'null',
@@ -304,8 +304,8 @@ export class DepartmentsComponent implements OnInit {
       this.hiddenPopUp = false;
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
-        // Swal.fire("Error","Department already exists","error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists'})
+        // Swal.fire("Error","Department already exists.","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists.'})
 
       } else {
         // Swal.fire("Error",resp.message,"error");

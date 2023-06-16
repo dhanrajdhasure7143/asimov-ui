@@ -164,13 +164,13 @@ export class RpaDatabaseFormComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:'Successfully Connected',key:'datamessage'})
+          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'datamessage'})
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Connection Failed',key:'datamessage'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!',key:'datamessage'})
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details',key:'datamessage'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.',key:'datamessage'})
       });
       this.activestatus();
     }
@@ -224,7 +224,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           this.submitted = false;
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connections',key:'datamessage'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connections.',key:'datamessage'})
         });
       } else {
         this.activestatus();
@@ -268,7 +268,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details.'})
       });
     }
   }

@@ -243,7 +243,7 @@ export class EditTaskComponent implements OnInit {
         }
       );
     } else {
-      alert("please fill all details");
+      alert("Please fill in all the details.");
     }
   }
 

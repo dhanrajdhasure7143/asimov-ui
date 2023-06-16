@@ -83,7 +83,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     let selectedId = event.id;
     this.confirmationService.confirm({
       message: "Do you want to delete this connector?",
-      header: 'Are you Sure?',
+      header: 'Are you sure?',
       
       accept: () => {
         this.spinner.show();

@@ -764,7 +764,7 @@ testDbConnection(){     // check DB connection with port id and psw
           this.isDisabled = false;
             this.notifier.show({
               type: 'success',
-              message: "Connected Successfully."
+              message: "Connected successfully!"
               });
           }else{
             this.loader.hide();

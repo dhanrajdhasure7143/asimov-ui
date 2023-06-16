@@ -118,7 +118,7 @@ export class RpaBotFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to create bot'});
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to create a bot.'});
         this.event.emit(null);
       })
     }
@@ -139,7 +139,7 @@ export class RpaBotFormComponent implements OnInit {
         this.event.emit(null);
       }
     }, err => {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
       this.event.emit(null)
       this.spinner.hide();
     })

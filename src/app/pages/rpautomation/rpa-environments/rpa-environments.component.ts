@@ -132,7 +132,7 @@ export class RpaenvironmentsComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file.'})
     }
   }
 
@@ -202,9 +202,9 @@ export class RpaenvironmentsComponent implements OnInit {
 // if(result.value){}
       // }
       this.confirmationService.confirm({
-        header: 'Are you Sure?',
-        message: "You wan't be able to revert this!",
-       acceptLabel:'Yes, delete it!',
+        header: 'Are you sure?',
+        message: "Do you want to delete this environment? This can't be undone.",
+       acceptLabel:'Yes',
        rejectLabel:'No',
        rejectButtonStyleClass: ' btn reset-btn',
        acceptButtonStyleClass: 'btn bluebg-button',
@@ -223,7 +223,7 @@ export class RpaenvironmentsComponent implements OnInit {
             }
           }, err => {
             this.spinner.hide();
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete environment'})
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment.'})
           })
         }
       })
@@ -248,7 +248,7 @@ export class RpaenvironmentsComponent implements OnInit {
         }
         this.getallData();
       }, err => {
-        this.messageService.add({severity:'success',summary:'Success',detail:'Agent Deployed Successfully !!'})
+        this.messageService.add({severity:'success',summary:'Success',detail:'Agent deployed successfully!'})
         this.getallData();
         this.spinner.hide();
       })
@@ -307,9 +307,9 @@ export class RpaenvironmentsComponent implements OnInit {
       //   confirmButtonText: 'Yes, delete it!'
       // }).then(
         this.confirmationService.confirm({
-        header:'Are you Sure?',
+        header:'Are you sure?',
         message:"You won't be able to revert this!",
-       acceptLabel:'Yes, delete it!',
+       acceptLabel:'Yes',
       rejectLabel:'No',
       rejectButtonStyleClass: ' btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
@@ -328,7 +328,7 @@ export class RpaenvironmentsComponent implements OnInit {
             }
           }, err => {
             this.spinner.hide();
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete environment'})
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment.'})
           })
         }
       })

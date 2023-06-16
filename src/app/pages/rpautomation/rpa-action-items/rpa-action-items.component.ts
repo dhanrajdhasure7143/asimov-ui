@@ -79,7 +79,7 @@ export class RpaActionItemsComponent implements OnInit {
           this.confirmationService.confirm({
             // message: "This action is already being used in running Bots."+"("+response.data.join(', ')+")"+" "+ "Do you want to edit?",
             message: message,
-            header: "Are you Sure?",
+            header: "Are you sure?",
             accept: () => {
             this.router.navigate(["/pages/rpautomation/connection"], {queryParams:{action_Id:actionID, id:this.selectedId, name:event.name, connector_name : this.selectedName, logo : this.selectedIcon, create:false, formDisabled : true}});
             }, reject: (type) => {},
@@ -97,7 +97,7 @@ export class RpaActionItemsComponent implements OnInit {
       let selectedId = event.id;
       this.confirmationService.confirm({
         message: "You won't be able to revert this!",
-        header: 'Are you Sure?',
+        header: 'Are you sure?',
        
         accept: () => {
           this.loader.show();
@@ -141,7 +141,7 @@ export class RpaActionItemsComponent implements OnInit {
     const selectedId = this.selectedData[0].id;
     this.confirmationService.confirm({
       message: "Do you want to delete this Action-Item?",
-      header: 'Are you Sure?',
+      header: 'Are you sure?',
      
       accept: () => {
         this.rest_api.deleteActionById(selectedId).subscribe(

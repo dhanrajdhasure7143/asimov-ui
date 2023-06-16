@@ -108,7 +108,7 @@ export class MonitoringComponent implements OnInit {
       this.botruntimestats();
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add.'})
     })
   }
 

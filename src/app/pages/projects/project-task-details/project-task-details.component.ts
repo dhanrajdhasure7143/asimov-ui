@@ -180,7 +180,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   deleteDocuments() {
     let req_body = [];
     this.confirmationService.confirm({
-      message: "Do you want to delete this document? This process can't be undone.",
+      message: "Do you want to delete this document? This can't be undone.",
       header: "Are you sure?",
       rejectLabel: "No",
       acceptLabel: "Yes",
@@ -296,7 +296,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       }
     );
     // } else {
-    //   alert("please fill all details");
+    //   alert("Please fill in all the details.");
     // }
   }
   changefileUploadForm(event) {

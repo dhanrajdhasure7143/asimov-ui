@@ -547,7 +547,7 @@ this.display = false
     }
     },(err)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get bots data'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get bot data.'})
     })
   }
 
@@ -596,7 +596,7 @@ this.display = false
     },err=>{
       this.spinner.hide();
       // Swal.fire("Error","Unable to update logs","error")
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update logs'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update the logs.'})
 
     });
   }
@@ -728,7 +728,7 @@ this.display = false
     },(err)=>{
       this.spinner.hide();
       this.logflag="Error";
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get bot logs'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get bot logs.'})
     })
   }
 
@@ -763,7 +763,7 @@ this.display = false
       },err=>{
         this.spinner.hide();
         // Swal.fire("Error","Unable to execute bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to excute bot'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
 
       });
       else if(source=="UiPath")
@@ -773,7 +773,7 @@ this.display = false
         if(response.value!=undefined)
         {
           // Swal.fire("Success","Bot  Execution Initated Successfully !!","success");
-          this.messageService.add({severity:'success',summary:'Success',detail:'Bot Execution Initiated Successfully !!'})
+          this.messageService.add({severity:'success',summary:'Success',detail:'Bot execution initiated successfully!'})
 
         }
         else
@@ -786,7 +786,7 @@ this.display = false
         
         this.spinner.hide();
         // Swal.fire("Error","Failed to start bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start bot'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start the bot.'})
 
       })
       // else if(source=="BluePrism")
@@ -805,7 +805,7 @@ this.display = false
           setTimeout(()=>{
             this.spinner.hide();
             // Swal.fire("Success","Bot Execution initiated successfully","success");
-          this.messageService.add({severity:'success',summary:'Success',detail:'Bot execution intiated successfully'})
+          this.messageService.add({severity:'success',summary:'Success',detail:'Bot execution initiated successfully!'})
 
           },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
@@ -821,7 +821,7 @@ this.display = false
 
           this.spinner.hide();
           // Swal.fire("Error","Failed to start bot","error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start bot '})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start the bot. '})
 
         });
       }
@@ -848,7 +848,7 @@ this.display = false
 
       }, err=>{
         // Swal.fire("Error","Unable to pause bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to pause bot '})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to pause the bot.'})
 
       });
       
@@ -876,7 +876,7 @@ this.display = false
         
             this.spinner.hide();
             // Swal.fire("Error","Bot failed to stop","error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Bot failed to stop'})
+            this.messageService.add({severity:'error',summary:'Error',detail:'Bot failed to stop.'})
           })
     }
 
@@ -955,7 +955,7 @@ this.display = false
       },err=>{
         this.spinner.hide()
         // Swal.fire("Error","Unable to get uipath bots","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get uipath bots'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get Uipath bots.'})
 
         
       });
@@ -1075,12 +1075,12 @@ this.display = false
       else
       {
         // Swal.fire("Error","Unable to get users list","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'unable to get users list'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the users list.'})
 
       }
     },err=>{
       // Swal.fire("Error","Unable to get users list","error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to et users list'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the users list.'})
 
     })
   }

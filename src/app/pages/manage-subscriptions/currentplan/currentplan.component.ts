@@ -214,7 +214,7 @@ export class CurrentplanComponent implements OnInit {
       if (this.paymentToken.message == "Failed To Generate Payment Token") {
         Swal.fire({
           title: "Error",
-          text: `Invalid Card Details!!`,
+          text: `Invalid card details!`,
           position: "center",
           icon: "error",
           showCancelButton: false,

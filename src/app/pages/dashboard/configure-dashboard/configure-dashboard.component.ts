@@ -459,10 +459,10 @@ export class ConfigureDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage="";
-    this.dashaboardcount > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone." : confrmMessage= "Are you sure that you are deleting the default dashboard?";  
+    this.dashaboardcount > 1? confrmMessage="Do you want to delete this dashboard? This can't be undone." : confrmMessage= "Are you sure that you are deleting the default dashboard?";  
   this.confirmationService.confirm({
     message: confrmMessage,
-    header: "Are you Sure?",
+    header: "Are you sure?",
     
       accept: () => {
         this.loader.show();

@@ -179,7 +179,7 @@ gettime(){
         },err=>{
         this.loader.hide()
         // Swal.fire("Error","Unable to load schedules","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load schedules'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load schedules.'})
       })
     }
   }
@@ -416,21 +416,21 @@ gettime(){
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            this.notifier.notify("success","Schedule saved successfully");
+            this.notifier.notify("success","Schedule saved successfully!");
             this.get_schedule();
           }  
           else
             this.notifier.notify("error",response.errorMessage);
         },err=>{
           this.loader.hide();
-          this.notifier.notify("error","Unable to save schedule");
+          this.notifier.notify("error","Unable to save the schedule.");
         })
       }
     }
     else
     {
       this.loader.hide();
-      this.notifier.notify("error", "Please fill all inputs");
+      this.notifier.notify("error", "Please fill in all inputs.");
     }
   }
 
@@ -480,7 +480,7 @@ gettime(){
       this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success","Schedule started successfully")
+          this.notifier.notify("success","Schedule started successfully!")
           this.get_schedule();
         }
         else
@@ -503,7 +503,7 @@ gettime(){
         if(resp.errorMessage==undefined)
         {
 
-          this.notifier.notify("success", "Schedule paused successfully");
+          this.notifier.notify("success", "Schedule paused successfully!");
           this.get_schedule();
         }
         else
@@ -527,7 +527,7 @@ gettime(){
       let resp:any=data
       if(resp.errorMessage==undefined)
       {
-        this.notifier.notify("success", "Schedule resumed successfully");
+        this.notifier.notify("success", "Schedule resumed successfully!");
         this.get_schedule();
       }
       else
@@ -547,7 +547,7 @@ gettime(){
         this.loader.hide();
         if(response.errorMessage==undefined)
         {
-          this.notifier.notify("success", "Schedules deleted successfully");
+          this.notifier.notify("success", "Schedules deleted successfully!");
           this.get_schedule();
         }
         else
@@ -556,7 +556,7 @@ gettime(){
         }
       },err=>{
         this.loader.hide()
-        this.notifier.notify("error", "Unable to delete schedule");
+        this.notifier.notify("error", "Unable to delete the schedule.");
         
       })
       // this.updateflags();
@@ -600,7 +600,7 @@ gettime(){
   //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
   //       let resp:any=data;
   //       if(resp.errorMessage){
-  //         this.notifier.notify("error","Failed to save the scheduler")
+  //         this.notifier.notify("error","Failed to save. the scheduler")
   //       }
   //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
   //       {

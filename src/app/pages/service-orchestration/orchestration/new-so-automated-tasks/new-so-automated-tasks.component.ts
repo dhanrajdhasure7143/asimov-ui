@@ -378,7 +378,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  
      });*/
      setTimeout(()=>{
-       this.messageService.add({severity:'success',summary:'Success',detail:'SLA configuration saved successfully'})
+       this.messageService.add({severity:'success',summary:'Success',detail:'SLA configuration saved successfully!'})
        this.SLAclose();
      },1000)
  
@@ -488,7 +488,7 @@ cascadingImp(){
 //       Swal.fire({
 //         position: 'center',
 //         icon: 'success',
-//         title: "Successfully Connected",
+//         title: "Successfully connected.",
 //         showConfirmButton: false,
 //         timer: 2000
 //       })
@@ -496,7 +496,7 @@ cascadingImp(){
 //         Swal.fire({
 //           position: 'center',
 //           icon: 'error',
-//           title: 'Connection Failed',
+//           title: 'Connection failed!',
 //           showConfirmButton: false,
 //           timer: 2000
 //         })
@@ -653,12 +653,12 @@ resetsla(){
         // this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
-       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to reorder tasks'})
+       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to re-order tasks.'})
       }))
     }
     else
     {
-      this.messageService.add({severity:'warn',summary:'Success',detail:'Please select process to re-oder tasks'})
+      this.messageService.add({severity:'warn',summary:'Success',detail:'Please select process to re-oder tasks.'})
     }
     // if (event.previousContainer === event.container) {
     //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
@@ -818,11 +818,11 @@ resetsla(){
               this.applyFilter(this.selectedvalue);
             }
           }
-       this.messageService.add({severity:'success',summary:'Success',detail:'Resource Assigned Successfully'})
+       this.messageService.add({severity:'success',summary:'Success',detail:'Resource assigned successfully!'})
           this.checkTaskAssigned(processId);
         }else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:'Failed to assign Resource'})
+       this.messageService.add({severity:'error',summary:'Error',detail:'Failed to assign a resource.'})
         }
       })
     }
@@ -1287,11 +1287,11 @@ resetsla(){
         }
       })
       this.accountName="";this.tenantId="";this.userKey="";this.clientId="";this.activeStatus=false;
-      this.messageService.add({severity:'success',summary:'Success',detail:'Configuration added successfully'})
+      this.messageService.add({severity:'success',summary:'Success',detail:'Configuration added successfully!'})
       this.addconfigstatus=false;
     }else
     {
-      this.messageService.add({severity:'warning',summary:'Warning',detail:'Please fill the data'})
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'Please fill in the data.'})
     }
   }
 
@@ -1343,10 +1343,10 @@ resetsla(){
     // }).then((result) => {
     //   if (result.value) {
       this.confirmationService.confirm({
-        header:'Are you Sure?',
+        header:'Are you sure?',
         message:"You won't be able to revert this!",
-        acceptLabel:'Yes, delete it!',
-        rejectLabel:'Cancel',
+        acceptLabel:'Yes',
+        rejectLabel:'No',
         rejectButtonStyleClass: ' btn reset-btn',
         acceptButtonStyleClass: 'btn bluebg-button',
         defaultFocus: 'none',
@@ -1358,10 +1358,10 @@ resetsla(){
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
           this.getautomatedtasks(this.selectedvalue);
-          this.messageService.add({severity:'success',summary:'Success',detail:'Task Deleted Successfully!!'})
+          this.messageService.add({severity:'success',summary:'Success',detail:'Task deleted successfully!'})
         }
         else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete task'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the task.'})
         }
         this.spinner.hide();
         })
@@ -1387,10 +1387,10 @@ resetsla(){
    
     if (value.message === "Task Added Successfully!!") {
       this.getautomatedtasks(this.selectedvalue);
-      this.messageService.add({severity:'success',summary:'Success',detail:'Task Added successfully!!'})
+      this.messageService.add({severity:'success',summary:'Success',detail:'Task added successfully!'})
     }
     else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to add task'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to add the task.'})
     }
     // this.spinner.hide();
     this.logs_modal.hide();

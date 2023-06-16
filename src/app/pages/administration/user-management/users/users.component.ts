@@ -122,10 +122,9 @@ export class UsersComponent implements OnInit {
     // }).then((result) => {
     //   if (result.value) {
       this.confirmationService.confirm({
-        header:'Are you Sure?',
-        message:"You won't be able to revert this!",
-        icon: "warning",
-        acceptLabel:'Yes, delete it!',
+        header:'Are you sure?',
+        message:"Do you want to delete this user? This can't be undone.",
+        acceptLabel:'Yes',
         rejectLabel:'No',
         rejectButtonStyleClass: ' btn reset-btn',
         acceptButtonStyleClass: 'btn bluebg-button',
@@ -141,7 +140,7 @@ export class UsersComponent implements OnInit {
               this.getUsers();
               // Swal.fire({
               //   title: "Success",
-              //   text: "User Deleted Successfully!!",
+              //   text: "User deleted successfully!",
               //   position: "center",
               //   icon: "success",
               //   showCancelButton: false,
@@ -152,24 +151,18 @@ export class UsersComponent implements OnInit {
               //   heightAuto: false,
               //   confirmButtonText: "Ok",
               // });
-              this.confirmationService.confirm({
-                header:'Success',
-                message:'User Deleted Successfully!!',
-                acceptLabel:'OK',
-                rejectVisible:false,
-                acceptIcon:'null',
-                acceptButtonStyleClass: 'btn bluebg-button',
-                defaultFocus:'none'
+              this.messageService.add({
+                severity: 'success', summary: 'Success', detail: 'User deleted successfully!'
               })
             } else {
-              // Swal.fire("Error", "Failed to delete user", "error");
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete user'})
+              // Swal.fire("Error", "Failed to delete the user.", "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
               this.loader.hide();
             }
           },
           (err) => {
-            // Swal.fire("Error", "Failed to delete user", "error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete user'})
+            // Swal.fire("Error", "Failed to delete the user.", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
             this.loader.hide();
           }
         );
@@ -195,7 +188,7 @@ export class UsersComponent implements OnInit {
         // });
         this.confirmationService.confirm({
           header: 'Error',
-          message: 'You have limited access to this product. Please contact EZFlow support team for more details.',
+          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
           acceptLabel: 'Ok',
           acceptButtonStyleClass: 'btn bluebg-button',
           rejectVisible: false,
@@ -298,7 +291,7 @@ export class UsersComponent implements OnInit {
       if (resp.message ==="Successfuly updated role of an user for particular application") {
         // Swal.fire({
         //   title: "Success",
-        //   text: "User details updated Successfully !!",
+        //   text: "User details updated successfully!",
         //   position: "center",
         //   icon: "success",
         //   showCancelButton: false,
@@ -311,7 +304,7 @@ export class UsersComponent implements OnInit {
         // });
         this.confirmationService.confirm({
           header:'Success',
-          message:'User details updated Successfully !!',
+          message:'User details updated successfully!',
           acceptLabel:'Ok',
           rejectVisible:false,
           acceptButtonStyleClass: 'btn bluebg-button',
@@ -408,10 +401,10 @@ export class UsersComponent implements OnInit {
     this.rest_api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe((res) => {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
           this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
-            if (resp.message === "User invited Successfully !!") {
+            if (resp.message === "User invited successfully!") {
               // Swal.fire({
               //   title: "Success",
-              //   text: "User Invited Successfully !!",
+              //   text: "User invited successfully!",
               //   position: "center",
               //   icon: "success",
               //   showCancelButton: false,
@@ -424,7 +417,7 @@ export class UsersComponent implements OnInit {
               // });
               this.confirmationService.confirm({
                 header:'Success',
-                message:'User Invited Successfully !!',
+                message:'User invited successfully!',
                 acceptIcon:'null',
                 acceptLabel:'Ok',
                 rejectVisible:false,
@@ -436,10 +429,10 @@ export class UsersComponent implements OnInit {
             } else {
               // Swal.fire(
               //   "Error",
-              //   "Failed to invite! Check if user already exists!!",
+              //   "Failed to invite! Check if the user already exists!",
               //   "error"
               // );
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if user already exists!!'})
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
             this.loader.hide();
             }
           });
@@ -450,8 +443,8 @@ export class UsersComponent implements OnInit {
           return;
         } else {
           this.loader.hide();
-          // Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
-          this.messageService.add({severity:'error',summary:'Error',detail: 'Failed to invite! Check if user already exists!!'})
+          // Swal.fire("Error","Failed to invite! Check if the user already exists!","error");
+          this.messageService.add({severity:'error',summary:'Error',detail: 'Failed to invite! Check if the user already exists!'})
         }
       });
   }

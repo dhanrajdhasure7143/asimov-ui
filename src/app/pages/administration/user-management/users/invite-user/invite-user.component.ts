@@ -127,10 +127,10 @@ export class InviteUserComponent implements OnInit {
           res.Message === "White listed domain.. Please proceed with invite"
         ) {
           this.api.inviteUserwithoutReg(body).subscribe((resp) => {
-            if (resp.message === "User invited Successfully !!") {
+            if (resp.message === "User invited successfully!") {
               // Swal.fire({
               //   title: "Success",
-              //   text: "User Invited Successfully !!",
+              //   text: "User invited successfully!",
               //   position: "center",
               //   icon: "success",
               //   showCancelButton: false,
@@ -143,9 +143,8 @@ export class InviteUserComponent implements OnInit {
               //   confirmButtonText: "Ok",
               // }).then((result) => {
                 this.confirmationService.confirm({
-                  header:'Success',
-                  message:'User Invited Successfully !!',
-                  icon: "success",
+                  header:'Info',
+                  message:'User invited successfully!',
                   acceptLabel:'OK',
                   rejectVisible:false,
                   acceptButtonStyleClass: 'btn bluebg-button',
@@ -161,7 +160,7 @@ export class InviteUserComponent implements OnInit {
              else {
               // Swal.fire(
               //   "Error",
-              //   "Failed to invite! Check if user already exists!!",
+              //   "Failed to invite! Check if the user already exists!",
               //   "error"
               // );
               this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if user already exists RRR!!'})
@@ -177,10 +176,10 @@ export class InviteUserComponent implements OnInit {
           this.loader.hide();
           // Swal.fire(
           //   "Error",
-          //   "Failed to invite! Check if user already exists!!",
+          //   "Failed to invite! Check if the user already exists!",
           //   "error"
           // );
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if user already exists!!'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
         }
       });
   }

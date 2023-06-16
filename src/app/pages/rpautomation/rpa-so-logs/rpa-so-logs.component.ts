@@ -106,8 +106,8 @@ export class RpaSoLogsComponent implements OnInit {
   },err=>{
     this.logsLoading=false;
     this.isDataEmpty=true;
-    Swal.fire("Error","unable to get logs","error")
-    this.messageService.add({severity:'success',summary:'Success',detail:'unable to get logs'})
+    //Swal.fire("Error","unable to get logs","error")
+    this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})
     });
   }
 
@@ -175,7 +175,7 @@ export class RpaSoLogsComponent implements OnInit {
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       this.messageService.add({severity:'error',summary:'Error',detail:'unable to get logs'})     
+       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})     
     })
    }
 
@@ -230,7 +230,7 @@ export class RpaSoLogsComponent implements OnInit {
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       this.messageService.add({severity:'error',summary:'Error',detail:'unable to get logs'})     
+       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})     
     })
    }
 
@@ -387,7 +387,7 @@ export class RpaSoLogsComponent implements OnInit {
       this.logsLoading=false;
       
       this.isDataEmpty=true;
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to open loop logs'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to open the loop logs.'})
     })
   }
 
@@ -413,7 +413,7 @@ export class RpaSoLogsComponent implements OnInit {
     },err=>{
       this.logsLoading=false
       this.isDataEmpty==true;
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get automation Logs'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the automation logs.'})
     })
   }
 

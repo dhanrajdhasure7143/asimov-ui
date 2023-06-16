@@ -149,7 +149,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       }
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get toolset'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the toolset.'})
     })
   }
 
@@ -165,7 +165,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
       }
     },err=>{
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load data'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load the data.'})
     })
   }
 
@@ -217,7 +217,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           
           this.spinner.hide();
           if(localStorage.getItem('bot_id')=="null")
-        this.messageService.add({severity:'warn',summary:'Warning',detail:'Selected Bot is already loaded'})
+        this.messageService.add({severity:'warn',summary:'Warning',detail:'The selected bot is already loaded.'})
         }
       }
       else
@@ -416,7 +416,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
     },(err:any)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get predefined bots'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the predefined bots.'})
     })
   }
 
@@ -513,9 +513,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     //   confirmButtonText: 'Yes, change it!'
     // }).then(
     this.confirmationService.confirm({
-      header: 'Are you Sure?',
-      message: 'You want to change version',
-      acceptLabel: 'Yes, change it!',
+      header: 'Are you sure?',
+      message: 'Do you want to change the version?',
+      acceptLabel: 'Yes',
       rejectLabel: 'No',
       rejectButtonStyleClass: ' btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',

@@ -130,19 +130,19 @@ export class RpaEnvironmentFormComponent implements OnInit {
         await this.api.testenvironment(connectionDetails).subscribe(res => {
           this.spinner.hide();
           if (res.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:'Successfully Connected',key:'toast1'});
+            this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'toast1'});
           } else {
-            this.messageService.add({severity:'error',summary:'Error',detail:'Connection Failed',key:'toast1'})
+            this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!',key:'toast1'})
           }
         }, err => {
           this.spinner.hide()
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connections',key:'toast1'})
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connections.',key:'toast1'})
         });
         this.activestatus();
       } else {
         this.spinner.hide()
         // Swal.fire("Alert", "Test connections for key pair authentication is not configured", "warning")
-        this.messageService.add({severity:'warning',summary:'Warning',detail:'Test connections for key pair authentication is not configured'})
+        this.messageService.add({severity:'warning',summary:'Warning',detail:'Test connections for key pair authentication are not configured.'})
       }
     } else {
       this.spinner.hide();
@@ -202,7 +202,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       }
     }, err => {
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add environment'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add environment.'})
       this.submitted = false;
       this.refreshTable.emit(false);
     });
@@ -217,7 +217,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file',key:'toast1'});
+     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file.',key:'toast1'});
     }
   }
 
@@ -260,11 +260,11 @@ export class RpaEnvironmentFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update environment details'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update environment details.'})
       });
     } else {
       this.spinner.hide();
-     this.messageService.add({severity:'warn',summary:'Alert',detail:'Update Environment is not configured for key pair authentication'})
+     this.messageService.add({severity:'warn',summary:'Alert',detail:'Update Environment is not configured for key pair authentication.'})
       this.refreshTable.emit(false);
     }
   }

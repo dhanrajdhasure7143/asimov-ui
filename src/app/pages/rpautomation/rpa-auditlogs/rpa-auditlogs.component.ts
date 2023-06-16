@@ -116,7 +116,7 @@ export class RpaAuditlogsComponent implements OnInit {
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get audit logs'});
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get audit logs.'});
     })
   }
 

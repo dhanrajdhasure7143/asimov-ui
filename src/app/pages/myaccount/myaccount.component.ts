@@ -58,7 +58,7 @@ export class MyaccountComponent implements OnInit {
       (data) => {
         Swal.fire({
           title: "Success",
-          text: "User Details Updated Successfully!!",
+          text: "User details updated successfully!",
           position: "center",
           icon: "success",
           showCancelButton: false,

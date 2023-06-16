@@ -174,7 +174,7 @@ export class RpaCredentialFormComponent implements OnInit {
             this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage});
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save credentials'});
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save credentials.'});
           this.refreshTable.emit(false)
         });
       }
@@ -248,11 +248,11 @@ resetCredForm(){
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update credentials'});
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update credentials.'});
         this.refreshTable.emit(false);
       });
     } else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Please fill all details'});
+      this.messageService.add({severity:'error',summary:'Error',detail:'Please fill in all the details.'});
     }
   }
 

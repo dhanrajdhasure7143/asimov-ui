@@ -432,7 +432,7 @@ export class ProgramDetailsComponent implements OnInit {
       if (this.linked_projects.length == 1) {
         Swal.fire({
           title: 'Error',
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          text: "You have limited access to this product. Please contact the EZFlow support team for more details.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,
@@ -564,7 +564,7 @@ export class ProgramDetailsComponent implements OnInit {
       if (this.linked_projects.length == 1) {
         Swal.fire({
           title: 'Error',
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          text: "You have limited access to this product. Please contact the EZFlow support team for more details.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,

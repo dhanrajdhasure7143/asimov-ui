@@ -98,7 +98,7 @@ export class SoInboxComponent implements OnInit {
         //   showConfirmButton: false,
         //   timer: 2000
         // });
-        this.messageService.add({severity:'success',summary:'Success',detail:'Task Approved Successfully !!'})
+        this.messageService.add({severity:'success',summary:'Success',detail:'Task approved successfully!'})
       }
       if(obj.status == "Rejected"){
         // Swal.fire({
@@ -108,7 +108,7 @@ export class SoInboxComponent implements OnInit {
         //   showConfirmButton: false,
         //   timer: 2000
         // });
-        this.messageService.add({severity:'success',summary:'Success',detail:'Task Rejected Successfully !!'})
+        this.messageService.add({severity:'success',summary:'Success',detail:'Task rejected successfully!'})
 
       }
         /* let res:any= data;
