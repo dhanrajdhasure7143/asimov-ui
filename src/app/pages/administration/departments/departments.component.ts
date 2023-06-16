@@ -148,15 +148,9 @@ export class DepartmentsComponent implements OnInit {
         //     heightAuto: false,
         //     confirmButtonText: 'Ok'
         // })
-        this.confirmationService.confirm({
-          header:'Success',
-          message:"Department deleted successfully!",
-          acceptLabel:'OK',
-          rejectVisible:false,
-          acceptIcon:'null',
-          acceptButtonStyleClass:'btn bluebg-button',
-          defaultFocus:'none',
-        })
+        this.messageService.add({
+          severity: 'success', summary: 'Success', detail: "Department deleted successfully!"
+        });
           this.getAllDepartments();
         } else {
           // Swal.fire("Error", value.message, "error");
@@ -236,21 +230,15 @@ export class DepartmentsComponent implements OnInit {
       //     heightAuto: false,
       //     confirmButtonText: 'Ok'
       // })
-      this.confirmationService.confirm({
-        header:'Success',
-        message:"Department created successfully!",
-        acceptLabel:'OK',
-        rejectVisible:false,
-        acceptIcon:'null',
-        acceptButtonStyleClass:'btn bluebg-button',
-        defaultFocus:'none',
-      })
+      this.messageService.add({
+        severity: 'success', summary: 'Success', detail: "Department created successfully!"
+      });
       this.hiddenPopUp = false;
       this.createDepartmentForm.reset();
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
         // Swal.fire("Error","Department already exists..","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists.'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists!'})
       } else {
         // Swal.fire("Error",resp.message,"error");
         this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
@@ -292,20 +280,14 @@ export class DepartmentsComponent implements OnInit {
       //     heightAuto: false,
       //     confirmButtonText: 'Ok'
       // })
-      this.confirmationService.confirm({
-        header:'Success',
-        message:"Department updated successfully!",
-        acceptLabel:'OK',
-        rejectVisible:false,
-        acceptIcon:'null',
-        acceptButtonStyleClass:'btn bluebg-button',
-        defaultFocus:'none',
-      })
+      this.messageService.add({
+        severity: 'success', summary: 'Success', detail: "Department updated successfully!"
+      });
       this.hiddenPopUp = false;
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
         // Swal.fire("Error","Department already exists.","error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists.'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists!'})
 
       } else {
         // Swal.fire("Error",resp.message,"error");

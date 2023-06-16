@@ -302,15 +302,9 @@ export class UsersComponent implements OnInit {
         //   heightAuto: false,
         //   confirmButtonText: "Ok",
         // });
-        this.confirmationService.confirm({
-          header:'Success',
-          message:'User details updated successfully!',
-          acceptLabel:'Ok',
-          rejectVisible:false,
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          acceptIcon: 'null',
-        })
+        this.messageService.add({
+          severity: 'success', summary: 'Success', detail: "User details updated successfully!"
+        });
         this.hideInvitePopUp = false;
         this.getUsers();
       } else {
@@ -415,17 +409,13 @@ export class UsersComponent implements OnInit {
               //   heightAuto: false,
               //   confirmButtonText: "Ok",
               // });
-              this.confirmationService.confirm({
-                header:'Success',
-                message:'User invited successfully!',
-                acceptIcon:'null',
-                acceptLabel:'Ok',
-                rejectVisible:false,
-                acceptButtonStyleClass: 'btn bluebg-button',
-                defaultFocus:'none',
-              })
+              this.messageService.add({
+                severity: 'success', summary: 'Success', detail: "User invited successfully!"
+              });
               this.getUsers();
+              this.loader.hide();
             this.hideInvitePopUp= false;
+
             } else {
               // Swal.fire(
               //   "Error",
