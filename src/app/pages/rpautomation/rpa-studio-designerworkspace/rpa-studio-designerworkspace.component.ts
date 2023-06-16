@@ -38,6 +38,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -50,6 +51,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("toolsetItems") public toolset: any[];
   @Input("environmentsList") public environmentsList: any[];
   @Input("categoriesList") public categoriesList: any[];
+  @Input("idBot") public idBot: number;
   @Output("onCreateBotDetails") public onCreateBotDetails: EventEmitter<any> =
     new EventEmitter();
   @ViewChild("logspopup") public logsOverlayRef: any;
@@ -172,7 +174,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private changesDecorator: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private messageService: MessageService
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -2723,23 +2726,58 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       Swal.fire("Warning", "Please check connections", "warning");
       return;
     }
-    if(this.isBotCompiled) {
-      this.spinner.show();
-      this.rest.execution(this.finalbot.botId).subscribe(
-        (response: any) => {
-          this.spinner.hide();
-          if (response.errorMessage == undefined)
-            Swal.fire("Success", response.status, "success");
-          else Swal.fire("Error", response.errorMessage, "error");
-        },
-        (err) => {
-          this.spinner.hide();
-          Swal.fire("Error", "Unable to execute bot", "error");
+    this.rest.getbotdata(this.idBot).subscribe((response: any) => {
+    for(let i = 0; i < 100; i++){
+      if(response.tasks[i].isModified == true){
+        // Swal.fire("Warning", "Deplicated action in the  Bot, update action and run", "warning");
+        this.messageService.add({
+          severity:'warn',
+          summary:'Warning',
+          detail:'Deprecated action in the Bot,Please update action and run'
+        });
+      } else {
+        if(this.isBotCompiled) {
+          this.spinner.show();
+          this.rest.execution(this.finalbot.botId).subscribe(
+            (response: any) => {
+              this.spinner.hide();
+              if (response.errorMessage == undefined)
+                // Swal.fire("Success", response.status, "success");
+                this.messageService.add({
+                  severity: "success",
+                  summary: "Success",
+                  detail: response.status
+                })
+              else 
+              // Swal.fire("Error", response.errorMessage, "error");
+              this.messageService.add({
+                severity: "error",
+                summary: "Error",
+                detail: response.errorMessage,
+              });
+            },
+            (err) => {
+              this.spinner.hide();
+              // Swal.fire("Error", "Unable to execute bot", "error");
+              this.messageService.add({
+                severity: "error",
+                summary: "Error",
+                detail: 'Unable to execute bot',
+              });
+            }
+          );
+        } else {
+          // Swal.fire("Error", "Unable to execute bot", "error");
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: 'Unable to execute bot',
+          });
         }
-      );
-    } else {
-      Swal.fire("Error", "Unable to execute bot", "error");
+      }
     }
+    return;
+    })
   }
 
   getAllVersions() {
