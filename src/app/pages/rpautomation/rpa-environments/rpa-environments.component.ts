@@ -5,6 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { MessageService,ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-environments',
@@ -44,7 +45,10 @@ export class RpaenvironmentsComponent implements OnInit {
 
   constructor(private rest_api: RestApiService,
     private spinner: LoaderService,
-    private columnList: columnList) {
+    private columnList: columnList,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
+    ) {
     this.updateflag = false;
     this.deleteflag = false;
   }
@@ -128,7 +132,7 @@ export class RpaenvironmentsComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-      Swal.fire("Error", "Unable to download .ppk file", "error")
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file'})
     }
   }
 
@@ -184,30 +188,42 @@ export class RpaenvironmentsComponent implements OnInit {
     // const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
     const selectedEnvironments = this.selected_list.map(p => p.environmentId);
     if (selectedEnvironments.length != 0) {
-      Swal.fire({
-        title: 'Are you Sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.value) {
+      // Swal.fire({
+      //   title: 'Are you Sure?',
+      //   text: "You won't be able to revert this!",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   customClass: {
+      //     confirmButton: 'btn bluebg-button',
+      //     cancelButton:  'btn new-cancelbtn',
+      //   },
+      //   confirmButtonText: 'Yes, delete it!'
+      // }).then((result)=>{
+// if(result.value){}
+      // }
+      this.confirmationService.confirm({
+        header: 'Are you Sure?',
+        message: "You wan't be able to revert this!",
+       acceptLabel:'Yes, delete it!',
+       rejectLabel:'No',
+       rejectButtonStyleClass: ' btn reset-btn',
+       acceptButtonStyleClass: 'btn bluebg-button',
+       defaultFocus: 'none',
+       rejectIcon: 'null',
+       acceptIcon: 'null',
+        accept: () => {
           this.spinner.show();
           this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
             this.spinner.hide();
             if (res.errorMessage == undefined) {
-              Swal.fire("Success", res.status, "success")
+              this.messageService.add({severity:'success',summary:'Success',detail:res.status})
               this.getallData();
             } else {
-              Swal.fire("Error", res.errorMessage, "error")
+              this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
             }
           }, err => {
             this.spinner.hide();
-            Swal.fire("Error", "Unable to delete environment", "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete environment'})
           })
         }
       })
@@ -226,13 +242,13 @@ export class RpaenvironmentsComponent implements OnInit {
         let data: any = res
         this.spinner.hide();
         if (data[0].errorMessage == undefined) {
-          Swal.fire("Success", data[0].status, "success")
+          this.messageService.add({severity:'success',summary:'Success',detail:data[0].status})
         } else {
-          Swal.fire("Error", data[0].errorMessage, "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:data[0].errorMessage})
         }
         this.getallData();
       }, err => {
-        Swal.fire("Success", "Agent Deployed Successfully !!", "success");
+        this.messageService.add({severity:'success',summary:'Success',detail:'Agent Deployed Successfully !!'})
         this.getallData();
         this.spinner.hide();
       })
@@ -279,30 +295,40 @@ export class RpaenvironmentsComponent implements OnInit {
 
   deletebyId(data){
     const selectedEnvironments=[data.environmentId];
-      Swal.fire({
-        title: 'Are you Sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.value) {
+      // Swal.fire({
+      //   title: 'Are you Sure?',
+      //   text: "You won't be able to revert this!",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   customClass: {
+      //     confirmButton: 'btn bluebg-button',
+      //     cancelButton:  'btn new-cancelbtn',
+      //   },
+      //   confirmButtonText: 'Yes, delete it!'
+      // }).then(
+        this.confirmationService.confirm({
+        header:'Are you Sure?',
+        message:"You won't be able to revert this!",
+       acceptLabel:'Yes, delete it!',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+       accept:() => {
           this.spinner.show();
           this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
             this.spinner.hide();
             if (res.errorMessage == undefined) {
-              Swal.fire("Success", res.status, "success")
+              this.messageService.add({severity:'success',summary:'Success',detail:res.status})
               this.getallData();
             } else {
-              Swal.fire("Error", res.errorMessage, "error")
+              this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
             }
           }, err => {
             this.spinner.hide();
-            Swal.fire("Error", "Unable to delete environment", "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete environment'})
           })
         }
       })

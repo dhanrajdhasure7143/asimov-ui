@@ -13,6 +13,7 @@ import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
+import {ConfirmationService, MessageService } from "primeng/api";
 declare var $: any;
 
 @Component({
@@ -123,8 +124,10 @@ export class RpaHomeComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private spinner: LoaderService,
-    @Inject(APP_CONFIG) private appconfig,
-    private dt : DataTransferService
+   @Inject(APP_CONFIG) private appconfig,
+    private dt : DataTransferService,
+    private confirmationService:ConfirmationService,
+    private messageService:MessageService
   ) { }
 
   @Input() get selectedColumns(): any[] {
@@ -140,20 +143,29 @@ export class RpaHomeComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     if (this.freetrail == 'true') {
       if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
-        Swal.fire({
-          title: 'Error',
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: 'center',
-          icon: 'error',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-	
-          heightAuto: false,
-          confirmButtonText: 'Ok'
-        })
+        // Swal.fire({
+        //   title: 'Error',
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: 'center',
+        //   icon: 'error',
+        //   showCancelButton: false,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton:  'btn new-cancelbtn',
+        //   },
+	        //   heightAuto: false,
+        //   confirmButtonText: 'Ok'
+        // })
+        this.confirmationService.confirm({
+          message: 'You have limited access to this product. Please contact EZFlow support team for more details.',
+          header: 'Error',
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {},
+        });
       }
       else {
         this.importfile = "";
@@ -202,29 +214,40 @@ export class RpaHomeComponent implements OnInit {
   }
 
   botdelete(bot) {
-    Swal.fire({
-      title: 'Are you Sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Are you Sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.value) {
+    this.confirmationService.confirm({
+      header: 'Are you Sure?',
+      message: "You won't be able to revert this!",
+      acceptLabel:'Yes, delete it!',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
         let response;
         this.spinner.show()
         this.rest.getDeleteBot(bot.botId).subscribe(data => {
           response = data;
           if (response.status != undefined) {
             this.spinner.hide()
-            Swal.fire("Success", response.status, "success");
             this.getallbots();
+            this.messageService.add({ severity: "success",summary: "Success",detail: response.status});   
           } else {
-            this.spinner.hide()
-            Swal.fire("Error", response.errorMessage, "error");
+            this.spinner.hide();
+            this.messageService.add({ severity: 'error', summary: 'Error',detail: response.errorMessage});
           }
         })
         setTimeout(() => {
@@ -335,16 +358,16 @@ export class RpaHomeComponent implements OnInit {
             }
             else {
               this.spinner.hide();
-              Swal.fire("Error", res.errorMessage, "error");
+              this.messageService.add({severity:'error', summary: 'Error', detail:res.errorMessage});
             }
           }, err => {
             this.spinner.hide();
-            Swal.fire("Error", catResponse.errorMessage, "error");
+            this.messageService.add({severity:'error', summary: 'Error', detail:catResponse.errorMessage});
           });
           // let botId=Base64.encode(JSON.stringify(createBotFormValue));
         }
         else {
-          Swal.fire("Error", catResponse.errorMessage, "error");
+          this.messageService.add({severity:'error', summary: 'Error', detail:catResponse.errorMessage});
         }
 
       });
@@ -359,11 +382,11 @@ export class RpaHomeComponent implements OnInit {
         }
         else {
           this.spinner.hide();
-          Swal.fire("Error", res.errorMessage, "error");
+         this.messageService.add({severity:'error', summary: 'Error', detail:res.errorMessage});
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "error");
+        this.messageService.add({severity:'error', summary: 'Error', detail:'Error'});
       })
     }
     this.insertbot.reset();
@@ -406,11 +429,12 @@ export class RpaHomeComponent implements OnInit {
         this.importenv = "";
         this.importfile = "";
         if (response.errorMessage == undefined) {
-          Swal.fire("Success", response.status, "success");
+          // Swal.fire("Success", response.status, "success");
+          this.messageService.add({severity:'success', summary: 'Success', detail:response.status});
           this.getallbots();
         }
         else
-          Swal.fire("Error", response.errorMessage, "error");
+          this.messageService.add({severity:'error', summary: 'Error', detail:response.errorMessage});
         this.modalRef.hide()
         this.getallbots();
       })
@@ -452,7 +476,7 @@ export class RpaHomeComponent implements OnInit {
       downloadLink.target = '_self';
       downloadLink.download = bot.botName + "-V" + bot.version + ".sql";
       downloadLink.click();
-      Swal.fire("Success", "Bot Exported Successfully", "success");
+      this.messageService.add({severity:'success', summary: 'Success', detail:'Bot Exported Successfully'});
     })
   }
 
@@ -669,16 +693,19 @@ importBot()
       this.importBotJson["department"]=response.department;
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
         this.spinner.hide();
-        Swal.fire("Success","Bot imported successfully","success");
+        // Swal.fire("Success","Bot imported successfully","success");
+        this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully"});
         this.getallbots();
       },err=>{
         this.spinner.hide();
-        Swal.fire("Error","Unable to bot task configurations","error");
+        // Swal.fire("Error","Unable to bot task configurations","error");
+        this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to bot task configurations'});
       })
     }
   },err=>{
     this.spinner.hide();
-    Swal.fire("Error","Unable to import bot","error");
+    // Swal.fire("Error","Unable to import bot","error");
+    this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import bot'});
   })
 }
 

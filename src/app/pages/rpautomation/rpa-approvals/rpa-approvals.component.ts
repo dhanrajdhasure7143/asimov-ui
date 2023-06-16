@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { DataTransferService } from "../../services/data-transfer.service";
 import { LoaderService } from 'src/app/services/loader/loader.service';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-approvals',
   templateUrl: './rpa-approvals.component.html',
@@ -29,6 +29,7 @@ export class RpaApprovalsComponent implements OnInit {
     private columnList: columnList,
     private dt:DataTransferService,
     private spinner: LoaderService,
+    private messageService :MessageService
     ) { }
 
 
@@ -74,7 +75,7 @@ export class RpaApprovalsComponent implements OnInit {
     },err=>{
       console.log(err);
       this.spinner.hide();
-      Swal.fire("Error", "Unable to get approvals list", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get approvals list'})
     })
   }
 
@@ -83,12 +84,12 @@ export class RpaApprovalsComponent implements OnInit {
     
     if(data.status==status)
     {
-      Swal.fire("Warning","This is already "+status, "warning")
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'This is already'+status})
       return;
     }
     if(data.status=="Completed")
     {
-      Swal.fire("Warning","Status updation not allowed for completed approvals", "warning")
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status updation not allowed for completed approvals'})
       return;
     }
     this.statusType=status;
@@ -118,13 +119,13 @@ export class RpaApprovalsComponent implements OnInit {
     });
     this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
-      Swal.fire("Success", response.status, "success");
+      this.messageService.add({severity:'success',summary:'Success',detail:response.status})
       this.selectedRows=[];
       this.comments="";
       this.getApprovalList();
     }, err=>{
       console.log(err);
-      Swal.fire("Error", "Unable to update approval", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update approval'})
       this.spinner.hide();
     })
   }
@@ -138,11 +139,11 @@ export class RpaApprovalsComponent implements OnInit {
     
     if(this.selectedRows.filter((item:any)=>item.status==statusType).length>0)
     {
-      Swal.fire("Warning","In Selected approvals "+this.selectedRows.filter((item:any)=>item.status==statusType).length+" records are already "+statusType, "warning")
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'In Selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType})
       return;
     }
     if(this.selectedRows.filter((item:any)=>item.status=='Completed').length>0){
-      Swal.fire("Warning", "Status will not update for completed approvals","warning");
+      this.messageService.add({severity:'warning',summary:'Warning',detail:'Status will not update for completed approvals'})
     }
     else
     {

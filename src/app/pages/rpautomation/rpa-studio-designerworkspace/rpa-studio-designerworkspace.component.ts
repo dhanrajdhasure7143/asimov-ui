@@ -38,6 +38,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
+import { MessageService,ConfirmationService } from "primeng/api";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -172,7 +173,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private changesDecorator: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -312,11 +315,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (item: any) => item.id == connection.targetId
         );
         if (connectionNodeForTarget.selectedNodeTask == "If condition") {
-          Swal.fire(
-            "Alert",
-            "Start Node Should not connect directly to if condition",
-            "warning"
-          );
+          this.messageService.add({severity:'warning',summary:'Alert',detail:'Start Node Should not connect directly to if condition'})
           setTimeout(() => {
             this.changesDecorator.detectChanges();
             this.jsPlumbInstance.deleteConnection(connection);
@@ -334,18 +333,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           source_length < 3 &&
           this.loadflag
         ) {
-          Swal.fire({
-            title: "Select True/False case",
-            icon: "warning",
-            showCancelButton: true,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton: 'btn new-cancelbtn',
-              },
-            cancelButtonText: "False",
-            confirmButtonText: "True",
-          }).then((result) => {
-            if (result.value) {
+          // Swal.fire({
+          //   title: "Select True/False case",
+          //   icon: "warning",
+          //   showCancelButton: true,
+          //   customClass: {
+          //     confirmButton: 'btn bluebg-button',
+          //     cancelButton: 'btn new-cancelbtn',
+          //     },
+          //   cancelButtonText: "False",
+          //   confirmButtonText: "True",
+          // }).then(
+            this.confirmationService.confirm({
+              header:'Select True/False case',
+              icon:'warning',
+              acceptLabel:'True',
+              rejectLabel:'False',
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
+          accept:() => {
               connection.addOverlay([
                 "Label",
                 {
@@ -372,7 +379,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   .attributes.find(
                     (attrs) => attrs.metaAttrValue == "if"
                   ).attrValue = connected_node_id;
-              }
+              
             } else {
               connection.addOverlay([
                 "Label",
@@ -400,7 +407,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   ).attrValue = connected_node_id;
               }
             }
-          });
+          }
+        })
         }
 
 
@@ -410,18 +418,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         source_length < 3 &&
         this.loadflag
       ) {
-        Swal.fire({
-          title: "Select True/False case",
-          icon: "warning",
-          showCancelButton: true,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton: 'btn new-cancelbtn',
-            },
-          cancelButtonText: "False",
-          confirmButtonText: "True",
-        }).then((result) => {
-          if (result.value) {
+        // Swal.fire({
+        //   title: "Select True/False case",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton: 'btn new-cancelbtn',
+        //     },
+        //   cancelButtonText: "False",
+        //   confirmButtonText: "True",
+        // }).then(
+        this.confirmationService.confirm({
+          header: 'Select True/False case',
+          icon: 'warning',
+          acceptLabel:'True',
+          rejectLabel:'False',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {
             connection.addOverlay([
               "Label",
               {
@@ -448,7 +464,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 .attributes.find(
                   (attrs) => attrs.metaAttrValue == "true"
                 ).attrValue = connected_node.id;
-            }
           } else {
             connection.addOverlay([
               "Label",
@@ -476,7 +491,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 ).attrValue = connected_node.id;
             }
           }
-        });
+        }
+      })
       }   
       } else {
         let connectionNodeForSource = this.nodes.find(
@@ -484,11 +500,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         );
         if (connectionNodeForSource != undefined) {
           if (connectionNodeForSource.selectedNodeTask == "If condition") {
-            Swal.fire(
-              "Alert",
-              "Please do config before adding connections for if condition",
-              "warning"
-            );
+       
+            this.messageService.add({severity:'warn',summary:'Warning',detail:'Please do config before adding connections for if condition'})
             setTimeout(() => {
               this.changesDecorator.detectChanges();
               this.jsPlumbInstance.deleteConnection(connection);
@@ -973,18 +986,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deletenode(node) {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(
+      this.confirmationService.confirm({
+        header:'Are you Sure?',
+        message:"You won't be able to revert this!",
+        acceptLabel:'Yes, delete it!',
+        rejectLabel:'Cancel',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+      accept:() => {
         this.nodes.splice(this.nodes.indexOf(node), 1);
         this.jsPlumbInstance.remove(node.id);
         let nodeId = node.name + "__" + node.id;
@@ -993,7 +1016,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
         }
       }
-    });
+  })
     this.validateBotNodes();
   }
 
@@ -1145,7 +1168,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
-            Swal.fire("Error","Failed to get configuration form","error");
+            // Swal.fire("Error","Failed to get configuration form","error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get configuration form,"error'})
             return;
           }
           this.multiformdata = data;
@@ -1173,7 +1197,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         });
       }
     } else {
-      Swal.fire("Please select task", "", "warning");
+      this.messageService.add({severity:'warn',summary:'warnibg',detail:'Please select task'})
     }
   }
 
@@ -1720,24 +1744,37 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   resetDesigner() {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, reset designer!",
-    }).then((result: any) => {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, reset designer!",
+    // }).then(
+      this.confirmationService.confirm({
+        header:'Are you Sure?',
+        message:"You won't be able to revert this!",
+        icon:'warning',
+        acceptLabel:'Yes, reset designer!',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+       accept:(result: any) => {
       if (result.value) {
         this.jsPlumbInstance.deleteEveryEndpoint();
         this.nodes = [];
         this.finaldataobjects = [];
         this.groupsData = [];
       }
-    });
+    }
+  })
   }
 
   checkBotDetails(versionType, comments, botDetails) {
@@ -1788,7 +1825,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to create bot", "error");
+        // Swal.fire("Error", "Unable to create bot", "error");
+        this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create bot'})
       }
     );
   }
@@ -1907,7 +1945,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
-        Swal.fire("Warning", "Please check connections", "warning");
+        // Swal.fire("Warning", "Please check connections", "warning");
+        this.messageService.add({ severity:'error',summary:'Error',detail:'Please check connections'})
+
       } else {
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         this.assignTaskConfiguration();
@@ -1930,7 +1970,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 ),
               ];
               this.actualEnv = [...response.envIds];
-              Swal.fire("Success", "Bot updated successfully", "success");
+              // Swal.fire("Success", "Bot updated successfully", "success");
+              // this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated Successfully"'})
+              this.confirmationService.confirm({
+           
+                message:'Bot updated Successfully !!',
+                acceptLabel:'Ok',
+                rejectVisible:false,
+                acceptButtonStyleClass: 'btn bluebg-button',
+                defaultFocus: 'none',
+                acceptIcon: 'null',
+              })
               this.uploadfile(response.envIds, response.tasks);
               let auditLogsList = [
                 ...this.auditLogs.map((item) => {
@@ -1965,21 +2015,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                       "Audit logs updated successfully"
                     );
                   } else {
-                    Swal.fire("Error", response.errorMessage, "error");
+                    // Swal.fire("Error", response.errorMessage, "error");
+                    this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
                   }
                 },
                 (err) => {
-                  Swal.fire("Error", "Unable to update audit logs", "error");
+                  // Swal.fire("Error", "Unable to update audit logs", "error");
+                  this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update audit logs'})
+
                 }
               );
             } else {
               this.spinner.hide();
-              Swal.fire("Error", response.errorMesssage, "error");
+              // Swal.fire("Error", response.errorMesssage, "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMesssage})
             }
           },
           (err) => {
             this.spinner.hide();
-            Swal.fire("Error", "Unable to update bot", "error");
+            // Swal.fire("Error", "Unable to update bot", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot'})
+
           }
         );
         //return false;
@@ -2217,9 +2273,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      Swal.fire("Designer Disabled Now", "", "warning");
+      // Swal.fire("Designer Disabled Now", "", "warning");
+      this.messageService.add({severity:'warn',summary:'Warning',detail:'Designer Disabled Now'})
+
     } else {
-      Swal.fire("Designer Enabled Now", "", "success");
+      // Swal.fire("Designer Enabled Now", "", "success");
+      this.messageService.add({severity:'Success',summary:'Success',detail:'Designer Enabled Now'})
+
     }
   }
 
@@ -2588,13 +2648,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.rest.save_credentials(Credentials).subscribe((res) => {
         let status: any = res;
         this.spinner.hide();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: status.status,
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        // Swal.fire({
+        //   position: "center",
+        //   icon: "success",
+        //   title: status.status,
+        //   showConfirmButton: false,
+        //   timer: 2000,
+        // });
+        this.messageService.add({severity:'success',summary:'Success',detail:status.status})
         this.getTaskForm(this.nodedata);
         // this.modalRef.hide();
         document.getElementById("createcredentials").style.display = "none";
@@ -2729,16 +2790,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         (response: any) => {
           this.spinner.hide();
           if (response.errorMessage == undefined)
-            Swal.fire("Success", response.status, "success");
-          else Swal.fire("Error", response.errorMessage, "error");
+            // Swal.fire("Success", response.status, "success");
+      this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+
+          else
+          //  Swal.fire("Error", response.errorMessage, "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
         },
         (err) => {
           this.spinner.hide();
-          Swal.fire("Error", "Unable to execute bot", "error");
+          // Swal.fire("Error", "Unable to execute bot", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to excute bot'})
+
+
         }
       );
     } else {
-      Swal.fire("Error", "Unable to execute bot", "error");
+      // Swal.fire("Error", "Unable to execute bot", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to excute bot'})
+
     }
   }
 
@@ -2751,11 +2822,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           );
           this.VersionsList = [...sortedversions.reverse()];
         } else {
-          Swal.fire("Error", response.errorMessage, "error");
+          // Swal.fire("Error", response.errorMessage, "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
         }
       },
       (err) => {
-        Swal.fire("Error", "Unable to get versions", "error");
+        // Swal.fire("Error", "Unable to get versions", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get versions'});
+
       }
     );
   }
@@ -2792,37 +2867,54 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deleteBot() {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(
+    this.confirmationService.confirm({
+      header: 'Are you Sure?',
+      message: "You won't be able to revert this!",
+      icon: 'warning',
+      acceptLabel:'Yes, delete it!',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept:() => {
+      
         this.spinner.show();
         this.rest.getDeleteBot(this.finalbot.botId).subscribe(
           (data) => {
             let response: any = data;
             this.spinner.hide();
             if (response.status != undefined) {
-              Swal.fire("Success", response.status, "success");
+              // Swal.fire("Success", response.status, "success");
+              this.messageService.add({severity:'success',summary:'Success',detail:response.status})
               $("#close_bot_" + this.finalbot.botName).click();
             } else {
-              Swal.fire("Error", response.errorMessage, "error");
+              // Swal.fire("Error", response.errorMessage, "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
             }
           },
           (err) => {
             this.spinner.hide();
-            Swal.fire("Error", "Unable to delete bot", "error");
+            // Swal.fire("Error", "Unable to delete bot", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete bot'})
+
           }
         );
       }
-    });
+  })
   }
 
   loadPredefinedBot(botId, dropCoordinates) {
@@ -2868,7 +2960,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.addconnections(response.sequences);
         this.spinner.hide();
       } else {
-        Swal.fire("Error", response.errorMessage, "error");
+        // Swal.fire("Error", response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
       }
     });
   }

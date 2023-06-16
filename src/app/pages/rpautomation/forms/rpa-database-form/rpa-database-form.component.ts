@@ -5,8 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import Swal from 'sweetalert2';
 import { Rpa_Hints } from '../../model/RPA-Hints';
+import { MessageService,ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-rpa-database-form',
@@ -51,7 +51,10 @@ export class RpaDatabaseFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private dt:DataTransferService,
-    private spinner: LoaderService) {
+    private spinner: LoaderService,
+    private messageService:MessageService,
+    private  confirmationservice:ConfirmationService
+    ) {
 
       this.dbForm=this.formBuilder.group({
         connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -161,13 +164,13 @@ export class RpaDatabaseFormComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          Swal.fire("Success", "Successfully Connected", "success")
+          this.messageService.add({severity:'success',summary:'Success',detail:'Successfully Connected',key:'datamessage'})
         } else {
-          Swal.fire("Error", "Connection Failed", "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:'Connection Failed',key:'datamessage'})
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to test connection details", "error")
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details',key:'datamessage'})
       });
       this.activestatus();
     }
@@ -208,7 +211,7 @@ export class RpaDatabaseFormComponent implements OnInit {
           this.spinner.hide();
           this.refreshData.emit(true)
           if (status.errorMessage == undefined) {
-            Swal.fire("Success", status.status, "success")
+            this.messageService.add({severity:'success',summary:'Success',detail:status.status,key:'datamessage'});
             document.getElementById('createdbconnection').style.display = "none";
             this.resetDBForm();
             this.closeOverlay.emit(false)
@@ -216,12 +219,12 @@ export class RpaDatabaseFormComponent implements OnInit {
             this.dbForm.get("activeStatus").setValue(true);
           } else {
             this.submitted = false
-            Swal.fire("Error", status.errorMessage, "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage,key:'datamessage'})
           }
         }, err => {
           this.spinner.hide();
           this.submitted = false;
-          Swal.fire("Error", "Unable to save database connections", "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connections',key:'datamessage'})
         });
       } else {
         this.activestatus();
@@ -256,16 +259,16 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.spinner.hide();
         this.refreshData.emit(true)
         if (status.errorMessage == undefined) {
-          Swal.fire("Success", status.status, "success")
+          this.messageService.add({severity:'success',summary:'Success',detail:status.status});
           // document.getElementById('Updatedbconnection').style.display = 'none';
           document.getElementById('createdbconnection').style.display = "none";
           this.closeOverlay.emit(false);
         } else {
-          Swal.fire("Error", status.errorMessage, "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to update database connection details", "error")
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details'})
       });
     }
   }

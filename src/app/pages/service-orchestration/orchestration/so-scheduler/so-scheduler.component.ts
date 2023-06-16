@@ -6,6 +6,7 @@ import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {MessageService} from'primeng/api'
 @Component({
   selector: 'app-so-scheduler',
   templateUrl: './so-scheduler.component.html',
@@ -83,7 +84,7 @@ export class SoSchedulerComponent implements OnInit {
   start_time:any;
   end_time:any;
   constructor(private rest:RestApiService, private notifier: NotifierService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:NgxSpinnerService,private messageService:MessageService) { }
   mindate= moment().format("YYYY-MM-DD");
   
   ngOnInit() {
@@ -465,12 +466,15 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+          // Swal.fire(resp.errorMessage,"","warning");
+          this.messageService.add({severity:'warning',summary:'Warning',detail:resp.errorMessage})
           
         }
         else
         {
-          Swal.fire(resp.status,"","success")
+          // Swal.fire(resp.status,"","success")
+          this.messageService.add({severity:'success',summary:'Success',detail:resp.status})
+
           this.schedule_list.find(data=>data.check==true).run_status="not_started";
           this.updateflags();
         }

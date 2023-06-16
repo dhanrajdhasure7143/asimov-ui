@@ -9,6 +9,7 @@ import { columnList } from "src/app/shared/model/table_columns";
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { TitleCasePipe } from "@angular/common";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
+import { MessageService,ConfirmationService } from "primeng/api";
 
 @Component({
   selector: "app-users",
@@ -49,7 +50,9 @@ export class UsersComponent implements OnInit {
     private loader: LoaderService,
     private columnList: columnList,
     private titlecasePipe:TitleCasePipe,
-    private dataTransfer: DataTransferService
+    private dataTransfer: DataTransferService,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -105,45 +108,68 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(data) {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      heightAuto: false,
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   heightAuto: false,
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then((result) => {
+    //   if (result.value) {
+      this.confirmationService.confirm({
+        header:'Are you Sure?',
+        message:"You won't be able to revert this!",
+        icon: "warning",
+        acceptLabel:'Yes, delete it!',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+         accept:()=>{
         this.loader.show();
         this.rest_api.deleteSelectedUser(data.email).subscribe(
           (resp) => {
             let value: any = resp;
             if (value.message === "User Deleted Successfully") {
               this.getUsers();
-              Swal.fire({
-                title: "Success",
-                text: "User Deleted Successfully!!",
-                position: "center",
-                icon: "success",
-                showCancelButton: false,
-                customClass: {
-                  confirmButton: 'btn bluebg-button',
-                  cancelButton:  'btn new-cancelbtn',
-                },
-                heightAuto: false,
-                confirmButtonText: "Ok",
-              });
+              // Swal.fire({
+              //   title: "Success",
+              //   text: "User Deleted Successfully!!",
+              //   position: "center",
+              //   icon: "success",
+              //   showCancelButton: false,
+              //   customClass: {
+              //     confirmButton: 'btn bluebg-button',
+              //     cancelButton:  'btn new-cancelbtn',
+              //   },
+              //   heightAuto: false,
+              //   confirmButtonText: "Ok",
+              // });
+              this.confirmationService.confirm({
+                header:'Success',
+                message:'User Deleted Successfully!!',
+                acceptLabel:'OK',
+                rejectVisible:false,
+                acceptIcon:'null',
+                acceptButtonStyleClass: 'btn bluebg-button',
+                defaultFocus:'none'
+              })
             } else {
-              Swal.fire("Error", "Failed to delete user", "error");
+              // Swal.fire("Error", "Failed to delete user", "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete user'})
               this.loader.hide();
             }
           },
           (err) => {
-            Swal.fire("Error", "Failed to delete user", "error");
+            // Swal.fire("Error", "Failed to delete user", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete user'})
             this.loader.hide();
           }
         );
@@ -154,19 +180,28 @@ export class UsersComponent implements OnInit {
   openInviteUserOverlay(){
     if (this.freetrail == "true") {
       if (this.users.length == this.config.inviteUserfreetraillimit) {
-        Swal.fire({
-          title: "Error",
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: "center",
-          icon: "error",
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-          heightAuto: false,
-          confirmButtonText: "Ok",
-        });
+        // Swal.fire({
+        //   title: "Error",
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: "center",
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton:  'btn new-cancelbtn',
+        //   },
+        //   heightAuto: false,
+        //   confirmButtonText: "Ok",
+        // });
+        this.confirmationService.confirm({
+          header: 'Error',
+          message: 'You have limited access to this product. Please contact EZFlow support team for more details.',
+          acceptLabel: 'Ok',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          rejectVisible: false,
+          defaultFocus: 'none',
+          acceptIcon: 'null'
+      })
       } else {
         this.router.navigate(["/pages/admin/invite-user"]);
       }
@@ -261,24 +296,35 @@ export class UsersComponent implements OnInit {
     this.loader.show();
     this.rest_api.updateUserRoleDepartment(body).subscribe((resp) => {
       if (resp.message ==="Successfuly updated role of an user for particular application") {
-        Swal.fire({
-          title: "Success",
-          text: "User details updated Successfully !!",
-          position: "center",
-          icon: "success",
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-          heightAuto: false,
-          confirmButtonText: "Ok",
-        });
+        // Swal.fire({
+        //   title: "Success",
+        //   text: "User details updated Successfully !!",
+        //   position: "center",
+        //   icon: "success",
+        //   showCancelButton: false,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton:  'btn new-cancelbtn',
+        //   },
+        //   heightAuto: false,
+        //   confirmButtonText: "Ok",
+        // });
+        this.confirmationService.confirm({
+          header:'Success',
+          message:'User details updated Successfully !!',
+          acceptLabel:'Ok',
+          rejectVisible:false,
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+        })
         this.hideInvitePopUp = false;
         this.getUsers();
       } else {
         this.loader.hide();
-        Swal.fire("Error", resp.message, "error");
+        // Swal.fire("Error", resp.message, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
+
       }
     });
   }
@@ -363,37 +409,49 @@ export class UsersComponent implements OnInit {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
           this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
             if (resp.message === "User invited Successfully !!") {
-              Swal.fire({
-                title: "Success",
-                text: "User Invited Successfully !!",
-                position: "center",
-                icon: "success",
-                showCancelButton: false,
-                customClass: {
-                  confirmButton: 'btn bluebg-button',
-                  cancelButton:  'btn new-cancelbtn',
-                },
-                heightAuto: false,
-                confirmButtonText: "Ok",
-              });
+              // Swal.fire({
+              //   title: "Success",
+              //   text: "User Invited Successfully !!",
+              //   position: "center",
+              //   icon: "success",
+              //   showCancelButton: false,
+              //   customClass: {
+              //     confirmButton: 'btn bluebg-button',
+              //     cancelButton:  'btn new-cancelbtn',
+              //   },
+              //   heightAuto: false,
+              //   confirmButtonText: "Ok",
+              // });
+              this.confirmationService.confirm({
+                header:'Success',
+                message:'User Invited Successfully !!',
+                acceptIcon:'null',
+                acceptLabel:'Ok',
+                rejectVisible:false,
+                acceptButtonStyleClass: 'btn bluebg-button',
+                defaultFocus:'none',
+              })
               this.getUsers();
             this.hideInvitePopUp= false;
             } else {
-              Swal.fire(
-                "Error",
-                "Failed to invite! Check if user already exists!!",
-                "error"
-              );
+              // Swal.fire(
+              //   "Error",
+              //   "Failed to invite! Check if user already exists!!",
+              //   "error"
+              // );
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if user already exists!!'})
             this.loader.hide();
             }
           });
         } else if (res.errorMessage) {
-          Swal.fire("Error", res.errorMessage, "error");
+          // Swal.fire("Error", res.errorMessage, "error");
+          this.messageService.add({severity:'error',summary:'Error',detail: res.errorMessage})
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
+          // Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
+          this.messageService.add({severity:'error',summary:'Error',detail: 'Failed to invite! Check if user already exists!!'})
         }
       });
   }

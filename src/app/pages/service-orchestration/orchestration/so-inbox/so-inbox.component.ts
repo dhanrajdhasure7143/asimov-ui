@@ -3,10 +3,11 @@ import {RestApiService} from '../../../services/rest-api.service';
 import { DataTransferService } from "../../../services/data-transfer.service";
 import{sohints} from '../model/new-so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
@@ -29,7 +30,8 @@ export class SoInboxComponent implements OnInit {
       private hints: sohints,
       private dt:DataTransferService,
       private spinner:LoaderService,
-      private columnList: columnList
+      private columnList: columnList,
+      private messageService:MessageService
       )
     {}
 
@@ -89,22 +91,25 @@ export class SoInboxComponent implements OnInit {
     this.rest.updateInboxstatus(obj).subscribe(data =>{
       this.spinner.hide();
         if(obj.status == "Approved"){
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Task Approved Successfully !!',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: 'Task Approved Successfully !!',
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // });
+        this.messageService.add({severity:'success',summary:'Success',detail:'Task Approved Successfully !!'})
       }
       if(obj.status == "Rejected"){
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Task Rejected Successfully !!',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: 'Task Rejected Successfully !!',
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // });
+        this.messageService.add({severity:'success',summary:'Success',detail:'Task Rejected Successfully !!'})
+
       }
         /* let res:any= data;
        Swal.fire(res.status, "","success")*/

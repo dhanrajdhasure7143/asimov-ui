@@ -449,11 +449,12 @@ export class ConfigureDashboardComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting it.",
         header: "Info",
-       
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        acceptIcon: 'null',
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
-        key: "positionDialog2",
       });
       return;
     }
