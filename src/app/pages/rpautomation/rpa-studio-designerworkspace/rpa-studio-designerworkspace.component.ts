@@ -627,7 +627,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         selectedNodeId: element.tMetaId,
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
-        action_uid:element.actionUUID
+        action_uid:element.actionUUID,
+        isModified:element.isModified
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -1054,6 +1055,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   // Will create get attributes and set values and generate form
   getTaskForm(node) {
+    // if(node.isModified) {
+    //   alert("Its a deprecated task please update accordingly!")
+    //   return;
+    // }
     this.nodedata = node;
     this.form_change = false;
     this.isShowExpand_icon=false;
