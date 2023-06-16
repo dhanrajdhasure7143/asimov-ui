@@ -149,13 +149,14 @@ export class UploadComponent implements OnInit {
     if (this.freetrail == 'true') {
       if (this.process_graph_list.length == this.config.pigraphfreetraillimit) {
         this.confirmationService.confirm({
-          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
           header: "Info",
-        
           rejectVisible: false,
           acceptLabel: "Ok",
-          accept: () => {},
-          key: "positionDialog1",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {}
         });
         // Swal.fire({
         //   title: 'Error',
@@ -176,7 +177,7 @@ export class UploadComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Please upload file with proper extension !'
+            detail: 'Please upload a file with the proper extension!'
           });
           // Swal.fire({
           //   title: 'Error',
@@ -200,7 +201,7 @@ export class UploadComponent implements OnInit {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Please try again !'
+                detail: 'Please try again!'
               });
               // Swal.fire({
               //   title: 'Error',
@@ -217,7 +218,7 @@ export class UploadComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Please upload file with proper extension !'
+          detail: 'Please upload a file with the proper extension!'
         });
         // Swal.fire({
         //   title: 'Error',
@@ -241,7 +242,7 @@ export class UploadComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Please try again !'
+              detail: 'Please try again!'
             });
             // Swal.fire({
             //   title: 'Error',
@@ -290,7 +291,7 @@ export class UploadComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'You have access to upload only excel file'
+          detail: 'You only have access to upload Excel files.'
         });
         // Swal.fire({
         //   title: 'Error',
@@ -348,13 +349,14 @@ export class UploadComponent implements OnInit {
       if(this.freetrail== 'true'){
         if(excelfile.length>100){
           this.confirmationService.confirm({
-            message: "Data limit exceeded for user",
-            header: "Info",
-          
+            message: "The data limit was exceeded for the user.",
+            header: "Info",          
             rejectVisible: false,
             acceptLabel: "Ok",
-            accept: () => {},
-            key: "positionDialog2",
+            acceptButtonStyleClass: 'btn bluebg-button',
+            defaultFocus: 'none',
+            acceptIcon: 'null',
+            accept: () => {}
           });
       //    Swal.fire({
       //      title: 'Error',
@@ -378,7 +380,7 @@ export class UploadComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "No data found in uploaded file!",
+          detail: "No data was found in the uploaded file!",
         })
         // Swal.fire({
         //   title: 'Error',
@@ -411,7 +413,7 @@ export class UploadComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "No data found in uploaded file!",
+          detail: "No data was found in the uploaded file!",
         })
         // Swal.fire({
         //   title: 'Error',
@@ -424,7 +426,7 @@ export class UploadComponent implements OnInit {
       }
     };
     reader.onerror = function () {
-      _self.global.notify("Oops! Something went wrong", "error");
+      _self.global.notify("Oops! Something went wrong.", "error");
     };
   }
 
@@ -515,7 +517,7 @@ export class UploadComponent implements OnInit {
         message.add({
           severity: "error",
           summary: "Error",
-          detail: "No data found in uploaded file!",
+          detail: "No data was found in the uploaded file!",
         });
         // Swal.fire({
         //   title: 'Error',
@@ -602,13 +604,14 @@ export class UploadComponent implements OnInit {
   onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
     if(selectedpiIdData.status == "Inprogress"){
       this.confirmationService.confirm({
-        message: "This graph is under processing, please try again later",
-        header: "Info",
-      
+        message: "This graph is currently being processed. Please try again later.",
+        header: "Info",      
         rejectVisible: false,
         acceptLabel: "Ok",
-        accept: () => {},
-        key: "positionDialog3",
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        acceptIcon: 'null',
+        accept: () => {}
       });
       // Swal.fire({
       //   position: 'center',
@@ -948,22 +951,23 @@ getDBTables(){      //get DB tables list
     this.rest.retryFailedProcessGraph(processDt.piId).subscribe((res:any)=>{
       if(res.is_error == false){
         this.confirmationService.confirm({
-          message: "Great" +res.display_msg.info,
+          message: "Great " + res.display_msg.info,
           header: "Info",
-          
           rejectVisible: false,
           acceptLabel: "Ok",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
           accept: () => {
             this.messageService.add({
               severity: "info",
               summary: "Info",
-              detail: "Please wait, Redirecting to process map"
+              detail: "Please wait, redirecting to the process map."
             })
             setTimeout(() => {
               _self.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { piId: processDt.piId } });
             }, 1500);
-          },
-          key: "positionDialog6",
+          }
         });
         // Swal.fire({
         //   title: 'Great',
@@ -997,7 +1001,7 @@ getDBTables(){      //get DB tables list
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Oops! "+res.display_msg.info
+          detail: "Oops! " + res.display_msg.info
         });
         // Swal.fire({
         //   title: 'Oops!',
@@ -1016,18 +1020,22 @@ getDBTables(){      //get DB tables list
       "piId":ele.piId
     }
     this.confirmationService.confirm({
-      message: "Do you really want to delete this process? This process cannot be undone.",
-      header: "Are you Sure?",
-      
-      rejectVisible: false,
-      acceptLabel: "Ok",
+      message: "Do you want to delete this process? This can't be undone.",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
         this.rest.deleteSelectedProcessID(req_body).subscribe(
           (res) => {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: ele.piName+ "Deleted Successfully !!",
+              detail: ele.piName + " deleted successfully!",
             });
             this.getAlluserProcessPiIds();
           },
@@ -1035,13 +1043,13 @@ getDBTables(){      //get DB tables list
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Something went wrong!",
+              detail: "Oops! Something went wrong.",
             });
           }
         );
-      },
-      key: "positionDialog5",
+      }
     });
+
     // Swal.fire({
     //   title: 'Are you sure?',
     //   text: "You won't be able to revert this!",
@@ -1090,13 +1098,14 @@ getDBTables(){      //get DB tables list
   onDeleteSelectedProcess1(id,status){
     if(status=='Inprogress'){
       this.confirmationService.confirm({
-        message: "You can't delete inprogress process!",
+        message: "You can't delete an in-progress process!",
         header: "Info",
-       
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        acceptIcon: 'null',
         rejectVisible: false,
         acceptLabel: "Ok",
-        accept: () => {},
-        key: "positionDialog4",
+        accept: () => {}
       });
       // Swal.fire({
       //   icon: 'info',
@@ -1129,7 +1138,7 @@ getDBTables(){      //get DB tables list
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Process Deleted Successfully !!'
+            detail: 'Process deleted successfully!'
           })
 
           // Swal.fire({
@@ -1164,7 +1173,7 @@ getDBTables(){      //get DB tables list
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Entered Process ID is Invalid !!'
+          detail: 'Entered Process ID is invalid!'
         })
 
         // Swal.fire({

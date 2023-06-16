@@ -291,11 +291,15 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             disply_text="Process name & Process owner"
           }
           this.confirmationService.confirm({
-            message: disply_text + " will be update all the versions of the bpmn",
-            header: "Are you Sure?",
-            
+            message: disply_text + " will be updated for all versions of the BPMN.",
+            header: "Are you sure?",            
+            acceptLabel:'Ok',
             rejectVisible: false,
-            acceptLabel: "Ok",
+            rejectButtonStyleClass: 'btn reset-btn',
+            acceptButtonStyleClass: 'btn bluebg-button',
+            defaultFocus: 'none',
+            rejectIcon: 'null',
+            acceptIcon: 'null',
             accept: () => {
               this.rest.updateBpsData(req_body).subscribe((res:any)=>{
                 this.isLoading=false;
@@ -309,8 +313,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
                 }, 1500);
                 this.slideDown(null);
               })
-            },
-            key: "positionDialog1",
+            }
           });
           // Swal.fire({
           //   title: 'Are you sure?',

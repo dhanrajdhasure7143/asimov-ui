@@ -226,7 +226,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     let obj
     if(this.isShowConformance){
       if(!this.process_owner){
-        this.messageService.add({severity: "error", summary: "Error", detail: "Please select process owner !"})
+        this.messageService.add({severity: "error", summary: "Error", detail: "Please select the process owner!"})
         // Swal.fire({
         //   icon: 'error',
         //   text: 'Please select process owner !',

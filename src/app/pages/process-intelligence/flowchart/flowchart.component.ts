@@ -287,11 +287,14 @@ pi_fullGraph_data:any=[];
               header: "Info",
               rejectVisible: false,
               acceptLabel: "Ok",
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
               accept: () => {
                 this.messageService.add({
                   severity: "info",
                   summary: "Info",
-                  detail: "Please wait, Redirecting to workspace"
+                  detail: "Please wait, redirecting to the workspace."
                 })
                 setTimeout(() => {
                   self.router.navigate(['pages/processIntelligence/upload'])
@@ -333,15 +336,18 @@ pi_fullGraph_data:any=[];
         if(this.fullgraph.hasOwnProperty('display_msg')){
 
           this.confirmationService.confirm({
-            message: "Oops! It is Not You it is Us, Please try again after some time",
+            message: "Oops! It's not you, it's us. Please try again after some time.",
             header: "Info",
             rejectVisible: false,
             acceptLabel: "Ok",
+            acceptButtonStyleClass: 'btn bluebg-button',
+            defaultFocus: 'none',
+            acceptIcon: 'null',
             accept: () => {
               this.messageService.add({
                 severity: "info",
                 summary: "Info",
-                detail: "Please wait, Redirecting to workspace"
+                detail: "Please wait, redirecting to the workspace."
               })
               setTimeout(() => {
                 self.router.navigate(['pages/processIntelligence/upload'])
@@ -494,11 +500,14 @@ pi_fullGraph_data:any=[];
               header: "Info",
               rejectVisible: false,
               acceptLabel: "Ok",
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
               accept: () => {
                 this.messageService.add({
                   severity: "info",
                   summary: "Info",
-                  detail: "Please wait, Redirecting to workspace"
+                  detail: "Please wait, redirecting to the workspace."
                 })
                 setTimeout(() => {
                   self.router.navigate(['pages/processIntelligence/upload'])
@@ -997,7 +1006,7 @@ pi_fullGraph_data:any=[];
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Oops! Failed to generate BPM Notation, Please try again later."
+              detail: "Oops! Failed to generate BPM notation. Please try again later."
             });
 
             // Swal.fire({
@@ -1013,7 +1022,7 @@ pi_fullGraph_data:any=[];
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Oops! Internal server error, Please try again later."
+            detail: "Oops! Internal server error. Please try again later."
           });
 
           // Swal.fire({
@@ -1040,7 +1049,7 @@ pi_fullGraph_data:any=[];
               this.messageService.add({
                 severity: "error",
                 summary: "Error",
-                detail: "Oops! Failed to generate BPM Notation, Please try again later."
+                detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
 
               // Swal.fire({
@@ -1055,7 +1064,7 @@ pi_fullGraph_data:any=[];
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Oops! Internal server error, Please try again later."
+            detail: "Oops! Internal server error. Please try again later."
           });
 
           // Swal.fire({
@@ -1081,7 +1090,7 @@ pi_fullGraph_data:any=[];
               this.messageService.add({
                 severity: "error",
                 summary: "Error",
-                detail: "Oops! Failed to generate BPM Notation, Please try again later."
+                detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
 
               // Swal.fire({
@@ -1096,7 +1105,7 @@ pi_fullGraph_data:any=[];
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Oops! Internal server error, Please try again later."
+            detail: "Oops! Internal server error. Please try again later."
           });
 
           // Swal.fire({
@@ -1122,7 +1131,7 @@ pi_fullGraph_data:any=[];
               this.messageService.add({
                 severity: "error",
                 summary: "Error",
-                detail: "Oops! Failed to generate BPM Notation, Please try again later."
+                detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
 
               // Swal.fire({
@@ -1137,7 +1146,7 @@ pi_fullGraph_data:any=[];
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Oops! Internal server error, Please try again later."
+            detail: "Oops! Internal server error. Please try again later."
           });
 
           // Swal.fire({
@@ -1910,22 +1919,24 @@ addWorkingHours(){
     if(this.fullgraph.hasOwnProperty('display_msg')){
 
       this.confirmationService.confirm({
-        message: "Oops! It is Not You it is Us, Please try again after some time.",
+        message: "Oops! It's not you, it's us. Please try again after some time.",
         header: "Info",
         
         rejectVisible: false,
         acceptLabel: "Ok",
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        acceptIcon: 'null',
         accept: () => {
           this.messageService.add({
             severity: "info",
             summary: "Info",
-            detail: "Please wait, Redirecting to workspace",
+            detail: "Please wait, redirecting to the workspace.",
           })
           setTimeout(() => {
             _self.router.navigate(['pages/processIntelligence/upload'])
           }, 1500);
-        },
-        key: "positionDialog1",
+        }
       });
 
         // Swal.fire({
@@ -2027,7 +2038,7 @@ addWorkingHours(){
     this.messageService.add({
       severity: "info",
       summary: "Info",
-      detail: "Auto close alert! I will close in <b></b> milliseconds."
+      detail: "Auto-close alert! I will close in <b></b> milliseconds."
     })
     // Swal.fire({
     //   title: 'Auto close alert!',
@@ -2142,22 +2153,24 @@ addWorkingHours(){
     if(this.fullgraph.hasOwnProperty('display_msg')){
 
       this.confirmationService.confirm({
-        message: "Oops! It is Not You it is Us, Please try again after some time.",
+        message: "Oops! It's not you, it's us. Please try again after some time.",
         header: "Info",
         
         rejectVisible: false,
         acceptLabel: "Ok",
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        acceptIcon: 'null',
         accept: () => {
           this.messageService.add({
             severity: "info",
             summary: "Info",
-            detail: "Please wait, Redirecting to workspace",
+            detail: "Please wait, redirecting to the workspace.",
           })
           setTimeout(() => {
             _self.router.navigate(['pages/processIntelligence/upload'])
           }, 1500);
-        },
-        key: "positionDialog1",
+        }
       });
 
         // Swal.fire({

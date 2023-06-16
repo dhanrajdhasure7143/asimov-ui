@@ -73,7 +73,7 @@ export class DeployNotationComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: "Oops! " +response.message
+          detail: "Oops! " + response.message
         })
           // Swal.fire({
           //   title: 'Oops!',

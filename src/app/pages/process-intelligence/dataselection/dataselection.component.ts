@@ -228,7 +228,7 @@ export class DataselectionComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Internal server error, Please try again later"
+          detail: "Oops! Internal server error. Please try again later."
         });
         // Swal.fire("Error", "Internal server error, Please try again later", "error");
       })
@@ -279,7 +279,7 @@ export class DataselectionComponent implements OnInit {
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Internal server error, Please try again later"
+            detail: "Oops! Internal server error. Please try again later."
           });
         // Swal.fire("Error", "Internal server error, Please try again later", "error");
         })
@@ -329,24 +329,29 @@ export class DataselectionComponent implements OnInit {
     else if(this.id.length == 1){
       if(v.includes('Time')){
         this.confirmationService.confirm({
-          message: "Case ID cannot be a Timestamp",
-          header: "Info",
-         
+          message: "The Case ID cannot be a timestamp.",
+          header: "Info",         
           rejectVisible: false,
           acceptLabel: "Ok",
-          accept: () => {},
-          key: "positionDialog2",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {}
         });
 
         // Swal.fire("Oops!", "Case ID canot be Timestamp", "warning");
         this.id=[];
       }else{
         this.confirmationService.confirm({
-          message: "You want to use this as Case ID!",
-          header: "Are you Sure?",
-            
-          rejectVisible: false,
-          acceptLabel: "Ok",
+          message: "Do you want to use this as the Case ID?",
+          header: "Are you sure?",            
+          rejectLabel: "No",
+          acceptLabel: "Yes",
+          rejectButtonStyleClass: 'btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
           accept: () => {
             this.name=v.trim();
             this.step_id=1
@@ -366,8 +371,7 @@ export class DataselectionComponent implements OnInit {
             this.validCells = [];
             this.invalidCells = [];
             this.headerArray=[];
-          },
-          key: "positionDialog1",
+          }
         });
 
       // Swal.fire({
@@ -407,13 +411,14 @@ export class DataselectionComponent implements OnInit {
       if(v.includes('Time')){
         
         this.confirmationService.confirm({
-          message: "Activity must be string!",
+          message: "The Activity must be a string!",
           header: "Info",
-         
           rejectVisible: false,
           acceptLabel: "Ok",
-          accept: () => {},
-          key: "positionDialog2",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {}
         });
 
         // Swal.fire("Oops!", "Activity must be string!", "warning");

@@ -6,7 +6,7 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { NotifierService } from "angular-notifier";
 import Swal from "sweetalert2";
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Router } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 @Component({
@@ -41,7 +41,6 @@ export class CreateProjectFormComponent implements OnInit {
     private spinner: LoaderService,
     private rest_api: RestApiService,
     private messageService: MessageService,
-    private confirmationSerivce: ConfirmationService,
     private router: Router
   ) {}
 
@@ -181,7 +180,7 @@ export class CreateProjectFormComponent implements OnInit {
         this.processOwner = false;
       } else {
         this.insertForm2.get("processOwner").setValue("");
-        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find process owner for selected process."});
+        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process."});
         // Swal.fire(
         //   "Error",
         //   "Unable to find process owner for selected process",

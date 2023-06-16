@@ -94,13 +94,16 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
         this.confirmationService.confirm({
-          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
           header: "Info",
-         
+          acceptLabel:'Ok',
           rejectVisible: false,
-          acceptLabel: "Ok",
+          rejectButtonStyleClass: 'btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
           accept: () => {},
-          key: "positionDialog",
         });
         // Swal.fire({
         //   title: 'Error',
@@ -202,13 +205,16 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
         this.confirmationService.confirm({
-          message: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
           header: "Info",
-         
+          acceptLabel:'Ok',
           rejectVisible: false,
-          acceptLabel: "Ok",
+          rejectButtonStyleClass: 'btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
           accept: () => {},
-          key: "positionDialog",
         });
         // Swal.fire({
         //   title: 'Error',

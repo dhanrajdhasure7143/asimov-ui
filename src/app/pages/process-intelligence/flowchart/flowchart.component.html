@@ -392,17 +392,5 @@
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
-<!-- It is Not You it is Us, Please try again after some time. -->
-<p-confirmDialog #cd1 [style]="{width: '30vw'}" key="positionDialog1" position="center" [baseZIndex]="10000" 
- rejectButtonStyleClass="btn bluebg-button" [closable]="false">
-   <p-footer>
-      <button
-        type="button"
-        pButton
-        label="Ok"
-        value="Update"
-        class="btn bluebg-button"
-        (click)="cd1.accept()"
-      ></button>     
-    </p-footer>
-</p-confirmDialog>
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" [closable]="false"></p-confirmDialog>
+

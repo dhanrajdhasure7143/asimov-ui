@@ -131,7 +131,7 @@ export class CreateTasksComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task Created Successfully !"
+          detail: "Task created successfully!"
         })
         setTimeout(() => {
           //this.resettask();
@@ -274,7 +274,7 @@ taskDescriptionMaxLength(value){
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
       message: 'This user is not in this project, Do you want to Invite them?',
-      header: 'Are you Sure?',
+      header: 'Are you sure?',
       
       accept: () => {
         this.confirmationService.close();
