@@ -69,15 +69,13 @@
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                    <p-dropdown [options]="categoriesList" optionLabel="categoryName" optionValue="categoryId" formControlName="categoryId"
-                        [ngModel]="categoriesList.length == 1 ? categoriesList[0].categoryId :''" (onChange)="onChangeEnvType()" placeholder="Select Category">
-                    </p-dropdown>
-                    <!-- <select name="Category" class="form-control" formControlName="categoryId"
+                    <select name="Category" class="form-control" formControlName="categoryId"
                         [value]="categoriesList.length==1?categoriesList[0].categoryId:''" (change)="onChangeEnvType()" >
                         <option value="" disabled hidden>Select Category</option>
+                        <option [value]="0" hidden disabled selected>Select Category</option>
                         <option [value]="category.categoryId" *ngFor="let category of categoriesList">
                             {{category.categoryName}}</option>
-                    </select> -->
+                    </select>
                     <span
                         *ngIf="(environmentForm.get('categoryId').invalid && environmentForm.get('categoryId').touched)"
                         class="required"> Category Required</span>

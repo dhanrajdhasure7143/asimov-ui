@@ -29,7 +29,7 @@
                 <ng-container matColumnDef="processStartDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.processStartDate != null">{{element.processStartDate |date: 'MMM d, y, H:mm:ss'}}</span>
+                        <span *ngIf="element.processStartDate != null">{{element.processStartDate |date: 'MMM d, y, HH:mm:ss'}}</span>
                         <span *ngIf="element.processStartDate == undefined">-</span>
                     </td>
                 </ng-container>
@@ -37,7 +37,7 @@
                 <ng-container matColumnDef="processEndDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.processEndDate != null">{{element.processEndDate |date: 'MMM d, y, H:mm:ss'}}</span>
+                        <span *ngIf="element.processEndDate != null">{{element.processEndDate |date: 'MMM d, y, HH:mm:ss'}}</span>
                         <span *ngIf="element.processEndDate == undefined">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="runStatus">
