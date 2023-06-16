@@ -33,3 +33,17 @@
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
 }
+
+
+img.hover-icon, .actionscol button:hover img.default-icon {
+    display: none;
+}
+.actionscol button:hover img.hover-icon {
+    display: initial;
+}
+.actionscol button:last-child {
+    margin-left: 12px;
+}
+.actionscol button img {
+    margin-right: 0px;
+}
