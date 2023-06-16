@@ -132,10 +132,11 @@ searchValue:any;
         
           this.bpmnModeler.importXML(byteBpmn, function(err){
             if(err){
-              this.notifier.show({
-                type: "error",
-                message: "Could not import Bpmn notation!"
-              });
+              this.messageService.add({severity: "error", summary: "Error", detail: "Could not import BPMN notation!"})
+              // this.notifier.show({
+              //   type: "error",
+              //   message: "Could not import Bpmn notation!"
+              // });
             }
           })
     },100)

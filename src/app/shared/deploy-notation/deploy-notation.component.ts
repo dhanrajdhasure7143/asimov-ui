@@ -7,6 +7,7 @@ import { APP_CONFIG } from 'src/app/app.config';
 import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-deploy-notation',
@@ -25,6 +26,7 @@ export class DeployNotationComponent implements OnInit {
     public dialogRef: MatDialogRef<DeployNotationComponent>,
     private dt:DataTransferService,
     private router: Router,
+    private messageService: MessageService,
     @Inject(APP_CONFIG) private config
   ) { 
     dialogRef.disableClose = true;
@@ -68,12 +70,17 @@ export class DeployNotationComponent implements OnInit {
         
         } else{
         this.isLoading = false;
-          Swal.fire({
-            title: 'Oops!',
-            text: response.message,
-            icon: 'error',
-            heightAuto: false,
-          })
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: "Oops! " + response.message
+        })
+          // Swal.fire({
+          //   title: 'Oops!',
+          //   text: response.message,
+          //   icon: 'error',
+          //   heightAuto: false,
+          // })
         }
       })
   }

@@ -24,6 +24,7 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { GlobalScript } from 'src/app/shared/global-script';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
@@ -164,7 +165,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut,
-      private loader: LoaderService) { }
+      private loader: LoaderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   canDeactivate(): Observable<boolean> | boolean {
     return !this.isDiagramChanged 
@@ -656,26 +657,24 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isDiagramChanged){
-    Swal.fire({
-      title: 'Are you Sure?',
-      text: 'Your current changes will be lost on changing notation.',
-      icon: 'warning',
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      heightAuto: false,
-      confirmButtonText: 'Save and Continue',
-      cancelButtonText: 'Discard'
-    }).then((res) => {
-      if(res.value){
+    this.confirmationService.confirm({
+      message: "Your current changes will be lost when changing the notation.",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
         _self.isDiagramChanged = false;
         _self.disableShowConformance = false;
         _self.notationListNewValue = _self.selected_notation;
         _self.selected_notation = value;
         _self.saveprocess(_self.notationListNewValue);
-      }else if(res.dismiss === Swal.DismissReason.cancel){
+      },
+      reject: () => {
         this.isDiagramChanged = false;
         this.diplayApproveBtn = true;
         this.keyboardLabels=this.shortcut[this.selectedNotationType];
@@ -694,7 +693,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
           "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
-      this.dt.bpsNotationaScreenValues(this.push_Obj)
+          this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
         setTimeout(()=> {
@@ -732,9 +731,88 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             }
           }
           _self.loader.hide();
-        }
-      })
-    }else{
+      }
+    });
+
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: 'Your current changes will be lost on changing notation.',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   heightAuto: false,
+    //   confirmButtonText: 'Save and Continue',
+    //   cancelButtonText: 'Discard'
+    // }).then((res) => {
+    //   if(res.value){
+    //     _self.isDiagramChanged = false;
+    //     _self.disableShowConformance = false;
+    //     _self.notationListNewValue = _self.selected_notation;
+    //     _self.selected_notation = value;
+    //     _self.saveprocess(_self.notationListNewValue);
+    //   }else if(res.dismiss === Swal.DismissReason.cancel){
+    //     this.isDiagramChanged = false;
+    //     this.diplayApproveBtn = true;
+    //     this.keyboardLabels=this.shortcut[this.selectedNotationType];
+    //     this.notationListOldValue = this.selected_notation;
+    //     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+    //     let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+    //     this.selectedNotationType = current_bpmn_info["ntype"];
+    //       this.fileType = "svg";
+    //       if(this.dmnTabs)
+    //         this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
+    //     this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+    //     this.hasConformance = current_bpmn_info["hasConformance"];
+    //     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
+    //       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+    //       this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+    //       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    //       "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    //       "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
+    //       this.dt.bpsNotationaScreenValues(this.push_Obj)
+    //     }
+    //     this.initModeler();
+    //     setTimeout(()=> {
+    //       if(this.hasConformance) this.initBpmnModeler();
+    //       if(this.bpmnModeler){
+    //         if(selected_xml && selected_xml != "undefined"){
+    //           try{
+    //             this.bpmnModeler.importXML(selected_xml);
+    //             this.oldXml = selected_xml;
+    //             this.newXml = selected_xml;
+    //           }catch(err){
+    //             console.error('could not import BPMN EZFlow notation', err);
+    //           }
+    //         }else{
+    //           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+    //             let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+    //             try{
+    //               this.bpmnModeler.importXML(encrypted_bpmn);
+    //               this.oldXml = selected_xml;
+    //               this.newXml = selected_xml;
+    //             }catch(err){
+    //               console.error('could not import BPMN EZFlow notation', err);
+    //             }
+    //           });
+    //           }
+    //         }
+    //       },0)
+    //       if(this.isShowConformance && current_bpmn_info["processIntelligenceId"] && current_bpmn_info["processIntelligenceId"] == this.pid ){
+    //         this.isConfBpmnModeler = !this.hasConformance;
+    //         let bpmn_not = this.hasConformance ? current_bpmn_info["bpmnConfProcessMeta"] : this.pivalues["data"];
+    //         try{
+    //           this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
+    //         }catch(err){
+    //           console.error('could not import BPMN EZFlow notation', err);
+    //         }
+    //       }
+    //       _self.loader.hide();
+    //     }
+    //   })
+  }else{
       this.loader.show();
       this.isDiagramChanged = false;
       this.disableShowConformance = false;
@@ -800,7 +878,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       _self.loader.hide();
     }
     this.getSelectedApprover();
-  }
+}
 
   autoSaveBpmnDiagram(){
     this.isStartProcessBtn=false;
@@ -888,11 +966,12 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      Swal.fire(
-        'Tasks automated successfully!',
-        '',
-        'success'
-      );
+      this.messageService.add({severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
+      // Swal.fire(
+      //   'Tasks automated successfully!',
+      //   '',
+      //   'success'
+      // );
     })
   }
 
@@ -1107,13 +1186,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let bpmnModel:BpmnModel = new BpmnModel();
     this.selected_approver=e.selectedApprovar
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      // Swal.fire("No approver", "Please select approver from the list given above", "error");
-      Swal.fire({
-        icon: 'error',
-        title: 'No approver',
-        text: 'Please select approver from the list given above !',
-        heightAuto: false,
-      });
+      this.messageService.add({severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'No approver',
+      //   text: 'Please select approver from the list given above !',
+      //   heightAuto: false,
+      // });
       return;
     }
     this.loader.show();
@@ -1167,33 +1246,36 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           _self.loader.hide();
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
-            Swal.fire({
-              icon: 'error',
-              title: 'Already exists!',
-              text: 'The notation is already in "PENDING" status !',
-              heightAuto: false,
-            });
+            this.messageService.add({severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status !"});
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: 'Already exists!',
+            //   text: 'The notation is already in "PENDING" status !',
+            //   heightAuto: false,
+            // });
           }else{
             _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            Swal.fire({
-              icon: 'success',
-              title: 'Saved!',
-              text: 'Your changes has been saved and submitted for approval successfully !',
-              heightAuto: false,
-            });
+            this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"})
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: 'Saved!',
+            //   text: 'Your changes has been saved and submitted for approval successfully !',
+            //   heightAuto: false,
+            // });
           }
         },err => {
           _self.loader.hide();
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops!',
-            text: 'Something went wrong. Please try again !',
-            heightAuto: false,
-          });
+          this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Oops!',
+          //   text: 'Something went wrong. Please try again !',
+          //   heightAuto: false,
+          // });
         })
     })
   }
@@ -1271,12 +1353,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         data=>{
           _self.loader.hide();
           if(data["errorCode"] == "2005"){
-            Swal.fire({
-              icon: 'error',
-              title: 'Already exists!',
-              text: 'The notation is already in "PENDING" status !',
-              heightAuto: false,
-            });
+            this.messageService.add({severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: 'Already exists!',
+            //   text: 'The notation is already in "PENDING" status !',
+            //   heightAuto: false,
+            // });
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
               
@@ -1313,12 +1396,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             _self.modalRef.hide();
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            Swal.fire({
-              icon: 'success',
-              title: 'Saved!',
-              text: 'Your changes has been saved successfully !',
-              heightAuto: false,
-            });
+            this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: 'Saved!',
+            //   text: 'Your changes has been saved successfully !',
+            //   heightAuto: false,
+            // });
             _self.process_owner='';
             if(newVal){
               _self.selected_notation = newVal;
@@ -1336,20 +1420,34 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         },
         err => {
           _self.loader.hide();
-          if(err.error.message == "2002")
-          Swal.fire({
-            icon: 'warning',
-            title: 'Oops!',
-            text: 'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation !',
-            heightAuto: false,
-          });
+          if(err.error.message == "2002"){
+            this.confirmationService.confirm({
+              message: "Oops! An in-progress process already exists for the selected process. Please make changes to the existing in-progress notation!",
+              header: 'Info',
+              acceptLabel:'Ok',
+              rejectVisible: false,
+              rejectButtonStyleClass: 'btn reset-btn',
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
+              accept: () => {},
+            });
+            
+            // Swal.fire({
+            //   icon: 'warning',
+            //   title: 'Oops!',
+            //   text: 'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation !',
+            //   heightAuto: false,
+            // });
+          }         
           else
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops!',
-            text: 'Something went wrong. Please try again !',
-            heightAuto: false,
-          });
+            this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Oops!',
+          //   text: 'Something went wrong. Please try again !',
+          //   heightAuto: false,
+          // });
         })
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
@@ -1594,17 +1692,19 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let response;
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{response=res
       if(response.failure){
-        Swal.fire(
-          'Error!',
-          response.failure,
-          'error'
-        )
+        this.messageService.add({severity: "error", summary: "Error", detail: response.failure });
+        // Swal.fire(
+        //   'Error!',
+        //   response.failure,
+        //   'error'
+        // )
       }else{
-        Swal.fire(
-          'Success!',
-          'Process started successfully',
-          'success'
-        )
+        this.messageService.add({severity: "success", summary: "Success", detail: "Process started successfully!"});
+        // Swal.fire(
+        //   'Success!',
+        //   'Process started successfully',
+        //   'success'
+        // )
       }
       
       this.cancelProcess();

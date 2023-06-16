@@ -182,17 +182,29 @@ export class ProjectsListScreenComponent implements OnInit {
       } else if (
         this.projectsresponse[1].length == this.config.projectfreetraillimit
       ) {
-        Swal.fire({
-          title: "Error",
-          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-          position: "center",
-          icon: "error",
-          showCancelButton: false,
-          confirmButtonColor: "#007bff",
-          cancelButtonColor: "#d33",
-          heightAuto: false,
-          confirmButtonText: "Ok",
+
+        this.confirmationService.confirm({
+          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
+          header: "Info",
+          acceptLabel:'Ok',
+          rejectVisible: false,
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {},
         });
+
+        // Swal.fire({
+        //   title: "Error",
+        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        //   position: "center",
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   confirmButtonColor: "#007bff",
+        //   cancelButtonColor: "#d33",
+        //   heightAuto: false,
+        //   confirmButtonText: "Ok",
+        // });
         return;
       } else if (this.projectsresponse[1].length >= 1) {
         this.create_Tabs = "projects";
@@ -251,9 +263,15 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
     this.confirmationService.confirm({
-      message: "Do you really want to delete this project? This process cannot be undone.",
-      header: "Are you Sure?",
-      
+      message: "Do you want to delete this project? This process can't be undone.",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe((res) => {
@@ -263,7 +281,7 @@ export class ProjectsListScreenComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Project Deleted Successfully !",
+              detail: "Project deleted successfully!",
             });
             this.getallProjects(this.userRoles, this.name, this.email);
           }
@@ -271,20 +289,19 @@ export class ProjectsListScreenComponent implements OnInit {
             this.messageService.add({
               severity: "info",
               summary: "Info",
-              detail: response.warningMessage+" !",
+              detail: response.warningMessage+"!",
             });
           }
         },err=>{
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Failed to delete !"
+            detail: "Failed to delete!"
           });
           this.spinner.hide();
         });
       },
-      reject: (type) => {},
-      key: "positionDialog",
+      reject: (type) => {}
     });
   }
 
