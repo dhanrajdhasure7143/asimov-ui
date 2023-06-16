@@ -260,3 +260,7 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.hide-node{
+  filter:grayscale();
+}
