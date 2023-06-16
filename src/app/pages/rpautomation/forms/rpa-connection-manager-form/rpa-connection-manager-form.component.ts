@@ -644,7 +644,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.grantItems = Object.keys(res).map(key => ({
         type: key,
         value: res[key]
-      })).filter(item => !['implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
+      })).filter(item => !['Implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
     });
     return this.authItems;
   }
