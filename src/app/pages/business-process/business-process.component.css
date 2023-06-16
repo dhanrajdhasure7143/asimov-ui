@@ -8,6 +8,7 @@
 .main-content1 .main-content-head {
     padding: 12px 20px;
     background-color: #F3F3F3;
+    height: auto;
 }
 .main-content1 .title_text {
     font-weight: 600;

@@ -13,7 +13,7 @@
             <div class="col-md-12 p-0 form-group" *ngIf="isMultiForm==true"  #scrollContainer>
                 <!-- <div class="table-responsive overaly-innertable"> -->
                 <div class="overaly-innertable">
-                    <table class="table cursor">
+                    <table class="table cursor table-responsive">
                         <thead>
                             <tr>
                                 <th class="col-md" *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
@@ -31,12 +31,14 @@
                                        *******
                                     </span>
                                 </td>                    
-                               <td class="col-md">
-                                    <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)">
-                                        <img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">
+                               <td class="actionscol">
+                                    <button tooltip="Edit" placement="top"  (click)="edit(eachObj)">
+                                        <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                        <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                     </button>
-                                    <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)">
-                                        <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">
+                                    <button tooltip="Delete" placement="top"  (click)="delete(eachObj)">
+                                        <img src="../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
+                                        <img src="../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
                                     </button>
                                </td>
                             </tr>

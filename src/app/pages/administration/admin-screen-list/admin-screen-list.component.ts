@@ -5,20 +5,28 @@ import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 import { columnList } from "src/app/shared/model/table_columns";
 import { DataTransferService } from "../../services/data-transfer.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-admin-screen-list",
   templateUrl: "./admin-screen-list.component.html",
   styleUrls: ["./admin-screen-list.component.css"],
-  providers:[columnList]
+  providers: [columnList],
 })
 export class AdminScreenListComponent implements OnInit {
   screenlist: any = [];
   loading: boolean = false;
   columns_list: any = [];
-  table_searchFields: any=[];
-  constructor(private router: Router, private rest: RestApiService, private columns:columnList,
-    private spinner:LoaderService,private dt:DataTransferService) {}
+  table_searchFields: any = [];
+  constructor(
+    private router: Router,
+    private rest: RestApiService,
+    private columns: columnList,
+    private spinner: LoaderService,
+    private dt: DataTransferService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.getScreenList();
@@ -37,10 +45,7 @@ export class AdminScreenListComponent implements OnInit {
     this.spinner.show();
     this.rest.getScreenList().subscribe((data) => {
       this.screenlist = data;
-      this.table_searchFields = [
-        "Screen_Name",
-        "Table_Name"
-      ];
+      this.table_searchFields = ["Screen_Name", "Table_Name"];
       this.spinner.hide();
     });
   }
@@ -52,51 +57,43 @@ export class AdminScreenListComponent implements OnInit {
   }
 
   deleteScreen(id: any) {
-    this.spinner.show();
-
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You Delete the Record!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
+    this.confirmationService.confirm({
+      message: "Are You Sure ? You want to delete this record!",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      key: "positionDialog",
+      accept: () => {
+        this.spinner.show();
+        this.rest.deleteScreen(id.Screen_ID).subscribe(
+          (resp) => {
+            this.messageService.add({
+              severity: "success",
+              summary: "Sucsess",
+              detail: "Record deleted !!",
+            });
+            this.spinner.hide();
+            this.getScreenList();
+          },
+          (err: any) => {
+            this.messageService.add({
+              severity: "error",
+              summary: "rejected",
+              detail: "Unable to delete record",
+            });
+          }
+        );
       },
-      heightAuto: false,
-      
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
-        this.rest.deleteScreen(id.Screen_ID).subscribe((resp) => {
-          Swal.fire({
-            title: "Success",
-            text: "Record Deleted Successfully!!",
-            position: "center",
-            icon: "success",
-            showCancelButton: false,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton:  'btn new-cancelbtn',
-            },
-            heightAuto: false,
-            confirmButtonText: "Ok",
-          }).then(()=>{
-            window.location.reload();
-          })      
-        },(err: any) => {
-            Swal.fire("Error", "Unable to delete record", "error")
-          });
-      }
-      this.getScreenList();
-      this.spinner.hide();
-
-      // }),
+      reject: (type) => {},
     });
   }
-  
-  viewDetails(screen){
-    this.dt.setScreenList(screen)
-    this.router.navigate(["/pages/admin/user"],{queryParams:{Screen_ID:screen.Screen_ID,Table_Name:screen.Table_Name}});
+
+  viewDetails(screen) {
+    this.dt.setScreenList(screen);
+    this.router.navigate(["/pages/admin/user"], {
+      queryParams: {
+        Screen_ID: screen.Screen_ID,
+        Table_Name: screen.Table_Name,
+      },
+    });
   }
 }

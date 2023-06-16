@@ -117,6 +117,7 @@ export class RpaHomeComponent implements OnInit {
     Stopped: '#FE665D',
     Running:"#C4B28E"
   };
+  searchValue: string;
 
   constructor(
     private rest: RestApiService,
@@ -589,7 +590,10 @@ export class RpaHomeComponent implements OnInit {
   }
 
   clear(table: Table) {
-    table.clear();
+   this.searchValue=""
+   table.filterGlobal("","");
+   table.clear();
+
   }
   onNavigateToWorkSpace(row){
     this.router.navigate(["/pages/rpautomation/designer"], {

@@ -6,7 +6,7 @@ selector:'form-builder',
 template:`
   <div [formGroup]="form">
     <div *ngIf ="field.visibility">
-      <label *ngIf="field.type!='checkbox'" class="label-control" [attr.for]="field.label">
+      <label *ngIf="field.type!='checkbox' && field.name!='loggedUser'" class="label-control" [attr.for]="field.label">
         {{field.label}}
         <span class="star" *ngIf="field.required==true">*</span>
       </label>
