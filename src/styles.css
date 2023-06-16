@@ -3706,3 +3706,6 @@ background-color: #D8E0EF !important;
   padding: 1px 10px;
   border-radius: 50px;
 }
+.bold {
+  font-weight: bold;
+}
