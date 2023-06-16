@@ -45,6 +45,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isBotValidated:boolean = true;
   isOpenSideOverlay:boolean=false;
   params:any={};
+  idBot:any;
   executionMode:boolean=false;
   constructor(
     private router:Router,
@@ -108,6 +109,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
+            this.idBot = params.botId
             if(params==undefined)
             {
               this.router.navigate(["home"])
