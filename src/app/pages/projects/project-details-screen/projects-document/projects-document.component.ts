@@ -166,10 +166,24 @@ export class ProjectsDocumentComponent implements OnInit {
 
       if(data.dataType == 'folder'){
         data['icon'] = "folder.svg"
-      }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' || data.dataType == 'gif'||data.dataType == 'PNG' || data.dataType == 'JPG'){
-        data['icon'] = "img-file.svg"
+      }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' ||data.dataType == 'PNG' || data.dataType == 'JPG'){
+        data['icon'] = "Image-file.svg"
+      }else if(data.dataType == 'pdf'){
+        data['icon'] = "pdf-file.svg"
+      }else if(data.dataType == 'txt'){
+        data['icon'] = "txt-file.svg"
+      }else if(data.dataType == 'mp4'|| data.dataType == 'gif'){
+        data['icon'] = "video-file.svg"
+      }else if(data.dataType == 'docx'){
+        data['icon'] = "doc-file.svg"
+      }else if(data.dataType == 'html'){
+        data['icon'] = "html-file.svg"
+      }else if(data.dataType == 'csv'||data.dataType == 'xlsx' ){
+        data['icon'] = "xlsx-file.svg"
+      }else if(data.dataType == 'ppt'){
+        data['icon'] = "ppt-file.svg"
       }else{
-        data['icon'] = "document-file.svg"
+        data['icon'] = "txt-file.svg"
       }
       return data;
     });
@@ -841,11 +855,24 @@ export class ProjectsDocumentComponent implements OnInit {
       data.uploadedByUser = this.getUserName(data.uploadedBy)
       if(data.dataType == 'folder'){
         data['icon'] = "folder.svg"
-        data["children"]=[];
       }else if(data.dataType == 'png' || data.dataType == 'jpg' || data.dataType == 'svg' || data.dataType == 'gif'||data.dataType == 'PNG' || data.dataType == 'JPG'){
         data['icon'] = "img-file.svg"
+      }else if(data.dataType == 'pdf'){
+        data['icon'] = "pdf-file.svg"
+      }else if(data.dataType == 'txt'){
+        data['icon'] = "txt-file.svg"
+      }else if(data.dataType == 'mp4'|| data.dataType == 'gif'){
+        data['icon'] = "video-file.svg"
+      }else if(data.dataType == 'docx'){
+        data['icon'] = "doc-file.svg"
+      }else if(data.dataType == 'html'){
+        data['icon'] = "html-file.svg"
+      }else if(data.dataType == 'csv'||data.dataType == 'xlsx' ){
+        data['icon'] = "xlsx-file.svg"
+      }else if(data.dataType == 'ppt'){
+        data['icon'] = "ppt-file.svg"
       }else{
-        data['icon'] = "document-file.svg"
+        data['icon'] = "txt-file.svg"
       }
       return data;
     });
@@ -1179,7 +1206,14 @@ export class ProjectsDocumentComponent implements OnInit {
           });
           this.createItems = [{label: "Folder",command: () => {this.onCreateFolder()}},];
           this.breadcrumbItems=[];
+          this.createItems = [
+            {label: "Folder",command: () => {this.onCreateFolder()}}
+          ];
       } else {
+        this.createItems = [
+          {label: "Folder",command: () => {this.onCreateFolder()}},
+          {label: "Document",command: () => {this.onCreateDocument()}}
+        ];
         this.breadcrumbItems.splice(-1);
         this.breadcrumbItems = [...this.breadcrumbItems];
         if(this.breadcrumbItems.length >0){
@@ -1197,6 +1231,10 @@ export class ProjectsDocumentComponent implements OnInit {
       this.folder_files=[];
       this.folder_files = this.setFolderOrder(filteredData);
       this.breadcrumbItems.splice(index+1);
+        this.createItems = [
+          {label: "Folder",command: () => {this.onCreateFolder()}},
+          {label: "Document",command: () => {this.onCreateDocument()}}
+        ];
   }
 
   setFolderOrder(filteredData:any){
@@ -1478,6 +1516,16 @@ async getFileDataById(fileId) {
   }
 
   documentSaveConfirmation(value,index?:number){
+    if(value == 'main'){
+      this.createItems = [
+        {label: "Folder",command: () => {this.onCreateFolder()}}
+      ];
+    }else{
+      this.createItems = [
+        {label: "Folder",command: () => {this.onCreateFolder()}},
+        {label: "Document",command: () => {this.onCreateDocument()}}
+      ];
+    }
     if(this.isEditor){
       this.term = '';
       this.confirmationService.confirm({
@@ -1521,7 +1569,10 @@ async getFileDataById(fileId) {
     if(searchResults.length > 0){
       searchResults.map(data=> {
         data["is_selected"]=false;
-      })
+      });
+      this.createItems = [
+        {label: "Folder",command: () => {this.onCreateFolder()}}
+      ];
       //   if(data.dataType=='folder'){
       //     data["children"]=[];
       //   }
@@ -1542,6 +1593,10 @@ async getFileDataById(fileId) {
     };
     if(searchTerm.length == 0){
         this.folder_files = this.files;
+        this.createItems = [
+          {label: "Folder",command: () => {this.onCreateFolder()}},
+          {label: "Document",command: () => {this.onCreateDocument()}}
+        ];
       }
   }
   

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78">
+  <g id="audio-file" transform="translate(-1.794 -2)">
+    <path id="Path_331" data-name="Path 331" d="M4.95,73.2h66.3a1.956,1.956,0,0,0,1.95-1.95V4.95A1.956,1.956,0,0,0,71.25,3H4.95A1.956,1.956,0,0,0,3,4.95v66.3A1.956,1.956,0,0,0,4.95,73.2Z" transform="translate(2.9 2.9)" fill="#fff"/>
+    <path id="Path_332" data-name="Path 332" d="M7.85,80h66.3A5.857,5.857,0,0,0,80,74.15V7.85A5.857,5.857,0,0,0,74.15,2H7.85A5.857,5.857,0,0,0,2,7.85v66.3A5.857,5.857,0,0,0,7.85,80ZM5.9,7.85A1.95,1.95,0,0,1,7.85,5.9h66.3A1.95,1.95,0,0,1,76.1,7.85v66.3a1.95,1.95,0,0,1-1.95,1.95H7.85A1.95,1.95,0,0,1,5.9,74.15Z" transform="translate(-0.206)" fill="#605e5c" fill-rule="evenodd" opacity="0.64"/>
+    <g id="Group_74" data-name="Group 74" transform="translate(-6130.206 -678.95)">
+      <path id="Path_336" data-name="Path 336" d="M43,57.95V38.6L62,33.95V53.3M43.333,44.783,62,40.116" transform="translate(6123 672)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+      <circle id="Ellipse_31" data-name="Ellipse 31" cx="4.5" cy="4.5" r="4.5" transform="translate(6157 725.05)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+      <circle id="Ellipse_32" data-name="Ellipse 32" cx="4.5" cy="4.5" r="4.5" transform="translate(6176 721.05)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+  </g>
+</svg>
