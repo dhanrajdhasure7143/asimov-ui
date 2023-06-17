@@ -123,7 +123,6 @@ export class ProjectsDocumentComponent implements OnInit {
     this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe((res:any)=>{
         res_data=res
         // this.documents_resData = res
-        // console.log(JSON.stringify(this.documents_resData))
         this.assignData(res_data);
         this.breadcrumbItems=[];
     })
@@ -269,7 +268,6 @@ export class ProjectsDocumentComponent implements OnInit {
         }
       });
       this.dataSearchList = [...dataList]
-      console.log(this.dataSearchList)
   }
 
   // treeChildFolderSave() {
@@ -348,6 +346,7 @@ export class ProjectsDocumentComponent implements OnInit {
 
   folderView(){
     this.isFolder = true;
+    this.term = '';
     this.folder_files = this.files;
     this.breadcrumbItems = [];
     this.folder_files.forEach(element => {
@@ -360,6 +359,7 @@ export class ProjectsDocumentComponent implements OnInit {
 
   treeView(){
     this.selectedItem_new = [];
+    this.term = '';
     this.isFolder = false;
     this.breadcrumbItems = [];
     this.folder_files = this.files;
@@ -951,13 +951,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedItem_new = [];
     this.selectedFolder_new = item;
     this.folder_files = [];
-    console.log(item)
-    console.log(item.children)
-      // this.folder_files = this.setFolderOrder(item.children);
-      this.folder_files = item.children;
-    setTimeout(() => {
-      console.log(this.folder_files)
-    }, 1000);
+      this.folder_files = this.setFolderOrder(item.children);
     let obj = {label:item.label,key:item.key,id:item.id}
     this.breadcrumbItems.push(obj);
     this.breadcrumbItems = [...this.breadcrumbItems];
@@ -967,7 +961,6 @@ export class ProjectsDocumentComponent implements OnInit {
         {label: "Document",command: () => {this.onCreateDocument()}}
       ];
     clearTimeout(this.clickTimeout);
-    console.log("this.breadcrumbItems",this.breadcrumbItems)
     }
   }
 
@@ -991,8 +984,6 @@ export class ProjectsDocumentComponent implements OnInit {
   };
 
   addSubfolder() {
-    console.log(this.selectedFolder_new);
-    console.log("this.breadcrumbItems",this.breadcrumbItems)
     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase() && e.dataType == "folder") 
      if(existValue.length > 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
@@ -1071,7 +1062,6 @@ export class ProjectsDocumentComponent implements OnInit {
       if(element.is_selected)
       this.selectedItem_new.push(element)
     });
-    console.log(this.selectedItem_new)
   }
 
   onSelectFolder(event: MouseEvent , index){
@@ -1181,9 +1171,9 @@ export class ProjectsDocumentComponent implements OnInit {
   backToSelectedFolder(type){
       this.folder_files=[];
       this.selectedItem_new=[];
+      this.term = '';
       if(type == 'main'){
           this.folder_files = this.files;
-          console.log(this.folder_files)
           this.folder_files.forEach(element => {
             element["is_selected"]=false;
           });
@@ -1206,7 +1196,6 @@ export class ProjectsDocumentComponent implements OnInit {
     let filteredData= this.findNodeByKey(event.key,this.files).children;
       this.folder_files=[];
       this.folder_files = this.setFolderOrder(filteredData);
-      console.log(this.folder_files,filteredData,this.files)
       this.breadcrumbItems.splice(index+1);
   }
 
@@ -1280,7 +1269,6 @@ export class ProjectsDocumentComponent implements OnInit {
       });
       return;
     }
-    console.log("isFilesExist",filesCount,foldersCount);
     const zip = new JSZip();
     for (const folder of this.selectedItem_new) {
       if(folder.dataType == "folder"){
@@ -1447,8 +1435,6 @@ async getFileDataById(fileId) {
     }
 
     uploadCreatedDocument(){
-      console.log(this.selectedAction)
-      console.log(this.folder_files)
     let existValue = this.folder_files.filter(e=> (e.label.toLowerCase() == (this.enterDocumentName+'.docx').toLowerCase()) && (e.dataType != "folder"));
     if(existValue.length > 0){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "File Name Already exists!" });
@@ -1465,7 +1451,6 @@ async getFileDataById(fileId) {
       formData.append("taskId", "");
       formData.append("ChildId", "1");
       formData.append("fileUniqueIds", JSON.stringify([objectKey+'-'+ filteredkey+1]));
-      console.log([objectKey+'-'+ filteredkey]);
       this.loader.show();
       this.rest_api.uploadfilesByProject(formData).subscribe((res) => {
         this.loader.hide();
@@ -1473,19 +1458,16 @@ async getFileDataById(fileId) {
         this.isEditor = false;
         this.documentCreateDialog = false;
         this.enterDocumentName= "";
-        console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
 
         if(this.selectedAction == 'main' || this.selectedAction == 'subfolders'){
           this.backToSelectedFolder(this.selectedAction);
         }
         if(this.breadcrumbSelectedIndex){
-          console.log("test1",this.selectedAction,this.breadcrumbSelectedIndex)
           this.onBreadcrumbItemClick(this.selectedAction,this.breadcrumbSelectedIndex);
         }
 
         if(!this.selectedAction){
           this.getTheListOfFolders1()
-          console.log("test",this.selectedAction,this.breadcrumbSelectedIndex)
         }
           this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
       },err=>{
@@ -1497,6 +1479,7 @@ async getFileDataById(fileId) {
 
   documentSaveConfirmation(value,index?:number){
     if(this.isEditor){
+      this.term = '';
       this.confirmationService.confirm({
         message: "Your changes will be lost if you don't save them.",
         header: 'Do you want to save the changes?',
