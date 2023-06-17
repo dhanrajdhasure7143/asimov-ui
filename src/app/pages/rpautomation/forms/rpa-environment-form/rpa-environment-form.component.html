@@ -72,6 +72,7 @@
                     <select name="Category" class="form-control" formControlName="categoryId"
                         [value]="categoriesList.length==1?categoriesList[0].categoryId:''" (change)="onChangeEnvType()" >
                         <option value="" disabled hidden>Select Category</option>
+                        <option [value]="0" hidden disabled selected>Select Category</option>
                         <option [value]="category.categoryId" *ngFor="let category of categoriesList">
                             {{category.categoryName}}</option>
                     </select>
