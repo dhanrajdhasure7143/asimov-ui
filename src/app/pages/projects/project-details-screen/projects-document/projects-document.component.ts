@@ -223,6 +223,8 @@ export class ProjectsDocumentComponent implements OnInit {
     if (item.dataType === 'folder') {
       // item.size = this.formatBytes(this.calculateFolderSize(item));
       item.size = this.calculateFolderSize(item);
+    }else{
+      item.size = item.fileSize;
     }
   });
   // return files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
@@ -279,6 +281,8 @@ export class ProjectsDocumentComponent implements OnInit {
       dataList.forEach(item => {
         if (item.dataType === 'folder') {
           item.size = this.calculateFolderSize(item);
+        }else{
+          item.size = item.fileSize;
         }
       });
       this.dataSearchList = [...dataList]
@@ -1260,7 +1264,7 @@ export class ProjectsDocumentComponent implements OnInit {
     if(user)
       return user["fullName"]
       else
-      return '';
+      return '-';
   }
 
   async downloadZip() {
