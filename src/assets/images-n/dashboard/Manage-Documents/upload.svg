@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
+  <defs>
+    <clipPath id="clip-upload">
+      <rect width="15" height="15"/>
+    </clipPath>
+  </defs>
+  <g id="upload" clip-path="url(#clip-upload)">
+    <g id="Group_67" data-name="Group 67" transform="translate(12.499 13.213) rotate(180)">
+      <path id="Path_242" data-name="Path 242" d="M10,0H0" transform="translate(9.998 11.427) rotate(180)" fill="none" stroke="#232832" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Group_41" data-name="Group 41" transform="translate(0 0)">
+        <path id="Path_243" data-name="Path 243" d="M0,5,5,0l5,5" transform="translate(9.998 9.999) rotate(180)" fill="none" stroke="#232832" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path id="Path_259" data-name="Path 259" d="M0,0V9.933" transform="translate(5.001 9.933) rotate(180)" fill="none" stroke="#232832" stroke-linecap="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

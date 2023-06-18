@@ -1,10 +1,15 @@
-<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_287_11158)">
-<path d="M40.625 14.6877H26.0417L20.5625 8.06273C20.3687 7.82374 20.1243 7.63067 19.8469 7.49739C19.5695 7.36411 19.2661 7.29393 18.9584 7.29189H9.37502C8.01379 7.27518 6.7014 7.79855 5.72522 8.74739C4.74905 9.69624 4.18863 10.9932 4.16669 12.3544V37.6461C4.18863 39.0072 4.74905 40.3042 5.72522 41.2531C6.7014 42.2019 8.01379 42.7253 9.37502 42.7086H40.625C41.9863 42.7253 43.2986 42.2019 44.2748 41.2531C45.251 40.3042 45.8114 39.0072 45.8334 37.6461V19.7502C45.8114 18.3891 45.251 17.0921 44.2748 16.1432C43.2986 15.1944 41.9863 14.671 40.625 14.6877Z" fill="#098DE6" fill-opacity="0.68"/>
-</g>
-<defs>
-<clipPath id="clip0_287_11158">
-<rect width="50" height="50" fill="white"/>
-</clipPath>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="112" height="80" viewBox="0 0 112 80">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#ffd75e" stop-opacity="0.302"/>
+    </linearGradient>
+  </defs>
+  <g id="OneDrive_Folder_Icon" transform="translate(-6 -18)">
+    <path id="Path_260" data-name="Path 260" d="M58,26l-5.657-5.657A8,8,0,0,0,46.686,18H10a4,4,0,0,0-4,4V96.667A1.333,1.333,0,0,0,7.333,98H116.667A1.333,1.333,0,0,0,118,96.667V30a4,4,0,0,0-4-4Z" transform="translate(0)" fill="#ffb900"/>
+    <path id="Path_261" data-name="Path 261" d="M58,24l-5.657,5.654A8,8,0,0,1,46.686,32H6V94.626a1.333,1.333,0,0,0,1.333,1.333H116.667A1.333,1.333,0,0,0,118,94.626V28a4,4,0,0,0-4-4Z" transform="translate(0 2.041)" fill="#ffd75e"/>
+    <path id="Path_262" data-name="Path 262" d="M58,24l-5.657,5.654A8,8,0,0,1,46.686,32H6V94.626a1.333,1.333,0,0,0,1.333,1.333H116.667A1.333,1.333,0,0,0,118,94.626V28a4,4,0,0,0-4-4Z" transform="translate(0 2.041)" fill="url(#linear-gradient)"/>
+    <path id="Path_263" data-name="Path 263" d="M6,32.041v1.34H47.009a9.381,9.381,0,0,0,6.633-2.748L60.276,24h-2.01L52.58,29.686a8.041,8.041,0,0,1-5.686,2.355Z" transform="translate(0 2.041)" fill="#fff" opacity="0.4"/>
+    <path id="Path_264" data-name="Path 264" d="M116.667,78.34H7.333A1.337,1.337,0,0,1,6,77H118A1.337,1.337,0,0,1,116.667,78.34Z" transform="translate(0 19.66)" fill="#da7b16"/>
+  </g>
 </svg>

@@ -674,6 +674,6 @@ export class BpsHomeComponent implements OnInit {
   if(user)
     return user["fullName"]
     else
-    return '';
+    return '-';
   }
 }

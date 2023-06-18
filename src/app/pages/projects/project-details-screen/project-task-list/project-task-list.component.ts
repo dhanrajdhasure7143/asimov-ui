@@ -75,6 +75,8 @@ export class ProjectTaskListComponent implements OnInit {
     this.users_list.forEach((element) => {
       if (element.user_email == event) {
         userName = element.firstName + " " + element.lastName;
+      }else{
+        userName ="-"
       }
     });
     return userName;
