@@ -55,6 +55,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild("logspopup") public logsOverlayRef: any;
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
+  @Input("idBot") public idBot: number;
   display:boolean = false;
   filteredEnvironments: any = [];
   VersionsList: any = [];
@@ -160,6 +161,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCreateForm:boolean=true;
   credupdatedata:any;
   credentialsFormFlag:boolean=false;
+  isDeprecated: boolean;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -220,6 +222,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getData();
     this.passwordtype1 = false;
     this.passwordtype2 = false;
     this.spinner.show();
@@ -1821,6 +1824,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateBotFun(version_type, comments) {
+    if(this.isDeprecated == true){
+      Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
+      return;
+    }
     let env = [
       ...this.filteredEnvironments
         .filter((item: any) => item.check == true)
@@ -2728,7 +2735,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       Swal.fire("Warning", "Please check connections", "warning");
       return;
     }
-    if(this.isBotCompiled) {
+    if(this.isDeprecated == true){
+      console.log(this.isDeprecated,"this.isDeprecated")
+      Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
+      return;
+    }
+    if(this.isBotCompiled || this.isDeprecated == false) {
       this.spinner.show();
       this.rest.execution(this.finalbot.botId).subscribe(
         (response: any) => {
@@ -2736,6 +2748,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if (response.errorMessage == undefined)
             Swal.fire("Success", response.status, "success");
           else Swal.fire("Error", response.errorMessage, "error");
+          this.getData();
         },
         (err) => {
           this.spinner.hide();
@@ -2745,6 +2758,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     } else {
       Swal.fire("Error", "Unable to execute bot", "error");
     }
+  }
+
+  getData(){
+    this.rest.getbotdata(this.idBot).subscribe((response: any) => {
+      for(let i = 0; i < 100; i++){
+          this.isDeprecated = response.tasks[i].isModified
+        console.log("data",this.isDeprecated);
+       
+      }
+    });
   }
 
   getAllVersions() {
