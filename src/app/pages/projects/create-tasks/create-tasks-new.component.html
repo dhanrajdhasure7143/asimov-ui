@@ -117,8 +117,8 @@
                           optionLabel="fullName" [appendTo]="'body'">
                 </p-dropdown>
               </div> -->
-                <div class="form-group col p-0 taskapprover" *ngIf="freetrail!='true'">
-                    <label class="" for="approvers">Approver<span class="star">*</span></label>
+                <!-- <div class="form-group col p-0 taskapprover" *ngIf="freetrail!='true'"> -->
+                    <!-- <label class="" for="approvers">Approver<span class="star">*</span></label>
                     <p-dropdown [options]="approverslist" [style]="{'width':'100%'}"
                       placeholder="Select Approver"
                       formControlName="approvers" optionValue="user_email" optionLabel="fullName" required>
@@ -130,8 +130,8 @@
                       <option value="" disabled hidden>Select Approver</option>
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                    </select> -->
-                    <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
+                    </select> 
+                   <-- <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
                       class="required">Approver Required</span>
                 </div> 
                 <div class="form-group col p-0" *ngIf="freetrail=='true'">
@@ -143,9 +143,9 @@
                       <option value="" disabled hidden>Select Approver</option>
                       <option *ngFor="let user of approverslist" [value]="user.userId.id">
                           {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                    </select>
-                </div> 
-                <div class="form-group col pr-0">
+                    </select> -->
+                <!-- </div>  -->
+                <div class="form-group col p-0">
                     <div class="row">
                         <div class="fromdate">
                             <label class="">From <span class="star">*</span></label>
