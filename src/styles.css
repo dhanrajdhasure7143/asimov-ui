@@ -2439,8 +2439,20 @@ input.p-inputtext {
 .actionspopmenu.prjactmenu .p-menu-overlay {
   top: 40px !important;
 }
+.dochead-leftbtns .p-menu-overlay {
+  top: 40px !important;
+  left: unset !important;
+}
 .download .p-overlaypanel-content {
   padding: 5px 0px !important;
+}
+.docuplbtn-items {
+  margin-top: 0px !important;
+  padding: 3.5px 0px !important;
+  top: 177px !important;
+}
+.docuplbtn-items .p-overlaypanel-content {
+  padding: 0px !important;
 }
 .editfields i {
   padding: 6px;
@@ -3077,6 +3089,17 @@ textarea.p-inputtextarea {
 .vrsn-btn .p-togglebutton.p-button:focus {
   box-shadow: unset !important;
 }
+.dochead-upldbtn .p-splitbutton.p-component {
+  height: 36px;
+}
+.dochead-upldbtn .p-card .p-card-body, .dochead-upldbtn .p-card .p-card-content {
+  padding: 0px !important;
+  position: relative;
+}
+.dochead-upldbtn .p-card {
+  background: transparent !important;
+  box-shadow: unset !important
+}
 
 /* new styles for ng select */
 .ng-select .ng-select-container {
@@ -3121,7 +3144,7 @@ textarea.p-inputtextarea {
 }
 .taskdescription p-inplace.p-element {
   height: calc(100% - 40px);
-  display: inline-block;
+ display: inline-block; 
 }
 .task_description p-inplace.p-element {
   width: 100%;
@@ -3343,9 +3366,9 @@ textarea.p-inputtextarea {
 }
 .doctree .p-tree-filter-container {
   position: fixed;
-  top: 70px;
-  right: 70px;
-  width: 196px;
+  top: 122px;
+  right: 51px;
+  width: 195px;
 }
 .doctree .p-tree-filter-container .p-tree-filter {
     padding-right: 17px !important;
@@ -3353,20 +3376,23 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 176px;
-  width: 176px;
+  height: 154px;
+  width: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: unset !important;
   border-radius: 3px;
-  margin: 10px 15px 5px 0px;
-  padding: 10px 15px;
+  /* margin: 10px;
+  padding: 10px 15px; */
   background: #fff;
   cursor: pointer;
 }
-.docfolder .p-card:hover {
-  border: 1px solid var(--secondary-bluecolor);
+.dochovercheck .p-card:hover {
+  background-color: #eeeeee;
+}
+.docfolder .p-card-content:hover span.foldname {
+  text-decoration: underline !important;
 }
 .docfolder1 .addpcard .p-card {
   background: #eee;
@@ -3376,9 +3402,12 @@ textarea.p-inputtextarea {
   color: var(--main-txtcolor);
   font-weight: 600;
 }
+.docscrnchngs .p-breadcrumb ul li:not(:last-child) .p-menuitem-text {
+  cursor:pointer;
+}
 .docscrnchngs .p-breadcrumb {
   background: transparent;
-  padding: 0px 10px;
+  padding: 15px 20px 0px 20px;
   border: unset;
 }
 .docscrnchngs .p-breadcrumb ul li.p-breadcrumb-chevron {
@@ -3402,6 +3431,16 @@ textarea.p-inputtextarea {
 }
 .docfolder .p-card-body, .docfolder .p-card-content {
   padding: 0px !important;
+  position: relative;
+}
+.docfolder .p-card-content span.datsiz {
+  color: #d36303 !important;
+  text-align: left;
+  position: absolute;
+  bottom: 30px;
+  left: 6px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Document Overlay Styles Start */
@@ -3531,7 +3570,7 @@ textarea.p-inputtextarea {
 /* ----------------------Editable noneditable and text-editor styles------------------------- */
 .editor-container.editor-body .ck.ck-editor__editable_inline {
   width: 100% !important;
-  height: calc(100vh - 190px) !important;
+  height: calc(100vh - 170px) !important;
   padding: 20px 20px 20px 20px !important;
   margin: 0px auto !important;
 }
@@ -3617,6 +3656,19 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
+.imageBox {
+  position: relative;
+  /* float: left; */
+}
+
+.imageBox .hover-icon,
+.imageBox:hover .active-icon  {
+  display: none;
+}
+
+.imageBox:hover .hover-icon{
+  display: block;
+}
 
 
 
@@ -3653,4 +3705,7 @@ background-color: #D8E0EF !important;
   color:  #fff;
   padding: 1px 10px;
   border-radius: 50px;
+}
+.bold {
+  font-weight: bold;
 }

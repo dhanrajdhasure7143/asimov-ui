@@ -42,6 +42,7 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {AvatarModule} from 'primeng/avatar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import {SplitButtonModule} from 'primeng/splitbutton';
 @NgModule({
   declarations: [],
   imports: [
@@ -86,7 +87,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     RippleModule,
     BreadcrumbModule,
     AvatarModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    SplitButtonModule
   ],
   exports: [
     CommonModule,
@@ -130,7 +132,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     TieredMenuModule,
     BreadcrumbModule,
     AvatarModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    SplitButtonModule
   ],
   providers: [ConfirmationService, MessageService]
 })

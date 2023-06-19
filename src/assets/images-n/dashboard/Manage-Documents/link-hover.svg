@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
+  <defs>
+    <clipPath id="clip-link-hover">
+      <rect width="15" height="15"/>
+    </clipPath>
+  </defs>
+  <g id="link-hover" clip-path="url(#clip-link-hover)">
+    <g id="Group_57" data-name="Group 57" transform="translate(1 -3.278)">
+      <path id="Path_292" data-name="Path 292" d="M15,9.765a3.073,3.073,0,0,0,4.634.332l1.844-1.844a3.073,3.073,0,1,0-4.345-4.345L16.076,4.959" transform="translate(-9.84 1.771)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path id="Path_293" data-name="Path 293" d="M10.371,14.725a3.073,3.073,0,0,0-4.634-.332L3.893,16.236a3.073,3.073,0,1,0,4.345,4.345l1.051-1.051" transform="translate(-2.993 -4.719)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

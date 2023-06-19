@@ -1,6 +1,6 @@
 <div class="maincontent">
   <div class="row main-content-head">
-    <div class="col-md-4 pl-0">
+    <div class="col-md-8 pl-0">
       <h3>
         <label id="popup_title">
           <a routerLink="/pages/admin/admin-screen-list" class="imageBox">
@@ -25,7 +25,7 @@
             <span class="module-header-title" *ngIf="labelupdate">Update Screen</span>
           </div> -->
     </div>
-    <div class="col-md-8 pr-0 text-right">
+    <div class="col-md-4 pr-0 text-right">
       <button type="button" class="btn new-cancelbtn" (click)="backToScreenList()">Cancel</button>
         <button *ngIf="!screen_id" [disabled]="insertForm.invalid || screenNameCheck" class="btn bluebg-button" (click)="saveScreen()">Save</button>
         <button *ngIf="screen_id"  [disabled]="insertForm.invalid || screenNameCheck"class="btn bluebg-button" (click)="updateData()">Update</button>
@@ -296,3 +296,4 @@
   </app-split-overlay>
 
 </div>
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>

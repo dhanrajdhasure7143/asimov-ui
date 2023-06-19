@@ -1,35 +1,21 @@
 <div class="maincontent">
     <div class="row main-content-head">
-      <div class="col-md-4 pl-0">
+      <div class="col-md-8 pl-0">
         <h3>     
         <span class="sub_title_text">
             Screen Generation
           </span>
         </h3>
       </div>
-      <div class="col-md-8 pr-0 text-right">
-        <!-- <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                    <span>Open</span>
-                </button> -->
-        <!-- <button class="btn" (click)="onCreateNew()" pTooltip="Create" tooltipPosition="top">
-          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-        </button> -->
+      <div class="col-md-4 pr-0 text-right">
         <button class="btn grey-btn configure-pad" (click)="addNew()">
           <img src="./../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Add New" class="imgicon-width">
           <span class="plus">Add New</span>
         </button>
-        
-        <!-- <button class="btn" pTooltip="Actions" tooltipPosition="top">
-          <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
-          <span>Actions</span>
-        </button> -->
       </div>
     </div>
     <div class="main-content-body  table-height-adj">
       <div class="tabs_screen h-100">
-      
-       
           <div class="gridparentdiv">
             <app-dynamic-table
             [table_data]="screenlist"
@@ -50,56 +36,13 @@
      
       </div>
   </div>
-
-
-  <!-- <mat-card id="projects_list_screen" class="h-100">
-    <div class="row module-heading title">
-      <span class="module-back-button"  routerLink="/pages/home" >
-        <i class="fas fa-arrow-left" aria-hidden="true"></i>
-      </span>
-      <span class="module-back-button" routerLink="/pages/home">
-        <i aria-hidden="true" class="fas fa-arrow-left"></i>
-      </span>
-      <span class="module-header-title">Screen Generation new</span>
-    </div>
-    <div class="module-heading title">
-      <div class="col-md-12 p-0">
-        <div class="col-md-12 p-0 env-data-tool text-right">
-          <div>
-            <button
-              class="btn btn-primary"
-              style="float: right"
-              (click)="addNew()"
-            >
-              Add New
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="department-body">
-        <app-dynamic-table
-          [table_data]="screenlist"
-          [screenTable]="'common'"
-          [columns_list]="columns_list"
-          (updateItem)="editScreen($event)"
-          (deleteItem)="deleteScreen($event)"
-          [show_delete_btn]="true"
-          [show_edit_btn]="true"
-          [show_column_filter]="true"
-          [show_search_field]="true"
-          [search_fields]="table_searchFields"
-        ></app-dynamic-table>
-    </div>
-  </mat-card> -->
-
 </div>
-<!-- <div class="spinoverlay" *ngIf="loading">
-  <div class="spincenter">
-    <img
-      src="../../../../assets/images/EZFlow_Loader.gif"
-      class="ezflow-loader"
-      alt="EZFlow_Loader"
-    />
-  </div>
-</div> -->
+
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" 
+rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+<ng-template pTemplate="footer">
+  <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+  <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+</ng-template>
+</p-confirmDialog>
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
