@@ -6,6 +6,7 @@ import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { MessageService } from "primeng/api";
+declare const CKEDITOR: any;
 @Component({
   selector: "app-project-document-editor",
   templateUrl: "./project-document-editor.component.html",
@@ -36,32 +37,40 @@ export class ProjectDocumentEditorComponent implements OnInit {
       this.navigarteURL = this.paramsData.url;
       this.project_id = this.paramsData.projectId;
       this.projectName = this.paramsData.projectName;
+      CKEDITOR.replace("project-document-editor",{
+        height: 250,
+        extraPlugins: 'colorbutton',
+        removeButtons: 'PasteFromWord'
+      });
       // this.ckeConfig = {
       //   allowedContent: false,
       //   extraPlugins: 'divarea',
       //   forcePasteAsPlainText: true,
       //   removePlugins: 'exportpdf'
       // };
-      DecoupledEditor.create(document.querySelector("#editor"),{
-        // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
-        removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
-      })
-        .then((editor) => {
-          // The toolbar needs to be explicitly appended.
-          document
-            .querySelector("#toolbar-container")
-            .appendChild(editor.ui.view.toolbar.element);
-          this.editorRef = editor;
-          // window = editor;
-        })
-        .catch((error) => {
-          console.error("There was a problem initializing the editor.", error);
-        });
+      // DecoupledEditor.create(document.querySelector("#editor"),{
+      //   // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
+      //   removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+      // })
+      //   .then((editor) => {
+      //     // The toolbar needs to be explicitly appended.
+      //     document
+      //       .querySelector("#toolbar-container")
+      //       .appendChild(editor.ui.view.toolbar.element);
+      //     this.editorRef = editor;
+      //     // window = editor;
+      //   })
+      //   .catch((error) => {
+      //     console.error("There was a problem initializing the editor.", error);
+      //   });
+
+
     });
   }
 
   downloadDocument() {
-    this.documentData = this.editorRef.getData();
+    //this.documentData = this.editorRef.getData();
+    this.documentData=CKEDITOR.instances["project-document-editor"].getData()??"";
     asBlob(this.documentData).then((data: any) => {
       saveAs(data, "file.docx"); // save as docx file
     });
@@ -73,8 +82,9 @@ export class ProjectDocumentEditorComponent implements OnInit {
 
   uploadFile() {
     this.loader.show();
-    this.documentData = this.editorRef.getData();
-    asBlob(this.documentData).then((data: any) => {
+   // this.documentData = this.editorRef.getData();
+   this.documentData=CKEDITOR.instances["project-document-editor"].getData()??"";
+   asBlob(this.documentData).then((data: any) => {
       const formData = new FormData();
       formData.append("filePath", data, this.entered_folderName+'.docx');
       formData.append("projectId", this.project_id);

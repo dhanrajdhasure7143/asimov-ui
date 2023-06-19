@@ -46,7 +46,11 @@ export class SignatureUpdate implements OnInit {
   ngOnInit(): void {
     setTimeout(()=>{
           this.form.get(this.field.name+"_"+this.field.id).setValue(this.field.value);
-          CKEDITOR.replace("template-editor"+this.field.id);
+          CKEDITOR.replace("template-editor"+this.field.id,{
+            height: 250,
+            extraPlugins: 'colorbutton',
+            removeButtons: 'PasteFromWord'
+          });
           CKEDITOR.config.allowedContent = true;
           this.loaded=true;
     }, 200)
