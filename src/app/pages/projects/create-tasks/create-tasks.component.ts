@@ -56,7 +56,7 @@ export class CreateTasksComponent implements OnInit {
       startDate: ["", Validators.compose([Validators.required])],
       endDate: ["",Validators.compose([Validators.required])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      approvers: ["",Validators.compose([Validators.required,Validators.maxLength(50)])],
+      // approvers: ["",Validators.compose([Validators.required,Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.required])],
 
 
@@ -77,11 +77,11 @@ export class CreateTasksComponent implements OnInit {
       })
       this.getProjectDetails();
       this.freetrail=localStorage.getItem('freetrail')
-      if(this.freetrail!='true') {
-        this.createtaskForm.get('approvers').setValidators(Validators.required)
-      } else {
-        this.createtaskForm.get('approvers').clearValidators();
-      }
+      // if(this.freetrail!='true') {
+      //   this.createtaskForm.get('approvers').setValidators(Validators.required)
+      // } else {
+      //   this.createtaskForm.get('approvers').clearValidators();
+      // }
 
   }
 
@@ -215,7 +215,7 @@ export class CreateTasksComponent implements OnInit {
     this.createtaskForm.get("taskCategory").setValue("");
   this.createtaskForm.get("priority").setValue("");
   this.createtaskForm.get("resources").setValue("");
-  this.createtaskForm.get("approvers").setValue("");
+  // this.createtaskForm.get("approvers").setValue("");
   this.createtaskForm.get("correlationID").setValue("");
   }
   DateMethod(){

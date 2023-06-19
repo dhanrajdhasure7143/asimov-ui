@@ -672,6 +672,10 @@ export class ProjectsDocumentComponent implements OnInit {
         //   folder_key= this.files.length+1;
         // }
       }
+      if(this.checkDuplicateFolder(folderName)){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
+        return;
+      }
       let req_body = [{
         key: folder_key,
         label: folderName,
@@ -819,7 +823,7 @@ export class ProjectsDocumentComponent implements OnInit {
           // filteredData1.push(element)
         });
         setTimeout(() => {
-          const uniqueIds = [];
+          const uniqueIds:any = [];
           const unique = filteredData1.filter(element => {
             const isDuplicate = uniqueIds.includes(element.id);
             if (!isDuplicate) {
@@ -834,17 +838,8 @@ export class ProjectsDocumentComponent implements OnInit {
       }, 100);
     }else{
       this.istaskFilterApplied = false;
-      this.files=[];
-      this.files=[
-        {
-          key: "0",
-          label: "Add Folder",
-          data: "Add Folder",
-          data_type:"addfolder",
-          icon:"folderadd.svg",
-        },
-      ];
-      this.convertToTreeView(this.documents_resData)
+      this.files=this.convertToTreeView(this.documents_resData);
+      this.folder_files = this.files;
     }
     }
 
@@ -915,6 +910,13 @@ export class ProjectsDocumentComponent implements OnInit {
       }
     }
     this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+    this.files.forEach(item => {
+      if (item.dataType === 'folder') {
+        item.size = this.calculateFolderSize(item);
+      }else{
+        item.size = item.fileSize;
+      }
+    });
     this.folder_files = this.files;
     this.dataFormateforSearch(res_data);
     this.loader.hide();
