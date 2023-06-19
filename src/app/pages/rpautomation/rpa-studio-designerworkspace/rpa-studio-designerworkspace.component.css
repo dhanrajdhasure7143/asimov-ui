@@ -262,5 +262,6 @@
 }
 
 .hide-node{
-  filter:grayscale();
+  /* filter:grayscale(); */
+  border: 3px solid red !important;
 }
