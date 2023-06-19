@@ -164,7 +164,7 @@
                     <tr>
                         <th></th>
                         <th>Name</th>
-                        <th>Last Modified</th>
+                        <th>Created At</th>
                         <th>Created By</th>
                         <th>File Size</th>
                     </tr>
@@ -172,10 +172,10 @@
                 <tbody>
                     <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)">
                         <td class="position-relative"><input type="checkbox" id="" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/></td>
-                        <td class="filname"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create" (click)="onSelectFolder($event,i)"><span>{{item.label}}</span></td>
+                        <td class="filname" (click)="onSelectFolder($event,i)"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create"><span>{{item.label}}</span></td>
                         <td (click)="onSelectFolder($event,i)">{{item.uploadedDate_new}}</td>
                         <td><span class="prjlastupdateprofile" (click)="onSelectFolder($event,i)">{{item.uploadedByUser|userLetters:users_list|uppercase}}</span>{{item.uploadedByUser}}</td>
-                        <td (click)="onSelectFolder($event,i)">{{item.size?item.size:item.fileSize | fileSizePipe}}</td>
+                        <td (click)="onSelectFolder($event,i)">{{item.size?(item.size| fileSizePipe) :item.size}}</td>
                     </tr>
                 </tbody>
             </table>

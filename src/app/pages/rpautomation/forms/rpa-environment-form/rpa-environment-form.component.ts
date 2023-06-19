@@ -96,7 +96,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   setPort() {
     if (this.environmentForm.value.environmentType == "Windows") {
-      this.environmentForm.get("portNumber").setValue("44");
+      this.environmentForm.get("portNumber").setValue("22");
     } else if (this.environmentForm.value.environmentType == "Linux") {
       this.environmentForm.get("portNumber").setValue("22");
     }
@@ -108,7 +108,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
     this.isKeyValuePair = false;
     this.environmentForm.get("portNumber").setValue("22");
     this.environmentForm.get("connectionType").setValue("SSH");
-    this.environmentForm.get("categoryId").setValue(this.categoriesList.length == 1 ? this.categoriesList[0].categoryId : '0');
+    this.environmentForm.get("categoryId").setValue(this.categoriesList.length == 1 ? this.categoriesList[0].categoryId : '');
     this.environmentForm.get("environmentType").setValue("");
     this.environmentForm.get("activeStatus").setValue(true);
     this.passwordtype1 = false;
@@ -320,7 +320,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
 
   onChangeEnvType(){
     if(this.environmentForm.value.environmentType == "Windows"){
-      this.environmentForm.get("portNumber").setValue("44");
+      this.environmentForm.get("portNumber").setValue("22");
     }else if(this.environmentForm.value.environmentType == "Linux"){
       this.environmentForm.get("portNumber").setValue("22");
     }
