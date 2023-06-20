@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../services/rest-api.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-change-password',
@@ -18,7 +19,11 @@ export class ChangePasswordComponent implements OnInit {
   isFormOverlay: boolean = false;
   @Output() valueChange = new EventEmitter();
 
-  constructor( private api:RestApiService, private loader:LoaderService) { }
+  constructor( private api:RestApiService, 
+    private loader:LoaderService,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -33,37 +38,53 @@ export class ChangePasswordComponent implements OnInit {
   this.api.changePassword(pswdbody).subscribe(res => {
   // this.pswdmodel = {};
   if(res.errorMessage === undefined){
-    Swal.fire({
-      title: "Success",
-      text: "Password updated successfully!",
-      position: 'center',
-      icon: 'success',
-      showCancelButton: false,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
+    // Swal.fire({
+    //   title: "Success",
+    //   text: "Password Updated successfully!",
+    //   position: 'center',
+    //   icon: 'success',
+    //   showCancelButton: false,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
 
-      confirmButtonText: 'Ok'
-    });
+    //   confirmButtonText: 'Ok'
+    // });
+
     this.loader.hide();
-    this.valueChange.emit(this.isFormOverlay)
+    this.confirmationService.confirm({
+     header:'Success',
+     message:'Password Updated successfully!',
+     acceptLabel:'Ok',
+     rejectVisible:false,
+     acceptButtonStyleClass:'btn bluebg-button',
+     defaultFocus:'none',
+    accept:()=>{
+      this.valueChange.emit(this.isFormOverlay);
+       form.resetForm();
+    }})
   }else if(res.errorMessage === "Your current password was incorrect."){
-      Swal.fire("Error","Please check your current password.","error");
+      // Swal.fire("Error","Please check your current password!","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Please check your current password!'})
+
       this.loader.hide(); 
     }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
-      Swal.fire("Error",res.errorMessage,"error");
+      // Swal.fire("Error",res.errorMessage,"error");
+        this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
       this.loader.hide(); 
     }
     else if(res.errorMessage === "The new password must be different from your current password"){
-      Swal.fire("Error",res.errorMessage,"error");
+      // Swal.fire("Error",res.errorMessage,"error");
+      this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
       this.loader.hide(); 
     }
   }, err => {
     this.loader.hide();
     // console
-    Swal.fire("Error","Please check your current password.","error");})
- form.resetForm();
+    // Swal.fire("Error","Please check your current password!","error");
+    this.messageService.add({severity:'error',summary:'Error',detail:'Please check your current password!'})
+  })
   }
 
   curreyetoggle() {
