@@ -6,7 +6,7 @@
         lightTheme: lightTheme
       }">
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{ node.id }}" class="dndDropzone" [ngClass]="node.isModified?'hide-node':''" [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+        <div id="{{ node.id }}" class="dndDropzone" [ngClass]="node.isModified?'hide-node':''" [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
           (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
             left: node.x,
             top: node.y,
