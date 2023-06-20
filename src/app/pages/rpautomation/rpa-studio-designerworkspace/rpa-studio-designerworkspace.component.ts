@@ -315,7 +315,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (item: any) => item.id == connection.targetId
         );
         if (connectionNodeForTarget.selectedNodeTask == "If condition") {
-          this.messageService.add({severity:'warning',summary:'Alert',detail:'Start Node Should not connect directly to if condition.'})
+          this.messageService.add({severity:'warn',summary:'Alert',detail:'Start Node Should not connect directly to if condition.'})
           setTimeout(() => {
             this.changesDecorator.detectChanges();
             this.jsPlumbInstance.deleteConnection(connection);
@@ -2783,7 +2783,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   async executeBot() {
     if (this.checkorderflag == false) {
       this.spinner.hide();
-      Swal.fire("Warning", "Please check the connections.", "warning");
+      // Swal.fire("Warning", "Please check the connections.", "warning");
+      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please check the connections.'})
       return;
     }
     if(this.isBotCompiled) {

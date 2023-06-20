@@ -467,7 +467,7 @@ export class SoSchedulerComponent implements OnInit {
         if(resp.errorMessage!=undefined)
         {
           // Swal.fire(resp.errorMessage,"","warning");
-          this.messageService.add({severity:'warning',summary:'Warning',detail:resp.errorMessage})
+          this.messageService.add({severity:'warn',summary:'Warning',detail:resp.errorMessage})
           
         }
         else

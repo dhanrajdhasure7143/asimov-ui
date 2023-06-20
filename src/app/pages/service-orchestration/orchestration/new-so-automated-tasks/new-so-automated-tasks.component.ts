@@ -1291,7 +1291,7 @@ resetsla(){
       this.addconfigstatus=false;
     }else
     {
-      this.messageService.add({severity:'warning',summary:'Warning',detail:'Please fill in the data.'})
+      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please fill in the data.'})
     }
   }
 

@@ -125,7 +125,7 @@ export class NewSoManagementComponent implements OnInit {
           }
           else
           {
-            this.messageService.add({severity:'warning',summary:'Warning',detail:response.errorMessage});
+            this.messageService.add({severity:'warn',summary:'Warning',detail:response.errorMessage});
           }
           //
         }

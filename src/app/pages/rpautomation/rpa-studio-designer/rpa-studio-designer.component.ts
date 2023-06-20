@@ -145,11 +145,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       else
       {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'
+      })
       }
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the toolset.'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the toolset.',key:'rpadesignertoast'})
     })
   }
 
@@ -162,10 +163,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       } 
       else
       {  
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     },err=>{
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load the data.'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load the data.',key:'rpadesignertoast'})
     })
   }
 
@@ -176,7 +177,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           this.environmentsList=response;
         }
         else{
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
         }
       });
   }
@@ -188,7 +189,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         this.categoriesList = response.data;
       }
       else {
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     })
   }
@@ -217,16 +218,16 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           
           this.spinner.hide();
           if(localStorage.getItem('bot_id')=="null")
-        this.messageService.add({severity:'warn',summary:'Warning',detail:'The selected bot is already loaded.'})
+        this.messageService.add({severity:'warn',summary:'Warning',detail:'The selected bot is already loaded.',key:'rpadesignertoast'})
         }
       }
       else
       {
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     },(err)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load bot'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load bot',key:'rpadesignertoast'})
       //this.router.navigate(["/home"])
     })
 
@@ -413,10 +414,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
       else
-      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
     },(err:any)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the predefined bots.'})
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the predefined bots.',key:'rpadesignertoast'})
     })
   }
 
@@ -522,7 +523,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
-      key: 'design',
+      key: 'messageService',
       
         accept:() => {
         this.current_instance.executionMode=this.executionMode;

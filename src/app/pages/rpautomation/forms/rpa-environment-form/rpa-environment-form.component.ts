@@ -142,7 +142,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       } else {
         this.spinner.hide()
         // Swal.fire("Alert", "Test connections for key pair authentication is not configured", "warning")
-        this.messageService.add({severity:'warning',summary:'Warning',detail:'Test connections for key pair authentication are not configured.'})
+        this.messageService.add({severity:'warn',summary:'Warning',detail:'Test connections for key pair authentication are not configured.'})
       }
     } else {
       this.spinner.hide();
