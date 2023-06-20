@@ -226,6 +226,9 @@ columns_list_activities:any[]=[];
 uploaded_file:any[]=[];
 loggedInUserId:any;
 users_List1:any[]=[];
+allFiles:any[]=[];
+documentList=[];
+
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -535,7 +538,7 @@ this.dt.tenantBased_UsersList.subscribe(response => {
   // this.connectToWebSocket();
     this.getMessagesList();
   this.getAllCategories();
-  this.getTheListOfFolders();
+  // this.getTheListOfFolders();
   this.getRoles();
   this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
   this.users_list.forEach((element) => {
@@ -1102,8 +1105,10 @@ if(this.selected_folder.dataType != 'folder'){
 // if(this.selected_folder.parent == undefined){
 //   key= String(this.files.length+1)
 // }else{
-  objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
-  key= this.selected_folder.key + "-" + objectKey
+  let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
+  key= this.selected_folder.key + "-" + this.getTheFileKey(selected_folder);
+  // objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+  // key= this.selected_folder.key + "-" + objectKey
 // }
 let req_body = {
   key: key,
@@ -1228,13 +1233,17 @@ createFolder(){
     this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
     return
   }
-this.isDialog = true;
-this.isFile_upload_dialog=false;
+  this.allFiles =[...this.convertToTree(this.documentList)];
+  // console.log(this.allFiles)
+  // console.log("selected_folder",this.selected_folder);
+  this.isDialog = true;
+  this.isFile_upload_dialog = false;
 }
 
 onCreateFolderDoc(type){
 this.isFile_upload_dialog = true;
 type=='folder'?this.selectedType="createFolder":this.selectedType="document"
+this.getTheListOfFolders();
 }
 
 getTheListOfFolders(){
@@ -1242,13 +1251,30 @@ let res_data:any=[];
 this.files=[];
 this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
     res_data=res
+    let onlyFolders=[];
     res_data.map(data=> {
       if(data.dataType=='folder'){
         data["children"]=[]
+        onlyFolders.push(data);
       }
       return data
-    })
+    });
+    this.documentList = [...res_data]
+  this.files =[...this.convertToTree(onlyFolders)];
+  // this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  this.allFiles =[...this.convertToTree(this.documentList)];
+  this.allFiles.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+})
+}
 
+convertToTree(res_data:any){
+  res_data.map(data=> {
+    if(data.dataType=='folder'){
+      data["children"]=[];
+    }
+    return data
+  });
+  let files:any =[];
   for (let obj of res_data) {
     let node = {
       key: obj.key,
@@ -1262,15 +1288,30 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
       children:obj.children,
       uploadedDate:obj.uploadedDate
     };
-      if(obj.dataType == 'folder'){
-        node['collapsedIcon']=  "pi pi-folder"
-        node["expandedIcon"]  ="pi pi-folder-open"
+    if(obj.dataType == 'folder'){
+      node['icon'] = "folder.svg"
+    }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'||obj.dataType == 'PNG' || obj.dataType == 'JPG'){
+      node['icon'] = "img-file.svg"
+    }else if(obj.dataType == 'pdf'){
+      node['icon'] = "pdf-file.svg"
+    }else if(obj.dataType == 'txt'){
+      node['icon'] = "txt-file.svg"
+    }else if(obj.dataType == 'mp4'|| obj.dataType == 'gif'){
+      node['icon'] = "video-file.svg"
+    }else if(obj.dataType == 'docx'){
+      node['icon'] = "doc-file.svg"
+    }else if(obj.dataType == 'html'){
+      node['icon'] = "html-file.svg"
+    }else if(obj.dataType == 'csv'||obj.dataType == 'xlsx' ){
+      node['icon'] = "xlsx-file.svg"
+    }else if(obj.dataType == 'ppt'){
+      node['icon'] = "ppt-file.svg"
     }else{
-      node['icon']=  "pi pi-file"
+      node['icon'] = "txt-file.svg"
     }
-    this.nodeMap[obj.key] = node;
+      this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
-      this.files.push(node);
+      files.push(node);
     } else {
       let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
       let parent = this.nodeMap[parentKey];
@@ -1280,23 +1321,22 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
       }
     }
   }
-  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-})
+  return files;
 }
 
 saveFolder(){
-  let key
+  let key:any
+  let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
   if(this.selected_folder){
-if(this.selected_folder.dataType != 'folder'){
-  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
-  return
-}
-  let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
-  key= this.selected_folder.key + "-" + objectKey;
+  if(this.selected_folder.dataType != 'folder'){
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+    return
+  }
+  // let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+  key= this.selected_folder.key + "-" + this.getTheFileKey(selected_folder);
 }else{
   key = "1"
 }
-
 
 let req_body = [{
   key: key,
@@ -1308,10 +1348,11 @@ let req_body = [{
   task_id: "",
   projectId: this.project_id
 }];
+
 this.spinner.show();
 // this.isDialog=false;
 this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-  this.getTheListOfFolders();
+  // this.getTheListOfFolders();
   this.spinner.hide();
   this.isDialog=false;
   this.entered_folder_name=''
@@ -1320,12 +1361,6 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
   this.spinner.hide();
   this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
 })
-}
-
-truncateValue(replyMessage) {
-  if (replyMessage && replyMessage.length > 21)
-    return replyMessage.substr(0, 20) + "...";
-  return replyMessage;
 }
 
 onFilteredUsers(usernames: string[]) {
@@ -1496,7 +1531,7 @@ selectEnd() {
     this.rest_api.uploadfilesByProject(fileData).subscribe(
       (res) => {
         this.spinner.hide();
-        this.getTheListOfFolders()
+        // this.getTheListOfFolders()
         this.messageService.add({
           severity: "success",
           summary: "Success",
@@ -1521,7 +1556,35 @@ selectEnd() {
       this.roles_list.unshift(obj)
     });
   }
-mouseUp() {}
+  
+  mouseUp() {}
+
+  getTheFileKey(selected_folder:any){
+    let filteredkey = selected_folder.children.length >0 ? selected_folder.children[selected_folder.children.length-1].key.split("-"):"1"
+    return selected_folder.children.length >0?Number(filteredkey[filteredkey.length-1])+1:filteredkey;
+  };
+
+  findNodeByKey(key: string, nodes: any[]) {
+    let node: any = null;
+    for (const n of nodes) {
+      if (n.key === key) {
+        node = n;
+        break;
+      } else if (n.children) {
+        node = this.findNodeByKey(key, n.children);
+        if (node) {
+          break;
+        }
+      }
+    }
+    return node;
+  };
+
+  truncateValue(replyMessage) {
+    if (replyMessage && replyMessage.length > 21)
+      return replyMessage.substr(0, 20) + "...";
+    return replyMessage;
+  };
 
 }
 

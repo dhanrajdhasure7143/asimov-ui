@@ -385,9 +385,15 @@
         <span class="p-float-label">
             <p-tree [value]="folder_files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
             (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
-            <!-- <ng-template let-node pTemplate="default"> -->
-                <!-- <span [class]="node.dataType=='folder' ? 'selectable' : 'not-selectable'" [pSelectable]="node.dataType =='folder'" *ngIf="node.dataType=='folder'">{{node.label}}</span> -->
-            <!-- </ng-template> -->
+            <ng-template let-node pTemplate="default">
+                <span *ngIf="node.dataType !='folder'">
+                    <img src="./../../../../assets/images-n/projects/{{node.icon}}" alt="Create">
+                </span>
+                <span *ngIf="node.dataType =='folder'">
+                    <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon" alt="">
+                </span>
+                <span [ngClass]="{ 'has-changes' : node.hasChanges }" [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
+            </ng-template>
             </p-tree>
         </span>
         <button type="button" class="btn bluebg-button savefoldername" (click)='uploadFile()'>Save</button>
