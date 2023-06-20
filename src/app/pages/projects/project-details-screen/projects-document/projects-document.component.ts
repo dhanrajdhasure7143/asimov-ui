@@ -923,8 +923,8 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   truncateDesc(data){
-    if(data && data.length > 51)
-      return data.substr(0,50)+'...';
+    if(data && data.length > 21)
+      return data.substr(0,20)+'...';
     return data;
   }
 

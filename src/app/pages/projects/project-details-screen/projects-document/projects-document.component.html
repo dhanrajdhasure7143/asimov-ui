@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-4 pr-0 dochead-rightbtns">
                              
-                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
+                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox fldviewicon" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
                                 <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" class="active-icon"/>
                                 <img src="../../../../../assets/images-n/dashboard/Component 13 – 1.svg" class="hover-icon" alt=""/>
                             </span>
@@ -120,7 +120,7 @@
                     <img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">
                     <!-- <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" /> -->
                 </div>
-                <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<50" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
+                <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<20" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
                    <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
                 </span>
                 <!-- <span *ngIf="item.type=='textBox'">
