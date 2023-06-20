@@ -53,7 +53,8 @@ export class TextBoxComponent  implements OnInit  {
     ngOnInit(): void {
       if(this.field.name=="loggedUser")
       {
-        this.form.get(this.field.name+"_"+this.field.id).setValue(localStorage.getItem("ProfileuserId"));
+        let loggedUserDetails=JSON.stringify({loggedUser:localStorage.getItem("ProfileuserId"), tenantId:localStorage.getItem("tenantName")})
+        this.form.get(this.field.name+"_"+this.field.id).setValue(loggedUserDetails);
       }
     }
     stope(event)
