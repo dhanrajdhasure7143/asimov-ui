@@ -454,6 +454,7 @@ export class BpsHomeComponent implements OnInit {
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
+      key:'confirm2',
       accept: () => {
         let data = {
           bpmnModelId: bpmNotation.bpmnModelId,
@@ -461,10 +462,10 @@ export class BpsHomeComponent implements OnInit {
         };
         this.rest.sendReminderMailToApprover(data).subscribe(
           (res) => {
-            this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!"})
+            this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!",key:'toast2'})
           },
           (err) => {
-            this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong."})
+            this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong.",key:'toast2'})
           }
         );
       }
@@ -529,6 +530,7 @@ export class BpsHomeComponent implements OnInit {
           defaultFocus: 'none',
           rejectIcon: 'null',
           acceptIcon: 'null',
+          key:'confirm2',
           accept: () => {
             this.loader.show();
             let data = {
@@ -541,17 +543,17 @@ export class BpsHomeComponent implements OnInit {
                 if (
                   res == "It is an ongoing project. Please contact Project Owner(s)."
                 ) {
-                    this.messageService.add({severity: "info", summary: "Info", detail: res});
+                    this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
                 } else {
                       this.messageService.add({severity: "success", summary: "Success", 
-                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " has been deleted."});
+                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " has been deleted.",key:'toast2'});
                       this.loader.show();
                       this.getBPMNList();
                 }
               },
               (err) => {
                   this.loader.hide();
-                  this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong."})
+                  this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong.",key:'toast2'})
               }
             );
           }
@@ -577,7 +579,7 @@ export class BpsHomeComponent implements OnInit {
     //   cancelButtonText: "Cancel",
     // }).then((res) => {
     //   if (res.isConfirmed) {
-    //     this.loader.show();
+    //     this.loader.show()
     //     let data = {
     //       bpmnModelId: bpmNotation.bpmnModelId,
     //       version: bpmNotation.version,

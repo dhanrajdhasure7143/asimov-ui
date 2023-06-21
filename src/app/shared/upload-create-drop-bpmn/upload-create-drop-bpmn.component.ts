@@ -103,6 +103,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           defaultFocus: 'none',
           rejectIcon: 'null',
           acceptIcon: 'null',
+          key:'confirm1',
           accept: () => {},
         });
         // Swal.fire({
@@ -214,6 +215,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           defaultFocus: 'none',
           rejectIcon: 'null',
           acceptIcon: 'null',
+          key:'confirm1',
           accept: () => {},
         });
         // Swal.fire({
