@@ -119,9 +119,11 @@
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
                     <img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">
                     <!-- <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" /> -->
+                    <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
                 </div>
+                
                 <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<20" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
-                   <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
+                   
                 </span>
                 <!-- <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
@@ -309,18 +311,18 @@
         </app-split-overlay>
     </div> -->
 
-    <p-dialog header="Folder Name" [(visible)]="isDialogBox" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <p-dialog header="Create a folder" [(visible)]="isDialogBox" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
+            <input type="text" pInputText placeholder="Enter your folder name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
             <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn bluebg-button" (click)="addParentFolder()" [disabled]="folder_name.length < 1 || folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
     <!-- add sub folder in folder structure -->
-    <p-dialog header="Folder Name" [(visible)]="subFolderDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <p-dialog header="Create a folder" [(visible)]="subFolderDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <input type="text" pInputText placeholder="Enter your folder name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn bluebg-button" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 1 || entered_folder_name.length == 51">Save</button>
         </span>
@@ -403,15 +405,15 @@
 
 <p-dialog header="File Name" [(visible)]="documentCreateDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="enterDocumentName" name="folder"
+        <input type="text" pInputText placeholder="Enter your file name" [(ngModel)]="enterDocumentName" name="folder"
             maxlength="50" />
         <button type="button" class="btn bluebg-button" (click)="uploadCreatedDocument()" [disabled]="!(enterDocumentName.length > 0)">Save</button>
     </span>
 </p-dialog>
 
-<p-dialog header="File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+<p-dialog header="Rename" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
+        <input type="text" pInputText placeholder="Enter your file name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
         <!-- <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')">Cancel</button> -->
         <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="(entered_folder_name.length == 0)">Save</button>
     </span>
