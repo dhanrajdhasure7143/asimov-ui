@@ -101,7 +101,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity:'error', 
               summary: 'Error', 
-              detail: "Please Delete the Action Items !"
+              detail: "Please delete the action items!"
             });
             this.spinner.hide();
             this.getAllConnections();

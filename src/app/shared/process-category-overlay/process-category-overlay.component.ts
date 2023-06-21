@@ -151,7 +151,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       for (var i = 0; i < this.categoriesList.data.length; i++) {
         if (this.categoriesList.data[i].categoryName == this.othercategory) {
           found = true;
-          this.global.notify("Entered category is already existed.Please enter new category.", "error");
+          this.global.notify("Entered category already exists. Please enter a new category!", "error");
           break;
         }
       }

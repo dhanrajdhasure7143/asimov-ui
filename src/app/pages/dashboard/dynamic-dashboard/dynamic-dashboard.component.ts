@@ -99,7 +99,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Updated Successfully !!",
+          detail: "Updated successfully",
         });
         // this.dashboardData.widgets[index].filterOptions = [
         //   ...this.dashboardData.widgets[index].filterOptions.map(
@@ -301,9 +301,9 @@ export class DynamicDashboardComponent implements OnInit {
       .updateDashBoardNamed(dashboard)
       .subscribe((response: any) => {
         this.getListOfDashBoards();
-        this.messageService.add({severity: "success",summary: "Success",detail: "Updated Successfully !!"});
+        this.messageService.add({severity: "success",summary: "Success",detail: "Updated successfully!"});
       },err=>{
-        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to Update !"});
+        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to update!"});
       });
   }
 
@@ -335,7 +335,7 @@ export class DynamicDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !!",
+              detail: "Deleted successfully!",
             });
             this.changeToDefaultDashBoard();
           });
@@ -567,7 +567,7 @@ export class DynamicDashboardComponent implements OnInit {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: "Deleted Successfully !",
+                  detail: "Deleted successfully!",
                 });
               }
             });
@@ -601,7 +601,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: response.message+' !',
+          detail: response.message+'!',
         });
       }
     })

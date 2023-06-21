@@ -237,7 +237,7 @@ export class AdminAddScreenComponent implements OnInit {
     }, 1000);
     this.spinner.hide();
     },(err: any) => {
-      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to update screen details. !!'});
+      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to update screen details!'});
     })  
   }
 

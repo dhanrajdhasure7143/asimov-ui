@@ -106,14 +106,14 @@ export class UserScreenComponent implements OnInit {
                 this.messageService.add({
                   severity: "error",
                   summary: "Rejected",
-                  detail: resp.message + "" + "!!",
+                  detail: resp.message + "!",
                 });
                 this.spinner.hide();
               } else {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: resp.message + "" + "!!",
+                  detail: resp.message + "!",
                 });
                 this.spinner.hide();
                 this.getUserScreenData();
@@ -172,7 +172,7 @@ export class UserScreenComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "rejected",
-              detail: response.message + "" +"!!",
+              detail: response.message +"!",
             });
   
             this.getUserScreenData();
@@ -180,7 +180,7 @@ export class UserScreenComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: response.message + "" +"!!",
+              detail: response.message +"!",
             });         
               this.getUserScreenData();
           }

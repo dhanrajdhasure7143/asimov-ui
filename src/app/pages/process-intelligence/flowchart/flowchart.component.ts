@@ -1012,7 +1012,7 @@ pi_fullGraph_data:any=[];
             // Swal.fire({
             //   icon: 'error',
             //   title: 'Oops...',
-            //   text: "Failed to generate BPM Notation, Please try again later. !",
+            //   text: "Failed to generate BPM Notation, Please try again later.",
             //   heightAuto: false,
             // })
           }

@@ -130,12 +130,12 @@ export class RpaBotFormComponent implements OnInit {
     this.spinner.show();
     this.rest.modifybotdetails(botFormValue).subscribe((response: any) => {
       if (response.errorMessage == undefined) {
-        this.messageService.add({severity:'success',summary:'Success',detail:response.message+''+'!!'})
+        this.messageService.add({severity:'success',summary:'Success',detail:response.message+'!'})
         this.closeBotForm();
         this.spinner.hide();
         this.event.emit({ botId: response.botId, case: "update" });
       } else {
-        this.messageService.add({ severity: "success",summary: "Success", detail: "Updated Successfully !!" });
+        this.messageService.add({ severity: "success",summary: "Success", detail: "Updated successfully!" });
         this.event.emit(null);
       }
     }, err => {

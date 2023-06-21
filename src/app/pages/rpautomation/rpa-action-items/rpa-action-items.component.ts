@@ -106,14 +106,14 @@ export class RpaActionItemsComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Action Deleted Successfully !!",
+              detail: "Action deleted successfully!",
             })
             this.loader.hide();
           },(err) => {
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Something Went Wrong !!",
+              detail: "Oops! Something went wrong.",
             })
             this.loader.hide();
           })
@@ -149,7 +149,7 @@ export class RpaActionItemsComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Action Deleted Successfully !!",
+              detail: "Action deleted successfully!",
             });
             this.loader.hide();
             this.getAllActionItems();
@@ -158,7 +158,7 @@ export class RpaActionItemsComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Something Went Wrong !!",
+              detail: "Oops! Something went wrong.",
             });
             this.loader.hide();
             this.getAllActionItems();

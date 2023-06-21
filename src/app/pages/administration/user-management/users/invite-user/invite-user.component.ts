@@ -163,7 +163,7 @@ export class InviteUserComponent implements OnInit {
               //   "Failed to invite! Check if the user already exists!",
               //   "error"
               // );
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if user already exists RRR!!'})
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exist.'})
             }
             this.loader.hide();
           });

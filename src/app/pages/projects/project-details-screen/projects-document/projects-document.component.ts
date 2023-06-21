@@ -1513,10 +1513,10 @@ async getFileDataById(fileId) {
         if(!this.selectedAction){
           this.getTheListOfFolders1()
         }
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
       },err=>{
         this.loader.hide();
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
       });
     });
   }
