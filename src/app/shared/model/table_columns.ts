@@ -50,32 +50,32 @@ export class columnList{
     public environments_column = [
         {ColumnName: "environmentName",DisplayName: "Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true},
         {ColumnName: "environmentType",DisplayName: "Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":['Windows','Linux'],width:"flex: 0 0 8rem"},
-        {ColumnName: "agentPath",DisplayName: "Agent Path",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true},
+        {ColumnName: "agentPath",DisplayName: "Agent Path",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,showTooltip:true,width:"flex: 0 0 10rem"},
         {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":''},
-        {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-        {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,width:"flex: 0 0 5rem"},
+        {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,width:"flex: 0 0 12rem"},
+        {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,width:"flex: 0 0 7rem"},
         // {ColumnName: "username",DisplayName: "User Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
         // {ColumnName: "password_new",DisplayName: "Password / Key",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
         {ColumnName: "activeStatus_new",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Active","Inactive"],width:"flex: 0 0 8rem"},
         {ColumnName: "deploy_status_new",DisplayName: "Deployed",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,"dropdownList":["Yes","No"],width:"flex: 0 0 9rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true},
         {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true,width:"flex: 0 0 10rem"},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false,width:"flex: 0 0 5rem"},
       ];
 
     public databaseConnections_column = [
-        {ColumnName: "connectiontName",DisplayName: "Connection Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
-        {ColumnName: "categoryName",DisplayName: "Category",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":''},
-        {ColumnName: "databasename",DisplayName: "Database Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":''},
-        {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
+        {ColumnName: "connectiontName",DisplayName: "Connection Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true,width:"flex: 0 0 13rem"},
+        {ColumnName: "categoryName",DisplayName: "Category",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":'',width:"flex: 0 0 10rem"},
+        {ColumnName: "databasename",DisplayName: "Database Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
+        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":'',width:"flex: 0 0 11rem"},
+        {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
+        {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 7rem"},
         // {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
-        {ColumnName: "schemaName",DisplayName: "Schema",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
-        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":["Active","Inactive"]},
+        {ColumnName: "schemaName",DisplayName: "Schema",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true,width:"flex: 0 0 10rem"},
+        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":["Active","Inactive"],width:"flex: 0 0 8rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false},
-        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false,width:"flex: 0 0 6rem"},
       ];
 
         // connection manager table
@@ -98,16 +98,16 @@ export class columnList{
       ];
     
       public emailList_column = [
-        {ColumnName: "userName",DisplayName: "Email / Organization Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
-        {ColumnName: "serverName",DisplayName: "Server Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:["Office365","G-mail","Others"]},
+        {ColumnName: "userName",DisplayName: "Email / Organization Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true,width:"flex: 0 0 16rem"},
+        {ColumnName: "serverName",DisplayName: "Server Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:["Office365","G-mail","Others"],width:"flex: 0 0 10rem"},
         // {ColumnName: "password_new",DisplayName: "Password",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "tableClientId",DisplayName: "Client Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "tableClientSecret",DisplayName: "Client Secret",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "tableOfficeTenant",DisplayName: "Tenant Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "host",DisplayName: "Host",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        {ColumnName: "port",DisplayName: "Port",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
-        {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":""},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
+        {ColumnName: "tableClientId",DisplayName: "Client Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 9rem"},
+        {ColumnName: "tableClientSecret",DisplayName: "Client Secret",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 10rem"},
+        {ColumnName: "tableOfficeTenant",DisplayName: "Tenant Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 9rem"},
+        {ColumnName: "host",DisplayName: "Host",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
+        {ColumnName: "port",DisplayName: "Port",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 7rem"},
+        {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":"",width:"flex: 0 0 9rem"},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true,width:"flex: 0 0 10rem"},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];
@@ -118,7 +118,7 @@ export class columnList{
         {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "previousTask",DisplayName: "Previous Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextSuccessTask",DisplayName: "Next Task (Upon Success)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "nextFailureTask",DisplayName: "Next Task (Upon Failure)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "nextFailureTask",DisplayName: "Next Task (Upon Failure)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 15rem"},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Approved','Pending','Running','Rejected']},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
@@ -129,7 +129,7 @@ export class columnList{
         {ColumnName: "category",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,},
         {ColumnName: "lastRunTS",DisplayName: "Previous Run",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "nextRunTS",DisplayName: "Next Run",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-        {ColumnName: "scheduleInterval",DisplayName: "Schedule Interval",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "scheduleInterval",DisplayName: "Schedule Interval",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Running','Failure','Success','Paused','New','Pending','Stop']},
         {ColumnName: "timezone",DisplayName: "Time Zone",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
       ];
@@ -139,7 +139,7 @@ export class columnList{
         {ColumnName: "environmentName",DisplayName: "Environment",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "lastRunTS",DisplayName: "Previous Run",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "nextRunTS",DisplayName: "Next Run",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
-        {ColumnName: "scheduleInterval",DisplayName: "Schedule Interval",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "scheduleInterval",DisplayName: "Schedule Interval",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:['Completed','Running','Failure','Success','Paused','New','Pending','Stop']},
         {ColumnName: "timezone",DisplayName: "Time Zone",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
       ];
@@ -194,16 +194,16 @@ export class columnList{
       ];
 
       public approval_column=[
-        {ColumnName:"botId",DisplayName:"Bot Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"} ,
-        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 5rem"},
-        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
-        {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"modfiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"",filterType:"date",ShowGrid: true,sort: true,},
-        {ColumnName:"modifiedBy",DisplayName:"Modified By",filterWidget: "normal",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 18rem"},
-        {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
+        {ColumnName:"botId",DisplayName:"Bot Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 7rem"} ,
+        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem"},
+        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 12rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+       {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"date",ShowGrid: true,sort: true,},
+       {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"modfiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 11rem",filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName:"modifiedBy",DisplayName:"Modified By",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 10rem"},
+        {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"flex: 0 0 8rem",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
         {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
       ];
 }

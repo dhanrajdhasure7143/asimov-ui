@@ -101,3 +101,7 @@ span.testtooltip:before {
 .approvalLink{
     color: #232832;
 }
+
+.noopenworkspace {
+    visibility: hidden;
+}
