@@ -228,7 +228,6 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   });
   // return files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-  // console.log(JSON.stringify(files))
   return files;
   }
 
