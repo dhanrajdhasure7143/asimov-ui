@@ -463,8 +463,14 @@ export class ConfigureDashboardComponent implements OnInit {
   this.confirmationService.confirm({
     message: confrmMessage,
     header: "Are you sure?",
-    
-      accept: () => {
+    acceptLabel:'Yes',
+    rejectLabel:'No',
+    rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+    acceptIcon:'null',
+    defaultFocus:'none',
+    rejectIcon:'null',
+     accept: () => {
         this.loader.show();
         this.rest_api
           .getdeleteDashBoard(this._paramsData.dashboardId)
@@ -484,7 +490,7 @@ export class ConfigureDashboardComponent implements OnInit {
         this.router.navigate(["/pages/dashboard/dynamicdashboard"]);
        }
       },
-      key: "positionDialog",
+      
     });
   }
 
