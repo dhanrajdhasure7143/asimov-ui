@@ -470,4 +470,5 @@ export class ProjectTaskDetailsComponent implements OnInit {
       queryParams: { project_id: this.project_id },
     });
   }
+  mouseUp(){}
 }
