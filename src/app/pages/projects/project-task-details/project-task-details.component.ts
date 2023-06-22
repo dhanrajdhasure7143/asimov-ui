@@ -520,4 +520,5 @@ export class ProjectTaskDetailsComponent implements OnInit {
     }
     return node;
   };
+  mouseUp(){}
 }

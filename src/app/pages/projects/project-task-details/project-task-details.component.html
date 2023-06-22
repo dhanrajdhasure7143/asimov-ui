@@ -191,7 +191,7 @@
                                                 </span>
                                             </ng-template>
                                         </p-inplace> -->
-                                        <p-knob [(ngModel)]="task_details.percentageComplete" valueTemplate="{value}%" (onChange)="updatetask()"></p-knob>
+                                        <p-knob [(ngModel)]="task_details.percentageComplete" valueTemplate="{value}%" [size]="70" (mouseup)="mouseUp()" (click)="updatetask()"></p-knob>
                                         <label>Task Completion</label>
                                     </span>
                                 </div>
