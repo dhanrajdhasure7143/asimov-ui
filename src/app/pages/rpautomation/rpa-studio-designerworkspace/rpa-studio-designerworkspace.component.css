@@ -1,11 +1,18 @@
 
 .drag-area{
-  min-height: 70vh;
+  /* min-height: 70vh;
   width:100%;
   position: relative;
   float: left;
   transform-origin:0% 0%;
-  display: inline;
+  display: inline; */
+  min-height: 75vh;
+  width:100%;
+  position: absolute;
+  overflow: auto;
+  /* float: left;
+  transform-origin:0% 0%;
+  display: inline; */
 }
 
 .outputtextareastyle{
@@ -41,7 +48,7 @@
 
 .studio_main{
   width:100%;
-  overflow: auto;
+  /* overflow: auto; */
   height: calc(100vh - 150px);
   padding:10px;
 }
@@ -262,6 +269,6 @@
 }
 
 .hide-node{
-  /* filter:grayscale(); */
-  border: 3px solid red !important;
+  border: 2px solid red !important;
+  background-color: rgb(0 0 0 / 15%);
 }
