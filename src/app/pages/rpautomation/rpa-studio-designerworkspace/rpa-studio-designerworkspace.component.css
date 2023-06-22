@@ -269,7 +269,6 @@
 }
 
 .hide-node{
-  /* filter:grayscale(); */
   border: 2px solid red !important;
   background-color: rgb(0 0 0 / 15%);
 }

@@ -20,12 +20,12 @@
                     <i class="pi pi-search"></i>
                     <input type="text" pInputText placeholder="Search" [(ngModel)]="searchValue" class="p-inputtext-lg" (input)="dt1.filterGlobal($event.target.value, 'contains')">
                 </span>
-                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined"  (click)="clear(dt1)"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="flex: 0 0 3rem;" *ngIf="checkBoxShow" class="checkboxth">
+                <th style="flex: 0 0 2rem;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" pReorderableColumn pResizableColumn 
@@ -70,7 +70,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'" (dblclick)="onRow_DoubleClick($event,rowData)">
-                <td style="flex: 0 0 3rem;" *ngIf="checkBoxShow" class="checkboxth">
+                <td style="flex: 0 0 2rem;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" [style]="col.width">
@@ -284,7 +284,7 @@
                                 <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
                             </span> -->
                             <span *ngIf="screenTable =='aprovalList'">
-                                <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" [style]="{'marginRight':'35px'}" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
+                                <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" [style]="{'marginRight':'30px'}" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
                                     <!-- <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
                                     <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/> -->
                                     <i class="pi pi-check text-success  approveOrReject"></i>

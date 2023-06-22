@@ -136,6 +136,9 @@
     padding-left:0px;
     transition: 0.5s;
     padding-top: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgb(0 0 0 / 28%);
   }
   #main {
     transition: margin-right .5s;

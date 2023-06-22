@@ -202,8 +202,8 @@ export class columnList{
        {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"modfiedAt",DisplayName:"Modified Date",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 11rem",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"modifiedBy",DisplayName:"Modified By",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 10rem"},
+        {ColumnName:"approvalInfo",DisplayName:"Approval Info", ShowFilter:true, filterType:"text",ShowGrid: true,sort: true,  width:"flex: 0 0 9rem"},
         {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"flex: 0 0 8rem",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
-        {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false}
+        {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false,width:"flex: 0 0 7rem"}
       ];
 }
