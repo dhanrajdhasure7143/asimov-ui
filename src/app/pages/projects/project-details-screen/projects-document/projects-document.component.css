@@ -212,7 +212,9 @@ i.pi.pi-search.treeviewsearchicon {
   display: block;
 }
 .folder-check {
-  position:relative
+  position:relative;
+  width: 112px;
+  margin: 0px auto;
 }
 .dochead-rightbtns {
   display:flex;
