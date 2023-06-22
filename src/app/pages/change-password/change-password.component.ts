@@ -55,7 +55,7 @@ export class ChangePasswordComponent implements OnInit {
     this.loader.hide();
     this.confirmationService.confirm({
      header:'Success',
-     message:'Password Updated successfully!',
+     message:'Password updated successfully!',
      acceptLabel:'Ok',
      rejectVisible:false,
      acceptButtonStyleClass:'btn bluebg-button',

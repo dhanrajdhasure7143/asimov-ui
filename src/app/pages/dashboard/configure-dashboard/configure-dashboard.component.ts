@@ -478,7 +478,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !",
+              detail: "Deleted successfully!",
             });
           });
         this.loader.hide();

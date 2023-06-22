@@ -196,7 +196,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           }
         }
       }else{
-        message = "Process name already exists ";
+        message = "Process name already exists.";
         this.global.notify(message,"error");
       }
     });

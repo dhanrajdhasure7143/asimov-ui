@@ -753,7 +753,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   submitDiagramForApproval(e){
     this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      this.messageService.add({severity: "warn", summary: "Warning", detail: "Please select an approver from the list given above!"});
+      this.messageService.add({severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
       // Swal.fire({
       //   icon: 'error',
       //   title: 'No approver',

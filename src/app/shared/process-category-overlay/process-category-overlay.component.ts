@@ -293,8 +293,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           this.confirmationService.confirm({
             message: disply_text + " will be updated for all versions of the BPMN.",
             header: "Are you sure?",            
-            acceptLabel:'Ok',
-            rejectVisible: false,
+            acceptLabel:'Yes',
+            rejectLabel: "No",
             rejectButtonStyleClass: 'btn reset-btn',
             acceptButtonStyleClass: 'btn bluebg-button',
             defaultFocus: 'none',

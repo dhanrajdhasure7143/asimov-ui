@@ -216,7 +216,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Connector Updated Successfully !",
+          detail: "Connector updated successfully!",
         });
         this.isFormOverlay = false;
         this.createConnectorForm.reset();
@@ -226,7 +226,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to Update Connector !",
+          detail: "Unable to update Connector!",
         });        
         this.spinner.hide();
       }
