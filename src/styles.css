@@ -3376,7 +3376,7 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 154px;
+  height: 160px;
   width: 170px;
   display: flex;
   align-items: center;
@@ -3434,10 +3434,10 @@ textarea.p-inputtextarea {
   position: relative;
 }
 .docfolder .p-card-content span.datsiz {
-  color: #d36303 !important;
+  color: #232832 !important;
   text-align: left;
   position: absolute;
-  bottom: 30px;
+  bottom: 6px;
   left: 6px;
   font-size: 13px;
   font-weight: 500;
@@ -3563,6 +3563,25 @@ textarea.p-inputtextarea {
 .configtabs .p-tabview {
   height: 100%;
   background-color: #fff;
+}
+.selectfoldername .p-tree .p-tree-container .p-treenode .p-treenode-content {
+  padding: 10px 0px !important
+}
+.selectfoldername .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  margin-right: 0px !important;
+  width: auto !important;
+  height: auto !important
+}
+.selectfoldername img.icon {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+.selectfoldername span.pi-chevron-right {
+  font-size: 10px !important;
+}
+.p-tree .p-tree-container .p-treenode .p-treenode-content:focus {
+  box-shadow: unset !important;
 }
 /* New Dashboard Styles End */
 
