@@ -226,8 +226,8 @@ input[type="checkbox"] {
   height: 18px;
   border-radius: 50%;
   cursor: pointer;
-  right: 6px;
-  top: 6px;
+  right: 7px;
+  top: 7px;
   z-index: 9;
   border: 1px solid #616161;
   background-color: #fff;
@@ -239,8 +239,8 @@ input[type="checkbox"]:checked {
   display: initial;
 }
 .doctree input[type="checkbox"] {
-  top: 14px;
-  left: 7px;
+  top: 16px;
+  left: 8px;
 }
 input[type=checkbox]:checked::after {
   border: 2px solid #fff;
@@ -334,3 +334,4 @@ input[type=checkbox]:checked::after {
   height: calc(100vh - 200px);
   overflow: auto;
 }
+

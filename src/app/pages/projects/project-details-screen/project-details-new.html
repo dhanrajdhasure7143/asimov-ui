@@ -589,9 +589,19 @@
 
 <p-dialog class="selectfoldername" header="Select Folder" [(visible)]="isFile_upload_dialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '25vw'}"
     (onHide)="onCloseFolderOverlay()">
-    <span class="p-float-label">
+    <span *ngIf="files.length == 0">Loading...</span>
+    <span class="p-float-label" *ngIf="files.length > 0">
         <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single"
             [style]="{'max-height':'auto','overflow':'auto'}" [(selection)]="selected_folder">
+            <ng-template let-node pTemplate="default">
+                <span *ngIf="node.dataType !='folder'">
+                    <img src="./../../../../assets/images-n/projects/{{node.icon}}" alt="Create">
+                </span>
+                <span *ngIf="node.dataType =='folder'">
+                    <img [src]="node.expanded ? './../../../../assets/images-n/projects/folder_open.svg' : './../../../../assets/images-n/projects/folder.svg'" class="icon" alt="">
+                </span>
+                <span [ngClass]="{ 'has-changes' : node.hasChanges }" [tooltipDisabled]="node.label?.length<50" [pTooltip]="node.label" tooltipPosition="top"> {{truncateDesc(node.label)}} </span>
+            </ng-template>
         </p-tree>
     </span>
     <button *ngIf="selectedType =='createFolder' " type="button" class="btn bluebg-button savefoldername"
