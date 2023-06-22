@@ -1,3 +1,23 @@
-<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M39.5834 41.6668H8.33335C6.02085 41.6668 4.16669 39.7918 4.16669 37.5002V12.5002C4.16669 10.1877 6.02085 8.3335 8.33335 8.3335H20.8334L25 12.5002H39.5834C40.6884 12.5002 41.7482 12.9391 42.5296 13.7206C43.311 14.502 43.75 15.5618 43.75 16.6668H8.33335V37.5002L12.7917 20.8335H48.3542L43.6042 38.5418C43.125 40.3543 41.5 41.6668 39.5834 41.6668Z" fill="#098DE6" fill-opacity="0.68"/>
+<svg id="folder_open" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44.343" height="29.277" viewBox="0 0 44.343 29.277">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_364" data-name="Path 364" d="M6.812,69.362a1.524,1.524,0,0,0-1.63,1.39L0,88.287a.457.457,0,0,0,.489.417H40.5a.457.457,0,0,0,.489-.417l3.355-17.525a1.524,1.524,0,0,0-1.63-1.39Z" transform="translate(0 -69.362)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_76" data-name="Group 76">
+    <g id="Group_83" data-name="Group 83">
+      <path id="Path_363" data-name="Path 363" d="M15.583,2.928a1.33,1.33,0,0,1-.941-.39L12.962.857A2.928,2.928,0,0,0,10.892,0H1.464A1.464,1.464,0,0,0,0,1.464V28.789a.488.488,0,0,0,.488.488H40.5a.488.488,0,0,0,.488-.488V4.392a1.464,1.464,0,0,0-1.464-1.464Z" fill="#6ec4f8"/>
+    </g>
+  </g>
+  <g id="Group_78" data-name="Group 78" transform="translate(0 9.936)">
+    <g id="Group_77" data-name="Group 77" transform="translate(0 0)" clip-path="url(#clip-path)">
+      <path id="Path_365" data-name="Path 365" d="M0,0H44.343V20.493H0Z" transform="translate(0 -1.152)" fill="#99d7fe"/>
+    </g>
+  </g>
+  <g id="Group_80" data-name="Group 80" transform="translate(2.928 25.736)">
+    <g id="Group_82" data-name="Group 82" transform="translate(0)">
+      <rect id="Rectangle_90" data-name="Rectangle 90" width="36.596" height="0.16" transform="translate(0 1.691)" fill="#ccecff"/>
+      <rect id="Rectangle_91" data-name="Rectangle 91" width="36.596" height="0.16" fill="#ccecff"/>
+    </g>
+  </g>
 </svg>

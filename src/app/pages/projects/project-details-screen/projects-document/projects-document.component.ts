@@ -1076,6 +1076,7 @@ export class ProjectsDocumentComponent implements OnInit {
           this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
             this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
             this.loader.hide();
+            this.selectedItem_new = [];
             this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
           },err=>{
             this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});

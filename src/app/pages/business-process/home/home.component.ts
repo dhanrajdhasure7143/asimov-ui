@@ -68,7 +68,7 @@ export class BpsHomeComponent implements OnInit {
       DisplayName: "Process Name",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "ntype",
@@ -76,7 +76,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["BPMN", "CMMN","DMN"],width:"flex: 0 0 5rem"
+      dropdownList: ["BPMN", "CMMN","DMN"],width:"flex: 0 0 7rem"
     },
     {
       ColumnName: "category",
@@ -84,35 +84,35 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList:this.categories_list_new
+      dropdownList:this.categories_list_new,width:"flex: 0 0 9rem"
     },
     {
       ColumnName: "processOwnerName",
       DisplayName: "Process Owner",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "version_new",
       DisplayName: "Version",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,width:"flex: 0 0 5rem"
+      ShowFilter: true,width:"flex: 0 0 8rem"
     },
     {
       ColumnName: "convertedModifiedTime_new",
       DisplayName: "Last Modified",
       filterType: "date",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "approverName",
       DisplayName: "Approver",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 9rem"
     },
     {
       ColumnName: "status",
