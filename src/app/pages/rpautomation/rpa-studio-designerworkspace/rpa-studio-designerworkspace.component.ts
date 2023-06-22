@@ -38,6 +38,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
+import { ConfirmationService } from "primeng/api";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -162,6 +163,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   credupdatedata:any;
   credentialsFormFlag:boolean=false;
   isDeprecated: boolean;
+  taskNames: string;
+  modifiedTaskNames: any = [];
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -174,7 +177,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private changesDecorator: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private confirmationService: ConfirmationService,
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -1825,178 +1829,361 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   async updateBotFun(version_type, comments) {
     if(this.isDeprecated == true){
-      Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
-      return;
-    }
-    let env = [
-      ...this.filteredEnvironments
-        .filter((item: any) => item.check == true)
-        .map((item2: any) => {
-          return item2.environmentId;
-        }),
-    ];
-    this.spinner.show();
-    this.checkorderflag = true;
-    this.addsquences();
-    if(this.executionMode){
-      this.arrange_task_order(this.startNodeId);
-    }
-    else
-    {
-      this.final_tasks=this.finaldataobjects;
-    }
-    this.get_coordinates();
-    await this.getsvg();
-    this.rpaAuditLogs(env);
-    await this.validateBotNodes();
-    if(this.executionMode)
-    {
-      
-      let finalTasksData=[...this.final_tasks];
-      finalTasksData.forEach((item, finalIndex)=>{
-        if(this.actualTaskValue.length != 0 && item.validated==undefined)
-        {    
-          if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
-          {
-            let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
-            if(actualTasks.length!=0)
-            {
-              let indexList:any=[];
-              this.final_tasks.forEach((tempTask, index)=>{
-                if(tempTask.nodeId==item.nodeId)
-                  indexList.push(index);
-              });
-              indexList.forEach((indexItem, indexmeta)=>{
-                  if(finalTasksData[indexItem] && actualTasks[indexmeta])
-                  {
-                  let task={...{},...finalTasksData[indexItem]}
-                  task.botTId=actualTasks[indexmeta].botTId;
-                  let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
-                  let attributes=[...task.attributes]
-                  actualTaskAttributes.forEach((item:any)=>{
-                    let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
-                    let attribute={...{},...attributes[attrIndex]};
-                    if(attribute !=undefined)
-                    {                      
-                      attribute.attrId=item.attrId;
-                      attribute.botTaskId=item.botTaskId;
-                      attributes[attrIndex]=attribute;
-                    }
-                  })
-                  task["attributes"]=[...attributes]
-                  task["validated"]=true;
-                  this.final_tasks[indexItem]=task;
-                }
-              })
-            }
-          }
-        
-        }
-      })
-    }
+      const message = `Deprecated task present in the bot, <br>
+      <span class="bold">(${this.modifiedTaskNames.join(', ')})</span>
+      Do yo want to update dynamic values?`;
+   this.confirmationService.confirm({
+     message: message,
+     header: 'Are you sure?',
+     accept: () => {
+       this.spinner.hide();
+     },
+     reject: async (type) => {
+       let env = [
+         ...this.filteredEnvironments
+           .filter((item: any) => item.check == true)
+           .map((item2: any) => {
+             return item2.environmentId;
+           }),
+       ];
+       this.spinner.show();
+       this.checkorderflag = true;
+       this.addsquences();
+       if(this.executionMode){
+         this.arrange_task_order(this.startNodeId);
+       }
+       else
+       {
+         this.final_tasks=this.finaldataobjects;
+       }
+       this.get_coordinates();
+       await this.getsvg();
+       this.rpaAuditLogs(env);
+       this.validateBotNodes();
+       if(this.executionMode)
+       {
+         
+         let finalTasksData=[...this.final_tasks];
+         finalTasksData.forEach((item, finalIndex)=>{
+           if(this.actualTaskValue.length != 0 && item.validated==undefined)
+           {    
+             if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
+             {
+               let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
+               if(actualTasks.length!=0)
+               {
+                 let indexList:any=[];
+                 this.final_tasks.forEach((tempTask, index)=>{
+                   if(tempTask.nodeId==item.nodeId)
+                     indexList.push(index);
+                 });
+                 indexList.forEach((indexItem, indexmeta)=>{
+                     if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                     {
+                     let task={...{},...finalTasksData[indexItem]}
+                     task.botTId=actualTasks[indexmeta].botTId;
+                     let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
+                     let attributes=[...task.attributes]
+                     actualTaskAttributes.forEach((item:any)=>{
+                       let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
+                       let attribute={...{},...attributes[attrIndex]};
+                       if(attribute !=undefined)
+                       {                      
+                         attribute.attrId=item.attrId;
+                         attribute.botTaskId=item.botTaskId;
+                         attributes[attrIndex]=attribute;
+                       }
+                     })
+                     task["attributes"]=[...attributes]
+                     task["validated"]=true;
+                     this.final_tasks[indexItem]=task;
+                   }
+                 })
+               }
+             }            
+           }
+         })
+       }
+   
+         this.saveBotdata = {
+           versionType: version_type,
+           comments: comments,
+           version: this.finalbot.version,
+           botId: this.finalbot.botId,
+           botName: this.finalbot.botName,
+           botType: this.finalbot.botType,
+           description: this.finalbot.botDescription,
+           department: this.finalbot.botDepartment,
+           botMainSchedulerEntity: null,
+           envIds: env,
+           isPredefined: this.finalbot.predefinedBot,
+           tasks: this.final_tasks,
+           createdBy: "admin",
+           groups: this.getGroupsInfo(),
+           lastSubmittedBy: "admin",
+           scheduler: null,
+           svg: this.svg,
+           sequences: this.getsequences(),
+           isBotCompiled: this.isBotCompiled,
+           executionMode: this.executionMode?"v1":"v2",
+         };
+         if (this.checkorderflag == false) {
+           this.spinner.hide();
+           Swal.fire("Warning", "Please check connections", "warning");
+         } else {
+           let previousBotDetails: any = { ...{}, ...this.finalbot };
+           this.assignTaskConfiguration();
+            (await this.rest.updateBot(this.saveBotdata)).subscribe(
+             (response: any) => {
+               this.spinner.hide();
+               if (response.errorMessage == undefined) {
+                 this.isBotUpdated = false;
+                 // this.finalbot=response;
+                 // this.actualTaskValue=[...response.tasks];
+                 this.finalbot = { ...{}, ...response };
+                 this.actualTaskValue = [
+                   ...response.tasks.filter(
+                     (item) => (item.version == response.version)
+                   ),
+                 ];
+                 this.finaldataobjects = [
+                   ...response.tasks.filter(
+                     (item) => (item.version == response.version)
+                   ),
+                 ];
+                 this.actualEnv = [...response.envIds];
+                 Swal.fire("Success", "Bot updated successfully", "success");
+                 this.uploadfile(response.envIds, response.tasks);
+                 let auditLogsList = [
+                   ...this.auditLogs.map((item) => {
+                     item["versionNew"] = response.versionNew;
+                     item["comments"] = response.comments;
+                     return item;
+                   }),
+                 ];
+                 let firstName = localStorage.getItem("firstName");
+                 let lastName = localStorage.getItem("lastName");
+                 if (
+                   parseFloat(previousBotDetails.versionNew).toFixed(1) <
+                   parseFloat(response.versionNew).toFixed(1)
+                 )
+                   auditLogsList.push({
+                     botId: response.botId,
+                     botName: "SortingBot|UpdatedVersion",
+                     changeActivity: "Updated Version",
+                     changedBy: `${firstName} ${lastName}`,
+                     comments: response.comments,
+                     newValue: response.versionNew,
+                     previousValue: previousBotDetails.versionNew,
+                     taskName: "Version Upgrade",
+                     version: 1,
+                     versionNew: response.versionNew,
+                   });
+                 this.rest.addAuditLogs(auditLogsList).subscribe(
+                   (response: any) => {
+                     if (response.errorMessage == undefined) {
+                       this.notifier.notify(
+                         "success",
+                         "Audit logs updated successfully"
+                       );
+                       this.getData();
+                       // window.location.reload();
 
-      this.saveBotdata = {
-        versionType: version_type,
-        comments: comments,
-        version: this.finalbot.version,
-        botId: this.finalbot.botId,
-        botName: this.finalbot.botName,
-        botType: this.finalbot.botType,
-        description: this.finalbot.botDescription,
-        department: this.finalbot.botDepartment,
-        botMainSchedulerEntity: null,
-        envIds: env,
-        isPredefined: this.finalbot.predefinedBot,
-        tasks: this.final_tasks,
-        createdBy: "admin",
-        groups: this.getGroupsInfo(),
-        lastSubmittedBy: "admin",
-        scheduler: null,
-        svg: this.svg,
-        sequences: this.getsequences(),
-        isBotCompiled: this.isBotCompiled,
-        executionMode: this.executionMode?"v1":"v2",
-      };
-      if (this.checkorderflag == false) {
-        this.spinner.hide();
-        Swal.fire("Warning", "Please check connections", "warning");
-      } else {
-        let previousBotDetails: any = { ...{}, ...this.finalbot };
-        this.assignTaskConfiguration();
-        (await this.rest.updateBot(this.saveBotdata)).subscribe(
-          (response: any) => {
-            this.spinner.hide();
-            if (response.errorMessage == undefined) {
-              this.isBotUpdated = false;
-              // this.finalbot=response;
-              // this.actualTaskValue=[...response.tasks];
-              this.finalbot = { ...{}, ...response };
-              this.actualTaskValue = [
-                ...response.tasks.filter(
-                  (item) => (item.version == response.version)
-                ),
-              ];
-              this.finaldataobjects = [
-                ...response.tasks.filter(
-                  (item) => (item.version == response.version)
-                ),
-              ];
-              this.actualEnv = [...response.envIds];
-              Swal.fire("Success", "Bot updated successfully", "success");
-              this.uploadfile(response.envIds, response.tasks);
-              let auditLogsList = [
-                ...this.auditLogs.map((item) => {
-                  item["versionNew"] = response.versionNew;
-                  item["comments"] = response.comments;
-                  return item;
-                }),
-              ];
-              let firstName = localStorage.getItem("firstName");
-              let lastName = localStorage.getItem("lastName");
-              if (
-                parseFloat(previousBotDetails.versionNew).toFixed(1) <
-                parseFloat(response.versionNew).toFixed(1)
-              )
-                auditLogsList.push({
-                  botId: response.botId,
-                  botName: "SortingBot|UpdatedVersion",
-                  changeActivity: "Updated Version",
-                  changedBy: `${firstName} ${lastName}`,
-                  comments: response.comments,
-                  newValue: response.versionNew,
-                  previousValue: previousBotDetails.versionNew,
-                  taskName: "Version Upgrade",
-                  version: 1,
-                  versionNew: response.versionNew,
-                });
-              this.rest.addAuditLogs(auditLogsList).subscribe(
-                (response: any) => {
-                  if (response.errorMessage == undefined) {
-                    this.notifier.notify(
-                      "success",
-                      "Audit logs updated successfully"
-                    );
-                  } else {
-                    Swal.fire("Error", response.errorMessage, "error");
-                  }
-                },
-                (err) => {
-                  Swal.fire("Error", "Unable to update audit logs", "error");
-                }
-              );
-            } else {
-              this.spinner.hide();
-              Swal.fire("Error", response.errorMesssage, "error");
-            }
-          },
-          (err) => {
-            this.spinner.hide();
-            Swal.fire("Error", "Unable to update bot", "error");
-          }
-        );
-        //return false;
-      }
-  }
+                     } else {
+                       Swal.fire("Error", response.errorMessage, "error");
+                     }
+                   },
+                   (err) => {
+                     Swal.fire("Error", "Unable to update audit logs", "error");
+                   }
+                 );
+               } else {
+                 this.spinner.hide();
+                 Swal.fire("Error", response.errorMesssage, "error");
+               }
+             },
+             (err) => {
+               this.spinner.hide();
+               Swal.fire("Error", "Unable to update bot", "error");
+             }
+           );
+           //return false;
+         }
+     },
+     key: "positionDialog"
+   });
+   } else {
+     let env = [
+       ...this.filteredEnvironments
+         .filter((item: any) => item.check == true)
+         .map((item2: any) => {
+           return item2.environmentId;
+         }),
+     ];
+     this.spinner.show();
+     this.checkorderflag = true;
+     this.addsquences();
+     if(this.executionMode){
+       this.arrange_task_order(this.startNodeId);
+     }
+     else
+     {
+       this.final_tasks=this.finaldataobjects;
+     }
+     this.get_coordinates();
+     await this.getsvg();
+     this.rpaAuditLogs(env);
+     await this.validateBotNodes();
+     if(this.executionMode)
+     {
+       
+       let finalTasksData=[...this.final_tasks];
+       finalTasksData.forEach((item, finalIndex)=>{
+         if(this.actualTaskValue.length != 0 && item.validated==undefined)
+         {    
+           if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
+           {
+             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
+             if(actualTasks.length!=0)
+             {
+               let indexList:any=[];
+               this.final_tasks.forEach((tempTask, index)=>{
+                 if(tempTask.nodeId==item.nodeId)
+                   indexList.push(index);
+               });
+               indexList.forEach((indexItem, indexmeta)=>{
+                   if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                   {
+                   let task={...{},...finalTasksData[indexItem]}
+                   task.botTId=actualTasks[indexmeta].botTId;
+                   let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
+                   let attributes=[...task.attributes]
+                   actualTaskAttributes.forEach((item:any)=>{
+                     let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
+                     let attribute={...{},...attributes[attrIndex]};
+                     if(attribute !=undefined)
+                     {                      
+                       attribute.attrId=item.attrId;
+                       attribute.botTaskId=item.botTaskId;
+                       attributes[attrIndex]=attribute;
+                     }
+                   })
+                   task["attributes"]=[...attributes]
+                   task["validated"]=true;
+                   this.final_tasks[indexItem]=task;
+                 }
+               })
+             }
+           }
+         
+         }
+       })
+     }
+ 
+       this.saveBotdata = {
+         versionType: version_type,
+         comments: comments,
+         version: this.finalbot.version,
+         botId: this.finalbot.botId,
+         botName: this.finalbot.botName,
+         botType: this.finalbot.botType,
+         description: this.finalbot.botDescription,
+         department: this.finalbot.botDepartment,
+         botMainSchedulerEntity: null,
+         envIds: env,
+         isPredefined: this.finalbot.predefinedBot,
+         tasks: this.final_tasks,
+         createdBy: "admin",
+         groups: this.getGroupsInfo(),
+         lastSubmittedBy: "admin",
+         scheduler: null,
+         svg: this.svg,
+         sequences: this.getsequences(),
+         isBotCompiled: this.isBotCompiled,
+         executionMode: this.executionMode?"v1":"v2",
+       };
+       if (this.checkorderflag == false) {
+         this.spinner.hide();
+         Swal.fire("Warning", "Please check connections", "warning");
+       } else {
+         let previousBotDetails: any = { ...{}, ...this.finalbot };
+         this.assignTaskConfiguration();
+         (await this.rest.updateBot(this.saveBotdata)).subscribe(
+           (response: any) => {
+             this.spinner.hide();
+             if (response.errorMessage == undefined) {
+               this.isBotUpdated = false;
+               // this.finalbot=response;
+               // this.actualTaskValue=[...response.tasks];
+               this.finalbot = { ...{}, ...response };
+               this.actualTaskValue = [
+                 ...response.tasks.filter(
+                   (item) => (item.version == response.version)
+                 ),
+               ];
+               this.finaldataobjects = [
+                 ...response.tasks.filter(
+                   (item) => (item.version == response.version)
+                 ),
+               ];
+               this.actualEnv = [...response.envIds];
+               Swal.fire("Success", "Bot updated successfully", "success");
+               this.uploadfile(response.envIds, response.tasks);
+               let auditLogsList = [
+                 ...this.auditLogs.map((item) => {
+                   item["versionNew"] = response.versionNew;
+                   item["comments"] = response.comments;
+                   return item;
+                 }),
+               ];
+               let firstName = localStorage.getItem("firstName");
+               let lastName = localStorage.getItem("lastName");
+               if (
+                 parseFloat(previousBotDetails.versionNew).toFixed(1) <
+                 parseFloat(response.versionNew).toFixed(1)
+               )
+                 auditLogsList.push({
+                   botId: response.botId,
+                   botName: "SortingBot|UpdatedVersion",
+                   changeActivity: "Updated Version",
+                   changedBy: `${firstName} ${lastName}`,
+                   comments: response.comments,
+                   newValue: response.versionNew,
+                   previousValue: previousBotDetails.versionNew,
+                   taskName: "Version Upgrade",
+                   version: 1,
+                   versionNew: response.versionNew,
+                 });
+               this.rest.addAuditLogs(auditLogsList).subscribe(
+                 (response: any) => {
+                   if (response.errorMessage == undefined) {
+                     this.notifier.notify(
+                       "success",
+                       "Audit logs updated successfully"
+                     );
+                     this.getData();
+                   } else {
+                     Swal.fire("Error", response.errorMessage, "error");
+                   }
+                 },
+                 (err) => {
+                   Swal.fire("Error", "Unable to update audit logs", "error");
+                 }
+               );
+             } else {
+               this.spinner.hide();
+               Swal.fire("Error", response.errorMesssage, "error");
+             }
+           },
+           (err) => {
+             this.spinner.hide();
+             Swal.fire("Error", "Unable to update bot", "error");
+           }
+         );
+         //return false;
+       }
+   }
+ }
 
 
   assignTaskConfiguration()
@@ -2736,36 +2923,75 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       return;
     }
     if(this.isDeprecated == true){
-      console.log(this.isDeprecated,"this.isDeprecated")
-      Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
-      return;
-    }
-    if(this.isBotCompiled || this.isDeprecated == false) {
-      this.spinner.show();
-      this.rest.execution(this.finalbot.botId).subscribe(
-        (response: any) => {
-          this.spinner.hide();
-          if (response.errorMessage == undefined)
-            Swal.fire("Success", response.status, "success");
-          else Swal.fire("Error", response.errorMessage, "error");
+      // console.log(this.isDeprecated,"this.isDeprecated")
+      // Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
+      // return;
+      this.confirmationService.confirm({
+        message: "Deprecated task present in the bot, Do you want to execute with default values?",
+        header: 'Are you Sure?',
+       
+        accept: () => {
+          if(this.isBotCompiled) {
+            this.spinner.show();
+            this.rest.execution(this.finalbot.botId).subscribe(
+              (response: any) => {
+                this.spinner.hide();
+                if (response.errorMessage == undefined) {
+                  Swal.fire("Success", response.status, "success");
+                  this.getData();
+                } else {
+                  Swal.fire("Error", response.errorMessage, "error");
+                } 
+              },
+              (err) => {
+                this.spinner.hide();
+                Swal.fire("Error", "Unable to execute bot", "error");
+              }
+            );
+          } else {
+            Swal.fire("Error", "Unable to execute bot", "error");
+          }
           this.getData();
         },
-        (err) => {
+        reject: (type) => {
           this.spinner.hide();
-          Swal.fire("Error", "Unable to execute bot", "error");
-        }
-      );
+        },
+        key: "positionDialog"
+      });
     } else {
-      Swal.fire("Error", "Unable to execute bot", "error");
+      if(this.isBotCompiled) {
+        this.spinner.show();
+        this.rest.execution(this.finalbot.botId).subscribe(
+          (response: any) => {
+            this.spinner.hide();
+            if (response.errorMessage == undefined){
+              Swal.fire("Success", response.status, "success");
+              this.getData();
+            } else {
+              Swal.fire("Error", response.errorMessage, "error");
+            } 
+          },
+          (err) => {
+            this.spinner.hide();
+            Swal.fire("Error", "Unable to execute bot", "error");
+          }
+        );
+      } else {
+        Swal.fire("Error", "Unable to execute bot", "error");
+      }
+      this.getData();
     }
+
   }
 
   getData(){
     this.rest.getbotdata(this.idBot).subscribe((response: any) => {
-      for(let i = 0; i < 100; i++){
+      for(let i = 0; i < response.tasks.length; i++){
           this.isDeprecated = response.tasks[i].isModified
-        console.log("data",this.isDeprecated);
-       
+          if(this.isDeprecated){
+            this.taskNames = response.tasks[i].taskName
+            this.modifiedTaskNames.push(this.taskNames);
+          }
       }
     });
   }
