@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-4 pr-0 dochead-rightbtns">
                              
-                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox fldviewicon" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
+                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
                                 <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" class="active-icon"/>
                                 <img src="../../../../../assets/images-n/dashboard/Component 13 – 1.svg" class="hover-icon" alt=""/>
                             </span>
@@ -113,7 +113,8 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-        <div *ngFor="let item of folder_files;let i = index" class="position-relative dochovercheck">
+        <div *ngFor="let item of folder_files;let i = index" class="position-relative dochovercheck" 
+        [ngClass]="{'folderselected': item.is_selected}" >
             <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
             <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
@@ -172,7 +173,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)">
+                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)" [ngClass]="{'folderselected': item.is_selected}">
                         <td class="position-relative"><input type="checkbox" id="" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/></td>
                         <td class="filname" (click)="onSelectFolder($event,i)"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create"><span>{{item.label}}</span></td>
                         <td (click)="onSelectFolder($event,i)">{{item.uploadedDate_new}}</td>

@@ -3389,9 +3389,7 @@ textarea.p-inputtextarea {
   background: #fff;
   cursor: pointer;
 }
-.dochovercheck .p-card:hover {
-  background-color: #eeeeee;
-}
+
 .docfolder .p-card-content:hover span.foldname {
   text-decoration: underline !important;
 }
@@ -3676,10 +3674,6 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-.imageBox {
-  position: relative;
-  /* float: left; */
-}
 
 .imageBox .hover-icon,
 .imageBox:hover .active-icon  {
@@ -3728,4 +3722,9 @@ background-color: #D8E0EF !important;
 }
 .bold {
   font-weight: bold;
+}
+
+.dochovercheck.folderselected .p-card,
+.doctree tr.folderselected {
+  background: #eeeeee !important;
 }
