@@ -80,45 +80,26 @@ export class RpaBotFormComponent implements OnInit {
 
   createBot() {
     let botFormValue = this.botForm.value;
-  // var message=this.messageService.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
-
-  if(botFormValue.botName=='' || botFormValue.botName==null)
+    if(botFormValue.botName=='' || botFormValue.botName==null)
       this.skipSaveBot()
     else
     {
       this.spinner.show()
-
       this.rest.createBot(botFormValue).subscribe((response: any) => {
         this.spinner.hide()
-    //  this.messageService.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
-
         if (response.errorMessage == undefined) {
-                  // message.confirm({
-          //   header:'Confirmation',
-          //   message:'Bot created successfully!',
-          //   acceptButtonStyleClass: 'btn bluebg-button',
-          //   defaultFocus: 'none',
-          //   acceptIcon: 'null',
-          //   acceptLabel:'Ok',
-          //   rejectVisible:false,
-          // }) 
-          //  message.add({severity:'success',summary:'Success',detail:'Bot created successfully!'});
-        
           this.closeBotForm();
           this.event.emit({ botId: response.botId, case: "create" });
-       
-       
-        // setTimeout(() => {
-        //   message
-        // }, 2000);
-
+          setTimeout(() => {
+          this.messageService.add({severity:'success', summary:'Success', detail:'Bot created successfully!',key:'rpadesignertoast'});
+          },500);
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
+          this.messageService.add({severity:'error', summary:'Error', detail:response.errorMessage});
           this.event.emit(null);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to create a bot.'});
+        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to create a bot.'});
         this.event.emit(null);
       })
     }
