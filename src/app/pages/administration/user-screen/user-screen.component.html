@@ -35,6 +35,7 @@
                     [show_delete_btn]="true"
                     [isdisabled_edit]="!selectedScreen.Allow_Edit"
                     [isdisabled_delete]="!selectedScreen.Allow_Delete"
+                    (onRowDoubleClick)="editForm($event)"
                   >
       </app-dynamic-table>
     </div>
