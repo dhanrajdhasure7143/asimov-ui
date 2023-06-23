@@ -196,7 +196,7 @@ div[class^='diagram_container'] {
   position: relative;
   z-index: -10;
 }
-.bps_overlay div#canvas2 {
+.bps_overlay div#canvas2, .bps_overlay div#canvas1 {
  z-index: 0;  
 }
 .bps_overlay {
@@ -775,9 +775,9 @@ mat-expansion-panel {
 .djs-minimap .viewport-dom {
   border: solid 1px #a0a0a0;
   border-radius: 4px;
-  left: 10px !important;
+  /* left: 10px !important;
     top: 30px !important;
-    width: 90% !important;
+    width: 90% !important; */
 }
 
 .djs-minimap svg {
