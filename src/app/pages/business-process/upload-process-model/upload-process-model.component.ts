@@ -966,7 +966,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      this.messageService.add({severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
+      this.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
       // Swal.fire(
       //   'Tasks automated successfully!',
       //   '',
@@ -1186,7 +1186,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let bpmnModel:BpmnModel = new BpmnModel();
     this.selected_approver=e.selectedApprovar
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      this.messageService.add({severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
+      this.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
       // Swal.fire({
       //   icon: 'error',
       //   title: 'No approver',
@@ -1246,7 +1246,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           _self.loader.hide();
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
-            this.messageService.add({severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status !"});
+            _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
             // Swal.fire({
             //   icon: 'error',
             //   title: 'Already exists!',
@@ -1259,7 +1259,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"})
+            _self.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"})
             // Swal.fire({
             //   icon: 'success',
             //   title: 'Saved!',
@@ -1269,7 +1269,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           }
         },err => {
           _self.loader.hide();
-          this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
           // Swal.fire({
           //   icon: 'error',
           //   title: 'Oops!',
@@ -1353,7 +1353,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         data=>{
           _self.loader.hide();
           if(data["errorCode"] == "2005"){
-            this.messageService.add({severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
+            _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
             // Swal.fire({
             //   icon: 'error',
             //   title: 'Already exists!',
@@ -1396,7 +1396,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             _self.modalRef.hide();
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
+            _self.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
             // Swal.fire({
             //   icon: 'success',
             //   title: 'Saved!',
@@ -1421,7 +1421,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         err => {
           _self.loader.hide();
           if(err.error.message == "2002"){
-            this.confirmationService.confirm({
+            _self.confirmationService.confirm({
               message: "Oops! An in-progress process already exists for the selected process. Please make changes to the existing in-progress notation!",
               header: 'Info',
               acceptLabel:'Ok',
@@ -1441,7 +1441,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             // });
           }         
           else
-            this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
           // Swal.fire({
           //   icon: 'error',
           //   title: 'Oops!',
@@ -1692,14 +1692,14 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let response;
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{response=res
       if(response.failure){
-        this.messageService.add({severity: "error", summary: "Error", detail: response.failure });
+        this.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: response.failure });
         // Swal.fire(
         //   'Error!',
         //   response.failure,
         //   'error'
         // )
       }else{
-        this.messageService.add({severity: "success", summary: "Success", detail: "Process started successfully!"});
+        this.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Process started successfully!"});
         // Swal.fire(
         //   'Success!',
         //   'Process started successfully',

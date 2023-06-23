@@ -269,13 +269,11 @@ export class CreateProjectFormComponent implements OnInit {
           summary: "Success",
           detail: response.message
         })
-        setTimeout(() => {
-          //this.resetcreateproject();
+          this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
           this.router.navigate(["/pages/projects/projectdetails"], {
             queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
           });
-        }, 1500);
 
         // Swal.fire({
         //   title: "Success",

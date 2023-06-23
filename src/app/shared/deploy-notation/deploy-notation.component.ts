@@ -71,9 +71,10 @@ export class DeployNotationComponent implements OnInit {
         } else{
         this.isLoading = false;
         this.messageService.add({
+          key: 'deplyBpmn',
           severity: 'error',
           summary: 'Error',
-          detail: "Oops! " + response.message
+          detail: "Oops " + response.message
         })
           // Swal.fire({
           //   title: 'Oops!',

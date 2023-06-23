@@ -133,7 +133,6 @@ export class CreateTasksComponent implements OnInit {
           summary: "Success",
           detail: "Task created successfully!"
         })
-        setTimeout(() => {
           //this.resettask();
           this.router.navigate(["/pages/projects/taskDetails"], {
             queryParams: {
@@ -142,7 +141,6 @@ export class CreateTasksComponent implements OnInit {
               task_id: response.taskId,
             }
           });
-        }, 1500);
         
       //   Swal.fire({
       //     title: 'Success',

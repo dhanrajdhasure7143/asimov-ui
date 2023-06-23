@@ -406,7 +406,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
     this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
       
-      this.confirmationService.confirm({
+      _self.confirmationService.confirm({
 
         message: "Your current changes will be lost when changing the notation.",
         header: 'Are you sure?',
@@ -596,7 +596,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      this.messageService.add({severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
+      this.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
       // Swal.fire({
       //   title: 'Success',
       //   text: 'Tasks automated successfully!',
@@ -753,7 +753,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   submitDiagramForApproval(e){
     this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      this.messageService.add({severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
+      this.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
       // Swal.fire({
       //   icon: 'error',
       //   title: 'No approver',
@@ -796,7 +796,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             "isShowConformance":false,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"});
+            _self.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"});
           // Swal.fire({
           //   icon: 'success',
           //   title: 'Saved',
@@ -805,7 +805,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
           // });
         },err => {
           _self.loader.hide();
-          this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          _self.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
           // Swal.fire({
           //   icon: 'error',
           //   title: 'Oops!',
@@ -859,7 +859,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             _self.getUserBpmnList();
           }
           _self.loader.hide();
-          this.messageService.add({severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
+          _self.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
           // Swal.fire({
           //   icon: 'success',
           //   title: 'Saved',
@@ -879,7 +879,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
         err => {
           _self.loader.hide();
           if(err.error.message == "2002"){
-            this.confirmationService.confirm({
+            _self.confirmationService.confirm({
               message: "Oops! An in-progress process already exists for the selected process. Please make changes to the existing in-progress notation!",
               header: 'Info',
               acceptLabel:'Ok',
@@ -897,7 +897,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             // )
           }         
           else
-            this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
+          _self.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
           // Swal.fire(
           //   'Oops!',
           //   'Something went wrong. Please try again',
@@ -985,7 +985,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       "variableList":this.variables
     };
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      this.messageService.add({severity: "success", summary: "Success", detail: "Process started successfully!"});
+      this.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Process started successfully!"});
       // Swal.fire({
       //   icon: 'success',
       //   title: 'Success',
