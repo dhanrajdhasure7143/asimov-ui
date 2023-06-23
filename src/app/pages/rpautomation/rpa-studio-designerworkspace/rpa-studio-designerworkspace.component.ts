@@ -1857,6 +1857,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
          this.final_tasks=this.finaldataobjects;
        }
        this.get_coordinates();
+
        await this.getsvg();
        this.rpaAuditLogs(env);
        this.validateBotNodes();
@@ -1954,6 +1955,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                  this.actualEnv = [...response.envIds];
                  Swal.fire("Success", "Bot updated successfully", "success");
                  this.uploadfile(response.envIds, response.tasks);
+                 this.saveBotImage();
                  let auditLogsList = [
                    ...this.auditLogs.map((item) => {
                      item["versionNew"] = response.versionNew;
@@ -2097,7 +2099,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
          groups: this.getGroupsInfo(),
          lastSubmittedBy: "admin",
          scheduler: null,
-         svg: this.svg,
+         svg: "",
          sequences: this.getsequences(),
          isBotCompiled: this.isBotCompiled,
          executionMode: this.executionMode?"v1":"v2",
@@ -2129,6 +2131,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                this.actualEnv = [...response.envIds];
                Swal.fire("Success", "Bot updated successfully", "success");
                this.uploadfile(response.envIds, response.tasks);
+               this.saveBotImage();
                let auditLogsList = [
                  ...this.auditLogs.map((item) => {
                    item["versionNew"] = response.versionNew;
@@ -2184,6 +2187,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
        }
    }
  }
+
+
+  saveBotImage(){
+  this.getsvg();
+    let data = {
+      "botImage" : this.svg
+     }
+     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
+        console.log(res);
+     })
+  }
 
 
   assignTaskConfiguration()
@@ -2986,12 +3000,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   getData(){
     this.rest.getbotdata(this.idBot).subscribe((response: any) => {
-      for(let i = 0; i < response.tasks.length; i++){
-          this.isDeprecated = response.tasks[i].isModified
-          if(this.isDeprecated){
-            this.taskNames = response.tasks[i].taskName
-            this.modifiedTaskNames.push(this.taskNames);
-          }
+      if(response.errorMessage != undefined)
+      {
+        for(let i = 0; i < response.tasks.length; i++){
+            this.isDeprecated = response.tasks[i].isModified
+            if(this.isDeprecated){
+              this.taskNames = response.tasks[i].taskName
+              this.modifiedTaskNames.push(this.taskNames);
+            }
+        }
       }
     });
   }
