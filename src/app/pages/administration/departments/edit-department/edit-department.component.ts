@@ -51,7 +51,7 @@ export class EditDepartmentComponent implements OnInit {
         if(resp.message === "Successfully updated the category"){
           Swal.fire({
             title: 'Success',
-            text: "Department updated successfully!",
+            text: "Department Updated Successfully !!",
             position: 'center',
             icon: 'success',
             showCancelButton: false,
@@ -68,7 +68,7 @@ export class EditDepartmentComponent implements OnInit {
         })
         }
         else if(resp.message==="Category already exists"){
-          Swal.fire("Error","Department already exists.","error");
+          Swal.fire("Error","Department already exists","error");
         }
         else {
           Swal.fire("Error",resp.message,"error");

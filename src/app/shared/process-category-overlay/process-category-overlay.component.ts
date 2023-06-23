@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
 import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
-import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'process-category-overlay',
@@ -46,9 +45,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"CMMN",id:"cmmn"},{type:"DMN",id:"dmn"}];
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
-    private cdRef: ChangeDetectorRef, private dt: DataTransferService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,) { }
+    private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.overlay_data.type=="edit"){
@@ -151,7 +148,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       for (var i = 0; i < this.categoriesList.data.length; i++) {
         if (this.categoriesList.data[i].categoryName == this.othercategory) {
           found = true;
-          this.global.notify("Entered category already exists. Please enter a new category!", "error");
+          this.global.notify("Entered category is already existed.Please enter new category.", "error");
           break;
         }
       }
@@ -248,24 +245,16 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }
       this.rest.updatePiData(req_body).subscribe((res:any) => {
         this.isLoading=false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: res.message
-        })
-        setTimeout(() => {
-          this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-        }, 1500);
-        // Swal.fire({
-        //   title: 'Success',
-        //   text: res.message,
-        //   icon: 'success',
-        //   heightAuto: false,
-        // }).then((result) => {
-        //   if (result.value) {
-        //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-        //   }
-        // });
+        Swal.fire({
+          title: 'Success',
+          text: res.message,
+          icon: 'success',
+          heightAuto: false,
+        }).then((result) => {
+          if (result.value) {
+            this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+          }
+        });
         this.slideDown(null);
       });
     }else{
@@ -290,83 +279,50 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           }else{
             disply_text="Process name & Process owner"
           }
-          this.confirmationService.confirm({
-            message: disply_text + " will be updated for all versions of the BPMN.",
-            header: "Are you sure?",            
-            acceptLabel:'Yes',
-            rejectLabel: "No",
-            rejectButtonStyleClass: 'btn reset-btn',
-            acceptButtonStyleClass: 'btn bluebg-button',
-            defaultFocus: 'none',
-            rejectIcon: 'null',
-            acceptIcon: 'null',
-            accept: () => {
-              this.rest.updateBpsData(req_body).subscribe((res:any)=>{
-                this.isLoading=false;
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Success',
-                  detail: res.message
-                })
-                setTimeout(() => {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: disply_text + " will be update all the versions of the bpmn",
+            icon: 'warning',
+            showCancelButton: true,
+            heightAuto: false,
+            customClass: {
+              confirmButton: 'btn bluebg-button',
+              cancelButton:  'btn new-cancelbtn',
+            },
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if (result.value) {
+              this.isLoading=true;
+            this.rest.updateBpsData(req_body).subscribe((res:any)=>{
+              this.isLoading=false;
+              Swal.fire({
+                title: 'Success',
+                text: res.message,
+                icon: 'success',
+                heightAuto: false,
+              }).then((result) => {
+                if (result.value) {
                   this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-                }, 1500);
-                this.slideDown(null);
-              })
-            }
+                }
+              });
+              this.slideDown(null);
+            })
+          }
           });
-          // Swal.fire({
-          //   title: 'Are you sure?',
-          //   text: disply_text + " will be update all the versions of the bpmn",
-          //   icon: 'warning',
-          //   showCancelButton: true,
-          //   heightAuto: false,
-          //   customClass: {
-          //     confirmButton: 'btn bluebg-button',
-          //     cancelButton:  'btn new-cancelbtn',
-          //   },
-          //   confirmButtonText: 'Yes'
-          // }).then((result) => {
-          //   if (result.value) {
-          //     this.isLoading=true;
-          //   this.rest.updateBpsData(req_body).subscribe((res:any)=>{
-          //     this.isLoading=false;
-          //     Swal.fire({
-          //       title: 'Success',
-          //       text: res.message,
-          //       icon: 'success',
-          //       heightAuto: false,
-          //     }).then((result) => {
-          //       if (result.value) {
-          //         this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-          //       }
-          //     });
-          //     this.slideDown(null);
-          //   })
-          // }
-          // });
         }else{
           this.isLoading=true;
           this.rest.updateBpsData(req_body).subscribe((res:any)=>{
             this.isLoading=false;
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: res.message
-            })
-            setTimeout(() => {
-              this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-            }, 1500);
-            // Swal.fire({
-            //   title: 'Success',
-            //   text: res.message,
-            //   icon: 'success',
-            //   heightAuto: false,
-            // }).then((result) => {
-            //   if (result.value) {
-            //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-            //   }
-            // });
+            Swal.fire({
+              title: 'Success',
+              text: res.message,
+              icon: 'success',
+              heightAuto: false,
+            }).then((result) => {
+              if (result.value) {
+                this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+              }
+            });
             this.slideDown(null);
           })
         }

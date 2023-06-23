@@ -432,7 +432,7 @@ export class ProgramDetailsComponent implements OnInit {
       if (this.linked_projects.length == 1) {
         Swal.fire({
           title: 'Error',
-          text: "You have limited access to this product. Please contact the EZFlow support team for more details.",
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,
@@ -507,7 +507,7 @@ export class ProgramDetailsComponent implements OnInit {
           if(response.errorMessage==undefined)
           {
             
-            Swal.fire("Success","Project deleted successfully!","success")
+            Swal.fire("Success","Project Deleted Successfully !!","success")
             this.getprogramdetails();
           }
           else
@@ -551,7 +551,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.spinner.hide()
       let response:any=res;
       if(response.errorMessage == undefined)
-        Swal.fire("Success","Program updated successfully!","success")
+        Swal.fire("Success","Program Updated Successfully !!","success")
       else
         Swal.fire("Error",response.errorMessage,"error");
       this.getprogramdetails();
@@ -564,7 +564,7 @@ export class ProgramDetailsComponent implements OnInit {
       if (this.linked_projects.length == 1) {
         Swal.fire({
           title: 'Error',
-          text: "You have limited access to this product. Please contact the EZFlow support team for more details.",
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
           position: 'center',
           icon: 'error',
           showCancelButton: false,
@@ -603,10 +603,10 @@ export class ProgramDetailsComponent implements OnInit {
     this.rest.savedata(this.program_id,req_body).subscribe(res=>{
       this.modalref.hide();
       if(res.message==="Project Added Successfully"){
-        Swal.fire("Success","Project added successfully!","success")
+        Swal.fire("Success","Project Added Successfully !!","success")
         this.getunassignedprojectslist(this.userRoles,this.userName,this.email);
       }else
-      Swal.fire("Error","Unable to add the Project!","error");
+      Swal.fire("Error","Unable to add the Project","error");
      
       this.getprogramdetails();
     })

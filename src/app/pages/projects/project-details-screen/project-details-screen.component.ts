@@ -7,11 +7,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
-import { MenuItem , MessageService, ConfirmationService} from 'primeng/api';
+import {MenuItem} from 'primeng/api';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
+import {MessageService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
@@ -387,22 +389,12 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
     link.download = this.projectDetails.projectName;
     link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
     link.click();
-    this.messageService.add({
-      severity: "success",
-      summary: "Success",
-      detail: response.message
-    })
-    // Swal.fire("Success", response.message, "success");
+    Swal.fire("Success", response.message, "success");
     this.spinner.hide();
   }
   else {
     this.spinner.hide();
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: response.errorMessage
-    })
-    // Swal.fire("Error", response.errorMessage, "error");
+    Swal.fire("Error", response.errorMessage, "error");
   }
 })
 }
@@ -522,12 +514,7 @@ if (process != undefined) {
     this.processownername='';
     this.processOwnerFlag = true;
     //this.createprogram.get("processOwner").setValue("")
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: "Unable to find the process owner for the selected process."
-    })
-    // Swal.fire("Error", "Unable to find process owner for selected process", "error")
+    Swal.fire("Error", "Unable to find process owner for selected process", "error")
   }
 }
 }
@@ -628,7 +615,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.spinner.hide();
   }
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource."});
+  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource"});
   this.spinner.hide();
 })
 }
@@ -657,19 +644,13 @@ const selectedresource = [
 ]
 
 this.confirmationService.confirm({
-  message: "Do you want to delete this user? This can't be undone.",
-  header: 'Are you sure?',
-  rejectLabel: "No",
-  acceptLabel: "Yes",
-  rejectButtonStyleClass: 'btn reset-btn',
-  acceptButtonStyleClass: 'btn bluebg-button',
-  defaultFocus: 'none',
-  rejectIcon: 'null',
-  acceptIcon: 'null',
+  message: "Do you really want to delete this user? This process cannot be undone.",
+  header: 'Are you Sure?',
+  
   accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource deleted successfully!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !'});
     this.getTheExistingUsersList(1);
     // setTimeout(() => {
     //   this.onUsersTab(1);
@@ -678,12 +659,13 @@ this.confirmationService.confirm({
       this.snapShotDetails();
       this.spinner.hide();
     }, err => {
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Oops! Something went wrong.'});
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong!'});
       this.spinner.hide();
     })
   },
   reject: (type) => {
-  }
+  },
+  key: "positionDialog"
 });
 }
 
@@ -752,13 +734,13 @@ this.rest_api.update_project(this.projectDetails).subscribe(res => {
   // this.spinner.hide();
   let response: any = res;
   if (response.errorMessage == undefined)
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project updated successfully!'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !'});
   else
   this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
   this.getProjectdetails()
   // this.editdata = false;
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Project update failed!"});
+  this.messageService.add({severity:'error', summary: 'Error', detail: "Project Update failed"});
 });
 }
 
@@ -1019,19 +1001,14 @@ pinMessage(item){
   if(this._pinnedMessage.length>0){
   this.confirmationService.confirm({
     message: 'Want to replace the currently pinned message with this one?',
-    header: 'Are you sure?',
-    rejectLabel: "No",
-    acceptLabel: "Yes",
-    rejectButtonStyleClass: 'btn reset-btn',
-    acceptButtonStyleClass: 'btn bluebg-button',
-    defaultFocus: 'none',
-    rejectIcon: 'null',
-    acceptIcon: 'null',
+    header: 'Are you Sure?',
+   
     accept: () => {
       this.sendMessage(item,'pinned')
     },
     reject: (type) => {
-    }
+    },
+    key: "positionDialog"
 });
 }else{
   this.sendMessage(item,'pinned')
@@ -1122,7 +1099,7 @@ navigateToCreateDocument(){
 let objectKey;
 let key;
 if(this.selected_folder.dataType != 'folder'){
-  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
   return
 }
 // if(this.selected_folder.parent == undefined){
@@ -1253,7 +1230,7 @@ this.isFile_upload_dialog = false;
 
 createFolder(){
   if(this.selected_folder.dataType != 'folder'){
-    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
     return
   }
   this.allFiles =[...this.convertToTree(this.documentList)];
@@ -1352,7 +1329,7 @@ saveFolder(){
   let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
   if(this.selected_folder){
   if(this.selected_folder.dataType != 'folder'){
-    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
     return
   }
   // let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
@@ -1379,10 +1356,10 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
   this.spinner.hide();
   this.isDialog=false;
   this.entered_folder_name=''
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
 },err=>{
   this.spinner.hide();
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create!"});
+  this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
 })
 }
 
@@ -1521,7 +1498,7 @@ selectEnd() {
       this.messageService.add({
         severity: "info",
         summary: "Info",
-        detail: "Please select a folder.",
+        detail: "Please select Folder",
       });
       return;
     }
@@ -1558,7 +1535,7 @@ selectEnd() {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File uploaded successfully!",
+          detail: "File Uploaded Successfully !",
         });
       },
       (err) => {
@@ -1566,7 +1543,7 @@ selectEnd() {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Failed to upload!",
+          detail: "Failed to upload !",
         });
       }
     );

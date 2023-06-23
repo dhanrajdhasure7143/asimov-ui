@@ -6,7 +6,6 @@ import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
 import Swal from 'sweetalert2';
-import { ConfirmationService } from 'primeng/api';
 import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
@@ -44,8 +43,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hiddenPopUp: boolean=false;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
-    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, 
-    private cdRef: ChangeDetectorRef, private confirmationService: ConfirmationService,
+    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -93,33 +91,20 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
-        this.confirmationService.confirm({
-          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
-          header: "Info",
-          acceptLabel:'Ok',
-          rejectVisible: false,
-          rejectButtonStyleClass: 'btn reset-btn',
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          rejectIcon: 'null',
-          acceptIcon: 'null',
-          key:'confirm1',
-          accept: () => {},
-        });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
 	
-        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // })
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
       }
       else {
         this.uploaded_file = null;
@@ -196,7 +181,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           }
         }
       }else{
-        message = "Process name already exists.";
+        message = "Process name already exists ";
         this.global.notify(message,"error");
       }
     });
@@ -205,33 +190,20 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   onUploadClick() {
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
-        this.confirmationService.confirm({
-          message: "You have limited access to this product. Please contact the EZFlow support team for more details.",
-          header: "Info",
-          acceptLabel:'Ok',
-          rejectVisible: false,
-          rejectButtonStyleClass: 'btn reset-btn',
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          rejectIcon: 'null',
-          acceptIcon: 'null',
-          key:'confirm1',
-          accept: () => {},
-        });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
 	
-        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // });
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        });
         return false;
       } else {
         return true;

@@ -6,7 +6,6 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { NotifierService } from "angular-notifier";
 import Swal from "sweetalert2";
-import { MessageService } from 'primeng/api';
 import { Router } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 @Component({
@@ -40,7 +39,6 @@ export class CreateProjectFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private rest_api: RestApiService,
-    private messageService: MessageService,
     private router: Router
   ) {}
 
@@ -180,12 +178,11 @@ export class CreateProjectFormComponent implements OnInit {
         this.processOwner = false;
       } else {
         this.insertForm2.get("processOwner").setValue("");
-        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process."});
-        // Swal.fire(
-        //   "Error",
-        //   "Unable to find process owner for selected process",
-        //   "error"
-        // );
+        Swal.fire(
+          "Error",
+          "Unable to find process owner for selected process",
+          "error"
+        );
       }
     }
   }
@@ -264,40 +261,25 @@ export class CreateProjectFormComponent implements OnInit {
       
         this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         })
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: response.message
-        })
+        Swal.fire({
+          title: "Success",
+          text: response.message,
+          position: "center",
+          icon: "success",
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+          confirmButtonText: "Ok",
+        }).then((result) => {
           this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
           this.router.navigate(["/pages/projects/projectdetails"], {
             queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
           });
-
-        // Swal.fire({
-        //   title: "Success",
-        //   text: response.message,
-        //   position: "center",
-        //   icon: "success",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   confirmButtonText: "Ok",
-        // }).then((result) => {
-        //   this.resetcreateproject();
-        //   // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
-        //   this.router.navigate(["/pages/projects/projectdetails"], {
-        //     queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
-        //   });
-        // });
-      } else {
-        this.messageService.add({severity: "error",summary: "Error", detail: response.errorMessage});
-        // Swal.fire("Error", response.errorMessage, "error");
-      }
-      
+        });
+      } else Swal.fire("Error", response.errorMessage, "error");
     });
   }
 }

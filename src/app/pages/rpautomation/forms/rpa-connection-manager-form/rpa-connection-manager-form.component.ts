@@ -249,7 +249,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Action saved successfully!"
+          detail: "Action Saved Successfully !!"
         })
           setTimeout(() =>{
             this.router.navigate(["/pages/rpautomation/action-item"], {
@@ -265,7 +265,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Oops! Something went wrong.",
+            detail: "Something Went Wrong !!",
           });
         // };
       }
@@ -313,7 +313,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to generate the access token!",
+          detail: "Unable to Generate Access Token !!",
         });        
         this.spinner.hide();
       }
@@ -1058,7 +1058,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           this.messageService.add({
             severity: "success",
             summary: "Success",
-            detail: "Action updated successfully!",
+            detail: "Action Updated Successfully !!",
           })            
             setTimeout(()=>{
               this.router.navigate(["/pages/rpautomation/action-item"], {
@@ -1076,7 +1076,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Oops! Something went wrong.",
+              detail: "Something Went Wrong !!",
             })
           // };
         }

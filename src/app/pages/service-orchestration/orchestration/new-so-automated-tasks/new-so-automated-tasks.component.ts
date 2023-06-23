@@ -13,7 +13,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { moveItemInArray} from '@angular/cdk/drag-drop';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
-import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -129,9 +128,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private dt : DataTransferService,
     private modalService:BsModalService,
     private cd:ChangeDetectorRef,
-    private dataTransfer: DataTransferService,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private dataTransfer: DataTransferService
    )
 
   {
@@ -378,7 +375,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  
      });*/
      setTimeout(()=>{
-       this.messageService.add({severity:'success',summary:'Success',detail:'SLA configuration saved successfully!'})
+       Swal.fire("SLA configuration saved successfully","","success")
        this.SLAclose();
      },1000)
  
@@ -488,7 +485,7 @@ cascadingImp(){
 //       Swal.fire({
 //         position: 'center',
 //         icon: 'success',
-//         title: "Successfully connected.",
+//         title: "Successfully Connected",
 //         showConfirmButton: false,
 //         timer: 2000
 //       })
@@ -496,7 +493,7 @@ cascadingImp(){
 //         Swal.fire({
 //           position: 'center',
 //           icon: 'error',
-//           title: 'Connection failed!',
+//           title: 'Connection Failed',
 //           showConfirmButton: false,
 //           timer: 2000
 //         })
@@ -653,12 +650,12 @@ resetsla(){
         // this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
-       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to re-order tasks.'})
+        Swal.fire("Error","Unable to reorder tasks","error")
       }))
     }
     else
     {
-      this.messageService.add({severity:'warn',summary:'Success',detail:'Please select process to re-oder tasks.'})
+      Swal.fire("Alert","Please select process to re-order tasks","warning")
     }
     // if (event.previousContainer === event.container) {
     //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
@@ -818,11 +815,11 @@ resetsla(){
               this.applyFilter(this.selectedvalue);
             }
           }
-       this.messageService.add({severity:'success',summary:'Success',detail:'Resource assigned successfully!'})
+          Swal.fire("Success","Resource Assigned Successfully","success");
           this.checkTaskAssigned(processId);
         }else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:'Failed to assign a resource.'})
+          Swal.fire("Error","Failed to Assign Resource","error");
         }
       })
     }
@@ -842,14 +839,14 @@ resetsla(){
         {
           this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          Swal.fire("Success",response.status,"success");
           if(this.selectedvalue!="")
           {
             this.checkTaskAssigned(task.processId)
           }
         }else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+          Swal.fire("Error",response.errorMessage,"warning");
         }
       })
     }
@@ -888,12 +885,11 @@ resetsla(){
       let response:any=data;
       this.spinner.hide();
       if(response.errorMessage==undefined){
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        Swal.fire("Success",response.status,"success");
         this.update_task_status()
       }else
       {
         Swal.fire("Error",response.errorMessage,"error");
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
       }
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
@@ -1149,11 +1145,24 @@ resetsla(){
       response.port=parseInt(response.port);
       this.rest.testcon_blueprism_config(response).subscribe(resp=>{
         let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        Swal.fire(response.status,"","success");
         if(response.errorCode==undefined){
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: response.status,
+            showConfirmButton: false,
+            timer: 2000
+          })
           }else{
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})          }
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: response.errorMessage,
+              showConfirmButton: false,
+              timer: 2000
+            })
+          }
       })
     }
     else
@@ -1175,7 +1184,7 @@ resetsla(){
       {
       this.rest.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        Swal.fire(response.status,"","success");
         this.BluePrismConfigForm.reset();
         this.getblueprismconnections();
       })
@@ -1185,7 +1194,7 @@ resetsla(){
         response["bluePrismId"]=this.bpid;
         this.rest.edit_blueprism_config(response).subscribe(resp=>{
           let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          Swal.fire(response.status,"","success");
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
         })
@@ -1228,7 +1237,7 @@ resetsla(){
     let Id = [parseInt(id)];
     this.rest.delete_blueprism_config(Id).subscribe(data=>{
       let response:any=data;
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          Swal.fire(response.status,"","success");
           this.getblueprismconnections();
     })
   }
@@ -1278,20 +1287,20 @@ resetsla(){
         let response:any=resp;
         if(response.status!=undefined)
         {
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          Swal.fire(response.status,"","success")
           this.configuration();
         }
         else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+          Swal.fire(response.errorMessage,"","warning")
         }
       })
       this.accountName="";this.tenantId="";this.userKey="";this.clientId="";this.activeStatus=false;
-      this.messageService.add({severity:'success',summary:'Success',detail:'Configuration added successfully!'})
+      Swal.fire("Configuration added successfully","","success");
       this.addconfigstatus=false;
     }else
     {
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please fill in the data.'})
+      Swal.fire("Pleas fill data","","warning")
     }
   }
 
@@ -1330,43 +1339,33 @@ resetsla(){
   }
 
   delete(taskid){
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-    //   if (result.value) {
-      this.confirmationService.confirm({
-        header:'Are you sure?',
-        message:"You won't be able to revert this!",
-        acceptLabel:'Yes',
-        rejectLabel:'No',
-        rejectButtonStyleClass: ' btn reset-btn',
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        rejectIcon: 'null',
-        acceptIcon: 'null',
-      accept:()=>{
+    Swal.fire({
+      title: 'Are you Sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
       this.spinner.show();
       this.rest.deleteTaskInProcess(taskid).subscribe(resp => {
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
           this.getautomatedtasks(this.selectedvalue);
-          this.messageService.add({severity:'success',summary:'Success',detail:'Task deleted successfully!'})
+          Swal.fire("Success", "Task Deleted Successfully!!", "success")
         }
         else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the task.'})
+          Swal.fire("Error", "Failed to delete task", "error");
         }
         this.spinner.hide();
         })
     }
-  })
+    })
+
   }
 
   addtasks(template){
@@ -1387,10 +1386,10 @@ resetsla(){
    
     if (value.message === "Task Added Successfully!!") {
       this.getautomatedtasks(this.selectedvalue);
-      this.messageService.add({severity:'success',summary:'Success',detail:'Task added successfully!'})
+      Swal.fire("Success", "Task Added Successfully!!", "success")
     }
     else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to add the task.'})
+      Swal.fire("Error", "Failed to add task", "error");
     }
     // this.spinner.hide();
     this.logs_modal.hide();
