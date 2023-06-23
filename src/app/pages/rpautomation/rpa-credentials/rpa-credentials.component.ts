@@ -6,7 +6,6 @@ import {Rpa_Hints} from "../model/RPA-Hints";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { Router } from '@angular/router';
-import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-credentials',
   templateUrl: './rpa-credentials.component.html',
@@ -45,9 +44,7 @@ export class RpaCredentialsComponent implements OnInit {
       private hints:Rpa_Hints, 
       private dt:DataTransferService,
       private spinner: LoaderService,
-      private columnList: columnList,
-      private messageService:MessageService,
-      private confirmationService:ConfirmationService
+      private columnList: columnList
       ) { 
   
       this.Credupdateflag=false;
@@ -139,46 +136,34 @@ inputNumberOnly(event){
 
   deleteCredentials(){
     const selectedcredentials = this.selectedData.map(p => p.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-this.confirmationService.confirm({
-  message: "Do you want to delete this credential? This can't be undone.",
-  header: 'Are you sure?',
-  acceptLabel:'Yes',
- rejectLabel:'No',
- rejectButtonStyleClass: ' btn reset-btn',
- acceptButtonStyleClass: 'btn bluebg-button',
- defaultFocus: 'none',
- rejectIcon: 'null',
- acceptIcon: 'null',
-  accept: (result) => {
+    Swal.fire({
+      title: 'Are you Sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
       if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
           if(status.errorMessage==undefined){
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            Swal.fire("Success",status.status,"success");
             this.getallCredentials();
           }else{
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+            Swal.fire("Error",status.errorMessage,"error")
           }              
         },err=>{
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
+          Swal.fire("Error","Unable to delete credentails","error");
         });
       }
-  },
-})
+    });
   }
 
  
@@ -238,49 +223,33 @@ this.confirmationService.confirm({
     // const selectedcredentials = this.selectedData.map(p => p.credentialId);
     const selectedcredentials=[]
     selectedcredentials.push(row.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-      this.confirmationService.confirm({
-        message: "You won't be able to revert this!",
-        header: 'Are you sure?',
-      acceptLabel:'Yes',
-      rejectLabel:'No',
-      rejectButtonStyleClass: ' btn reset-btn',
-      acceptButtonStyleClass: 'btn bluebg-button',
-      defaultFocus: 'none',
-      rejectIcon: 'null',
-      acceptIcon: 'null',
-      accept: (result) => {
+    Swal.fire({
+      title: 'Are you Sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn bluebg-button',
+        cancelButton:  'btn new-cancelbtn',
+      },
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
       if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
           if(status.errorMessage==undefined){
-            // Swal.fire("Success",status.status,"success");
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            Swal.fire("Success",status.status,"success");
             this.getallCredentials();
           }else{
-            // Swal.fire("Error",status.errorMessage,"error")
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
-
+            Swal.fire("Error",status.errorMessage,"error")
           }              
         },err=>{
           this.spinner.hide();
-          // Swal.fire("Error","Unable to delete credentails","error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
-
+          Swal.fire("Error","Unable to delete credentails","error");
         });
-      }}
+      }
     });
   }
 }

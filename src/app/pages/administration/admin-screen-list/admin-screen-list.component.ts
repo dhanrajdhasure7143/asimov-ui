@@ -58,8 +58,9 @@ export class AdminScreenListComponent implements OnInit {
 
   deleteScreen(id: any) {
     this.confirmationService.confirm({
-      message: "Do you want to delete this record? This can't be undone.",
-      header: "Are you sure?",
+      message: "Are You Sure ? You want to delete this record!",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
       key: "positionDialog",
       accept: () => {
         this.spinner.show();
@@ -68,7 +69,7 @@ export class AdminScreenListComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Sucsess",
-              detail: "Record deleted!",
+              detail: "Record deleted !!",
             });
             this.spinner.hide();
             this.getScreenList();
@@ -77,7 +78,7 @@ export class AdminScreenListComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "rejected",
-              detail: "Unable to delete the record.",
+              detail: "Unable to delete record",
             });
           }
         );

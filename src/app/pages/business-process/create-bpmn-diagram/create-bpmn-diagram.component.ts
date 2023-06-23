@@ -13,7 +13,6 @@ import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { RestApiService } from '../../services/rest-api.service';
@@ -116,7 +115,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut,
-    private loader: LoaderService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+    private loader: LoaderService) {}
     
   canDeactivate(): Observable<boolean> | boolean {
     return !this.isDiagramChanged
@@ -405,25 +404,26 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
     this.updated_date_time = null;
     this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
-      
-      _self.confirmationService.confirm({
-
-        message: "Your current changes will be lost when changing the notation.",
-        header: 'Are you sure?',
-        acceptLabel:'Yes',
-        rejectLabel:'No',
-        rejectButtonStyleClass: 'btn reset-btn',
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        rejectIcon: 'null',
-        acceptIcon: 'null',
-        accept: () => {
+      Swal.fire({
+        title: 'Are you Sure?',
+        text: 'Your current changes will be lost on changing notation.',
+        icon: 'warning',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'btn bluebg-button',
+          cancelButton:  'btn new-cancelbtn',
+        },
+        heightAuto: false,
+        confirmButtonText: 'Save and Continue',
+        cancelButtonText: 'Discard'
+        
+      }).then((res) => {
+        if(res.value){
           _self.isDiagramChanged = false;
           _self.notationListNewValue = _self.selected_notation;
           _self.selected_notation = value;
           _self.saveprocess(_self.notationListNewValue);
-        },
-        reject: () => {
+        }else if(res.dismiss === Swal.DismissReason.cancel){
           this.isDiagramChanged = false;
           this.diplayApproveBtn = true;
           this.keyboardLabels=this.shortcut[this.selectedNotationType];
@@ -449,53 +449,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             _self.newXml = selected_xml;
           });
         }
-      });
-      // Swal.fire({
-      //   title: 'Are you Sure?',
-      //   text: 'Your current changes will be lost on changing notation.',
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   customClass: {
-      //     confirmButton: 'btn bluebg-button',
-      //     cancelButton:  'btn new-cancelbtn',
-      //   },
-      //   heightAuto: false,
-      //   confirmButtonText: 'Save and Continue',
-      //   cancelButtonText: 'Discard'
-        
-      // }).then((res) => {
-      //   if(res.value){
-      //     _self.isDiagramChanged = false;
-      //     _self.notationListNewValue = _self.selected_notation;
-      //     _self.selected_notation = value;
-      //     _self.saveprocess(_self.notationListNewValue);
-      //   }else if(res.dismiss === Swal.DismissReason.cancel){
-      //     this.isDiagramChanged = false;
-      //     this.diplayApproveBtn = true;
-      //     this.keyboardLabels=this.shortcut[this.selectedNotationType];
-      //     this.notationListOldValue = this.selected_notation;
-      //     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-      //     let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-      //     this.selectedNotationType = current_bpmn_info["ntype"];
-      //     this.fileType = "svg";
-      //     if(this.dmnTabs)
-      //       this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
-      //     this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
-      //     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
-      //       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      //       this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
-      //       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-      //                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-      //                     "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
-      //       this.dt.bpsNotationaScreenValues(this.push_Obj);
-      //     }
-      //     this.initModeler();
-      //     this.bpmnModeler.importXML(selected_xml, function(err){
-      //       _self.oldXml = selected_xml;
-      //       _self.newXml = selected_xml;
-      //     });
-      //   }
-      // })
+      })
     }else{
       this.loader.show();
       this.isDiagramChanged = false;
@@ -596,14 +550,13 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      this.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
-      // Swal.fire({
-      //   title: 'Success',
-      //   text: 'Tasks automated successfully!',
-      //   icon: 'success',
-      //   heightAuto: false,
-      // }
-      // );
+      Swal.fire({
+        title: 'Success',
+        text: 'Tasks automated successfully!',
+        icon: 'success',
+        heightAuto: false,
+      }
+      );
     })
   }
 
@@ -753,13 +706,12 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   submitDiagramForApproval(e){
     this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      this.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'No approver',
-      //   text: 'Please select approver from the list given above !',
-      //   heightAuto: false,
-      // });
+      Swal.fire({
+        icon: 'error',
+        title: 'No approver',
+        text: 'Please select approver from the list given above !',
+        heightAuto: false,
+      });
       return;
     }
     this.isStartProcessBtn=false;
@@ -796,22 +748,20 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             "isShowConformance":false,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            _self.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"});
-          // Swal.fire({
-          //   icon: 'success',
-          //   title: 'Saved',
-          //   text: 'Your changes has been saved and submitted for approval successfully!',
-          //   heightAuto: false,
-          // });
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            text: 'Your changes has been saved and submitted for approval successfully!',
+            heightAuto: false,
+          });
         },err => {
           _self.loader.hide();
-          _self.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops!',
-          //   text: 'Something went wrong. Please try again!',
-          //   heightAuto: false,
-          // });
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again!',
+            heightAuto: false,
+          });
         })
     })
   }
@@ -859,13 +809,12 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             _self.getUserBpmnList();
           }
           _self.loader.hide();
-          _self.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
-          // Swal.fire({
-          //   icon: 'success',
-          //   title: 'Saved',
-          //   text: 'Your changes has been saved successfully!',
-          //   heightAuto: false,
-          // });
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            text: 'Your changes has been saved successfully!',
+            heightAuto: false,
+          });
           if(newVal){
             _self.selected_notation = newVal;
             let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
@@ -878,31 +827,18 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
         },
         err => {
           _self.loader.hide();
-          if(err.error.message == "2002"){
-            _self.confirmationService.confirm({
-              message: "Oops! An in-progress process already exists for the selected process. Please make changes to the existing in-progress notation!",
-              header: 'Info',
-              acceptLabel:'Ok',
-              rejectVisible: false,
-              rejectButtonStyleClass: 'btn reset-btn',
-              acceptButtonStyleClass: 'btn bluebg-button',
-              defaultFocus: 'none',
-              acceptIcon: 'null',
-              accept: () => {},
-            });
-            // Swal.fire(
-            //   'Oops!',
-            //   'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
-            //   'warning'
-            // )
-          }         
+          if(err.error.message == "2002")
+          Swal.fire(
+            'Oops!',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
+            'warning'
+          )
           else
-          _self.messageService.add({key: 'createBpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
-          // Swal.fire(
-          //   'Oops!',
-          //   'Something went wrong. Please try again',
-          //   'error'
-          // )
+          Swal.fire(
+            'Oops!',
+            'Something went wrong. Please try again',
+            'error'
+          )
         })
     });
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
@@ -985,13 +921,12 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       "variableList":this.variables
     };
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      this.messageService.add({key: 'createBpmn',severity: "success", summary: "Success", detail: "Process started successfully!"});
-      // Swal.fire({
-      //   icon: 'success',
-      //   title: 'Success',
-      //   text: 'Process started successfully!',
-      //   heightAuto: false,
-      // });
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Process started successfully!',
+        heightAuto: false,
+      });
       this.cancelProcess();
       this.isStartProcessBtn=false;
     })    

@@ -20,10 +20,10 @@ export class AppComponent {
 
   ngOnInit() {
     addEventListener("offline",(e)=>{
-      this.toastr.error('Please check your internet connection.');
+      this.toastr.error('Please check your internet connection');
     });
     addEventListener("online",(e)=>{
-      this.toastr.success('You are now online.');
+      this.toastr.success('You are now online');
     });
     //Start watching for user inactivity.
     this.userIdle.startWatching();

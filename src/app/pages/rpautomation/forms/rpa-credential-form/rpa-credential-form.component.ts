@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService } from 'primeng/api';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rpa-credential-form',
@@ -30,9 +30,7 @@ export class RpaCredentialFormComponent implements OnInit {
   constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
-    private spinner: LoaderService,
-    private messageService:MessageService
-    ) {
+    private spinner: LoaderService) {
 
       this.credentialForm=this.formBuilder.group({
         //Removed email validator because we can also add organization name
@@ -165,16 +163,16 @@ export class RpaCredentialFormComponent implements OnInit {
           this.spinner.hide();
           if (status.errorMessage == undefined) {
             this.refreshTable.emit(true)
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            Swal.fire("Success", status.status, "success");
             document.getElementById('createcredentials').style.display = "none";
             this.resetCredForm();
             this.submitted = false;
           }
           else
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage});
+            Swal.fire("Error", status.errorMessage, "error");
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save credentials.'});
+          Swal.fire("Error", "Unable to save credentials", "error");
           this.refreshTable.emit(false)
         });
       }
@@ -240,19 +238,19 @@ resetCredForm(){
         this.spinner.hide();
         this.refreshTable.emit(true)
         if (status.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:status.status});
+          Swal.fire("Success", status.status, "success");
           // document.getElementById('Updatecredntials').style.display = 'none';
           document.getElementById('createcredentials').style.display = 'none';
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage});
+          Swal.fire("Error", status.errorMessage, "error");
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update credentials.'});
+        Swal.fire("Error", "Unable to update credentials", "error")
         this.refreshTable.emit(false);
       });
     } else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Please fill in all the details.'});
+      Swal.fire("Error", "please fill all details", "error");
     }
   }
 

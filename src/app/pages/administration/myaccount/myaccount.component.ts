@@ -66,7 +66,7 @@ export class MyAccountComponent implements OnInit {
       (data) => {
         Swal.fire({
           title: "Success",
-          text: "User details updated successfully!",
+          text: "User Details Updated Successfully!!",
           position: "center",
           icon: "success",
           showCancelButton: false,
@@ -176,7 +176,7 @@ export class MyAccountComponent implements OnInit {
 
   OnFlagChange(event){
     if(event.name !=this.formOne.country){
-      this.errorMessage="Select appropriate country"
+      this.errorMessage="Please Select Appropriate Country *"
     }
    if(event.iso2 ==this.phnCountryCode){
       this.errorMessage =""

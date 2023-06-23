@@ -5,11 +5,10 @@ import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
-
 @Component({
   selector: 'app-create-tasks',
   templateUrl: './create-tasks-new.component.html',
@@ -43,8 +42,7 @@ export class CreateTasksComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private confirmationService: ConfirmationService
     
     ) { }
 
@@ -127,49 +125,34 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         let status: any= response;
         //this.createtaskmodalref.hide();
-        
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Task created successfully!"
-        })
-          //this.resettask();
-          this.router.navigate(["/pages/projects/taskDetails"], {
-            queryParams: {
-              project_id: this.params_data.project_id,
-              project_name: this.project_name,
-              task_id: response.taskId,
-            }
-          });
-        
-      //   Swal.fire({
-      //     title: 'Success',
-      //     text: "Task Created Successfully !",
-      //     position: 'center',
-      //     icon: 'success',
-      //     showCancelButton: false,
-      //     customClass: {
-      //       confirmButton: 'btn bluebg-button',
-      //       cancelButton:  'btn new-cancelbtn',
-      //     },
+       
+        Swal.fire({
+          title: 'Success',
+          text: "Task Created Successfully !",
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
          
-      //     confirmButtonText: 'Ok'
-      // }).then((result) => {
-      //   this.resettask();
-      //   this.router.navigate(["/pages/projects/taskDetails"], {
-      //     queryParams: {
-      //       project_id: this.params_data.project_id,
-      //       project_name: this.project_name,
-      //       task_id: response.taskId,
-      //     },
-      //   });
-      //   //this.projectdetailscreen.getTaskandCommentsData();
-      // })
+          confirmButtonText: 'Ok'
+      }).then((result) => {
+        this.resettask();
+        this.router.navigate(["/pages/projects/taskDetails"], {
+          queryParams: {
+            project_id: this.params_data.project_id,
+            project_name: this.project_name,
+            task_id: response.taskId,
+          },
+        });
+        //this.projectdetailscreen.getTaskandCommentsData();
+      })
 
       }
       else
-        this.messageService.add({ severity: "error", summary: "Error", detail: response.message});
-        // Swal.fire("Error",response.message,"error");
+      Swal.fire("Error",response.message,"error");
 
     })
   }
@@ -272,7 +255,7 @@ taskDescriptionMaxLength(value){
     if(this.existingUsersList.find(data=>data.user_email == event.value) == undefined )
     this.confirmationService.confirm({
       message: 'This user is not in this project, Do you want to Invite them?',
-      header: 'Are you sure?',
+      header: 'Are you Sure?',
       
       accept: () => {
         this.confirmationService.close();

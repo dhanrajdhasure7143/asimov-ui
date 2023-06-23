@@ -271,7 +271,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.rest_api.deleteNotification(data).subscribe(resp => {
           Swal.fire({
             title: 'Success',
-            text: `Notification deleted successfully!`,
+            text: `Notification Deleted Successfully!!`,
             position: 'center',
             icon: 'success',
             showCancelButton: false,

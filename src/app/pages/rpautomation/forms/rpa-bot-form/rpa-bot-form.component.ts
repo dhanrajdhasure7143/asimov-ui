@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from 'js-base64';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import {ConfirmationService, MessageService} from "primeng/api";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rpa-bot-form',
@@ -25,10 +25,7 @@ export class RpaBotFormComponent implements OnInit {
     private formBuilder:FormBuilder,
     private rest:RestApiService,
     private spinner:LoaderService,
-    private cd: ChangeDetectorRef,
-    private messageService:MessageService,
-    public confirmationService:ConfirmationService
-    ){
+    private cd: ChangeDetectorRef){
       this.botForm = this.formBuilder.group({
         botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         department: ["", Validators.required],
@@ -88,18 +85,16 @@ export class RpaBotFormComponent implements OnInit {
       this.rest.createBot(botFormValue).subscribe((response: any) => {
         this.spinner.hide()
         if (response.errorMessage == undefined) {
+          Swal.fire("Success", "Bot created successfully!", "success");
           this.closeBotForm();
           this.event.emit({ botId: response.botId, case: "create" });
-          setTimeout(() => {
-          this.messageService.add({severity:'success', summary:'Success', detail:'Bot created successfully!',key:'rpadesignertoast'});
-          },500);
         } else {
-          this.messageService.add({severity:'error', summary:'Error', detail:response.errorMessage});
+          Swal.fire("Error", response.errorMessage, "error");
           this.event.emit(null);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to create a bot.'});
+        Swal.fire("Error", "Unable to create bot", "error");
         this.event.emit(null);
       })
     }
@@ -111,16 +106,16 @@ export class RpaBotFormComponent implements OnInit {
     this.spinner.show();
     this.rest.modifybotdetails(botFormValue).subscribe((response: any) => {
       if (response.errorMessage == undefined) {
-        this.messageService.add({severity:'success',summary:'Success',detail:response.message+'!'})
+        Swal.fire("Success", "Bot details updated successfully!", "success");
         this.closeBotForm();
         this.spinner.hide();
         this.event.emit({ botId: response.botId, case: "update" });
       } else {
-        this.messageService.add({ severity: "success",summary: "Success", detail: "Updated successfully!" });
+        Swal.fire("Error", "Unable to update bot details", "error");
         this.event.emit(null);
       }
     }, err => {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
+      Swal.fire("Error", "Unable to update bot", "error");
       this.event.emit(null)
       this.spinner.hide();
     })
@@ -168,7 +163,6 @@ export class RpaBotFormComponent implements OnInit {
       {
         botDetails.botName="Unsaved-Bot-"+((new Date()).getTime());
         this.event.emit({botId:Base64.encode(JSON.stringify(botDetails)),case:"create"});
-     
       }
     }
     else{

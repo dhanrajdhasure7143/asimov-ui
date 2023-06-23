@@ -449,28 +449,21 @@ export class ConfigureDashboardComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting it.",
         header: "Info",
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        acceptIcon: 'null',
+       
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
+        key: "positionDialog2",
       });
       return;
     }
     let confrmMessage="";
-    this.dashaboardcount > 1? confrmMessage="Do you want to delete this dashboard? This can't be undone." : confrmMessage= "Are you sure that you are deleting the default dashboard?";  
+    this.dashaboardcount > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone." : confrmMessage= "Are you sure that you are deleting the default dashboard?";  
   this.confirmationService.confirm({
     message: confrmMessage,
-    header: "Are you sure?",
-    acceptLabel:'Yes',
-    rejectLabel:'No',
-    rejectButtonStyleClass: ' btn reset-btn',
-      acceptButtonStyleClass: 'btn bluebg-button',
-    acceptIcon:'null',
-    defaultFocus:'none',
-    rejectIcon:'null',
-     accept: () => {
+    header: "Are you Sure?",
+    
+      accept: () => {
         this.loader.show();
         this.rest_api
           .getdeleteDashBoard(this._paramsData.dashboardId)
@@ -478,7 +471,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted successfully!",
+              detail: "Deleted Successfully !",
             });
           });
         this.loader.hide();
@@ -490,7 +483,7 @@ export class ConfigureDashboardComponent implements OnInit {
         this.router.navigate(["/pages/dashboard/dynamicdashboard"]);
        }
       },
-      
+      key: "positionDialog",
     });
   }
 

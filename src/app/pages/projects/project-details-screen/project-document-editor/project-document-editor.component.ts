@@ -95,10 +95,10 @@ export class ProjectDocumentEditorComponent implements OnInit {
         this.loader.hide();
         this.isDialog = false;
         this.onNavigate();
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
       },err=>{
         this.loader.hide();
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       });
     });
   }

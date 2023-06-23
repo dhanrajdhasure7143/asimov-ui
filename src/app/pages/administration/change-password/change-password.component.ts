@@ -34,7 +34,7 @@ export class ChangePasswordComponent implements OnInit {
   if(res.errorMessage === undefined){
     Swal.fire({
       title: "Success",
-      text: "Password updated successfully!",
+      text: "Password Updated successfully!",
       position: 'center',
       icon: 'success',
       showCancelButton: false,
@@ -47,7 +47,7 @@ export class ChangePasswordComponent implements OnInit {
     });
     this.loader.hide();
   }else if(res.errorMessage === "Your current password was incorrect."){
-      Swal.fire("Error","Please check your current password.","error");
+      Swal.fire("Error","Please check your current password!","error");
       this.loader.hide(); 
     }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
       Swal.fire("Error",res.errorMessage,"error");
@@ -60,7 +60,7 @@ export class ChangePasswordComponent implements OnInit {
   }, err => {
     this.loader.hide();
     // console
-    Swal.fire("Error","Please check your current password.","error");})
+    Swal.fire("Error","Please check your current password!","error");})
  form.resetForm();
   }
 

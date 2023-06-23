@@ -47,7 +47,7 @@ export class BpmnDiagramComponent implements OnInit {
     let _self = this;
     this.bpmnModeler.importXML(this.bpmnXmlNotation, function(err){
       if(err)
-        _self.global.notify("Oops! Something went wrong.","error");
+        _self.global.notify("Something went wrong!","error");
     });
     if(!this.viewMode){
       let _self = this;

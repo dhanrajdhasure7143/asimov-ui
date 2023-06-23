@@ -5,9 +5,8 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import * as moment from 'moment';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
-import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -28,8 +27,7 @@ export class StatisticsComponent implements OnInit {
   constructor(
     private spinner:NgxSpinnerService,
     private rest:RestApiService,
-    private dataTransfer:DataTransferService,
-    private messageService:MessageService
+    private dataTransfer:DataTransferService
     ) { }
 
     public allbots:any;
@@ -115,7 +113,7 @@ this.getEnvironments();
     }
   
       else{
-        this.messageService.add({severity:'error',summary:'Error',detail:item.errorMessage})
+        Swal.fire("Error",item.errorMessage,"error")
       }
       
       
@@ -125,7 +123,7 @@ this.getEnvironments();
     },
     err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get the bot's list."})
+      Swal.fire("Error","Unable to get bots list","error")
     })
   }
 
