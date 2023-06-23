@@ -157,7 +157,7 @@ export class AdminAddScreenComponent implements OnInit {
       .subscribe((data) => {
         this.updateColumndata = data;
         this.display = false;
-        this.messageService.add({severity:'success', summary:'Success', detail:'Column Updated Successfully !!'});
+        this.messageService.add({severity:'success', summary:'Success', detail:'Column updated successfully!'});
         this.getScreenDetail();
         this.spinner.hide();
         this.hiddenPopUp = false;
@@ -231,13 +231,13 @@ export class AdminAddScreenComponent implements OnInit {
     payload["fields"] = "";
     this.spinner.show();
     this.rest.updateScreenData(payload, this.screen_id).subscribe((data) => {
-    this.messageService.add({severity:'success', summary:'Success',detail:'Screen Updated successfully !!'});
+    this.messageService.add({severity:'success', summary:'Success',detail:'Screen updated successfully!'});
     setTimeout(() => {
       this.backToScreenList();
     }, 1000);
     this.spinner.hide();
     },(err: any) => {
-      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to Update Screen Details !!'});
+      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to update screen details!'});
     })  
   }
 
@@ -251,7 +251,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.columns_list = this.savedata;
       this.tableData = this.savedata;
       this.columns_list = this.columns.saveTable_column;
-      this.messageService.add({severity:'success', summary:'Success', detail:'Screen Saved successfully !!'});
+      this.messageService.add({severity:'success', summary:'Success', detail:'Screen saved successfully!'});
       setTimeout(() => {
         this.backToScreenList();
       }, 1000);
@@ -259,7 +259,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.buttonDisable = true;
     }),
       (err: any) => {
-        this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to Save !!'});
+        this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to save!'});
       };
   }
 

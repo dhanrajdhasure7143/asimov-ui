@@ -204,7 +204,7 @@ checktodelete()
     if(selectedEnvironments.length!=0)
     {
       Swal.fire({
-        title: 'Are you Sure?',
+        title: 'Are you sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
@@ -484,7 +484,7 @@ testBluePrismconnection()
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Successfully Connected',
+            title: 'Connected successfully!',
             showConfirmButton: false,
             timer: 2000
           })
@@ -531,7 +531,7 @@ testBluePrismconnection()
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Successfully Connected',
+            title: 'Connected successfully!',
             showConfirmButton: false,
             timer: 2000
           })

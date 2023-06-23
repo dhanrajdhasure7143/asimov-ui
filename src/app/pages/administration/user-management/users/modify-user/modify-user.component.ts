@@ -110,7 +110,7 @@ export class ModifyUserComponent implements OnInit {
         this.loader.hide();
         Swal.fire({
           title: "Success",
-          text: "User details updated Successfully !!",
+          text: "User details updated successfully!",
           position: "center",
           icon: "success",
           showCancelButton: false,
