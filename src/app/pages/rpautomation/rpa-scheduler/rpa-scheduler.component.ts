@@ -1,7 +1,6 @@
 import {Input, Component, OnInit ,Pipe, PipeTransform, EventEmitter,Output } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
-import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
@@ -174,12 +173,10 @@ gettime(){
           }
         }
         else
-          // Swal.fire("Error",response.errorMessage, "error");
-         this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
         },err=>{
         this.loader.hide()
-        // Swal.fire("Error","Unable to load schedules","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load schedules.'})
+        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to load schedules!'})
       })
     }
   }
@@ -416,21 +413,21 @@ gettime(){
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            this.notifier.notify("success","Schedule saved successfully!");
+            this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule saved successfully!"});   
             this.get_schedule();
           }  
           else
-            this.notifier.notify("error",response.errorMessage);
+         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'});
         },err=>{
           this.loader.hide();
-          this.notifier.notify("error","Unable to save the schedule.");
+          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to save the schedule!'})
         })
       }
     }
     else
     {
       this.loader.hide();
-      this.notifier.notify("error", "Please fill in all inputs.");
+      this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Please fill in all inputs!'})
     }
   }
 
@@ -480,11 +477,11 @@ gettime(){
       this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success","Schedule started successfully!")
+          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule started successfully!"});   
           this.get_schedule();
         }
         else
-          this.notifier.notify("error", resp.errorMessage);
+          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
       })
     }
   }
@@ -500,16 +497,11 @@ gettime(){
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage==undefined)
-        {
-
-          this.notifier.notify("success", "Schedule paused successfully!");
+        if(resp.errorMessage==undefined){
+          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule paused successfully!"});   
           this.get_schedule();
-        }
-        else
-        {
-        
-          this.notifier.notify("error",resp.errorMessage)
+        } else{
+         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
         }
       })
   }
@@ -525,13 +517,11 @@ gettime(){
     }
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
-      if(resp.errorMessage==undefined)
-      {
-        this.notifier.notify("success", "Schedule resumed successfully!");
+      if(resp.errorMessage==undefined){
+        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule resumed successfully!"});   
         this.get_schedule();
-      }
-      else
-        this.notifier.notify("error", resp.errorMessage);
+      }else
+        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
     })
 
   }
@@ -545,18 +535,16 @@ gettime(){
       let list=this.schedule_list.filter(data=>data.checked==true);
       this.rest.stop_schedule(list).subscribe((response:any)=>{
         this.loader.hide();
-        if(response.errorMessage==undefined)
-        {
-          this.notifier.notify("success", "Schedules deleted successfully!");
+        if(response.errorMessage==undefined){
+        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule deleted successfully!"});   
           this.get_schedule();
-        }
-        else
-        {
-          this.notifier.notify("error", response.errorMessage);
+        } else{
+          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
         }
       },err=>{
         this.loader.hide()
-        this.notifier.notify("error", "Unable to delete the schedule.");
+        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to delete the schedule!'})
+
         
       })
       // this.updateflags();

@@ -523,13 +523,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
-      key: 'messageService',
-      
+      key: 'rpadesigner',
         accept:() => {
         this.current_instance.executionMode=this.executionMode;
       },
-      reject:()=>
-      {
+      reject:()=>{
         this.executionMode=!this.executionMode;
       }
   })
