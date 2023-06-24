@@ -43,7 +43,6 @@ export class ApprovalsComponent implements OnInit {
   loginUser(){
     this.loading = true;
     let user=JSON.parse(this.tokenData.loggedUser);
-    console.log(user)
     this.http.post(environment.idm_url+"/api/login/beta/token", {userId:user.loggedUser}).subscribe((response:any)=>{
       this.getTenantBasedAccessToken(response, user);
       //this.getApprovals(response);
