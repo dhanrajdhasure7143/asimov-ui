@@ -7,31 +7,29 @@
     </div>
 </mat-toolbar>
 
-<div class="container-fluid approval-body">
+<div class="container-fluid approval-newscreen-body">
     <div *ngIf="approvalsList.length>0" class="h4 text-center text-success py-3">{{tokenData.status}} Successfully</div>
     <div class="row">
-        <div class="col-md-12">
-            <app-dynamic-table [columns_list]="columns_list" [table_data]="approvalsList" [screenTable]="'common'"
-                [dataKeyId]="'piId'" [search_fields]="[]" [show_search_field]="false" [show_column_filter]="false"
-                [show_clear_filter]="false">
-            </app-dynamic-table>
-            <!-- <table class="table px-2 py-2 approvals-table">
-                <thead class="bg-prime-header text-white">
+        <div class="col-md-12 approval-table-div">
+            <table class="table approvals-table">
+                <thead class="bg-prime-header text-center">
+                <tr class="text-center bg-prime-header">
                   <th>S.No</th>
                   <th>Approval Info</th> 
                   <th>Approver Name</th>
                   <th>Created At</th>
+                </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of approvalsList;let i=index">
                     <td>{{i+1}}</td>
                     <td>{{item.approvalInfo?(item.approvalInfo):"-"}}</td>
                     <td>{{item.approverName?(item.approverName):"-"}}</td>
-                    <td><span>{{item.createdAt?( item.createdAt | date :"medium"):'-'}}</span></td>
+                    <td><span>{{item.createdAt?( item.createdAt |date:'MMM d, y HH:mm:ss'):'-'}}</span></td>
                   </tr>
                 </tbody>
-              </table> -->
-              <!-- <div *ngIf="approvalsList.length==0" class="h5 text-center">No Items Found</div> -->
+              </table>
+              <div *ngIf="approvalsList.length==0" class="text-center h6 py-2">No Items Found</div>
         </div>
     </div>
 </div>
