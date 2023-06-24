@@ -1,0 +1,19 @@
+.ep-header-white{
+  background-color: #098DE6 !important;
+  height: 55px;
+  box-shadow: none !important;
+  position: absolute;
+}
+
+.approval-body{
+  margin-top: 100px;
+}
+
+.bg-prime-header{
+  background-color: #098DE6 !important;
+}
+
+
+.approvals-table .td{
+  font-size:14px;
+}
