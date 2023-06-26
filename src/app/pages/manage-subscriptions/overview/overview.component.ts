@@ -88,7 +88,7 @@ export class OverviewComponent implements OnInit {
     this.api.listofPaymentModes().subscribe((response) => {
       this.paymentMode = response;
       if(this.paymentMode.message=='Billing account not found'){
-        this.error1="Billing account not found."
+        this.error1="Billing Account Not Found"
      }
       this.spinner.hide();
     });
@@ -110,7 +110,7 @@ export class OverviewComponent implements OnInit {
   subscriptionCancel() {
     this.confirmationService.confirm({
       message: "Do you really want to cancel your subscription?",
-      header: "Are you sure?",
+      header: "Are you Sure?",
       
       key: "positionDialog",
       accept: (result) => {

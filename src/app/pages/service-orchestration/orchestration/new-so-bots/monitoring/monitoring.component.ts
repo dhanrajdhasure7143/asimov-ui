@@ -7,9 +7,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
 // import * as Chart from 'chart.js'
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as $ from 'jquery'
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
-import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
@@ -19,8 +18,7 @@ export class MonitoringComponent implements OnInit {
 
   constructor(
     private rest:RestApiService,
-    private spinner:NgxSpinnerService,
-    private messageService:MessageService
+    private spinner:NgxSpinnerService
   ) { }
     q:any;
     columns_list:any=[]
@@ -108,7 +106,7 @@ export class MonitoringComponent implements OnInit {
       this.botruntimestats();
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add.'})
+      Swal.fire("Error","Unable to add ","error")
     })
   }
 

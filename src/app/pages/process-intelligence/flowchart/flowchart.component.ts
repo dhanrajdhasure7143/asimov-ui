@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 import { Location} from '@angular/common'
 import { GlobalScript } from 'src/app/shared/global-script';
 import { Subscription } from 'rxjs';
-import { MessageService, ConfirmationService } from 'primeng/api';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -165,9 +164,7 @@ pi_fullGraph_data:any=[];
     private route:ActivatedRoute,
     private renderer: Renderer2,
     private location:Location,
-    private global:GlobalScript,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService) {  }
+    private global:GlobalScript) {  }
 
   @HostListener('document:click', ['$event.target'])  // spinner overlay hide on out side click
   public onClick(targetElement) {
@@ -281,51 +278,30 @@ pi_fullGraph_data:any=[];
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-
-            this.confirmationService.confirm({
-              message: "Oops!" +this.fullgraph.display_msg.info,
-              header: "Info",
-              rejectVisible: false,
-              acceptLabel: "Ok",
-              acceptButtonStyleClass: 'btn bluebg-button',
-              defaultFocus: 'none',
-              acceptIcon: 'null',
-              accept: () => {
-                this.messageService.add({
-                  severity: "info",
-                  summary: "Info",
-                  detail: "Please wait, redirecting to the workspace."
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              heightAuto: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  heightAuto: false,
+                  timer: 1500
                 })
                 setTimeout(() => {
                   self.router.navigate(['pages/processIntelligence/upload'])
-                }, 1500)
+                }, 1500);
               }
             });
-
-            // Swal.fire({
-            //   title: 'Oops!',
-            //   text: ""+this.fullgraph.display_msg.info,
-            //   icon: 'error',
-            //   showCancelButton: false,
-            //   heightAuto: false,
-            //   confirmButtonColor: '#007bff',
-            //   cancelButtonColor: '#d33',
-            //   confirmButtonText: 'Okay'
-            // }).then((result) => {
-            //   if (result.isConfirmed) {
-            //     Swal.fire({
-            //       position: 'center',
-            //       icon: 'info',
-            //       title: 'Please wait, Redirecting to workspace',
-            //       showConfirmButton: false,
-            //       heightAuto: false,
-            //       timer: 1500
-            //     })
-            //     setTimeout(() => {
-            //       self.router.navigate(['pages/processIntelligence/upload'])
-            //     }, 1500);
-            //   }
-            // });
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
@@ -334,51 +310,30 @@ pi_fullGraph_data:any=[];
           } 
         }
         if(this.fullgraph.hasOwnProperty('display_msg')){
-
-          this.confirmationService.confirm({
-            message: "Oops! It's not you, it's us. Please try again after some time.",
-            header: "Info",
-            rejectVisible: false,
-            acceptLabel: "Ok",
-            acceptButtonStyleClass: 'btn bluebg-button',
-            defaultFocus: 'none',
-            acceptIcon: 'null',
-            accept: () => {
-              this.messageService.add({
-                severity: "info",
-                summary: "Info",
-                detail: "Please wait, redirecting to the workspace."
+          Swal.fire({
+            title: 'Oops!',
+            text: "It is Not You it is Us, Please try again after some time",
+            icon: 'error',
+            showCancelButton: false,
+            heightAuto: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Okay'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: 'Please wait, Redirecting to workspace',
+                showConfirmButton: false,
+                heightAuto: false,
+                timer: 1500
               })
               setTimeout(() => {
                 self.router.navigate(['pages/processIntelligence/upload'])
-              }, 1500)
+              }, 1500);
             }
-          });
-
-          // Swal.fire({
-          //   title: 'Oops!',
-          //   text: "It is Not You it is Us, Please try again after some time",
-          //   icon: 'error',
-          //   showCancelButton: false,
-          //   heightAuto: false,
-          //   confirmButtonColor: '#007bff',
-          //   cancelButtonColor: '#d33',
-          //   confirmButtonText: 'Okay'
-          // }).then((result) => {
-          //   if (result.isConfirmed) {
-          //     Swal.fire({
-          //       position: 'center',
-          //       icon: 'info',
-          //       title: 'Please wait, Redirecting to workspace',
-          //       showConfirmButton: false,
-          //       heightAuto: false,
-          //       timer: 1500
-          //     })
-          //     setTimeout(() => {
-          //       self.router.navigate(['pages/processIntelligence/upload'])
-          //     }, 1500);
-          //   }
-          // })
+          })
 
           this.spinner.hide();
           this.model1=[];
@@ -495,50 +450,30 @@ pi_fullGraph_data:any=[];
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
          
-            this.confirmationService.confirm({
-              message: "Oops!" +this.fullgraph.display_msg.info,
-              header: "Info",
-              rejectVisible: false,
-              acceptLabel: "Ok",
-              acceptButtonStyleClass: 'btn bluebg-button',
-              defaultFocus: 'none',
-              acceptIcon: 'null',
-              accept: () => {
-                this.messageService.add({
-                  severity: "info",
-                  summary: "Info",
-                  detail: "Please wait, redirecting to the workspace."
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              heightAuto: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  heightAuto: false,
+                  timer: 1500
                 })
                 setTimeout(() => {
                   self.router.navigate(['pages/processIntelligence/upload'])
-                }, 1500)
+                }, 1500);
               }
             });
-
-            // Swal.fire({
-            //   title: 'Oops!',
-            //   text: ""+this.fullgraph.display_msg.info,
-            //   icon: 'error',
-            //   showCancelButton: false,
-            //   heightAuto: false,
-            //   confirmButtonColor: '#007bff',
-            //   cancelButtonColor: '#d33',
-            //   confirmButtonText: 'Okay'
-            // }).then((result) => {
-            //   if (result.isConfirmed) {
-            //     Swal.fire({
-            //       position: 'center',
-            //       icon: 'info',
-            //       title: 'Please wait, Redirecting to workspace',
-            //       showConfirmButton: false,
-            //       heightAuto: false,
-            //       timer: 1500
-            //     })
-            //     setTimeout(() => {
-            //       self.router.navigate(['pages/processIntelligence/upload'])
-            //     }, 1500);
-            //   }
-            // });
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
@@ -1002,36 +937,22 @@ pi_fullGraph_data:any=[];
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
-
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Failed to generate BPM notation. Please try again later."
-            });
-
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: 'Oops...',
-            //   text: "Failed to generate BPM Notation, Please try again later.",
-            //   heightAuto: false,
-            // })
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Failed to generate BPM Notation, Please try again later. !",
+              heightAuto: false,
+            })
           }
         },
         (err =>{
-
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
-
-          // Swal.fire({
-          //     icon: 'error',
-          //     title: 'Oops...',
-          //     text: 'Internal server error, Please try again later !',
-          //     // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
-          //     heightAuto: false,
-          //   });
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Internal server error, Please try again later !',
+              // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+              heightAuto: false,
+            });
             this.spinner.hide();
         }))
 
@@ -1046,33 +967,21 @@ pi_fullGraph_data:any=[];
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
         },
         (err =>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
           this.spinner.hide();
         }))
 
@@ -1087,33 +996,21 @@ pi_fullGraph_data:any=[];
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
         },
         (err =>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -1128,33 +1025,21 @@ pi_fullGraph_data:any=[];
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
         },
         (err =>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
         }))
     }
   } 
@@ -1917,52 +1802,30 @@ addWorkingHours(){
      }
   this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
     if(this.fullgraph.hasOwnProperty('display_msg')){
-
-      this.confirmationService.confirm({
-        message: "Oops! It's not you, it's us. Please try again after some time.",
-        header: "Info",
-        
-        rejectVisible: false,
-        acceptLabel: "Ok",
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        acceptIcon: 'null',
-        accept: () => {
-          this.messageService.add({
-            severity: "info",
-            summary: "Info",
-            detail: "Please wait, redirecting to the workspace.",
-          })
-          setTimeout(() => {
-            _self.router.navigate(['pages/processIntelligence/upload'])
-          }, 1500);
-        }
-      });
-
-        // Swal.fire({
-        //   title: 'Oops!',
-        //   text: "It is Not You it is Us, Please try again after some time",
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   heightAuto: false,
-        //   confirmButtonColor: '#007bff',
-        //   cancelButtonColor: '#d33',
-        //   confirmButtonText: 'Okay'
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'info',
-        //       title: 'Please wait, Redirecting to workspace',
-        //       showConfirmButton: false,
-        //       heightAuto: false,
-        //       timer: 1500
-        //     })
-        //     setTimeout(() => {
-        //       _self.router.navigate(['pages/processIntelligence/upload'])
-        //     }, 1500);
-        //   }
-        // })
+        Swal.fire({
+          title: 'Oops!',
+          text: "It is Not You it is Us, Please try again after some time",
+          icon: 'error',
+          showCancelButton: false,
+          heightAuto: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Okay'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Please wait, Redirecting to workspace',
+              showConfirmButton: false,
+              heightAuto: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              _self.router.navigate(['pages/processIntelligence/upload'])
+            }, 1500);
+          }
+        })
         this.spinner.hide();
         this.model1=[];
         this.model2=[];
@@ -2035,23 +1898,18 @@ addWorkingHours(){
 
   redirectToWorkspace(){
     let timerInterval
-    this.messageService.add({
-      severity: "info",
-      summary: "Info",
-      detail: "Auto-close alert! I will close in <b></b> milliseconds."
-    })
-    // Swal.fire({
-    //   title: 'Auto close alert!',
-    //   html: 'I will close in <b></b> milliseconds.',
-    //   timer: 2000,
-    //   timerProgressBar: true,
-    //   heightAuto: false,
-    // }).then((result) => {
-    //   // Read more about handling dismissals below 
-    //   if (result.dismiss === Swal.DismissReason.timer) {
+    Swal.fire({
+      title: 'Auto close alert!',
+      html: 'I will close in <b></b> milliseconds.',
+      timer: 2000,
+      timerProgressBar: true,
+      heightAuto: false,
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
 
-    //   }
-    // })
+      }
+    })
   }
 
   applyPerformanceFilterMethod(event){
@@ -2151,52 +2009,30 @@ addWorkingHours(){
        this.fullgraph=data //process graph full data call
        this.spinner.hide();
     if(this.fullgraph.hasOwnProperty('display_msg')){
-
-      this.confirmationService.confirm({
-        message: "Oops! It's not you, it's us. Please try again after some time.",
-        header: "Info",
-        
-        rejectVisible: false,
-        acceptLabel: "Ok",
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        acceptIcon: 'null',
-        accept: () => {
-          this.messageService.add({
-            severity: "info",
-            summary: "Info",
-            detail: "Please wait, redirecting to the workspace.",
-          })
-          setTimeout(() => {
-            _self.router.navigate(['pages/processIntelligence/upload'])
-          }, 1500);
-        }
-      });
-
-        // Swal.fire({
-        //   title: 'Oops!',
-        //   text: "It is Not You it is Us, Please try again after some time",
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   heightAuto: false,
-        //   confirmButtonColor: '#007bff',
-        //   cancelButtonColor: '#d33',
-        //   confirmButtonText: 'Okay'
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'info',
-        //       title: 'Please wait, Redirecting to workspace',
-        //       showConfirmButton: false,
-        //       heightAuto: false,
-        //       timer: 1500
-        //     })
-        //     setTimeout(() => {
-        //       _self.router.navigate(['pages/processIntelligence/upload'])
-        //     }, 1500);
-        //   }
-        // })
+        Swal.fire({
+          title: 'Oops!',
+          text: "It is Not You it is Us, Please try again after some time",
+          icon: 'error',
+          showCancelButton: false,
+          heightAuto: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Okay'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Please wait, Redirecting to workspace',
+              showConfirmButton: false,
+              heightAuto: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              _self.router.navigate(['pages/processIntelligence/upload'])
+            }, 1500);
+          }
+        })
         this.spinner.hide();
         this.model1=[];
         this.model2=[];

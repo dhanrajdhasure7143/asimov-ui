@@ -1,11 +1,11 @@
 import {Input, Component, OnInit ,Pipe, PipeTransform, EventEmitter,Output } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
+import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService} from 'primeng/api';
 
 
 @Component({
@@ -86,12 +86,7 @@ export class RpaSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
-  constructor(
-    private rest:RestApiService, 
-    private notifier: NotifierService,
-    private loader:LoaderService,
-    private messageService:MessageService
-     ) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService, private loader:LoaderService) { }
   mindate= moment().format("YYYY-MM-DD");
   ngOnInit() {
     var dtToday = new Date();
@@ -173,10 +168,10 @@ gettime(){
           }
         }
         else
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
-        },err=>{
+          Swal.fire("Error",response.errorMessage, "error");
+      },err=>{
         this.loader.hide()
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to load schedules!'})
+        Swal.fire("Error","Unable to load schedules","error");
       })
     }
   }
@@ -413,21 +408,21 @@ gettime(){
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule saved successfully!"});   
+            this.notifier.notify("success","Schedule saved successfully");
             this.get_schedule();
           }  
           else
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'});
+            this.notifier.notify("error",response.errorMessage);
         },err=>{
           this.loader.hide();
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to save the schedule!'})
+          this.notifier.notify("error","Unable to save schedule");
         })
       }
     }
     else
     {
       this.loader.hide();
-      this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Please fill in all inputs!'})
+      this.notifier.notify("error", "Please fill all inputs");
     }
   }
 
@@ -477,11 +472,11 @@ gettime(){
       this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule started successfully!"});   
+          this.notifier.notify("success","Schedule started successfully")
           this.get_schedule();
         }
         else
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+          this.notifier.notify("error", resp.errorMessage);
       })
     }
   }
@@ -497,11 +492,16 @@ gettime(){
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage==undefined){
-          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule paused successfully!"});   
+        if(resp.errorMessage==undefined)
+        {
+
+          this.notifier.notify("success", "Schedule paused successfully");
           this.get_schedule();
-        } else{
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+        }
+        else
+        {
+        
+          this.notifier.notify("error",resp.errorMessage)
         }
       })
   }
@@ -517,11 +517,13 @@ gettime(){
     }
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
-      if(resp.errorMessage==undefined){
-        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule resumed successfully!"});   
+      if(resp.errorMessage==undefined)
+      {
+        this.notifier.notify("success", "Schedule resumed successfully");
         this.get_schedule();
-      }else
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+      }
+      else
+        this.notifier.notify("error", resp.errorMessage);
     })
 
   }
@@ -535,16 +537,18 @@ gettime(){
       let list=this.schedule_list.filter(data=>data.checked==true);
       this.rest.stop_schedule(list).subscribe((response:any)=>{
         this.loader.hide();
-        if(response.errorMessage==undefined){
-        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule deleted successfully!"});   
+        if(response.errorMessage==undefined)
+        {
+          this.notifier.notify("success", "Schedules deleted successfully");
           this.get_schedule();
-        } else{
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
+        }
+        else
+        {
+          this.notifier.notify("error", response.errorMessage);
         }
       },err=>{
         this.loader.hide()
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to delete the schedule!'})
-
+        this.notifier.notify("error", "Unable to delete schedule");
         
       })
       // this.updateflags();
@@ -588,7 +592,7 @@ gettime(){
   //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
   //       let resp:any=data;
   //       if(resp.errorMessage){
-  //         this.notifier.notify("error","Failed to save. the scheduler")
+  //         this.notifier.notify("error","Failed to save the scheduler")
   //       }
   //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
   //       {

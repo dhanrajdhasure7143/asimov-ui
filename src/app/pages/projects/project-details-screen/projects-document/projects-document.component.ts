@@ -228,6 +228,7 @@ export class ProjectsDocumentComponent implements OnInit {
     }
   });
   // return files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  // console.log(JSON.stringify(files))
   return files;
   }
 
@@ -522,7 +523,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded successfully!'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
     // let obj = res_data.data[0]
     res_data.data.forEach(item=>{
       let obj = item
@@ -540,7 +541,7 @@ export class ProjectsDocumentComponent implements OnInit {
     // this.selectedFile.parent.children.push(obj)
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to upload!'});
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to Upload !'});
     })
   }
 
@@ -590,7 +591,7 @@ export class ProjectsDocumentComponent implements OnInit {
     let req_body:any;
     if(type == 'folderView'){
       if(this.checkDuplicateFolder(this.entered_folder_name)){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
         return;
       }
       req_body = this.selectedItem_new[0]
@@ -601,7 +602,7 @@ export class ProjectsDocumentComponent implements OnInit {
     }
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated successfully!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated Successfully !'});
       this.renameDialog = false;
       if(type == 'folderView'){
         this.selectedItem_new[0].label = this.entered_folder_name;
@@ -611,7 +612,7 @@ export class ProjectsDocumentComponent implements OnInit {
         this.selectedItem.node.type ='default';
       }
     },err=>{
-      this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to update!"});
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to update !"});
     })
   }
 
@@ -626,12 +627,12 @@ export class ProjectsDocumentComponent implements OnInit {
       delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
-      message: "Do you want to delete this? This can't be undone.",
-      header: 'Are you sure?',
+      message: "Do you really want to delete this? This process cannot be undone.",
+      header: 'Are you Sure?',
      
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
           this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         },err=>{
           this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
@@ -672,7 +673,7 @@ export class ProjectsDocumentComponent implements OnInit {
         // }
       }
       if(this.checkDuplicateFolder(folderName)){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
         return;
       }
       let req_body = [{
@@ -706,14 +707,14 @@ export class ProjectsDocumentComponent implements OnInit {
         this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         this.createFolderPopUP=false;
         this.createTreeFolderOverlay =false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder uploaded successfully!'});
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Uploaded Successfully !'});
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       })
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       })
     }
   }
@@ -747,7 +748,7 @@ export class ProjectsDocumentComponent implements OnInit {
       folderName = this.selected_folder_rename.label.split('.')[0]
       }
       if(req_body.length == 0){
-        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder!'});
+        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
         return
       }
       this.loader.show();
@@ -999,7 +1000,7 @@ export class ProjectsDocumentComponent implements OnInit {
   addParentFolder() {
      let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.folder_name.toLowerCase() && e.dataType == "folder");
      if(existValue.length > 0) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
       return;
      }
     let req_body = [{
@@ -1018,7 +1019,7 @@ export class ProjectsDocumentComponent implements OnInit {
   addSubfolder() {
     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase() && e.dataType == "folder") 
      if(existValue.length > 0) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder Name Already exists!" });
       return;
      }
     if (this.entered_folder_name) {
@@ -1044,7 +1045,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.isDialogBox = false;
       this.selectedFolder_new={};
       this.folder_name='';
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
       let obj = res_data.data[0];
       obj['icon'] = "folder.svg"
       obj["children"]= []
@@ -1055,7 +1056,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.subFolderDialog = false;
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: "Folder creation failed!"});
+      this.messageService.add({severity:'error', summary: 'Error', detail: "Folder Creation failed"});
     })
   }
 
@@ -1069,12 +1070,12 @@ export class ProjectsDocumentComponent implements OnInit {
         delete req_body[0]["parent"];
       }
       this.confirmationService.confirm({
-        message: "Do you want to delete this? This can't be undone.",
-        header: 'Are you sure?',
+        message: "Do you really want to delete this? This process cannot be undone.",
+        header: 'Are you Sure?',
         accept: () => {
           this.loader.show();
           this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-            this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+            this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Successfully !'});
             this.loader.hide();
             this.selectedItem_new = [];
             this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
@@ -1146,11 +1147,11 @@ export class ProjectsDocumentComponent implements OnInit {
         }
 
         if(isFileExist == 1){
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: existingFiles[0].name +" already exists!"});
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: existingFiles[0].name +" Already exists!"});
         }
 
         if(isFileExist > 1){
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Some files already exists!"});
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Some files are Already exists!"});
         };
        if(nonExistingFiles.length == 0) return;
 
@@ -1172,7 +1173,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.createFolderPopUP=false;
         let res_data:any = res;
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded successfully!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded Successfully !'});
       res_data.data.forEach(item=>{
         let obj = item
         if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
@@ -1394,7 +1395,7 @@ async getFileDataById(fileId) {
       }
 
       if(req_body.length == 0){
-        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder!'});
+        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder !'});
         return
       }
       this.loader.show();
@@ -1481,7 +1482,7 @@ async getFileDataById(fileId) {
     uploadCreatedDocument(){
     let existValue = this.folder_files.filter(e=> (e.label.toLowerCase() == (this.enterDocumentName+'.docx').toLowerCase()) && (e.dataType != "folder"));
     if(existValue.length > 0){
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "File name already exists!" });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "File Name Already exists!" });
       return;
     };
 
@@ -1513,10 +1514,10 @@ async getFileDataById(fileId) {
         if(!this.selectedAction){
           this.getTheListOfFolders1()
         }
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded Successfully !!'});
       },err=>{
         this.loader.hide();
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload !"});
       });
     });
   }

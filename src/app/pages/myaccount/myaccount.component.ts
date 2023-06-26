@@ -7,7 +7,6 @@ import { CryptoService } from 'src/app/services/crypto.service';
 import countries from 'src/app/../assets/jsons/countries.json';
 import { DataTransferService } from '../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-myaccount',
@@ -40,9 +39,7 @@ export class MyaccountComponent implements OnInit {
     private api: RestApiService,
     private loader: LoaderService,
     private cryptoService: CryptoService,
-    private dt: DataTransferService,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private dt: DataTransferService
   ) {
 
   }
@@ -59,38 +56,27 @@ export class MyaccountComponent implements OnInit {
     let reqObj = { enc: encrypt };
     this.api.updateUser(reqObj).subscribe(
       (data) => {
-        // Swal.fire({
-        //   title: "Success",
-        //   text: "User details updated successfully!",
-        //   position: "center",
-        //   icon: "success",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   heightAuto: false,
-        //   confirmButtonText: "Ok",
-        // });
-      this.confirmationService.confirm({
-        header:'Success',
-        message:'User details updated successfully!',
-        rejectVisible:false,
-        acceptLabel:'Ok',
-        acceptButtonStyleClass:'',
-        acceptIcon:'none',
-        accept:()=>{
-          this.loader.hide();
-          this.valueChange.emit(this.isFormOverlay)
-          this.addDepartment = false;
-          // this.getAllDepartments();
-          this.userDetails();
-        }
-      })
+        Swal.fire({
+          title: "Success",
+          text: "User Details Updated Successfully!!",
+          position: "center",
+          icon: "success",
+          showCancelButton: false,
+          customClass: {
+            confirmButton: 'btn bluebg-button',
+            cancelButton:  'btn new-cancelbtn',
+          },
+          heightAuto: false,
+          confirmButtonText: "Ok",
+        });
+        this.loader.hide();
+        this.valueChange.emit(this.isFormOverlay)
+        this.addDepartment = false;
+        // this.getAllDepartments();
+        this.userDetails();
       },(err) => {
         this.loader.hide();
-        // Swal.fire("Error", "Please try again!", "error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Please try again!'})
+        Swal.fire("Error", "Please try again!", "error");
       }
     );
   }

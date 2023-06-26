@@ -75,9 +75,3 @@
             <process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate" (closeOverlay)="closeOverlay($event)"></process-category-overlay>
         </app-split-overlay>
     </div>
-
-    
-    <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
-    <p-confirmDialog [style]="{width: '30vw'}" position="center" key="confirm1" [baseZIndex]="10000" 
-        [closable]="false">
-    </p-confirmDialog>

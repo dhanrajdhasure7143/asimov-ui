@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-auditlogs',
   templateUrl: './rpa-auditlogs.component.html',
@@ -24,8 +23,7 @@ export class RpaAuditlogsComponent implements OnInit {
     private router: Router, 
     private rest: RestApiService, 
     private spinner: LoaderService,
-    private columnList : columnList,
-    private messageService:MessageService
+    private columnList : columnList
     ) { }
   
   ngOnInit(): void {
@@ -53,7 +51,7 @@ export class RpaAuditlogsComponent implements OnInit {
       }
       else {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
+        Swal.fire("Error", response.errorMessage, "error")
       }
     },err=>{
       this.spinner.hide();
@@ -111,12 +109,12 @@ export class RpaAuditlogsComponent implements OnInit {
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {
-        this.messageService.add({severity:'error',summary:'Error',detail:this.logsData.errorMessage});
+        Swal.fire("Error", this.logsData.errorMessage, "error")
       }
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get audit logs.'});
+      Swal.fire("Error", "Unable to get audit logs", "error")
     })
   }
 

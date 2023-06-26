@@ -89,8 +89,9 @@ export class UserScreenComponent implements OnInit {
   deleteRecord(data: any) {
     this.spinner.show();
     this.confirmationService.confirm({
-      message: "Do you want to delete this record? This can't be undone.",
-      header: "Are you sure?",
+      message: "Are You Sure ? You want to delete this record!",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
       key: "positionDialog",
       accept: () => {
         this.spinner.show();
@@ -106,14 +107,14 @@ export class UserScreenComponent implements OnInit {
                 this.messageService.add({
                   severity: "error",
                   summary: "Rejected",
-                  detail: resp.message + "!",
+                  detail: resp.message + "" + "!!",
                 });
                 this.spinner.hide();
               } else {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: resp.message + "!",
+                  detail: resp.message + "" + "!!",
                 });
                 this.spinner.hide();
                 this.getUserScreenData();
@@ -126,7 +127,7 @@ export class UserScreenComponent implements OnInit {
               this.messageService.add({
                 severity: "error",
                 summary: "rejected",
-                detail: "Unable to delete the record.",
+                detail: "Unable to delete record",
               });
             }
           );
@@ -147,7 +148,7 @@ export class UserScreenComponent implements OnInit {
           this.messageService.add({
             severity: "success",
             summary: "Success",
-            detail: "Record saved successfully!",
+            detail: "Record Saved successfully !!",
           });
             this.getUserScreenData();
             setTimeout(() => {
@@ -172,7 +173,7 @@ export class UserScreenComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "rejected",
-              detail: response.message +"!",
+              detail: response.message + "" +"!!",
             });
   
             this.getUserScreenData();
@@ -180,7 +181,7 @@ export class UserScreenComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: response.message +"!",
+              detail: response.message + "" +"!!",
             });         
               this.getUserScreenData();
           }

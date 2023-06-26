@@ -8,28 +8,39 @@
                 </div>
                 <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="firstName">First Name<span class="star">*</span></label>
-                    <input type="text" name="firstName" #firstName="ngModel" class="form-control"
-                        (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name"
-                        maxlength="25" required />
-                    <span
-                        *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )"
-                        class='required'>First Name required </span>
+                    <input type="text" name="firstName" #firstName="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
+                      [(ngModel)]="formOne.firstName" placeholder="Enter First Name"
+                        maxlength="25" required  />
+                    <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) ) && firstName.errors?.required && !firstName.errors?.pattern"
+                     class='required'>First Name required</span>
+                     <span class="required" *ngIf="firstName.errors?.pattern">
+                        Spaces are not allowed
+                     </span>
+            
+                    
                 </div>
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="lastName">Last Name<span class="star">*</span></label>
-                    <input type="text" name="lastName" #lastName="ngModel" class="form-control"
-                        (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name"
-                        maxlength="25" required alphabetOnly />
-                    <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )"
-                        class='required'> Last Name required </span>
+                    <input type="text" name="lastName" #lastName="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
+                         [(ngModel)]="formOne.lastName" placeholder="Enter Last Name"
+                        maxlength="25" required />
+                    <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) ) && lastName.errors?.required && !lastName.errors?.pattern" class='required'>Last Name required</span>
+                    <span class="required" *ngIf="lastName.errors?.pattern">
+                        Spaces are not allowed
+                     </span>
+            
+                    
                 </div>
                 <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="jobTitle">Job Title<span class="star">*</span></label>
-                    <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control"
-                        (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title"
-                        maxlength="25" required alphabetOnly />
-                    <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )"
-                        class='required'>Job Title required </span>
+                    <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
+                        [(ngModel)]="formOne.designation" placeholder="Enter Job Title"
+                        maxlength="25"  required alphabetOnly />
+                    <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) ) && jobTitle.errors?.required && !jobTitle.errors?.pattern" class='required'>Job Title required</span>
+                    <span class="required" *ngIf="jobTitle.errors?.pattern">
+                        Spaces are not allowed
+                     </span>
+                    
                 </div>
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="company">Company<span class="star">*</span></label>
@@ -99,5 +110,3 @@
                 [disabled]="!(updateUser.valid && (updateUser.touched ||  updateUser.dirty)) || errorMessage">Update</button>
         </div>
 </div>
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
-<p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="false" ></p-confirmDialog>

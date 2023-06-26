@@ -15,7 +15,6 @@ import { NotifierService } from 'angular-notifier';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
-import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -141,10 +140,7 @@ public slaupdate : boolean = false;
       private notify:NotifierService,
       private modalService:BsModalService,
       private detectChanges:ChangeDetectorRef,
-      private dataTransfer:DataTransferService,
-      private messageService:MessageService,
-      private confirmationService:ConfirmationService
-      )
+      private dataTransfer:DataTransferService)
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required])],
@@ -466,13 +462,13 @@ this.display = false
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-          this.messageService.add({severity:'success',summary:'Success',detail:resp.Status})
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
             // document.getElementById("SLAConfig_overlay").style.display = "none";
             this.closeOverlay();
           }
           else
-          this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage})
+            Swal.fire("Error",resp.errorMessage,"error")
     });
    else
     this.rest.update_sla_config(slaalertsc).subscribe( res =>
@@ -480,14 +476,14 @@ this.display = false
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-            this.messageService.add({severity:'success',summary:'Success',detail:resp.Status})
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
             // document.getElementById("SLAConfig_overlay").style.display = "none";
             this.closeOverlay();
 
           }
           else
-          this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage})
+            Swal.fire("Error",resp.errorMessage,"error");
 
     });
  }
@@ -517,9 +513,7 @@ this.display = false
       if(botlist.errorMessage!=undefined){
         this.spinner.hide();
         this.respdata1=true
-        // Swal.fire("Error",botlist.errorMessage,"error");
-        this.messageService.add({severity:'error',summary:'Error',detail:botlist.errorMessage})
-
+        Swal.fire("Error",botlist.errorMessage,"error");
       }else {
         this.respdata1=(botlist.length >0)? false: true;
         botlist.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
@@ -547,7 +541,7 @@ this.display = false
     }
     },(err)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get bot data.'})
+      Swal.fire("Error","Unable to get bots data","error")
     })
   }
 
@@ -590,14 +584,10 @@ this.display = false
        if(response.errorMessage==undefined)
          this.getEpsoftLogs(this.log_botid,this.log_version,Logtemplate,'update');
        else
-        //  Swal.fire("Error",response.errorMessage,"error");
-         this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+         Swal.fire("Error",response.errorMessage,"error");
     },err=>{
       this.spinner.hide();
-      // Swal.fire("Error","Unable to update logs","error")
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update the logs.'})
-
+      Swal.fire("Error","Unable to update logs","error")
     });
   }
 
@@ -688,11 +678,11 @@ this.display = false
        
       else
       {
-        this.messageService.add({severity:'error',summary:'Error',detail:data.errorMessage})
+        Swal.fire("Error",data.errorMessage,"error");
       }
    },err=>{
       this.spinner.hide()
-      this.messageService.add({severity:'error',summary:'Error',detail:'Uable to get versions'})
+      Swal.fire("Error","Unable to get versions","error")
    })
  }
 
@@ -723,12 +713,12 @@ this.display = false
       }else
       {
         this.logflag="Error";
-        this.messageService.add({severity:'error',summary:'Error',detail:data.errorMessage})
+        Swal.fire("Error",data.errorMessage,"error")
       }
     },(err)=>{
       this.spinner.hide();
       this.logflag="Error";
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get bot logs.'})
+      Swal.fire("Error","Failed to get bot logs","error");
     })
   }
 
@@ -753,18 +743,12 @@ this.display = false
         response=res;
         this.spinner.hide();
         if(response.status!= undefined)
-        // Swal.fire("Success",response.status,"success")
-        this.messageService.add({severity:'success',summary:'Success',detail:response.Status})
-
+        Swal.fire("Success",response.status,"success")
         else
-        // Swal.fire("Error",response.errorMessage,"error");
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+        Swal.fire("Error",response.errorMessage,"error");
       },err=>{
         this.spinner.hide();
-        // Swal.fire("Error","Unable to execute bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
-
+        Swal.fire("Error","Unable to execute bot","error")
       });
       else if(source=="UiPath")
       this.rest.startuipathbot(botid).subscribe(res=>{
@@ -772,22 +756,16 @@ this.display = false
         this.spinner.hide();
         if(response.value!=undefined)
         {
-          // Swal.fire("Success","Bot  Execution Initated Successfully !!","success");
-          this.messageService.add({severity:'success',summary:'Success',detail:'Bot execution initiated successfully!'})
-
+          Swal.fire("Success","Bot  Execution Initated Successfully !!","success");
         }
         else
         {
-          // Swal.fire("Error",response.errorMessage,"error");
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-          
+          Swal.fire("Error",response.errorMessage,"error");
         }
       },(err)=>{
         
         this.spinner.hide();
-        // Swal.fire("Error","Failed to start bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start the bot.'})
-
+        Swal.fire("Error","Failed to start bot","error")
       })
       // else if(source=="BluePrism")
       // {
@@ -804,9 +782,7 @@ this.display = false
         this.spinner.show();
           setTimeout(()=>{
             this.spinner.hide();
-            // Swal.fire("Success","Bot Execution initiated successfully","success");
-          this.messageService.add({severity:'success',summary:'Success',detail:'Bot execution initiated successfully!'})
-
+            Swal.fire("Success","Bot Execution initiated successfully","success");
           },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
           // this.spinner.hide();
@@ -820,9 +796,7 @@ this.display = false
         },(err)=>{
 
           this.spinner.hide();
-          // Swal.fire("Error","Failed to start bot","error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to start the bot. '})
-
+          Swal.fire("Error","Failed to start bot","error");
         });
       }
 
@@ -838,18 +812,12 @@ this.display = false
         let  response:any=data;
         if(response.errorMessage==undefined)
         {
-          // Swal.fire("Success",response.status,"success")
-          this.messageService.add({severity:'success',summary:'Success',detail:response.status})
-
+          Swal.fire("Success",response.status,"success")
         }
         else
-          // Swal.fire("Error",response.errorMessage,"error")
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+          Swal.fire("Error",response.errorMessage,"error")
       }, err=>{
-        // Swal.fire("Error","Unable to pause bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to pause the bot.'})
-
+        Swal.fire("Error","Unable to pause bot","error")
       });
       
     }
@@ -857,9 +825,7 @@ this.display = false
     resumeBot(botid) {
         this.rest.getUserResume(botid).subscribe(data => {
            let response:any=data;
-          //  response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error");
-           response.errorMessage== undefined? this.messageService.add({severity:'success',summary:'Success',detail:response.status}) : this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
-
+           response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error");
         })
     }
 
@@ -870,13 +836,11 @@ this.display = false
             let response:any=data;
             
             this.spinner.hide();
-            // response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error"); 
-            response.errorMessage== undefined? this.messageService.add({severity:'success',summary:'Success',detail:response.status}) : this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
+            response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error"); 
           },(err)=>{
         
             this.spinner.hide();
-            // Swal.fire("Error","Bot failed to stop","error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Bot failed to stop.'})
+            Swal.fire("Error","Bot failed to stop","error");
           })
     }
 
@@ -954,10 +918,7 @@ this.display = false
         this.logsmodalref=this.modalService.show(template,{class:"modal-lg"});
       },err=>{
         this.spinner.hide()
-        // Swal.fire("Error","Unable to get uipath bots","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get Uipath bots.'})
-
-        
+        Swal.fire("Error","Unable to get uipath bots","error");
       });
 
 
@@ -1074,14 +1035,10 @@ this.display = false
       }
       else
       {
-        // Swal.fire("Error","Unable to get users list","error");
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the users list.'})
-
+        Swal.fire("Error","Unable to get users list","error");
       }
     },err=>{
-      // Swal.fire("Error","Unable to get users list","error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the users list.'})
-
+      Swal.fire("Error","Unable to get users list","error");
     })
   }
 

@@ -158,7 +158,7 @@ export class BillingAddressComponent implements OnInit {
       this.messageService.add({
         severity: "success",
         summary: "Success",
-        detail: "Saved successfully!",
+        detail: "Saved Successfully !!",
       });
       this.billingForm.reset();
       this.getBillingInfo();
@@ -168,7 +168,7 @@ export class BillingAddressComponent implements OnInit {
     this.messageService.add({
       severity: "error",
       summary: "Error",
-      detail: "Please save again!",
+      detail: "Please Save Again !!",
     });
     
    this.spinner.hide();
@@ -180,7 +180,7 @@ export class BillingAddressComponent implements OnInit {
           this.messageService.add({
             severity: "success",
             summary: "Success",
-            detail: "Updated successfully!",
+            detail: "Updated Successfully !!",
           });
           this.billingForm.reset();
           this.getBillingInfo();
@@ -190,7 +190,7 @@ export class BillingAddressComponent implements OnInit {
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: "Please update again!",
+            detail: "Please Update Again !!",
           });
           
          this.spinner.hide();
@@ -227,7 +227,7 @@ export class BillingAddressComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to get the data!",
+          detail: "Unable Get The Data !!",
         });
         this.spinner.hide();
       }
@@ -235,9 +235,9 @@ export class BillingAddressComponent implements OnInit {
   }
   OnFlagChange(event){
     if(event.name !=this.optionValue){
-      this.errorMessage="Select appropriate country";
-      this.errorMessage1="Select appropriate state";
-      this.errorMessage2="Select appropriate city";
+      this.errorMessage="Please Select Appropriate Country *";
+      this.errorMessage1="Please Select Appropriate State *";
+      this.errorMessage2="Please Select Appropriate City *";
     }
   }
 }

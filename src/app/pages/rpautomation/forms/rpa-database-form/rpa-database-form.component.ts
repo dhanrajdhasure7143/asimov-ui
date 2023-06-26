@@ -5,8 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import Swal from 'sweetalert2';
 import { Rpa_Hints } from '../../model/RPA-Hints';
-import { MessageService,ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-rpa-database-form',
@@ -51,10 +51,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private dt:DataTransferService,
-    private spinner: LoaderService,
-    private messageService:MessageService,
-    private  confirmationservice:ConfirmationService
-    ) {
+    private spinner: LoaderService) {
 
       this.dbForm=this.formBuilder.group({
         connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -164,13 +161,13 @@ export class RpaDatabaseFormComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'datamessage'})
+          Swal.fire("Success", "Successfully Connected", "success")
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!',key:'datamessage'})
+          Swal.fire("Error", "Connection Failed", "error")
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.',key:'datamessage'})
+        Swal.fire("Error", "Unable to test connection details", "error")
       });
       this.activestatus();
     }
@@ -211,7 +208,7 @@ export class RpaDatabaseFormComponent implements OnInit {
           this.spinner.hide();
           this.refreshData.emit(true)
           if (status.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status,key:'datamessage'});
+            Swal.fire("Success", status.status, "success")
             document.getElementById('createdbconnection').style.display = "none";
             this.resetDBForm();
             this.closeOverlay.emit(false)
@@ -219,12 +216,12 @@ export class RpaDatabaseFormComponent implements OnInit {
             this.dbForm.get("activeStatus").setValue(true);
           } else {
             this.submitted = false
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage,key:'datamessage'})
+            Swal.fire("Error", status.errorMessage, "error")
           }
         }, err => {
           this.spinner.hide();
           this.submitted = false;
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connections.',key:'datamessage'})
+          Swal.fire("Error", "Unable to save database connections", "error")
         });
       } else {
         this.activestatus();
@@ -259,16 +256,16 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.spinner.hide();
         this.refreshData.emit(true)
         if (status.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:status.status});
+          Swal.fire("Success", status.status, "success")
           // document.getElementById('Updatedbconnection').style.display = 'none';
           document.getElementById('createdbconnection').style.display = "none";
           this.closeOverlay.emit(false);
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+          Swal.fire("Error", status.errorMessage, "error")
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details.'})
+        Swal.fire("Error", "Unable to update database connection details", "error")
       });
     }
   }
