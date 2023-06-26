@@ -22,7 +22,7 @@
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="lastName">Last Name<span class="star">*</span></label>
                     <input type="text" name="lastName" #lastName="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
-                        (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name"
+                         [(ngModel)]="formOne.lastName" placeholder="Enter Last Name"
                         maxlength="25" required />
                     <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) ) && lastName.errors?.required && !lastName.errors?.pattern" class='required'>Last Name required</span>
                     <span class="required" *ngIf="lastName.errors?.pattern">
