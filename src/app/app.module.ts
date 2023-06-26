@@ -23,12 +23,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { TitleCasePipe } from '@angular/common';
 import { MentionModule } from 'angular-mentions';
+import { ApprovalsComponent } from './approvals/approvals.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RedirectionComponent
+    RedirectionComponent,
+    ApprovalsComponent
   ],
 
   imports: [
@@ -67,7 +71,9 @@ import { MentionModule } from 'angular-mentions';
     NgxSpinnerModule,
     ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
       positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
-    MentionModule
+    MentionModule,
+    MatToolbarModule,
+    SharedModule
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },

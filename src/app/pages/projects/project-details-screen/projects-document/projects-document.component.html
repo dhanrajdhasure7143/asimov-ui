@@ -59,7 +59,7 @@
                                 <button type="button" class="btn docmnt-btn icn-adj imageBox" (click)="op.toggle($event)">
                                     <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload.svg"  class="active-icon" alt=""/>
                                     <img src="../../../../../assets/images-n/dashboard/Manage-Documents/upload-hover.svg"  class="hover-icon" alt=""/>
-                                    Upload
+                                    <span class="crt-new">Upload</span>
                                 </button>
                            
                             <button type="button" class="btn docmnt-btn icn-adj imageBox" *ngIf="selectedItem_new.length > 0" (click)="downloadZip()">
@@ -82,19 +82,28 @@
                                 <img src="../../../../../assets/images-n/dashboard/Manage-Documents/link-hover.svg"  class="hover-icon" alt=""/>
                                 <span class="crt-new">Copy Link</span>
                             </button> -->
-
+                           
                         </div>
                         <div class="col-md-4 pr-0 dochead-rightbtns">
-                             
-                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox fldviewicon" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
+                              <!-- [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}"
+                            [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder }" -->
+                           <span (click)="folderView()" pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox" *ngIf ="breadcrumbItems.length == 0 && isFolder || !isFolder">
                                 <img src="../../../../../assets/images-n/Component 13 – 1.svg" alt="Tree View" class="active-icon"/>
                                 <img src="../../../../../assets/images-n/dashboard/Component 13 – 1.svg" class="hover-icon" alt=""/>
                             </span>
-                            <span  pTooltip="List View" tooltipPosition="top" class="icn-adj1 imageBox" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder}">
-                                <img (click)="treeView()" src="../../../../../assets/images-n/Icon feather-list.svg" alt="Tree View" class="active-icon" />
-                                <img (click)="treeView()" src="../../../../../assets/images-n/dashboard/Icon feather-list.svg" class="hover-icon" alt=""/>
+                           <span pTooltip="Folder View" tooltipPosition="top" class="icn-adj1 imageBox disicons" *ngIf ="breadcrumbItems.length > 0 && isFolder">
+                            <!-- replace with disabled icon here -->
+                                <img src="../../../../../assets/images-n/dashboard/tiles-dis.svg" alt=""/>
                             </span>
-                            <span class="docfilt-icon icn-adj1 imageBox" pTooltip="Filter" tooltipPosition="top" [ngClass]="{'treeviewfilter': !isFolder, 'treeviewfilter1': isFolder }">
+                            <span  (click)="treeView()" pTooltip="List View" tooltipPosition="top" class="icn-adj1 imageBox" *ngIf ="breadcrumbItems.length == 0 && !isFolder || isFolder">
+                                <img src="../../../../../assets/images-n/Icon feather-list.svg" alt="Tree View" class="active-icon" />
+                                <img src="../../../../../assets/images-n/dashboard/Icon feather-list.svg" class="hover-icon" alt=""/>
+                            </span>
+                            <span  pTooltip="List View" tooltipPosition="top" class="icn-adj1 imageBox disicons" *ngIf ="breadcrumbItems.length > 0 && !isFolder">
+                                <!-- replace with disabled icon here -->
+                                <img src="../../../../../assets/images-n/dashboard/list-dis.svg" alt=""/>
+                            </span>
+                            <span class="docfilt-icon icn-adj1 imageBox" pTooltip="Filter" tooltipPosition="top" >
                                 <!-- <i  class="pi pi-filter icon-color"></i> -->
                                 <img (click)="op1.toggle($event)" src="../../../../../assets/images-n/Icon feather-filter.svg " class="active-icon" alt=""/>
                                 <img (click)="op1.toggle($event)" src="../../../../../assets/images-n/dashboard/Icon feather-filter.svg" class="hover-icon" alt=""/>
@@ -113,15 +122,18 @@
                         <p-breadcrumb [model]="breadcrumbItems" (onItemClick)="onBreadcrumbItemClick($event)"></p-breadcrumb>
                     </div> -->
             <div *ngIf="isFolder" class="row docfolder" [ngClass]="{'docfolder1': !istaskFilterApplied}">
-        <div *ngFor="let item of folder_files;let i = index" class="position-relative dochovercheck">
+        <div *ngFor="let item of folder_files;let i = index" class="position-relative dochovercheck" 
+        [ngClass]="{'folderselected': item.is_selected}" >
             <input type="checkbox" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/>
             <p-card  class="cards" styleClass="document-tree" [ngClass]="{'addpcard' : item.label == 'Add Folder' || item.label == 'Add Folder / Document'}">  
                 <div class="folder-check" (dblclick)="openFolderonDblClick(item)" (click)="onSelectFolder($event,i)">
                     <img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create">
                     <!-- <input type="checkbox" id="check-cls" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" /> -->
+                    <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
                 </div>
+                
                 <span *ngIf="item.type !='textBox'" (dblclick)="openFolderonDblClick(item)" [tooltipDisabled]="item.label?.length<20" [pTooltip]="item.label" tooltipPosition="top" class="foldname"> {{truncateDesc(item.label)}} 
-                   <span *ngIf="item.dataType == 'folder'" class="datsiz"> {{item.size | fileSizePipe}}</span>
+                   
                 </span>
                 <!-- <span *ngIf="item.type=='textBox'">
                     <input [(ngModel)]="entered_folder_name" type="text" maxlength="50" pInputText>
@@ -170,7 +182,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)">
+                    <tr *ngFor="let item of folder_files;let i = index;" (dblclick)="openFolderonDblClick(item)" [ngClass]="{'folderselected': item.is_selected}">
                         <td class="position-relative"><input type="checkbox" id="" [ngClass]="{'check-cls-show' : item.is_selected,'check-cls-hide' : !item.is_selected}" [(ngModel)]="item.is_selected" (change)="onChangeSelectFolder()"/></td>
                         <td class="filname" (click)="onSelectFolder($event,i)"><img src="./../../../../assets/images-n/projects/{{item.icon}}" alt="Create"><span>{{item.label}}</span></td>
                         <td (click)="onSelectFolder($event,i)">{{item.uploadedDate_new}}</td>
@@ -309,18 +321,18 @@
         </app-split-overlay>
     </div> -->
 
-    <p-dialog header="Folder Name" [(visible)]="isDialogBox" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <p-dialog header="Create a folder" [(visible)]="isDialogBox" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
+            <input type="text" pInputText placeholder="Enter your folder name" [(ngModel)]="folder_name" name="folder" maxlength="51" required>
             <div *ngIf="folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn bluebg-button" (click)="addParentFolder()" [disabled]="folder_name.length < 1 || folder_name.length == 51">Save</button>
         </span>
     </p-dialog>
 
     <!-- add sub folder in folder structure -->
-    <p-dialog header="Folder Name" [(visible)]="subFolderDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+    <p-dialog header="Create a folder" [(visible)]="subFolderDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
         <span class="p-float-label">
-            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
+            <input type="text" pInputText placeholder="Enter your folder name" [(ngModel)]="entered_folder_name" name="folder" maxlength="51">
             <div *ngIf="entered_folder_name?.length > 50" class='required' > Maximum of 50 characters</div>
             <button type="button" class="btn bluebg-button" (click)="addSubfolder()" [disabled]="entered_folder_name.length < 1 || entered_folder_name.length == 51">Save</button>
         </span>
@@ -403,15 +415,15 @@
 
 <p-dialog header="File Name" [(visible)]="documentCreateDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="enterDocumentName" name="folder"
+        <input type="text" pInputText placeholder="Enter your file name" [(ngModel)]="enterDocumentName" name="folder"
             maxlength="50" />
         <button type="button" class="btn bluebg-button" (click)="uploadCreatedDocument()" [disabled]="!(enterDocumentName.length > 0)">Save</button>
     </span>
 </p-dialog>
 
-<p-dialog header="File Name" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+<p-dialog header="Rename" [(visible)]="renameDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
+        <input type="text" pInputText placeholder="Enter your file name" [(ngModel)]="entered_folder_name" name="folder" maxlength="50" />
         <!-- <button type="button" class="btn bluebg-button" (click)="onCancelFolderNameUpdate('folderView')">Cancel</button> -->
         <button type="button" class="btn bluebg-button" (click)="onSaveFolderNameUpdate('folderView')" [disabled]="(entered_folder_name.length == 0)">Save</button>
     </span>
