@@ -129,7 +129,7 @@ span.oopstxt label {
     margin:0px 0px 0px 0px !important;
     height: 36px !important;
     padding: 10px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .defaltdrpdwn ul#dropdown-basic {
