@@ -325,7 +325,9 @@
 </div>
 
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
-<p-confirmDialog #cd2 [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
+<p-confirmDialog [style]="{width: '30vw'}" key="designerWorkspace" position="center" [baseZIndex]="10000" [closable]="false"></p-confirmDialog>
+
+<p-confirmDialog #cd2 key="trueFalse" [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
  rejectButtonStyleClass="btn bluebg-button" [closable]="false">
    <ng-template pTemplate="footer">
       <button type="button" pButton class="btn reset-btn" label="False" (click)="cd2.reject()"></button>
