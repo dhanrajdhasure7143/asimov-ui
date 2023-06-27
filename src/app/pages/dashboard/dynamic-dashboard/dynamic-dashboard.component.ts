@@ -99,7 +99,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Updated Successfully !!",
+          detail: "Updated successfully",
         });
         // this.dashboardData.widgets[index].filterOptions = [
         //   ...this.dashboardData.widgets[index].filterOptions.map(
@@ -301,9 +301,9 @@ export class DynamicDashboardComponent implements OnInit {
       .updateDashBoardNamed(dashboard)
       .subscribe((response: any) => {
         this.getListOfDashBoards();
-        this.messageService.add({severity: "success",summary: "Success",detail: "Updated Successfully !!"});
+        this.messageService.add({severity: "success",summary: "Success",detail: "Updated successfully!"});
       },err=>{
-        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to Update !"});
+        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to update!"});
       });
   }
 
@@ -321,10 +321,10 @@ export class DynamicDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage=""
-    this.dashbordlist.length > 1? confrmMessage="Do you really want to delete this dashboard? This process cannot be undone." : confrmMessage="Are you sure that you are deleting the default dashboard?"
+    this.dashbordlist.length > 1? confrmMessage="Do you want to delete this dashboard? This can't be undone." : confrmMessage="Are you sure that you are deleting the default dashboard?"
     this.confirmationService.confirm({
       message: confrmMessage,
-      header: "Are you Sure?",
+      header: "Are you sure?",
      
       accept: () => {
         this.loader.show();
@@ -335,7 +335,7 @@ export class DynamicDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !!",
+              detail: "Deleted successfully!",
             });
             this.changeToDefaultDashBoard();
           });
@@ -554,7 +554,7 @@ export class DynamicDashboardComponent implements OnInit {
   onRmoveWidget() {
     this.confirmationService.confirm({
       message: "You are trying to remove the widget from the dashboard.",
-      header: "Are you Sure?",
+      header: "Are you sure?",
       
       rejectVisible: false,
       acceptLabel: "Ok",
@@ -567,7 +567,7 @@ export class DynamicDashboardComponent implements OnInit {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: "Deleted Successfully !",
+                  detail: "Deleted successfully!",
                 });
               }
             });
@@ -601,7 +601,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: response.message+' !',
+          detail: response.message+'!',
         });
       }
     })

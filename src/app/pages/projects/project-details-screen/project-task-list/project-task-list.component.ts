@@ -160,26 +160,31 @@ export class ProjectTaskListComponent implements OnInit {
     ];
 
     this.confirmationService.confirm({
-      message: "Do you really want to delete this task? This process cannot be undone.",
-      header: "Are you Sure?",
-      
+      message: "Do you want to delete this task? This can't be undone.",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+' !'});
+            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+'!'});
             this.getTasksList();
           },
           (err) => {
             this.spinner.hide();
-            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete !"});
+            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
           }
         );
       },
-      reject: (type) => {},
-      key: "positionDialog1",
+      reject: (type) => {}
     });
   }
 

@@ -323,3 +323,12 @@
       (onClose)="getTaskForm(nodedata)" (refreshTable)="refreshCredentialList($event)"> </app-rpa-credential-form>
   </app-split-overlay>
 </div>
+
+<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="False" (click)="cd2.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="True" (click)="cd2.accept()"></button>
+   </ng-template>
+</p-confirmDialog>
