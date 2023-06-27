@@ -10,7 +10,6 @@ import { PiHints } from '../model/process-intelligence-module-hints';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
@@ -51,8 +50,6 @@ export class UploadComponent implements OnInit {
   category: any;
   dtTrigger: Subject<any> = new Subject();
   isSearch: boolean = true;
-  @ViewChild(DataTableDirective, { static: true })
-  dtElement: DataTableDirective;
   dateFormats:any;
   processId: number;
   isOtherPort:boolean=false;
