@@ -3000,8 +3000,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   getData(){
     this.rest.getbotdata(this.idBot).subscribe((response: any) => {
-      if(response.errorMessage != undefined)
-      {
         for(let i = 0; i < response.tasks.length; i++){
             this.isDeprecated = response.tasks[i].isModified
             if(this.isDeprecated){
@@ -3009,7 +3007,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.modifiedTaskNames.push(this.taskNames);
             }
         }
-      }
     });
   }
 
