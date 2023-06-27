@@ -183,9 +183,15 @@ export class ProjectTaskDetailsComponent implements OnInit {
   deleteDocuments() {
     let req_body = [];
     this.confirmationService.confirm({
-      message: "Do you really want to delete this document? This process cannot be undone.",
-      header: "Are you Sure?",
-      
+      message: "Do you want to delete this document? This can't be undone.",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(
@@ -193,7 +199,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !",
+              detail: "Document deleted successfully!",
             });
             this.getTheListOfFolders();
             this.getTaskAttachments();
@@ -209,8 +215,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
           }
         );
       },
-      reject: (type) => {},
-      key: "positionDialog",
+      reject: (type) => {}
     });
   }
 
@@ -275,7 +280,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task Updated Successfully !",
+          detail: "Task updated successfully!",
         });
         this.gettask();
         // let status: any = res;
@@ -289,12 +294,12 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Task Update failed",
+          detail: "Task update failed.",
         });
       }
     );
     // } else {
-    //   alert("please fill all details");
+    //   alert("Please fill in all the details.");
     // }
   }
   changefileUploadForm(event) {
@@ -341,7 +346,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       this.messageService.add({
         severity: "info",
         summary: "Info",
-        detail: "Please select Folder",
+        detail: "Please select a folder.",
       });
       return;
     }
@@ -368,7 +373,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File Uploaded Successfully !",
+          detail: "File uploaded successfully!",
         });
         this.getTaskAttachments();
       },
@@ -377,7 +382,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Failed to upload !",
+          detail: "Failed to upload!",
         });
       }
     );

@@ -230,7 +230,7 @@ export class EditTaskComponent implements OnInit {
           this.spinner.hide();
           let status: any = res;
           if (status.errorMessage == undefined) {
-            Swal.fire("Success", "Task Updated Successfully !!", "success");
+            Swal.fire("Success", "Task updated successfully!", "success");
             this.route.navigate(["/pages/projects/projectdetails"], {
               queryParams: { id: this.project_id },
             });
@@ -243,7 +243,7 @@ export class EditTaskComponent implements OnInit {
         }
       );
     } else {
-      alert("please fill all details");
+      alert("Please fill in all the details.");
     }
   }
 

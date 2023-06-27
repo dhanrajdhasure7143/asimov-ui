@@ -9,6 +9,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -54,7 +55,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private spinner: LoaderService,
-    private columnList : columnList
+    private columnList : columnList,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
   ) {
     const ipPattern ="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     this.DBupdateflag = false;
@@ -141,13 +144,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          Swal.fire("Success", "Successfully Connected", "success")
+          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!'})
         } else {
-          Swal.fire("Error", "Connection Failed", "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!'})
         }
       }, err => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to test connection details", "error")
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.'})
       });
       this.activestatus();
     }
@@ -181,35 +184,46 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   deletedbconnection() {
     const selecteddbconnection = this.selectedData.map(p => p.connectionId);
-    Swal.fire({
-      title: 'Are you Sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Are you Sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then(
+      this.confirmationService.confirm({
+        message: "Do you want to delete this connection? This can't be undone.",
+        header: 'Are you sure?',
+        acceptLabel:'Yes',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+      accept:() => {
+  
         this.spinner.show();
         this.api.deleteDBConnection(selecteddbconnection).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
           if (status.errorMessage == undefined) {
-            Swal.fire("Success", status.status, "success")
+            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallDBConnection();
           }
           else
-            Swal.fire("Error", status.errorMessage, "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
 
         }, err => {
           this.spinner.hide();
-          Swal.fire("Error", "Unable to delete database connections", "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
         });
-      }
-    });
+    },
+  });
 
   }
 
@@ -291,35 +305,47 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   deletedbconnectionByRow(row) {
     const selecteddbconnection=[]
     selecteddbconnection.push(row.connectionId);
-    Swal.fire({
-      title: 'Are you Sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Are you Sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then(
+    this.confirmationService.confirm({
+      header: 'Are you sure?',
+      message: "You won't be able to revert this!",
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
         this.spinner.show();
         this.api.deleteDBConnection(selecteddbconnection).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
           if (status.errorMessage == undefined) {
-            Swal.fire("Success", status.status, "success")
+            // Swal.fire("Success", status.status, "success")
+            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallDBConnection();
           }
           else
-            Swal.fire("Error", status.errorMessage, "error")
-
+            // Swal.fire("Error", status.errorMessage, "error")
+            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
         }, err => {
           this.spinner.hide();
-          Swal.fire("Error", "Unable to delete database connections", "error")
+          // Swal.fire("Error", "Unable to delete database connections", "error")
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
         });
       }
-    });
-
+    
+  })
   }
 }

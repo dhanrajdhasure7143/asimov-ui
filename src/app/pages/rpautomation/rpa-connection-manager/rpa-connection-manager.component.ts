@@ -83,7 +83,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     let selectedId = event.id;
     this.confirmationService.confirm({
       message: "Do you want to delete this connector?",
-      header: 'Are you Sure?',
+      header: 'Are you sure?',
       
       accept: () => {
         this.spinner.show();
@@ -101,7 +101,7 @@ export class RpaConnectionManagerComponent implements OnInit {
             this.messageService.add({
               severity:'error', 
               summary: 'Error', 
-              detail: "Please Delete the Action Items !"
+              detail: "Please delete the action items!"
             });
             this.spinner.hide();
             this.getAllConnections();
@@ -216,7 +216,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Connector Updated Successfully !",
+          detail: "Connector updated successfully!",
         });
         this.isFormOverlay = false;
         this.createConnectorForm.reset();
@@ -226,7 +226,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Unable to Update Connector !",
+          detail: "Unable to update Connector!",
         });        
         this.spinner.hide();
       }
