@@ -38,7 +38,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
-import { MessageService,ConfirmationService } from "primeng/api";
+import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -328,86 +328,81 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         var source_length = this.jsPlumbInstance
           .getAllConnections()
           .filter((data) => data.sourceId == connection.sourceId).length;
-          if (
-          node_object.taskName == "If condition" &&
-          source_length < 3 &&
-          this.loadflag
-        ) {
-          // Swal.fire({
-          //   title: "Select True/False case",
-          //   icon: "warning",
-          //   showCancelButton: true,
-          //   customClass: {
-          //     confirmButton: 'btn bluebg-button',
-          //     cancelButton: 'btn new-cancelbtn',
-          //     },
-          //   cancelButtonText: "False",
-          //   confirmButtonText: "True",
-          // }).then(
+          if (node_object.taskName == "If condition" &&source_length < 3 &&this.loadflag) {
             this.confirmationService.confirm({
-              header:'Select True/False case.',
+              message: "Select True/False case.",
+              header: "Confirmation",
               acceptLabel:'True',
               rejectLabel:'False',
               acceptButtonStyleClass: 'btn bluebg-button',
               defaultFocus: 'none',
               acceptIcon: 'null',
-          accept:() => {
-              connection.addOverlay([
-                "Label",
-                {
-                  label: "<span class='bg-white text-success'>True<span>",
-                  location: 0.8,
-                  cssClass: "aLabel",
-                  id: "iflabel" + connection.id,
-                },
-              ]);
+              rejectIcon: 'null',
+            accept:() => {
+                connection.addOverlay([
+                  "Label",
+                  {
+                    label: "<span class='bg-white text-success'>True<span>",
+                    location: 0.8,
+                    cssClass: "aLabel",
+                    id: "iflabel" + connection.id,
+                  },
+                ]);
+  
+                let connected_node: any = this.nodes.find(
+                  (develop) => develop.id == connection.targetId
+                );
+                let connected_node_id: any =
+                  connected_node.name + "__" + connected_node.id;
+                let source_node_id = node_object.nodeId;
+                if (
+                  this.finaldataobjects.find(
+                    (tasks) => tasks.nodeId == source_node_id
+                  ) != undefined
+                ) {
+                  this.finaldataobjects
+                    .find((tasks) => tasks.nodeId == source_node_id)
+                    .attributes.find(
+                      (attrs) => attrs.metaAttrValue == "if"
+                    ).attrValue = connected_node_id;
+                }
 
-              let connected_node: any = this.nodes.find(
-                (develop) => develop.id == connection.targetId
-              );
-              let connected_node_id: any =
-                connected_node.name + "__" + connected_node.id;
-              let source_node_id = node_object.nodeId;
-              if (
-                this.finaldataobjects.find(
-                  (tasks) => tasks.nodeId == source_node_id
-                ) != undefined
-              ) {
-                this.finaldataobjects
-                  .find((tasks) => tasks.nodeId == source_node_id)
-                  .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "if"
-                  ).attrValue = connected_node_id;
-              
-            } else {
-              connection.addOverlay([
-                "Label",
-                {
-                  label: "<span class='bg-white text-danger'>False<span>",
-                  location: 0.8,
-                  cssClass: "aLabel",
-                  id: "iflabel" + connection.id,
-                },
-              ]);
-              let connected_node: any = this.nodes.find(
-                (develop) => develop.id == connection.targetId
-              );
-              let connected_node_id: any =
-                connected_node.name + "__" + connected_node.id;
-              if (
-                this.finaldataobjects.find(
-                  (tasks) => tasks.nodeId == node_object.nodeId
-                ) != undefined
-              ) {
-                this.finaldataobjects
-                  .find((tasks) => tasks.nodeId == node_object.nodeId)
-                  .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "else"
-                  ).attrValue = connected_node_id;
+            },
+            reject: (type) => {
+              switch(type) {
+                  case ConfirmEventType.REJECT:
+                    connection.addOverlay([
+                      "Label",
+                      {
+                        label: "<span class='bg-white text-danger'>False<span>",
+                        location: 0.8,
+                        cssClass: "aLabel",
+                        id: "iflabel" + connection.id,
+                      },
+                    ]);
+                    let connected_node: any = this.nodes.find(
+                      (develop) => develop.id == connection.targetId
+                    );
+                    let connected_node_id: any =
+                      connected_node.name + "__" + connected_node.id;
+                    if (
+                      this.finaldataobjects.find(
+                        (tasks) => tasks.nodeId == node_object.nodeId
+                      ) != undefined
+                    ) {
+                      this.finaldataobjects
+                        .find((tasks) => tasks.nodeId == node_object.nodeId)
+                        .attributes.find(
+                          (attrs) => attrs.metaAttrValue == "else"
+                        ).attrValue = connected_node_id;
+                    }
+                  break;
+                  case ConfirmEventType.CANCEL:
+                      
+                  break;
               }
-            }
           }
-        })
+          })
         }
 
 
