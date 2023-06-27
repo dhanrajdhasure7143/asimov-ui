@@ -23,6 +23,12 @@
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 
+.toast-container.toast-top-full-width .ngx-toastr {
+  width: 100% !important;
+}
+.toast-container.toast-top-full-width .ngx-toastr .toast-message {
+  line-height: 2;
+}
 .enjoy_hint_label {
   color: #6b2929;
   background-color: white;
@@ -2957,6 +2963,10 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
   border-color: var(--main-bluecolor) !important;
   background: var(--main-bluecolor) !important;
+  box-shadow: none !important;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+  box-shadow: none !important;
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   border-color: var(--main-bluecolor) !important;
@@ -3386,7 +3396,7 @@ textarea.p-inputtextarea {
   border-radius: 3px;
   /* margin: 10px;
   padding: 10px 15px; */
-  background: #fff;
+  background: transparent;
   cursor: pointer;
 }
 
@@ -3724,7 +3734,8 @@ background-color: #D8E0EF !important;
   font-weight: bold;
 }
 
-.dochovercheck.folderselected .p-card,
+.dochovercheck:hover,
+.dochovercheck.folderselected,
 .doctree tr.folderselected {
   background: #eeeeee !important;
 }
