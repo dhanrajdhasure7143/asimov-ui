@@ -235,7 +235,7 @@
    [draggable]="false" [resizable]="false">
    <div class="form-group">
       <label for="" class="label-control" > Name<span class="star">*</span></label>
-      <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" (keydown)="noSpace($event)"  maxlength="50" />
+      <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="entered_name" (keydown)="spaceNotAllow($event)"  maxlength="50" />
    </div>
    <ng-template pTemplate="footer">
       <button class="btn new-cancelbtn" (click)="isDialogShow = false">Cancel</button>
