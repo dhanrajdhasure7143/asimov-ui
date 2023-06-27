@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { NgxSpinnerService } from 'ngx-spinner';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
+import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
@@ -53,7 +54,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     private spinner:NgxSpinnerService,
     private formGroup:FormBuilder,
     private activatedRoute:ActivatedRoute,
-    private changeDecoratorRef:ChangeDetectorRef
+    private changeDecoratorRef:ChangeDetectorRef,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
     ) { }
 
   ngOnInit() {
@@ -142,11 +145,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       else
       {
         this.spinner.hide();
-        Swal.fire("Error",response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'
+      })
       }
     },err=>{
       this.spinner.hide();
-      Swal.fire("Error","Unable to get toolset","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the toolset.',key:'rpadesignertoast'})
     })
   }
 
@@ -159,10 +163,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       } 
       else
       {  
-        Swal.fire("Error",response.errorMessage, "error")
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     },err=>{
-      Swal.fire("Error","Unable to load data","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load the data.',key:'rpadesignertoast'})
     })
   }
 
@@ -173,7 +177,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           this.environmentsList=response;
         }
         else{
-          Swal.fire("Error",response.errorMessage,"error");
+          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
         }
       });
   }
@@ -185,7 +189,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         this.categoriesList = response.data;
       }
       else {
-        Swal.fire("Error", response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     })
   }
@@ -214,16 +218,16 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           
           this.spinner.hide();
           if(localStorage.getItem('bot_id')=="null")
-          Swal.fire("Warning","Selected Bot is already loaded","warning");
+        this.messageService.add({severity:'warn',summary:'Warning',detail:'The selected bot is already loaded.',key:'rpadesignertoast'})
         }
       }
       else
       {
-        Swal.fire("Error",response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
       }
     },(err)=>{
       this.spinner.hide();
-      Swal.fire("Error","Unable to load bot","error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load bot',key:'rpadesignertoast'})
       //this.router.navigate(["/home"])
     })
 
@@ -410,10 +414,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
       else
-        Swal.fire("Error",response.errorMessage,"error");
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
     },(err:any)=>{
       this.spinner.hide();
-      Swal.fire("Error","Unable to get predefined bots","error")
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the predefined bots.',key:'rpadesignertoast'})
     })
   }
 
@@ -444,6 +448,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   onBotCreate(event) {
+    debugger
     if (event != null) {
       if (event.case == "create") {
         if(!isNaN(event.botId)){
@@ -497,25 +502,35 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   onChangeExecutionMode()
   { 
-    Swal.fire({
-      title: 'Are you Sure?',
-      text: "You want to change version",
-      icon: 'warning',
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      confirmButtonText: 'Yes, change it!'
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Are you Sure?',
+    //   text: "You want to change version",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   confirmButtonText: 'Yes, change it!'
+    // }).then(
+    this.confirmationService.confirm({
+      header: 'Are you sure?',
+      message: 'Do you want to change the version?',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      key: 'rpadesigner',
+        accept:() => {
         this.current_instance.executionMode=this.executionMode;
-      }
-      else
-      {
+      },
+      reject:()=>{
         this.executionMode=!this.executionMode;
       }
-    })
+  })
   }
 
 }

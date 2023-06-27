@@ -6,6 +6,7 @@ import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {MessageService} from'primeng/api'
 @Component({
   selector: 'app-so-scheduler',
   templateUrl: './so-scheduler.component.html',
@@ -83,7 +84,7 @@ export class SoSchedulerComponent implements OnInit {
   start_time:any;
   end_time:any;
   constructor(private rest:RestApiService, private notifier: NotifierService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:NgxSpinnerService,private messageService:MessageService) { }
   mindate= moment().format("YYYY-MM-DD");
   
   ngOnInit() {
@@ -265,16 +266,16 @@ export class SoSchedulerComponent implements OnInit {
         else
         {
           
-          this.notifier.notify("error","Please give all inputs")
-          //Swal.fire("Please give all inputs","","warning")
+          this.notifier.notify("error","Please provide all inputs.")
+          //Swal.fire("Please provide all inputs.","","warning")
         }
       }
     }
     else
     {
-      //Swal.fire("Please fill all details","","warning");
+      //Swal.fire("Please fill in all the details.","","warning");
       
-      this.notifier.notify("error","Please give all inputs")
+      this.notifier.notify("error","Please provide all inputs.")
     }
   }
   check_all(event)
@@ -465,12 +466,15 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+          // Swal.fire(resp.errorMessage,"","warning");
+          this.messageService.add({severity:'warn',summary:'Warning',detail:resp.errorMessage})
           
         }
         else
         {
-          Swal.fire(resp.status,"","success")
+          // Swal.fire(resp.status,"","success")
+          this.messageService.add({severity:'success',summary:'Success',detail:resp.status})
+
           this.schedule_list.find(data=>data.check==true).run_status="not_started";
           this.updateflags();
         }
@@ -507,14 +511,14 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule deleted successfully")
+            this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-            this.notifier.notify("error","Schedule not deleted successfully")
+            this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }else if(unsaved_schedules.length>0)
       {
-          this.notifier.notify("success","Schedule deleted successfully") 
+          this.notifier.notify("success","Schedule deleted successfully!") 
       }
       else if(saved_schedules.length==0 && unsaved_schedules.length==0)
       {
@@ -523,15 +527,15 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule deleted successfully")
+            this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-            this.notifier.notify("error","Schedule not deleted successfully")
+            this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }
       else
       {
-        this.notifier.notify("error","No schedule selected to delete");
+        this.notifier.notify("error","No schedule is selected to delete.");
       }
     }
     else if(this.processid!="" && this.processid != undefined)
@@ -554,7 +558,7 @@ export class SoSchedulerComponent implements OnInit {
             this.deletestack=[];
             this.updateflags();
           }else{
-            this.notifier.notify("error","Unable to delete shcedule")
+            this.notifier.notify("error","Unable to delete the schedule.")
           }
           
         })
@@ -592,7 +596,7 @@ export class SoSchedulerComponent implements OnInit {
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
           let resp:any=data;
           if(resp.errorMessage==undefined){
-            this.notifier.notify("success","Schedules saved successfully")
+            this.notifier.notify("success","Schedules saved successfully!")
            
             /*if(resp.botMainSchedulerEntity==null){
             }
@@ -603,7 +607,7 @@ export class SoSchedulerComponent implements OnInit {
             this.updateflags();
             this.spinner.hide();
           }else{  
-            this.notifier.notify("error","Schedule failed to add")
+            this.notifier.notify("error","Schedule failed to add.")
           }      
     })
     }else if(this.processid!=undefined && this.processid!=""){
@@ -613,7 +617,7 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage==undefined){
-          this.notifier.notify("success","Schedules saved successfully");
+          this.notifier.notify("success","Schedules saved successfully!");
           this.get_schedule();
           this.updateflags();
           this.spinner.hide();

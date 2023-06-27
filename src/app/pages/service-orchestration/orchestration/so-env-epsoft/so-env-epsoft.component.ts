@@ -233,7 +233,7 @@ async testConnection(data){
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: "Successfully Connected",
+        title: "Connected successfully!",
         showConfirmButton: false,
         timer: 2000
       })
@@ -339,7 +339,7 @@ async updateEnvironment()
   }
   else
   {
-    //alert("please fill all details");
+    //alert("Please fill in all the details.");
   }
 }
 
@@ -395,7 +395,7 @@ async deleteEnvironments(){
   if(selectedEnvironments.length!=0)
   {
     Swal.fire({
-      title: 'Are you Sure?',
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
