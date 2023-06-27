@@ -197,7 +197,7 @@ export class AdminAddScreenComponent implements OnInit {
         this.insertForm = this.formBuilder.group({
           screen_Name: [
             this.filterData.Screen_Name,
-            Validators.compose([Validators.required,,Validators.pattern('^[a-zA-Z ]+$'),Validators.maxLength(50)]),
+            Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'),Validators.maxLength(50)]),
           ],
           table_Name: [this.filterData.Table_Name],
           allow_Insert: [this.filterData.Allow_Insert],
