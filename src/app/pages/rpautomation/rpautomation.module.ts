@@ -7,7 +7,6 @@ import { DynamicFormBuilderModule } from './dynamic-form-builder/dynamic-form-bu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RpaenvironmentsComponent } from './rpa-environments/rpa-environments.component';
-import { DataTablesModule } from 'angular-datatables';
 import { Ng5SliderModule } from 'ng5-slider';
 import { HttpClientModule } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -112,7 +111,6 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
     MatTableModule,
     MatTabsModule,
     FilterPipeModule,
-    DataTablesModule,
     NgbModule,MatExpansionModule,
     //ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
