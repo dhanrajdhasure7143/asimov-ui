@@ -18,7 +18,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import {DataTablesModule} from 'angular-datatables';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -77,7 +76,6 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     NgMultiSelectDropDownModule.forRoot(),
     Ng2SearchPipeModule,
     NgxSpinnerModule,
-    DataTablesModule,
     MatOptionModule,MatSelectModule,
     NgxPaginationModule,
     BackButtonDisableModule.forRoot({
