@@ -38,7 +38,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
-import { ConfirmationService } from "primeng/api";
+import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -56,7 +56,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild("logspopup") public logsOverlayRef: any;
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
-  @Input("idBot") public idBot: number;
   display:boolean = false;
   filteredEnvironments: any = [];
   VersionsList: any = [];
@@ -162,9 +161,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCreateForm:boolean=true;
   credupdatedata:any;
   credentialsFormFlag:boolean=false;
-  isDeprecated: boolean;
-  taskNames: string;
-  modifiedTaskNames: any = [];
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -178,7 +174,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private modalService: BsModalService,
     private changesDecorator: ChangeDetectorRef,
     private ngZone: NgZone,
-    private confirmationService: ConfirmationService,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -226,7 +223,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getData();
     this.passwordtype1 = false;
     this.passwordtype2 = false;
     this.spinner.show();
@@ -319,11 +315,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (item: any) => item.id == connection.targetId
         );
         if (connectionNodeForTarget.selectedNodeTask == "If condition") {
-          Swal.fire(
-            "Alert",
-            "Start Node Should not connect directly to if condition",
-            "warning"
-          );
+          this.messageService.add({severity:'warn',summary:'Alert',detail:'Start Node Should not connect directly to if condition.'})
           setTimeout(() => {
             this.changesDecorator.detectChanges();
             this.jsPlumbInstance.deleteConnection(connection);
@@ -336,24 +328,112 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         var source_length = this.jsPlumbInstance
           .getAllConnections()
           .filter((data) => data.sourceId == connection.sourceId).length;
-          if (
-          node_object.taskName == "If condition" &&
-          source_length < 3 &&
-          this.loadflag
-        ) {
-          Swal.fire({
-            title: "Select True/False case",
-            icon: "warning",
-            showCancelButton: true,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton: 'btn new-cancelbtn',
-              },
-            cancelButtonText: "False",
-            confirmButtonText: "True",
-          }).then((result) => {
-            if (result.value) {
-              connection.addOverlay([
+          if (node_object.taskName == "If condition" &&source_length < 3 &&this.loadflag) {
+            this.confirmationService.confirm({
+              message: "Select True/False case.",
+              header: "Confirmation",
+              acceptLabel:'True',
+              rejectLabel:'False',
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
+              rejectIcon: 'null',
+              key: "trueFalse",
+            accept:() => {
+                connection.addOverlay([
+                  "Label",
+                  {
+                    label: "<span class='bg-white text-success'>True<span>",
+                    location: 0.8,
+                    cssClass: "aLabel",
+                    id: "iflabel" + connection.id,
+                  },
+                ]);
+  
+                let connected_node: any = this.nodes.find(
+                  (develop) => develop.id == connection.targetId
+                );
+                let connected_node_id: any =
+                  connected_node.name + "__" + connected_node.id;
+                let source_node_id = node_object.nodeId;
+                if (
+                  this.finaldataobjects.find(
+                    (tasks) => tasks.nodeId == source_node_id
+                  ) != undefined
+                ) {
+                  this.finaldataobjects
+                    .find((tasks) => tasks.nodeId == source_node_id)
+                    .attributes.find(
+                      (attrs) => attrs.metaAttrValue == "if"
+                    ).attrValue = connected_node_id;
+                }
+
+            },
+            reject: (type) => {
+              switch(type) {
+                  case ConfirmEventType.REJECT:
+                    connection.addOverlay([
+                      "Label",
+                      {
+                        label: "<span class='bg-white text-danger'>False<span>",
+                        location: 0.8,
+                        cssClass: "aLabel",
+                        id: "iflabel" + connection.id,
+                      },
+                    ]);
+                    let connected_node: any = this.nodes.find(
+                      (develop) => develop.id == connection.targetId
+                    );
+                    let connected_node_id: any =
+                      connected_node.name + "__" + connected_node.id;
+                    if (
+                      this.finaldataobjects.find(
+                        (tasks) => tasks.nodeId == node_object.nodeId
+                      ) != undefined
+                    ) {
+                      this.finaldataobjects
+                        .find((tasks) => tasks.nodeId == node_object.nodeId)
+                        .attributes.find(
+                          (attrs) => attrs.metaAttrValue == "else"
+                        ).attrValue = connected_node_id;
+                    }
+                  break;
+                  case ConfirmEventType.CANCEL:
+                      
+                  break;
+              }
+          }
+          })
+        }
+      //v2 if
+      if (
+        node_object.taskName == "If" &&
+        source_length < 3 &&
+        this.loadflag
+      ) {
+        // Swal.fire({
+        //   title: "Select True/False case",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   customClass: {
+        //     confirmButton: 'btn bluebg-button',
+        //     cancelButton: 'btn new-cancelbtn',
+        //     },
+        //   cancelButtonText: "False",
+        //   confirmButtonText: "True",
+        // }).then(
+        this.confirmationService.confirm({
+          message: "Select True/False case.",
+          header: "Confirmation",
+          acceptLabel:'True',
+          rejectLabel:'False',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          rejectIcon: 'null',
+          key: "trueFalse",
+          accept: () => {
+          connection.addOverlay([
                 "Label",
                 {
                   label: "<span class='bg-white text-success'>True<span>",
@@ -362,12 +442,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   id: "iflabel" + connection.id,
                 },
               ]);
-
+  
               let connected_node: any = this.nodes.find(
                 (develop) => develop.id == connection.targetId
               );
-              let connected_node_id: any =
-                connected_node.name + "__" + connected_node.id;
+              // let connected_node_id: any =
+              //   connected_node.name + "__" + connected_node.id;
               let source_node_id = node_object.nodeId;
               if (
                 this.finaldataobjects.find(
@@ -377,113 +457,47 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 this.finaldataobjects
                   .find((tasks) => tasks.nodeId == source_node_id)
                   .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "if"
-                  ).attrValue = connected_node_id;
+                    (attrs) => attrs.metaAttrValue == "true"
+                  ).attrValue = connected_node.id;
               }
-            } else {
-              connection.addOverlay([
-                "Label",
-                {
-                  label: "<span class='bg-white text-danger'>False<span>",
-                  location: 0.8,
-                  cssClass: "aLabel",
-                  id: "iflabel" + connection.id,
-                },
-              ]);
-              let connected_node: any = this.nodes.find(
-                (develop) => develop.id == connection.targetId
-              );
-              let connected_node_id: any =
-                connected_node.name + "__" + connected_node.id;
-              if (
-                this.finaldataobjects.find(
-                  (tasks) => tasks.nodeId == node_object.nodeId
-                ) != undefined
-              ) {
-                this.finaldataobjects
-                  .find((tasks) => tasks.nodeId == node_object.nodeId)
-                  .attributes.find(
-                    (attrs) => attrs.metaAttrValue == "else"
-                  ).attrValue = connected_node_id;
-              }
-            }
-          });
+            
+        },
+        reject: (type) => {
+          switch(type) {
+            case ConfirmEventType.REJECT:
+                connection.addOverlay([
+                  "Label",
+                  {
+                    label: "<span class='bg-white text-danger'>False<span>",
+                    location: 0.8,
+                    cssClass: "aLabel",
+                    id: "iflabel" + connection.id,
+                  },
+                ]);
+                let connected_node: any = this.nodes.find(
+                  (develop) => develop.id == connection.targetId
+                );
+                // let connected_node_id: any =
+                //   connected_node.name + "__" + connected_node.id;
+                if (
+                  this.finaldataobjects.find(
+                    (tasks) => tasks.nodeId == node_object.nodeId
+                  ) != undefined
+                ) {
+                  this.finaldataobjects
+                    .find((tasks) => tasks.nodeId == node_object.nodeId)
+                    .attributes.find(
+                      (attrs) => attrs.metaAttrValue == "false"
+                    ).attrValue = connected_node.id;
+                }
+            break;
+            case ConfirmEventType.CANCEL:
+                
+            break;
         }
 
-
-      //v2 if
-      if (
-        node_object.taskName == "If" &&
-        source_length < 3 &&
-        this.loadflag
-      ) {
-        Swal.fire({
-          title: "Select True/False case",
-          icon: "warning",
-          showCancelButton: true,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton: 'btn new-cancelbtn',
-            },
-          cancelButtonText: "False",
-          confirmButtonText: "True",
-        }).then((result) => {
-          if (result.value) {
-            connection.addOverlay([
-              "Label",
-              {
-                label: "<span class='bg-white text-success'>True<span>",
-                location: 0.8,
-                cssClass: "aLabel",
-                id: "iflabel" + connection.id,
-              },
-            ]);
-
-            let connected_node: any = this.nodes.find(
-              (develop) => develop.id == connection.targetId
-            );
-            // let connected_node_id: any =
-            //   connected_node.name + "__" + connected_node.id;
-            let source_node_id = node_object.nodeId;
-            if (
-              this.finaldataobjects.find(
-                (tasks) => tasks.nodeId == source_node_id
-              ) != undefined
-            ) {
-              this.finaldataobjects
-                .find((tasks) => tasks.nodeId == source_node_id)
-                .attributes.find(
-                  (attrs) => attrs.metaAttrValue == "true"
-                ).attrValue = connected_node.id;
-            }
-          } else {
-            connection.addOverlay([
-              "Label",
-              {
-                label: "<span class='bg-white text-danger'>False<span>",
-                location: 0.8,
-                cssClass: "aLabel",
-                id: "iflabel" + connection.id,
-              },
-            ]);
-            let connected_node: any = this.nodes.find(
-              (develop) => develop.id == connection.targetId
-            );
-            // let connected_node_id: any =
-            //   connected_node.name + "__" + connected_node.id;
-            if (
-              this.finaldataobjects.find(
-                (tasks) => tasks.nodeId == node_object.nodeId
-              ) != undefined
-            ) {
-              this.finaldataobjects
-                .find((tasks) => tasks.nodeId == node_object.nodeId)
-                .attributes.find(
-                  (attrs) => attrs.metaAttrValue == "false"
-                ).attrValue = connected_node.id;
-            }
-          }
-        });
+        }
+      });
       }   
       } else {
         let connectionNodeForSource = this.nodes.find(
@@ -491,11 +505,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         );
         if (connectionNodeForSource != undefined) {
           if (connectionNodeForSource.selectedNodeTask == "If condition") {
-            Swal.fire(
-              "Alert",
-              "Please do config before adding connections for if condition",
-              "warning"
-            );
+       
+            this.messageService.add({severity:'warn',summary:'Warning',detail:'Please configure before adding connections for the if condition.'})
             setTimeout(() => {
               this.changesDecorator.detectChanges();
               this.jsPlumbInstance.deleteConnection(connection);
@@ -975,24 +986,35 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       menu.name;
     this.nodes.find((data) => data.id == tempnode.id).selectedNodeId = menu.id;
     let type = "info";
-    let message = `${menu.name} is Selected`;
+    let message = `${menu.name} is selected.`;
     this.notifier.notify(type, message);
     this.selectedTask = menu;
   }
 
   deletenode(node) {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(
+      this.confirmationService.confirm({
+        header:'Are you sure?',
+        message:"Do you want to delete this node? This can't be undone.",
+        acceptLabel:'Yes',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+        key: "designerWorkspace",
+      accept:() => {
         this.nodes.splice(this.nodes.indexOf(node), 1);
         this.jsPlumbInstance.remove(node.id);
         let nodeId = node.name + "__" + node.id;
@@ -1001,7 +1023,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
         }
       }
-    });
+  })
     this.validateBotNodes();
   }
 
@@ -1157,7 +1179,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
-            Swal.fire("Error","Failed to get configuration form","error");
+            // Swal.fire("Error","Failed to get configuration form","error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get the configuration form.'})
             return;
           }
           this.multiformdata = data;
@@ -1185,7 +1208,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         });
       }
     } else {
-      Swal.fire("Please select task", "", "warning");
+      this.messageService.add({severity:'warn',summary:'warnibg',detail:'Please select a task.'})
     }
   }
 
@@ -1236,7 +1259,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
-      let message = "No Data Found";
+      let message = "No data was found";
       this.notifier.notify(type, message);
     } else {
       this.fields = [];
@@ -1490,7 +1513,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     } else {
       this.finaldataobjects.push(cutedata);
     }
-    this.notifier.notify("info", "Data Saved Successfully");
+    this.notifier.notify("info", "Data saved successfully!");
   }
 
   //Normal Task Form Submit
@@ -1628,7 +1651,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     } else {
       this.finaldataobjects.push(cutedata);
     }
-    if (notifierflag) this.notifier.notify("info", "Data Saved Successfully");
+    if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
 
   
@@ -1732,24 +1755,37 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   resetDesigner() {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, reset designer!",
-    }).then((result: any) => {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, reset designer!",
+    // }).then(
+      this.confirmationService.confirm({
+        header:'Are you sure?',
+        message:"You want to reset the designer.",
+        acceptLabel:'Yes',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+        key: "designerWorkspace",
+       accept:(result: any) => {
       if (result.value) {
         this.jsPlumbInstance.deleteEveryEndpoint();
         this.nodes = [];
         this.finaldataobjects = [];
         this.groupsData = [];
       }
-    });
+    }
+  })
   }
 
   checkBotDetails(versionType, comments, botDetails) {
@@ -1800,7 +1836,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        Swal.fire("Error", "Unable to create bot", "error");
+        // Swal.fire("Error", "Unable to create a bot.", "error");
+        this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create a bot.'})
       }
     );
   }
@@ -1828,375 +1865,184 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateBotFun(version_type, comments) {
-    if(this.isDeprecated == true){
-      const message = `Deprecated task present in the bot, <br>
-      <span class="bold">(${this.modifiedTaskNames.join(', ')})</span>
-      Do yo want to update dynamic values?`;
-   this.confirmationService.confirm({
-     message: message,
-     header: 'Are you sure?',
-     accept: () => {
-       this.spinner.hide();
-     },
-     reject: async (type) => {
-       let env = [
-         ...this.filteredEnvironments
-           .filter((item: any) => item.check == true)
-           .map((item2: any) => {
-             return item2.environmentId;
-           }),
-       ];
-       this.spinner.show();
-       this.checkorderflag = true;
-       this.addsquences();
-       if(this.executionMode){
-         this.arrange_task_order(this.startNodeId);
-       }
-       else
-       {
-         this.final_tasks=this.finaldataobjects;
-       }
-       this.get_coordinates();
+    let env = [
+      ...this.filteredEnvironments
+        .filter((item: any) => item.check == true)
+        .map((item2: any) => {
+          return item2.environmentId;
+        }),
+    ];
+    this.spinner.show();
+    this.checkorderflag = true;
+    this.addsquences();
+    if(this.executionMode){
+      this.arrange_task_order(this.startNodeId);
+    }
+    else
+    {
+      this.final_tasks=this.finaldataobjects;
+    }
+    this.get_coordinates();
+    await this.getsvg();
+    this.rpaAuditLogs(env);
+    await this.validateBotNodes();
+    if(this.executionMode)
+    {
+      
+      let finalTasksData=[...this.final_tasks];
+      finalTasksData.forEach((item, finalIndex)=>{
+        if(this.actualTaskValue.length != 0 && item.validated==undefined)
+        {    
+          if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
+          {
+            let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
+            if(actualTasks.length!=0)
+            {
+              let indexList:any=[];
+              this.final_tasks.forEach((tempTask, index)=>{
+                if(tempTask.nodeId==item.nodeId)
+                  indexList.push(index);
+              });
+              indexList.forEach((indexItem, indexmeta)=>{
+                  if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                  {
+                  let task={...{},...finalTasksData[indexItem]}
+                  task.botTId=actualTasks[indexmeta].botTId;
+                  let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
+                  let attributes=[...task.attributes]
+                  actualTaskAttributes.forEach((item:any)=>{
+                    let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
+                    let attribute={...{},...attributes[attrIndex]};
+                    if(attribute !=undefined)
+                    {                      
+                      attribute.attrId=item.attrId;
+                      attribute.botTaskId=item.botTaskId;
+                      attributes[attrIndex]=attribute;
+                    }
+                  })
+                  task["attributes"]=[...attributes]
+                  task["validated"]=true;
+                  this.final_tasks[indexItem]=task;
+                }
+              })
+            }
+          }
+        
+        }
+      })
+    }
 
-       await this.getsvg();
-       this.rpaAuditLogs(env);
-       this.validateBotNodes();
-       if(this.executionMode)
-       {
-         
-         let finalTasksData=[...this.final_tasks];
-         finalTasksData.forEach((item, finalIndex)=>{
-           if(this.actualTaskValue.length != 0 && item.validated==undefined)
-           {    
-             if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
-             {
-               let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
-               if(actualTasks.length!=0)
-               {
-                 let indexList:any=[];
-                 this.final_tasks.forEach((tempTask, index)=>{
-                   if(tempTask.nodeId==item.nodeId)
-                     indexList.push(index);
-                 });
-                 indexList.forEach((indexItem, indexmeta)=>{
-                     if(finalTasksData[indexItem] && actualTasks[indexmeta])
-                     {
-                     let task={...{},...finalTasksData[indexItem]}
-                     task.botTId=actualTasks[indexmeta].botTId;
-                     let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
-                     let attributes=[...task.attributes]
-                     actualTaskAttributes.forEach((item:any)=>{
-                       let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
-                       let attribute={...{},...attributes[attrIndex]};
-                       if(attribute !=undefined)
-                       {                      
-                         attribute.attrId=item.attrId;
-                         attribute.botTaskId=item.botTaskId;
-                         attributes[attrIndex]=attribute;
-                       }
-                     })
-                     task["attributes"]=[...attributes]
-                     task["validated"]=true;
-                     this.final_tasks[indexItem]=task;
-                   }
-                 })
-               }
-             }            
-           }
-         })
-       }
-   
-         this.saveBotdata = {
-           versionType: version_type,
-           comments: comments,
-           version: this.finalbot.version,
-           botId: this.finalbot.botId,
-           botName: this.finalbot.botName,
-           botType: this.finalbot.botType,
-           description: this.finalbot.botDescription,
-           department: this.finalbot.botDepartment,
-           botMainSchedulerEntity: null,
-           envIds: env,
-           isPredefined: this.finalbot.predefinedBot,
-           tasks: this.final_tasks,
-           createdBy: "admin",
-           groups: this.getGroupsInfo(),
-           lastSubmittedBy: "admin",
-           scheduler: null,
-           svg: this.svg,
-           sequences: this.getsequences(),
-           isBotCompiled: this.isBotCompiled,
-           executionMode: this.executionMode?"v1":"v2",
-         };
-         if (this.checkorderflag == false) {
-           this.spinner.hide();
-           Swal.fire("Warning", "Please check connections", "warning");
-         } else {
-           let previousBotDetails: any = { ...{}, ...this.finalbot };
-           this.assignTaskConfiguration();
-            (await this.rest.updateBot(this.saveBotdata)).subscribe(
-             (response: any) => {
-               this.spinner.hide();
-               if (response.errorMessage == undefined) {
-                 this.isBotUpdated = false;
-                 // this.finalbot=response;
-                 // this.actualTaskValue=[...response.tasks];
-                 this.finalbot = { ...{}, ...response };
-                 this.actualTaskValue = [
-                   ...response.tasks.filter(
-                     (item) => (item.version == response.version)
-                   ),
-                 ];
-                 this.finaldataobjects = [
-                   ...response.tasks.filter(
-                     (item) => (item.version == response.version)
-                   ),
-                 ];
-                 this.actualEnv = [...response.envIds];
-                 Swal.fire("Success", "Bot updated successfully", "success");
-                 this.uploadfile(response.envIds, response.tasks);
-                 this.saveBotImage();
-                 let auditLogsList = [
-                   ...this.auditLogs.map((item) => {
-                     item["versionNew"] = response.versionNew;
-                     item["comments"] = response.comments;
-                     return item;
-                   }),
-                 ];
-                 let firstName = localStorage.getItem("firstName");
-                 let lastName = localStorage.getItem("lastName");
-                 if (
-                   parseFloat(previousBotDetails.versionNew).toFixed(1) <
-                   parseFloat(response.versionNew).toFixed(1)
-                 )
-                   auditLogsList.push({
-                     botId: response.botId,
-                     botName: "SortingBot|UpdatedVersion",
-                     changeActivity: "Updated Version",
-                     changedBy: `${firstName} ${lastName}`,
-                     comments: response.comments,
-                     newValue: response.versionNew,
-                     previousValue: previousBotDetails.versionNew,
-                     taskName: "Version Upgrade",
-                     version: 1,
-                     versionNew: response.versionNew,
-                   });
-                 this.rest.addAuditLogs(auditLogsList).subscribe(
-                   (response: any) => {
-                     if (response.errorMessage == undefined) {
-                       this.notifier.notify(
-                         "success",
-                         "Audit logs updated successfully"
-                       );
-                       this.getData();
-                       // window.location.reload();
+      this.saveBotdata = {
+        versionType: version_type,
+        comments: comments,
+        version: this.finalbot.version,
+        botId: this.finalbot.botId,
+        botName: this.finalbot.botName,
+        botType: this.finalbot.botType,
+        description: this.finalbot.botDescription,
+        department: this.finalbot.botDepartment,
+        botMainSchedulerEntity: null,
+        envIds: env,
+        isPredefined: this.finalbot.predefinedBot,
+        tasks: this.final_tasks,
+        createdBy: "admin",
+        groups: this.getGroupsInfo(),
+        lastSubmittedBy: "admin",
+        scheduler: null,
+        svg: this.svg,
+        sequences: this.getsequences(),
+        isBotCompiled: this.isBotCompiled,
+        executionMode: this.executionMode?"v1":"v2",
+      };
+      if (this.checkorderflag == false) {
+        this.spinner.hide();
+        // Swal.fire("Warning", "Please check connections", "warning");
+        this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections.'})
 
-                     } else {
-                       Swal.fire("Error", response.errorMessage, "error");
-                     }
-                   },
-                   (err) => {
-                     Swal.fire("Error", "Unable to update audit logs", "error");
-                   }
-                 );
-               } else {
-                 this.spinner.hide();
-                 Swal.fire("Error", response.errorMesssage, "error");
-               }
-             },
-             (err) => {
-               this.spinner.hide();
-               Swal.fire("Error", "Unable to update bot", "error");
-             }
-           );
-           //return false;
-         }
-     },
-     key: "positionDialog"
-   });
-   } else {
-     let env = [
-       ...this.filteredEnvironments
-         .filter((item: any) => item.check == true)
-         .map((item2: any) => {
-           return item2.environmentId;
-         }),
-     ];
-     this.spinner.show();
-     this.checkorderflag = true;
-     this.addsquences();
-     if(this.executionMode){
-       this.arrange_task_order(this.startNodeId);
-     }
-     else
-     {
-       this.final_tasks=this.finaldataobjects;
-     }
-     this.get_coordinates();
-     await this.getsvg();
-     this.rpaAuditLogs(env);
-     await this.validateBotNodes();
-     if(this.executionMode)
-     {
-       
-       let finalTasksData=[...this.final_tasks];
-       finalTasksData.forEach((item, finalIndex)=>{
-         if(this.actualTaskValue.length != 0 && item.validated==undefined)
-         {    
-           if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
-           {
-             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
-             if(actualTasks.length!=0)
-             {
-               let indexList:any=[];
-               this.final_tasks.forEach((tempTask, index)=>{
-                 if(tempTask.nodeId==item.nodeId)
-                   indexList.push(index);
-               });
-               indexList.forEach((indexItem, indexmeta)=>{
-                   if(finalTasksData[indexItem] && actualTasks[indexmeta])
-                   {
-                   let task={...{},...finalTasksData[indexItem]}
-                   task.botTId=actualTasks[indexmeta].botTId;
-                   let actualTaskAttributes=[...actualTasks[indexmeta].attributes];
-                   let attributes=[...task.attributes]
-                   actualTaskAttributes.forEach((item:any)=>{
-                     let attrIndex=attributes.findIndex((attrItem:any)=>attrItem.metaAttrId==item.metaAttrId);
-                     let attribute={...{},...attributes[attrIndex]};
-                     if(attribute !=undefined)
-                     {                      
-                       attribute.attrId=item.attrId;
-                       attribute.botTaskId=item.botTaskId;
-                       attributes[attrIndex]=attribute;
-                     }
-                   })
-                   task["attributes"]=[...attributes]
-                   task["validated"]=true;
-                   this.final_tasks[indexItem]=task;
-                 }
-               })
-             }
-           }
-         
-         }
-       })
-     }
- 
-       this.saveBotdata = {
-         versionType: version_type,
-         comments: comments,
-         version: this.finalbot.version,
-         botId: this.finalbot.botId,
-         botName: this.finalbot.botName,
-         botType: this.finalbot.botType,
-         description: this.finalbot.botDescription,
-         department: this.finalbot.botDepartment,
-         botMainSchedulerEntity: null,
-         envIds: env,
-         isPredefined: this.finalbot.predefinedBot,
-         tasks: this.final_tasks,
-         createdBy: "admin",
-         groups: this.getGroupsInfo(),
-         lastSubmittedBy: "admin",
-         scheduler: null,
-         svg: "",
-         sequences: this.getsequences(),
-         isBotCompiled: this.isBotCompiled,
-         executionMode: this.executionMode?"v1":"v2",
-       };
-       if (this.checkorderflag == false) {
-         this.spinner.hide();
-         Swal.fire("Warning", "Please check connections", "warning");
-       } else {
-         let previousBotDetails: any = { ...{}, ...this.finalbot };
-         this.assignTaskConfiguration();
-         (await this.rest.updateBot(this.saveBotdata)).subscribe(
-           (response: any) => {
-             this.spinner.hide();
-             if (response.errorMessage == undefined) {
-               this.isBotUpdated = false;
-               // this.finalbot=response;
-               // this.actualTaskValue=[...response.tasks];
-               this.finalbot = { ...{}, ...response };
-               this.actualTaskValue = [
-                 ...response.tasks.filter(
-                   (item) => (item.version == response.version)
-                 ),
-               ];
-               this.finaldataobjects = [
-                 ...response.tasks.filter(
-                   (item) => (item.version == response.version)
-                 ),
-               ];
-               this.actualEnv = [...response.envIds];
-               Swal.fire("Success", "Bot updated successfully", "success");
-               this.uploadfile(response.envIds, response.tasks);
-               this.saveBotImage();
-               let auditLogsList = [
-                 ...this.auditLogs.map((item) => {
-                   item["versionNew"] = response.versionNew;
-                   item["comments"] = response.comments;
-                   return item;
-                 }),
-               ];
-               let firstName = localStorage.getItem("firstName");
-               let lastName = localStorage.getItem("lastName");
-               if (
-                 parseFloat(previousBotDetails.versionNew).toFixed(1) <
-                 parseFloat(response.versionNew).toFixed(1)
-               )
-                 auditLogsList.push({
-                   botId: response.botId,
-                   botName: "SortingBot|UpdatedVersion",
-                   changeActivity: "Updated Version",
-                   changedBy: `${firstName} ${lastName}`,
-                   comments: response.comments,
-                   newValue: response.versionNew,
-                   previousValue: previousBotDetails.versionNew,
-                   taskName: "Version Upgrade",
-                   version: 1,
-                   versionNew: response.versionNew,
-                 });
-               this.rest.addAuditLogs(auditLogsList).subscribe(
-                 (response: any) => {
-                   if (response.errorMessage == undefined) {
-                     this.notifier.notify(
-                       "success",
-                       "Audit logs updated successfully"
-                     );
-                     this.getData();
-                   } else {
-                     Swal.fire("Error", response.errorMessage, "error");
-                   }
-                 },
-                 (err) => {
-                   Swal.fire("Error", "Unable to update audit logs", "error");
-                 }
-               );
-             } else {
-               this.spinner.hide();
-               Swal.fire("Error", response.errorMesssage, "error");
-             }
-           },
-           (err) => {
-             this.spinner.hide();
-             Swal.fire("Error", "Unable to update bot", "error");
-           }
-         );
-         //return false;
-       }
-   }
- }
+      } else {
+        let previousBotDetails: any = { ...{}, ...this.finalbot };
+        this.assignTaskConfiguration();
+        (await this.rest.updateBot(this.saveBotdata)).subscribe(
+          (response: any) => {
+            this.spinner.hide();
+            if (response.errorMessage == undefined) {
+              this.isBotUpdated = false;
+              // this.finalbot=response;
+              // this.actualTaskValue=[...response.tasks];
+              this.finalbot = { ...{}, ...response };
+              this.actualTaskValue = [
+                ...response.tasks.filter(
+                  (item) => (item.version == response.version)
+                ),
+              ];
+              this.finaldataobjects = [
+                ...response.tasks.filter(
+                  (item) => (item.version == response.version)
+                ),
+              ];
+              this.actualEnv = [...response.envIds];
+              // Swal.fire("Success", "Bot updated successfully", "success");
+              this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
 
+              this.uploadfile(response.envIds, response.tasks);
+              let auditLogsList = [
+                ...this.auditLogs.map((item) => {
+                  item["versionNew"] = response.versionNew;
+                  item["comments"] = response.comments;
+                  return item;
+                }),
+              ];
+              let firstName = localStorage.getItem("firstName");
+              let lastName = localStorage.getItem("lastName");
+              if (
+                parseFloat(previousBotDetails.versionNew).toFixed(1) <
+                parseFloat(response.versionNew).toFixed(1)
+              )
+                auditLogsList.push({
+                  botId: response.botId,
+                  botName: "SortingBot|UpdatedVersion",
+                  changeActivity: "Updated Version",
+                  changedBy: `${firstName} ${lastName}`,
+                  comments: response.comments,
+                  newValue: response.versionNew,
+                  previousValue: previousBotDetails.versionNew,
+                  taskName: "Version Upgrade",
+                  version: 1,
+                  versionNew: response.versionNew,
+                });
+              this.rest.addAuditLogs(auditLogsList).subscribe(
+                (response: any) => {
+                  if (response.errorMessage == undefined) {
+                    this.notifier.notify(
+                      "success",
+                      "Audit logs updated successfully!"
+                    );
+                  } else {
+                    // Swal.fire("Error", response.errorMessage, "error");
+                    this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+                  }
+                },
+                (err) => {
+                  // Swal.fire("Error", "Unable to update audit logs", "error");
+                  this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update the audit logs.'})
 
-  saveBotImage(){
-  this.getsvg();
-    let data = {
-      "botImage" : this.svg
-     }
-     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
-        console.log(res);
-     })
+                }
+              );
+            } else {
+              this.spinner.hide();
+              // Swal.fire("Error", response.errorMesssage, "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMesssage})
+            }
+          },
+          (err) => {
+            this.spinner.hide();
+            // Swal.fire("Error", "Unable to update bot.", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
+
+          }
+        );
+        //return false;
+      }
   }
 
 
@@ -2290,12 +2136,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (data.error) {
       this.disable = false;
       let type = "info";
-      let message = "Failed to Save Data";
+      let message = "Failed to save the data.";
       this.notifier.notify(type, message);
     } else {
       let type = "info";
       this.disable = true;
-      let message = "Data is Saved Successfully";
+      let message = "Data is saved successfully!";
       this.notifier.notify(type, message);
     }
   }
@@ -2314,11 +2160,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   exectionVal(data) {
     if (data.error) {
       let type = "info";
-      let message = "Failed to execute";
+      let message = "Failed to execute.";
       this.notifier.notify(type, message);
     } else {
       let type = "info";
-      let message = "Bot is executed Successfully";
+      let message = "Bot is executed successfully!";
       this.notifier.notify(type, message);
     }
   }
@@ -2430,9 +2276,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      Swal.fire("Designer Disabled Now", "", "warning");
+      // Swal.fire("Designer Disabled Now", "", "warning");
+      this.messageService.add({severity:'warn',summary:'Warning',detail:'Designer is disabled now!'})
+
     } else {
-      Swal.fire("Designer Enabled Now", "", "success");
+      // Swal.fire("Designer Enabled Now", "", "success");
+      this.messageService.add({severity:'Success',summary:'Success',detail:'Designer is enabled now!'})
+
     }
   }
 
@@ -2801,13 +2651,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.rest.save_credentials(Credentials).subscribe((res) => {
         let status: any = res;
         this.spinner.hide();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: status.status,
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        // Swal.fire({
+        //   position: "center",
+        //   icon: "success",
+        //   title: status.status,
+        //   showConfirmButton: false,
+        //   timer: 2000,
+        // });
+        this.messageService.add({severity:'success',summary:'Success',detail:status.status})
         this.getTaskForm(this.nodedata);
         // this.modalRef.hide();
         document.getElementById("createcredentials").style.display = "none";
@@ -2933,81 +2784,37 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   async executeBot() {
     if (this.checkorderflag == false) {
       this.spinner.hide();
-      Swal.fire("Warning", "Please check connections", "warning");
+      // Swal.fire("Warning", "Please check the connections.", "warning");
+      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please check the connections.'})
       return;
     }
-    if(this.isDeprecated == true){
-      // console.log(this.isDeprecated,"this.isDeprecated")
-      // Swal.fire("Warning", "Deprecated action in the  Bot, update action and run", "warning");
-      // return;
-      this.confirmationService.confirm({
-        message: "Deprecated task present in the bot, Do you want to execute with default values?",
-        header: 'Are you Sure?',
-       
-        accept: () => {
-          if(this.isBotCompiled) {
-            this.spinner.show();
-            this.rest.execution(this.finalbot.botId).subscribe(
-              (response: any) => {
-                this.spinner.hide();
-                if (response.errorMessage == undefined) {
-                  Swal.fire("Success", response.status, "success");
-                  this.getData();
-                } else {
-                  Swal.fire("Error", response.errorMessage, "error");
-                } 
-              },
-              (err) => {
-                this.spinner.hide();
-                Swal.fire("Error", "Unable to execute bot", "error");
-              }
-            );
-          } else {
-            Swal.fire("Error", "Unable to execute bot", "error");
-          }
-          this.getData();
-        },
-        reject: (type) => {
+    if(this.isBotCompiled) {
+      this.spinner.show();
+      this.rest.execution(this.finalbot.botId).subscribe(
+        (response: any) => {
           this.spinner.hide();
+          if (response.errorMessage == undefined)
+            // Swal.fire("Success", response.status, "success");
+      this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+
+          else
+          //  Swal.fire("Error", response.errorMessage, "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
         },
-        key: "positionDialog"
-      });
-    } else {
-      if(this.isBotCompiled) {
-        this.spinner.show();
-        this.rest.execution(this.finalbot.botId).subscribe(
-          (response: any) => {
-            this.spinner.hide();
-            if (response.errorMessage == undefined){
-              Swal.fire("Success", response.status, "success");
-              this.getData();
-            } else {
-              Swal.fire("Error", response.errorMessage, "error");
-            } 
-          },
-          (err) => {
-            this.spinner.hide();
-            Swal.fire("Error", "Unable to execute bot", "error");
-          }
-        );
-      } else {
-        Swal.fire("Error", "Unable to execute bot", "error");
-      }
-      this.getData();
-    }
+        (err) => {
+          this.spinner.hide();
+          // Swal.fire("Error", "Unable to execute bot", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
 
-  }
 
-  getData(){
-    this.rest.getbotdata(this.idBot).subscribe((response: any) => {
-        for(let i = 0; i < response.tasks.length; i++){
-            this.isDeprecated = response.tasks[i].isModified
-            if(this.isDeprecated){
-              this.taskNames = response.tasks[i].taskName
-              this.modifiedTaskNames.push(this.taskNames);
-            }
         }
-    });
+      );
+    } else {
+      // Swal.fire("Error", "Unable to execute bot", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+
+    }
   }
 
   getAllVersions() {
@@ -3019,11 +2826,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           );
           this.VersionsList = [...sortedversions.reverse()];
         } else {
-          Swal.fire("Error", response.errorMessage, "error");
+          // Swal.fire("Error", response.errorMessage, "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
         }
       },
       (err) => {
-        Swal.fire("Error", "Unable to get versions", "error");
+        // Swal.fire("Error", "Unable to get versions", "error");
+      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get versions.'});
+
       }
     );
   }
@@ -3060,37 +2871,54 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deleteBot() {
-    Swal.fire({
-      title: "Are you Sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton: 'btn new-cancelbtn',
-        },
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Are you Sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton: 'btn new-cancelbtn',
+    //     },
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(
+    this.confirmationService.confirm({
+      header: 'Are you sure?',
+      message: "Do you want to delete this bot? This can't be undone.",
+      acceptLabel:'Yes',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      key: "designerWorkspace",
+      accept:() => {
+      
         this.spinner.show();
         this.rest.getDeleteBot(this.finalbot.botId).subscribe(
           (data) => {
             let response: any = data;
             this.spinner.hide();
             if (response.status != undefined) {
-              Swal.fire("Success", response.status, "success");
+              // Swal.fire("Success", response.status, "success");
+              this.messageService.add({severity:'success',summary:'Success',detail:response.status})
               $("#close_bot_" + this.finalbot.botName).click();
             } else {
-              Swal.fire("Error", response.errorMessage, "error");
+              // Swal.fire("Error", response.errorMessage, "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+
             }
           },
           (err) => {
             this.spinner.hide();
-            Swal.fire("Error", "Unable to delete bot", "error");
+            // Swal.fire("Error", "Unable to delete bot", "error");
+            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the bot.'})
+
           }
         );
       }
-    });
+  })
   }
 
   loadPredefinedBot(botId, dropCoordinates) {
@@ -3136,7 +2964,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.addconnections(response.sequences);
         this.spinner.hide();
       } else {
-        Swal.fire("Error", response.errorMessage, "error");
+        // Swal.fire("Error", response.errorMessage, "error");
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
       }
     });
   }

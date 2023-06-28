@@ -296,7 +296,7 @@ export class SoProcesslogComponent implements OnInit {
         }      
       },err=>{
         this.loadLogsFlag=false;
-        Swal.fire("Error","Unable to open loop logs","error");
+        Swal.fire("Error","Unable to open the loop logs.","error");
       })
     }
 

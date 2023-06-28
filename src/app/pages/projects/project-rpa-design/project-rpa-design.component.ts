@@ -152,7 +152,7 @@ export class ProjectRpaDesignComponent implements OnInit {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Created Successfully !!",
+          text: "Created successfully!",
           heightAuto: false,
         }).then((result) => {
           this.getRPAdesignData();
@@ -185,7 +185,7 @@ export class ProjectRpaDesignComponent implements OnInit {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Updated Successfully !!",
+          text: "Updated successfully!",
           heightAuto: false,
         }).then((result) => {
           this.getRPAdesignData();
