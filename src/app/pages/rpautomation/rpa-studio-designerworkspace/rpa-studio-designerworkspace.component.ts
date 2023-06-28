@@ -338,6 +338,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               defaultFocus: 'none',
               acceptIcon: 'null',
               rejectIcon: 'null',
+              key: "trueFalse",
             accept:() => {
                 connection.addOverlay([
                   "Label",
@@ -404,8 +405,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           }
           })
         }
-
-
       //v2 if
       if (
         node_object.taskName == "If" &&
@@ -424,68 +423,81 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         //   confirmButtonText: "True",
         // }).then(
         this.confirmationService.confirm({
-          header: 'Select True/False case.',
+          message: "Select True/False case.",
+          header: "Confirmation",
           acceptLabel:'True',
           rejectLabel:'False',
           acceptButtonStyleClass: 'btn bluebg-button',
           defaultFocus: 'none',
           acceptIcon: 'null',
+          rejectIcon: 'null',
+          key: "trueFalse",
           accept: () => {
-            connection.addOverlay([
-              "Label",
-              {
-                label: "<span class='bg-white text-success'>True<span>",
-                location: 0.8,
-                cssClass: "aLabel",
-                id: "iflabel" + connection.id,
-              },
-            ]);
-
-            let connected_node: any = this.nodes.find(
-              (develop) => develop.id == connection.targetId
-            );
-            // let connected_node_id: any =
-            //   connected_node.name + "__" + connected_node.id;
-            let source_node_id = node_object.nodeId;
-            if (
-              this.finaldataobjects.find(
-                (tasks) => tasks.nodeId == source_node_id
-              ) != undefined
-            ) {
-              this.finaldataobjects
-                .find((tasks) => tasks.nodeId == source_node_id)
-                .attributes.find(
-                  (attrs) => attrs.metaAttrValue == "true"
-                ).attrValue = connected_node.id;
-          } else {
-            connection.addOverlay([
-              "Label",
-              {
-                label: "<span class='bg-white text-danger'>False<span>",
-                location: 0.8,
-                cssClass: "aLabel",
-                id: "iflabel" + connection.id,
-              },
-            ]);
-            let connected_node: any = this.nodes.find(
-              (develop) => develop.id == connection.targetId
-            );
-            // let connected_node_id: any =
-            //   connected_node.name + "__" + connected_node.id;
-            if (
-              this.finaldataobjects.find(
-                (tasks) => tasks.nodeId == node_object.nodeId
-              ) != undefined
-            ) {
-              this.finaldataobjects
-                .find((tasks) => tasks.nodeId == node_object.nodeId)
-                .attributes.find(
-                  (attrs) => attrs.metaAttrValue == "false"
-                ).attrValue = connected_node.id;
-            }
-          }
+          connection.addOverlay([
+                "Label",
+                {
+                  label: "<span class='bg-white text-success'>True<span>",
+                  location: 0.8,
+                  cssClass: "aLabel",
+                  id: "iflabel" + connection.id,
+                },
+              ]);
+  
+              let connected_node: any = this.nodes.find(
+                (develop) => develop.id == connection.targetId
+              );
+              // let connected_node_id: any =
+              //   connected_node.name + "__" + connected_node.id;
+              let source_node_id = node_object.nodeId;
+              if (
+                this.finaldataobjects.find(
+                  (tasks) => tasks.nodeId == source_node_id
+                ) != undefined
+              ) {
+                this.finaldataobjects
+                  .find((tasks) => tasks.nodeId == source_node_id)
+                  .attributes.find(
+                    (attrs) => attrs.metaAttrValue == "true"
+                  ).attrValue = connected_node.id;
+              }
+            
+        },
+        reject: (type) => {
+          switch(type) {
+            case ConfirmEventType.REJECT:
+                connection.addOverlay([
+                  "Label",
+                  {
+                    label: "<span class='bg-white text-danger'>False<span>",
+                    location: 0.8,
+                    cssClass: "aLabel",
+                    id: "iflabel" + connection.id,
+                  },
+                ]);
+                let connected_node: any = this.nodes.find(
+                  (develop) => develop.id == connection.targetId
+                );
+                // let connected_node_id: any =
+                //   connected_node.name + "__" + connected_node.id;
+                if (
+                  this.finaldataobjects.find(
+                    (tasks) => tasks.nodeId == node_object.nodeId
+                  ) != undefined
+                ) {
+                  this.finaldataobjects
+                    .find((tasks) => tasks.nodeId == node_object.nodeId)
+                    .attributes.find(
+                      (attrs) => attrs.metaAttrValue == "false"
+                    ).attrValue = connected_node.id;
+                }
+            break;
+            case ConfirmEventType.CANCEL:
+                
+            break;
         }
-      })
+
+        }
+      });
       }   
       } else {
         let connectionNodeForSource = this.nodes.find(
@@ -1001,6 +1013,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         defaultFocus: 'none',
         rejectIcon: 'null',
         acceptIcon: 'null',
+        key: "designerWorkspace",
       accept:() => {
         this.nodes.splice(this.nodes.indexOf(node), 1);
         this.jsPlumbInstance.remove(node.id);
@@ -1763,6 +1776,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         defaultFocus: 'none',
         rejectIcon: 'null',
         acceptIcon: 'null',
+        key: "designerWorkspace",
        accept:(result: any) => {
       if (result.value) {
         this.jsPlumbInstance.deleteEveryEndpoint();
@@ -1968,16 +1982,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               ];
               this.actualEnv = [...response.envIds];
               // Swal.fire("Success", "Bot updated successfully", "success");
-              // this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated Successfully"'})
-              this.confirmationService.confirm({
-           
-                message:'Bot updated successfully!',
-                acceptLabel:'Ok',
-                rejectVisible:false,
-                acceptButtonStyleClass: 'btn bluebg-button',
-                defaultFocus: 'none',
-                acceptIcon: 'null',
-              })
+              this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
+
               this.uploadfile(response.envIds, response.tasks);
               let auditLogsList = [
                 ...this.auditLogs.map((item) => {
@@ -2886,6 +2892,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
+      key: "designerWorkspace",
       accept:() => {
       
         this.spinner.show();
