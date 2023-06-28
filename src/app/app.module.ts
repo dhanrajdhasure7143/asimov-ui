@@ -20,12 +20,12 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { UserIdleModule } from 'angular-user-idle';
 import { RedirectionComponent } from './rediraction/redirection.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ToastrModule } from 'ngx-toastr';
 import { TitleCasePipe } from '@angular/common';
 import { MentionModule } from 'angular-mentions';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SharedModule } from './shared/shared.module';
+import { ToastModule } from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -69,11 +69,10 @@ import { SharedModule } from './shared/shared.module';
     BackButtonDisableModule.forRoot(),
     UserIdleModule.forRoot({idle: 7200, timeout: 1, ping: 1740}),
     NgxSpinnerModule,
-    ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
-      positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
     MentionModule,
     MatToolbarModule,
-    SharedModule
+    SharedModule,
+    ToastModule
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
