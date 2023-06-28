@@ -31,11 +31,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DataTablesModule } from 'angular-datatables';
-import { Ng5SliderModule } from 'ng5-slider';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { OrderByPipe } from './pipes/orderby-pipe.pipe';
@@ -59,7 +55,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatDialogModule,
     MatInputModule,
     MatTabsModule,
-    DataTablesModule,ReactiveFormsModule,FormsModule,MatSliderModule,
+    ReactiveFormsModule,FormsModule,MatSliderModule,
     MatFormFieldModule,NgxPaginationModule,
     ModalModule.forRoot(),
     NgbModule,NgxSpinnerModule,
