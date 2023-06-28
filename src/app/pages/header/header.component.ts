@@ -70,6 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ismyAccount : boolean = false;
   isClose : boolean;
   isPassword : boolean;
+  isChatOpen:boolean=false;
 
   constructor(
     private router: Router,
@@ -398,9 +399,15 @@ onChangeTenant(event:any){
 closeFormOverlay() {
   this.ismyAccount = this.isClose;
   this.isPassword = this.isClose;
+  this.isChatOpen = this.isClose;
 }
 display(event){
   this.isClose = event
   this.closeFormOverlay();
 }
+
+chatClick(){
+  this.isChatOpen = true;
+}
+
 }
