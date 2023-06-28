@@ -37,7 +37,7 @@ export class CreateDepartmentComponent implements OnInit {
       if(resp.message === "Successfully created the category"){
         Swal.fire({
           title: 'Success',
-          text: "Department Created Successfully !!",
+          text: "Department created successfully!",
           position: 'center',
           icon: 'success',
           showCancelButton: false,
@@ -55,7 +55,7 @@ export class CreateDepartmentComponent implements OnInit {
       })
       }
       else if(resp.message==="Category already exists"){
-        Swal.fire("Error","Department already exists","error");
+        Swal.fire("Error","Department already exists.","error");
       } else {
         Swal.fire("Error",resp.message,"error");
       }

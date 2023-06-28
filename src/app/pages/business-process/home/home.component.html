@@ -52,7 +52,7 @@
                                         <input type="text" pInputText placeholder="Search" [(ngModel)]="searchValue" class="p-inputtext-lg"
                                             (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                     </span>
-                                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                    <button pButton label="Clear" class="p-button-outlined" 
                                         (click)="clear(dt1)">
                                     </button>
                                     
@@ -61,7 +61,7 @@
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th style="flex:0.2 1 0;" class="arrowcol"></th>
+                                <th style="flex:0.1 1 0;" class="arrowcol"></th>
                                 <th *ngFor="let col of columns" [pSortableColumn]="col.ColumnName" pReorderableColumn pResizableColumn [style]="col.width">
                                     {{col.DisplayName}}
                                     <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'date'"
@@ -97,7 +97,7 @@
                         <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"
                             let-i="rowIndex">
                             <tr>
-                                <td style="flex:0.2 1 0;">
+                                <td style="flex:0.1 1 0;">
                                     <a href="#" [pRowToggler]="rowData" (click)=getSelectedNotation(rowData,i,expanded)>
                                         <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                     </a>
@@ -306,3 +306,7 @@
         </div>
     </div>
 </div>
+
+<p-toast  [style]="{marginTop: '50px'}" key="toast2" ></p-toast>
+
+<p-confirmDialog  [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" [closable]="false" key="confirm2"></p-confirmDialog>

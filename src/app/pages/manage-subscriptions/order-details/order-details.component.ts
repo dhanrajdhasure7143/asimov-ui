@@ -100,7 +100,7 @@ export class OrderDetailsComponent implements OnInit {
            this.spinner.hide();
       Swal.fire({
         title: 'Success',
-        text: "Subscription cancelled successfully !!",
+        text: "Subscription cancelled successfully!",
         position: 'center',
         icon: 'success',
         showCancelButton: false,
@@ -120,10 +120,10 @@ export class OrderDetailsComponent implements OnInit {
     });
     }
     else if(data.message=='Cancellation Abrupted!!'){
-      //Swal.fire("Warning","Subscription cancelled in progress!","success");
+      //Swal.fire("Warning","Subscription cancellation is in progress!","success");
       Swal.fire({
         title: 'Warning',
-        text: "Subscription cancelled in progress!",
+        text: "Subscription cancellation is in progress!",
         position: 'center',
         icon: 'warning',
         showCancelButton: false,

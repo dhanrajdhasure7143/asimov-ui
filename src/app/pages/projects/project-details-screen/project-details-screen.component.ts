@@ -7,13 +7,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
-import {MenuItem} from 'primeng/api';
+import { MenuItem , MessageService, ConfirmationService} from 'primeng/api';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
-import {MessageService} from 'primeng/api';
-import { ConfirmationService } from 'primeng/api';
 import { columnList } from 'src/app/shared/model/table_columns';
 
 @Component({
@@ -226,6 +224,9 @@ columns_list_activities:any[]=[];
 uploaded_file:any[]=[];
 loggedInUserId:any;
 users_List1:any[]=[];
+allFiles:any[]=[];
+documentList=[];
+
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -386,12 +387,22 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
     link.download = this.projectDetails.projectName;
     link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
     link.click();
-    Swal.fire("Success", response.message, "success");
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: response.message
+    })
+    // Swal.fire("Success", response.message, "success");
     this.spinner.hide();
   }
   else {
     this.spinner.hide();
-    Swal.fire("Error", response.errorMessage, "error");
+    this.messageService.add({
+      severity: "error",
+      summary: "Error",
+      detail: response.errorMessage
+    })
+    // Swal.fire("Error", response.errorMessage, "error");
   }
 })
 }
@@ -511,7 +522,12 @@ if (process != undefined) {
     this.processownername='';
     this.processOwnerFlag = true;
     //this.createprogram.get("processOwner").setValue("")
-    Swal.fire("Error", "Unable to find process owner for selected process", "error")
+    this.messageService.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Unable to find the process owner for the selected process."
+    })
+    // Swal.fire("Error", "Unable to find process owner for selected process", "error")
   }
 }
 }
@@ -535,7 +551,7 @@ this.dt.tenantBased_UsersList.subscribe(response => {
   // this.connectToWebSocket();
     this.getMessagesList();
   this.getAllCategories();
-  this.getTheListOfFolders();
+  // this.getTheListOfFolders();
   this.getRoles();
   this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
   this.users_list.forEach((element) => {
@@ -612,7 +628,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.spinner.hide();
   }
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource"});
+  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource."});
   this.spinner.hide();
 })
 }
@@ -641,13 +657,19 @@ const selectedresource = [
 ]
 
 this.confirmationService.confirm({
-  message: "Do you really want to delete this user? This process cannot be undone.",
-  header: 'Are you Sure?',
-  
+  message: "Do you want to delete this user? This can't be undone.",
+  header: 'Are you sure?',
+  rejectLabel: "No",
+  acceptLabel: "Yes",
+  rejectButtonStyleClass: 'btn reset-btn',
+  acceptButtonStyleClass: 'btn bluebg-button',
+  defaultFocus: 'none',
+  rejectIcon: 'null',
+  acceptIcon: 'null',
   accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource Deleted Successfully !'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource deleted successfully!'});
     this.getTheExistingUsersList(1);
     // setTimeout(() => {
     //   this.onUsersTab(1);
@@ -656,13 +678,12 @@ this.confirmationService.confirm({
       this.snapShotDetails();
       this.spinner.hide();
     }, err => {
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong!'});
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Oops! Something went wrong.'});
       this.spinner.hide();
     })
   },
   reject: (type) => {
-  },
-  key: "positionDialog"
+  }
 });
 }
 
@@ -731,13 +752,13 @@ this.rest_api.update_project(this.projectDetails).subscribe(res => {
   // this.spinner.hide();
   let response: any = res;
   if (response.errorMessage == undefined)
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project Updated Successfully !'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project updated successfully!'});
   else
   this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
   this.getProjectdetails()
   // this.editdata = false;
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Project Update failed"});
+  this.messageService.add({severity:'error', summary: 'Error', detail: "Project update failed!"});
 });
 }
 
@@ -998,14 +1019,19 @@ pinMessage(item){
   if(this._pinnedMessage.length>0){
   this.confirmationService.confirm({
     message: 'Want to replace the currently pinned message with this one?',
-    header: 'Are you Sure?',
-   
+    header: 'Are you sure?',
+    rejectLabel: "No",
+    acceptLabel: "Yes",
+    rejectButtonStyleClass: 'btn reset-btn',
+    acceptButtonStyleClass: 'btn bluebg-button',
+    defaultFocus: 'none',
+    rejectIcon: 'null',
+    acceptIcon: 'null',
     accept: () => {
       this.sendMessage(item,'pinned')
     },
     reject: (type) => {
-    },
-    key: "positionDialog"
+    }
 });
 }else{
   this.sendMessage(item,'pinned')
@@ -1096,14 +1122,16 @@ navigateToCreateDocument(){
 let objectKey;
 let key;
 if(this.selected_folder.dataType != 'folder'){
-  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
   return
 }
 // if(this.selected_folder.parent == undefined){
 //   key= String(this.files.length+1)
 // }else{
-  objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
-  key= this.selected_folder.key + "-" + objectKey
+  let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
+  key= this.selected_folder.key + "-" + this.getTheFileKey(selected_folder);
+  // objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+  // key= this.selected_folder.key + "-" + objectKey
 // }
 let req_body = {
   key: key,
@@ -1225,16 +1253,20 @@ this.isFile_upload_dialog = false;
 
 createFolder(){
   if(this.selected_folder.dataType != 'folder'){
-    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
     return
   }
-this.isDialog = true;
-this.isFile_upload_dialog=false;
+  this.allFiles =[...this.convertToTree(this.documentList)];
+  // console.log(this.allFiles)
+  // console.log("selected_folder",this.selected_folder);
+  this.isDialog = true;
+  this.isFile_upload_dialog = false;
 }
 
 onCreateFolderDoc(type){
 this.isFile_upload_dialog = true;
 type=='folder'?this.selectedType="createFolder":this.selectedType="document"
+this.getTheListOfFolders();
 }
 
 getTheListOfFolders(){
@@ -1242,13 +1274,30 @@ let res_data:any=[];
 this.files=[];
 this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
     res_data=res
+    let onlyFolders=[];
     res_data.map(data=> {
       if(data.dataType=='folder'){
         data["children"]=[]
+        onlyFolders.push(data);
       }
       return data
-    })
+    });
+    this.documentList = [...res_data]
+  this.files =[...this.convertToTree(onlyFolders)];
+  // this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+  this.allFiles =[...this.convertToTree(this.documentList)];
+  this.allFiles.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+})
+}
 
+convertToTree(res_data:any){
+  res_data.map(data=> {
+    if(data.dataType=='folder'){
+      data["children"]=[];
+    }
+    return data
+  });
+  let files:any =[];
   for (let obj of res_data) {
     let node = {
       key: obj.key,
@@ -1262,15 +1311,30 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
       children:obj.children,
       uploadedDate:obj.uploadedDate
     };
-      if(obj.dataType == 'folder'){
-        node['collapsedIcon']=  "pi pi-folder"
-        node["expandedIcon"]  ="pi pi-folder-open"
+    if(obj.dataType == 'folder'){
+      node['icon'] = "folder.svg"
+    }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'||obj.dataType == 'PNG' || obj.dataType == 'JPG'){
+      node['icon'] = "img-file.svg"
+    }else if(obj.dataType == 'pdf'){
+      node['icon'] = "pdf-file.svg"
+    }else if(obj.dataType == 'txt'){
+      node['icon'] = "txt-file.svg"
+    }else if(obj.dataType == 'mp4'|| obj.dataType == 'gif'){
+      node['icon'] = "video-file.svg"
+    }else if(obj.dataType == 'docx'){
+      node['icon'] = "doc-file.svg"
+    }else if(obj.dataType == 'html'){
+      node['icon'] = "html-file.svg"
+    }else if(obj.dataType == 'csv'||obj.dataType == 'xlsx' ){
+      node['icon'] = "xlsx-file.svg"
+    }else if(obj.dataType == 'ppt'){
+      node['icon'] = "ppt-file.svg"
     }else{
-      node['icon']=  "pi pi-file"
+      node['icon'] = "txt-file.svg"
     }
-    this.nodeMap[obj.key] = node;
+      this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
-      this.files.push(node);
+      files.push(node);
     } else {
       let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
       let parent = this.nodeMap[parentKey];
@@ -1280,23 +1344,22 @@ this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
       }
     }
   }
-  this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-})
+  return files;
 }
 
 saveFolder(){
-  let key
+  let key:any
+  let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
   if(this.selected_folder){
-if(this.selected_folder.dataType != 'folder'){
-  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select Folder'});
-  return
-}
-  let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
-  key= this.selected_folder.key + "-" + objectKey;
+  if(this.selected_folder.dataType != 'folder'){
+    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+    return
+  }
+  // let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
+  key= this.selected_folder.key + "-" + this.getTheFileKey(selected_folder);
 }else{
   key = "1"
 }
-
 
 let req_body = [{
   key: key,
@@ -1308,24 +1371,19 @@ let req_body = [{
   task_id: "",
   projectId: this.project_id
 }];
+
 this.spinner.show();
 // this.isDialog=false;
 this.rest_api.createFolderByProject(req_body).subscribe(res=>{
-  this.getTheListOfFolders();
+  // this.getTheListOfFolders();
   this.spinner.hide();
   this.isDialog=false;
   this.entered_folder_name=''
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder Created Successfully !'});
+  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
 },err=>{
   this.spinner.hide();
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create !"});
+  this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create!"});
 })
-}
-
-truncateValue(replyMessage) {
-  if (replyMessage && replyMessage.length > 21)
-    return replyMessage.substr(0, 20) + "...";
-  return replyMessage;
 }
 
 onFilteredUsers(usernames: string[]) {
@@ -1463,7 +1521,7 @@ selectEnd() {
       this.messageService.add({
         severity: "info",
         summary: "Info",
-        detail: "Please select Folder",
+        detail: "Please select a folder.",
       });
       return;
     }
@@ -1496,11 +1554,11 @@ selectEnd() {
     this.rest_api.uploadfilesByProject(fileData).subscribe(
       (res) => {
         this.spinner.hide();
-        this.getTheListOfFolders()
+        // this.getTheListOfFolders()
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File Uploaded Successfully !",
+          detail: "File uploaded successfully!",
         });
       },
       (err) => {
@@ -1508,7 +1566,7 @@ selectEnd() {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Failed to upload !",
+          detail: "Failed to upload!",
         });
       }
     );
@@ -1521,7 +1579,35 @@ selectEnd() {
       this.roles_list.unshift(obj)
     });
   }
-mouseUp() {}
+  
+  mouseUp() {}
+
+  getTheFileKey(selected_folder:any){
+    let filteredkey = selected_folder.children.length >0 ? selected_folder.children[selected_folder.children.length-1].key.split("-"):"1"
+    return selected_folder.children.length >0?Number(filteredkey[filteredkey.length-1])+1:filteredkey;
+  };
+
+  findNodeByKey(key: string, nodes: any[]) {
+    let node: any = null;
+    for (const n of nodes) {
+      if (n.key === key) {
+        node = n;
+        break;
+      } else if (n.children) {
+        node = this.findNodeByKey(key, n.children);
+        if (node) {
+          break;
+        }
+      }
+    }
+    return node;
+  };
+
+  truncateValue(replyMessage) {
+    if (replyMessage && replyMessage.length > 21)
+      return replyMessage.substr(0, 20) + "...";
+    return replyMessage;
+  };
 
 }
 

@@ -32,12 +32,12 @@ export class PaymentMethodsComponent implements OnInit {
     Swal.fire({
       // title: 'Confirmation',
       // // text: `Updated failed, Please try again.`,
-      // html: '<h4> Do you want to set this card as default?</h4> ',
+      // html: '<h4> Do you want to set this card as the default?</h4> ',
     
       // showCancelButton: true,
       // allowOutsideClick: true,
       title: 'Confirmation',
-      text: "Do you want to Remove this card?",
+      text: "Do you want to remove this card?",
       showCancelButton: true,
       customClass: {
         confirmButton: 'btn bluebg-button',
@@ -63,12 +63,12 @@ export class PaymentMethodsComponent implements OnInit {
       Swal.fire({
         // title: 'Confirmation',
         // // text: `Updated failed, Please try again.`,
-        // html: '<h4> Do you want to set this card as default?</h4> ',
+        // html: '<h4> Do you want to set this card as the default?</h4> ',
       
         // showCancelButton: true,
         // allowOutsideClick: true,
         title: 'Confirmation',
-        text: "Do you want to set this card as default?",
+        text: "Do you want to set this card as the default?",
         showCancelButton: true,
         customClass: {
           confirmButton: 'btn bluebg-button',
@@ -83,7 +83,7 @@ export class PaymentMethodsComponent implements OnInit {
             this.spinner.hide();
             Swal.fire({
               title: 'Success',
-              text: "Default card is set successfully!!",
+              text: "Default card is set successfully!",
               position: 'center',
               icon: 'success',
               showCancelButton: false,
@@ -118,10 +118,10 @@ export class PaymentMethodsComponent implements OnInit {
      
        this.paymentMode = response 
        if(this.paymentMode.message=='Billing account not found'){
-         this.error="Billing Account Not Found"
+         this.error="Billing account not found."
       //   Swal.fire({
       //     title: 'Error',
-      //     text: "Billing Account Not Found",
+      //     text: "Billing account not found.",
       //     position: 'center',
       //     icon: 'error',
       //     showCancelButton: false,

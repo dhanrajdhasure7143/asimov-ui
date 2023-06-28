@@ -2,10 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-import Swal from 'sweetalert2';
 import { inject } from '@angular/core/testing';
 import { APP_CONFIG } from 'src/app/app.config';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import {MessageService ,ConfirmationService} from 'primeng/api'
 
 @Component({
   selector: "app-invite-user",
@@ -27,7 +27,9 @@ export class InviteUserComponent implements OnInit {
     private api: RestApiService,
     private router: Router,
     private loader: LoaderService,
-    @Inject(APP_CONFIG) private config
+    @Inject(APP_CONFIG) private config,
+    private messageService:MessageService,
+    private confirmationService:ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -125,45 +127,59 @@ export class InviteUserComponent implements OnInit {
           res.Message === "White listed domain.. Please proceed with invite"
         ) {
           this.api.inviteUserwithoutReg(body).subscribe((resp) => {
-            if (resp.message === "User invited Successfully !!") {
-              Swal.fire({
-                title: "Success",
-                text: "User Invited Successfully !!",
-                position: "center",
-                icon: "success",
-                showCancelButton: false,
-                customClass: {
-                  confirmButton: 'btn bluebg-button',
-                  cancelButton:  'btn new-cancelbtn',
-                },
-                heightAuto: false,
+            if (resp.message === "User invited successfully!") {
+              // Swal.fire({
+              //   title: "Success",
+              //   text: "User invited successfully!",
+              //   position: "center",
+              //   icon: "success",
+              //   showCancelButton: false,
+              //   customClass: {
+              //     confirmButton: 'btn bluebg-button',
+              //     cancelButton:  'btn new-cancelbtn',
+              //   },
+              //   heightAuto: false,
                
-                confirmButtonText: "Ok",
-              }).then((result) => {
+              //   confirmButtonText: "Ok",
+              // }).then((result) => {
+                this.confirmationService.confirm({
+                  header:'Info',
+                  message:'User invited successfully!',
+                  acceptLabel:'OK',
+                  rejectVisible:false,
+                  acceptButtonStyleClass: 'btn bluebg-button',
+                  defaultFocus: 'none',
+                  acceptIcon: 'null',
+                  accept:()=>{
                 this.resetUserInvite(form);
                 // this.router.navigate(["/pages/admin/user-management"]);
                 this.userManagementUrl();
-              });
-            } else {
-              Swal.fire(
-                "Error",
-                "Failed to invite! Check if user already exists!!",
-                "error"
-              );
+              },
+            })
+            }
+             else {
+              // Swal.fire(
+              //   "Error",
+              //   "Failed to invite! Check if the user already exists!",
+              //   "error"
+              // );
+              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exist.'})
             }
             this.loader.hide();
           });
         } else if (res.errorMessage) {
-          Swal.fire("Error", res.errorMessage, "error");
+          // Swal.fire("Error", res.errorMessage, "error");
+          this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          Swal.fire(
-            "Error",
-            "Failed to invite! Check if user already exists!!",
-            "error"
-          );
+          // Swal.fire(
+          //   "Error",
+          //   "Failed to invite! Check if the user already exists!",
+          //   "error"
+          // );
+          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
         }
       });
   }
