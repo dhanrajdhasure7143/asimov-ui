@@ -12,6 +12,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
 import { NotifierService } from 'angular-notifier';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-new-so-management',
   templateUrl: './new-so-management.component.html',
@@ -24,7 +25,8 @@ export class NewSoManagementComponent implements OnInit {
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
     private notifier: NotifierService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private messageService:MessageService
   ) { }
   public botstatistics: any = 0;
   public select:any;
@@ -123,7 +125,7 @@ export class NewSoManagementComponent implements OnInit {
           }
           else
           {
-            Swal.fire(response.errorMessage,"","warning");
+            this.messageService.add({severity:'warn',summary:'Warning',detail:response.errorMessage});
           }
           //
         }
