@@ -3733,9 +3733,3 @@ background-color: #D8E0EF !important;
 .bold {
   font-weight: bold;
 }
-
-.dochovercheck:hover,
-.dochovercheck.folderselected,
-.doctree tr.folderselected {
-  background: #eeeeee !important;
-}

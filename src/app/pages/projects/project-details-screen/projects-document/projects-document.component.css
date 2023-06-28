@@ -245,7 +245,7 @@ input[type="checkbox"]:checked {
   left: 8px;
 }
 input[type=checkbox]:hover::before {
-  border: 2px solid #616161;
+  border: 1px solid #616161;
   border-top: none;
   border-right: none;
   content: "";
@@ -326,16 +326,20 @@ input[type=checkbox]:checked::after {
   background: #e9ecef !important;
 }
 
-.doctree table tbody tr:hover {
-  background: #eeeeee !important;
-}
-
 .dochovercheck:hover input[type="checkbox"], .doctree table tbody tr:hover input[type="checkbox"] {
   display: block;
 }
 .dochovercheck {
   margin-right: 10px;
   margin-bottom: 10px;
+  border-radius: 4px;
+}
+.dochovercheck:hover, .doctree tr:hover {
+  background: #FAFAFA !important;
+}
+.dochovercheck.folderselected,
+.doctree tr.folderselected {
+  background: #eeeeee !important;
 }
 
 .filname span {
