@@ -644,4 +644,9 @@ export class DynamicDashboardComponent implements OnInit {
       }
     }
   }
+  spaceNotAllow(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+  }
 }
