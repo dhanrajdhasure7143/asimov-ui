@@ -327,5 +327,9 @@ export class RpaDatabaseFormComponent implements OnInit {
     this.resetDBForm();
   document.getElementById('createdbconnection').style.display='none';
 }
-
+spaceNotAllow(event: any) {                    //initially doesn't allow space
+  if (event.target.selectionStart === 0 && event.code === "Space") {
+    event.preventDefault();
+  }
+}
 }
