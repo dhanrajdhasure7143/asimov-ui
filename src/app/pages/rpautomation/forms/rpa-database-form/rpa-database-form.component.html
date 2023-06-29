@@ -11,7 +11,7 @@
                 <label class="label-control" for="connectiontName">Connection Name<span
                         class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="connectiontName"
-                    #connectiontName value="" placeholder="Enter Connection Name">
+                    #connectiontName value="" placeholder="Enter Connection Name" (keydown)="spaceNotAllow($event)">
                 <span
                     *ngIf="(dbForm.get('connectiontName').invalid && dbForm.get('connectiontName').touched) && !dbForm.controls['connectiontName'].hasError('maxlength')"
                     class="required">Connection Name Required</span>
@@ -36,7 +36,7 @@
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="databasename">Database Name<span class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="databasename"
-                    #hostAddress value="" placeholder="Database Name">
+                    #hostAddress value="" placeholder="Database Name" (keydown)="spaceNotAllow($event)">
                 <span
                     *ngIf="(dbForm.get('databasename').invalid && dbForm.get('databasename').touched) && !dbForm.controls['databasename'].hasError('maxlength')"
                     class="required">Database Name Required</span>
@@ -48,13 +48,13 @@
                 <label class="label-control" for="hostAddress">IP Address / Host<span
                         class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress"
-                    #hostAddress value="" placeholder="Enter IP Address / Host">
+                    #hostAddress value="" placeholder="Enter IP Address / Host" (keydown)="spaceNotAllow($event)">
                 <span
                     *ngIf="(dbForm.get('hostAddress').invalid && dbForm.get('hostAddress').touched) && !dbForm.controls['hostAddress'].hasError('maxlength') && !dbForm.controls['hostAddress'].hasError('pattern')"
                     class="required"> IP Address/Host Required</span>
-                <!--<div *ngIf="dbForm.controls['hostAddress'].hasError('maxlength')" class="required">
+                <div *ngIf="dbForm.controls['hostAddress'].hasError('maxlength')" class="required">
                         Maximum of 50 characters
-                    </div>-->
+                </div>
                 <div *ngIf="(dbForm.controls['hostAddress'].hasError('pattern') && !dbForm.controls['hostAddress'].hasError('maxlength')) && dbForm.get('hostAddress').touched"
                     class="required">
                     Invalid IP Address format
@@ -93,7 +93,7 @@
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="username">Username<span class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control" formControlName="username" #username
-                    value="" placeholder="Enter Username">
+                    value="" placeholder="Enter Username" (keydown)="spaceNotAllow($event)">
                 <span
                     *ngIf="(dbForm.get('username').invalid && dbForm.get('username').touched) && !dbForm.controls['username'].hasError('maxlength')"
                     class="required"> Username Required</span>
@@ -105,7 +105,7 @@
                 <label class="label-control" for="password">Password<span *ngIf="!pwdflag"
                         class="star">*</span></label>
                 <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control"
-                    formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                    formControlName="password" value="" placeholder="Enter Password" passwordToggle (keydown)="spaceNotAllow($event)">
                 <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1">
                 </span>
@@ -123,7 +123,7 @@
                 <label class="label-control" for="schemaName">Schema<span *ngIf="!pwdflag"
                         class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="schemaName"
-                    #schemaName value="" placeholder="Enter Schema">
+                    #schemaName value="" placeholder="Enter Schema" (keydown)="spaceNotAllow($event)">
                 <span
                     *ngIf="(dbForm.get('schemaName').invalid && dbForm.get('schemaName').touched) && !dbForm.controls['schemaName'].hasError('maxlength')"
                     class="required"> Schema Required</span>
