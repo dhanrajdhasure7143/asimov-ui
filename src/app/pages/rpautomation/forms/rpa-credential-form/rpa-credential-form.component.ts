@@ -380,7 +380,7 @@ resetCredForm(){
       secretKey:this.credentialForm.get("secretKey").value,
     }
   }
-  Space(event: any) {
+  spaceNotAllow(event: any) {
     if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
     }
