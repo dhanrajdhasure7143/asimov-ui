@@ -44,7 +44,7 @@ export class RpaCredentialFormComponent implements OnInit {
         clientSecret:[""],
         clientId:[""],
         officeTenant:[""],
-        host:[""],
+        host:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         port:[""],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -106,7 +106,7 @@ export class RpaCredentialFormComponent implements OnInit {
         authType:[""],
         clientId:[""],
         officeTenant:[""],
-        host:[""],
+        host:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         port:[""],
         categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -186,7 +186,7 @@ export class RpaCredentialFormComponent implements OnInit {
 resetCredForm(){
   this.credentialForm.reset();
   this.hideLabels = false
-  this.credentialForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+  this.credentialForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'')
   this.credentialForm.get("serverName").setValue("")
   this.passwordtype1=false;
 }
@@ -283,7 +283,7 @@ resetCredForm(){
       }
       if(serverName=="Others")
       {
-        this.credentialForm.get("host").setValidators([Validators.required]);
+        this.credentialForm.get("host").setValidators([Validators.required, Validators.maxLength(50)]);
         this.credentialForm.get("host").updateValueAndValidity();
         this.credentialForm.get("port").setValidators([Validators.required]);
         this.credentialForm.get("port").updateValueAndValidity();
@@ -378,6 +378,11 @@ resetCredForm(){
       clientId:this.credentialForm.get("clientId").value,
       officeTenant:this.credentialForm.get("officeTenant").value,
       secretKey:this.credentialForm.get("secretKey").value,
+    }
+  }
+  spaceNotAllow(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
     }
   }
 }
