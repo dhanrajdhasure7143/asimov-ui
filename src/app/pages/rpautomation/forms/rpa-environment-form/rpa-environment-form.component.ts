@@ -325,4 +325,9 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("portNumber").setValue("22");
     }
   }
+  spaceNotAllow(event: any) {        // Intially doesn't accept space
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+  }
 }
