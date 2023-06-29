@@ -53,7 +53,7 @@
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="hostAddress"> IP Address / Host<span
                             class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" (keydown)="Space($event)"
+                    <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" (keydown)="spaceNotAllow($event)"
                         placeholder="Enter IP Address / Host">
                     <span
                         *ngIf="(environmentForm.get('hostAddress').invalid && environmentForm.get('hostAddress').touched) && !environmentForm.controls['hostAddress'].hasError('maxlength') && !environmentForm.controls['hostAddress'].hasError('pattern')"
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="userName">Username<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control" formControlName="username" value="" (keydown)="Space($event)"
+                    <input type="text" maxlength="51" class="form-control" formControlName="username" value="" (keydown)="spaceNotAllow($event)"
                         placeholder="Enter Username">
                     <span
                         *ngIf="(environmentForm.get('username').invalid && environmentForm.get('username').touched) && !environmentForm.controls['username'].hasError('maxlength')"
@@ -104,7 +104,7 @@
                 </div>
                 <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                     <label class="label-control" for="password">Password<span class="star">*</span></label>
-                    <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" [(ngModel)]="password" (keydown)="Space($event)"
+                    <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" [(ngModel)]="password" (keydown)="spaceNotAllow($event)"
                          placeholder="Enter Password">
                     <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                         <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1">
