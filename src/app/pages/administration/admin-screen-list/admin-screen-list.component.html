@@ -2,7 +2,7 @@
     <div class="row main-content-head">
       <div class="col-md-8 pl-0">
         <h3>     
-        <span class="sub_title_text">
+        <span class="title_text">
             Screen Generation
           </span>
         </h3>
@@ -31,6 +31,7 @@
             [show_clear_filter]="true"
             [show_view_btn]="true"
             (viewItem)="viewDetails($event)" 
+            (onRowDoubleClick)="viewDetails($event)"
           ></app-dynamic-table>
           </div>
      

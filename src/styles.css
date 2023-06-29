@@ -2725,6 +2725,7 @@ tbody tr {
   color: var(--main-txtcolor) !important;
   font-size: 16px;
   margin: 5px 0px 0px;
+  cursor: pointer;
 }
 .p-datatable .p-datatable-tbody > tr > td,
 tbody tr td {
@@ -3376,7 +3377,7 @@ textarea.p-inputtextarea {
 /* Tree Styles End */
 
 .docfolder .p-card, .fldrovrlay .p-card.p-component {
-  height: 154px;
+  height: 160px;
   width: 170px;
   display: flex;
   align-items: center;
@@ -3388,9 +3389,7 @@ textarea.p-inputtextarea {
   background: #fff;
   cursor: pointer;
 }
-.dochovercheck .p-card:hover {
-  background-color: #eeeeee;
-}
+
 .docfolder .p-card-content:hover span.foldname {
   text-decoration: underline !important;
 }
@@ -3434,10 +3433,10 @@ textarea.p-inputtextarea {
   position: relative;
 }
 .docfolder .p-card-content span.datsiz {
-  color: #d36303 !important;
+  color: #232832 !important;
   text-align: left;
   position: absolute;
-  bottom: 30px;
+  bottom: 6px;
   left: 6px;
   font-size: 13px;
   font-weight: 500;
@@ -3564,6 +3563,25 @@ textarea.p-inputtextarea {
   height: 100%;
   background-color: #fff;
 }
+.selectfoldername .p-tree .p-tree-container .p-treenode .p-treenode-content {
+  padding: 10px 0px !important
+}
+.selectfoldername .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  margin-right: 0px !important;
+  width: auto !important;
+  height: auto !important
+}
+.selectfoldername img.icon {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+.selectfoldername span.pi-chevron-right {
+  font-size: 10px !important;
+}
+.p-tree .p-tree-container .p-treenode .p-treenode-content:focus {
+  box-shadow: unset !important;
+}
 /* New Dashboard Styles End */
 
 /* ----------------------NEW STYLES END------------------------- */
@@ -3656,10 +3674,6 @@ background-color: #D8E0EF !important;
 .configure-pad{display: flex;
   align-items: center;
   float: right;}
-.imageBox {
-  position: relative;
-  /* float: left; */
-}
 
 .imageBox .hover-icon,
 .imageBox:hover .active-icon  {
@@ -3708,4 +3722,9 @@ background-color: #D8E0EF !important;
 }
 .bold {
   font-weight: bold;
+}
+
+.dochovercheck.folderselected .p-card,
+.doctree tr.folderselected {
+  background: #eeeeee !important;
 }

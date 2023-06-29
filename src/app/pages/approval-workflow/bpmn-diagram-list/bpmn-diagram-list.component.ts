@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { TitleCasePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -70,7 +71,7 @@ searchValue:any;
     private rest_Api: RestApiService,
     private router: Router,
     private loader: LoaderService,
-    private titleCase: TitleCasePipe) { }
+    private titleCase: TitleCasePipe,private messageService: MessageService) { }
 
     @Input() get selectedColumns(): any[] {
       return this._selectedColumns;
@@ -132,10 +133,11 @@ searchValue:any;
         
           this.bpmnModeler.importXML(byteBpmn, function(err){
             if(err){
-              this.notifier.show({
-                type: "error",
-                message: "Could not import Bpmn notation!"
-              });
+              this.messageService.add({severity: "error", summary: "Error", detail: "Could not import BPMN notation!"})
+              // this.notifier.show({
+              //   type: "error",
+              //   message: "Could not import Bpmn notation!"
+              // });
             }
           })
     },100)
@@ -168,7 +170,8 @@ searchValue:any;
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     let msg="Notation";
-    this.global.notify(msg+" is fit to view port", "success")
+    this.messageService.add({severity: "success", summary: "Success", detail: msg+" is fit to view port!"});
+
   }
 
   formatApproverName(apprName){
@@ -272,13 +275,11 @@ this.selectedrow =i;
     };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
-        let message = "Notation Successfully Approved"; //this has to change after approval API
         this.bpmnlist();
-        this.global.notify(message,'success');
+        this.messageService.add({severity: "success", summary: "Success", detail: "Notation Approved Successfully!"});
       },
       err=>{
-        let message = "Oops! Something went wrong";
-        this.global.notify(message,'error');
+      this.messageService.add({severity: "error", summary: "Error", detail: "Oops Something went wrong!"});
     });
     this.bpmnlist();
   }
@@ -345,13 +346,11 @@ this.selectedrow =i;
     }
     this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
-        let message =  "Notation has been rejected.";
         this.bpmnlist();
-        this.global.notify(message,'success');
+        this.messageService.add({severity: "success", summary: "Success", detail: "Notation has been rejected!"});
       },
       err=>{
-        let message = "Oops! Something went wrong";
-        this.global.notify(message,'error');
+        this.messageService.add({severity: "error", summary: "Error", detail: "Opps Somthing went wrong!"})
       });
    }
    sort1(colKey,ind) { // if not asc, desc

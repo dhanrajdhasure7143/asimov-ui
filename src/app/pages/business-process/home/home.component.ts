@@ -12,6 +12,7 @@ import { SharebpmndiagramService } from "../../services/sharebpmndiagram.service
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { GlobalScript } from "src/app/shared/global-script";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs";
@@ -67,7 +68,7 @@ export class BpsHomeComponent implements OnInit {
       DisplayName: "Process Name",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "ntype",
@@ -75,7 +76,7 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList: ["BPMN", "CMMN","DMN"],width:"flex: 0 0 5rem"
+      dropdownList: ["BPMN", "CMMN","DMN"],width:"flex: 0 0 7rem"
     },
     {
       ColumnName: "category",
@@ -83,35 +84,35 @@ export class BpsHomeComponent implements OnInit {
       filterType: "text",
       filterWidget: "dropdown",
       ShowFilter: true,
-      dropdownList:this.categories_list_new
+      dropdownList:this.categories_list_new,width:"flex: 0 0 9rem"
     },
     {
       ColumnName: "processOwnerName",
       DisplayName: "Process Owner",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "version_new",
       DisplayName: "Version",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,width:"flex: 0 0 5rem"
+      ShowFilter: true,width:"flex: 0 0 8rem"
     },
     {
       ColumnName: "convertedModifiedTime_new",
       DisplayName: "Last Modified",
       filterType: "date",
       filterWidget: "normal",
-      ShowFilter: true,
+      ShowFilter: true,width:"flex: 0 0 11rem"
     },
     {
       ColumnName: "approverName",
       DisplayName: "Approver",
       filterType: "text",
       filterWidget: "normal",
-      ShowFilter: true,showTooltip:true
+      ShowFilter: true,showTooltip:true,width:"flex: 0 0 9rem"
     },
     {
       ColumnName: "status",
@@ -133,7 +134,9 @@ export class BpsHomeComponent implements OnInit {
     private dt: DataTransferService,
     private rest: RestApiService,
     private global: GlobalScript,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   @Input() get selectedColumns(): any[] {
@@ -441,35 +444,61 @@ export class BpsHomeComponent implements OnInit {
 
   sendReminderMail(bpmNotation) {
     // e.stopPropagation();
-    Swal.fire({
-      title: "Reminder mail",
-      text:
-        bpmNotation.bpmnProcessName +
-        " V1." +
-        bpmNotation.version +
-        " reminder mail to " +
-        bpmNotation.approverName,
-      icon: "info",
-      showCancelButton: true,
-      heightAuto: false,
-      confirmButtonText: "Send",
-      cancelButtonText: "Cancel",
-    }).then((res) => {
-      if (res.isConfirmed) {
+    this.confirmationService.confirm({
+      message: "You want to send a reminder mail to " + bpmNotation.approverName + " for the " + bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + ".",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      key:'confirm2',
+      accept: () => {
         let data = {
           bpmnModelId: bpmNotation.bpmnModelId,
           version: bpmNotation.version,
         };
         this.rest.sendReminderMailToApprover(data).subscribe(
           (res) => {
-            this.global.notify("Sent reminder successfully", "success");
+            this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!",key:'toast2'})
           },
           (err) => {
-            this.global.notify("Oops! Something went wrong", "error");
+            this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong.",key:'toast2'})
           }
         );
       }
     });
+    // Swal.fire({
+    //   title: "Reminder mail",
+    //   text:
+    //     bpmNotation.bpmnProcessName +
+    //     " V1." +
+    //     bpmNotation.version +
+    //     " reminder mail to " +
+    //     bpmNotation.approverName,
+    //   icon: "info",
+    //   showCancelButton: true,
+    //   heightAuto: false,
+    //   confirmButtonText: "Send",
+    //   cancelButtonText: "Cancel",
+    // }).then((res) => {
+    //   if (res.isConfirmed) {
+    //     let data = {
+    //       bpmnModelId: bpmNotation.bpmnModelId,
+    //       version: bpmNotation.version,
+    //     };
+    //     this.rest.sendReminderMailToApprover(data).subscribe(
+    //       (res) => {
+    //         this.global.notify("Sent reminder successfully", "success");
+    //       },
+    //       (err) => {
+    //         this.global.notify("Oops! Something went wrong", "error");
+    //       }
+    //     );
+    //   }
+    // });
   }
 
   fitNotationView(e) {
@@ -491,79 +520,118 @@ export class BpsHomeComponent implements OnInit {
       bpmNotation.bpmnProcessStatus == "PENDING"
         ? "PENDING APPROVAL"
         : bpmNotation.bpmnProcessStatus;
-    Swal.fire({
-      title: "Are you Sure?",
-      text:
-        bpmNotation.bpmnProcessName +
-        " V1." +
-        bpmNotation.version +
-        " in " +
-        status +
-        " status will be deleted",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      heightAuto: false,
-      confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
-    }).then((res) => {
-      if (res.isConfirmed) {
-        this.loader.show();
-        let data = {
-          bpmnModelId: bpmNotation.bpmnModelId,
-          version: bpmNotation.version,
-        };
-        this.rest.deleteBPMNProcess(data).subscribe(
-          (res) => {
-            this.loader.hide();
-            if (
-              res == "It is an ongoing project.Please contact Project Owner(s)"
-            ) {
-              Swal.fire({
-                icon: "info",
-                title: "Info",
-                text: res,
-                heightAuto: false,
-              });
-            } else {
-              Swal.fire({
-                icon: "success",
-                title: "Success",
-                customClass: {
-                  confirmButton: 'btn bluebg-button',
-                  cancelButton:  'btn new-cancelbtn',
-                },
-                text:
-                  bpmNotation.bpmnProcessName +
-                  " V1." +
-                  bpmNotation.version +
-                  " deleted",
-                heightAuto: false,
-              });
-              this.loader.show();
-              this.getBPMNList();
-            }
-          },
-          (err) => {
-            this.loader.hide();
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              customClass: {
-                confirmButton: 'btn bluebg-button',
-                cancelButton:  'btn new-cancelbtn',
+      this.confirmationService.confirm({
+          message: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " in " + status + " status will be deleted",
+          header: "Are you sure?",
+          rejectLabel: "No",
+          acceptLabel: "Yes",
+          rejectButtonStyleClass: 'btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
+          key:'confirm2',
+          accept: () => {
+            this.loader.show();
+            let data = {
+              bpmnModelId: bpmNotation.bpmnModelId,
+              version: bpmNotation.version,
+            };
+            this.rest.deleteBPMNProcess(data).subscribe(
+              (res) => {
+                this.loader.hide();
+                if (
+                  res == "It is an ongoing project. Please contact Project Owner(s)."
+                ) {
+                    this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
+                } else {
+                      this.messageService.add({severity: "success", summary: "Success", 
+                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " has been deleted.",key:'toast2'});
+                      this.loader.show();
+                      this.getBPMNList();
+                }
               },
-              text: "Something went wrong!",
-              heightAuto: false,
-            });
-            // this.global.notify('Oops! Something went wrong','error')
+              (err) => {
+                  this.loader.hide();
+                  this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong.",key:'toast2'})
+              }
+            );
           }
-        );
-      }
-    });
+      });
+
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text:
+    //     bpmNotation.bpmnProcessName +
+    //     " V1." +
+    //     bpmNotation.version +
+    //     " in " +
+    //     status +
+    //     " status will be deleted",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
+    //   heightAuto: false,
+    //   confirmButtonText: "Delete",
+    //   cancelButtonText: "Cancel",
+    // }).then((res) => {
+    //   if (res.isConfirmed) {
+    //     this.loader.show()
+    //     let data = {
+    //       bpmnModelId: bpmNotation.bpmnModelId,
+    //       version: bpmNotation.version,
+    //     };
+    //     this.rest.deleteBPMNProcess(data).subscribe(
+    //       (res) => {
+    //         this.loader.hide();
+    //         if (
+    //           res == "It is an ongoing project.Please contact Project Owner(s)"
+    //         ) {
+    //           Swal.fire({
+    //             icon: "info",
+    //             title: "Info",
+    //             text: res,
+    //             heightAuto: false,
+    //           });
+    //         } else {
+    //           Swal.fire({
+    //             icon: "success",
+    //             title: "Success",
+    //             customClass: {
+    //               confirmButton: 'btn bluebg-button',
+    //               cancelButton:  'btn new-cancelbtn',
+    //             },
+    //             text:
+    //               bpmNotation.bpmnProcessName +
+    //               " V1." +
+    //               bpmNotation.version +
+    //               " deleted",
+    //             heightAuto: false,
+    //           });
+    //           this.loader.show();
+    //           this.getBPMNList();
+    //         }
+    //       },
+    //       (err) => {
+    //         this.loader.hide();
+    //         Swal.fire({
+    //           icon: "error",
+    //           title: "Oops...",
+    //           customClass: {
+    //             confirmButton: 'btn bluebg-button',
+    //             cancelButton:  'btn new-cancelbtn',
+    //           },
+    //           text: "Something went wrong!",
+    //           heightAuto: false,
+    //         });
+    //         this.global.notify('Oops! Something went wrong','error')
+    //       }
+    //     );
+    //   }
+    // });
   }
 
   gotoBPMNPlatform() {

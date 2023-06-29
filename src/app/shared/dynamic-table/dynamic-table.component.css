@@ -97,7 +97,10 @@ span.testtooltip:before {
     display: block;
 }
 
-
 .approvalLink{
     color: #232832;
+}
+
+.noopenworkspace {
+    visibility: hidden;
 }

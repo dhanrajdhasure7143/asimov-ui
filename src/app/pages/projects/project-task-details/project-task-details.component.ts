@@ -59,6 +59,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
   nodeMap: Object = {};
   uploaded_file: any;
   selectedItem: any;
+  documentList:any;
+  allFiles:any[]=[];
 
   constructor(
     private route: ActivatedRoute,
@@ -108,7 +110,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
           this.mindate = moment(this.task_details.startDate).format(
             "YYYY-MM-DD"
           );
-          this.getTheListOfFolders();
+          // this.getTheListOfFolders();
         });
       this.spinner.hide();
     });
@@ -175,14 +177,21 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   taskAttachments() {
     this.hiddenPopUp = true;
+    this.getTheListOfFolders();
   }
 
   deleteDocuments() {
     let req_body = [];
     this.confirmationService.confirm({
-      message: "Do you really want to delete this document? This process cannot be undone.",
-      header: "Are you Sure?",
-      
+      message: "Do you want to delete this document? This can't be undone.",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(
@@ -190,7 +199,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted Successfully !",
+              detail: "Document deleted successfully!",
             });
             this.getTheListOfFolders();
             this.getTaskAttachments();
@@ -206,8 +215,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
           }
         );
       },
-      reject: (type) => {},
-      key: "positionDialog",
+      reject: (type) => {}
     });
   }
 
@@ -272,7 +280,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task Updated Successfully !",
+          detail: "Task updated successfully!",
         });
         this.gettask();
         // let status: any = res;
@@ -286,12 +294,12 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Task Update failed",
+          detail: "Task update failed.",
         });
       }
     );
     // } else {
-    //   alert("please fill all details");
+    //   alert("Please fill in all the details.");
     // }
   }
   changefileUploadForm(event) {
@@ -311,85 +319,48 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.isFile_upload_dialog = false;
   }
 
-  getTheListOfFolders() {
-    let res_data: any = [];
-    this.rest_api
-      .getListOfFoldersByProjectId(this.project_id)
-      .subscribe((res) => {
-        res_data = res;
-        this.files = [];
-        res_data.map((data) => {
-          if (data.dataType == "folder") {
-            data["children"] = [];
+  getTheListOfFolders(){
+    let res_data:any=[];
+    this.files=[];
+    this.rest_api.getListOfFoldersByProjectId(this.project_id).subscribe(res=>{
+        res_data=res
+        let onlyFolders=[];
+        res_data.map(data=> {
+          if(data.dataType=='folder'){
+            data["children"]=[]
+            onlyFolders.push(data);
           }
-          return data;
+          return data
         });
-
-        for (let obj of res_data) {
-          let node = {
-            key: obj.key,
-            label: obj.label,
-            data: obj.data,
-            type: "default",
-            uploadedBy: obj.uploadedBy,
-            projectId: obj.projectId,
-            id: obj.id,
-            dataType: obj.dataType,
-            children: obj.children,
-            uploadedDate: obj.uploadedDate,
-          };
-          if (obj.dataType == "folder") {
-            node["collapsedIcon"] = "pi pi-folder";
-            node["expandedIcon"] = "pi pi-folder-open";
-          } else {
-            node["icon"] = "pi pi-file";
-          }
-          this.nodeMap[obj.key] = node;
-          if (obj.key.indexOf("-") === -1) {
-            this.files.push(node);
-          } else {
-            let parentKey = obj.key.substring(0, obj.key.lastIndexOf("-"));
-            let parent = this.nodeMap[parentKey];
-            if (parent) {
-              parent.children.push(node);
-            }
-          }
-        }
-        this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
-        this.folder_files = this.files;
-      });
-  }
+        this.documentList = [...res_data]
+      this.files =[...this.convertToTree(onlyFolders)];
+      this.folder_files = this.files;
+      // this.files.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+      this.allFiles =[...this.convertToTree(this.documentList)];
+      this.allFiles.sort((a, b) => parseFloat(a.key) - parseFloat(b.key));
+    })
+    }
 
   uploadFile() {
     if (this.selected_folder.dataType != "folder") {
       this.messageService.add({
         severity: "info",
         summary: "Info",
-        detail: "Please select Folder",
+        detail: "Please select a folder.",
       });
       return;
     }
     this.isFile_upload_dialog = false;
-    this.spinner.show();
 
-    let objectKey;
-    let fileKey;
-    if (this.selected_folder.parent) {
-      objectKey = this.selected_folder.parent.children.length ? this.selected_folder.parent.children.length: 1;
-      fileKey = this.selected_folder.key + "-" + Number(objectKey);
-    } else {
-      objectKey = this.selected_folder.children.length
-        ? this.selected_folder.children.length
-        : 0;
-      fileKey = this.selected_folder.key + "-" + Number(objectKey + 1);
-    }
+    let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
     let fileKeys=[];
     var fileData = new FormData();
     for (let i = 0; i < this.uploaded_file.length; i++) {
       fileData.append("filePath", this.uploaded_file[i]);
-      this.selected_folder.parent ? fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+i))):fileKeys.push(String(this.selected_folder.key+'-'+(objectKey+(i+1))))
+      // this.selected_folder.parent ? fileKeys.push(String(this.selected_folder.key+'-'+(fileKey+i))):fileKeys.push(String(this.selected_folder.key+'-'+(fileKey+(i+1))))
+      fileKeys.push(String(this.selected_folder.key+'-'+(Number(this.getTheFileKey(selected_folder))+i)))
     }
-
+    this.spinner.show();
     // fileData.append("filePath", this.uploaded_file);
     fileData.append("projectId", this.project_id);
     fileData.append("taskId", this.params_data.task_id);
@@ -402,7 +373,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "File Uploaded Successfully !",
+          detail: "File uploaded successfully!",
         });
         this.getTaskAttachments();
       },
@@ -411,7 +382,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Failed to upload !",
+          detail: "Failed to upload!",
         });
       }
     );
@@ -470,4 +441,89 @@ export class ProjectTaskDetailsComponent implements OnInit {
       queryParams: { project_id: this.project_id },
     });
   }
+
+  truncateDesc(data){
+    if(data && data.length > 51)
+      return data.substr(0,50)+'...';
+    return data;
+  }
+
+  convertToTree(res_data:any){
+    res_data.map(data=> {
+      if(data.dataType=='folder'){
+        data["children"]=[];
+      }
+      return data
+    });
+    let files:any =[];
+    for (let obj of res_data) {
+      let node = {
+        key: obj.key,
+        label: obj.label,
+        data: obj.data,
+        type:"default",
+        uploadedBy:obj.uploadedBy,
+        projectId:obj.projectId,
+        id: obj.id,
+        dataType:obj.dataType,
+        children:obj.children,
+        uploadedDate:obj.uploadedDate
+      };
+      if(obj.dataType == 'folder'){
+        node['icon'] = "folder.svg"
+      }else if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'||obj.dataType == 'PNG' || obj.dataType == 'JPG'){
+        node['icon'] = "img-file.svg"
+      }else if(obj.dataType == 'pdf'){
+        node['icon'] = "pdf-file.svg"
+      }else if(obj.dataType == 'txt'){
+        node['icon'] = "txt-file.svg"
+      }else if(obj.dataType == 'mp4'|| obj.dataType == 'gif'){
+        node['icon'] = "video-file.svg"
+      }else if(obj.dataType == 'docx'){
+        node['icon'] = "doc-file.svg"
+      }else if(obj.dataType == 'html'){
+        node['icon'] = "html-file.svg"
+      }else if(obj.dataType == 'csv'||obj.dataType == 'xlsx' ){
+        node['icon'] = "xlsx-file.svg"
+      }else if(obj.dataType == 'ppt'){
+        node['icon'] = "ppt-file.svg"
+      }else{
+        node['icon'] = "txt-file.svg"
+      }
+        this.nodeMap[obj.key] = node;
+      if (obj.key.indexOf('-') === -1) {
+        files.push(node);
+      } else {
+        let parentKey = obj.key.substring(0, obj.key.lastIndexOf('-'));
+        let parent = this.nodeMap[parentKey];
+        if (parent) {
+          if(parent.children)
+          parent.children.push(node);
+        }
+      }
+    }
+    return files;
+  }
+
+  getTheFileKey(selected_folder:any){
+    let filteredkey = selected_folder.children.length >0 ? selected_folder.children[selected_folder.children.length-1].key.split("-"):"1"
+    return selected_folder.children.length >0?Number(filteredkey[filteredkey.length-1])+1:filteredkey;
+  };
+
+  findNodeByKey(key: string, nodes: any[]) {
+    let node: any = null;
+    for (const n of nodes) {
+      if (n.key === key) {
+        node = n;
+        break;
+      } else if (n.children) {
+        node = this.findNodeByKey(key, n.children);
+        if (node) {
+          break;
+        }
+      }
+    }
+    return node;
+  };
+  mouseUp(){}
 }

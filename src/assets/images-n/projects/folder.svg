@@ -1,15 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="112" height="80" viewBox="0 0 112 80">
+<svg id="folder" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="112" height="80" viewBox="0 0 112 80">
   <defs>
-    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
-      <stop offset="1" stop-color="#ffd75e" stop-opacity="0.302"/>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_88" data-name="Rectangle 88" width="112" height="80" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Path_364" data-name="Path 364" d="M4.453,65.672A4.453,4.453,0,0,0,0,70.125V130a1.336,1.336,0,0,0,1.336,1.336H110.664A1.336,1.336,0,0,0,112,130V70.125a4.453,4.453,0,0,0-4.453-4.453Z" transform="translate(0 -65.672)" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" y1="1" x2="0.002" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#6ec4f8"/>
+      <stop offset="0.989" stop-color="#6ec4f8"/>
+      <stop offset="1" stop-color="#6ec4f8"/>
     </linearGradient>
   </defs>
-  <g id="OneDrive_Folder_Icon" transform="translate(-6 -18)">
-    <path id="Path_260" data-name="Path 260" d="M58,26l-5.657-5.657A8,8,0,0,0,46.686,18H10a4,4,0,0,0-4,4V96.667A1.333,1.333,0,0,0,7.333,98H116.667A1.333,1.333,0,0,0,118,96.667V30a4,4,0,0,0-4-4Z" transform="translate(0)" fill="#ffb900"/>
-    <path id="Path_261" data-name="Path 261" d="M58,24l-5.657,5.654A8,8,0,0,1,46.686,32H6V94.626a1.333,1.333,0,0,0,1.333,1.333H116.667A1.333,1.333,0,0,0,118,94.626V28a4,4,0,0,0-4-4Z" transform="translate(0 2.041)" fill="#ffd75e"/>
-    <path id="Path_262" data-name="Path 262" d="M58,24l-5.657,5.654A8,8,0,0,1,46.686,32H6V94.626a1.333,1.333,0,0,0,1.333,1.333H116.667A1.333,1.333,0,0,0,118,94.626V28a4,4,0,0,0-4-4Z" transform="translate(0 2.041)" fill="url(#linear-gradient)"/>
-    <path id="Path_263" data-name="Path 263" d="M6,32.041v1.34H47.009a9.381,9.381,0,0,0,6.633-2.748L60.276,24h-2.01L52.58,29.686a8.041,8.041,0,0,1-5.686,2.355Z" transform="translate(0 2.041)" fill="#fff" opacity="0.4"/>
-    <path id="Path_264" data-name="Path 264" d="M116.667,78.34H7.333A1.337,1.337,0,0,1,6,77H118A1.337,1.337,0,0,1,116.667,78.34Z" transform="translate(0 19.66)" fill="#da7b16"/>
+  <g id="Group_76" data-name="Group 76">
+    <g id="Group_75" data-name="Group 75" clip-path="url(#clip-path)">
+      <path id="Path_363" data-name="Path 363" d="M42.582,8a3.635,3.635,0,0,1-2.571-1.065L35.419,2.343A8,8,0,0,0,29.762,0H4A4,4,0,0,0,0,4V78.667A1.333,1.333,0,0,0,1.333,80H110.667A1.333,1.333,0,0,0,112,78.667V12a4,4,0,0,0-4-4Z" fill="#99d7fe"/>
+    </g>
+  </g>
+  <g id="Group_78" data-name="Group 78" transform="translate(0 14.338)">
+    <g id="Group_77" data-name="Group 77" clip-path="url(#clip-path-2)">
+      <rect id="Rectangle_89" data-name="Rectangle 89" width="112" height="65.662" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+  <g id="Group_80" data-name="Group 80">
+    <g id="Group_82" data-name="Group 82" transform="translate(0 -2)">
+      <rect id="Rectangle_90" data-name="Rectangle 90" width="100" height="0.437" transform="translate(6 76.944)" fill="#ccecff"/>
+      <rect id="Rectangle_91" data-name="Rectangle 91" width="100" height="0.437" transform="translate(6 72.324)" fill="#ccecff"/>
+    </g>
   </g>
 </svg>
