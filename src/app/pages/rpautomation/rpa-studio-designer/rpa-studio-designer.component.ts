@@ -47,7 +47,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isOpenSideOverlay:boolean=false;
   params:any={};
   executionMode:boolean=false;
-  idBot: number;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -112,7 +111,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
-            this.idBot = params.botId
             if(params==undefined)
             {
               this.router.navigate(["home"])
@@ -379,7 +377,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     else{
       this.versionControlPopup.hide();
       this.childBotWorkspace.reset('');
-      this.current_instance.updateBotFun(this.version_type,this.comments);
+      this.current_instance.acceptUpdateBotWithDeprecatedTasks(this.version_type,this.comments);
     }
   }
 

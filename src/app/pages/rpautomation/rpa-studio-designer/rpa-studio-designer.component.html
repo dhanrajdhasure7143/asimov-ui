@@ -293,7 +293,7 @@
                         <mat-drawer-content>
                           <div class="row h-100">
                             <div class="col-md-12 check p-0 h-100" *ngIf="loadedBotsList.length!=0" >  
-                              <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated" [idBot]="idBot"></app-rpa-studio-designerworkspace>
+                              <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances [isBotValidated]="isBotValidated"></app-rpa-studio-designerworkspace>
                               <div class="rpa-custom-slider">
                                 <button class="action-item hovericon" pTooltip="Zoom In" tooltipPosition="right" (click)="childBotWorkspace.zoomin('')">
                                   <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg" />
