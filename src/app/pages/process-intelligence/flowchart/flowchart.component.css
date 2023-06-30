@@ -537,6 +537,7 @@ display: initial;
 }
 .edit-disabled{
 cursor: no-drop;
+padding: 6px 8px;
 }
 .dis-btns button:disabled {
   cursor: no-drop;

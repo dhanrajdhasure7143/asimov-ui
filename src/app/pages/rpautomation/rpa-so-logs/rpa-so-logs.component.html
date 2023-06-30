@@ -1,4 +1,4 @@
-<p-dialog  [draggable]="true" [(visible)]="display" [style]="{width: '70vw', height:'40vw'}" (onHide)="closeLogsOverlay()" class="rpasologs">
+<p-dialog  [draggable]="true" [(visible)]="display" [modal]="true" [baseZIndex]="10000" [style]="{width: '60vw', height:'40vw'}" (onHide)="closeLogsOverlay()" class="rpasologs">
   <ng-template pTemplate="header">
       <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="viewRunsByBotId()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>

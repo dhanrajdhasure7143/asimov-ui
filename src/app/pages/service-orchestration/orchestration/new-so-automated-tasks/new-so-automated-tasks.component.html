@@ -124,7 +124,7 @@
                     </ng-template>
                     <ng-template pTemplate="header">
                             <tr>
-                                <th style="flex: 0 0 4rem"></th>
+                                <th style="flex: 0 0 3rem"></th>
                                 <th *ngFor="let each of columnList" pSortableColumn="{{each.field}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
                                     <p-columnFilter *ngIf="each.ShowFilter && each.field != 'category'&& each.field != 'taskType'&& each.field != 'status'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.field"
                                               display="menu" [showApplyButton]="false">
@@ -161,7 +161,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-element let-index="rowIndex">
                             <tr [pReorderableRow]="index">
-                                <td style="flex: 0 0 4rem">
+                                <td style="flex: 0 0 3rem">
                                     <span class="pi pi-bars" pReorderableRowHandle></span>
                                 </td>
                                 <td [pTooltip]="element.processName" tooltipPosition="top" pReorderableRowHandle>{{element.processName}}</td>
