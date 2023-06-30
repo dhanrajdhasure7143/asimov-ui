@@ -40,6 +40,7 @@ export class CreateTasksComponent implements OnInit {
   emptyList:any[]=[];
   isExist_user:boolean= false;
   position: string;
+  invalidText: boolean;
 
   constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute,
@@ -283,4 +284,17 @@ taskDescriptionMaxLength(value){
       key: "assigneeDialog"
   });
    }
+   spaceNotAllow(event: any) {           //initially doesn't allow space
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+  }
+  ContainsSpaces(event){                 //initially doesn't allow space 
+    var text = event.textValue;
+     if (!/\S/.test(text)) {
+      this.invalidText= true;
+    } else {
+      this.invalidText = false;
+    }
+  }
 }
