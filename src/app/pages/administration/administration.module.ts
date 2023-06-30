@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdministrationComponent } from './administration.component';
-import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';  
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
@@ -72,7 +71,7 @@ const materialModules: any[] = [
     MatCardModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,MatSliderModule,
+    MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,MatSliderModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,

@@ -597,7 +597,7 @@ resetsla(){
         });
        
       }
-      this.spinner.hide();
+      // this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
     })
@@ -837,7 +837,7 @@ resetsla(){
       this.spinner.show();
       this.rest.assign_bot_and_task(botId,task.taskId,"","Human","").subscribe(data=>{
         let response:any=data;
-        this.spinner.hide();
+         this.spinner.hide();
         if(response.status!=undefined)
         {
           this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
@@ -1019,7 +1019,9 @@ resetsla(){
       this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       this.getenvironments();
       this.getautomatedtasks(processid);
-    });
+    },(err)=>{
+      this.spinner.hide()
+    })
   }
 
   getUserslist() {

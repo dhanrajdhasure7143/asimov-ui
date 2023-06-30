@@ -7,7 +7,6 @@ import { DynamicDashboardComponent } from './dynamic-dashboard/dynamic-dashboard
 import { ConfigureDashboardComponent} from './configure-dashboard/configure-dashboard.component'
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
-import { NgChartsModule } from 'ng2-charts';
 import { MyFilterPipe } from './pipe/my-filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
