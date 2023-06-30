@@ -1471,7 +1471,6 @@ span.star {
   font-weight: 400;
   margin-bottom: 2px;
   color: var(--formlabel-color);
-  text-transform: capitalize;
 }
 
 .form-group,.form-fields {

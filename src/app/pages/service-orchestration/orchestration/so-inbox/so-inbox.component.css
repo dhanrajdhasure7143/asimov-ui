@@ -15,9 +15,8 @@
 
 .Inboxtab-btns {
   position: absolute;
-  right: 285px;
-  /* right: 210px; */
-  top: 22px;
+  right: 262px;
+  top: 24px;
   z-index: 9;
 }
 .Inboxtab-btns button:first-child {

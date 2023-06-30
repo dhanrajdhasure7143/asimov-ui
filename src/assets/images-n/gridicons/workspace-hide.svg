@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25.98" height="28.198" viewBox="0 0 25.98 28.198">
+  <g id="workspace-hide" transform="translate(-4.135 -1.289)">
+    <g id="workspace-default" transform="translate(3.885 5)">
+      <path id="Path_218" data-name="Path 218" d="M3,18.687H23a1.983,1.983,0,0,0,2-1.965V2.965A1.983,1.983,0,0,0,23,1H3A1.983,1.983,0,0,0,1,2.965V16.722A1.983,1.983,0,0,0,3,18.687Z" fill="none" stroke="#232832" stroke-width="1.5"/>
+      <path id="Path_219" data-name="Path 219" d="M8.525,15,6,20.05" transform="translate(1.316 3.687)" fill="none" stroke="#232832" stroke-width="1.5"/>
+      <path id="Path_220" data-name="Path 220" d="M13,15l2.525,5.05" transform="translate(3.159 3.687)" fill="none" stroke="#232832" stroke-width="1.5"/>
+      <path id="Path_221" data-name="Path 221" d="M5,19H18.9" transform="translate(1.05 4.737)" fill="none" stroke="#232832" stroke-linecap="round" stroke-width="1.5"/>
+    </g>
+    <rect id="Rectangle_2127" data-name="Rectangle 2127" width="35.1" height="1.5" transform="matrix(0.669, -0.743, 0.743, 0.669, 4.885, 27.373)" fill="#232832"/>
+    <rect id="Rectangle_2128" data-name="Rectangle 2128" width="35.1" height="1" transform="matrix(0.669, -0.743, 0.743, 0.669, 5.885, 28.373)" fill="#fff"/>
+  </g>
+</svg>
