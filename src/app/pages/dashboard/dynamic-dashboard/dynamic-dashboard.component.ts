@@ -605,9 +605,7 @@ export class DynamicDashboardComponent implements OnInit {
           summary: "Success",
           detail: 'Created successfully!',
         });
-        // setTimeout(() => {
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
-        // }, 200);
       }
       if(response.code == 8010){
         this.messageService.add({
