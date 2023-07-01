@@ -395,7 +395,7 @@ export class UsersComponent implements OnInit {
     this.rest_api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe((res) => {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
           this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
-            if (resp.message === "User invited successfully!") {
+            if (resp.message === "User invited Successfully !!") {
               // Swal.fire({
               //   title: "Success",
               //   text: "User invited successfully!",

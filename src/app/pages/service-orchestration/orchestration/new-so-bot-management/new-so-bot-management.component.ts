@@ -110,15 +110,15 @@ public slaupdate : boolean = false;
     hiddenPopUp:boolean=false;
     allBotsList:any[]=[];
     columnList=[
-      {DisplayName:"Bot Name",ColumnName:"botName",ShowFilter: true},
-      {DisplayName:"Description",ColumnName:"description",ShowFilter: true},
+      {DisplayName:"Bot Name",ColumnName:"botName",ShowFilter: true,sort:true},
+      {DisplayName:"Description",ColumnName:"description",ShowFilter: true,sort:true},
       // {DisplayName:"Source",ColumnName:"sourceType",ShowFilter: true},
-      {DisplayName:"Category",ColumnName:"department",ShowFilter: true},
-      {DisplayName:"Version",ColumnName:"version_new",ShowFilter: true},
-      {DisplayName:"Status",ColumnName:"botStatus",ShowFilter: true},
-      {DisplayName:"Actions",ColumnName:"Actions",ShowFilter: false},
-      {DisplayName:"Schedule",ColumnName:"botStatus",ShowFilter: false},
-      {DisplayName:"Logs",ColumnName:"botStatus",ShowFilter: false},
+      {DisplayName:"Category",ColumnName:"department",ShowFilter: true,sort:true},
+      {DisplayName:"Version",ColumnName:"version_new",ShowFilter: true,sort:true},
+      {DisplayName:"Status",ColumnName:"botStatus",ShowFilter: true,sort:true},
+      {DisplayName:"Actions",ColumnName:"Actions",ShowFilter: false,sort:false},
+      {DisplayName:"Schedule",ColumnName:"botStatus",ShowFilter: false,sort:false},
+      {DisplayName:"Logs",ColumnName:"botStatus",ShowFilter: false,sort:false},
     ]
     statusColors = {
       New: '#3CA4F3',
@@ -750,11 +750,12 @@ this.display = false
       if(source=="EPSoft")
       this.rest.execution(botid).subscribe(res =>{
         let response:any;
+        console.log(res)
         response=res;
         this.spinner.hide();
         if(response.status!= undefined)
         // Swal.fire("Success",response.status,"success")
-        this.messageService.add({severity:'success',summary:'Success',detail:response.Status})
+        this.messageService.add({severity:'success',summary:'Success',detail:response.status})
 
         else
         // Swal.fire("Error",response.errorMessage,"error");
@@ -763,7 +764,7 @@ this.display = false
       },err=>{
         this.spinner.hide();
         // Swal.fire("Error","Unable to execute bot","error")
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot'})
 
       });
       else if(source=="UiPath")
