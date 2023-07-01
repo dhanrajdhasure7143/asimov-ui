@@ -194,6 +194,36 @@
                                     </span>
                                 </div>
                             </div>
+                            <div class="row" *ngIf="isClient">
+                                <div class="col-md-6 form-group pl-0">
+                                    <label class="label-control" for="programname"> Client ID
+                                        <span class="star" *ngIf="connectorForm.get('grantType').value !== 'password'">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                        formControlName="clientId" placeholder="Enter Client ID">
+                                    <span
+                                        *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
+                                        class="required"> Client ID Required
+                                    </span>
+                                    <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
+                                        Client Id or Dynamic Pattern Incorrect.
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group pr-0">
+                                    <label class="label-control" for="programname"> Client Secret
+                                        <span class="star" *ngIf="connectorForm.get('grantType').value !== 'password'">*</span>
+                                    </label>
+                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                        formControlName="clientSecret" placeholder="Enter Client Secret">
+                                    <span
+                                        *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
+                                        class="required"> Client Secret Required
+                                    </span>
+                                    <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
+                                        Client Secret or Dynamic Pattern Incorrect.
+                                    </span>
+                                </div>
+                            </div>
                             <div class="row" *ngIf="isAuthorization">
                                 <div class="col-md-6 form-group pl-0">
                                     <label class="label-control" for="programname"> Code
@@ -254,36 +284,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="isClient">
-                                <div class="col-md-6 form-group pl-0">
-                                    <label class="label-control" for="programname"> Client ID
-                                        <span class="star">*</span>
-                                    </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
-                                        formControlName="clientId" placeholder="Enter Client ID">
-                                    <span
-                                        *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
-                                        class="required"> Client ID Required
-                                    </span>
-                                    <span *ngIf="connectorForm.get('clientId').hasError('pattern')" class="required">
-                                        Client Id or Dynamic Pattern Incorrect.
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group pr-0">
-                                    <label class="label-control" for="programname"> Client Secret
-                                        <span class="star">*</span>
-                                    </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
-                                        formControlName="clientSecret" placeholder="Enter Client Secret">
-                                    <span
-                                        *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
-                                        class="required"> Client Secret Required
-                                    </span>
-                                    <span *ngIf="connectorForm.get('clientSecret').hasError('pattern')" class="required">
-                                        Client Secret or Dynamic Pattern Incorrect.
-                                    </span>
-                                </div>
-                            </div>
+                        
                             <div class="col-md-6 form-group pl-0" *ngIf="isVerifier">
                                     <label class="label-control" for="programname"> Code Verifier
                                         <span class="star">*</span>
