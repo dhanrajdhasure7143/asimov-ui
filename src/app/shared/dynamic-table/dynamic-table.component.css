@@ -101,6 +101,7 @@ span.testtooltip:before {
     color: #232832;
 }
 
-.noopenworkspace {
-    visibility: hidden;
+.noopenworkspace img {
+    /* visibility: hidden; */
+    cursor: no-drop;
 }

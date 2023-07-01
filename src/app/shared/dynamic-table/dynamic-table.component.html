@@ -161,14 +161,17 @@
                     <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100">
                         <div class="newinntalx">
                         <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
-                                <a [ngClass]="rowData['taskCategory'] != 'Analysis' ? '' : 'noopenworkspace'" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
-                                    <img src="../../../assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
-                                </a>
-                                <!-- <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
+                                <!-- <a [ngClass]="rowData['taskCategory'] != 'Analysis' ? '' : 'noopenworkspace'" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
                                     <img src="../../../assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
                                     <img src="../../../assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
                                 </a> -->
+                                <a *ngIf= "rowData['taskCategory'] == 'Analysis'" class="noopenworkspace">
+                                    <img src="../../../assets/images-n/gridicons/workspace-hide.svg" alt="Open Workspace">
+                                </a>
+                                <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
+                                    <img src="../../../assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
+                                    <img src="../../../assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
+                                </a>
                         </span>
                     <span *ngIf="screenTable !='actionsTable'" >
                         <span *ngIf="show_view_btn" (click)="viewDetailsbyId(rowData)">

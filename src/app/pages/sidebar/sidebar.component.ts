@@ -88,13 +88,13 @@ export class SidebarComponent implements OnInit {
      this.obj.sidebar.showprocessesSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
       this.obj.sidebar.showProjectsSubmenu=false;
-      this.obj.contentMargin = 62;
+      this.obj.contentMargin = 70;
   }
   
   selection(){
     this.role = localStorage.getItem("role")
      this.obj.sideBarOpen=true;
-     this.obj.contentMargin=260;
+     this.obj.contentMargin=270;
    }
 
    getAllPlans() {

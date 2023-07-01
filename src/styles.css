@@ -664,7 +664,7 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-   z-index: 2 !important;
+   z-index: 0 !important;
 }
 
 #sidenav.menu-open {
@@ -1471,7 +1471,6 @@ span.star {
   font-weight: 400;
   margin-bottom: 2px;
   color: var(--formlabel-color);
-  text-transform: capitalize;
 }
 
 .form-group,.form-fields {
@@ -3719,6 +3718,7 @@ background-color: #D8E0EF !important;
 
 .rpasologs .p-dialog-header {
   justify-content: inherit !important;
+  padding-bottom: 5px !important;
 }
 .rpasologs .p-dialog-header-icons {
   margin-left: auto;

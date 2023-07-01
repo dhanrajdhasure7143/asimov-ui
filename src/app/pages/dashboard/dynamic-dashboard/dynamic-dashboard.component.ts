@@ -99,7 +99,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Updated successfully",
+          detail: "Updated successfully!",
         });
         // this.dashboardData.widgets[index].filterOptions = [
         //   ...this.dashboardData.widgets[index].filterOptions.map(
@@ -181,7 +181,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Error...",
+          detail: "Failed to update!",
         });
       }
     );
@@ -206,7 +206,7 @@ export class DynamicDashboardComponent implements OnInit {
           this.messageService.add({
             severity: "error",
             summary: "Error",
-            detail: response.message + ' !',
+            detail: response.message + '!',
           });
         }
       },err=>{
@@ -214,7 +214,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: "Failed to Update !",
+          detail: "Failed to update!",
         });
       });
   }
@@ -576,7 +576,7 @@ export class DynamicDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: "Error...",
+              detail: "Failed to delete!",
             });
           }
         );
