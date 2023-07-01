@@ -221,6 +221,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         event.preventDefault();
         return false;
       }
+      if ((event.target.selectionStart === 0 && event.code === 'Space')){
+        event.preventDefault();
+      }
   }
 
   async getApproverList(){
