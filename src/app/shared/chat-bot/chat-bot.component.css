@@ -49,3 +49,22 @@
     right: 110px;
     height: calc(100% - 85px);
 }
+.msg-div{
+    /* float: right; */
+    background: lightgray;
+    padding: 0px 10px;
+    /* border: 1px solid; */
+    border-radius: 3px;
+    font-size: 15px;
+    /* min-width: 50px; */
+    /* max-width: 200px; */
+    word-wrap: break-word;
+    text-align: right;
+}
+.msgs-main-div{
+    float: right;
+}
+.msg-sub-div{
+    margin-top: 3px;
+    /* width: 400px; */
+}
