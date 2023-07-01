@@ -580,3 +580,8 @@ p-image.p-element.crtprgm {
 .actionmenu:hover img.hover-icon {
     display: initial;
 }
+.pinnedmsgtext{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

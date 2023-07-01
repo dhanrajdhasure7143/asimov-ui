@@ -198,6 +198,11 @@ export class DynamicDashboardComponent implements OnInit {
             summary: "Success",
             detail: response.message + '!',
           });
+          let params1 = {
+            dashboardId: this.selectedDashBoard.id,
+            dashboardName: this.selectedDashBoard.dashboardName,
+          };
+          this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
         this.inplace.deactivate();
         }
         if (response.code == 8010) {
@@ -595,7 +600,14 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.createDashBoard(req_data).subscribe((response: any) => {
       if(response.code == 4200){
         let res_data = response.data
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: 'Created successfully!',
+        });
+        // setTimeout(() => {
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
+        // }, 200);
       }
       if(response.code == 8010){
         this.messageService.add({

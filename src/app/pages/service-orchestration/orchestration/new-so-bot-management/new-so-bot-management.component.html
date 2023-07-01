@@ -179,7 +179,7 @@
             </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th *ngFor="let each of columnList" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn>{{each.DisplayName}}
+                    <th *ngFor="let each of columnList" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
                       <p-columnFilter *ngIf="each.ShowFilter && each.ColumnName != 'department'&&each.ColumnName != 'botStatus'" [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName"
                                 display="menu" [showApplyButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
