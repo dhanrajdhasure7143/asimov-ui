@@ -3,9 +3,9 @@
         <div class="row">
             <div class="form-group col p-0">
               <label class="" for="taskName">Task Name<span class="star">*</span></label>
-              <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="taskName"
+              <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="taskName" (keydown)="spaceNotAllow($event)"
                   placeholder="Enter Task Name" required>
-              <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
+              <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched  && !createtaskForm.controls['taskName'].hasError('maxlength')"
                   class="required">Task Name Required</span>
               <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="required">
                   Maximum of 50 characters
@@ -175,7 +175,7 @@
                           </textarea> -->
                     <!-- <textarea pInputTextarea formControlName="description"   placeholder="Enter Description"
                     [autoResize]="true" style="min-height:56px;overflow:auto" required></textarea> -->
-                    <p-editor formControlName="description" >
+                    <p-editor formControlName="description" (onTextChange)="ContainsSpaces($event)">
                       <!-- <ng-template pTemplate="header">
                           <span class="ql-formats">
                           </span>
@@ -193,6 +193,7 @@
                     <span *ngIf="(createtaskForm.get('description').invalid && createtaskForm.get('description').touched)&& 
                     !createtaskForm.controls['description'].hasError('maxlength')"
                     class="required">Task Description Required</span>
+                    <span *ngIf="invalidText && !createtaskForm.get('description').invalid && createtaskForm.get('description').touched" class="required">Only spaces are allowed between words</span>
                 </div>
             </div>
         </div>
@@ -200,7 +201,7 @@
   
     <div class="createform-footer">
         <button (click)="resettask()" class="btn new-cancelbtn">Reset</button>
-        <button [disabled]="createtaskForm.invalid || taskDescriptionFlag" (click)="savetasks()"
+        <button [disabled]="createtaskForm.invalid || taskDescriptionFlag || invalidText" (click)="savetasks()"
           class="btn bluebg-button">Create</button>
     </div>
 </div>

@@ -113,7 +113,7 @@
                                             <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
                                             {{rowData[col.ColumnName]}} </span>
                                         <span *ngIf="screenTable != 'taskList' && col.ColumnName !='changeActivity' && col.ColumnName !='deploy_status_new' && col.ColumnName!='approvalInfo'">
-                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
+                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments' && col.ColumnName !='ColumnName' && col.ColumnName !='DisplayName'  && col.ColumnName !='column_name')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
                                             {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
                                         </span>
                                         <span *ngIf="screenTable == 'environment_table' && col.ColumnName =='deploy_status_new'">
