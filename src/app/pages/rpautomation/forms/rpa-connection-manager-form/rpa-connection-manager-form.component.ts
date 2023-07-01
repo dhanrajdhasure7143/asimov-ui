@@ -559,14 +559,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isScopeField = false;
       this.isRefreshToken = false;
       this.isRefresh = true;
-      const setValidators: string[] = ['userName', 'password'];
+      const setValidators: string[] = ['userName', 'password','clientId','clientSecret'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
           if(key == 'userName')
-            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9@.]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9@.]+)@\\])$")]);
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9@._]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9@._]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'password')
-            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\@\\$\\#&\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\@\\$\\#&\\/]+)@\\])$")]);
+            this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\@\\$\\#&\\/\\^*]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\@\\$\\#&\\/\\^*]+)@\\])$")]);
+            this.connectorForm.get(key).updateValueAndValidity();
+          if(key =='clientId')
+            this.connectorForm.get(key).setValidators([]);
+            this.connectorForm.get(key).updateValueAndValidity();
+          if(key =='clientSecret')
+            this.connectorForm.get(key).setValidators([]);
             this.connectorForm.get(key).updateValueAndValidity();
         }
       });
@@ -644,7 +650,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.grantItems = Object.keys(res).map(key => ({
         type: key,
         value: res[key]
-      })).filter(item => !['Implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
+      })).filter(item => !['implicit', 'AuthorizationCodeWithPKCE'].includes(item.type));
     });
     return this.authItems;
   }
@@ -791,14 +797,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
-        const setValidators: string[] = ['userName','password'];
+        const setValidators: string[] = ['userName','password', 'clientId', 'clientSecret'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
             if(key == 'userName')
-              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9@.]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9@.]+)@\\])$")]);
+              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9@._]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9@._]+)@\\])$")]);
               this.connectorForm.get(key).updateValueAndValidity();
             if(key == 'password')
-              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\@\\$\\#&\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\@\\$\\#&\\/]+)@\\])$")]);
+              this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\@\\$\\#&\\/\\^*]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~\\@\\$\\#&\\/\\^*]+)@\\])$")]);
+              this.connectorForm.get(key).updateValueAndValidity();
+            if(key =='clientId')
+              this.connectorForm.get(key).setValidators([]);
+              this.connectorForm.get(key).updateValueAndValidity();
+            if(key =='clientSecret')
+              this.connectorForm.get(key).setValidators([]);
               this.connectorForm.get(key).updateValueAndValidity();
           }
         });
