@@ -1,6 +1,6 @@
 <div [id]="dragareaid">
-  <div class="studio_main">
-    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
+  <div  class="studio_main">
+    <div class="drag-area" [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
         workspace: disable,
         dndDropzoneDisabled: false,
         lightTheme: lightTheme
