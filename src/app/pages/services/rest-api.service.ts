@@ -1822,4 +1822,8 @@ checkActionName(connectorId:any, actionName:any) {
 checkRunningAction(actionId:any){
   return this.http.get(`/rpa-service/action/getBotName/${actionId}`)
 }
+
+updateBotImage(botid,data:any){
+  return this.http.put("/rpa-service/updateBotImage/"+botid, data);
+}
 }

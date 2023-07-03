@@ -377,7 +377,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     else{
       this.versionControlPopup.hide();
       this.childBotWorkspace.reset('');
-      this.current_instance.updateBotFun(this.version_type,this.comments);
+      this.current_instance.acceptUpdateBotWithDeprecatedTasks(this.version_type,this.comments);
     }
   }
 

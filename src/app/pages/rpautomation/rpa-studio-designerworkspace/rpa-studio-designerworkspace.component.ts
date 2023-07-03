@@ -161,6 +161,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCreateForm:boolean=true;
   credupdatedata:any;
   credentialsFormFlag:boolean=false;
+  isDeprecated: boolean;
+  taskNames: any;
+  modifiedTaskNames: any = [];
   startStopCoordinates:any="";
   constructor(
     private rest: RestApiService,
@@ -224,6 +227,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateBotNodes();
     this.passwordtype1 = false;
     this.passwordtype2 = false;
     this.spinner.show();
@@ -1806,7 +1810,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.finalbot["comments"] = comments;
       this.modalRef = this.modalService.show(this.checkBotTemplate);
     } else {
-      this.updateBotFun(versionType, comments);
+      this.acceptUpdateBotWithDeprecatedTasks(versionType, comments);
     }
   }
 
@@ -1837,7 +1841,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           "",
           url.split("botId")[0] + "botId=" + response.botId
         );
-        this.updateBotFun(versionType, comments);
+        this.updateFinalBot(versionType, comments);
       },
       (err) => {
         this.spinner.hide();
@@ -1869,7 +1873,62 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
   }
 
-  async updateBotFun(version_type, comments) {
+  updateBotNodes(){
+    this.rest.getbotdata(this.finalbot.botId).subscribe((response: any) => {
+      if(response.errorMessage){
+        alert("unable to get bot details")
+        return;
+      }
+        if(response.tasks.find((item:any)=>item.isModified==true))
+          this.isDeprecated=true;
+        else
+          this.isDeprecated=false;
+        for(let i = 0; i < response.tasks.length; i++){  
+            if((response.tasks[i].nodeId.split("__")[1]))
+              this.nodes.find((item:any)=>item.id==(response.tasks[i].nodeId.split("__")[1])).isModified=response.tasks[i].isModified;
+            if(response.tasks[i].isModified){
+              this.modifiedTaskNames.push(response.tasks[i].taskName);
+              if((response.tasks[i].nodeId.split("__")[1])){
+                this.nodes.find((item:any)=>item.id==(response.tasks[i].nodeId.split("__")[1])).isModified=true;
+              }
+            } 
+        }
+        this.jsPlumbInstance.repaintEverything();
+    });
+  }
+
+  saveBotImage(){
+   this.getsvg();
+    let data = {
+      "botImage" : this.svg
+    }
+    this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
+      console.log(res,"res")
+    })
+  }
+
+  async acceptUpdateBotWithDeprecatedTasks(version_type, comments) {
+    if(this.isDeprecated == true){
+      const message = `Deprecated task present in the bot, <br>
+      <span class="bold">${this.modifiedTaskNames.join(', ')}</span>
+      Unless you update, bot will run with default values. Do you want to proceed with Update?`;
+   this.confirmationService.confirm({
+     message: message,
+     header: 'Are you sure?',
+     accept: () => {
+       this.spinner.hide();
+     },
+     reject: async (type) => {
+      this.updateFinalBot(version_type, comments);
+     },
+     key: "positionDialog"
+   });
+   } else {
+    this.updateFinalBot(version_type, comments);
+   }
+  }
+
+  async updateFinalBot(version_type:any, comments:any){
     let env = [
       ...this.filteredEnvironments
         .filter((item: any) => item.check == true)
@@ -1887,8 +1946,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     {
       this.final_tasks=this.finaldataobjects;
     }
+    await this.getsvg()
     this.get_coordinates();
-    await this.getsvg();
     this.rpaAuditLogs(env);
     await this.validateBotNodes();
     if(this.executionMode)
@@ -1954,7 +2013,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         groups: this.getGroupsInfo(),
         lastSubmittedBy: "admin",
         scheduler: null,
-        svg: this.svg,
+        svg: "",
         sequences: this.getsequences(),
         isBotCompiled: this.isBotCompiled,
         executionMode: this.executionMode?"v1":"v2",
@@ -1989,8 +2048,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.actualEnv = [...response.envIds];
               // Swal.fire("Success", "Bot updated successfully", "success");
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
-
               this.uploadfile(response.envIds, response.tasks);
+              this.updateBotNodes();
+              this.saveBotImage();
               let auditLogsList = [
                 ...this.auditLogs.map((item) => {
                   item["versionNew"] = response.versionNew;
@@ -2023,6 +2083,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                       "success",
                       "Audit logs updated successfully!"
                     );
+
                   } else {
                     // Swal.fire("Error", response.errorMessage, "error");
                     this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
@@ -2809,32 +2870,48 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.messageService.add({severity:'warn',summary:'Warning',detail:'Please check the connections.'})
       return;
     }
+
+    if(this.isDeprecated == true){
+      this.confirmationService.confirm({
+        message: "Deprecated task present in the bot, Do you want to execute with default values?",
+        header: 'Are you Sure?',
+        accept: () => {
+         this.deprecatedExecuteBot()
+        },
+        reject: (type) => {
+          this.spinner.hide();
+        },
+        key: "positionDialog"
+      });
+    } else {
+      this.deprecatedExecuteBot()
+    }
+  }
+
+  async deprecatedExecuteBot(){
     if(this.isBotCompiled) {
       this.spinner.show();
       this.rest.execution(this.finalbot.botId).subscribe(
         (response: any) => {
           this.spinner.hide();
-          if (response.errorMessage == undefined)
+          if (response.errorMessage == undefined){
             // Swal.fire("Success", response.status, "success");
-      this.messageService.add({severity:'success',summary:'Success',detail:response.status})
-
-          else
+            this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+            this.updateBotNodes();                   
+          } else {
           //  Swal.fire("Error", response.errorMessage, "error");
-      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+          }
         },
         (err) => {
           this.spinner.hide();
           // Swal.fire("Error", "Unable to execute bot", "error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
-
-
+          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
         }
       );
     } else {
       // Swal.fire("Error", "Unable to execute bot", "error");
       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
-
     }
   }
 
