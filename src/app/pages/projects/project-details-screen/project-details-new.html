@@ -381,9 +381,10 @@
                                         class="testplus" (click)="sendMessage(null,'unpinned')">
                                     <span class="pinnedmsgtext"
                                         (click)="scrollTomain(_pinnedMessage[0],'pin_message')">
-                                        <!-- <p [innerHTML]="(pinnedMessage[0].message) | sanitizeHtml : users_list" class="usermessage"></p> -->
+                                        <p [innerHTML]="truncatemessage((_pinnedMessage[0].message) | sanitizeHtml : users_list)" class="usermessage"></p>
                                         
-                                        {{truncatemessage(_pinnedMessage[0].message)}}</span>
+                                        <!-- {{truncatemessage(_pinnedMessage[0].message)}} -->
+                                        </span>
                                 </div>
                             </span>
                             <div id="message-body" class="selectable" *ngIf="messages_list.length != 0">
@@ -546,8 +547,8 @@
                                         <div class="newinntalx">
                                             <a (click)="deleteuserById(rowData)" pTooltip="Delete"
                                                 tooltipPosition="top">
-                                                <img src="../../../../assets/images-n/gridicons/delete-default.svg" alt="delete" class="default-icon">
-                                                <img src="../../../../assets/images-n/gridicons/delete-hover.svg" alt="delete" class="hover-icon">
+                                                <img src="../../../../assets/images-n/gridicons/delete-default.svg" alt="delete" class="testplus default-icon">
+                                                <img src="../../../../assets/images-n/gridicons/delete-hover.svg" alt="delete" class="testplus hover-icon">
                                             </a>
                                         </div>
                                     </span>

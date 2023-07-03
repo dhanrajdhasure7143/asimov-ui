@@ -618,17 +618,17 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.checktodelete();
     this.getRecentactivities();
     this.snapShotDetails();
-    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+' !'});
+    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+'!'});
     this.checkBoxselected =[];
     // this.onUsersTab(0);
     this.spinner.hide();
   }
   else {
-    this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
+    this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage+'!'});
     this.spinner.hide();
   }
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource."});
+  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource!"});
   this.spinner.hide();
 })
 }
@@ -1427,8 +1427,8 @@ ngOnDestroy() {
 }
 
 truncatemessage(data){
-  if(data && data.length > 66)
-    return data.substr(0,65)+'...';
+  if(data && data.length > 55)
+    return data.substr(0,54)+'...';
   return data;
 }
 
@@ -1604,8 +1604,8 @@ selectEnd() {
   };
 
   truncateValue(replyMessage) {
-    if (replyMessage && replyMessage.length > 21)
-      return replyMessage.substr(0, 20) + "...";
+    if (replyMessage && replyMessage.length > 41)
+      return replyMessage.substr(0, 40) + "...";
     return replyMessage;
   };
 

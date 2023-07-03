@@ -164,6 +164,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isDeprecated: boolean;
   taskNames: any;
   modifiedTaskNames: any = [];
+  startStopCoordinates:any="";
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -553,7 +554,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let inseq = String(element.inSeqId);
       let outseq = String(element.outSeqId);
       if (inseq.split("_")[0] == "START") {
-        if (element.x.split("|").length == 3) {
+        if(this.finalbot.startStopCoordinate!=null && this.finalbot.startStopCoordinate!="")
+        {
+          this.coordinates=JSON.parse(this.finalbot.startStopCoordinate);
+        }
+        else if (element.x.split("|").length == 3) {
           this.coordinates = {
             startTaskX: element.x.split("|")[1],
             startTaskY: element.y.split("|")[1],
@@ -2012,6 +2017,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         sequences: this.getsequences(),
         isBotCompiled: this.isBotCompiled,
         executionMode: this.executionMode?"v1":"v2",
+        startStopCoordinate:this.startStopCoordinates,
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
@@ -2245,7 +2251,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       document.getElementById(
-        this.dragareaid
+       this.dragareaid
       ).style.transform = `scale(${this.dagvalue})`;
       this.jsPlumbInstance.repaintEverything();
     }
@@ -2390,54 +2396,69 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   get_coordinates() {
+    let container = document.getElementById('dnd_'+this.dragareaid); // Replace 'container' with the ID of your scrollable container
     this.nodes.forEach((data) => {
       let p: any = $("#" + data.id).first();
       let position: any = p.position();
       for (let i = 0; i < this.finaldataobjects.length; i++) {
         let nodeid = this.finaldataobjects[i].nodeId.split("|")[0].split("__");
         if (nodeid[1] == data.id) {
-          this.finaldataobjects[i].x = position.left + "px";
-          this.finaldataobjects[i].y = position.top + "px";
+          let element = document.getElementById(data.id); // Replace 'element' with the ID of the element inside the containe
+          let containerRect = container.getBoundingClientRect();
+          let elementRect = element.getBoundingClientRect();
+          this.finaldataobjects[i].x =elementRect.left - containerRect.left + container.scrollLeft+"px";
+          this.finaldataobjects[i].y =elementRect.top - containerRect.top + container.scrollTop+"px";
         }
       }
     });
-    if (
-      this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId) !=
-      undefined
-    ) {
-      let firstTask = this.finaldataobjects.find(
-        (item) => item.inSeqId == this.startNodeId
-      );
-      let p1: any = $("#" + firstTask.inSeqId).first();
-      let position1: any = p1.position();
-      this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).x =
-        firstTask.x + "|" + position1.left + "px";
-      this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).y =
-        firstTask.y + "|" + position1.top + "px";
-    }
+    let p: any = $("#" + this.startNodeId).first();
+    let startTaskPosition: any = p.position();
+    let stop = $("#" + this.stopNodeId).first();
+    let stopTaskPosition: any = stop.position();
 
-    if (
-      this.finaldataobjects.find((item) => item.outSeqId == this.stopNodeId) !=
-      undefined
-    ) {
-      let lastTask = this.finaldataobjects.find(
-        (item) => item.outSeqId == this.stopNodeId
-      );
-      let pn: any = $("#" + lastTask.outSeqId).first();
-      let positionn: any = pn.position();
-      this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).x =
-        this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId)
-          .x +
-        "|" +
-        positionn.left +
-        "px";
-      this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).y =
-        this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId)
-          .y +
-        "|" +
-        positionn.top +
-        "px";
-    }
+    this.startStopCoordinates=JSON.stringify({
+      startTaskX:startTaskPosition.left+"px",
+      startTaskY:startTaskPosition.top+"px",
+      stopTaskX:stopTaskPosition.left+"px",
+      stopTaskY:stopTaskPosition.top+"px",
+    })
+    // if (
+    //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId) !=
+    //   undefined
+    // ) {
+    //   let firstTask = this.finaldataobjects.find(
+    //     (item) => item.inSeqId == this.startNodeId
+    //   );
+    //   let p1: any = $("#" + firstTask.inSeqId).first();
+    //   let position1: any = p1.position();
+    //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).x =
+    //     firstTask.x + "|" + position1.left + "px";
+    //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).y =
+    //     firstTask.y + "|" + position1.top + "px";
+    // }
+
+    // if (
+    //   this.finaldataobjects.find((item) => item.outSeqId == this.stopNodeId) !=
+    //   undefined
+    // ) {
+    //   let lastTask = this.finaldataobjects.find(
+    //     (item) => item.outSeqId == this.stopNodeId
+    //   );
+    //   let pn: any = $("#" + lastTask.outSeqId).first();
+    //   let positionn: any = pn.position();
+    //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).x =
+    //     this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId)
+    //       .x +
+    //     "|" +
+    //     positionn.left +
+    //     "px";
+    //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId).y =
+    //     this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId)
+    //       .y +
+    //     "|" +
+    //     positionn.top +
+    //     "px";
+    // }
   }
 
   openoutputmenu(node) {

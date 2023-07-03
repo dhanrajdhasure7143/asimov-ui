@@ -249,7 +249,9 @@ h4.colheads.chatheader {
     margin-bottom: 0px;
 }
 .pinnedmsgs {
-    background-color: #e5e5e5;
+    background-color: #efefef;
+    box-shadow: 1px 2px 5px #c3c3c3;
+    border-top: 1px solid #dedede;
     padding: 8px 10px 8px 20px;
     display: flex;
     align-items: center;
@@ -270,6 +272,8 @@ h4.colheads.chatheader {
     top: -18px;
     right: 8px;
     margin: 0px;
+    color: #7D7D7D;
+    font-size: 12px;
 }
 .rply-msg {
     background-color: #fff;
@@ -353,6 +357,9 @@ input.msgip {
 }
 .collabottom button:last-child {
     padding: 0px 0px 0px 4px !important;
+}
+.collabottom button[disabled] img {
+    opacity: 0.7;
 }
 .emptychat {
     display: flex;
@@ -480,6 +487,8 @@ p.qcard-name {
     margin-bottom: 0px !important;
     line-height: 1.5;
     margin-right: 10px;
+    font-weight: 600;
+    font-size: 18px;
 }
 .quick-actions button.btn.blue-btntext {
     padding-top: 0px !important;
@@ -570,4 +579,9 @@ p-image.p-element.crtprgm {
 .newinntalx a:hover img.hover-icon,
 .actionmenu:hover img.hover-icon {
     display: initial;
+}
+.pinnedmsgtext{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
