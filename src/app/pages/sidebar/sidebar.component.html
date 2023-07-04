@@ -20,6 +20,23 @@
           <span class="side-menu-font">Dashboard</span>
         </a>
 
+        <a mat-list-item class="link" [ngClass]="_selectedModule=='processlogs'?'active':'' " id="processlogs" (click)="hightlight('eiap-home',null)"
+          routerLink="/pages/processIntelligence/automate" [matTooltip]=" !obj.sideBarOpen ? 'processlogs' : ''" matTooltipClass="sidebarTooltip"
+          matTooltipPosition="right">
+          <span class="side-icon">
+            <span class="active-img" id="eiap-home-icon-active">
+              <img src="../../../assets/images/Sidebar/Dashboard-Active.svg" alt="">
+            </span>
+            <span class="hover-img" id="eiap-home-icon-white">
+              <img src="../../../assets/images/Sidebar/Dashboard-Hover.svg" alt="">
+            </span>
+            <span class="default-img" id="eiap-home-icon-gray">
+              <img src="../../../assets/images/Sidebar/Dashboard-Normal.svg" alt="">
+            </span>
+          </span>
+          <span class="side-menu-font">Process Logs</span>
+        </a>
+
 
         <!-- <a mat-list-item class="link" id="dashboard" (click)="navigateToDashBoard()"
          [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''"

@@ -25,10 +25,12 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { SplitOverlayComponent } from './split-overlay/split-overlay.component';
 import { AngularSplitModule } from 'angular-split';
 import { UserLettersPipe } from './pipes/user-letters.pipe';
+import { ChatBotComponent } from './chat-bot/chat-bot.component';
+import { ProcessLogsComponent } from './process-logs/process-logs.component';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent],
     imports: [
         CommonModule,
         NgxDropzoneModule,
@@ -47,6 +49,6 @@ import { UserLettersPipe } from './pipes/user-letters.pipe';
     ],
     providers: [],
     exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent,
-        SplitOverlayComponent, UserLettersPipe]
+        SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent]
 })
 export class SharedModule { }

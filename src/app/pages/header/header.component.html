@@ -90,6 +90,12 @@
       <p-tieredMenu #menu [model]="tenantsList" [popup]="true"></p-tieredMenu>
     </div>
 
+
+    <i class="pi pi-comments" style="cursor: pointer;font-size:1.5rem;color: white;padding-right:5px;"(click)="chatClick()"></i>
+    <div [hidden]="!isChatOpen" style="position: absolute;z-index: 9999;">
+      <app-chat-bot (closeOverlay)="closeFormOverlay()"></app-chat-bot>
+    </div>
+
     <!-- <div class="space">
       <div class="">
         <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
