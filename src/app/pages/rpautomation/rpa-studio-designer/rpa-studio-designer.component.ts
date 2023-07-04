@@ -448,7 +448,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   onBotCreate(event) {
-    debugger
     if (event != null) {
       if (event.case == "create") {
         if(!isNaN(event.botId)){
