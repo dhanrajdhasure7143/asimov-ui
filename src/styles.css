@@ -2303,6 +2303,19 @@ button {
   border: none;
   background: transparent;
 }
+/* Prime Tooltip Custom Styles Start */
+.p-tooltip {
+  width: max-content !important;
+}
+.p-tooltip .p-tooltip-text {
+  background-color: #001c47 !important;
+  font-size: 12px !important;
+}
+.p-tooltip .p-tooltip-arrow {
+  border-top-color: #001c47 !important;
+}
+/* Prime Tooltip Custom Styles End */
+
 /* Scrollbar styles START */
  ::-webkit-scrollbar {
   width: 7px;

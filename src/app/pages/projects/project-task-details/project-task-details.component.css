@@ -272,3 +272,15 @@ button.btn.btn-primary.savefoldername {
 .content div:last-child .commentaddedby {
   border-bottom: unset;
 }
+
+.taskassignby p {
+  width: 88%;
+}
+.taskresource p,
+.taskassignby span {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

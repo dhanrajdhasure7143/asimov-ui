@@ -108,13 +108,13 @@
                                 </div>
                                 <div class="prjdetfields">
                                     <div class="pinf taskassignby">
-                                       <p> <span class="non-editablefield">{{task_details.createdBy}}</span></p>
+                                       <p><span class="non-editablefield" pTooltip="{{task_details.createdBy}}" tooltipPosition="top">{{task_details.createdBy}}</span></p>
                                         <label>Assigned By</label>
                                     </div>
                                     <div class="pinf taskresource">
                                         <p-inplace #inplace1 (onActivate)="inplaceActivate('resources','inplace1')">
                                             <ng-template pTemplate="display">
-                                                <p >{{task_details.resources| userPipe : users_list}}</p>
+                                                <p pTooltip="{{task_details.resources| userPipe : users_list}}" tooltipPosition="top">{{task_details.resources| userPipe : users_list}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">                                            
                                                 <p-dropdown [options]="users_list" [filter]="true"

@@ -94,7 +94,7 @@
                                     <div class="pinf procowner">
                                         <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                             <ng-template pTemplate="display">
-                                                <p class="" pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}">{{projectDetails.processOwner?(projectDetails.processOwner| userPipe : users_list):'-'}}</p>
+                                                <p pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}" tooltipPosition="top">{{projectDetails.processOwner?(projectDetails.processOwner| userPipe : users_list):'-'}}</p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
                                                 <p-dropdown [options]="users_List1" [filter]="true"
@@ -147,7 +147,7 @@
                                         <label>Status</label>
                                     </div>
                                     <div class="pinf prjowner">
-                                        <p><span class="non-editablefield">{{projectDetails.owner| userPipe : users_list}}</span></p>
+                                        <p><span class="non-editablefield" pTooltip="{{projectDetails.owner| userPipe : users_list}}" tooltipPosition="top">{{projectDetails.owner| userPipe : users_list}}</span></p>
                                         <label>Created By</label>
                                     </div>
                                     <div class="pinf prjlastupdated">
@@ -533,7 +533,7 @@
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr *ngIf="users_tabIndex == 1">
-                                <th *ngFor="let col of columns">{{col.DisplayName}}
+                                <th id="" *ngFor="let col of columns">{{col.DisplayName}}
                                 </th>
                             </tr>
                         </ng-template>

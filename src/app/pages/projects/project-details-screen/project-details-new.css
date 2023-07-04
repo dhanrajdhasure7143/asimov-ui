@@ -585,3 +585,17 @@ p-image.p-element.crtprgm {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.pinnedmsgtext p {
+    margin-bottom: 0;
+}
+.prjowner p {
+    width: 88%;
+}
+.procowner p,
+.prjowner span {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
