@@ -91,7 +91,7 @@
     </div>
 
 
-    <i class="pi pi-comments" style="cursor: pointer;font-size:1.5rem;color: white;padding-right:5px;"(click)="chatClick()"></i>
+    <div *ngIf="isChatEnable"><i class="pi pi-comments" style="cursor: pointer;font-size:1.5rem;color: white;padding-right:5px;"(click)="chatClick()"></i></div>
     <div [hidden]="!isChatOpen" style="position: absolute;z-index: 9999;">
       <app-chat-bot (closeOverlay)="closeFormOverlay()"></app-chat-bot>
     </div>
