@@ -283,7 +283,6 @@ export class RpaDatabaseFormComponent implements OnInit {
   }
 
   changeDatabaseType(event){
-    debugger
     if(event.target.value=='Snowflake'){
       this.hideLabels = true
       this.snowflakeflag=true;
