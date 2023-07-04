@@ -5,6 +5,7 @@
         dndDropzoneDisabled: false,
         lightTheme: lightTheme
       }">
+      <!--Nodes inside designer-->
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{ node.id }}" class="dndDropzone" [ngClass]="node.isModified?'hide-node':''" [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
           (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
@@ -81,6 +82,7 @@
           </div>
         </div>
       </ng-container>
+      <!--Show bot Image when no nodes in designer-->
       <div *ngIf="nodes.length == 0" class="dragactionsdiv">
         <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
         <span>Drag an action here...</span>
