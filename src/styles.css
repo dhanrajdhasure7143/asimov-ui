@@ -2304,9 +2304,6 @@ button {
   background: transparent;
 }
 /* Prime Tooltip Custom Styles Start */
-.p-tooltip {
-  width: max-content !important;
-}
 .p-tooltip .p-tooltip-text {
   background-color: #001c47 !important;
   font-size: 12px !important;

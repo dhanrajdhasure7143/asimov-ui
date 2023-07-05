@@ -94,7 +94,9 @@
                                     <div class="pinf procowner">
                                         <p-inplace #inplace2 (onActivate)="inplaceActivate('processOwner','inplace2')">
                                             <ng-template pTemplate="display">
-                                                <p pTooltip="{{ projectDetails.processOwner| userPipe : users_list}}" tooltipPosition="top">{{projectDetails.processOwner?(projectDetails.processOwner| userPipe : users_list):'-'}}</p>
+                                                <p pTooltip="{{projectDetails.processOwner?(projectDetails.processOwner| userPipe : users_list):'-'}}" tooltipPosition="top">
+                                                    <span>{{truncateProcowner(projectDetails.processOwner?(projectDetails.processOwner| userPipe : users_list):'-')}}</span>
+                                                </p>
                                             </ng-template>
                                             <ng-template pTemplate="content">
                                                 <p-dropdown [options]="users_List1" [filter]="true"
@@ -147,7 +149,9 @@
                                         <label>Status</label>
                                     </div>
                                     <div class="pinf prjowner">
-                                        <p><span class="non-editablefield" pTooltip="{{projectDetails.owner| userPipe : users_list}}" tooltipPosition="top">{{projectDetails.owner| userPipe : users_list}}</span></p>
+                                        <p pTooltip="{{projectDetails.owner| userPipe : users_list}}" tooltipPosition="top">
+                                            <span class="non-editablefield">{{truncatePrjonwer(projectDetails.owner| userPipe : users_list)}}</span>
+                                        </p>
                                         <label>Created By</label>
                                     </div>
                                     <div class="pinf prjlastupdated">

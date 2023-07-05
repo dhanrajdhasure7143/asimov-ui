@@ -1608,6 +1608,18 @@ selectEnd() {
       return replyMessage.substr(0, 40) + "...";
     return replyMessage;
   };
+  
+  truncateProcowner(procownername) {
+    if (procownername && procownername.length > 26)
+      procownername = procownername.substr(0, 25) + "...";
+    return procownername;
+    
+  };
+  truncatePrjonwer(projownername) {
+    if (projownername && projownername.length > 21)
+      projownername = projownername.substr(0, 20) + "...";
+    return projownername;
+  };
 
 }
 
