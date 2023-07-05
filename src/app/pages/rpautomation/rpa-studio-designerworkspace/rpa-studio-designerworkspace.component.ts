@@ -227,7 +227,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateBotNodes();
+    this.updateBotNodes(false);
     this.passwordtype1 = false;
     this.passwordtype2 = false;
     this.spinner.show();
@@ -1849,7 +1849,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
   }
 
-  updateBotNodes(){
+  updateBotNodes(updateBotImageFlag:Boolean){
     this.rest.getbotdata(this.finalbot.botId).subscribe((response: any) => {
       if(response.errorMessage){
         alert("unable to get bot details")
@@ -1871,18 +1871,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
         
         this.jsPlumbInstance.repaintEverything();
-        this.saveBotImage();
-         
+        if(updateBotImageFlag)
+          setTimeout(()=>{
+            this.saveBotImage();
+          },500)
     });
   }
 
-  saveBotImage(){
-    this.getsvg();
+  async saveBotImage(){
+    await this.getsvg();
     let data = {
       "botImage" : this.svg
     }
     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
-      console.log(res,"updated bot Image")
+      this.notifier.notify("success","Bot Image updated successfully")
     })
   }
 
@@ -2028,7 +2030,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               // Swal.fire("Success", "Bot updated successfully", "success");
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
               this.uploadfile(response.envIds, response.tasks);
-              this.updateBotNodes();
+              this.updateBotNodes(true);
               let auditLogsList = [
                 ...this.auditLogs.map((item) => {
                   item["versionNew"] = response.versionNew;
@@ -2875,7 +2877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if (response.errorMessage == undefined){
             // Swal.fire("Success", response.status, "success");
             this.messageService.add({severity:'success',summary:'Success',detail:response.status})
-            this.updateBotNodes();                   
+            this.updateBotNodes(false);                   
           } else {
           //  Swal.fire("Error", response.errorMessage, "error");
           this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
