@@ -551,87 +551,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public coordinates: any;
   public loadnodes() {
     this.finaldataobjects.forEach((element, index) => {
-      let inseq = String(element.inSeqId);
-      let outseq = String(element.outSeqId);
-      if (inseq.split("_")[0] == "START") {
-        if(this.finalbot.startStopCoordinate!=null && this.finalbot.startStopCoordinate!="")
-        {
-          this.coordinates=JSON.parse(this.finalbot.startStopCoordinate);
-        }
-        else if (element.x.split("|").length == 3) {
-          this.coordinates = {
-            startTaskX: element.x.split("|")[1],
-            startTaskY: element.y.split("|")[1],
-            stopTaskX: element.x.split("|")[2],
-            stopTaskY: element.y.split("|")[2],
-          };
-          element.x = element.x.split("|")[0];
-          element.y = element.y.split("|")[0];
-        }
-        let startnode = {
-          id: inseq,
-          name: "START",
-          selectedNodeTask: "",
-          selectedNodeId: "",
-          path: "/assets/images/RPA/Start.png",
-        };
-        if (this.coordinates != undefined) {
-          startnode["x"] =
-            this.coordinates.startTaskX == undefined
-              ? "10px"
-              : this.coordinates.startTaskX;
-          startnode["y"] =
-            this.coordinates.startTaskY == undefined
-              ? "10px"
-              : this.coordinates.startTaskY;
-        } else {
-          startnode["x"] = "10px";
-          startnode["y"] = "10px";
-        }
-
-        this.startNodeId = startnode.id;
-        if (this.nodes.find((item) => item.id == startnode.id) == undefined) {
-          this.nodes.push(startnode);
-          setTimeout(() => {
-            this.populateNodes(startnode);
-          }, 240);
-        }
-      }
-      if (outseq.split("_")[0] == "STOP") {
-        //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
-
-        let stopnode = {
-          id: outseq,
-          name: "STOP",
-          selectedNodeTask: "",
-          selectedNodeId: "",
-          path: "/assets/images/RPA/Stop.png",
-          // x: "900px",
-          // y: "396px",
-          // x: (this.coordinates[3]!=undefined)?(this.coordinates[3]+"px"):"900px",
-          // y: (this.coordinates[4]!=undefined)?(this.coordinates[4]+"px"):"300px",
-        };
-        if (this.coordinates != undefined) {
-          stopnode["x"] =
-            this.coordinates.stopTaskX == undefined
-              ? "900px"
-              : this.coordinates.stopTaskX;
-          stopnode["y"] =
-            this.coordinates.stopTaskY == undefined
-              ? "300px"
-              : this.coordinates.stopTaskY;
-        } else {
-          stopnode["x"] = "900px";
-          stopnode["y"] = "300px";
-        }
-        this.stopNodeId = stopnode.id;
-        if (this.nodes.find((item) => item.id == stopnode.id) == undefined) {
-          this.nodes.push(stopnode);
-         setTimeout(() => {
-            this.populateNodes(stopnode);
-         }, 240);
-        }
-      }
       let templatenodes: any = [];
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
@@ -680,6 +599,58 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }, 240);
       }
     });
+    //load start and stop node
+    if(this.nodes.length>0)
+    {
+        let startNode:any={
+          id:"",
+          name: "START",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Stop.png",
+          x:"",
+          y:""
+        };
+        let stopNode:any={
+          id:"",
+          name: "STOP",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Stop.png",
+          x:"",
+          y:""
+        }
+        let startNodeId=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
+        let stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
+        (startNodeId)?startNode["id"]=startNodeId:startNode["id"]=((this.startStopCoordinates.startNodeId)?this.startStopCoordinates.startNodeId:"START_"+this.finalbot.botName);
+        (stopNodeId)?stopNode["id"]=stopNodeId:stopNode["id"]=((this.startStopCoordinates.stopNodeId)?this.startStopCoordinates.stopNodeId:"STOP_"+this.finalbot.botName);
+        this.startNodeId=startNode["id"];
+        this.stopNodeId=stopNode["id"];
+        if(this.finalbot.startStopCoordinate!=null && this.finalbot.startStopCoordinate!="")
+        {
+          let coordinates=JSON.parse(this.finalbot.startStopCoordinate);
+          startNode["x"]=coordinates.startTaskX;
+          startNode["y"]=coordinates.startTaskY;
+          stopNode["x"]=coordinates.stopTaskX;
+          stopNode["y"]=coordinates.stopTaskY;
+        }
+        else
+        {
+          startNode["x"]="5px";
+          startNode["y"]="5px";
+          stopNode["x"]="900px";
+          stopNode["y"]="900px";
+        }
+        this.nodes.push(startNode);
+        setTimeout(()=>{
+          this.populateNodes(startNode);
+        },240);
+        this.nodes.push(stopNode)
+        setTimeout(()=>{
+          this.populateNodes(stopNode);
+        },240);
+    }
+
   }
 
   public addconnections(sequences) {
@@ -821,9 +792,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.stud = [];
     this.optionsVisible = true;
     const obs = fromEvent(document.body, "  ").subscribe((e) => {});
-    this.changePx = this.getMousePos(event.event.target, event);
+   // this.changePx = this.getMousePos(event);
 
-    var mousePos = this.getMousePos(event.event.target, event);
+    var mousePos = this.getMousePos(event);
     const dropCoordinates = {
       x: mousePos.x + "px",
       y: mousePos.y + "px",
@@ -980,12 +951,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
   }
 
-  getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
+  getMousePos(event:any) {
+    let dropContainer=document.getElementById("dnd_"+this.dragareaid);
     return {
-      x: evt.event.clientX - rect.left,
-      y: evt.event.clientY - rect.top,
-    };
+      x:event.event.offsetX+dropContainer.scrollLeft,
+      y:event.event.offsetY+dropContainer.scrollTop
+    }
+    //var rect = canvas.getBoundingClientRect();
+    // return {
+    //   x: evt.event.clientX - rect.left,
+    //   y: evt.event.clientY - rect.top,
+    // };
   }
 
   callFunction(menu, tempnode) {
@@ -1893,17 +1869,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               }
             } 
         }
+        
         this.jsPlumbInstance.repaintEverything();
+        this.saveBotImage();
+         
     });
   }
 
   saveBotImage(){
-   this.getsvg();
+    this.getsvg();
     let data = {
       "botImage" : this.svg
     }
     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
-      console.log(res,"res")
+      console.log(res,"updated bot Image")
     })
   }
 
@@ -2050,7 +2029,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
               this.uploadfile(response.envIds, response.tasks);
               this.updateBotNodes();
-              this.saveBotImage();
               let auditLogsList = [
                 ...this.auditLogs.map((item) => {
                   item["versionNew"] = response.versionNew;
@@ -2403,25 +2381,25 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       for (let i = 0; i < this.finaldataobjects.length; i++) {
         let nodeid = this.finaldataobjects[i].nodeId.split("|")[0].split("__");
         if (nodeid[1] == data.id) {
-          let element = document.getElementById(data.id); // Replace 'element' with the ID of the element inside the containe
-          let containerRect = container.getBoundingClientRect();
-          let elementRect = element.getBoundingClientRect();
-          this.finaldataobjects[i].x =elementRect.left - containerRect.left + container.scrollLeft+"px";
-          this.finaldataobjects[i].y =elementRect.top - containerRect.top + container.scrollTop+"px";
+          let element = document.getElementById(data.id);
+          this.finaldataobjects[i].x =(element.offsetLeft)+"px";
+          this.finaldataobjects[i].y =(element.offsetTop)+"px";
         }
       }
     });
-    let p: any = $("#" + this.startNodeId).first();
-    let startTaskPosition: any = p.position();
-    let stop = $("#" + this.stopNodeId).first();
-    let stopTaskPosition: any = stop.position();
-
+    let startTaskPosition=document.getElementById(this.startNodeId);
+    let stopTaskPosition=document.getElementById(this.stopNodeId);
     this.startStopCoordinates=JSON.stringify({
-      startTaskX:startTaskPosition.left+"px",
-      startTaskY:startTaskPosition.top+"px",
-      stopTaskX:stopTaskPosition.left+"px",
-      stopTaskY:stopTaskPosition.top+"px",
+      startTaskX:startTaskPosition.offsetLeft+"px",
+      startTaskY:startTaskPosition.offsetTop+"px",
+      stopTaskX:stopTaskPosition.offsetLeft+"px",
+      stopTaskY:stopTaskPosition.offsetTop+"px",
+      startNodeId:this.startNodeId,
+      stopNodeId:this.stopNodeId
     })
+
+
+    console.log(this.startStopCoordinates)
     // if (
     //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId) !=
     //   undefined

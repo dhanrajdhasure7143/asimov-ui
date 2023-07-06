@@ -46,6 +46,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { AutomateProcessLogsComponent } from './automate-process-logs/automate-process-logs.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     ComboChartComponent, 
     ComboSeriesVerticalComponent,
     BusinessInsightsComponent,
+    AutomateProcessLogsComponent,
   ],
   imports: [
     CommonModule,

@@ -139,4 +139,11 @@ setScreenList(module:any){
       else
       return '';
   }
+
+  private processLogs:BehaviorSubject<any> = new BehaviorSubject<any[]>([]);
+  getProcessLogs = this.processLogs.asObservable();
+
+  setProcessLogs(value:any){
+    this.processLogs.next(value);
+  }
 }

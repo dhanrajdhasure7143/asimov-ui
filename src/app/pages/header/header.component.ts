@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Location, TitleCasePipe } from '@angular/common';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -70,6 +71,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ismyAccount : boolean = false;
   isClose : boolean;
   isPassword : boolean;
+  isChatOpen:boolean=false;
+  isChatEnable:boolean= false;
 
   constructor(
     private router: Router,
@@ -142,6 +145,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.getTenantLists();
     this.navigationTenantName = localStorage.getItem("tenantSwitchName")
+    this.isChatEnable = environment.isChatEnable? environment.isChatEnable : false;
   }
 
   loopTrackBy(index, term) {
@@ -398,9 +402,15 @@ onChangeTenant(event:any){
 closeFormOverlay() {
   this.ismyAccount = this.isClose;
   this.isPassword = this.isClose;
+  this.isChatOpen = this.isClose;
 }
 display(event){
   this.isClose = event
   this.closeFormOverlay();
 }
+
+chatClick(){
+  this.isChatOpen = true;
+}
+
 }
