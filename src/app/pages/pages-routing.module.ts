@@ -19,6 +19,7 @@ const routes: Routes = [
     {path:'subscriptions', loadChildren:() => import('./manage-subscriptions/manage-subscriptions.module').then(m => m.ManageSubscriptionsModule)},
     {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
     {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
+    {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
   ]}
 ];
