@@ -693,23 +693,34 @@ importBot()
       this.importBotJson["department"]=response.department;
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
         this.spinner.hide();
+        this.resetImportBotForm();
         // Swal.fire("Success","Bot imported successfully","success");
         this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
         this.getallbots();
       },err=>{
         this.spinner.hide();
+        this.resetImportBotForm();
         // Swal.fire("Error","Unable to bot task configurations","error");
         this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to configure bot task configurations.'});
       })
     }
   },err=>{
     this.spinner.hide();
+    this.resetImportBotForm();
     // Swal.fire("Error","Unable to import bot","error");
     this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot.'});
   })
 }
 
 
+  resetImportBotForm()
+  {
+    this.importBotJson=undefined;
+    this.file_error="";
+    this.importBotForm.reset();
+    this.importBotForm.get("categoryId").setValue("");
+    this.importBotForm.get("environmentId").setValue("")
+  }
   validateBotName() {
     let botname = this.importBotForm.get("botName").value;
     this.rest.checkbotname(botname).subscribe(data => {
