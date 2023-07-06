@@ -591,3 +591,6 @@ p-image.p-element.crtprgm {
 .userstagged:hover .usertaggedprofile {
     display: none;
 }
+.pinnedmsgtext p {
+    margin-bottom: 0;
+}

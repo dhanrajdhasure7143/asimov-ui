@@ -448,6 +448,18 @@ export class ProjectTaskDetailsComponent implements OnInit {
     return data;
   }
 
+  truncateResourcename(resourcename) {
+    if (resourcename && resourcename.length > 26)
+      return resourcename.substr(0, 25) + "...";
+    return resourcename;
+    
+  };
+  truncateAssignedby(assignedby) {
+    if (assignedby && assignedby.length > 23)
+      return assignedby.substr(0, 22) + "...";
+    return assignedby;
+  };
+
   convertToTree(res_data:any){
     res_data.map(data=> {
       if(data.dataType=='folder'){
