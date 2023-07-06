@@ -175,7 +175,7 @@ export class ProjectTaskListComponent implements OnInit {
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Success', detail: status.message+'!'});
+            this.messageService.add({severity:'success', summary: 'Success', detail: status.message});
             this.getTasksList();
           },
           (err) => {

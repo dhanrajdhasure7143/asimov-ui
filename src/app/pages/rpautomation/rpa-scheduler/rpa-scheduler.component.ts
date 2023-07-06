@@ -319,7 +319,7 @@ gettime(){
     this.beforetime=false;
     this.aftertime=false;
    if(date=='startdate'){
-    this.enddate=this.startdate;
+    //this.enddate=this.startdate;
     $('#enddatepicker').attr('min', this.startdate);
    }
   

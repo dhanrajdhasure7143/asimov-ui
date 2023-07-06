@@ -48,19 +48,3 @@
     margin-top: 200px;
     margin-left: 48%;
 }
-.tsttooltipbtn:hover span.testtooltip {
-    display: block;
-}
-span.testtooltip {
-    position: absolute;
-    left: 40px;
-    background-color: #001c47;
-    color: #fff;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    padding: 3px 10px;
-    margin-top: -10px;
-    border-radius: 4px;
-    display: none;
-}
