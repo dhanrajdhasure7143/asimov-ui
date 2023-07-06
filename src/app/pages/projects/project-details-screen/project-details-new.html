@@ -399,7 +399,7 @@
 
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
-                                        <div class="user_keys res-reply">
+                                        <div class="user_keys res-reply text-right">
                                             <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" pTooltip="Pin" tooltipPosition="top"
                                                 (click)="pinMessage(each)" class="testplus">
                                                 <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" pTooltip="Unpin" tooltipPosition="top" (click)="sendMessage(null,'unpinned')">
@@ -419,7 +419,7 @@
                                         [ngClass]="logged_userId == each.userId ?'rgtusermsg': 'lftusermsg'" class="">
                                         <div class="user_keys res-circle" *ngIf="logged_userId != each.userId">
                                             {{userFirstValues(each.firstName,each.lastName)}}</div>
-                                        <div class="user_keys res-reply">
+                                        <div class="user_keys res-reply text-right">
                                             <img *ngIf="!each.pinnedMessage" src="../../../../assets/images-n/projects/pin.svg" alt="pinmsg" pTooltip="Pin" tooltipPosition="top"
                                                 class="testplus" (click)="pinMessage(each)">
                                                 <img *ngIf="each.pinnedMessage" alt="unpinmsg" src="../../../../assets/images-n/projects/unpin.svg" class="testplus" pTooltip="Unpin" tooltipPosition="top" (click)="sendMessage(null,'unpinned')">
