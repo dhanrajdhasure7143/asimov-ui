@@ -1884,7 +1884,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "botImage" : this.svg
     }
     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
-      this.notifier.notify("success","Bot Image updated successfully")
     })
   }
 
