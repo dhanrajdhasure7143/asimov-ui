@@ -176,32 +176,3 @@ span.oopstxt label {
     text-overflow: ellipsis;
     margin: 0px 5px 0px 0px;
 }
-.tsttooltipbtn { 
-    position: relative;
-}
-span.testtooltip {
-    position: absolute;
-    top: 5px;
-    left: 35px;
-    background-color: #001c47;
-    color: #fff;
-    width: max-content;
-    padding: 3px 10px;
-    border-radius: 4px;
-    display: none;
-    z-index: 9;
-}
-span.testtooltip:before {
-    content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
-    position: absolute;
-    padding: 4px;
-    left: -3px;
-    top: 10px;
-    background: #001c47;
-    transform: rotate(45deg);
-}
-.tsttooltipbtn:hover span.testtooltip {
-    display: block;
-}
