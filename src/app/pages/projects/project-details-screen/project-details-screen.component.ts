@@ -1611,13 +1611,13 @@ selectEnd() {
   
   truncateProcowner(procownername) {
     if (procownername && procownername.length > 26)
-      procownername = procownername.substr(0, 25) + "...";
+      return procownername.substr(0, 25) + "...";
     return procownername;
     
   };
   truncatePrjonwer(projownername) {
     if (projownername && projownername.length > 21)
-      projownername = projownername.substr(0, 20) + "...";
+      return projownername.substr(0, 20) + "...";
     return projownername;
   };
 

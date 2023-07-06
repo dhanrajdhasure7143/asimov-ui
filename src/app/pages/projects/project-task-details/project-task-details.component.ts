@@ -450,13 +450,13 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   truncateResourcename(resourcename) {
     if (resourcename && resourcename.length > 26)
-      resourcename = resourcename.substr(0, 25) + "...";
+      return resourcename.substr(0, 25) + "...";
     return resourcename;
     
   };
   truncateAssignedby(assignedby) {
     if (assignedby && assignedby.length > 23)
-      assignedby = assignedby.substr(0, 22) + "...";
+      return assignedby.substr(0, 22) + "...";
     return assignedby;
   };
 
