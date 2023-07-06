@@ -44,12 +44,12 @@ export class RpaCredentialFormComponent implements OnInit {
         clientSecret:[""],
         clientId:[""],
         officeTenant:[""],
-        host:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        host:[""],
         port:[""],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddress: [""],
+        inBoundAddressPort: [""],
+        outBoundAddress: [""],
+        outboundAddressPort: [""],
     })
 
       this.Credupdateflag=false;
@@ -101,19 +101,19 @@ export class RpaCredentialFormComponent implements OnInit {
       this.credentialForm=this.formBuilder.group({
         //Removed email validator because we can also add organization name
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        clientSecret:[""],
+        password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
+        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         authType:[""],
+        clientSecret:[""],
         clientId:[""],
         officeTenant:[""],
-        host:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        host:[""],
         port:[""],
-        categoryId:["", Validators.compose([Validators.required])],
-        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_-]*$")])],
-        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_-]*$")])],
-        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddress: [""],
+        inBoundAddressPort: [""],
+        outBoundAddress: [""],
+        outboundAddressPort: [""],
     })
     }
 
