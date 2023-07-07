@@ -3406,7 +3406,6 @@ textarea.p-inputtextarea {
   /* margin: 10px;
   padding: 10px 15px; */
   background: transparent;
-  cursor: pointer;
 }
 
 .docfolder .p-card-content:hover span.foldname {
@@ -3450,6 +3449,7 @@ textarea.p-inputtextarea {
 .docfolder .p-card-body, .docfolder .p-card-content {
   padding: 0px !important;
   position: relative;
+  cursor: pointer;
 }
 .docfolder .p-card-content span.datsiz {
   color: #232832 !important;
