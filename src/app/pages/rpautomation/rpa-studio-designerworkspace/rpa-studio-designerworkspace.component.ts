@@ -772,7 +772,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         setTimeout(() => {
           if (!delconn) {
             if(conn)
-              conn.getOverlay("label" + conn.id).setVisible(false);
+            {
+              conn?.getOverlay("label" + conn.id)?.setVisible(false)??console.log("no connections");
+            }
           }
         }, 1000);
       });
@@ -1852,7 +1854,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   updateBotNodes(updateBotImageFlag:Boolean){
     this.rest.getbotdata(this.finalbot.botId).subscribe((response: any) => {
       if(response.errorMessage){
-        alert("unable to get bot details")
+        console.log(response.errorMessage)
+        //this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot details!'})
         return;
       }
         if(response.tasks.find((item:any)=>item.isModified==true))
@@ -1884,6 +1887,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "botImage" : this.svg
     }
     this.rest.updateBotImage(this.finalbot.botId,data).subscribe((res:any) =>{
+      if(res.status=="success"){
+       // this.messageService.add({severity:'success',summary:'Success',detail:'Updated bot image successfully!'});
+      }else{
+        console.log(res?.message??"Unable to update bot image")
+        //this.messageService.add({severity:'error',summary:'Error',detail:'Unable bot update image!'});
+      }
+    },err=>{
+      console.log(err)
     })
   }
 
@@ -2058,10 +2069,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.rest.addAuditLogs(auditLogsList).subscribe(
                 (response: any) => {
                   if (response.errorMessage == undefined) {
-                    this.notifier.notify(
-                      "success",
-                      "Audit logs updated successfully!"
-                    );
+                    this.messageService.add({severity:'success',summary:'Success',detail:'Audit logs updated successfully!'})
 
                   } else {
                     // Swal.fire("Error", response.errorMessage, "error");
