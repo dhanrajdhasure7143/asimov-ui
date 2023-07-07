@@ -81,6 +81,7 @@ span.testtooltip {
     border-radius: 4px;
     display:none;
     white-space: break-spaces;
+    font-size: 12px !important;
 }
 span.testtooltip:before {
     content: '';

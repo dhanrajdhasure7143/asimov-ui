@@ -99,15 +99,15 @@ export class columnList{
     
       public emailList_column = [
         {ColumnName: "userName",DisplayName: "Email / Organization Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true,width:"flex: 0 0 16rem"},
-        {ColumnName: "serverName",DisplayName: "Server Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:["Office365","G-mail","Others"],width:"flex: 0 0 10rem"},
+        {ColumnName: "serverName",DisplayName: "Server Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:["Office365","G-mail","Others"]},
         // {ColumnName: "password_new",DisplayName: "Password",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
-        {ColumnName: "tableClientId",DisplayName: "Client Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 9rem"},
-        {ColumnName: "tableClientSecret",DisplayName: "Client Secret",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 10rem"},
-        {ColumnName: "tableOfficeTenant",DisplayName: "Tenant Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 9rem"},
-        {ColumnName: "host",DisplayName: "Host",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 8rem"},
-        {ColumnName: "port",DisplayName: "Port",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 7rem"},
-        {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":"",width:"flex: 0 0 9rem"},
-        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true,width:"flex: 0 0 10rem"},
+        {ColumnName: "tableClientId",DisplayName: "Client Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "tableClientSecret",DisplayName: "Client Secret",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "tableOfficeTenant",DisplayName: "Tenant Id",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "host",DisplayName: "Host",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "port",DisplayName: "Port",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
+        {ColumnName: "categoryName",DisplayName: "Category",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":""},
+        {ColumnName: "createdBy",DisplayName: "Created By",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"createdBy",multi: true,multiOptions: ["createdBy", "createdTimeStamp_converted"],datePipe:true},
         // {ColumnName: "createdTimeStamp_converted",DisplayName: "Created Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,freeze:false},
       ];

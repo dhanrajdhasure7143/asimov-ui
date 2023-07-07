@@ -84,12 +84,13 @@
   text-align: center;
   font-size:10px; */
   position: absolute;
-    right: -8px;
-    top: -12px;
+  right: -8px;
+  top: -9px;
 }
 
-.node-delete img{
+.node-delete i{
   height:15px;  
+  color:#2370e5 !important;
 }
 
 
