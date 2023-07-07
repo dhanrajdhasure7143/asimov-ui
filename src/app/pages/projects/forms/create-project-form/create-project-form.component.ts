@@ -267,7 +267,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: response.message
+          detail: response.message,
+          key:"create"
         })
           this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})

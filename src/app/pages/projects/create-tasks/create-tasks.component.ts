@@ -132,7 +132,8 @@ export class CreateTasksComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task created successfully!"
+          detail: "Task created successfully!",
+          key:"create"
         })
           //this.resettask();
           this.router.navigate(["/pages/projects/taskDetails"], {
