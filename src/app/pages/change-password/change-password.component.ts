@@ -4,6 +4,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../services/rest-api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CryptoService } from '../services/crypto.service';
 
 @Component({
   selector: 'app-change-password',
@@ -22,7 +23,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor( private api:RestApiService, 
     private loader:LoaderService,
     private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private cryptoService :CryptoService,
     ) { }
 
   ngOnInit(): void {
@@ -30,9 +32,9 @@ export class ChangePasswordComponent implements OnInit {
 
   passwordChange(form:NgForm){
     let pswdbody = {
-      "confirmPassword": this.pswdmodel.confirmPassword,
-      "currentPassword": this.pswdmodel.currentPassword,
-      "newPassword":this.pswdmodel.confirmPassword,
+      "confirmPassword": this.cryptoService.encrypt(this.pswdmodel.confirmPassword),
+      "currentPassword": this.cryptoService.encrypt(this.pswdmodel.currentPassword),
+      "newPassword": this.cryptoService.encrypt(this.pswdmodel.confirmPassword),
       "userId": localStorage.getItem('ProfileuserId')
     }
   this.api.changePassword(pswdbody).subscribe(res => {
