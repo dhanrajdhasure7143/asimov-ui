@@ -169,7 +169,7 @@
                                     <label class="label-control" for="programname"> Key
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="requestKey" placeholder="Enter Key">
                                     <span
                                         *ngIf="connectorForm.get('requestKey').invalid && connectorForm.get('requestKey').touched && !connectorForm.get('requestKey').hasError('pattern')"
@@ -199,7 +199,7 @@
                                     <label class="label-control" for="programname"> Client ID
                                         <span class="star" *ngIf="connectorForm.get('grantType').value !== 'password'">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="clientId" placeholder="Enter Client ID">
                                     <span
                                         *ngIf="connectorForm.get('clientId').invalid && connectorForm.get('clientId').touched && !connectorForm.get('clientId').hasError('pattern')"
@@ -213,7 +213,7 @@
                                     <label class="label-control" for="programname"> Client Secret
                                         <span class="star" *ngIf="connectorForm.get('grantType').value !== 'password'">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="clientSecret" placeholder="Enter Client Secret">
                                     <span
                                         *ngIf="connectorForm.get('clientSecret').invalid && connectorForm.get('clientSecret').touched && !connectorForm.get('clientSecret').hasError('pattern')"
@@ -229,7 +229,7 @@
                                     <label class="label-control" for="programname"> Code
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="code" placeholder="Enter Code">
                                     <span
                                         *ngIf="connectorForm.get('code').invalid && connectorForm.get('code').touched && !connectorForm.get('code').hasError('pattern')"
@@ -243,7 +243,7 @@
                                     <label class="label-control" for="programname"> Redirect URL
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="redirect_uri" placeholder="Enter Redirect URL">
                                     <span
                                         *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
@@ -259,7 +259,7 @@
                                     <label class="label-control" for="programname"> Username
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="userName" placeholder="Enter Username">
                                     <span
                                         *ngIf="connectorForm.get('userName').invalid && connectorForm.get('userName').touched && !connectorForm.get('userName').hasError('pattern')"
@@ -273,7 +273,7 @@
                                     <label class="label-control" for="programname"> Password
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="password" placeholder="Enter Password">                                        
                                     <span
                                         *ngIf="connectorForm.get('password').invalid && connectorForm.get('password').touched && !connectorForm.get('password').hasError('pattern')"
@@ -289,7 +289,7 @@
                                     <label class="label-control" for="programname"> Code Verifier
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="verifier" placeholder="Enter Code Verifier">
                                     <span
                                         *ngIf="connectorForm.get('verifier').invalid && connectorForm.get('verifier').touched && !connectorForm.get('verifier').hasError('pattern')"
@@ -304,14 +304,14 @@
                                     <label class="label-control" for="programname"> Scope
                                         <!-- <span class="star">*</span> -->
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="scope" placeholder="Enter Scope ">
                                 </div>
                                 <div class="col-md-6 form-group pr-0" *ngIf="isRefreshToken">
                                     <label class="label-control" for="programname"> Refresh Token
                                         <span class="star">*</span>
                                     </label>
-                                    <input type="text" maxlength="256" pInputText [style]="{'width':'100%'}" value=""
+                                    <input type="text" pInputText [style]="{'width':'100%'}" value=""
                                         formControlName="refreshToken" placeholder=" Refresh Token">
                                     <span
                                         *ngIf="connectorForm.get('refreshToken').invalid && connectorForm.get('refreshToken').touched && !connectorForm.get('refreshToken').hasError('pattern')"

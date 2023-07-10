@@ -25,7 +25,7 @@
 .credential-btntool button:hover .hover-icon {
   display: initial;
 }
-.tsttooltipbtn:hover span.testtooltip {
+/* .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
 span.testtooltip {
@@ -41,6 +41,7 @@ span.testtooltip {
   border-radius: 4px;
   display: none;
   z-index: 999;
+  font-size: 12px !important;
 }
 span.testtooltip:before {
   content: '';
@@ -53,7 +54,7 @@ span.testtooltip:before {
   background: #001c47;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
-}
+} */
 button:hover img.testplus.default-img{
   display: none;
 }
