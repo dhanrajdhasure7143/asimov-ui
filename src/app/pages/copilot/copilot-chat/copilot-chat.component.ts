@@ -14,8 +14,12 @@ export class CopilotChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [{
-      label: 'History',
       items: [{
+          label: 'History',
+          command: () => {
+          }
+        },
+        {
           label: 'Client Service Reporting',
           command: () => {
           }
