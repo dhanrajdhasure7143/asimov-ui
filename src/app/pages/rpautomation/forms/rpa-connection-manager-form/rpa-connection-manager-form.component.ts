@@ -36,6 +36,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   selectedToolsetName:string;
   requestJson_body:any[]=[];
   headerForm = [];
+  dynamicForm =[];
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
@@ -196,6 +197,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"] = this.connectorForm.value.refreshToken
       }
+      let dynamic = []
+      this.dynamicForm.forEach(ele => {
+        dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+      })
+      object["customAttributes"] = dynamic;
+
       req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
@@ -674,6 +681,14 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     // }
   }
 
+  addDynamic() {
+    this.dynamicForm.push({
+      index: this.dynamicForm.length,
+      dynamicKey: "",
+      dynamicValue: "",
+    });
+  }
+
   backToaction() {
     this.router.navigate(["/pages/rpautomation/action-item"], {
       queryParams: { id: this.selectedId, name: this.selectedConnector, icon : this.icon },
@@ -885,7 +900,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
-    if(this.actionData.configurationAsJson.httpHeaders || this.actionData.configurationAsJson.queryParams){
+      if(this.actionData.configurationAsJson.httpHeaders || this.actionData.configurationAsJson.queryParams){
       if(this.actionData.configurationAsJson.httpHeaders.length>0){
         let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
         this.connectorForm.get("requestKey").setValue(key),
@@ -899,6 +914,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         ));
       }
     }
+    if(this.actionData.configurationAsJson.customAttributes){
+      let custom_attributes = this.actionData.configurationAsJson.customAttributes
+      Object.keys(custom_attributes).forEach((key,i) => {
+        let DynamicFormKey = Object.keys(custom_attributes[i])[0];
+        let DynamicFormValue = custom_attributes[i][DynamicFormKey];
+        this.dynamicForm.push({
+          index: i,
+          dynamicKey: DynamicFormKey,
+          dynamicValue: DynamicFormValue,
+        })
+    });
+      this.selectedOne = this.dynamicForm;
+    }
+
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
         Object.keys(headers_data).forEach((key,i) => {
@@ -1237,6 +1266,10 @@ checkActionName(){
       this.actionNameCheck = false;
     }
   });
+}
+
+dynamicDelete(index) {
+  this.dynamicForm.splice(index, 1);
 }
 
 }

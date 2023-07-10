@@ -51,7 +51,40 @@ button.btn.new-cancelbtn:disabled {
 .headercheckbox button:hover img.hover-icon, img.default-icon {
     display: initial;
 }
+
 /* .custom::before{
     content: 'Replace?    ';
     display: inline-block;
 } */
+
+.table-smll{
+    border:1px solid #979797;
+}
+
+.table-smll tbody tr td{
+    border:0px solid grey !important;
+}
+
+.table-smll thead tr {
+    height:35px;
+}
+
+tbody {
+    display:block;
+    max-height:190px;
+    overflow-y:scroll;
+}
+
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+.tableh-wid,.tableh-wid2{
+    width:45%;
+}
+
+.tableh-wid3{
+    width:10%;
+}
