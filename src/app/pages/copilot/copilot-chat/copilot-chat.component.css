@@ -1,0 +1,14 @@
+.cursor{
+    cursor: pointer;
+    
+}
+
+.padding{
+    padding:30px;
+}
+
+input{
+    border: 7px solid #399FFF !important;
+    height: 45px;
+    width: 97%;
+}

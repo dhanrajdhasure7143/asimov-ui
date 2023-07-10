@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CopilotRoutingModule } from './copilot-routing.module';
 import { CopilotComponent } from './copilot.component';
 import { CopilotChatComponent } from './copilot-chat/copilot-chat.component';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CopilotChatComponent } from './copilot-chat/copilot-chat.component';
   ],
   imports: [
     CommonModule,
-    CopilotRoutingModule
+    CopilotRoutingModule,
+    PrimengCustomModule
   ]
 })
 export class CopilotModule { }
