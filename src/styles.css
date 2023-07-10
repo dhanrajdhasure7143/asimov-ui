@@ -3733,3 +3733,24 @@ background-color: #D8E0EF !important;
 .bold {
   font-weight: bold;
 }
+
+.copilotchatblock .p-card.p-component {
+  width: 275px !important;
+  height: 130px !important;
+  text-align: center;
+  background-color: #e7f0fb;
+  border: 2px solid #99c1ee;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.copilotchatblock .p-card .p-card-content {
+    padding: 0px !important;
+}
+.copilotchatblock .p-card-content p {
+    margin-bottom: 0px;
+    font-weight: 700;
+    margin-top: 15px;
+    font-size: 16px;
+}

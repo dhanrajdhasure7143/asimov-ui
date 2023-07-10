@@ -6,51 +6,49 @@
     <label class="mt-3" style="color: #098de6;text-align: center;font-size:larger;"> <b>What Would You Like to
             Do Today?</b></label>
     <div class="row padding">
-        <div class="col-sm-4 cursor">
-            <p-card [style]="{'width': '10rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;padding-left:40px"> <br>
-                <b> Automate Process</b>
+        <div class="col-sm-4 cursor copilotchatblock">
+            <p-card  (click)="showDialog()">
+                <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;"> 
+                <p> Automate Process</p>
             </p-card>
         </div>
-        <div class="col-sm-4 cursor">
-            <p-card [style]="{'width': '12rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;padding-left:40px"> <br>
+        <div class="col-sm-4 cursor copilotchatblock">
+            <p-card  (click)="showDialog()">
+                <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;"> 
 
-                <b style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</b> </p-card>
+                <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> </p-card>
         </div>
-        <div class="col-sm-4 cursor">
-            <p-card [style]="{'width': '12rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;padding-left:40px"> <br>
+        <div class="col-sm-4 cursor copilotchatblock">
+            <p-card  (click)="showDialog()">
+                <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;"> 
 
-                <b> Acess Process Graph</b>
+                <p> Access Process Graphs</p>
             </p-card>
         </div>
         <div class="row" style="margin-top: 34px !important">
-            <div class="col-sm-4 cursor">
-                <p-card [style]="{'width': '10rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;padding-left:40px"> <br>
-                    <b style="word-wrap: break-word;">Monitor and View Insights</b> </p-card>
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;"> 
+                    <p style="word-wrap: break-word;">Monitor and View Insights</p> </p-card>
             </div>
-            <div class="col-sm-4 cursor">
-                <p-card [style]="{'width': '10rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;padding-left:40px"> <br>
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;"> 
 
-                    <b class="ml-3">View Drafts</b> </p-card>
+                    <p class="">View Drafts</p> </p-card>
             </div>
-            <div class="col-sm-4 cursor">
-                <p-card [style]="{'width': '12rem','background-color': '#C5FFFC'}" (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;padding-left:40px">
-                    <br>
-
-                    <b>Explore Templates</b> </p-card>
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;">
+                    <p>Explore Templates</p> </p-card>
             </div>
         </div>
     </div>
     <br>
 
-    <div class="p-inputgroup">
-        <input type="text" pInputText placeholder="Send Message">&nbsp;
-        <span>
+    <div class="p-inputgroup sendinput">
+        <input type="text" pInputText placeholder="Send a message">&nbsp;
+        <span class="sendimg">
             <i class="pi pi-send"></i>
         </span>
     </div>
@@ -89,7 +87,7 @@
                 <b>CRM</b> </p-card>
         </div>
         <div class="col-sm-3">
-            <p-card [style]="{'width': '12rem','background-color': '#C5FFFC'}">
+            <p-card [style]="{'background-color': '#C5FFFC'}">
                 <b>Master Date Management</b> </p-card>
         </div>
         <div class="col-sm-3">
