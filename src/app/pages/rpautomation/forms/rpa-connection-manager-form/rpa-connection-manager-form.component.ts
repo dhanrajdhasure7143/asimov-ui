@@ -1050,6 +1050,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"]=this.connectorForm.value.refreshToken
       }
+
+      let dynamic = []
+      this.dynamicForm.forEach(ele => {
+        dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+      })
+      object["customAttributes"] = dynamic;
+      
       req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
