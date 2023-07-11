@@ -1,6 +1,5 @@
 .cursor{
-    cursor: pointer;
-    
+    cursor: pointer;   
 }
 
 .padding{
@@ -22,4 +21,18 @@ span.sendimg {
     position: absolute;
     right: 18px;
     top: 20px;
+}
+
+.heading p{
+    font-weight: bold;
+    font-size: medium;
+    margin: 8px;
+}
+
+.side{
+    background-color: #ebebeb;
+}
+
+.side-bar{
+width: 12rem;
 }

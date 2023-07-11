@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api/menuitem';
+
 
 
 @Component({
@@ -8,25 +8,18 @@ import { MenuItem } from 'primeng/api/menuitem';
   styleUrls: ['./copilot-chat.component.css']
 })
 export class CopilotChatComponent implements OnInit {
-  items: MenuItem[];
   display: boolean = false;
+  historyOpen:boolean = false;
   constructor() { }
 
   ngOnInit(): void {
-    this.items = [{
-      items: [{
-          label: 'History',
-          command: () => {
-          }
-        },
-        {
-          label: 'Client Service Reporting',
-          command: () => {
-          }
-      }]}]
+  
 }  
 
 showDialog() {
   this.display = true;
+}
+openHistory(){
+  this.historyOpen = true
 }
 }

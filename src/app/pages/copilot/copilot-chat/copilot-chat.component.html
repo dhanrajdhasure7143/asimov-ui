@@ -1,58 +1,69 @@
-<div class="mt-1">
-    <p-menu [model]="items"></p-menu>
+<div class="heading">
+    <p> Conversational AI Process Automation </p>
 </div>
-
-<div class="card col-md-10 mt-0" style="margin-left: 188px;overflow:scroll;bottom: 84px;width:100%">
-    <label class="mt-3" style="color: #098de6;text-align: center;font-size:larger;"> <b>What Would You Like to
-            Do Today?</b></label>
-    <div class="row padding">
-        <div class="col-sm-4 cursor copilotchatblock">
-            <p-card  (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;"> 
-                <p> Automate Process</p>
-            </p-card>
+<div class="row">
+    <div class="col-md-2 side">
+        <p> History </p>
+        <div class="side-bar cursor">
+            <p> Client Services Reporting </p>
         </div>
-        <div class="col-sm-4 cursor copilotchatblock">
-            <p-card  (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;"> 
 
-                <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> </p-card>
-        </div>
-        <div class="col-sm-4 cursor copilotchatblock">
-            <p-card  (click)="showDialog()">
-                <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;"> 
-
-                <p> Access Process Graphs</p>
-            </p-card>
-        </div>
-        <div class="row" style="margin-top: 34px !important">
+    </div>
+    <div class="card col-md-10" style="overflow:scroll;width:100%">
+        <h2 class="mt-3" style="color: #098de6;text-align: center;font-size:larger;"> <b>What Would You Like to
+                Do Today?</b></h2>
+        <div class="row padding">
             <div class="col-sm-4 cursor copilotchatblock">
                 <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;"> 
-                    <p style="word-wrap: break-word;">Monitor and View Insights</p> </p-card>
+                    <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;"> 
+                    <p> Automate Process</p>
+                </p-card>
             </div>
             <div class="col-sm-4 cursor copilotchatblock">
                 <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;"> 
-
-                    <p class="">View Drafts</p> </p-card>
+                    <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;"> 
+    
+                    <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> </p-card>
             </div>
             <div class="col-sm-4 cursor copilotchatblock">
                 <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;">
-                    <p>Explore Templates</p> </p-card>
+                    <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;"> 
+    
+                    <p> Access Process Graphs</p>
+                </p-card>
             </div>
+            <div class="row" style="margin-top: 34px !important">
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;"> 
+                        <p style="word-wrap: break-word;">Monitor and View Insights</p> </p-card>
+                </div>
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;"> 
+    
+                        <p class="">View Drafts</p> </p-card>
+                </div>
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;">
+                        <p>Explore Templates</p> </p-card>
+                </div>
+            </div>
+        </div>
+        <br>
+    
+        <div class="p-inputgroup sendinput">
+            <input type="text" pInputText placeholder="Send a message">&nbsp;
+            <span class="sendimg">
+                <i class="pi pi-send"></i>
+            </span>
         </div>
     </div>
-    <br>
-
-    <div class="p-inputgroup sendinput">
-        <input type="text" pInputText placeholder="Send a message">&nbsp;
-        <span class="sendimg">
-            <i class="pi pi-send"></i>
-        </span>
-    </div>
 </div>
+
+
+
 
 
 <p-dialog [(visible)]="display" [style]="{width: '70vw'}">
