@@ -1,0 +1,79 @@
+.chat-box{
+    background-color:white !important;
+}
+
+.copilot-main-card{
+    border: 1px solid gray !important;
+    border-radius: 20px !important; 
+}
+
+
+.chat-model-height{
+    height: calc(100vh - 180px) !important;
+    border: 1px solid rgb(231, 231, 231) !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+}
+.model-box{
+    background-color:rgb(235, 235, 235) !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.chat-box{
+    background-color: white !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    padding-right:0px !important; 
+    padding-left: 0px !important;
+}
+
+.chat-grid{
+    height:calc(100vh - 200px) !important;
+    overflow: scroll !important;
+    width: 100% !important;
+}
+
+
+.message-input{
+    background-color: rgb(244, 244, 244) !important;
+    height: 37px !important;
+    border:none !important;
+}
+
+
+.msg-snd-btn{
+    position: relative !important;
+    left: 191px !important;
+    top: -28px!important;
+
+}
+
+.chat-history-grid{
+    padding-left: 5px !important;
+    padding-right:5px !important;
+}
+
+
+.user-message{
+    background-color: aliceblue;
+    border:1px solid lightgray;
+    width: 91%;
+    position: relative;
+    right:-25px !important;
+    border-radius: 5px !important;
+
+}
+
+
+
+.system-message{
+    background-color: rgb(154, 208, 255);
+    border:1px solid lightgray;
+    width: 91%;
+    position: relative !important;
+    border-radius: 5px !important;
+}

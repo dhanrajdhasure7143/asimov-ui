@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 
 
@@ -10,7 +11,8 @@ import { MenuItem } from 'primeng/api/menuitem';
 export class CopilotChatComponent implements OnInit {
   items: MenuItem[];
   display: boolean = false;
-  constructor() { }
+
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     this.items = [{
@@ -25,4 +27,12 @@ export class CopilotChatComponent implements OnInit {
 showDialog() {
   this.display = true;
 }
+
+openChat2()
+{
+  console.log("sample test")
+  this.router.navigate(["./pages/copilot/copilot-chat"]) 
+}
+
+
 }
