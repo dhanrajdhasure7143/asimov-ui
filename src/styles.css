@@ -3744,8 +3744,8 @@ background-color: #D8E0EF !important;
   font-weight: bold;
 }
 
-.copilotchatblock .p-card.p-component,
-.copilotchatblock-popup .p-card.p-component {
+/* Co-Pilot CSS Start */
+.copilotchatblock .p-card.p-component {
   width: 275px !important;
   height: 130px !important;
   text-align: center;
@@ -3755,12 +3755,6 @@ background-color: #D8E0EF !important;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.copilotchatblock-popup .p-card.p-component {
-  width: 200px !important;
-  height: 105px !important;
-  border: none;
-  background-color: #cae1fc;
 }
 .copilotchatblock .p-card .p-card-content,
 .copilotchatblock-popup .p-card .p-card-content {
@@ -3773,3 +3767,57 @@ background-color: #D8E0EF !important;
     margin-top: 15px;
     font-size: 16px;
 }
+.copilotchatblock-popup .p-dialog {
+  background: #fff !important;
+  border-radius: 8px !important;
+}
+.copilotchatblock-popup .p-dialog .p-dialog-header {
+  color: #000000 !important;
+  padding: 1rem 0rem 1rem !important;
+  font-weight: 500;
+  font-size: 18px;
+  border-bottom: 1px solid #f0f6f8;
+  margin: 0rem 1.5rem 1.3rem;
+}
+.copilotchatblock-popup .p-dialog .p-dialog-content {
+  color: #000000 !important;
+  padding: 0 0.5rem !important;
+  border-radius: 8px;
+}
+.copilotchatblock-popup .p-card.p-component {
+  height: 100px !important;
+  border: 1px solid #ebebeb !important;
+  background: #f6fcfe !important;
+  color: #000000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  font-size: 16px;
+}
+.copilotchatblock-popup .p-card.p-component:hover {
+  border: 1px solid rgb(9 141 230 / 40%) !important;
+  color: #098de6 !important;
+  box-shadow: 0px 2px 4px rgb(0 0 0 / 10%) !important;
+  background-color: #fff !important;
+  cursor: pointer;
+}
+.copilotchatblock-popup .p-card.p-component .p-card-body {
+  transition: 0.3s;
+}
+.copilotchatblock-popup .p-card.p-component:hover .p-card-body {
+  transform: translate(0,-5px);
+}
+.copilotchatblock-popup .col-sm-3.form-group {
+  margin-bottom: 30px !important;
+}
+.copilotchatblock-popup .subheader {
+  margin: 0rem 1rem 1.3rem;
+  font-size: 15px;
+}
+.copilotchatblock-popup .subheader span{
+  color: #098de6;
+}
+/* Co-Pilot CSS End */

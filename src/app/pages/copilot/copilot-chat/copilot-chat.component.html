@@ -66,51 +66,40 @@
 
 
 
-<p-dialog [(visible)]="display" [style]="{width: '70vw'}">
+<p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup">
     <ng-template pTemplate="header">
-        <b>Select a process that you wish to automate with C-pilot experience</b>
+        Automate a Process
     </ng-template>
+    <p class="subheader">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
     <div class="row">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card (click)="openChat2()">
-                <b>Quote to Cash</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card (click)="openChat2()">Quote to Cash</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Finance & Accounting</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card>Finance & Accounting</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Production</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card>Production</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Business Warehouse</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
         </div>
-    </div>
-    <div class="row" style="margin-top: 20px !important">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Demand to pay</b> </p-card>
+    
+        <div class="col-sm-3 form-group">
+            <p-card>Demand to Pay</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>CRM</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card>CRM</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Master Date Management</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card>Master Date Management</p-card>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Human Resource</b> </p-card>
+        <div class="col-sm-3 form-group">
+            <p-card> Human <br>Resource </p-card>
         </div>
-    </div>
-    <div class="row" style="margin-top: 20px !important">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Others</b> </p-card>
+    
+        <div class="col-sm-3 form-group">
+            <p-card>Others</p-card>
         </div>
-
     </div>
 </p-dialog>
