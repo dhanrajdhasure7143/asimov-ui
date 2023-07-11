@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api/menuitem';
 
 
 @Component({
@@ -10,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class CopilotChatComponent implements OnInit {
   display: boolean = false;
   historyOpen:boolean = false;
-  constructor() { }
+
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   
@@ -19,7 +22,15 @@ export class CopilotChatComponent implements OnInit {
 showDialog() {
   this.display = true;
 }
+
 openHistory(){
   this.historyOpen = true
 }
+
+openChat2()
+{
+  this.router.navigate(["./pages/copilot/copilot-chat"]) 
+}
+
+
 }
