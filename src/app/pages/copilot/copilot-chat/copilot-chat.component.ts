@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class CopilotChatComponent implements OnInit {
   display: boolean = false;
   historyOpen:boolean = false;
-
+  nextFlag:any=""
   constructor(private router:Router) { }
 
   ngOnInit(): void {
@@ -31,5 +31,14 @@ openChat2()
   this.router.navigate(["./pages/copilot/copilot-chat"]) 
 }
 
+openHumanResource()
+{
+  this.nextFlag="Human Resource"
+}
+
+openRecruiting()
+{
+  this.nextFlag="Recruiting"
+}
 
 }

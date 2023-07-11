@@ -68,49 +68,99 @@
 
 <p-dialog [(visible)]="display" [style]="{width: '70vw'}">
     <ng-template pTemplate="header">
-        <b>Select a process that you wish to automate with C-pilot experience</b>
+        <b  *ngIf="nextFlag==''" >Select a process that you wish to automate with C-pilot experience</b>
+        <div  *ngIf="nextFlag=='Human Resource'" >
+           <a (click)="nextFlag=''"> <i class="pi pi-angle-left"></i>&nbsp;Back</a>
+        </div>
+        <div  *ngIf="nextFlag=='Recruiting'"  >
+           <a  (click)="nextFlag='Human Resource'"> <i class="pi pi-angle-left"></i>&nbsp;Back</a>
+        </div>
     </ng-template>
-    <div class="row">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card (click)="openChat2()">
-                <b>Quote to Cash</b> </p-card>
+    
+    <div *ngIf="nextFlag==''">
+        <div class="row">
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card (click)="openChat2()">
+                    <b>Quote to Cash</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Finance & Accounting</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Production</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Business Warehouse</b> </p-card>
+            </div>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Finance & Accounting</b> </p-card>
+        <div class="row" style="margin-top: 20px !important">
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Demand to pay</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>CRM</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Master Date Management</b> </p-card>
+            </div>
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card (click)="openHumanResource()">
+                    <b>Human Resource</b> </p-card>
+            </div>
         </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Production</b> </p-card>
-        </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Business Warehouse</b> </p-card>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 20px !important">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Demand to pay</b> </p-card>
-        </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>CRM</b> </p-card>
-        </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Master Date Management</b> </p-card>
-        </div>
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Human Resource</b> </p-card>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 20px !important">
-        <div class="col-sm-3 copilotchatblock-popup ">
-            <p-card>
-                <b>Others</b> </p-card>
-        </div>
+        <div class="row" style="margin-top: 20px !important">
+            <div class="col-sm-3 copilotchatblock-popup ">
+                <p-card>
+                    <b>Others</b> </p-card>
+            </div>
 
+        </div>
     </div>
+    <div class="container-fluid copilot-bg"  *ngIf="nextFlag=='Human Resource'">
+        <div clas="row" >
+            <div class="col-sm-6 py-1">
+                <div (click)="openRecruiting()"class="item-card">Recruting (10)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Learning & Development (10)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Training (2)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Talent Management (12)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Payroll (12)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Seperation (12)</div>
+            </div>
+            <div class="col-sm-6 py-1">
+                <div class="item-card">Benifits (3)</div>
+            </div>
+            <div class="col-sm-6">
+                <div class=" py-1"><div class="item-card">Retirement (12)</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid"  *ngIf="nextFlag=='Recruiting'">
+        <div class="row" >
+            <div class="col-3 card">
+                <img src="../../../../assets/graph.svg" class="w-100 py-2">
+                <div class="w-100 card-title-bg">
+                    <div class="py-2 px-2 text-center h5">
+                        Employee on boarding v1
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </p-dialog>
