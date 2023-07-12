@@ -3761,7 +3761,7 @@ background-color: #D8E0EF !important;
   height: 210px !important;
   text-align: center;
   background-color: transparent;
-  border: 1px solid #a5a9ac;
+  border: 1px solid #ebebeb;
   margin-bottom:50px;
   box-shadow: none !important;
   display: flex;
@@ -3771,7 +3771,7 @@ background-color: #D8E0EF !important;
 }
 .copilotchatblock:hover .p-card.p-component {
   border:1px solid #098DE6;
-  box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
+  box-shadow: 0px 6px 14px 0px #e3e1e15e !important;
 }
 
 .copilotchatblock-popup .p-card.p-component {
@@ -3798,6 +3798,36 @@ background-color: #D8E0EF !important;
 }
 .copilotchatblock .p-card .p-card-content{margin-top:25px;transition: transform ease 500ms;}
 .copilotchatblock:hover .p-card .p-card-content{transform: translate(0, -10px);}
+.second-header{text-align: center;
+  padding-top: 40px;
+  margin-bottom: 0px;
+font-size:25px;}
+.grid-align{padding:30px 25px 0px;
+  height: calc(100vh - 195px);
+  overflow: auto;}
+.card-history{width:100%;
+min-height:100%;
+background-color: #F6FCFE;}
+.histry-space{padding-top: 23px;
+  border-bottom: 1px solid #d9dcde;
+  padding-bottom: 23px;
+  font-size: 16px;}
+.histry-img{margin: auto;
+  display: block;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-top: 50px;}
+.histry-text{    
+text-align: center;
+margin-top: 10px;
+padding: 0px 30px;}
+.cursor:hover p{color:#098DE6}
+
+.pad-align{padding-right:25px;padding-left:25px;}
+.pl-adj{padding-right:0px;padding-left:0px;}
+.alignment-card{margin-bottom:30px !important;}
+.popup-heading-align{margin-left:5px;}
 
 
 /* Popup CSS Start */
