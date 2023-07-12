@@ -79,36 +79,37 @@
     </div>
   
     <div *ngIf="nextFlag==''">
-        <div class="col-sm-3 form-group">
-            <p-card (click)="openChat2()">Quote to Cash</p-card>
+        <div class="row">
+            <div class="col-sm-3 form-group">
+                <p-card (click)="openChat2()">Quote to Cash</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card>Finance & Accounting</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card>Production</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
+            </div>
+        
+            <div class="col-sm-3 form-group">
+                <p-card>Demand to Pay</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card>CRM</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card>Master Date Management</p-card>
+            </div>
+            <div class="col-sm-3 form-group">
+                <p-card (click)="openHumanResource()"> Human <br>Resource </p-card>
+            </div>
+        
+            <div class="col-sm-3 form-group">
+                <p-card>Others</p-card>
+            </div>    
         </div>
-        <div class="col-sm-3 form-group">
-            <p-card>Finance & Accounting</p-card>
-        </div>
-        <div class="col-sm-3 form-group">
-            <p-card>Production</p-card>
-        </div>
-        <div class="col-sm-3 form-group">
-            <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
-        </div>
-    
-        <div class="col-sm-3 form-group">
-            <p-card>Demand to Pay</p-card>
-        </div>
-        <div class="col-sm-3 form-group">
-            <p-card>CRM</p-card>
-        </div>
-        <div class="col-sm-3 form-group">
-            <p-card>Master Date Management</p-card>
-        </div>
-        <div class="col-sm-3 form-group">
-            <p-card (click)="openHumanResource()"> Human <br>Resource </p-card>
-        </div>
-    
-        <div class="col-sm-3 form-group">
-            <p-card>Others</p-card>
-        </div>
-
     </div>
     <div class="container-fluid copilot-bg"  *ngIf="nextFlag=='Human Resource'">
         <div clas="row" >
