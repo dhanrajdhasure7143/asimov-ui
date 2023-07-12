@@ -3756,20 +3756,29 @@ background-color: #D8E0EF !important;
   align-items: center;
   justify-content: center;
 }
-.copilotchatblock .p-card .p-card-content,
-.copilotchatblock-popup .p-card .p-card-content {
+.copilotchatblock .p-card .p-card-content {
     padding: 0px !important;
 }
-.copilotchatblock .p-card-content p,
-.copilotchatblock-popup .p-card-content p {
+.copilotchatblock .p-card-content p {
     margin-bottom: 0px;
     font-weight: 700;
     margin-top: 15px;
     font-size: 16px;
 }
+
+/* Popup CSS Start */
 .copilotchatblock-popup .p-dialog {
   background: #fff !important;
   border-radius: 8px !important;
+}
+.copilotchatblock-popup .p-card .p-card-content {
+  padding: 0px !important;
+}
+.copilotchatblock-popup .p-card-content p {
+  margin-bottom: 0px;
+  font-weight: 700;
+  margin-top: 15px;
+  font-size: 16px;
 }
 .copilotchatblock-popup .p-dialog .p-dialog-header {
   color: #000000 !important;
@@ -3820,4 +3829,12 @@ background-color: #D8E0EF !important;
 .copilotchatblock-popup .subheader span{
   color: #098de6;
 }
+.copilotchatblock-popup .item-card1 .p-card.p-component {
+  height: auto !important;
+}
+.copilotchatblock-popup .item-card1 .p-card.p-component:hover .p-card-body {
+  transform: translate(0,-2px);
+}
+/* Popup CSS End */
+
 /* Co-Pilot CSS End */

@@ -40,7 +40,7 @@ width: 12rem;
 /* Popup styles Start */
 .copilotchatblock-popup a img {
     cursor: pointer;
-    margin-right: 5px;
+    margin-right: 8px;
 }
 .copilotchatblock-popup a:hover img.default-icon, .copilotchatblock-popup img.hover-icon {
     display: none;
@@ -52,29 +52,6 @@ width: 12rem;
     overflow: auto;
     max-height: 365px;
     margin-bottom: 10px;
-}
-.item-card{
-    background-color: #f6fcfe;
-    color: #000000 !important;
-    padding: 10px;
-    text-align: center;
-    font-size: 16px !important;
-    border-radius: 6px;
-    border: 1px solid #ebebeb;
-    margin-bottom: 15px;
-}
-.item-card:hover {
-    border: 1px solid rgb(9 141 230 / 40%) !important;
-    color: #098de6 !important;
-    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%) !important;
-    background-color: #fff !important;
-    cursor: pointer;
-}
-.item-card span {
-    transition: 0.3s;
-}
-.item-card:hover span {
-    transform: translate(0,15px);
 }
 /* Popup styles End */
 

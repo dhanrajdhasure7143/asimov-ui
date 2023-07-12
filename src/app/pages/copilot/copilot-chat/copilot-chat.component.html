@@ -71,15 +71,15 @@
         <div  *ngIf="nextFlag==''" >
             Automate a Process
         </div>
-        <div  *ngIf="nextFlag=='Human Resource'" >
-            <a (click)="nextFlag=''">
+        <div class="d-flex align-items-center" *ngIf="nextFlag=='Human Resource'" >
+            <a class="d-flex" (click)="nextFlag=''">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" >
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" >
             </a>
             <span>Human Resource</span>
         </div>
-        <div  *ngIf="nextFlag=='Recruiting'"  >
-            <a  (click)="nextFlag='Human Resource'">
+        <div class="d-flex" *ngIf="nextFlag=='Recruiting'"  >
+            <a class="d-flex" (click)="nextFlag='Human Resource'">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" >
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" >
             </a>
@@ -125,29 +125,29 @@
 
     <div class="secondpopup"  *ngIf="nextFlag=='Human Resource'">
         <div class="row" >
-            <div class="col-sm-6">
-                <div (click)="openRecruiting()" class="item-card"><span>Recruting (10)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card (click)="openRecruiting()" class="item-card1"><span>Recruting (10)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Learning & Development (10)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Learning & Development (10)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Training (2)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Training (2)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Talent Management (12)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Talent Management (12)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Payroll (12)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Payroll (12)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Seperation (12)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Seperation (12)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Benifits (3)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Benifits (3)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class="item-card"><span>Retirement (12)</span></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Retirement (12)</span></p-card>
             </div>
         </div>
     </div>
