@@ -3,9 +3,9 @@
 </div>
 <div class="row">
     <div class="col-md-2 side">
-        <p> History </p>
-        <div class="side-bar cursor">
-            <p> Client Services Reporting </p>
+        <b class="cursor"> History </b>
+        <div class="side-bar cursor" *ngFor="let h of historyList">
+            <p> {{h.label}} </p>
         </div>
 
     </div>
@@ -53,18 +53,14 @@
         </div>
         <br>
     
-        <div class="p-inputgroup sendinput">
-            <input type="text" pInputText placeholder="Send a message">&nbsp;
+        <div class="sendinput">
+            <input type="text" pInputText placeholder="Send a message" [(ngModel)]="message">&nbsp;
             <span class="sendimg">
-                <i class="pi pi-send"></i>
+                <i class="pi pi-send" (click)="sendMessage()"></i>
             </span>
         </div>
     </div>
 </div>
-
-
-
-
 
 <p-dialog [(visible)]="display" [style]="{width: '70vw'}">
     <ng-template pTemplate="header">
