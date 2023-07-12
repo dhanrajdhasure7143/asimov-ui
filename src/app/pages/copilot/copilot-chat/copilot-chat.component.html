@@ -188,15 +188,26 @@
 
 <p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup">
     <ng-template pTemplate="header">
-        Automate a Process
+        <div  *ngIf="nextFlag==''" >
+            Automate a Process
+        </div>
+        <div class="d-flex align-items-center" *ngIf="nextFlag=='Human Resource'" >
+            <a class="d-flex" (click)="nextFlag=''">
+                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" >
+                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" >
+            </a>
+            <span>Human Resource</span>
+        </div>
+        <div class="d-flex" *ngIf="nextFlag=='Recruiting'"  >
+            <a class="d-flex" (click)="nextFlag='Human Resource'">
+                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" >
+                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" >
+            </a>
+            <span>Recruiting(10)</span>
+        </div>
     </ng-template>
     <p class="subheader" *ngIf="nextFlag==''">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
-    <div  *ngIf="nextFlag=='Human Resource'" >
-        <a (click)="nextFlag=''"> <i class="pi pi-angle-left"></i>&nbsp;Back</a>
-    </div>
-    <div  *ngIf="nextFlag=='Recruiting'"  >
-        <a  (click)="nextFlag='Human Resource'"> <i class="pi pi-angle-left"></i>&nbsp;Back</a>
-    </div>
+    
   
     <div *ngIf="nextFlag==''">
         <div class="row">
@@ -231,38 +242,48 @@
             </div>    
         </div>
     </div>
-    <div class="container-fluid copilot-bg"  *ngIf="nextFlag=='Human Resource'">
-        <div clas="row" >
-            <div class="col-sm-6 py-1">
-                <div (click)="openRecruiting()"class="item-card">Recruting (10)</div>
+
+    <div class="secondpopup"  *ngIf="nextFlag=='Human Resource'">
+        <div class="row" >
+            <div class="col-sm-6 form-group">
+                <p-card (click)="openRecruiting()" class="item-card1"><span>Recruting (10)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Learning & Development (10)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Learning & Development (10)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Training (2)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Training (2)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Talent Management (12)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Talent Management (12)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Payroll (12)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Payroll (12)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Seperation (12)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Seperation (12)</span></p-card>
             </div>
-            <div class="col-sm-6 py-1">
-                <div class="item-card">Benifits (3)</div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Benifits (3)</span></p-card>
             </div>
-            <div class="col-sm-6">
-                <div class=" py-1"><div class="item-card">Retirement (12)</div></div>
+            <div class="col-sm-6 form-group">
+                <p-card class="item-card1"><span>Retirement (12)</span></p-card>
             </div>
         </div>
     </div>
+
     <div class="container-fluid"  *ngIf="nextFlag=='Recruiting'">
         <div class="row" >
             <div class="col-3 card">
-                <img src="../../../../assets/graph.svg" class="w-100 py-2">
+                <img src="../../../../assets/graph.svg" class="w-100 py-2" alt="graph">
+                <div class="w-100 card-title-bg">
+                    <div class="py-2 px-2 text-center h5">
+                        Employee on boarding v1
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 card">
+                <img src="../../../../assets/graph.svg" class="w-100 py-2" alt="graph">
                 <div class="w-100 card-title-bg">
                     <div class="py-2 px-2 text-center h5">
                         Employee on boarding v1
