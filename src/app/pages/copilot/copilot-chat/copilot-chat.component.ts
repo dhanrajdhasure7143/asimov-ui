@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api/menuitem';
+
 
 
 @Component({
@@ -9,34 +9,44 @@ import { MenuItem } from 'primeng/api/menuitem';
   styleUrls: ['./copilot-chat.component.css']
 })
 export class CopilotChatComponent implements OnInit {
-  items: MenuItem[];
   display: boolean = false;
-
+  historyOpen:boolean = false;
+  historyList:any=[]
+  message:any
+  nextFlag:any=""
   constructor(private router:Router) { }
 
   ngOnInit(): void {
-    this.items = [{
-      items: [{
-          label: 'History',
-          command: () => {
-          }
-        },
-        {
-          label: 'Client Service Reporting',
-          command: () => {
-          }
-      }]}]
+    this.historyList=[
+      {label:"Process Graph"},
+      {label:"RPA"},
+      {label:"BPS"},
+      {label:"PI"}
+    ]
+  
 }  
 
 showDialog() {
   this.display = true;
 }
 
-openChat2()
-{
-  console.log("sample test")
+openChat2(){
   this.router.navigate(["./pages/copilot/copilot-chat"]) 
 }
 
+sendMessage(){
+  console.log(this.message);
+  this.historyList.push({label:this.message})
+  this.message=""
+}
+openHumanResource()
+{
+  this.nextFlag="Human Resource"
+}
+
+openRecruiting()
+{
+  this.nextFlag="Recruiting"
+}
 
 }
