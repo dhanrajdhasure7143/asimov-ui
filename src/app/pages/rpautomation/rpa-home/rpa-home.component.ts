@@ -99,7 +99,7 @@ export class RpaHomeComponent implements OnInit {
   ];
   EdithiddenPopUp:boolean=false;
   importBotForm=new FormGroup({
-    botName:new FormControl("", Validators.compose([Validators.required,, Validators.pattern("^[a-zA-Z0-9_-]*$")])),
+    botName:new FormControl("", Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(1), Validators.pattern("^[a-zA-Z0-9_-]*$")])),
     categoryId:new FormControl("", Validators.compose([Validators.required])),
     environmentId:new FormControl("", Validators.compose([Validators.required]))
   })
