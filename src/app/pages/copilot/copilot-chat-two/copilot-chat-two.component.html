@@ -1,57 +1,64 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 py-3">
-            <h5>Conversational AI Process Automation</h5>
-        </div>
+<div class="row">
+    <div class="col-md-2 pl-adj">
+    <div class="card-history">
+     <div class="col-md-12">
+         <h4 class="histry-space">History</h4>
+     </div>
+     <div>
+         <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img"/>
+         <p class="histry-text">You have no saved conversations</p>
+     </div>
+ 
     </div>
-    <div class="row">
-        <div class="col-md-2 chat-history-grid">
-            <div class="h6  py-1">
-                History
-            </div>
-            <div>
-                <div class="py-1">
-                    You have saved conversations
+ </div>
+ <div class="col-md-10 pl-0 pr-0">
+    <div class="maincontent">
+        <div class="h-100">
+          <div class="row main-content-head">
+    <h3>
+        <span class="title_text">Conversational AI Process Automation</span>
+    </h3>
+    </div>
+   
+    <div class="main-content-body row">
+        <div class="col-md-9 model-box ">
+            <div class="process-graph">
+               
+                <div [hidden]="model.length == 0" class="h-100">
+                    <div id="exportSVGtoPDF" #exportSVGtoPDF class="h-100">
+                        <svg id="render"  #render>
+                          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                          markerWidth="5" markerHeight="5"
+                          orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" />
+                      </marker>
+                        </svg>
+                      </div>
                 </div>
             </div>
-            <!-- <p-menu style="width:100%" [model]="items"></p-menu> -->
         </div>
-        <div class="col-md-10 chat-model-height row">        
-                <div class="col-md-9 model-box ">
-                    <div class="process-graph">
-                       
-                        <div [hidden]="model.length == 0" class="h-100">
-                            <div id="exportSVGtoPDF" #exportSVGtoPDF class="h-100">
-                                <svg id="render"  #render>
-                                  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
-                                  markerWidth="5" markerHeight="5"
-                                  orient="auto">
-                                <path d="M 0 0 L 10 5 L 0 10 z" />
-                              </marker>
-                                </svg>
-                              </div>
+        <div class="col-md-3 chat-box">
+            <div class="chat-grid">
+                <div *ngFor="let message of messages" class="py-2 px-3">
+                    
+                        <div *ngIf="message.user!='SYSTEM'" class="user-message">
+                            <div class="py-2 px-2">{{message.message}}</div>
                         </div>
-                    </div>
+                        <div></div>
+                        <div *ngIf="message.user=='SYSTEM'" class="system-message">
+                            <div class="py-2 px-2">{{message.message}}</div>
+                        </div>
+                        <div></div>
                 </div>
-                <div class="col-md-3 chat-box">
-                    <div class="chat-grid">
-                        <div *ngFor="let message of messages" class="py-2 px-3">
-                            
-                                <div *ngIf="message.user!='SYSTEM'" class="user-message">
-                                    <div class="py-2 px-2">{{message.message}}</div>
-                                </div>
-                                <div></div>
-                                <div *ngIf="message.user=='SYSTEM'" class="system-message">
-                                    <div class="py-2 px-2">{{message.message}}</div>
-                                </div>
-                                <div></div>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Enter Message"></textarea>
-                        <a  (click)="sendMessage()" class="msg-snd-btn bg-white"><i class="pi pi-arrow-circle-up"></i></a>
-                    </div>
-                </div>   
-        </div>
-    </div>
+            </div>
+            <div class="px-3">
+                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Enter Message"></textarea>
+                <a  (click)="sendMessage()" class="msg-snd-btn bg-white"><i class="pi pi-arrow-circle-up"></i></a>
+            </div>
+        </div> 
 </div>
+</div>
+</div>
+</div>
+</div>
+

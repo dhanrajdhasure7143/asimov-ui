@@ -2411,7 +2411,7 @@ height:10px;
   padding: 0px 30px 10px;
   overflow: auto;
   position: relative;
-  margin-top: 15px;
+  margin-top: 15px !important;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -3806,7 +3806,7 @@ font-size:25px;}
   height: calc(100vh - 195px);
   overflow: auto;}
 .card-history{width:100%;
-min-height:100%;
+min-height:100vh;
 background-color: #F6FCFE;}
 .histry-space{padding-top: 23px;
   border-bottom: 1px solid #d9dcde;
