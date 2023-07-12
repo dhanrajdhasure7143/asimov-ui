@@ -3830,7 +3830,7 @@ background-color: #D8E0EF !important;
   color: #098de6;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component {
-  height: auto !important;
+  height: 46px !important;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component:hover .p-card-body {
   transform: translate(0,-2px);
