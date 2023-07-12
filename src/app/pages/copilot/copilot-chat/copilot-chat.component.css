@@ -36,3 +36,28 @@ span.sendimg {
 .side-bar{
 width: 12rem;
 }
+
+
+.item-card{
+    background-color: white !important;
+
+}
+
+.copilot-bg{
+    background-color: #a0ceff !important;
+}
+
+
+.item-card{
+    background-color: white;
+    padding:10px;
+    text-align: center;
+    font-size: 20px !important;
+    border-radius: 5px !important;
+    box-shadow: 0px 0px 0px -3px rgba(0,0,0,0.1);
+}
+
+
+.card-title-bg{
+    background-color: lightgray;
+}

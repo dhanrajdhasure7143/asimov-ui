@@ -13,6 +13,7 @@ export class CopilotChatComponent implements OnInit {
   historyOpen:boolean = false;
   historyList:any=[]
   message:any
+  nextFlag:any=""
   constructor(private router:Router) { }
 
   ngOnInit(): void {
@@ -38,4 +39,14 @@ sendMessage(){
   this.historyList.push({label:this.message})
   this.message=""
 }
+openHumanResource()
+{
+  this.nextFlag="Human Resource"
+}
+
+openRecruiting()
+{
+  this.nextFlag="Recruiting"
+}
+
 }
