@@ -1,10 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './pages.component.html',
-  styles:[`
+  styles: [`
 
   ::ng-deep mat-sidenav:not(.mat-drawer-opened) div.leftNav div.navProfile img {
     width: 40px; margin: 16px 0 0px 0;
@@ -49,27 +49,34 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   .shadow{
     box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 !important;
   }
-  `
-]
-})
-export class PagesComponent{
 
-  sideBarOpen:Boolean=false;
-  contentMargin:any;
+  .content-div {
+    margin-left: 70px !important;
+  }
+  `
+  ]
+})
+export class PagesComponent implements OnInit {
+
+  sideBarOpen: Boolean = true;
+  contentMargin: any = 62;
   @ViewChild(SidebarComponent) sidebar: SidebarComponent;
-  constructor( ) { }
+  constructor() { }
+  ngOnInit(): void {
+    this.onToolbarMenuToggle();
+  }
 
   onToolbarMenuToggle() {
-  
+
     this.sideBarOpen = !this.sideBarOpen;
 
-    if(!this.sideBarOpen) {
-      this.sidebar.showSubmenu=false
-      this.sidebar.showprocessesSubmenu=false
-      this.sidebar.showadminSubmenu=false
-      this.contentMargin = 70;
+    if (!this.sideBarOpen) {
+      this.sidebar.showSubmenu = false
+      this.sidebar.showprocessesSubmenu = false
+      this.sidebar.showadminSubmenu = false
+      this.contentMargin = 62;
     } else {
-      this.contentMargin = 270;
+      this.contentMargin = 260;
     }
   }
   // sidenavEvents(str) {

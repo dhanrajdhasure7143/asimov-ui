@@ -4,8 +4,8 @@
     }
 .card{border: 0px solid rgba(0,0,0,.125);
     border-radius: 6px;}
-    .main-content-body {
-        height: calc(100% - 61px) !important;}
+    /* .main-content-body {
+        height: calc(100% - 61px) !important;} */
 input{
     border: 2px solid #3e8bdb !important;
     height: 55px;
@@ -26,7 +26,9 @@ span.sendimg {
     padding-top: 40px;
     margin-bottom: 0px;
 font-size:25px;}
-.grid-align{padding:30px 25px 0px;}
+.grid-align{padding:30px 25px 0px;
+    height: calc(100vh - 195px);
+    overflow: auto;}
 .card-history{width:100%;
 min-height:100%;
 background-color: #F6FCFE;}
@@ -47,6 +49,7 @@ background-color: #F6FCFE;}
   .cursor:hover p{color:#098DE6}
   .cursor:hover .p-card.p-component{border:1px solid blue;}
   .pad-align{padding-right:25px;padding-left:25px;}
+  .pl-adj{padding-right:0px;padding-left:0px;}
   /* .imageBox .hover-icon, .imageBox .active-icon{transition: transform ease 300ms;}
   .imageBox:hover .hover-icon, .imageBox:hover .active-icon{transform: translate(0, -10px);} */
 

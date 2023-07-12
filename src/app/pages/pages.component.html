@@ -9,18 +9,14 @@
 <section class="h-100">
 
 
-    <app-header class="shadow"></app-header>
-    <mat-drawer-container class="main">
-  
-    <mat-drawer  mode="side" mode="side"
-    #sidenav
-    id="sidenav"
-    [class.menu-open]="sideBarOpen"
-    [class.menu-close]="!sideBarOpen"
-    opened>
-        <app-sidebar  ></app-sidebar>
+  <app-header class="shadow"></app-header>
+  <mat-drawer-container class="main">
+
+    <mat-drawer mode="side" mode="side" #sidenav id="sidenav" [class.menu-open]="sideBarOpen"
+      [class.menu-close]="!sideBarOpen" opened>
+      <app-sidebar></app-sidebar>
     </mat-drawer>
-    <mat-drawer-content [ngStyle]="{ 'margin-left.px': contentMargin }" class="h-100">
+    <mat-drawer-content [ngStyle]="{ 'margin-left.px': contentMargin }" style="margin-left: 62px;" class="h-100">
       <!-- <mat-toolbar color="primary">
         <button mat-icon-button class="example-icon" (click)="(sideBarOpen==true?sideBarOpen=false:sideBarOpen=true)" aria-label="Example icon-button with menu icon">
          <i class="fa fa-bars"></i>
@@ -50,13 +46,12 @@
       </mat-menu>
   
     </mat-toolbar> -->
-  
-    <div class="h-100">
-      <router-outlet></router-outlet>
-      <app-my-loader></app-my-loader>
-    </div>
-  </mat-drawer-content>
-    </mat-drawer-container>
-    <!-- <app-footer></app-footer> -->
-  </section>
-  
+
+      <div class="h-100">
+        <router-outlet></router-outlet>
+        <app-my-loader></app-my-loader>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <!-- <app-footer></app-footer> -->
+</section>
