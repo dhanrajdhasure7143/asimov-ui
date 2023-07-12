@@ -3694,12 +3694,24 @@ background-color: #D8E0EF !important;
   align-items: center;
   float: right;}
 
+
 .imageBox .hover-icon,
 .imageBox:hover .active-icon  {
   display: none;
+  
 }
 
 .imageBox:hover .hover-icon{
+  display: block;
+
+ 
+}
+.imageBox .hover-ico {
+ 
+  display: none;
+}
+
+.imageBox:hover .hover-icon {
   display: block;
 }
 
@@ -3760,7 +3772,7 @@ background-color: #D8E0EF !important;
 }
 .copilotchatblock:hover .p-card.p-component {
   border:1px solid #098DE6;
-  box-shadow: 0px 3px 3px 0px #d5d5d5 !important;
+  box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
 }
 
 .copilotchatblock-popup .p-card.p-component {
@@ -3780,9 +3792,12 @@ background-color: #D8E0EF !important;
     margin-top: 20px;
     font-size: 18px;
     color: #000 !important;
+    
 }
 .copilotchatblock:hover .p-card-content p {
    
     color: #098DE6 !important;
+    
 }
-.copilotchatblock .p-card .p-card-content{margin-top:25px;}
+.copilotchatblock .p-card .p-card-content{margin-top:25px;transition: transform ease 500ms;}
+.copilotchatblock:hover .p-card .p-card-content{transform: translate(0, -10px);}

@@ -47,5 +47,7 @@ background-color: #F6FCFE;}
   .cursor:hover p{color:#098DE6}
   .cursor:hover .p-card.p-component{border:1px solid blue;}
   .pad-align{padding-right:25px;padding-left:25px;}
+  /* .imageBox .hover-icon, .imageBox .active-icon{transition: transform ease 300ms;}
+  .imageBox:hover .hover-icon, .imageBox:hover .active-icon{transform: translate(0, -10px);} */
 
  
