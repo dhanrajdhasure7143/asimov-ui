@@ -37,25 +37,46 @@ span.sendimg {
 width: 12rem;
 }
 
-
-.item-card{
-    background-color: white !important;
-
+/* Popup styles Start */
+.copilotchatblock-popup a img {
+    cursor: pointer;
+    margin-right: 5px;
 }
-
-.copilot-bg{
-    background-color: #a0ceff !important;
+.copilotchatblock-popup a:hover img.default-icon, .copilotchatblock-popup img.hover-icon {
+    display: none;
 }
-
-
+.copilotchatblock-popup a:hover img.hover-icon {
+    display: initial;
+}
+.secondpopup {
+    overflow: auto;
+    max-height: 365px;
+    margin-bottom: 10px;
+}
 .item-card{
-    background-color: white;
-    padding:10px;
+    background-color: #f6fcfe;
+    color: #000000 !important;
+    padding: 10px;
     text-align: center;
-    font-size: 20px !important;
-    border-radius: 5px !important;
-    box-shadow: 0px 0px 0px -3px rgba(0,0,0,0.1);
+    font-size: 16px !important;
+    border-radius: 6px;
+    border: 1px solid #ebebeb;
+    margin-bottom: 15px;
 }
+.item-card:hover {
+    border: 1px solid rgb(9 141 230 / 40%) !important;
+    color: #098de6 !important;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%) !important;
+    background-color: #fff !important;
+    cursor: pointer;
+}
+.item-card span {
+    transition: 0.3s;
+}
+.item-card:hover span {
+    transform: translate(0,15px);
+}
+/* Popup styles End */
 
 
 .card-title-bg{
