@@ -671,7 +671,7 @@ foreignObject {
   width: 260px;
   min-height: 100%;
   transition: width 0.05s;
-  z-index: 2 !important;
+  z-index: 0 !important;
 }
 
 #sidenav.menu-close .side-icon {
@@ -3694,12 +3694,24 @@ background-color: #D8E0EF !important;
   align-items: center;
   float: right;}
 
+
 .imageBox .hover-icon,
 .imageBox:hover .active-icon  {
   display: none;
+  
 }
 
 .imageBox:hover .hover-icon{
+  display: block;
+
+ 
+}
+.imageBox .hover-ico {
+ 
+  display: none;
+}
+
+.imageBox:hover .hover-icon {
   display: block;
 }
 
@@ -3744,27 +3756,46 @@ background-color: #D8E0EF !important;
   font-weight: bold;
 }
 
-/* Co-Pilot CSS Start */
+/* Co-Pilot Styles Start */
 .copilotchatblock .p-card.p-component {
-  width: 275px !important;
-  height: 130px !important;
+  height: 210px !important;
   text-align: center;
-  background-color: #e7f0fb;
-  border: 2px solid #99c1ee;
+  background-color: transparent;
+  border: 1px solid #a5a9ac;
+  margin-bottom:50px;
   box-shadow: none !important;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius:6px;
+}
+.copilotchatblock:hover .p-card.p-component {
+  border:1px solid #098DE6;
+  box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
+}
+
+.copilotchatblock-popup .p-card.p-component {
+  width: 200px !important;
+  height: 105px !important;
+  border: none;
+  background-color: #cae1fc;
 }
 .copilotchatblock .p-card .p-card-content {
     padding: 0px !important;
 }
 .copilotchatblock .p-card-content p {
     margin-bottom: 0px;
-    font-weight: 700;
-    margin-top: 15px;
-    font-size: 16px;
+    font-weight: 400;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #000 !important;
 }
+.copilotchatblock:hover .p-card-content p {
+    color: #098DE6 !important;
+}
+.copilotchatblock .p-card .p-card-content{margin-top:25px;transition: transform ease 500ms;}
+.copilotchatblock:hover .p-card .p-card-content{transform: translate(0, -10px);}
+
 
 /* Popup CSS Start */
 .copilotchatblock-popup .p-dialog {
@@ -3807,17 +3838,20 @@ background-color: #D8E0EF !important;
   font-size: 16px;
 }
 .copilotchatblock-popup .p-card.p-component:hover {
-  border: 1px solid rgb(9 141 230 / 40%) !important;
+  border:1px solid #098DE6 !important;
+  box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
   color: #098de6 !important;
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 10%) !important;
+  
   background-color: #fff !important;
   cursor: pointer;
 }
 .copilotchatblock-popup .p-card.p-component .p-card-body {
-  transition: 0.3s;
+  transition: transform ease 500ms;
+  /* transition: 0.3s; */
 }
 .copilotchatblock-popup .p-card.p-component:hover .p-card-body {
-  transform: translate(0,-5px);
+  
+  transform: translate(0, -5px);
 }
 .copilotchatblock-popup .col-sm-3.form-group {
   margin-bottom: 30px !important;
@@ -3831,6 +3865,7 @@ background-color: #D8E0EF !important;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component {
   height: 46px !important;
+  width: 100% !important;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component:hover .p-card-body {
   transform: translate(0,-2px);
