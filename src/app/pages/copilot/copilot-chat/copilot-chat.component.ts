@@ -11,10 +11,18 @@ import { Router } from '@angular/router';
 export class CopilotChatComponent implements OnInit {
   display: boolean = false;
   historyOpen:boolean = false;
+  historyList:any=[]
+  message:any
   nextFlag:any=""
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    this.historyList=[
+      {label:"Process Graph"},
+      {label:"RPA"},
+      {label:"BPS"},
+      {label:"PI"}
+    ]
   
 }  
 
@@ -22,15 +30,15 @@ showDialog() {
   this.display = true;
 }
 
-openHistory(){
-  this.historyOpen = true
-}
-
-openChat2()
-{
+openChat2(){
   this.router.navigate(["./pages/copilot/copilot-chat"]) 
 }
 
+sendMessage(){
+  console.log(this.message);
+  this.historyList.push({label:this.message})
+  this.message=""
+}
 openHumanResource()
 {
   this.nextFlag="Human Resource"
