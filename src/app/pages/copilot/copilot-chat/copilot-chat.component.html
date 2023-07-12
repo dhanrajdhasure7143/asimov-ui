@@ -196,14 +196,14 @@
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;" >
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span class="popup-heading-align">Human Resource</span>
+            <span>Human Resource</span>
         </div>
         <div class="d-flex" *ngIf="nextFlag=='Recruiting'"  >
             <a class="d-flex" (click)="nextFlag='Human Resource'">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span class="popup-heading-align">Recruiting(10)</span>
+            <span>Recruiting(10)</span>
         </div>
     </ng-template>
     <p class="subheader" *ngIf="nextFlag != 'Recruiting'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
@@ -211,33 +211,33 @@
   
     <div *ngIf="nextFlag==''">
         <div class="row">
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openChat2()">Quote to Cash</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>Finance & Accounting</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>Production</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
             </div>
         
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>Demand to Pay</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>CRM</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>Master Date Management</p-card>
             </div>
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openHumanResource()"> Human <br>Resource </p-card>
             </div>
         
-            <div class="col-sm-3 form-group">
+            <div class="col-sm-3 form-group cardlist">
                 <p-card>Others</p-card>
             </div>    
         </div>
@@ -245,28 +245,28 @@
 
     <div class="secondpopup"  *ngIf="nextFlag=='Human Resource'">
         <div class="row" >
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card (click)="openRecruiting()" class="item-card1"><span>Recruting (10)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Learning & Development (10)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Training (2)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Talent Management (12)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Payroll (12)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Seperation (12)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Benifits (3)</span></p-card>
             </div>
-            <div class="col-sm-6 form-group alignment-card">
+            <div class="col-sm-6 form-group cardlist">
                 <p-card class="item-card1"><span>Retirement (12)</span></p-card>
             </div>
         </div>

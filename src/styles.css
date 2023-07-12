@@ -3773,13 +3773,6 @@ background-color: #D8E0EF !important;
   border:1px solid #098DE6;
   box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
 }
-
-.copilotchatblock-popup .p-card.p-component {
-  width: 200px !important;
-  height: 105px !important;
-  border: none;
-  background-color: #cae1fc;
-}
 .copilotchatblock .p-card .p-card-content {
     padding: 0px !important;
 }
@@ -3801,6 +3794,12 @@ background-color: #D8E0EF !important;
 .copilotchatblock-popup .p-dialog {
   background: #fff !important;
   border-radius: 8px !important;
+}
+.copilotchatblock-popup .p-card.p-component {
+  width: 100% !important;
+  height: 105px !important;
+  border: none;
+  background-color: #cae1fc;
 }
 .copilotchatblock-popup .p-card .p-card-content {
   padding: 0px !important;
@@ -3841,19 +3840,17 @@ background-color: #D8E0EF !important;
   border:1px solid #098DE6 !important;
   box-shadow: 0px 3px 3px 0px #e3e1e196 !important;
   color: #098de6 !important;
-  
   background-color: #fff !important;
   cursor: pointer;
 }
 .copilotchatblock-popup .p-card.p-component .p-card-body {
-  transition: transform ease 500ms;
-  /* transition: 0.3s; */
+  transition: 0.5s;
 }
 .copilotchatblock-popup .p-card.p-component:hover .p-card-body {
-  
   transform: translate(0, -5px);
 }
-.copilotchatblock-popup .col-sm-3.form-group {
+.copilotchatblock-popup .cardlist,
+.secondpopup .cardlist {
   margin-bottom: 30px !important;
 }
 .copilotchatblock-popup .subheader {
@@ -3864,7 +3861,7 @@ background-color: #D8E0EF !important;
   color: #098de6;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component {
-  height: 46px !important;
+  height: 55px !important;
   width: 100% !important;
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component:hover .p-card-body {
