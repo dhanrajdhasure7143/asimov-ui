@@ -15,13 +15,22 @@
     <div class="maincontent">
         <div class="h-100">
           <div class="row main-content-head">
+            <div class="col-md-6 pl-0">
     <h3>
         <span class="title_text">Conversational AI Process Automation</span>
-    </h3>
+        
+    </h3></div>
+    <div class="col-md-6 title-help">
+    Need Help <span class="ml-2"><img src="../../../../assets/copilot/needhelp.svg"/></span>
+</div>
+    
     </div>
+    <div class="hr"></div>
    
     <div class="main-content-body row">
-        <div class="col-md-9 model-box ">
+       
+        <div class="col-md-8 model-box ">
+            
             <div class="process-graph">
                
                 <div [hidden]="model.length == 0" class="h-100">
@@ -36,24 +45,34 @@
                       </div>
                 </div>
             </div>
+       
         </div>
-        <div class="col-md-3 chat-box">
+        <div class="col-md-4 chat-box">
             <div class="chat-grid">
-                <div *ngFor="let message of messages" class="py-2 px-3">
+                <div *ngFor="let message of messages" class="py-3 ">
                     
-                        <div *ngIf="message.user!='SYSTEM'" class="user-message">
-                            <div class="py-2 px-2">{{message.message}}</div>
+                        <div *ngIf="message.user!='SYSTEM'" class="user-message ">
+                           
+                            <div class="py-3 px-3 mr-2 user-msgtext">{{message.message}}</div>
+                            <div class="sys-image">
+                                <img src="../../../../assets/copilot/user.svg"/>
+                            </div>
                         </div>
                         <div></div>
                         <div *ngIf="message.user=='SYSTEM'" class="system-message">
-                            <div class="py-2 px-2">{{message.message}}</div>
+                            <div class="sys-image">
+                                <img src="../../../../assets/copilot/systemicon.svg"/>
+                            </div>
+                            <div class="py-0 px-2 ml-2 send-msgtext">{{message.message}}</div>
                         </div>
                         <div></div>
                 </div>
             </div>
             <div class="px-3">
-                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Enter Message"></textarea>
-                <a  (click)="sendMessage()" class="msg-snd-btn bg-white"><i class="pi pi-arrow-circle-up"></i></a>
+                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate"></textarea>
+                <a  (click)="sendMessage()" class="msg-snd-btn">
+                    <img src="./../../../../assets/images-n/projects/send.svg">
+                </a>
             </div>
         </div> 
 </div>
