@@ -227,14 +227,59 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-  sendMessage()
-  {
+  sendMessage(){
     let message={
       id:(new Date()).getTime(),
       message:this.message,
       user:localStorage.getItem("ProfileuserId")
     }
     this.messages.push(message);
+    this.messages = [
+      {
+        "uuid": "text_uuid1",
+        "message": "This is sample text response",
+        "components": ["Buttons"],
+        "values": [
+          [
+            {
+              "label": "button label",
+              "submitValue": "submit value"
+            },
+            {
+              "label": "button label2",
+              "submitValue": "submit value2"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid": "text_uuid2",
+        "message": ["This is sample text response2"],
+        "components": ["Buttons"],
+        "values": [
+          [
+            {
+              "label": "button label"
+            },
+            {
+              "label": "button label2"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid":"text_uuid1",
+        "message":"This is sample text response"
+      },
+      {
+        "uuid":"text_uuid2",
+        "message":["This is sample text response"]
+      },
+      {
+        "uuid":"text_uuid3",
+        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+      }
+    ];
     let systemMessage={
       id:(new Date()).getTime(),
       message:"Hi Kiran Mudili",
@@ -251,7 +296,8 @@ export class CopilotChatTwoComponent implements OnInit {
     })
     this.processGraph();
     this.message=""
-    this.messages.push(systemMessage)
+    this.messages.push(systemMessage);
+
   }
 
 
@@ -319,6 +365,10 @@ export class CopilotChatTwoComponent implements OnInit {
     });
     this.nodes[nodeIndex].x = dragNode.x;
     this.nodes[nodeIndex].y = dragNode.y;
+  }
+
+  submitButton(value){
+
   }
 
 }
