@@ -22,7 +22,7 @@
    
     <div class="main-content-body row">
         <div class="col-md-9 model-box ">
-            <div class="process-graph">
+            <div *ngIf="false" class="process-graph">
                
                 <div [hidden]="model.length == 0" class="h-100">
                     <div id="exportSVGtoPDF" #exportSVGtoPDF class="h-100">
@@ -35,6 +35,34 @@
                         </svg>
                       </div>
                 </div>
+            </div>
+            <div class="graph-designer">
+                <div  class="studio_main">
+                    <div class="drag-area">
+                      <!--Nodes inside designer-->
+                      <ng-container *ngFor="let node of nodes; let i = index">
+                        <div id="{{ node.id }}" class="dndDropzone" [ngStyle]="{
+                            left: node.x,
+                            top: node.y,
+                            'background-image': 'url(../../../../assets/circle.png)'
+                          }">
+                          <!--Node close button-->
+                          <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
+                            {{ node.name }}
+                          </div>
+                          <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
+                            {{ node.selectedNodeTask }}
+                          </div>
+                        </div>
+                      </ng-container>
+                
+                      <!--Show bot Image when no nodes in designer-->
+                      <div *ngIf="nodes.length == 0" class="dragactionsdiv">
+                        <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
+                        <span>Drag an action here...</span>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
         <div class="col-md-3 chat-box">

@@ -238,7 +238,7 @@
             </div>
         
             <div class="col-sm-3 form-group cardlist">
-                <p-card>Others</p-card>
+                <p-card (click)="openChat2()">Others</p-card>
             </div>    
         </div>
     </div>
@@ -274,7 +274,7 @@
 
     <div class="container-fluid"  *ngIf="nextFlag=='Recruiting'">
         <div class="row" >
-            <div class="col-3 card">
+            <div (click)="openChat2()" class="col-3 card">
                 <img src="../../../../assets/graph.svg" class="w-100 py-2" alt="graph">
                 <div class="w-100 card-title-bg">
                     <div class="py-2 px-2 text-center h5">

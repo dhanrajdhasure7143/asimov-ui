@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import * as dagreD3 from 'dagre-d3';
 import * as d3 from 'd3';
+import { jsPlumb, jsPlumbInstance } from "jsplumb";
 
 @Component({
   selector: 'app-copilot-chat-two',
@@ -12,8 +13,10 @@ export class CopilotChatTwoComponent implements OnInit {
 
   isPlayAnimation: boolean = false;
   public model: any = [];
-
-  constructor() {}
+  jsPlumbInstance:any;
+  constructor() {
+    
+  }
 
   @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
@@ -23,8 +26,16 @@ export class CopilotChatTwoComponent implements OnInit {
   items: MenuItem[];
   messages:any=[];
   message:any="";
+  nodes:any=[];
   ngOnInit(): void {
-    this.items = [{
+    this.jsPlumbInstance = jsPlumb.getInstance();
+    this.jsPlumbInstance.importDefaults({
+      Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
+      overlays: [
+        ["Arrow", { width: 12, length: 12, location: 0.5 }],
+        ["Label", { label: "FOO" }],
+      ],})
+      this.items = [{
       label: 'History',
       items: [{
           label: 'Client Service Reporting',
@@ -41,7 +52,7 @@ export class CopilotChatTwoComponent implements OnInit {
         {"key":4,"name":"Clear Invoice"},
         {"key":5,"name":"Due Date Passed"}
       ]
-      this.processGraph();
+     // this.processGraph();
       this.model2 =[{
           "from": "Vendor Creates Invoice","to": "Scan Invoice","text": 1,},
         {
@@ -65,9 +76,56 @@ export class CopilotChatTwoComponent implements OnInit {
           "text": 1,
         },
       ]
+      for(let i=0;i<10;i++)
+      {
+
+        let node={
+          id:i+"bot",
+          selectedNodeTask:"Sample", 
+          x:((i+2)*100)+"px",
+          y:"10px",
+          
+        }
+        console.log(node)
+        this.nodes.push(node);
+        setTimeout(()=>{
+          this.populateNodes(node);
+        },200)
+
+      }
+
+        for(let j=0;j<10;j++)
+        {
+          if(j<10){
+  
+            this.jsPlumbInstance.connect({
+              endpoint: [
+                "Dot",
+                {
+                  radius: 3,
+                  cssClass: "myEndpoint",
+                  width: 8,
+                  height: 8,
+                },
+              ],
+              source:j+"bot",
+              target:(j+1)+"bot",
+              anchors: ["Right", "Left"],
+              detachable: true,
+              paintStyle: { stroke: "#404040", strokeWidth: 2 },
+              overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
+            });
+          }
+        }
+
+      
+    }
+
+
+  generateFlowChart()
+  {
+
   }
-
-
   processGraph() {
     if (this.model.length > 0) {
       var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 100, rankdir: "TB" });
@@ -88,7 +146,7 @@ export class CopilotChatTwoComponent implements OnInit {
       d3.select("svg").append("marker")
         .attr("id", "arrow3")
         .attr("class", "marker3")
-        .attr("viewBox", "0 0 10 10")
+        .attr("viewBox", "5 5 5 5")
         .attr("refX", "8")
         .attr("refY", "5")
         .attr("markerWidth", "5")
@@ -177,13 +235,90 @@ export class CopilotChatTwoComponent implements OnInit {
       user:localStorage.getItem("ProfileuserId")
     }
     this.messages.push(message);
-    this.message=""
     let systemMessage={
       id:(new Date()).getTime(),
       message:"Hi Kiran Mudili",
       user:"SYSTEM"
     }
+    this.model.push({
+      key:this.model.length,
+      name:this.message
+    })
+    this.model2.push({
+      from:this.model[this.model.length-1].name,
+      to:this.message,
+      text:1
+    })
+    this.processGraph();
+    this.message=""
     this.messages.push(systemMessage)
+  }
+
+
+  populateNodes(nodeData) {
+    const nodeIds = this.nodes.map(function (obj) {
+      return obj.id;
+    });
+    var self = this;
+    this.jsPlumbInstance.draggable(nodeIds, {
+      containment: true,
+      stop: function (element) {
+        self.updateCoordinates(element);
+      },
+    });
+
+    const rightEndPointOptions = {
+      endpoint: [
+        "Dot",
+        {
+          radius: 2,
+          cssClass: "myEndpoint",
+          width: 8,
+          height: 8,
+        },
+      ],
+
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
+      isSource: true,
+      connectorStyle: { stroke: "#404040", strokeWidth: 2 },
+      anchor: "Right",
+      maxConnections: -1,
+      cssClass: "path",
+      Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
+      connectorClass: "path",
+      connectorOverlays: [["Arrow", { width: 10, length: 10, location: 1 }]],
+    };
+    const leftEndPointOptions = {
+      endpoint: [
+        "Dot",
+        {
+          radius: 2,
+          cssClass: "myEndpoint",
+          width: 8,
+          height: 8,
+        },
+      ],
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
+      isTarget: true,
+      connectorStyle: { stroke: "#404040", strokeWidth: 2 },
+      anchor: "Left",
+      maxConnections: -1,
+      Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
+      cssClass: "path",
+      connectorClass: "path",
+      connectorOverlays: [["Arrow", { width: 10, length: 10, location: 1 }]],
+    };
+    if (nodeData.name != "STOP")
+      this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
+    if (nodeData.name != "START")
+      this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
+  }
+  updateCoordinates(dragNode) {
+    var nodeIndex = this.nodes.findIndex((node) => {
+      return node.id == dragNode.id;
+    });
+    this.nodes[nodeIndex].x = dragNode.x;
+    this.nodes[nodeIndex].y = dragNode.y;
   }
 
 }

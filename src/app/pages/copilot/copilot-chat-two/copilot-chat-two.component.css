@@ -78,3 +78,169 @@
     position: relative !important;
     border-radius: 5px !important;
 }
+
+.drag-area{
+    /* min-height: 70vh;
+    width:100%;
+    position: relative;
+    float: left;
+    transform-origin:0% 0%;
+    display: inline; */
+    min-height: 75vh;
+    width:100%;
+    position: absolute;
+    overflow: auto;
+    /* float: left;
+    transform-origin:0% 0%;
+    display: inline; */
+  }
+  
+  .outputtextareastyle{
+    padding:10px !important;
+    min-height:200px;
+    min-width:100%;
+    max-width:100%;
+    max-height: 200px !important;
+     overflow-x:auto;
+  }
+  
+  .dndDropzone {
+    cursor: pointer;
+    box-shadow: none;
+    -o-box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    border-radius: 0.2em;
+    position: absolute;
+    line-height: 14px;
+    background-size: 45px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    background-color: #00a0e317;
+    border: 2px solid #4ab0f5;  
+  }
+  
+  .dndDropzone:hover{
+   
+  }
+  
+  .studio_main{
+    width:100%;
+    /* overflow: auto; */
+    height: calc(100vh - 150px);
+    padding:10px;
+  }
+  .studio_main.zoomout_bot {
+    overflow: inherit !important;
+  }
+  .zoomoutbot_dragarea {
+    position: relative;
+    left: -20%;
+  }
+  
+  .connector-name{
+    text-align: center;
+    font-size: 11px;
+    vertical-align: middle;
+    padding: 0px;
+    max-width: 100em;
+    font-weight: 600;
+    line-height: 0.5cm;
+    margin-top: 60px;
+    color: #001c47 !important;
+  }
+  
+  
+  .node-delete {
+    /* float: right;
+    margin-top:-10px;
+    margin-right: -7px;
+    border-radius: 10px;
+    height:13px;
+    width:13px;
+    color:rgb(255, 255, 255);
+    text-align: center;
+    font-size:10px; */
+    position: absolute;
+    right: -8px;
+    top: -9px;
+  }
+  
+  .node-delete i{
+    height:15px;  
+    color:#2370e5 !important;
+  }
+  
+  
+  .context-menu__item{
+    padding: 6px;
+  }
+  .context-menu1{
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    z-index: 1;
+    padding: 5px;
+    position: absolute;
+    width: max-content;
+    background-color: #fff;
+  }
+  .context-menu{
+    position: absolute;
+    top: -17px;
+      left: 10px;
+      background: white;
+      width: max-content;
+  }
+  
+  
+  .node_tooltip{
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 45px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent gray transparent transparent;
+  }
+  
+  .connLabel{
+    background-color:white !important;
+    padding:10px !important;
+  }
+  
+  .field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    }
+  
+  .back-container{
+    max-height: 400px;
+    overflow: auto;
+  }
+  
+  
+  .dragactionsdiv {
+    text-align:center;
+    position: absolute;
+      top: 20%;
+      left: 0%;
+      width: 100%;
+  }
+  .dragactionsdiv img {
+    width: 30%;
+    height: auto;
+  }
+  .dragactionsdiv span {
+    display: block;
+    font-size: 20px;
+    color: #001c47;
+    opacity: 0.5;
+    margin-top: 10px;
+  }
+  
