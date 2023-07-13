@@ -27,7 +27,17 @@ export class CopilotChatTwoComponent implements OnInit {
   messages:any=[];
   message:any="";
   nodes:any=[];
+  showTable:boolean = true;
+  tableData:any[] = [];
+
   ngOnInit(): void {
+   this.tableData = [
+    {name:"IT from sent to the manager"},
+    {name:"Manager fills the form"},
+    {name:"IT team create Email ID"},
+    {name:"IT team assign a system"},
+    {name:"System Access for the user"},
+   ]
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -227,7 +237,7 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-  sendMessage(){
+  sendMessage(value?:any){
     let message={
       id:(new Date()).getTime(),
       message:this.message,
@@ -239,6 +249,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "uuid": "text_uuid1",
         "message": "This is sample text response",
         "components": ["Buttons"],
+        "user" :'SYSTEM',
         "values": [
           [
             {
@@ -256,6 +267,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "uuid": "text_uuid2",
         "message": ["This is sample text response2"],
         "components": ["Buttons"],
+        "user" :'SYSTEM',
         "values": [
           [
             {
@@ -297,6 +309,7 @@ export class CopilotChatTwoComponent implements OnInit {
     this.processGraph();
     this.message=""
     this.messages.push(systemMessage);
+    this.message = "";
 
   }
 
@@ -367,7 +380,7 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
-  submitButton(value){
+  submitButton(value?:any){
 
   }
 

@@ -28,7 +28,7 @@
     <div class="hr"></div>
    
     <div class="main-content-body row">
-        <div class="col-md-8 model-box ">
+        <div class="col-md-8 model-box " *ngIf="!showTable">
             <div *ngIf="false" class="process-graph">
                
                 <div [hidden]="model.length == 0" class="h-100">
@@ -73,13 +73,64 @@
             </div>
        
         </div>
+        <div class="col-md-8 model-box " *ngIf="showTable">
+          <div></div>
+
+          <h5>
+            <label id="popup_title">
+                <a class="imageBox">
+                    <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                </a>
+            </label>
+            <span class="title_text_haspath">
+                <span class="breadcrum-back">Fill in the time taken for below steps in the process:</span>
+            </span>
+        </h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Time Taken (hrs)</th>
+                <th scope="col">Mins</th>
+                <th scope="col">Hrs</th>
+                <th scope="col">Days</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tableData">
+                <th>{{item.name}}</th>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="col-md-4 chat-box">
             <div class="chat-grid">
                 <div *ngFor="let message of messages" class="py-3 ">
                     
                         <div *ngIf="message.user!='SYSTEM'" class="user-message ">
                            
-                            <div class="py-3 px-3 mr-2 user-msgtext">{{message.message}}</div>
+                            <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="message.message"></div>
                             <div class="sys-image">
                                 <img src="../../../../assets/copilot/user.svg" alt=""/>
                             </div>
@@ -89,14 +140,21 @@
                             <div class="sys-image">
                                 <img src="../../../../assets/copilot/systemicon.svg" alt=""/>
                             </div>
-                            <div class="py-0 px-2 ml-2 send-msgtext">{{message.message}}</div>
+                            <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="message.message"></div>
+                            <div *ngIf="message.components">
+                              <div *ngIf="message.components.includes('Buttons')" class="d-flex">
+                              <div class="col-3" *ngFor="let each of message.values[0]">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="submitButton(each)">{{ each.label}}</button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div></div>
                 </div>
             </div>
             <div class="px-3 text-align">
-                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate"></textarea>
-                <a  (click)="sendMessage()" class="msg-snd-btn">
+                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate" (keyup.enter)="sendMessage(message)"></textarea>
+                <a  (click)="sendMessage(message)" class="msg-snd-btn">
                     <img src="./../../../../assets/copilot/textareaicon.svg" alt="">
                 </a>
             </div>
