@@ -6,7 +6,8 @@
     border: 1px solid gray !important;
     border-radius: 20px !important; 
 }
-
+.pl-adj{padding-right:0px;padding-left:0px;}
+.main-content-body {height: calc(100% - 130px);}
 
 .chat-model-height{
     height: calc(100vh - 180px) !important;
