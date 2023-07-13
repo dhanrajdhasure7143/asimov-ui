@@ -179,7 +179,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "client_credentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -297,7 +297,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       (req_body["grantType"] = "password"),
       (req_body["password"] = this.connectorForm.value.password);
       req_body["userName"] = this.connectorForm.value.userName;
-    } else if (this.connectorForm.value.grantType == "client_credentials") {
+    } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
       req_body["grantType"] = this.connectorForm.value.grantType;
       req_body["scope"] = this.connectorForm.value.scope;
     } else if (this.connectorForm.value.grantType == "refresh_token") {
@@ -305,6 +305,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["refreshToken"] = this.connectorForm.value.refreshToken;
       req_body["scope"] = this.connectorForm.value.scope;
     }
+    let dynamic = []
+    this.dynamicForm.forEach(ele => {
+      dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+    })
+    req_body["customAttributes"] = dynamic;
     this.rest_api.testActions(req_body).subscribe(
       (res: any) => {
         if (res.data)
@@ -584,7 +589,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
       });
       
-    } else if (event == "client_credentials") {
+    } else if (event == "client_credentials" || event == "delegation") {
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
@@ -830,7 +835,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "client_credentials"
+        this.actionData.configurationAsJson["grantType"] == "client_credentials" || this.actionData.configurationAsJson["grantType"] == "delegation"
       ) {
         this.isClient = true;
         this.isResponse = true;
@@ -1032,7 +1037,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "client_credentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
