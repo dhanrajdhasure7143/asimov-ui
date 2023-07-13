@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { MessageService } from 'primeng/api';
+import { CryptoService } from 'src/app/pages/services/crypto.service';
 @Component({
   selector: 'app-rpa-environment-form',
   templateUrl: './rpa-environment-form.component.html',
@@ -31,7 +32,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private cd:ChangeDetectorRef,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private cryptoService : CryptoService
   ) {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -57,7 +59,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
       this.environmentForm.get("username").setValue(this.updateenvdata["username"]);
       if (this.updateenvdata.keyValue == null) {
-        this.environmentForm.get("password").setValue(this.updateenvdata["password"].password);
+        this.environmentForm.get("password").setValue(this.cryptoService.decrypt(this.updateenvdata["password"].password));
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
@@ -124,7 +126,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       }
       if (this.isKeyValuePair == false) {
         let connectionDetails = JSON.parse(JSON.stringify(envFormValue));
-        connectionDetails["password"] = this.password;
+        connectionDetails["password"] = this.cryptoService.encrypt(this.password);
         connectionDetails["categoryId"]=parseInt(connectionDetails["categoryId"])
         this.spinner.show();
         await this.api.testenvironment(connectionDetails).subscribe(res => {
@@ -177,7 +179,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.password = "";
       formData.append("password","");
     } else {
-      formData.append("password", this.password);
+      formData.append("password", this.cryptoService.encrypt(this.password));
       formData.append("key", "");
     }
     this.spinner.show();
@@ -239,7 +241,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
            updateEnvData.append(String(key), String(updatFormValue[key]))
       });
       if (this.isKeyValuePair == false) {
-        updateEnvData.append("password", this.password);
+        updateEnvData.append("password", this.cryptoService.encrypt(this.password));
         updateEnvData.append("key", "")
       } else {
         updateEnvData.append("password", "")
