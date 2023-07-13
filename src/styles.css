@@ -3833,12 +3833,6 @@ padding: 0px 30px;}
 .copilotchatblock-popup .p-card .p-card-content {
   padding: 0px !important;
 }
-.copilotchatblock-popup .p-card-content p {
-  margin-bottom: 0px;
-  font-weight: 700;
-  margin-top: 15px;
-  font-size: 16px;
-}
 .copilotchatblock-popup .p-dialog .p-dialog-header {
   color: #000000 !important;
   padding: 1rem 0rem 1rem !important;
@@ -3879,7 +3873,7 @@ padding: 0px 30px;}
   transform: translate(0, -5px);
 }
 .copilotchatblock-popup .cardlist,
-.secondpopup .cardlist {
+.copilotchatblock-popup .secondpopup .cardlist {
   margin-bottom: 30px !important;
 }
 .copilotchatblock-popup .subheader {
@@ -3895,6 +3889,31 @@ padding: 0px 30px;}
 }
 .copilotchatblock-popup .item-card1 .p-card.p-component:hover .p-card-body {
   transform: translate(0,-2px);
+}
+.copilotchatblock-popup .thirdpopup .p-card.p-component {
+  display: block;
+  height: 180px !important;
+  width: 100% !important;
+}
+.copilotchatblock-popup .thirdpopup .p-card.p-component .p-card-body {
+  padding: 15px 0px !important;
+  transition: none !important;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.copilotchatblock-popup .thirdpopup .p-card-header {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.copilotchatblock-popup .thirdpopup .p-card-header img {
+  height: 75px;
+}
+.copilotchatblock-popup .thirdpopup .p-card.p-component:hover .p-card-body {
+  background-color: #098de6;
+  color: #fff;
+  transform: none;
 }
 /* Popup CSS End */
 
