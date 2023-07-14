@@ -369,6 +369,7 @@ export class UsersComponent implements OnInit {
       office365User: false,
       redirectionUrl: this.config.platform_home_url,
       tenantId:localStorage.getItem("tenantName"),
+      masterTenant:localStorage.getItem("masterTenant"),
       userRoles: [
         {
           id: this.role,
@@ -384,6 +385,7 @@ export class UsersComponent implements OnInit {
         office365User: true,
         redirectionUrl: this.config.platform_home_url,
         tenantId:localStorage.getItem("tenantName"),
+        masterTenant:localStorage.getItem("masterTenant"),
         userRoles: [
           {
             id: this.role,
