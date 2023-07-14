@@ -255,10 +255,10 @@ export class CopilotChatTwoComponent implements OnInit {
         "values": [
           [
             {
-              "label": "button label"
+              "label": "Load Graph"
             },
             {
-              "label": "button label2"
+              "label": "Load Form"
             }
           ]
         ]
@@ -354,8 +354,16 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
+  isGraphLoaded:boolean=false;
   submitButton(value?:any){
-    this.loadGraph()
+    this.showTable=false;
+    if(value.label=="Load Graph")
+    {
+      if(!this.isGraphLoaded)
+        this.loadGraph()
+    }
+    else if(value.label=="Load Form")
+      this.showTable=true;
   }
 
 
@@ -406,6 +414,7 @@ export class CopilotChatTwoComponent implements OnInit {
         this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j+1].id)
       }
       this.addConnection(this.graphJsonData[this.graphJsonData.length-1].id,"STOP");
+      this.isGraphLoaded=true;
     }, 200)
   }
 

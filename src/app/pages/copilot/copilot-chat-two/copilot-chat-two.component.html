@@ -28,21 +28,7 @@
     <div class="hr"></div>
    
     <div class="main-content-body row">
-        <div class="col-md-8 model-box " *ngIf="!showTable">
-            <div *ngIf="false" class="process-graph">
-               
-                <div [hidden]="model.length == 0" class="h-100">
-                    <div id="exportSVGtoPDF" #exportSVGtoPDF class="h-100">
-                        <svg id="render"  #render>
-                          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
-                          markerWidth="5" markerHeight="5"
-                          orient="auto">
-                        <path d="M 0 0 L 10 5 L 0 10 z" />
-                      </marker>
-                        </svg>
-                      </div>
-                </div>
-            </div>
+        <div class="col-md-8 model-box " [hidden]="showTable">
             <div class="graph-designer">
                 <div  class="studio_main">
                     <div class="drag-area">
@@ -73,12 +59,12 @@
             </div>
        
         </div>
-        <div class="col-md-8 model-box " *ngIf="showTable">
+        <div class="col-md-8 model-box " [hidden]="!showTable">
           <div></div>
 
           <h5>
             <label id="popup_title">
-                <a class="imageBox">
+                <a class="imageBox" (click)="showTable=false">
                     <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                     <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                 </a>
@@ -144,7 +130,8 @@
                             <div *ngIf="message.components">
                               <div *ngIf="message.components.includes('Buttons')" class="d-flex">
                               <div class="col-3" *ngFor="let each of message.values[0]">
-                                <button type="button" class="btn btn-primary btn-sm" (click)="submitButton(each)">{{ each.label}}</button>
+                                <br/>
+                                <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
                               </div>
                             </div>
                           </div>
