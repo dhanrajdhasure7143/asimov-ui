@@ -21,6 +21,19 @@
     padding-right: 0px !important;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
 }
+.model-box{padding-left:0px;padding-right:30px;}
+.chat-form select{width:75%;
+border-radius:6px;
+color: #979797;
+border-color: #979797;}
+.chat-form tbody th{font-weight: 400 !important;
+    font-size: 15px !important;}
+.chat-form thead tr{border:0px solid grey !important;}
+.chat-form tbody tr td{border:0px solid !important;}
+.chat-form tbody tr{height:43px;}
+.chat-form tbody tr:nth-of-type(odd){background-color: #ede9e9 !important;}
+ .chat-form tbody tr:nth-of-type(odd) th{background-color: #e9e9e9 !important;} 
+
 /* .model-box{
     background-color:rgb(235, 235, 235) !important;
     border-top-left-radius: 10px !important;
@@ -53,8 +66,7 @@ height:auto !important;}
         resize: none !important;
     }
     textarea.form-control.message-input{
-       position:absolute;
-       width:92%;
+   
     background-color: #F1F0F0 !important;
     height: 50px !important;
     border: none !important;
@@ -69,8 +81,8 @@ textarea.form-control.message-input:focus{background-color: #ebf7ff !important;}
 /* .msg-snd-btn image{width:21px;} */
 
 .msg-snd-btn{
-    position: relative !important;
-    left: 248px !important;
+    position: absolute !important;
+    right: 20px !important;
     top: 5px!important;
     /* background-color: #DAE6EF;
     width: 30px;
@@ -110,7 +122,7 @@ width:100%;}
 }
 .send-msgtext{width:100%;}
 .system-message{
-   display:flex;
+   
     font-size: 15px;
     text-align: justify;
    line-height: 22px;
@@ -126,7 +138,7 @@ width:100%;}
     transform-origin:0% 0%;
     display: inline; */
     min-height: 75vh;
-    width:100%;
+    width:95%;
     position: absolute;
     overflow: auto;
     /* float: left;
@@ -152,13 +164,13 @@ width:100%;}
     border-radius: 0.2em;
     position: absolute;
     line-height: 14px;
-    background-size: 45px;
+    background-size: 31px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 60px;
-    height: 60px;
-    background-color: #00a0e317;
-    border: 2px solid #4ab0f5;  
+    width: 55px;
+    height: 55px;
+    background-color: #F6FCFE;
+    border: 2px solid #1673DB;  
   }
   
   .dndDropzone:hover{
@@ -282,4 +294,6 @@ width:100%;}
     opacity: 0.5;
     margin-top: 10px;
   }
-  
+  .chat-btn button.btn{width:100% !important;
+border-radius:4px;}
+.adjtextarea-align{width:100%;position:relative;}
