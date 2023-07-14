@@ -44,7 +44,7 @@
                         <div id="{{ node.id }}" class="dndDropzone" [ngStyle]="{
                             left: node.x,
                             top: node.y,
-                            'background-image': 'url(../../../../assets/circle.png)'
+                            'background-image': 'url('+node.path+')'
                           }">
                           <!--Node close button-->
                           <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
