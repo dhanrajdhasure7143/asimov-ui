@@ -40,7 +40,8 @@ export class AppComponent {
     this.userIdle.ping$.subscribe(() => {
       if(localStorage.getItem("accessToken") != null){
         let tenantId=localStorage.getItem('tenantName')
-        this.apiservice.getNewAccessTokenByTenantId(tenantId).subscribe(resp=>{
+        let masterTenant=localStorage.getItem("masterTenant")
+        this.apiservice.getNewAccessTokenByTenantId(tenantId,masterTenant).subscribe(resp=>{
           this.newAccessToken=resp;
           localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       })}
