@@ -1,0 +1,340 @@
+
+       
+<div class="row">
+
+<div class="col-md-2 pl-adj">
+   <div class="card-history">
+    <div class="col-md-12">
+        <h4 class="histry-space">History</h4>
+    </div>
+    <div>
+        <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img" alt=""/>
+        <p class="histry-text">You have no saved conversations</p>
+    </div>
+
+   </div>
+</div>
+
+<div class="col-md-10 pl-0 pr-0">
+    <div class="maincontent">
+        <div class="h-100">
+          <div class="row main-content-head">
+    <h3>
+        <span class="title_text">Conversational AI Process Automation</span>
+    </h3>
+    </div>
+   
+    <div class="main-content-body">
+    <div class="card">
+        <h4 class="second-header"> What Would You Like to Do Today?</h4>
+    <div class="row grid-align">
+        <div class="col-sm-4 pad-align">
+            <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+              
+                    <span class="active-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/Automate.svg" > 
+            </span>
+            <span class="hover-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/Automate-blue.svg" alt=""> 
+            </span>
+                <p> Automate Process</p>
+           
+            </p-card>
+        </div>
+        <div class="col-sm-4 pad-align">
+            <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+              
+                    <span class="active-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject.svg" alt=""> 
+                </span>
+                <span class="hover-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject-blue.svg" alt=""> 
+            </span>
+                <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> 
+                
+            </p-card>
+        </div>
+        <div class="col-sm-4 pad-align">
+            <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+               
+                    <span class="active-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs.svg"   alt=""> 
+                </span>
+                <span class="hover-icon" >
+                <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs-blue.svg"    alt=""> 
+            </span>
+                <p> Access Process Graphs</p>
+               
+            </p-card>
+        </div>
+       
+            <div class="col-sm-4 pad-align">
+                <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+                   
+                        <span class="active-icon" >
+                    <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights.svg" alt="" >
+                    </span>
+                    <span class="hover-icon" >
+                    <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights-blue.svg"  alt=""> 
+                </span>
+                    <p style="word-wrap: break-word;">Monitor and View Insights</p>
+                 </p-card>
+            </div>
+            <div class="col-sm-4 pad-align">
+                <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+                    
+                        <span class="active-icon" >
+                    <img src=".././../../../assets/copilot/Landing_Icons/Drafts.svg" alt=""> 
+                    </span>
+                    <span class="hover-icon" >
+                     <img src=".././../../../assets/copilot/Landing_Icons/Drafts-blue.svg"  alt=""> 
+                    </span>
+                    <p class="">View Drafts</p>
+                 </p-card>
+            </div>
+            <div class="col-sm-4 pad-align">
+                <p-card  (click)="showDialog()" class="cursor copilotchatblock imageBox">
+                   
+                        <span class="active-icon">
+                    <img src=".././../../../assets/copilot/Landing_Icons/Templates.svg" alt="" >
+                    </span>
+                    <span class="hover-icon">
+                    <img src=".././../../../assets/copilot/Landing_Icons/Templates-blue.svg" alt="">
+                </span>
+                    <p>Explore Templates</p>
+                 </p-card>
+            </div>
+        
+    </div>
+   
+
+    <div class="p-inputgroup sendinput">
+        <!-- <input type="text" pInputText placeholder="Send a message">&nbsp;
+        <span class="sendimg">
+            <i class="pi pi-send"></i>
+        </span> -->
+    </div> 
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- <div class="heading">
+    <p> Conversational AI Process Automation </p>
+</div> -->
+<!-- <div class="row">
+    <div class="col-md-2 side">
+        <b class="cursor"> History </b>
+        <div class="side-bar cursor" *ngFor="let h of historyList">
+            <p> {{h.label}} </p>
+        </div>
+
+    </div>
+    <div class="card col-md-10" style="overflow:scroll;width:100%">
+        <h2 class="mt-3" style="color: #098de6;text-align: center;font-size:larger;"> <b>What Would You Like to
+                Do Today?</b></h2>
+        <div class="row padding">
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;"> 
+                    <p> Automate Process</p>
+                </p-card>
+            </div>
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;"> 
+    
+                    <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> </p-card>
+            </div>
+            <div class="col-sm-4 cursor copilotchatblock">
+                <p-card  (click)="showDialog()">
+                    <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;"> 
+    
+                    <p> Access Process Graphs</p>
+                </p-card>
+            </div>
+            <div class="row" style="margin-top: 34px !important">
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;"> 
+                        <p style="word-wrap: break-word;">Monitor and View Insights</p> </p-card>
+                </div>
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;"> 
+    
+                        <p class="">View Drafts</p> </p-card>
+                </div>
+                <div class="col-sm-4 cursor copilotchatblock">
+                    <p-card  (click)="showDialog()">
+                        <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;">
+                        <p>Explore Templates</p> </p-card>
+                </div>
+            </div>
+        </div>
+        <br>
+    
+        <div class="sendinput">
+            <input type="text" pInputText placeholder="Send a message" [(ngModel)]="message">&nbsp;
+            <span class="sendimg">
+                <i class="pi pi-send" (click)="sendMessage()"></i>
+            </span>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+<p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup">
+    <ng-template pTemplate="header">
+        <div  *ngIf="nextFlag==''" >
+            Automate a Process
+        </div>
+        <div class="d-flex align-items-center" *ngIf="nextFlag=='Human Resource'" >
+            <a class="d-flex" (click)="nextFlag=''">
+                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;" >
+                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
+            </a>
+            <span>Human Resource</span>
+        </div>
+        <div class="d-flex" *ngIf="nextFlag=='Recruiting'"  >
+            <a class="d-flex" (click)="nextFlag='Human Resource'">
+                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
+                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
+            </a>
+            <span>Recruiting(10)</span>
+        </div>
+    </ng-template>
+    <p class="subheader" *ngIf="nextFlag != 'Recruiting'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
+    
+  
+    <div *ngIf="nextFlag==''">
+        <div class="row">
+            <div class="col-sm-3 form-group cardlist">
+                <p-card (click)="openChat2()">Quote to Cash</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card>Finance & Accounting</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card>Production</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
+            </div>
+        
+            <div class="col-sm-3 form-group cardlist">
+                <p-card>Demand to Pay</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card>CRM</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card>Master Date Management</p-card>
+            </div>
+            <div class="col-sm-3 form-group cardlist">
+                <p-card (click)="openHumanResource()"> Human <br>Resource </p-card>
+            </div>
+        
+            <div class="col-sm-3 form-group cardlist">
+                <p-card (click)="openChat2()">Others</p-card>
+            </div>    
+        </div>
+    </div>
+
+    <div class="secondpopup"  *ngIf="nextFlag=='Human Resource'">
+        <div class="row" >
+            <div class="col-sm-6 form-group cardlist">
+                <p-card (click)="openRecruiting()" class="item-card1"><span>Recruting (10)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Learning & Development (10)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Training (2)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Talent Management (12)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Payroll (12)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Seperation (12)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Benifits (3)</span></p-card>
+            </div>
+            <div class="col-sm-6 form-group cardlist">
+                <p-card class="item-card1"><span>Retirement (12)</span></p-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="thirdpopup"  *ngIf="nextFlag=='Recruiting'">
+        <div class="row" >
+            <div class="col-4 form-group cardlist">
+                <p-card (click)="openChat2()">
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V1</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V2</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V3</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V4</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V5</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V6</h6>
+                    </div>
+                </p-card>                
+            </div>
+        </div>
+    </div>
+
+</p-dialog>

@@ -8,6 +8,8 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Rpa_Hints } from '../../model/RPA-Hints';
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { CryptoService } from 'src/app/pages/services/crypto.service';
+import * as CryptoJS from 'crypto-js';
+
 @Component({
   selector: 'app-rpa-database-form',
   templateUrl: './rpa-database-form.component.html',
@@ -54,7 +56,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     private spinner: LoaderService,
     private messageService:MessageService,
     private  confirmationservice:ConfirmationService,
-    private cryptoService: CryptoService
+    private cryptoService:CryptoService
     ) {
 
       this.dbForm=this.formBuilder.group({
@@ -79,6 +81,15 @@ export class RpaDatabaseFormComponent implements OnInit {
     this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;
+    const passwordToEncrypt = 'myPassword';
+    const secretKey = '6575fae36288be6d1bad40b99808e37f';
+    
+    const encryptedPassword = this.encryptPassword(passwordToEncrypt, secretKey);
+    console.log('Encrypted Password:', encryptedPassword);
+    // const decryptedPassword = this.decryptPassword(encryptedPassword, secretKey);
+    // console.log('Decrypted Password:', decryptedPassword);
+
+
   }
 
   ngOnChanges(changes : SimpleChanges){
@@ -339,4 +350,64 @@ spaceNotAllow(event: any) {                    //initially doesn't allow space
     event.preventDefault();
   }
 }
+// encryptPassword(strToEncrypt: string, secret: string): string {
+//   try {
+//     const key = CryptoJS.SHA1(secret).toString(CryptoJS.enc.Hex).substr(0, 32);
+//     const encrypted = CryptoJS.AES.encrypt(strToEncrypt, key, {
+//       mode: CryptoJS.mode.ECB,
+//       padding: CryptoJS.pad.Pkcs7,
+//     });
+//     this.setKey(secret)
+//     return encrypted.toString();
+//   } catch (e) {
+//     console.error('Error while encrypting:', e);
+//   }
+//   return null;
+// }
+
+
+setKey(key: string): string {
+  try {
+    const sha1 = CryptoJS.SHA1(key);
+    const hashedKey = sha1.toString(CryptoJS.enc.Hex).substr(0, 16);
+    return hashedKey;
+  } catch (e) {
+    console.error('Error occurred while generating key:', e);
+  }
+  return null;
+}
+encryptPassword(strToEncrypt: string, secret: string): string {
+  try {
+    const key = CryptoJS.SHA1(secret).toString(CryptoJS.enc.Hex).substr(0, 32);
+    const encrypted = CryptoJS.AES.encrypt(strToEncrypt, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+    const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
+    const encryptedBase64 = encryptedBytes.toString(CryptoJS.enc.Base64);
+    return btoa(encryptedBase64);
+  } catch (e) {
+    console.error('Error while encrypting:', e);
+  }
+  return null;
+}
+
+ 
+
+
+ 
+
+// decryptPassword(strToDecrypt: string, secret: string): string {
+//   try {
+//     const key = CryptoJS.SHA1(secret).toString(CryptoJS.enc.Hex).substr(0, 32);
+//     const decrypted = CryptoJS.AES.decrypt(strToDecrypt, key, {
+//       mode: CryptoJS.mode.ECB,
+//       padding: CryptoJS.pad.Pkcs7,
+//     });
+//     return decrypted.toString(CryptoJS.enc.Utf8);
+//   } catch (e) {
+//     console.error('Error while decrypting:', e);
+//   }
+//   return null;
+// }
 }
