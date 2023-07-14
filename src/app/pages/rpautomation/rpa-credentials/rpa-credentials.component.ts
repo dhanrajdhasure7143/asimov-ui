@@ -267,7 +267,7 @@ this.confirmationService.confirm({
       acceptIcon: 'null',
       key:"positionDialog",
       accept: (result) => {
-      if (result.value) {
+      // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
@@ -287,7 +287,8 @@ this.confirmationService.confirm({
           this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
 
         });
-      }}
+      // }
+    }
     });
   }
 }
