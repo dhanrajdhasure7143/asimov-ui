@@ -27,6 +27,7 @@ export class CopilotChatComponent implements OnInit {
 }  
 
 showDialog() {
+  this.nextFlag="";
   this.display = true;
 }
 

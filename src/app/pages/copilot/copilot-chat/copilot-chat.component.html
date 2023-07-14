@@ -8,7 +8,7 @@
         <h4 class="histry-space">History</h4>
     </div>
     <div>
-        <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img"/>
+        <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img" alt=""/>
         <p class="histry-text">You have no saved conversations</p>
     </div>
 
@@ -238,7 +238,7 @@
             </div>
         
             <div class="col-sm-3 form-group cardlist">
-                <p-card>Others</p-card>
+                <p-card (click)="openChat2()">Others</p-card>
             </div>    
         </div>
     </div>
@@ -275,7 +275,7 @@
     <div class="thirdpopup"  *ngIf="nextFlag=='Recruiting'">
         <div class="row" >
             <div class="col-4 form-group cardlist">
-                <p-card>
+                <p-card (click)="openChat2()">
                     <ng-template pTemplate="header">
                         <img src="../../../../assets/graph.svg" class="" alt="graph">
                     </ng-template>                    

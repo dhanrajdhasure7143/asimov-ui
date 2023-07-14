@@ -5,7 +5,7 @@
          <h4 class="histry-space">History</h4>
      </div>
      <div>
-         <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img"/>
+         <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img" alt=""/>
          <p class="histry-text">You have no saved conversations</p>
      </div>
  
@@ -21,31 +21,94 @@
         
     </h3></div>
     <div class="col-md-6 title-help">
-    Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg"/></span>
+    Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg" alt=""/></span>
 </div>
     
     </div>
     <div class="hr"></div>
    
     <div class="main-content-body row">
-       
-        <div class="col-md-8 model-box ">
-            
-            <div class="process-graph">
-               
-                <div [hidden]="model.length == 0" class="h-100">
-                    <div id="exportSVGtoPDF" #exportSVGtoPDF class="h-100">
-                        <svg id="render"  #render>
-                          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
-                          markerWidth="5" markerHeight="5"
-                          orient="auto">
-                        <path d="M 0 0 L 10 5 L 0 10 z" />
-                      </marker>
-                        </svg>
-                      </div>
-                </div>
+        <div class="col-md-8 model-box " [hidden]="showTable">
+            <div class="graph-designer">
+                <div  class="studio_main">
+                    <div class="drag-area">
+                      <!--Nodes inside designer-->
+                      <ng-container *ngFor="let node of nodes; let i = index">
+                        <div id="{{ node.id }}" class="dndDropzone" [ngStyle]="{
+                            left: node.x,
+                            top: node.y,
+                            'background-image': 'url('+node.path+')'
+                          }">
+                          <!--Node close button-->
+                          <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
+                            {{ node.name }}
+                          </div>
+                          <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
+                            {{ node.selectedNodeTask }}
+                          </div>
+                        </div>
+                      </ng-container>
+                
+                      <!--Show bot Image when no nodes in designer-->
+                      <!-- <div *ngIf="nodes.length == 0" class="dragactionsdiv">
+                        <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
+                        <span>Drag an action here...</span>
+                      </div> -->
+                    </div>
+                  </div>
             </div>
        
+        </div>
+        <div class="col-md-8 model-box " [hidden]="!showTable">
+          <div></div>
+
+          <h5>
+            <label id="popup_title">
+                <a class="imageBox" (click)="showTable=false">
+                    <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                </a>
+            </label>
+            <span class="title_text_haspath">
+                <span class="breadcrum-back">Fill in the time taken for below steps in the process:</span>
+            </span>
+        </h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Time Taken (hrs)</th>
+                <th scope="col">Mins</th>
+                <th scope="col">Hrs</th>
+                <th scope="col">Days</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tableData">
+                <th>{{item.name}}</th>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="">
+                    <option value="">00</option>
+                    <option value="">01</option>
+                    <option value="">02</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="col-md-4 chat-box">
             <div class="chat-grid">
@@ -53,25 +116,33 @@
                     
                         <div *ngIf="message.user!='SYSTEM'" class="user-message ">
                            
-                            <div class="py-3 px-3 mr-2 user-msgtext">{{message.message}}</div>
+                            <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="message.message"></div>
                             <div class="sys-image">
-                                <img src="../../../../assets/copilot/user.svg"/>
+                                <img src="../../../../assets/copilot/user.svg" alt=""/>
                             </div>
                         </div>
                         <div></div>
                         <div *ngIf="message.user=='SYSTEM'" class="system-message">
                             <div class="sys-image">
-                                <img src="../../../../assets/copilot/systemicon.svg"/>
+                                <img src="../../../../assets/copilot/systemicon.svg" alt=""/>
                             </div>
-                            <div class="py-0 px-2 ml-2 send-msgtext">{{message.message}}</div>
+                            <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="message.message"></div>
+                            <div *ngIf="message.components">
+                              <div *ngIf="message.components.includes('Buttons')" class="d-flex">
+                              <div class="col-3" *ngFor="let each of message.values[0]">
+                                <br/>
+                                <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div></div>
                 </div>
             </div>
             <div class="px-3 text-align">
-                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate"></textarea>
-                <a  (click)="sendMessage()" class="msg-snd-btn">
-                    <img src="./../../../../assets/copilot/textareaicon.svg">
+                <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate" (keyup.enter)="sendMessage(message)"></textarea>
+                <a  (click)="sendMessage(message)" class="msg-snd-btn">
+                    <img src="./../../../../assets/copilot/textareaicon.svg" alt="">
                 </a>
             </div>
            

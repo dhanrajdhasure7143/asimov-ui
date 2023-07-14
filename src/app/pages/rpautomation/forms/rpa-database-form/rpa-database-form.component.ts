@@ -134,7 +134,8 @@ export class RpaDatabaseFormComponent implements OnInit {
       }
       this.dbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
       this.dbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
-      this.dbForm.get("password").setValue(this.dbupdatedata["password"]);
+      // this.dbForm.get("password").setValue(this.dbupdatedata["password"]);
+      this.dbForm.get("password").setValue(this.cryptoService.decrypt(this.dbupdatedata["password"]));
       this.dbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
       this.dbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
       this.dbForm.get("username").setValue(this.dbupdatedata["username"]);
@@ -173,7 +174,9 @@ export class RpaDatabaseFormComponent implements OnInit {
       } else {
         formdata.value.activeStatus = 8
       }
-      await this.api.testdbconnections(formdata.value).subscribe(res => {
+      // await this.api.testdbconnections(formdata.value).subscribe(res => {
+      const encryptedFormData = {...formdata.value, password: this.cryptoService.encrypt(formdata.value["password"])};
+      await this.api.testdbconnections(encryptedFormData).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
           this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'datamessage'})
@@ -218,7 +221,9 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.submitted = true;
         let DBConnection = this.dbForm.value;
         DBConnection["categoryId"]=parseInt(DBConnection["categoryId"])
-        this.api.addDBConnection(DBConnection).subscribe(res => {
+        // this.api.addDBConnection(DBConnection).subscribe(res => {
+        const encryptedDBConnection = {...DBConnection, password: this.cryptoService.encrypt(DBConnection["password"])};
+        this.api.addDBConnection(encryptedDBConnection).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
           this.refreshData.emit(true)
@@ -266,7 +271,9 @@ export class RpaDatabaseFormComponent implements OnInit {
       dbupdatFormValue["connectionId"] = this.dbupdatedata.connectionId;
       dbupdatFormValue["createdBy"] = this.dbupdatedata.createdBy;
       dbupdatFormValue["categoryId"]=parseInt(dbupdatFormValue["categoryId"])
-      this.api.updateDBConnection(dbupdatFormValue).subscribe(res => {
+      // this.api.updateDBConnection(dbupdatFormValue).subscribe(res => {
+      const encryptedDbupdateFormValue = {...dbupdatFormValue, password: this.cryptoService.encrypt(dbupdatFormValue["password"])};
+      this.api.updateDBConnection(encryptedDbupdateFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();
         this.refreshData.emit(true)
