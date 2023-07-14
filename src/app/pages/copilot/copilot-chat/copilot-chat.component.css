@@ -22,34 +22,7 @@ span.sendimg {
     right: 18px;
     top: 20px;
 }
-.second-header{text-align: center;
-    padding-top: 40px;
-    margin-bottom: 0px;
-font-size:25px;}
-.grid-align{padding:30px 25px 0px;
-    height: calc(100vh - 195px);
-    overflow: auto;}
-.card-history{width:100%;
-min-height:100%;
-background-color: #F6FCFE;}
-.histry-space{padding-top: 23px;
-    border-bottom: 1px solid #d9dcde;
-    padding-bottom: 23px;
-    font-size: 16px;}
-.histry-img{margin: auto;
-    display: block;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    margin-top: 50px;}
-.histry-text{    
-  text-align: center;
-  margin-top: 10px;
-  padding: 0px 30px;}
-  .cursor:hover p{color:#098DE6}
-  .cursor:hover .p-card.p-component{border:1px solid blue;}
-  .pad-align{padding-right:25px;padding-left:25px;}
-  .pl-adj{padding-right:0px;padding-left:0px;}
+
   /* .imageBox .hover-icon, .imageBox .active-icon{transition: transform ease 300ms;}
   .imageBox:hover .hover-icon, .imageBox:hover .active-icon{transform: translate(0, -10px);} */
 
@@ -69,12 +42,10 @@ background-color: #F6FCFE;}
 width: 12rem;
 }
 
-
-
 /* Popup styles Start */
 .copilotchatblock-popup a img {
     cursor: pointer;
-    margin-right: 13px;
+    margin-right: 8px;
 }
 .copilotchatblock-popup a:hover img.default-icon, .copilotchatblock-popup img.hover-icon {
     display: none;
@@ -82,18 +53,20 @@ width: 12rem;
 .copilotchatblock-popup a:hover img.hover-icon {
     display: initial;
 }
-.copilotchatblock-popup .secondpopup, 
-.copilotchatblock-popup .thirdpopup {
+
+.secondpopup {
     overflow: auto;
     max-height: 365px;
     margin-bottom: 10px;
 }
-.copilotchatblock-popup .thirdpopup {
-    max-height: 420px;
-}
-.thirdpopup h6 {
-    margin-bottom: 0px;
-    font-weight: 500;
-    font-size: 16px;
-  }
 /* Popup styles End */
+
+
+.card-title-bg{
+    background-color: lightgray;
+}
+.pl-adj {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.pad-align{padding-right:25px;padding-left:25px;}

@@ -3758,10 +3758,10 @@ background-color: #D8E0EF !important;
 
 /* Co-Pilot Styles Start */
 .copilotchatblock .p-card.p-component {
-  height: 210px !important;
+  height: 190px !important;
   text-align: center;
-  background-color: transparent;
-  border: 1px solid #ebebeb;
+  background-color: #E9F2FE;
+  border: 1px solid #9DBCEA;
   margin-bottom:50px;
   box-shadow: none !important;
   display: flex;
@@ -3772,6 +3772,7 @@ background-color: #D8E0EF !important;
 .copilotchatblock:hover .p-card.p-component {
   border:1px solid #098DE6;
   box-shadow: 0px 6px 14px 0px #e3e1e15e !important;
+  background-color: #fff;
 }
 .copilotchatblock .p-card .p-card-content {
     padding: 0px !important;
@@ -3786,14 +3787,15 @@ background-color: #D8E0EF !important;
 .copilotchatblock:hover .p-card-content p {
     color: #098DE6 !important;
 }
-.copilotchatblock .p-card .p-card-content{margin-top:25px;transition: transform ease 500ms;}
+.copilotchatblock .p-card .p-card-content{margin-top:15px;transition: transform ease 500ms;}
 .copilotchatblock:hover .p-card .p-card-content{transform: translate(0, -10px);}
 .second-header{text-align: center;
   padding-top: 40px;
   margin-bottom: 0px;
-font-size:25px;}
+font-size:25px;
+color:#5388D8;}
 .grid-align{padding:30px 25px 0px;
-  height: calc(100vh - 195px);
+  height: calc(100vh - 234px);
   overflow: auto;}
 .card-history{width:100%;
 min-height:100vh;
