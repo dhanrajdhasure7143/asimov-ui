@@ -295,5 +295,5 @@ width:100%;}
     margin-top: 10px;
   }
   .chat-btn button.btn{width:100% !important;
-border-radius:4px;}
+border-radius:4px;text-transform: capitalize;}
 .adjtextarea-align{width:100%;position:relative;}
