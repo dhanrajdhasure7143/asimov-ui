@@ -137,54 +137,54 @@ export class CopilotChatTwoComponent implements OnInit {
     //   this.messages.push(systemMessage);
     //   this.message = "";
     // }
-    // this.messages = [
-    //   {
-    //     "uuid": "text_uuid1",
-    //     "message": "This is sample text response",
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "button label",
-    //           "submitValue": "submit value"
-    //         },
-    //         {
-    //           "label": "button label2",
-    //           "submitValue": "submit value2"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid": "text_uuid2",
-    //     "message": ["This is sample text response2"],
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "Load Graph"
-    //         },
-    //         {
-    //           "label": "Load Form"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid":"text_uuid1",
-    //     "message":"This is sample text response"
-    //   },
-    //   {
-    //     "uuid":"text_uuid2",
-    //     "message":["This is sample text response"]
-    //   },
-    //   {
-    //     "uuid":"text_uuid3",
-    //     "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
-    //   }
-    // ];
+    this.messages = [
+      {
+        "uuid": "text_uuid1",
+        "message": "This is sample text response",
+        "components": ["Buttons"],
+        "user" :'SYSTEM',
+        "values": [
+          [
+            {
+              "label": "button label",
+              "submitValue": "submit value"
+            },
+            {
+              "label": "button label2",
+              "submitValue": "submit value2"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid": "text_uuid2",
+        "message": ["This is sample text response2"],
+        "components": ["Buttons"],
+        "user" :'SYSTEM',
+        "values": [
+          [
+            {
+              "label": "Load Graph"
+            },
+            {
+              "label": "Load Form"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid":"text_uuid1",
+        "message":"This is sample text response"
+      },
+      {
+        "uuid":"text_uuid2",
+        "message":["This is sample text response"]
+      },
+      {
+        "uuid":"text_uuid3",
+        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+      }
+    ];
     // let systemMessage={
     //   id:(new Date()).getTime(),
     //   message:"Hi Kiran Mudili",
