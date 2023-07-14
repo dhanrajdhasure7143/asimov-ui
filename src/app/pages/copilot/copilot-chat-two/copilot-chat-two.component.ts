@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import * as dagreD3 from 'dagre-d3';
-import * as d3 from 'd3';
 import { jsPlumb, jsPlumbInstance } from "jsplumb";
-
+import { HttpClient, HttpBackend } from '@angular/common/http';
+//import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
   selector: 'app-copilot-chat-two',
   templateUrl: './copilot-chat-two.component.html',
@@ -14,8 +13,9 @@ export class CopilotChatTwoComponent implements OnInit {
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
+  copilotJson:any={};
   constructor() {
-
+    //this.copilotJson=copilot;
   }
 
   @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
@@ -89,8 +89,7 @@ export class CopilotChatTwoComponent implements OnInit {
     {name:"IT team assign a system"},
     {name:"System Access for the user"},
    ]
-  
-
+  //  console.log("check",this.copilotJson)
   }
 
 
@@ -116,109 +115,6 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-  generateFlowChart() {
-
-  }
-  processGraph() {
-    if (this.model.length > 0) {
-      var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 100, rankdir: "TB" });
-      var me = this
-      const w = 1300;
-      d3.select("svg").remove()
-      let svg = d3.select("#exportSVGtoPDF").append("svg")
-        .attr("xmlns", "http://www.w3.org/2000/svg")
-        .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
-        .attr("width", w)
-        .attr('id', 'render')
-        .attr("class", "pisvg")
-
-      d3.select("marker").append("path")
-        .attr("d", "M 0 0 L 10 5 L 0 10 z")
-        .style("stroke-width", 1)
-
-      d3.select("svg").append("marker")
-        .attr("id", "arrow3")
-        .attr("class", "marker3")
-        .attr("viewBox", "5 5 5 5")
-        .attr("refX", "8")
-        .attr("refY", "5")
-        .attr("markerWidth", "5")
-        .attr("markerHeight", "5")
-        .attr("orient", "auto")
-        .attr("fill", "black")
-        .append("path")
-        .attr("d", "M 0 0 L 10 5 L 0 10 z")
-        .style("stroke-width", 2)
-
-      var inner = svg.append("g");
-      var states: any = {}
-      for (var j = 0; j < this.model.length; j++) {
-        var nodeName = this.model[j].name
-        states[nodeName] = {
-        }
-      }
-
-      Object.keys(states).forEach(function (state) {
-        var value = states[state];
-        value.rx = value.ry = 10;
-        value.lableStyle = "font-zie: 4em";
-        g.setNode(state, value);
-      });
-
-      // Set up the edges
-      for (var i = 0; i < this.model.length - 1; i++) {
-        g.setEdge(this.model[i].name, this.model[i + 1].name, {
-          labelType: "html", style: "stroke: black; stroke-width: 5px;marker-end:url(#arrow3);fill:none;",
-          curve: d3.curveBasis, arrowhead: "normal"
-        })
-      }
-
-      g.nodes().forEach(function (v) {
-        var node = g.node(v);
-        node.width = 400
-        node.height = 50
-        node.style = "fill: #bab7bf";
-        // nodesArray.push(node)
-        node.rx = node.ry = 5;
-      });
-
-      const handleZoom = (e) => inner.attr('transform', e.transform);
-      const zoom = d3.zoom().on('zoom', handleZoom);
-
-      svg.call(zoom);
-      var render = new dagreD3.render();
-
-      d3.select("body")
-        .append("div")
-      render(inner, g);
-
-      // let nodes_Array = d3.selectAll("g.node rect")['_groups'][0];
-      // console.log(nodes_Array)
-      // // let nodes= inner.selectAll('g.node')
-      // // console.log(nodes)
-      // nodes_Array.forEach((element, i) => {
-      //   console.log(nodes_Array[i]['attributes'])
-      //   // nodes_Array[i]['attributes'][1].value = "font-size: 13px;fill: #fff"
-
-      // });
-
-
-      d3.selectAll("g g.label g")
-        .attr("transform", "translate(-5,-15)")
-
-      d3.selectAll("g text")
-        .attr("text-anchor", "middle")
-
-      d3.selectAll("g text")
-        .style('font-size', '25')
-        .style('font-weight', '600')
-
-      // graph auto adjust to the screen
-      var initialScale = 0.42;
-      svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 4, 53).scale(initialScale));
-      svg.attr('height', g.graph().height * initialScale + 53);
-    }
-  }
 
 
   sendMessage(value?:any){
@@ -228,62 +124,73 @@ export class CopilotChatTwoComponent implements OnInit {
       user:localStorage.getItem("ProfileuserId")
     }
     this.messages.push(message);
-    this.messages = [
-      {
-        "uuid": "text_uuid1",
-        "message": "This is sample text response",
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "button label",
-              "submitValue": "submit value"
-            },
-            {
-              "label": "button label2",
-              "submitValue": "submit value2"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid": "text_uuid2",
-        "message": ["This is sample text response2"],
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "Load Graph"
-            },
-            {
-              "label": "Load Form"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid":"text_uuid1",
-        "message":"This is sample text response"
-      },
-      {
-        "uuid":"text_uuid2",
-        "message":["This is sample text response"]
-      },
-      {
-        "uuid":"text_uuid3",
-        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
-      }
-    ];
-    let systemMessage={
-      id:(new Date()).getTime(),
-      message:"Hi Kiran Mudili",
-      user:"SYSTEM"
-    }
-    this.message=""
-    this.messages.push(systemMessage);
-    this.message = "";
+    // let response=copilot.find((item:any)=>item.message.includes(this.message)).response;
+    // if(response)
+    // {
+    //   console.log(response)
+    //   let systemMessage={
+    //     id:(new Date()).getTime(),
+    //     user:"SYSTEM",
+    //     message:response.message,
+    //     steps:response.steps
+    //   }
+    //   this.messages.push(systemMessage);
+    //   this.message = "";
+    // }
+    // this.messages = [
+    //   {
+    //     "uuid": "text_uuid1",
+    //     "message": "This is sample text response",
+    //     "components": ["Buttons"],
+    //     "user" :'SYSTEM',
+    //     "values": [
+    //       [
+    //         {
+    //           "label": "button label",
+    //           "submitValue": "submit value"
+    //         },
+    //         {
+    //           "label": "button label2",
+    //           "submitValue": "submit value2"
+    //         }
+    //       ]
+    //     ]
+    //   },
+    //   {
+    //     "uuid": "text_uuid2",
+    //     "message": ["This is sample text response2"],
+    //     "components": ["Buttons"],
+    //     "user" :'SYSTEM',
+    //     "values": [
+    //       [
+    //         {
+    //           "label": "Load Graph"
+    //         },
+    //         {
+    //           "label": "Load Form"
+    //         }
+    //       ]
+    //     ]
+    //   },
+    //   {
+    //     "uuid":"text_uuid1",
+    //     "message":"This is sample text response"
+    //   },
+    //   {
+    //     "uuid":"text_uuid2",
+    //     "message":["This is sample text response"]
+    //   },
+    //   {
+    //     "uuid":"text_uuid3",
+    //     "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+    //   }
+    // ];
+    // let systemMessage={
+    //   id:(new Date()).getTime(),
+    //   message:"Hi Kiran Mudili",
+    //   user:"SYSTEM"
+    // }
+
 
   }
 
@@ -367,9 +274,6 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-  addNewStep()
-  {
-  }
   loadGraph()
   {
 
@@ -379,7 +283,6 @@ export class CopilotChatTwoComponent implements OnInit {
       x:  "0px",
       y:"200px",
       path: "../../../../assets/images/RPA/Start.png"
-
     }
     this.nodes.push(startNode);
     setTimeout(() => {
