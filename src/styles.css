@@ -3824,12 +3824,6 @@ padding: 0px 30px;}
   background: #fff !important;
   border-radius: 8px !important;
 }
-.copilotchatblock-popup .p-card.p-component {
-  width: 100% !important;
-  height: 105px !important;
-  border: none;
-  background-color: #cae1fc;
-}
 .copilotchatblock-popup .p-card .p-card-content {
   padding: 0px !important;
 }
@@ -3843,13 +3837,25 @@ padding: 0px 30px;}
 }
 .copilotchatblock-popup .p-dialog .p-dialog-content {
   color: #000000 !important;
+  /* padding: 0 0.5rem !important;
+  border-radius: 8px; */
+  padding: 1.3rem 0 0 !important;
+  border-radius: 3px;
+  background: #EAF6FF;
+  margin: 0 1.5rem 1.3rem;
+}
+.copilotchatblock-popup.initialpopup .p-dialog .p-dialog-content {
+  background: #fff;
   padding: 0 0.5rem !important;
   border-radius: 8px;
+  margin: 0;
 }
 .copilotchatblock-popup .p-card.p-component {
+  width: 100% !important;
   height: 100px !important;
-  border: 1px solid #ebebeb !important;
-  background: #f6fcfe !important;
+  background: #CEE5FF !important;
+  /* background: #f6fcfe !important; 
+  border: 1px solid #ebebeb !important; */
   color: #000000 !important;
   display: flex;
   align-items: center;
@@ -3858,6 +3864,10 @@ padding: 0px 30px;}
   box-shadow: none !important;
   border-radius: 6px !important;
   font-size: 16px;
+}
+.copilotchatblock-popup .secondpopup .p-card.p-component  {
+  background: #FFFFFF !important;
+  box-shadow: 0px 0px 11px 0px #00000040 !important;
 }
 .copilotchatblock-popup .p-card.p-component:hover {
   border:1px solid #098DE6 !important;
@@ -3877,7 +3887,7 @@ padding: 0px 30px;}
   margin-bottom: 30px !important;
 }
 .copilotchatblock-popup .subheader {
-  margin: 0rem 1rem 1.3rem;
+  margin: 0rem 1rem 0rem;
   font-size: 15px;
 }
 .copilotchatblock-popup .subheader span{
@@ -3894,12 +3904,15 @@ padding: 0px 30px;}
   display: block;
   height: 180px !important;
   width: 100% !important;
+  background: #FFFFFF !important;
+  box-shadow: 0px 4px 4px 0px #00000040 !important;
 }
 .copilotchatblock-popup .thirdpopup .p-card.p-component .p-card-body {
-  padding: 15px 0px !important;
+  padding: 16px 0px !important;
   transition: none !important;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
+  background-color: #E6E6E6;
 }
 .copilotchatblock-popup .thirdpopup .p-card-header {
   height: 130px;

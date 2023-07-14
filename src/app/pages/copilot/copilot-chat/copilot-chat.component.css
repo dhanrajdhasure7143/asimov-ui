@@ -82,6 +82,9 @@ width: 12rem;
 .copilotchatblock-popup a:hover img.hover-icon {
     display: initial;
 }
+.popupcontent {
+    padding-top: 1.3rem;
+}
 .copilotchatblock-popup .secondpopup, 
 .copilotchatblock-popup .thirdpopup {
     overflow: auto;
