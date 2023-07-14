@@ -62,6 +62,9 @@ export class CopilotChatTwoComponent implements OnInit {
     y: "500px",
     path: "../../../../assets/circle.png"
   }]
+  showTable:boolean = false;
+  tableData:any[] = [];
+
   ngOnInit(): void {
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
@@ -79,83 +82,14 @@ export class CopilotChatTwoComponent implements OnInit {
         }
       }]
     }]
-
-
-    this.model = [
-      { "key": 0, "name": "Vendor Creates Invoice" },
-      { "key": 1, "name": "Scan Invoice" },
-      { "key": 2, "name": "Enter in SAP" },
-      { "key": 3, "name": "Book Invoice" },
-      { "key": 4, "name": "Clear Invoice" },
-      { "key": 5, "name": "Due Date Passed" }
-    ]
-    // this.processGraph();
-    this.model2 = [{
-      "from": "Vendor Creates Invoice", "to": "Scan Invoice", "text": 1,
-    },
-    {
-      "from": "Scan Invoice",
-      "to": "Enter in SAP",
-      "text": 1,
-    },
-    {
-      "from": "Enter in SAP",
-      "to": "Book Invoice",
-      "text": 1,
-    },
-    {
-      "from": "Book Invoice",
-      "to": "Clear Invoice",
-      "text": 1,
-    },
-    {
-      "from": "Clear Invoice",
-      "to": "Due Date Passed",
-      "text": 1,
-    },
-    ]
-    let startNode = {
-      id: "START",
-      selectedNodeTask: "START",
-      x:  "0px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Start.png"
-
-    }
-    this.nodes.push(startNode);
-    setTimeout(() => {
-      this.populateNodes(startNode);
-    }, 200)
-    for (let i = 0; i < this.graphJsonData.length; i++) {
-      this.graphJsonData[i]["id"]=String(i+1);
-      this.graphJsonData[i]["x"]=((i+1)*120)+"px";
-      this.graphJsonData[i]["y"]="200px";
-      this.nodes.push(this.graphJsonData[i]);
-      setTimeout(() => {
-        this.populateNodes(this.graphJsonData[i]);
-      }, 200)
-
-    }
-    let stopnode = {
-      id: "STOP",
-      selectedNodeTask: "STOP",
-      x:((this.graphJsonData.length+1)*120)+"px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Stop.png"
-
-    }
-    this.nodes.push(stopnode);
-
-    setTimeout(() => {
-      this.populateNodes(stopnode);
-    }, 200)
-    setTimeout(() => {
-      this.addConnection("START", this.graphJsonData[0].id)
-      for (let j = 0; j < this.graphJsonData.length-1; j++) {
-        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j+1].id)
-      }
-      this.addConnection(this.graphJsonData[this.graphJsonData.length-1].id,"STOP");
-    }, 200)
+   this.tableData = [
+    {name:"IT from sent to the manager"},
+    {name:"Manager fills the form"},
+    {name:"IT team create Email ID"},
+    {name:"IT team assign a system"},
+    {name:"System Access for the user"},
+   ]
+  
 
   }
 
@@ -287,46 +221,69 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-  sendMessage() {
-    let message = {
-      id: (new Date()).getTime(),
-      message: this.message,
-      user: localStorage.getItem("ProfileuserId")
+  sendMessage(value?:any){
+    let message={
+      id:(new Date()).getTime(),
+      message:this.message,
+      user:localStorage.getItem("ProfileuserId")
     }
     this.messages.push(message);
-    let systemMessage = {
-      id: (new Date()).getTime(),
-      message: "Hi Kiran Mudili",
-      user: "SYSTEM"
+    this.messages = [
+      {
+        "uuid": "text_uuid1",
+        "message": "This is sample text response",
+        "components": ["Buttons"],
+        "user" :'SYSTEM',
+        "values": [
+          [
+            {
+              "label": "button label",
+              "submitValue": "submit value"
+            },
+            {
+              "label": "button label2",
+              "submitValue": "submit value2"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid": "text_uuid2",
+        "message": ["This is sample text response2"],
+        "components": ["Buttons"],
+        "user" :'SYSTEM',
+        "values": [
+          [
+            {
+              "label": "button label"
+            },
+            {
+              "label": "button label2"
+            }
+          ]
+        ]
+      },
+      {
+        "uuid":"text_uuid1",
+        "message":"This is sample text response"
+      },
+      {
+        "uuid":"text_uuid2",
+        "message":["This is sample text response"]
+      },
+      {
+        "uuid":"text_uuid3",
+        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+      }
+    ];
+    let systemMessage={
+      id:(new Date()).getTime(),
+      message:"Hi Kiran Mudili",
+      user:"SYSTEM"
     }
-    this.model.push({
-      key: this.model.length,
-      name: this.message
-    })
-    this.model2.push({
-      from: this.model[this.model.length - 1].name,
-      to: this.message,
-      text: 1
-    })
-    let node={
-      id:String(this.graphJsonData.length+1),
-      selectedNodeTask:"It Form Sent to reporting manager",
-      x:"120px",
-      Y:"52px",
-      path: "../../../../assets/circle.png"
-    }
-    // this.nodes.find((item:any)=>item.id=="1").x="150px";
-    this.graphJsonData.push(node);
-    this.nodes.push(node);
-    setTimeout(()=>{
-      this.populateNodes(node);
-      this.addConnection("START", node.id);
-      this.addConnection(node.id,"2");
-    },200)
-    
-    //this.processGraph();
-    this.message = ""
-    this.messages.push(systemMessage)
+    this.message=""
+    this.messages.push(systemMessage);
+    this.message = "";
 
   }
 
@@ -395,6 +352,61 @@ export class CopilotChatTwoComponent implements OnInit {
     });
     this.nodes[nodeIndex].x = dragNode.x;
     this.nodes[nodeIndex].y = dragNode.y;
+  }
+
+  submitButton(value?:any){
+    this.loadGraph()
+  }
+
+
+  addNewStep()
+  {
+  }
+  loadGraph()
+  {
+
+    let startNode = {
+      id: "START",
+      selectedNodeTask: "START",
+      x:  "0px",
+      y:"200px",
+      path: "../../../../assets/images/RPA/Start.png"
+
+    }
+    this.nodes.push(startNode);
+    setTimeout(() => {
+      this.populateNodes(startNode);
+    }, 200)
+    for (let i = 0; i < this.graphJsonData.length; i++) {
+      this.graphJsonData[i]["id"]=String(i+1);
+      this.graphJsonData[i]["x"]=((i+1)*120)+"px";
+      this.graphJsonData[i]["y"]="200px";
+      this.nodes.push(this.graphJsonData[i]);
+      setTimeout(() => {
+        this.populateNodes(this.graphJsonData[i]);
+      }, 200)
+
+    }
+    let stopnode = {
+      id: "STOP",
+      selectedNodeTask: "STOP",
+      x:((this.graphJsonData.length+1)*120)+"px",
+      y:"200px",
+      path: "../../../../assets/images/RPA/Stop.png"
+
+    }
+    this.nodes.push(stopnode);
+
+    setTimeout(() => {
+      this.populateNodes(stopnode);
+    }, 200)
+    setTimeout(() => {
+      this.addConnection("START", this.graphJsonData[0].id)
+      for (let j = 0; j < this.graphJsonData.length-1; j++) {
+        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j+1].id)
+      }
+      this.addConnection(this.graphJsonData[this.graphJsonData.length-1].id,"STOP");
+    }, 200)
   }
 
 }
