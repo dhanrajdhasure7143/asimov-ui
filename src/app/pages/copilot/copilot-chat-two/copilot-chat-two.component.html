@@ -130,9 +130,9 @@
                             </div>
                             <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="message.message"></div>
                         </div>
-                            <div *ngIf="message.components" class="ml-5 mr-3">
-                              <div *ngIf="message.components.includes('Buttons')" class="d-flex">
-                              <div class="col-6 chat-btn pr-0" *ngFor="let each of message.values[0]">
+                            <div *ngIf="message.components" class="">
+                              <div *ngIf="message.components.includes('Buttons')">
+                              <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
                               
                                 <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
                               </div>
