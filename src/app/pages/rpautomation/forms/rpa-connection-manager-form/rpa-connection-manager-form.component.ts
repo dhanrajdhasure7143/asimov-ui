@@ -36,6 +36,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   selectedToolsetName:string;
   requestJson_body:any[]=[];
   headerForm = [];
+  dynamicForm =[];
   action_id:any;
   selectedConnector: any;
   istoolSet: boolean;
@@ -178,7 +179,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "client_credentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -196,6 +197,12 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"] = this.connectorForm.value.refreshToken
       }
+      let dynamic = []
+      this.dynamicForm.forEach(ele => {
+        dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+      })
+      object["customAttributes"] = dynamic;
+
       req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
@@ -290,7 +297,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       (req_body["grantType"] = "password"),
       (req_body["password"] = this.connectorForm.value.password);
       req_body["userName"] = this.connectorForm.value.userName;
-    } else if (this.connectorForm.value.grantType == "client_credentials") {
+    } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
       req_body["grantType"] = this.connectorForm.value.grantType;
       req_body["scope"] = this.connectorForm.value.scope;
     } else if (this.connectorForm.value.grantType == "refresh_token") {
@@ -298,6 +305,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       req_body["refreshToken"] = this.connectorForm.value.refreshToken;
       req_body["scope"] = this.connectorForm.value.scope;
     }
+    let dynamic = []
+    this.dynamicForm.forEach(ele => {
+      dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+    })
+    req_body["customAttributes"] = dynamic;
     this.rest_api.testActions(req_body).subscribe(
       (res: any) => {
         if (res.data)
@@ -577,7 +589,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         }
       });
       
-    } else if (event == "client_credentials") {
+    } else if (event == "client_credentials" || event == "delegation") {
       this.isClient = true;
       this.isResponse = true;
       this.isAuthorization = false;
@@ -672,6 +684,14 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     //     each.check = false;
     //   }
     // }
+  }
+
+  addDynamic() {
+    this.dynamicForm.push({
+      index: this.dynamicForm.length,
+      dynamicKey: "",
+      dynamicValue: "",
+    });
   }
 
   backToaction() {
@@ -815,7 +835,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "client_credentials"
+        this.actionData.configurationAsJson["grantType"] == "client_credentials" || this.actionData.configurationAsJson["grantType"] == "delegation"
       ) {
         this.isClient = true;
         this.isResponse = true;
@@ -885,7 +905,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
-    if(this.actionData.configurationAsJson.httpHeaders || this.actionData.configurationAsJson.queryParams){
+      if(this.actionData.configurationAsJson.httpHeaders || this.actionData.configurationAsJson.queryParams){
       if(this.actionData.configurationAsJson.httpHeaders.length>0){
         let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
         this.connectorForm.get("requestKey").setValue(key),
@@ -899,6 +919,20 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         ));
       }
     }
+    if(this.actionData.configurationAsJson.customAttributes){
+      let custom_attributes = this.actionData.configurationAsJson.customAttributes
+      Object.keys(custom_attributes).forEach((key,i) => {
+        let DynamicFormKey = Object.keys(custom_attributes[i])[0];
+        let DynamicFormValue = custom_attributes[i][DynamicFormKey];
+        this.dynamicForm.push({
+          index: i,
+          dynamicKey: DynamicFormKey,
+          dynamicValue: DynamicFormValue,
+        })
+    });
+      this.selectedOne = this.dynamicForm;
+    }
+
       if(this.actionData.configurationAsJson.httpHeaders){
         let headers_data = this.actionData.configurationAsJson.httpHeaders
         Object.keys(headers_data).forEach((key,i) => {
@@ -1003,7 +1037,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["userName"] = this.connectorForm.value.userName;
         object["password"] = this.connectorForm.value.password;
-      } else if (this.connectorForm.value.grantType == "client_credentials") {
+      } else if (this.connectorForm.value.grantType == "client_credentials" || this.connectorForm.value.grantType == "delegation") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["scope"] = this.connectorForm.value.scope;
@@ -1021,6 +1055,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["scope"] = this.connectorForm.value.scope;
         object["refreshToken"]=this.connectorForm.value.refreshToken
       }
+
+      let dynamic = []
+      this.dynamicForm.forEach(ele => {
+        dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
+      })
+      object["customAttributes"] = dynamic;
+      
       req_body["configuration"] = btoa(JSON.stringify(object));
     } else {
       req_body = {
@@ -1237,6 +1278,10 @@ checkActionName(){
       this.actionNameCheck = false;
     }
   });
+}
+
+dynamicDelete(index) {
+  this.dynamicForm.splice(index, 1);
 }
 
 }
