@@ -31,7 +31,7 @@ border-color: #979797;}
 .chat-form thead tr{border:0px solid grey !important;}
 .chat-form tbody tr td{border:0px solid !important;}
 .chat-form tbody tr{height:43px;}
-.chat-form tbody tr:nth-of-type(odd){background-color: #ede9e9 !important;}
+.chat-form tbody tr:nth-of-type(odd){background-color: #e9e9e9 !important;}
  .chat-form tbody tr:nth-of-type(odd) th{background-color: #e9e9e9 !important;} 
 
 /* .model-box{
@@ -197,7 +197,7 @@ width:100%;}
     vertical-align: middle;
     padding: 0px;
     max-width: 100em;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 0.5cm;
     margin-top: 60px;
     color: #001c47 !important;
