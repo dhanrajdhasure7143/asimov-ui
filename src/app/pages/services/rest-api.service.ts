@@ -68,8 +68,9 @@ export class RestApiService{
     return this.http.get<any[]>('/api/login/beta/newAccessToken',{responseType:'json'});
   }
 
-  getNewAccessTokenByTenantId(tenantId){
-    return this.http.get<any[]>('/api/login/beta/newAccessToken?tenant_id='+tenantId); 
+  getNewAccessTokenByTenantId(tenantId,masterTenant){
+    return this.http.get<any[]>('/api/login/beta/newAccessToken?tenant_id='+tenantId+'&masterTenant='+masterTenant); 
+
   }
   
   getIP()
