@@ -21,7 +21,7 @@
         
     </h3></div>
     <div class="col-md-6 title-help">
-    Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg" alt=""/></span>
+   <a href="#"> Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg" alt=""/></span></a>
 </div>
     
     </div>
@@ -60,7 +60,7 @@
        
         </div>
         <div class="col-md-8 model-box " [hidden]="!showTable">
-          <div></div>
+          <div class="mt-3 mb-4">
 
           <h5>
             <label id="popup_title">
@@ -70,10 +70,11 @@
                 </a>
             </label>
             <span class="title_text_haspath">
-                <span class="breadcrum-back">Fill in the time taken for below steps in the process:</span>
+                <span class="">Fill in the time taken for below steps in the process:</span>
             </span>
         </h5>
-          <table class="table table-striped">
+    </div>
+          <table class="table table-striped chat-form">
             <thead>
               <tr>
                 <th scope="col">Time Taken (hrs)</th>
@@ -123,14 +124,16 @@
                         </div>
                         <div></div>
                         <div *ngIf="message.user=='SYSTEM'" class="system-message">
+                            <div class="d-flex">
                             <div class="sys-image">
                                 <img src="../../../../assets/copilot/systemicon.svg" alt=""/>
                             </div>
                             <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="message.message"></div>
-                            <div *ngIf="message.components">
-                              <div *ngIf="message.components.includes('Buttons')" class="d-flex">
-                              <div class="col-3" *ngFor="let each of message.values[0]">
-                                <br/>
+                        </div>
+                            <div *ngIf="message.components" class="">
+                              <div *ngIf="message.components.includes('Buttons')">
+                              <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
+                              
                                 <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
                               </div>
                             </div>
@@ -139,7 +142,7 @@
                         <div></div>
                 </div>
             </div>
-            <div class="px-3 text-align">
+            <div class="px-3 adjtextarea-align">
                 <textarea [(ngModel)]="message" class="form-control message-input" placeholder="Type to Automate" (keyup.enter)="sendMessage(message)"></textarea>
                 <a  (click)="sendMessage(message)" class="msg-snd-btn">
                     <img src="./../../../../assets/copilot/textareaicon.svg" alt="">
