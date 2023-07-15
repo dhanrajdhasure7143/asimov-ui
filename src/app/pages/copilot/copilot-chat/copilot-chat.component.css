@@ -53,11 +53,22 @@ width: 12rem;
 .copilotchatblock-popup a:hover img.hover-icon {
     display: initial;
 }
-
-.secondpopup {
+.popupcontent {
+    padding-top: 1.3rem;
+}
+.copilotchatblock-popup .secondpopup, 
+.copilotchatblock-popup .thirdpopup {
     overflow: auto;
     max-height: 365px;
     margin-bottom: 10px;
+}
+.copilotchatblock-popup .thirdpopup {
+    max-height: 420px;
+}
+.thirdpopup h6 {
+    margin-bottom: 0px;
+    font-weight: 500;
+    font-size: 16px;
 }
 /* Popup styles End */
 

@@ -1,0 +1,115 @@
+[
+    {
+        "message": "Provisioning Users",
+        "response": {
+            "message": "Sure, here are a few examples of onboarding users process flow. You can choose one that matches or ‘closely’ matches your organization’s process. If none of them match, please tell us more about the process you would like to automate.",
+            "steps": [
+                {
+                    "id": 1,
+                    "type": "PROCESS-IMAGE",
+                    "label": "Employee Onboarding (v1)"
+                },
+                {
+                    "id": 2,
+                    "type": "PROCESS-IMAGE",
+                    "label": "Employee Onboarding (v2)"
+                },
+                {
+                    "id": 3,
+                    "type": "PROCESS-IMAGE",
+                    "label": "Employee Onboarding (v3)"
+                }
+            ]
+        }
+    },
+    {
+        "message": "Employee OnBoarding (v3)",
+        "response": {
+            "message": "Would you prefer modifying these steps to match your organization’s flow?",
+            "steps": [
+                {
+                    "id": 4,
+                    "type": "LOAD-GRAPH"
+                }
+            ]
+        }
+    },
+    {
+        "message": "Yes. Along with sending pre-boarding form, my team sends the onboarding form to the designated Reporting Manager. Both these tasks happen in parallel.",
+        "response": {
+            "message": "Your workflow has been updated with the additional step. Would you like to make any further modifications?",
+            "steps": [
+                {
+                    "id": 5,
+                    "type": "ADD-NODE"
+                }
+            ]
+        }
+    },
+    {
+        "message": "No",
+        "response": {
+            "message": "What are the systems you use in this process?",
+            "steps": [
+                {
+                    "id": 6,
+                    "type": "BUTTON",
+                    "label": "Zoho"
+                },
+                {
+                    "id": 6,
+                    "type": "BUTTON",
+                    "label": "Zoho"
+                },
+                {
+                    "id": 6,
+                    "type": "BUTTON",
+                    "label": "None of the above"
+                }
+            ]
+        }
+    },
+    {
+        "message": "None of the above",
+        "response": {
+            "message": "What is the Email system that you use in your organization?",
+            "steps": [
+                {
+                    "type": "BUTTON",
+                    "label": "Microsoft"
+                },
+                {
+                    "type": "BUTTON",
+                    "label": "Google"
+                }
+            ]
+        }
+    },
+    {
+        "message": "Microsoft",
+        "response": {
+            "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
+            "steps": [
+                {
+                    "type": "BUTTON",
+                    "label": "Generate RPA"
+                },
+                {
+                    "type": "BUTTON",
+                    "label": "Generate Process Logs"
+                }
+            ]
+        }
+    },
+    {
+        "message": "Generate Process Logs",
+        "response": {
+            "message": "Fill the form with time taken for each of the manual steps in the process. This will allow us to calculate the overall time taken for the entire workflow. Once you are done, click on submit below to create the process graph.",
+            "steps": [
+                {
+                    "type": "LOAD-STEPS-TABLE"
+                }
+            ]
+        }
+    }
+]

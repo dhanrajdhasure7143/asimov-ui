@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { MessageService } from 'primeng/api';
-
+import { CryptoService } from 'src/app/services/crypto.service';
 @Component({
   selector: 'app-rpa-credential-form',
   templateUrl: './rpa-credential-form.component.html',
@@ -31,7 +31,8 @@ export class RpaCredentialFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private spinner: LoaderService,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private cryptoService:CryptoService
     ) {
 
       this.credentialForm=this.formBuilder.group({
@@ -69,7 +70,8 @@ export class RpaCredentialFormComponent implements OnInit {
   ngOnChanges(changes:SimpleChanges){
     if(!this.isCreateForm){
       this.credentialForm.get("userName").setValue(this.credupdatedata["userName"]);
-      this.credentialForm.get("password").setValue(this.credupdatedata["password"]);
+      // this.credentialForm.get("password").setValue(this.credupdatedata["password"]);
+      this.credentialForm.get("password").setValue(this.cryptoService.decrypt(this.credupdatedata["password"]));
       this.credentialForm.get("categoryId").setValue(this.credupdatedata["categoryId"]);
       setTimeout(()=>{
         this.credentialForm.get("serverName").setValue(this.credupdatedata["serverName"]);
@@ -90,9 +92,9 @@ export class RpaCredentialFormComponent implements OnInit {
       },100);
       this.credentialForm.get("host").setValue(this.credupdatedata["host"]);
       this.credentialForm.get("port").setValue(this.credupdatedata["port"]);
-      this.credentialForm.get("clientId").setValue(this.credupdatedata["clientId"]);
-      this.credentialForm.get("clientSecret").setValue(this.credupdatedata["clientSecret"]);
-      this.credentialForm.get("officeTenant").setValue(this.credupdatedata["officeTenant"]);
+      this.credentialForm.get("clientId").setValue(this.cryptoService.decrypt(this.credupdatedata["clientId"]));
+      this.credentialForm.get("clientSecret").setValue(this.cryptoService.decrypt(this.credupdatedata["clientSecret"]));
+      this.credentialForm.get("officeTenant").setValue(this.cryptoService.decrypt(this.credupdatedata["officeTenant"]));
       this.credentialForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
       this.credentialForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
       this.credentialForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
@@ -160,7 +162,22 @@ export class RpaCredentialFormComponent implements OnInit {
           Credentials["host"]="";
           Credentials["port"]="";
         }
-        this.api.save_credentials(Credentials).subscribe(res => {
+        const encryptedCredentials = { ...Credentials };
+        // Encrypting clientId, clientSecret, officeTenant and password if they are not empty
+        if (encryptedCredentials["clientId"]) {
+          encryptedCredentials["clientId"] = this.cryptoService.encrypt(encryptedCredentials["clientId"]);
+        }
+        if (encryptedCredentials["clientSecret"]) {
+          encryptedCredentials["clientSecret"] = this.cryptoService.encrypt(encryptedCredentials["clientSecret"]);
+        }
+        if (encryptedCredentials["officeTenant"]) {
+          encryptedCredentials["officeTenant"] = this.cryptoService.encrypt(encryptedCredentials["officeTenant"]);
+        }
+        if (encryptedCredentials["password"]) {
+          encryptedCredentials["password"] = this.cryptoService.encrypt(encryptedCredentials["password"]);
+        }
+        // this.api.save_credentials(Credentials).subscribe(res => {
+        this.api.save_credentials(encryptedCredentials).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
           if (status.errorMessage == undefined) {
@@ -235,7 +252,22 @@ resetCredForm(){
               credupdatFormValue["officeTenant"]=this.credupdatedata["officeTenant"];
           }
         }
-      this.api.update_Credentials(credupdatFormValue).subscribe(res => {
+        const encryptedCredupdatFormValue = { ...credupdatFormValue };
+        // Encrypting clientId, clientSecret, officeTenant and password if they are not empty
+        if (encryptedCredupdatFormValue["clientId"]) {
+          encryptedCredupdatFormValue["clientId"] = this.cryptoService.encrypt(encryptedCredupdatFormValue["clientId"]);
+        }
+        if (encryptedCredupdatFormValue["clientSecret"]) {
+          encryptedCredupdatFormValue["clientSecret"] = this.cryptoService.encrypt(encryptedCredupdatFormValue["clientSecret"]);
+        }
+        if (encryptedCredupdatFormValue["officeTenant"]) {
+          encryptedCredupdatFormValue["officeTenant"] = this.cryptoService.encrypt(encryptedCredupdatFormValue["officeTenant"]);
+        }
+        if (encryptedCredupdatFormValue["password"]) {
+          encryptedCredupdatFormValue["password"] = this.cryptoService.encrypt(encryptedCredupdatFormValue["password"]);
+        }
+        // this.api.update_Credentials(credupdatFormValue).subscribe(res => {
+      this.api.update_Credentials(encryptedCredupdatFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();
         this.refreshTable.emit(true)
