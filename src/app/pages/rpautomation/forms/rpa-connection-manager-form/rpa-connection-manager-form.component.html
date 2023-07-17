@@ -244,12 +244,12 @@
                                         <span class="star">*</span>
                                     </label>
                                     <input type="text" pInputText [style]="{'width':'100%'}" value=""
-                                        formControlName="redirect_uri" placeholder="Enter Redirect URL">
+                                        formControlName="redirectUri" placeholder="Enter Redirect URL">
                                     <span
-                                        *ngIf="connectorForm.get('redirect_uri').invalid && connectorForm.get('redirect_uri').touched && !connectorForm.get('redirect_uri').hasError('pattern')"
+                                        *ngIf="connectorForm.get('redirectUri').invalid && connectorForm.get('redirectUri').touched && !connectorForm.get('redirectUri').hasError('pattern')"
                                         class="required"> Redirect URL Required
                                     </span>
-                                    <span *ngIf="connectorForm.get('redirect_uri').hasError('pattern')" class="required">
+                                    <span *ngIf="connectorForm.get('redirectUri').hasError('pattern')" class="required">
                                         Redirct URL or Dynamic Pattern Incorrect.
                                     </span>
                                 </div>
@@ -476,7 +476,7 @@
                             <div class="row">
                                 <div class="col-md-6 form-group pl-0" *ngIf="isAuthenticated">
                                     <label class="label-control" for="programname"> Custom Attributes </label>
-                                    <table class="table table-smll" aria-describedby="dynamicTable">
+                                    <table class="table table-smll custom" aria-describedby="dynamicTable">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="tableh-wid">Key</th> 

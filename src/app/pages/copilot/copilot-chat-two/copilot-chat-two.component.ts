@@ -13,7 +13,175 @@ export class CopilotChatTwoComponent implements OnInit {
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
-  copilotJson:any={};
+  copilotJson: any = [
+    {
+      "message": "Provisioning Users",
+      "response": {
+        "message": "Sure, here are a few examples of onboarding users process flow. You can choose one that matches or ‘closely’ matches your organization’s process. If none of them match, please tell us more about the process you would like to automate.",
+        "steps": [
+          {
+            "id": 1,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v1)"
+          },
+          {
+            "id": 2,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v2)"
+          },
+          {
+            "id": 3,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v3)"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Employee Onboarding (v3)",
+      "response": {
+        "message": "Would you prefer modifying these steps to match your organization’s flow?",
+        "steps": [
+          {
+            "id": 4,
+            "type": "LOAD-GRAPH"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Yes. Along with sending pre-boarding form, my team sends the onboarding form to the designated Reporting Manager. Both these tasks happen in parallel.",
+      "response": {
+        "message": "Your workflow has been updated with the additional step. Would you like to make any further modifications?",
+        "steps": [
+          {
+            "id": 5,
+            "type": "ADD-NODE"
+          },
+          {
+            "id": 51,
+            "type": "BUTTON",
+            "label": "Yes, I want to",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "No, contintue to next step",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "No, contintue to next step",
+      "response": {
+        "message": "What are the systems you use in this process?",
+        "steps": [
+          {
+            "id": 6,
+            "type": "BUTTON",
+            "label": "Zoho",
+            "disable":false
+          },
+          {
+            "id": 6,
+            "type": "BUTTON",
+            "label": "Zoho",
+            "disable":false
+          },
+          {
+            "id": 6,
+            "type": "BUTTON",
+            "label": "None of the above",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Zoho",
+      "response": {
+        "message": "What is the Email system that you use in your organization?",
+        "steps": [
+          {
+            "type": "BUTTON",
+            "label": "Outlook by Microsoft",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Gmail from Google",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Outlook by Microsoft",
+      "response": {
+        "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
+        "steps": [
+          {
+            "type":"UPDATE-NODES"
+          },
+          {
+            "type": "BUTTON",
+            "label": "Save as Draft",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Analyse this Process",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Open in Bot Designer",
+            "disable":false
+          },
+          {
+            "type": "MESSAGE",
+            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
+          },
+          {
+            "type": "BUTTON",
+            "label": "Have our executive contact you",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Analyse this Process",
+      "response": {
+        "message": "Fill the form with time taken for each of the manual steps in the process. This will allow us to calculate the overall time taken for the entire workflow. Once you are done, click on submit below to create the process graph.",
+        "steps": [
+          {
+            "type": "LOAD-STEPS-TABLE"
+          },
+          {
+            "type": "BUTTON",
+            "label": "Submit",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Save as Draft",
+            "disable":false
+          },
+          {
+            "type": "MESSAGE",
+            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
+          },
+          {
+            "type": "BUTTON",
+            "label": "Have our executive contact you",
+            "disable":false
+          }
+        ]
+      }
+    }
+  ];
   constructor() {
     //this.copilotJson=copilot;
   }
@@ -33,37 +201,46 @@ export class CopilotChatTwoComponent implements OnInit {
     x: "100px",
     y: "100px",
     path: "../../../../assets/circle.png",
+    updated:false
   },
   {
     id: "2",
     selectedNodeTask: "Gather and Organize Responses",
     x: "100px",
     y: "200px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/circle.png",
+    updated:false
+
   },
   {
     id: 3,
     selectedNodeTask: "Enter gathered details as employee details",
     x: "100px",
     y: "300px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/circle.png",
+    updated:false
+
   },
   {
     id: 4,
     selectedNodeTask: "Create Email account",
     x: "100px",
     y: "400px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/circle.png",
+    updated:false
+
   },
   {
     id: 5,
     selectedNodeTask: "Trigger, Welcome Email",
     x: "100px",
     y: "500px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/circle.png",
+    updated:false
+
   }]
-  showTable:boolean = false;
-  tableData:any[] = [];
+  showTable: boolean = false;
+  tableData: any[] = [];
 
   ngOnInit(): void {
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -82,109 +259,105 @@ export class CopilotChatTwoComponent implements OnInit {
         }
       }]
     }]
-   this.tableData = [
-    {name:"IT from sent to the manager"},
-    {name:"Manager fills the form"},
-    {name:"IT team create Email ID"},
-    {name:"IT team assign a system"},
-    {name:"System Access for the user"},
-   ]
-  //  console.log("check",this.copilotJson)
-  }
-
-
-  addConnection(source:String, target:String)
-  {
-    this.jsPlumbInstance.connect({
-      endpoint: [
-        "Dot",
-        {
-          radius: 3,
-          cssClass: "myEndpoint",
-          width: 8,
-          height: 8,
-        },
-      ],
-      source:source,
-      target: target,
-      anchors: ["Right", "Left"],
-      detachable: true,
-      paintStyle: { stroke: "#404040", strokeWidth: 2 },
-      overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
-    });
+    this.tableData = [
+      { name: "IT from sent to the manager" },
+      { name: "Manager fills the form" },
+      { name: "IT team create Email ID" },
+      { name: "IT team assign a system" },
+      { name: "System Access for the user" },
+    ],
+    this.messages.push({
+      id: (new Date()).getTime(),
+      user: "SYSTEM",
+      message: "Hi, what process would you like to automate?",
+      steps: []
+    })
   }
 
 
 
 
-  sendMessage(value?:any){
-    let message={
-      id:(new Date()).getTime(),
-      message:this.message,
-      user:localStorage.getItem("ProfileuserId")
+  sendMessage(value?: any, messageType?:String) {
+    let message = {
+      id: (new Date()).getTime(),
+      message: value,
+      user: localStorage.getItem("ProfileuserId")
     }
-    this.messages.push(message);
-    // let response=copilot.find((item:any)=>item.message.includes(this.message)).response;
-    // if(response)
-    // {
-    //   console.log(response)
-    //   let systemMessage={
-    //     id:(new Date()).getTime(),
-    //     user:"SYSTEM",
-    //     message:response.message,
-    //     steps:response.steps
-    //   }
-    //   this.messages.push(systemMessage);
-    //   this.message = "";
-    // }
-    this.messages = [
-      {
-        "uuid": "text_uuid1",
-        "message": "This is sample text response",
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "button label",
-              "submitValue": "submit value"
-            },
-            {
-              "label": "button label2",
-              "submitValue": "submit value2"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid": "text_uuid2",
-        "message": ["This is sample text response2"],
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "Load Graph"
-            },
-            {
-              "label": "Load Form"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid":"text_uuid1",
-        "message":"This is sample text response"
-      },
-      {
-        "uuid":"text_uuid2",
-        "message":["This is sample text response"]
-      },
-      {
-        "uuid":"text_uuid3",
-        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+    if(messageType != 'LABEL')
+      this.messages.push(message);
+    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? "No Data Found";
+    if (response) {
+      let systemMessage = {
+        id: (new Date()).getTime(),
+        user: "SYSTEM",
+        message: response.message,
+        steps: response.steps
       }
-    ];
+      if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
+        this.loadGraphIntiate("Load Graph");
+      }
+      else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
+        this.loadGraphIntiate("Load Form")
+      }
+      else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
+        this.loadGraphIntiate("Load Node");
+      }
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODES")) {
+        this.loadGraphIntiate("Update Nodes");
+      }
+      this.messages.push(systemMessage);
+      let chatGridElement=document.getElementById("chat-grid");
+      chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      this.message = "";
+    }
+    // this.messages = [
+    //   {
+    //     "uuid": "text_uuid1",
+    //     "message": "This is sample text response",
+    //     "components": ["Buttons"],
+    //     "user" :'SYSTEM',
+    //     "values": [
+    //       [
+    //         {
+    //           "label": "button label",
+    //           "submitValue": "submit value"
+    //         },
+    //         {
+    //           "label": "button label2",
+    //           "submitValue": "submit value2"
+    //         }
+    //       ]
+    //     ]
+    //   },
+    //   {
+    //     "uuid": "text_uuid2",
+    //     "message": ["This is sample text response2"],
+    //     "components": ["Buttons"],
+    //     "user" :'SYSTEM',
+    //     "values": [
+    //       [
+    //         {
+    //           "label": "Load Graph"
+    //         },
+    //         {
+    //           "label": "Load Form"
+    //         }
+    //       ]
+    //     ]
+    //   },
+    //   {
+    //     "uuid":"text_uuid1",
+    //     "message":"This is sample text response"
+    //   },
+    //   {
+    //     "uuid":"text_uuid2",
+    //     "message":["This is sample text response"]
+    //   },
+    //   {
+    //     "uuid":"text_uuid3",
+    //     "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+    //   }
+    // ];
     // let systemMessage={
     //   id:(new Date()).getTime(),
     //   message:"Hi Kiran Mudili",
@@ -253,6 +426,29 @@ export class CopilotChatTwoComponent implements OnInit {
     if (nodeData.selectedNodeTask != "START")
       this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
   }
+
+  
+  addConnection(source: String, target: String) {
+    this.jsPlumbInstance.connect({
+      endpoint: [
+        "Dot",
+        {
+          radius: 3,
+          cssClass: "myEndpoint",
+          width: 8,
+          height: 8,
+        },
+      ],
+      source: source,
+      target: target,
+      anchors: ["Right", "Left"],
+      detachable: true,
+      paintStyle: { stroke: "#404040", strokeWidth: 2 },
+      overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
+    });
+  }
+
+
   updateCoordinates(dragNode) {
     var nodeIndex = this.nodes.findIndex((node) => {
       return node.id == dragNode.id;
@@ -261,37 +457,64 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
-  isGraphLoaded:boolean=false;
-  submitButton(value?:any){
-    this.showTable=false;
-    if(value.label=="Load Graph")
-    {
-      if(!this.isGraphLoaded)
+  isGraphLoaded: boolean = false;
+  isNodeLoaded: boolean = false;
+  isNodesUpdates:boolean=false;
+  loadGraphIntiate(value?: any) {
+    this.showTable = false;
+    if (value == "Load Graph" || value == "Load Node" || value=="Update Nodes") {
+      if (!this.isGraphLoaded) {
         this.loadGraph()
+      }
+      else if (!this.isNodeLoaded) {
+        this.isNodeLoaded = true
+        let node = {
+          id: "22",
+          selectedNodeTask: "IT form sent to Reporting Manager",
+          x: "122px",
+          y: "40px",
+          path: "../../../../assets/circle.png",
+          updated:false
+        }
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+          this.addConnection("START", "22");
+          this.addConnection("22", "2");
+        }, 200)
+      }
+      else if(!this.isNodesUpdates)
+      {
+        this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
+        this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+        this.nodes.find((item:any)=>item.id=="3").updated=true;
+        this.nodes.find((item:any)=>item.id=="5").updated=true;
+
+      }
     }
-    else if(value.label=="Load Form")
-      this.showTable=true;
+    else if (value == "Load Form")
+      this.showTable = true;
   }
 
 
-  loadGraph()
-  {
+  loadGraph() {
 
     let startNode = {
       id: "START",
       selectedNodeTask: "START",
-      x:  "0px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Start.png"
+      x: "0px",
+      y: "200px",
+      path: "../../../../assets/images/RPA/Start.png",
+      updated:false
     }
     this.nodes.push(startNode);
     setTimeout(() => {
       this.populateNodes(startNode);
     }, 200)
     for (let i = 0; i < this.graphJsonData.length; i++) {
-      this.graphJsonData[i]["id"]=String(i+1);
-      this.graphJsonData[i]["x"]=((i+1)*120)+"px";
-      this.graphJsonData[i]["y"]="200px";
+      this.graphJsonData[i]["id"] = String(i + 1);
+      this.graphJsonData[i]["x"] = ((i + 1) * 120) + "px";
+      this.graphJsonData[i]["y"] = "200px";
       this.nodes.push(this.graphJsonData[i]);
       setTimeout(() => {
         this.populateNodes(this.graphJsonData[i]);
@@ -301,10 +524,10 @@ export class CopilotChatTwoComponent implements OnInit {
     let stopnode = {
       id: "STOP",
       selectedNodeTask: "STOP",
-      x:((this.graphJsonData.length+1)*120)+"px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Stop.png"
-
+      x: ((this.graphJsonData.length + 1) * 120) + "px",
+      y: "200px",
+      path: "../../../../assets/images/RPA/Stop.png",
+      updated:false
     }
     this.nodes.push(stopnode);
 
@@ -313,11 +536,11 @@ export class CopilotChatTwoComponent implements OnInit {
     }, 200)
     setTimeout(() => {
       this.addConnection("START", this.graphJsonData[0].id)
-      for (let j = 0; j < this.graphJsonData.length-1; j++) {
-        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j+1].id)
+      for (let j = 0; j < this.graphJsonData.length - 1; j++) {
+        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j + 1].id)
       }
-      this.addConnection(this.graphJsonData[this.graphJsonData.length-1].id,"STOP");
-      this.isGraphLoaded=true;
+      this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
+      this.isGraphLoaded = true;
     }, 200)
   }
 

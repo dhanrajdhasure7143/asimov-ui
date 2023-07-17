@@ -155,7 +155,7 @@ width:100%;}
      overflow-x:auto;
   }
   
-  .dndDropzone {
+  .node {
     cursor: pointer;
     box-shadow: none;
     -o-box-shadow: none;
@@ -171,6 +171,23 @@ width:100%;}
     height: 55px;
     background-color: #F6FCFE;
     border: 2px solid #1673DB;  
+  }
+  .node-updated {
+    cursor: pointer;
+    box-shadow: none;
+    -o-box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    border-radius: 0.2em;
+    position: absolute;
+    line-height: 14px;
+    background-size: 31px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 55px;
+    height: 55px;
+    background-color: #e2faf1;
+    border: 2px solid #16db4a;  
   }
   
   .dndDropzone:hover{
