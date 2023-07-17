@@ -76,6 +76,7 @@ height:auto !important;}
     padding-top: 14px !important;
     padding-right: 48px !important;
     padding-bottom: 10px !important;
+    overflow:hidden !important;
 }
 textarea.form-control.message-input:focus{background-color: #ebf7ff !important;}
 /* .msg-snd-btn image{width:21px;} */
@@ -106,7 +107,7 @@ textarea.form-control.message-input:focus{background-color: #ebf7ff !important;}
     display:flex;
     border-radius: 5px !important;
     font-size: 15px;
-    text-align: justify;
+    /* text-align: justify; */
     line-height:22px;
 
 }
@@ -120,11 +121,15 @@ width:100%;}
     height: 50px;
     padding: 10px;
 }
+button[disabled]:hover{cursor: no-drop;
+  background: #e0e0e0 !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;}
 .send-msgtext{width:100%;}
 .system-message{
    
     font-size: 15px;
-    text-align: justify;
+    /* text-align: justify; */
    line-height: 22px;
     position: relative !important;
     border-radius: 5px !important;
