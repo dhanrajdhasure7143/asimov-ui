@@ -36,7 +36,7 @@
                                 <div class="drag-area">
                                     <!--Nodes inside designer-->
                                     <ng-container *ngFor="let node of nodes; let i = index">
-                                        <div id="{{ node.id }}" class="dndDropzone" [ngStyle]="{
+                                        <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'" [ngStyle]="{
                             left: node.x,
                             top: node.y,
                             'background-image': 'url('+node.path+')'

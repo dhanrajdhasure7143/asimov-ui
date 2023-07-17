@@ -307,7 +307,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       this.messages.push(systemMessage);
       let chatGridElement=document.getElementById("chat-grid");
-      chatGridElement.scrollTop=chatGridElement.scrollHeight;
+      chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
       this.message = "";
     }
     // this.messages = [
@@ -487,6 +487,8 @@ export class CopilotChatTwoComponent implements OnInit {
       {
         this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
         this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+        this.nodes.find((item:any)=>item.id=="3").updated=true;
+        this.nodes.find((item:any)=>item.id=="5").updated=true;
 
       }
     }
