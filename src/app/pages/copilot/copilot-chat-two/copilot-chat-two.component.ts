@@ -200,7 +200,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Pre-Boarding From Sent To Candidate",
     x: "100px",
     y: "100px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
     updated:false
   },
   {
@@ -208,7 +208,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Gather and Organize Responses",
     x: "100px",
     y: "200px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
     updated:false
 
   },
@@ -217,7 +217,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Enter gathered details as employee details",
     x: "100px",
     y: "300px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
     updated:false
 
   },
@@ -226,16 +226,15 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Create Email account",
     x: "100px",
     y: "400px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
     updated:false
-
   },
   {
     id: 5,
     selectedNodeTask: "Trigger, Welcome Email",
     x: "100px",
     y: "500px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
     updated:false
 
   }]
@@ -504,7 +503,7 @@ export class CopilotChatTwoComponent implements OnInit {
       selectedNodeTask: "START",
       x: "0px",
       y: "200px",
-      path: "../../../../assets/images/RPA/Start.png",
+      path: "../../../../assets/copilot/graph-icons/start-icon.png",
       updated:false
     }
     this.nodes.push(startNode);
