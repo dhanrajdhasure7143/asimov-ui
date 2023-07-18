@@ -172,10 +172,10 @@ button[disabled]:hover{cursor: no-drop;
     background-size: 31px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 55px;
+    width: 40px;
     height: 55px;
-    background-color: #F6FCFE;
-    border: 2px solid #1673DB;  
+    /* background-color: #F6FCFE;
+    border: 2px solid #1673DB;   */
   }
   .node-updated {
     cursor: pointer;
@@ -189,10 +189,11 @@ button[disabled]:hover{cursor: no-drop;
     background-size: 31px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 55px;
+    width: 40px;
     height: 55px;
-    background-color: #e2faf1;
-    border: 2px solid #16db4a;  
+    /* background-color: #e2faf1;
+    border: 2px solid #16db4a;  */
+    background-image: url("../../../../assets/copilot/graph-icons/process-block-green.png") !important; 
   }
   
   .dndDropzone:hover{

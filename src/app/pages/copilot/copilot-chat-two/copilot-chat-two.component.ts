@@ -200,7 +200,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Pre-Boarding From Sent To Candidate",
     x: "100px",
     y: "100px",
-    path: "../../../../assets/copilot/graph-icons/circle.png",
+    path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
   },
   {
@@ -208,7 +208,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Gather and Organize Responses",
     x: "100px",
     y: "200px",
-    path: "../../../../assets/copilot/graph-icons/circle.png",
+    path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
 
   },
@@ -217,7 +217,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Enter gathered details as employee details",
     x: "100px",
     y: "300px",
-    path: "../../../../assets/copilot/graph-icons/circle.png",
+    path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
 
   },
@@ -226,7 +226,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Create Email account",
     x: "100px",
     y: "400px",
-    path: "../../../../assets/copilot/graph-icons/circle.png",
+    path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
   },
   {
@@ -234,7 +234,7 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Trigger, Welcome Email",
     x: "100px",
     y: "500px",
-    path: "../../../../assets/copilot/graph-icons/circle.png",
+    path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
 
   }]
@@ -246,7 +246,7 @@ export class CopilotChatTwoComponent implements OnInit {
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
       overlays: [
-        ["Arrow", { width: 12, length: 12, location: 0.5 }],
+        ["Arrow", { width: 6, length: 6, location: 0.5 }],
         ["Label", { label: "FOO" }],
       ],
     })
@@ -385,12 +385,12 @@ export class CopilotChatTwoComponent implements OnInit {
         {
           radius: 2,
           cssClass: "myEndpoint",
-          width: 8,
-          height: 8,
+          width: 2,
+          height: 2,
         },
       ],
 
-      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 1 },
       isSource: true,
       connectorStyle: { stroke: "#404040", strokeWidth: 2 },
       anchor: "Right",
@@ -398,7 +398,7 @@ export class CopilotChatTwoComponent implements OnInit {
       cssClass: "path",
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       connectorClass: "path",
-      connectorOverlays: [["Arrow", { width: 10, length: 10, location: 1 }]],
+      connectorOverlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
     };
     const leftEndPointOptions = {
       endpoint: [
@@ -406,19 +406,19 @@ export class CopilotChatTwoComponent implements OnInit {
         {
           radius: 2,
           cssClass: "myEndpoint",
-          width: 8,
-          height: 8,
+          width: 2,
+          height: 2,
         },
       ],
-      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 1 },
       isTarget: true,
-      connectorStyle: { stroke: "#404040", strokeWidth: 2 },
+      connectorStyle: { stroke: "#404040", strokeWidth: 1 },
       anchor: "Left",
       maxConnections: -1,
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       cssClass: "path",
       connectorClass: "path",
-      connectorOverlays: [["Arrow", { width: 10, length: 10, location: 1 }]],
+      connectorOverlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
     };
     if (nodeData.selectedNodeTask != "STOP")
       this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
@@ -432,18 +432,18 @@ export class CopilotChatTwoComponent implements OnInit {
       endpoint: [
         "Dot",
         {
-          radius: 3,
+          radius: 2,
           cssClass: "myEndpoint",
-          width: 8,
-          height: 8,
+          width: 2,
+          height: 2,
         },
       ],
       source: source,
       target: target,
       anchors: ["Right", "Left"],
       detachable: true,
-      paintStyle: { stroke: "#404040", strokeWidth: 2 },
-      overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
+      paintStyle: { stroke: "#404040", strokeWidth: 1 },
+      overlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
     });
   }
 
@@ -470,9 +470,9 @@ export class CopilotChatTwoComponent implements OnInit {
         let node = {
           id: "22",
           selectedNodeTask: "IT form sent to Reporting Manager",
-          x: "122px",
-          y: "40px",
-          path: "../../../../assets/circle.png",
+          x: "100px",
+          y: "30px",
+          path: "../../../../assets/copilot/graph-icons/General.png",
           updated:false
         }
         this.nodes.push(node);
@@ -503,7 +503,7 @@ export class CopilotChatTwoComponent implements OnInit {
       selectedNodeTask: "START",
       x: "0px",
       y: "200px",
-      path: "../../../../assets/copilot/graph-icons/start-icon.png",
+      path: "../../../../assets/copilot/graph-icons/start.png",
       updated:false
     }
     this.nodes.push(startNode);
@@ -512,7 +512,7 @@ export class CopilotChatTwoComponent implements OnInit {
     }, 200)
     for (let i = 0; i < this.graphJsonData.length; i++) {
       this.graphJsonData[i]["id"] = String(i + 1);
-      this.graphJsonData[i]["x"] = ((i + 1) * 120) + "px";
+      this.graphJsonData[i]["x"] = ((i + 1) * 100) + "px";
       this.graphJsonData[i]["y"] = "200px";
       this.nodes.push(this.graphJsonData[i]);
       setTimeout(() => {
@@ -523,9 +523,9 @@ export class CopilotChatTwoComponent implements OnInit {
     let stopnode = {
       id: "STOP",
       selectedNodeTask: "STOP",
-      x: ((this.graphJsonData.length + 1) * 120) + "px",
+      x: ((this.graphJsonData.length + 1) * 100) + "px",
       y: "200px",
-      path: "../../../../assets/images/RPA/Stop.png",
+      path: "../../../../assets/copilot/graph-icons/stop.png",
       updated:false
     }
     this.nodes.push(stopnode);

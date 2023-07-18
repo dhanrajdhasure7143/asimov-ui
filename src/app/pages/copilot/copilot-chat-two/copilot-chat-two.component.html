@@ -139,7 +139,7 @@
                                         <br/>
                                         <div *ngFor="let step of sentMessage.steps">
                                             <div *ngIf="step.type=='PROCESS-IMAGE'">
-                                                <div (click)="sendMessage(step.label, 'LABEL')" class="card">
+                                                <div (click)="sendMessage(step.label, 'LABEL')" class="card" style="width:87%;margin-left:13%;">
                                                     <div class="py-3 px-1 text-center">
                                                         <img src="../../../../assets/graph.svg">
                                                         <br /><br />
