@@ -4,6 +4,7 @@ import { jsPlumb, jsPlumbInstance } from "jsplumb";
 import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 //import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
   selector: 'app-copilot-chat-two',
@@ -15,6 +16,7 @@ export class CopilotChatTwoComponent implements OnInit {
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
+  @ViewChild('op', {static: false}) overlayModel;
   copilotJson: any = [
     {
       "message": "Provisioning Users",
@@ -211,7 +213,10 @@ export class CopilotChatTwoComponent implements OnInit {
       }
     },
   ];
-  constructor(private router:Router, private dt:DataTransferService) {
+  constructor(private router:Router, 
+    private dt:DataTransferService,
+    private loaderService:LoaderService
+    ) {
     //this.copilotJson=copilot;
   }
 
@@ -276,6 +281,7 @@ export class CopilotChatTwoComponent implements OnInit {
   daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
 
   ngOnInit(): void {
+    this.loaderService.show()
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -322,6 +328,7 @@ export class CopilotChatTwoComponent implements OnInit {
             this.tableData=response.tableData;
             setTimeout(()=>{
               this.loadGraphIntiate("Load Form");
+              this.loaderService.hide();
             },500)
           }
           setTimeout(()=>{
@@ -334,6 +341,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else
       {
+        this.loaderService.hide();
         this.messages.push({
           id: (new Date()).getTime(),
           user: "SYSTEM",
@@ -381,7 +389,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
-        this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "849167", redirect:"copilot" } });
+        this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect:"copilot" } });
       }
       else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
       {
@@ -563,6 +571,7 @@ export class CopilotChatTwoComponent implements OnInit {
       this.graphJsonData[i]["id"] = String(i + 1);
       this.graphJsonData[i]["x"] = ((i + 1) * 100) + "px";
       this.graphJsonData[i]["y"] = "200px";
+      this.graphJsonData[i]["comments"]="";
       this.nodes.push(this.graphJsonData[i]);
       setTimeout(() => {
         this.populateNodes(this.graphJsonData[i]);
@@ -592,6 +601,17 @@ export class CopilotChatTwoComponent implements OnInit {
     }, 200)
   }
 
+  public nodeData:any={};
+  openOverlay(event:any, nodeData:any)
+  {
+    this.nodeData=nodeData
+    this.overlayModel.show(event);
+  }
+  saveNodeComment()
+  {
+    this.nodes.find((item:any)=>item.id==this.nodeData.id).comment=this.nodeData.comment;
+    this.overlayModel.hide();
+  }
   onChange(){
     console.log(this.tableData)
   }
