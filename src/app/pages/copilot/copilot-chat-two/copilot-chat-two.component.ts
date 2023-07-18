@@ -140,7 +140,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "disable":false
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Open in Bot Designer",
             "disable":false
           },
@@ -149,7 +149,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Have our executive contact you",
             "disable":false
           }
@@ -179,7 +179,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Have our executive contact you",
             "disable":false
           }
