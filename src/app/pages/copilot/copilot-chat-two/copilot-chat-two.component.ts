@@ -81,14 +81,14 @@ export class CopilotChatTwoComponent implements OnInit {
         "steps": [
           {
             "id": 6,
-            "type": "BUTTON",
-            "label": "Zoho",
+            "type": "IMG-BUTTON",
+            "label": "Workday",
             "disable":false
           },
           {
             "id": 6,
-            "type": "BUTTON",
-            "label": "Zoho",
+            "type": "IMG-BUTTON",
+            "label": "SAP SuccessFactors",
             "disable":false
           },
           {
@@ -195,6 +195,18 @@ export class CopilotChatTwoComponent implements OnInit {
         ]
       }
     },
+    {
+      "message": "Open in Bot Designer",
+      "response": {
+        "message": "",
+        "steps": [
+          {
+            "id": 4,
+            "type": "REDIRECT-RPA"
+          }
+        ]
+      }
+    },
   ];
   constructor(private router:Router, private dt:DataTransferService) {
     //this.copilotJson=copilot;
@@ -290,20 +302,24 @@ export class CopilotChatTwoComponent implements OnInit {
     this.dt.getCoplilotData.subscribe((response:any)=>{
       if(response!=undefined)
       {
-        this.messages=response.messages;
-        if(response.isGraphLoaded)
-        {
-          this.loadGraphIntiate("Load Graph");
-        }
-        if (response.isNodeLoaded) {
-          this.loadGraphIntiate("Load Node");
-        }
-        if (response.isNodeUpdated) {
-          this.loadGraphIntiate("Update Nodes");
-        }
-        if (response.isTableLoaded) {
-          this.loadGraphIntiate("Load Form")
-        }
+        setTimeout(()=>{
+          this.messages=response.messages;
+          if(response.isGraphLoaded)
+          {
+            this.loadGraphIntiate("Load Graph");
+          }
+          if (response.isNodeLoaded) {
+            this.loadGraphIntiate("Load Node");
+          }
+          if (response.isNodeUpdated) {
+            this.loadGraphIntiate("Update Nodes");
+          }
+          if (response.isTableLoaded) {
+            this.loadGraphIntiate("Load Form")
+          }
+          //this.dt.setCopilotData(undefined)
+        
+        },100)
       }
     })
   }
@@ -342,6 +358,11 @@ export class CopilotChatTwoComponent implements OnInit {
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
         this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "849167", redirect:"copilot" } });
+      }
+      else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
+      {
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
+        this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect:"copilot" } });
       }
       this.messages.push(systemMessage);
       let chatGridElement=document.getElementById("chat-grid");
