@@ -81,14 +81,14 @@ export class CopilotChatTwoComponent implements OnInit {
         "steps": [
           {
             "id": 6,
-            "type": "BUTTON",
-            "label": "Zoho",
+            "type": "IMG-BUTTON",
+            "label": "Workday",
             "disable":false
           },
           {
             "id": 6,
-            "type": "BUTTON",
-            "label": "Zoho",
+            "type": "IMG-BUTTON",
+            "label": "SAP SuccessFactors",
             "disable":false
           },
           {
@@ -105,6 +105,9 @@ export class CopilotChatTwoComponent implements OnInit {
       "response": {
         "message": "What is the Email system that you use in your organization?",
         "steps": [
+          {
+            "type": "UPDATE-NODE-1",
+          },
           {
             "type": "BUTTON",
             "label": "Outlook by Microsoft",
@@ -124,7 +127,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
         "steps": [
           {
-            "type":"UPDATE-NODES"
+            "type":"UPDATE-NODE-2"
           },
           {
             "type": "BUTTON",
@@ -137,7 +140,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "disable":false
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Open in Bot Designer",
             "disable":false
           },
@@ -146,7 +149,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Have our executive contact you",
             "disable":false
           }
@@ -176,7 +179,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
           },
           {
-            "type": "BUTTON",
+            "type": "OUTLINE-BUTTON",
             "label": "Have our executive contact you",
             "disable":false
           }
@@ -191,6 +194,18 @@ export class CopilotChatTwoComponent implements OnInit {
           {
             "id": 4,
             "type": "REDIRECT-PI"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Open in Bot Designer",
+      "response": {
+        "message": "",
+        "steps": [
+          {
+            "id": 4,
+            "type": "REDIRECT-RPA"
           }
         ]
       }
@@ -255,6 +270,10 @@ export class CopilotChatTwoComponent implements OnInit {
   }]
   showTable: boolean = false;
   tableData: any[] = [];
+  // minOptins: number[]  = Array.from({length :60 }, (_, index)=> index+1)
+  minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
+  hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
+  daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
 
   ngOnInit(): void {
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -274,36 +293,53 @@ export class CopilotChatTwoComponent implements OnInit {
       }]
     }]
     this.tableData = [
-      { name: "IT from sent to the manager" },
-      { name: "Manager fills the form" },
-      { name: "IT team create Email ID" },
-      { name: "IT team assign a system" },
-      { name: "System Access for the user" },
+      { name: "IT from sent to the manager",min:"00",hrs:"00",days:"00"},
+      { name: "Manager fills the form",min:"00",hrs:"00",days:"00" },
+      { name: "IT team create Email ID",min:"00",hrs:"00",days:"00" },
+      { name: "IT team assign a system",min:"00",hrs:"00",days:"00" },
+      { name: "System Access for the user",min:"00",hrs:"00",days:"00" },
     ],
-    this.messages.push({
-      id: (new Date()).getTime(),
-      user: "SYSTEM",
-      message: "Hi, what process would you like to automate?",
-      steps: []
-    })
 
     this.dt.getCoplilotData.subscribe((response:any)=>{
       if(response!=undefined)
       {
-        this.messages=response.messages;
-        if(response.isGraphLoaded)
-        {
-          this.loadGraphIntiate("Load Graph");
-        }
-        if (response.isNodeLoaded) {
-          this.loadGraphIntiate("Load Node");
-        }
-        if (response.isNodeUpdated) {
-          this.loadGraphIntiate("Update Nodes");
-        }
-        if (response.isTableLoaded) {
-          this.loadGraphIntiate("Load Form")
-        }
+        setTimeout(()=>{
+          this.messages=response.messages;
+          if(response.isGraphLoaded)
+          {
+            this.loadGraphIntiate("Load Graph");
+          }
+          if (response.isNodeLoaded) {
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Node");
+            },300)
+          }
+          if (response.isNodeUpdated) {
+              this.loadGraphIntiate("Update Node 1");
+              this.loadGraphIntiate("Update Node 2");
+          }
+          if (response.isTableLoaded) {
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Form")
+            },500)
+          }
+          setTimeout(()=>{
+            var objDiv = document.getElementById("chat-grid");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          },200)
+          //this.dt.setCopilotData(undefined)
+        
+        },1000)
+      }
+      else
+      {
+        this.messages.push({
+          id: (new Date()).getTime(),
+          user: "SYSTEM",
+          message: "Hi, what process would you like to automate?",
+          steps: []
+        })
+    
       }
     })
   }
@@ -319,7 +355,7 @@ export class CopilotChatTwoComponent implements OnInit {
     }
     if(messageType != 'LABEL')
       this.messages.push(message);
-    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? "No Data Found";
+    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
     if (response) {
       let systemMessage = {
         id: (new Date()).getTime(),
@@ -336,71 +372,37 @@ export class CopilotChatTwoComponent implements OnInit {
       else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
         this.loadGraphIntiate("Load Node");
       }
-      else if (response.steps.find((item: any) => item.type == "UPDATE-NODES")) {
-        this.loadGraphIntiate("Update Nodes");
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
+        this.loadGraphIntiate("Update Node 1");
+      }
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
+        this.loadGraphIntiate("Update Node 2");
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
         this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "849167", redirect:"copilot" } });
       }
+      else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
+      {
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
+        this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect:"copilot" } });
+      }
       this.messages.push(systemMessage);
       let chatGridElement=document.getElementById("chat-grid");
       chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
       this.message = "";
+      setTimeout(()=>{
+        var objDiv = document.getElementById("chat-grid");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },200)
     }
-    // this.messages = [
-    //   {
-    //     "uuid": "text_uuid1",
-    //     "message": "This is sample text response",
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "button label",
-    //           "submitValue": "submit value"
-    //         },
-    //         {
-    //           "label": "button label2",
-    //           "submitValue": "submit value2"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid": "text_uuid2",
-    //     "message": ["This is sample text response2"],
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "Load Graph"
-    //         },
-    //         {
-    //           "label": "Load Form"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid":"text_uuid1",
-    //     "message":"This is sample text response"
-    //   },
-    //   {
-    //     "uuid":"text_uuid2",
-    //     "message":["This is sample text response"]
-    //   },
-    //   {
-    //     "uuid":"text_uuid3",
-    //     "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
-    //   }
-    // ];
-    // let systemMessage={
-    //   id:(new Date()).getTime(),
-    //   message:"Hi Kiran Mudili",
-    //   user:"SYSTEM"
-    // }
+    else{
+    this.message = "";
+    setTimeout(()=>{
+      var objDiv = document.getElementById("chat-grid");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    },100)
+  }
 
 
   }
@@ -500,7 +502,7 @@ export class CopilotChatTwoComponent implements OnInit {
   isNodesUpdates:boolean=false;
   loadGraphIntiate(value?: any) {
     this.showTable = false;
-    if (value == "Load Graph" || value == "Load Node" || value=="Update Nodes") {
+    if (value == "Load Graph" || value == "Load Node" || value=="Update Node 1" || value=="Update Node 2") {
       if (!this.isGraphLoaded) {
         this.loadGraph()
       }
@@ -523,10 +525,17 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if(!this.isNodesUpdates)
       {
-        this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
-        this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-        this.nodes.find((item:any)=>item.id=="3").updated=true;
-        this.nodes.find((item:any)=>item.id=="5").updated=true;
+        if(value=='Update Node 1')
+        {
+          this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
+          this.nodes.find((item:any)=>item.id=="3").updated=true;
+        }
+        if(value=='Update Node 2')
+        {
+          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+          this.nodes.find((item:any)=>item.id=="5").updated=true;
+          this.isNodesUpdates=true;
+        }
 
       }
     }
@@ -580,6 +589,10 @@ export class CopilotChatTwoComponent implements OnInit {
       this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
       this.isGraphLoaded = true;
     }, 200)
+  }
+
+  onChange(){
+    console.log(this.tableData)
   }
 
 }
