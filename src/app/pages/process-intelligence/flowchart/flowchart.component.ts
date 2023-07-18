@@ -154,7 +154,7 @@ pi_fullGraph_data:any=[];
   hiddenPopUp:boolean=false;
   freetrail = localStorage.getItem("freetrail");
   isGenerate:boolean = false;
-
+redirectCopilot:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -196,6 +196,12 @@ pi_fullGraph_data:any=[];
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     var piId;
     this.route.queryParams.subscribe(params => {
+      console.log(params)
+      if(params.redirect)
+      {
+        if(params.redirect=="copilot")
+          this.redirectCopilot=true;
+      }
       if(params['wpiId']!=undefined){
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
@@ -450,9 +456,10 @@ pi_fullGraph_data:any=[];
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
+      
       if (token) {
-          let url=this.router.url.split('?')
-          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
       }else{
         let url=this.router.url.split('?')
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
@@ -2292,4 +2299,8 @@ addWorkingHours(){
     }
   }
 
+  backToCopilot()
+  {
+    this.router.navigate(["/pages/copilot/copilot-chat"])
+  }
 }
