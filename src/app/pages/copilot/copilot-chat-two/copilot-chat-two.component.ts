@@ -338,7 +338,7 @@ export class CopilotChatTwoComponent implements OnInit {
     }
     if(messageType != 'LABEL')
       this.messages.push(message);
-    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? "No Data Found";
+    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
     if (response) {
       let systemMessage = {
         id: (new Date()).getTime(),
@@ -374,60 +374,18 @@ export class CopilotChatTwoComponent implements OnInit {
       let chatGridElement=document.getElementById("chat-grid");
       chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
       this.message = "";
+      setTimeout(()=>{
+        var objDiv = document.getElementById("chat-grid");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },200)
     }
-    // this.messages = [
-    //   {
-    //     "uuid": "text_uuid1",
-    //     "message": "This is sample text response",
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "button label",
-    //           "submitValue": "submit value"
-    //         },
-    //         {
-    //           "label": "button label2",
-    //           "submitValue": "submit value2"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid": "text_uuid2",
-    //     "message": ["This is sample text response2"],
-    //     "components": ["Buttons"],
-    //     "user" :'SYSTEM',
-    //     "values": [
-    //       [
-    //         {
-    //           "label": "Load Graph"
-    //         },
-    //         {
-    //           "label": "Load Form"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   {
-    //     "uuid":"text_uuid1",
-    //     "message":"This is sample text response"
-    //   },
-    //   {
-    //     "uuid":"text_uuid2",
-    //     "message":["This is sample text response"]
-    //   },
-    //   {
-    //     "uuid":"text_uuid3",
-    //     "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
-    //   }
-    // ];
-    // let systemMessage={
-    //   id:(new Date()).getTime(),
-    //   message:"Hi Kiran Mudili",
-    //   user:"SYSTEM"
-    // }
+    else{
+    this.message = "";
+    setTimeout(()=>{
+      var objDiv = document.getElementById("chat-grid");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    },100)
+  }
 
 
   }
