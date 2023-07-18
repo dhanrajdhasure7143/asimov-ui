@@ -270,6 +270,10 @@ export class CopilotChatTwoComponent implements OnInit {
   }]
   showTable: boolean = false;
   tableData: any[] = [];
+  // minOptins: number[]  = Array.from({length :60 }, (_, index)=> index+1)
+  minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
+  hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
+  daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
 
   ngOnInit(): void {
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -289,11 +293,11 @@ export class CopilotChatTwoComponent implements OnInit {
       }]
     }]
     this.tableData = [
-      { name: "IT from sent to the manager" },
-      { name: "Manager fills the form" },
-      { name: "IT team create Email ID" },
-      { name: "IT team assign a system" },
-      { name: "System Access for the user" },
+      { name: "IT from sent to the manager",min:"00",hrs:"00",days:"00"},
+      { name: "Manager fills the form",min:"00",hrs:"00",days:"00" },
+      { name: "IT team create Email ID",min:"00",hrs:"00",days:"00" },
+      { name: "IT team assign a system",min:"00",hrs:"00",days:"00" },
+      { name: "System Access for the user",min:"00",hrs:"00",days:"00" },
     ],
     this.messages.push({
       id: (new Date()).getTime(),
@@ -572,6 +576,10 @@ export class CopilotChatTwoComponent implements OnInit {
       this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
       this.isGraphLoaded = true;
     }, 200)
+  }
+
+  onChange(){
+    console.log(this.tableData)
   }
 
 }
