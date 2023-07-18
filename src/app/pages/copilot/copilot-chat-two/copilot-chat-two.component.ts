@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { jsPlumb, jsPlumbInstance } from "jsplumb";
 import { HttpClient, HttpBackend } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
 //import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
   selector: 'app-copilot-chat-two',
@@ -180,15 +182,28 @@ export class CopilotChatTwoComponent implements OnInit {
           }
         ]
       }
-    }
+    },
+    {
+      "message": "Submit",
+      "response": {
+        "message": "",
+        "steps": [
+          {
+            "id": 4,
+            "type": "REDIRECT-PI"
+          }
+        ]
+      }
+    },
   ];
-  constructor() {
+  constructor(private router:Router, private dt:DataTransferService) {
     //this.copilotJson=copilot;
   }
 
   @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('render') render: ElementRef;
+  
   public model2: any;
 
   items: MenuItem[];
@@ -271,6 +286,26 @@ export class CopilotChatTwoComponent implements OnInit {
       message: "Hi, what process would you like to automate?",
       steps: []
     })
+
+    this.dt.getCoplilotData.subscribe((response:any)=>{
+      if(response!=undefined)
+      {
+        this.messages=response.messages;
+        if(response.isGraphLoaded)
+        {
+          this.loadGraphIntiate("Load Graph");
+        }
+        if (response.isNodeLoaded) {
+          this.loadGraphIntiate("Load Node");
+        }
+        if (response.isNodeUpdated) {
+          this.loadGraphIntiate("Update Nodes");
+        }
+        if (response.isTableLoaded) {
+          this.loadGraphIntiate("Load Form")
+        }
+      }
+    })
   }
 
 
@@ -303,6 +338,10 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if (response.steps.find((item: any) => item.type == "UPDATE-NODES")) {
         this.loadGraphIntiate("Update Nodes");
+      }
+      else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
+        this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "849167", redirect:"copilot" } });
       }
       this.messages.push(systemMessage);
       let chatGridElement=document.getElementById("chat-grid");

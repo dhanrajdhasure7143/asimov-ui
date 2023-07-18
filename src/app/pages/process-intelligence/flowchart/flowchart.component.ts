@@ -154,7 +154,7 @@ pi_fullGraph_data:any=[];
   hiddenPopUp:boolean=false;
   freetrail = localStorage.getItem("freetrail");
   isGenerate:boolean = false;
-
+redirectCopilot:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -450,6 +450,12 @@ pi_fullGraph_data:any=[];
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
+      if(params.redirect)
+      {
+        if(params.redirect=="copilot")
+          this.redirectCopilot=true;
+        
+      }
       if (token) {
           let url=this.router.url.split('?')
           this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
@@ -2292,4 +2298,8 @@ addWorkingHours(){
     }
   }
 
+  backToCopilot()
+  {
+    this.router.navigate(["/pages/copilot/copilot-chat"])
+  }
 }
