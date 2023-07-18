@@ -54,7 +54,7 @@ border-color: #979797;}
     height:calc(100vh - 188px) !important;
     overflow: scroll !important;
     width: 100% !important;
-    padding:15px 20px;
+    padding:15px;
 }
 .textarea-align{display:flex;}
 .main-content-head {
@@ -70,12 +70,14 @@ height:auto !important;}
     background-color: #F1F0F0 !important;
     height: 50px !important;
     border: none !important;
-    border-radius: 25px !important;
-    padding-left: 22px !important;
-    font-size: 16px;
+    border-radius: 25px !important;    
+    font-size: 15px;
+    /* padding-left: 22px !important;
     padding-top: 14px !important;
     padding-right: 48px !important;
-    padding-bottom: 10px !important;
+    padding-bottom: 10px !important; */
+    padding: 15px 20px !important;
+    overflow: hidden;
 }
 textarea.form-control.message-input:focus{background-color: #ebf7ff !important;}
 /* .msg-snd-btn image{width:21px;} */
@@ -112,7 +114,10 @@ textarea.form-control.message-input:focus{background-color: #ebf7ff !important;}
 }
 .user-message .user-msgtext{background-color: #ebf7ff;
     border-radius: 12px 0px 12px 12px !important;
-width:100%;}
+width:100%;
+text-align: left;
+    word-break: break-word;
+    color: #000;}
 
 .user-image{    background-color: #098de6;
     border-radius: 50%;
@@ -120,7 +125,12 @@ width:100%;}
     height: 50px;
     padding: 10px;
 }
-.send-msgtext{width:100%;}
+.send-msgtext{
+  width:100%;
+  text-align: left;
+  word-break: break-word;
+    color: #000;
+}
 .system-message{
    
     font-size: 15px;
@@ -129,7 +139,11 @@ width:100%;}
     position: relative !important;
     border-radius: 5px !important;
 }
-
+.system-message .card {
+  width: calc(100% - 44px);
+  padding: 10px 15px;
+  margin-top: 15px;
+}
 .drag-area{
     /* min-height: 70vh;
     width:100%;
@@ -137,8 +151,8 @@ width:100%;}
     float: left;
     transform-origin:0% 0%;
     display: inline; */
-    min-height: 75vh;
-    width:95%;
+    min-height: 100%;
+    width:96%;
     position: absolute;
     overflow: auto;
     /* float: left;
@@ -198,7 +212,7 @@ width:100%;}
     width:100%;
     /* overflow: auto; */
     height: calc(100vh - 150px);
-    padding:10px;
+    /* padding:10px; */
   }
   .studio_main.zoomout_bot {
     overflow: inherit !important;
@@ -320,4 +334,6 @@ border-radius:4px;text-transform: capitalize;margin-bottom:10px;padding: 6px 22p
     background-color: #025cbb !important;
     border-color: #0062cc !important;
 }
-.adjtextarea-align{width:100%;position:relative;}
+.adjtextarea-align{width:100%;position:relative;
+padding: 0px 15px !important;
+}
