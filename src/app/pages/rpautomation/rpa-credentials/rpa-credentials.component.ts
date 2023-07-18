@@ -7,6 +7,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { Router } from '@angular/router';
 import { MessageService,ConfirmationService } from 'primeng/api';
+import { CryptoService } from 'src/app/services/crypto.service';
 @Component({
   selector: 'app-rpa-credentials',
   templateUrl: './rpa-credentials.component.html',
@@ -47,7 +48,8 @@ export class RpaCredentialsComponent implements OnInit {
       private spinner: LoaderService,
       private columnList: columnList,
       private messageService:MessageService,
-      private confirmationService:ConfirmationService
+      private confirmationService:ConfirmationService,
+      private cryptoService:CryptoService
       ) { 
   
       this.Credupdateflag=false;
@@ -97,6 +99,9 @@ inputNumberOnly(event){
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
+              let decryptClientId = this.cryptoService.decrypt(item["clientId"]);
+              let decryptclientSecret = this.cryptoService.decrypt(item["clientSecret"]);
+              let decryptOfficeTenat = this.cryptoService.decrypt(item["officeTenant"]);
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
               item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp);
               item["password_new"]=(item["password"]!="")?("*").repeat(10):"-";
@@ -104,11 +109,11 @@ inputNumberOnly(event){
               item["tableClientSecret"]="";
               item["tableOfficeTenant"]="";
               if(item["clientId"]!=null && item["clientId"]!="")
-              item["tableClientId"]= item["clientId"].length>=6?(item["clientId"].substr(0, 2) +("x").repeat( item["clientId"].length-4) + item["clientId"].substr( item["clientId"].length-2,  item["clientId"].length)):item["clientId"];
+              item["tableClientId"]= decryptClientId.length>=6?(decryptClientId.substr(0, 2) +("x").repeat( decryptClientId.length-4) + decryptClientId.substr( decryptClientId.length-2,  decryptClientId.length)):decryptClientId;
               if(item["clientSecret"]!=null && item["clientSecret"]!="")
-              item["tableClientSecret"]= item["clientSecret"].length>=6?(item["clientSecret"].substr(0, 2) +("x").repeat( item["clientSecret"].length-4) + item["clientSecret"].substr( item["clientSecret"].length-2,  item["clientSecret"].length)):item["clientSecret"];
+              item["tableClientSecret"]= decryptclientSecret.length>=6?(decryptclientSecret.substr(0, 2) +("x").repeat( decryptclientSecret.length-4) + decryptclientSecret.substr( decryptclientSecret.length-2,  decryptclientSecret.length)):decryptclientSecret;
               if(item["officeTenant"]!=null && item["officeTenant"]!="")
-              item["tableOfficeTenant"]=  item["officeTenant"].length>=6?(item["officeTenant"].substr(0, 2) +("x").repeat( item["officeTenant"].length-4) + item["officeTenant"].substr( item["officeTenant"].length-2,  item["officeTenant"].length)):item["officeTenant"]; 
+              item["tableOfficeTenant"]=  decryptOfficeTenat.length>=6?(decryptOfficeTenat.substr(0, 2) +("x").repeat( decryptOfficeTenat.length-4) + decryptOfficeTenat.substr( decryptOfficeTenat.length-2,  decryptOfficeTenat.length)):decryptOfficeTenat; 
               return item;
             })
             this.readSelectedData([]);
@@ -160,8 +165,9 @@ this.confirmationService.confirm({
  defaultFocus: 'none',
  rejectIcon: 'null',
  acceptIcon: 'null',
+ key:"positionDialog",
   accept: (result) => {
-      if (result.value) {
+      // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
@@ -176,7 +182,7 @@ this.confirmationService.confirm({
           this.spinner.hide();
           this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
         });
-      }
+      // }
   },
 })
   }
@@ -259,6 +265,7 @@ this.confirmationService.confirm({
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
+      key:"positionDialog",
       accept: (result) => {
       if (result.value) {
         this.spinner.show();

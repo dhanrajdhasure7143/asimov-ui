@@ -116,7 +116,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
       let tenantId=localStorage.getItem("tenantName")
-      this.rest_api.getNewAccessTokenByTenantId(tenantId).subscribe(resp => {
+      let masterTenant=localStorage.getItem("masterTenant")
+      this.rest_api.getNewAccessTokenByTenantId(tenantId,masterTenant).subscribe(resp => {
         this.newAccessToken = resp;
         localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       });
@@ -375,8 +376,9 @@ getTenantLists(){
 onChangeTenant(event:any){
   this.spinner.show();
   let value = event.item
+  let masterTenant=localStorage.getItem("masterTenant")
   // let value = this.tenantsList.find(data=>data.tenant_name == event.value);
-  this.rest_api.getNewAccessTokenByTenantId(value.tenant_id).subscribe(async (data:any) => {
+  this.rest_api.getNewAccessTokenByTenantId(value.tenant_id,masterTenant).subscribe(async (data:any) => {
   await localStorage.setItem("accessToken", data.accessToken);
   await localStorage.setItem("tenantName",value.tenant_id);
   await localStorage.setItem("tenantSwitchName", value.tenant_name);
