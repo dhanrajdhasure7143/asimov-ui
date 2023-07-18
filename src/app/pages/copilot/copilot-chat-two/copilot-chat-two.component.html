@@ -156,14 +156,14 @@
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
                                             <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
-                                                <a class="d-flex py-1 bg-success">
+                                                <button class="btn d-flex py-1 bg-success">
                                                    <div>
                                                     <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'">
                                                    </div>
                                                     <div>
                                                     {{step.label}}
                                                    </div>
-                                                </a>
+                                                  </button>
                                             </div>
                                             <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
                                                 <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="step.label">
@@ -188,7 +188,8 @@
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
                             <a (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
-                                <img src="./../../../../assets/copilot/textareaicon.svg" alt="">
+                                <img src="./../../../../assets/copilot/textareaicon.svg" alt="" *ngIf="message.length == 0">
+                                <img src="./../../../../assets/copilot/textareaiconactive.svg" alt="" *ngIf="message.length > 0">
                             </a>
                         </div>
 
