@@ -91,24 +91,18 @@
                                 <tr *ngFor="let item of tableData">
                                     <th>{{item.name}}</th>
                                     <td>
-                                        <select name="" id="">
-                                            <option value="">00</option>
-                                            <option value="">01</option>
-                                            <option value="">02</option>
+                                        <select name="" id="" [(ngModel)]="item.min" (change)="onChange()">
+                                            <option [value]="item" *ngFor="let item of minOptins">{{item}}</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="">
-                                            <option value="">00</option>
-                                            <option value="">01</option>
-                                            <option value="">02</option>
+                                        <select name="" id=""  [(ngModel)]="item.hrs">
+                                          <option [value]="item" *ngFor="let item of hrsOptins">{{item}}</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="">
-                                            <option value="">00</option>
-                                            <option value="">01</option>
-                                            <option value="">02</option>
+                                        <select name="" id=""  [(ngModel)]="item.days">
+                                          <option [value]="item" *ngFor="let item of daysOptins">{{item}}</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -127,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div></div>
-                                <div *ngIf="sentMessage.user=='SYSTEM'" class="system-message">
+                                <div *ngIf="sentMessage.user=='SYSTEM' && sentMessage.message!=''" class="system-message">
                                     <div class="d-flex">
                                         <div class="sys-image">
                                             <img src="../../../../assets/copilot/systemicon.svg" alt="" />
@@ -156,6 +150,20 @@
                                             <div class="col-12 chat-btn " *ngIf="step.type=='BUTTON'">
                                                 <button class="btn btn-primary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
+                                            </div>
+                                            <div class="col-12 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
+                                                <button class="btn btn-outline-primary text-white btn-sm"
+                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
+                                            </div>
+                                            <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
+                                                <a class="d-flex py-1 bg-success">
+                                                   <div>
+                                                    <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'">
+                                                   </div>
+                                                    <div>
+                                                    {{step.label}}
+                                                   </div>
+                                                </a>
                                             </div>
                                             <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
                                                 <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="step.label">
