@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { jsPlumb, jsPlumbInstance } from "jsplumb";
 import { HttpClient, HttpBackend } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 //import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
   selector: 'app-copilot-chat-two',
@@ -13,14 +16,214 @@ export class CopilotChatTwoComponent implements OnInit {
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
-  copilotJson:any={};
-  constructor() {
+  @ViewChild('op', {static: false}) overlayModel;
+  copilotJson: any = [
+    {
+      "message": "Provisioning Users",
+      "response": {
+        "message": "Sure, here are a few examples of onboarding users process flow. You can choose one that matches or ‘closely’ matches your organization’s process. If none of them match, please tell us more about the process you would like to automate.",
+        "steps": [
+          {
+            "id": 1,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v1)"
+          },
+          {
+            "id": 2,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v2)"
+          },
+          {
+            "id": 3,
+            "type": "PROCESS-IMAGE",
+            "label": "Employee Onboarding (v3)"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Employee Onboarding (v3)",
+      "response": {
+        "message": "Would you prefer modifying these steps to match your organization’s flow?",
+        "steps": [
+          {
+            "id": 4,
+            "type": "LOAD-GRAPH"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Yes. Along with sending pre-boarding form, my team sends the onboarding form to the designated Reporting Manager. Both these tasks happen in parallel.",
+      "response": {
+        "message": "Your workflow has been updated with the additional step. Would you like to make any further modifications?",
+        "steps": [
+          {
+            "id": 5,
+            "type": "ADD-NODE"
+          },
+          {
+            "id": 51,
+            "type": "BUTTON",
+            "label": "Yes, I want to",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "No, contintue to next step",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "No, contintue to next step",
+      "response": {
+        "message": "What are the systems you use in this process?",
+        "steps": [
+          {
+            "id": 6,
+            "type": "IMG-BUTTON",
+            "label": "Workday",
+            "disable":false
+          },
+          {
+            "id": 6,
+            "type": "IMG-BUTTON",
+            "label": "SAP SuccessFactors",
+            "disable":false
+          },
+          {
+            "id": 6,
+            "type": "BUTTON",
+            "label": "None of the above",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Zoho",
+      "response": {
+        "message": "What is the Email system that you use in your organization?",
+        "steps": [
+          {
+            "type": "UPDATE-NODE-1",
+          },
+          {
+            "type": "BUTTON",
+            "label": "Outlook by Microsoft",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Gmail from Google",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Outlook by Microsoft",
+      "response": {
+        "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
+        "steps": [
+          {
+            "type":"UPDATE-NODE-2"
+          },
+          {
+            "type": "BUTTON",
+            "label": "Save as Draft",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Analyse this Process",
+            "disable":false
+          },
+          {
+            "type": "OUTLINE-BUTTON",
+            "label": "Open in Bot Designer",
+            "disable":false
+          },
+          {
+            "type": "MESSAGE",
+            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
+          },
+          {
+            "type": "OUTLINE-BUTTON",
+            "label": "Have our executive contact you",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Analyse this Process",
+      "response": {
+        "message": "Fill the form with time taken for each of the manual steps in the process. This will allow us to calculate the overall time taken for the entire workflow. Once you are done, click on submit below to create the process graph.",
+        "steps": [
+          {
+            "type": "LOAD-STEPS-TABLE"
+          },
+          {
+            "type": "BUTTON",
+            "label": "Submit",
+            "disable":false
+          },
+          {
+            "type": "BUTTON",
+            "label": "Save as Draft",
+            "disable":false
+          },
+          {
+            "type": "MESSAGE",
+            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
+          },
+          {
+            "type": "OUTLINE-BUTTON",
+            "label": "Have our executive contact you",
+            "disable":false
+          }
+        ]
+      }
+    },
+    {
+      "message": "Submit",
+      "response": {
+        "message": "",
+        "steps": [
+          {
+            "id": 4,
+            "type": "REDIRECT-PI"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Open in Bot Designer",
+      "response": {
+        "message": "",
+        "steps": [
+          {
+            "id": 4,
+            "type": "REDIRECT-RPA"
+          }
+        ]
+      }
+    },
+  ];
+  constructor(private router:Router, 
+    private dt:DataTransferService,
+    private loaderService:LoaderService
+    ) {
     //this.copilotJson=copilot;
   }
 
   @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('render') render: ElementRef;
+  
   public model2: any;
 
   items: MenuItem[];
@@ -32,40 +235,53 @@ export class CopilotChatTwoComponent implements OnInit {
     selectedNodeTask: "Pre-Boarding From Sent To Candidate",
     x: "100px",
     y: "100px",
-    path: "../../../../assets/circle.png",
+    path: "../../../../assets/copilot/graph-icons/circle.png",
+    updated:false
   },
   {
     id: "2",
     selectedNodeTask: "Gather and Organize Responses",
     x: "100px",
     y: "200px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/copilot/graph-icons/circle.png",
+    updated:false
+
   },
   {
     id: 3,
     selectedNodeTask: "Enter gathered details as employee details",
     x: "100px",
     y: "300px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/copilot/graph-icons/circle.png",
+    updated:false
+
   },
   {
     id: 4,
     selectedNodeTask: "Create Email account",
     x: "100px",
     y: "400px",
-    path: "../../../../assets/circle.png"
+    path: "../../../../assets/copilot/graph-icons/circle.png",
+    updated:false
   },
   {
     id: 5,
     selectedNodeTask: "Trigger, Welcome Email",
     x: "100px",
     y: "500px",
-    path: "../../../../assets/circle.png"
-  }]
-  showTable:boolean = false;
-  tableData:any[] = [];
+    path: "../../../../assets/copilot/graph-icons/circle.png",
+    updated:false
 
+  }]
+  showTable: boolean = false;
+  tableData: any[] = [];
+  // minOptins: number[]  = Array.from({length :60 }, (_, index)=> index+1)
+  minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
+  hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
+  daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
+  loader:boolean=false;
   ngOnInit(): void {
+    this.loader=true;
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -82,114 +298,120 @@ export class CopilotChatTwoComponent implements OnInit {
         }
       }]
     }]
-   this.tableData = [
-    {name:"IT from sent to the manager"},
-    {name:"Manager fills the form"},
-    {name:"IT team create Email ID"},
-    {name:"IT team assign a system"},
-    {name:"System Access for the user"},
-   ]
-  //  console.log("check",this.copilotJson)
-  }
+    this.tableData = [
+      { name: "IT from sent to the manager",min:"00",hrs:"00",days:"00"},
+      { name: "Manager fills the form",min:"00",hrs:"00",days:"00" },
+      { name: "IT team create Email ID",min:"00",hrs:"00",days:"00" },
+      { name: "IT team assign a system",min:"00",hrs:"00",days:"00" },
+      { name: "System Access for the user",min:"00",hrs:"00",days:"00" },
+    ],
 
-
-  addConnection(source:String, target:String)
-  {
-    this.jsPlumbInstance.connect({
-      endpoint: [
-        "Dot",
-        {
-          radius: 3,
-          cssClass: "myEndpoint",
-          width: 8,
-          height: 8,
-        },
-      ],
-      source:source,
-      target: target,
-      anchors: ["Right", "Left"],
-      detachable: true,
-      paintStyle: { stroke: "#404040", strokeWidth: 2 },
-      overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
-    });
-  }
-
-
-
-
-  sendMessage(value?:any){
-    let message={
-      id:(new Date()).getTime(),
-      message:this.message,
-      user:localStorage.getItem("ProfileuserId")
-    }
-    this.messages.push(message);
-    // let response=copilot.find((item:any)=>item.message.includes(this.message)).response;
-    // if(response)
-    // {
-    //   console.log(response)
-    //   let systemMessage={
-    //     id:(new Date()).getTime(),
-    //     user:"SYSTEM",
-    //     message:response.message,
-    //     steps:response.steps
-    //   }
-    //   this.messages.push(systemMessage);
-    //   this.message = "";
-    // }
-    this.messages = [
+    this.dt.getCoplilotData.subscribe((response:any)=>{
+      if(response!=undefined)
       {
-        "uuid": "text_uuid1",
-        "message": "This is sample text response",
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "button label",
-              "submitValue": "submit value"
-            },
-            {
-              "label": "button label2",
-              "submitValue": "submit value2"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid": "text_uuid2",
-        "message": ["This is sample text response2"],
-        "components": ["Buttons"],
-        "user" :'SYSTEM',
-        "values": [
-          [
-            {
-              "label": "Load Graph"
-            },
-            {
-              "label": "Load Form"
-            }
-          ]
-        ]
-      },
-      {
-        "uuid":"text_uuid1",
-        "message":"This is sample text response"
-      },
-      {
-        "uuid":"text_uuid2",
-        "message":["This is sample text response"]
-      },
-      {
-        "uuid":"text_uuid3",
-        "message":[" <b>This</b> is sample text response2, <a href='www.epsoftinc.com' target='_blank'> click here </a>" ]
+        setTimeout(()=>{
+          this.messages=response.messages;
+          if(response.isGraphLoaded)
+          {
+            this.loadGraphIntiate("Load Graph");
+          }
+          if (response.isNodeLoaded) {
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Node");
+            },300)
+          }
+          if (response.isNodeUpdated) {
+              this.loadGraphIntiate("Update Node 1");
+              this.loadGraphIntiate("Update Node 2");
+          }
+          if (response.isTableLoaded) {
+            this.tableData=response.tableData;
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Form");
+              this.loader=false;
+            },500)
+          }
+          setTimeout(()=>{
+            var objDiv = document.getElementById("chat-grid");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          },200)
+          //this.dt.setCopilotData(undefined)
+        
+        },1000)
       }
-    ];
-    // let systemMessage={
-    //   id:(new Date()).getTime(),
-    //   message:"Hi Kiran Mudili",
-    //   user:"SYSTEM"
-    // }
+      else
+      {
+        this.loader=false
+        this.messages.push({
+          id: (new Date()).getTime(),
+          user: "SYSTEM",
+          message: "Hi, what process would you like to automate?",
+          steps: []
+        })
+    
+      }
+    })
+  }
+
+
+
+
+  sendMessage(value?: any, messageType?:String) {
+    let message = {
+      id: (new Date()).getTime(),
+      message: value,
+      user: localStorage.getItem("ProfileuserId")
+    }
+    if(messageType != 'LABEL')
+      this.messages.push(message);
+    let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
+    if (response) {
+      let systemMessage = {
+        id: (new Date()).getTime(),
+        user: "SYSTEM",
+        message: response.message,
+        steps: response.steps
+      }
+      if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
+        this.loadGraphIntiate("Load Graph");
+      }
+      else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
+        this.loadGraphIntiate("Load Form")
+      }
+      else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
+        this.loadGraphIntiate("Load Node");
+      }
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
+        this.loadGraphIntiate("Update Node 1");
+      }
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
+        this.loadGraphIntiate("Update Node 2");
+      }
+      else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
+        this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect:"copilot" } });
+      }
+      else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
+      {
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
+        this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect:"copilot" } });
+      }
+      this.messages.push(systemMessage);
+      let chatGridElement=document.getElementById("chat-grid");
+      chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      this.message = "";
+      setTimeout(()=>{
+        var objDiv = document.getElementById("chat-grid");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },200)
+    }
+    else{
+    this.message = "";
+    setTimeout(()=>{
+      var objDiv = document.getElementById("chat-grid");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    },100)
+  }
 
 
   }
@@ -253,6 +475,29 @@ export class CopilotChatTwoComponent implements OnInit {
     if (nodeData.selectedNodeTask != "START")
       this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
   }
+
+  
+  addConnection(source: String, target: String) {
+    this.jsPlumbInstance.connect({
+      endpoint: [
+        "Dot",
+        {
+          radius: 3,
+          cssClass: "myEndpoint",
+          width: 8,
+          height: 8,
+        },
+      ],
+      source: source,
+      target: target,
+      anchors: ["Right", "Left"],
+      detachable: true,
+      paintStyle: { stroke: "#404040", strokeWidth: 2 },
+      overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
+    });
+  }
+
+
   updateCoordinates(dragNode) {
     var nodeIndex = this.nodes.findIndex((node) => {
       return node.id == dragNode.id;
@@ -261,37 +506,72 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
-  isGraphLoaded:boolean=false;
-  submitButton(value?:any){
-    this.showTable=false;
-    if(value.label=="Load Graph")
-    {
-      if(!this.isGraphLoaded)
+  isGraphLoaded: boolean = false;
+  isNodeLoaded: boolean = false;
+  isNodesUpdates:boolean=false;
+  loadGraphIntiate(value?: any) {
+    this.showTable = false;
+    if (value == "Load Graph" || value == "Load Node" || value=="Update Node 1" || value=="Update Node 2") {
+      if (!this.isGraphLoaded) {
         this.loadGraph()
+      }
+      else if (!this.isNodeLoaded) {
+        this.isNodeLoaded = true
+        let node = {
+          id: "22",
+          selectedNodeTask: "IT form sent to Reporting Manager",
+          x: "122px",
+          y: "40px",
+          path: "../../../../assets/circle.png",
+          updated:false
+        }
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+          this.addConnection("START", "22");
+          this.addConnection("22", "2");
+        }, 200)
+      }
+      else if(!this.isNodesUpdates)
+      {
+        if(value=='Update Node 1')
+        {
+          this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
+          this.nodes.find((item:any)=>item.id=="3").updated=true;
+        }
+        if(value=='Update Node 2')
+        {
+          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+          this.nodes.find((item:any)=>item.id=="5").updated=true;
+          this.isNodesUpdates=true;
+        }
+
+      }
     }
-    else if(value.label=="Load Form")
-      this.showTable=true;
+    else if (value == "Load Form")
+      this.showTable = true;
   }
 
 
-  loadGraph()
-  {
+  loadGraph() {
 
     let startNode = {
       id: "START",
       selectedNodeTask: "START",
-      x:  "0px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Start.png"
+      x: "0px",
+      y: "200px",
+      path: "../../../../assets/copilot/graph-icons/start-icon.png",
+      updated:false
     }
     this.nodes.push(startNode);
     setTimeout(() => {
       this.populateNodes(startNode);
     }, 200)
     for (let i = 0; i < this.graphJsonData.length; i++) {
-      this.graphJsonData[i]["id"]=String(i+1);
-      this.graphJsonData[i]["x"]=((i+1)*120)+"px";
-      this.graphJsonData[i]["y"]="200px";
+      this.graphJsonData[i]["id"] = String(i + 1);
+      this.graphJsonData[i]["x"] = ((i + 1) * 120) + "px";
+      this.graphJsonData[i]["y"] = "200px";
+      this.graphJsonData[i]["comments"]="";
       this.nodes.push(this.graphJsonData[i]);
       setTimeout(() => {
         this.populateNodes(this.graphJsonData[i]);
@@ -301,10 +581,10 @@ export class CopilotChatTwoComponent implements OnInit {
     let stopnode = {
       id: "STOP",
       selectedNodeTask: "STOP",
-      x:((this.graphJsonData.length+1)*120)+"px",
-      y:"200px",
-      path: "../../../../assets/images/RPA/Stop.png"
-
+      x: ((this.graphJsonData.length + 1) * 120) + "px",
+      y: "200px",
+      path: "../../../../assets/images/RPA/Stop.png",
+      updated:false
     }
     this.nodes.push(stopnode);
 
@@ -313,12 +593,27 @@ export class CopilotChatTwoComponent implements OnInit {
     }, 200)
     setTimeout(() => {
       this.addConnection("START", this.graphJsonData[0].id)
-      for (let j = 0; j < this.graphJsonData.length-1; j++) {
-        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j+1].id)
+      for (let j = 0; j < this.graphJsonData.length - 1; j++) {
+        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j + 1].id)
       }
-      this.addConnection(this.graphJsonData[this.graphJsonData.length-1].id,"STOP");
-      this.isGraphLoaded=true;
+      this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
+      this.isGraphLoaded = true;
     }, 200)
+  }
+
+  public nodeData:any={};
+  openOverlay(event:any, nodeData:any)
+  {
+    this.nodeData=nodeData
+    this.overlayModel.show(event);
+  }
+  saveNodeComment()
+  {
+    this.nodes.find((item:any)=>item.id==this.nodeData.id).comment=this.nodeData.comment;
+    this.overlayModel.hide();
+  }
+  onChange(){
+    console.log(this.tableData)
   }
 
 }

@@ -18,6 +18,7 @@ import { NgForm } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from "src/app/shared/model/table_columns"
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { CryptoService } from 'src/app/services/crypto.service';
 
 declare var target: any;
 @Component({
@@ -95,6 +96,7 @@ export class UploadComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private columnList: columnList,
+    private cryptoService : CryptoService,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -705,7 +707,8 @@ testDbConnection(){     // check DB connection with port id and psw
         "connection.attempts": "10",
         "connection.backoff.ms": "10000",
         "connection.user": this.dbDetails.userName,
-        "connection.password": this.dbDetails.password,
+        // "connection.password": this.dbDetails.password,
+        "connection.password": this.cryptoService.encrypt(this.dbDetails.password),
         "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
         "db.timezone": "UTC",
         "validate.non.null": "true",
@@ -801,7 +804,8 @@ testDbConnection(){     // check DB connection with port id and psw
           "connection.attempts": "10",
           "connection.backoff.ms": "10000",
           "connection.user": this.dbDetails.userName,
-          "connection.password": this.dbDetails.password,
+          // "connection.password": this.dbDetails.password,
+          "connection.password": this.cryptoService.encrypt(this.dbDetails.password),
           "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
           "db.timezone": "UTC",
           "validate.non.null": "true",
@@ -896,7 +900,8 @@ getDBTables(){      //get DB tables list
   this.loader.show();
   var reqObj =  {
       "dbType": this.dbDetails.dbType,
-      "password": this.dbDetails.password,
+      // "password": this.dbDetails.password,
+      "password": this.cryptoService.encrypt(this.dbDetails.password),
       "url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
       "userName": this.dbDetails.userName
     }

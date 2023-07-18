@@ -7,6 +7,8 @@ import { CopilotChatComponent } from './copilot-chat/copilot-chat.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { CopilotChatTwoComponent } from './copilot-chat-two/copilot-chat-two.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+//import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @NgModule({
@@ -20,7 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CopilotRoutingModule,
     PrimengCustomModule,
     ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+    PrimengCustomModule
+    //LoaderService
+  ],
+  providers:[LoaderService]
 })
 export class CopilotModule { }

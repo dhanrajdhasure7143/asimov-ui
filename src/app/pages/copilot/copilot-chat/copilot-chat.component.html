@@ -186,7 +186,8 @@
 
 
 
-<p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup">
+<p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup"
+    [ngClass]="nextFlag=='' ? 'initialpopup' : '' " >
     <ng-template pTemplate="header">
         <div  *ngIf="nextFlag==''" >
             Automate a Process
@@ -203,13 +204,13 @@
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span>Recruiting(10)</span>
+            <span>Human Resource - Recruiting(10)</span>
         </div>
     </ng-template>
     <p class="subheader" *ngIf="nextFlag != 'Recruiting'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
     
   
-    <div *ngIf="nextFlag==''">
+    <div *ngIf="nextFlag==''" class="popupcontent">
         <div class="row">
             <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openChat2()">Quote to Cash</p-card>
@@ -243,7 +244,7 @@
         </div>
     </div>
 
-    <div class="secondpopup"  *ngIf="nextFlag=='Human Resource'">
+    <div class="popupcontent secondpopup"  *ngIf="nextFlag=='Human Resource'">       
         <div class="row" >
             <div class="col-sm-6 form-group cardlist">
                 <p-card (click)="openRecruiting()" class="item-card1"><span>Recruting (10)</span></p-card>
@@ -331,6 +332,26 @@
                     </ng-template>                    
                     <div class="">
                         <h6>Employee On Boarding V6</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V7</h6>
+                    </div>
+                </p-card>                
+            </div>
+            <div class="col-4 form-group cardlist">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <img src="../../../../assets/graph.svg" class="" alt="graph">
+                    </ng-template>                    
+                    <div class="">
+                        <h6>Employee On Boarding V8</h6>
                     </div>
                 </p-card>                
             </div>
