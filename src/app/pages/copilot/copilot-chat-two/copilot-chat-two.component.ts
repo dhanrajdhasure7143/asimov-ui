@@ -106,6 +106,9 @@ export class CopilotChatTwoComponent implements OnInit {
         "message": "What is the Email system that you use in your organization?",
         "steps": [
           {
+            "type": "UPDATE-NODE-1",
+          },
+          {
             "type": "BUTTON",
             "label": "Outlook by Microsoft",
             "disable":false
@@ -124,7 +127,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
         "steps": [
           {
-            "type":"UPDATE-NODES"
+            "type":"UPDATE-NODE-2"
           },
           {
             "type": "BUTTON",
@@ -352,8 +355,11 @@ export class CopilotChatTwoComponent implements OnInit {
       else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
         this.loadGraphIntiate("Load Node");
       }
-      else if (response.steps.find((item: any) => item.type == "UPDATE-NODES")) {
-        this.loadGraphIntiate("Update Nodes");
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
+        this.loadGraphIntiate("Update Node 1");
+      }
+      else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
+        this.loadGraphIntiate("Update Node 2");
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
@@ -544,10 +550,17 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if(!this.isNodesUpdates)
       {
-        this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
-        this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-        this.nodes.find((item:any)=>item.id=="3").updated=true;
-        this.nodes.find((item:any)=>item.id=="5").updated=true;
+        if(value=='Update Nodes 1')
+        {
+          this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
+          this.nodes.find((item:any)=>item.id=="3").updated=true;
+        }
+        if(value=='Updated Nodes 2')
+        {
+          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+          this.nodes.find((item:any)=>item.id=="5").updated=true;
+          this.isNodesUpdates=true;
+        }
 
       }
     }
