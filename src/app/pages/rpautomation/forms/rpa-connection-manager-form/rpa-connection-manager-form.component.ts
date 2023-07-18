@@ -107,7 +107,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       icon: ["", Validators.compose([])],
       grantType: [""],
       code: [""],
-      redirect_uri: [""],
+      redirectUri: [""],
       userName: [""],
       password: [""],
       clientId: [""],
@@ -173,7 +173,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
-        object["redirect_uri"] = this.connectorForm.value.redirect_uri;
+        object["redirectUri"] = this.connectorForm.value.redirectUri;
       } else if (this.connectorForm.value.grantType == "password") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
@@ -189,7 +189,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
-        object["redirect_uri"] = this.connectorForm.value.redirect_uri;
+        object["redirectUri"] = this.connectorForm.value.redirectUri;
         object["verifier"] = this.connectorForm.value.verifier;
       } else if (this.connectorForm.value.grantType == "refresh_token") {
         object["clientId"] = this.connectorForm.value.clientId;
@@ -291,7 +291,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     if (this.connectorForm.value.grantType == "AuthorizationCode") {
       req_body["grantType"] = "authorization_code";
       req_body["code"] = this.connectorForm.value.code;
-      req_body["redirect_uri"] = this.connectorForm.value.redirect_uri;
+      req_body["redirectUri"] = this.connectorForm.value.redirectUri;
     } else if (this.connectorForm.value.grantType == "password") {
       // "grantType": this.connectorForm.value.grantType,
       (req_body["grantType"] = "password"),
@@ -550,13 +550,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isScopeField = false;
       this.isRefreshToken = false;
 
-      const setValidators: string[] = ['code', 'redirect_uri'];
+      const setValidators: string[] = ['code', 'redirectUri'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
           if(key == 'code')
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
-          if(key == 'redirect_uri')
+          if(key == 'redirectUri')
           this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
           this.connectorForm.get(key).updateValueAndValidity();
         }
@@ -595,7 +595,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isAuthorization = false;
       this.isPassword = false;
       this.isVerifier = false;
-      this.isScopeField = true;
+      this.isScopeField = false;
       this.isRefreshToken = false;
       this.isRefresh = true;
     } else if (event == "AuthorizationCodeWithPKCE") {
@@ -607,13 +607,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isScopeField = false;
       this.isRefreshToken = false;
       this.isRefresh = true;
-      const setValidators: string[] = ['code', 'redirect_uri','verifier'];
+      const setValidators: string[] = ['code', 'redirectUri','verifier'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (setValidators.findIndex(q => q === key) != -1) {
           if(key == 'code')
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
             this.connectorForm.get(key).updateValueAndValidity();
-          if(key == 'redirect_uri')
+          if(key == 'redirectUri')
             this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
             this.connectorForm.get(key).updateValueAndValidity();
           if(key == 'verifier')
@@ -796,13 +796,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = false;
         this.isScopeField = false;
         this.isRefreshToken = false;
-        const setValidators: string[] = ['code','redirect_uri'];
+        const setValidators: string[] = ['code','redirectUri'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
             if(key == 'code')
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
               this.connectorForm.get(key).updateValueAndValidity();
-            if(key == 'redirect_uri')
+            if(key == 'redirectUri')
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
               this.connectorForm.get(key).updateValueAndValidity();
           }
@@ -854,13 +854,13 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.isVerifier = true;
         this.isScopeField = false;
         this.isRefreshToken = false;
-        const setValidators: string[] = ['code','redirect_uri','verifier'];
+        const setValidators: string[] = ['code','redirectUri','verifier'];
         Object.keys(this.connectorForm.controls).forEach(key => {
           if (setValidators.findIndex(q => q === key) != -1) {
             if(key == 'code')
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^(?:([a-zA-Z0-9%~\\._\\-=\\/]+)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|([a-zA-Z0-9%~,\\._\\-=\\/]+)@\\])$")]);
               this.connectorForm.get(key).updateValueAndValidity();
-            if(key == 'redirect_uri')
+            if(key == 'redirectUri')
               this.connectorForm.get(key).setValidators([Validators.required,Validators.pattern("^[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)|\\[@[a-zA-Z][a-zA-Z\\s]*\\|[a-zA-Z]+\\|[Hh][Tt][Tt][Pp][Ss]?:\\/\\/(?:(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-zA-Z\\u00a1-\\uffff0-9]+-?)*[a-zA-Z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-zA-Z\\u00a1-\\uffff]{2,}))(?::\\d{2,5})?(?:\\/[^\\s]*)?@]")]);
               this.connectorForm.get(key).updateValueAndValidity();
             if(key == 'verifier')
@@ -896,7 +896,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
       this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grantType"]);
       this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
-      this.connectorForm.get("redirect_uri").setValue(this.actionData.configurationAsJson["redirect_uri"]);
+      this.connectorForm.get("redirectUri").setValue(this.actionData.configurationAsJson["redirectUri"]);
       this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
       this.connectorForm.get("password").setValue(this.actionData.configurationAsJson["password"]);
       this.connectorForm.get("clientId").setValue(this.actionData.configurationAsJson["clientId"]);
@@ -1031,7 +1031,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
-        object["redirect_uri"] = this.connectorForm.value.redirect_uri;
+        object["redirectUri"] = this.connectorForm.value.redirectUri;
       } else if (this.connectorForm.value.grantType == "password") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
@@ -1047,7 +1047,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
-        object["redirect_uri"] = this.connectorForm.value.redirect_uri;
+        object["redirectUri"] = this.connectorForm.value.redirectUri;
         object["verifier"] = this.connectorForm.value.verifier;
       } else if (this.connectorForm.value.grantType == "refresh_token") {
         object["clientId"] = this.connectorForm.value.clientId;
