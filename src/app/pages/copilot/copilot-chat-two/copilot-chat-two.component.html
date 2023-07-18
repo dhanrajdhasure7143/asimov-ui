@@ -153,6 +153,10 @@
                                                 <button class="btn btn-primary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
+                                            <div class="col-12 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
+                                                <button class="btn btn-outline-primary text-white btn-sm"
+                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
+                                            </div>
                                             <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
                                                 <a class="d-flex py-1 bg-success">
                                                    <div>
