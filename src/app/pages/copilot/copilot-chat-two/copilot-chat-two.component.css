@@ -196,10 +196,12 @@ button[disabled]:hover{cursor: no-drop;
     background-image: url("../../../../assets/copilot/graph-icons/process-block-green.png") !important; 
   }
   
-  .dndDropzone:hover{
-   
-  }
-  
+  .new-card{background-color: #F6FCFE !important;width: 87%;
+    margin-left: 13%;
+    border-radius: 8px;
+  cursor: pointer;}
+  .text-chat{float:left;}
+  .eye-imgchat{float:right;}
   .studio_main{
     width:100%;
     /* overflow: auto; */
