@@ -35,8 +35,8 @@
                             <div class="studio_main">
                                 <div class="drag-area">
                                     <!--Nodes inside designer-->
-                                    <ng-container *ngFor="let node of nodes; let i = index">
-                                        <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'" [ngStyle]="{
+                                    <ng-container  *ngFor="let node of nodes; let i = index">
+                                        <div id="{{ node.id }}" (click)="openOverlay($event, node)" [class]="node.updated?'node-updated':'node'" [ngStyle]="{
                             left: node.x,
                             top: node.y,
                             'background-image': 'url('+node.path+')'
@@ -50,6 +50,14 @@
                                             </div>
                                         </div>
                                     </ng-container>
+                                    <p-overlayPanel #op>
+                                        <div class="py-2 px-2">
+                                            <textarea class="form-control" [(ngModel)]="nodeData.comment" placeholder="Enter Comments"></textarea>
+                                        </div>
+                                        <div class="text-right">
+                                            <button class="btn btn-primary btn-sm" (click)="saveNodeComment()">Submit</button>
+                                        </div>
+                                    </p-overlayPanel>
 
                                     <!--Show bot Image when no nodes in designer-->
                                     <!-- <div *ngIf="nodes.length == 0" class="dragactionsdiv">
@@ -148,7 +156,7 @@
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
                                             <div class="col-12 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
-                                                <button class="btn btn-outline-primary text-white btn-sm"
+                                                <button class="btn btn-secondary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
                                             <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
