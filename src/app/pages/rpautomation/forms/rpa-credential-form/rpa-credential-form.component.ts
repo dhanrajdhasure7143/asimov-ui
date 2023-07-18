@@ -39,7 +39,7 @@ export class RpaCredentialFormComponent implements OnInit {
         //Removed email validator because we can also add organization name
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
+        categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         authType:[""],
         clientSecret:[""],
@@ -104,7 +104,7 @@ export class RpaCredentialFormComponent implements OnInit {
         //Removed email validator because we can also add organization name
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
+        categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         authType:[""],
         clientSecret:[""],
