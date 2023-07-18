@@ -295,12 +295,6 @@ export class CopilotChatTwoComponent implements OnInit {
       { name: "IT team assign a system" },
       { name: "System Access for the user" },
     ],
-    this.messages.push({
-      id: (new Date()).getTime(),
-      user: "SYSTEM",
-      message: "Hi, what process would you like to automate?",
-      steps: []
-    })
 
     this.dt.getCoplilotData.subscribe((response:any)=>{
       if(response!=undefined)
@@ -312,17 +306,36 @@ export class CopilotChatTwoComponent implements OnInit {
             this.loadGraphIntiate("Load Graph");
           }
           if (response.isNodeLoaded) {
-            this.loadGraphIntiate("Load Node");
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Node");
+            },300)
           }
           if (response.isNodeUpdated) {
-            this.loadGraphIntiate("Update Nodes");
+              this.loadGraphIntiate("Update Node 1");
+              this.loadGraphIntiate("Update Node 2");
           }
           if (response.isTableLoaded) {
-            this.loadGraphIntiate("Load Form")
+            setTimeout(()=>{
+              this.loadGraphIntiate("Load Form")
+            },500)
           }
+          setTimeout(()=>{
+            var objDiv = document.getElementById("chat-grid");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          },200)
           //this.dt.setCopilotData(undefined)
         
-        },100)
+        },1000)
+      }
+      else
+      {
+        this.messages.push({
+          id: (new Date()).getTime(),
+          user: "SYSTEM",
+          message: "Hi, what process would you like to automate?",
+          steps: []
+        })
+    
       }
     })
   }
@@ -485,7 +498,7 @@ export class CopilotChatTwoComponent implements OnInit {
   isNodesUpdates:boolean=false;
   loadGraphIntiate(value?: any) {
     this.showTable = false;
-    if (value == "Load Graph" || value == "Load Node" || value=="Update Nodes") {
+    if (value == "Load Graph" || value == "Load Node" || value=="Update Node 1" || value=="Update Node 2") {
       if (!this.isGraphLoaded) {
         this.loadGraph()
       }
@@ -508,12 +521,12 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if(!this.isNodesUpdates)
       {
-        if(value=='Update Nodes 1')
+        if(value=='Update Node 1')
         {
           this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
           this.nodes.find((item:any)=>item.id=="3").updated=true;
         }
-        if(value=='Updated Nodes 2')
+        if(value=='Update Node 2')
         {
           this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
           this.nodes.find((item:any)=>item.id=="5").updated=true;
