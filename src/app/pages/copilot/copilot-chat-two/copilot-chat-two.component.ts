@@ -319,8 +319,9 @@ export class CopilotChatTwoComponent implements OnInit {
               this.loadGraphIntiate("Update Node 2");
           }
           if (response.isTableLoaded) {
+            this.tableData=response.tableData;
             setTimeout(()=>{
-              this.loadGraphIntiate("Load Form")
+              this.loadGraphIntiate("Load Form");
             },500)
           }
           setTimeout(()=>{
@@ -379,12 +380,12 @@ export class CopilotChatTwoComponent implements OnInit {
         this.loadGraphIntiate("Update Node 2");
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
-        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
         this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "849167", redirect:"copilot" } });
       }
       else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
       {
-        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable})
+        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
         this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect:"copilot" } });
       }
       this.messages.push(systemMessage);
