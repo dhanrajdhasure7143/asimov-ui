@@ -118,12 +118,14 @@ textarea.form-control.message-input {
     background-color: #F1F0F0 !important;
     height: 50px !important;
     border: none !important;
-    border-radius: 25px !important;
-    padding-left: 22px !important;
-    font-size: 16px;
+    border-radius: 25px !important;    
+    font-size: 15px;
+    /* padding-left: 22px !important;
     padding-top: 14px !important;
     padding-right: 48px !important;
-    padding-bottom: 10px !important;
+    padding-bottom: 10px !important; */
+    padding: 15px 20px !important;
+    overflow: hidden;
 }
 
 textarea.form-control.message-input:focus {
@@ -158,10 +160,16 @@ textarea.form-control.message-input:focus {
     display: flex;
     border-radius: 5px !important;
     font-size: 15px;
-    text-align: justify;
-    line-height: 22px;
+    /* text-align: justify; */
+    line-height:22px;
 
 }
+.user-message .user-msgtext{background-color: #ebf7ff;
+    border-radius: 12px 0px 12px 12px !important;
+width:100%;
+text-align: left;
+    word-break: break-word;
+    color: #000;}
 
 .user-message .user-msgtext {
     background-color: #ebf7ff;
@@ -176,29 +184,39 @@ textarea.form-control.message-input:focus {
     height: 50px;
     padding: 10px;
 }
+button[disabled]:hover{cursor: no-drop;
+  background: #e0e0e0 !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;}
 
-.send-msgtext {
-    width: 100%;
+.send-msgtext{
+  width:100%;
+  text-align: left;
+  word-break: break-word;
+    color: #000;
 }
-
-.system-message {
-
+.system-message{
+   
     font-size: 15px;
-    text-align: justify;
-    line-height: 22px;
+    /* text-align: justify; */
+   line-height: 22px;
     position: relative !important;
     border-radius: 5px !important;
 }
-
-.drag-area {
+.system-message .card {
+  width: calc(100% - 44px);
+  /* padding: 10px 15px; */
+  margin-top: 15px;
+}
+.drag-area{
     /* min-height: 70vh;
     width:100%;
     position: relative;
     float: left;
     transform-origin:0% 0%;
     display: inline; */
-    min-height: 75vh;
-    width: 95%;
+    min-height: 100%;
+    width:96%;
     position: absolute;
     overflow: auto;
     /* float: left;
@@ -227,13 +245,12 @@ textarea.form-control.message-input:focus {
     background-size: 31px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 55px;
+    width: 40px;
     height: 55px;
-    background-color: #F6FCFE;
-    border: 2px solid #1673DB;
-}
-
-.node-updated {
+    /* background-color: #F6FCFE;
+    border: 2px solid #1673DB;   */
+  }
+  .node-updated {
     cursor: pointer;
     box-shadow: none;
     -o-box-shadow: none;
@@ -245,13 +262,31 @@ textarea.form-control.message-input:focus {
     background-size: 31px;
     background-repeat: no-repeat;
     background-position: center;
-    width: 55px;
+    width: 40px;
     height: 55px;
+    /* background-color: #e2faf1;
+    border: 2px solid #16db4a;  */
+    background-image: url("../../../../assets/copilot/graph-icons/process-block-green.png") !important; 
+  }
+  
+  .new-card{background-color: #F6FCFE !important;width: 87%;
+    margin-left: 13%;
+    border-radius: 8px;
+  cursor: pointer;}
+  .text-chat{float:left;}
+  .eye-imgchat{float:right;}
+  .studio_main{
+    width:100%;
+    /* overflow: auto; */
+    height: calc(100vh - 150px);
+    /* padding:10px; */
+  }
+  .studio_main.zoomout_bot {
     background-color: #e2faf1;
     border: 2px solid #16db4a;
 }
 
-.dndDropzone:hover {}
+
 
 .studio_main {
     width: 100%;
@@ -381,19 +416,32 @@ textarea.form-control.message-input:focus {
     display: flex;
     justify-content: center;
 }
+.chat-btn .bg-success img {
+  margin-right: 6px !important;
+}
 
 .chat-btn button.btn {
     border-radius: 4px;
     text-transform: capitalize;
-    margin-bottom: 10px;
+    margin-top: 10px;
     padding: 6px 22px !important;
 }
-
+button.btn.bg-success-new {
+  background-color: #A8F0AB !important;
+}
+button.btn.bg-success-new:hover {
+  background-color: #77E47B !important;
+}
 .btn-primary:hover {
     color: #fff !important;
     background-color: #025cbb !important;
     border-color: #0062cc !important;
 }
+
+.adjtextarea-align{width:100%;position:relative;
+padding: 0px 15px !important;
+}
+.bg-success-new{background-color: #A8F0AB !important;}
 
 .adjtextarea-align {
     width: 100%;
