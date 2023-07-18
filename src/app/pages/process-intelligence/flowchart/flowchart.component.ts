@@ -196,6 +196,12 @@ redirectCopilot:boolean=false;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     var piId;
     this.route.queryParams.subscribe(params => {
+      console.log(params)
+      if(params.redirect)
+      {
+        if(params.redirect=="copilot")
+          this.redirectCopilot=true;
+      }
       if(params['wpiId']!=undefined){
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
@@ -450,15 +456,10 @@ redirectCopilot:boolean=false;
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
-      if(params.redirect)
-      {
-        if(params.redirect=="copilot")
-          this.redirectCopilot=true;
-        
-      }
+      
       if (token) {
-          let url=this.router.url.split('?')
-          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
       }else{
         let url=this.router.url.split('?')
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
