@@ -279,9 +279,9 @@ export class CopilotChatTwoComponent implements OnInit {
   minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
   hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
   daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
-
+  loader:boolean=false;
   ngOnInit(): void {
-    this.loaderService.show()
+    this.loader=true;
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -328,7 +328,7 @@ export class CopilotChatTwoComponent implements OnInit {
             this.tableData=response.tableData;
             setTimeout(()=>{
               this.loadGraphIntiate("Load Form");
-              this.loaderService.hide();
+              this.loader=false;
             },500)
           }
           setTimeout(()=>{
@@ -341,7 +341,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else
       {
-        this.loaderService.hide();
+        this.loader=false
         this.messages.push({
           id: (new Date()).getTime(),
           user: "SYSTEM",
