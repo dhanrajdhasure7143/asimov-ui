@@ -17,7 +17,7 @@
               <img src="../../../assets/images/Sidebar/Dashboard-Normal.svg" alt="">
             </span>
           </span>
-          <span class="side-menu-font">Dashboard</span>
+          <span class="side-menu-font">Dashboard_1</span>
         </a>
 
         <!-- <a *ngIf="isProcessLogsEnable" mat-list-item class="link" [ngClass]="_selectedModule=='processlogs'?'active':'' " id="processlogs" (click)="hightlight('eiap-home',null)"
@@ -69,7 +69,7 @@
               <img src="../../../assets/images/Sidebar/Projects-Normal.svg" alt="">
             </span>
           </span>
-          <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
+          <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects_1</span>
         </a>
         <!-- ToDO  Enable/Disable for VCM -->
         <!-- <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
@@ -162,7 +162,7 @@
             <img src="../../../assets/images/Sidebar/copilot-nrmal.png" alt="">
           </span>
         </span>
-        <span class="side-menu-font" (click)="hightlight('copilot','null')">Copilot</span>
+        <span class="side-menu-font">Copilot</span>
       </a>
         <mat-list-item *ngIf="this.userRoles.includes('System Admin')"
           (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}"
