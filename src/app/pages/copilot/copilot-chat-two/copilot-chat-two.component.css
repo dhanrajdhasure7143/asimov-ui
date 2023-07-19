@@ -486,10 +486,8 @@ padding: 0px 15px !important;
         max-height: 80px;
         overflow-y: auto;
     }
-    .select-wrapper {
-        height: 50px !important;
-        overflow-y: visible !important;
-        background-color: yellow !important;
+    select:-internal-list-box {
+       max-height:50px !important;overflow: auto !important;
     }
     .select {
         width: 100%;
