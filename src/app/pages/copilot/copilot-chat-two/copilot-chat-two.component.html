@@ -193,7 +193,9 @@
                             </div>
                         </div>
                         <div class="px-3 adjtextarea-align">
-                          <span *ngIf="isChatLoad"><i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i></span>
+                          <span *ngIf="isChatLoad">
+                            <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader">
+                          </span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
                             <a (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
