@@ -50,7 +50,7 @@
     font-size: 15px !important;
     float:right;
     margin-right:10px;
-    padding: 12px 10px !important;
+    padding: 15px 10px !important;
 }
 
 .chat-form thead tr {
@@ -73,7 +73,7 @@
     background-color: #c8d6e0 !important;
     float:right;
     margin-right:10px;
-    padding: 12px 10px !important;
+    padding: 15px 10px !important;
 }
 .table-mainhead{font-size:18px !important;}
 
@@ -489,3 +489,30 @@ padding: 0px 15px !important;
     select:-internal-list-box {
        max-height:50px !important;overflow: auto !important;
     }
+    .pi {
+        font-size: 0.7rem !important;
+    }
+    .select {
+        width: 100%;
+        /* make it min-height*/
+        min-height: 50px;
+        border-radius: 25px;
+        border-color: #555;
+        padding: 10px;
+      }
+
+
+.node-menu{
+    list-style-type: none;
+}
+.node-menu a{
+     padding:5px !important;
+     cursor: pointer !important;
+     font-size: 16px !important;
+}
+
+.node-menu li{
+    padding:6px !important;
+    font-size: 18px !important;
+}
+
