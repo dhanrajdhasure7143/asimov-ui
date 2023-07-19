@@ -432,8 +432,16 @@ export class CopilotChatTwoComponent implements OnInit {
         steps: response.steps
       }
       if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
-        
-        this.loadGraphIntiate("Load Graph");
+        this.confirmationService.confirm({
+          message: "Are u sure you want to load graph ?",
+          header: "Warning",
+         
+          rejectVisible: false,
+          acceptLabel: "Yes",
+          accept: () => {
+            this.loadGraphIntiate("Load Graph");
+          },
+        });
       }
       else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
         this.loadGraphIntiate("Load Form")
