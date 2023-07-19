@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { jsPlumb, jsPlumbInstance } from "jsplumb";
 import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -202,7 +202,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
     },
     {
-      "message": "Open in Bot Designer",
+      "message": "Generate Bot Design",
       "response": {
         "message": "",
         "steps": [
@@ -216,7 +216,8 @@ export class CopilotChatTwoComponent implements OnInit {
   ];
   constructor(private router:Router, 
     private dt:DataTransferService,
-    private loaderService:LoaderService
+    private loaderService:LoaderService,
+    private confirmationService: ConfirmationService
     ) {
     //this.copilotJson=copilot;
   }
@@ -249,24 +250,31 @@ export class CopilotChatTwoComponent implements OnInit {
 
   },
   {
-    id: 3,
-    selectedNodeTask: "Enter employee details",
-    x: "100px",
-    y: "300px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated:false
-
-  },
-  {
-    id: 4,
-    selectedNodeTask: "Create Email account",
+    id: 5,
+    selectedNodeTask: "Login to HRA",
     x: "100px",
     y: "400px",
     path: "../../../../assets/copilot/graph-icons/General.png",
     updated:false
   },
   {
-    id: 5,
+    id: 4,
+    selectedNodeTask: "Enter gathered information as Employee details",
+    x: "100px",
+    y: "400px",
+    path: "../../../../assets/copilot/graph-icons/General.png",
+    updated:false
+  },
+  {
+    id: 4,
+    selectedNodeTask: "Create Email Account",
+    x: "100px",
+    y: "400px",
+    path: "../../../../assets/copilot/graph-icons/General.png",
+    updated:false
+  },
+  {
+    id: 6,
     selectedNodeTask: "Trigger, Welcome Email",
     x: "100px",
     y: "500px",
@@ -301,7 +309,7 @@ export class CopilotChatTwoComponent implements OnInit {
                   label: 'AddNode',
                   icon: 'pi pi-refresh',
                   command: () => {
-                      this.addNode({});
+                    
                   }
               },
               {
@@ -362,6 +370,19 @@ export class CopilotChatTwoComponent implements OnInit {
             setTimeout(()=>{
               this.loadGraphIntiate("Load Form");
               this.loader=false;
+              this.messages.push(
+                {
+                  "user":"SYSTEM",
+                  "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
+                  "steps":[
+                    {
+                      "type":"BUTTON",
+                      "label":"Generate Bot Design"
+                    }
+                  ],
+                },
+              
+              )
             },500)
           }
           setTimeout(()=>{
@@ -401,6 +422,7 @@ export class CopilotChatTwoComponent implements OnInit {
     }
     if(messageType != 'LABEL')
       this.messages.push(message);
+
     let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
     if (response) {
       let systemMessage = {
@@ -410,6 +432,7 @@ export class CopilotChatTwoComponent implements OnInit {
         steps: response.steps
       }
       if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
+        
         this.loadGraphIntiate("Load Graph");
       }
       else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
@@ -426,12 +449,20 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
-        this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect:"copilot" } });
+        this.loader=true;
+        setTimeout(()=>{
+          this.loader=false
+          this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect:"copilot" } });
+        },3000)
       }
       else if(response.steps.find((item:any)=>item.type=="REDIRECT-RPA"))
       {
         this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
+        this.loader=true;
+        setTimeout(()=>{
+          this.loader=false
         this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect:"copilot" } });
+        },2000)
       }
       this.messages.push(systemMessage);
       let chatGridElement=document.getElementById("chat-grid");
@@ -573,12 +604,14 @@ export class CopilotChatTwoComponent implements OnInit {
         if(value=='Update Node 1')
         {
           this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
+          this.nodes.find((item:any)=>item.id=="3").path="../../../../assets/copilot/graph-icons/process-block-green.png";
           this.nodes.find((item:any)=>item.id=="3").updated=true;
         }
         if(value=='Update Node 2'){
-          // this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-          // this.nodes.find((item:any)=>item.id=="5").updated=true;
-          this.addExtraNode();
+           this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+           this.nodes.find((item:any)=>item.id=="5").path="../../../../assets/copilot/graph-icons/process-block-green.png";
+           this.nodes.find((item:any)=>item.id=="5").updated=true;
+          //this.addExtraNode();
           this.isNodesUpdates=true;
         }
 
@@ -588,23 +621,44 @@ export class CopilotChatTwoComponent implements OnInit {
       this.showTable = true;
   }
 
-  addNode(node)
+  addNode()
   {
+    let previouseNode:any=this.jsPlumbInstance.getAllConnections().find((item:any)=>item.sourceId==this.nodeData.id);
+    var conn = this.jsPlumbInstance.getConnections({
+      source: this.nodeData.id,
+      target: previouseNode.targetId
+    });
+    if (conn[0]) {
+      this.jsPlumbInstance.deleteConnection(conn[0]);
+    }
+    this.overlayModel.hide();
     let nodeData={
-      id:this.nodes.length+1,
-      selectedTaskName:"New Node",
+      id:String(this.nodes.length+3),
+      selectedNodeTask:"New Node",
       path: "../../../../assets/copilot/graph-icons/General.png",
       updated:false,
-      x:"",
-      y:""
+      x:"100px",
+      y:"100px"
     }
+    let nodeItems=this.nodes.slice(this.nodes.findIndex((item:any)=>item==this.nodeData), this.nodes.length);
+    for(let i=0;i<nodeItems.length;i++)
+    {
+      setTimeout(()=>{
+        console.log(nodeItems[i])
+        let index= nodeItems.findIndex((item:any)=>item==nodeItems[i]);
+        this.nodes[index].x=(parseInt((this.nodes[index].x).split("px")[0])+100)+"px"
+        this.nodes[index].y=(parseInt((this.nodes[index].y).split("px")[0])+100)+"px"
+        let element=document.getElementById(this.nodes[index].id)
+        this.jsPlumbInstance.revalidate(this.nodes[index].id);
+      },100)
 
-    this.jsPlumbInstance.
+    }
     this.nodes.push(nodeData);
     setTimeout(()=>{
       this.populateNodes(nodeData);
-      this.addConnection(node.id,nodeData.id);
-      this.addConnection(node.id, nodeData.id);
+      
+      this.addConnection(this.nodeData.id,nodeData.id);
+      this.addConnection(nodeData.id, previouseNode.targetId);
     },200);
     
 
@@ -668,10 +722,10 @@ export class CopilotChatTwoComponent implements OnInit {
     this.overlayModel.show(event);
   }
 
-  openMenuItem(menuRef:any, event:any, nodeData:any)
+  openMenuItem(event:any, nodeData:any)
   {
     this.nodeData=nodeData;
-    this.popupMenuOverlay.show(event)
+    //this.popupMenuOverlay.show(event)
   }
   saveNodeComment()
   {
@@ -712,7 +766,7 @@ export class CopilotChatTwoComponent implements OnInit {
     },
     {
       id: 4,
-      selectedNodeTask: "Create O365 Account",
+      selectedNodeTask: "Login To HRA",
       x: "100px",
       y: "400px",
       path: "../../../../assets/copilot/graph-icons/General.png",
@@ -720,6 +774,14 @@ export class CopilotChatTwoComponent implements OnInit {
     },
     {
       id: 5,
+      selectedNodeTask: "Enter gathered information as Employee details",
+      x: "100px",
+      y: "400px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:true
+    },
+    {
+      id: 6,
       selectedNodeTask: "Create Email account",
       x: "100px",
       y: "500px",
@@ -727,7 +789,7 @@ export class CopilotChatTwoComponent implements OnInit {
       updated:false
     },
     {
-      id: 6,
+      id: 7,
       selectedNodeTask: "Trigger, Welcome Email",
       x: "100px",
       y: "600px",

@@ -38,7 +38,7 @@
                                     <ng-container  *ngFor="let node of nodes; let i = index">
                                         <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'" [ngStyle]="{left: node.x,top: node.y}">
                                             <!--Node close button-->
-                                            <img [src]="node.path" (click)="openMenuItem(popupMenu ,$event, node)" [id]="node.id+'_img'" class="w-100 node-image" >
+                                            <img [src]="node.path" (click)="openMenuItem($event, node)" [id]="node.id+'_img'" class="w-100 node-image" >
                                             <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
                                                 {{ node.selectedNodeTask }}
                                             </div>
@@ -52,14 +52,25 @@
                                             <button class="btn btn-primary btn-sm" (click)="saveNodeComment()">Submit</button>
                                         </div>
                                     </p-overlayPanel >
-                                    <p-overlayPanel #popupMenu my="center top" at="right center">
-                                        <li>
-                                            Add Node
-                                        </li>
-                                        <li>
-                                            Update Comment
-                                        </li>
-                                    </p-overlayPanel>
+                                    <!-- <p-overlayPanel #popupMenu my="center top" at="right center">
+                                       <ul class="node-menu">
+                                            <li class="nav-item">
+                                                <a (click)="addNode()" > <i class="pi pi-calendar-plus"></i>&nbsp;Add Node</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-comment"></i>Update Comment</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-angle-left"></i> Move Left</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-angle-right"></i> Move Right</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-trash"></i>Delete Node</a>
+                                            </li>
+                                        </ul>
+                                    </p-overlayPanel> -->
 
                                     <!--Show bot Image when no nodes in designer-->
                                     <!-- <div *ngIf="nodes.length == 0" class="dragactionsdiv">
