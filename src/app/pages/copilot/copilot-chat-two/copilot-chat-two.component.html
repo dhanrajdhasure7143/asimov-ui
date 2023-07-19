@@ -166,7 +166,7 @@
                                             <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
                                                 <button class="btn d-flex py-1 bg-success">
                                                    <div>
-                                                    <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'">
+                                                    <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'" alt="">
                                                    </div>
                                                     <div>
                                                     {{step.label}}
@@ -193,6 +193,7 @@
                             </div>
                         </div>
                         <div class="px-3 adjtextarea-align">
+                          <span *ngIf="isChatLoad"><i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i></span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
                             <a (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">

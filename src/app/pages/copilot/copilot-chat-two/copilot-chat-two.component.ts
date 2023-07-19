@@ -280,6 +280,8 @@ export class CopilotChatTwoComponent implements OnInit {
   hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
   daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
   loader:boolean=false;
+  isChatLoad:boolean = false;
+
   ngOnInit(): void {
     this.loader=true;
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -357,6 +359,8 @@ export class CopilotChatTwoComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?:String) {
+    this.isChatLoad = true;
+    setTimeout(() => { 
     let message = {
       id: (new Date()).getTime(),
       message: value,
@@ -404,16 +408,15 @@ export class CopilotChatTwoComponent implements OnInit {
         var objDiv = document.getElementById("chat-grid");
         objDiv.scrollTop = objDiv.scrollHeight;
       },200)
-    }
-    else{
+    } else{
     this.message = "";
     setTimeout(()=>{
       var objDiv = document.getElementById("chat-grid");
       objDiv.scrollTop = objDiv.scrollHeight;
     },100)
   }
-
-
+  this.isChatLoad = false;
+  }, 2000);
   }
 
 
