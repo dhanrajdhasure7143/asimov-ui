@@ -575,10 +575,10 @@ export class CopilotChatTwoComponent implements OnInit {
           this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
           this.nodes.find((item:any)=>item.id=="3").updated=true;
         }
-        if(value=='Update Node 2')
-        {
-          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-          this.nodes.find((item:any)=>item.id=="5").updated=true;
+        if(value=='Update Node 2'){
+          // this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+          // this.nodes.find((item:any)=>item.id=="5").updated=true;
+          this.addExtraNode();
           this.isNodesUpdates=true;
         }
 
@@ -611,7 +611,9 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
   loadGraph() {
-
+    this.jsPlumbInstance.reset(); // This will remove all existing connections and endpoints.
+    this.jsPlumbInstance.deleteEveryEndpoint(); // This will delete all endpoints.
+    this.nodes=[];
     let startNode = {
       id: "START",
       selectedNodeTask: "START",
@@ -655,6 +657,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
       this.isGraphLoaded = true;
+      this.loader = false;
     }, 200)
   }
 
@@ -677,6 +680,64 @@ export class CopilotChatTwoComponent implements OnInit {
   }
   onChange(){
     console.log(this.tableData)
+  }
+
+  addExtraNode(){
+    this.graphJsonData = [];
+    this.loader = true;
+    this.graphJsonData = [{
+      id: "1",
+      selectedNodeTask: "Pre Boarding Form Sent",
+      x: "100px",
+      y: "100px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: "2",
+      selectedNodeTask: "Gather and Organize Responses",
+      x: "100px",
+      y: "200px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+  
+    },
+    {
+      id: 3,
+      selectedNodeTask: "Enter employee details",
+      x: "100px",
+      y: "300px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: 4,
+      selectedNodeTask: "Create O365 Account",
+      x: "100px",
+      y: "400px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:true
+    },
+    {
+      id: 5,
+      selectedNodeTask: "Create Email account",
+      x: "100px",
+      y: "500px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: 6,
+      selectedNodeTask: "Trigger, Welcome Email",
+      x: "100px",
+      y: "600px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+  
+    }]
+    setTimeout(() => {
+      this.loadGraph();
+    }, 1000);
   }
 
 }
