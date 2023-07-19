@@ -66,7 +66,9 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.loader.show();
     this.loggedinUser = localStorage.getItem("ProfileuserId");
-    this.rest_api.getuserslist(localStorage.getItem("masterTenant"))
+    let masterTenant=localStorage.getItem("masterTenant")
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest_api.getuserslist(masterTenant,tenantid)
       .subscribe((resp) => {
         this.users = resp;
         resp.forEach(element => {

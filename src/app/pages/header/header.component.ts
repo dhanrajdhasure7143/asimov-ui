@@ -340,8 +340,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.user_firstletter = fname_fLetter + lname_fLetter;
   }
 
-  getAllUsers(tenantid){
-  this.rest_api.getuserslist(tenantid).subscribe((res) => {
+  getAllUsers(masterTenant){
+    let tenantid=localStorage.getItem("tenantName")
+  this.rest_api.getuserslist(masterTenant,tenantid).subscribe((res) => {
     let data =res
     if(Array.isArray(data)){
     data.forEach(element => {

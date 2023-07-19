@@ -294,8 +294,9 @@ createproject(event)
   }
   getallusers()
   {
-    let tenantid=localStorage.getItem("masterTenant")
-    this.api.getuserslist(tenantid).subscribe(item=>{
+    let masterTenant=localStorage.getItem("masterTenant")
+    let tenantid=localStorage.getItem("tenantName")
+    this.api.getuserslist(masterTenant,tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
       this.userslist=this.userslist.filter(x=>x.user_role_status=='ACTIVE')
