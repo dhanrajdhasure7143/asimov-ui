@@ -38,7 +38,8 @@
 }
 
 .chat-form select {
-    width: 100%;
+    height: 30px;
+    width: 85%;
     border-radius: 6px;
     color: #979797;
     border-color: #979797;
@@ -49,7 +50,7 @@
     font-size: 15px !important;
     float:right;
     margin-right:10px;
-    padding: 10px 10px !important;
+    padding: 12px 10px !important;
 }
 
 .chat-form thead tr {
@@ -72,8 +73,9 @@
     background-color: #c8d6e0 !important;
     float:right;
     margin-right:10px;
-    padding: 10px 10px !important;
+    padding: 12px 10px !important;
 }
+.table-mainhead{font-size:18px !important;}
 
 /* .model-box{
     background-color:rgb(235, 235, 235) !important;

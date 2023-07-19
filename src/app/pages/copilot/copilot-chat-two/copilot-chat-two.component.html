@@ -91,6 +91,10 @@
                         <table class="table table-striped chat-form">
                             <thead>
                                 <tr>
+                                    <th></th>
+                                    <th colspan="3" class="table-mainhead">Time Taken (hrs)</th>
+                                </tr>
+                                <tr>
                                     <th scope="col"></th>
                                     <th scope="col">Mins</th>
                                     <th scope="col">Hrs</th>
@@ -101,7 +105,7 @@
                                 <tr *ngFor="let item of tableData">
                                     <th>{{item.name}}</th>
                                     <td>
-                                        <select name="" id="" [(ngModel)]="item.min" (change)="onChange()">
+                                        <select name="" id="" [(ngModel)]="item.min" (change)="onChange()" >
                                             <option [value]="item" *ngFor="let item of minOptins">{{item}}</option>
                                         </select>
                                     </td>
