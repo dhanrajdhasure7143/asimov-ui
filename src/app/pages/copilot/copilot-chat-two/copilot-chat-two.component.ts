@@ -26,23 +26,23 @@ export class CopilotChatTwoComponent implements OnInit {
           {
             "id": 1,
             "type": "PROCESS-IMAGE",
-            "label": "Employee Onboarding (v1)"
+            "label": "Onboard Users"
           },
           {
             "id": 2,
             "type": "PROCESS-IMAGE",
-            "label": "Employee Onboarding (v2)"
+            "label": "Account Creation"
           },
           {
             "id": 3,
             "type": "PROCESS-IMAGE",
-            "label": "Employee Onboarding (v3)"
+            "label": "Employee Onboarding"
           }
         ]
       }
     },
     {
-      "message": "Employee Onboarding (v3)",
+      "message": "Employee Onboarding",
       "response": {
         "message": "Would you prefer modifying these steps to match your organization’s flow?",
         "steps": [
@@ -143,7 +143,7 @@ export class CopilotChatTwoComponent implements OnInit {
           },
           {
             "type": "OUTLINE-BUTTON",
-            "label": "Open in Bot Designer",
+            "label": "Generate Bot Design",
             "disable":false
           },
           {
@@ -232,7 +232,7 @@ export class CopilotChatTwoComponent implements OnInit {
   nodes: any = [];
   graphJsonData: any = [{
     id: "1",
-    selectedNodeTask: "Pre-Boarding From Sent To Candidate",
+    selectedNodeTask: "Pre Boarding Form Sent",
     x: "100px",
     y: "100px",
     path: "../../../../assets/copilot/graph-icons/General.png",
@@ -249,7 +249,7 @@ export class CopilotChatTwoComponent implements OnInit {
   },
   {
     id: 3,
-    selectedNodeTask: "Enter gathered details as employee details",
+    selectedNodeTask: "Enter employee details",
     x: "100px",
     y: "300px",
     path: "../../../../assets/copilot/graph-icons/General.png",
@@ -280,6 +280,8 @@ export class CopilotChatTwoComponent implements OnInit {
   hrsOptins: string[]  = Array.from(Array(25).keys(), num =>num.toString().padStart(2,"0"))
   daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
   loader:boolean=false;
+  isChatLoad:boolean = false;
+
   ngOnInit(): void {
     this.loader=true;
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -357,6 +359,8 @@ export class CopilotChatTwoComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?:String) {
+    this.isChatLoad = true;
+    setTimeout(() => { 
     let message = {
       id: (new Date()).getTime(),
       message: value,
@@ -404,16 +408,15 @@ export class CopilotChatTwoComponent implements OnInit {
         var objDiv = document.getElementById("chat-grid");
         objDiv.scrollTop = objDiv.scrollHeight;
       },200)
-    }
-    else{
+    } else{
     this.message = "";
     setTimeout(()=>{
       var objDiv = document.getElementById("chat-grid");
       objDiv.scrollTop = objDiv.scrollHeight;
     },100)
   }
-
-
+  this.isChatLoad = false;
+  }, 2000);
   }
 
 
