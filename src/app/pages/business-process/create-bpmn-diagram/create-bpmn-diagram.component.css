@@ -383,7 +383,7 @@
 
     .canvas-container-main {
         /* height: 100%; */
-        height: calc(100% -10px);
+        height: calc(100% - 20px);
         padding: 0px !important;
     }
     
