@@ -29,6 +29,8 @@ export class SidebarComponent implements OnInit {
   role: any;
   _selectedModule:any;
   isProcessLogsEnable:boolean = false;
+  isCopilotEnable:boolean = false;
+
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -62,7 +64,8 @@ export class SidebarComponent implements OnInit {
     }, 200);
   this.getAllPlans();
   // this.getUserScreenList();
-  this.isProcessLogsEnable = environment.isProcessLogsEnable?environment.isProcessLogsEnable : false;
+  this.isCopilotEnable = environment.isCopilotEnable
+
   }
   getCookie(cname) {
     let name = cname + "=";
