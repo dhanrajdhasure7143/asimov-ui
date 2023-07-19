@@ -56,6 +56,10 @@
                       <button mat-menu-item (click)="downloadjpeg()">JPEG</button>
                       <button mat-menu-item (click)="downloadPdf()">PDF</button>
                     </mat-menu>
+                    <button (click)="backToCopilot()" *ngIf="redirectCopilot" class="tsttooltipbtn">
+                      <img src="../../../assets/images/PI/varaintlist-dis.svg" alt="">
+                      <span class="testtooltip">Copilot</span>
+                    </button>
                   <button (click)="playAnimation()" id="play_btn" class="tsttooltipbtn" *ngIf="!isplay">
                     <img src="../../../assets/images/PI/play.svg" alt="">
                     <span class="testtooltip">Play</span>

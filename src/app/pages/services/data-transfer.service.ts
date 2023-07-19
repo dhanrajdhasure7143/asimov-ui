@@ -140,10 +140,21 @@ setScreenList(module:any){
       return '';
   }
 
+
+
+
   private processLogs:BehaviorSubject<any> = new BehaviorSubject<any[]>([]);
   getProcessLogs = this.processLogs.asObservable();
 
   setProcessLogs(value:any){
     this.processLogs.next(value);
+  }
+
+
+  private copilotData:BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+  getCoplilotData=this.copilotData.asObservable();
+  setCopilotData(value:any)
+  {
+    this.copilotData.next(value);
   }
 }
