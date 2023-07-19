@@ -97,10 +97,11 @@
 }
 
 .chat-grid {
-    height: calc(100vh - 188px) !important;
+    height: calc(100vh - 200px) !important;
     overflow: scroll !important;
     width: 100% !important;
     padding: 15px 20px;
+    margin-bottom:10px;
 }
 
 .textarea-align {
@@ -479,5 +480,22 @@ padding: 0px 15px !important;
 }
 .loader-fix{width:50px;margin:auto;display:block;}
 .loader-align{position: absolute;
-    top: -22px;
+    top: -40px;
     width: 95%;}
+    .dropdown-menu {
+        max-height: 80px;
+        overflow-y: auto;
+    }
+    .select-wrapper {
+        height: 50px !important;
+        overflow-y: visible !important;
+        background-color: yellow !important;
+    }
+    .select {
+        width: 100%;
+        /* make it min-height*/
+        min-height: 50px;
+        border-radius: 25px;
+        border-color: #555;
+        padding: 10px;
+      }
