@@ -82,6 +82,7 @@
 }
 .docfldnam button.btn {
   margin-top: 30px;
+  float: right;
 }
 .upload-btn-wrapper {
   position: relative;
@@ -309,9 +310,6 @@ input[type=checkbox]:checked::after {
 }
 .docfldnam input.p-inputtext:focus {
   box-shadow: none !important;
-}
-.docfldnam button.btn {
-  margin-top: 30px;
 }
 
 
