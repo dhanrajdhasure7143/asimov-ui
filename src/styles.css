@@ -3924,7 +3924,8 @@ padding: 0px 30px;}
   justify-content: center;
 }
 .copilotchatblock-popup .thirdpopup .p-card-header img {
-  height: 75px;
+  width: auto !important;
+  height: auto;
 }
 .copilotchatblock-popup .thirdpopup .p-card.p-component:hover .p-card-body {
   background-color: #098de6;
