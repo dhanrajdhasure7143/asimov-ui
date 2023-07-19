@@ -39,6 +39,8 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
 import { SplitComponent } from "angular-split";
 import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
+import { ActivatedRoute } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -165,6 +167,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   taskNames: any;
   modifiedTaskNames: any = [];
   startStopCoordinates:any="";
+  isCopilot:boolean = false;
+  isNavigateCopilot:boolean = false;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -179,7 +183,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private changesDecorator: ChangeDetectorRef,
     private ngZone: NgZone,
     private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private route: ActivatedRoute
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -261,6 +266,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.outputboxid = "outputbox__" + this.finalbot.botName;
     //this.getCategories();
     this.validateBotNodes();
+    this.route.queryParams.subscribe(res=>{
+      console.log("testingh",res)
+      this.isCopilot = environment.isCopilotEnable
+      if(res.redirect) 
+      if(res.redirect == "copilot")this.isNavigateCopilot = true
+      else this.isNavigateCopilot = false
+    })
   }
 
   getSelectedEnvironments() {
@@ -2038,7 +2050,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               ];
               this.actualEnv = [...response.envIds];
               // Swal.fire("Success", "Bot updated successfully", "success");
+              this.isNavigateCopilot = false;
+              if(this.isCopilot)
+              this.messageService.add({severity:'success',summary:'Success',detail:'Bot ready to execute!'})
+              else
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
+
               this.uploadfile(response.envIds, response.tasks);
               this.updateBotNodes(true);
               let auditLogsList = [
@@ -2069,7 +2086,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.rest.addAuditLogs(auditLogsList).subscribe(
                 (response: any) => {
                   if (response.errorMessage == undefined) {
-                    this.messageService.add({severity:'success',summary:'Success',detail:'Audit logs updated successfully!'})
+                    // this.messageService.add({severity:'success',summary:'Success',detail:'Audit logs updated successfully!'})
 
                   } else {
                     // Swal.fire("Error", response.errorMessage, "error");
