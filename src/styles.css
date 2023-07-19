@@ -3934,3 +3934,8 @@ padding: 0px 30px;}
 /* Popup CSS End */
 
 /* Co-Pilot CSS End */
+.custom-dd .p-dropdown{    width: 100%;
+  background-color: #fff !important;
+  border-radius: 6px;
+}
+.custom-dd .p-dropdown .p-dropdown-trigger .pi{font-size:0.7rem;}

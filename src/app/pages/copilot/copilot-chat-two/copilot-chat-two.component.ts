@@ -5,6 +5,10 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+interface City {
+  name: string,
+  code: string
+}
 //import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
   selector: 'app-copilot-chat-two',
@@ -12,7 +16,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./copilot-chat-two.component.css']
 })
 export class CopilotChatTwoComponent implements OnInit {
+  cities: City[];
 
+  selectedCity: City;
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
@@ -218,6 +224,18 @@ export class CopilotChatTwoComponent implements OnInit {
     private dt:DataTransferService,
     private loaderService:LoaderService
     ) {
+      this.cities = [
+        {name: '00', code: 'NY'},
+        {name: '01', code: 'RM'},
+        {name: '02', code: 'LDN'},
+        {name: '03', code: 'IST'},
+        {name: '04', code: 'PRS'},
+        {name: '05', code: 'NY'},
+        {name: '06', code: 'RM'},
+        {name: '07', code: 'LDN'},
+        {name: '08', code: 'IST'},
+        {name: '09', code: 'PRS'}
+    ];
     //this.copilotJson=copilot;
   }
 
