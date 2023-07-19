@@ -13,7 +13,7 @@
 }
 
 .main-content-body {
-    height: calc(100% - 117px);
+    height: calc(100% - 54px);
 }
 
 .title-help {
@@ -63,11 +63,11 @@
 }
 
 .chat-form tbody tr:nth-of-type(odd) {
-    background-color: #e9e9e9 !important;
+    background-color: #EBF3F8 !important;
 }
 
 .chat-form tbody tr:nth-of-type(odd) th {
-    background-color: #e9e9e9 !important;
+    background-color: #EBF3F8 !important;
 }
 
 /* .model-box{
@@ -75,6 +75,7 @@
     border-top-left-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
 } */
+.select-wrapper{height:50px;overflow-y:visible;}
 .hr {
     border-top: 1px solid #dde3e5;
     margin-left: 30px;
@@ -162,6 +163,7 @@ textarea.form-control.message-input:focus {
     font-size: 15px;
     /* text-align: justify; */
     line-height:22px;
+    
 
 }
 .user-message .user-msgtext{background-color: #ebf7ff;
@@ -169,7 +171,8 @@ textarea.form-control.message-input:focus {
 width:100%;
 text-align: left;
     word-break: break-word;
-    color: #000;}
+    color: #000;
+margin-left:10%;}
 
 .user-message .user-msgtext {
     background-color: #ebf7ff;
@@ -190,7 +193,7 @@ button[disabled]:hover{cursor: no-drop;
   opacity: 1 !important;}
 
 .send-msgtext{
-  width:100%;
+  width:80%;
   text-align: left;
   word-break: break-word;
     color: #000;
@@ -204,7 +207,9 @@ button[disabled]:hover{cursor: no-drop;
     border-radius: 5px !important;
 }
 .system-message .card {
-  width: calc(100% - 44px);
+    width: calc(100% - 41px);
+    margin-top: 15px;
+    margin-right:47px;
   /* padding: 10px 15px; */
   margin-top: 15px;
 }
@@ -269,8 +274,7 @@ button[disabled]:hover{cursor: no-drop;
     background-image: url("../../../../assets/copilot/graph-icons/process-block-green.png") !important; 
   }
   
-  .new-card{background-color: #F6FCFE !important;width: 87%;
-    margin-left: 13%;
+  .new-card{background-color: #F6FCFE !important;
     border-radius: 8px;
   cursor: pointer;}
   .text-chat{float:left;}
@@ -416,7 +420,7 @@ button[disabled]:hover{cursor: no-drop;
     display: flex;
     justify-content: center;
 }
-.chat-btn .bg-success img {
+.chat-btn .bg-success-new img {
   margin-right: 6px !important;
 }
 
@@ -427,7 +431,12 @@ button[disabled]:hover{cursor: no-drop;
     padding: 6px 22px !important;
 }
 button.btn.bg-success-new {
+    width: 250px;
   background-color: #A8F0AB !important;
+}
+.dropdown-menu {
+    max-height: 100px;
+    overflow-y: auto;
 }
 button.btn.bg-success-new:hover {
   background-color: #77E47B !important;

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-2 pl-adj">
+    <!-- <div class="col-md-2 pl-adj">
         <div class="card-history">
             <div class="col-md-12">
                 <h4 class="histry-space">History</h4>
@@ -10,8 +10,8 @@
             </div>
 
         </div>
-    </div>
-    <div class="col-md-10 pl-0 pr-0">
+    </div> -->
+    <div class="col-md-12 pl-0 pr-0">
         <div class="maincontent">
             <div class="h-100">
                 <div class="row main-content-head">
@@ -137,7 +137,7 @@
                                         <div class="ml-2 send-msgtext" [innerHTML]="sentMessage.message">
                                         </div>
                                     </div>
-                                    <div *ngIf="sentMessage.steps.length" style="text-align: -webkit-right;">
+                                    <div *ngIf="sentMessage.steps.length" style="margin-left:10%;">
                                        
                                         <div *ngFor="let step of sentMessage.steps">
                                             <div *ngIf="step.type=='PROCESS-IMAGE'">
@@ -155,16 +155,16 @@
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='BUTTON'">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='BUTTON'">
                                                 <button class="btn btn-primary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
                                                 <button class="btn btn-secondary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
-                                                <button class="btn d-flex py-1 bg-success">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
+                                                <button class="btn d-flex py-1 bg-success-new">
                                                    <div>
                                                     <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'">
                                                    </div>
@@ -174,7 +174,7 @@
                                                   </button>
                                             </div>
                                             <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
-                                                <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="step.label">
+                                                <div class="py-0 send-msgtext" [innerHTML]="step.label">
                                                 </div>
                                             </div>
                                         </div>
