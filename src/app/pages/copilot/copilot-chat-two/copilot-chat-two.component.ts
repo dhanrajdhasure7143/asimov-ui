@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { jsPlumb, jsPlumbInstance } from "jsplumb";
 import { HttpClient, HttpBackend } from '@angular/common/http';
@@ -17,6 +17,7 @@ export class CopilotChatTwoComponent implements OnInit {
   public model: any = [];
   jsPlumbInstance: any;
   @ViewChild('op', {static: false}) overlayModel;
+  @ViewChild('popupMenu', {static:false}) popupMenuOverlay;
   copilotJson: any = [
     {
       "message": "Provisioning Users",
@@ -223,10 +224,10 @@ export class CopilotChatTwoComponent implements OnInit {
   @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('render') render: ElementRef;
-  
+  @ViewChild('nodeImage', { read: ElementRef }) nodeImage: ElementRef;
   public model2: any;
 
-  items: MenuItem[];
+  nodeMenuItems: MenuItem[];
   messages: any = [];
   message: any = "";
   nodes: any = [];
@@ -292,14 +293,44 @@ export class CopilotChatTwoComponent implements OnInit {
         ["Label", { label: "FOO" }],
       ],
     })
-    this.items = [{
-      label: 'History',
-      items: [{
-        label: 'Client Service Reporting',
-        command: () => {
-        }
-      }]
-    }]
+    this.nodeMenuItems = [
+      {
+          label: 'Options',
+          items: [
+              {
+                  label: 'AddNode',
+                  icon: 'pi pi-refresh',
+                  command: () => {
+                      this.addNode({});
+                  }
+              },
+              {
+                  label: 'Delete',
+                  icon: 'pi pi-times',
+                  command: () => {
+                      //this.delete();
+                  }
+              }
+          ]
+      },
+      {
+          label: 'Navigate',
+          items: [
+              {
+                  label: 'Angular',
+                  icon: 'pi pi-external-link',
+                  url: 'http://angular.io'
+              },
+              {
+                  label: 'Router',
+                  icon: 'pi pi-upload',
+                  routerLink: '/fileupload'
+              }
+          ]
+      }
+  ];
+
+  
     this.tableData = [
       { name: "IT from sent to the manager",min:"00",hrs:"00",days:"00"},
       { name: "Manager fills the form",min:"00",hrs:"00",days:"00" },
@@ -354,6 +385,8 @@ export class CopilotChatTwoComponent implements OnInit {
       }
     })
   }
+
+
 
 
 
@@ -542,10 +575,10 @@ export class CopilotChatTwoComponent implements OnInit {
           this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
           this.nodes.find((item:any)=>item.id=="3").updated=true;
         }
-        if(value=='Update Node 2')
-        {
-          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-          this.nodes.find((item:any)=>item.id=="5").updated=true;
+        if(value=='Update Node 2'){
+          // this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
+          // this.nodes.find((item:any)=>item.id=="5").updated=true;
+          this.addExtraNode();
           this.isNodesUpdates=true;
         }
 
@@ -555,9 +588,32 @@ export class CopilotChatTwoComponent implements OnInit {
       this.showTable = true;
   }
 
+  addNode(node)
+  {
+    let nodeData={
+      id:this.nodes.length+1,
+      selectedTaskName:"New Node",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false,
+      x:"",
+      y:""
+    }
+
+    this.jsPlumbInstance.
+    this.nodes.push(nodeData);
+    setTimeout(()=>{
+      this.populateNodes(nodeData);
+      this.addConnection(node.id,nodeData.id);
+      this.addConnection(node.id, nodeData.id);
+    },200);
+    
+
+  }
 
   loadGraph() {
-
+    this.jsPlumbInstance.reset(); // This will remove all existing connections and endpoints.
+    this.jsPlumbInstance.deleteEveryEndpoint(); // This will delete all endpoints.
+    this.nodes=[];
     let startNode = {
       id: "START",
       selectedNodeTask: "START",
@@ -601,6 +657,7 @@ export class CopilotChatTwoComponent implements OnInit {
       }
       this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
       this.isGraphLoaded = true;
+      this.loader = false;
     }, 200)
   }
 
@@ -610,6 +667,12 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodeData=nodeData
     this.overlayModel.show(event);
   }
+
+  openMenuItem(menuRef:any, event:any, nodeData:any)
+  {
+    this.nodeData=nodeData;
+    this.popupMenuOverlay.show(event)
+  }
   saveNodeComment()
   {
     this.nodes.find((item:any)=>item.id==this.nodeData.id).comment=this.nodeData.comment;
@@ -617,6 +680,64 @@ export class CopilotChatTwoComponent implements OnInit {
   }
   onChange(){
     console.log(this.tableData)
+  }
+
+  addExtraNode(){
+    this.graphJsonData = [];
+    this.loader = true;
+    this.graphJsonData = [{
+      id: "1",
+      selectedNodeTask: "Pre Boarding Form Sent",
+      x: "100px",
+      y: "100px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: "2",
+      selectedNodeTask: "Gather and Organize Responses",
+      x: "100px",
+      y: "200px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+  
+    },
+    {
+      id: 3,
+      selectedNodeTask: "Enter employee details",
+      x: "100px",
+      y: "300px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: 4,
+      selectedNodeTask: "Create O365 Account",
+      x: "100px",
+      y: "400px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:true
+    },
+    {
+      id: 5,
+      selectedNodeTask: "Create Email account",
+      x: "100px",
+      y: "500px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+    },
+    {
+      id: 6,
+      selectedNodeTask: "Trigger, Welcome Email",
+      x: "100px",
+      y: "600px",
+      path: "../../../../assets/copilot/graph-icons/General.png",
+      updated:false
+  
+    }]
+    setTimeout(() => {
+      this.loadGraph();
+    }, 1000);
   }
 
 }

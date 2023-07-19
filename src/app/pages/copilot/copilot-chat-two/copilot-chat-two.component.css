@@ -260,6 +260,10 @@ button[disabled]:hover{cursor: no-drop;
     /* background-color: #F6FCFE;
     border: 2px solid #1673DB;   */
   }
+  .node-image
+  {
+    margin-top:8px !important;
+  }
   .node-updated {
     cursor: pointer;
     box-shadow: none;
@@ -321,7 +325,7 @@ button[disabled]:hover{cursor: no-drop;
     max-width: 100em;
     font-weight: 500;
     line-height: 0.5cm;
-    margin-top: 60px;
+    margin-top: 10px;
     color: #001c47 !important;
 }
 
