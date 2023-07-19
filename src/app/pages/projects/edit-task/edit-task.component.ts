@@ -193,9 +193,10 @@ export class EditTaskComponent implements OnInit {
     // this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
   }
 
-  getallusers() {
-    let tenantid = localStorage.getItem("masterTenant");
-    this.rest.getuserslist(tenantid).subscribe((response) => {
+  getallusers() {  
+  let masterTenant=localStorage.getItem("masterTenant")
+  let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(masterTenant,tenantid).subscribe((response) => {
       this.users_list = response;
       let user = this.users_list.find(
         (item) => item.userId.userId == this.selectedtask.resources

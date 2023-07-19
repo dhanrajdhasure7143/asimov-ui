@@ -71,8 +71,9 @@ export class CreateDepartmentComponent implements OnInit {
 
   getallusers(){
     this.users_list=[];
-    let tenantid=localStorage.getItem("masterTenant")
-    this.api.getuserslist(tenantid).subscribe(item=>{
+    let masterTenant=localStorage.getItem("masterTenant")
+    let tenantid=localStorage.getItem("tenantName")
+    this.api.getuserslist(masterTenant,tenantid).subscribe(item=>{
       let users:any=item;
       users.forEach(e=>{
         if(e.user_role_status != "INACTIVE"){

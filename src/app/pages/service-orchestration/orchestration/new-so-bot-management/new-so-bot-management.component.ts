@@ -1066,8 +1066,9 @@ this.display = false
   }
   getusersList()
   {
-    let tenant=localStorage.getItem("masterTenant");
-    this.rest.getuserslist(tenant).subscribe((data:any)=>
+    let masterTenant=localStorage.getItem("masterTenant")
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(masterTenant,tenantid).subscribe((data:any)=>
     {
       if(data.errorMessage==undefined)
       {
