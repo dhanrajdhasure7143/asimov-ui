@@ -194,8 +194,8 @@
                             </div>
                         </div>
                         <div class="px-3 adjtextarea-align">
-                          <span *ngIf="isChatLoad">
-                            <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader">
+                          <span *ngIf="isChatLoad" class="loader-align">
+                            <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader" class="loader-fix">
                           </span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>

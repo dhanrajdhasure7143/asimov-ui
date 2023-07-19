@@ -48,6 +48,7 @@
     font-weight: 400 !important;
     font-size: 15px !important;
     float:right;
+    margin-right:10px;
 }
 
 .chat-form thead tr {
@@ -468,3 +469,7 @@ padding: 0px 15px !important;
 .btn-secondary:hover {
     background-color: #098de617 !important;
 }
+.loader-fix{width:50px;margin:auto;display:block;}
+.loader-align{position: absolute;
+    top: -22px;
+    width: 95%;}
