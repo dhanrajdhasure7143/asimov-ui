@@ -164,9 +164,9 @@
                                             <div *ngIf="step.type=='PROCESS-IMAGE'">
                                                 <div (click)="sendMessage(step.label, 'LABEL')" class="card new-card">
                                                     <div class="py-3 px-3 text-center ">
-                                                      <span class="text-chat mr-2"> <input type="checkbox"  /></span>
+                                                      <!-- <span class="text-chat mr-2"> <input type="checkbox"  /></span> -->
                                                       <span class="h6 text-chat">{{step.label}}</span>
-                                                      <a href="#" class="eye-imgchat "><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a>
+                                                      <!-- <a href="#" class="eye-imgchat "><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a> -->
                                                     </div>
                                                     <img [src] ="step.ImagePath" alt="" class="impath-adj">
                                                 </div>
@@ -237,7 +237,7 @@
 </p-confirmDialog>
 
 <p-dialog header="Employee on boarding Process Log Graph" class="dialogHeader" [(visible)]="isDialogVisible" [style]="{width: '50vw'}" [modal]="true" [baseZIndex]="1000">
-    <div class="py-5" >
+    <div class="py-3" >
         <span *ngIf="isLoadGraphImage">
             <div *ngFor="let task of graphJsonData"  class="py-2 px-2 h6">
                 {{task.selectedNodeTask}}
