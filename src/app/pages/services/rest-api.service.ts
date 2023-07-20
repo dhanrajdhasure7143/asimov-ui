@@ -723,9 +723,8 @@ export class RestApiService{
       return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
     }
 
-    getuserslist(tenantid)
-    {
-      return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
+    getuserslist(masterTenant,tenantid){
+      return this.http.get<any>('/api/user/tenants/'+masterTenant+'/users?tenantId='+tenantid);
     }
 
     getusername(tenantId){

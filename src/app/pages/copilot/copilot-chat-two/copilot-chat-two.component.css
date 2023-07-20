@@ -38,7 +38,8 @@
 }
 
 .chat-form select {
-    width: 100%;
+    height: 30px;
+    width: 85%;
     border-radius: 6px;
     color: #979797;
     border-color: #979797;
@@ -49,6 +50,7 @@
     font-size: 15px !important;
     float:right;
     margin-right:10px;
+    padding: 15px 10px !important;
 }
 
 .chat-form thead tr {
@@ -64,14 +66,16 @@
 }
 
 .chat-form tbody tr:nth-of-type(odd) {
-    background-color: #EBF3F8 !important;
+    background-color: #c8d6e0 !important;
 }
 
 .chat-form tbody tr:nth-of-type(odd) th {
-    background-color: #EBF3F8 !important;
+    background-color: #c8d6e0 !important;
     float:right;
     margin-right:10px;
+    padding: 15px 10px !important;
 }
+.table-mainhead{font-size:18px !important;}
 
 /* .model-box{
     background-color:rgb(235, 235, 235) !important;
@@ -93,10 +97,11 @@
 }
 
 .chat-grid {
-    height: calc(100vh - 188px) !important;
+    height: calc(100vh - 200px) !important;
     overflow: scroll !important;
     width: 100% !important;
     padding: 15px 20px;
+    margin-bottom:10px;
 }
 
 .textarea-align {
@@ -475,5 +480,39 @@ padding: 0px 15px !important;
 }
 .loader-fix{width:50px;margin:auto;display:block;}
 .loader-align{position: absolute;
-    top: -22px;
+    top: -40px;
     width: 95%;}
+    .dropdown-menu {
+        max-height: 80px;
+        overflow-y: auto;
+    }
+    select:-internal-list-box {
+       max-height:50px !important;overflow: auto !important;
+    }
+    .pi {
+        font-size: 0.7rem !important;
+    }
+    .select {
+        width: 100%;
+        /* make it min-height*/
+        min-height: 50px;
+        border-radius: 25px;
+        border-color: #555;
+        padding: 10px;
+      }
+
+
+.node-menu{
+    list-style-type: none;
+}
+.node-menu a{
+     padding:5px !important;
+     cursor: pointer !important;
+     font-size: 16px !important;
+}
+
+.node-menu li{
+    padding:6px !important;
+    font-size: 18px !important;
+}
+
