@@ -62,7 +62,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   isKeyValueTab:boolean =false;
   requestParams:any =[];
   payload: any = [];
-  actionNameCheck:boolean;
+  actionNameCheck:any;
   isActionName: boolean;
 
   constructor(
@@ -1281,28 +1281,16 @@ export class RpaConnectionManagerFormComponent implements OnInit {
  }
 }
 
-checkActionName(){
+checkActionName() {
   let connectorId = this.selectedId;
-  let actionName =this.connectorForm.get("actionName").value;
-  if(this.isActionName){
-    if(this.selectedToolsetName != actionName){
-      this.rest_api.checkActionName(connectorId,actionName).subscribe((data) => {
-        if(data == false){
-          this.actionNameCheck = true;
-        }else{
-          this.actionNameCheck = false;
-        }
-      });
+  let actionName = this.connectorForm.get("actionName").value;
+  this.rest_api.checkActionName(connectorId, actionName).subscribe((data) => {
+      this.actionNameCheck = this.isActionName ? (this.selectedToolsetName !== actionName ? !data : false) : !data;
+    },
+    (error) => {
+      this.actionNameCheck = true;
     }
-  } else {
-    this.rest_api.checkActionName(connectorId,actionName).subscribe((data) => {
-      if(data == false){
-        this.actionNameCheck = true;
-      }else{
-        this.actionNameCheck = false;
-      }
-    });
-  }
+  );
 }
 
 dynamicDelete(index) {
