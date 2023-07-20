@@ -133,7 +133,7 @@ textarea.form-control.message-input {
     padding-top: 14px !important;
     padding-right: 48px !important;
     padding-bottom: 10px !important; */
-    padding: 15px 20px !important;
+    padding: 15px 45px 15px 20px  !important;
     overflow: hidden;
 }
 
@@ -220,6 +220,7 @@ button[disabled]:hover{cursor: no-drop;
     margin-right:47px;
   /* padding: 10px 15px; */
   margin-top: 15px;
+  height:183px;
 }
 .drag-area{
     /* min-height: 70vh;
@@ -288,6 +289,7 @@ button[disabled]:hover{cursor: no-drop;
   
   .new-card{background-color: #F6FCFE !important;
     border-radius: 8px;
+    overflow-x:auto;
   cursor: pointer;}
   .text-chat{float:left;}
   .eye-imgchat{float:right;}
@@ -515,4 +517,12 @@ padding: 0px 15px !important;
     padding:6px !important;
     font-size: 18px !important;
 }
+.impath-adj{margin: auto;
+    height: auto;}
+.popup-imgchart{width:80%;
+margin:auto;
+display:block;}
+.btn-align-no{margin-right:1rem;}
+button.msg-snd-btn:disabled{background-color: transparent !important;}
+
 
