@@ -524,5 +524,6 @@ margin:auto;
 display:block;}
 .btn-align-no{margin-right:1rem;}
 button.msg-snd-btn:disabled{background-color: transparent !important;}
+.new-box{padding:0px !important;}
 
 
