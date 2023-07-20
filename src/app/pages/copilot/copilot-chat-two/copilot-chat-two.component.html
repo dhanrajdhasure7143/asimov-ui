@@ -214,7 +214,7 @@
                             <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader" class="loader-fix">
                           </span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
-                                placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
+                                placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')" (keydown.enter)="$event.preventDefault()" ></textarea>
                             <button [disabled]="isChatLoad" (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
                                 <img src="./../../../../assets/copilot/textareaicon.svg" alt="" *ngIf="message.length == 0">
                                 <img src="./../../../../assets/copilot/textareaiconactive.svg" alt="" *ngIf="message.length > 0">
