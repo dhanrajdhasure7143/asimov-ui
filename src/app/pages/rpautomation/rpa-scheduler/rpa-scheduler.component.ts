@@ -161,6 +161,24 @@ gettime(){
         {
           this.schedule_list=[...response.map(item=>{
             item["checked"]=false;
+            let splitStarttime: any;
+            let splitEndtime: any;
+            splitStarttime = (item.startDate.split(",")[3]) + ":" + (item.startDate.split(",")[4])
+            splitEndtime = (item.endDate.split(",")[3]) + ":" + (item.endDate.split(",")[4])
+            let startTime = splitStarttime.split(":");
+            let endTime = splitEndtime.split(":");
+            if ((startTime[0] >= 0 && startTime[0] <= 9) || (startTime[1] >= 0 && startTime[1] <= 9)) {
+              item["startTimestamp"] = "0" + splitStarttime
+            }
+            else {
+              item["startTimestamp"] = splitStarttime
+            }
+            if ((endTime[0] >= 0 && endTime[0] <= 9) || (endTime[1] >= 0 && endTime[1] <= 9)) {
+              item["endTimestamp"] = "0" + splitEndtime
+            }
+            else {
+              item["endTimestamp"] = splitEndtime
+            } 
             return item;
           })];
           this.checkScheduler=false;
