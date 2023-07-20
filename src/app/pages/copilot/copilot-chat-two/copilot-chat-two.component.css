@@ -507,15 +507,22 @@ padding: 0px 15px !important;
 .node-menu{
     list-style-type: none;
 }
+.nod-img-wid{width:40px;}
+.node-menu a img{margin-left:3px;}
 .node-menu a{
-    padding:5px; 
+   display:flex;
      cursor: pointer !important;
      font-size: 16px !important;
 }
-
+.node-menu{margin-top: 14px;
+    margin-bottom: 0px;}
 .node-menu i{
     font-size: 18px !important;
 }
+.p-overlaypanel-content {
+    padding: 20px 16px 4px !important;
+}
+.node-align ul{margin-bottom:0px !important;}
 .impath-adj{margin: auto;
     height: auto;}
 .popup-imgchart{width:80%;
@@ -524,5 +531,7 @@ display:block;}
 .btn-align-no{margin-right:1rem;}
 button.msg-snd-btn:disabled{background-color: transparent !important;}
 .new-box{padding:0px !important;}
+.node-menu li{margin-bottom:14px;}
+
 
 
