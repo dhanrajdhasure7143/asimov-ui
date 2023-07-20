@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-2 pl-adj">
+    <!-- <div class="col-md-2 pl-adj">
         <div class="card-history">
             <div class="col-md-12">
                 <h4 class="histry-space">History</h4>
@@ -10,8 +10,8 @@
             </div>
 
         </div>
-    </div>
-    <div class="col-md-10 pl-0 pr-0">
+    </div> -->
+    <div class="col-md-12 pl-0 pr-0">
         <div class="maincontent">
             <div class="h-100">
                 <div class="row main-content-head">
@@ -36,28 +36,41 @@
                                 <div class="drag-area">
                                     <!--Nodes inside designer-->
                                     <ng-container  *ngFor="let node of nodes; let i = index">
-                                        <div id="{{ node.id }}" (click)="openOverlay($event, node)" [class]="node.updated?'node-updated':'node'" [ngStyle]="{
-                            left: node.x,
-                            top: node.y,
-                            'background-image': 'url('+node.path+')'
-                          }">
+                                        <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'" [ngStyle]="{left: node.x,top: node.y}">
                                             <!--Node close button-->
-                                            <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
-                                                {{ node.name }}
-                                            </div>
+                                            <img [src]="node.path" (click)="openMenuItem($event, node)" [id]="node.id+'_img'" class="w-100 node-image" alt="">
                                             <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
                                                 {{ node.selectedNodeTask }}
                                             </div>
                                         </div>
                                     </ng-container>
-                                    <p-overlayPanel #op>
+                                    <p-overlayPanel #op my="center top" at="right center">
                                         <div class="py-2 px-2">
                                             <textarea class="form-control" [(ngModel)]="nodeData.comment" placeholder="Enter Comments"></textarea>
                                         </div>
                                         <div class="text-right">
                                             <button class="btn btn-primary btn-sm" (click)="saveNodeComment()">Submit</button>
                                         </div>
-                                    </p-overlayPanel>
+                                    </p-overlayPanel >
+                                    <!-- <p-overlayPanel #popupMenu my="center top" at="right center">
+                                       <ul class="node-menu">
+                                            <li class="nav-item">
+                                                <a (click)="addNode()" > <i class="pi pi-calendar-plus"></i>&nbsp;Add Node</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-comment"></i>Update Comment</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-angle-left"></i> Move Left</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-angle-right"></i> Move Right</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a><i class="pi pi-trash"></i>Delete Node</a>
+                                            </li>
+                                        </ul>
+                                    </p-overlayPanel> -->
 
                                     <!--Show bot Image when no nodes in designer-->
                                     <!-- <div *ngIf="nodes.length == 0" class="dragactionsdiv">
@@ -89,7 +102,11 @@
                         <table class="table table-striped chat-form">
                             <thead>
                                 <tr>
-                                    <th scope="col">Time Taken (hrs)</th>
+                                    <th></th>
+                                    <th colspan="3" class="table-mainhead">Time Taken (hrs)</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col"></th>
                                     <th scope="col">Mins</th>
                                     <th scope="col">Hrs</th>
                                     <th scope="col">Days</th>
@@ -98,21 +115,25 @@
                             <tbody>
                                 <tr *ngFor="let item of tableData">
                                     <th>{{item.name}}</th>
-                                    <td>
-                                        <select name="" id="" [(ngModel)]="item.min" (change)="onChange()">
+                                    <td style="width:50px;">
+                                        <p-dropdown [options]="minOptins" [(ngModel)]="item.min" class="custom-dd"></p-dropdown>
+                                        <!-- <select  [(ngModel)]="item.min" (change)="onChange()" >
                                             <option [value]="item" *ngFor="let item of minOptins">{{item}}</option>
-                                        </select>
+                                        </select> -->
                                     </td>
-                                    <td>
-                                        <select name="" id=""  [(ngModel)]="item.hrs">
+                                    <td style="width:50px;">
+                                        <!-- <select name="" id=""  [(ngModel)]="item.hrs">
                                           <option [value]="item" *ngFor="let item of hrsOptins">{{item}}</option>
-                                        </select>
+                                        </select> -->
+                                        <p-dropdown [options]="hrsOptins" [(ngModel)]="item.hrs" class="custom-dd"></p-dropdown>
                                     </td>
-                                    <td>
-                                        <select name="" id=""  [(ngModel)]="item.days">
+                                    <td style="width:50px;"> 
+                                        <!-- <select name="" id=""  [(ngModel)]="item.days">
                                           <option [value]="item" *ngFor="let item of daysOptins">{{item}}</option>
-                                        </select>
+                                        </select> -->
+                                        <p-dropdown [options]="daysOptins" [(ngModel)]="item.days" class="custom-dd"></p-dropdown>
                                     </td>
+                                    <td style="width:20%;"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -137,36 +158,34 @@
                                         <div class="ml-2 send-msgtext" [innerHTML]="sentMessage.message">
                                         </div>
                                     </div>
-                                    <div *ngIf="sentMessage.steps.length" style="text-align: -webkit-right;">
+                                    <div *ngIf="sentMessage.steps.length" style="margin-left:10%;">
                                        
                                         <div *ngFor="let step of sentMessage.steps">
                                             <div *ngIf="step.type=='PROCESS-IMAGE'">
                                                 <div (click)="sendMessage(step.label, 'LABEL')" class="card new-card">
                                                     <div class="py-3 px-3 text-center">
-                                                      <span class="text-chat mr-2"> <input type="checkbox" formControlName="graph" /></span>
+                                                      <span class="text-chat mr-2"> <input type="checkbox"  /></span>
                                                       <span class="h6 text-chat">{{step.label}}</span>
-                                                      <a href="#" class="eye-imgchat"><img src="../../../../assets/copilot/graph-icons/eye.svg"/></a>
+                                                      <a href="#" class="eye-imgchat"><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a>
                                                       <br /><br />
-                                                        <img src="../../../../assets/graph.svg">
-                                                       
-                                                        
+                                                        <img src="../../../../assets/graph.svg" alt="">
                                                     </div>
 
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='BUTTON'">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='BUTTON'">
                                                 <button class="btn btn-primary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
                                                 <button class="btn btn-secondary text-white btn-sm"
                                                     (click)="sendMessage(step.label, 'LABEL');step.disable=true" [disabled]="step.disable">{{step.label}}</button>
                                             </div>
-                                            <div class="col-12 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
-                                                <button class="btn d-flex py-1 bg-success">
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
+                                                <button class="btn d-flex py-1 bg-success-new">
                                                    <div>
-                                                    <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'">
+                                                    <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'" alt="">
                                                    </div>
                                                     <div>
                                                     {{step.label}}
@@ -174,7 +193,7 @@
                                                   </button>
                                             </div>
                                             <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
-                                                <div class="py-0 px-2 ml-2 send-msgtext" [innerHTML]="step.label">
+                                                <div class="py-0 send-msgtext" [innerHTML]="step.label">
                                                 </div>
                                             </div>
                                         </div>
@@ -193,6 +212,9 @@
                             </div>
                         </div>
                         <div class="px-3 adjtextarea-align">
+                          <span *ngIf="isChatLoad" class="loader-align">
+                            <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader" class="loader-fix">
+                          </span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
                             <a (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
@@ -207,6 +229,14 @@
         </div>
     </div>
 </div>
+
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd2.accept()"></button>
+   </ng-template>
+</p-confirmDialog>
 
 
 <div class="spinoverlay" *ngIf="loader">
