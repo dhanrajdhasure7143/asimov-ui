@@ -163,12 +163,10 @@
                                         <div *ngFor="let step of sentMessage.steps">
                                             <div *ngIf="step.type=='PROCESS-IMAGE'">
                                                 <div (click)="sendMessage(step.label, 'LABEL')" class="card new-card">
-                                                    <div class="py-3 px-3 text-center">
+                                                    <div class="py-3 px-3 text-center ">
                                                       <span class="text-chat mr-2"> <input type="checkbox"  /></span>
                                                       <span class="h6 text-chat">{{step.label}}</span>
-                                                      <a href="#" class="eye-imgchat"><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a>
-                                                  
-                                                       
+                                                      <a href="#" class="eye-imgchat "><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a>
                                                     </div>
                                                     <img [src] ="step.ImagePath" alt="" class="impath-adj">
                                                 </div>
@@ -238,6 +236,16 @@
    </ng-template>
 </p-confirmDialog>
 
+<p-dialog header="Employee on boarding Process Log Graph" [(visible)]="isDialogVisible" [style]="{width: '50vw'}">
+    <div class="py-2">
+        <img src="../../../../assets/copilot/popup-chart.svg" class="w-100">
+        <br><br>
+        <div class="text-right">
+            <button (click)="loadGraphIntiate('Load Graph')" class="btn btn-primary btn-sm text-white">Yes</button>&nbsp;<button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
+        </div>
+    </div>
+
+</p-dialog>
 
 <div class="spinoverlay" *ngIf="loader">
     <div class="spincenter">

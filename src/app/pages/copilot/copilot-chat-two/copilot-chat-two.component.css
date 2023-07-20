@@ -289,6 +289,7 @@ button[disabled]:hover{cursor: no-drop;
   
   .new-card{background-color: #F6FCFE !important;
     border-radius: 8px;
+    overflow-x:auto;
   cursor: pointer;}
   .text-chat{float:left;}
   .eye-imgchat{float:right;}

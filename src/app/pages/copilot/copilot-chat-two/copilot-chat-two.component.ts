@@ -22,8 +22,10 @@ export class CopilotChatTwoComponent implements OnInit {
   isPlayAnimation: boolean = false;
   public model: any = [];
   jsPlumbInstance: any;
+  isDialogVisible:boolean=false;
   @ViewChild('op', {static: false}) overlayModel;
   @ViewChild('popupMenu', {static:false}) popupMenuOverlay;
+
   copilotJson: any = [
     {
       "message": "Provisioning Users",
@@ -47,7 +49,7 @@ export class CopilotChatTwoComponent implements OnInit {
             "id": 3,
             "type": "PROCESS-IMAGE",
             "label": "Employee Onboarding",
-            "ImagePath": "./../../../assets/copilot/chart-image-3.svg"
+            "ImagePath": "./../../../assets/copilot/chart-employee.svg"
           }
         ]
       }
@@ -374,6 +376,20 @@ export class CopilotChatTwoComponent implements OnInit {
       {
         setTimeout(()=>{
           this.messages=response.messages;
+          console.log("test final")
+          this.messages.push(
+            {
+              "user":"SYSTEM",
+              "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
+              "steps":[
+                {
+                  "type":"BUTTON",
+                  "label":"Generate Bot Design"
+                }
+              ],
+            },
+          
+          )
           if(response.isGraphLoaded)
           {
             this.loadGraphIntiate("Load Graph");
@@ -392,19 +408,7 @@ export class CopilotChatTwoComponent implements OnInit {
             setTimeout(()=>{
               this.loadGraphIntiate("Load Form");
               this.loader=false;
-              this.messages.push(
-                {
-                  "user":"SYSTEM",
-                  "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
-                  "steps":[
-                    {
-                      "type":"BUTTON",
-                      "label":"Generate Bot Design"
-                    }
-                  ],
-                },
-              
-              )
+             
             },500)
           }
           setTimeout(()=>{
@@ -454,16 +458,17 @@ export class CopilotChatTwoComponent implements OnInit {
         steps: response.steps
       }
       if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
-        this.confirmationService.confirm({
-          message: "Are u sure you want to load graph ?",
-          header: "Warning",
+        // this.confirmationService.confirm({
+        //   message: "Are u sure you want to load graph ?",
+        //   header: "Warning",
          
-          rejectVisible: false,
-          acceptLabel: "Yes",
-          accept: () => {
-            this.loadGraphIntiate("Load Graph");
-          },
-        });
+        //   rejectVisible: false,
+        //   acceptLabel: "Yes",
+        //   accept: () => {
+        //     this.loadGraphIntiate("Load Graph");
+        //   },
+        // });
+        this.isDialogVisible=true;
       }
       else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
         this.loadGraphIntiate("Load Form")
