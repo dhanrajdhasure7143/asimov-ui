@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 
 
@@ -14,7 +15,7 @@ export class CopilotChatComponent implements OnInit {
   historyList:any=[]
   message:any
   nextFlag:any=""
-  constructor(private router:Router) { }
+  constructor(private router:Router, private dt:DataTransferService) { }
 
   ngOnInit(): void {
     this.historyList=[
@@ -23,6 +24,7 @@ export class CopilotChatComponent implements OnInit {
       {label:"BPS"},
       {label:"PI"}
     ]
+    this.dt.setCopilotData(undefined)
   
 }  
 

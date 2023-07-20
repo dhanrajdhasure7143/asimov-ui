@@ -3924,7 +3924,8 @@ padding: 0px 30px;}
   justify-content: center;
 }
 .copilotchatblock-popup .thirdpopup .p-card-header img {
-  height: 75px;
+  width: auto !important;
+  height: auto;
 }
 .copilotchatblock-popup .thirdpopup .p-card.p-component:hover .p-card-body {
   background-color: #098de6;
@@ -3939,3 +3940,5 @@ padding: 0px 30px;}
   border-radius: 6px;
 }
 .custom-dd .p-dropdown .p-dropdown-trigger .pi{font-size:0.7rem;}
+.dialogHeader .p-dialog .p-dialog-header .p-dialog-header-icon {width:auto !important;}
+ 
