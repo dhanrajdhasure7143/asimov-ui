@@ -33,17 +33,21 @@ export class CopilotChatTwoComponent implements OnInit {
           {
             "id": 1,
             "type": "PROCESS-IMAGE",
-            "label": "Onboard Users"
+            "label": "Onboard Users",
+            "ImagePath": "./../../../assets/copilot/chart-image-1.svg"
+            
           },
           {
             "id": 2,
             "type": "PROCESS-IMAGE",
-            "label": "Account Creation"
+            "label": "Account Creation",
+            "ImagePath": "./../../../assets/copilot/chart-image-2.svg"
           },
           {
             "id": 3,
             "type": "PROCESS-IMAGE",
-            "label": "Employee Onboarding"
+            "label": "Employee Onboarding",
+            "ImagePath": "./../../../assets/copilot/chart-image-3.svg"
           }
         ]
       }

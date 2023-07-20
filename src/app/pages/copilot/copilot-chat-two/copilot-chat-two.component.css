@@ -220,6 +220,7 @@ button[disabled]:hover{cursor: no-drop;
     margin-right:47px;
   /* padding: 10px 15px; */
   margin-top: 15px;
+  height:183px;
 }
 .drag-area{
     /* min-height: 70vh;
@@ -515,4 +516,6 @@ padding: 0px 15px !important;
     padding:6px !important;
     font-size: 18px !important;
 }
+.impath-adj{margin: auto;
+    height: auto;}
 
