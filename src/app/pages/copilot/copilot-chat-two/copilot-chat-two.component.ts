@@ -281,7 +281,7 @@ export class CopilotChatTwoComponent implements OnInit {
   },
   {
     id: 4,
-    selectedNodeTask: "Enter gathered information as Employee details",
+    selectedNodeTask: "Enter Employee details",
     x: "100px",
     y: "400px",
     path: "../../../../assets/copilot/graph-icons/General.png",
