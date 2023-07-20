@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { MessageService } from "primeng/api";
+import { CryptoService } from "src/app/pages/services/crypto.service";
 
 @Component({
   selector: "app-rpa-connection-manager-form",
@@ -69,7 +70,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private spinner: LoaderService
+    private spinner: LoaderService,
+    private cryptoService: CryptoService
   ) {
     this.route.queryParams.subscribe((data) => {
       //this.isDisabled = data.formDisabled;
@@ -169,7 +171,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["httpHeaders"] = this.payload.headers,
         object["queryParams"] = this.payload.queryParams;
       };
-      if (this.connectorForm.value.grantType == "AuthorizationCode") {
+      if (this.connectorForm.value.grantType == "authorization_code") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
@@ -203,7 +205,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       })
       object["customAttributes"] = dynamic;
 
-      req_body["configuration"] = btoa(JSON.stringify(object));
+      // req_body["configuration"] = btoa(JSON.stringify(object));
+      req_body["configuration"] = this.cryptoService.encrypt(JSON.stringify(object));
     } else {
       req_body = {
         "id": "",
@@ -248,7 +251,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload": this.connectorForm.get("request").value == null ? "" : this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       }
-      req_body["configuration"] = btoa(JSON.stringify(object));
+      // req_body["configuration"] = btoa(JSON.stringify(object));
+      req_body["configuration"] = this.cryptoService.encrypt(JSON.stringify(object));
     }
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
@@ -288,7 +292,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       endPoint: this.connectorForm.value.endPoint,
       type: this.connectorForm.value.authType,
     };
-    if (this.connectorForm.value.grantType == "AuthorizationCode") {
+    if (this.connectorForm.value.grantType == "authorization_code") {
       req_body["grantType"] = "authorization_code";
       req_body["code"] = this.connectorForm.value.code;
       req_body["redirectUri"] = this.connectorForm.value.redirectUri;
@@ -310,8 +314,11 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       dynamic.push({ [ele.dynamicKey]: ele.dynamicValue });
     })
     req_body["customAttributes"] = dynamic;
-    this.rest_api.testActions(req_body).subscribe(
-      (res: any) => {
+    // this.rest_api.testActions(req_body).subscribe(
+    let obj={
+      requestAccessToken: this.cryptoService.encrypt(JSON.stringify(req_body))
+    }
+    this.rest_api.testActions(obj).subscribe((res: any) => {
         if (res.data)
           this.connectorForm.get("response").setValue(JSON.stringify(res.data));
         this.spinner.hide();
@@ -541,7 +548,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       // this.connectorForm.get('clientId').updateValueAndValidity();
       // this.connectorForm.get('clientSecret').setValidators([Validators.required]);
       // this.connectorForm.get('clientSecret').updateValueAndValidity();
-    if (event == "AuthorizationCode") {
+    if (event == "authorization_code") {
       this.isAuthorization = true;
       this.isClient = true;
       this.isResponse = true;
@@ -706,6 +713,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.actionData = res["data"];
       this.isDisabled.AuthenticatedType = true;
       this.isDisabled.methodType=true;     
+      const decryptedConfig = this.cryptoService.decrypt(res["data"].configuration);
+      this.actionData.configuration = JSON.parse(decryptedConfig);
       if (this.actionData["actionType"] == "APIRequest") {
         this.isRequest = true;
         this.isHeader = true;
@@ -739,7 +748,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         });
       }
 
-      if (this.actionData.configurationAsJson["type"] == "OAUTH2") {
+      if (this.actionData.configuration["type"] == "OAUTH2") {
         this.isAuthenticated = true;
         this.connectorForm.get('endPoint').enable();
         const setValidators: string[] = ['grantType'];
@@ -749,7 +758,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
               this.connectorForm.get(key).updateValueAndValidity();
           }
         });
-      }else if(this.actionData.configurationAsJson["type"] == "API_KEY"){
+      }else if(this.actionData.configuration["type"] == "API_KEY"){
           this.isaddTo = true;
           this.isKeyValue = true;
           this.isKeyValueTab =true;
@@ -787,7 +796,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       }
 
       if (
-        this.actionData.configurationAsJson["grantType"] == "AuthorizationCode"
+        this.actionData.configuration["grantType"] == "authorization_code"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -808,7 +817,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "password"
+        this.actionData.configuration["grantType"] == "password"
       ) {
         this.isPassword = true;
         this.isClient = true;
@@ -835,17 +844,17 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "client_credentials" || this.actionData.configurationAsJson["grantType"] == "delegation"
+        this.actionData.configuration["grantType"] == "client_credentials" || this.actionData.configuration["grantType"] == "delegation"
       ) {
         this.isClient = true;
         this.isResponse = true;
         this.isAuthorization = false;
         this.isPassword = false;
         this.isVerifier = false;
-        this.isScopeField = true;
+        this.isScopeField = false;
         this.isRefreshToken = false;
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "AuthorizationCodeWithPKCE"
+        this.actionData.configuration["grantType"] == "AuthorizationCodeWithPKCE"
       ) {
         this.isAuthorization = true;
         this.isClient = true;
@@ -869,7 +878,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
           }
         });
       } else if (
-        this.actionData.configurationAsJson["grantType"] == "refresh_token"
+        this.actionData.configuration["grantType"] == "refresh_token"
       ) {
         this.isAuthorization = false;
         this.isClient = true;
@@ -882,45 +891,45 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.connectorForm.get('refreshToken').updateValueAndValidity();
       }
 
-      if(this.actionData.configurationAsJson["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){
+      if(this.actionData.configuration["methodType"] == "GET" && this.actionData["actionType"] == "APIRequest"){
         this.isReqDisable = true;
        }else{
          this.isReqDisable = false;
        }
 
       this.connectorForm.get("actionName").setValue(this.actionData["name"]);
-      this.connectorForm.get("endPoint").setValue(this.actionData.configurationAsJson["endPoint"]);
+      this.connectorForm.get("endPoint").setValue(this.actionData.configuration["endPoint"]);
       this.connectorForm.get("actionType").setValue(this.actionData["actionType"]);
-      this.connectorForm.get("methodType").setValue(this.actionData.configurationAsJson["methodType"]);
+      this.connectorForm.get("methodType").setValue(this.actionData.configuration["methodType"]);
       this.connectorForm.get("icon").setValue(this.actionData["actionLogo"]);
-      this.connectorForm.get("authType").setValue(this.actionData.configurationAsJson["type"]);
-      this.connectorForm.get("grantType").setValue(this.actionData.configurationAsJson["grantType"]);
-      this.connectorForm.get("code").setValue(this.actionData.configurationAsJson["code"]);
-      this.connectorForm.get("redirectUri").setValue(this.actionData.configurationAsJson["redirectUri"]);
-      this.connectorForm.get("userName").setValue(this.actionData.configurationAsJson["userName"]);
-      this.connectorForm.get("password").setValue(this.actionData.configurationAsJson["password"]);
-      this.connectorForm.get("clientId").setValue(this.actionData.configurationAsJson["clientId"]);
-      this.connectorForm.get("clientSecret").setValue(this.actionData.configurationAsJson["clientSecret"]);
-      this.connectorForm.get("verifier").setValue(this.actionData.configurationAsJson["verifier"]);
-      this.connectorForm.get("scope").setValue(this.actionData.configurationAsJson["scope"]);
-      this.connectorForm.get("refreshToken").setValue(this.actionData.configurationAsJson["refreshToken"]);
-      this.connectorForm.get("addTo").setValue(this.actionData.configurationAsJson["addTo"]);
-      if(this.actionData.configurationAsJson.httpHeaders || this.actionData.configurationAsJson.queryParams){
-      if(this.actionData.configurationAsJson.httpHeaders.length>0){
-        let data= Object.keys(this.actionData.configurationAsJson["httpHeaders"][0]).map((key) => (
+      this.connectorForm.get("authType").setValue(this.actionData.configuration["type"]);
+      this.connectorForm.get("grantType").setValue(this.actionData.configuration["grantType"]);
+      this.connectorForm.get("code").setValue(this.actionData.configuration["code"]);
+      this.connectorForm.get("redirectUri").setValue(this.actionData.configuration["redirectUri"]);
+      this.connectorForm.get("userName").setValue(this.actionData.configuration["userName"]);
+      this.connectorForm.get("password").setValue(this.actionData.configuration["password"]);
+      this.connectorForm.get("clientId").setValue(this.actionData.configuration["clientId"]);
+      this.connectorForm.get("clientSecret").setValue(this.actionData.configuration["clientSecret"]);
+      this.connectorForm.get("verifier").setValue(this.actionData.configuration["verifier"]);
+      this.connectorForm.get("scope").setValue(this.actionData.configuration["scope"]);
+      this.connectorForm.get("refreshToken").setValue(this.actionData.configuration["refreshToken"]);
+      this.connectorForm.get("addTo").setValue(this.actionData.configuration["addTo"]);
+      if(this.actionData.configuration.httpHeaders || this.actionData.configuration.queryParams){
+      if(this.actionData.configuration.httpHeaders.length>0){
+        let data= Object.keys(this.actionData.configuration["httpHeaders"][0]).map((key) => (
         this.connectorForm.get("requestKey").setValue(key),
-        this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["httpHeaders"][0][key])
+        this.connectorForm.get("requestValue").setValue(this.actionData.configuration["httpHeaders"][0][key])
         ));
       }
-      if(this.actionData.configurationAsJson.queryParams.length>0){
-        let data= Object.keys(this.actionData.configurationAsJson["queryParams"][0]).map((key) => (
+      if(this.actionData.configuration.queryParams.length>0){
+        let data= Object.keys(this.actionData.configuration["queryParams"][0]).map((key) => (
         this.connectorForm.get("requestKey").setValue(key),
-        this.connectorForm.get("requestValue").setValue(this.actionData.configurationAsJson["queryParams"][0][key])
+        this.connectorForm.get("requestValue").setValue(this.actionData.configuration["queryParams"][0][key])
         ));
       }
     }
-    if(this.actionData.configurationAsJson.customAttributes){
-      let custom_attributes = this.actionData.configurationAsJson.customAttributes
+    if(this.actionData.configuration.customAttributes){
+      let custom_attributes = this.actionData.configuration.customAttributes
       Object.keys(custom_attributes).forEach((key,i) => {
         let DynamicFormKey = Object.keys(custom_attributes[i])[0];
         let DynamicFormValue = custom_attributes[i][DynamicFormKey];
@@ -933,8 +942,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.selectedOne = this.dynamicForm;
     }
 
-      if(this.actionData.configurationAsJson.httpHeaders){
-        let headers_data = this.actionData.configurationAsJson.httpHeaders
+      if(this.actionData.configuration.httpHeaders){
+        let headers_data = this.actionData.configuration.httpHeaders
         Object.keys(headers_data).forEach((key,i) => {
           let headerKey = Object.keys(headers_data[i])[0];
           let headervalue = headers_data[i][headerKey];
@@ -947,8 +956,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       });
         this.selectedOne = this.headerForm;
       }
-      if (this.actionData.configurationAsJson.queryParams) {
-        let params_data = this.actionData.configurationAsJson.queryParams;
+      if (this.actionData.configuration.queryParams) {
+        let params_data = this.actionData.configuration.queryParams;
         Object.keys(params_data).forEach((key, i) => {
           let paramKey = Object.keys(params_data[i])[0];
           let paramValue = params_data[i][paramKey];
@@ -961,7 +970,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         });
       }
       if (this.actionData["actionType"] == "APIRequest"){
-        this.connectorForm.get("request").setValue(this.actionData.configurationAsJson["requestPayload"]);
+        this.connectorForm.get("request").setValue(this.actionData.configuration["requestPayload"]);
       }
       this.connectorForm.get("response").setValue(this.actionData["response"]);
       this.spinner.hide();
@@ -1027,7 +1036,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         object["httpHeaders"] = this.payload.headers,
         object["queryParams"] = this.payload.queryParams;
       }
-      if (this.connectorForm.value.grantType == "AuthorizationCode") {
+      if (this.connectorForm.value.grantType == "authorization_code") {
         object["clientId"] = this.connectorForm.value.clientId;
         object["clientSecret"] = this.connectorForm.value.clientSecret;
         object["code"] = this.connectorForm.value.code;
@@ -1062,7 +1071,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       })
       object["customAttributes"] = dynamic;
       
-      req_body["configuration"] = btoa(JSON.stringify(object));
+      // req_body["configuration"] = btoa(JSON.stringify(object));
+      req_body["configuration"] = this.cryptoService.encrypt(JSON.stringify(object));
     } else {
       req_body = {
         id: this.action_id,
@@ -1103,7 +1113,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         // "requestPayload":this.connectorForm.get("request").value.replace(/\s/g, "")
         "requestPayload":this.connectorForm.get("request").value.replace(/[^\x20-\x7E\n]/gmi, '')
       };
-      req_body["configuration"] = btoa(JSON.stringify(object));
+      // req_body["configuration"] = btoa(JSON.stringify(object));
+      req_body["configuration"] = this.cryptoService.encrypt(JSON.stringify(object));
     }
     this.rest_api.updateAction(this.action_id, req_body).subscribe((res: any) => {
         this.spinner.hide();
