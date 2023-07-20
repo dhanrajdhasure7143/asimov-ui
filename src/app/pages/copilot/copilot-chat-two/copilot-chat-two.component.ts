@@ -23,6 +23,7 @@ export class CopilotChatTwoComponent implements OnInit {
   public model: any = [];
   jsPlumbInstance: any;
   isDialogVisible:boolean=false;
+  isLoadGraphImage:boolean=false;
   @ViewChild('op', {static: false}) overlayModel;
   @ViewChild('popupMenu', {static:false}) popupMenuOverlay;
 
@@ -440,6 +441,13 @@ export class CopilotChatTwoComponent implements OnInit {
 
   sendMessage(value?: any, messageType?:String) {
     this.isChatLoad = true;
+    if(value=="Onboard Users")
+    {
+      this.isChatLoad = false;
+      this.isLoadGraphImage=true;
+      this.isDialogVisible=true;
+      return;
+    }
     setTimeout(() => { 
     let message = {
       id: (new Date()).getTime(),
@@ -468,6 +476,7 @@ export class CopilotChatTwoComponent implements OnInit {
         //     this.loadGraphIntiate("Load Graph");
         //   },
         // });
+        this.isLoadGraphImage=false;
         this.isDialogVisible=true;
       }
       else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
