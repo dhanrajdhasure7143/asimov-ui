@@ -215,10 +215,10 @@
                           </span>
                             <textarea [(ngModel)]="message" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"></textarea>
-                            <a (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
+                            <button [disabled]="isChatLoad" (click)="sendMessage(message, 'MESSAGE')" class="msg-snd-btn">
                                 <img src="./../../../../assets/copilot/textareaicon.svg" alt="" *ngIf="message.length == 0">
                                 <img src="./../../../../assets/copilot/textareaiconactive.svg" alt="" *ngIf="message.length > 0">
-                            </a>
+                            </button>
                         </div>
 
                     </div>
@@ -237,11 +237,19 @@
 </p-confirmDialog>
 
 <p-dialog header="Employee on boarding Process Log Graph" [(visible)]="isDialogVisible" [style]="{width: '50vw'}">
-    <div class="py-2">
-        <img src="../../../../assets/copilot/popup-chart.svg" class="w-100">
+    <div class="py-2" >
+        <span *ngIf="isLoadGraphImage">
+            <div *ngFor="let task of graphJsonData"  class="py-2 px-2 h6">
+                {{task.selectedNodeTask}}
+            </div>
+        </span>
+        <!-- <div class="text-right">
+            <button (click)="loadGraphIntiate('Load Graph')" class="btn btn-primary btn-sm text-white">Yes</button>&nbsp;<button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
+        </div> -->
+        <img src="../../../../assets/copilot/popup-chart.svg" *ngIf="!isLoadGraphImage" class="w-100">
         <br><br>
         <div class="text-right">
-            <button (click)="loadGraphIntiate('Load Graph')" class="btn btn-primary btn-sm text-white">Yes</button>&nbsp;<button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
+            <button (click)="loadGraphIntiate('Load Graph')" class="btn btn-primary btn-sm text-white">Ok</button>
         </div>
     </div>
 
