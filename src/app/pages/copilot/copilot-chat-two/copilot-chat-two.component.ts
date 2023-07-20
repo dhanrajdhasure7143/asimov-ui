@@ -667,6 +667,7 @@ export class CopilotChatTwoComponent implements OnInit {
 
   addNode()
   {
+    this.popupMenuOverlay.hide();
     let previouseNode:any=this.jsPlumbInstance.getAllConnections().find((item:any)=>item.sourceId==this.nodeData.id);
     var conn = this.jsPlumbInstance.getConnections({
       source: this.nodeData.id,
@@ -681,26 +682,25 @@ export class CopilotChatTwoComponent implements OnInit {
       selectedNodeTask:"New Node",
       path: "../../../../assets/copilot/graph-icons/General.png",
       updated:false,
-      x:"100px",
-      y:"100px"
+      x:(parseInt(this.nodeData.x.split("px")[0])+48)+"px",
+      y:(parseInt(this.nodeData.y.split("px")[0])-100)+"px"
     }
-    let nodeItems=this.nodes.slice(this.nodes.findIndex((item:any)=>item==this.nodeData), this.nodes.length);
-    for(let i=0;i<nodeItems.length;i++)
-    {
-      setTimeout(()=>{
-        console.log(nodeItems[i])
-        let index= nodeItems.findIndex((item:any)=>item==nodeItems[i]);
-        this.nodes[index].x=(parseInt((this.nodes[index].x).split("px")[0])+100)+"px"
-        this.nodes[index].y=(parseInt((this.nodes[index].y).split("px")[0])+100)+"px"
-        let element=document.getElementById(this.nodes[index].id)
-        this.jsPlumbInstance.revalidate(this.nodes[index].id);
-      },100)
+    //let nodeItems=this.nodes.slice(this.nodes.findIndex((item:any)=>item==this.nodeData), this.nodes.length);
+    // for(let i=0;i<nodeItems.length;i++)
+    // {
+    //   setTimeout(()=>{
+    //     console.log(nodeItems[i])
+    //     let index= nodeItems.findIndex((item:any)=>item==nodeItems[i]);
+    //     this.nodes[index].x=(parseInt((this.nodes[index].x).split("px")[0])+100)+"px"
+    //     this.nodes[index].y=(parseInt((this.nodes[index].y).split("px")[0])+100)+"px"
+    //     let element=document.getElementById(this.nodes[index].id)
+    //     this.jsPlumbInstance.revalidate(this.nodes[index].id);
+    //   },100)
 
-    }
+    // }
     this.nodes.push(nodeData);
     setTimeout(()=>{
       this.populateNodes(nodeData);
-      
       this.addConnection(this.nodeData.id,nodeData.id);
       this.addConnection(nodeData.id, previouseNode.targetId);
     },200);
@@ -726,7 +726,7 @@ export class CopilotChatTwoComponent implements OnInit {
     }, 200)
     for (let i = 0; i < this.graphJsonData.length; i++) {
       this.graphJsonData[i]["id"] = String(i + 1);
-      this.graphJsonData[i]["x"] = ((i + 1) * 100) + "px";
+      this.graphJsonData[i]["x"] = ((i + 1) * 105) + "px";
       this.graphJsonData[i]["y"] = "200px";
       this.graphJsonData[i]["comments"]="";
       this.nodes.push(this.graphJsonData[i]);
@@ -738,7 +738,7 @@ export class CopilotChatTwoComponent implements OnInit {
     let stopnode = {
       id: "STOP",
       selectedNodeTask: "STOP",
-      x: ((this.graphJsonData.length + 1) * 100) + "px",
+      x: ((this.graphJsonData.length + 1) * 105) + "px",
       y: "200px",
       path: "../../../../assets/copilot/graph-icons/stop.png",
       updated:false
@@ -760,16 +760,19 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
   public nodeData:any={};
-  openOverlay(event:any, nodeData:any)
+  public mouseEvent:any={};
+  openCommentBox(event:any)
   {
-    this.nodeData=nodeData
+    this.popupMenuOverlay.hide();
     this.overlayModel.show(event);
   }
 
   openMenuItem(event:any, nodeData:any)
   {
     this.nodeData=nodeData;
-    //this.popupMenuOverlay.show(event)
+    this.mouseEvent=event;
+    event.preventDefault();
+    this.popupMenuOverlay.show(event)
   }
   saveNodeComment()
   {
