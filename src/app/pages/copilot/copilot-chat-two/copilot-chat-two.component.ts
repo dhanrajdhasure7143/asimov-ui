@@ -370,27 +370,27 @@ export class CopilotChatTwoComponent implements OnInit {
       { name: "IT team create Email ID",min:"00",hrs:"00",days:"00" },
       { name: "IT team assign a system",min:"00",hrs:"00",days:"00" },
       { name: "System Access for the user",min:"00",hrs:"00",days:"00" },
-    ],
-
+    ];
     this.dt.getCoplilotData.subscribe((response:any)=>{
+      console.log("check sample")
       if(response!=undefined)
       {
         setTimeout(()=>{
           this.messages=response.messages;
-          console.log("test final")
-          this.messages.push(
-            {
-              "user":"SYSTEM",
-              "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
-              "steps":[
-                {
-                  "type":"BUTTON",
-                  "label":"Generate Bot Design"
-                }
-              ],
-            },
-          
-          )
+          if(this.messages.find((item:any)=>item.message=="Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?")==undefined)
+          {
+            this.messages.push(
+              {
+                "user":"SYSTEM",
+                "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
+                "steps":[
+                  {
+                    "type":"BUTTON",
+                    "label":"Generate Bot Design"
+                  }
+                ],
+              })
+          }
           if(response.isGraphLoaded)
           {
             this.loadGraphIntiate("Load Graph");
@@ -492,10 +492,10 @@ export class CopilotChatTwoComponent implements OnInit {
         this.loadGraphIntiate("Update Node 2");
       }
       else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
-        this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
         this.loader=true;
         setTimeout(()=>{
           this.loader=false
+          this.dt.setCopilotData({messages:this.messages, isGrpahLoaded:this.isGraphLoaded, isNodeLoaded:this.isNodeLoaded, isNodesUpdated:this.isNodesUpdates, isTableLoaded:this.showTable, tableData:this.tableData})
           this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect:"copilot" } });
         },3000)
       }
