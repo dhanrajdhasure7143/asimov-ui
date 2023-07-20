@@ -667,6 +667,7 @@ export class CopilotChatTwoComponent implements OnInit {
 
   addNode()
   {
+    this.popupMenuOverlay.hide();
     let previouseNode:any=this.jsPlumbInstance.getAllConnections().find((item:any)=>item.sourceId==this.nodeData.id);
     var conn = this.jsPlumbInstance.getConnections({
       source: this.nodeData.id,
@@ -759,15 +760,17 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
   public nodeData:any={};
-  openOverlay(event:any, nodeData:any)
+  public mouseEvent:any={};
+  openCommentBox(event:any)
   {
-    this.nodeData=nodeData
+    this.popupMenuOverlay.hide();
     this.overlayModel.show(event);
   }
 
   openMenuItem(event:any, nodeData:any)
   {
     this.nodeData=nodeData;
+    this.mouseEvent=event;
     event.preventDefault();
     this.popupMenuOverlay.show(event)
   }
