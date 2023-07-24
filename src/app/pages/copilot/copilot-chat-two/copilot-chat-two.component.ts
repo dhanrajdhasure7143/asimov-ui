@@ -630,7 +630,7 @@ export class CopilotChatTwoComponent implements OnInit {
         this.isNodeLoaded = true
         let node = {
           id: "22",
-          selectedNodeTask: "IT form sent to Reporting Manager",
+          selectedNodeTask: "Send IT form",
           x: "100px",
           y: "30px",
           path: "../../../../assets/copilot/graph-icons/General.png",
