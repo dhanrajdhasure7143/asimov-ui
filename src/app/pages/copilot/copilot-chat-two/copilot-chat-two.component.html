@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
                                     </ng-container>
-                                    <p-overlayPanel #op class="comment-box" my="center top" at="right center">
+                                    <p-overlayPanel #op styleClass = comment-box my="center top" at="right center" >
                                         <div class="py-2 px-2">
                                             <textarea class="form-control" [(ngModel)]="nodeData.comment"
                                                 placeholder="Enter Comments"></textarea>
@@ -56,41 +56,43 @@
                                                 (click)="saveNodeComment()">Save</button>
                                         </div>
                                     </p-overlayPanel>
-                                    <p-overlayPanel #popupMenu my="center top" at="right center">
+                                    <p-overlayPanel #popupMenu my="center top" at="right center" class="node-align">
                                         <ul class="node-menu">
                                             <li class="nav-item">
                                                 <a (click)="addNode()">
-                                                    <span class="px-2"><i class="pi pi-calendar-plus"></i></span>
-                                                    <span class="px-2">Add Node</span></a>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/one.svg"/></div>
+                                                    <div class="">Add Node</div></a>
                                             </li>
                                             <li class="nav-item">
                                                 <a (click)="openCommentBox($event)">
-                                                    <span class="px-2"><i class="pi pi-comment"></i></span>
-                                                    <span class="px-2">Update Comment</span>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/addcomment.svg"/></div>
+                                                    <div class="">Add Comment</div>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a>
-                                                    <span class="px-2">
-                                                        <i class="pi pi-angle-left"></i>
-                                                    </span>
-                                                    <span class="px-2">
+                                                    <div class="nod-img-wid">
+                                                        <img src="../../../../assets/copilot/nodeicons/left.svg"/>
+                                                    </div>
+                                                    <div class="">
                                                         Move Left
-                                                    </span>
+                                                    </div>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a>
-                                                    <span class="px-2"><i class="pi pi-angle-right"></i></span>
-                                                    <span class="px-2">
+                                                    <div class="nod-img-wid">
+                                                        <img src="../../../../assets/copilot/nodeicons/right.svg"/>
+                                                    </div>
+                                                    <div class="">
                                                         Move Right
-                                                    </span>
+                                                    </div>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a>
-                                                    <span class="px-2"><i class="pi pi-trash"></i></span >
-                                                    <span class="px-2">Delete Node</span>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/trash.svg"/></div>
+                                                    <div class="">Delete Node</div>
                                                 </a>
                                             </li>
                                         </ul>
