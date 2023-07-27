@@ -2052,7 +2052,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               // Swal.fire("Success", "Bot updated successfully", "success");
               this.isNavigateCopilot = false;
               if(this.isCopilot)
-              this.messageService.add({severity:'success',summary:'Success',detail:'Bot ready to execute!'})
+              this.messageService.add({severity:'success',summary:'Success',detail:'Bot saved successfully!'})
               else
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
 
