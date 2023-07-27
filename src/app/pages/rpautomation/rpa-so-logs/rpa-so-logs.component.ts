@@ -76,6 +76,7 @@ export class RpaSoLogsComponent implements OnInit {
   viewRunsByBotId(){
     this.logsLoading=true;
     this.rest.getviewlogdata(this.logsbotid).subscribe((response:any) =>{
+      this.traversalLogs=[]
       this.logsLoading = false;
       this.logsDisplayFlag="RUNS";
       this.botrunid="";
@@ -180,20 +181,16 @@ export class RpaSoLogsComponent implements OnInit {
    }
 
 
-   getChildLogs(task_details, logId, traversalType:any)
-   {
-
+   getChildLogs(task_details, logId, traversalType:any){
     this.logsLoading=true;
     let flag=0;
-    this.selectedChildLog=task_details;
-    if(traversalType=="FARWORD")
-      this.traversalLogs.push(task_details);
+    this.selectedChildLog=task_details; 
     this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, logId).subscribe((response:any)=>{ 
-    
-      if(response.errorMessage==undefined)
-      { 
-      
-      this.logsDisplayFlag="CHILD-LOGS";  
+      if(traversalType=="FARWORD"){
+        this.traversalLogs.push(task_details);
+      }     
+      if(response.errorMessage==undefined){ 
+       this.logsDisplayFlag="CHILD-LOGS";  
        this.isDataEmpty=false;
        this.columnList=[
         {ColumnName:"task_name",DisplayName:"Task",ShowFilter: false,width:"flex: 0 0 10rem",filterType:"text"},
@@ -236,8 +233,7 @@ export class RpaSoLogsComponent implements OnInit {
 
 
 
-   logsBackTraversal()
-   {
+   logsBackTraversal(){
       let logData:any=(this.traversalLogs.pop());
       this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
       if(logData.parent_log_id!=null)

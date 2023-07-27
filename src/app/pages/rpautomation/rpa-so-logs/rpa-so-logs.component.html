@@ -19,7 +19,7 @@
         </span>
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
-        &nbsp;<span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span>
+        &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
             <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >Refresh</span>
         <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
           Refresh
@@ -84,7 +84,7 @@
                         </span>
                         <span *ngIf="col.ColumnName=='bot_status'" class="d-flex align-items-center">
                           <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span> {{logs[col.ColumnName]}}
-                        </span>
+                      </span>
                         <span *ngIf="col.ColumnName=='task_name'">
                           <span *ngIf="logs['child_logs_count']==0  && logs['task_name']!='Loop-Start'">
                             {{logs[col.ColumnName]}}
