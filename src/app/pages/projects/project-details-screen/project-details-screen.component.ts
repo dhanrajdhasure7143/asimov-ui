@@ -1514,6 +1514,7 @@ selectEnd() {
     this.isFile_upload_dialog = true;
     this.uploaded_file = event.target.files;
     this.selectedType="uploadFile"
+    this.getTheListOfFolders();
   }
 
   uploadFile() {

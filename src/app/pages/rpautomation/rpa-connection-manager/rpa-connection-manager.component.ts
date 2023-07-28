@@ -254,11 +254,11 @@ export class RpaConnectionManagerComponent implements OnInit {
   checkConnectionName() {
     let connectionName = this.createConnectorForm.get("name").value;
     this.rest_api.checkConnectionName(connectionName).subscribe((data) => {
-      if(data == false){
+        this.connectionNameCheck = !this.isCreate ? (this.connctionupdatedata["name"] !== connectionName ? !data : false) : !data;
+      },
+      (error) => {
         this.connectionNameCheck = true;
-      }else{
-        this.connectionNameCheck = false;
       }
-    });
+    );
   }
 }
