@@ -2894,30 +2894,41 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   async deprecatedExecuteBot(){
     if(this.isBotCompiled) {
-      this.spinner.show();
-      this.rest.execution(this.finalbot.botId).subscribe(
-        (response: any) => {
-          this.spinner.hide();
-          if (response.errorMessage == undefined){
-            // Swal.fire("Success", response.status, "success");
-            this.messageService.add({severity:'success',summary:'Success',detail:response.status})
-            this.updateBotNodes(false);                   
-          } else {
-          //  Swal.fire("Error", response.errorMessage, "error");
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-          }
+      this.confirmationService.confirm({
+        message: "Do you want to execute bot?",
+        header: 'Confirmation',
+        accept: () => {
+          this.spinner.show();
+          this.rest.execution(this.finalbot.botId).subscribe(
+            (response: any) => {
+              this.spinner.hide();
+              if (response.errorMessage == undefined){
+                // Swal.fire("Success", response.status, "success");
+                this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                this.updateBotNodes(false);                  
+              } else {
+              //  Swal.fire("Error", response.errorMessage, "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+              }
+            },
+            (err) => {
+              this.spinner.hide();
+              // Swal.fire("Error", "Unable to execute bot", "error");
+              this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+            }
+          );
         },
-        (err) => {
+        reject: (type) => {
           this.spinner.hide();
-          // Swal.fire("Error", "Unable to execute bot", "error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
-        }
-      );
+        },
+        key: "positionDialog"
+      });
     } else {
       // Swal.fire("Error", "Unable to execute bot", "error");
       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
     }
   }
+
 
   getAllVersions() {
     this.rest.getBotVersion(this.finalbot.botId).subscribe(
