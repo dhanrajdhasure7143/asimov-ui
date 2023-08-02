@@ -99,9 +99,9 @@ inputNumberOnly(event){
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
-              let decryptClientId = this.cryptoService.decrypt(item["clientId"]);
-              let decryptclientSecret = this.cryptoService.decrypt(item["clientSecret"]);
-              let decryptOfficeTenat = this.cryptoService.decrypt(item["officeTenant"]);
+              let decryptClientId = item["clientId"]?this.cryptoService.decrypt(item["clientId"]):item["clientId"];
+              let decryptclientSecret = item["clientSecret"]?this.cryptoService.decrypt(item["clientSecret"]):item["clientSecret"];
+              let decryptOfficeTenat = item["officeTenant"]?this.cryptoService.decrypt(item["officeTenant"]):item["officeTeant"];
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
               item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp);
               item["password_new"]=(item["password"]!="")?("*").repeat(10):"-";
