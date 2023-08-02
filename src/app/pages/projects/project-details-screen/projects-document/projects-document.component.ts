@@ -1458,7 +1458,7 @@ async getFileDataById(fileId) {
           removeButtons: 'PasteFromWord'
         }).catch((error) => {
           console.error("There was a problem initializing the editor.", error);
-        });      
+        });
       }, 250);
 
     }
