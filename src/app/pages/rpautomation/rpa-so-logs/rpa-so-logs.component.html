@@ -82,9 +82,20 @@
                             {{logs[col.ColumnName] | slice :0 : 10}}...
                           </span>
                         </span>
-                        <span *ngIf="col.ColumnName=='bot_status'" class="d-flex align-items-center">
-                          <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span> {{logs[col.ColumnName]}}
-                      </span>
+                        <span *ngIf="col.ColumnName=='bot_status'">
+                          <span *ngIf="logs['bot_status']=='Running'" class="text-primary" >
+                            <span>
+                              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                            </span>
+                            {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
+                            <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
+                          </span>
+                          </span>
+                          <span *ngIf="col.ColumnName=='bot_status'">
+                          <span *ngIf="logs['bot_status']!='Running'"  class="d-flex align-items-center">
+                            <span class="statusbadge_nc" [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span> {{logs[col.ColumnName]}}
+                          </span>
+                         </span>
                         <span *ngIf="col.ColumnName=='task_name'">
                           <span *ngIf="logs['child_logs_count']==0  && logs['task_name']!='Loop-Start'">
                             {{logs[col.ColumnName]}}
