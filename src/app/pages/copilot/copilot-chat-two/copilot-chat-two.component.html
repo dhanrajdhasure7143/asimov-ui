@@ -34,18 +34,20 @@
                         <div class="graph-designer">
                             <div class="studio_main">
                                 <div class="drag-area">
+                                    <div class="diagram_container"
+                                            id="_diagram">
+                                        </div>
                                     <!--Nodes inside designer-->
-                                    <ng-container *ngFor="let node of nodes; let i = index">
+                                    <!-- <ng-container *ngFor="let node of nodes; let i = index">
                                         <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'"
                                             [ngStyle]="{left: node.x,top: node.y}">
-                                            <!--Node close button-->
                                             <img [src]="node.path" (contextmenu)="openMenuItem($event, node)"
                                                 [id]="node.id+'_img'" class="w-100 node-image" alt="">
                                             <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
                                                 {{ node.selectedNodeTask }}
                                             </div>
                                         </div>
-                                    </ng-container>
+                                    </ng-container> -->
                                     <p-overlayPanel #op styleClass = comment-box my="center top" at="right center" >
                                         <div class="py-2 px-2">
                                             <textarea class="form-control" [(ngModel)]="nodeData.comment"
@@ -60,19 +62,19 @@
                                         <ul class="node-menu">
                                             <li class="nav-item">
                                                 <a (click)="addNode()">
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/one.svg"/></div>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/one.svg" alt=""/></div>
                                                     <div class="">Add Node</div></a>
                                             </li>
                                             <li class="nav-item">
                                                 <a (click)="openCommentBox($event)">
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/addcomment.svg"/></div>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/addcomment.svg" alt=""/></div>
                                                     <div class="">Add Comment</div>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a>
                                                     <div class="nod-img-wid">
-                                                        <img src="../../../../assets/copilot/nodeicons/left.svg"/>
+                                                        <img src="../../../../assets/copilot/nodeicons/left.svg" alt=""/>
                                                     </div>
                                                     <div class="">
                                                         Move Left
@@ -82,7 +84,7 @@
                                             <li class="nav-item">
                                                 <a>
                                                     <div class="nod-img-wid">
-                                                        <img src="../../../../assets/copilot/nodeicons/right.svg"/>
+                                                        <img src="../../../../assets/copilot/nodeicons/right.svg" alt=""/>
                                                     </div>
                                                     <div class="">
                                                         Move Right
@@ -91,7 +93,7 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a>
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/trash.svg"/></div>
+                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/trash.svg" alt=""/></div>
                                                     <div class="">Delete Node</div>
                                                 </a>
                                             </li>

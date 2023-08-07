@@ -5,6 +5,9 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import * as BpmnJS from "./../../../bpmn-modeler.development.js";
+import { SharebpmndiagramService } from "./../../services/sharebpmndiagram.service";
+import { RestApiService } from '../../services/rest-api.service';
 interface City {
   name: string,
   code: string
@@ -230,7 +233,9 @@ export class CopilotChatTwoComponent implements OnInit {
   constructor(private router:Router, 
     private dt:DataTransferService,
     private loaderService:LoaderService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private bpmnservice: SharebpmndiagramService,
+    private rest_api : RestApiService
     ) {
       this.cities = [
         {name: '00', code: 'NY'},
@@ -315,8 +320,10 @@ export class CopilotChatTwoComponent implements OnInit {
   daysOptins: string[]  = Array.from(Array(32).keys(), num =>num.toString().padStart(2,"0"))
   loader:boolean=false;
   isChatLoad:boolean = false;
+  bpmnModeler: any;
 
   ngOnInit(): void {
+    this.loadGraph();
     this.loader=true;
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
@@ -709,6 +716,29 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
   loadGraph() {
+
+    let xml=""
+    let notationJson = {
+      container: ".diagram_container",
+      keyboard: {
+        bindTo: window,
+      },
+    };
+
+    this.bpmnModeler = new BpmnJS(notationJson);
+setTimeout(() => {
+  
+    this.rest_api
+        .getBPMNFileContent("assets/resources/newDiagram.bpmn")
+        .subscribe((res) => {
+          this.bpmnModeler.importXML(res, function (err) {
+            if (err) {
+              console.error("could not import BPMN EZFlow notation", err);
+            }
+          });
+        });
+}, 1000);
+
     this.jsPlumbInstance.reset(); // This will remove all existing connections and endpoints.
     this.jsPlumbInstance.deleteEveryEndpoint(); // This will delete all endpoints.
     this.nodes=[];
