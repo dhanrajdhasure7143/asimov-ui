@@ -235,6 +235,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         createdUserEmail: localStorage.getItem("ProfileuserId"),
       });
       this.updatetask();
+      this.add_comment="";
     }
   }
 
@@ -275,8 +276,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // taskupdatFormValue["taskCategory"]=this.taskcategory
     this.rest_api.updateTask(taskupdatFormValue).subscribe(
       (res) => {
-        this.taskcomments_list = this.added_comments_list;
-        this.add_comment = "";
+        // this.taskcomments_list = this.added_comments_list;
+        // this.add_comment = "";
         this.messageService.add({
           severity: "success",
           summary: "Success",

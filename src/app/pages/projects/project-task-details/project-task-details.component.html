@@ -284,7 +284,7 @@
                                     <label><b>Add Comment</b></label> 
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
-                                    <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
+                                    <textarea [style]="{'width':'100%'}"  pInputTextarea  (keyup.enter)='postcomments()'
                                         [(ngModel)]="add_comment" [autoResize]="true" maxlength="251" placeholder="Type comment here"></textarea>
                                         <div *ngIf="add_comment?.length == 251" class='required' > Maximum of 250 characters</div>
 
