@@ -193,6 +193,15 @@ label.epsoft-label sup {
   display: none;
 }
 
+.active-menu span#eiap-home-icon-active {
+  display: block;
+}
+.active-menu span#eiap-home-icon-gray {
+  display: none;
+}
+.active-menu:hover span#eiap-home-icon-active {
+  display: none !important;
+}
 
 .side-icon img {
   height: auto;
