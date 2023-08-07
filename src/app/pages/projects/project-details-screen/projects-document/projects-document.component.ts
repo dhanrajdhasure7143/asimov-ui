@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MenuItem, MessageService, TreeNode, ConfirmEventType } from "primeng/api";
+import { ConfirmationService, MessageService, ConfirmEventType } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import * as JSZip from "jszip";
@@ -10,7 +10,7 @@ import moment from 'moment';
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { asBlob } from "html-docx-js-typescript";
 import { saveAs } from "file-saver";
-import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+declare const CKEDITOR: any;
 
 @Component({
   selector: "app-projects-document",
@@ -1442,29 +1442,21 @@ async getFileDataById(fileId) {
     }
 
     downloadDocument() {
-      this.documentData = this.editorRef.getData();
+     // this.documentData = this.editorRef.getData();
+      this.documentData=CKEDITOR.instances["project-document-editor"].getData()??"";
       asBlob(this.documentData).then((data: any) => {
-        saveAs(data, "file.docx"); // save as docx file
+          saveAs(data, "file.docx"); // save as docx file
       });
     }
 
     onCreateDocument(){
       this.isEditor = true;
       setTimeout(() => {
-        
-      DecoupledEditor.create(document.querySelector("#editor"),{
-        // toolbar: [ 'bold', 'italic', 'undo', 'redo' ]
-        removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
-      })
-        .then((editor) => {
-          // The toolbar needs to be explicitly appended.
-          document
-            .querySelector("#toolbar-container")
-            .appendChild(editor.ui.view.toolbar.element);
-          this.editorRef = editor;
-          // window = editor;
-        })
-        .catch((error) => {
+        CKEDITOR.replace("project-document-editor",{
+          height: 250,
+          extraPlugins: 'colorbutton',
+          removeButtons: 'PasteFromWord'
+        }).catch((error) => {
           console.error("There was a problem initializing the editor.", error);
         });
       }, 250);
@@ -1487,7 +1479,8 @@ async getFileDataById(fileId) {
 
     let filteredkey = this.getTheFileKey();
     let objectKey = this.selectedFolder_new.key;
-    this.documentData = this.editorRef.getData();
+   // this.documentData = this.editorRef.getData();
+   this.documentData=CKEDITOR.instances["project-document-editor"].getData()??"";
     asBlob(this.documentData).then((data: any) => {
       const formData = new FormData();
       formData.append("filePath", data, this.enterDocumentName+'.docx');
@@ -1605,5 +1598,4 @@ async getFileDataById(fileId) {
         ];
       }
   }
-  
 }
