@@ -2,9 +2,26 @@
   <div class="nav-main">
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
-  
-        <a mat-list-item *ngIf="!freetrail" class="link" [ngClass]="_selectedModule=='eiap-home'?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
-          routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
+        <span *ngIf="isCopilotEnable" >
+          <a mat-list-item class="link" [ngClass]="_selectedModule=='eiap-home' && isCopilotEnable ?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
+            routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Copilot' : ''"
+            matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <span class="side-icon">
+              <span class="active-img" id="eiap-home-icon-active">
+                <img src="../../../assets/images/Sidebar/copilot.svg" alt="">
+              </span>
+              <span class="hover-img" id="eiap-home-icon-white">
+                <img src="../../../assets/images/Sidebar/copilo-hover.png" alt="">
+              </span>
+              <span class="default-img" id="eiap-home-icon-gray">
+                <img src="../../../assets/images/Sidebar/copilot-nrmal.png" alt="">
+              </span>
+            </span>
+            <span class="side-menu-font">Copilot</span>
+          </a>
+        </span>
+        <a mat-list-item *ngIf="!freetrail" class="link" [ngClass]="_selectedModule=='eiap-home' && (!(isCopilotEnable)) ?'active':'' " [id]="(!(isCopilotEnable))?'eiap-home':'dashboard'" (click)="hightlight(((!(isCopilotEnable))?'eiap-home':'dashboard'),null)"
+          [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
           matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
@@ -99,7 +116,7 @@
             <span class="side-menu-font">Value Chain Mapping</span>
           </a>
         </div> -->
-  
+      
         <a mat-list-item class="link orchimg" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)"
           routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -148,24 +165,7 @@
             <span class="side-menu-font">RPA</span>
           </a>
         </div>
-        <span *ngIf="isCopilotEnable">
-          <a mat-list-item class="link" id="copilot" (click)="hightlight('copilot',null)"
-            routerLink="/pages/copilot/chat" [matTooltip]=" !obj.sideBarOpen ? 'Copilot' : ''"
-            matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-            <span class="side-icon">
-              <span class="active-img" id="eiap-home-icon-active">
-                <img src="../../../assets/images/Sidebar/copilot.svg" alt="">
-              </span>
-              <span class="hover-img" id="eiap-home-icon-white">
-                <img src="../../../assets/images/Sidebar/copilo-hover.png" alt="">
-              </span>
-              <span class="default-img" id="eiap-home-icon-gray">
-                <img src="../../../assets/images/Sidebar/copilot-nrmal.png" alt="">
-              </span>
-            </span>
-            <span class="side-menu-font">Copilot</span>
-          </a>
-        </span>
+
         <mat-list-item *ngIf="this.userRoles.includes('System Admin')"
           (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}"
           id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''"
