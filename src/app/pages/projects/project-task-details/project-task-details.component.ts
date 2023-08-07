@@ -117,7 +117,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   backToTaskList() {
-    this.router.navigate(["/pages/projects/tasks"], {
+    // this.router.navigate(["/pages/projects/tasks"], {
+      this.router.navigate(["/pages/projects/projectdetails"], {
       queryParams: {
         project_id: this.project_id,
         project_name: this.project_name,

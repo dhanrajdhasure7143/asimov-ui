@@ -249,10 +249,10 @@ private columnList: columnList
 
 ngOnInit() {
 this.actionsitems = [
-  {
-    label: 'Tasks',
-    command: () => {this.taskListView()}
-  },
+  // {
+  //   label: 'Tasks',
+  //   command: () => {this.taskListView()}
+  // },
   { 
     label: 'Users',
     command: () => { this.openUsersOverlay()}

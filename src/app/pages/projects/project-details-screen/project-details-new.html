@@ -21,7 +21,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <button class="btn actionmenu grey-btn" type="button" (click)="menu.toggle($event)">
                     <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" >
-                    <span class="plus">More Actions</span>
+                    <span class="plus">More</span>
                     <!--pTooltip="Action Menu" tooltipPosition="top" 
                         class="default-icon"
                         <img src="./../../../../assets/images-n/projects/menudots-hover.png" alt="Actions" class="hover-icon"> -->
@@ -213,7 +213,7 @@
             </div>
             <div class="row">
                 <div class="col-md-8 pl-0">
-                    <div class="row quicksnapshot">
+                    <!-- <div class="row quicksnapshot">
                         <h4 class="colheads">Quick Snapshot</h4>
                         <div class="row">
                             <div class="col-md-4 pl-0">
@@ -304,7 +304,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row quick-actions" *ngIf="!isCreate">
                         <h6>Quick Actions</h6>
                         <img class="mr-3" src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
@@ -324,6 +324,10 @@
                             <a><span>View BPMN</span></a>
                         </button>
                     </div>
+                    <div class="acresources">
+                        <app-project-task-list></app-project-task-list>
+                    </div>
+                    <br>
                     <div class="row acresources" *ngIf="!isCreate">
                         <div class="col-4 p-0">
                             <h4 class="colheads">Recent Activities</h4>

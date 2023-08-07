@@ -89,6 +89,7 @@ export class ProjectTaskListComponent implements OnInit {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = new Date(item.endDate);
         item["assignedTo"] = this.getUserName(item.resources);
+        item["percentageCompleted"]= item.percentageComplete+"%"
         // item["representative"] = { name: item.priority };
         return item;
       });
@@ -139,17 +140,17 @@ export class ProjectTaskListComponent implements OnInit {
     });
   }
 
-  onTabChanged(event, tabView: TabView) {
-    const tab = tabView.tabs[event.index].header;
-    if (tab == "All") {
-      this.tasks_list = this.all_tasks_list;
-    } else {
-      let filteredProjects = this.all_tasks_list.filter(
-        (item) => item.status == tab
-      );
-      this.tasks_list = filteredProjects;
-    }
-  }
+  // onTabChanged(event, tabView: TabView) {
+  //   const tab = tabView.tabs[event.index].header;
+  //   if (tab == "All") {
+  //     this.tasks_list = this.all_tasks_list;
+  //   } else {
+  //     let filteredProjects = this.all_tasks_list.filter(
+  //       (item) => item.status == tab
+  //     );
+  //     this.tasks_list = filteredProjects;
+  //   }
+  // }
 
   deletetask(data) {
     // delete the task by selected id
@@ -261,5 +262,24 @@ export class ProjectTaskListComponent implements OnInit {
       })
 
     })
+   }
+
+percentageComplete(data){
+      this.rest_api.updateTask(data).subscribe((res) => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Task updated successfully!",
+          });
+          // this.gettask();
+        },
+        (err) => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Task update failed.",
+          });
+        }
+      );
    }
 }

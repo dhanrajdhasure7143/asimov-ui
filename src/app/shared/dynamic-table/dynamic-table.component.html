@@ -157,7 +157,9 @@
                                 </span>
                             </div>
                     </span>
-                   
+                <span *ngIf="col.ColumnName == 'percentageCompleted'" class="w-100">
+                    <input [(ngModel)]="rowData.percentageCompleted" (click)="taskPercentage(rowData)" [min]="0" [max]="100" type="range">
+                </span>
                     <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100">
                         <div class="newinntalx">
                         <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
