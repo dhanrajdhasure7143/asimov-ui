@@ -89,7 +89,7 @@ export class ProjectTaskListComponent implements OnInit {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = new Date(item.endDate);
         item["assignedTo"] = this.getUserName(item.resources);
-        item["percentageCompleted"]= item.percentageComplete+"%"
+        item["percentageComplete"]= item.percentageComplete+"%"
         // item["representative"] = { name: item.priority };
         return item;
       });

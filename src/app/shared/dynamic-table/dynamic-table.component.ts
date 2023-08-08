@@ -173,5 +173,6 @@ export class DynamicTableComponent implements OnInit {
 
   taskPercentage(row){
     this.dragPercentage.emit(row)
+    row.percentageComplete = row.percentageComplete + '%';
   }
 }
