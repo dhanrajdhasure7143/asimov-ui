@@ -326,7 +326,7 @@ export class DynamicDashboardComponent implements OnInit {
       return;
     }
     let confrmMessage=""
-    this.dashbordlist.length > 1? confrmMessage="Do you want to delete this dashboard? This can't be undone." : confrmMessage="Are you sure that you are deleting the default dashboard?"
+    this.dashbordlist.length > 1? confrmMessage="Do you want to delete this dashboard? This can't be undo." : confrmMessage="Are you sure that you are deleting the default dashboard?"
     this.confirmationService.confirm({
       message: confrmMessage,
       header: "Are you sure?",

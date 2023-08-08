@@ -626,7 +626,7 @@ export class ProjectsDocumentComponent implements OnInit {
       delete req_body[0]["parent"]; 
     }
     this.confirmationService.confirm({
-      message: "Do you want to delete this? This can't be undone.",
+      message: "Do you want to delete this? This can't be undo.",
       header: 'Are you sure?',
      
       accept: () => {
@@ -1069,7 +1069,7 @@ export class ProjectsDocumentComponent implements OnInit {
         delete req_body[0]["parent"];
       }
       this.confirmationService.confirm({
-        message: "Do you want to delete this? This can't be undone.",
+        message: "Do you want to delete this? This can't be undo.",
         header: 'Are you sure?',
         accept: () => {
           this.loader.show();
