@@ -321,6 +321,9 @@ export class CopilotChatTwoComponent implements OnInit {
   loader:boolean=false;
   isChatLoad:boolean = false;
   bpmnModeler: any;
+  isGraphLoaded: boolean = false;
+  isNodeLoaded: boolean = false;
+  isNodesUpdates:boolean=false;
 
   ngOnInit(): void {
     this.loadGraph();
@@ -594,26 +597,7 @@ export class CopilotChatTwoComponent implements OnInit {
       this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
   }
 
-  
-  addConnection(source: String, target: String) {
-    this.jsPlumbInstance.connect({
-      endpoint: [
-        "Dot",
-        {
-          radius: 2,
-          cssClass: "myEndpoint",
-          width: 2,
-          height: 2,
-        },
-      ],
-      source: source,
-      target: target,
-      anchors: ["Right", "Left"],
-      detachable: true,
-      paintStyle: { stroke: "#404040", strokeWidth: 1 },
-      overlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
-    });
-  }
+
 
 
   updateCoordinates(dragNode) {
@@ -624,9 +608,7 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
-  isGraphLoaded: boolean = false;
-  isNodeLoaded: boolean = false;
-  isNodesUpdates:boolean=false;
+
   loadGraphIntiate(value?: any) {
     this.showTable = false;
     if (value == "Load Graph" || value == "Load Node" || value=="Update Node 1" || value=="Update Node 2") {
@@ -646,8 +628,6 @@ export class CopilotChatTwoComponent implements OnInit {
         this.nodes.push(node);
         setTimeout(() => {
           this.populateNodes(node);
-          this.addConnection("START", "22");
-          this.addConnection("22", "2");
         }, 200)
       }
       else if(!this.isNodesUpdates)
@@ -672,54 +652,11 @@ export class CopilotChatTwoComponent implements OnInit {
       this.showTable = true;
   }
 
-  addNode()
-  {
-    this.popupMenuOverlay.hide();
-    let previouseNode:any=this.jsPlumbInstance.getAllConnections().find((item:any)=>item.sourceId==this.nodeData.id);
-    var conn = this.jsPlumbInstance.getConnections({
-      source: this.nodeData.id,
-      target: previouseNode.targetId
-    });
-    if (conn[0]) {
-      this.jsPlumbInstance.deleteConnection(conn[0]);
-    }
-    this.overlayModel.hide();
-    let nodeData={
-      id:String(this.nodes.length+3),
-      selectedNodeTask:"New Node",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false,
-      x:(parseInt(this.nodeData.x.split("px")[0])+48)+"px",
-      y:(parseInt(this.nodeData.y.split("px")[0])-100)+"px"
-    }
-    //let nodeItems=this.nodes.slice(this.nodes.findIndex((item:any)=>item==this.nodeData), this.nodes.length);
-    // for(let i=0;i<nodeItems.length;i++)
-    // {
-    //   setTimeout(()=>{
-    //     console.log(nodeItems[i])
-    //     let index= nodeItems.findIndex((item:any)=>item==nodeItems[i]);
-    //     this.nodes[index].x=(parseInt((this.nodes[index].x).split("px")[0])+100)+"px"
-    //     this.nodes[index].y=(parseInt((this.nodes[index].y).split("px")[0])+100)+"px"
-    //     let element=document.getElementById(this.nodes[index].id)
-    //     this.jsPlumbInstance.revalidate(this.nodes[index].id);
-    //   },100)
-
-    // }
-    this.nodes.push(nodeData);
-    setTimeout(()=>{
-      this.populateNodes(nodeData);
-      this.addConnection(this.nodeData.id,nodeData.id);
-      this.addConnection(nodeData.id, previouseNode.targetId);
-    },200);
-    
-
-  }
-
   loadGraph() {
 
     let xml=""
     let notationJson = {
-      container: ".diagram_container",
+      container: ".diagram_container-copilot",
       keyboard: {
         bindTo: window,
       },
@@ -727,9 +664,10 @@ export class CopilotChatTwoComponent implements OnInit {
 
     this.bpmnModeler = new BpmnJS(notationJson);
 setTimeout(() => {
-  
     this.rest_api
-        .getBPMNFileContent("assets/resources/newDiagram.bpmn")
+        // .getBPMNFileContent("assets/resources/copilot_bpmn.bpmn")
+        .getBPMNFileContent("assets/resources/copilot_bpmn_chatgpt.bpmn")
+
         .subscribe((res) => {
           this.bpmnModeler.importXML(res, function (err) {
             if (err) {
@@ -737,146 +675,17 @@ setTimeout(() => {
             }
           });
         });
-}, 1000);
-
-    this.jsPlumbInstance.reset(); // This will remove all existing connections and endpoints.
-    this.jsPlumbInstance.deleteEveryEndpoint(); // This will delete all endpoints.
-    this.nodes=[];
-    let startNode = {
-      id: "START",
-      selectedNodeTask: "START",
-      x: "0px",
-      y: "200px",
-      path: "../../../../assets/copilot/graph-icons/start.png",
-      updated:false
-    }
-    this.nodes.push(startNode);
-    setTimeout(() => {
-      this.populateNodes(startNode);
-    }, 200)
-    for (let i = 0; i < this.graphJsonData.length; i++) {
-      this.graphJsonData[i]["id"] = String(i + 1);
-      this.graphJsonData[i]["x"] = ((i + 1) * 105) + "px";
-      this.graphJsonData[i]["y"] = "200px";
-      this.graphJsonData[i]["comments"]="";
-      this.nodes.push(this.graphJsonData[i]);
-      setTimeout(() => {
-        this.populateNodes(this.graphJsonData[i]);
-      }, 200)
-
-    }
-    let stopnode = {
-      id: "STOP",
-      selectedNodeTask: "STOP",
-      x: ((this.graphJsonData.length + 1) * 105) + "px",
-      y: "200px",
-      path: "../../../../assets/copilot/graph-icons/stop.png",
-      updated:false
-    }
-    this.nodes.push(stopnode);
-
-    setTimeout(() => {
-      this.populateNodes(stopnode);
-    }, 200)
-    setTimeout(() => {
-      this.addConnection("START", this.graphJsonData[0].id)
-      for (let j = 0; j < this.graphJsonData.length - 1; j++) {
-        this.addConnection(this.graphJsonData[j].id, this.graphJsonData[j + 1].id)
-      }
-      this.addConnection(this.graphJsonData[this.graphJsonData.length - 1].id, "STOP");
-      this.isGraphLoaded = true;
-      this.loader = false;
-    }, 200)
+}, 1000);   
   }
-
-  public nodeData:any={};
-  public mouseEvent:any={};
   openCommentBox(event:any)
   {
     this.popupMenuOverlay.hide();
     this.overlayModel.show(event);
   }
 
-  openMenuItem(event:any, nodeData:any)
-  {
-    this.nodeData=nodeData;
-    this.mouseEvent=event;
-    event.preventDefault();
-    this.popupMenuOverlay.show(event)
-  }
-  saveNodeComment()
-  {
-    this.nodes.find((item:any)=>item.id==this.nodeData.id).comment=this.nodeData.comment;
-    this.overlayModel.hide();
-  }
+
   onChange(){
     console.log(this.tableData)
-  }
-
-  addExtraNode(){
-    this.graphJsonData = [];
-    this.loader = true;
-    this.graphJsonData = [{
-      id: "1",
-      selectedNodeTask: "Pre Boarding Form Sent",
-      x: "100px",
-      y: "100px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false
-    },
-    {
-      id: "2",
-      selectedNodeTask: "Gather and Organize Responses",
-      x: "100px",
-      y: "200px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false
-  
-    },
-    {
-      id: 3,
-      selectedNodeTask: "Enter employee details",
-      x: "100px",
-      y: "300px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false
-    },
-    {
-      id: 4,
-      selectedNodeTask: "Login To HRA",
-      x: "100px",
-      y: "400px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:true
-    },
-    {
-      id: 5,
-      selectedNodeTask: "Enter gathered information as Employee details",
-      x: "100px",
-      y: "400px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:true
-    },
-    {
-      id: 6,
-      selectedNodeTask: "Create Email account",
-      x: "100px",
-      y: "500px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false
-    },
-    {
-      id: 7,
-      selectedNodeTask: "Trigger, Welcome Email",
-      x: "100px",
-      y: "600px",
-      path: "../../../../assets/copilot/graph-icons/General.png",
-      updated:false
-  
-    }]
-    setTimeout(() => {
-      this.loadGraph();
-    }, 1000);
   }
 
 }

@@ -34,7 +34,7 @@
                         <div class="graph-designer">
                             <div class="studio_main">
                                 <div class="drag-area">
-                                    <div class="diagram_container"
+                                    <div class="diagram_container-copilot"
                                             id="_diagram">
                                         </div>
                                     <!--Nodes inside designer-->
@@ -48,63 +48,9 @@
                                             </div>
                                         </div>
                                     </ng-container> -->
-                                    <p-overlayPanel #op styleClass = comment-box my="center top" at="right center" >
-                                        <div class="py-2 px-2">
-                                            <textarea class="form-control" [(ngModel)]="nodeData.comment"
-                                                placeholder="Enter Comments"></textarea>
-                                        </div>
-                                        <div class="text-right">
-                                            <button class="btn btn-primary btn-sm text-white"
-                                                (click)="saveNodeComment()">Save</button>
-                                        </div>
-                                    </p-overlayPanel>
-                                    <p-overlayPanel #popupMenu my="center top" at="right center" class="node-align">
-                                        <ul class="node-menu">
-                                            <li class="nav-item">
-                                                <a (click)="addNode()">
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/one.svg" alt=""/></div>
-                                                    <div class="">Add Node</div></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a (click)="openCommentBox($event)">
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/addcomment.svg" alt=""/></div>
-                                                    <div class="">Add Comment</div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a>
-                                                    <div class="nod-img-wid">
-                                                        <img src="../../../../assets/copilot/nodeicons/left.svg" alt=""/>
-                                                    </div>
-                                                    <div class="">
-                                                        Move Left
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a>
-                                                    <div class="nod-img-wid">
-                                                        <img src="../../../../assets/copilot/nodeicons/right.svg" alt=""/>
-                                                    </div>
-                                                    <div class="">
-                                                        Move Right
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a>
-                                                    <div class="nod-img-wid"><img src="../../../../assets/copilot/nodeicons/trash.svg" alt=""/></div>
-                                                    <div class="">Delete Node</div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </p-overlayPanel>
+                                    
 
-                                    <!--Show bot Image when no nodes in designer-->
-                                    <!-- <div *ngIf="nodes.length == 0" class="dragactionsdiv">
-                        <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
-                        <span>Drag an action here...</span>
-                      </div> -->
+                                    
                                 </div>
                             </div>
                         </div>
