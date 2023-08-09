@@ -277,7 +277,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.rest_api.updateTask(taskupdatFormValue).subscribe(
       (res) => {
         // this.taskcomments_list = this.added_comments_list;
-        // this.add_comment = "";
+        this.add_comment = "";
         this.messageService.add({
           severity: "success",
           summary: "Success",
