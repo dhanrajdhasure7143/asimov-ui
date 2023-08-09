@@ -21,9 +21,9 @@ export class columnList{
       ];
 
     public recentActivities_columns = [
-        {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-        {ColumnName: "lastModifiedUsername",DisplayName: "Resource",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"lastModifiedByEmail"},
-        {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Timestamp", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
+        {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false},
+        {ColumnName: "lastModifiedUsername",DisplayName: "Resource",ShowFilter: false,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: false,userProfile:true,userProfileKey:"lastModifiedByEmail"},
+        {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Timestamp", ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "date",sort: false}
       ];
 
     public taskList_columns = [

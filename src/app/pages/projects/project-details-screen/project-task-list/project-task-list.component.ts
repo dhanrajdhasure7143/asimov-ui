@@ -170,6 +170,7 @@ export class ProjectTaskListComponent implements OnInit {
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
+      key:'taskDelete',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
