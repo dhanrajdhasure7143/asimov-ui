@@ -334,8 +334,8 @@
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
                         <div class="col-12 p-0">
                             <app-dynamic-table [columns_list]="columns_list_activities"
-                                [table_data]="recentActivityList" [show_search_field]="true" [show_column_filter]="true"
-                                [show_clear_filter]="true" [screenTable]="'recentActivityList'"
+                                [table_data]="recentActivityList" [show_search_field]="false" [show_column_filter]="true"
+                                [show_clear_filter]="false" [screenTable]="'recentActivityList'"
                                 [search_fields]="['activity','lastModifiedUsername','lastModifiedTimestamp_new']">
                             </app-dynamic-table>
                         </div>
