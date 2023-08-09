@@ -172,7 +172,7 @@ span.lowimp {
     width: 15%;
 }
 .pinf.prjstatus {
-    width: 11%;
+    width: 15% !important;
 }
 
 /* Collaboration Styles Start */
@@ -185,7 +185,8 @@ span.lowimp {
     position: relative;
 }
 .collab {
-    height: 460px;
+    /* height: 460px; */
+    height: 650px;
 }
 .lftusermsg {
     background: #EDF6FD;
@@ -250,13 +251,16 @@ h4.colheads.chatheader {
 }
 .pinnedmsgs {
     background-color: #efefef;
-    box-shadow: 1px 2px 5px #c3c3c3;
+    box-shadow: 0px 2px 3px 0px #cdcdcd;
+    /* box-shadow: 1px 2px 5px #c3c3c3; */
     border-top: 1px solid #dedede;
     padding: 8px 10px 8px 20px;
     display: flex;
     align-items: center;
-    z-index: 9999;
+    /* z-index: 9999; */
     position: relative;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 #message-body {
     /* height: 88%; */
@@ -372,8 +376,8 @@ input.msgip {
     height: 70%;
 }
 .emptychat img {
-    /* margin-top: 10%; */
-    width: 200px;
+    width: 175px;
+    /* width: 200px; */
     height: auto;
 }
 .emptychat p {
@@ -400,11 +404,14 @@ input.msgip {
 
 /* Collaboration Styles End */
 
-.acresources {
+.acresources, .taskslist {
     border: 1px solid #d0d0d0;
     padding: 20px 20px 10px !important;
     border-radius: 6px;
     background-color: #fff;
+}
+.taskslist {
+    margin-bottom: 25px !important;
 }
 .acresources .blue-btntext {
     padding: 0px 10px !important;

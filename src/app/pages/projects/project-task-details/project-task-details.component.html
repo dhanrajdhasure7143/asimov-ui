@@ -316,7 +316,14 @@
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
             <div class="h-100">
                 <div class="create-header">
-                    <h3>Attached Documents</h3>
+                    <h3 class="d-inline">Attached Documents</h3>
+                    <span class="" (change)="changefileUploadForm($event)">
+                        <span class="fileupsec">
+                            <input class="tsttooltipbtn" type="file" name="myfile" multiple id="file-input" title="Attach Documents">
+                            <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt="Attach Documents" class="testplus" >
+                            <!-- <span class="testtooltip">Attach Documents</span> -->
+                        </span>
+                    </span>
                 </div>
                 <div class="splitoverlaycontent attachdocgrid">
                     <div class="tablediv">
@@ -372,7 +379,7 @@
                         </p-table>
                     </div>
                 </div>
-                <div class="row pl-4">
+                <!-- <div class="row pl-4">
                     <div class="" (change)="changefileUploadForm($event)">
                         <div class="fileupsec">
                             <input type="file" name="myfile" multiple id="file-input">
@@ -380,7 +387,7 @@
                             <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt="Attach Documents" class="testplus">                            
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </app-split-overlay>
     </div>
