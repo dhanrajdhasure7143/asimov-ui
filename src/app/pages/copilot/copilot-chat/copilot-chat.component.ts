@@ -76,30 +76,37 @@ export class CopilotChatComponent implements OnInit {
     ]),
     getTemplates:new BehaviorSubject([
       {
+          "id": 1,
           "templateTitle": "Workforce Planning",
-          "templatePreviewImage": "../../../../assets/copilot/workplan.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-1.png"
       },
       {
+          "id": 2,
           "templateTitle": "Job Analysis and Job Posting",
-          "templatePreviewImage": "../../../../assets/copilot/Jobanalysis.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-2.png"
       },
       {
+          "id": 3,
           "templateTitle": "Assessment and Testing",
-          "templatePreviewImage": "../../../../assets/copilot/Assessment.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-3.png"
       },
       {
+          "id": 4,
           "templateTitle": "Talent Pipeline Management",
           "templatePreviewImage": "../../../../assets/copilot/Talentpipeline.png"
       },
       {
+          "id": 5,
           "templateTitle": "Compliance and Legal Considerations",
           "templatePreviewImage": "../../../../assets/copilot/Compliance.png"
       },
+      // {
+      //     "id": 6,
+      //     "templateTitle": "Candidate Experience",
+      //     "templatePreviewImage": "../../../../assets/copilot/Candidatexp.png"
+      // },
       {
-          "templateTitle": "Candidate Experience",
-          "templatePreviewImage": "../../../../assets/copilot/Candidatexp.png"
-      },
-      {
+          "id": 7,
           "templateTitle": "Applicant Tracking System (ATS) Management",
           "templatePreviewImage": "../../../../assets/copilot/ATSmgmt.png"
       }
@@ -130,8 +137,8 @@ showDialog() {
   this.display = true;
 }
 
-openChat2(){
-  this.router.navigate(["./pages/copilot/copilot-chat"]) 
+openChat2(template:any){
+  this.router.navigate(["./pages/copilot/copilot-chat"],{queryParams:{template:template}}) 
 }
 
 sendMessage(){

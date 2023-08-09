@@ -239,7 +239,7 @@
             </div> -->
         
             <div class="col-sm-3 form-group cardlist">
-                <p-card (click)="openChat2()">Others</p-card>
+                <p-card (click)="openChat2('Others')">Others</p-card>
             </div>    
         </div>
     </div>
@@ -276,9 +276,9 @@
     <div class="thirdpopup"  *ngIf="copilotFlag=='TEMPLATES'">
         <div class="row" >
             <div *ngFor="let template of templates" class="col-4 form-group cardlist">
-                <p-card (click)="openChat2()">
+                <p-card (click)="openChat2(template.templateTitle)">
                     <ng-template pTemplate="header">
-                        <img src="{{template.templatePreviewImage}}" class="" alt="graph">
+                        <img src="{{template.templatePreviewImage}}" class="w-100" alt="graph">
                     </ng-template>                    
                     <div class="">
                         <h6>{{template.templateTitle}}</h6>
