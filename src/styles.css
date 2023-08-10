@@ -2670,9 +2670,12 @@ span.statusbadge_nc {
   height: calc(100vh - 210px); /* for Attached Documents grid */
 }
 /* PRJ Details - RecentActivities  & Tasks Grid */
-.acresources .p-datatable-wrapper, 
+.acresources .p-datatable-wrapper {
+  height: 155px;
+  margin-top: 10px;
+} 
 .taskslist .p-datatable-wrapper {
-  height: 268px;
+  height: 320px;
   margin-top: 10px;
 }
 .acresources .p-datatable .p-datatable-header, 
@@ -2695,7 +2698,7 @@ span.statusbadge_nc {
   top: -40px;
   right: 0;
 }
-.acresources th.p-element.p-sortable-column.p-resizable-column,
+.acresources th.p-element,
 .taskslist th.p-element.p-sortable-column.p-resizable-column,
 .taskslist th.p-element.p-resizable-column {
   background-color: #fff !important;
