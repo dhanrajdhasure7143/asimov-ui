@@ -126,23 +126,22 @@ export class CreateTasksComponent implements OnInit {
       let response:any=data;
       this.spinner.hide();
       if(response.code == 4200){
-        let status: any= response;
+        // let status: any= response;
         //this.createtaskmodalref.hide();
-        
-        this.messageService.add({
+        this.router.navigate(["/pages/projects/taskDetails"], {
+          queryParams: {
+            project_id: this.params_data.project_id,
+            project_name: this.project_name,
+            task_id: response.taskId,
+          }});
+        setTimeout(()=>{
+          this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Task created successfully!",
-          key:"create"
-        })
-          //this.resettask();
-          this.router.navigate(["/pages/projects/taskDetails"], {
-            queryParams: {
-              project_id: this.params_data.project_id,
-              project_name: this.project_name,
-              task_id: response.taskId,
-            }
-          });
+         detail: "Task created successfully!",
+         key:"create",
+       })
+     },300);
         
       //   Swal.fire({
       //     title: 'Success',

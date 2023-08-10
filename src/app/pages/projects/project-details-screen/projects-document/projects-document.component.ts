@@ -178,12 +178,14 @@ export class ProjectsDocumentComponent implements OnInit {
         data['icon'] = "doc-file.svg"
       }else if(data.dataType == 'html'){
         data['icon'] = "html-file.svg"
-      }else if(data.dataType == 'csv'||data.dataType == 'xlsx' ){
+      }else if(data.dataType == 'csv'||data.dataType == 'xlsx' || data.dataType=='xlsm' ){
         data['icon'] = "xlsx-file.svg"
-      }else if(data.dataType == 'ppt'){
+      }else if(data.dataType == 'ppt'||data.dataType=='pptx'){
         data['icon'] = "ppt-file.svg"
       }else{
         data['icon'] = "txt-file.svg"
+      } if(data.dataType=='mp3'){
+        data['icon'] = "audio-file.svg"
       }
       return data;
     });
@@ -364,8 +366,8 @@ export class ProjectsDocumentComponent implements OnInit {
   folderView(){
     this.isFolder = true;
     this.term = '';
-    this.folder_files = this.files;
-    this.breadcrumbItems = [];
+    // this.folder_files = this.files;
+    // this.breadcrumbItems = [];
     this.folder_files.forEach(element => {
       element["is_selected"] = false;
     });
@@ -378,8 +380,8 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedItem_new = [];
     this.term = '';
     this.isFolder = false;
-    this.breadcrumbItems = [];
-    this.folder_files = this.files;
+    // this.breadcrumbItems = [];
+    // this.folder_files = this.files;
     this.folder_files.forEach(element => {
       element["is_selected"] = false;
     });
@@ -1131,6 +1133,15 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
     singleFileUploadFolder(e){
+      const file = e.target.files[0];
+      if (file) {
+        const fileExtension = file.name.split('.').pop()?.toLowerCase();
+        if (fileExtension === 'exe') {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "This file not Allow!"});
+          e.target.value = ''; // Clear the file input
+          return;
+        }
+      }
       if(e.target.files.length>0){
       const selectedFile:any[] = e.target.files;
         let isFileExist = 0;
