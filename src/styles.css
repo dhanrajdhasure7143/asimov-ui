@@ -3958,3 +3958,24 @@ padding: 0px 30px;}
 .dialogHeader .p-dialog .p-dialog-header .p-dialog-header-icon {width:auto !important;}
 .comment-box.p-overlaypanel.p-component{top: 381px !important;}
  
+.projects-process-bar-low .p-progressbar-value {
+  background: red !important;
+}
+.projects-process-bar-medium .p-progressbar-value {
+  background: orange !important;
+}
+.projects-process-bar-high .p-progressbar-value {
+  background: green !important;
+}
+.projects-process-bar .p-progressbar{
+  height: 1.0rem !important;
+  border-radius: 15px !important;
+}
+.projects-process-bar .p-progressbar-label{
+  font-size: 12px !important;
+  line-height: 1.1rem !important;
+}
+.progress-bar-grid{
+  top: 7px !important;
+  position: relative !important;
+}

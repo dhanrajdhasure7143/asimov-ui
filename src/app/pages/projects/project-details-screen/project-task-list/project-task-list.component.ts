@@ -89,7 +89,6 @@ export class ProjectTaskListComponent implements OnInit {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = new Date(item.endDate);
         item["assignedTo"] = this.getUserName(item.resources);
-        item["percentageComplete"]= item.percentageComplete+"%"
         // item["representative"] = { name: item.priority };
         return item;
       });
@@ -265,22 +264,4 @@ export class ProjectTaskListComponent implements OnInit {
     })
    }
 
-percentageComplete(data){
-      this.rest_api.updateTask(data).subscribe((res) => {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Task updated successfully!",
-          });
-          // this.gettask();
-        },
-        (err) => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Task update failed.",
-          });
-        }
-      );
-   }
 }
