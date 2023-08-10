@@ -3959,13 +3959,13 @@ padding: 0px 30px;}
 .comment-box.p-overlaypanel.p-component{top: 381px !important;}
  
 .projects-process-bar-low .p-progressbar-value {
-  background: red !important;
+  background: #EA3D3D !important;
 }
 .projects-process-bar-medium .p-progressbar-value {
-  background: orange !important;
+  background: #FFC107 !important;
 }
 .projects-process-bar-high .p-progressbar-value {
-  background: green !important;
+  background: #27AD74 !important;
 }
 .projects-process-bar .p-progressbar{
   height: 1.0rem !important;
@@ -3974,6 +3974,9 @@ padding: 0px 30px;}
 .projects-process-bar .p-progressbar-label{
   font-size: 12px !important;
   line-height: 1.1rem !important;
+}
+.projects-process-bar-high .p-progressbar-label{
+  color: #fff !important;
 }
 .progress-bar-grid{
   top: 7px !important;
