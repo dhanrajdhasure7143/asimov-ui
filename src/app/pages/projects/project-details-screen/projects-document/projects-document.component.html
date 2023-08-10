@@ -144,8 +144,8 @@
                 </span> -->
             </p-card>
         </div>
-        <span *ngIf="folder_files.length==0" style="text-align:center;">
-            Folder Is Empty 
+        <span *ngIf="folder_files.length==0" class="w-100 d-flex justify-content-center">
+            This folder is empty. 
         </span>
            </div>
            <div *ngIf = "!isFolder" class="doctree">
@@ -192,10 +192,10 @@
                         <td><span class="prjlastupdateprofile" (click)="onSelectFolder($event,i)">{{item.uploadedByUser|userLetters:users_list|uppercase}}</span>{{item.uploadedByUser}}</td>
                         <td (click)="onSelectFolder($event,i)">{{item.size?(item.size| fileSizePipe) :item.size}}</td>
                     </tr>
-                    <tr *ngIf="folder_files.length==0" style="text-align: center;">
-                        <!-- <div class="emptylable"> -->
-                            <span>File Is Empty</span>
-                        <!-- </div> -->
+                    <tr *ngIf="folder_files.length==0" class="text-center">
+                        <td colspan="5">
+                            <span>This folder is empty.</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
