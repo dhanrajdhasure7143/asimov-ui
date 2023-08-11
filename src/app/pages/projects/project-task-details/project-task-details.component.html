@@ -70,14 +70,14 @@
                                     <p-inplace #inplace6 (onActivate)="inplaceActivate('priority','inplace6')" class="taskname-priority">
                                         <ng-template pTemplate="display">
                                             <span class="priorlabels">
-                                                <img src="./../../../../assets/images-n/projects/low_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'Low'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'Low'"> -->
                                                     <span class="lowimp" *ngIf="task_details.priority == 'Low'">{{task_details.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/medium_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'Medium'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/medium_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'Medium'"> -->
                                                     <span class="mediumimp" *ngIf="task_details.priority == 'Medium'">{{task_details.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/high_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'High'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/high_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'High'"> -->
                                                 <span class="highimp" *ngIf="task_details.priority == 'High'">{{task_details.priority}}</span>
                                             </span>
                                         </ng-template>
