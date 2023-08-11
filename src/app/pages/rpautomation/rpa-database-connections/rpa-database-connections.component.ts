@@ -196,7 +196,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     //   confirmButtonText: 'Yes, delete it!'
     // }).then(
       this.confirmationService.confirm({
-        message: "Do you want to delete this connection? This can't be undone.",
+        message: "Do you want to delete this connection? This can't be undo.",
         header: 'Are you sure?',
         acceptLabel:'Yes',
         rejectLabel:'No',

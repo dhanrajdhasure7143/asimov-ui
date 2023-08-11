@@ -58,7 +58,7 @@ export class AdminScreenListComponent implements OnInit {
 
   deleteScreen(id: any) {
     this.confirmationService.confirm({
-      message: "Do you want to delete this record? This can't be undone.",
+      message: "Do you want to delete this record? This can't be undo.",
       header: "Are you sure?",
       key: "positionDialog",
       accept: () => {
