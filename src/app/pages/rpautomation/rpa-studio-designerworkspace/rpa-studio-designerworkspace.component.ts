@@ -1004,7 +1004,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     // }).then(
       this.confirmationService.confirm({
         header:'Are you sure?',
-        message:"Do you want to delete this node? This can't be undone.",
+        message:"Do you want to delete this node? This can't be undo.",
         acceptLabel:'Yes',
         rejectLabel:'No',
         rejectButtonStyleClass: ' btn reset-btn',
@@ -2997,7 +2997,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     // }).then(
     this.confirmationService.confirm({
       header: 'Are you sure?',
-      message: "Do you want to delete this bot? This can't be undone.",
+      message: "Do you want to delete this bot? This can't be undo.",
       acceptLabel:'Yes',
       rejectLabel:'No',
       rejectButtonStyleClass: ' btn reset-btn',

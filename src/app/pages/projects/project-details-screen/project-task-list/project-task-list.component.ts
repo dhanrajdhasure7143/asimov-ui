@@ -160,7 +160,7 @@ export class ProjectTaskListComponent implements OnInit {
     ];
 
     this.confirmationService.confirm({
-      message: "Do you want to delete this task? This can't be undone.",
+      message: "Do you want to delete this task? This can't be undo.",
       header: "Are you sure?",
       rejectLabel: "No",
       acceptLabel: "Yes",
