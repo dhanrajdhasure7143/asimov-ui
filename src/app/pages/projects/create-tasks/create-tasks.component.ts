@@ -134,14 +134,7 @@ export class CreateTasksComponent implements OnInit {
             project_name: this.project_name,
             task_id: response.taskId,
           }});
-        setTimeout(()=>{
-          this.messageService.add({
-          severity: "success",
-          summary: "Success",
-         detail: "Task created successfully!",
-         key:"create",
-       })
-     },300);
+       
         
       //   Swal.fire({
       //     title: 'Success',

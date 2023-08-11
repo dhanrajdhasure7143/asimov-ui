@@ -95,6 +95,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
       this.rest_api
         .getProjectTaskDetailsById(this.project_id, this.params_data.task_id)
         .subscribe((response) => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: " Task created  successfully!",
+          });
           let taskList: any = response;
           this.task_details = taskList[0];
           // this.task_details = taskList.find((item) => item.id == data.task_id);
