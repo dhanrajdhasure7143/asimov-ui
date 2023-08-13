@@ -194,7 +194,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         {queryParams:{"project_id":projectId, "project_name":projectName}})
         localStorage.removeItem("navigateTo")
       }else{
-        this.router.navigate(["/pages/projects/tasks"], 
+        this.router.navigate(["/pages/projects/projectdetails"], 
         {queryParams:{"project_id":projectId, "project_name":projectName}})
       } 
     } else{
