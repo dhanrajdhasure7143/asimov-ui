@@ -5,7 +5,7 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import * as BpmnJS from "./../../../bpmn-modeler.development.js";
+import * as BpmnJS from "./../../../bpmn-modeler-copilot.development.js";
 import { SharebpmndiagramService } from "./../../services/sharebpmndiagram.service";
 import { RestApiService } from '../../services/rest-api.service';
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
@@ -666,10 +666,7 @@ export class CopilotChatTwoComponent implements OnInit {
         container: ".diagram_container-copilot",
         keyboard: {
           bindTo: window,
-        },
-        additionalModules: [
-          BpmnColorPickerModule
-        ],
+        }
       };
 
       this.bpmnModeler = new BpmnJS(notationJson);
