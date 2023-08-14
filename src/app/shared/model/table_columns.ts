@@ -21,16 +21,17 @@ export class columnList{
       ];
 
     public recentActivities_columns = [
-        {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true},
-        {ColumnName: "lastModifiedUsername",DisplayName: "Resource",ShowFilter: true,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: true,userProfile:true,userProfileKey:"lastModifiedByEmail"},
-        {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Timestamp", ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true}
+        {ColumnName: "replacedText",DisplayName: "Activity",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: false},
+        {ColumnName: "lastModifiedUsername",DisplayName: "Resource",ShowFilter: false,ShowGrid: true,filterWidget: "normal",filterType: "text",sort: false,userProfile:true,userProfileKey:"lastModifiedByEmail"},
+        {ColumnName: "lastModifiedTimestamp_new",DisplayName: "Timestamp", ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "date",sort: false}
       ];
 
     public taskList_columns = [
-        {ColumnName: "taskName",DisplayName: "Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,multiOptions: ["taskName", "priority"]},
+        {ColumnName: "taskName",DisplayName: "Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: true,showTooltip:true,multiOptions: ["taskName", "priority"]},
         {ColumnName: "taskCategory",DisplayName: "Type",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:[]},
         // {ColumnName: "priority",DisplayName: "Priority",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false, dropdownList:["High","Medium","Low"]},
         {ColumnName: "assignedTo",DisplayName: "Assigned To",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,userProfile:true,userProfileKey:"assignedTo"},
+        {ColumnName:"percentageComplete",DisplayName: "Completed(%)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
         {ColumnName: "endDate_converted",DisplayName: "Due Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "date",sort: true,multi: false,},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,dropdownList:["New","In Progress","In Review","Closed"]},
         { ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false}

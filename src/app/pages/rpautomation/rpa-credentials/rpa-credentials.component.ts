@@ -156,7 +156,7 @@ inputNumberOnly(event){
     //   confirmButtonText: 'Yes, delete it!'
     // }).then((result) => {
 this.confirmationService.confirm({
-  message: "Do you want to delete this credential? This can't be undone.",
+  message: "Do you want to delete this credential? This can't be undo.",
   header: 'Are you sure?',
   acceptLabel:'Yes',
  rejectLabel:'No',

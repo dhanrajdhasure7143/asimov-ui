@@ -1,15 +1,15 @@
-<p-splitter [style]="{'height': 'auto'}" [panelSizes]="panelSizes" layout="horizontal">
+<p-splitter [style]="{'height': 'auto'}" [panelSizes]="panelSizes" [minSizes]="panelMiniSize" layout="horizontal">
   <ng-template pTemplate>
     <div class="maincont">  
       <div class="maincont-contentarea">
         <div class="maincontent">
           <div class="row main-content-head align-items-center">
-            <div class="col-md-8 pl-0 projectnamerow">
+            <div class="col-md-6 pl-0 projectnamerow">
               <h3>
                 <span class="title_text">{{_paramsData.dashboardName}} </span>
               </h3>
             </div>
-            <div class="col-md-4 pr-1 row justify-content-end align-items-center">
+            <div class="col-md-6 pr-1 row justify-content-end align-items-center">
               <button *ngIf="isCreate==1" class="btn bluebg-button" (click)="saveDashBoard('save')">Done</button>
               <button *ngIf="isCreate==0" class="btn new-cancelbtn"(click)="canelUpdate()">Cancel</button>
               <button *ngIf="isCreate==0" class="btn bluebg-button"(click)="saveDashBoard('update')">Update</button>

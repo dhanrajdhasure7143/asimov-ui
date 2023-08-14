@@ -169,4 +169,5 @@ export class DynamicTableComponent implements OnInit {
   {
     this.viewAprrovalInfo.emit(rowData);
   }
+
 }
