@@ -35730,26 +35730,26 @@
 	        !isEventSubProcess(businessObject)) {
 
 	      assign(actions, {
-	        'append.end-event': appendAction(
-	          'bpmn:EndEvent',
-	          'bpmn-icon-end-event-none',
-	          translate('Append EndEvent')
-	        ),
-	        'append.gateway': appendAction(
-	          'bpmn:ExclusiveGateway',
-	          'bpmn-icon-gateway-none',
-	          translate('Append Gateway')
-	        ),
+	        // 'append.end-event': appendAction(
+	        //   'bpmn:EndEvent',
+	        //   'bpmn-icon-end-event-none',
+	        //   translate('Append EndEvent')
+	        // ),
+	        // 'append.gateway': appendAction(
+	        //   'bpmn:ExclusiveGateway',
+	        //   'bpmn-icon-gateway-none',
+	        //   translate('Append Gateway')
+	        // ),
 	        'append.append-task': appendAction(
 	          'bpmn:Task',
 	          'bpmn-icon-task',
 	          translate('Append Task')
 	        ),
-	        'append.intermediate-event': appendAction(
-	          'bpmn:IntermediateThrowEvent',
-	          'bpmn-icon-intermediate-event-none',
-	          translate('Append Intermediate/Boundary Event')
-	        )
+	        // 'append.intermediate-event': appendAction(
+	        //   'bpmn:IntermediateThrowEvent',
+	        //   'bpmn-icon-intermediate-event-none',
+	        //   translate('Append Intermediate/Boundary Event')
+	        // )
 	      });
 	    }
 	  }
@@ -35757,23 +35757,23 @@
 	  if (!popupMenu.isEmpty(element, 'bpmn-replace')) {
 
 	    // Replace menu entry
-	    assign(actions, {
-	      'replace': {
-	        group: 'edit',
-	        className: 'bpmn-icon-screw-wrench',
-	        title: translate('Change type'),
-	        action: {
-	          click: function(event, element) {
+	    // assign(actions, {
+	    //   'replace': {
+	    //     group: 'edit',
+	    //     className: 'bpmn-icon-screw-wrench',
+	    //     title: translate('Change type'),
+	    //     action: {
+	    //       click: function(event, element) {
 
-	            var position = assign(getReplaceMenuPosition(element), {
-	              cursor: { x: event.x, y: event.y }
-	            });
+	    //         var position = assign(getReplaceMenuPosition(element), {
+	    //           cursor: { x: event.x, y: event.y }
+	    //         });
 
-	            popupMenu.open(element, 'bpmn-replace', position);
-	          }
-	        }
-	      }
-	    });
+	    //         popupMenu.open(element, 'bpmn-replace', position);
+	    //       }
+	    //     }
+	    //   }
+	    // });
 	  }
 
 	  if (isAny(businessObject, [
@@ -35784,7 +35784,7 @@
 	  ])) {
 
 	    assign(actions, {
-	      'append.text-annotation': appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation'),
+	    //   'append.text-annotation': appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation'),
 
 	      'connect': {
 	        group: 'connect',
