@@ -117,7 +117,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   backToTaskList() {
-    this.router.navigate(["/pages/projects/tasks"], {
+    // this.router.navigate(["/pages/projects/tasks"], {
+      this.router.navigate(["/pages/projects/projectdetails"], {
       queryParams: {
         project_id: this.project_id,
         project_name: this.project_name,
@@ -183,7 +184,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   deleteDocuments() {
     let req_body = [];
     this.confirmationService.confirm({
-      message: "Do you want to delete this document? This can't be undone.",
+      message: "Do you want to delete this document? This can't be undo.",
       header: "Are you sure?",
       rejectLabel: "No",
       acceptLabel: "Yes",
@@ -438,7 +439,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   backToProjectDetails() {
     this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { project_id: this.project_id },
+      queryParams: { project_id: this.project_id, project_name:this.project_name },
     });
   }
 

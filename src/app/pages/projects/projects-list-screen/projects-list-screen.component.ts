@@ -250,7 +250,7 @@ export class ProjectsListScreenComponent implements OnInit {
       });
     } else {
       this.router.navigate(["/pages/projects/projectdetails"], {
-        queryParams: { project_id: event.id },
+        queryParams: { project_id: event.id, project_name: event.projectName },
       });
     }
   }
@@ -263,7 +263,7 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
     this.confirmationService.confirm({
-      message: "Do you want to delete this project? This can't be undone.",
+      message: "Do you want to delete this project? This can't be undo.",
       header: "Are you sure?",
       acceptLabel: "Yes",
       rejectLabel: "No",
