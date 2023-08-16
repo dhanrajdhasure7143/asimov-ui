@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
   _selectedModule:any;
   isProcessLogsEnable:boolean = false;
   isCopilotEnable:boolean = false;
-
+  dashboardDetails:any={};
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -44,6 +44,13 @@ export class SidebarComponent implements OnInit {
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
     });
+    if(this.dashboardDetails)
+    {
+      this.rest_service.getDashBoardsList().subscribe((res:any)=>{
+        let dashbordlist:any=res.data;
+        this.dashboardDetails = dashbordlist.find(item=>item.defaultDashboard == true);
+      })
+    }
     let active_module=localStorage.getItem('selectedModule')
     if(active_module){
     let selected_module=active_module.split('&')
@@ -95,6 +102,23 @@ export class SidebarComponent implements OnInit {
       this.obj.sidebar.showadminSubmenu=false;
       this.obj.sidebar.showProjectsSubmenu=false;
       this.obj.contentMargin = 62;
+      if(element=='dashboard')
+      {
+        this.rest_service.getDashBoardsList().subscribe((res:any)=>{
+          let dashbordlist:any=res.data;
+          let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+          if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+            this.router.navigate(["/pages/dashboard/create-dashboard"])
+          }else{
+            const newObj = Object.assign({}, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+            this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+          }
+        })
+      }
+      if(element=='eiap-home')
+      {
+        this.router.navigate(['/pages/home'])
+      }
   }
   
   selection(){

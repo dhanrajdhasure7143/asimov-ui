@@ -2292,7 +2292,7 @@ addWorkingHours(){
 
   backtoWorkspace() {
     if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
-      this.router.navigate(["/pages/projects/tasks"], 
+      this.router.navigate(["/pages/projects/projectdetails"], 
       {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
     }else{
       this.router.navigate(["/pages/processIntelligence/upload"]);

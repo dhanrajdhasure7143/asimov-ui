@@ -21,7 +21,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <button class="btn actionmenu grey-btn" type="button" (click)="menu.toggle($event)">
                     <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" >
-                    <span class="plus">More Actions</span>
+                    <span class="plus">More</span>
                     <!--pTooltip="Action Menu" tooltipPosition="top" 
                         class="default-icon"
                         <img src="./../../../../assets/images-n/projects/menudots-hover.png" alt="Actions" class="hover-icon"> -->
@@ -66,16 +66,16 @@
                                     class="prjname-priority">
                                         <ng-template pTemplate="display">
                                             <span class="priorlabels">
-                                                <img src="./../../../../assets/images-n/projects/low_priority.svg"
-                                                    alt="importance" *ngIf="projectDetails.priority == 'Low'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'Low'"> -->
                                                 <span class="lowimp"
                                                     *ngIf="projectDetails.priority == 'Low'">{{projectDetails.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/medium_priority.svg"
-                                                    alt="importance" *ngIf="projectDetails.priority == 'Medium'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/medium_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'Medium'"> -->
                                                 <span class="mediumimp"
                                                     *ngIf="projectDetails.priority == 'Medium'">{{projectDetails.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/high_priority.svg"
-                                                    alt="importance" *ngIf="projectDetails.priority == 'High'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/high_priority.svg"
+                                                    alt="importance" *ngIf="projectDetails.priority == 'High'"> -->
                                                 <span class="highimp"
                                                     *ngIf="projectDetails.priority == 'High'">{{projectDetails.priority}}</span>
                                             </span>
@@ -212,8 +212,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 pl-0">
-                    <div class="row quicksnapshot">
+                <div class="col-md-9 pl-0">
+                    <!-- <div class="row quicksnapshot">
                         <h4 class="colheads">Quick Snapshot</h4>
                         <div class="row">
                             <div class="col-md-4 pl-0">
@@ -304,7 +304,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row quick-actions" *ngIf="!isCreate">
                         <h6>Quick Actions</h6>
                         <img class="mr-3" src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
@@ -324,6 +324,9 @@
                             <a><span>View BPMN</span></a>
                         </button>
                     </div>
+                    <div class="taskslist">
+                        <app-project-task-list></app-project-task-list>
+                    </div>
                     <div class="row acresources" *ngIf="!isCreate">
                         <div class="col-4 p-0">
                             <h4 class="colheads">Recent Activities</h4>
@@ -331,8 +334,8 @@
                         <!-- <button class="btn blue-btntext"><a href="#">View All</a></button> -->
                         <div class="col-12 p-0">
                             <app-dynamic-table [columns_list]="columns_list_activities"
-                                [table_data]="recentActivityList" [show_search_field]="true" [show_column_filter]="true"
-                                [show_clear_filter]="true" [screenTable]="'recentActivityList'"
+                                [table_data]="recentActivityList" [show_search_field]="false" [show_column_filter]="true"
+                                [show_clear_filter]="false" [screenTable]="'recentActivityList'"
                                 [search_fields]="['activity','lastModifiedUsername','lastModifiedTimestamp_new']">
                             </app-dynamic-table>
                         </div>
@@ -372,11 +375,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 pr-0 ">
+                <div class="col-md-3 pr-0 ">
                     <div class="activecollaboration">
-                        <div>
+                        <!-- <div>
                             <h4 class="colheads chatheader">Collaborations</h4>
-                        </div>
+                        </div> -->
                         <div class="collab">
                            
                             <span>

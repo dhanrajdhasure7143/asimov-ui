@@ -139,17 +139,17 @@ export class ProjectTaskListComponent implements OnInit {
     });
   }
 
-  onTabChanged(event, tabView: TabView) {
-    const tab = tabView.tabs[event.index].header;
-    if (tab == "All") {
-      this.tasks_list = this.all_tasks_list;
-    } else {
-      let filteredProjects = this.all_tasks_list.filter(
-        (item) => item.status == tab
-      );
-      this.tasks_list = filteredProjects;
-    }
-  }
+  // onTabChanged(event, tabView: TabView) {
+  //   const tab = tabView.tabs[event.index].header;
+  //   if (tab == "All") {
+  //     this.tasks_list = this.all_tasks_list;
+  //   } else {
+  //     let filteredProjects = this.all_tasks_list.filter(
+  //       (item) => item.status == tab
+  //     );
+  //     this.tasks_list = filteredProjects;
+  //   }
+  // }
 
   deletetask(data) {
     // delete the task by selected id
@@ -169,6 +169,7 @@ export class ProjectTaskListComponent implements OnInit {
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
+      key:'taskDelete',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteTask(deletetask).subscribe(
@@ -262,4 +263,5 @@ export class ProjectTaskListComponent implements OnInit {
 
     })
    }
+
 }

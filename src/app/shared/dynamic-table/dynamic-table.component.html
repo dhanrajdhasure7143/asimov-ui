@@ -74,13 +74,19 @@
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" [style]="col.width">
-                    <span *ngIf="col.ColumnName!='action'">
+                    <span *ngIf="col.ColumnName!='action' && col.ColumnName != 'percentageComplete'">
                             <div class="d-flex align-items-center">
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
-                                    <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="left" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
+                                    <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [pTooltip]="rowData[col.multiOptions[1]]" tooltipPosition="top">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Low'" src="../../../assets/images-n/projects/lowpriority_new.svg" alt="Low Priority">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Medium'" src="../../../assets/images-n/projects/mediumpriority_new.svg" alt="Medium Priority">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'High'" src="../../../assets/images-n/projects/highpriority_new.svg" alt="High Priority">
+                                    </span>
+                                    <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
                                     <span *ngIf="col.datePipe" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
-                                    <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                                    <!-- <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span> -->
+                                    
                                     <span *ngIf="col.multiOptions[1] == 'roles'" class="resourcerole" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}}</span>
                                 </span>
                                 <span *ngIf="!col.multi">
@@ -157,7 +163,11 @@
                                 </span>
                             </div>
                     </span>
-                   
+                    <span *ngIf="col.ColumnName == 'percentageComplete'" class="w-100 progress-bar-grid">
+                        <p-progressBar [class]="(rowData.percentageComplete < 30?'projects-process-bar-low': (rowData.percentageComplete < 70 ? 'projects-process-bar-medium' :'projects-process-bar-high'))+ ' projects-process-bar' " [value]="rowData.percentageComplete"></p-progressBar> 
+                        <!-- <input [(ngModel)]="rowData.percentageComplete" (click)="taskPercentage(rowData)" [min]="0" [max]="100" type="range" class="custom-slider" disabled
+                        [ngStyle]="{ 'background-color': getColor(rowData.percentageComplete) }"> -->
+                    </span>
                     <span *ngIf="col.ColumnName == 'action'" alignFrozen="right" class="w-100">
                         <div class="newinntalx">
                         <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
