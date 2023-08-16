@@ -8,7 +8,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import * as BpmnJS from "./../../../bpmn-modeler-copilot.development.js";
 import { SharebpmndiagramService } from "./../../services/sharebpmndiagram.service";
 import { RestApiService } from '../../services/rest-api.service';
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
 interface City {
   name: string,
   code: string
@@ -66,7 +65,8 @@ export class CopilotChatTwoComponent implements OnInit {
         "steps": [
           {
             "id": 4,
-            "type": "LOAD-GRAPH"
+            "type": "LOAD-GRAPH",
+            "xml":"assets/resources/Copilot- 2.bpmn"
           }
         ]
       }
@@ -323,6 +323,7 @@ export class CopilotChatTwoComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
+  previewBpmnModeler:any
   isGraphLoaded: boolean = false;
   isNodeLoaded: boolean = false;
   isNodesUpdates: boolean = false;
@@ -330,6 +331,17 @@ export class CopilotChatTwoComponent implements OnInit {
   ngOnInit(): void {
     //this.loadGraph();
     this.loader = true;
+    setTimeout(()=>{
+      let notationJson = {
+        container: ".diagram_container-copilot",
+        keyboard: {
+          bindTo: window,
+        }
+      };
+  
+      this.bpmnModeler = new BpmnJS(notationJson);
+    }, 100)
+
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -383,6 +395,7 @@ export class CopilotChatTwoComponent implements OnInit {
       { name: "IT team assign a system", min: "00", hrs: "00", days: "00" },
       { name: "System Access for the user", min: "00", hrs: "00", days: "00" },
     ];
+
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.template)
         this.loadGraph(params.template)
@@ -482,6 +495,45 @@ export class CopilotChatTwoComponent implements OnInit {
           steps: response.steps
         }
         if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
+          let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
+          this.isLoadGraphImage = false;
+          this.isDialogVisible = true;
+          setTimeout(()=>{
+            let notationJson = {
+              container: ".graph-preview-container",
+              keyboard: {
+                bindTo: window,
+              },
+              additionalModules: [{
+                __init__: [
+                  "labelEditingProvider"
+                ],
+                labelEditingProvider: ['value', null],
+              }],
+            };
+            this.previewBpmnModeler = new BpmnJS(notationJson);
+            setTimeout(() => {
+              let canvas = this.previewBpmnModeler.get('canvas');
+              canvas.zoom('fit-viewport');
+            }, 200)
+          },500)
+          setTimeout(() => {
+            this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
+    
+              this.previewBpmnModeler.importXML(res, function (err) {
+                if (err) {
+                  console.error("could not import BPMN EZFlow notation", err);
+                }
+              });
+              setTimeout(() => {
+                let canvas = this.bpmnModeler.get('canvas');
+                canvas.zoom('fit-viewport');
+              }, 200)
+              this.bpmnModeler.on('element.contextmenu', () => false);
+            });
+          }, 1500);
+          // response.steps.find((item: any) => item.type)
+        
           // this.confirmationService.confirm({
           //   message: "Are u sure you want to load graph ?",
           //   header: "Warning",
@@ -489,11 +541,10 @@ export class CopilotChatTwoComponent implements OnInit {
           //   rejectVisible: false,
           //   acceptLabel: "Yes",
           //   accept: () => {
-          //     this.loadGraphIntiate("Load Graph");
+          //     this.loadGraph("");
           //   },
           // });
-          this.isLoadGraphImage = false;
-          this.isDialogVisible = true;
+
         }
         else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
           // this.loadGraphIntiate("Load Form")
@@ -660,16 +711,9 @@ export class CopilotChatTwoComponent implements OnInit {
   loadGraph(template) {
     if (template != "Others") {
 
-
+      this.isDialogVisible=false;
       let xml = ""
-      let notationJson = {
-        container: ".diagram_container-copilot",
-        keyboard: {
-          bindTo: window,
-        }
-      };
 
-      this.bpmnModeler = new BpmnJS(notationJson);
       let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
       if (template == 'Workforce Planning')
         path = "assets/resources/Copilot- 3.bpmn"
@@ -678,8 +722,8 @@ export class CopilotChatTwoComponent implements OnInit {
       if (template == "Assessment and Testing")
         path = "assets/resources/Copilot- 2.bpmn"
       setTimeout(() => {
-        this.rest_api.getBPMNFileContent(path).subscribe((res) => {
 
+        this.rest_api.getBPMNFileContent(path).subscribe((res) => {
           this.bpmnModeler.importXML(res, function (err) {
             if (err) {
               console.error("could not import BPMN EZFlow notation", err);
