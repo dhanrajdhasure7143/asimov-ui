@@ -1826,4 +1826,10 @@ checkRunningAction(actionId:any){
 updateBotImage(botid,data:any){
   return this.http.put("/rpa-service/updateBotImage/"+botid, data);
 }
+
+//Copilot rest-api's
+
+getData(body){
+  return this.http.post("/a-square/v1/conversation/message",body)
+}
 }
