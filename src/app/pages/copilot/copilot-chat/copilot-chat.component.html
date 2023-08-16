@@ -275,10 +275,14 @@
 
     <div class="thirdpopup"  *ngIf="copilotFlag=='TEMPLATES'">
         <div class="row" >
-            <div *ngFor="let template of templates" class="col-4 form-group cardlist">
-                <p-card (click)="openChat2(template.templateTitle)">
+            <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
+                <p-card>
+                    <!-- <p-card (click)="openChat2(template.templateTitle)"> -->
                     <ng-template pTemplate="header">
-                        <img src="{{template.templatePreviewImage}}" class="w-100" alt="graph">
+                        <!-- <div [class]="'diagram_container-copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"> </div> -->
+                        <div [hidden]="!template.isExicuted" class="bps_overlay" [class]="'diagram_copilot'+i" id="_diagram"></div>
+                        <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
+                        <!-- <img src="{{template.templatePreviewImage}}" class="w-100" alt="graph"> -->
                     </ng-template>                    
                     <div class="">
                         <h6>{{template.templateTitle}}</h6>
