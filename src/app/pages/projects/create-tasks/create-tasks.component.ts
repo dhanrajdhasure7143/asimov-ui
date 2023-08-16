@@ -128,6 +128,12 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         // let status: any= response;
         //this.createtaskmodalref.hide();
+        this.messageService.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Task created successfully!",
+          key:"create"
+        })
         this.router.navigate(["/pages/projects/taskDetails"], {
           queryParams: {
             project_id: this.params_data.project_id,
