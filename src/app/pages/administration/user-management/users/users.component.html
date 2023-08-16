@@ -5,7 +5,7 @@
             <img src="../../../../../assets/images-n/gridicons/inviteuser-hover.svg" alt="inviteUser" class="hover-icon" />
         </span>
     </div>
-    <div class="gridparentdiv">
+    <div class="gridparentdiv userslistgrid">
         <app-dynamic-table [columns_list]="columns_list" [table_data]="userslist" (deleteItem)="deleteUser($event)"
             [screenTable]="'users_screen'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
             (updateItem)="modifyUser($event)" [show_search_field]="true" [show_column_filter]="true"

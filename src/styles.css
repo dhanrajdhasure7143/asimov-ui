@@ -2660,6 +2660,10 @@ span.statusbadge_nc {
   /* overflow: hidden;
   text-overflow: ellipsis; */
 }
+.userslistgrid .p-datatable-wrapper td:nth-child(4) .d-flex span  {   
+  width: 140px;
+  display: block;
+}
 .usersgrid .p-datatable-wrapper {
   height: calc(100vh - 230px); /* for Onboard Users grid */
 }
