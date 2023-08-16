@@ -5,9 +5,13 @@ th.checkboxth:before {
 .prjlastupdatename {
     text-transform: capitalize;
 }
-.prjgridpriority,
 .resourcerole {
     display: block;
+    font-size: 14px;
+    line-height: 14px;
+}
+.prjgridpriority {
+    margin-right: 5px;
     font-size: 14px;
     line-height: 14px;
 }

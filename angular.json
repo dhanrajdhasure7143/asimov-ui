@@ -47,7 +47,8 @@
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/quill/dist/quill.core.css", 
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/ng2-tel-input/node_modules/intl-tel-input/build/css/intlTelInput.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -58,7 +59,10 @@
               "node_modules/jquery/dist/jquery.js",
               "src/assets/js/jquery-2.2.4.min.js",
               "src/assets/js/jquery.tipsy.js",
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+              "node_modules/quill/dist/quill.js",
+              "node_modules/ng2-tel-input/node_modules/intl-tel-input/build/js/intlTelInput.min.js"
+
             ],
             "vendorChunk": true,
             "extractLicenses": false,

@@ -203,7 +203,7 @@ export class RpaenvironmentsComponent implements OnInit {
       // }
       this.confirmationService.confirm({
         header: 'Are you sure?',
-        message: "Do you want to delete this environment? This can't be undone.",
+        message: "Do you want to delete this environment? This can't be undo.",
        acceptLabel:'Yes',
        rejectLabel:'No',
        rejectButtonStyleClass: ' btn reset-btn',

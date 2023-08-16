@@ -70,14 +70,14 @@
                                     <p-inplace #inplace6 (onActivate)="inplaceActivate('priority','inplace6')" class="taskname-priority">
                                         <ng-template pTemplate="display">
                                             <span class="priorlabels">
-                                                <img src="./../../../../assets/images-n/projects/low_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'Low'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/low_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'Low'"> -->
                                                     <span class="lowimp" *ngIf="task_details.priority == 'Low'">{{task_details.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/medium_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'Medium'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/medium_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'Medium'"> -->
                                                     <span class="mediumimp" *ngIf="task_details.priority == 'Medium'">{{task_details.priority}}</span>
-                                                <img src="./../../../../assets/images-n/projects/high_priority.svg"
-                                                    alt="importance" *ngIf="task_details.priority == 'High'">
+                                                <!-- <img src="./../../../../assets/images-n/projects/high_priority.svg"
+                                                    alt="importance" *ngIf="task_details.priority == 'High'"> -->
                                                 <span class="highimp" *ngIf="task_details.priority == 'High'">{{task_details.priority}}</span>
                                             </span>
                                         </ng-template>
@@ -316,7 +316,14 @@
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
             <div class="h-100">
                 <div class="create-header">
-                    <h3>Attached Documents</h3>
+                    <h3 class="d-inline">Attached Documents</h3>
+                    <span class="" (change)="changefileUploadForm($event)">
+                        <span class="fileupsec">
+                            <input class="tsttooltipbtn" type="file" name="myfile" multiple id="file-input" title="Attach Documents">
+                            <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt="Attach Documents" class="testplus" >
+                            <!-- <span class="testtooltip">Attach Documents</span> -->
+                        </span>
+                    </span>
                 </div>
                 <div class="splitoverlaycontent attachdocgrid">
                     <div class="tablediv">
@@ -372,7 +379,7 @@
                         </p-table>
                     </div>
                 </div>
-                <div class="row pl-4">
+                <!-- <div class="row pl-4">
                     <div class="" (change)="changefileUploadForm($event)">
                         <div class="fileupsec">
                             <input type="file" name="myfile" multiple id="file-input">
@@ -380,7 +387,7 @@
                             <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt="Attach Documents" class="testplus">                            
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </app-split-overlay>
     </div>

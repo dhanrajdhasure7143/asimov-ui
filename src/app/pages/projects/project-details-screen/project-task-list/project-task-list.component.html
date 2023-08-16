@@ -1,6 +1,6 @@
 <div class="maincontent">
   <div class="h-100">
-      <div class="row main-content-head">
+      <!-- <div class="row main-content-head">
           <div class="col-md-8 pl-0">
               <h3>
                   <label id="popup_title">
@@ -18,18 +18,23 @@
               <button  (click)="onCreateTask()" class="btn grey-btn configure-pad" >
                   <img src="./../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Create" class="imgicon-width">
                   <span class="plus">Create Task</span>
-                  <!-- <span>Create</span> -->
+                  <span>Create</span>
               </button>
-              <!-- <button class="btn">
+              <button class="btn">
                   <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                   <span>Actions</span>
-              </button> -->
+              </button>
           </div>
-      </div>
-      <div class="main-content-body tablist-cont">
+      </div> -->
+      <!-- <div class="main-content-body tablist-cont"> -->
+        <div>
+            <div class="col-md-4 pl-0">
+                <h4 class="colheads"> Tasks</h4>
+            </div>
+            
           <div class="h-100">
               <div class="tabs_screen h-100" id="">
-                  <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+                  <!-- <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
                       <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
                           [selected]="i == 0">
                           <ng-template pTemplate="header">
@@ -65,7 +70,28 @@
                             >
                           </app-dynamic-table>
                       </div>
-                  </p-tabView>
+                  </p-tabView> -->
+                  <div class="gridparentdiv">
+                    <app-dynamic-table 
+                      [columns_list]="columns_list" 
+                      [table_data]="tasks_list"
+                      (viewItem)="viewDetails($event)" 
+                      (deleteItem)="deletetask($event)"
+                      [representatives]="representatives" 
+                      [screenTable]="'taskList'" 
+                      [dataKeyId]="'id'" 
+                      [search_fields]="table_searchFields"
+                      [selectionMode]="'single'" 
+                      (openTaskWorkSpace)="openTaskWorkSpace($event)"
+                      [show_search_field]="true"
+                      [show_column_filter]="true"
+                      [show_clear_filter]="true"
+                      (onRowDoubleClick)="viewDetails($event)"
+                      [show_view_btn]="true"
+                      [show_delete_btn]="true"
+                      >
+                    </app-dynamic-table>
+                </div>
               </div>
           </div>
       </div>
@@ -93,6 +119,6 @@
 </div>
 
 <p-toast [style]="{marginTop: '50px'}"></p-toast>
-<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"  key="taskDelete"
  [closable]="false">
 </p-confirmDialog>
