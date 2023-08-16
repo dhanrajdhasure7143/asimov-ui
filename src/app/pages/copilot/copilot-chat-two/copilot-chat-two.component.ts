@@ -66,7 +66,7 @@ export class CopilotChatTwoComponent implements OnInit {
           {
             "id": 4,
             "type": "LOAD-GRAPH",
-            "xml":"assets/resources/copilot_bpmn_chatgpt.bpmn"
+            "xml":"assets/resources/Copilot- 2.bpmn"
           }
         ]
       }
@@ -323,6 +323,7 @@ export class CopilotChatTwoComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
+  previewBpmnModeler:any
   isGraphLoaded: boolean = false;
   isNodeLoaded: boolean = false;
   isNodesUpdates: boolean = false;
@@ -330,6 +331,17 @@ export class CopilotChatTwoComponent implements OnInit {
   ngOnInit(): void {
     //this.loadGraph();
     this.loader = true;
+    setTimeout(()=>{
+      let notationJson = {
+        container: ".diagram_container-copilot",
+        keyboard: {
+          bindTo: window,
+        }
+      };
+  
+      this.bpmnModeler = new BpmnJS(notationJson);
+    }, 100)
+
     this.jsPlumbInstance = jsPlumb.getInstance();
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
@@ -383,6 +395,7 @@ export class CopilotChatTwoComponent implements OnInit {
       { name: "IT team assign a system", min: "00", hrs: "00", days: "00" },
       { name: "System Access for the user", min: "00", hrs: "00", days: "00" },
     ];
+
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.template)
         this.loadGraph(params.template)
@@ -498,12 +511,16 @@ export class CopilotChatTwoComponent implements OnInit {
                 labelEditingProvider: ['value', null],
               }],
             };
-            this.bpmnModeler = new BpmnJS(notationJson);
-          },200)
+            this.previewBpmnModeler = new BpmnJS(notationJson);
+            setTimeout(() => {
+              let canvas = this.previewBpmnModeler.get('canvas');
+              canvas.zoom('fit-viewport');
+            }, 200)
+          },500)
           setTimeout(() => {
             this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
     
-              this.bpmnModeler.importXML(res, function (err) {
+              this.previewBpmnModeler.importXML(res, function (err) {
                 if (err) {
                   console.error("could not import BPMN EZFlow notation", err);
                 }
@@ -694,16 +711,9 @@ export class CopilotChatTwoComponent implements OnInit {
   loadGraph(template) {
     if (template != "Others") {
 
-
+      this.isDialogVisible=false;
       let xml = ""
-      let notationJson = {
-        container: ".diagram_container-copilot",
-        keyboard: {
-          bindTo: window,
-        }
-      };
 
-      this.bpmnModeler = new BpmnJS(notationJson);
       let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
       if (template == 'Workforce Planning')
         path = "assets/resources/Copilot- 3.bpmn"
@@ -712,8 +722,8 @@ export class CopilotChatTwoComponent implements OnInit {
       if (template == "Assessment and Testing")
         path = "assets/resources/Copilot- 2.bpmn"
       setTimeout(() => {
-        this.rest_api.getBPMNFileContent(path).subscribe((res) => {
 
+        this.rest_api.getBPMNFileContent(path).subscribe((res) => {
           this.bpmnModeler.importXML(res, function (err) {
             if (err) {
               console.error("could not import BPMN EZFlow notation", err);
