@@ -1139,7 +1139,7 @@ export class ProjectsDocumentComponent implements OnInit {
       if (file) {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
         if (fileExtension === 'exe') {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: "This file not Allow!"});
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: "This file not Allowed!"});
           e.target.value = ''; // Clear the file input
           return;
         }
