@@ -18,7 +18,7 @@ export class ModifyUserComponent implements OnInit {
   roleObj: any;
   roleIds: any[] = [];
   isdprtDisabled: boolean = false;
-  people = [{ name: "test", id: "01" }];
+ // people = [{ name: "test", id: "01" }];
   isdisabled: boolean = true;
   departments = [];
   email: any;
