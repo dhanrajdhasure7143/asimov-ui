@@ -25,8 +25,7 @@ export class RpaActionItemsComponent implements OnInit {
   table_searchFields:any[]=[];
   selectedIcon: any;
   action_Id:any;
-  userRole:any=[]
-  // selectedActionType: any =[];
+  userRole:any=[];
   // actionVisible:boolean=true;
 
   constructor(
@@ -58,23 +57,6 @@ export class RpaActionItemsComponent implements OnInit {
   getAllActionItems() {
     this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
     this.actionTable = res.data;
-    // console.log('this is data',res.data);
-    // this.actionTable.forEach((element) => {   
-    //   if(element.authenticationType!== null){
-    //      this.selectedActionType.push(element.authenticationType)
-    //   }else{
-    //     this.selectedActionType.push('None')
-    //   }
-    // });
-    // this.selectedActionType = [...new Set(this.selectedActionType)];
-    // console.log('smk',this.selectedActionType)
-    // this.columns_list.forEach(item => {
-    //   console.log("item",item);   
-    //   if (item.ColumnName == "authenticationType") {
-    //     item["dropdownList"] = this.selectedActionType
-    //   }
-    // });
-   
     this.readSelectedData([]); 
     this.loader.hide();
     this.table_searchFields=["name","actionType","endPoint","methodType"];
