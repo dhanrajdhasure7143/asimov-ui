@@ -182,11 +182,11 @@ export class ProjectsDocumentComponent implements OnInit {
         data['icon'] = "xlsx-file.svg"
       }else if(data.dataType == 'ppt'||data.dataType=='pptx'){
         data['icon'] = "ppt-file.svg"
-      }else{
-        data['icon'] = "txt-file.svg"
-      } if(data.dataType=='mp3'){
+      }else if(data.dataType=='mp3'){
         data['icon'] = "audio-file.svg"
-      }
+      } else{
+        data['icon'] = "txt-file.svg"
+      } 
       return data;
     });
 
@@ -871,7 +871,9 @@ export class ProjectsDocumentComponent implements OnInit {
         data['icon'] = "xlsx-file.svg"
       }else if(data.dataType == 'ppt'){
         data['icon'] = "ppt-file.svg"
-      }else{
+      }else if(data.dataType=='mp3'){
+        data['icon'] = "audio-file.svg"
+      } else{
         data['icon'] = "txt-file.svg"
       }
       return data;

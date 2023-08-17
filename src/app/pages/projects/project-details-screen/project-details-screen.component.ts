@@ -1329,10 +1329,10 @@ convertToTree(res_data:any){
       node['icon'] = "xlsx-file.svg"
     }else if(obj.dataType == 'ppt'||obj.dataKey=='pptx' ){
       node['icon'] = "ppt-file.svg"
+    }else if(obj.dataType=='mp3'){
+      obj['icon'] = "audio-file.svg"
     }else{
       node['icon'] = "txt-file.svg"
-    }if(obj.dataType=='mp3'){
-      node['icon'] = "audio-file.svg"
     }
       this.nodeMap[obj.key] = node;
     if (obj.key.indexOf('-') === -1) {
