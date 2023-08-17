@@ -50,13 +50,13 @@ export class RpaActionItemsComponent implements OnInit {
     this.loader.show();
     this.getAllActionItems();
      this.userRole = localStorage.getItem("userRole");
-     this.columns_list = this.columnList.actionItemsList_column
+    this.columns_list = this.columnList.actionItemsList_column
     // this.userRole = this.userRole.split(','); this.actionVisible = this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer') ;
   }
 
   getAllActionItems() {
     this.rest_api.getActionsByConnectionId(this.selectedId).subscribe((res: any) => {
-    this.actionTable = res.data;
+    this.actionTable = res.data; 
     this.readSelectedData([]); 
     this.loader.hide();
     this.table_searchFields=["name","actionType","endPoint","methodType"];
