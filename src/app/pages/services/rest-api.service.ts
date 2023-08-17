@@ -1832,4 +1832,11 @@ updateBotImage(botid,data:any){
 getData(body){
   return this.http.post("/a-square/v1/conversation/message",body)
 }
+
+getdata1(){
+  return this.http.get("/a-square/v1/processes/1")
+}
+// getdata1(){
+//   return this.http.get("/a-square/v1/processes/1")
+// }
 }
