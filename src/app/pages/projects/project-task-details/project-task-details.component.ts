@@ -4,7 +4,6 @@ import { Inplace } from "primeng/inplace";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
-import Swal from "sweetalert2";
 import * as moment from "moment";
 import { ConfirmationService, MessageService } from "primeng/api";
 import * as JSZip from "jszip";
@@ -236,6 +235,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         createdUserEmail: localStorage.getItem("ProfileuserId"),
       });
       this.updatetask();
+      this.add_comment="";
     }
   }
 
@@ -276,7 +276,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // taskupdatFormValue["taskCategory"]=this.taskcategory
     this.rest_api.updateTask(taskupdatFormValue).subscribe(
       (res) => {
-        this.taskcomments_list = this.added_comments_list;
+        // this.taskcomments_list = this.added_comments_list;
         this.add_comment = "";
         this.messageService.add({
           severity: "success",
