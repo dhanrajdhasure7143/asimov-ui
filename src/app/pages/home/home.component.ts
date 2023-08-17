@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../services/data-transfer.service";
 import { PagesHints } from '../model/pages.model';
 import { RestApiService } from '../services/rest-api.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -55,7 +56,12 @@ export class HomeComponent implements OnInit {
     // },error => {
     //   //this.error = "Please complete your registration process";
     // })
-    this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+
+    //  --- Redirection to rpa ---
+    if(environment.isCopilotEnable)
+        this.router.navigate(["/pages/copilot/chat"], {queryParams:this._params});
+    if(!environment.isCopilotEnable)
+      this.rest_api.getDashBoardsList().subscribe((res:any)=>{
       let dashbordlist:any=res.data;
       let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
       if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
