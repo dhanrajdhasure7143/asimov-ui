@@ -127,6 +127,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "steps": [
           {
             "type": "UPDATE-NODE-1",
+            "xml":"Job Analysis and Job Posting"
           },
           {
             "type": "BUTTON",
@@ -147,7 +148,8 @@ export class CopilotChatTwoComponent implements OnInit {
         "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
         "steps": [
           {
-            "type": "UPDATE-NODE-2"
+            "type": "UPDATE-NODE-2",
+            "xml":""
           },
           {
             "type": "BUTTON",
@@ -526,10 +528,10 @@ export class CopilotChatTwoComponent implements OnInit {
                 }
               });
               setTimeout(() => {
-                let canvas = this.bpmnModeler.get('canvas');
+                let canvas = this.previewBpmnModeler.get('canvas');
                 canvas.zoom('fit-viewport');
               }, 200)
-              this.bpmnModeler.on('element.contextmenu', () => false);
+              this.previewBpmnModeler.on('element.contextmenu', () => false);
             });
           }, 1500);
           // response.steps.find((item: any) => item.type)
@@ -553,10 +555,13 @@ export class CopilotChatTwoComponent implements OnInit {
           //  this.loadGraphIntiate("Load Node");
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
+          let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
+          this.loadGraph(responseData);
           // this.loadGraphIntiate("Update Node 1");
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
-          // this.loadGraphIntiate("Update Node 2");
+          let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
+          this.loadGraph(responseData);
         }
         else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
           this.loader = true;
