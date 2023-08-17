@@ -134,13 +134,6 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       if(params["vcmId"]){
         this.vcmId = params['vcmId'];
       }
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail:'Created Successfully',
-        key:"createBpmn"
-      })
-
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
     this.setRPAData();
