@@ -1912,17 +1912,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   async acceptUpdateBotWithDeprecatedTasks(version_type, comments) {
     if(this.isDeprecated == true){
-      const message = `Deprecated task present in the bot, <br>
+      const message = `Deprecated task(s) present in the bot, <br>
       <span class="bold">${this.modifiedTaskNames.join(', ')}</span>
-      Unless you update, bot will run with default values. Do you want to proceed with Update?`;
+      Do you want to proceed with Update?`;
    this.confirmationService.confirm({
      message: message,
      header: 'Are you sure?',
      accept: () => {
-       this.spinner.hide();
+      this.updateFinalBot(version_type, comments);
      },
      reject: async (type) => {
-      this.updateFinalBot(version_type, comments);
+      this.spinner.hide();
      },
      key: "positionDialog"
    });
