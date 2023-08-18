@@ -127,7 +127,7 @@ export class CopilotChatComponent implements OnInit {
 
    
   ngOnInit(): void {
-    
+    this.getListOfProcess();
     this.historyList=[
       {label:"Process Graph"},
       {label:"RPA"},
@@ -157,8 +157,7 @@ sendMessage(){
 }
 
 
-getProcessNames()
-{
+getProcessNames(){
   this.rest.getProcesses.subscribe((response:any)=>{
     this.copilotFlag="PROCESS"
     this.display=true;
@@ -248,6 +247,12 @@ loadBpmnInTemplate(template?,index?) {
   this.templates[index]["isExicuted"]= true;
 
     }, 1500);
+}
+
+getListOfProcess(){
+  this.rest_api.getCopilotProcessList().subscribe(res=>{
+    console.log(res)
+  })
 }
 
 
