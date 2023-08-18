@@ -197,14 +197,14 @@
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;" >
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span>{{selectedProcess.processName}}</span>
+            <span>{{selectedProcess.process_name}}</span>
         </div>
         <div class="d-flex" *ngIf="copilotFlag=='TEMPLATES'"  >
             <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span>{{selectedProcess.processName}} - {{selectedFunction.functionName}}</span>
+            <span>{{selectedProcess.process_name}} - {{selectedFunction.functionName}}</span>
         </div>
     </ng-template>
     <p class="subheader"*ngIf="copilotFlag=='PROCESS'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
@@ -212,32 +212,9 @@
   
     <div *ngIf="copilotFlag=='PROCESS'" class="popupcontent">
         <div class="row">
-            <div *ngFor="let process of processes" class="col-sm-3 form-group cardlist">
-                <p-card (click)="getFunctionsByProcessId(process)">{{process.processName}}</p-card>
+            <div *ngFor="let process of processesList" class="col-sm-3 form-group cardlist">
+                <p-card (click)="getFunctionsByProcessId(process)">{{process.process_name}}</p-card>
             </div>
-            <!-- <div class="col-sm-3 form-group cardlist">
-                <p-card>Finance & Accounting</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card>Production</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card style="white-space: 'break-spaces'">Business <br>Warehouse</p-card>
-            </div>
-        
-            <div class="col-sm-3 form-group cardlist">
-                <p-card>Demand to Pay</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card>CRM</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card>Master Date Management</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card (click)="openHumanResource()"> Human <br>Resource </p-card>
-            </div> -->
-        
             <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openChat2('Others')">Others</p-card>
             </div>    
@@ -249,27 +226,6 @@
             <div *ngFor="let functionItem of functions" class="col-sm-6 form-group cardlist">
                 <p-card (click)="getTemplatesByFunction(functionItem)"  class="item-card1"><span>{{functionItem.functionName}}</span></p-card>
             </div>
-            <!-- <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Learning & Development (10)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Training (2)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Talent Management (12)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Payroll (12)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Separation (12)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Benefits (3)</span></p-card>
-            </div>
-            <div class="col-sm-6 form-group cardlist">
-                <p-card class="item-card1"><span>Retirement (12)</span></p-card>
-            </div> -->
         </div>
     </div>
 
