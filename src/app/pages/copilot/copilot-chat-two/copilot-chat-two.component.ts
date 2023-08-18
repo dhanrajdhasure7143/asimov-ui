@@ -127,7 +127,7 @@ export class CopilotChatTwoComponent implements OnInit {
         "steps": [
           {
             "type": "UPDATE-NODE-1",
-            "xml":"Job Analysis and Job Posting"
+            "xml":"assets/resources/Copilot-1.bpmn"
           },
           {
             "type": "BUTTON",
@@ -261,7 +261,7 @@ export class CopilotChatTwoComponent implements OnInit {
   @ViewChild('render') render: ElementRef;
   @ViewChild('nodeImage', { read: ElementRef }) nodeImage: ElementRef;
   public model2: any;
-
+  public bpmnPath:String=""
   nodeMenuItems: MenuItem[];
   messages: any = [];
   message: any = "";
@@ -389,6 +389,7 @@ export class CopilotChatTwoComponent implements OnInit {
           let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
           this.isLoadGraphImage = false;
           this.isDialogVisible = true;
+          this.bpmnPath=responseData
           setTimeout(() => {
             this.loadBpmnwithXML(responseData,".graph-preview-container");
           }, 500);
@@ -402,12 +403,11 @@ export class CopilotChatTwoComponent implements OnInit {
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
           let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
-          this.loadupdatedBpmn();
+          this.loadupdatedBpmn(responseData);
           // this.loadGraphIntiate("Update Node 1");
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
           let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
-          this.loadupdatedBpmn();
         }
         else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
           this.loader = true;
@@ -529,9 +529,8 @@ export class CopilotChatTwoComponent implements OnInit {
     }
   }
 
-  loadupdatedBpmn(){
-    console.log("testing")
-    this.rest_api.getBPMNFileContent('assets/resources/Copilot- 1.bpmn').subscribe((res) => {
+  loadupdatedBpmn(BpmnPath){
+    this.rest_api.getBPMNFileContent(BpmnPath).subscribe((res) => {
       this.bpmnModeler.importXML(res, function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
@@ -546,6 +545,8 @@ export class CopilotChatTwoComponent implements OnInit {
 
 
   loadBpmnwithXML(responseData,element){
+    if(element==".diagram_container-copilot")
+      this.isDialogVisible=false;
     // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
     this.bpmnModeler = new BpmnJS({container: element});
 
