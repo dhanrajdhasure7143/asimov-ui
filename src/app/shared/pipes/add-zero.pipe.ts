@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'AddExtrazero'
+  name: 'addZero'
 })
-export class AddExtrazeroPipe implements PipeTransform {
+export class AddZeroPipe implements PipeTransform {
   transform(value: any) {
     // Add an extra zero when the value is zero
     if (value === 0) {
