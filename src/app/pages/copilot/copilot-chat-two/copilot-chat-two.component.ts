@@ -325,7 +325,6 @@ export class CopilotChatTwoComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
-  previewBpmnModeler:any
   isGraphLoaded: boolean = false;
   isNodeLoaded: boolean = false;
   isNodesUpdates: boolean = false;
@@ -333,63 +332,6 @@ export class CopilotChatTwoComponent implements OnInit {
   ngOnInit(): void {
     //this.loadGraph();
     this.loader = true;
-    setTimeout(()=>{
-      let notationJson = {
-        container: ".diagram_container-copilot",
-        keyboard: {
-          bindTo: window,
-        }
-      };
-  
-      this.bpmnModeler = new BpmnJS(notationJson);
-    }, 100)
-
-    this.jsPlumbInstance = jsPlumb.getInstance();
-    this.jsPlumbInstance.importDefaults({
-      Connector: ["Flowchart", { curviness: 200, cornerRadius: 5 }],
-      overlays: [
-        ["Arrow", { width: 6, length: 6, location: 0.5 }],
-        ["Label", { label: "FOO" }],
-      ],
-    })
-    this.nodeMenuItems = [
-      {
-        label: 'Options',
-        items: [
-          {
-            label: 'AddNode',
-            icon: 'pi pi-refresh',
-            command: () => {
-
-            }
-          },
-          {
-            label: 'Delete',
-            icon: 'pi pi-times',
-            command: () => {
-              //this.delete();
-            }
-          }
-        ]
-      },
-      {
-        label: 'Navigate',
-        items: [
-          {
-            label: 'Angular',
-            icon: 'pi pi-external-link',
-            url: 'http://angular.io'
-          },
-          {
-            label: 'Router',
-            icon: 'pi pi-upload',
-            routerLink: '/fileupload'
-          }
-        ]
-      }
-    ];
-
-
     this.tableData = [
       { name: "IT from sent to the manager", min: "00", hrs: "00", days: "00" },
       { name: "Manager fills the form", min: "00", hrs: "00", days: "00" },
@@ -403,76 +345,23 @@ export class CopilotChatTwoComponent implements OnInit {
         this.loadGraph(params.template)
       this.loader = false;
     })
-    // this.dt.getCoplilotData.subscribe((response:any)=>{
-    //   console.log("check sample")
-    //   if(response!=undefined)
-    //   {
-    //     setTimeout(()=>{
-    //       this.messages=response.messages;
-    //       if(this.messages.find((item:any)=>item.message=="Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?")==undefined)
-    //       {
-    //         this.messages.push(
-    //           {
-    //             "user":"SYSTEM",
-    //             "message":"Hi! Would you like to do modifications in the current flow? Or do you want to open Bot Design?",
-    //             "steps":[
-    //               {
-    //                 "type":"BUTTON",
-    //                 "label":"Generate Bot Design"
-    //               }
-    //             ],
-    //           })
-    //       }
-    //       if(response.isGraphLoaded)
-    //       {
-    //         this.loadGraphIntiate("Load Graph");
-    //       }
-    //       if (response.isNodeLoaded) {
-    //         setTimeout(()=>{
-    //           this.loadGraphIntiate("Load Node");
-    //         },300)
-    //       }
-    //       if (response.isNodeUpdated) {
-    //           this.loadGraphIntiate("Update Node 1");
-    //           this.loadGraphIntiate("Update Node 2");
-    //       }
-    //       if (response.isTableLoaded) {
-    //         this.tableData=response.tableData;
-    //         setTimeout(()=>{
-    //           this.loadGraphIntiate("Load Form");
-    //           this.loader=false;
-
-    //         },500)
-    //       }
-    //       setTimeout(()=>{
-    //         var objDiv = document.getElementById("chat-grid");
-    //         objDiv.scrollTop = objDiv.scrollHeight;
-    //       },200)
-    //       //this.dt.setCopilotData(undefined)
-
-    //     },1000)
-    //   }
-    //   else
-    //   {
-    //     this.loader=false
-    //     this.messages.push({
-    //       id: (new Date()).getTime(),
-    //       user: "SYSTEM",
-    //       message: "Hi, what process would you like to automate?",
-    //       steps: []
-    //     })
-
-    //   }
-    // })
   }
-
-
-
-
-
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
+    setTimeout(() => {
+      let data ={
+        "conversationId": "b4d32511-1c79-4fe7-8b7f-0dfb9fbd9bcb",    
+        "message": "Please create Employee onboarding"
+    }
+      this.rest_api.getData(data).subscribe(res=>{
+        console.log(res)
+      })
+      this.rest_api.getdata1().subscribe(res=>{
+        console.log(res)
+      })
+    }, 1000);
+
     if (value == "Onboard Users") {
       this.isChatLoad = false;
       this.isLoadGraphImage = true;
@@ -500,52 +389,9 @@ export class CopilotChatTwoComponent implements OnInit {
           let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
           this.isLoadGraphImage = false;
           this.isDialogVisible = true;
-          setTimeout(()=>{
-            let notationJson = {
-              container: ".graph-preview-container",
-              keyboard: {
-                bindTo: window,
-              },
-              additionalModules: [{
-                __init__: [
-                  "labelEditingProvider"
-                ],
-                labelEditingProvider: ['value', null],
-              }],
-            };
-            this.previewBpmnModeler = new BpmnJS(notationJson);
-            setTimeout(() => {
-              let canvas = this.previewBpmnModeler.get('canvas');
-              canvas.zoom('fit-viewport');
-            }, 200)
-          },500)
           setTimeout(() => {
-            this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
-    
-              this.previewBpmnModeler.importXML(res, function (err) {
-                if (err) {
-                  console.error("could not import BPMN EZFlow notation", err);
-                }
-              });
-              setTimeout(() => {
-                let canvas = this.previewBpmnModeler.get('canvas');
-                canvas.zoom('fit-viewport');
-              }, 200)
-              this.previewBpmnModeler.on('element.contextmenu', () => false);
-            });
-          }, 1500);
-          // response.steps.find((item: any) => item.type)
-        
-          // this.confirmationService.confirm({
-          //   message: "Are u sure you want to load graph ?",
-          //   header: "Warning",
-
-          //   rejectVisible: false,
-          //   acceptLabel: "Yes",
-          //   accept: () => {
-          //     this.loadGraph("");
-          //   },
-          // });
+            this.loadBpmnwithXML(responseData,".graph-preview-container");
+          }, 500);
 
         }
         else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
@@ -556,12 +402,12 @@ export class CopilotChatTwoComponent implements OnInit {
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
           let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
-          this.loadGraph(responseData);
+          this.loadupdatedBpmn();
           // this.loadGraphIntiate("Update Node 1");
         }
         else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
           let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
-          this.loadGraph(responseData);
+          this.loadupdatedBpmn();
         }
         else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
           this.loader = true;
@@ -659,8 +505,6 @@ export class CopilotChatTwoComponent implements OnInit {
   }
 
 
-
-
   updateCoordinates(dragNode) {
     var nodeIndex = this.nodes.findIndex((node) => {
       return node.id == dragNode.id;
@@ -669,56 +513,9 @@ export class CopilotChatTwoComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
 
-
-  // loadGraphIntiate(value?: any) {
-  //   this.showTable = false;
-  //   if (value == "Load Graph" || value == "Load Node" || value=="Update Node 1" || value=="Update Node 2") {
-  //     if (!this.isGraphLoaded) {
-  //       this.loadGraph()
-  //     }
-  //     else if (!this.isNodeLoaded) {
-  //       this.isNodeLoaded = true
-  //       let node = {
-  //         id: "22",
-  //         selectedNodeTask: "Send IT form",
-  //         x: "100px",
-  //         y: "30px",
-  //         path: "../../../../assets/copilot/graph-icons/General.png",
-  //         updated:false
-  //       }
-  //       this.nodes.push(node);
-  //       setTimeout(() => {
-  //         this.populateNodes(node);
-  //       }, 200)
-  //     }
-  //     else if(!this.isNodesUpdates)
-  //     {
-  //       if(value=='Update Node 1')
-  //       {
-  //         this.nodes.find((item:any)=>item.id=="3").selectedNodeTask="Login to Zoho";
-  //         this.nodes.find((item:any)=>item.id=="3").path="../../../../assets/copilot/graph-icons/process-block-green.png";
-  //         this.nodes.find((item:any)=>item.id=="3").updated=true;
-  //       }
-  //       if(value=='Update Node 2'){
-  //          this.nodes.find((item:any)=>item.id=="5").selectedNodeTask="Create O365 Account";
-  //          this.nodes.find((item:any)=>item.id=="5").path="../../../../assets/copilot/graph-icons/process-block-green.png";
-  //          this.nodes.find((item:any)=>item.id=="5").updated=true;
-  //         //this.addExtraNode();
-  //         this.isNodesUpdates=true;
-  //       }
-
-  //     }
-  //   }
-  //   else if (value == "Load Form")
-  //     this.showTable = true;
-  // }
-
   loadGraph(template) {
     if (template != "Others") {
-
       this.isDialogVisible=false;
-      let xml = ""
-
       let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
       if (template == 'Workforce Planning')
         path = "assets/resources/Copilot- 3.bpmn"
@@ -727,33 +524,59 @@ export class CopilotChatTwoComponent implements OnInit {
       if (template == "Assessment and Testing")
         path = "assets/resources/Copilot- 2.bpmn"
       setTimeout(() => {
-
-        this.rest_api.getBPMNFileContent(path).subscribe((res) => {
-          this.bpmnModeler.importXML(res, function (err) {
-            if (err) {
-              console.error("could not import BPMN EZFlow notation", err);
-            }
-          });
-          setTimeout(() => {
-            let canvas = this.bpmnModeler.get('canvas');
-            canvas.zoom('fit-viewport');
-          }, 200)
-
-          this.bpmnModeler.on('element.contextmenu', () => false);
-          // this.bpmnModeler.on('contextPad.destroy', event => {
-          //   console.log("check")
-          //   const contextPadContainer = event.contextPad._container;
-          //   contextPadContainer.parentNode.removeChild(contextPadContainer);
-          // });
-        });
+        this.loadBpmnwithXML(path,".diagram_container-copilot");
       }, 1500);
     }
   }
-  openCommentBox(event: any) {
-    this.popupMenuOverlay.hide();
-    this.overlayModel.show(event);
+
+  loadupdatedBpmn(){
+    console.log("testing")
+    this.rest_api.getBPMNFileContent('assets/resources/Copilot- 1.bpmn').subscribe((res) => {
+      this.bpmnModeler.importXML(res, function (err) {
+        if (err) {
+          console.error("could not import BPMN EZFlow notation", err);
+        }
+      });
+      setTimeout(() => {
+        this.notationFittoScreen();
+        this.readBpmnModelerXMLdata();
+      }, 500);
+    });
   }
 
+
+  loadBpmnwithXML(responseData,element){
+    // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
+    this.bpmnModeler = new BpmnJS({container: element});
+
+    this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
+      this.bpmnModeler.importXML(res, function (err) {
+        if (err) {
+          console.error("could not import BPMN EZFlow notation", err);
+        }
+      });
+      setTimeout(() => {
+            this.notationFittoScreen();
+          if(element !='.graph-preview-container')
+            this.readBpmnModelerXMLdata();
+      }, 500)
+      this.bpmnModeler.on('element.contextmenu', () => false);
+    });
+  }
+
+  notationFittoScreen(){
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+  }
+
+  readBpmnModelerXMLdata(){
+    var self = this
+    self.bpmnModeler.on('element.changed', function(){
+     self.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+        console.log("xml",xml)// xml data will get for every change
+      })
+      })
+  }
 
   onChange() {
     console.log(this.tableData)

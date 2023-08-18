@@ -1834,9 +1834,8 @@ getData(body){
 }
 
 getdata1(){
-  return this.http.get("/a-square/v1/processes/1")
+  // return this.http.get("/a-square/v1/processes/1")
+  return this.http.get("/a-square/v1/conversation")
 }
-// getdata1(){
-//   return this.http.get("/a-square/v1/processes/1")
-// }
+
 }
