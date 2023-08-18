@@ -357,9 +357,9 @@ export class CopilotChatTwoComponent implements OnInit {
       this.rest_api.getData(data).subscribe(res=>{
         console.log(res)
       })
-      this.rest_api.getdata1().subscribe(res=>{
-        console.log(res)
-      })
+      // this.rest_api.getdata1().subscribe(res=>{
+      //   console.log(res)
+      // })
     }, 1000);
 
     if (value == "Onboard Users") {
