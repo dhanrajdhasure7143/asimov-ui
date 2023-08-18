@@ -386,6 +386,7 @@ button.btn.bg-success-new {
 button.btn.bg-success-new:hover {
   background-color: #77E47B !important;
 }
+.btn-primary{ height:36px;}
 .btn-primary:hover {
     color: #fff !important;
     background-color: #025cbb !important;
@@ -406,8 +407,13 @@ padding: 0px 15px !important;
     background-color: white !important;
     color: #098de6 !important;
     border: 1px solid #098de6 !important;
+    height:36px;
+    margin-left:12px;
 }
-
+.p-dialog .p-dialog-content {
+   
+    padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
 .btn-secondary:hover {
     background-color: #098de617 !important;
 }
