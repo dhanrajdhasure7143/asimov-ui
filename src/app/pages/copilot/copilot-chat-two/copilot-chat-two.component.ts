@@ -239,7 +239,7 @@ export class CopilotChatTwoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
-    private activatedRouter: ActivatedRoute
+    private activatedRouter: ActivatedRoute,
   ) {
     this.cities = [
       { name: '00', code: 'NY' },
@@ -330,7 +330,6 @@ export class CopilotChatTwoComponent implements OnInit {
   isNodesUpdates: boolean = false;
 
   ngOnInit(): void {
-    //this.loadGraph();
     this.loader = true;
     this.tableData = [
       { name: "IT from sent to the manager", min: "00", hrs: "00", days: "00" },
@@ -340,10 +339,23 @@ export class CopilotChatTwoComponent implements OnInit {
       { name: "System Access for the user", min: "00", hrs: "00", days: "00" },
     ];
 
+
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.template)
         this.loadGraph(params.template)
+      this.getConversation();
       this.loader = false;
+    })
+  }
+
+
+
+  getConversation()
+  {
+    this.rest_api.getCopilotConversation().subscribe((response)=>{
+      console.log(response);
+    }, err=>{
+      console.log(err)
     })
   }
 
