@@ -29,7 +29,7 @@ export class CopilotChatTwoComponent implements OnInit {
   isLoadGraphImage: boolean = false;
   @ViewChild('op', { static: false }) overlayModel;
   @ViewChild('popupMenu', { static: false }) popupMenuOverlay;
-
+  staticData:Boolean=false;
   copilotJson: any = [
     {
       "message": "Provisioning Users",
@@ -343,7 +343,8 @@ export class CopilotChatTwoComponent implements OnInit {
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.template)
         this.loadGraph(params.template)
-      this.getConversation();
+      if(!this.staticData)
+        this.getConversation();
       this.loader = false;
     })
   }
@@ -352,8 +353,12 @@ export class CopilotChatTwoComponent implements OnInit {
 
   getConversation()
   {
-    this.rest_api.getCopilotConversation().subscribe((response)=>{
-      console.log(response);
+    this.rest_api.getCopilotConversation().subscribe((response:any)=>{
+      this.messages.push({
+        message:response.data,
+        user:"SYSTEM",
+        steps:[]
+      })
     }, err=>{
       console.log(err)
     })
@@ -361,99 +366,117 @@ export class CopilotChatTwoComponent implements OnInit {
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
-    setTimeout(() => {
-      let data ={
-        "conversationId": "b4d32511-1c79-4fe7-8b7f-0dfb9fbd9bcb",    
-        "message": "Please create Employee onboarding"
-    }
-      this.rest_api.getData(data).subscribe(res=>{
-        console.log(res)
-      })
-      // this.rest_api.getdata1().subscribe(res=>{
-      //   console.log(res)
-      // })
-    }, 1000);
-
-    if (value == "Onboard Users") {
-      this.isChatLoad = false;
-      this.isLoadGraphImage = true;
-      this.isDialogVisible = true;
-      return;
-    }
-    setTimeout(() => {
-      let message = {
-        id: (new Date()).getTime(),
-        message: value,
-        user: localStorage.getItem("ProfileuserId")
+    if(!this.staticData){  
+      setTimeout(() => {
+        let data ={
+          "conversationId": "b4d32511-1c79-4fe7-8b7f-0dfb9fbd9bcb",    
+          "message": value
       }
-      if (messageType != 'LABEL')
-        this.messages.push(message);
+       this.messages.push({
+        user:localStorage.getItem("ProfileuserId"),
+        message:value,
 
-      let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
-      if (response) {
-        let systemMessage = {
+       }) 
+
+       this.message="";
+        this.rest_api.sendMessageToCopilot(data).subscribe((res:any)=>{
+          this.isChatLoad=false;
+          if(res.find((item:any)=>item.template.type=="BPMN"))
+          {
+              let ecryptedBpmn = res.find((item:any)=>item.template.type=="BPMN").payload
+              let bpmn=btoa(ecryptedBpmn);
+              console.log(bpmn)
+          }
+          console.log(res)
+        })
+        // this.rest_api.getdata1().subscribe(res=>{
+        //   console.log(res)
+        // })
+      }, 1000);
+    }
+    if(this.staticData)
+    {
+      if (value == "Onboard Users") {
+        this.isChatLoad = false;
+        this.isLoadGraphImage = true;
+        this.isDialogVisible = true;
+        return;
+      }
+      setTimeout(() => {
+        let message = {
           id: (new Date()).getTime(),
-          user: "SYSTEM",
-          message: response.message,
-          steps: response.steps
+          message: value,
+          user: localStorage.getItem("ProfileuserId")
         }
-        if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
-          let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
-          this.isLoadGraphImage = false;
-          this.isDialogVisible = true;
-          this.bpmnPath=responseData
-          setTimeout(() => {
-            this.loadBpmnwithXML(responseData,".graph-preview-container");
-          }, 500);
+        if (messageType != 'LABEL')
+          this.messages.push(message);
 
-        }
-        else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
-          // this.loadGraphIntiate("Load Form")
-        }
-        else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
-          //  this.loadGraphIntiate("Load Node");
-        }
-        else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
-          let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
-          this.loadupdatedBpmn(responseData);
-          // this.loadGraphIntiate("Update Node 1");
-        }
-        else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
-          let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
-        }
-        else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
-          this.loader = true;
-          setTimeout(() => {
-            this.loader = false
+        let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
+        if (response) {
+          let systemMessage = {
+            id: (new Date()).getTime(),
+            user: "SYSTEM",
+            message: response.message,
+            steps: response.steps
+          }
+          if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
+            let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
+            this.isLoadGraphImage = false;
+            this.isDialogVisible = true;
+            this.bpmnPath=responseData
+            setTimeout(() => {
+              this.loadBpmnwithXML(responseData,".graph-preview-container");
+            }, 500);
+
+          }
+          else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
+            // this.loadGraphIntiate("Load Form")
+          }
+          else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
+            //  this.loadGraphIntiate("Load Node");
+          }
+          else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
+            let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
+            this.loadupdatedBpmn(responseData);
+            // this.loadGraphIntiate("Update Node 1");
+          }
+          else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
+            let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
+          }
+          else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
+            this.loader = true;
+            setTimeout(() => {
+              this.loader = false
+              this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
+              this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect: "copilot" } });
+            }, 3000)
+          }
+          else if (response.steps.find((item: any) => item.type == "REDIRECT-RPA")) {
             this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-            this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect: "copilot" } });
-          }, 3000)
-        }
-        else if (response.steps.find((item: any) => item.type == "REDIRECT-RPA")) {
-          this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-          this.loader = true;
+            this.loader = true;
+            setTimeout(() => {
+              this.loader = false
+              this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect: "copilot" } });
+            }, 2000)
+          }
+          this.messages.push(systemMessage);
+          let chatGridElement = document.getElementById("chat-grid");
+          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+          this.message = "";
           setTimeout(() => {
-            this.loader = false
-            this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect: "copilot" } });
-          }, 2000)
+            var objDiv = document.getElementById("chat-grid");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          }, 200)
+        } else {
+          this.message = "";
+          setTimeout(() => {
+            var objDiv = document.getElementById("chat-grid");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          }, 100)
         }
-        this.messages.push(systemMessage);
-        let chatGridElement = document.getElementById("chat-grid");
-        chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-        this.message = "";
-        setTimeout(() => {
-          var objDiv = document.getElementById("chat-grid");
-          objDiv.scrollTop = objDiv.scrollHeight;
-        }, 200)
-      } else {
-        this.message = "";
-        setTimeout(() => {
-          var objDiv = document.getElementById("chat-grid");
-          objDiv.scrollTop = objDiv.scrollHeight;
-        }, 100)
-      }
-      this.isChatLoad = false;
-    }, 2000);
+        this.isChatLoad = false;
+      }, 2000);
+    }
   }
 
 
