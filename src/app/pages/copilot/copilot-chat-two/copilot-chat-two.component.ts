@@ -29,7 +29,7 @@ export class CopilotChatTwoComponent implements OnInit {
   isLoadGraphImage: boolean = false;
   @ViewChild('op', { static: false }) overlayModel;
   @ViewChild('popupMenu', { static: false }) popupMenuOverlay;
-  staticData:Boolean=false;
+  staticData:Boolean=true;
   copilotJson: any = [
     {
       "message": "Provisioning Users",
