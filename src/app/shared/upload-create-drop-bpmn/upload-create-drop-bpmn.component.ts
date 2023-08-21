@@ -6,7 +6,7 @@ import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
 import Swal from 'sweetalert2';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
@@ -46,6 +46,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, 
     private cdRef: ChangeDetectorRef, private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -189,15 +190,30 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           this.update.emit(true);
         }else{
           if(target == "create"){
+            console.log("testing")
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail:'Created Successfully',
+              })
               this.router.navigateByUrl('/pages/businessProcess/createDiagram');
           }
           if(target == "upload"){
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail:'Uploaded Successfully',
+            })
               this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
           }
         }
       }else{
         message = "Process name already exists.";
-        this.global.notify(message,"error");
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail:message
+        })
       }
     });
   }
