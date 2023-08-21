@@ -43,9 +43,11 @@
             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"(timeChanged)="onChangeHour($event,'endtime')"  [format]="24" [(ngModel)]="endtime" ></ngx-timepicker-field>
             <span  class='required' *ngIf="aftertime">{{endtimeerror}}</span>
         </div>
+    
     </div>
+    <span *ngIf="compareScheduleDate">Please give valid start date and end date</span>
     <div class="col p-0 form-group">
-        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) " (click)="add_sch()">Add</button>
+        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDate" (click)="add_sch()">Add</button>
     </div>
     <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
