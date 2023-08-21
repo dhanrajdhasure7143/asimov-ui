@@ -3856,6 +3856,10 @@ padding: 0px 30px;}
   border-bottom: 1px solid #f0f6f8;
   margin: 0rem 1.5rem 1.3rem;
 }
+.p-dialog .p-dialog-content {
+   
+  padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
 .copilotchatblock-popup .p-dialog .p-dialog-content {
   color: #000000 !important;
   /* padding: 0 0.5rem !important;

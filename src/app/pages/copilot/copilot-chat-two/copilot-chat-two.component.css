@@ -389,8 +389,8 @@ button.btn.bg-success-new:hover {
 .btn-primary{ height:36px;}
 .btn-primary:hover {
     color: #fff !important;
-    background-color: #025cbb !important;
-    border-color: #0062cc !important;
+    background-color: #209AED !important;
+    border-color: #209AED !important;
 }
 
 .adjtextarea-align{width:100%;position:relative;
@@ -410,10 +410,7 @@ padding: 0px 15px !important;
     height:36px;
     margin-left:12px;
 }
-.p-dialog .p-dialog-content {
-   
-    padding: 0 1.5rem 1.5rem 1.5rem !important;
-}
+.text-right{margin-top:1.5rem;}
 .btn-secondary:hover {
     background-color: #098de617 !important;
 }
