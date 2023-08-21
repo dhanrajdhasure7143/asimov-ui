@@ -333,11 +333,11 @@ export class CopilotChatTwoComponent implements OnInit {
     //this.loadGraph();
     this.loader = true;
     this.tableData = [
-      { name: "IT from sent to the manager", min: "00", hrs: "00", days: "00" },
-      { name: "Manager fills the form", min: "00", hrs: "00", days: "00" },
-      { name: "IT team create Email ID", min: "00", hrs: "00", days: "00" },
-      { name: "IT team assign a system", min: "00", hrs: "00", days: "00" },
-      { name: "System Access for the user", min: "00", hrs: "00", days: "00" },
+      { name: "IT Form Sent To The Manager",min:"00",hrs:"00",days:"00"},
+      { name: "Manager Fills The Form",min:"00",hrs:"00",days:"00" },
+      { name: "IT Team Creates Email ID",min:"00",hrs:"00",days:"00" },
+      { name: "IT Team Assign A System",min:"00",hrs:"00",days:"00" },
+      { name: "System Access For The User",min:"00",hrs:"00",days:"00" },
     ];
 
     this.activatedRouter.queryParams.subscribe((params: any) => {
