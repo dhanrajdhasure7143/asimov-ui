@@ -1840,4 +1840,16 @@ getCopilotFunctionsList(){
   return this.http.get("/a-square/v1/functions")
 }
 
+
+getCopilotConversation()
+{
+  return this.http.get("/a-square/v1/conversation")
+}
+
+
+sendMessageToCopilot(messageBody:any)
+{
+  return this.http.post("/a-square/v1/conversation/message", messageBody)
+}
+
 }
