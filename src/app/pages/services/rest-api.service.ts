@@ -1828,16 +1828,16 @@ updateBotImage(botid,data:any){
 }
 
 //Copilot Rest-Api's
-getCopilotFunctionsList(id){
-  return this.http.get("/a-square/v1/processes/function/1");
+getCopilotFunctionsList(){
+  return this.http.get("/a-square/v1/functions");
 }
 
-getCopilotProcessList(){
-  return this.http.get("/a-square/v1/processes")
+getCopilotProcessesList(id){
+  return this.http.get("/a-square/v1/processes/function/"+id)
 }
 
-getCopilotTemplatesList(functionID){
-  return this.http.get("/a-square/v1/template/process/1")
+getCopilotTemplatesList(id){
+  return this.http.get("/a-square/v1/template/process/"+id);
 }
 
 

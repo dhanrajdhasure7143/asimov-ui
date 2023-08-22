@@ -29,7 +29,7 @@
         <h4 class="second-header"> What Would You Like to Do Today?</h4>
     <div class="row grid-align">
         <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+            <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
               
                     <span class="active-icon" >
                 <img src=".././../../../assets/copilot/Landing_Icons/Automate.svg" alt=""> 
@@ -42,7 +42,7 @@
             </p-card>
         </div>
         <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+            <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
               
                     <span class="active-icon" >
                 <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject.svg" alt=""> 
@@ -55,7 +55,7 @@
             </p-card>
         </div>
         <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+            <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
                
                     <span class="active-icon" >
                 <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs.svg"   alt=""> 
@@ -69,7 +69,7 @@
         </div>
        
             <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+                <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
                    
                         <span class="active-icon" >
                     <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights.svg" alt="" >
@@ -81,7 +81,7 @@
                  </p-card>
             </div>
             <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+                <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
                     
                         <span class="active-icon" >
                     <img src=".././../../../assets/copilot/Landing_Icons/Drafts.svg" alt=""> 
@@ -93,7 +93,7 @@
                  </p-card>
             </div>
             <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
+                <p-card  (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
                    
                         <span class="active-icon">
                     <img src=".././../../../assets/copilot/Landing_Icons/Templates.svg" alt="" >
@@ -189,31 +189,31 @@
 <p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup"
     [ngClass]="nextFlag=='' ? 'initialpopup' : '' " >
     <ng-template pTemplate="header">
-        <div  *ngIf="copilotFlag=='PROCESS'" >
+        <div  *ngIf="copilotFlag=='FUNCTIONS'" >
             Automate a Process
         </div>
-        <div class="d-flex align-items-center" *ngIf="copilotFlag=='FUNCTIONS'" >
-            <a class="d-flex" (click)="copilotFlag='PROCESS'">
+        <div class="d-flex align-items-center" *ngIf="copilotFlag=='PROCESS'" >
+            <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;" >
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span>{{selectedProcess.process_name}}</span>
+            <span>{{selectedProcess.functionName}}</span>
         </div>
         <div class="d-flex" *ngIf="copilotFlag=='TEMPLATES'"  >
-            <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
+            <a class="d-flex" (click)="copilotFlag='PROCESS'">
                 <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
                 <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
             </a>
-            <span>{{selectedProcess.process_name}} - {{selectedFunction.functionName}}</span>
+            <span>{{selectedProcess.functionName}} - {{selectedFunction.process_name}}</span>
         </div>
     </ng-template>
-    <p class="subheader"*ngIf="copilotFlag=='PROCESS'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
+    <p class="subheader"*ngIf="copilotFlag=='FUNCTIONS'">Select a Function that you wish to automate with the <span>Co-Pilot</span> experience</p>
     
   
-    <div *ngIf="copilotFlag=='PROCESS'" class="popupcontent">
+    <div *ngIf="copilotFlag=='FUNCTIONS'" class="popupcontent">
         <div class="row">
             <div *ngFor="let process of processesList" class="col-sm-3 form-group cardlist">
-                <p-card (click)="getFunctionsByProcessId(process)">{{process.process_name}}</p-card>
+                <p-card (click)="getProcessesByFunctionId(process)">{{process.functionName}}1</p-card>
             </div>
             <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openChat2('Others')">Others</p-card>
@@ -221,10 +221,10 @@
         </div>
     </div>
 
-    <div class="popupcontent secondpopup"  *ngIf="copilotFlag=='FUNCTIONS'">       
+    <div class="popupcontent secondpopup"  *ngIf="copilotFlag=='PROCESS'">       
         <div class="row" >
             <div *ngFor="let functionItem of functions" class="col-sm-6 form-group cardlist">
-                <p-card (click)="getTemplatesByFunction(functionItem)"  class="item-card1"><span>{{functionItem.functionName}}</span></p-card>
+                <p-card (click)="getTemplatesByProcess(functionItem)"  class="item-card1"><span>{{functionItem.process_name}}</span></p-card>
             </div>
         </div>
     </div>

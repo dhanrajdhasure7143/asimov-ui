@@ -121,7 +121,7 @@ export class CopilotChatComponent implements OnInit {
       // }
   ])
   }
-  copilotFlag:string="PROCESS";
+  copilotFlag:string="FUNCTIONS";
 
 
 
@@ -156,32 +156,31 @@ sendMessage(){
 }
 
 
-getProcessNames(){
-  this.rest_api.getCopilotProcessList().subscribe((response:any)=>{
-    console.log(response)
-    this.copilotFlag="PROCESS"
+getFunctionsList(){
+  this.rest_api.getCopilotFunctionsList().subscribe((response:any)=>{
+    this.copilotFlag="FUNCTIONS"
     this.display=true;
     this.processesList=response;
   })
 }
 
-getFunctionsByProcessId(processItem:any){
-  console.log(processItem)
-  this.rest_api.getCopilotFunctionsList(processItem.process_id).subscribe((response:any)=>{
-    this.selectedProcess=processItem;
+getProcessesByFunctionId(functionItem:any){
+  console.log(functionItem)
+  this.rest_api.getCopilotProcessesList(functionItem.functionId).subscribe((response:any)=>{
+    this.selectedProcess=functionItem;
     console.log(response)
-    this.copilotFlag="FUNCTIONS"
+    this.copilotFlag="PROCESS"
     this.functions=response;
   })
-  this.getTemplatesByFunction(processItem);
+  // this.getTemplatesByFunction(functionItem);
 }
 
 
-getTemplatesByFunction(functionItem:any){
-  console.log(functionItem)
-  this.rest_api.getCopilotTemplatesList(functionItem.functionId).subscribe((response:any)=>{
+getTemplatesByProcess(item:any){
+  console.log(item)
+  this.rest_api.getCopilotTemplatesList(item.process_id).subscribe((response:any)=>{
     console.log(response)
-    this.selectedFunction=functionItem;
+    this.selectedFunction=item;
     this.copilotFlag="TEMPLATES"
     this.templates=response;
     this.processResponse(this.templates);
