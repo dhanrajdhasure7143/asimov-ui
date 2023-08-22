@@ -726,6 +726,14 @@ gettime(){
      })
   }
 
+
+  get compareScheduleDates()
+  {
+    let startDate:Date=new Date(this.startdate);
+    let endDate:Date=new Date(this.enddate);
+    return (startDate > endDate)?true:false;
+  }
+
 }
 
 
