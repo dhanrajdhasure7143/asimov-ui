@@ -1754,17 +1754,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   resetDesigner() {
-    // Swal.fire({
-    //   title: "Are you Sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton: 'btn new-cancelbtn',
-    //     },
-    //   confirmButtonText: "Yes, reset designer!",
-    // }).then(
       this.confirmationService.confirm({
         header:'Are you sure?',
         message:"You want to reset the designer.",
@@ -1776,13 +1765,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         rejectIcon: 'null',
         acceptIcon: 'null',
         key: "designerWorkspace",
-       accept:(result: any) => {
-      if (result.value) {
+       accept:() => {
         this.jsPlumbInstance.deleteEveryEndpoint();
         this.nodes = [];
         this.finaldataobjects = [];
         this.groupsData = [];
-      }
     }
   })
   }
