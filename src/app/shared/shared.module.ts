@@ -27,10 +27,11 @@ import { AngularSplitModule } from 'angular-split';
 import { UserLettersPipe } from './pipes/user-letters.pipe';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { ProcessLogsComponent } from './process-logs/process-logs.component';
+import { AddZeroPipe } from './pipes/add-zero.pipe';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe],
     imports: [
         CommonModule,
         NgxDropzoneModule,
@@ -49,6 +50,6 @@ import { ProcessLogsComponent } from './process-logs/process-logs.component';
     ],
     providers: [],
     exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent,
-        SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent]
+        SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe]
 })
 export class SharedModule { }
