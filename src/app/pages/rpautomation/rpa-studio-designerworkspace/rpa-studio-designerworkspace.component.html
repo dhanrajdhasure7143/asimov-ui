@@ -243,7 +243,40 @@
   </div>
 </ng-template>
 
-<div id="recordandplay" class="rpa-modal">
+<div *ngIf="recordandplay">
+  <app-split-overlay (closeOverlay)="close_record_play()">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>Web Automation - Record and Play</h3>
+      </div>
+      <div *ngIf="recordedcode == undefined">
+        <div class="col-md-12 p-0 form-group">
+          <label class="label-control">Url</label>
+          <input type="url" [(ngModel)]="rp_url" class="form-control" />
+        </div>
+        <div class="col-md-12 p-0 form-group">
+          <label class="label-control"></label>
+          <textarea id="record_n_play" name="codeSnippet" [(ngModel)]="finalcode" class="form-control"
+            rows="3"></textarea>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btn btn-default" [disabled]="rp_url == ''" (click)="recording('start')">
+          Start Recording
+        </button>
+        <button class="btn bluebg-button" (click)="recording('stop')">
+          Stop Recording
+        </button>&nbsp;&nbsp;
+        <button class="btn bluebg-button" (click)="submitcode()">
+          Save Code
+        </button>
+      </div>
+    </div>
+  </app-split-overlay>
+</div>
+
+
+<!-- <div id="recordandplay" class="rpa-modal">
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
       <span class="rpa-modal-close" (click)="close_record_play()"><img
@@ -272,7 +305,7 @@
         <button class="btn bluebg-button" (click)="submitcode()">
           Save code
         </button>
-      </div>
+      </div> -->
 
       <!--Added for record and playback-->
       <!-- <div class="container" *ngIf="recordedcode==undefined">
@@ -287,9 +320,9 @@
                 <button class="btn btn-primary" (click)="submitcode()">Save code</button>
 
             </div> -->
-    </div>
+    <!-- </div>
   </div>
-</div>
+</div> -->
 
 
 

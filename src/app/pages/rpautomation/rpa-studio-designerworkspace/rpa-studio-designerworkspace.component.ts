@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   NgZone,
-  AfterViewInit,
   ChangeDetectorRef,
   EventEmitter,
   Output,
@@ -12,12 +11,10 @@ import {
   Pipe,
   PipeTransform,
   TemplateRef,
-  OnChanges,
-  SimpleChanges,
 } from "@angular/core";
 import { DndDropEvent } from "ngx-drag-drop";
 import { fromEvent } from "rxjs";
-import { jsPlumb, jsPlumbInstance } from "jsplumb";
+import { jsPlumb } from "jsplumb";
 import { RestApiService } from "../../services/rest-api.service";
 import {
   FormGroup,
@@ -29,15 +26,12 @@ import jsPDF from "jspdf";
 import { NotifierService } from "angular-notifier";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { DataTransferService } from "../../services/data-transfer.service";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import Swal from "sweetalert2";
+import { HttpClient } from "@angular/common/http";
 // import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from "dom-to-image";
 import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
-import { SplitComponent } from "angular-split";
 import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
 import { ActivatedRoute } from "@angular/router";
 import { environment } from "src/environments/environment";
@@ -169,13 +163,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   startStopCoordinates:any="";
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
+  recordandplay:boolean = false;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
-    private RPA_Designer_Component: RpaStudioDesignerComponent,
     // private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
@@ -267,7 +261,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //this.getCategories();
     this.validateBotNodes();
     this.route.queryParams.subscribe(res=>{
-      console.log("testingh",res)
       this.isCopilot = environment.isCopilotEnable
       if(res.redirect) 
       if(res.redirect == "copilot")this.isNavigateCopilot = true
@@ -1155,7 +1148,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 }
               });
               if (
-                finalattributes.find((attr) => attr.taskId == 71) != undefined
+                finalattributes.find((attr) => attr.name == "codeSnippet") != undefined
               ) {
                 this.formVales = finalattributes;
                 this.update_record_n_play(finalattributes, node);
@@ -1196,7 +1189,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             this.formVales = attr_response;
             this.recordandplayid =
               "recordandplay_" + this.finalbot.botName + "_" + node.id;
-            document.getElementById("recordandplay").style.display = "block";
+                this.recordandplay = true;
           } else if (
             attr_response.find((attr) => attr.type == "restapi") != undefined
           ) {
@@ -1222,11 +1215,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   update_record_n_play(finalattributes, node) {
-    if (finalattributes.find((attr) => attr.taskId == 71).value != undefined) {
+    if (finalattributes.find((attr) => attr.name == "codeSnippet").value != undefined) {  
       $("#record_n_play").val(
-        finalattributes.find((attr) => attr.taskId == 71).value
+        finalattributes.find((attr) => attr.name == "codeSnippet").value
       );
-      document.getElementById("recordandplay").style.display = "block";
+      this.recordandplay=true;
     }
   }
 
@@ -1346,7 +1339,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 // close record and play form
   close_record_play() {
-    document.getElementById("recordandplay").style.display = "none";
+    this.recordandplay= false;
   }
 
   //MultiForm Submit
@@ -1853,7 +1846,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   updateBotNodes(updateBotImageFlag:Boolean){
     this.rest.getbotdata(this.finalbot.botId).subscribe((response: any) => {
       if(response.errorMessage){
-        console.log(response.errorMessage)
         //this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot details!'})
         return;
       }
@@ -1889,11 +1881,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if(res.status=="success"){
        // this.messageService.add({severity:'success',summary:'Success',detail:'Updated bot image successfully!'});
       }else{
-        console.log(res?.message??"Unable to update bot image")
         //this.messageService.add({severity:'error',summary:'Error',detail:'Unable bot update image!'});
       }
     },err=>{
-      console.log(err)
+      console.log(err);
     })
   }
 
@@ -2412,7 +2403,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
 
 
-    console.log(this.startStopCoordinates)
+
     // if (
     //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId) !=
     //   undefined
