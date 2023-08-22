@@ -6,8 +6,8 @@ import { CopilotChatTwoComponent } from './copilot-chat-two/copilot-chat-two.com
 
 const routes: Routes = [
   {path:"", component:CopilotComponent, children:[
-    {path:"chat", component:CopilotChatComponent},
-    {path:"copilot-chat", component:CopilotChatTwoComponent}
+    {path:"home", component:CopilotChatComponent},
+    {path:"chat", component:CopilotChatTwoComponent}
   ]}
 ];
 

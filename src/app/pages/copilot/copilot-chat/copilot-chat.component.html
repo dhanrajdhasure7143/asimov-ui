@@ -216,7 +216,7 @@
                 <p-card (click)="getProcessesByFunctionId(each)">{{each.functionName}}1</p-card>
             </div>
             <div class="col-sm-3 form-group cardlist">
-                <p-card (click)="openChat2('Others')">Others</p-card>
+                <p-card (click)="navigateToCopilotChatScreen('Others')">Others</p-card>
             </div>    
         </div>
     </div>
@@ -232,7 +232,7 @@
     <div class="thirdpopup"  *ngIf="copilotFlag=='TEMPLATES'">
         <div class="row" >
             <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
-                    <p-card (click)="openChat2(template.templateTitle)">
+                    <p-card (click)="navigateToCopilotChatScreen(template)">
                     <ng-template pTemplate="header">
                         <!-- <div [class]="'diagram_container-copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"> </div> -->
                         <div [hidden]="!template.isExicuted" class="bps_overlay readOnly" [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)" style="position:relative;z-index:100;"></div>
