@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
-import * as BpmnJS from "./../../../bpmn-modeler-copilot.development.js";
+import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
-  selector: 'app-copilot-chat',
-  templateUrl: './copilot-chat.component.html',
-  styleUrls: ['./copilot-chat.component.css']
+  selector: 'app-copilot-home',
+  templateUrl: './copilot-home.component.html',
+  styleUrls: ['./copilot-home.component.css']
 })
-export class CopilotChatComponent implements OnInit {
+export class CopilotHomeComponent implements OnInit {
   display: boolean = false;
   historyOpen: boolean = false;
   historyList: any = []
