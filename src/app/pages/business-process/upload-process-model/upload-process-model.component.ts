@@ -906,6 +906,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       _self.oldXml = _self.newXml;
+      console.log(xml)
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         if(!_self.isShowConformance){
@@ -948,6 +949,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     model.processOwnerName = this.saved_bpmn_list[this.selected_notation]['processOwnerName'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
+      console.log("testingdata",data)
+
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
         this.isEdit=true;
@@ -1073,6 +1076,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         _self.isDiagramChanged = true;
         if(now - _self.last_updated_time > 10*1000){
           _self.autoSaveBpmnDiagram();
+            console.log("testing123")
           _self.last_updated_time = now;
         }
       })

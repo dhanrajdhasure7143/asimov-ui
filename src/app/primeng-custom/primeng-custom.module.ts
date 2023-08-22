@@ -43,6 +43,7 @@ import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {AvatarModule} from 'primeng/avatar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import {SplitButtonModule} from 'primeng/splitbutton';
+import {SkeletonModule} from 'primeng/skeleton';
 @NgModule({
   declarations: [],
   imports: [
@@ -88,7 +89,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     BreadcrumbModule,
     AvatarModule,
     ToggleButtonModule,
-    SplitButtonModule
+    SplitButtonModule,
+    SkeletonModule
   ],
   exports: [
     CommonModule,
@@ -133,7 +135,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     BreadcrumbModule,
     AvatarModule,
     ToggleButtonModule,
-    SplitButtonModule
+    SplitButtonModule,
+    SkeletonModule
   ],
   providers: [ConfirmationService, MessageService]
 })

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { BehaviorSubject } from 'rxjs';
+import * as BpmnJS from "./../../../bpmn-modeler-copilot.development.js";
+import { RestApiService } from '../../services/rest-api.service';
+
 @Component({
   selector: 'app-copilot-chat',
   templateUrl: './copilot-chat.component.html',
@@ -13,12 +16,15 @@ export class CopilotChatComponent implements OnInit {
   historyList:any=[]
   message:any
   nextFlag:any=""
-  processes:any=[];
+  processesList:any=[];
   functions:any=[];
   templates:any=[];
   selectedProcess:any={};
   selectedFunction:any={};
-  constructor(private router:Router, private dt:DataTransferService) { }
+  bpmnModeler: any;
+
+  constructor(private router:Router, private dt:DataTransferService,
+              private rest_api: RestApiService) { }
   rest:any={
     getProcesses:new BehaviorSubject([
       {
@@ -78,17 +84,20 @@ export class CopilotChatComponent implements OnInit {
       {
           "id": 1,
           "templateTitle": "Workforce Planning",
-          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-1.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-1.png",
+          "xml":"assets/resources/Copilot- 3.bpmn"
       },
       {
           "id": 2,
           "templateTitle": "Job Analysis and Job Posting",
-          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-2.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-2.png",
+          "xml":"assets/resources/Copilot-1.bpmn"
       },
       {
           "id": 3,
           "templateTitle": "Assessment and Testing",
-          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-3.png"
+          "templatePreviewImage": "../../../../assets/images-n/co-pilot/template-3.png",
+          "xml":"assets/resources/Copilot- 2.bpmn"
       },
       {
           "id": 4,
@@ -100,16 +109,16 @@ export class CopilotChatComponent implements OnInit {
           "templateTitle": "Compliance and Legal Considerations",
           "templatePreviewImage": "../../../../assets/copilot/Compliance.png"
       },
+      // // {
+      // //     "id": 6,
+      // //     "templateTitle": "Candidate Experience",
+      // //     "templatePreviewImage": "../../../../assets/copilot/Candidatexp.png"
+      // // },
       // {
-      //     "id": 6,
-      //     "templateTitle": "Candidate Experience",
-      //     "templatePreviewImage": "../../../../assets/copilot/Candidatexp.png"
-      // },
-      {
-          "id": 7,
-          "templateTitle": "Applicant Tracking System (ATS) Management",
-          "templatePreviewImage": "../../../../assets/copilot/ATSmgmt.png"
-      }
+      //     "id": 7,
+      //     "templateTitle": "Applicant Tracking System (ATS) Management",
+      //     "templatePreviewImage": "../../../../assets/copilot/ATSmgmt.png"
+      // }
   ])
   }
   copilotFlag:string="PROCESS";
@@ -118,7 +127,7 @@ export class CopilotChatComponent implements OnInit {
 
    
   ngOnInit(): void {
-    
+    this.getListOfProcess();
     this.historyList=[
       {label:"Process Graph"},
       {label:"RPA"},
@@ -148,17 +157,16 @@ sendMessage(){
 }
 
 
-getProcessNames()
-{
-  this.rest.getProcesses.subscribe((response:any)=>{
+getProcessNames(){
+  this.rest_api.getCopilotProcessList().subscribe((response:any)=>{
+    console.log(response)
     this.copilotFlag="PROCESS"
     this.display=true;
-    this.processes=response;
+    this.processesList=response;
   })
 }
 
-getFunctionsByProcessId(processItem:any)
-{
+getFunctionsByProcessId(processItem:any){
   this.rest.getFunctions.subscribe((response:any)=>{
     this.selectedProcess=processItem;
     this.copilotFlag="FUNCTIONS"
@@ -167,23 +175,89 @@ getFunctionsByProcessId(processItem:any)
 }
 
 
-getTemplatesByFunction(functionItem:any)
-{
+getTemplatesByFunction(functionItem:any){
   this.rest.getTemplates.subscribe((response:any)=>{
     this.selectedFunction=functionItem;
     this.copilotFlag="TEMPLATES"
     this.templates=response;
+    this.processResponse(this.templates);
   })
 }
-openHumanResource()
 
-{
+async processResponse(response) {
+  for (let index = 0; index < response.length; index++) {
+    const item = response[index];
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    this.loadBpmnInTemplate(item, index);
+  }
+  // for (let index = 0; index < this.templates.length; index++) {
+  //   const item = this.templates[index];
+  //   // Process the first item immediately
+  //   if (index === 0) {
+  //     setTimeout(() => {
+  //     this.loadBpmnInTemplate(item, index);
+  //     }, 2000);
+  //   } else {
+  //     await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 3 seconds
+  //     this.loadBpmnInTemplate(item, index);
+  //   }
+  // }
+}
+
+openHumanResource(){
   this.nextFlag="Human Resource"
 }
 
-openRecruiting()
-{
+openRecruiting(){
   this.nextFlag="Recruiting"
+}
+
+
+loadBpmnInTemplate(template?,index?) {
+  console.log(template,"testing",index)
+    let xml = ""
+    let notationJson = {
+      container: '.diagram_copilot'+index,
+      keyboard: {
+        bindTo: window,
+      }
+    };
+
+    this.bpmnModeler = new BpmnJS(notationJson);
+    // let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
+    let path = template.xml
+    setTimeout(() => {
+      this.rest_api.getBPMNFileContent(path).subscribe((res) => {
+        this.bpmnModeler.importXML(res, function (err) {
+          if (err) {
+            console.error("could not import BPMN EZFlow notation", err);
+          }
+        });
+        setTimeout(() => {
+          let canvas = this.bpmnModeler.get('canvas');
+          canvas.zoom('fit-viewport');
+        }, 200)
+
+        // this.bpmnModeler.on('element.contextmenu', () => false);
+        // this.bpmnModeler.on('contextPad.destroy', event => {
+        //   console.log("check")
+        //   const contextPadContainer = event.contextPad._container;
+        //   contextPadContainer.parentNode.removeChild(contextPadContainer);
+        // });
+      });
+  this.templates[index]["isExicuted"]= true;
+
+    }, 1500);
+}
+
+getListOfProcess(){
+  this.rest_api.getCopilotProcessList().subscribe(res=>{
+    console.log(res)
+  })
+
+  this.rest_api.getCopilotFunctionsList().subscribe(res=>{
+    console.log(res)
+  })
 }
 
 

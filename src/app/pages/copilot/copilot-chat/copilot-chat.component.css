@@ -81,3 +81,13 @@ width: 12rem;
     padding-left: 0px;
 }
 .pad-align{padding-right:25px;padding-left:25px;}
+
+.diagram_copilot{
+    height: 135px;
+    width: 100%;
+    border: 1px solid #098de6;
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
+    overflow: scroll;
+}
