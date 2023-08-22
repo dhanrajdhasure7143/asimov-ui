@@ -235,7 +235,7 @@
                     <p-card (click)="openChat2(template.templateTitle)">
                     <ng-template pTemplate="header">
                         <!-- <div [class]="'diagram_container-copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"> </div> -->
-                        <div [hidden]="!template.isExicuted" class="bps_overlay" [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"></div>
+                        <div [hidden]="!template.isExicuted" class="bps_overlay readOnly" [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)" style="position:relative;z-index:100;"></div>
                         <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
                         <!-- <img src="{{template.templatePreviewImage}}" class="w-100" alt="graph"> -->
                     </ng-template>                    

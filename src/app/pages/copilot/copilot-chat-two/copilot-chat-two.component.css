@@ -386,10 +386,11 @@ button.btn.bg-success-new {
 button.btn.bg-success-new:hover {
   background-color: #77E47B !important;
 }
+.btn-primary{ height:36px;}
 .btn-primary:hover {
     color: #fff !important;
-    background-color: #025cbb !important;
-    border-color: #0062cc !important;
+    background-color: #209AED !important;
+    border-color: #209AED !important;
 }
 
 .adjtextarea-align{width:100%;position:relative;
@@ -406,8 +407,10 @@ padding: 0px 15px !important;
     background-color: white !important;
     color: #098de6 !important;
     border: 1px solid #098de6 !important;
+    height:36px;
+    margin-left:12px;
 }
-
+.text-right{margin-top:1.5rem;}
 .btn-secondary:hover {
     background-color: #098de617 !important;
 }
