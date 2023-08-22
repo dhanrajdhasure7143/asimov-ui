@@ -16,8 +16,8 @@ export class CopilotChatComponent implements OnInit {
   historyList:any=[]
   message:any
   nextFlag:any=""
-  processesList:any=[];
-  functions:any=[];
+  funtionsList:any=[];
+  processList:any=[];
   templates:any=[];
   selectedProcess:any={};
   selectedFunction:any={};
@@ -160,7 +160,7 @@ getFunctionsList(){
   this.rest_api.getCopilotFunctionsList().subscribe((response:any)=>{
     this.copilotFlag="FUNCTIONS"
     this.display=true;
-    this.processesList=response;
+    this.funtionsList=response;
   })
 }
 
@@ -170,7 +170,7 @@ getProcessesByFunctionId(functionItem:any){
     this.selectedProcess=functionItem;
     console.log(response)
     this.copilotFlag="PROCESS"
-    this.functions=response;
+    this.processList=response;
   })
   // this.getTemplatesByFunction(functionItem);
 }

@@ -212,8 +212,8 @@
   
     <div *ngIf="copilotFlag=='FUNCTIONS'" class="popupcontent">
         <div class="row">
-            <div *ngFor="let process of processesList" class="col-sm-3 form-group cardlist">
-                <p-card (click)="getProcessesByFunctionId(process)">{{process.functionName}}1</p-card>
+            <div *ngFor="let each of funtionsList" class="col-sm-3 form-group cardlist">
+                <p-card (click)="getProcessesByFunctionId(each)">{{each.functionName}}1</p-card>
             </div>
             <div class="col-sm-3 form-group cardlist">
                 <p-card (click)="openChat2('Others')">Others</p-card>
@@ -223,8 +223,8 @@
 
     <div class="popupcontent secondpopup"  *ngIf="copilotFlag=='PROCESS'">       
         <div class="row" >
-            <div *ngFor="let functionItem of functions" class="col-sm-6 form-group cardlist">
-                <p-card (click)="getTemplatesByProcess(functionItem)"  class="item-card1"><span>{{functionItem.process_name}}</span></p-card>
+            <div *ngFor="let item of processList" class="col-sm-6 form-group cardlist">
+                <p-card (click)="getTemplatesByProcess(item)"  class="item-card1"><span>{{item.process_name}}</span></p-card>
             </div>
         </div>
     </div>
