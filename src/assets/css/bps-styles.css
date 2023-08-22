@@ -958,3 +958,7 @@ mat-expansion-panel.menuprop-disabled {
   position: fixed;
   bottom: 45px;
 }
+
+.copilot-bpmn .djs-palette{
+  display: none !important;
+}
