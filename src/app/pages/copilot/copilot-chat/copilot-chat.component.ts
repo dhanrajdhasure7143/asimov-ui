@@ -5,8 +5,8 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import * as BpmnJS from "./../../../bpmn-modeler-copilot.development.js";
-import { SharebpmndiagramService } from "./../../services/sharebpmndiagram.service";
+import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
+import { SharebpmndiagramService } from "../../services/sharebpmndiagram.service";
 import { RestApiService } from '../../services/rest-api.service';
 interface City {
   name: string,
@@ -14,11 +14,11 @@ interface City {
 }
 //import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
-  selector: 'app-copilot-chat-two',
-  templateUrl: './copilot-chat-two.component.html',
-  styleUrls: ['./copilot-chat-two.component.css']
+  selector: 'app-copilot-chat',
+  templateUrl: './copilot-chat.component.html',
+  styleUrls: ['./copilot-chat.component.css']
 })
-export class CopilotChatTwoComponent implements OnInit {
+export class CopilotChatComponent implements OnInit {
   cities: City[];
 
   selectedCity: City;
