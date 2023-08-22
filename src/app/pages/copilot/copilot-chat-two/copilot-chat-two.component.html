@@ -229,8 +229,7 @@
     <div class="" >
         <div id="_diagram" *ngIf="isDialogVisible" class="graph-preview-container readOnly" style="z-index:100;position:relative;padding:2rem 0rem;"></div>
         <div class="text-right">
-            <button (click)="loadGraph('Assessment and Testing')" class="btn btn-primary btn-sm text-white">Yes</button><button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
-    
+         <button (click)="loadBpmnwithXML(bpmnPath,'.diagram_container-copilot');" class="btn btn-primary btn-sm text-white">Yes</button><button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
         </div>
         <!-- <img src="../../../../assets/copilot/popup-chart.svg" *ngIf="!isLoadGraphImage" class="popup-imgchart"> -->
     </div>

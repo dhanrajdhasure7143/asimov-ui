@@ -67,7 +67,7 @@ export class RpaConnectionManagerComponent implements OnInit {
       this.connectorTable = res.data;
       this.readSelectedData([]); 
       this.spinner.hide();
-      this.table_searchFields=["name","actionCount"]
+      this.table_searchFields=["name","actionCount","createdBy","createdAt"]
     });
   }
 
