@@ -29,7 +29,7 @@ export class CopilotChatComponent implements OnInit {
   isLoadGraphImage: boolean = false;
   @ViewChild('op', { static: false }) overlayModel;
   @ViewChild('popupMenu', { static: false }) popupMenuOverlay;
-  staticData:Boolean=true;
+  staticData:Boolean=false;
   copilotJson: any = [
     {
       "message": "Provisioning Users",
@@ -341,11 +341,27 @@ export class CopilotChatComponent implements OnInit {
 
 
     this.activatedRouter.queryParams.subscribe((params: any) => {
-      if (params.template)
-        this.loadGraph(params.template)
-      if(!this.staticData)
-        (!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
+      if (params.templateId)
+      {
+        if(params.templateId!="Others")
+          this.getTemplatesByProcessId(params.process_id, params.templateId)
+        else
+        if(!this.staticData)
+          (!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
+      }
       this.loader = false;
+      
+    })
+  }
+
+  getTemplatesByProcessId(processId, templateId)
+  {
+    this.rest_api.getCopilotTemplatesList(processId).subscribe((response:any)=>{
+      if(response)
+      {
+        let template=response.find((item:any)=>item.template_id==templateId);
+        this.loadBpmnwithXML(atob(template.bpmn_xml), ".diagram_container-copilot");
+      }
     })
   }
 

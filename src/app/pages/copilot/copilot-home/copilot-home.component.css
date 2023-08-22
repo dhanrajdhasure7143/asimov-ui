@@ -55,11 +55,12 @@ width: 12rem;
 }
 .popupcontent {
     padding-top: 1.3rem;
+    height:420px; 
 }
 .copilotchatblock-popup .secondpopup, 
 .copilotchatblock-popup .thirdpopup {
     overflow: auto;
-    max-height: 365px;
+    /* max-height: 365px; */
     margin-bottom: 10px;
 }
 .copilotchatblock-popup .thirdpopup {

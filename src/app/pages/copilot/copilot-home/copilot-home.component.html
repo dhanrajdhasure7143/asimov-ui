@@ -104,7 +104,7 @@
         class="copilotchatblock-popup" [ngClass]="nextFlag=='' ? 'initialpopup' : '' ">
         <ng-template pTemplate="header">
             <div *ngIf="copilotFlag=='FUNCTIONS'">
-                Automate a Process
+                Automate a Function
             </div>
             <div class="d-flex align-items-center" *ngIf="copilotFlag=='PROCESS'">
                 <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
@@ -131,7 +131,7 @@
         <div *ngIf="copilotFlag=='FUNCTIONS'" class="popupcontent">
             <div class="row">
                 <div *ngFor="let each of funtionsList" class="col-sm-3 form-group cardlist">
-                    <p-card (click)="getProcessesByFunctionId(each)">{{each.functionName}}1</p-card>
+                    <p-card (click)="getProcessesByFunctionId(each)">{{each.functionName}}</p-card>
                 </div>
                 <div class="col-sm-3 form-group cardlist">
                     <p-card (click)="navigateToCopilotChatScreen('Others')">Others</p-card>
@@ -148,7 +148,7 @@
             </div>
         </div>
 
-        <div class="thirdpopup" *ngIf="copilotFlag=='TEMPLATES'">
+        <div class="thirdpopup popupcontent" *ngIf="copilotFlag=='TEMPLATES'">
             <div class="row">
                 <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
                     <p-card (click)="navigateToCopilotChatScreen(template)">
@@ -159,9 +159,16 @@
                             <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
                         </ng-template>
                         <div class="">
-                            <h6>{{template.templateTitle}}</h6>
+                            <h6>{{template.template_name}}</h6>
                         </div>
                     </p-card>
+                </div>
+
+
+                <div class="col-12" *ngIf="templates.length==0">
+                    <div class="text-center">
+                        <span class="h6">No Items Found</span>
+                    </div>
                 </div>
 
             </div>
