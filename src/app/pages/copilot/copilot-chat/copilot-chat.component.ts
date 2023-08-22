@@ -127,7 +127,6 @@ export class CopilotChatComponent implements OnInit {
 
    
   ngOnInit(): void {
-    this.getListOfProcess();
     this.historyList=[
       {label:"Process Graph"},
       {label:"RPA"},
@@ -167,16 +166,21 @@ getProcessNames(){
 }
 
 getFunctionsByProcessId(processItem:any){
-  this.rest.getFunctions.subscribe((response:any)=>{
+  console.log(processItem)
+  this.rest_api.getCopilotFunctionsList(processItem.process_id).subscribe((response:any)=>{
     this.selectedProcess=processItem;
+    console.log(response)
     this.copilotFlag="FUNCTIONS"
     this.functions=response;
   })
+  this.getTemplatesByFunction(processItem);
 }
 
 
 getTemplatesByFunction(functionItem:any){
-  this.rest.getTemplates.subscribe((response:any)=>{
+  console.log(functionItem)
+  this.rest_api.getCopilotTemplatesList(functionItem.functionId).subscribe((response:any)=>{
+    console.log(response)
     this.selectedFunction=functionItem;
     this.copilotFlag="TEMPLATES"
     this.templates=response;
@@ -249,17 +253,6 @@ loadBpmnInTemplate(template?,index?) {
 
     }, 1500);
 }
-
-getListOfProcess(){
-  this.rest_api.getCopilotProcessList().subscribe(res=>{
-    console.log(res)
-  })
-
-  this.rest_api.getCopilotFunctionsList().subscribe(res=>{
-    console.log(res)
-  })
-}
-
 
 
 
