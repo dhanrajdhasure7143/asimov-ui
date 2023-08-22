@@ -1852,4 +1852,10 @@ sendMessageToCopilot(messageBody:any)
   return this.http.post("/a-square/v1/conversation/message", messageBody)
 }
 
+
+createCopilotConversationSessionId(payload:any)
+{
+  return this.http.post("/a-square/v1/conversation", payload);
+}
+
 }

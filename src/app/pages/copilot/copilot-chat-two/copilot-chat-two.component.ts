@@ -344,11 +344,25 @@ export class CopilotChatTwoComponent implements OnInit {
       if (params.template)
         this.loadGraph(params.template)
       if(!this.staticData)
-        this.getConversation();
+        (!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
       this.loader = false;
     })
   }
 
+  // use to create conversation session id
+  createConversationSessionId()
+  {
+    let payload:any={
+      userId:localStorage.getItem("ProfileuserId"),
+      tenantId:localStorage.getItem("tenantName")
+    }
+    this.rest_api.createCopilotConversationSessionId(payload).subscribe((response:any)=>{
+      console.log("tenant",response);
+      this.getConversation();
+    },err=>{
+      console.log(err);
+    })
+  }
 
 
   getConversation()
