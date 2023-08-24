@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-copilot-home',
@@ -25,7 +26,9 @@ export class CopilotHomeComponent implements OnInit {
 
   constructor(private router: Router, 
     private dt: DataTransferService,
-    private rest_api: RestApiService) { }
+    private rest_api: RestApiService,
+    private messageService:MessageService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -54,6 +57,9 @@ export class CopilotHomeComponent implements OnInit {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
       this.funtionsList = response;
+    },(err:any)=>{
+      console.log(err);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Functions!'});
     })
   }
 
@@ -64,6 +70,9 @@ export class CopilotHomeComponent implements OnInit {
       console.log(response)
       this.copilotFlag = "PROCESS"
       this.processList = response;
+    },err=>{
+      console.log(err);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Processes!'});
     })
   }
 
@@ -73,6 +82,9 @@ export class CopilotHomeComponent implements OnInit {
       this.copilotFlag = "TEMPLATES"
       this.templates = response;
       this.processResponse(this.templates);
+    },(err:any)=>{
+      console.log(err);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Templates!'});
     })
   }
 

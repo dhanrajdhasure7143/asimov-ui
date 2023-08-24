@@ -345,12 +345,11 @@ export class CopilotChatComponent implements OnInit {
       {
         if(params.templateId!="Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId)
-        else
         if(!this.staticData)
-          (!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
+          this.getConversation();
+          //(!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
       }
       this.loader = false;
-      
     })
   }
 
