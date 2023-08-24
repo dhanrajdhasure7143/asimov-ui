@@ -1,320 +1,250 @@
-
-       
 <div class="row">
+    <!-- <div class="col-md-2 pl-adj">
+        <div class="card-history">
+            <div class="col-md-12">
+                <h4 class="histry-space">History</h4>
+            </div>
+            <div>
+                <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img" alt="" />
+                <p class="histry-text">You have no saved conversations</p>
+            </div>
 
-<!-- <div class="col-md-2 pl-adj">
-   <div class="card-history">
-    <div class="col-md-12">
-        <h4 class="histry-space">History</h4>
-    </div>
-    <div>
-        <img src="../../../../assets/copilot/noviewmsg.svg" class="histry-img" alt=""/>
-        <p class="histry-text">You have no saved conversations</p>
-    </div>
-
-   </div>
-</div> -->
-
-<div class="col-md-12 pl-0 pr-0">
-    <div class="maincontent">
-        <div class="h-100">
-          <div class="row main-content-head">
-    <h3>
-        <span class="title_text">Conversational AI Process Automation</span>
-    </h3>
-    </div>
-   
-    <div class="main-content-body">
-    <div class="card">
-        <h4 class="second-header"> What Would You Like to Do Today?</h4>
-    <div class="row grid-align">
-        <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-              
-                    <span class="active-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/Automate.svg" alt=""> 
-            </span>
-            <span class="hover-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/Automate-blue.svg" alt=""> 
-            </span>
-                <p> Automate Process</p>
-           
-            </p-card>
         </div>
-        <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-              
-                    <span class="active-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject.svg" alt=""> 
-                </span>
-                <span class="hover-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject-blue.svg" alt=""> 
-            </span>
-                <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> 
-                
-            </p-card>
-        </div>
-        <div class="col-sm-4 pad-align">
-            <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-               
-                    <span class="active-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs.svg"   alt=""> 
-                </span>
-                <span class="hover-icon" >
-                <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs-blue.svg"    alt=""> 
-            </span>
-                <p> Access Process Graphs</p>
-               
-            </p-card>
-        </div>
-       
-            <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-                   
-                        <span class="active-icon" >
-                    <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights.svg" alt="" >
-                    </span>
-                    <span class="hover-icon" >
-                    <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights-blue.svg"  alt=""> 
-                </span>
-                    <p style="word-wrap: break-word;">Monitor and View Insights</p>
-                 </p-card>
-            </div>
-            <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-                    
-                        <span class="active-icon" >
-                    <img src=".././../../../assets/copilot/Landing_Icons/Drafts.svg" alt=""> 
-                    </span>
-                    <span class="hover-icon" >
-                     <img src=".././../../../assets/copilot/Landing_Icons/Drafts-blue.svg"  alt=""> 
-                    </span>
-                    <p class="">View Drafts</p>
-                 </p-card>
-            </div>
-            <div class="col-sm-4 pad-align">
-                <p-card  (click)="getProcessNames()" class="cursor copilotchatblock imageBox">
-                   
-                        <span class="active-icon">
-                    <img src=".././../../../assets/copilot/Landing_Icons/Templates.svg" alt="" >
-                    </span>
-                    <span class="hover-icon">
-                    <img src=".././../../../assets/copilot/Landing_Icons/Templates-blue.svg" alt="">
-                </span>
-                    <p>Explore Templates</p>
-                 </p-card>
-            </div>
-        
-    </div>
-   
+    </div> -->
+    <div class="col-md-12 pl-0 pr-0">
+        <div class="maincontent">
+            <div class="h-100">
+                <div class="row main-content-head">
+                    <div class="col-md-6 pl-0">
+                        <h3>
+                            <span class="title_text">Conversational AI Process Automation</span>
 
-    <div class="p-inputgroup sendinput">
-        <!-- <input type="text" pInputText placeholder="Send a message">&nbsp;
-        <span class="sendimg">
-            <i class="pi pi-send"></i>
-        </span> -->
-    </div> 
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- <div class="heading">
-    <p> Conversational AI Process Automation </p>
-</div> -->
-<!-- <div class="row">
-    <div class="col-md-2 side">
-        <b class="cursor"> History </b>
-        <div class="side-bar cursor" *ngFor="let h of historyList">
-            <p> {{h.label}} </p>
-        </div>
+                        </h3>
+                    </div>
+                    <div class="col-md-6 title-help">
+                        <a href="#"> Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg"
+                                    alt="" /></span></a>
+                    </div>
 
-    </div>
-    <div class="card col-md-10" style="overflow:scroll;width:100%">
-        <h2 class="mt-3" style="color: #098de6;text-align: center;font-size:larger;"> <b>What Would You Like to
-                Do Today?</b></h2>
-        <div class="row padding">
-            <div class="col-sm-4 cursor copilotchatblock">
-                <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_process.png" style="height: 30px;"> 
-                    <p> Automate Process</p>
-                </p-card>
-            </div>
-            <div class="col-sm-4 cursor copilotchatblock">
-                <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_edit.png" style="height: 30px;"> 
-    
-                    <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p> </p-card>
-            </div>
-            <div class="col-sm-4 cursor copilotchatblock">
-                <p-card  (click)="showDialog()">
-                    <img src=".././../../../assets/icons/icon_graph.png" style="height:30px;"> 
-    
-                    <p> Access Process Graphs</p>
-                </p-card>
-            </div>
-            <div class="row" style="margin-top: 34px !important">
-                <div class="col-sm-4 cursor copilotchatblock">
-                    <p-card  (click)="showDialog()">
-                        <img src=".././../../../assets/icons/icon_insights.png" style="height: 30px;"> 
-                        <p style="word-wrap: break-word;">Monitor and View Insights</p> </p-card>
                 </div>
-                <div class="col-sm-4 cursor copilotchatblock">
-                    <p-card  (click)="showDialog()">
-                        <img src=".././../../../assets/icons/icon_draft.png" style="height: 30px;"> 
-    
-                        <p class="">View Drafts</p> </p-card>
-                </div>
-                <div class="col-sm-4 cursor copilotchatblock">
-                    <p-card  (click)="showDialog()">
-                        <img src=".././../../../assets/icons/icon_templates.png" style="height: 30px;">
-                        <p>Explore Templates</p> </p-card>
+                <div class="hr"></div>
+
+                <div class="main-content-body row">
+                    <div class="col-md-9 model-box " [hidden]="showTable">
+                        <div class="graph-designer">
+                            <div class="studio_main">
+                                <div class="drag-area">
+                                    <div class="diagram_container-copilot"
+                                            id="_diagram">
+                                        </div>
+                                    <!--Nodes inside designer-->
+                                    <!-- <ng-container *ngFor="let node of nodes; let i = index">
+                                        <div id="{{ node.id }}" [class]="node.updated?'node-updated':'node'"
+                                            [ngStyle]="{left: node.x,top: node.y}">
+                                            <img [src]="node.path" (contextmenu)="openMenuItem($event, node)"
+                                                [id]="node.id+'_img'" class="w-100 node-image" alt="">
+                                            <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
+                                                {{ node.selectedNodeTask }}
+                                            </div>
+                                        </div>
+                                    </ng-container> -->
+                                    
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-9 model-box new-box " [hidden]="!showTable">
+                        <div class="mt-3 mb-4">
+
+                            <h5>
+                                <label id="popup_title">
+                                    <a class="imageBox" (click)="showTable=false">
+                                        <img class="default-arrow"
+                                            src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                                        <img class="hover-arrow"
+                                            src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
+                                    </a>
+                                </label>
+                                <span class="title_text_haspath">
+                                    <span class="">Fill in the time taken for below steps in the process:</span>
+                                </span>
+                            </h5>
+                        </div>
+                        <div style="margin:0px 60px !important;">
+                            <table class="table table-striped chat-form">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="3" class="table-mainhead">Time Taken (hrs)</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Mins</th>
+                                        <th scope="col">Hrs</th>
+                                        <th scope="col">Days</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                        <th>{{item.name}}</th>
+                                        <td style="width:50px;">
+                                            <p-dropdown [options]="minOptins" [(ngModel)]="item.min"
+                                                class="custom-dd"></p-dropdown>
+                                            <!-- <select  [(ngModel)]="item.min" (change)="onChange()" >
+                                            <option [value]="item" *ngFor="let item of minOptins">{{item}}</option>
+                                        </select> -->
+                                        </td>
+                                        <td style="width:50px;">
+                                            <!-- <select name="" id=""  [(ngModel)]="item.hrs">
+                                          <option [value]="item" *ngFor="let item of hrsOptins">{{item}}</option>
+                                        </select> -->
+                                            <p-dropdown [options]="hrsOptins" [(ngModel)]="item.hrs"
+                                                class="custom-dd"></p-dropdown>
+                                        </td>
+                                        <td style="width:50px;">
+                                            <!-- <select name="" id=""  [(ngModel)]="item.days">
+                                          <option [value]="item" *ngFor="let item of daysOptins">{{item}}</option>
+                                        </select> -->
+                                            <p-dropdown [options]="daysOptins" [(ngModel)]="item.days"
+                                                class="custom-dd"></p-dropdown>
+                                        </td>
+                                        <td style="width:20%;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3 chat-box">
+                        <div id="chat-grid" class="chat-grid">
+                            <div *ngFor="let sentMessage of messages" class="py-3 ">
+
+                                <div *ngIf="sentMessage.user!='SYSTEM'" class="user-message ">
+
+                                    <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
+                                    <div class="sys-image">
+                                        <img src="../../../../assets/copilot/user.svg" alt="" />
+                                    </div>
+                                </div>
+                                <div></div>
+                                <div *ngIf="sentMessage.user=='SYSTEM' && sentMessage.message!=''"
+                                    class="system-message">
+                                    <div class="d-flex">
+                                        <div class="sys-image">
+                                            <img src="../../../../assets/copilot/systemicon.svg" alt="" />
+                                        </div>
+                                        <div class="ml-2 send-msgtext" [innerHTML]="sentMessage.message">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="sentMessage.steps.length" style="margin-left:10%;">
+
+                                        <div *ngFor="let step of sentMessage.steps">
+                                            <div *ngIf="step.type=='PROCESS-IMAGE'">
+                                                <div (click)="sendMessage(step.label, 'LABEL')" class="card new-card">
+                                                    <div class="py-3 px-3 text-center ">
+                                                        <!-- <span class="text-chat mr-2"> <input type="checkbox"  /></span> -->
+                                                        <span class="h6 text-chat">{{step.label}}</span>
+                                                        <!-- <a href="#" class="eye-imgchat "><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a> -->
+                                                    </div>
+                                                    <img [src]="step.ImagePath" alt="" class="impath-adj">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='BUTTON'">
+                                                <button class="btn btn-primary text-white btn-sm"
+                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true"
+                                                    [disabled]="step.disable">{{step.label}}</button>
+                                            </div>
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
+                                                <button class="btn btn-secondary text-white btn-sm"
+                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true"
+                                                    [disabled]="step.disable">{{step.label}}</button>
+                                            </div>
+                                            <div class="col-11 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
+                                                <button class="btn d-flex py-1 bg-success-new">
+                                                    <div>
+                                                        <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'"
+                                                            alt="">
+                                                    </div>
+                                                    <div>
+                                                        {{step.label}}
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
+                                                <div class="py-0 send-msgtext" [innerHTML]="step.label">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div *ngIf="message.components" class="">
+                              <div *ngIf="message.components.includes('Buttons')">
+                              <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
+                              
+                                <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
+                              </div>
+                            </div>
+                            </div> -->
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="px-3 adjtextarea-align">
+                            <span *ngIf="isChatLoad" class="loader-align">
+                                <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader"
+                                    class="loader-fix">
+                            </span>
+                            <textarea [(ngModel)]="message" class="form-control message-input"
+                                placeholder="Type to Automate" (keyup.enter)="sendMessage(message,'MESSAGE')"
+                                (keydown.enter)="$event.preventDefault()"></textarea>
+                            <button [disabled]="isChatLoad" (click)="sendMessage(message, 'MESSAGE')"
+                                class="msg-snd-btn">
+                                <img src="./../../../../assets/copilot/textareaicon.svg" alt=""
+                                    *ngIf="message.length == 0">
+                                <img src="./../../../../assets/copilot/textareaiconactive.svg" alt=""
+                                    *ngIf="message.length > 0">
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
-    
-        <div class="sendinput">
-            <input type="text" pInputText placeholder="Send a message" [(ngModel)]="message">&nbsp;
-            <span class="sendimg">
-                <i class="pi pi-send" (click)="sendMessage()"></i>
-            </span>
-        </div>
     </div>
-</div> -->
+</div>
 
-
-
-
-<p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000" class="copilotchatblock-popup"
-    [ngClass]="nextFlag=='' ? 'initialpopup' : '' " >
-    <ng-template pTemplate="header">
-        <div  *ngIf="copilotFlag=='PROCESS'" >
-            Automate a Process
-        </div>
-        <div class="d-flex align-items-center" *ngIf="copilotFlag=='FUNCTIONS'" >
-            <a class="d-flex" (click)="copilotFlag='PROCESS'">
-                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;" >
-                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
-            </a>
-            <span>{{selectedProcess.process_name}}</span>
-        </div>
-        <div class="d-flex" *ngIf="copilotFlag=='TEMPLATES'"  >
-            <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
-                <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon" style="width:7px;">
-                <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon" style="width:7px;">
-            </a>
-            <span>{{selectedProcess.process_name}} - {{selectedFunction.functionName}}</span>
-        </div>
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
+    rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>
+        <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd2.accept()"></button>
     </ng-template>
-    <p class="subheader"*ngIf="copilotFlag=='PROCESS'">Select a process that you wish to automate with the <span>Co-Pilot</span> experience</p>
-    
-  
-    <div *ngIf="copilotFlag=='PROCESS'" class="popupcontent">
-        <div class="row">
-            <div *ngFor="let process of processesList" class="col-sm-3 form-group cardlist">
-                <p-card (click)="getFunctionsByProcessId(process)">{{process.process_name}}</p-card>
-            </div>
-            <div class="col-sm-3 form-group cardlist">
-                <p-card (click)="openChat2('Others')">Others</p-card>
-            </div>    
-        </div>
-    </div>
+</p-confirmDialog>
 
-    <div class="popupcontent secondpopup"  *ngIf="copilotFlag=='FUNCTIONS'">       
-        <div class="row" >
-            <div *ngFor="let functionItem of functions" class="col-sm-6 form-group cardlist">
-                <p-card (click)="getTemplatesByFunction(functionItem)"  class="item-card1"><span>{{functionItem.functionName}}</span></p-card>
-            </div>
+<p-dialog header="Employee on boarding Process Log Graph" class="dialogHeader" [(visible)]="isDialogVisible"
+    [style]="{width: '50vw'}" class="bps_overlay" [modal]="true" [baseZIndex]="1000">
+    <div class="" >
+        <div id="_diagram" *ngIf="isDialogVisible" class="graph-preview-container readOnly" style="z-index:100;position:relative;padding:2rem 0rem;"></div>
+        <div class="text-right">
+            <button (click)="loadBpmnwithXML(bpmnPath,'.diagram_container-copilot');" class="btn btn-primary btn-sm text-white">Yes</button>&nbsp;<button (click)="isDialogVisible=false;" class="btn btn-secondary text-white btn-sm">No</button>
         </div>
+        <!-- <img src="../../../../assets/copilot/popup-chart.svg" *ngIf="!isLoadGraphImage" class="popup-imgchart"> -->
     </div>
+    <!-- <div class="text-right">
+        <button (click)="loadGraphIntiate('Load Graph');isDialogVisible=false"
+            class="btn btn-primary btn-sm text-white">Ok</button>
+    </div> -->
 
-    <div class="thirdpopup"  *ngIf="copilotFlag=='TEMPLATES'">
-        <div class="row" >
-            <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
-                    <p-card (click)="openChat2(template.templateTitle)">
-                    <ng-template pTemplate="header">
-                        <!-- <div [class]="'diagram_container-copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"> </div> -->
-                        <div [hidden]="!template.isExicuted" class="bps_overlay" [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"></div>
-                        <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
-                        <!-- <img src="{{template.templatePreviewImage}}" class="w-100" alt="graph"> -->
-                    </ng-template>                    
-                    <div class="">
-                        <h6>{{template.templateTitle}}</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <!-- <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/Jobanalysis.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Job Analysis and Job Posting</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/Assessment.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Assessment and Testing</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/Talentpipeline.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Talent Pipeline Management</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/Compliance.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Compliance and Legal Considerations</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/Candidatexp.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Candidate Experience</h6>
-                    </div>
-                </p-card>                
-            </div>
-            <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/copilot/ATSmgmt.png" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Applicant Tracking System (ATS) Management</h6>
-                    </div>
-                </p-card>                
-            </div> -->
-            <!-- <div class="col-4 form-group cardlist">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <img src="../../../../assets/graph.svg" class="" alt="graph">
-                    </ng-template>                    
-                    <div class="">
-                        <h6>Employee On Boarding V8</h6>
-                    </div>
-                </p-card>                
-            </div> -->
-        </div>
-    </div>
+
+
 
 </p-dialog>
+
+<div class="spinoverlay" *ngIf="loader">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' alt="loader-image" class="ezflow-loader" />
+    </div>
+</div>

@@ -1,0 +1,94 @@
+.cursor{
+    cursor: pointer;
+ 
+    }
+.card{border: 0px solid rgba(0,0,0,.125);
+    border-radius: 6px;}
+    /* .main-content-body {
+        height: calc(100% - 61px) !important;} */
+input{
+    border: 2px solid #3e8bdb !important;
+    height: 55px;
+    width: 100%;
+    border-radius: 3px !important;
+}
+
+.sendinput {
+    position: relative;
+}
+
+span.sendimg {
+    position: absolute;
+    right: 18px;
+    top: 20px;
+}
+
+  /* .imageBox .hover-icon, .imageBox .active-icon{transition: transform ease 300ms;}
+  .imageBox:hover .hover-icon, .imageBox:hover .active-icon{transform: translate(0, -10px);} */
+
+ 
+
+.heading p{
+    font-weight: bold;
+    font-size: medium;
+    margin: 8px;
+}
+
+.side{
+    background-color: #ebebeb;
+}
+
+.side-bar{
+width: 12rem;
+}
+
+/* Popup styles Start */
+.copilotchatblock-popup a img {
+    cursor: pointer;
+    margin-right: 8px;
+}
+.copilotchatblock-popup a:hover img.default-icon, .copilotchatblock-popup img.hover-icon {
+    display: none;
+}
+.copilotchatblock-popup a:hover img.hover-icon {
+    display: initial;
+}
+.popupcontent {
+    padding-top: 1.3rem;
+    height:420px; 
+}
+.copilotchatblock-popup .secondpopup, 
+.copilotchatblock-popup .thirdpopup {
+    overflow: auto;
+    /* max-height: 365px; */
+    margin-bottom: 10px;
+}
+.copilotchatblock-popup .thirdpopup {
+    max-height: 420px;
+}
+.thirdpopup h6 {
+    margin-bottom: 0px;
+    font-weight: 500;
+    font-size: 16px;
+}
+/* Popup styles End */
+
+
+.card-title-bg{
+    background-color: lightgray;
+}
+.pl-adj {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.pad-align{padding-right:25px;padding-left:25px;}
+
+.diagram_copilot{
+    height: 135px;
+    width: 100%;
+    border: 1px solid #098de6;
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
+    overflow: scroll;
+}

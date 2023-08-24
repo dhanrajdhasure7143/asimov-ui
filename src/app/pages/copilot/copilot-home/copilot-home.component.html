@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-md-12 pl-0 pr-0">
+        <div class="maincontent">
+            <div class="h-100">
+                <div class="row main-content-head">
+                    <h3>
+                        <span class="title_text">Conversational AI Process Automation</span>
+                    </h3>
+                </div>
+                <div class="main-content-body">
+                    <div class="card">
+                        <h4 class="second-header"> What Would You Like to Do Today?</h4>
+                        <div class="row grid-align">
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Automate.svg" alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Automate-blue.svg" alt="">
+                                    </span>
+                                    <p> Automate Process</p>
+
+                                </p-card>
+                            </div>
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject.svg"
+                                            alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject-blue.svg"
+                                            alt="">
+                                    </span>
+                                    <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p>
+
+                                </p-card>
+                            </div>
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs.svg" alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs-blue.svg"
+                                            alt="">
+                                    </span>
+                                    <p> Access Process Graphs</p>
+
+                                </p-card>
+                            </div>
+
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights.svg"
+                                            alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights-blue.svg"
+                                            alt="">
+                                    </span>
+                                    <p style="word-wrap: break-word;">Monitor and View Insights</p>
+                                </p-card>
+                            </div>
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Drafts.svg" alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Drafts-blue.svg" alt="">
+                                    </span>
+                                    <p class="">View Drafts</p>
+                                </p-card>
+                            </div>
+                            <div class="col-sm-4 pad-align">
+                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
+
+                                    <span class="active-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Templates.svg" alt="">
+                                    </span>
+                                    <span class="hover-icon">
+                                        <img src=".././../../../assets/copilot/Landing_Icons/Templates-blue.svg" alt="">
+                                    </span>
+                                    <p>Explore Templates</p>
+                                </p-card>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-dialog [(visible)]="display" [style]="{width: '60vw'}" [modal]="true" [baseZIndex]="1000"
+        class="copilotchatblock-popup" [ngClass]="nextFlag=='' ? 'initialpopup' : '' ">
+        <ng-template pTemplate="header">
+            <div *ngIf="copilotFlag=='FUNCTIONS'">
+                Automate a Function
+            </div>
+            <div class="d-flex align-items-center" *ngIf="copilotFlag=='PROCESS'">
+                <a class="d-flex" (click)="copilotFlag='FUNCTIONS'">
+                    <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon"
+                        style="width:7px;">
+                    <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon"
+                        style="width:7px;">
+                </a>
+                <span>{{selectedProcess.functionName}}</span>
+            </div>
+            <div class="d-flex" *ngIf="copilotFlag=='TEMPLATES'">
+                <a class="d-flex" (click)="copilotFlag='PROCESS'">
+                    <img src="../../../../assets/images-n/co-pilot/back-default.svg" alt="back" class="default-icon"
+                        style="width:7px;">
+                    <img src="../../../../assets/images-n/co-pilot/back-hover.svg" alt="back" class="hover-icon"
+                        style="width:7px;">
+                </a>
+                <span>{{selectedProcess.functionName}} - {{selectedFunction.process_name}}</span>
+            </div>
+        </ng-template>
+        <p class="subheader" *ngIf="copilotFlag=='FUNCTIONS'">Select a Function that you wish to automate with the
+            <span>Co-Pilot</span> experience
+        </p>
+        <div *ngIf="copilotFlag=='FUNCTIONS'" class="popupcontent">
+            <div class="row">
+                <div *ngFor="let each of funtionsList" class="col-sm-3 form-group cardlist">
+                    <p-card (click)="getProcessesByFunctionId(each)">{{each.functionName}}</p-card>
+                </div>
+                <div class="col-sm-3 form-group cardlist">
+                    <p-card (click)="navigateToCopilotChatScreen('Others')">Others</p-card>
+                </div>
+            </div>
+        </div>
+
+        <div class="popupcontent secondpopup" *ngIf="copilotFlag=='PROCESS'">
+            <div class="row">
+                <div *ngFor="let item of processList" class="col-sm-6 form-group cardlist">
+                    <p-card (click)="getTemplatesByProcess(item)"
+                        class="item-card1"><span>{{item.process_name}}</span></p-card>
+                </div>
+            </div>
+        </div>
+
+        <div class="thirdpopup popupcontent" *ngIf="copilotFlag=='TEMPLATES'">
+            <div class="row">
+                <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
+                    <p-card (click)="navigateToCopilotChatScreen(template)">
+                        <ng-template pTemplate="header">
+                            <div [hidden]="!template.isExicuted" class="bps_overlay readOnly"
+                                [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"
+                                style="position:relative;z-index:100;"></div>
+                            <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
+                        </ng-template>
+                        <div class="">
+                            <h6>{{template.template_name}}</h6>
+                        </div>
+                    </p-card>
+                </div>
+
+
+                <div class="col-12" *ngIf="templates.length==0">
+                    <div class="text-center">
+                        <span class="h6">No Items Found</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </p-dialog>

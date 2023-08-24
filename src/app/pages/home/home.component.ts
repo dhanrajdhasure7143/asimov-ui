@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
 
     //  --- Redirection to rpa ---
     if(environment.isCopilotEnable)
-        this.router.navigate(["/pages/copilot/chat"], {queryParams:this._params});
+        this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
     if(!environment.isCopilotEnable)
       this.rest_api.getDashBoardsList().subscribe((res:any)=>{
       let dashbordlist:any=res.data;
