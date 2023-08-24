@@ -60,7 +60,7 @@
                     <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/> -->
                     <img src="../../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus" alt=""/>
                 </button>
-                <button disabled *ngIf=" selectedvalue !==''"  (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
+                <button  *ngIf=" selectedvalue !==''"  (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
                     <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
                 </button>
                 <button (click)="reset_all()" id="autoreset"  pTooltip="Reset" tooltipPosition="top">
