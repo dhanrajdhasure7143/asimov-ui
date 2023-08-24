@@ -264,12 +264,12 @@
                                     <span *ngIf="element.taskType=='Human'">
                                         <span *ngIf="isHumanLoading=='Loading'">Loading...</span>
                                         <span *ngIf="isHumanLoading=='Success'">
-                                            <select class="form-control" [(ngModel)]="element.assignedUserId"
+                                            <select class="form-control"
                                                 [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"
                                                 [id]="element.taskId+'__select'">
                                                 <option value="0" hidden selected>Select Resource</option>
                                                 <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )"
-                                                    [value]="human.userId.id">{{human.userId.firstName|titlecase}}
+                                                [value]="human.userId.id" [selected]="human.userId.id == element.assignedUserId">{{human.userId.firstName|titlecase}}
                                                     {{human.userId.lastName|titlecase}} </option>
                                             </select>
                                         </span>
@@ -353,7 +353,7 @@
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
+                                            <button (click)="resetbot(element)" pTooltip="Reset" tooltipPosition="top">
                                                 <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="" />
                                                 <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt="" />
                                                 <!-- <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" alt="" /> -->
@@ -398,7 +398,7 @@
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="resetbot(element.taskId)" pTooltip="Reset" tooltipPosition="top">
+                                            <button (click)="resetbot(element)" pTooltip="Reset" tooltipPosition="top">
                                                 <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="" />
                                                 <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt="" />
                                             </button>
