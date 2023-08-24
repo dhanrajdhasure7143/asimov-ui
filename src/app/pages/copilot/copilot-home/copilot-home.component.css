@@ -6,12 +6,12 @@
     border-radius: 6px;}
     /* .main-content-body {
         height: calc(100% - 61px) !important;} */
-input{
+/* input{
     border: 2px solid #3e8bdb !important;
     height: 55px;
     width: 100%;
     border-radius: 3px !important;
-}
+} */
 
 .sendinput {
     position: relative;
@@ -122,7 +122,7 @@ input{
     margin-right: 17px;
 }
 .headerTitle img{
-    width: 100px; 
+    /* width: 100px;  */
     margin-bottom: 45px; 
     height: 100px
 }
