@@ -92,3 +92,42 @@ width: 12rem;
     position: relative;
     overflow: scroll;
 }
+
+
+
+
+.card{
+    background-color: #cee5ff;
+    font-style: italic;
+    height: 45px;
+    cursor: pointer;
+}
+.innerText{
+    margin-top: 10px ;
+}
+input{
+    width: 95%;
+}
+.input-container {
+    position: relative;
+}
+.send-icon {
+    position: absolute;
+    top: 50%;
+    right: 35px; /* Adjust this value as needed */
+    transform: translateY(-50%);
+    height: 18px;
+}
+.headerTitle{
+    margin-right: 17px;
+}
+.headerTitle img{
+    width: 100px; 
+    margin-bottom: 45px; 
+    height: 100px
+}
+.headerTitle span{
+    font-size: 85px; 
+    margin-left: 10px; 
+    font-weight: 450;
+}
