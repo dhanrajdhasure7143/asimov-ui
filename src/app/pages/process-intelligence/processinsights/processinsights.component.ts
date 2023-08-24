@@ -90,6 +90,7 @@ export class ProcessinsightsComponent implements OnInit {
     isAddHrs:boolean=false;
     value:any='23:11';
     time:any
+    allActivityList:boolean=false;
 
     // NGX Charts
     multi: any = [];
@@ -354,7 +355,8 @@ hiddenPopUp:boolean=false;
     }
 
     showTop10Rec() {
-        (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView();
+        // (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView();
+        this.allActivityList = true;
     }
 
     getResources(vData) {

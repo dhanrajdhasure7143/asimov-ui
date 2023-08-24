@@ -168,7 +168,7 @@
                                   <ul class="business_content">
                                         <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><span><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range) | currency}}</b></span></li>
                                         <div class="explrlink" (click)="showTop10Rec()">
-                                            <a href="#">
+                                            <a>
                                                 Explore More<i class="fa fa-arrow-right"></i>
                                             </a>
                                         </div>
@@ -418,7 +418,22 @@
             </div>
         </div>
     </div>
-        
+
+</div>
+<div>
+    <p-dialog [(visible)]="allActivityList" [style]="{width: '60vw', height:'40vw'}">
+        <ng-template pTemplate="header">
+            <h2 class="" style="font-size: 18px;">Recommendations</h2>
+        </ng-template>
+        <div>
+            <ul class="business_content">
+                <li *ngFor="let acti of actual_activityData; let i=index"><span><b>{{acti.Activity}}</b> automation saves
+                        <b>{{calculateSavings(acti.Duration_range) | currency}}</b></span></li>
+                <div class="explrlink" (click)="showTop10Rec()">
+                </div>
+            </ul>
+        </div>
+    </p-dialog>
 </div>
 
 <!-- //Variant List Split Overlay Design Code//
