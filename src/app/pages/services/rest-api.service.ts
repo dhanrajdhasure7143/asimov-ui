@@ -1828,16 +1828,16 @@ updateBotImage(botid,data:any){
 }
 
 //Copilot Rest-Api's
-getData(body){
-  return this.http.post("/a-square/v1/conversation/message",body);
-}
-
-getCopilotProcessList(){
-  return this.http.get("/a-square/v1/processes")
-}
-
 getCopilotFunctionsList(){
-  return this.http.get("/a-square/v1/functions")
+  return this.http.get("/a-square/v1/functions");
+}
+
+getCopilotProcessesList(id){
+  return this.http.get("/a-square/v1/processes/function/"+id)
+}
+
+getCopilotTemplatesList(id){
+  return this.http.get("/a-square/v1/template/process/"+id);
 }
 
 
@@ -1850,6 +1850,12 @@ getCopilotConversation()
 sendMessageToCopilot(messageBody:any)
 {
   return this.http.post("/a-square/v1/conversation/message", messageBody)
+}
+
+
+createCopilotConversationSessionId(payload:any)
+{
+  return this.http.post("/a-square/v1/conversation", payload);
 }
 
 }
