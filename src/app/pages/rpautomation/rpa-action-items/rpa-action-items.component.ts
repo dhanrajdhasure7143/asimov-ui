@@ -25,7 +25,7 @@ export class RpaActionItemsComponent implements OnInit {
   table_searchFields:any[]=[];
   selectedIcon: any;
   action_Id:any;
-  userRole:any=[]
+  userRole:any=[];
   // actionVisible:boolean=true;
 
   constructor(

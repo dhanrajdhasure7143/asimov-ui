@@ -330,7 +330,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       let projectName=localStorage.getItem("projectName");
       localStorage.removeItem("projectId");
       localStorage.removeItem("projectName");
-      this.router.navigate(["/pages/projects/tasks"], {queryParams:{"project_id":projectId, "project_name":projectName}})
+      this.router.navigate(["/pages/projects/projectdetails"], {queryParams:{"project_id":projectId, "project_name":projectName}})
     }else{
       $(".bot-close").click();
     }

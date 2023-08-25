@@ -249,10 +249,10 @@ private columnList: columnList
 
 ngOnInit() {
 this.actionsitems = [
-  {
-    label: 'Tasks',
-    command: () => {this.taskListView()}
-  },
+  // {
+  //   label: 'Tasks',
+  //   command: () => {this.taskListView()}
+  // },
   { 
     label: 'Users',
     command: () => { this.openUsersOverlay()}
@@ -1325,10 +1325,12 @@ convertToTree(res_data:any){
       node['icon'] = "doc-file.svg"
     }else if(obj.dataType == 'html'){
       node['icon'] = "html-file.svg"
-    }else if(obj.dataType == 'csv'||obj.dataType == 'xlsx' ){
+    }else if(obj.dataType == 'csv'||obj.dataType == 'xlsx'||obj.dataType=='xlsm' ){
       node['icon'] = "xlsx-file.svg"
-    }else if(obj.dataType == 'ppt'){
+    }else if(obj.dataType == 'ppt'||obj.dataKey=='pptx' ){
       node['icon'] = "ppt-file.svg"
+    }else if(obj.dataType=='mp3'){
+      obj['icon'] = "audio-file.svg"
     }else{
       node['icon'] = "txt-file.svg"
     }

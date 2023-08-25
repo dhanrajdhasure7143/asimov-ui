@@ -55,9 +55,12 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
-                <button (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
+                <button disabled *ngIf="selectedvalue==''" (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
                     <!-- <img src="../../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt=""/>
                     <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/> -->
+                    <img src="../../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus" alt=""/>
+                </button>
+                <button  *ngIf=" selectedvalue !==''"  (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
                     <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
                 </button>
                 <button (click)="reset_all()" id="autoreset"  pTooltip="Reset" tooltipPosition="top">

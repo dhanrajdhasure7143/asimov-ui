@@ -258,13 +258,28 @@ export class ConfigureDashboardComponent implements OnInit {
         this.router.navigate(["/pages/dashboard/dynamicdashboard"], {
           queryParams: this._paramsData,
         });
+          
+            this.messageService.add({
+              severity: "success",
+              summary: "Success",
+              detail: "Created successfully!", 
+              key:"test_1"          
+            });
+         
       });
     }else{
       this.rest_api.updateDashboardConfiguration(req_array, this._paramsData.dashboardId).subscribe((res) => {
         this.loader.hide();
         this.router.navigate(["/pages/dashboard/dynamicdashboard"], {
           queryParams: this._paramsData,
+        })
+            setTimeout(()=>{
+              this.messageService.add({
+                severity: "success",
+                summary: "Success",
+                detail: "Updated successfully!",         
         });
+            },500);
       });
     }
   }

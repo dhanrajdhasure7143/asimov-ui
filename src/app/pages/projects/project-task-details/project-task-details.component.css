@@ -226,26 +226,34 @@ ul.historydiv li:last-child {
 
 .fileupsec {
   position: relative;
+  float: right;
+  right: 10%;
 }
 input[type="file"] {
   opacity: 0;
   cursor: pointer;
-  width: 140px;
+  width: 30px;
   z-index: 1;
   position: relative;
 }
 .fileupsec span {
-  position: absolute;
+  /* position: absolute;
   color: #098de6;
   padding: 3px 5px;
   left: 0px;
   cursor: pointer;
+  z-index: 0; */
+  position: absolute;
+  right: 17px;
   z-index: 0;
 }
 .fileupsec img {
   position: absolute;
   right: -10px;
-  top: 5px;
+  /* top: 5px; */
+  top: 1px;
+  height: 19px;
+  width: 19px;
 }
 .emptycomments img {
   margin-top: 5%;

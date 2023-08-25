@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   NgZone,
-  AfterViewInit,
   ChangeDetectorRef,
   EventEmitter,
   Output,
@@ -12,12 +11,10 @@ import {
   Pipe,
   PipeTransform,
   TemplateRef,
-  OnChanges,
-  SimpleChanges,
 } from "@angular/core";
 import { DndDropEvent } from "ngx-drag-drop";
 import { fromEvent } from "rxjs";
-import { jsPlumb, jsPlumbInstance } from "jsplumb";
+import { jsPlumb } from "jsplumb";
 import { RestApiService } from "../../services/rest-api.service";
 import {
   FormGroup,
@@ -29,15 +26,12 @@ import jsPDF from "jspdf";
 import { NotifierService } from "angular-notifier";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { DataTransferService } from "../../services/data-transfer.service";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import Swal from "sweetalert2";
+import { HttpClient } from "@angular/common/http";
 // import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from "dom-to-image";
 import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { RpaStudioDesignerComponent } from "../rpa-studio-designer/rpa-studio-designer.component";
-import { SplitComponent } from "angular-split";
 import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
 import { ActivatedRoute } from "@angular/router";
 import { environment } from "src/environments/environment";
@@ -169,13 +163,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   startStopCoordinates:any="";
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
+  recordandplay:boolean = false;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
-    private RPA_Designer_Component: RpaStudioDesignerComponent,
     // private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
@@ -267,7 +261,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //this.getCategories();
     this.validateBotNodes();
     this.route.queryParams.subscribe(res=>{
-      console.log("testingh",res)
       this.isCopilot = environment.isCopilotEnable
       if(res.redirect) 
       if(res.redirect == "copilot")this.isNavigateCopilot = true
@@ -1155,7 +1148,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 }
               });
               if (
-                finalattributes.find((attr) => attr.taskId == 71) != undefined
+                finalattributes.find((attr) => attr.name == "codeSnippet") != undefined
               ) {
                 this.formVales = finalattributes;
                 this.update_record_n_play(finalattributes, node);
@@ -1196,7 +1189,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             this.formVales = attr_response;
             this.recordandplayid =
               "recordandplay_" + this.finalbot.botName + "_" + node.id;
-            document.getElementById("recordandplay").style.display = "block";
+                this.recordandplay = true;
           } else if (
             attr_response.find((attr) => attr.type == "restapi") != undefined
           ) {
@@ -1222,11 +1215,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   update_record_n_play(finalattributes, node) {
-    if (finalattributes.find((attr) => attr.taskId == 71).value != undefined) {
+    if (finalattributes.find((attr) => attr.name == "codeSnippet").value != undefined) {  
       $("#record_n_play").val(
-        finalattributes.find((attr) => attr.taskId == 71).value
+        finalattributes.find((attr) => attr.name == "codeSnippet").value
       );
-      document.getElementById("recordandplay").style.display = "block";
+      this.recordandplay=true;
     }
   }
 
@@ -1346,7 +1339,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 // close record and play form
   close_record_play() {
-    document.getElementById("recordandplay").style.display = "none";
+    this.recordandplay= false;
   }
 
   //MultiForm Submit
@@ -1754,17 +1747,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   resetDesigner() {
-    // Swal.fire({
-    //   title: "Are you Sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton: 'btn new-cancelbtn',
-    //     },
-    //   confirmButtonText: "Yes, reset designer!",
-    // }).then(
       this.confirmationService.confirm({
         header:'Are you sure?',
         message:"You want to reset the designer.",
@@ -1776,13 +1758,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         rejectIcon: 'null',
         acceptIcon: 'null',
         key: "designerWorkspace",
-       accept:(result: any) => {
-      if (result.value) {
+       accept:() => {
         this.jsPlumbInstance.deleteEveryEndpoint();
         this.nodes = [];
         this.finaldataobjects = [];
         this.groupsData = [];
-      }
     }
   })
   }
@@ -1866,7 +1846,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   updateBotNodes(updateBotImageFlag:Boolean){
     this.rest.getbotdata(this.finalbot.botId).subscribe((response: any) => {
       if(response.errorMessage){
-        console.log(response.errorMessage)
         //this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot details!'})
         return;
       }
@@ -1902,27 +1881,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if(res.status=="success"){
        // this.messageService.add({severity:'success',summary:'Success',detail:'Updated bot image successfully!'});
       }else{
-        console.log(res?.message??"Unable to update bot image")
         //this.messageService.add({severity:'error',summary:'Error',detail:'Unable bot update image!'});
       }
     },err=>{
-      console.log(err)
+      console.log(err);
     })
   }
 
   async acceptUpdateBotWithDeprecatedTasks(version_type, comments) {
     if(this.isDeprecated == true){
-      const message = `Deprecated task present in the bot, <br>
+      const message = `Deprecated task(s) present in the bot, <br>
       <span class="bold">${this.modifiedTaskNames.join(', ')}</span>
-      Unless you update, bot will run with default values. Do you want to proceed with Update?`;
+      Do you want to proceed with Update?`;
    this.confirmationService.confirm({
      message: message,
      header: 'Are you sure?',
      accept: () => {
-       this.spinner.hide();
+      this.updateFinalBot(version_type, comments);
      },
      reject: async (type) => {
-      this.updateFinalBot(version_type, comments);
+      this.spinner.hide();
      },
      key: "positionDialog"
    });
@@ -2425,7 +2403,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
 
 
-    console.log(this.startStopCoordinates)
+
     // if (
     //   this.finaldataobjects.find((item) => item.inSeqId == this.startNodeId) !=
     //   undefined
@@ -2877,10 +2855,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     if(this.isDeprecated == true){
       this.confirmationService.confirm({
-        message: "Deprecated task present in the bot, Do you want to execute with default values?",
+        message: "Deprecated task present in the bot, Do you want to execute bot?",
         header: 'Are you Sure?',
         accept: () => {
-         this.deprecatedExecuteBot()
+        //  this.deprecatedExecuteBot()
+            this.spinner.show();
+            this.rest.execution(this.finalbot.botId).subscribe(
+              (response: any) => {
+                this.spinner.hide();
+                if (response.errorMessage == undefined){
+                  this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                  this.updateBotNodes(false);                  
+                } else {
+                this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+                }
+              },
+              (err) => {
+                this.spinner.hide();
+                this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+              }
+            );
         },
         reject: (type) => {
           this.spinner.hide();

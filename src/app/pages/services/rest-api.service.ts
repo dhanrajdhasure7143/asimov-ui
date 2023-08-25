@@ -1826,4 +1826,30 @@ checkRunningAction(actionId:any){
 updateBotImage(botid,data:any){
   return this.http.put("/rpa-service/updateBotImage/"+botid, data);
 }
+
+//Copilot Rest-Api's
+getData(body){
+  return this.http.post("/a-square/v1/conversation/message",body);
+}
+
+getCopilotProcessList(){
+  return this.http.get("/a-square/v1/processes")
+}
+
+getCopilotFunctionsList(){
+  return this.http.get("/a-square/v1/functions")
+}
+
+
+getCopilotConversation()
+{
+  return this.http.get("/a-square/v1/conversation")
+}
+
+
+sendMessageToCopilot(messageBody:any)
+{
+  return this.http.post("/a-square/v1/conversation/message", messageBody)
+}
+
 }

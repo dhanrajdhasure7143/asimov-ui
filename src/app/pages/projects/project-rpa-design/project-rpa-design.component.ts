@@ -126,7 +126,7 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   backToProjects() {
     this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { id: this.projectId, programId: this.programId },
+      queryParams: { project_id: this.projectId, programId: this.programId },
     });
   }
 

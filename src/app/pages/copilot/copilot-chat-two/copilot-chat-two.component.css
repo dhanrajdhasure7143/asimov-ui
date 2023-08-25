@@ -34,7 +34,7 @@
 }
 
 .model-box {
-   padding:0px 60px;
+   padding:0px 0px;
 }
 
 .chat-form select {
@@ -247,45 +247,8 @@ button[disabled]:hover{cursor: no-drop;
     overflow-x: auto;
 }
 
-.node {
-    cursor: pointer;
-    box-shadow: none;
-    -o-box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    border-radius: 0.2em;
-    position: absolute;
-    line-height: 14px;
-    background-size: 31px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 40px;
-    height: 55px;
-    /* background-color: #F6FCFE;
-    border: 2px solid #1673DB;   */
-  }
-  .node-image
-  {
-    margin-top:8px !important;
-  }
-  .node-updated {
-    cursor: pointer;
-    box-shadow: none;
-    -o-box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    border-radius: 0.2em;
-    position: absolute;
-    line-height: 14px;
-    background-size: 31px;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 40px;
-    height: 55px;
-    /* background-color: #e2faf1;
-    border: 2px solid #16db4a;  */
-    background-image: url("../../../../assets/copilot/graph-icons/process-block-green.png") !important; 
-  }
+
+ 
   
   .new-card{background-color: #F6FCFE !important;
     border-radius: 8px;
@@ -335,27 +298,6 @@ button[disabled]:hover{cursor: no-drop;
 }
 
 
-.node-delete {
-    /* float: right;
-    margin-top:-10px;
-    margin-right: -7px;
-    border-radius: 10px;
-    height:13px;
-    width:13px;
-    color:rgb(255, 255, 255);
-    text-align: center;
-    font-size:10px; */
-    position: absolute;
-    right: -8px;
-    top: -9px;
-}
-
-.node-delete i {
-    height: 15px;
-    color: #2370e5 !important;
-}
-
-
 .context-menu__item {
     padding: 6px;
 }
@@ -377,17 +319,6 @@ button[disabled]:hover{cursor: no-drop;
     left: 10px;
     background: white;
     width: max-content;
-}
-
-
-.node_tooltip {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 45px;
-    border-width: 6px;
-    border-style: solid;
-    border-color: transparent gray transparent transparent;
 }
 
 .connLabel {
@@ -503,26 +434,6 @@ padding: 0px 15px !important;
         padding: 10px;
       }
 
-
-.node-menu{
-    list-style-type: none;
-}
-.nod-img-wid{width:40px;}
-.node-menu a img{margin-left:3px;}
-.node-menu a{
-   display:flex;
-     cursor: pointer !important;
-     font-size: 16px !important;
-}
-.node-menu{margin-top: 14px;
-    margin-bottom: 0px;}
-.node-menu i{
-    font-size: 18px !important;
-}
-.p-overlaypanel-content {
-    padding: 20px 16px 4px !important;
-}
-.node-align ul{margin-bottom:0px !important;}
 .impath-adj{margin: auto;
     height: auto;}
 .popup-imgchart{width:80%;
@@ -531,8 +442,17 @@ display:block;}
 .btn-align-no{margin-right:1rem;}
 button.msg-snd-btn:disabled{background-color: transparent !important;}
 .new-box{padding:0px !important;}
-.node-menu li{margin-bottom:14px;}
 
+
+.diagram_container-copilot{
+    height: 500px;
+    width: 100%;
+    border: 1px solid #098de6;
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
+    overflow: scroll;
+}
 
 
 

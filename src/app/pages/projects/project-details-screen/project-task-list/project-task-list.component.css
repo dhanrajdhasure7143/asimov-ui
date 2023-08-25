@@ -20,9 +20,6 @@ td p.lowpriority {
     height: 100%;
 }
 
-.status-img > img {
-    /* height: 40px !important; */
-}
 .newstatu .status-img img {
     padding: 0px;
     display: inline-flex;
@@ -36,4 +33,10 @@ td p.lowpriority {
 .status-data {
     vertical-align: middle;
     color: black !important;
+}
+
+.colheads {
+    font-weight: 600;
+    font-size: 20px !important;
+    margin-bottom: 0px;
 }

@@ -2511,11 +2511,13 @@ input.p-inputtext {
 }
 .tabs_screen .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 16px 20px 6px !important;
+  margin-right: 25px !important;
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   margin: 0px !important;
   padding: 16px 20px 6px !important;
   justify-content: left;
+  margin-right: 25px !important;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link,
 cron-editor > div > div.card-header > ul > li > a.nav-link.active {
@@ -2667,16 +2669,30 @@ span.statusbadge_nc {
 .attachdocgrid .p-datatable-wrapper {
   height: calc(100vh - 210px); /* for Attached Documents grid */
 }
-/* for RecentActivities  grid */
+/* PRJ Details - RecentActivities  & Tasks Grid */
 .acresources .p-datatable-wrapper {
-  height: 268px;
+  height: 155px;
+  margin-top: 10px;
+} 
+.taskslist .p-datatable-wrapper {
+  height: 320px;
   margin-top: 10px;
 }
-.acresources .p-datatable .p-datatable-header{
+.acresources .p-datatable .p-datatable-header, 
+.taskslist .p-datatable .p-datatable-header {
   background-color: transparent !important;
   position: absolute;
   top: -40px;
   right: 0;
+}
+.taskslist .p-datatable-scrollable .p-datatable-tbody>tr>td:nth-child(4) {
+  display: block;
+}
+.taskslist .p-datatable-scrollable .p-datatable-tbody>tr>td:nth-child(4) .d-flex span {
+  line-height: 0.6;
+}
+.taskslist .newinntalx span:last-child a {
+  margin-right: 0px;
 }
 .PI-workspace-table .p-datatable-header,
 .rpa-workspacegrid .p-datatable-header,
@@ -2685,7 +2701,9 @@ span.statusbadge_nc {
   top: -40px;
   right: 0;
 }
-.acresources th.p-element.p-sortable-column.p-resizable-column {
+.acresources th.p-element,
+.taskslist th.p-element.p-sortable-column.p-resizable-column,
+.taskslist th.p-element.p-resizable-column {
   background-color: #fff !important;
 }
 /* chat mention styles */
@@ -3014,7 +3032,7 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 
 .project-ninfo .pinf .p-inplace.p-component {
   height: 28px;
-  width: 88% !important;
+  width: 92% !important;
   margin-bottom: 1px;
 }
 .project-overview .p-dropdown .p-inputtext {
@@ -3935,7 +3953,7 @@ padding: 0px 30px;}
   justify-content: center;
 }
 .copilotchatblock-popup .thirdpopup .p-card-header img {
-  width: auto !important;
+  /* width: auto !important; */
   height: auto;
 }
 .copilotchatblock-popup .thirdpopup .p-card.p-component:hover .p-card-body {
@@ -3954,3 +3972,29 @@ padding: 0px 30px;}
 .dialogHeader .p-dialog .p-dialog-header .p-dialog-header-icon {width:auto !important;}
 .comment-box.p-overlaypanel.p-component{top: 381px !important;}
  
+.projects-process-bar-low .p-progressbar-value {
+  background: #EA3D3D !important;
+}
+.projects-process-bar-medium .p-progressbar-value {
+  background: #FFC107 !important;
+}
+.projects-process-bar-high .p-progressbar-value {
+  background: #27AD74 !important;
+}
+.projects-process-bar .p-progressbar{
+  height: 1.0rem !important;
+  border-radius: 15px !important;
+}
+.projects-process-bar .p-progressbar-label{
+  font-size: 12px !important;
+  line-height: 1.1rem !important;
+}
+.projects-process-bar-high .p-progressbar-label{
+  color: #fff !important;
+}
+.progress-bar-grid{
+  top: 7px !important;
+  position: relative !important;
+}
+
+
