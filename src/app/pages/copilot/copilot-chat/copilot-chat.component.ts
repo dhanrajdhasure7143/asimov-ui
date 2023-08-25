@@ -85,9 +85,8 @@ export class CopilotChatComponent implements OnInit {
   }
 
   getTemplatesByProcessId(processId, templateId) {
-    this.rest_api
-      .getCopilotTemplatesList(processId)
-      .subscribe((response: any) => {
+    this.rest_api.getCopilotTemplatesList(processId).subscribe(
+      (response: any) => {
         if (response) {
           let template = response.find(
             (item: any) => item.template_id == templateId
