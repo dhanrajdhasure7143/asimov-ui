@@ -454,5 +454,10 @@ export class UsersComponent implements OnInit {
       this.isdprtDisabled = false;
     }
   }
-
+  
+  handleRowDoubleClick(rowData: any) {
+    if (rowData.email !== this.loggedinUser) {
+        this.modifyUser(rowData);
+    }
+}
 }
