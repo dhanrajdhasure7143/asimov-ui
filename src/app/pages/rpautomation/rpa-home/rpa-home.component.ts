@@ -635,6 +635,7 @@ export class RpaHomeComponent implements OnInit {
               delete attrItem.botTaskId;
               delete attrItem.attrId;
               delete attrItem.botId;
+              attrItem.attrValue="";
               return attrItem;
             })
             return item;
