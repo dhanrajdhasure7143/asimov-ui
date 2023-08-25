@@ -119,6 +119,47 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
+
+  templateDetails:any=[]
+  loadTemplate(template:any)
+  {
+    if(template.bpmnXml)
+    {
+      this.templateDetails=template;
+      if(this.bpmnPath=='')
+        this.isDialogVisible=true
+      setTimeout(()=>{
+        let bpmn=atob(template.bpmnXml);
+        if(this.bpmnPath=='')
+        this.loadBpmnwithXML(bpmn,'.graph-preview-container');
+        else
+        this.loadupdatedBpmn(bpmn);
+      },1000)
+    }
+  }
+
+
+  actionDispatch(message:any, action:any)
+  {
+    if(action.submitValue=="submit")
+    {
+      if(this.templateDetails)
+      {
+        this.sendMessage("1", "input")
+      }
+      else
+      {
+        alert("No template selected")
+      }
+    }
+    else
+    {
+      this.sendMessage(action.submitValue, "input");
+    }
+
+  }
+
+
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
     if(!this.staticData){  
@@ -130,20 +171,21 @@ export class CopilotChatComponent implements OnInit {
        this.messages.push({
         user:localStorage.getItem("ProfileuserId"),
         message:value,
-
+        messageType:messageType
        }) 
 
        this.message="";
        this.dt.sendMessage(data).subscribe((response:any)=>{
         this.isChatLoad=false;
-        console.log("validate",response);
+        let res={...{}, ...response};
         response.data.values=response.data.values.map((item:any)=>{
           item=item.map((valueItem:any)=>{
-            return (valueItem.encoded)?JSON.parse(atob(valueItem.values)):valueItem
+            valueItem.values=(valueItem.encoded)?JSON.parse(atob(valueItem.values)):valueItem.values;
+            return valueItem;
           })
-          console.log(item);
           return item;
         })
+        console.log("------sample--",response)
         this.messages.push(response);
        })
         // this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
@@ -280,8 +322,7 @@ export class CopilotChatComponent implements OnInit {
   }
 
   loadupdatedBpmn(BpmnPath){
-    this.rest_api.getBPMNFileContent(BpmnPath).subscribe((res) => {
-      this.bpmnModeler.importXML(res, function (err) {
+      this.bpmnModeler.importXML(BpmnPath, function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
         }
@@ -290,7 +331,6 @@ export class CopilotChatComponent implements OnInit {
         this.notationFittoScreen();
         this.readBpmnModelerXMLdata();
       }, 500);
-    });
   }
 
 
@@ -298,27 +338,29 @@ export class CopilotChatComponent implements OnInit {
     if(element==".diagram_container-copilot")
       this.isDialogVisible=false;
 
+      console.log(element)
     
     // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
     this.bpmnModeler = new BpmnJS({container: element});
-    if(this.staticData)
-    {
-      this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
-        this.bpmnModeler.importXML(res, function (err) {
-          if (err) {
-            console.error("could not import BPMN EZFlow notation", err);
-          }
-        });
-        setTimeout(() => {
-              this.notationFittoScreen();
-            if(element !='.graph-preview-container')
-              this.readBpmnModelerXMLdata();
-        }, 500)
-        this.bpmnModeler.on('element.contextmenu', () => false);
-      });
-    }
-    else
-    {
+    // if(this.staticData)
+    // {
+    //   this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
+    //     this.bpmnModeler.importXML(res, function (err) {
+    //       if (err) {
+    //         console.error("could not import BPMN EZFlow notation", err);
+    //       }
+    //     });
+    //     setTimeout(() => {
+    //           this.notationFittoScreen();
+    //         if(element !='.graph-preview-container')
+    //           this.readBpmnModelerXMLdata();
+    //     }, 500)
+    //     this.bpmnModeler.on('element.contextmenu', () => false);
+    //   });
+    // }
+    // else
+    // {
+      this.bpmnPath=responseData;
       this.bpmnModeler.importXML(responseData, function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
@@ -330,7 +372,7 @@ export class CopilotChatComponent implements OnInit {
             this.readBpmnModelerXMLdata();
       }, 500)
       this.bpmnModeler.on('element.contextmenu', () => false);
-    }
+    //}
 
   }
 
