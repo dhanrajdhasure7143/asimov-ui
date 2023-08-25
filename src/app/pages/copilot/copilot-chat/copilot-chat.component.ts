@@ -1,106 +1,101 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
-import { RestApiService } from '../../services/rest-api.service';
-import { MessageService } from 'primeng/api';
-import { DataTransferService } from '../../../pages/services/data-transfer.service';
+import { RestApiService } from "../../services/rest-api.service";
+import { MessageService } from "primeng/api";
+import { DataTransferService } from "../../../pages/services/data-transfer.service";
 interface City {
-  name: string,
-  code: string
+  name: string;
+  code: string;
 }
 @Component({
-  selector: 'app-copilot-chat',
-  templateUrl: './copilot-chat.component.html',
-  styleUrls: ['./copilot-chat.component.css']
+  selector: "app-copilot-chat",
+  templateUrl: "./copilot-chat.component.html",
+  styleUrls: ["./copilot-chat.component.css"],
 })
 export class CopilotChatComponent implements OnInit {
-  cities: City[];
   selectedCity: City;
   isPlayAnimation: boolean = false;
   public model: any = [];
   isDialogVisible: boolean = false;
   isLoadGraphImage: boolean = false;
-  @ViewChild('op', { static: false }) overlayModel;
-  @ViewChild('popupMenu', { static: false }) popupMenuOverlay;
-  staticData:Boolean=false;
-  copilotJson: any =[]
-  constructor(
-    private rest_api: RestApiService,
-    private activatedRouter: ActivatedRoute,
-    private messageService:MessageService,
-    private dt:DataTransferService
-  ) {
-    this.cities = [
-      { name: '00', code: 'NY' },
-      { name: '01', code: 'RM' },
-      { name: '02', code: 'LDN' },
-      { name: '03', code: 'IST' },
-      { name: '04', code: 'PRS' },
-      { name: '05', code: 'NY' },
-      { name: '06', code: 'RM' },
-      { name: '07', code: 'LDN' },
-      { name: '08', code: 'IST' },
-      { name: '09', code: 'PRS' }
-    ];
-  }
-
-  @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('render') render: ElementRef;
+  @ViewChild("op", { static: false }) overlayModel;
+  @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
+  staticData: Boolean = false;
+  copilotJson: any = [];
+  @ViewChild("exportSVGtoPDF") exportSVGtoPDF: ElementRef;
+  @ViewChild("canvas") canvas: ElementRef;
+  @ViewChild("render") render: ElementRef;
   public model2: any;
-  public bpmnPath:String=""
+  public bpmnPath: String = "";
   messages: any = [];
   message: any = "";
   showTable: boolean = false;
   tableData: any[] = [];
-  minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
-  hrsOptins: string[] = Array.from(Array(25).keys(), num => num.toString().padStart(2, "0"))
-  daysOptins: string[] = Array.from(Array(32).keys(), num => num.toString().padStart(2, "0"))
+  minOptins: string[] = Array.from(Array(61).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
+  hrsOptins: string[] = Array.from(Array(25).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
+  daysOptins: string[] = Array.from(Array(32).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
 
+  constructor(
+    private rest_api: RestApiService,
+    private activatedRouter: ActivatedRoute,
+    private messageService: MessageService,
+    private dt: DataTransferService
+  ) {}
+
   ngOnInit(): void {
     this.loader = true;
     this.tableData = [
-      { name: "IT Form Sent To The Manager",min:"00",hrs:"00",days:"00"},
-      { name: "Manager Fills The Form",min:"00",hrs:"00",days:"00" },
-      { name: "IT Team Creates Email ID",min:"00",hrs:"00",days:"00" },
-      { name: "IT Team Assign A System",min:"00",hrs:"00",days:"00" },
-      { name: "System Access For The User",min:"00",hrs:"00",days:"00" },
+      { name: "IT Form Sent To The Manager", min: "00", hrs: "00", days: "00" },
+      { name: "Manager Fills The Form", min: "00", hrs: "00", days: "00" },
+      { name: "IT Team Creates Email ID", min: "00", hrs: "00", days: "00" },
+      { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
+      { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
     ];
 
-
     this.activatedRouter.queryParams.subscribe((params: any) => {
-      if (params.templateId)
-      {
-        setTimeout(()=>{ 
-          this.bpmnModeler = new BpmnJS({container: ".diagram_container-copilot"});
-        },300)
-        if(params.templateId!="Others")
-          this.getTemplatesByProcessId(params.process_id, params.templateId)
-        if(!this.staticData)
-          this.getConversation()
-          //(!(localStorage.getItem("conversationId")))?this.getConversation():undefined;
-          //(!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
+      if (params.templateId) {
+        setTimeout(() => {
+          this.bpmnModeler = new BpmnJS({
+            container: ".diagram_container-copilot",
+          });
+        }, 300);
+        if (params.templateId != "Others")
+          this.getTemplatesByProcessId(params.process_id, params.templateId);
+        if (!this.staticData) this.getConversation();
+        //(!(localStorage.getItem("conversationId")))?this.getConversation():undefined;
+        //(!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
       }
       this.loader = false;
-    })
+    });
   }
 
-  getTemplatesByProcessId(processId, templateId)
-  {
-    this.rest_api.getCopilotTemplatesList(processId).subscribe((response:any)=>{
-      if(response)
-      {
-        let template=response.find((item:any)=>item.template_id==templateId);
-        this.loadBpmnwithXML(atob(template.bpmn_xml), ".diagram_container-copilot");
-      }
-    })
+  getTemplatesByProcessId(processId, templateId) {
+    this.rest_api
+      .getCopilotTemplatesList(processId)
+      .subscribe((response: any) => {
+        if (response) {
+          let template = response.find(
+            (item: any) => item.template_id == templateId
+          );
+          this.loadBpmnwithXML(
+            atob(template.bpmn_xml),
+            ".diagram_container-copilot"
+          );
+        }
+      });
   }
-  
-  getConversation()
-  {
+
+  getConversation() {
     // this.rest_api.getCopilotConversation().subscribe((response:any)=>{
     //   if(response.conversationId)
     //   {
@@ -115,82 +110,70 @@ export class CopilotChatComponent implements OnInit {
     //   console.log(err)
     //   this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to get conversation details!'});
     // })
-    this.dt.createConversation({userId:localStorage.getItem("userId")}).subscribe((response:any)=>{
-      console.log(response);
-      //localStorage.setItem("conversationId", response.conversationId);
-      this.messages.push(response)
-    })
+    this.dt
+      .createConversation({ userId: localStorage.getItem("userId") })
+      .subscribe((response: any) => {
+        console.log(response);
+        //localStorage.setItem("conversationId", response.conversationId);
+        this.messages.push(response);
+      });
   }
 
-
-  templateDetails:any=[]
-  loadTemplate(template:any)
-  {
-    if(template.bpmnXml)
-    {
-      this.templateDetails=template;
-      if(this.bpmnPath=='')
-        this.isDialogVisible=true
-      setTimeout(()=>{
-        let bpmn=atob(template.bpmnXml);
-        if(this.bpmnPath=='')
-          this.previewBpmn(bpmn);
-        else
-          this.loadBpmnwithXML(bpmn,'');
-      },1000)
+  templateDetails: any = [];
+  loadTemplate(template: any) {
+    if (template.bpmnXml) {
+      this.templateDetails = template;
+      if (this.bpmnPath == "") this.isDialogVisible = true;
+      setTimeout(() => {
+        let bpmn = atob(template.bpmnXml);
+        if (this.bpmnPath == "") this.previewBpmn(bpmn);
+        else this.loadBpmnwithXML(bpmn, "");
+      }, 1000);
     }
   }
 
-
-  actionDispatch(message:any, action:any)
-  {
-    if(action.submitValue=="submit")
-    {
-      if(this.templateDetails)
-      {
-        this.sendMessage("1", "input")
+  actionDispatch(message: any, action: any) {
+    if (action.submitValue == "submit") {
+      if (this.templateDetails) {
+        this.sendMessage("1", "input");
+      } else {
+        alert("No template selected");
       }
-      else
-      {
-        alert("No template selected")
-      }
-    }
-    else
-    {
+    } else {
       this.sendMessage(action.submitValue, "input");
     }
-
   }
-
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
-    if(!this.staticData){  
+    if (!this.staticData) {
       setTimeout(() => {
-        let data ={
-          "conversationId": localStorage.getItem("conversationId"),    
-          "message": value
-      }
-       this.messages.push({
-        user:localStorage.getItem("ProfileuserId"),
-        message:value,
-        messageType:messageType
-       }) 
+        let data = {
+          conversationId: localStorage.getItem("conversationId"),
+          message: value,
+        };
+        this.messages.push({
+          user: localStorage.getItem("ProfileuserId"),
+          message: value,
+          messageType: messageType,
+        });
 
-       this.message="";
-       this.dt.sendMessage(data).subscribe((response:any)=>{
-        this.isChatLoad=false;
-        let res={...{}, ...response};
-        response.data.values=response.data.values.map((item:any)=>{
-          item=item.map((valueItem:any)=>{
-            valueItem.values=(valueItem.encoded)?JSON.parse(atob(valueItem.values)):valueItem.values;
-            return valueItem;
-          })
-          return item;
-        })
-        console.log("------sample--",response)
-        this.messages.push(response);
-       })
+        this.message = "";
+        this.dt.sendMessage(data).subscribe((response: any) => {
+          this.isChatLoad = false;
+          let res = { ...{}, ...response };
+          response.data.values = response.data.values.map((item: any) => {
+            item = item.map((valueItem: any) => {
+              valueItem.values = valueItem.encoded
+                ? JSON.parse(atob(valueItem.values))
+                : valueItem.values;
+              return valueItem;
+            });
+            return item;
+          });
+          console.log("------sample--", response);
+          this.messages.push(response);
+        });
         // this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         //   this.isChatLoad=false;
         //   if(response.data)
@@ -210,8 +193,7 @@ export class CopilotChatComponent implements OnInit {
         //       }
         //       else
         //       {
-              
-    
+
         //       }
         //     }
         //   }
@@ -221,8 +203,7 @@ export class CopilotChatComponent implements OnInit {
         // })
       }, 1000);
     }
-    if(this.staticData)
-    {
+    if (this.staticData) {
       // if (value == "Onboard Users") {
       //   this.isChatLoad = false;
       //   this.isLoadGraphImage = true;
@@ -237,7 +218,6 @@ export class CopilotChatComponent implements OnInit {
       //   }
       //   if (messageType != 'LABEL')
       //     this.messages.push(message);
-
       //   let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
       //   if (response) {
       //     let systemMessage = {
@@ -254,7 +234,6 @@ export class CopilotChatComponent implements OnInit {
       //       setTimeout(() => {
       //         this.loadBpmnwithXML(responseData,".graph-preview-container");
       //       }, 500);
-
       //     }
       //     else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
       //       // this.loadGraphIntiate("Load Form")
@@ -306,41 +285,37 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
-
-
   loadGraph(template) {
     if (template != "Others") {
-      this.isDialogVisible=false;
-      let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
-      if (template == 'Workforce Planning')
-        path = "assets/resources/Copilot- 3.bpmn"
+      this.isDialogVisible = false;
+      let path = "assets/resources/copilot_bpmn_chatgpt.bpmn";
+      if (template == "Workforce Planning")
+        path = "assets/resources/Copilot- 3.bpmn";
       if (template == "Job Analysis and Job Posting")
-        path = "assets/resources/Copilot-1.bpmn"
+        path = "assets/resources/Copilot-1.bpmn";
       if (template == "Assessment and Testing")
-        path = "assets/resources/Copilot- 2.bpmn"
+        path = "assets/resources/Copilot- 2.bpmn";
       setTimeout(() => {
-        this.loadBpmnwithXML(path,".diagram_container-copilot");
+        this.loadBpmnwithXML(path, ".diagram_container-copilot");
       }, 1500);
     }
   }
 
-  loadupdatedBpmn(BpmnPath){
-      this.bpmnModeler.importXML(BpmnPath, function (err) {
-        if (err) {
-          console.error("could not import BPMN EZFlow notation", err);
-        }
-      });
-      setTimeout(() => {
-        this.notationFittoScreen();
-        this.readBpmnModelerXMLdata();
-      }, 500);
+  loadupdatedBpmn(BpmnPath) {
+    this.bpmnModeler.importXML(BpmnPath, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
+      }
+    });
+    setTimeout(() => {
+      this.notationFittoScreen();
+      this.readBpmnModelerXMLdata();
+    }, 500);
   }
 
+  loadBpmnwithXML(responseData, element) {
+    this.isDialogVisible = false;
 
-  loadBpmnwithXML(responseData, element){
-      this.isDialogVisible=false;
-
-    
     // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
     // if(this.staticData)
     // {
@@ -360,54 +335,50 @@ export class CopilotChatComponent implements OnInit {
     // }
     // else
     // {
-      this.bpmnPath=responseData;
-      this.bpmnModeler.importXML(responseData, function (err) {
-        if (err) {
-          console.error("could not import BPMN EZFlow notation", err);
-        }
-      });
-      setTimeout(() => {
-            this.notationFittoScreen();
-            this.readBpmnModelerXMLdata();
-      }, 500)
-      this.bpmnModeler.on('element.contextmenu', () => false);
+    this.bpmnPath = responseData;
+    this.bpmnModeler.importXML(responseData, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
+      }
+    });
+    setTimeout(() => {
+      this.notationFittoScreen();
+      this.readBpmnModelerXMLdata();
+    }, 500);
+    this.bpmnModeler.on("element.contextmenu", () => false);
     //}
-
   }
 
-  previewBpmn(responseData)
-  {
-    let previewMolder = new BpmnJS({container: ".graph-preview-container"});
-    this.bpmnPath=responseData;
+  previewBpmn(responseData) {
+    let previewMolder = new BpmnJS({ container: ".graph-preview-container" });
+    this.bpmnPath = responseData;
     previewMolder.importXML(responseData, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
       }
     });
     setTimeout(() => {
-          let canvas = previewMolder.get('canvas');
-          canvas.zoom('fit-viewport');
-          previewMolder.on('element.changed', function(){
-            previewMolder.saveXML({ format: true }, function(err, xml) {
-               console.log("xml",xml)// xml data will get for every change
-             })
-            })
-    }, 500)
+      let canvas = previewMolder.get("canvas");
+      canvas.zoom("fit-viewport");
+      previewMolder.on("element.changed", function () {
+        previewMolder.saveXML({ format: true }, function (err, xml) {
+          console.log("xml", xml); // xml data will get for every change
+        });
+      });
+    }, 500);
   }
 
-  notationFittoScreen(){
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
+  notationFittoScreen() {
+    let canvas = this.bpmnModeler.get("canvas");
+    canvas.zoom("fit-viewport");
   }
 
-  readBpmnModelerXMLdata(){
-    var self = this
-    self.bpmnModeler.on('element.changed', function(){
-     self.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-        console.log("xml",xml)// xml data will get for every change
-      })
-      })
+  readBpmnModelerXMLdata() {
+    var self = this;
+    self.bpmnModeler.on("element.changed", function () {
+      self.bpmnModeler.saveXML({ format: true }, function (err, xml) {
+        console.log("xml", xml); // xml data will get for every change
+      });
+    });
   }
-
 }
-

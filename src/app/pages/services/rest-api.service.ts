@@ -1840,21 +1840,15 @@ getCopilotTemplatesList(id){
   return this.http.get("/a-square/v1/template/process/"+id);
 }
 
-
-getCopilotConversation()
-{
+getCopilotConversation(){
   return this.http.get("/a-square/v1/conversation")
 }
 
-
-sendMessageToCopilot(messageBody:any)
-{
+sendMessageToCopilot(messageBody:any){
   return this.http.post("/a-square/v1/conversation/message", messageBody)
 }
 
-
-createCopilotConversationSessionId(payload:any)
-{
+createCopilotConversationSessionId(payload:any){
   return this.http.post("/a-square/v1/conversation", payload);
 }
 
