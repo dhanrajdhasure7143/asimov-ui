@@ -8,6 +8,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { CopilotChatComponent } from './copilot-chat/copilot-chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { CopilotMessage } from './actions/Message.component';
 //import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
@@ -15,7 +16,8 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   declarations: [
     CopilotComponent,
     CopilotHomeComponent,
-    CopilotChatComponent
+    CopilotChatComponent,
+    CopilotMessage,
   ],
   imports: [
     CommonModule,

@@ -121,7 +121,7 @@
                         <div id="chat-grid" class="chat-grid">
                             <div *ngFor="let sentMessage of messages" class="py-3 ">
 
-                                <div *ngIf="sentMessage.user!='SYSTEM'" class="user-message ">
+                                <div *ngIf="sentMessage.messageSourceType!='SYSTEM'" class="user-message ">
 
                                     <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
                                     <div class="sys-image">
@@ -129,57 +129,16 @@
                                     </div>
                                 </div>
                                 <div></div>
-                                <div *ngIf="sentMessage.user=='SYSTEM' && sentMessage.message!=''"
+                                <div *ngIf="sentMessage.messageSourceType=='SYSTEM'"
                                     class="system-message">
-                                    <div class="d-flex">
+                                    <div *ngFor="let message of (sentMessage?.data?.message??[])" class="d-flex">
                                         <div class="sys-image">
                                             <img src="../../../../assets/copilot/systemicon.svg" alt="" />
                                         </div>
-                                        <div class="ml-2 send-msgtext" [innerHTML]="sentMessage.message">
+                                        <div class="ml-2 send-msgtext" [innerHTML]="message">
                                         </div>
                                     </div>
-                                    <div *ngIf="sentMessage.steps.length" style="margin-left:10%;">
-
-                                        <div *ngFor="let step of sentMessage.steps">
-                                            <div *ngIf="step.type=='PROCESS-IMAGE'">
-                                                <div (click)="sendMessage(step.label, 'LABEL')" class="card new-card">
-                                                    <div class="py-3 px-3 text-center ">
-                                                        <!-- <span class="text-chat mr-2"> <input type="checkbox"  /></span> -->
-                                                        <span class="h6 text-chat">{{step.label}}</span>
-                                                        <!-- <a href="#" class="eye-imgchat "><img src="../../../../assets/copilot/graph-icons/eye.svg" alt=""/></a> -->
-                                                    </div>
-                                                    <img [src]="step.ImagePath" alt="" class="impath-adj">
-                                                </div>
-
-                                            </div>
-                                            <div class="col-11 chat-btn " *ngIf="step.type=='BUTTON'">
-                                                <button class="btn btn-primary text-white btn-sm"
-                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true"
-                                                    [disabled]="step.disable">{{step.label}}</button>
-                                            </div>
-                                            <div class="col-11 chat-btn " *ngIf="step.type=='OUTLINE-BUTTON'">
-                                                <button class="btn btn-secondary text-white btn-sm"
-                                                    (click)="sendMessage(step.label, 'LABEL');step.disable=true"
-                                                    [disabled]="step.disable">{{step.label}}</button>
-                                            </div>
-                                            <div class="col-11 chat-btn " *ngIf="step.type=='IMG-BUTTON'">
-                                                <button class="btn d-flex py-1 bg-success-new">
-                                                    <div>
-                                                        <img [src]="step.label=='Workday'?'../../../../assets/copilot/workday.png':'../../../../assets/copilot/SAP.png'"
-                                                            alt="">
-                                                    </div>
-                                                    <div>
-                                                        {{step.label}}
-                                                    </div>
-                                                </button>
-                                            </div>
-                                            <div class="py-1 px-1" *ngIf="step.type=='MESSAGE'">
-                                                <div class="py-0 send-msgtext" [innerHTML]="step.label">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                 
                                     <!-- <div *ngIf="message.components" class="">
                               <div *ngIf="message.components.includes('Buttons')">
                               <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
