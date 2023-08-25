@@ -74,6 +74,9 @@ export class CopilotChatComponent implements OnInit {
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.templateId)
       {
+        setTimeout(()=>{ 
+          this.bpmnModeler = new BpmnJS({container: ".diagram_container-copilot"});
+        },300)
         if(params.templateId!="Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId)
         if(!this.staticData)
@@ -131,9 +134,9 @@ export class CopilotChatComponent implements OnInit {
       setTimeout(()=>{
         let bpmn=atob(template.bpmnXml);
         if(this.bpmnPath=='')
-        this.loadBpmnwithXML(bpmn,'.graph-preview-container');
+          this.previewBpmn(bpmn);
         else
-        this.loadupdatedBpmn(bpmn);
+          this.loadBpmnwithXML(bpmn,'');
       },1000)
     }
   }
@@ -334,14 +337,11 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  loadBpmnwithXML(responseData,element){
-    if(element==".diagram_container-copilot")
+  loadBpmnwithXML(responseData, element){
       this.isDialogVisible=false;
 
-      console.log(element)
     
     // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
-    this.bpmnModeler = new BpmnJS({container: element});
     // if(this.staticData)
     // {
     //   this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
@@ -368,12 +368,31 @@ export class CopilotChatComponent implements OnInit {
       });
       setTimeout(() => {
             this.notationFittoScreen();
-          if(element !='.graph-preview-container')
             this.readBpmnModelerXMLdata();
       }, 500)
       this.bpmnModeler.on('element.contextmenu', () => false);
     //}
 
+  }
+
+  previewBpmn(responseData)
+  {
+    let previewMolder = new BpmnJS({container: ".graph-preview-container"});
+    this.bpmnPath=responseData;
+    previewMolder.importXML(responseData, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
+      }
+    });
+    setTimeout(() => {
+          let canvas = previewMolder.get('canvas');
+          canvas.zoom('fit-viewport');
+          previewMolder.on('element.changed', function(){
+            previewMolder.saveXML({ format: true }, function(err, xml) {
+               console.log("xml",xml)// xml data will get for every change
+             })
+            })
+    }, 500)
   }
 
   notationFittoScreen(){

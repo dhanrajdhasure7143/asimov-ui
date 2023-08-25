@@ -113,7 +113,7 @@ export class CopilotHomeComponent implements OnInit {
     };
     this.bpmnModeler = new BpmnJS(notationJson);
     setTimeout(() => {
-      this.bpmnModeler.importXML(atob(template.bpmn_xml), function (err) {
+      this.bpmnModeler.importXML(atob(template.bpmnXml), function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
         }
