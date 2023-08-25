@@ -136,7 +136,15 @@ export class CopilotChatComponent implements OnInit {
        this.message="";
        this.dt.sendMessage(data).subscribe((response:any)=>{
         this.isChatLoad=false;
-        this.messages.push(data);
+        console.log("validate",response);
+        response.data.values=response.data.values.map((item:any)=>{
+          item=item.map((valueItem:any)=>{
+            return (valueItem.encoded)?JSON.parse(atob(valueItem.values)):valueItem
+          })
+          console.log(item);
+          return item;
+        })
+        this.messages.push(response);
        })
         // this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         //   this.isChatLoad=false;

@@ -27,7 +27,7 @@ export const environment = {
   // camunda navigation
   camunda_url: "https://ezworkflow.dev.epsoftinc.com",
   //A-Square/Copilot
-  copilot:"https://ezflow.dev.epsoftinc.com",
+  copilot:"https://ezflow.dev.epsoftinc.com/a-square",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors

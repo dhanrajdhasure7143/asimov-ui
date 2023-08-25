@@ -138,7 +138,17 @@
                                         <div class="ml-2 send-msgtext" [innerHTML]="message">
                                         </div>
                                     </div>
-                                 
+                                    <div *ngIf="sentMessage.data.components" style="margin-left:10%;">
+
+                                        <div *ngFor="let component of sentMessage.data.components; let i as index;">
+                                            <div *ngIf="component=='list'">
+                                                <div *ngFor="let template of sentMessage.value[i].values">
+                                                    {{template.templateName}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <!-- <div *ngIf="message.components" class="">
                               <div *ngIf="message.components.includes('Buttons')">
                               <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
