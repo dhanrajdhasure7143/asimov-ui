@@ -4,6 +4,7 @@ import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../../pages/services/data-transfer.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 interface City {
   name: string;
   code: string;
@@ -32,24 +33,26 @@ export class CopilotChatComponent implements OnInit {
   message: any = "";
   showTable: boolean = false;
   tableData: any[] = [];
-  minOptins: string[] = Array.from(Array(61).keys(), (num) =>
+  minOptions: string[] = Array.from(Array(61).keys(), (num) =>
     num.toString().padStart(2, "0")
   );
-  hrsOptins: string[] = Array.from(Array(25).keys(), (num) =>
+  hrsOptions: string[] = Array.from(Array(25).keys(), (num) =>
     num.toString().padStart(2, "0")
   );
-  daysOptins: string[] = Array.from(Array(32).keys(), (num) =>
+  daysOptions: string[] = Array.from(Array(32).keys(), (num) =>
     num.toString().padStart(2, "0")
   );
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
+  tableForm: FormGroup
 
   constructor(
     private rest_api: RestApiService,
     private activatedRouter: ActivatedRoute,
     private messageService: MessageService,
-    private dt: DataTransferService
+    private dt: DataTransferService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +64,8 @@ export class CopilotChatComponent implements OnInit {
       { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
       { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
     ];
+
+    this.createForm()
 
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.templateId) {
@@ -381,4 +386,22 @@ export class CopilotChatComponent implements OnInit {
       });
     });
   }
+
+  createForm() {
+    const formControls = {};
+    for (let i = 0; i < this.tableData.length; i++) {
+      formControls[i] = this.fb.group({
+        min: ['', Validators.required],
+        hrs: ['', Validators.required],
+        days: ['', Validators.required]
+      });
+    }
+    this.tableForm = this.fb.group(formControls);
+  }
+
+  onSubmit(){
+    console.log(this.tableForm.valid)
+    console.log(this.tableForm.value)
+  }
+
 }

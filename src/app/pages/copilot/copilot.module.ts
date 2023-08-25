@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CopilotRoutingModule } from './copilot-routing.module';
 import { CopilotComponent } from './copilot.component';
 import { CopilotHomeComponent } from './copilot-home/copilot-home.component';
@@ -25,7 +24,9 @@ import { CopilotMessage } from './actions/Message.component';
     PrimengCustomModule,
     ReactiveFormsModule,
     FormsModule,
-    PrimengCustomModule
+    PrimengCustomModule,
+    FormsModule,
+    ReactiveFormsModule
     //LoaderService
   ],
   providers:[LoaderService]

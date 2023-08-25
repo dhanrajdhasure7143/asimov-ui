@@ -58,6 +58,7 @@
                             </h5>
                         </div>
                         <div style="margin:0px 60px !important;">
+                            <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
                             <table class="table table-striped chat-form">
                                 <thead>
                                     <tr>
@@ -72,24 +73,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of tableData">
-                                        <th>{{item.name}}</th>
+                                    <tr *ngFor="let item of tableData; let i = index" [formGroupName]="i">
+                                        <th>{{ item.name }}</th>
                                         <td style="width:50px;">
-                                            <p-dropdown [options]="minOptins" [(ngModel)]="item.min" class="custom-dd"
-                                                name="min"></p-dropdown>
+                                          <p-dropdown [options]="minOptions" formControlName="min" class="custom-dd" name="min"></p-dropdown>
                                         </td>
                                         <td style="width:50px;">
-                                            <p-dropdown [options]="hrsOptins" [(ngModel)]="item.hrs" class="custom-dd"
-                                                name="hrs"></p-dropdown>
+                                          <p-dropdown [options]="hrsOptions" formControlName="hrs" class="custom-dd" name="hrs"></p-dropdown>
                                         </td>
                                         <td style="width:50px;">
-                                            <p-dropdown [options]="daysOptins" [(ngModel)]="item.days"
-                                                class="custom-dd"></p-dropdown>
+                                          <p-dropdown [options]="daysOptions" formControlName="days" class="custom-dd" name="days"></p-dropdown>
                                         </td>
                                         <td style="width:20%;"></td>
-                                    </tr>
+                                      </tr>
                                 </tbody>
                             </table>
+                            <button class="btn btn-primary"></button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-md-3 chat-box">
