@@ -1848,8 +1848,11 @@ sendMessageToCopilot(messageBody:any){
   return this.http.post("/a-square/v1/conversation/message", messageBody)
 }
 
-createCopilotConversationSessionId(payload:any){
-  return this.http.post("/a-square/v1/conversation", payload);
+initializeConversation(body) {
+  return this.http.post<any>("/a-square/v1/conversation/",body,
+    {
+      headers: new HttpHeaders().set('x-api-key', 'FyNw9kKOupVIz5joICubvWlVUW8m2K0yNEgX'),
+    });
 }
 
 }

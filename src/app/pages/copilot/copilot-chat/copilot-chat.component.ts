@@ -57,6 +57,7 @@ export class CopilotChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader = true;
+    this.getConversationId();
     this.tableData = [
       { name: "IT Form Sent To The Manager", min: "00", hrs: "00", days: "00" },
       { name: "Manager Fills The Form", min: "00", hrs: "00", days: "00" },
@@ -163,7 +164,8 @@ export class CopilotChatComponent implements OnInit {
         });
 
         this.message = "";
-        this.dt.sendMessage(data).subscribe((response: any) => {
+        // this.dt.sendMessage(data).subscribe((response: any) => {
+          this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
           response.data.values = response.data.values.map((item: any) => {
@@ -401,6 +403,18 @@ export class CopilotChatComponent implements OnInit {
   onSubmit(){
     console.log(this.tableForm.valid)
     console.log(this.tableForm.value)
+  }
+
+  getConversationId(){
+    let req_body = {"userId": localStorage.getItem("ProfileuserId")}
+    let resdata;
+    this.rest_api.initializeConversation(req_body).subscribe(
+      (res:any)=>{
+        resdata = res
+        console.log(res)
+        localStorage.setItem("conversationId",resdata.conversationId)
+      }
+    )
   }
 
 }
