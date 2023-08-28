@@ -284,8 +284,8 @@ export class CopilotChatComponent implements OnInit {
     const formControls = {};
     for (let i = 0; i < this.tableData.length; i++) {
       formControls[i] = this.fb.group({
-        min: ['', Validators.required],
-        hrs: ['', Validators.required],
+        minutes: ['', Validators.required],
+        hours: ['', Validators.required],
         days: ['', Validators.required]
       });
     }
@@ -352,11 +352,11 @@ export class CopilotChatComponent implements OnInit {
     else if (event.actionType=='logsCollection'){
       console.log("log event",event)
       this.tableData = [
-        { name: "IT Form Sent To The Manager", min: "00", hrs: "00", days: "00" },
-        { name: "Manager Fills The Form", min: "00", hrs: "00", days: "00" },
-        { name: "IT Team Creates Email ID", min: "00", hrs: "00", days: "00" },
-        { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
-        { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
+        { name: "IT Form Sent To The Manager", hours: "00", minutes: "00", days: "00" },
+        { name: "Manager Fills The Form", hours: "00", minutes: "00", days: "00" },
+        { name: "IT Team Creates Email ID", minutes: "00", hours: "00", days: "00" },
+        { name: "IT Team Assign A System", minutes: "00", hours: "00", days: "00" },
+        { name: "System Access For The User", minutes: "00", hours: "00", days: "00" },
       ];
       this.createForm()
     }
@@ -401,8 +401,8 @@ export class CopilotChatComponent implements OnInit {
             this.tableData.push({
               stepName:item.stepName,
               days:"00",
-              hrs:"00",
-              min:"00",
+              hours:"00",
+              minutes:"00",
             })
           })
           this.createForm();
