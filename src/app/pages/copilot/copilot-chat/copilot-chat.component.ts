@@ -59,14 +59,6 @@ export class CopilotChatComponent implements OnInit {
   ngOnInit(): void {
     this.loader = true;
     this.getConversationId();
-    this.tableData = [
-      { name: "IT Form Sent To The Manager", min: "00", hrs: "00", days: "00" },
-      { name: "Manager Fills The Form", min: "00", hrs: "00", days: "00" },
-      { name: "IT Team Creates Email ID", min: "00", hrs: "00", days: "00" },
-      { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
-      { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
-    ];
-    this.createForm()
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.templateId) {
         setTimeout(() => {
@@ -82,7 +74,14 @@ export class CopilotChatComponent implements OnInit {
       }
       this.loader = false;
     });
+    this.dt.currentMessage2.subscribe((response:any)=>{
+      console.log("subject check",response);
+    
+    })
   }
+
+
+ 
 
   getTemplatesByProcessId(processId, templateId) {
     this.rest_api.getCopilotTemplatesList(processId).subscribe(
@@ -150,7 +149,6 @@ export class CopilotChatComponent implements OnInit {
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
-    if (!this.staticData) {
         let data = {
           conversationId: localStorage.getItem("conversationId"),
           message: value,
@@ -174,117 +172,15 @@ export class CopilotChatComponent implements OnInit {
           //   });
           //   return item;
           // });
-          console.log("------sample--", response);
-          this.messages.push(response);
+            this.messages.push(response);
+                let chatGridElement = document.getElementById("chat-box");
+          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+         
+          setTimeout(() => {
+            var objDiv = document.getElementById("chat-box");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          }, 200)
         });
-        // this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
-        //   this.isChatLoad=false;
-        //   if(response.data)
-        //   {
-        //     if(response.data.find((item:any)=>item.template.type=="BPMN"))
-        //     {
-        //       let encryptedBpmn = response.data.find((item:any)=>item.template.type=="BPMN")?.template?.payload??undefined;
-        //       if(encryptedBpmn)
-        //       {
-        //         let bpmn=atob(encryptedBpmn);
-        //         this.isLoadGraphImage = false;
-        //         this.isDialogVisible = true;
-        //         this.bpmnPath=bpmn
-        //         setTimeout(() => {
-        //           this.loadBpmnwithXML(bpmn,".graph-preview-container");
-        //         }, 500);
-        //       }
-        //       else
-        //       {
-
-        //       }
-        //     }
-        //   }
-        // })
-        // this.rest_api.getdata1().subscribe(res=>{
-        //   console.log(res)
-        // })
-    }
-    if (this.staticData) {
-      // if (value == "Onboard Users") {
-      //   this.isChatLoad = false;
-      //   this.isLoadGraphImage = true;
-      //   this.isDialogVisible = true;
-      //   return;
-      // }
-      // setTimeout(() => {
-      //   let message = {
-      //     id: (new Date()).getTime(),
-      //     message: value,
-      //     user: localStorage.getItem("ProfileuserId")
-      //   }
-      //   if (messageType != 'LABEL')
-      //     this.messages.push(message);
-      //   let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
-      //   if (response) {
-      //     let systemMessage = {
-      //       id: (new Date()).getTime(),
-      //       user: "SYSTEM",
-      //       message: response.message,
-      //       steps: response.steps
-      //     }
-      //     if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
-      //       let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
-      //       this.isLoadGraphImage = false;
-      //       this.isDialogVisible = true;
-      //       this.bpmnPath=responseData
-      //       setTimeout(() => {
-      //         this.loadBpmnwithXML(responseData,".graph-preview-container");
-      //       }, 500);
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
-      //       // this.loadGraphIntiate("Load Form")
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
-      //       //  this.loadGraphIntiate("Load Node");
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
-      //       let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
-      //       this.loadupdatedBpmn(responseData);
-      //       // this.loadGraphIntiate("Update Node 1");
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
-      //       let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
-      //       this.loader = true;
-      //       setTimeout(() => {
-      //         this.loader = false
-      //         this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-      //         this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect: "copilot" } });
-      //       }, 3000)
-      //     }
-      //     else if (response.steps.find((item: any) => item.type == "REDIRECT-RPA")) {
-      //       this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-      //       this.loader = true;
-      //       setTimeout(() => {
-      //         this.loader = false
-      //         this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect: "copilot" } });
-      //       }, 2000)
-      //     }
-      //     this.messages.push(systemMessage);
-      //     let chatGridElement = document.getElementById("chat-grid");
-      //     chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-      //     this.message = "";
-      //     setTimeout(() => {
-      //       var objDiv = document.getElementById("chat-grid");
-      //       objDiv.scrollTop = objDiv.scrollHeight;
-      //     }, 200)
-      //   } else {
-      //     this.message = "";
-      //     setTimeout(() => {
-      //       var objDiv = document.getElementById("chat-grid");
-      //       objDiv.scrollTop = objDiv.scrollHeight;
-      //     }, 100)
-      //   }
-      //   this.isChatLoad = false;
-      // }, 2000);
-    }
   }
 
   loadGraph(template) {
@@ -397,7 +293,10 @@ export class CopilotChatComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.tableForm.valid)
+    if(!this.tableForm.valid)
+    {
+      this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
+    }
     console.log(this.tableForm.value)
   }
 
@@ -419,7 +318,7 @@ export class CopilotChatComponent implements OnInit {
     if (event.actionType==='Button'){
         this.messages.push({
             data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'USER'
+            messageSourceType:'INPUT'
           })
         //   if (event?.data?.submitValue==='infoBot'){
         //     this.botType = 'infoBot';
@@ -429,21 +328,37 @@ export class CopilotChatComponent implements OnInit {
     }else if (event.actionType==='Form'){
         this.messages.push({
             data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'USER'
+            messageSourceType:'INPUT'
           })
           this.sendFormAction(event?.data)
     }else if (event.actionType==='Card'){
         this.messages.push({
             data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'USER'
+            messageSourceType:'INPUT'
           })
           this.sendCardAction(event?.data?.submitValue)
     }else if (event.actionType==='list'){
         this.messages.push({
             data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'USER'
+            messageSourceType:'INPUT'
           })
+          console.log("list data",event?.data)
           this.sendListAction(event?.data?.submitValue)
+    }else if (event.actionType=='bpmn'){
+      let decodedBpmn=atob(event.data.bpmnXml)
+      this.isDialogVisible=true;
+      setTimeout(()=>{this.previewBpmn(decodedBpmn)},500)
+    }
+    else if (event.actionType=='logsCollection'){
+      console.log("log event",event)
+      this.tableData = [
+        { name: "IT Form Sent To The Manager", min: "00", hrs: "00", days: "00" },
+        { name: "Manager Fills The Form", min: "00", hrs: "00", days: "00" },
+        { name: "IT Team Creates Email ID", min: "00", hrs: "00", days: "00" },
+        { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
+        { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
+      ];
+      this.createForm()
     }
   }
 
@@ -475,11 +390,41 @@ export class CopilotChatComponent implements OnInit {
         jsonData:data?.jsonData
     }
     let response = this.rest_api.sendMessageToCopilot(userMessage);
-    response.subscribe(res =>{
+    response.subscribe((res:any) =>{
         this.messages.push(res);
         this.usermessage='';
+        if (res.data?.components?.includes('logCollection')){
+          let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
+          values= JSON.parse( atob(values[0].values));
+          console.log("meta check",values)
+          values.forEach((item:any)=>{
+            this.tableData.push({
+              stepName:item.stepName,
+              days:"00",
+              hrs:"00",
+              min:"00",
+            })
+          })
+          let chatGridElement = document.getElementById("chat-box");
+          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });  
+          setTimeout(() => {
+            var objDiv = document.getElementById("chat-box");
+            objDiv.scrollTop = objDiv.scrollHeight;
+          }, 200)
+          this.createForm();
+          setTimeout(()=>{
+            this.showTable=true;
+          },500)
+        }
+
     }, err =>{
 
     })
+  }
+
+
+  get checkTable()
+  {
+    return this.tableData.length>0?true:false;
   }
 }

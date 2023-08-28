@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef,SimpleChanges,OnChanges } from '@angular/core';
 import { ChatMessage, MessageAction, MessageData, SelectedItem } from '../copilot-models';
 import { DataTransferService } from '../../services/data-transfer.service';
 
@@ -14,19 +14,22 @@ export class CopilotMessageComponent implements OnInit {
  hideActions:boolean = false;
  subscription: any;
 
- constructor(private data: DataTransferService) { }
+ constructor(private data: DataTransferService,
+  private cd:ChangeDetectorRef
+  ) { }
  ngOnDestroy() {
    this.subscription.unsubscribe();
  }
 
  ngOnInit() {
-   if (this.messages.data?.components?.includes('logCollection')){
-     let values =this.messages.data?.values[ this.messages.data?.components?.indexOf('logCollection')];
-     values= JSON.parse( atob(values[0].values));
-     this.data.updateProcessStepLogs(values);
-   }
+
  }
 
+ ngAfterViewInit() {
+  this.cd.detectChanges();
+  console.log(this.messages);
+  
+ }
 
  processButtonAction(event:any){
    console.log("received from child "+event)
@@ -58,7 +61,7 @@ export class CopilotMessageComponent implements OnInit {
  processListPreviewAction(event:any){
    console.log("processListPreviewAction received from child "+event)
    this.messageAction.emit({
-     actionType:'list',
+     actionType:event.bpmnXml?'bpmn':'list',
      data: event
    });
    this.hideActions= true;

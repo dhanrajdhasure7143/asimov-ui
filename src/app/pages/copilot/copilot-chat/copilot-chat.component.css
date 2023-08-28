@@ -36,7 +36,16 @@
 .model-box {
    padding:0px 0px;
 }
+/* .chat-form{
+    height:300px;
+    overflow: auto;
+} */
 
+.table-box{
+    margin:0px 60px !important;
+    max-height: 410px !important;
+    overflow: auto !important;
+}
 .chat-form select {
     height: 30px;
     width: 85%;

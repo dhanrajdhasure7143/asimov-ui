@@ -91,12 +91,18 @@ export class CopilotMessageListComponent implements OnInit {
     });
   }
 
-  userSelectedItem(label:string, submitValue:string){
+  userSelectedItem(label:string, submitValue:string, elem:any){
+    console.log(elem)
     this.selectedItem.label = label;
     this.selectedItem.submitValue= submitValue;
+    if(elem.bpmnXml)
+    {
+      this.previewResponse.emit(elem);
+    }
     this.previewSelectedProcess();
   }
   previewUpdatedProcess(){
+
     this.data.updateProcess(this.selectionListValues &&  this.selectionListValues[0]? this.selectionListValues[0]:{});
   }
   previewSelectedProcess(){

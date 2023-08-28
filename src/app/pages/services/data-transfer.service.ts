@@ -173,7 +173,7 @@ setScreenList(module:any){
   }
 
   updateProcessStepLogs(message: any) {
-    this.messageSource2.next(message)
+    this.messageSource2.next(message);
   }
 
    // Copilot New changes End

@@ -1,3 +1,3 @@
-<button class="btn btn-primary" *ngIf = "buttonData?.submitValue" value="buttonData?.submitValue" (click)="submitButton(buttonData)">{{buttonData?.label}}</button>
-<button class="btn btn-primary" *ngIf = "!buttonData?.submitValue && buttonData?.label" value="buttonData?.label" (click)="submitButton(buttonData)">{{buttonData?.label}}</button>
-<button class="btn btn-primary"  *ngIf = "!buttonData?.submitValue && !buttonData?.label" value="buttonData?.type" (click)="submitButton(buttonData)">{{buttonData?.type}}</button>
+<button class="btn btn-primary text-white" *ngIf = "buttonData?.submitValue" value="buttonData?.submitValue"  (click)="submitButton(buttonData)">{{buttonData?.label}}</button>
+<button class="btn btn-primary text-white" *ngIf = "!buttonData?.submitValue && buttonData?.label" value="buttonData?.label" (click)="submitButton(buttonData)">{{buttonData?.label}}</button>
+<button class="btn btn-primary text-white"  *ngIf = "!buttonData?.submitValue && !buttonData?.label" value="buttonData?.type" (click)="submitButton(buttonData)">{{buttonData?.type}}</button>

@@ -57,8 +57,10 @@
                                 </span>
                             </h5>
                         </div>
-                        <div style="margin:0px 60px !important;">
-                            <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+                        <div *ngIf="checkTable">
+                            <form [formGroup]="tableForm"  (ngSubmit)="onSubmit()">
+                                <div class="table-box">
+                      
                             <table class="table table-striped chat-form">
                                 <thead>
                                     <tr>
@@ -74,7 +76,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let item of tableData; let i = index" [formGroupName]="i">
-                                        <th>{{ item.name }}</th>
+                                        <th>{{ item.stepName }}</th>
                                         <td style="width:50px;">
                                           <p-dropdown [options]="minOptions" formControlName="min" class="custom-dd" name="min"></p-dropdown>
                                         </td>
@@ -88,7 +90,9 @@
                                       </tr>
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary"></button>
+                        </div>
+                        <button class="btn btn-primary text-right" (click)="onSubmit()">Submit</button>
+                    
                             </form>
                         </div>
                     </div>
