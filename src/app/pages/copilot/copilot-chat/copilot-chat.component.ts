@@ -173,8 +173,8 @@ export class CopilotChatComponent implements OnInit {
           //   return item;
           // });
             this.messages.push(response);
-                let chatGridElement = document.getElementById("chat-box");
-          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+          //       let chatGridElement = document.getElementById("chat-box");
+          // chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
          
           setTimeout(() => {
             var objDiv = document.getElementById("chat-box");
@@ -405,13 +405,14 @@ export class CopilotChatComponent implements OnInit {
               min:"00",
             })
           })
-          let chatGridElement = document.getElementById("chat-box");
-          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });  
+          this.createForm();
+          // let chatGridElement = document.getElementById("chat-box");
+          // chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });  
           setTimeout(() => {
             var objDiv = document.getElementById("chat-box");
             objDiv.scrollTop = objDiv.scrollHeight;
           }, 200)
-          this.createForm();
+
           setTimeout(()=>{
             this.showTable=true;
           },500)
