@@ -1,0 +1,11 @@
+.itemsStyle{
+    font-size: 10px;
+}
+.selectItem{
+    margin-top: 5px;
+    padding-left:10px;
+    padding-bottom:10px; 
+    border: 1px solid #c9c9c9;
+    background-color: #e9e9e9;
+    cursor: pointer;
+}

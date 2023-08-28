@@ -3,8 +3,9 @@ import { ActivatedRoute } from "@angular/router";
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService } from "primeng/api";
-import { DataTransferService } from "../../../pages/services/data-transfer.service";
+import { DataTransferService } from "../../services/data-transfer.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageData, UserMessagePayload } from "../copilot-models";
 interface City {
   name: string;
   code: string;
@@ -30,7 +31,7 @@ export class CopilotChatComponent implements OnInit {
   public model2: any;
   public bpmnPath: String = "";
   messages: any = [];
-  message: any = "";
+  usermessage: any = "I would like to automate associate joining process";
   showTable: boolean = false;
   tableData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>
@@ -65,9 +66,7 @@ export class CopilotChatComponent implements OnInit {
       { name: "IT Team Assign A System", min: "00", hrs: "00", days: "00" },
       { name: "System Access For The User", min: "00", hrs: "00", days: "00" },
     ];
-
     this.createForm()
-
     this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params.templateId) {
         setTimeout(() => {
@@ -152,7 +151,6 @@ export class CopilotChatComponent implements OnInit {
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
     if (!this.staticData) {
-      setTimeout(() => {
         let data = {
           conversationId: localStorage.getItem("conversationId"),
           message: value,
@@ -163,20 +161,19 @@ export class CopilotChatComponent implements OnInit {
           messageType: messageType,
         });
 
-        this.message = "";
+        this.usermessage = "";
         // this.dt.sendMessage(data).subscribe((response: any) => {
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
-          response.data.values = response.data.values.map((item: any) => {
-            item = item.map((valueItem: any) => {
-              valueItem.values = valueItem.encoded
-                ? JSON.parse(atob(valueItem.values))
-                : valueItem.values;
-              return valueItem;
-            });
-            return item;
-          });
+          // response.data.values = response.data.values.map((item: any) => {
+          //   item = item.map((valueItem: any) => {
+          //     valueItem.values = valueItem.encoded ? JSON.parse(atob(valueItem.values))
+          //       : valueItem.values;
+          //     return valueItem;
+          //   });
+          //   return item;
+          // });
           console.log("------sample--", response);
           this.messages.push(response);
         });
@@ -207,7 +204,6 @@ export class CopilotChatComponent implements OnInit {
         // this.rest_api.getdata1().subscribe(res=>{
         //   console.log(res)
         // })
-      }, 1000);
     }
     if (this.staticData) {
       // if (value == "Onboard Users") {
@@ -417,4 +413,73 @@ export class CopilotChatComponent implements OnInit {
     )
   }
 
+
+  public processMessageAction = (event:any) =>{
+    console.log('processMessageAction '+ JSON.stringify(event))
+    if (event.actionType==='Button'){
+        this.messages.push({
+            data: {message:event?.data?.label} as MessageData,
+            messageSourceType:'USER'
+          })
+        //   if (event?.data?.submitValue==='infoBot'){
+        //     this.botType = 'infoBot';
+        //     this.conversationId='';
+        //   }
+          this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
+    }else if (event.actionType==='Form'){
+        this.messages.push({
+            data: {message:event?.data?.label} as MessageData,
+            messageSourceType:'USER'
+          })
+          this.sendFormAction(event?.data)
+    }else if (event.actionType==='Card'){
+        this.messages.push({
+            data: {message:event?.data?.label} as MessageData,
+            messageSourceType:'USER'
+          })
+          this.sendCardAction(event?.data?.submitValue)
+    }else if (event.actionType==='list'){
+        this.messages.push({
+            data: {message:event?.data?.label} as MessageData,
+            messageSourceType:'USER'
+          })
+          this.sendListAction(event?.data?.submitValue)
+    }
+  }
+
+  public sendButtonAction = (value:string) =>{
+    this.sendUserAction({
+        message: value
+    })
+  }
+
+
+  public sendFormAction = (data:any) =>{
+    //TODO: Send request to backend
+  }
+  public sendCardAction = (data:any) =>{
+    this.sendUserAction({
+        message: data
+    })
+  }
+  public sendListAction = (data:any) =>{
+    this.sendUserAction({
+        message: data
+    })
+  }
+
+  public sendUserAction =(data:any)=>{
+    let userMessage: UserMessagePayload={
+        conversationId:localStorage.getItem("conversationId"),
+        message:data?.message,
+        jsonData:data?.jsonData
+    }
+    let response = this.rest_api.sendMessageToCopilot(userMessage);
+    response.subscribe(res =>{
+        this.messages.push(res);
+        this.usermessage='';
+    }, err =>{
+
+    })
+  }
 }

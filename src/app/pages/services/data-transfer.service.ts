@@ -158,6 +158,26 @@ setScreenList(module:any){
     this.copilotData.next(value);
   }
 
+  // Copilot New changes start
+
+  private messageSource = new BehaviorSubject({});
+  currentMessage = this.messageSource.asObservable();
+
+  private messageSource2 = new BehaviorSubject({});
+  currentMessage2 = this.messageSource2.asObservable();
+
+  constructor() { }
+
+  updateProcess(message: any) {
+    this.messageSource.next(message)
+  }
+
+  updateProcessStepLogs(message: any) {
+    this.messageSource2.next(message)
+  }
+
+   // Copilot New changes End
+
 
   createConversation(data)
   {
