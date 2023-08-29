@@ -75,6 +75,7 @@ export class CopilotChatComponent implements OnInit {
       console.log("subject check",response);
     
     })
+    this.createForm();
   }
 
 

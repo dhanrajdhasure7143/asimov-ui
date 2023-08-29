@@ -27,12 +27,10 @@ export class CopilotMessageComponent implements OnInit {
 
  ngAfterViewInit() {
   this.cd.detectChanges();
-  console.log(this.messages);
   
  }
 
  processButtonAction(event:any){
-   console.log("received from child "+event)
    this.messageAction.emit({
      actionType:'Button',
      data: event

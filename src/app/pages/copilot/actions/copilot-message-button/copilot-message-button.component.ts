@@ -6,16 +6,16 @@ import { ButtonData } from './../../copilot-models';
   templateUrl: './copilot-message-button.component.html',
   styleUrls: ['./copilot-message-button.component.css']
 })
-export class CopilotMessageButtonComponent {
+export class CopilotMessageButtonComponent implements OnInit{
   @Input() buttonData: ButtonData={} as ButtonData;
   @Output() buttonAction = new EventEmitter<ButtonData>();
-  constructor(){}
-  ngOninIt()
-  {
-
+  disabled:boolean=false;
+  constructor(){
+  }
+  ngOnInit(): void {
   }
   submitButton(value: any) {
-    this.buttonData["disabled"]=true;
+    this.disabled=true;
     this.buttonAction.emit(value);
   }
 }
