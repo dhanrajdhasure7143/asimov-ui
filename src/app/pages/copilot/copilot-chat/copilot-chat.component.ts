@@ -109,9 +109,7 @@ export class CopilotChatComponent implements OnInit {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
           this.currentMessage=res;
-          console.log("current message",this.currentMessage)
           this.updateCurrentMessageButtonState("ENABLED")
-          console.log("updated message",this.currentMessage)
           this.messages.push(this.currentMessage);
           setTimeout(() => {
             var objDiv = document.getElementById("chat-box");
@@ -179,6 +177,39 @@ export class CopilotChatComponent implements OnInit {
       });
     }
     this.tableForm = this.fb.group(formControls);
+  }
+
+
+
+  updateFormEvent(index, fieldName)
+  {
+    if(fieldName=="mins")
+    {
+      this.tableForm.get(index).get("hours").clearValidators(); 
+      this.tableForm.get(index).get("hours").updateValueAndValidity();
+      this.tableForm.get(index).get("days").clearValidators();      
+      this.tableForm.get(index).get("days").updateValueAndValidity();
+      this.tableForm.get(index).get("minutes").setValidators(Validators.compose([Validators.required]));
+      this.tableForm.get(index).get("minutes").updateValueAndValidity();   
+    }
+    else if(fieldName=="hrs")
+    {
+      this.tableForm.get(index).get("hours").setValidators(Validators.compose([Validators.required]));
+      this.tableForm.get(index).get("hours").updateValueAndValidity();
+      this.tableForm.get(index).get("days").clearValidators();      
+      this.tableForm.get(index).get("days").updateValueAndValidity();
+      this.tableForm.get(index).get("minutes").clearAsyncValidators();
+      this.tableForm.get(index).get("minutes").updateValueAndValidity();
+    }
+    else if(fieldName=="days")
+    {
+      this.tableForm.get(index).get("hours").clearValidators();
+      this.tableForm.get(index).get("hours").updateValueAndValidity();
+      this.tableForm.get(index).get("days").clearValidators();      
+      this.tableForm.get(index).get("days").setValidators(Validators.compose([Validators.required]));
+      this.tableForm.get(index).get("minutes").clearAsyncValidators();
+      this.tableForm.get(index).get("minutes").updateValueAndValidity();
+    }
   }
 
   onSubmit(){
@@ -450,26 +481,19 @@ export class CopilotChatComponent implements OnInit {
 
   updateCurrentMessageButtonState(state){
     if(this.currentMessage.data.components){
-      if(this.currentMessage.data.components.includes("Buttons"))
-      {
+      if(this.currentMessage.data.components.includes("Buttons")){
         let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="Buttons");
         this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item:any)=>{
           item['disabled']=(state=="ENABLED"?false:true);
           return item;
         })
       }
-      if(this.currentMessage.data.components.includes("list"))
-      {
-        console.log("1")
+      if(this.currentMessage.data.components.includes("list")){
         let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="list");
-        if(this.currentMessage.data.values[componentIndex].filter((item)=>item.type=="bpmnList").length>0)
-        {
-          console.log("2")
+        if(this.currentMessage.data.values[componentIndex].filter((item)=>item.type=="bpmnList").length>0){
           this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item)=>{
-            console.log("3")
             if(item.type=="bpmnList")
               item.actions=item.actions.map((actionItems)=>{
-                console.log("4")
                 actionItems["disabled"]=(state=="ENABLED"?false:true);
                 return actionItems;
               })
