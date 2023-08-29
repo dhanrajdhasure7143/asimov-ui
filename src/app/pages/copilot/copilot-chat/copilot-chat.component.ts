@@ -29,9 +29,9 @@ export class CopilotChatComponent implements OnInit {
   @ViewChild("canvas") canvas: ElementRef;
   @ViewChild("render") render: ElementRef;
   public model2: any;
-  public bpmnPath: String = "";
+  public bpmnActionDetails: String = "";
   messages: any = [];
-  usermessage: any = "I would like to automate associate joining process";
+  usermessage: any = "";
   showTable: boolean = false;
   tableData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>
@@ -47,7 +47,7 @@ export class CopilotChatComponent implements OnInit {
   isChatLoad: boolean = false;
   bpmnModeler: any;
   tableForm: FormGroup
-
+  bpmnId:number;
   constructor(
     private rest_api: RestApiService,
     private activatedRouter: ActivatedRoute,
@@ -68,9 +68,6 @@ export class CopilotChatComponent implements OnInit {
         }, 300);
         if (params.templateId != "Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId);
-        if (!this.staticData) this.getConversation();
-        //(!(localStorage.getItem("conversationId")))?this.getConversation():undefined;
-        //(!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
       }
       this.loader = false;
     });
@@ -90,62 +87,11 @@ export class CopilotChatComponent implements OnInit {
           let template = response.find(
             (item: any) => item.template_id == templateId
           );
-          this.loadBpmnwithXML(
-            atob(template.bpmn_xml),
-            ".diagram_container-copilot"
-          );
+          this.loadBpmnwithXML(atob(template.bpmn_xml));
         }
       });
   }
 
-  getConversation() {
-    // this.rest_api.getCopilotConversation().subscribe((response:any)=>{
-    //   if(response.conversationId)
-    //   {
-    //     localStorage.setItem("conversationId",response.conversationId);
-    //     this.messages.push({
-    //       message:response.data,
-    //       user:"SYSTEM",
-    //       steps:[]
-    //     })
-    //   }
-    // }, err=>{
-    //   console.log(err)
-    //   this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to get conversation details!'});
-    // })
-    this.dt
-      .createConversation({ userId: localStorage.getItem("userId") })
-      .subscribe((response: any) => {
-        console.log(response);
-        //localStorage.setItem("conversationId", response.conversationId);
-        this.messages.push(response);
-      });
-  }
-
-  templateDetails: any = [];
-  loadTemplate(template: any) {
-    if (template.bpmnXml) {
-      this.templateDetails = template;
-      if (this.bpmnPath == "") this.isDialogVisible = true;
-      setTimeout(() => {
-        let bpmn = atob(template.bpmnXml);
-        if (this.bpmnPath == "") this.previewBpmn(bpmn);
-        else this.loadBpmnwithXML(bpmn, "");
-      }, 1000);
-    }
-  }
-
-  actionDispatch(message: any, action: any) {
-    if (action.submitValue == "submit") {
-      if (this.templateDetails) {
-        this.sendMessage("1", "input");
-      } else {
-        alert("No template selected");
-      }
-    } else {
-      this.sendMessage(action.submitValue, "input");
-    }
-  }
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
@@ -160,22 +106,10 @@ export class CopilotChatComponent implements OnInit {
         });
 
         this.usermessage = "";
-        // this.dt.sendMessage(data).subscribe((response: any) => {
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
-          // response.data.values = response.data.values.map((item: any) => {
-          //   item = item.map((valueItem: any) => {
-          //     valueItem.values = valueItem.encoded ? JSON.parse(atob(valueItem.values))
-          //       : valueItem.values;
-          //     return valueItem;
-          //   });
-          //   return item;
-          // });
-            this.messages.push(response);
-          //       let chatGridElement = document.getElementById("chat-box");
-          // chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-         
+          this.messages.push(response);
           setTimeout(() => {
             var objDiv = document.getElementById("chat-box");
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -183,74 +117,29 @@ export class CopilotChatComponent implements OnInit {
         });
   }
 
-  loadGraph(template) {
-    if (template != "Others") {
-      this.isDialogVisible = false;
-      let path = "assets/resources/copilot_bpmn_chatgpt.bpmn";
-      if (template == "Workforce Planning")
-        path = "assets/resources/Copilot- 3.bpmn";
-      if (template == "Job Analysis and Job Posting")
-        path = "assets/resources/Copilot-1.bpmn";
-      if (template == "Assessment and Testing")
-        path = "assets/resources/Copilot- 2.bpmn";
-      setTimeout(() => {
-        this.loadBpmnwithXML(path, ".diagram_container-copilot");
-      }, 1500);
-    }
-  }
-
-  loadupdatedBpmn(BpmnPath) {
-    this.bpmnModeler.importXML(BpmnPath, function (err) {
-      if (err) {
-        console.error("could not import BPMN EZFlow notation", err);
-      }
-    });
-    setTimeout(() => {
-      this.notationFittoScreen();
-      this.readBpmnModelerXMLdata();
-    }, 500);
-  }
-
-  loadBpmnwithXML(responseData, element) {
+  loadBpmnwithXML(bpmnActionDetails:any) {
     this.isDialogVisible = false;
-
-    // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
-    // if(this.staticData)
-    // {
-    //   this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
-    //     this.bpmnModeler.importXML(res, function (err) {
-    //       if (err) {
-    //         console.error("could not import BPMN EZFlow notation", err);
-    //       }
-    //     });
-    //     setTimeout(() => {
-    //           this.notationFittoScreen();
-    //         if(element !='.graph-preview-container')
-    //           this.readBpmnModelerXMLdata();
-    //     }, 500)
-    //     this.bpmnModeler.on('element.contextmenu', () => false);
-    //   });
-    // }
-    // else
-    // {
-    this.bpmnPath = responseData;
-    this.bpmnModeler.importXML(responseData, function (err) {
+    let bpmnPath=atob(bpmnActionDetails.bpmnXml);
+    this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
       }
+      
     });
+    this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
+    this.sendBpmnAction(bpmnActionDetails.submitValue)
     setTimeout(() => {
       this.notationFittoScreen();
       this.readBpmnModelerXMLdata();
     }, 500);
     this.bpmnModeler.on("element.contextmenu", () => false);
-    //}
   }
 
-  previewBpmn(responseData) {
+  previewBpmn(bpmnActionDetails:any) {
     let previewMolder = new BpmnJS({ container: ".graph-preview-container" });
-    this.bpmnPath = responseData;
-    previewMolder.importXML(responseData, function (err) {
+    this.bpmnActionDetails = bpmnActionDetails;
+    let bpmnXml=atob(bpmnActionDetails.bpmnXml)
+    previewMolder.importXML(bpmnXml, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
       }
@@ -258,11 +147,6 @@ export class CopilotChatComponent implements OnInit {
     setTimeout(() => {
       let canvas = previewMolder.get("canvas");
       canvas.zoom("fit-viewport");
-      previewMolder.on("element.changed", function () {
-        previewMolder.saveXML({ format: true }, function (err, xml) {
-          console.log("xml", xml); // xml data will get for every change
-        });
-      });
     }, 500);
   }
 
@@ -306,7 +190,7 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.initializeConversation(req_body).subscribe(
       (res:any)=>{
         resdata = res
-        console.log(res)
+        this.messages.push(resdata);
         localStorage.setItem("conversationId",resdata.conversationId)
       }
     )
@@ -314,40 +198,33 @@ export class CopilotChatComponent implements OnInit {
 
 
   public processMessageAction = (event:any) =>{
-    console.log('processMessageAction '+ JSON.stringify(event))
     if (event.actionType==='Button'){
         this.messages.push({
-            data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'INPUT'
+            message:event?.data?.label,
+            messageSourceType:localStorage.getItem("ProfileuserId")
           })
-        //   if (event?.data?.submitValue==='infoBot'){
-        //     this.botType = 'infoBot';
-        //     this.conversationId='';
-        //   }
           this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
     }else if (event.actionType==='Form'){
-        this.messages.push({
-            data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'INPUT'
-          })
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
           this.sendFormAction(event?.data)
     }else if (event.actionType==='Card'){
-        this.messages.push({
-            data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'INPUT'
-          })
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
           this.sendCardAction(event?.data?.submitValue)
     }else if (event.actionType==='list'){
-        this.messages.push({
-            data: {message:event?.data?.label} as MessageData,
-            messageSourceType:'INPUT'
-          })
-          console.log("list data",event?.data)
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
           this.sendListAction(event?.data?.submitValue)
     }else if (event.actionType=='bpmn'){
-      let decodedBpmn=atob(event.data.bpmnXml)
       this.isDialogVisible=true;
-      setTimeout(()=>{this.previewBpmn(decodedBpmn)},500)
+      setTimeout(()=>{this.previewBpmn(event.data)},500)
     }
     else if (event.actionType=='logsCollection'){
       console.log("log event",event)
@@ -360,6 +237,11 @@ export class CopilotChatComponent implements OnInit {
       ];
       this.createForm()
     }
+  }
+
+
+  public sendBpmnAction=(value:string)=>{
+    this.sendUserAction({message:value})
   }
 
   public sendButtonAction = (value:string) =>{
@@ -396,7 +278,6 @@ export class CopilotChatComponent implements OnInit {
         if (res.data?.components?.includes('logCollection')){
           let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
           values= JSON.parse( atob(values[0].values));
-          console.log("meta check",values)
           values.forEach((item:any)=>{
             this.tableData.push({
               stepName:item.stepName,
@@ -406,13 +287,6 @@ export class CopilotChatComponent implements OnInit {
             })
           })
           this.createForm();
-          // let chatGridElement = document.getElementById("chat-box");
-          // chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });  
-          setTimeout(() => {
-            var objDiv = document.getElementById("chat-box");
-            objDiv.scrollTop = objDiv.scrollHeight;
-          }, 200)
-
           setTimeout(()=>{
             this.showTable=true;
           },500)

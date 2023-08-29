@@ -69,9 +69,11 @@ export class CopilotMessageListComponent implements OnInit {
       this.selectionListValues.forEach((d:any) =>{
         let item:any={};
         this.properties.forEach(i => {
+          console.log("data", i)
           let val = getElementValue(i, this.mappings, d);
           if (val) item[i] = val ;
         });
+        if(d.templateName) item["label"]=d.templateName
         this.componentData.push(item);
       });
       
@@ -81,7 +83,6 @@ export class CopilotMessageListComponent implements OnInit {
     if ( this.selectionListValues && this.selectionListValues.length ===1){
         this.previewUpdatedProcess();
     }
-
     this.subscription = this.data.currentMessage.subscribe((selectedProcessSteps:any) => this.selectedProcessSteps = selectedProcessSteps)
   }
 
@@ -92,13 +93,9 @@ export class CopilotMessageListComponent implements OnInit {
   }
 
   userSelectedItem(label:string, submitValue:string, elem:any){
-    console.log(elem)
     this.selectedItem.label = label;
     this.selectedItem.submitValue= submitValue;
-    if(elem.bpmnXml)
-    {
-      this.previewResponse.emit(elem);
-    }
+    if(elem.bpmnXml) this.previewResponse.emit(elem);
     this.previewSelectedProcess();
   }
   previewUpdatedProcess(){
