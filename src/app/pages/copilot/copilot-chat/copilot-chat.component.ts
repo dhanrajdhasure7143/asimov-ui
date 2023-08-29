@@ -58,7 +58,6 @@ export class CopilotChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader = true;
-    this.getConversationId();
     this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
         setTimeout(() => {
@@ -67,10 +66,12 @@ export class CopilotChatComponent implements OnInit {
           });
         }, 300);
         if(params.templateId == "AutomateEmployeeOnboarding")
-        this.getAutomatedProcess();
-
-        if (params.templateId != "Others")
+          this.getAutomatedProcess();
+        else if (params.templateId != "Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId);
+        else
+          this.getConversationId();
+    
       }
       this.loader = false;
     });
@@ -311,7 +312,7 @@ export class CopilotChatComponent implements OnInit {
       "intent":"Employee Onboarding"
   }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
-      console.log()
+      this.messages.push(res);
     })
   }
 }
