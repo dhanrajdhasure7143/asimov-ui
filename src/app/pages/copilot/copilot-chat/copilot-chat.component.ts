@@ -16,20 +16,13 @@ interface City {
   styleUrls: ["./copilot-chat.component.css"],
 })
 export class CopilotChatComponent implements OnInit {
-  selectedCity: City;
-  isPlayAnimation: boolean = false;
-  public model: any = [];
-  isDialogVisible: boolean = false;
-  isLoadGraphImage: boolean = false;
   @ViewChild("op", { static: false }) overlayModel;
   @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
-  staticData: Boolean = false;
-  copilotJson: any = [];
   @ViewChild("exportSVGtoPDF") exportSVGtoPDF: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
   @ViewChild("render") render: ElementRef;
-  public model2: any;
-  public bpmnActionDetails: String = "";
+  isDialogVisible: boolean = false;
+  bpmnActionDetails: any;
   messages: any = [];
   usermessage: any = "";
   showTable: boolean = false;
@@ -47,7 +40,6 @@ export class CopilotChatComponent implements OnInit {
   isChatLoad: boolean = false;
   bpmnModeler: any;
   tableForm: FormGroup
-  bpmnId:number;
   constructor(
     private rest_api: RestApiService,
     private route: ActivatedRoute,
@@ -270,6 +262,10 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
+  updateCurrentMessageButtonState(state)
+  {
+    
+  }
   public sendUserAction =(data:any)=>{
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
