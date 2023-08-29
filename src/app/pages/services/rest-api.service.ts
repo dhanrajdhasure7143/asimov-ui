@@ -1855,4 +1855,8 @@ initializeConversation(body) {
     });
 }
 
+getAutomatedProcess(messageBody){
+  return this.http.post("/a-square/v1/conversation/modify-template", messageBody)
+}
+
 }

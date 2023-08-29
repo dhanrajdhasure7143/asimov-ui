@@ -126,7 +126,7 @@ export class CopilotHomeComponent implements OnInit {
     }, 1500);
   }
   navigateToCopilotChatScreen1() {
-    this.router.navigate(["./pages/copilot/chat"])
+    this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: 'AutomateEmployeeOnboarding'}})
 }
 
 navigateToProjects(){

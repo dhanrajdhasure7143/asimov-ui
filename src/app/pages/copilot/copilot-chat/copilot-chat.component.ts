@@ -50,7 +50,7 @@ export class CopilotChatComponent implements OnInit {
   bpmnId:number;
   constructor(
     private rest_api: RestApiService,
-    private activatedRouter: ActivatedRoute,
+    private route: ActivatedRoute,
     private messageService: MessageService,
     private dt: DataTransferService,
     private fb: FormBuilder
@@ -59,13 +59,16 @@ export class CopilotChatComponent implements OnInit {
   ngOnInit(): void {
     this.loader = true;
     this.getConversationId();
-    this.activatedRouter.queryParams.subscribe((params: any) => {
+    this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
         setTimeout(() => {
           this.bpmnModeler = new BpmnJS({
             container: ".diagram_container-copilot",
           });
         }, 300);
+        if(params.templateId == "AutomateEmployeeOnboarding")
+        this.getAutomatedProcess();
+
         if (params.templateId != "Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId);
       }
@@ -298,9 +301,17 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
-
-  get checkTable()
-  {
+  get checkTable(){
     return this.tableData.length>0?true:false;
+  }
+
+  getAutomatedProcess(){
+    let req_body={
+      "userId":localStorage.getItem("ProfileuserId"),
+      "intent":"Employee Onboarding"
+  }
+    this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
+      console.log()
+    })
   }
 }
