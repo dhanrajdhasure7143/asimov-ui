@@ -53,7 +53,8 @@ export class CopilotChatComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private messageService: MessageService,
     private dt: DataTransferService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +75,13 @@ export class CopilotChatComponent implements OnInit {
     this.dt.currentMessage2.subscribe((response:any)=>{
       console.log("subject check",response);
     
+    })
+
+    this.route.queryParams.subscribe(res=>{
+      console.log(res)
+      if(res)
+      if(res.templateId == "AutomateEmployeeOnboarding")
+      this.getAutomatedProcess();
     })
   }
 
@@ -297,9 +305,17 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
-
-  get checkTable()
-  {
+  get checkTable(){
     return this.tableData.length>0?true:false;
+  }
+
+  getAutomatedProcess(){
+    let req_body={
+      "userId":localStorage.getItem("ProfileuserId"),
+      "intent":"Employee Onboarding"
+  }
+    this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
+      console.log()
+    })
   }
 }
