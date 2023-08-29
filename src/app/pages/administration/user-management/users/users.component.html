@@ -9,7 +9,7 @@
         <app-dynamic-table [columns_list]="columns_list" [table_data]="userslist" (deleteItem)="deleteUser($event)"
             [screenTable]="'users_screen'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
             (updateItem)="modifyUser($event)" [show_search_field]="true" [show_column_filter]="true"
-            [show_clear_filter]="true" (onRowDoubleClick)="handleRowDoubleClick($event)">
+            [show_clear_filter]="true" (onRowDoubleClick)="modifyUser($event)">
         </app-dynamic-table>
     </div>
 </div>

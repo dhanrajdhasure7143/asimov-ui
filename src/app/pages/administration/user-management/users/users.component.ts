@@ -209,6 +209,7 @@ export class UsersComponent implements OnInit {
   }
 
   modifyUser(data) {
+    if (data.email !== this.loggedinUser){
     let department = [];
     var roles1: any = [];
     this.department = [];
@@ -250,6 +251,7 @@ export class UsersComponent implements OnInit {
     //   queryParams: { id: data.email, role: userroles, dept: depts },
     // });
   }
+}
 
   getreducedValue(value) {
     if (value.length > 15) return value.substring(0, 16) + "...";
@@ -455,9 +457,4 @@ export class UsersComponent implements OnInit {
     }
   }
   
-  handleRowDoubleClick(rowData: any) {
-    if (rowData.email !== this.loggedinUser) {
-        this.modifyUser(rowData);
-    }
-}
 }
