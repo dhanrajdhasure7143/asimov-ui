@@ -167,10 +167,11 @@
       <p-tabPanel header="Widgets" [headerStyle]="{'font-size': '20px'}" >
         <div class="d-flex configtabssearch mb-3">
           <div class="categselect">
-            <select class="form-control data">
-              <option value="">All</option>
-              <option value="">Operational</option>
-            </select>
+            <!-- <select  id="category"class="form-control data" (onChange)="onOptionSelect($event)">
+              <option value="All">All</option>
+              <option value="Operational">Operational</option>
+            </select> -->
+            <p-dropdown id="category"  [options]="options" optionLabel="option" (onChange)="onOptionSelect($event)" ></p-dropdown>
           </div>
           <div class="categinput">
             <input type="text" placeholder="Search" [(ngModel)]="searchText" class="form-control toolbar-search ng-untouched ng-pristine ng-valid">
@@ -191,7 +192,8 @@
             </div>
         </div>           -->
         <div class="configtabslists">
-          <div *ngFor="let widget of widgetslist|myFilter:searchText:['name', 'description']; let i=index" >
+          
+          <div *ngFor="let widget of widgetslist |myFilter:searchText:['name', 'description']; let i=index" >
             <div class="row metricalign"pDraggable="widget" pDroppableDisabled="true"  [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'"(onDragStart)="widgetDragStart(widget)"
             (onDragEnd)="widgetDragEnd()"  (click)="addWidget(widget,i)" >
               <div class="col-md-11 p-0 d-flex widget-set">
