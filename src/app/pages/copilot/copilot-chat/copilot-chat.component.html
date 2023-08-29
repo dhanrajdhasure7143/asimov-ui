@@ -55,8 +55,8 @@
                                 <span class="title_text_haspath">
                                     <span class="">Fill in the time taken for below steps in the process:</span>
                                 </span>
-                                <span class="process-log-btn-pos">
-                                    <input type="file" id="fileInput" style="display: none;">
+                                <span class="process-log-btn-pos" (change)="changefileUploadForm($event)">
+                                    <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
                                     <label for="fileInput" class="process-log-btn">Upload Process Log Graph</label>    
                                 </span>
                             </h5>
@@ -78,7 +78,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of tableData; let i = index" [formGroupName]="i">
+                                    <tr *ngFor="let item of processLogsData; let i = index" [formGroupName]="i">
                                         <th>{{ item.stepName }}</th>
                                         <td style="width:50px;">
                                           <p-dropdown [options]="minOptions" formControlName="minutes" class="custom-dd" name="min"></p-dropdown>

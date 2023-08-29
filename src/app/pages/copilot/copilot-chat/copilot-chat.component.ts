@@ -26,7 +26,7 @@ export class CopilotChatComponent implements OnInit {
   messages: any = [];
   usermessage: any = "";
   showTable: boolean = false;
-  tableData: any[] = [];
+  processLogsData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>
     num.toString().padStart(2, "0")
   );
@@ -164,19 +164,21 @@ export class CopilotChatComponent implements OnInit {
 
   createForm() {
     const formControls = {};
-    for (let i = 0; i < this.tableData.length; i++) {
+    for (let i = 0; i < this.processLogsData.length; i++) {
       formControls[i] = this.fb.group({
         minutes: ['', Validators.required],
         hours: ['', Validators.required],
-        days: ['', Validators.required]
+        days: ['', Validators.required],
+        stepId:this.processLogsData[i]["stepId"],
+        stepName:this.processLogsData[i]["stepName"]
       });
     }
     this.tableForm = this.fb.group(formControls);
   }
 
   onSubmit(){
-    if(!this.tableForm.valid)
-    {
+    console.log(this.tableForm.value)
+    if(!this.tableForm.valid){
       this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
     }
     console.log(this.tableForm.value)
@@ -226,7 +228,7 @@ export class CopilotChatComponent implements OnInit {
     }
     else if (event.actionType=='logsCollection'){
       console.log("log event",event)
-      this.tableData = [
+      this.processLogsData = [
         { name: "IT Form Sent To The Manager", hours: "00", minutes: "00", days: "00" },
         { name: "Manager Fills The Form", hours: "00", minutes: "00", days: "00" },
         { name: "IT Team Creates Email ID", minutes: "00", hours: "00", days: "00" },
@@ -288,8 +290,9 @@ export class CopilotChatComponent implements OnInit {
     let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
     values= JSON.parse( atob(values[0].values));
     values.forEach((item:any)=>{
-      this.tableData.push({
+      this.processLogsData.push({
         stepName:item.stepName,
+        stepId:item.stepId,
         days:"00",
         hours:"00",
         minutes:"00",
@@ -310,6 +313,17 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
       this.currentMessage=res;
       this.messages.push(res);
+    })
+  }
+
+  changefileUploadForm(event){
+    console.log(event.target.files)
+    let selectedFile = <File>event.target.files[0];
+          const fd = new FormData();
+    fd.append('file', selectedFile),
+    fd.append('permissionStatus', 'yes')
+    this.rest_api.fileupload(fd).subscribe(res => {
+      console.log(res)
     })
   }
 
