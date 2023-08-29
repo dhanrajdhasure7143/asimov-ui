@@ -8,7 +8,8 @@ export interface MessageData{
 export interface ButtonData {
     type?:string,
     label?: string
-    submitValue?: string
+    submitValue?:any,
+    disabled?:any
 }
 export interface MessageAction {
     actionType?: string,

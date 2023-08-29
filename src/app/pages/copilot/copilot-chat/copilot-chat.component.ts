@@ -25,7 +25,7 @@ export class CopilotChatComponent implements OnInit {
   bpmnActionDetails: any;
   messages: any = [];
   usermessage: any = "";
-  showTable: boolean = true;
+  showTable: boolean = false;
   processLogsData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>
     num.toString().padStart(2, "0")
@@ -102,12 +102,17 @@ export class CopilotChatComponent implements OnInit {
           message: value,
           messageType: messageType,
         });
-
+        console.log("last message",this.currentMessage)
+        this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
-          this.messages.push(response);
+          this.currentMessage=res;
+          console.log("current message",this.currentMessage)
+          this.updateCurrentMessageButtonState("ENABLED")
+          console.log("updated message",this.currentMessage)
+          this.messages.push(this.currentMessage);
           setTimeout(() => {
             var objDiv = document.getElementById("chat-box");
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -276,10 +281,11 @@ export class CopilotChatComponent implements OnInit {
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
-        this.messages.push(res);
+        this.updateCurrentMessageButtonState("ENABLED");
+        this.messages.push(this.currentMessage);
+
         this.usermessage='';
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
-        this.updateCurrentMessageButtonState("ENABLED")
     }, err =>{
 
     })
@@ -443,6 +449,38 @@ export class CopilotChatComponent implements OnInit {
   }
 
   updateCurrentMessageButtonState(state){
-    
+    if(this.currentMessage.data.components){
+      if(this.currentMessage.data.components.includes("Buttons"))
+      {
+        let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="Buttons");
+        this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item:any)=>{
+          item['disabled']=(state=="ENABLED"?false:true);
+          return item;
+        })
+      }
+      if(this.currentMessage.data.components.includes("list"))
+      {
+        console.log("1")
+        let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="list");
+        if(this.currentMessage.data.values[componentIndex].filter((item)=>item.type=="bpmnList").length>0)
+        {
+          console.log("2")
+          this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item)=>{
+            console.log("3")
+            if(item.type=="bpmnList")
+              item.actions=item.actions.map((actionItems)=>{
+                console.log("4")
+                actionItems["disabled"]=(state=="ENABLED"?false:true);
+                return actionItems;
+              })
+              return item;
+          })
+        }
+        if(state=="DISABLED")
+          if(this.messages.find((item:any)=>item?.data?.uuid==this.currentMessage?.data?.uuid))
+            this.messages.find((item:any)=>item?.data?.uuid==this.currentMessage?.data?.uuid).data=this.currentMessage.data;
+      }
+    }
+
   }
 }

@@ -9,13 +9,11 @@ import { ButtonData } from './../../copilot-models';
 export class CopilotMessageButtonComponent implements OnInit{
   @Input() buttonData: ButtonData={} as ButtonData;
   @Output() buttonAction = new EventEmitter<ButtonData>();
-  disabled:boolean=false;
   constructor(){
   }
   ngOnInit(): void {
   }
   submitButton(value: any) {
-    this.disabled=true;
     this.buttonAction.emit(value);
   }
 }
