@@ -39,7 +39,8 @@ export class CopilotChatComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
-  tableForm: FormGroup
+  tableForm: FormGroup;
+  currentMessage:any;
   constructor(
     private rest_api: RestApiService,
     private route: ActivatedRoute,
@@ -187,12 +188,12 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.initializeConversation(req_body).subscribe(
       (res:any)=>{
         resdata = res
+        this.currentMessage=res;
         this.messages.push(resdata);
         localStorage.setItem("conversationId",resdata.conversationId)
       }
     )
   }
-
 
   public processMessageAction = (event:any) =>{
     if (event.actionType==='Button'){
@@ -236,7 +237,6 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
-
   public sendBpmnAction=(value:string)=>{
     this.sendUserAction({message:value})
   }
@@ -251,64 +251,69 @@ export class CopilotChatComponent implements OnInit {
   public sendFormAction = (data:any) =>{
     //TODO: Send request to backend
   }
+
   public sendCardAction = (data:any) =>{
     this.sendUserAction({
         message: data
     })
   }
+
   public sendListAction = (data:any) =>{
     this.sendUserAction({
         message: data
     })
   }
 
-  updateCurrentMessageButtonState(state)
-  {
-    
-  }
   public sendUserAction =(data:any)=>{
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
         message:data?.message,
         jsonData:data?.jsonData
     }
+    this.updateCurrentMessageButtonState("DISABLED");
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
+        this.currentMessage=res;
         this.messages.push(res);
         this.usermessage='';
-        if (res.data?.components?.includes('logCollection')){
-          let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
-          values= JSON.parse( atob(values[0].values));
-          values.forEach((item:any)=>{
-            this.tableData.push({
-              stepName:item.stepName,
-              days:"00",
-              hours:"00",
-              minutes:"00",
-            })
-          })
-          this.createForm();
-          setTimeout(()=>{
-            this.showTable=true;
-          },500)
-        }
-
+        if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
+        this.updateCurrentMessageButtonState("ENABLED")
     }, err =>{
 
     })
   }
 
-  get checkTable(){
-    return this.tableData.length>0?true:false;
+  displaylogCollectionForm(res:any)
+  {
+    let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
+    values= JSON.parse( atob(values[0].values));
+    values.forEach((item:any)=>{
+      this.tableData.push({
+        stepName:item.stepName,
+        days:"00",
+        hours:"00",
+        minutes:"00",
+      })
+    })
+    this.createForm();
+    setTimeout(()=>{
+      this.showTable=true;
+    },500)
   }
+
 
   getAutomatedProcess(){
     let req_body={
       "userId":localStorage.getItem("ProfileuserId"),
       "intent":"Employee Onboarding"
-  }
+    }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
+      this.currentMessage=res;
       this.messages.push(res);
     })
+  }
+
+  updateCurrentMessageButtonState(state){
+    
   }
 }
