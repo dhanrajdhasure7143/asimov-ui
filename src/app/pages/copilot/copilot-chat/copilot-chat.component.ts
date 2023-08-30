@@ -24,7 +24,7 @@ export class CopilotChatComponent implements OnInit {
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
-  usermessage: any = "I want to automate assiociate joining process";
+  usermessage: any = "";
   showTable: boolean = false;
   processLogsData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>
@@ -120,6 +120,7 @@ export class CopilotChatComponent implements OnInit {
   }
 
   loadBpmnwithXML(bpmnActionDetails:any) {
+    console.log(bpmnActionDetails)
     this.isDialogVisible = false;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
     this.bpmnModeler.importXML(bpmnPath, function (err) {
@@ -128,6 +129,7 @@ export class CopilotChatComponent implements OnInit {
       }
       
     });
+    console.log("check 2")
     if(!(bpmnActionDetails?.isUpdate)){
       this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
       this.sendBpmnAction(bpmnActionDetails.submitValue)
@@ -521,7 +523,19 @@ export class CopilotChatComponent implements OnInit {
       this.currentMessage.data.values[index].map((item:any)=>{
         if(item.type)
           if(item.type=='bpmnList'){
-            console.log("--- check --",item)
+            if(item.hide)
+            {
+              let bpmnData=JSON.parse(atob(item.values));
+              console.log("sita sample",bpmnData);
+              let bpmnActionDetails={
+                bpmnXml:bpmnData[0].bpmnXml,
+                label:bpmnData[0].templateName,
+                isUpdate:true
+              }
+              console.log("check-1")
+              this.loadBpmnwithXML(bpmnActionDetails);
+
+            }
           }
       })
     }
