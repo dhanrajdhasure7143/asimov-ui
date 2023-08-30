@@ -20,6 +20,12 @@
                     <div class="messageButton" *ngIf="comp === 'Buttons'">
                         <div *ngFor="let b of sentMessage?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
                             <app-copilot-message-button [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+                            <span *ngIf="b?.type=='processLogUpload'" >
+                                    <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
+                                        <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
+                                        <label for="fileInput" class="process-log-btn">Upload Process Logs</label>    
+                                    </span>
+                            </span>
                         </div>
                     </div>
                     <div class="messageForm" *ngIf="comp === 'Form'">
@@ -40,14 +46,11 @@
                         </div>
                     </div>
 
-                    <div class="messageForm" *ngIf="comp === 'fileUploadButton'">
+                    <!-- <div class="messageForm" *ngIf="comp === 'fileUploadButton'">
                         <div *ngFor="let b of sentMessage?.data?.values[i]">
-                            <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
-                                <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
-                                <label for="fileInput" class="process-log-btn">Upload Process Logs</label>    
-                            </span>
+                           
                         </div>
-                    </div>
+                    </div> -->
                    
                 </div>
                   
