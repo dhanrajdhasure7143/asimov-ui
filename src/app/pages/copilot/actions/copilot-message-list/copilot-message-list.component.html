@@ -4,7 +4,7 @@
             <div *ngFor="let elem of componentData" class="selectItem"
                 (click)="userSelectedItem(elem.label, elem.submitValue, elem)">
                 <div *ngIf="elem.label">
-                    <span>{{elem.label}}</span>
+                    <b>{{elem.label}}</b>
                 </div>
                 <div *ngIf="elem.items" class="itemsStyle">
                     <div *ngFor="let dataItems of elem.items" style="width: 50%;padding-left:10px;padding-bottom:10px">
@@ -26,13 +26,14 @@
 <div *ngIf="'bpmnList' === listData?.type">
     <div class="selectionList" *ngIf="componentData">
         <div style="display: flex;width: 100%; flex-wrap: wrap;">
-            <div *ngFor="let elem of componentData" class="selectItem"
+            <div *ngFor="let elem of componentData; let i= index;" class="selectItem"
                 (click)="userSelectedItem(elem.label, elem.submitValue, elem)">
                 <div *ngIf="elem.label">
                     <span>{{elem.label}}</span>
                 </div>
                 <div *ngIf="elem.imageURL">
-                    <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/>
+                    <div [class]="'diagram_container-copilot_chat'+i" id="_diagram-chat"></div>
+                    <!-- <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/> -->
                 </div>
                 <div *ngIf="!elem.imageURL">
                     <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/>

@@ -24,7 +24,7 @@ export class CopilotChatComponent implements OnInit {
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
-  usermessage: any = "";
+  usermessage: any = "I want to automate assiociate joining process";
   showTable: boolean = false;
   processLogsData: any[] = [];
   minOptions: string[] = Array.from(Array(61).keys(), (num) =>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectedItem, SelectionList } from '../../copilot-models';
 import { getElementValue } from '../../Utilities';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
+import * as BpmnJS from "../../../../bpmn-modeler-copilot.development.js";
 
 
 @Component({
@@ -27,12 +28,15 @@ export class CopilotMessageListComponent implements OnInit {
   @Output() previewResponse= new EventEmitter();
   isLoaded:Boolean=false;
   subscription: any;
+  bpmnModeler: any;
 
   constructor(private data: DataTransferService) { }
 
 
 
   ngOnInit() {
+    console.log("test",this.listData)
+
     if ('selectList' === this.listData?.type){
       //Handling encoding
       if (this.listData?.encoded){
@@ -65,8 +69,11 @@ export class CopilotMessageListComponent implements OnInit {
         this.selectionListValues = this.listData?.values;
       }
 
+      console.log("bpmn data", this.selectionListValues)
+      this.processResponse(this.selectionListValues)
       //handling mappings
-      this.selectionListValues.forEach((d:any) =>{
+      this.selectionListValues.forEach((d:any,index) =>{
+
         let item:any={};
         this.properties.forEach(i => {
           console.log("data", i)
@@ -124,6 +131,31 @@ export class CopilotMessageListComponent implements OnInit {
         label: event.label, submitValue: event.submitValue
       });
     }
+  }
+
+  async processResponse(response) {
+    for (let index = 0; index < response.length; index++) {
+      const item = atob(response[index].bpmnXml);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      this.loadBpmnInTemplate(item, index);
+    }
+  }
+
+  loadBpmnInTemplate(bpmnPath,index){
+    setTimeout(() => {
+      this.bpmnModeler = new BpmnJS({
+        container: ".diagram_container-copilot_chat"+ + index,
+      });
+      this.bpmnModeler.importXML(bpmnPath, function (err) {
+        if (err) {
+          console.error("could not import BPMN EZFlow notation", err);
+        }
+      });
+      setTimeout(() => {
+        let canvas = this.bpmnModeler.get("canvas");
+        canvas.zoom("fit-viewport");
+      }, 500);
+    }, 2000);
   }
 
 }
