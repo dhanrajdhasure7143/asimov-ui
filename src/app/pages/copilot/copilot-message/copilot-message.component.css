@@ -36,16 +36,7 @@
 .model-box {
    padding:0px 0px;
 }
-/* .chat-form{
-    height:300px;
-    overflow: auto;
-} */
 
-.table-box{
-    margin:0px 60px !important;
-    max-height: 410px !important;
-    overflow: auto !important;
-}
 .chat-form select {
     height: 30px;
     width: 85%;
@@ -464,4 +455,21 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
     padding: 5px;
     position: relative;
     overflow: scroll;
+}
+
+
+
+.process-log-btn-pos{
+
+    float: right;
+    margin-right: 61px;
+
+}
+.process-log-btn{
+    padding: 10px; 
+    background-color: #007bff; 
+    color: white; 
+    cursor: pointer; 
+    border-radius: 5px;
+    font-size: 10px;
 }

@@ -1,0 +1,14 @@
+<div class="messageCardsContainer">
+    <div class="messageCardHeader" *ngIf="cardData?.header">{{cardData?.header}}</div>
+    <div class="messageCardDescription" *ngIf="cardData?.description">{{cardData?.description}}</div>
+
+    <div class="messageCards" *ngIf="cardItems && !hideActions">
+        <div  style="display: flex;width: 100%; flex-wrap: wrap;">
+        <div *ngFor="let elem of cardItems" style="width: 50%;padding-left:10px;padding-bottom:10px">
+            <app-copilot-message-card-item [cardItemData]="elem"  [mappings]="mappings" (response)="selectedCardItem($event)" > </app-copilot-message-card-item>
+        </div>
+    </div>  
+    
+    </div>
+    <div class="messageCardFooter" *ngIf="cardData?.footer">{{cardData?.footer}}</div>
+</div>

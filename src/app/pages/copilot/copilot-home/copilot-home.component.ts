@@ -113,7 +113,7 @@ export class CopilotHomeComponent implements OnInit {
     };
     this.bpmnModeler = new BpmnJS(notationJson);
     setTimeout(() => {
-      this.bpmnModeler.importXML(atob(template.bpmn_xml), function (err) {
+      this.bpmnModeler.importXML(atob(template.bpmnXml), function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
         }
@@ -125,5 +125,11 @@ export class CopilotHomeComponent implements OnInit {
       this.templates[index]["isExicuted"] = true;
     }, 1500);
   }
+  navigateToCopilotChatScreen1() {
+    this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: 'AutomateEmployeeOnboarding'}})
+}
 
+navigateToProjects(){
+  this.router.navigate(["./pages/projects/listOfProjects"])
+}
 }

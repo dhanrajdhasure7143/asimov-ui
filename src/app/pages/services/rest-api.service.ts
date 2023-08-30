@@ -1840,22 +1840,23 @@ getCopilotTemplatesList(id){
   return this.http.get("/a-square/v1/template/process/"+id);
 }
 
-
-getCopilotConversation()
-{
+getCopilotConversation(){
   return this.http.get("/a-square/v1/conversation")
 }
 
-
-sendMessageToCopilot(messageBody:any)
-{
+sendMessageToCopilot(messageBody:any){
   return this.http.post("/a-square/v1/conversation/message", messageBody)
 }
 
+initializeConversation(body) {
+  return this.http.post<any>("/a-square/v1/conversation/",body,
+    {
+      headers: new HttpHeaders().set('x-api-key', 'FyNw9kKOupVIz5joICubvWlVUW8m2K0yNEgX'),
+    });
+}
 
-createCopilotConversationSessionId(payload:any)
-{
-  return this.http.post("/a-square/v1/conversation", payload);
+getAutomatedProcess(messageBody){
+  return this.http.post("/a-square/v1/conversation/modify-template", messageBody)
 }
 
 }
