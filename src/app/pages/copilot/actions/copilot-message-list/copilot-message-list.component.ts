@@ -25,7 +25,7 @@ export class CopilotMessageListComponent implements OnInit {
   selectionListValues:any;
   componentData:any=[];
   @Output() previewResponse= new EventEmitter();
-
+  isLoaded:Boolean=false;
   subscription: any;
 
   constructor(private data: DataTransferService) { }
@@ -79,7 +79,6 @@ export class CopilotMessageListComponent implements OnInit {
       
     }
     //TODO: Need to think how to identify modified step
-    console.log('this.selectionListValues.length()  '+this.selectionListValues.length)
     if ( this.selectionListValues && this.selectionListValues.length ===1){
         this.previewUpdatedProcess();
     }

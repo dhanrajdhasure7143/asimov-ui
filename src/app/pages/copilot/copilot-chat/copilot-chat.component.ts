@@ -41,6 +41,7 @@ export class CopilotChatComponent implements OnInit {
   bpmnModeler: any;
   tableForm: FormGroup;
   currentMessage:any;
+  isGraphLoaded:boolean=false;
   constructor(
     private rest_api: RestApiService,
     private route: ActivatedRoute,
@@ -139,7 +140,8 @@ export class CopilotChatComponent implements OnInit {
   previewBpmn(bpmnActionDetails:any) {
     let previewMolder = new BpmnJS({ container: ".graph-preview-container" });
     this.bpmnActionDetails = bpmnActionDetails;
-    let bpmnXml=atob(bpmnActionDetails.bpmnXml)
+    let bpmnXml=atob(bpmnActionDetails.bpmnXml);
+    this.isGraphLoaded=true;
     previewMolder.importXML(bpmnXml, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
@@ -262,18 +264,13 @@ export class CopilotChatComponent implements OnInit {
       this.isDialogVisible=true;
       setTimeout(()=>{this.previewBpmn(event.data)},500)
     }
-    else if (event.actionType=='logsCollection'){
-      console.log("log event",event)
-      this.processLogsData = [
-        { name: "IT Form Sent To The Manager", hours: "00", minutes: "00", days: "00" },
-        { name: "Manager Fills The Form", hours: "00", minutes: "00", days: "00" },
-        { name: "IT Team Creates Email ID", minutes: "00", hours: "00", days: "00" },
-        { name: "IT Team Assign A System", minutes: "00", hours: "00", days: "00" },
-        { name: "System Access For The User", minutes: "00", hours: "00", days: "00" },
-      ];
-      this.createForm()
+    else if (event.actionType=='UploadFileAction'){
+      this.changefileUploadForm(event.data)
     }
   }
+
+
+  
 
   public sendBpmnAction=(value:string)=>{
     this.sendUserAction({message:value})
@@ -309,12 +306,12 @@ export class CopilotChatComponent implements OnInit {
         jsonData:data?.jsonData
     }
     this.updateCurrentMessageButtonState("DISABLED");
+    //this.updateTemplateFlag()
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage);
-
         this.usermessage='';
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
@@ -362,6 +359,10 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.fileupload(fd).subscribe(res => {
       console.log(res)
       let processId = Math.floor(100000 + Math.random() * 900000);
+      this.messages.push({
+        message:selectedFile.name,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
       let isUploadFileName = selectedFile.name
       // if(selectedFile.name.includes(".csv")){
       //   const connectorBody ={
@@ -481,9 +482,9 @@ export class CopilotChatComponent implements OnInit {
 
   updateCurrentMessageButtonState(state){
     if(this.currentMessage.data.components){
-      if(this.currentMessage.data.components.includes("Buttons")){
-        let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="Buttons");
-        this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item:any)=>{
+      if(this.currentMessage.data.components?.includes("Buttons")){
+        let componentIndex=this.currentMessage.data.components?.findIndex((item)=>item=="Buttons");
+        this.currentMessage.data.values[componentIndex]=this.currentMessage.data?.values[componentIndex].map((item:any)=>{
           item['disabled']=(state=="ENABLED"?false:true);
           return item;
         })
@@ -492,11 +493,12 @@ export class CopilotChatComponent implements OnInit {
         let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="list");
         if(this.currentMessage.data.values[componentIndex].filter((item)=>item.type=="bpmnList").length>0){
           this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item)=>{
-            if(item.type=="bpmnList")
-              item.actions=item.actions.map((actionItems)=>{
-                actionItems["disabled"]=(state=="ENABLED"?false:true);
-                return actionItems;
-              })
+            if(item?.type=="bpmnList")
+              if(item?.actions)
+                item.actions=item.actions.map((actionItems)=>{
+                  actionItems["disabled"]=(state=="ENABLED"?false:true);
+                  return actionItems;
+                })
               return item;
           })
         }
@@ -506,5 +508,29 @@ export class CopilotChatComponent implements OnInit {
       }
     }
 
+  }
+
+
+  updateTemplateFlag()
+  {
+    if(this.currentMessage.data.components?.find((item:any)=>item=="list"))
+    {
+      let index=(this.currentMessage.data.components?.findIndex((item:any)=>item=="list"))
+      this.currentMessage.data.values[index].map((item:any)=>{
+        if(item.type)
+          if(item.type=='bpmnList'){
+            item.isShow=(this.isGraphLoaded)?true:false;
+              if(this.isGraphLoaded){
+                let templateDetails:any=(JSON.parse(atob(item.values)))[0];
+                let bpmnActionDetails={
+                  label:templateDetails.templateName,
+                  bpmnXml:templateDetails.bpmnXml
+                }
+                this.loadBpmnwithXML(bpmnActionDetails);
+              } 
+              return item;
+            }
+      })
+    }
   }
 }

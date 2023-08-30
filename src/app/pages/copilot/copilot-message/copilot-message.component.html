@@ -39,8 +39,18 @@
                             <app-copilot-message-card [cardData]="b" [mappings]='sentMessage?.data?.mappings'  (response)="processCardAction($event)" ></app-copilot-message-card> 
                         </div>
                     </div>
+
+                    <div class="messageForm" *ngIf="comp === 'fileUploadButton'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]">
+                            <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
+                                <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
+                                <label for="fileInput" class="process-log-btn">Upload Process Logs</label>    
+                            </span>
+                        </div>
+                    </div>
                    
-                </div>  
+                </div>
+                  
                 <!-- <div *ngFor="let component of sentMessage.data.components; let i=index;">
                     <div *ngIf="component=='list'">
                         <div *ngFor="let widget of (sentMessage.data.values[i])">

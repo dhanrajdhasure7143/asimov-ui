@@ -72,4 +72,12 @@ export class CopilotMessageComponent implements OnInit {
    });
  }
 
+
+ processUploadFileAction(event:any){
+    this.messageAction.emit({
+      actionType:"UploadFileAction",
+      data:event
+    })
+ }
+
 }
