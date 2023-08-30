@@ -17,9 +17,9 @@ export class CopilotMessageComponent implements OnInit {
  constructor(private data: DataTransferService,
   private cd:ChangeDetectorRef
   ) { }
- ngOnDestroy() {
-   this.subscription.unsubscribe();
- }
+//  ngOnDestroy() {
+//    this.subscription.unsubscribe();
+//  }
 
  ngOnInit() {
 

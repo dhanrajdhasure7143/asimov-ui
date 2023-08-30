@@ -128,8 +128,10 @@ export class CopilotChatComponent implements OnInit {
       }
       
     });
-    this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
-    this.sendBpmnAction(bpmnActionDetails.submitValue)
+    if(!(bpmnActionDetails?.isUpdate)){
+      this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
+      this.sendBpmnAction(bpmnActionDetails.submitValue)
+    }
     setTimeout(() => {
       this.notationFittoScreen();
       this.readBpmnModelerXMLdata();
@@ -306,11 +308,11 @@ export class CopilotChatComponent implements OnInit {
         jsonData:data?.jsonData
     }
     this.updateCurrentMessageButtonState("DISABLED");
-    //this.updateTemplateFlag()
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
         this.updateCurrentMessageButtonState("ENABLED");
+        this.updateTemplateFlag();
         this.messages.push(this.currentMessage);
         this.usermessage='';
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
@@ -519,17 +521,8 @@ export class CopilotChatComponent implements OnInit {
       this.currentMessage.data.values[index].map((item:any)=>{
         if(item.type)
           if(item.type=='bpmnList'){
-            item.isShow=(this.isGraphLoaded)?true:false;
-              if(this.isGraphLoaded){
-                let templateDetails:any=(JSON.parse(atob(item.values)))[0];
-                let bpmnActionDetails={
-                  label:templateDetails.templateName,
-                  bpmnXml:templateDetails.bpmnXml
-                }
-                this.loadBpmnwithXML(bpmnActionDetails);
-              } 
-              return item;
-            }
+            console.log("--- check --",item)
+          }
       })
     }
   }

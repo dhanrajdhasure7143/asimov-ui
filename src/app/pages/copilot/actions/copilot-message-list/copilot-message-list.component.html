@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div *ngIf="'bpmnList' === listData?.type">
+<div *ngIf="'bpmnList' === listData?.type && !(listData?.hide)">
     <div class="selectionList" *ngIf="componentData">
         <div style="display: flex;width: 100%; flex-wrap: wrap;">
             <div *ngFor="let elem of componentData" class="selectItem"
