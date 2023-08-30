@@ -46,7 +46,7 @@
                             *ngIf="((user_role.invalid && inviteUser_form.submitted) || (user_role.errors && user_role.touched))"
                             class='required'> Role Required </span>
                     </div>
-                    <div class="form-group col-md-12 p-0 form-group">
+                    <div class="form-group col-md-12 p-0 form-group usrmgtdepart">
                         <label class="label-control">Department(s)<span class="star">*</span></label>
                         <p-multiSelect [options]="categories" name="depart" [disabled]="role==8"
                             [(ngModel)]="departments" #depart="ngModel" id="depart" optionLabel="categoryName"
