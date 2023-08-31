@@ -6,7 +6,7 @@ import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
-import { CopilotService } from "../../services/copilot.service.js";
+import { CopilotService } from "../../services/copilot.service";
 interface City {
   name: string;
   code: string;
