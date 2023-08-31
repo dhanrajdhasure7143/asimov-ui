@@ -4,6 +4,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
 import { MessageService } from 'primeng/api';
+import { CopilotService } from '../../services/copilot.service';
 
 @Component({
   selector: 'app-copilot-home',
@@ -27,7 +28,8 @@ export class CopilotHomeComponent implements OnInit {
   constructor(private router: Router, 
     private dt: DataTransferService,
     private rest_api: RestApiService,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private restService: CopilotService
     ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,9 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   getFunctionsList() {
+    this.restService.getCopilotFunctionsList().subscribe((res)=>{
+      console.log(res)
+    })
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
