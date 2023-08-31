@@ -276,7 +276,18 @@ export class CopilotChatComponent implements OnInit {
         })
         return item;
       })
-   //   this.rest_api.
+      let data={
+        conversationId:localStorage.getItem("conversationId"),
+        message:"Submit",
+        jsonData:tableData
+      }
+      this.messages.push(data);
+      this.updateCurrentMessageButtonState("DISABLED");
+      this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
+        this.currentMessage=response;
+        this.updateCurrentMessageButtonState("ENABLED");
+        this.messages.push(this.currentMessage)
+      })
     }
     else
       this.messageService.add({
