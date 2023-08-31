@@ -17,7 +17,15 @@
                 <div class="row main-content-head">
                     <div class="col-md-6 pl-0">
                         <h3>
-                            <span class="title_text">Conversational AI Process Automation</span>
+                            <span class="title_text">
+                                <a class="imageBox" routerLink="../home">
+                                    <img class="default-arrow"
+                                        src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                                    <img class="hover-arrow"
+                                        src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt="">
+                                </a>
+                                &nbsp;
+                                Conversational AI Process Automation</span>
 
                         </h3>
                     </div>
@@ -55,10 +63,7 @@
                                 <span class="title_text_haspath">
                                     <span class="">Fill in the time taken for below steps in the process:</span>
                                 </span>
-                                <span class="process-log-btn-pos" (change)="changefileUploadForm($event)">
-                                    <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
-                                    <label for="fileInput" class="process-log-btn">Upload Process Log Graph</label>    
-                                </span>
+                              
                             </h5>
                         </div>
                         <div>
@@ -94,8 +99,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button class="btn btn-primary text-right" (click)="onSubmit()">Submit</button>
-                    
+                        <!-- <button class="btn btn-primary text-right" (click)="onSubmit()">Submit</button>
+                     -->
                             </form>
                         </div>
                     </div>
