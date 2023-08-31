@@ -214,6 +214,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           if (status.errorMessage == undefined) {
             this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallDBConnection();
+            this.DBdeleteflag = false;
           }
           else
             this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
