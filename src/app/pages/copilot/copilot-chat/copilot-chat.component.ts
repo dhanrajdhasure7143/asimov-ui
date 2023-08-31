@@ -4,7 +4,7 @@ import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../services/data-transfer.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
 interface City {
   name: string;
@@ -39,7 +39,7 @@ export class CopilotChatComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
-  tableForm: FormGroup;
+  tableForm: FormArray;
   currentMessage:any;
   isGraphLoaded:boolean=false;
   constructor(
@@ -172,7 +172,7 @@ export class CopilotChatComponent implements OnInit {
   }
 
   createForm() {
-    const formControls = {};
+    const formControls = [];
     for (let i = 0; i < this.processLogsData.length; i++) {
       formControls[i] = this.fb.group({
         minutes: ['', Validators.required],
@@ -182,44 +182,29 @@ export class CopilotChatComponent implements OnInit {
         stepName:this.processLogsData[i]["stepName"]
       });
     }
-    this.tableForm = this.fb.group(formControls);
+    this.tableForm = this.fb.array(formControls);
   }
 
 
 
   updateFormEvent(index, fieldName)
   {
-    if(fieldName=="mins")
-    {
-      this.tableForm.get(index).get("hours").clearValidators(); 
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").updateValueAndValidity();
-      this.tableForm.get(index).get("minutes").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();   
-    }
-    else if(fieldName=="hrs")
-    {
-      this.tableForm.get(index).get("hours").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").updateValueAndValidity();
-      this.tableForm.get(index).get("minutes").clearAsyncValidators();
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();
-    }
-    else if(fieldName=="days")
-    {
-      this.tableForm.get(index).get("hours").clearValidators();
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("minutes").clearAsyncValidators();
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();
-    }
+    (["minutes", "hours", "days"]).forEach((item)=>{
+      if(item==fieldName)
+      {
+        this.tableForm.at(index).get(item).setValidators(Validators.compose([Validators.required]));
+        this.tableForm.at(index).get(item).updateValueAndValidity();   
+      }
+      else
+      {
+        this.tableForm.at(index).get(item).clearValidators(); 
+        this.tableForm.at(index).get(item).updateValueAndValidity();
+      }
+    })
   }
 
   onSubmit(){
-    console.log(this.tableForm.value)
+    console.log(this.tableForm. valid)
     if(!this.tableForm.valid){
       this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
     }
@@ -271,9 +256,36 @@ export class CopilotChatComponent implements OnInit {
     else if (event.actionType=='UploadFileAction'){
       this.changefileUploadForm(event.data)
     }
+    else if(event.actionType=='ProcessLogAction'){
+      this.sendProcessLogs();
+    }
   }
 
-
+  sendProcessLogs()
+  {
+    console.log(this.tableForm.valid) 
+    if(this.tableForm.valid)
+    {
+      let tableData=[...this.tableForm.value];
+      tableData=tableData.map((item:any)=>{
+        (["days", "minutes", "hours"]).forEach((attr:any)=>{
+          if(item[attr]=='')
+          {
+            item[attr]="00";
+          }
+        })
+        return item;
+      })
+   //   this.rest_api.
+    }
+    else
+      this.messageService.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Please fill time in all fieldss "
+      });
+    
+  }
   
 
   public sendBpmnAction=(value:string)=>{

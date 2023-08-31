@@ -86,10 +86,10 @@
                                     <tr *ngFor="let item of processLogsData; let i = index" [formGroupName]="i">
                                         <th>{{ item.stepName }}</th>
                                         <td style="width:50px;">
-                                          <p-dropdown [options]="minOptions" (onChange)="updateFormEvent(i, 'mins')" formControlName="minutes" class="custom-dd" name="min"></p-dropdown>
+                                          <p-dropdown [options]="minOptions" (onChange)="updateFormEvent(i, 'minutes')" formControlName="minutes" class="custom-dd" name="min"></p-dropdown>
                                         </td>
                                         <td style="width:50px;">
-                                          <p-dropdown [options]="hrsOptions" (onChange)="updateFormEvent(i, 'hrs')"  formControlName="hours" class="custom-dd" name="hrs"></p-dropdown>
+                                          <p-dropdown [options]="hrsOptions" (onChange)="updateFormEvent(i, 'hours')"  formControlName="hours" class="custom-dd" name="hrs"></p-dropdown>
                                         </td>
                                         <td style="width:50px;">
                                           <p-dropdown [options]="daysOptions"  (onChange)="updateFormEvent(i, 'days')"  formControlName="days" class="custom-dd" name="days"></p-dropdown>
