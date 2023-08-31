@@ -1,0 +1,25 @@
+
+<div class="messageCardItemContainer" (click)="selectedCard(data)">
+    
+    <div *ngIf="data.icon" class="cardItemIcon" style="background-position: center;background-repeat: no-repeat;background-image: url('{{data.icon}}')"></div>
+    <div *ngIf="data.title">
+        <span>{{data.title}}</span>
+    </div>
+    <div *ngIf="data.header">
+        <span>{{data.header}}</span>
+    </div>
+    <div *ngIf="data.description">
+        <span>{{data.description}}</span>
+    </div>
+    <div *ngIf="data.items">
+        <ul>
+            <li *ngFor="let r of data.items">
+                {{r}}
+            </li>
+        </ul>
+
+    </div>
+    <div *ngIf="data.footer">
+        <span> {{data.footer}}</span>
+    </div>
+</div>

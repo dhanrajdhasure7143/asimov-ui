@@ -1,0 +1,10 @@
+.messageCardItemContainer{
+    min-height: 100px;
+    background-color: #97d997;
+    border: 1px solid green;
+    cursor: pointer;
+}
+.cardItemIcon{
+    min-height: 64px;
+    min-width: 64px;
+}

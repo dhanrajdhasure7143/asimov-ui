@@ -1828,28 +1828,35 @@ updateBotImage(botid,data:any){
 }
 
 //Copilot Rest-Api's
-getData(body){
-  return this.http.post("/a-square/v1/conversation/message",body);
-}
-
-getCopilotProcessList(){
-  return this.http.get("/a-square/v1/processes")
-}
-
 getCopilotFunctionsList(){
-  return this.http.get("/a-square/v1/functions")
+  return this.http.get("/a-square/v1/functions");
 }
 
+getCopilotProcessesList(id){
+  return this.http.get("/a-square/v1/processes/function/"+id)
+}
 
-getCopilotConversation()
-{
+getCopilotTemplatesList(id){
+  return this.http.get("/a-square/v1/template/process/"+id);
+}
+
+getCopilotConversation(){
   return this.http.get("/a-square/v1/conversation")
 }
 
-
-sendMessageToCopilot(messageBody:any)
-{
+sendMessageToCopilot(messageBody:any){
   return this.http.post("/a-square/v1/conversation/message", messageBody)
+}
+
+initializeConversation(body) {
+  return this.http.post<any>("/a-square/v1/conversation/",body,
+    {
+      headers: new HttpHeaders().set('x-api-key', 'FyNw9kKOupVIz5joICubvWlVUW8m2K0yNEgX'),
+    });
+}
+
+getAutomatedProcess(messageBody){
+  return this.http.post("/a-square/v1/conversation/modify-template", messageBody)
 }
 
 }

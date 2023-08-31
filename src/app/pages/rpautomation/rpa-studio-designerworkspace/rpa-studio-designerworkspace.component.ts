@@ -1890,17 +1890,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   async acceptUpdateBotWithDeprecatedTasks(version_type, comments) {
     if(this.isDeprecated == true){
-      const message = `Deprecated task present in the bot, <br>
+      const message = `Deprecated task(s) present in the bot, <br>
       <span class="bold">${this.modifiedTaskNames.join(', ')}</span>
-      Unless you update, bot will run with default values. Do you want to proceed with Update?`;
+      Do you want to proceed with Update?`;
    this.confirmationService.confirm({
      message: message,
      header: 'Are you sure?',
      accept: () => {
-       this.spinner.hide();
+      this.updateFinalBot(version_type, comments);
      },
      reject: async (type) => {
-      this.updateFinalBot(version_type, comments);
+      this.spinner.hide();
      },
      key: "positionDialog"
    });
@@ -2855,10 +2855,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     if(this.isDeprecated == true){
       this.confirmationService.confirm({
-        message: "Deprecated task present in the bot, Do you want to execute with default values?",
+        message: "Deprecated task present in the bot, Do you want to execute bot?",
         header: 'Are you Sure?',
         accept: () => {
-         this.deprecatedExecuteBot()
+        //  this.deprecatedExecuteBot()
+            this.spinner.show();
+            this.rest.execution(this.finalbot.botId).subscribe(
+              (response: any) => {
+                this.spinner.hide();
+                if (response.errorMessage == undefined){
+                  this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                  this.updateBotNodes(false);                  
+                } else {
+                this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+                }
+              },
+              (err) => {
+                this.spinner.hide();
+                this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+              }
+            );
         },
         reject: (type) => {
           this.spinner.hide();
