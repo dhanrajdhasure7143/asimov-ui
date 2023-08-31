@@ -376,6 +376,7 @@ export class CopilotChatComponent implements OnInit {
     }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
       this.currentMessage=res;
+      localStorage.setItem("conversationId", res.conversationId);
       this.messages.push(res);
     })
   }
