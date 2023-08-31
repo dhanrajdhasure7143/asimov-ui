@@ -28,6 +28,7 @@ export const environment = {
   bpmnplatformUrl: "https://ezworkflow.qa.epsoftinc.com",
   // camunda navigation
   camunda_url: "https://ezworkflow.qa.epsoftinc.com",
+  asquare:"https://ezflow.dev.epsoftinc.com",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
