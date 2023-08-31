@@ -6,7 +6,7 @@ import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
-import { CopilotService } from "../../services/copilot.service.js";
+import { CopilotService } from "../../services/copilot.service";
 interface City {
   name: string;
   code: string;
@@ -105,12 +105,12 @@ export class CopilotChatComponent implements OnInit {
           message: value,
           messageType: messageType,
         });
-        console.log("last message",this.currentMessage)
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
+          this.updateTemplateFlag(res);
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
@@ -125,6 +125,7 @@ export class CopilotChatComponent implements OnInit {
     console.log(bpmnActionDetails)
     this.isDialogVisible = false;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
+    console.log("validate", bpmnPath)
     this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
@@ -339,7 +340,7 @@ export class CopilotChatComponent implements OnInit {
     response.subscribe((res:any) =>{
         this.currentMessage=res;
         this.updateCurrentMessageButtonState("ENABLED");
-        this.updateTemplateFlag();
+        this.updateTemplateFlag(res);
         this.messages.push(this.currentMessage);
         this.usermessage='';
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
@@ -540,26 +541,23 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  updateTemplateFlag()
+  updateTemplateFlag(currentMessage)
   {
-    if(this.currentMessage.data.components?.find((item:any)=>item=="list"))
+    if(currentMessage.data.components?.find((item:any)=>item=="list"))
     {
-      let index=(this.currentMessage.data.components?.findIndex((item:any)=>item=="list"))
-      this.currentMessage.data.values[index].map((item:any)=>{
+      let index=(currentMessage.data.components?.findIndex((item:any)=>item=="list"))
+      currentMessage.data.values[index].forEach((item:any)=>{
         if(item.type)
           if(item.type=='bpmnList'){
             if(item.hide)
             {
               let bpmnData=JSON.parse(atob(item.values));
-              console.log("sita sample",bpmnData);
               let bpmnActionDetails={
                 bpmnXml:bpmnData[0].bpmnXml,
                 label:bpmnData[0].templateName,
                 isUpdate:true
               }
-              console.log("check-1")
               this.loadBpmnwithXML(bpmnActionDetails);
-
             }
           }
       })
