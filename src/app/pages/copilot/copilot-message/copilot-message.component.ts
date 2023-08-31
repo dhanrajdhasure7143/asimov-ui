@@ -80,4 +80,12 @@ export class CopilotMessageComponent implements OnInit {
     })
  }
 
+
+ processProcessLog()
+ {
+  this.messageAction.emit({
+    actionType:"ProcessLogAction",
+  })
+ }
+
 }

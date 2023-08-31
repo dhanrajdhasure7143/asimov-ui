@@ -19,12 +19,16 @@
                 <div *ngFor="let comp of sentMessage?.data?.components;index as i" > 
                     <div class="messageButton" *ngIf="comp === 'Buttons'">
                         <div *ngFor="let b of sentMessage?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
-                            <app-copilot-message-button [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
-                            <span *ngIf="b?.type=='processLogUpload'" >
+                            <app-copilot-message-button *ngIf="b?.type!='processLogsUpload' && b?.type!='processLogFileUpload'" [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+                            <span *ngIf="b?.type=='processLogFileUpload'" >
                                     <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
                                         <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
-                                        <label for="fileInput" class="process-log-btn">Upload Process Logs</label>    
+                                        <label for="fileInput" class="btn btn-primary text-white">{{b?.label}}</label>    
                                     </span>
+                            </span>
+                            &nbsp;
+                            <span *ngIf="b?.type=='processLogsUpload'" >
+                                <button (click)="processProcessLog()" class="btn btn-primary text-white">{{b?.label}}</button>
                             </span>
                         </div>
                     </div>
