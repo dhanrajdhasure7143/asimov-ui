@@ -27,7 +27,7 @@ export class CopilotHomeComponent implements OnInit {
 
   constructor(private router: Router, 
     private dt: DataTransferService,
-    private rest_api: RestApiService,
+    private rest_api:CopilotService ,
     private messageService:MessageService,
     private restService: CopilotService
     ) { }

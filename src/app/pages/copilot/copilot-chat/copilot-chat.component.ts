@@ -6,6 +6,7 @@ import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
+import { CopilotService } from "../../services/copilot.service.js";
 interface City {
   name: string;
   code: string;
@@ -43,11 +44,12 @@ export class CopilotChatComponent implements OnInit {
   currentMessage:any;
   isGraphLoaded:boolean=false;
   constructor(
-    private rest_api: RestApiService,
+    private rest_api: CopilotService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private dt: DataTransferService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private main_rest:RestApiService
   ) {}
 
   ngOnInit(): void {
@@ -383,7 +385,7 @@ export class CopilotChatComponent implements OnInit {
           const fd = new FormData();
     fd.append('file', selectedFile),
     fd.append('permissionStatus', 'yes')
-    this.rest_api.fileupload(fd).subscribe(res => {
+    this.main_rest.fileupload(fd).subscribe(res => {
       console.log(res)
       let processId = Math.floor(100000 + Math.random() * 900000);
       this.messages.push({
