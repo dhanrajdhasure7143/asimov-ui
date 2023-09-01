@@ -114,10 +114,10 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
-            var objDiv = document.getElementById("chat-box");
             objDiv.scrollTop = objDiv.scrollHeight;
-          }, 200)
+          }, 500)
         });
   }
 
@@ -132,7 +132,6 @@ export class CopilotChatComponent implements OnInit {
       }
       
     });
-    console.log("check 2")
     if(!(bpmnActionDetails?.isUpdate)){
       this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
       this.sendBpmnAction(bpmnActionDetails.submitValue)
@@ -285,11 +284,16 @@ export class CopilotChatComponent implements OnInit {
         jsonData:tableData
       }
       this.messages.push(data);
+
       this.updateCurrentMessageButtonState("DISABLED");
       this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         this.currentMessage=response;
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage)
+        var objDiv = document.getElementById("chat-grid");
+        setTimeout(() => {
+          objDiv.scrollTop = objDiv.scrollHeight;
+        }, 500)
       })
     }
     else
@@ -336,6 +340,7 @@ export class CopilotChatComponent implements OnInit {
         jsonData:data?.jsonData
     }
     this.updateCurrentMessageButtonState("DISABLED");
+    this.isChatLoad=true;
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
@@ -343,6 +348,11 @@ export class CopilotChatComponent implements OnInit {
         this.updateTemplateFlag(res);
         this.messages.push(this.currentMessage);
         this.usermessage='';
+        var objDiv = document.getElementById("chat-grid");
+        setTimeout(() => {
+          objDiv.scrollTop = objDiv.scrollHeight;
+          this.isChatLoad=false;
+        }, 500)
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
 

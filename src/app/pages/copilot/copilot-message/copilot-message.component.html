@@ -1,4 +1,4 @@
-<div id="chat-grid" class="chat-grid">
+
     <div *ngFor="let sentMessage of messages" class="py-3 ">
         <div *ngIf="sentMessage.messageSourceType!='SYSTEM' && sentMessage.messageSourceType!='INPUT'" class="user-message ">
             <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
@@ -101,4 +101,3 @@
         </div>
         <div></div>
     </div>
-</div>

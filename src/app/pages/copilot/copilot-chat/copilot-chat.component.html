@@ -105,8 +105,9 @@
                         </div>
                     </div>
                     <div class="col-md-3 chat-box">
-                        <app-copilot-message [messages]="messages" (messageAction) = "processMessageAction($event)"></app-copilot-message>
-                        
+                        <div id="chat-grid" class="chat-grid">
+                            <app-copilot-message [messages]="messages" (messageAction) = "processMessageAction($event)"></app-copilot-message>
+                        </div>
                         <div class="px-3 adjtextarea-align">
                             <span *ngIf="isChatLoad" class="loader-align">
                                 <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader"
