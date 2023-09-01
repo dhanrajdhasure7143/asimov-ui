@@ -32,7 +32,7 @@
                     <span>{{elem.label}}</span>
                 </div>
                 <div *ngIf="elem.imageURL">
-                    <div [class]="'diagram_container-copilot_chat'+i" id="_diagram-chat"></div>
+                    <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" id="_diagram-chat" style="position:relative;z-index:100;"></div>
                     <!-- <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/> -->
                 </div>
                 <div *ngIf="!elem.imageURL">
