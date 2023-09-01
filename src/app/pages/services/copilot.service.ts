@@ -7,6 +7,12 @@ import { environment } from "src/environments/environment";
 })
 export class CopilotService {
   public http: any;
+  token=localStorage.getItem('accessToken');
+  encryptedaKey= localStorage.getItem('authKey');
+  ipAddress = '192.168.0.1';
+  timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  headers=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey})
+
   constructor(private httpBackend: HttpBackend) {
     this.http = new HttpClient(this.httpBackend);
   }
@@ -17,23 +23,23 @@ export class CopilotService {
 
   //Copilot Rest-Api's
 getCopilotFunctionsList(){
-  return this.http.get(environment.asquare+"/a-square/v1/functions");
+  return this.http.get(environment.asquare+"/a-square/v1/functions", {headers:this.headers});
 }
 
 getCopilotProcessesList(id){
-  return this.http.get(environment.asquare+"/a-square/v1/processes/function/"+id)
+  return this.http.get(environment.asquare+"/a-square/v1/processes/function/"+id, {headers:this.headers})
 }
 
 getCopilotTemplatesList(id){
-  return this.http.get(environment.asquare+"/a-square/v1/template/process/"+id);
+  return this.http.get(environment.asquare+"/a-square/v1/template/process/"+id, {headers:this.headers});
 }
 
 getCopilotConversation(){
-  return this.http.get(environment.asquare+"/a-square/v1/conversation")
+  return this.http.get(environment.asquare+"/a-square/v1/conversation", {headers:this.headers})
 }
 
 sendMessageToCopilot(messageBody:any){
-  return this.http.post(environment.asquare+"/a-square/v1/conversation/message", messageBody)
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/message", messageBody, {headers:this.headers})
 }
 
 initializeConversation(body) {
@@ -41,7 +47,7 @@ initializeConversation(body) {
 }
 
 getAutomatedProcess(messageBody){
-  return this.http.post(environment.asquare+"/a-square/v1/conversation/modify-template", messageBody)
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/modify-template", messageBody, {headers:this.headers})
 }
 
 
