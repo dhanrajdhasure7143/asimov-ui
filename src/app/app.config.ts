@@ -33,7 +33,7 @@ export interface AsimovAppConfig {
     bpsprocessfreetraillimit:number;
     projectfreetraillimit:number;
     inviteUserfreetraillimit:number;
-    copilot:string;
+    asquare:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -66,5 +66,5 @@ export const AppConfig: AsimovAppConfig = {
     bpsprocessfreetraillimit:1,
     projectfreetraillimit:1,
     inviteUserfreetraillimit:10,
-    copilot: environment.copilot
+    asquare: environment.asquare
 };
