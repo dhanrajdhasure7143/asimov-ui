@@ -3,7 +3,8 @@
         <div *ngIf="sentMessage.messageSourceType!='SYSTEM' && sentMessage.messageSourceType!='INPUT'" class="user-message ">
             <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
             <div class="sys-image">
-                <img src="../../../../assets/copilot/user.svg" alt="" />
+                <!-- <img src="../../../../assets/copilot/user.svg" alt="" /> -->
+                <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff'}" shape="circle"></p-avatar>
             </div>
         </div>
         <div></div>
