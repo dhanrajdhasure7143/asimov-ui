@@ -32,8 +32,11 @@
                     <span>{{elem.label}}</span>
                 </div>
                 <div *ngIf="elem.imageURL">
-                    <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" id="_diagram-chat" style="position:relative;z-index:100;"></div>
-                    <!-- <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/> -->
+                    <!-- <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" [innerHTML]="elem.imageURL" [id]="'_diagram-chat'+i" style="position:relative;z-index:100;"></div> -->
+                    <!-- <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" id="_diagram-chat" style="position:relative;z-index:100;"></div> -->
+                    <!-- <img width="80%" height="200px" [src]="elem.imageUrl" alt=""/> -->
+                    <!-- {{elem.imageURL}} -->
+                    <div  [innerHTML]="elem.imageUrl"  [style.width]="'100%'" class="bps_overlay"></div>
                 </div>
                 <div *ngIf="!elem.imageURL">
                     <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/>
