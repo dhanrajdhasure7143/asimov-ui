@@ -164,7 +164,7 @@ textarea.form-control.message-input:focus {
 .user-message {
     /* background-color: aliceblue;
     border:1px solid lightgray; */
-
+    user-select: all !important;
     position: relative;
     display: flex;
     border-radius: 5px !important;
@@ -207,7 +207,7 @@ button[disabled]:hover{cursor: no-drop;
     color: #000;
 }
 .system-message{
-   
+    user-select: all !important;
     font-size: 15px;
     /* text-align: justify; */
    line-height: 22px;
