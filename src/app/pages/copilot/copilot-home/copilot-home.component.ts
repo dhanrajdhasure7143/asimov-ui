@@ -4,6 +4,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
 import { MessageService } from 'primeng/api';
+import { CopilotService } from '../../services/copilot.service';
 
 @Component({
   selector: 'app-copilot-home',
@@ -26,8 +27,9 @@ export class CopilotHomeComponent implements OnInit {
 
   constructor(private router: Router, 
     private dt: DataTransferService,
-    private rest_api: RestApiService,
-    private messageService:MessageService
+    private rest_api:CopilotService ,
+    private messageService:MessageService,
+    private restService: CopilotService
     ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,9 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   getFunctionsList() {
+    this.restService.getCopilotFunctionsList().subscribe((res)=>{
+      console.log(res)
+    })
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
@@ -113,7 +118,7 @@ export class CopilotHomeComponent implements OnInit {
     };
     this.bpmnModeler = new BpmnJS(notationJson);
     setTimeout(() => {
-      this.bpmnModeler.importXML(atob(template.bpmn_xml), function (err) {
+      this.bpmnModeler.importXML(atob(template.bpmnXml), function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow notation", err);
         }
@@ -125,5 +130,11 @@ export class CopilotHomeComponent implements OnInit {
       this.templates[index]["isExicuted"] = true;
     }, 1500);
   }
+  navigateToCopilotChatScreen1() {
+    this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: 'AutomateEmployeeOnboarding'}})
+}
 
+navigateToProjects(){
+  this.router.navigate(["./pages/projects/listOfProjects"])
+}
 }

@@ -1,0 +1,104 @@
+
+    <div *ngFor="let sentMessage of messages" class="py-3 ">
+        <div *ngIf="sentMessage.messageSourceType!='SYSTEM' && sentMessage.messageSourceType!='INPUT'" class="user-message ">
+            <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
+            <div class="sys-image">
+                <!-- <img src="../../../../assets/copilot/user.svg" alt="" /> -->
+                <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff'}" shape="circle"></p-avatar>
+            </div>
+        </div>
+        <div></div>
+        <div *ngIf="sentMessage.messageSourceType=='SYSTEM'" class="system-message">
+            <div *ngFor="let message of (sentMessage?.data?.message??[])" class="d-flex">
+                <div class="sys-image">
+                    <img src="../../../../assets/copilot/systemicon.svg" alt="" />
+                </div>
+                <div class="ml-2 send-msgtext" [innerHTML]="message">
+                </div>
+            </div>
+            <div *ngIf="sentMessage.data.components" style="margin-left:10%;">
+                <div *ngFor="let comp of sentMessage?.data?.components;index as i" > 
+                    <div class="messageButton" *ngIf="comp === 'Buttons'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
+                            <app-copilot-message-button *ngIf="b?.type!='processLogsUpload' && b?.type!='processLogFileUpload'" [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+                            <span *ngIf="b?.type=='processLogFileUpload'" >
+                                    <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
+                                        <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
+                                        <label for="fileInput" class="btn btn-primary text-white">{{b?.label}}</label>    
+                                    </span>
+                            </span>
+                            &nbsp;
+                            <span *ngIf="b?.type=='processLogsUpload'" >
+                                <button (click)="processProcessLog()" class="btn btn-primary text-white">{{b?.label}}</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="messageForm" *ngIf="comp === 'Form'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]">
+                            <app-copilot-message-form [formInputData]="b" (formAction) = "processFormAction($event)"></app-copilot-message-form> 
+                        </div>
+                    </div>
+        
+                    <div class="messageForm" *ngIf="comp === 'list'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]">
+                            <app-copilot-message-list [listData]="b" [mappings]='sentMessage?.data?.mappings'  (response) = "processListAction($event)" (previewResponse)="processListPreviewAction($event)"></app-copilot-message-list> 
+                        </div>
+                    </div>
+        
+                    <div class="messageForm" *ngIf="comp === 'card'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]">
+                            <app-copilot-message-card [cardData]="b" [mappings]='sentMessage?.data?.mappings'  (response)="processCardAction($event)" ></app-copilot-message-card> 
+                        </div>
+                    </div>
+
+                    <!-- <div class="messageForm" *ngIf="comp === 'fileUploadButton'">
+                        <div *ngFor="let b of sentMessage?.data?.values[i]">
+                           
+                        </div>
+                    </div> -->
+                   
+                </div>
+                  
+                <!-- <div *ngFor="let component of sentMessage.data.components; let i=index;">
+                    <div *ngIf="component=='list'">
+                        <div *ngFor="let widget of (sentMessage.data.values[i])">
+                            <div *ngIf="widget.type=='selectList'">
+                                <div *ngFor="let template of widget.values">
+                                    <div (click)="loadTemplate(template)" class="card new-card">
+                                        <div class="py-3 px-3 text-center ">
+                                            
+                                            <span
+                                                class="h6 text-chat">{{template.templateName}}</span>
+                                        </div>
+                                        <img src="./../../../assets/copilot/chart-image-1.svg"
+                                            alt="" class="impath-adj">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="py-2" *ngFor="let action of widget.actions">
+                                    <button (click)="actionDispatch(sentMessage, action)" class="btn btn-primary text-white ">{{action.label}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="component=='Buttons'">
+                        <div class="py-1" *ngFor="let widget of (sentMessage.data.values[i])">
+                            <button class="btn btn-primary text-white"
+                                (click)="actionDispatch(sentMessage,widget)">
+                                {{widget.label}}
+                            </button>
+                            <br>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <!-- <div *ngIf="message.components" class="">
+      <div *ngIf="message.components.includes('Buttons')">
+      <div class="col-12 chat-btn " *ngFor="let each of message.values[0]">
+        <button type="button" class="btn btn-primary btn-sm text-white" (click)="submitButton(each)">{{ each.label}}</button>
+      </div>
+    </div>
+    </div> -->
+        </div>
+        <div></div>
+    </div>
