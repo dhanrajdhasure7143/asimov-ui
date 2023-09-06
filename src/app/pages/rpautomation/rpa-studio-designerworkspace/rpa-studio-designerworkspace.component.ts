@@ -846,7 +846,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
           x: "850px",
-          y: "350px",
+          y: "70%",
         };
         this.stopNodeId = stopnode.id;
         this.nodes.push(stopnode);
