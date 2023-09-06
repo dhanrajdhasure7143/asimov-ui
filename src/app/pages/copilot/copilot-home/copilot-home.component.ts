@@ -29,7 +29,7 @@ export class CopilotHomeComponent implements OnInit {
     private dt: DataTransferService,
     private rest_api:CopilotService ,
     private messageService:MessageService,
-    private restService: CopilotService
+    private restService: RestApiService
     ) { }
 
   ngOnInit(): void {

@@ -3,7 +3,7 @@ import { SelectedItem, SelectionList } from '../../copilot-models';
 import { getElementValue } from '../../Utilities';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import * as BpmnJS from "../../../../bpmn-modeler-copilot.development.js";
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-copilot-message-list',
@@ -30,13 +30,13 @@ export class CopilotMessageListComponent implements OnInit {
   subscription: any;
   bpmnModeler: any;
 
-  constructor(private data: DataTransferService) { }
+  constructor(private data: DataTransferService,
+    private sanitizer:DomSanitizer
+    ) { }
 
 
 
   ngOnInit() {
-    console.log("test",this.listData)
-
     if ('selectList' === this.listData?.type){
       //Handling encoding
       if (this.listData?.encoded){
@@ -68,18 +68,16 @@ export class CopilotMessageListComponent implements OnInit {
       }else {
         this.selectionListValues = this.listData?.values;
       }
-
-      console.log("bpmn data", this.selectionListValues)
       this.processResponse(this.selectionListValues)
-      //handling mappings
       this.selectionListValues.forEach((d:any,index) =>{
 
         let item:any={};
         this.properties.forEach(i => {
-          console.log("data", i)
           let val = getElementValue(i, this.mappings, d);
           if (val) item[i] = val ;
         });
+     
+        item["imageUrl"]=this.sanitizer.bypassSecurityTrustHtml(item["imageURL"]);
         if(d.templateName) item["label"]=d.templateName
         this.componentData.push(item);
       });
@@ -134,11 +132,16 @@ export class CopilotMessageListComponent implements OnInit {
   }
 
   async processResponse(response) {
-    for (let index = 0; index < response.length; index++) {
-      const item = atob(response[index].bpmnXml);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      this.loadBpmnInTemplate(item, index);
-    }
+   
+      for (let index = 0; index < response.length; index++) {
+        if(index==0)
+        console.log(response[index].imageURL)
+       // document.getElementById('_diagram-chat'+index)?.innerHTML(response[index].imageURL);
+       
+        // const item = atob(response[index].bpmnXml);
+        // await new Promise(resolve => setTimeout(resolve, 1000));
+        //this.loadBpmnInTemplate(item, index);
+      }
   }
 
   loadBpmnInTemplate(bpmnPath,index){
