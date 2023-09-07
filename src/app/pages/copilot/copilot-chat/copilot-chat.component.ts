@@ -61,8 +61,8 @@ export class CopilotChatComponent implements OnInit {
             container: ".diagram_container-copilot",
           });
         }, 300);
-        if(params.templateId == "AutomateEmployeeOnboarding")
-          this.getAutomatedProcess();
+        if(isNaN(params.templateId) && params.templateId != "Others")
+          this.getAutomatedProcess(atob(params.templateId));
         else if (params.templateId != "Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId);
         else
@@ -379,10 +379,22 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  getAutomatedProcess(){
-    let req_body={
-      "userId":localStorage.getItem("ProfileuserId"),
-      "intent":"Employee Onboarding"
+  getAutomatedProcess(intent:any){
+    let req_body:any
+    if(this.validateJson(intent)){
+      let json=JSON.parse(intent);
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "message":json.message
+      }
+    }
+    else{
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "intent":intent
+      }
     }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
       this.currentMessage=res;
@@ -404,120 +416,6 @@ export class CopilotChatComponent implements OnInit {
         message:selectedFile.name,
         messageSourceType:localStorage.getItem("ProfileuserId")
       })
-      let isUploadFileName = selectedFile.name
-      // if(selectedFile.name.includes(".csv")){
-      //   const connectorBody ={
-      //     "name": "CsvSchemaSpool-" + processId,
-      //       "config": {
-      //       "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
-      //       "input.path": this.config.dataPath,
-      //       "input.file.pattern": isUploadFileName,
-      //       "error.path": this.config.dataPath,
-      //       "topic": this.config.piConnector + "connector-spooldir-" + processId,
-      //       "finished.path": this.config.dataPath + "/data",
-      //       "halt.on.error": "false",
-      //       "csv.first.row.as.header": "true",
-      //       "cleanup.policy": "DELETE",
-      //       "schema.generation.enabled": "true",
-      //       "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
-      //       "csv.case.sensitive.field.names": "true",
-      //       "parser.timestamp.timezone": "UTC",
-      //       "key.converter": "io.confluent.connect.avro.AvroConverter",
-      //       "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //       "value.converter": "io.confluent.connect.avro.AvroConverter",
-      //       "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //       "transforms": "RenameField,ReplaceField,ValueToKey,InsertField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string"
-      //       ,
-      //       "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //       "transforms.RenameField.renames": renamestring,
-      //       "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //       "transforms.ReplaceField.whitelist": renamesObjOne.join(),
-      //       "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      //       "transforms.ValueToKey.fields": "caseID",
-      //       "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      //       "transforms.InsertField.static.field": "piIdName",
-      //       "transforms.InsertField.static.value": processId + "-p" + processId,
-      //       "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_startTime_unix.field": "startTime",
-      //       "transforms.convert_startTime_unix.target.type": "unix",
-      //       "transforms.convert_startTime_unix.format": this.isDateformat,
-      //       "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_startTime_string.field": "startTime",
-      //       "transforms.convert_startTime_string.target.type": "string",
-      //       "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      //       "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_endTime_unix.field": "endTime",
-      //       "transforms.convert_endTime_unix.target.type": "unix",
-      //       "transforms.convert_endTime_unix.format":this.isDateformat,
-      //       "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_endTime_string.field": "endTime",
-      //       "transforms.convert_endTime_string.target.type": "string",
-      //       "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
-      //       }
-      //     }
-    
-      //     this.rest_api.saveConnectorConfig(connectorBody,"Engineering",processId,e.processName).subscribe(res=>{
-      //           // this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:processId}});
-      //     },err=>{
-      //       this.messageService.add({
-      //         severity: "error",
-      //         summary: "Error",
-      //         detail: "Oops! Internal server error. Please try again later."
-      //       });
-      //       // Swal.fire("Error", "Internal server error, Please try again later", "error");
-      //     })
-      //   }else{
-      //         const xlsxConnectorBody={
-      //           "name": "xls-"+processId,
-      //           "config": {
-      //             "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
-      //             "tasks.max": "1",
-      //             "file": this.config.dataPath+"/"+this.isUploadFileName,
-      //             "topic": this.config.piConnector+"connector-xls-"+processId,
-      //             "key.converter": "io.confluent.connect.avro.AvroConverter",
-      //             "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //             "value.converter": "io.confluent.connect.avro.AvroConverter",
-      //             "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //             "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
-      //             "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //             "transforms.RenameField.renames": renamestring,
-      //             "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_startTime_unix.field": "startTime",
-      //             "transforms.convert_startTime_unix.target.type": "unix",
-      //             "parseDateFormat": this.isDateformat,
-      //             "transforms.convert_startTime_unix.format": this.isDateformat,
-      //             "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //             "transforms.ReplaceField.whitelist":renamesObjOne.join(),
-      //             "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_startTime_string.field": "startTime",
-      //             "transforms.convert_startTime_string.target.type": "string",
-      //             "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      //             "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      //             "transforms.ValueToKey.fields": "caseID",
-      //             "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      //             "transforms.InsertField.static.field": "piIdName",
-      //             "transforms.InsertField.static.value":processId+"-p"+processId,
-      //             "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_endTime_unix.field": "endTime",
-      //             "transforms.convert_endTime_unix.target.type": "unix",
-      //             "transforms.convert_endTime_unix.format":this.isDateformat,
-      //             "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_endTime_string.field": "endTime",
-      //             "transforms.convert_endTime_string.target.type": "string",
-      //             "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
-      //           }
-      //         }
-      //       this.rest_api.saveConnectorConfig(xlsxConnectorBody,e.categoryName,processId,e.processName).subscribe(res=>{
-      //             // this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:processId}});
-      //       },err=>{
-      //         this.messageService.add({
-      //           severity: "error",
-      //           summary: "Error",
-      //           detail: "Oops! Internal server error. Please try again later."
-      //         });
-      //       // Swal.fire("Error", "Internal server error, Please try again later", "error");
-      //       })
-      //   }
     })
   }
 
@@ -574,4 +472,18 @@ export class CopilotChatComponent implements OnInit {
       })
     }
   }
+
+
+  validateJson(intentDetails:any)
+  {
+    try{
+      let data=JSON.parse(intentDetails);
+      return data;
+    }
+    catch(e)
+    {
+      return false;
+    }
+  }
+
 }
