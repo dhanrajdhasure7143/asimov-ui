@@ -547,7 +547,7 @@ export class BpsHomeComponent implements OnInit {
                     this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
                 } else {
                       this.messageService.add({severity: "success", summary: "Success", 
-                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " has been deleted.",key:'toast2'});
+                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " Deleted successfully!",key:'toast2'});
                       this.loader.show();
                       this.getBPMNList();
                 }
