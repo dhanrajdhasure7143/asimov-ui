@@ -20,7 +20,7 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6" style="display: flex;">
                                 <div class="col-md-6">
-                                    <div class="card" (click)="navigateToCopilotChatScreen1()">
+                                    <div class="card" (click)="navigateToCopilotChatScreenWithIntent('Employee Onboarding')">
                                         <span class="innerText">Automate Employee Onboarding</span>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6" style="display: flex;">
                                 <div class="col-md-6">
-                                    <div class="card">
+                                    <div class="card" (click)="navigateToCopilotChatScreenWithIntent('Finance Accounting')">
                                         <span class="innerText">Automate Finance Accounting</span>
                                     </div>
                                 </div>
@@ -53,103 +53,14 @@
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-6 input-container">
-                                <input pInputText type="text" placeholder="Tell us what you want to automate?">
-                                <img class="send-icon" src="../../../assets/images-n/projects/send.svg" alt="">
+                                <input pInputText type="text" [(ngModel)]="intentData" placeholder="Tell us what you want to automate?">
+                                <a (click)="navigateToChatScreenWithMessage()"><img class="send-icon" src="../../../assets/images-n/projects/send.svg" alt=""></a>
                                 <!-- <i class="pi pi-send send-icon"></i> -->
                             </div>
                             <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="main-content-body">
-                    <div class="card">
-                        <h4 class="second-header"> What Would You Like to Do Today?</h4>
-                        <div class="row grid-align">
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Automate.svg" alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Automate-blue.svg" alt="">
-                                    </span>
-                                    <p> Automate Process</p>
-
-                                </p-card>
-                            </div>
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject.svg"
-                                            alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/ExistingProject-blue.svg"
-                                            alt="">
-                                    </span>
-                                    <p style="word-wrap: break-word;"> Edit Existing Project in Bot Designer</p>
-
-                                </p-card>
-                            </div>
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs.svg" alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/ProcessGraphs-blue.svg"
-                                            alt="">
-                                    </span>
-                                    <p> Access Process Graphs</p>
-
-                                </p-card>
-                            </div>
-
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights.svg"
-                                            alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Monitor-ViewInsights-blue.svg"
-                                            alt="">
-                                    </span>
-                                    <p style="word-wrap: break-word;">Monitor and View Insights</p>
-                                </p-card>
-                            </div>
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Drafts.svg" alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Drafts-blue.svg" alt="">
-                                    </span>
-                                    <p class="">View Drafts</p>
-                                </p-card>
-                            </div>
-                            <div class="col-sm-4 pad-align">
-                                <p-card (click)="getFunctionsList()" class="cursor copilotchatblock imageBox">
-
-                                    <span class="active-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Templates.svg" alt="">
-                                    </span>
-                                    <span class="hover-icon">
-                                        <img src=".././../../../assets/copilot/Landing_Icons/Templates-blue.svg" alt="">
-                                    </span>
-                                    <p>Explore Templates</p>
-                                </p-card>
-                            </div>
-
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>

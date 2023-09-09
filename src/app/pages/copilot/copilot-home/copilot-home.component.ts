@@ -4,6 +4,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
 import { MessageService } from 'primeng/api';
+import { CopilotService } from '../../services/copilot.service';
 
 @Component({
   selector: 'app-copilot-home',
@@ -23,11 +24,12 @@ export class CopilotHomeComponent implements OnInit {
   selectedFunction: any = {};
   bpmnModeler: any;
   copilotFlag: string = "FUNCTIONS";
-
+  intentData:any="";
   constructor(private router: Router, 
     private dt: DataTransferService,
-    private rest_api: RestApiService,
-    private messageService:MessageService
+    private rest_api:CopilotService ,
+    private messageService:MessageService,
+    private restService: RestApiService
     ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,9 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   getFunctionsList() {
+    this.restService.getCopilotFunctionsList().subscribe((res)=>{
+      console.log(res)
+    })
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
@@ -125,11 +130,16 @@ export class CopilotHomeComponent implements OnInit {
       this.templates[index]["isExicuted"] = true;
     }, 1500);
   }
-  navigateToCopilotChatScreen1() {
-    this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: 'AutomateEmployeeOnboarding'}})
-}
+  navigateToCopilotChatScreenWithIntent(intent:any) {
+    this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: btoa(intent)}})
+  }
 
-navigateToProjects(){
-  this.router.navigate(["./pages/projects/listOfProjects"])
-}
+  navigateToProjects(){
+    this.router.navigate(["./pages/projects/listOfProjects"])
+  }
+
+  navigateToChatScreenWithMessage()
+  {
+    this.router.navigate(["./pages/copilot/chat"],{queryParams:{templateId:btoa(JSON.stringify({type:'message',message:this.intentData}))}}); 
+  }
 }

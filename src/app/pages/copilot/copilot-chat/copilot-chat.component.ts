@@ -4,8 +4,9 @@ import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService } from "primeng/api";
 import { DataTransferService } from "../../services/data-transfer.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
+import { CopilotService } from "../../services/copilot.service";
 interface City {
   name: string;
   code: string;
@@ -39,15 +40,16 @@ export class CopilotChatComponent implements OnInit {
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
-  tableForm: FormGroup;
+  tableForm: FormArray;
   currentMessage:any;
   isGraphLoaded:boolean=false;
   constructor(
-    private rest_api: RestApiService,
+    private rest_api: CopilotService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private dt: DataTransferService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private main_rest:RestApiService
   ) {}
 
   ngOnInit(): void {
@@ -59,8 +61,8 @@ export class CopilotChatComponent implements OnInit {
             container: ".diagram_container-copilot",
           });
         }, 300);
-        if(params.templateId == "AutomateEmployeeOnboarding")
-          this.getAutomatedProcess();
+        if(isNaN(params.templateId) && params.templateId != "Others")
+          this.getAutomatedProcess(atob(params.templateId));
         else if (params.templateId != "Others")
           this.getTemplatesByProcessId(params.process_id, params.templateId);
         else
@@ -103,19 +105,19 @@ export class CopilotChatComponent implements OnInit {
           message: value,
           messageType: messageType,
         });
-        console.log("last message",this.currentMessage)
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
           this.isChatLoad = false;
           let res = { ...{}, ...response };
+          this.updateTemplateFlag(res);
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
-            var objDiv = document.getElementById("chat-box");
             objDiv.scrollTop = objDiv.scrollHeight;
-          }, 200)
+          }, 500)
         });
   }
 
@@ -123,13 +125,13 @@ export class CopilotChatComponent implements OnInit {
     console.log(bpmnActionDetails)
     this.isDialogVisible = false;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
+    console.log("validate", bpmnPath)
     this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
       }
       
     });
-    console.log("check 2")
     if(!(bpmnActionDetails?.isUpdate)){
       this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
       this.sendBpmnAction(bpmnActionDetails.submitValue)
@@ -166,13 +168,19 @@ export class CopilotChatComponent implements OnInit {
     var self = this;
     self.bpmnModeler.on("element.changed", function () {
       self.bpmnModeler.saveXML({ format: true }, function (err, xml) {
-        console.log("xml", xml); // xml data will get for every change
+        let payload={
+          conversationId:localStorage.getItem("conversationId"),
+          message:xml
+        }
+        self.rest_api.updateProcessLogGraph(payload).subscribe((response:any)=>{
+        },err=>{
+        })
       });
     });
   }
 
   createForm() {
-    const formControls = {};
+    const formControls = [];
     for (let i = 0; i < this.processLogsData.length; i++) {
       formControls[i] = this.fb.group({
         minutes: ['', Validators.required],
@@ -182,44 +190,29 @@ export class CopilotChatComponent implements OnInit {
         stepName:this.processLogsData[i]["stepName"]
       });
     }
-    this.tableForm = this.fb.group(formControls);
+    this.tableForm = this.fb.array(formControls);
   }
 
 
 
   updateFormEvent(index, fieldName)
   {
-    if(fieldName=="mins")
-    {
-      this.tableForm.get(index).get("hours").clearValidators(); 
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").updateValueAndValidity();
-      this.tableForm.get(index).get("minutes").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();   
-    }
-    else if(fieldName=="hrs")
-    {
-      this.tableForm.get(index).get("hours").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").updateValueAndValidity();
-      this.tableForm.get(index).get("minutes").clearAsyncValidators();
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();
-    }
-    else if(fieldName=="days")
-    {
-      this.tableForm.get(index).get("hours").clearValidators();
-      this.tableForm.get(index).get("hours").updateValueAndValidity();
-      this.tableForm.get(index).get("days").clearValidators();      
-      this.tableForm.get(index).get("days").setValidators(Validators.compose([Validators.required]));
-      this.tableForm.get(index).get("minutes").clearAsyncValidators();
-      this.tableForm.get(index).get("minutes").updateValueAndValidity();
-    }
+    (["minutes", "hours", "days"]).forEach((item)=>{
+      if(item==fieldName)
+      {
+        this.tableForm.at(index).get(item).setValidators(Validators.compose([Validators.required]));
+        this.tableForm.at(index).get(item).updateValueAndValidity();   
+      }
+      else
+      {
+        this.tableForm.at(index).get(item).clearValidators(); 
+        this.tableForm.at(index).get(item).updateValueAndValidity();
+      }
+    })
   }
 
   onSubmit(){
-    console.log(this.tableForm.value)
+    console.log(this.tableForm. valid)
     if(!this.tableForm.valid){
       this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
     }
@@ -271,9 +264,52 @@ export class CopilotChatComponent implements OnInit {
     else if (event.actionType=='UploadFileAction'){
       this.changefileUploadForm(event.data)
     }
+    else if(event.actionType=='ProcessLogAction'){
+      this.sendProcessLogs();
+    }
   }
 
+  sendProcessLogs()
+  {
+    console.log(this.tableForm.valid) 
+    if(this.tableForm.valid)
+    {
+      let tableData=[...this.tableForm.value];
+      tableData=tableData.map((item:any)=>{
+        (["days", "minutes", "hours"]).forEach((attr:any)=>{
+          if(item[attr]=='')
+          {
+            item[attr]="00";
+          }
+        })
+        return item;
+      })
+      let data={
+        conversationId:localStorage.getItem("conversationId"),
+        message:"Submit",
+        jsonData:tableData
+      }
+      this.messages.push(data);
 
+      this.updateCurrentMessageButtonState("DISABLED");
+      this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
+        this.currentMessage=response;
+        this.updateCurrentMessageButtonState("ENABLED");
+        this.messages.push(this.currentMessage)
+        var objDiv = document.getElementById("chat-grid");
+        setTimeout(() => {
+          objDiv.scrollTop = objDiv.scrollHeight;
+        }, 500)
+      })
+    }
+    else
+      this.messageService.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Please fill time in all fieldss "
+      });
+    
+  }
   
 
   public sendBpmnAction=(value:string)=>{
@@ -310,13 +346,19 @@ export class CopilotChatComponent implements OnInit {
         jsonData:data?.jsonData
     }
     this.updateCurrentMessageButtonState("DISABLED");
+    this.isChatLoad=true;
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
         this.updateCurrentMessageButtonState("ENABLED");
-        this.updateTemplateFlag();
+        this.updateTemplateFlag(res);
         this.messages.push(this.currentMessage);
         this.usermessage='';
+        var objDiv = document.getElementById("chat-grid");
+        setTimeout(() => {
+          objDiv.scrollTop = objDiv.scrollHeight;
+          this.isChatLoad=false;
+        }, 500)
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
 
@@ -343,13 +385,26 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  getAutomatedProcess(){
-    let req_body={
-      "userId":localStorage.getItem("ProfileuserId"),
-      "intent":"Employee Onboarding"
+  getAutomatedProcess(intent:any){
+    let req_body:any
+    if(this.validateJson(intent)){
+      let json=JSON.parse(intent);
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "message":json.message
+      }
+    }
+    else{
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "intent":intent
+      }
     }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
       this.currentMessage=res;
+      localStorage.setItem("conversationId", res.conversationId);
       this.messages.push(res);
     })
   }
@@ -360,127 +415,13 @@ export class CopilotChatComponent implements OnInit {
           const fd = new FormData();
     fd.append('file', selectedFile),
     fd.append('permissionStatus', 'yes')
-    this.rest_api.fileupload(fd).subscribe(res => {
+    this.main_rest.fileupload(fd).subscribe(res => {
       console.log(res)
       let processId = Math.floor(100000 + Math.random() * 900000);
       this.messages.push({
         message:selectedFile.name,
         messageSourceType:localStorage.getItem("ProfileuserId")
       })
-      let isUploadFileName = selectedFile.name
-      // if(selectedFile.name.includes(".csv")){
-      //   const connectorBody ={
-      //     "name": "CsvSchemaSpool-" + processId,
-      //       "config": {
-      //       "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
-      //       "input.path": this.config.dataPath,
-      //       "input.file.pattern": isUploadFileName,
-      //       "error.path": this.config.dataPath,
-      //       "topic": this.config.piConnector + "connector-spooldir-" + processId,
-      //       "finished.path": this.config.dataPath + "/data",
-      //       "halt.on.error": "false",
-      //       "csv.first.row.as.header": "true",
-      //       "cleanup.policy": "DELETE",
-      //       "schema.generation.enabled": "true",
-      //       "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
-      //       "csv.case.sensitive.field.names": "true",
-      //       "parser.timestamp.timezone": "UTC",
-      //       "key.converter": "io.confluent.connect.avro.AvroConverter",
-      //       "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //       "value.converter": "io.confluent.connect.avro.AvroConverter",
-      //       "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //       "transforms": "RenameField,ReplaceField,ValueToKey,InsertField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string"
-      //       ,
-      //       "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //       "transforms.RenameField.renames": renamestring,
-      //       "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //       "transforms.ReplaceField.whitelist": renamesObjOne.join(),
-      //       "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      //       "transforms.ValueToKey.fields": "caseID",
-      //       "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      //       "transforms.InsertField.static.field": "piIdName",
-      //       "transforms.InsertField.static.value": processId + "-p" + processId,
-      //       "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_startTime_unix.field": "startTime",
-      //       "transforms.convert_startTime_unix.target.type": "unix",
-      //       "transforms.convert_startTime_unix.format": this.isDateformat,
-      //       "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_startTime_string.field": "startTime",
-      //       "transforms.convert_startTime_string.target.type": "string",
-      //       "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      //       "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_endTime_unix.field": "endTime",
-      //       "transforms.convert_endTime_unix.target.type": "unix",
-      //       "transforms.convert_endTime_unix.format":this.isDateformat,
-      //       "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //       "transforms.convert_endTime_string.field": "endTime",
-      //       "transforms.convert_endTime_string.target.type": "string",
-      //       "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
-      //       }
-      //     }
-    
-      //     this.rest_api.saveConnectorConfig(connectorBody,"Engineering",processId,e.processName).subscribe(res=>{
-      //           // this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:processId}});
-      //     },err=>{
-      //       this.messageService.add({
-      //         severity: "error",
-      //         summary: "Error",
-      //         detail: "Oops! Internal server error. Please try again later."
-      //       });
-      //       // Swal.fire("Error", "Internal server error, Please try again later", "error");
-      //     })
-      //   }else{
-      //         const xlsxConnectorBody={
-      //           "name": "xls-"+processId,
-      //           "config": {
-      //             "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
-      //             "tasks.max": "1",
-      //             "file": this.config.dataPath+"/"+this.isUploadFileName,
-      //             "topic": this.config.piConnector+"connector-xls-"+processId,
-      //             "key.converter": "io.confluent.connect.avro.AvroConverter",
-      //             "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //             "value.converter": "io.confluent.connect.avro.AvroConverter",
-      //             "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      //             "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
-      //             "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //             "transforms.RenameField.renames": renamestring,
-      //             "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_startTime_unix.field": "startTime",
-      //             "transforms.convert_startTime_unix.target.type": "unix",
-      //             "parseDateFormat": this.isDateformat,
-      //             "transforms.convert_startTime_unix.format": this.isDateformat,
-      //             "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      //             "transforms.ReplaceField.whitelist":renamesObjOne.join(),
-      //             "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_startTime_string.field": "startTime",
-      //             "transforms.convert_startTime_string.target.type": "string",
-      //             "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      //             "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      //             "transforms.ValueToKey.fields": "caseID",
-      //             "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      //             "transforms.InsertField.static.field": "piIdName",
-      //             "transforms.InsertField.static.value":processId+"-p"+processId,
-      //             "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_endTime_unix.field": "endTime",
-      //             "transforms.convert_endTime_unix.target.type": "unix",
-      //             "transforms.convert_endTime_unix.format":this.isDateformat,
-      //             "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      //             "transforms.convert_endTime_string.field": "endTime",
-      //             "transforms.convert_endTime_string.target.type": "string",
-      //             "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
-      //           }
-      //         }
-      //       this.rest_api.saveConnectorConfig(xlsxConnectorBody,e.categoryName,processId,e.processName).subscribe(res=>{
-      //             // this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:processId}});
-      //       },err=>{
-      //         this.messageService.add({
-      //           severity: "error",
-      //           summary: "Error",
-      //           detail: "Oops! Internal server error. Please try again later."
-      //         });
-      //       // Swal.fire("Error", "Internal server error, Please try again later", "error");
-      //       })
-      //   }
     })
   }
 
@@ -515,29 +456,40 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  updateTemplateFlag()
+  updateTemplateFlag(currentMessage)
   {
-    if(this.currentMessage.data.components?.find((item:any)=>item=="list"))
+    if(currentMessage.data.components?.find((item:any)=>item=="list"))
     {
-      let index=(this.currentMessage.data.components?.findIndex((item:any)=>item=="list"))
-      this.currentMessage.data.values[index].map((item:any)=>{
+      let index=(currentMessage.data.components?.findIndex((item:any)=>item=="list"))
+      currentMessage.data.values[index].forEach((item:any)=>{
         if(item.type)
           if(item.type=='bpmnList'){
             if(item.hide)
             {
               let bpmnData=JSON.parse(atob(item.values));
-              console.log("sita sample",bpmnData);
               let bpmnActionDetails={
                 bpmnXml:bpmnData[0].bpmnXml,
                 label:bpmnData[0].templateName,
                 isUpdate:true
               }
-              console.log("check-1")
               this.loadBpmnwithXML(bpmnActionDetails);
-
             }
           }
       })
     }
   }
+
+
+  validateJson(intentDetails:any)
+  {
+    try{
+      let data=JSON.parse(intentDetails);
+      return data;
+    }
+    catch(e)
+    {
+      return false;
+    }
+  }
+
 }

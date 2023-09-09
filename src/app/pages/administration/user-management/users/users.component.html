@@ -27,7 +27,7 @@
                         <label class="label-control">Email<span class="star">*</span></label>
                         <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
                             [disabled]="isUpdate" (change)="onEmailChange()" class="form-control data"
-                            (keyup)="myemailFunction()" pattern="^\S*[@]\S*[.]\S*$" email placeholder="Enter Emails"
+                            (keyup)="myemailFunction()" pattern="^[\w\.-]+@[\w\.-]+\.\w+$" email placeholder="Enter Emails"
                             pInputText required />
                         <span
                             *ngIf="((mail_id.invalid && inviteUser_form.submitted) || (mail_id.errors && mail_id.touched) )">
