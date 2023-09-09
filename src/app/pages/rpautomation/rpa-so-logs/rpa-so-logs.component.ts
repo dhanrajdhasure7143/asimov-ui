@@ -181,11 +181,11 @@ export class RpaSoLogsComponent implements OnInit {
    }
 
 
-   getChildLogs(task_details,logId,taskId, traversalType:any){
+   getChildLogs(task_details,logId,taskId,parentIterationId, traversalType:any){
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
-    this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id,logId,taskId).subscribe((response:any)=>{ 
+    this.rest.getChildLogs(task_details,logId,taskId,parentIterationId).subscribe((response:any)=>{ 
       if(traversalType=="FARWORD"){
         this.traversalLogs.push(task_details);
       }     
@@ -237,7 +237,7 @@ export class RpaSoLogsComponent implements OnInit {
       let logData:any=(this.traversalLogs.pop());
       this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
       if(logData.parent_log_id!=null && logData.parent_task_id!=null)
-        this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id, "BACKWARD");
+        this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
       else
         this.ViewlogByrunid(logData.run_id, logData.version);
    }
