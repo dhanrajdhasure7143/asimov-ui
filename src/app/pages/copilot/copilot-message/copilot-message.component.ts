@@ -13,7 +13,7 @@ export class CopilotMessageComponent implements OnInit {
 
  hideActions:boolean = false;
  subscription: any;
-
+ user_firstletter:any;
  constructor(private data: DataTransferService,
   private cd:ChangeDetectorRef
   ) { }
@@ -22,7 +22,7 @@ export class CopilotMessageComponent implements OnInit {
 //  }
 
  ngOnInit() {
-
+  this.user_firstletter = localStorage.getItem("firstName").charAt(0) + localStorage.getItem("lastName").charAt(0);
  }
 
  ngAfterViewInit() {
