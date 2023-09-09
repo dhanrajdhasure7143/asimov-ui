@@ -63,7 +63,7 @@
                                         Maximum of 50 characters
                                     </span>
                                     <span *ngIf="connectorForm.get('actionName').hasError('pattern') && !connectorForm.controls['actionName'].hasError('maxlength')" class="required">
-                                        Only space between words are allowed & Numbers are not allowed.
+                                        Only space between words are allowed, Numbers & special characters are not allowed.
                                     </span>
                                     <span *ngIf="actionNameCheck && connectorForm.get('actionName').value && !connectorForm.get('actionName').hasError('pattern')" class="required">
                                         Action name already exists*
