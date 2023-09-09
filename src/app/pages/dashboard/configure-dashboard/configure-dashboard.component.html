@@ -171,7 +171,8 @@
               <option value="All">All</option>
               <option value="Operational">Operational</option>
             </select> -->
-            <p-dropdown id="category"  [options]="options" optionLabel="option" (onChange)="onOptionSelect($event)" ></p-dropdown>
+            <!-- we have only operational widgets only as of now so temporarely disabling this dropdown -->
+            <p-dropdown id="category"  [options]="options" optionLabel="option" (onChange)="onOptionSelect($event)"  [disabled]="true"></p-dropdown>
           </div>
           <div class="categinput">
             <input type="text" placeholder="Search" [(ngModel)]="searchText" class="form-control toolbar-search ng-untouched ng-pristine ng-valid">
