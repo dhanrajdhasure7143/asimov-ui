@@ -1,0 +1,31 @@
+<div class="messageFormContainer">
+    <div class="messageFormHeader" *ngIf="formInputData?.header">{{formInputData?.header}}</div>
+    <div class="messageFormDescription" *ngIf="formInputData?.description">{{formInputData?.description}}</div>
+    <div class="messageFormElements" *ngIf="formInputData?.elements">
+        <form [formGroup]="formInputData.name">
+        <div *ngFor="let elem of formInputData?.elements">
+            <!-- Text boxes-->
+            <span *ngIf="elem?.type==='text'" >
+                <label class="inputLabel"> {{elem.label}}</label> <span class="inputRequired" *ngIf="elem?.required">&nbsp; *</span><br/>
+                <input placeholder="{{elem?.placeholder}}" [name]="elem.name"  value="{{elem?.value}}"/>
+            </span>
+            <!-- Radio buttons-->
+            <br>
+            <span *ngIf="elem?.type==='radio'" >
+                <p>{{elem.placeholder}}</p>
+                <label class="inputLabel"> {{elem.label}}</label> <span class="inputRequired" *ngIf="elem?.required">&nbsp; *</span><br/>
+                <span *ngFor="let r of elem.options">
+                <input type="radio" [id]="r.key"  [name]="elem.name"   value="{{r?.value}}"/>
+                  <label for="{{r.key}}">{{r.key}}</label><br>
+                </span>
+            </span>
+        </div>
+        <div  *ngIf="formInputData?.actions" [style]='{"display": "inline-block", "text-align":"center"}'>
+            <div *ngFor="let action of formInputData?.actions"   [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
+                <app-copilot-message-button [buttonData]="action" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="messageFormFooter" *ngIf="formInputData?.footer">{{formInputData?.footer}}</div>
+</div>

@@ -36,7 +36,16 @@
 .model-box {
    padding:0px 0px;
 }
+/* .chat-form{
+    height:300px;
+    overflow: auto;
+} */
 
+.table-box{
+    margin:0px 60px !important;
+    height:calc(100vh - 190px) !important;
+    overflow: auto !important;
+}
 .chat-form select {
     height: 30px;
     width: 85%;
@@ -448,7 +457,7 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
 
 
 .diagram_container-copilot{
-    height: 500px;
+    height: calc(100vh - 150px) !important;
     width: 100%;
     border: 1px solid #098de6;
     border-radius: 10px;
@@ -459,3 +468,6 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
 
 
 
+.send-msgtext ol {
+    padding-left: 10px !important;
+}

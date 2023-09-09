@@ -99,7 +99,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Success",
-          detail: "Updated successfully!",
+          detail: "Widget updated successfully!",
         });
         // this.dashboardData.widgets[index].filterOptions = [
         //   ...this.dashboardData.widgets[index].filterOptions.map(
@@ -306,7 +306,7 @@ export class DynamicDashboardComponent implements OnInit {
       .updateDashBoardNamed(dashboard)
       .subscribe((response: any) => {
         this.getListOfDashBoards();
-        this.messageService.add({severity: "success",summary: "Success",detail: "Updated successfully!"});
+        this.messageService.add({severity: "success",summary: "Success",detail: "Dashboard updated successfully!"});
       },err=>{
         this.messageService.add({severity: "error",summary: "Error",detail: "Failed to update!"});
       });
@@ -340,7 +340,7 @@ export class DynamicDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted successfully!",
+              detail: "Dashboard deleted successfully!",
             });
             this.changeToDefaultDashBoard();
           });
@@ -572,7 +572,7 @@ export class DynamicDashboardComponent implements OnInit {
                 this.messageService.add({
                   severity: "success",
                   summary: "Success",
-                  detail: "Deleted successfully!",
+                  detail: "Widget deleted successfully!",
                 });
               }
             });

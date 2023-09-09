@@ -1,685 +1,495 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { ConfirmationService, MenuItem } from 'primeng/api';
-import { jsPlumb, jsPlumbInstance } from "jsplumb";
-import { HttpClient, HttpBackend } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DataTransferService } from '../../services/data-transfer.service';
-import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
-import { SharebpmndiagramService } from "../../services/sharebpmndiagram.service";
-import { RestApiService } from '../../services/rest-api.service';
+import { RestApiService } from "../../services/rest-api.service";
+import { MessageService } from "primeng/api";
+import { DataTransferService } from "../../services/data-transfer.service";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageData, UserMessagePayload } from "../copilot-models";
+import { CopilotService } from "../../services/copilot.service";
 interface City {
-  name: string,
-  code: string
+  name: string;
+  code: string;
 }
-//import * as copilot from '../../../../assets/jsons/copilot-req-res.json';
 @Component({
-  selector: 'app-copilot-chat',
-  templateUrl: './copilot-chat.component.html',
-  styleUrls: ['./copilot-chat.component.css']
+  selector: "app-copilot-chat",
+  templateUrl: "./copilot-chat.component.html",
+  styleUrls: ["./copilot-chat.component.css"],
 })
 export class CopilotChatComponent implements OnInit {
-  cities: City[];
-
-  selectedCity: City;
-  isPlayAnimation: boolean = false;
-  public model: any = [];
-  jsPlumbInstance: any;
+  @ViewChild("op", { static: false }) overlayModel;
+  @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
+  @ViewChild("exportSVGtoPDF") exportSVGtoPDF: ElementRef;
+  @ViewChild("canvas") canvas: ElementRef;
+  @ViewChild("render") render: ElementRef;
   isDialogVisible: boolean = false;
-  isLoadGraphImage: boolean = false;
-  @ViewChild('op', { static: false }) overlayModel;
-  @ViewChild('popupMenu', { static: false }) popupMenuOverlay;
-  staticData:Boolean=false;
-  copilotJson: any = [
-    {
-      "message": "Provisioning Users",
-      "response": {
-        "message": "Sure, here are a few examples of onboarding users process flow. You can choose one that matches or ‘closely’ matches your organization’s process. If none of them match, please tell us more about the process you would like to automate.",
-        "steps": [
-          {
-            "id": 1,
-            "type": "PROCESS-IMAGE",
-            "label": "Onboard Users",
-            "ImagePath": "./../../../assets/copilot/chart-image-1.svg"
-
-          },
-          {
-            "id": 2,
-            "type": "PROCESS-IMAGE",
-            "label": "Account Creation",
-            "ImagePath": "./../../../assets/copilot/chart-image-2.svg"
-          },
-          {
-            "id": 3,
-            "type": "PROCESS-IMAGE",
-            "label": "Employee Onboarding",
-            "ImagePath": "./../../../assets/copilot/chart-employee.svg"
-          }
-        ]
-      }
-    },
-    {
-      "message": "Employee Onboarding",
-      "response": {
-        "message": "Would you prefer modifying these steps to match your organization’s flow?",
-        "steps": [
-          {
-            "id": 4,
-            "type": "LOAD-GRAPH",
-            "xml":"assets/resources/Copilot- 2.bpmn"
-          }
-        ]
-      }
-    },
-    {
-      "message": "Yes. Along with sending pre-boarding form, my team sends the onboarding form to the designated Reporting Manager. Both these tasks happen in parallel.",
-      "response": {
-        "message": "Your workflow has been updated with the additional step. Would you like to make any further modifications?",
-        "steps": [
-          {
-            "id": 5,
-            "type": "ADD-NODE"
-          },
-          {
-            "id": 51,
-            "type": "BUTTON",
-            "label": "Yes, I want to",
-            "disable": false
-          },
-          {
-            "type": "BUTTON",
-            "label": "No, contintue to next step",
-            "disable": false
-          }
-        ]
-      }
-    },
-    {
-      "message": "No, contintue to next step",
-      "response": {
-        "message": "What are the systems you use in this process?",
-        "steps": [
-          {
-            "id": 6,
-            "type": "IMG-BUTTON",
-            "label": "Workday",
-            "disable": false
-          },
-          {
-            "id": 6,
-            "type": "IMG-BUTTON",
-            "label": "SAP SuccessFactors",
-            "disable": false
-          },
-          {
-            "id": 6,
-            "type": "BUTTON",
-            "label": "None of the above",
-            "disable": false
-          }
-        ]
-      }
-    },
-    {
-      "message": "Zoho",
-      "response": {
-        "message": "What is the Email system that you use in your organization?",
-        "steps": [
-          {
-            "type": "UPDATE-NODE-1",
-            "xml":"assets/resources/Copilot-1.bpmn"
-          },
-          {
-            "type": "BUTTON",
-            "label": "Outlook by Microsoft",
-            "disable": false
-          },
-          {
-            "type": "BUTTON",
-            "label": "Gmail from Google",
-            "disable": false
-          }
-        ]
-      }
-    },
-    {
-      "message": "Outlook by Microsoft",
-      "response": {
-        "message": "Systems are updated in your workflow. Select an option from here to proceed further:",
-        "steps": [
-          {
-            "type": "UPDATE-NODE-2",
-            "xml":""
-          },
-          {
-            "type": "BUTTON",
-            "label": "Save as Draft",
-            "disable": false
-          },
-          {
-            "type": "BUTTON",
-            "label": "Analyse this Process",
-            "disable": false
-          },
-          {
-            "type": "OUTLINE-BUTTON",
-            "label": "Generate Bot Design",
-            "disable": false
-          },
-          {
-            "type": "MESSAGE",
-            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
-          },
-          {
-            "type": "OUTLINE-BUTTON",
-            "label": "Have our executive contact you",
-            "disable": false
-          }
-        ]
-      }
-    },
-    {
-      "message": "Analyse this Process",
-      "response": {
-        "message": "Fill the form with time taken for each of the manual steps in the process. This will allow us to calculate the overall time taken for the entire workflow. Once you are done, click on submit below to create the process graph.",
-        "steps": [
-          {
-            "type": "LOAD-STEPS-TABLE"
-          },
-          {
-            "type": "BUTTON",
-            "label": "Submit",
-            "disable": false
-          },
-          {
-            "type": "BUTTON",
-            "label": "Save as Draft",
-            "disable": false
-          },
-          {
-            "type": "MESSAGE",
-            "label": "If you're still uncertain, we can arrange for our customer executive to contact you",
-          },
-          {
-            "type": "OUTLINE-BUTTON",
-            "label": "Have our executive contact you",
-            "disable": false
-          }
-        ]
-      }
-    },
-    {
-      "message": "Submit",
-      "response": {
-        "message": "",
-        "steps": [
-          {
-            "id": 4,
-            "type": "REDIRECT-PI"
-          }
-        ]
-      }
-    },
-    {
-      "message": "Generate Bot Design",
-      "response": {
-        "message": "",
-        "steps": [
-          {
-            "id": 4,
-            "type": "REDIRECT-RPA"
-          }
-        ]
-      }
-    },
-  ];
-  constructor(private router: Router,
-    private dt: DataTransferService,
-    private loaderService: LoaderService,
-    private confirmationService: ConfirmationService,
-    private bpmnservice: SharebpmndiagramService,
-    private rest_api: RestApiService,
-    private activatedRouter: ActivatedRoute,
-  ) {
-    this.cities = [
-      { name: '00', code: 'NY' },
-      { name: '01', code: 'RM' },
-      { name: '02', code: 'LDN' },
-      { name: '03', code: 'IST' },
-      { name: '04', code: 'PRS' },
-      { name: '05', code: 'NY' },
-      { name: '06', code: 'RM' },
-      { name: '07', code: 'LDN' },
-      { name: '08', code: 'IST' },
-      { name: '09', code: 'PRS' }
-    ];
-    //this.copilotJson=copilot;
-  }
-
-  @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('render') render: ElementRef;
-  @ViewChild('nodeImage', { read: ElementRef }) nodeImage: ElementRef;
-  public model2: any;
-  public bpmnPath:String=""
-  nodeMenuItems: MenuItem[];
+  bpmnActionDetails: any;
   messages: any = [];
-  message: any = "";
-  nodes: any = [];
-  graphJsonData: any = [{
-    id: "1",
-    selectedNodeTask: "Pre Boarding Form Sent",
-    x: "100px",
-    y: "100px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-  },
-  {
-    id: "2",
-    selectedNodeTask: "Gather and Organize Responses",
-    x: "100px",
-    y: "200px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-
-  },
-  {
-    id: 5,
-    selectedNodeTask: "Login to HRA",
-    x: "100px",
-    y: "400px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-  },
-  {
-    id: 4,
-    selectedNodeTask: "Enter Employee Details",
-    x: "100px",
-    y: "400px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-  },
-  {
-    id: 4,
-    selectedNodeTask: "Create Email Account",
-    x: "100px",
-    y: "400px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-  },
-  {
-    id: 6,
-    selectedNodeTask: "Trigger, Welcome Email",
-    x: "100px",
-    y: "500px",
-    path: "../../../../assets/copilot/graph-icons/General.png",
-    updated: false
-
-  }]
+  usermessage: any = "";
   showTable: boolean = false;
-  tableData: any[] = [];
-  // minOptins: number[]  = Array.from({length :60 }, (_, index)=> index+1)
-  minOptins: string[] = Array.from(Array(61).keys(), num => (num).toString().padStart(2, '0'));
-  hrsOptins: string[] = Array.from(Array(25).keys(), num => num.toString().padStart(2, "0"))
-  daysOptins: string[] = Array.from(Array(32).keys(), num => num.toString().padStart(2, "0"))
+  processLogsData: any[] = [];
+  minOptions: string[] = Array.from(Array(61).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
+  hrsOptions: string[] = Array.from(Array(25).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
+  daysOptions: string[] = Array.from(Array(32).keys(), (num) =>
+    num.toString().padStart(2, "0")
+  );
   loader: boolean = false;
   isChatLoad: boolean = false;
   bpmnModeler: any;
-  isGraphLoaded: boolean = false;
-  isNodeLoaded: boolean = false;
-  isNodesUpdates: boolean = false;
+  tableForm: FormArray;
+  currentMessage:any;
+  isGraphLoaded:boolean=false;
+  constructor(
+    private rest_api: CopilotService,
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private dt: DataTransferService,
+    private fb: FormBuilder,
+    private main_rest:RestApiService
+  ) {}
 
   ngOnInit(): void {
     this.loader = true;
-    this.tableData = [
-      { name: "IT Form Sent To The Manager",min:"00",hrs:"00",days:"00"},
-      { name: "Manager Fills The Form",min:"00",hrs:"00",days:"00" },
-      { name: "IT Team Creates Email ID",min:"00",hrs:"00",days:"00" },
-      { name: "IT Team Assign A System",min:"00",hrs:"00",days:"00" },
-      { name: "System Access For The User",min:"00",hrs:"00",days:"00" },
-    ];
-
-
-    this.activatedRouter.queryParams.subscribe((params: any) => {
-      if (params.templateId)
-      {
-        if(params.templateId!="Others")
-          this.getTemplatesByProcessId(params.process_id, params.templateId)
-        if(!this.staticData)
-          this.getConversation();
-          //(!(localStorage.getItem("conversationId")))?this.createConversationSessionId():this.getConversation();
+    this.route.queryParams.subscribe((params: any) => {
+      if (params.templateId) {
+        setTimeout(() => {
+          this.bpmnModeler = new BpmnJS({
+            container: ".diagram_container-copilot",
+          });
+        }, 300);
+        if(isNaN(params.templateId) && params.templateId != "Others")
+          this.getAutomatedProcess(atob(params.templateId));
+        else if (params.templateId != "Others")
+          this.getTemplatesByProcessId(params.process_id, params.templateId);
+        else
+          this.getConversationId();
+    
       }
       this.loader = false;
+    });
+    this.dt.currentMessage2.subscribe((response:any)=>{
+      console.log("subject check",response);
+    
     })
-  }
-
-  getTemplatesByProcessId(processId, templateId)
-  {
-    this.rest_api.getCopilotTemplatesList(processId).subscribe((response:any)=>{
-      if(response)
-      {
-        let template=response.find((item:any)=>item.template_id==templateId);
-        this.loadBpmnwithXML(atob(template.bpmn_xml), ".diagram_container-copilot");
-      }
-    })
-  }
-
-  // use to create conversation session id
-  createConversationSessionId()
-  {
-    let payload:any={
-      userId:localStorage.getItem("ProfileuserId"),
-      tenantId:localStorage.getItem("tenantName")
-    }
-    this.rest_api.createCopilotConversationSessionId(payload).subscribe((response:any)=>{
-      console.log("tenant",response);
-      this.getConversation();
-    },err=>{
-      console.log(err);
-    })
+    this.createForm();
   }
 
 
-  getConversation()
-  {
-    this.rest_api.getCopilotConversation().subscribe((response:any)=>{
-      this.messages.push({
-        message:response.data,
-        user:"SYSTEM",
-        steps:[]
-      })
-    }, err=>{
-      console.log(err)
-    })
+ 
+
+  getTemplatesByProcessId(processId, templateId) {
+    this.rest_api.getCopilotTemplatesList(processId).subscribe(
+      (response: any) => {
+        if (response) {
+          let template = response.find(
+            (item: any) => item.template_id == templateId
+          );
+          this.loadBpmnwithXML(atob(template.bpmn_xml));
+        }
+      });
   }
+
 
   sendMessage(value?: any, messageType?: String) {
     this.isChatLoad = true;
-    if(!this.staticData){  
-      setTimeout(() => {
-        let data ={
-          "conversationId": "b4d32511-1c79-4fe7-8b7f-0dfb9fbd9bcb",    
-          "message": value
+        let data = {
+          conversationId: localStorage.getItem("conversationId"),
+          message: value,
+        };
+        this.messages.push({
+          user: localStorage.getItem("ProfileuserId"),
+          message: value,
+          messageType: messageType,
+        });
+        this.updateCurrentMessageButtonState("DISABLED");
+        this.usermessage = "";
+          this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
+          this.isChatLoad = false;
+          let res = { ...{}, ...response };
+          this.updateTemplateFlag(res);
+          this.currentMessage=res;
+          this.updateCurrentMessageButtonState("ENABLED")
+          this.messages.push(this.currentMessage);
+          var objDiv = document.getElementById("chat-grid");
+          setTimeout(() => {
+            objDiv.scrollTop = objDiv.scrollHeight;
+          }, 500)
+        });
+  }
+
+  loadBpmnwithXML(bpmnActionDetails:any) {
+    console.log(bpmnActionDetails)
+    this.isDialogVisible = false;
+    let bpmnPath=atob(bpmnActionDetails.bpmnXml);
+    console.log("validate", bpmnPath)
+    this.bpmnModeler.importXML(bpmnPath, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
       }
-       this.messages.push({
-        user:localStorage.getItem("ProfileuserId"),
-        message:value,
+      
+    });
+    if(!(bpmnActionDetails?.isUpdate)){
+      this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
+      this.sendBpmnAction(bpmnActionDetails.submitValue)
+    }
+    setTimeout(() => {
+      this.notationFittoScreen();
+      this.readBpmnModelerXMLdata();
+    }, 500);
+    this.bpmnModeler.on("element.contextmenu", () => false);
+  }
 
-       }) 
+  previewBpmn(bpmnActionDetails:any) {
+    let previewMolder = new BpmnJS({ container: ".graph-preview-container" });
+    this.bpmnActionDetails = bpmnActionDetails;
+    let bpmnXml=atob(bpmnActionDetails.bpmnXml);
+    this.isGraphLoaded=true;
+    previewMolder.importXML(bpmnXml, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
+      }
+    });
+    setTimeout(() => {
+      let canvas = previewMolder.get("canvas");
+      canvas.zoom("fit-viewport");
+    }, 500);
+  }
 
-       this.message="";
-        this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
-          this.isChatLoad=false;
-          if(response.data)
+  notationFittoScreen() {
+    let canvas = this.bpmnModeler.get("canvas");
+    canvas.zoom("fit-viewport");
+  }
+
+  readBpmnModelerXMLdata() {
+    var self = this;
+    self.bpmnModeler.on("element.changed", function () {
+      self.bpmnModeler.saveXML({ format: true }, function (err, xml) {
+        let payload={
+          conversationId:localStorage.getItem("conversationId"),
+          message:xml
+        }
+        self.rest_api.updateProcessLogGraph(payload).subscribe((response:any)=>{
+        },err=>{
+        })
+      });
+    });
+  }
+
+  createForm() {
+    const formControls = [];
+    for (let i = 0; i < this.processLogsData.length; i++) {
+      formControls[i] = this.fb.group({
+        minutes: ['', Validators.required],
+        hours: ['', Validators.required],
+        days: ['', Validators.required],
+        stepId:this.processLogsData[i]["stepId"],
+        stepName:this.processLogsData[i]["stepName"]
+      });
+    }
+    this.tableForm = this.fb.array(formControls);
+  }
+
+
+
+  updateFormEvent(index, fieldName)
+  {
+    (["minutes", "hours", "days"]).forEach((item)=>{
+      if(item==fieldName)
+      {
+        this.tableForm.at(index).get(item).setValidators(Validators.compose([Validators.required]));
+        this.tableForm.at(index).get(item).updateValueAndValidity();   
+      }
+      else
+      {
+        this.tableForm.at(index).get(item).clearValidators(); 
+        this.tableForm.at(index).get(item).updateValueAndValidity();
+      }
+    })
+  }
+
+  onSubmit(){
+    console.log(this.tableForm. valid)
+    if(!this.tableForm.valid){
+      this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
+    }
+    console.log(this.tableForm.value)
+  }
+
+  getConversationId(){
+    let req_body = {"userId": localStorage.getItem("ProfileuserId")}
+    let resdata;
+    this.rest_api.initializeConversation(req_body).subscribe(
+      (res:any)=>{
+        resdata = res
+        this.currentMessage=res;
+        this.messages.push(resdata);
+        localStorage.setItem("conversationId",resdata.conversationId)
+      }
+    )
+  }
+
+  public processMessageAction = (event:any) =>{
+    if (event.actionType==='Button'){
+        this.messages.push({
+            message:event?.data?.label,
+            messageSourceType:localStorage.getItem("ProfileuserId")
+          })
+          this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
+    }else if (event.actionType==='Form'){
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
+          this.sendFormAction(event?.data)
+    }else if (event.actionType==='Card'){
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
+          this.sendCardAction(event?.data?.submitValue)
+    }else if (event.actionType==='list'){
+      this.messages.push({
+        message:event?.data?.label,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
+          this.sendListAction(event?.data?.submitValue)
+    }else if (event.actionType=='bpmn'){
+      this.isDialogVisible=true;
+      setTimeout(()=>{this.previewBpmn(event.data)},500)
+    }
+    else if (event.actionType=='UploadFileAction'){
+      this.changefileUploadForm(event.data)
+    }
+    else if(event.actionType=='ProcessLogAction'){
+      this.sendProcessLogs();
+    }
+  }
+
+  sendProcessLogs()
+  {
+    console.log(this.tableForm.valid) 
+    if(this.tableForm.valid)
+    {
+      let tableData=[...this.tableForm.value];
+      tableData=tableData.map((item:any)=>{
+        (["days", "minutes", "hours"]).forEach((attr:any)=>{
+          if(item[attr]=='')
           {
-            if(response.data.find((item:any)=>item.template.type=="BPMN"))
-            {
-              let encryptedBpmn = response.data.find((item:any)=>item.template.type=="BPMN")?.template?.payload??undefined;
-              if(encryptedBpmn)
-              {
-                let bpmn=atob(encryptedBpmn);
-                this.isLoadGraphImage = false;
-                this.isDialogVisible = true;
-                this.bpmnPath=bpmn
-                setTimeout(() => {
-                  this.loadBpmnwithXML(bpmn,".graph-preview-container");
-                }, 500);
-              }
-              else
-              {
-              
-    
-              }
-            }
+            item[attr]="00";
           }
         })
-        // this.rest_api.getdata1().subscribe(res=>{
-        //   console.log(res)
-        // })
-      }, 1000);
-    }
-    if(this.staticData)
-    {
-      if (value == "Onboard Users") {
-        this.isChatLoad = false;
-        this.isLoadGraphImage = true;
-        this.isDialogVisible = true;
-        return;
+        return item;
+      })
+      let data={
+        conversationId:localStorage.getItem("conversationId"),
+        message:"Submit",
+        jsonData:tableData
       }
-      setTimeout(() => {
-        let message = {
-          id: (new Date()).getTime(),
-          message: value,
-          user: localStorage.getItem("ProfileuserId")
-        }
-        if (messageType != 'LABEL')
-          this.messages.push(message);
+      this.messages.push(data);
 
-        let response = this.copilotJson.find((item: any) => item.message == (value))?.response ?? undefined;
-        if (response) {
-          let systemMessage = {
-            id: (new Date()).getTime(),
-            user: "SYSTEM",
-            message: response.message,
-            steps: response.steps
-          }
-          if (response.steps.find((item: any) => item.type == "LOAD-GRAPH")) {
-            let responseData=response.steps.find((item: any) => item.type == "LOAD-GRAPH").xml;
-            this.isLoadGraphImage = false;
-            this.isDialogVisible = true;
-            this.bpmnPath=responseData
-            setTimeout(() => {
-              this.loadBpmnwithXML(responseData,".graph-preview-container");
-            }, 500);
-
-          }
-          else if (response.steps.find((item: any) => item.type == "LOAD-STEPS-TABLE")) {
-            // this.loadGraphIntiate("Load Form")
-          }
-          else if (response.steps.find((item: any) => item.type == "ADD-NODE")) {
-            //  this.loadGraphIntiate("Load Node");
-          }
-          else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-1")) {
-            let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-1").xml;
-            this.loadupdatedBpmn(responseData);
-            // this.loadGraphIntiate("Update Node 1");
-          }
-          else if (response.steps.find((item: any) => item.type == "UPDATE-NODE-2")) {
-            let responseData=response.steps.find((item: any) => item.type == "UPDATE-NODE-2").xml;
-          }
-          else if (response.steps.find((item: any) => item.type == "REDIRECT-PI")) {
-            this.loader = true;
-            setTimeout(() => {
-              this.loader = false
-              this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-              this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: "159884", redirect: "copilot" } });
-            }, 3000)
-          }
-          else if (response.steps.find((item: any) => item.type == "REDIRECT-RPA")) {
-            this.dt.setCopilotData({ messages: this.messages, isGrpahLoaded: this.isGraphLoaded, isNodeLoaded: this.isNodeLoaded, isNodesUpdated: this.isNodesUpdates, isTableLoaded: this.showTable, tableData: this.tableData })
-            this.loader = true;
-            setTimeout(() => {
-              this.loader = false
-              this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: "4495", redirect: "copilot" } });
-            }, 2000)
-          }
-          this.messages.push(systemMessage);
-          let chatGridElement = document.getElementById("chat-grid");
-          chatGridElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-          this.message = "";
-          setTimeout(() => {
-            var objDiv = document.getElementById("chat-grid");
-            objDiv.scrollTop = objDiv.scrollHeight;
-          }, 200)
-        } else {
-          this.message = "";
-          setTimeout(() => {
-            var objDiv = document.getElementById("chat-grid");
-            objDiv.scrollTop = objDiv.scrollHeight;
-          }, 100)
-        }
-        this.isChatLoad = false;
-      }, 2000);
-    }
-  }
-
-
-  populateNodes(nodeData) {
-    const nodeIds = this.nodes.map(function (obj) {
-      return obj.id;
-    });
-    var self = this;
-    this.jsPlumbInstance.draggable(nodeIds, {
-      containment: true,
-      stop: function (element) {
-        self.updateCoordinates(element);
-      },
-    });
-
-    const rightEndPointOptions = {
-      endpoint: [
-        "Dot",
-        {
-          radius: 2,
-          cssClass: "myEndpoint",
-          width: 2,
-          height: 2,
-        },
-      ],
-
-      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 1 },
-      isSource: true,
-      connectorStyle: { stroke: "#404040", strokeWidth: 2 },
-      anchor: "Right",
-      maxConnections: -1,
-      cssClass: "path",
-      Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
-      connectorClass: "path",
-      connectorOverlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
-    };
-    const leftEndPointOptions = {
-      endpoint: [
-        "Dot",
-        {
-          radius: 2,
-          cssClass: "myEndpoint",
-          width: 2,
-          height: 2,
-        },
-      ],
-      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 1 },
-      isTarget: true,
-      connectorStyle: { stroke: "#404040", strokeWidth: 1 },
-      anchor: "Left",
-      maxConnections: -1,
-      Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
-      cssClass: "path",
-      connectorClass: "path",
-      connectorOverlays: [["Arrow", { width: 5, length: 6, location: 1 }]],
-    };
-    if (nodeData.selectedNodeTask != "STOP")
-      this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
-    if (nodeData.selectedNodeTask != "START")
-      this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
-  }
-
-
-  updateCoordinates(dragNode) {
-    var nodeIndex = this.nodes.findIndex((node) => {
-      return node.id == dragNode.id;
-    });
-    this.nodes[nodeIndex].x = dragNode.x;
-    this.nodes[nodeIndex].y = dragNode.y;
-  }
-
-  loadGraph(template) {
-    if (template != "Others") {
-      this.isDialogVisible=false;
-      let path = "assets/resources/copilot_bpmn_chatgpt.bpmn"
-      if (template == 'Workforce Planning')
-        path = "assets/resources/Copilot- 3.bpmn"
-      if (template == "Job Analysis and Job Posting")
-        path = "assets/resources/Copilot-1.bpmn"
-      if (template == "Assessment and Testing")
-        path = "assets/resources/Copilot- 2.bpmn"
-      setTimeout(() => {
-        this.loadBpmnwithXML(path,".diagram_container-copilot");
-      }, 1500);
-    }
-  }
-
-  loadupdatedBpmn(BpmnPath){
-    this.rest_api.getBPMNFileContent(BpmnPath).subscribe((res) => {
-      this.bpmnModeler.importXML(res, function (err) {
-        if (err) {
-          console.error("could not import BPMN EZFlow notation", err);
-        }
-      });
-      setTimeout(() => {
-        this.notationFittoScreen();
-        this.readBpmnModelerXMLdata();
-      }, 500);
-    });
-  }
-
-
-  loadBpmnwithXML(responseData,element){
-    if(element==".diagram_container-copilot")
-      this.isDialogVisible=false;
-
-    
-    // this.bpmnModeler = new BpmnJS({container: ".graph-preview-container"});
-    this.bpmnModeler = new BpmnJS({container: element});
-    if(this.staticData)
-    {
-      this.rest_api.getBPMNFileContent(responseData).subscribe((res) => {
-        this.bpmnModeler.importXML(res, function (err) {
-          if (err) {
-            console.error("could not import BPMN EZFlow notation", err);
-          }
-        });
+      this.updateCurrentMessageButtonState("DISABLED");
+      this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
+        this.currentMessage=response;
+        this.updateCurrentMessageButtonState("ENABLED");
+        this.messages.push(this.currentMessage)
+        var objDiv = document.getElementById("chat-grid");
         setTimeout(() => {
-              this.notationFittoScreen();
-            if(element !='.graph-preview-container')
-              this.readBpmnModelerXMLdata();
+          objDiv.scrollTop = objDiv.scrollHeight;
         }, 500)
-        this.bpmnModeler.on('element.contextmenu', () => false);
-      });
+      })
     }
     else
-    {
-      this.bpmnModeler.importXML(responseData, function (err) {
-        if (err) {
-          console.error("could not import BPMN EZFlow notation", err);
-        }
+      this.messageService.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Please fill time in all fieldss "
       });
-      setTimeout(() => {
-            this.notationFittoScreen();
-          if(element !='.graph-preview-container')
-            this.readBpmnModelerXMLdata();
-      }, 500)
-      this.bpmnModeler.on('element.contextmenu', () => false);
+    
+  }
+  
+
+  public sendBpmnAction=(value:string)=>{
+    this.sendUserAction({message:value})
+  }
+
+  public sendButtonAction = (value:string) =>{
+    this.sendUserAction({
+        message: value
+    })
+  }
+
+
+  public sendFormAction = (data:any) =>{
+    //TODO: Send request to backend
+  }
+
+  public sendCardAction = (data:any) =>{
+    this.sendUserAction({
+        message: data
+    })
+  }
+
+  public sendListAction = (data:any) =>{
+    this.sendUserAction({
+        message: data
+    })
+  }
+
+  public sendUserAction =(data:any)=>{
+    let userMessage: UserMessagePayload={
+        conversationId:localStorage.getItem("conversationId"),
+        message:data?.message,
+        jsonData:data?.jsonData
+    }
+    this.updateCurrentMessageButtonState("DISABLED");
+    this.isChatLoad=true;
+    let response = this.rest_api.sendMessageToCopilot(userMessage);
+    response.subscribe((res:any) =>{
+        this.currentMessage=res;
+        this.updateCurrentMessageButtonState("ENABLED");
+        this.updateTemplateFlag(res);
+        this.messages.push(this.currentMessage);
+        this.usermessage='';
+        var objDiv = document.getElementById("chat-grid");
+        setTimeout(() => {
+          objDiv.scrollTop = objDiv.scrollHeight;
+          this.isChatLoad=false;
+        }, 500)
+        if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
+    }, err =>{
+
+    })
+  }
+
+  displaylogCollectionForm(res:any)
+  {
+    let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
+    values= JSON.parse( atob(values[0].values));
+    values.forEach((item:any)=>{
+      this.processLogsData.push({
+        stepName:item.stepName,
+        stepId:item.stepId,
+        days:"00",
+        hours:"00",
+        minutes:"00",
+      })
+    })
+    this.createForm();
+    setTimeout(()=>{
+      this.showTable=true;
+    },500)
+  }
+
+
+  getAutomatedProcess(intent:any){
+    let req_body:any
+    if(this.validateJson(intent)){
+      let json=JSON.parse(intent);
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "message":json.message
+      }
+    }
+    else{
+      req_body={
+        "userId":localStorage.getItem("ProfileuserId"),
+        "tenantId":localStorage.getItem("tenantName"),
+        "intent":intent
+      }
+    }
+    this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
+      this.currentMessage=res;
+      localStorage.setItem("conversationId", res.conversationId);
+      this.messages.push(res);
+    })
+  }
+
+  changefileUploadForm(event){
+    console.log(event.target.files)
+    let selectedFile = <File>event.target.files[0];
+          const fd = new FormData();
+    fd.append('file', selectedFile),
+    fd.append('permissionStatus', 'yes')
+    this.main_rest.fileupload(fd).subscribe(res => {
+      console.log(res)
+      let processId = Math.floor(100000 + Math.random() * 900000);
+      this.messages.push({
+        message:selectedFile.name,
+        messageSourceType:localStorage.getItem("ProfileuserId")
+      })
+    })
+  }
+
+  updateCurrentMessageButtonState(state){
+    if(this.currentMessage.data.components){
+      if(this.currentMessage.data.components?.includes("Buttons")){
+        let componentIndex=this.currentMessage.data.components?.findIndex((item)=>item=="Buttons");
+        this.currentMessage.data.values[componentIndex]=this.currentMessage.data?.values[componentIndex].map((item:any)=>{
+          item['disabled']=(state=="ENABLED"?false:true);
+          return item;
+        })
+      }
+      if(this.currentMessage.data.components.includes("list")){
+        let componentIndex=this.currentMessage.data.components.findIndex((item)=>item=="list");
+        if(this.currentMessage.data.values[componentIndex].filter((item)=>item.type=="bpmnList").length>0){
+          this.currentMessage.data.values[componentIndex]=this.currentMessage.data.values[componentIndex].map((item)=>{
+            if(item?.type=="bpmnList")
+              if(item?.actions)
+                item.actions=item.actions.map((actionItems)=>{
+                  actionItems["disabled"]=(state=="ENABLED"?false:true);
+                  return actionItems;
+                })
+              return item;
+          })
+        }
+        if(state=="DISABLED")
+          if(this.messages.find((item:any)=>item?.data?.uuid==this.currentMessage?.data?.uuid))
+            this.messages.find((item:any)=>item?.data?.uuid==this.currentMessage?.data?.uuid).data=this.currentMessage.data;
+      }
     }
 
   }
 
-  notationFittoScreen(){
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
+
+  updateTemplateFlag(currentMessage)
+  {
+    if(currentMessage.data.components?.find((item:any)=>item=="list"))
+    {
+      let index=(currentMessage.data.components?.findIndex((item:any)=>item=="list"))
+      currentMessage.data.values[index].forEach((item:any)=>{
+        if(item.type)
+          if(item.type=='bpmnList'){
+            if(item.hide)
+            {
+              let bpmnData=JSON.parse(atob(item.values));
+              let bpmnActionDetails={
+                bpmnXml:bpmnData[0].bpmnXml,
+                label:bpmnData[0].templateName,
+                isUpdate:true
+              }
+              this.loadBpmnwithXML(bpmnActionDetails);
+            }
+          }
+      })
+    }
   }
 
-  readBpmnModelerXMLdata(){
-    var self = this
-    self.bpmnModeler.on('element.changed', function(){
-     self.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-        console.log("xml",xml)// xml data will get for every change
-      })
-      })
-  }
 
-  onChange() {
-    console.log(this.tableData)
+  validateJson(intentDetails:any)
+  {
+    try{
+      let data=JSON.parse(intentDetails);
+      return data;
+    }
+    catch(e)
+    {
+      return false;
+    }
   }
 
 }
-
