@@ -202,13 +202,12 @@ button[disabled]:hover{cursor: no-drop;
 
 .send-msgtext{
   width:80%;
-  user-select: auto !important;
+  user-select: all !important;
   text-align: left;
   word-break: break-word;
     color: #000;
 }
 .system-message{
-    user-select: all !important;
     font-size: 15px;
     /* text-align: justify; */
    line-height: 22px;

@@ -50,5 +50,8 @@ getAutomatedProcess(messageBody){
   return this.http.post(environment.asquare+"/a-square/v1/conversation/modify-template", messageBody, {headers:this.headers})
 }
 
+updateProcessLogGraph(data:any){
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/update-process-bpmn", data);
+}
 
 }
