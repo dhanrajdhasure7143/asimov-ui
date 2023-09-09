@@ -3551,6 +3551,9 @@ textarea.p-inputtextarea {
   position: relative;
   cursor: pointer;
 }
+.pinnedmsgtext .icon-color.userstagged:hover .usertaggedprofile {
+  display: none;
+}
 .usrtag {
   background-color: #1e65d3;
   color: #fff;
