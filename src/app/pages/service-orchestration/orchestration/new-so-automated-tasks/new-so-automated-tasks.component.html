@@ -229,7 +229,9 @@
                                                 <select class="form-control" 
                                                     [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType "
                                                     [id]="element.taskId+'__select'">
-                                                    <option value="0" disabled hidden>Select Bot</option>
+                                                    <option value="0" hidden selected>Select Bot</option>
+                                                    <option [value]="null" disabled hidden>Select Bot</option>
+                                                    <!-- <option value="0" disabled hidden>Select Bot</option> -->
                                                     <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)"
                                                         [value]="bot.botId" [selected]="bot.botId == element.botId">{{bot.botName}}
                                                     </option>
