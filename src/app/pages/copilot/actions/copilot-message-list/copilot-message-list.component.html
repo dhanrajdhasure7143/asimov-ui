@@ -1,0 +1,59 @@
+<div *ngIf="'selectList' === listData?.type">
+    <div class="selectionList" *ngIf="componentData">
+        <div style="display: flex;width: 100%; flex-wrap: wrap;">
+            <div *ngFor="let elem of componentData" class="selectItem"
+                (click)="userSelectedItem(elem.label, elem.submitValue, elem)">
+                <div *ngIf="elem.label">
+                    <b>{{elem.label}}</b>
+                </div>
+                <div *ngIf="elem.items" class="itemsStyle">
+                    <div *ngFor="let dataItems of elem.items" style="width: 50%;padding-left:10px;padding-bottom:10px">
+                        <div *ngIf="dataItems.name">
+                            <span>{{dataItems.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="messageButton" *ngIf="listData?.actions">
+        <div *ngFor="let b of listData?.actions" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
+            <app-copilot-message-button [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+        </div>
+    </div>
+</div>
+
+<div *ngIf="'bpmnList' === listData?.type && !(listData?.hide)">
+    <div class="selectionList" *ngIf="componentData">
+        <div style="display: flex;width: 100%; flex-wrap: wrap;">
+            <div *ngFor="let elem of componentData; let i= index;" class="selectItem"
+                (click)="userSelectedItem(elem.label, elem.submitValue, elem)">
+                <div *ngIf="elem.label">
+                    <span>{{elem.label}}</span>
+                </div>
+                <div *ngIf="elem.imageURL">
+                    <!-- <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" [innerHTML]="elem.imageURL" [id]="'_diagram-chat'+i" style="position:relative;z-index:100;"></div> -->
+                    <!-- <div [class]="'diagram_container-copilot_chat'+i" class="bps_overlay readOnly" id="_diagram-chat" style="position:relative;z-index:100;"></div> -->
+                    <!-- <img width="80%" height="200px" [src]="elem.imageUrl" alt=""/> -->
+                    <!-- {{elem.imageURL}} -->
+                    <div  [innerHTML]="elem.imageUrl"  [style.width]="'100%'" class="copilotTemplatePreviewSvg"></div>
+                </div>
+                <div *ngIf="!elem.imageURL">
+                    <img width="80%" height="200px" src="./../../../../../assets/copilot/chart-image-1.svg" alt=""/>
+                </div>
+                <div *ngIf="elem.items" class="itemsStyle">
+                    <div *ngFor="let dataItems of elem.items" style="width: 50%;padding-left:10px;padding-bottom:10px">
+                        <div *ngIf="dataItems.name">
+                            <span>{{dataItems.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="messageButton" *ngIf="listData?.actions">
+        <div *ngFor="let b of listData?.actions" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
+            <app-copilot-message-button [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+        </div>
+    </div>
+</div>

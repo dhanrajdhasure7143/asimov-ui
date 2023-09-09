@@ -1827,35 +1827,9 @@ updateBotImage(botid,data:any){
   return this.http.put("/rpa-service/updateBotImage/"+botid, data);
 }
 
-//Copilot Rest-Api's
 getCopilotFunctionsList(){
   return this.http.get("/a-square/v1/functions");
 }
 
-getCopilotProcessesList(id){
-  return this.http.get("/a-square/v1/processes/function/"+id)
-}
-
-getCopilotTemplatesList(id){
-  return this.http.get("/a-square/v1/template/process/"+id);
-}
-
-
-getCopilotConversation()
-{
-  return this.http.get("/a-square/v1/conversation")
-}
-
-
-sendMessageToCopilot(messageBody:any)
-{
-  return this.http.post("/a-square/v1/conversation/message", messageBody)
-}
-
-
-createCopilotConversationSessionId(payload:any)
-{
-  return this.http.post("/a-square/v1/conversation", payload);
-}
 
 }
