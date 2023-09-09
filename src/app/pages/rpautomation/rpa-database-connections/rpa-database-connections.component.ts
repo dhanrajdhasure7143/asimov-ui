@@ -214,7 +214,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           if (status.errorMessage == undefined) {
             this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallDBConnection();
-            this.DBdeleteflag = false;
+            this.readSelectedData([])
           }
           else
             this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
@@ -336,6 +336,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
             // Swal.fire("Success", status.status, "success")
             this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallDBConnection();
+            this.readSelectedData([])
           }
           else
             // Swal.fire("Error", status.errorMessage, "error")
