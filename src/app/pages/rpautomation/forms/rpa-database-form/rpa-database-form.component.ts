@@ -228,7 +228,7 @@ export class RpaDatabaseFormComponent implements OnInit {
           this.spinner.hide();
           this.refreshData.emit(true)
           if (status.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status,key:'datamessage'});
+            this.messageService.add({severity:'success',summary:'Success',detail:status.status});
             document.getElementById('createdbconnection').style.display = "none";
             this.resetDBForm();
             this.closeOverlay.emit(false)

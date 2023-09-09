@@ -164,7 +164,7 @@ textarea.form-control.message-input:focus {
 .user-message {
     /* background-color: aliceblue;
     border:1px solid lightgray; */
-
+    /* user-select: all !important; */
     position: relative;
     display: flex;
     border-radius: 5px !important;
@@ -202,12 +202,12 @@ button[disabled]:hover{cursor: no-drop;
 
 .send-msgtext{
   width:80%;
+  user-select: all !important;
   text-align: left;
   word-break: break-word;
     color: #000;
 }
 .system-message{
-   
     font-size: 15px;
     /* text-align: justify; */
    line-height: 22px;
@@ -386,10 +386,11 @@ button.btn.bg-success-new {
 button.btn.bg-success-new:hover {
   background-color: #77E47B !important;
 }
+.btn-primary{ height:36px;}
 .btn-primary:hover {
     color: #fff !important;
-    background-color: #025cbb !important;
-    border-color: #0062cc !important;
+    background-color: #209AED !important;
+    border-color: #209AED !important;
 }
 
 .adjtextarea-align{width:100%;position:relative;
@@ -406,8 +407,10 @@ padding: 0px 15px !important;
     background-color: white !important;
     color: #098de6 !important;
     border: 1px solid #098de6 !important;
+    height:36px;
+    margin-left:12px;
 }
-
+.text-right{margin-top:1.5rem;}
 .btn-secondary:hover {
     background-color: #098de617 !important;
 }
@@ -456,4 +459,17 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
 
 
 
+.process-log-btn-pos{
 
+    float: right;
+    margin-right: 61px;
+
+}
+.process-log-btn{
+    padding: 10px; 
+    background-color: #007bff; 
+    color: white; 
+    cursor: pointer; 
+    border-radius: 5px;
+    font-size: 10px;
+}

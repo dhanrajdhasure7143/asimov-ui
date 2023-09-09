@@ -1826,4 +1826,10 @@ checkRunningAction(actionId:any){
 updateBotImage(botid,data:any){
   return this.http.put("/rpa-service/updateBotImage/"+botid, data);
 }
+
+getCopilotFunctionsList(){
+  return this.http.get("/a-square/v1/functions");
+}
+
+
 }

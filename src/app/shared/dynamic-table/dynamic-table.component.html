@@ -185,7 +185,7 @@
                         </span>
                     <span *ngIf="screenTable !='actionsTable'" >
                         <span *ngIf="show_view_btn" (click)="viewDetailsbyId(rowData)">
-                            <a class="" pTooltip="View" tooltipPosition="top">
+                            <a class="" [pTooltip]="screenTable === 'taskList' ? 'View/Edit' : 'View'" tooltipPosition="top">
                                 <img src="../../../assets/images-n/gridicons/view-default.svg" alt="View" class="testplus default-icon">
                                 <img src="../../../assets/images-n/gridicons/view-hover.svg" alt="View" class="testplus hover-icon">
                             </a>

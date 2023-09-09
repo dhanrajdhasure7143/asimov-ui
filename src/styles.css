@@ -2929,6 +2929,17 @@ button.p-column-filter-menu-button.p-link.p-column-filter-menu-button-active {
 .desctextarea {
   white-space: pre-line;
 }
+.usrmgtdepart .p-multiselect .p-multiselect-panel {
+    max-height: 190px !important;
+    height: 190px !important;
+}
+.usrmgtdepart .p-multiselect-filter-container .p-inputtext {
+    width: 100%;
+    height: 34px !important;
+}
+.usrmgtdepart .p-multiselect-items-wrapper {
+    max-height: 140px !important;
+}
 /* primeNg components Styles Start */
 .p-multiselect .p-multiselect-panel {
   max-height: 240px !important;
@@ -3544,6 +3555,9 @@ textarea.p-inputtextarea {
   position: relative;
   cursor: pointer;
 }
+.pinnedmsgtext .icon-color.userstagged:hover .usertaggedprofile {
+  display: none;
+}
 .usrtag {
   background-color: #1e65d3;
   color: #fff;
@@ -3860,6 +3874,10 @@ padding: 0px 30px;}
   border-bottom: 1px solid #f0f6f8;
   margin: 0rem 1.5rem 1.3rem;
 }
+.p-dialog .p-dialog-content {
+   
+  padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
 .copilotchatblock-popup .p-dialog .p-dialog-content {
   color: #000000 !important;
   /* padding: 0 0.5rem !important;
@@ -3988,4 +4006,15 @@ padding: 0px 30px;}
 .progress-bar-grid{
   top: 7px !important;
   position: relative !important;
+}
+
+
+
+.send-msgtext ol{
+  padding-left: 10px !important;
+}
+
+
+.copilotTemplatePreviewSvg svg{
+  width:100%;
 }

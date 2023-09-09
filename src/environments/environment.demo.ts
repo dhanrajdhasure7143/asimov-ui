@@ -26,6 +26,8 @@ export const environment = {
   subscriptionendpoint_url: "https://ezflow.demo.epsoftinc.com/subscriptions",
   //BPMN Platform URL
   camunda_url: "https://ezworkflow.demo.epsoftinc.com",
+  //A-Square/Copilot
+  asquare:"https://ezflow.dev.epsoftinc.com",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
