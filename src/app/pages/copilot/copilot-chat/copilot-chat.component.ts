@@ -168,7 +168,13 @@ export class CopilotChatComponent implements OnInit {
     var self = this;
     self.bpmnModeler.on("element.changed", function () {
       self.bpmnModeler.saveXML({ format: true }, function (err, xml) {
-        console.log("xml", xml); // xml data will get for every change
+        let payload={
+          conversationId:localStorage.getItem("conversationId"),
+          message:xml
+        }
+        self.rest_api.updateProcessLogGraph(payload).subscribe((response:any)=>{
+        },err=>{
+        })
       });
     });
   }
