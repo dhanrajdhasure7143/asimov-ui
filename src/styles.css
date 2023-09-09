@@ -4002,3 +4002,12 @@ padding: 0px 30px;}
 }
 
 
+
+.send-msgtext ol{
+  padding-left: 10px !important;
+}
+
+
+.copilotTemplatePreviewSvg svg{
+  width:100%;
+}

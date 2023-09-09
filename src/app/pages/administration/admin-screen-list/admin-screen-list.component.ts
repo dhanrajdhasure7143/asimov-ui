@@ -68,7 +68,7 @@ export class AdminScreenListComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Sucsess",
-              detail: "Record deleted!",
+              detail: "Record deleted successfully!",
             });
             this.spinner.hide();
             this.getScreenList();

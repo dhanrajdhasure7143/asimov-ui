@@ -262,7 +262,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Created successfully!", 
+              detail: "Dashboard created successfully!", 
               key:"test_1"          
             });
          
@@ -277,7 +277,7 @@ export class ConfigureDashboardComponent implements OnInit {
               this.messageService.add({
                 severity: "success",
                 summary: "Success",
-                detail: "Updated successfully!",         
+                detail: "Dashboard updated successfully!",         
         });
             },500);
       });
@@ -494,7 +494,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted successfully!",
+              detail: "Dashboard deleted successfully!",
             });
           });
         this.loader.hide();
