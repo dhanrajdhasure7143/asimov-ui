@@ -5,7 +5,7 @@
             <img src="../../../../../assets/images-n/gridicons/inviteuser-hover.svg" alt="inviteUser" class="hover-icon" />
         </span>
     </div>
-    <div class="gridparentdiv">
+    <div class="gridparentdiv userslistgrid">
         <app-dynamic-table [columns_list]="columns_list" [table_data]="userslist" (deleteItem)="deleteUser($event)"
             [screenTable]="'users_screen'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
             (updateItem)="modifyUser($event)" [show_search_field]="true" [show_column_filter]="true"
@@ -27,7 +27,7 @@
                         <label class="label-control">Email<span class="star">*</span></label>
                         <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
                             [disabled]="isUpdate" (change)="onEmailChange()" class="form-control data"
-                            (keyup)="myemailFunction()" pattern="^\S*[@]\S*[.]\S*$" email placeholder="Enter Emails"
+                            (keyup)="myemailFunction()" pattern="^[\w\.-]+@[\w\.-]+\.\w+$" email placeholder="Enter Emails"
                             pInputText required />
                         <span
                             *ngIf="((mail_id.invalid && inviteUser_form.submitted) || (mail_id.errors && mail_id.touched) )">

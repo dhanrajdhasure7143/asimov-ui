@@ -194,7 +194,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
-                detail:'Created Successfully',
+                detail:'Business process created successfully!',
               })
               this.router.navigateByUrl('/pages/businessProcess/createDiagram');
           }
