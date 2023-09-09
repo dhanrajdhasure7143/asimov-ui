@@ -1185,7 +1185,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.createFolderPopUP=false;
         let res_data:any = res;
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded successfully!'});
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
       res_data.data.forEach(item=>{
         let obj = item
         if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
