@@ -542,7 +542,7 @@ export class BpsHomeComponent implements OnInit {
               (res) => {
                 this.loader.hide();
                 if (
-                  res == "It is an ongoing project. Please contact Project Owner(s)."
+                  res == "It is an ongoing project.Please contact Project Owner(s)"
                 ) {
                     this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
                 } else {
