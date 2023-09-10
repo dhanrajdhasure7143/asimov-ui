@@ -3012,7 +3012,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             if (response.status != undefined) {
               // Swal.fire("Success", response.status, "success");
               this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+              setTimeout(() => {
               $("#close_bot_" + this.finalbot.botName).click();
+              }, 500);
             } else {
               // Swal.fire("Error", response.errorMessage, "error");
               this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})

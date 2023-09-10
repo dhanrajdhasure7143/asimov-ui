@@ -5,6 +5,9 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Inplace } from "primeng/inplace";
 
+interface option {
+  option: string;
+}
 @Component({
   selector: "app-configure-dashboard",
   templateUrl: "./configure-dashboard.component.html",
@@ -44,6 +47,9 @@ export class ConfigureDashboardComponent implements OnInit {
   chartColors: any[] = ["#065B93","#076AAB","#0879C4","#0A8EE6","#0A97F5","#0B8DE4","#149AF4","#2CA5F6","#44AFF7","#5CBAF9","#074169","#085081","#095F9A","#0A6EB2","#0A7DCB",];
   execution_Status: any[] = ["#1DCD82","#FF4956","#2C97DE","#688090","#CE1919","#EC6D26",];
   dashaboardcount: number;
+  options:option[];
+  selectedWidgetslist: any[]=[];
+  widgetslistIntialData: any[]=[];
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -59,6 +65,7 @@ export class ConfigureDashboardComponent implements OnInit {
       this.isCreate = this._paramsData.isCreate;
       this.isdefaultDashboard = params.defaultDashboard;
     });
+    this.options=[{option:"All"},{option:"Operational"}]
   }
 
   ngOnInit(): void {
@@ -262,7 +269,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Created successfully!", 
+              detail: "Dashboard created successfully!", 
               key:"test_1"          
             });
          
@@ -277,7 +284,7 @@ export class ConfigureDashboardComponent implements OnInit {
               this.messageService.add({
                 severity: "success",
                 summary: "Success",
-                detail: "Updated successfully!",         
+                detail: "Dashboard updated successfully!",         
         });
             },500);
       });
@@ -494,7 +501,7 @@ export class ConfigureDashboardComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Success",
-              detail: "Deleted successfully!",
+              detail: "Dashboard deleted successfully!",
             });
           });
         this.loader.hide();
@@ -519,5 +526,20 @@ export class ConfigureDashboardComponent implements OnInit {
     this.rest_api.getDashBoardsList().subscribe((res: any) => {
       this.dashaboardcount = res.data.length;
     });
+  }
+  onOptionSelect(option1) {
+    this.searchText='';
+    if (option1.value.option == "Operational") {
+      this.widgetslistIntialData=this.widgetslist;
+      this.selectedWidgetslist=[];
+       this.widgetslist.forEach(item => {
+        if (item.widgetAdded == true) {
+          this.selectedWidgetslist.push(item);
+        }})
+    this.widgetslist=this.selectedWidgetslist;
+    }
+    if(option1.value.option == "All"){
+      this.widgetslist=this.widgetslistIntialData;
+    }
   }
 }
