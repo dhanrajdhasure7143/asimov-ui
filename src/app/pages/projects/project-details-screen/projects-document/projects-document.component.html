@@ -145,7 +145,8 @@
             </p-card>
         </div>
         <span *ngIf="folder_files.length==0" class="w-100 d-flex justify-content-center">
-            This folder is empty. 
+            <span *ngIf="searchResults.length != 0">This folder is empty.</span>
+            <span *ngIf="searchResults.length == 0">No files found.</span>        
         </span>
            </div>
            <div *ngIf = "!isFolder" class="doctree">
@@ -194,8 +195,8 @@
                     </tr>
                     <tr *ngIf="folder_files.length==0" class="text-center">
                         <td colspan="5">
-                            <span>This folder is empty.</span>
-                        </td>
+                            <span *ngIf="searchResults.length != 0">This folder is empty.</span>
+                            <span *ngIf="searchResults.length == 0">No files found.</span>                          </td>
                     </tr>
                 </tbody>
             </table>
