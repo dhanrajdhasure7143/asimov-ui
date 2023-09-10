@@ -80,6 +80,8 @@ export class ProjectsDocumentComponent implements OnInit {
   breadcrumbSelectedIndex:any;
   renameDialog : boolean = false;
   dataSearchList:any[];
+  flatArray : any = [];
+  searchResults : any = []
 
   columns_list = [
     {ColumnName: "label",DisplayName: "Name",ShowGrid: true,ShowFilter: false},
@@ -988,6 +990,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedFolder_new = item;
     this.folder_files = [];
       this.folder_files = this.setFolderOrder(item.children);
+    this.flatArray =  this.flattenTree(this.folder_files)
     let obj = {label:item.label,key:item.key,id:item.id}
     this.breadcrumbItems.push(obj);
     this.breadcrumbItems = [...this.breadcrumbItems];
@@ -1574,12 +1577,19 @@ async getFileDataById(fileId) {
   }
 
   searchByName(searchTerm: string): void {
+    this.searchResults = [];
     const searchTermLowerCase = searchTerm.toLowerCase();
-    let searchResults = this.dataSearchList.filter(item =>
-      item.label.toLowerCase().includes(searchTermLowerCase)
+    if(this.breadcrumbItems.length == 0){
+     this.searchResults = this.documents_resData.filter(item =>
+      item.label.toLowerCase().indexOf(searchTermLowerCase) !== -1
     );
-    if(searchResults.length > 0){
-      searchResults.map(data=> {
+  } else {
+    this.searchResults = this.flatArray.filter(item =>
+      item.label.toLowerCase().indexOf(searchTermLowerCase) !== -1
+    );
+  }
+    if(this.searchResults.length > 0){
+      this.searchResults.map(data=> {
         data["is_selected"]=false;
       });
       this.createItems = [
@@ -1601,14 +1611,33 @@ async getFileDataById(fileId) {
       //   }
       //   return data;
       // });
-      this.folder_files = searchResults;
+      this.folder_files = this.searchResults;
     };
+    if(this.searchResults.length == 0){
+      this.folder_files = [];
+    }
     if(searchTerm.length == 0){
+      if(this.breadcrumbItems.length == 0){
         this.folder_files = this.files;
+      } else {
+        this.selectedFolder_new = this.findNodeByKey(this.breadcrumbItems[this.breadcrumbItems.length-1].key,this.files)
+        this.folder_files = this.setFolderOrder(this.selectedFolder_new.children);
+      }
         this.createItems = [
           {label: "Folder",command: () => {this.onCreateFolder()}},
           {label: "Document",command: () => {this.onCreateDocument()}}
         ];
+    }
+  }
+
+  flattenTree(nodes) {
+    let flatArray:any = [];
+    for (const node of nodes) {
+      flatArray.push(node);
+      if (node.children && node.children.length > 0) {
+        flatArray = flatArray.concat(this.flattenTree(node.children));
       }
+    }
+    return flatArray;
   }
 }
