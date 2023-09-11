@@ -123,7 +123,7 @@
                     <!-- <label class="label-control" for="KeyValuePair">Key Value Pair <span class="star">*</span></label> -->
                     <input type="file" (change)="keyValueFile=$event.target.files[0]" class="form-control"
                         id="KeyValuePair">
-                    <a class="downloadLink" *ngIf="updateenvdata.keyValue !=null"
+                    <a class="downloadLink" *ngIf="updateenvdata.keyValue" [hidden]="updateenvdata.keyValue !=null"
                         (click)="downloadKey(updateenvdata.environmentName,updateenvdata.keyValue)">Download Key</a>
                 </div>
                 <div class="col-md-12 p-0 form-group">
@@ -160,10 +160,10 @@
         <div class="createform-footer">
             <button class="btn new-cancelbtn" (click)="resetEnvForm()">Reset</button>
             <button class="btn bluebg-button btn-test"
-                [disabled]="environmentForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                [disabled]="environmentForm.invalid || !((password!='' && isKeyValuePair==false  )|| (isKeyValuePair==true && keyValueFile!=undefined))"
                 (click)="testConnection()">Test Connection</button>
             <button class="btn bluebg-button"
-                [disabled]=" environmentForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                [disabled]=" environmentForm.invalid || !((password!='' && isKeyValuePair==false  )|| (isKeyValuePair==true && keyValueFile!=undefined))"
                 (click)="submitEnvironmentForm()">
                 <span *ngIf="isCreate">Save</span>
                 <span *ngIf="!isCreate">Update</span>
