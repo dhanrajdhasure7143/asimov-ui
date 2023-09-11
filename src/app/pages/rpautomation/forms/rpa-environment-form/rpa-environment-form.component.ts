@@ -281,6 +281,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
   keypair(event) {
     this.isKeyValuePair = !this.isKeyValuePair;
     if (event.target.checked == true) {
+      this.environmentForm.get("password").clearValidators();
+      this.environmentForm.get("password").updateValueAndValidity();
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       }
@@ -293,6 +295,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
         this.keyValueFile = this.updateenvdata.keyValue
       }
     } else {
+      this.environmentForm.get("password").setValidators([Validators.required]);
+      this.environmentForm.get("password").updateValueAndValidity();
       if (this.keyValueFile == undefined) {
         this.keyValueFile = undefined
       }
