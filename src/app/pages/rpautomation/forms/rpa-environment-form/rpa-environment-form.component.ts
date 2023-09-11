@@ -279,10 +279,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   keypair(event) {
+    console.log("--- sample ---",this.updateenvdata)
     this.isKeyValuePair = !this.isKeyValuePair;
     if (event.target.checked == true) {
       this.environmentForm.get("password").clearValidators();
       this.environmentForm.get("password").updateValueAndValidity();
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       }
@@ -300,6 +302,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       if (this.keyValueFile == undefined) {
         this.keyValueFile = undefined
       }
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       } else {
