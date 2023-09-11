@@ -845,8 +845,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          x: "941px",
-          y: "396px",
+          // x: "941px",
+          // y: "396px",
+          x: "92%",
+          y: "80%",
         };
         this.stopNodeId = stopnode.id;
         this.nodes.push(stopnode);
@@ -3010,7 +3012,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             if (response.status != undefined) {
               // Swal.fire("Success", response.status, "success");
               this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+              setTimeout(() => {
               $("#close_bot_" + this.finalbot.botName).click();
+              }, 500);
             } else {
               // Swal.fire("Error", response.errorMessage, "error");
               this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
