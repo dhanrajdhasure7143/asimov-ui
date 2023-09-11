@@ -63,6 +63,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
+        this.environmentForm.get("password").clearValidators();
+        this.environmentForm.get("password").updateValueAndValidity();
       }
       //this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
       this.environmentForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
