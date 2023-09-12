@@ -42,6 +42,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   vcm_id:any;
   disableShowConformance:boolean = false;
   isConfNavigation:boolean=false;
+  buttonVisible: boolean = true;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, 
     private dt: DataTransferService,private rest:RestApiService, private messageService: MessageService,
               @Inject(APP_CONFIG) private config, ) { }
@@ -171,6 +172,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.dt.bpsHeaderValues("save&approval");
   }
   orchestartion(){
+    this.activatedRoute.queryParams.subscribe(params =>{
+      localStorage.setItem("bpsId", params.bpsId);
+      localStorage.setItem("ver", params.ver);
+      localStorage.setItem("ntype", params.ntype);
+    })
     this.dt.bpsHeaderValues("orchestartion");
   }
  deployNotation(){
