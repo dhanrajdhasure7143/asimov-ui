@@ -295,8 +295,8 @@ export class RestApiService{
     }
 
 
-    getChildLogs(botid,botverid,runid,logId){
-      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid+"?parentLogId="+logId);
+    getChildLogs(task_details,logId,taskId,iterationId){
+      return this.http.get("/rpa-service/logs/"+task_details.bot_id+"/"+task_details.version+"/"+task_details.run_id+"?parentLogId="+logId+"&parentTaskId="+taskId+"&parentIterationId="+iterationId);
     }
 
 
