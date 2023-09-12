@@ -25,7 +25,7 @@
           Refresh
         </span>
        
-        <span (click)="getChildLogs(selectedChildLog, selectedChildLog.log_id, 'REFRESH')"  *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
+        <span (click)="getChildLogs(selectedChildLog, selectedChildLog.log_id,selectedChildLog.task_id,selectedChildLog.parent_iteration_id, 'REFRESH')"  *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
           Refresh
         </span>
        
@@ -97,14 +97,14 @@
                           </span>
                          </span>
                         <span *ngIf="col.ColumnName=='task_name'">
-                          <span *ngIf="logs['child_logs_count']==0  && logs['task_name']!='Loop-Start'">
+                          <span *ngIf="logs['child_logs_exist']==false  && logs['task_name']!='Loop-Start'">
                             {{logs[col.ColumnName]}}
                           </span>
                           <span *ngIf="logs['task_name']=='Loop-Start'">
                             <a (click)="getLoopIterations(logs)" class="clickable">{{logs[col.ColumnName]}}</a>
                           </span>
-                          <span *ngIf="logs['child_logs_count']!=0 && logs['task_name']!='Loop-Start'">
-                            <a (click)="getChildLogs(logs, logs.log_id, 'FARWORD')" class="clickable">{{logs[col.ColumnName]}}</a>
+                          <span *ngIf="logs['child_logs_exist']!=false && logs['task_name']!='Loop-Start'">
+                            <a (click)="getChildLogs(logs, logs.log_id,logs.task_id,logs.iteration_id,'FARWORD')" class="clickable">{{logs[col.ColumnName]}}</a>
                           </span>
                         </span>
                           <span *ngIf="logs[col.ColumnName] == undefined || logs[col.ColumnName] == null || logs[col.ColumnName]==''">-</span>

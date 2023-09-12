@@ -181,11 +181,11 @@ export class RpaSoLogsComponent implements OnInit {
    }
 
 
-   getChildLogs(task_details, logId, traversalType:any){
+   getChildLogs(task_details,logId,taskId,parentIterationId, traversalType:any){
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
-    this.rest.getChildLogs(task_details.bot_id,task_details.version,task_details.run_id, logId).subscribe((response:any)=>{ 
+    this.rest.getChildLogs(task_details,logId,taskId,parentIterationId).subscribe((response:any)=>{ 
       if(traversalType=="FARWORD"){
         this.traversalLogs.push(task_details);
       }     
@@ -236,8 +236,8 @@ export class RpaSoLogsComponent implements OnInit {
    logsBackTraversal(){
       let logData:any=(this.traversalLogs.pop());
       this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
-      if(logData.parent_log_id!=null)
-        this.getChildLogs(logData, logData.parent_log_id, "BACKWARD");
+      if(logData.parent_log_id!=null && logData.parent_task_id!=null)
+        this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
       else
         this.ViewlogByrunid(logData.run_id, logData.version);
    }
@@ -366,7 +366,7 @@ export class RpaSoLogsComponent implements OnInit {
           item["bot_status"]="Success";
           if(item.status==6)
           item["bot_status"]="Failed";
-          item["child_logs_count"]=0;
+          item["child_logs_exist"]=false;
           return item;
         });
         this.selectedIterationTask=e;
