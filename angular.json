@@ -295,6 +295,12 @@
             },
             "staging":{
               "browserTarget": "asimov:build:staging"
+            },
+            "asquaredev":{
+              "browserTarget": "asimov:build:asquaredev"
+            },
+            "asquaredemo":{
+              "browserTarget": "asimov:build:asquaredemo"
             }
           }
         },
