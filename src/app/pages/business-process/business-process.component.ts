@@ -42,7 +42,6 @@ export class BusinessProcessComponent implements AfterViewChecked {
   vcm_id:any;
   disableShowConformance:boolean = false;
   isConfNavigation:boolean=false;
-  buttonVisible: boolean = true;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, 
     private dt: DataTransferService,private rest:RestApiService, private messageService: MessageService,
               @Inject(APP_CONFIG) private config, ) { }
