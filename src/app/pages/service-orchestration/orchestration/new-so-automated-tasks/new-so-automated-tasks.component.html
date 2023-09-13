@@ -8,7 +8,7 @@
                     <select class="rpa-control form-control" [(ngModel)]="selectedcategory" [disabled]="categaoriesList.length==1"
                         [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" (change)="applyFilter1($event.target.value)">
                         <option value="" disabled hidden>Select Process Group</option>
-                        <option value="null            " hidden disabled>Select Process Group</option>
+                        <option value="null" hidden disabled>Select Process Group</option>
                         <option [value]="" hidden disabled>Select Process Group</option>
                         <option [value]="null" hidden disabled>Select Process Group</option>
                         <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -102,7 +102,7 @@
       <img src="../../../../../assets/images/file.svg" alt="" class="testplus"> 
     </button>
 
-    <button *ngIf="selectedvalue!=''" id="autoViewLogs"  (click)="getprocesslogs(process_logs)" pTooltip="View Logs" tooltipPosition="top">
+    <button *ngIf="selectedvalue!=''" id="autoViewLogs"  (click)="getprocesslogs()" pTooltip="View Logs" tooltipPosition="top">
         <!-- <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus default-icon">
         <img src="../../../../../assets/images-n/gridicons/logs-default.svg" alt="" class="testplus hover-icon"> -->
         <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
@@ -707,27 +707,9 @@
             <!-- <div class="newpaginationdiv">
                 <mat-paginator class="newpaginationdiv" #paginator10 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
             </div> -->
-<ng-template #process_logs>
-    <div id='logsid' ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="OS-AddtaskPopup">
-        <div class="modal-header modelprhead class cursor-all-scroll" #draggableHandle>
-            <!-- <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i>
-    </span> -->
-            Logs
-            <!-- <span (click)="getprocesslog()" class="logrefresh">Refresh</span> -->
-
-            <button type="button" class="close pull-right" (click)="logs_modal.hide()">
-        <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
-      </button>
-
-            <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
+        <div *ngIf="popup">
+          <app-so-processlog [environments]="environments" (closeEvent)="popup=false" [processId]="processId1"></app-so-processlog>
         </div>
-    </div>
-        <div class="process-logs modal-body">
-            <app-so-processlog [processId]="processId1"></app-so-processlog>
-        </div>
-
-</ng-template>
 
 
 <div *ngIf="schedulepopup">
