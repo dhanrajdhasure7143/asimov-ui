@@ -208,4 +208,40 @@ export class columnList{
         {ColumnName:"status",DisplayName:"Status",filterWidget: "dropdown",ShowFilter: true,width:"flex: 0 0 8rem",filterType:"text",ShowGrid: true,sort: true,dropdownList:['Approved','Rejected','Pending','Completed']},
         {ColumnName:"action",DisplayName:"Actions", ShowGrid: true,sort: false,ShowFilter:false,width:"flex: 0 0 7rem"}
       ];
+
+
+      public orchestration_process_runs_columns=[
+        {ColumnName:"processRunId",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"environmentName",DisplayName:"Environment Name",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"processStartTime",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"runStatus",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+      ];
+
+      public orchestration_process_logs_columns=[
+        {ColumnName:"bot_name",DisplayName:"Bot Name",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"version",DisplayName:"Bot Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"start_time",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+      ];
+
+
+      public orchestration_bot_logs_columns=[
+        {ColumnName:"task_name",DisplayName:"Task Name",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"version",DisplayName:"Version",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"start_time",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Error Info",ShowFilter: false,width:"",filterType:"text"}
+      ]
+
+
+      public orchestration_child_logs_columns=[
+        {ColumnName:"task_name",DisplayName:"Task Name",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"iteration_id",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"start_time",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Error Info",ShowFilter: false,width:"",filterType:"text"}
+      ];
 }

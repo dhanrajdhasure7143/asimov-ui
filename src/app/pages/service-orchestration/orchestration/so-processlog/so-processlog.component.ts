@@ -1,312 +1,225 @@
-import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef, OnDestroy} from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import { Component, OnInit,Input, ChangeDetectorRef, OnDestroy, Output, EventEmitter} from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NewSoAutomatedTasksComponent } from '../new-so-automated-tasks/new-so-automated-tasks.component';
-import { NgxSpinnerService } from 'ngx-spinner';
-import Swal from 'sweetalert2';
+import { MessageService } from 'primeng/api';
+import { filter, map } from 'rxjs/operators';
+import moment from 'moment';
+import {columnList}  from '../../../../shared/model/table_columns'
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
-  styleUrls: ['./so-processlog.component.css']
+  styleUrls: ['./so-processlog.component.css'],
+  providers:[columnList]
 })
 export class SoProcesslogComponent implements OnInit {
 
   @Input('processId') public processId: any;
-  public logresponse: any;
-  public viewlogid1: any;
-  public plogrunid:any;
-  public runidresponse:any;
-  public respdata2: boolean = false;
-  public respdata3: boolean = false;
-  public loadLogsFlag:boolean=false;
-  @ViewChild("paginator1") paginator1: MatPaginator;
-  @ViewChild("paginator2") paginator2: MatPaginator;
-  @ViewChild("paginator3") paginator3: MatPaginator;
-  @ViewChild("sortp1") sortp1: MatSort;
-  @ViewChild("sortp2") sortp2: MatSort;
-  @ViewChild("sortp3") sortp3: MatSort;
-  public dataSourcep1: MatTableDataSource<any>;
-  public dataSourcep2: MatTableDataSource<any>;
-  public Environments:any;
-  public dataSourcep3: MatTableDataSource<any>;
-  public dataSourcep4: MatTableDataSource<any>;
-  public respdata1: boolean = false;
-  public interval: any = 0;
-  public displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
-  public displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
-  public displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  public displayedColoumnsp4: string[] =['taskName','iterationId','status','startTS','endTS',"errorMsg"];;
-  public interval1: any = 0;
-  public interval2: any = 0;
-  public interval4:any;
-  public selected_processRunId:any;
-  public selected_runid:any;
-  public logstatus:any;
-  public iterationsList:any=[];
-  public loopIterations:any=[];
-  constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
-
+  @Input('environments') public environments:any[];
+  @Output("closeEvent") public closeEvent:any=new EventEmitter<any>()
+  processRuns:any=[];
+  botLogsByRunId:any=[];
+  taskLogsByBot:any=[];
+  childLogsByTask:any=[];
+  columnList:any=[];
+  logsLoading:boolean=false;
+  display:boolean=true;
+  errormsg="";
+  logsData:any=[]
+  statusColors = {
+    New: '#3CA4F3',
+    Failure: '#FE665D',
+    Success: '#4BD963',
+    Killed:"#B91C1C",
+    Stopped: '#FE665D',
+    Running:"#FFA033"
+  };
+  isDataEmpty:boolean=false;
+  traversalLogs:any=[];
+  logsDisplayFlag:any="";
+  selectedRun:any;
+  selectedBot:any;
+  selectedTask:any;
+  selectedAutomationTask:any;
+  selectedIterationTask:any;
+  constructor( private rest:RestApiService, 
+    private changeDetectorRef: ChangeDetectorRef,
+    private messageService:MessageService,
+    private columns_list:columnList
+    ) { }
   ngOnInit() {
-    document.getElementById("viewlogid1").style.display="none";
-    document.getElementById("plogrunid").style.display="none";
-    document.getElementById("pbotrunid").style.display="none";
-    document.getElementById("loopStartLogs").style.display="none";
-    this.Environments=this.automated.environments;
-    //this.setProcesslog();
-    this.getprocesslog()
+    this.getProcessRuns();
   }
 
-  // setProcesslog(){
-  //   clearInterval(this.interval2)
-  //   this.getprocesslog()
-  //   this.loadLogsFlag=true;
-  //   this.interval  = setInterval(()=> { 
-  //     this.getprocesslog()
-  //   }, 3000);
-    
-  // }
-
-  getprocesslog(){
-    let logbyrunidresp1:any;
-    let resplogbyrun1: any = [];
-    if(this.processId != '' && this.processId != undefined){
-    this.logresponse=[];
-    document.getElementById("viewlogid1").style.display = "block";
-    this.loadLogsFlag=true
-    this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
-        this.logresponse = data;
-        this.loadLogsFlag=false
-        if(this.logresponse.length >0){
-          this.respdata1 = false;
-        }else {
-          this.respdata1 = true;
-        }
-        this.logresponse.forEach(rlog=>{
-          logbyrunidresp1=rlog;
-          logbyrunidresp1["processStartDate"]=logbyrunidresp1.processStartTime;
-          logbyrunidresp1["processEndDate"]=logbyrunidresp1.processEndTime;
-          logbyrunidresp1.processStartTime=logbyrunidresp1.processStartTime;
-          logbyrunidresp1.processEndTime=logbyrunidresp1.processEndTime;
-          resplogbyrun1.push(logbyrunidresp1)
-        });
-        this.runidresponse = resplogbyrun1;
-        this.runidresponse.sort((a,b) => a.processRunId > b.processRunId ? -1 : 1);
-        this.dataSourcep1 =  new MatTableDataSource(this.runidresponse);
-        this.changeDetectorRef.detectChanges();
-        this.dataSourcep1.sort=this.sortp1;
-        this.dataSourcep1.paginator=this.paginator1;
-    });
-    }
-  }
-
-  Processlogclose(){
-    document.getElementById("viewlogid1").style.display = "none";
-  }
-
-  Processlogclose2(){
-    document.getElementById("plogrunid").style.display = "none";
-  }
-
-  Processlogclose3(){
-    document.getElementById("pbotrunid").style.display = "none";
-  }
-
-  backplogrid(){
-    document.getElementById("plogrunid").style.display = "none";
-    document.getElementById("viewlogid1").style.display = "block";
-    //clearInterval(this.interval1)
-    //this.setProcesslog()
-    this.getprocesslog()
-  }
-
-  backpbotrunid(){
-    this.getprocessrunid(this.selected_processRunId)
-    document.getElementById("pbotrunid").style.display = "none";
-    document.getElementById("plogrunid").style.display = "block";
-    // clearInterval(this.interval1)
-  }
-
-  // setProcessByRunID(processRunId,runStatus){
-  //   clearInterval(this.interval)
-  //   this.getprocessrunid(processRunId)
-  //   this.logstatus=runStatus
-  // //   this.loadLogsFlag=true
-  // //   if(runStatus == "Running" || runStatus == "New" ){
-  // //   // this.interval2=setInterval(()=>{
-  // //   // this.getprocessrunid(processRunId)
-  // //   // },3000)
-  // // }
-  // }
-
-
-  getprocessrunid(processRunId){
-    this.selected_processRunId=processRunId;
-    let logbyrunidresp: any;
-    let resplogbyrun = [];
-    let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
-    document.getElementById("viewlogid1").style.display="none";
-    document.getElementById("plogrunid").style.display="block";
-    this.loadLogsFlag=true
-    this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
-      this.runidresponse = data;
-      this.loadLogsFlag=false;
-      if(this.runidresponse.length >0) {
-          this.respdata2 = false;
-        }else{
-          this.respdata2 = true;
-        }
-      this.runidresponse.forEach(rlog=>{
-        logbyrunidresp=rlog;
-        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
-        logbyrunidresp["end_date"]=logbyrunidresp.end_time;
-        logbyrunidresp.start_time=logbyrunidresp.start_time;
-        logbyrunidresp.end_time=logbyrunidresp.end_time;
-        resplogbyrun.push(logbyrunidresp)
-      });
-      this.runidresponse = resplogbyrun;
-      this.changeDetectorRef.detectChanges();
-      this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
-      this.dataSourcep2.sort=this.sortp2;
-      this.dataSourcep2.paginator=this.paginator2;
-      resplogbyrun = [];
-    });
-  }
-
-  // setLogByRunID(runid,bot_status){
-  //   clearInterval(this.interval2)
-  //   this.ViewlogByrunid(runid)
-  //   this.loadLogsFlag=true
-  //   if(bot_status == "Running" || bot_status == "New" ){
-  //   this.interval1=  setInterval(()=>{
-  //     this.ViewlogByrunid(runid)
-  //   },3000)
-  // }
-  // }
-
-  ViewlogByrunid(runid){
-    this.selected_runid=runid;
-    let responsedata:any=[];
-    let logbyrunidresp1:any;
-    let resplogbyrun1:any=[];
-    let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
-    let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
-    document.getElementById("plogrunid").style.display="none";
-    document.getElementById("pbotrunid").style.display="block";
-    
-    this.loadLogsFlag=true
-    this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
-      responsedata = data;
-      this.loadLogsFlag=false;
-      if(responsedata.length >0){
-        this.respdata2 = false;
-      }else{
-        this.respdata2 = true;
-      }
-      let flag=0;
-      let updatedTaskList:any=[...responsedata.map(rlog=>{
-        logbyrunidresp1=rlog;
-        logbyrunidresp1["start_date"]=logbyrunidresp1.start_time;
-        logbyrunidresp1["end_date"]=logbyrunidresp1.end_time;
-        logbyrunidresp1.start_time=logbyrunidresp1.start_time;
-        logbyrunidresp1.end_time=logbyrunidresp1.end_time;
-        return logbyrunidresp1;
-        //resplogbyrun1.push(logbyrunidresp1)
-      }).filter((item:any)=>{
-        if(item.task_name=='Loop-Start')
-        {
-          flag=1;
-          return item;
-        }
-        if(item.task_name=='Loop-End')
-          flag=0;
-        if(flag==0)
-          return item;
-      })];
-      this.dataSourcep3 = new MatTableDataSource(updatedTaskList);
-      this.changeDetectorRef.detectChanges();
-      this.dataSourcep3.sort=this.sortp3;
-      this.dataSourcep3.paginator=this.paginator3;
-      resplogbyrun1 = [];
-        })
+    getProcessRuns(){
+      this.logsLoading=true;
+      this.rest.getProcesslogsdata(this.processId).pipe(filter(data => Array.isArray(data)),map(runs=>this.assignEnvironmentNamesToProcessRuns(runs))).subscribe((response:any) =>{
+        this.logsLoading=false;
+        if(this.validateErrorMessage(response)) return (this.logsData=[]);
+        this.columnList=this.columns_list.orchestration_process_runs_columns;
+        this.logsDisplayFlag="RUNS";
+        this.processRuns=response;
+        this.logsData=response;
+       },(err=>{
+        this.handleException(err);
+       }));
     }
 
-    kill_bot_run(bot)
-    {
-      this.rest.updateBotLog(bot.bot_id,bot.version,bot.run_id).subscribe((res)=>{
-        this.getprocessrunid(this.selected_processRunId);
-      })
-    }
-
-
-    kill_process_run(processid,envid,runid)
-    {
-      this.rest.kill_process_log(processid,envid,runid).subscribe(data=>{
-        this.getprocesslog();
-      })
-    }
-
-    // ngOnDestroy(): void {
-    //   clearInterval(this.interval)
-    //   clearInterval(this.interval1)
-    //   clearInterval(this.interval2)
-    //   clearInterval(this.interval4)
-    // }
-
-
-    // setLoopLogs(element){
-    //   this.loadLogsFlag=true
-    //   this.interval4=setInterval(()=>{
-    //     this.getLoopLogs(element);
-    //   },3000)
-    // }
-
-
-    selectedLoopTask:any;
-    getLoopLogs(element){
-      this.iterationsList=[]
-      this.loadLogsFlag=true
-      this.rest.getLooplogs(element.bot_id, element.version, element.run_id ).subscribe((response:any)=>{
-        this.loadLogsFlag=false;
-        this.selectedLoopTask=element;
-        if(response.errorMessage==undefined)
-        {
-          this.loopIterations=[...response];
-          this.loopIterations=this.loopIterations.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1);
-          this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
-          //this.selectedIterationTask=e;
-          this.loopIterations.forEach(item=>{
-            if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
-              this.iterationsList.push(item.iterationId)    
-          })
-          this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
-          
-          // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
-          //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
-          // this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
-          this.dataSourcep4 = new MatTableDataSource(this.loopIterations);
-          document.getElementById('pbotrunid').style.display='none';
-          document.getElementById('loopStartLogs').style.display='block';
-        }
-        else
-        {
-          Swal.fire("Error",response.errorMessage,"error");
-        }      
+    getBotLogsByRunId(runData:any){
+      this.logsLoading=true;
+      this.rest.getprocessruniddata(runData.processId, runData.processRunId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+        this.logsLoading=false;
+        if(this.validateErrorMessage(response)) return (this.logsData=[]);
+        this.selectedRun=runData;
+        this.logsDisplayFlag="LOGS";
+        this.columnList=this.columns_list.orchestration_process_logs_columns;
+        this.logsData=response;
       },err=>{
-        this.loadLogsFlag=false;
-        Swal.fire("Error","Unable to open the loop logs.","error");
+        this.handleException(err)
+      })
+    }
+    
+    getTaskLogsByBot(botData:any){
+      this.logsLoading=true;
+      this.rest.getViewlogbyrunid(botData.bot_id,botData.version,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+        this.logsLoading=false;
+        if(this.validateErrorMessage(response)) return (this.logsData=[]);
+        this.logsDisplayFlag="BOT-LOGS";
+        this.selectedBot=botData;
+        this.columnList=this.columns_list.orchestration_bot_logs_columns;
+        let flag=0;
+        this.logsData=[...response.filter((item:any)=>{
+          if(item.task_name=='Loop-Start')
+          {
+            flag=1;
+            return item;
+          }
+          if(item.task_name=='Loop-End') flag=0;
+          if(flag==0) return item;
+        })];
+        
+      },err=>{
+        this.handleException(err);
       })
     }
 
-    backtasktable()
-    {
-      // clearInterval(this.interval4)
-      document.getElementById("loopStartLogs").style.display = "none";
-      document.getElementById("pbotrunid").style.display = "block";
+    getChildLogs(logs,logId, taskId, iterationId, type){
+      this.logsLoading=true;
+      this.rest.getChildLogs(logs, logId, taskId, iterationId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+        this.logsLoading=false;
+        this.columnList=this.columns_list.orchestration_child_logs_columns;
+        this.logsDisplayFlag="CHILD-LOGS";
+        if(this.validateErrorMessage(response)) return (this.logsData=[]);
+        if(type=='FARWORD') this.traversalLogs.push(logs);
+        this.selectedTask=logs;
+        this.selectedTask["actual_task_id"]=taskId;
+        this.selectedTask["actual_log_id"]=logId;
+        this.selectedTask["actual_iteration_id"]=iterationId;
+        this.logsData=[...response];
+      },err=>{
+        this.handleException(err);
+      })
     }
+
+    getLoopLogs(element){
+      this.logsLoading=true;
+      this.rest.getLooplogs(element.bot_id, element.version, element.run_id ).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["endTs", "startTs"]), map(data=>this.updateStatus(data,"status")))).subscribe((response:any)=>{
+        this.logsLoading=false;
+
+        this.logsDisplayFlag="LOOP-LOGS";    
+        this.columnList=[
+          {ColumnName:"taskName",DisplayName:"Task Name",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+          {ColumnName:"iterationId",DisplayName:"Iteration Id",ShowFilter: false,width:"",filterType:"text"},
+          {ColumnName:"startTs",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+          {ColumnName:"endTs",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+          {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+          {ColumnName:"errorMsg",DisplayName:"Error Info",ShowFilter: false,width:"",filterType:"text"}
+        ];
+        if(this.validateErrorMessage(response)) return (this.logsData=[]);
+        this.logsData=response;
+      },err=>{
+        this.handleException(err);
+      })
+    }
+
+
+    getAutomationLogs(logData:any){
+    }
+
+    killRun(log){
+      this.rest.kill_process_log(log.processId, log.envId, log.runId).subscribe(data=>{
+        this.getProcessRuns();
+      },err=>{
+        console.log(err)
+      })
+    }
+
+    getColor(status) {
+      return this.statusColors[status]?this.statusColors[status]:'';
+    }
+
+    closeLogsOverlay(){
+      this.display=false;
+      this.closeEvent.emit({close:true});
+    }
+
+    backTraversalLogs(){
+      let logData:any=(this.traversalLogs.pop());
+      this.traversalLogs.splice(0,this.traversalLogs.findIndex((item=>item==logData)));
+      if(logData.parent_log_id!=null && logData.parent_task_id!=null)
+        this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
+      else
+        this.getTaskLogsByBot(this.selectedBot);
+    }
+
+    assignEnvironmentNamesToProcessRuns=(runs:any)=>{
+      runs=runs.map((item:any)=>{
+        for(let i=0;i<this.environments.length;i++)
+          if(this.environments[i]["environmentId"]==item.envId)
+            item["environmentName"]=this.environments[i]["environmentName"];
+        item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
+        return item;
+      })
+      return runs;
+    }
+
+    updateDateFormat=(logs , columnArray)=>{
+      logs=logs.map((item:any)=>{
+        columnArray.forEach((dateItem:any)=>{
+          item[dateItem]=item[dateItem]!=null?(moment(item[dateItem]).format("MMM DD, yyyy, HH:mm:ss")):item[dateItem];
+        })
+        return item;
+      })
+      return logs;
+    }
+
+    updateStatus=(logs, column)=>{
+      logs=logs.map((item:any)=>{
+          if(item[column]==1)
+          item[column]="New";
+          if(item[column]==2)
+          item[column]="Running";
+          if(item[column]==3)
+          item[column]="Paused";
+          if(item[column]==4)
+          item[column]="Stopped";
+          if(item[column]==5)
+          item[column]="Success";
+          if(item[column]==6)
+          item[column]="Failed";
+          return item;
+      })
+      return logs;
+    }
+
+    validateErrorMessage(response:any){
+      return (response.errorMessage)?(this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})):false;    
+    }
+
+    handleException=(err)=>{
+     return (this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to fetch data"}),this.logsLoading=false);
+    }
+  
 }
+
 
 
 
