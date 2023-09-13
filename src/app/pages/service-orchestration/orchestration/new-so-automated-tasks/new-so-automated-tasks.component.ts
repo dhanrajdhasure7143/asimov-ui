@@ -1043,10 +1043,11 @@ resetsla(){
     })
   }
 
-  getprocesslogs(template){
+  getprocesslogs(){
+
     //document.getElementById("filters").style.display = "none";
     // this.logs_modal=this.modalService.show(template,{class:"logs-modal"})
-    this.logs_modal=this.modalService.show(template,{class:"modal-lg"})
+    //this.logs_modal=this.modalService.show(template,{class:"modal-lg"})
     this.processId1 = this.selectedvalue;
     this.popup=true;
    
