@@ -10,7 +10,6 @@
     cursor: pointer;
     padding-right: 10px;
     width: 98%;
-    pointer-events: none !important;
 }
 
 .diagram_container-copilot_chat{
