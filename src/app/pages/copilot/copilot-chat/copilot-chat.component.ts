@@ -57,17 +57,12 @@ export class CopilotChatComponent implements OnInit {
     this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
         setTimeout(() => {
-          this.bpmnModeler = new BpmnJS({
-            container: ".diagram_container-copilot",
-          });
+          this.bpmnModeler = new BpmnJS({ container: ".diagram_container-copilot",});
         }, 300);
-        if(isNaN(params.templateId) && params.templateId != "Others")
+        if(isNaN(params.templateId) && params.templateId != "Others"){
           this.getAutomatedProcess(atob(params.templateId));
-        else if (params.templateId != "Others")
-          this.getTemplatesByProcessId(params.process_id, params.templateId);
-        else
+        }else
           this.getConversationId();
-    
       }
       this.loader = false;
     });
@@ -82,19 +77,15 @@ export class CopilotChatComponent implements OnInit {
  
 
   getTemplatesByProcessId(processId, templateId) {
-    this.rest_api.getCopilotTemplatesList(processId).subscribe(
-      (response: any) => {
-        if (response) {
-          let template = response.find(
-            (item: any) => item.template_id == templateId
-          );
-          this.loadBpmnwithXML(atob(template.bpmn_xml));
-        }
+    this.rest_api.getCopilotTemplatesList(processId).subscribe((response: any) => {
+        let template:any;
+        if(response) (template = response.find((item: any) => item.templateId == templateId),this.loadBpmnwithXML({bpmnXml:template.bpmnXml,isUpdate:true}))
       });
   }
 
 
   sendMessage(value?: any, messageType?: String) {
+    console.log("testing")
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -122,15 +113,12 @@ export class CopilotChatComponent implements OnInit {
   }
 
   loadBpmnwithXML(bpmnActionDetails:any) {
-    console.log(bpmnActionDetails)
     this.isDialogVisible = false;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
-    console.log("validate", bpmnPath)
     this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
         console.error("could not import BPMN EZFlow notation", err);
       }
-      
     });
     if(!(bpmnActionDetails?.isUpdate)){
       this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
@@ -156,7 +144,7 @@ export class CopilotChatComponent implements OnInit {
     setTimeout(() => {
       let canvas = previewMolder.get("canvas");
       canvas.zoom("fit-viewport");
-    }, 500);
+    }, 200);
   }
 
   notationFittoScreen() {
@@ -269,11 +257,9 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
-  sendProcessLogs()
-  {
+  sendProcessLogs(){
     console.log(this.tableForm.valid) 
-    if(this.tableForm.valid)
-    {
+    if(this.tableForm.valid){
       let tableData=[...this.tableForm.value];
       tableData=tableData.map((item:any)=>{
         (["days", "minutes", "hours"]).forEach((attr:any)=>{
@@ -306,7 +292,7 @@ export class CopilotChatComponent implements OnInit {
       this.messageService.add({
         severity: "error",
         summary: "Error",
-        detail: "Please fill time in all fieldss "
+        detail: "Please fill time in all fields "
       });
     
   }
@@ -365,8 +351,7 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
-  displaylogCollectionForm(res:any)
-  {
+  displaylogCollectionForm(res:any){
     let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
     values= JSON.parse( atob(values[0].values));
     values.forEach((item:any)=>{
@@ -386,21 +371,23 @@ export class CopilotChatComponent implements OnInit {
 
 
   getAutomatedProcess(intent:any){
-    let req_body:any
-    if(this.validateJson(intent)){
-      let json=JSON.parse(intent);
-      req_body={
-        "userId":localStorage.getItem("ProfileuserId"),
-        "tenantId":localStorage.getItem("tenantName"),
-        "message":json.message
-      }
+    console.log(intent)
+    let req_body:any= {
+      "userId":localStorage.getItem("ProfileuserId"),
+      "tenantId":localStorage.getItem("tenantName")
     }
-    else{
-      req_body={
-        "userId":localStorage.getItem("ProfileuserId"),
-        "tenantId":localStorage.getItem("tenantName"),
-        "intent":intent
+
+    if(this.validateJson(intent)){
+      let parsedData=JSON.parse(intent);
+      if(parsedData.isTemplate){
+        this.getTemplatesByProcessId(parsedData.processId,parsedData.templateId)
+        req_body["intent"]=parsedData.templateName
+        req_body["templateId"]=parsedData.templateId;
+      }else{
+        req_body["message"]=parsedData.message
       }
+    }else{
+      req_body["intent"]=intent
     }
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
       this.currentMessage=res;
@@ -480,14 +467,11 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  validateJson(intentDetails:any)
-  {
+  validateJson(intentDetails:any){
     try{
       let data=JSON.parse(intentDetails);
       return data;
-    }
-    catch(e)
-    {
+    }catch(e){
       return false;
     }
   }
