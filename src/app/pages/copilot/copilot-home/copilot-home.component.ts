@@ -41,12 +41,12 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   navigateToCopilotChatScreen(template: any) {
-
-    console.log(this.selectedFunction)
     if(template=='Others')
       this.router.navigate(["./pages/copilot/chat"], { queryParams: { templateId: 'Others' } })
-    else
-      this.router.navigate(["./pages/copilot/chat"], { queryParams: { templateId: template.template_id, process_id:this.selectedFunction.process_id } })
+    else{
+      const templateData:any =  { templateId: template.templateId, templateName:template.templateName,isTemplate:true,processId:template.processId };
+      this.router.navigate(["./pages/copilot/chat"], { queryParams:{templateId:  btoa(JSON.stringify(templateData))}});
+    }
   }
 
   sendMessage() {

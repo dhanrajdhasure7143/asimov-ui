@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row copilot-home">
     <div class="col-md-12 pl-0 pr-0">
         <div class="maincontent">
             <div class="h-100">
@@ -118,7 +118,7 @@
                 <div *ngFor="let template of templates; let i = index" class="col-4 form-group cardlist">
                     <p-card (click)="navigateToCopilotChatScreen(template)">
                         <ng-template pTemplate="header">
-                            <div [hidden]="!template.isExicuted" class="bps_overlay readOnly"
+                            <div [hidden]="!template.isExicuted" class="bps_overlay readOnly diagram_copilot-template"
                                 [class]="'diagram_copilot'+i" id="_diagram" (loaded)="loadBpmnInTemplate(template,i)"
                                 style="position:relative;z-index:100;"></div>
                             <p-skeleton [hidden]="template.isExicuted" width="10rem" height="4rem"></p-skeleton>
