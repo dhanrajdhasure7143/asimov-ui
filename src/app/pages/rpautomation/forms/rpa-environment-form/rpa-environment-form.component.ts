@@ -63,6 +63,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
+        this.environmentForm.get("password").clearValidators();
+        this.environmentForm.get("password").updateValueAndValidity();
       }
       //this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
       this.environmentForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
@@ -279,8 +281,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   keypair(event) {
+    console.log("--- sample ---",this.updateenvdata)
     this.isKeyValuePair = !this.isKeyValuePair;
     if (event.target.checked == true) {
+      this.environmentForm.get("password").clearValidators();
+      this.environmentForm.get("password").updateValueAndValidity();
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       }
@@ -293,9 +299,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
         this.keyValueFile = this.updateenvdata.keyValue
       }
     } else {
+      this.environmentForm.get("password").setValidators([Validators.required]);
+      this.environmentForm.get("password").updateValueAndValidity();
       if (this.keyValueFile == undefined) {
         this.keyValueFile = undefined
       }
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       } else {

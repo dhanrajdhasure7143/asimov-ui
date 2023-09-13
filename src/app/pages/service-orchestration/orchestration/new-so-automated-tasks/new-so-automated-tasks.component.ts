@@ -829,22 +829,18 @@ resetsla(){
   }
 
 
-  assignhuman(task)
-  {
+  assignhuman(task){
     let botId=$("#"+task.taskId+"__select").val();
-    if(botId!=0)
-    {
+    if(botId!=0){
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,task.taskId,"","Human","").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,task.taskId,task.assignedUserId,"Human","").subscribe(data=>{
         let response:any=data;
          this.spinner.hide();
-        if(response.status!=undefined)
-        {
+        if(response.status!=undefined){
           this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
-          if(this.selectedvalue!="")
-          {
+          this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          if(this.selectedvalue!=""){
             this.checkTaskAssigned(task.processId)
           }
         }else
@@ -872,10 +868,12 @@ resetsla(){
   }
 
 
-  resetbot(taskid:any)
-  {
-    $("#"+taskid+"__select").val((this.responsedata.find(data=>data.taskId==taskid).botId));
-  }
+  resetbot(task:any){
+      if(task.taskType=="Automated")
+        $("#"+task.taskId+"__select").val((this.responsedata.find(data=>data.taskId==task.taskId).botId));
+      else
+        $("#"+task.taskId+"__select").val((this.responsedata.find(data=>data.taskId==task.taskId).assignedUserId));
+    }  
 
 
   startprocess()

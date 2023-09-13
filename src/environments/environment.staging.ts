@@ -24,6 +24,8 @@ export const environment = {
   projectendpoint_url:'https://ezflow.staging.epsoftinc.com/pcs',
   camunda_url : "https://ezworkflow.staging.epsoftinc.com",
   socialLoginRedirectURL: 'https://ezflow.staging.epsoftinc.com/#/user',
+  //A-Square/Copilot
+  asquare:"https://ezflow.dev.epsoftinc.com",
 
   //DB Connector
   dbConnectorHost: "pg-0",

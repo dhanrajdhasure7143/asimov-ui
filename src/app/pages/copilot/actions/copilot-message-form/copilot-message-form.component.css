@@ -1,0 +1,24 @@
+.messageFormHeader{
+    font-size: 20px;
+    font-weight: bold;
+    color:#4189d1
+}
+.messageFormDescription{
+    font-size:10px;
+    font-weight: normal;
+    color:#000000
+}
+.messageFormFooter{
+    font-size:10px;
+    font-weight: normal;
+    color:#000000
+}
+.messageFormElements{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputRequired{
+    color: red;
+    font-weight: bold;
+}
