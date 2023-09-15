@@ -17,11 +17,8 @@ interface City {
   styleUrls: ["./copilot-chat.component.css"],
 })
 export class CopilotChatComponent implements OnInit {
-  @ViewChild("op", { static: false }) overlayModel;
   @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
-  @ViewChild("exportSVGtoPDF") exportSVGtoPDF: ElementRef;
-  @ViewChild("canvas") canvas: ElementRef;
-  @ViewChild("render") render: ElementRef;
+  @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
@@ -43,6 +40,231 @@ export class CopilotChatComponent implements OnInit {
   tableForm: FormArray;
   currentMessage:any;
   isGraphLoaded:boolean=false;
+  loadData:any={
+    "conversationId":"sample",
+    "data":{
+      "uuid":"form_uuid2",
+      "message":["This is sample text response", "This is sample text response2"],
+      "components":["Form"],
+      "values":[
+    
+          [
+    
+              {
+    
+                  "header":"Form header",
+    
+                  "description":"form description",
+    
+                  "footer":"form footer",
+    
+                  "name":"MyForm",
+    
+                  "elements":[
+    
+                      {
+    
+                          "type":"text",
+    
+                          "name":"firstName",
+    
+                          "placeholder":"Please enter first name",
+    
+                          "label": "First Name",
+    
+                          "required":true,
+    
+                          "errorMessage":" Please enter first name",
+    
+                          "value":"John"
+    
+                      },
+    
+                      {
+    
+                        "type":"text",
+    
+                        "name":"lastName",
+    
+                        "placeholder":"Please enter last name",
+    
+                        "label": "Last Name",
+    
+                        "errorMessage":" Please enter last name",
+
+                        "value":"sample"
+    
+                    },
+    
+                      {
+    
+                          "type":"radio",
+    
+                          "name":"gender",
+    
+                          "placeholder":"Please select gender",
+    
+                          "label": "Gender",
+    
+                          "required":true,
+    
+                          "errorMessage":" Please select gender",
+    
+                          "value":"Male",
+    
+                          "options":[
+    
+                              {
+    
+                                  "key":"Male",
+    
+                                  "value":"Male"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Female",
+    
+                                  "value":"Female"
+    
+                              }
+    
+                          ]
+    
+                      },
+    
+                      {
+    
+                          "type":"select",
+    
+                          "name":"profession",
+    
+                          "placeholder":"Please enter profession",
+    
+                          "label": "Profession",
+    
+                          "errorMessage":" Please select profession",
+    
+                          "value":"eng",
+    
+                          "options":[
+    
+                              {
+    
+                                  "key":"Engineer",
+    
+                                  "value":"eng"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Doctor",
+    
+                                  "value":"dr"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Student",
+    
+                                  "value":"st"
+    
+                              }
+    
+                          ]
+    
+                      },
+    
+                      {
+    
+                          "type":"checkbox",
+    
+                          "name":"habits",
+    
+                          "placeholder":"Please select habits",
+    
+                          "label": "Habits",
+    
+                          "value":["Cricket", "Movies"],
+    
+                          "options":[
+    
+                              {
+    
+                                  "key":"Cricket",
+    
+                                  "value":"Cricket"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Movies",
+    
+                                  "value":"Movies"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Music",
+    
+                                  "value":"Music"
+    
+                              },
+    
+                              {
+    
+                                  "key":"Football",
+    
+                                  "value":"Football"
+    
+                              }
+    
+                          ]
+    
+                      }
+    
+                  ],
+    
+                  "actions":[
+    
+                      {
+    
+                          "type":"submit",
+    
+                          "label":"Submit"
+    
+                      },
+    
+                      {
+    
+                          "type":"Reset"
+    
+                      },
+    
+                      {
+    
+                          "type":"Cancel",
+    
+                          "label":"Cancel"
+    
+                      }
+    
+                  ]
+    
+              }
+    
+          ]
+    
+      ],
+    },
+    "messageSourceType":"SYSTEM",
+    "endConversation":false
+  }
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
@@ -52,25 +274,21 @@ export class CopilotChatComponent implements OnInit {
     private main_rest:RestApiService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loader = true;
+    this.createForm();
     this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
-        setTimeout(() => {
-          this.bpmnModeler = new BpmnJS({ container: ".diagram_container-copilot",});
-        }, 300);
-        if(isNaN(params.templateId) && params.templateId != "Others"){
-          this.getAutomatedProcess(atob(params.templateId));
-        }else
-          this.getConversationId();
+        this.loadBpmnContainer();
+        (isNaN(params.templateId) && params.templateId != "Others")?this.getAutomatedProcess(atob(params.templateId)):this.getConversationId();
       }
       this.loader = false;
     });
-    this.dt.currentMessage2.subscribe((response:any)=>{
-      console.log("subject check",response);
-    
-    })
-    this.createForm();
+  }
+
+  loadBpmnContainer(){
+    let container:any=this.diagramContainer?.nativeElement;
+    (!container)?setTimeout(() => this.loadBpmnContainer(), 100):this.bpmnModeler = new BpmnJS({container});
   }
 
 
@@ -79,13 +297,12 @@ export class CopilotChatComponent implements OnInit {
   getTemplatesByProcessId(processId, templateId) {
     this.rest_api.getCopilotTemplatesList(processId).subscribe((response: any) => {
         let template:any;
-        if(response) (template = response.find((item: any) => item.templateId == templateId),this.loadBpmnwithXML({bpmnXml:template.bpmnXml,isUpdate:true}))
+        if(response) (template = response.find((item: any) => item.templateId == templateId),this.loadBpmnwithXML({bpmnXml:template.bpmnXml,isUpdate:true}));
       });
   }
 
 
   sendMessage(value?: any, messageType?: String) {
-    console.log("testing")
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -214,13 +431,14 @@ export class CopilotChatComponent implements OnInit {
       (res:any)=>{
         resdata = res
         this.currentMessage=res;
-        this.messages.push(resdata);
-        localStorage.setItem("conversationId",resdata.conversationId)
+        this.messages.push(resdata); 
+        localStorage.setItem("conversationId", res.conversationId)
+        this.messages.push(this.loadData);
       }
     )
   }
 
-  public processMessageAction = (event:any) =>{
+  processMessageAction = (event:any) =>{
     if (event.actionType==='Button'){
         this.messages.push({
             message:event?.data?.label,
@@ -229,10 +447,10 @@ export class CopilotChatComponent implements OnInit {
           this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
     }else if (event.actionType==='Form'){
       this.messages.push({
-        message:event?.data?.label,
+        message:event?.data?.message,
         messageSourceType:localStorage.getItem("ProfileuserId")
       })
-          this.sendFormAction(event?.data)
+      this.sendFormAction(event.data)
     }else if (event.actionType==='Card'){
       this.messages.push({
         message:event?.data?.label,
@@ -309,7 +527,8 @@ export class CopilotChatComponent implements OnInit {
   }
 
 
-  public sendFormAction = (data:any) =>{
+  public sendFormAction = (event:any) =>{
+    this.sendUserAction(event)
     //TODO: Send request to backend
   }
 
@@ -347,7 +566,7 @@ export class CopilotChatComponent implements OnInit {
         }, 500)
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
-
+      console.log(err);
     })
   }
 

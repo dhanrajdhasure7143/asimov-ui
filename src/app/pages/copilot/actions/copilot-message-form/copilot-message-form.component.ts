@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-copilot-message-form',
@@ -12,33 +13,36 @@ export class CopilotMessageFormComponent implements OnInit {
   @Output()
   formAction= new EventEmitter<any>();
   formId = 'form-'+new Date().getTime();
-
-  userForm:FormGroup; // variable is created of type FormGroup is created
-  constructor( private fb: FormBuilder) {
-    // Form element defined below
-    let form:any ={}
-    this.formInputData?.elements.map((i:any)=>{
-      form[i.name]= i.value
-    })
-    this.userForm = this.fb.group(form);
+  userForm:FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private messageService:MessageService
+    ) {
   }
-  // fb: FormBuilder= new FormBuilder();
 
   ngOnInit() {
-    
-   // Form element defined below
-   let form:any ={}
-   this.formInputData?.elements.map((i:any)=>{
-     form[i.name]= i.value
-   })
-   this.userForm = this.fb.group(form);
+    this.createForm();
   }
 
+  createForm(){
+    let formData:any ={}
+    this.formInputData?.elements.map((element:any)=>{
+      let validations:any=[];
+      if(element.required) validations.push(Validators.required);
+      (element.type=="checkbox")?(formData[element.name]=[],element.options.forEach((optionItem:any) => {
+          formData[element.name].push(this.fb.group({[optionItem.value]:(Array.isArray(element.value)?element.value.includes(optionItem.value):false)}));
+        }),formData[element.name] = this.fb.array(formData[element.name])):formData[element.name]=new FormControl(element.value , Validators.compose(validations))
+    });
+    this.userForm = this.fb.group(formData);
+  }
+
+
+
+
   processButtonAction(event:any){
-    console.log("processButtonAction received from child "+event)
-    console.log(event.target.value)
-    console.log(this.userForm)
-    
+    (event?.type=="submit")?((this.userForm.valid)?this.formAction.emit({message:"submit",data:this.userForm.value}):
+    this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'})):
+    this.formAction.emit(event);
   }
   processInputAction(event:any){
     console.log("processInputAction received from child "+event)
@@ -47,6 +51,6 @@ export class CopilotMessageFormComponent implements OnInit {
 
   processRadioAction(event:any){
     console.log("processInputAction received from child "+event)
-    
   }
+
 }
