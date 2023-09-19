@@ -398,9 +398,14 @@ export class CopilotChatComponent implements OnInit {
     this.main_rest.fileupload(fd).subscribe(res => {
       console.log(res)
       let processId = Math.floor(100000 + Math.random() * 900000);
-      this.messages.push({
-        message:selectedFile.name,
-        messageSourceType:localStorage.getItem("ProfileuserId")
+      // this.messages.push({
+      //   message:selectedFile.name,
+      //   messageSourceType:localStorage.getItem("ProfileuserId")
+      // })
+
+      this.sendUserAction({
+        message:"Submit",
+        jsonData:selectedFile.name
       })
     })
   }
