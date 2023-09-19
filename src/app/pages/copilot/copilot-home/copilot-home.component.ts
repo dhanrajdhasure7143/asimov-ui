@@ -55,6 +55,9 @@ export class CopilotHomeComponent implements OnInit {
   // }
 
   getFunctionsList() {
+    this.restService.getCopilotFunctionsList().subscribe((response: any) => {
+      console.log(response)
+    });
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
