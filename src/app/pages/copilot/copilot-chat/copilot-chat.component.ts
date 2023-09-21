@@ -40,6 +40,8 @@ export class CopilotChatComponent implements OnInit {
   tableForm: FormArray;
   currentMessage:any;
   isGraphLoaded:boolean=false;
+  isTableLoaded:boolean=false;
+  previewLabel:any="";
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
@@ -242,6 +244,7 @@ export class CopilotChatComponent implements OnInit {
           this.sendListAction(event?.data?.submitValue)
     }else if (event.actionType=='bpmn'){
       this.isDialogVisible=true;
+      this.previewLabel=event.data.label;
       setTimeout(()=>{this.previewBpmn(event.data)},500)
     }
     else if (event.actionType=='UploadFileAction'){
@@ -253,7 +256,6 @@ export class CopilotChatComponent implements OnInit {
   }
 
   sendProcessLogs(){
-    console.log(this.tableForm.valid) 
     if(this.tableForm.valid){
       let tableData=[...this.tableForm.value];
       tableData=tableData.map((item:any)=>{
@@ -362,6 +364,7 @@ export class CopilotChatComponent implements OnInit {
     this.createForm();
     setTimeout(()=>{
       this.showTable=true;
+      this.isTableLoaded=true;
     },500)
   }
 
@@ -406,7 +409,7 @@ export class CopilotChatComponent implements OnInit {
       this.isChatLoad=false;
       this.sendUserAction({
         message:"Submit",
-        jsonData:selectedFile.name
+        jsonData:JSON.stringify({fileName:selectedFile.name})
       })
     },err=>{
       this.isChatLoad=false;
@@ -477,4 +480,11 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
+  autoGrowTextZone(e) {
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  }
 }
