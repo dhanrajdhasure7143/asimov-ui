@@ -15,8 +15,8 @@
         <div class="maincontent">
             <div class="h-100">
                 <div class="row main-content-head">
-                    <div class="col-md-6 pl-0">
-                        <h3>
+                    <div class="col-md-8 pl-0">
+                        <div>
                             <span class="title_text">
                                 <a class="imageBox" routerLink="../home">
                                     <img class="default-arrow"
@@ -26,10 +26,10 @@
                                 </a>
                                 &nbsp;
                                 Conversational AI Process Automation</span>
-
-                        </h3>
+                                <span *ngIf="isTableLoaded && !(showTable)" class="pull-right clickable"><a (click)="showTable=true;">Back to process event log ></a></span>
+                            </div>
                     </div>
-                    <div class="col-md-6 title-help">
+                    <div class="col-md-4 title-help">
                         <a href="#"> Need Help <span class="ml-1"><img src="../../../../assets/copilot/needhelp.svg"
                                     alt="" /></span></a>
                     </div>
@@ -112,9 +112,11 @@
                                 <img src="./../../../../assets/images-n/co-pilot/copilot_loader.gif" alt="chat_loader"
                                     class="loader-fix">
                             </span>
-                            <textarea [(ngModel)]="usermessage" class="form-control message-input"
+                            <div class="testing-input">
+                                <textarea rows="1" [(ngModel)]="usermessage" class="form-control message-input"
                                 placeholder="Type to Automate" (keyup.enter)="sendMessage(usermessage,'MESSAGE')"
-                                (keydown.enter)="$event.preventDefault()"></textarea>
+                                (keydown.enter)="$event.preventDefault()" id="texttype" (keyup)="autoGrowTextZone($event)"  pInputTextarea autoResize="autoResize"></textarea>
+                            </div>
                             <button [disabled]="isChatLoad" (click)="sendMessage(usermessage, 'MESSAGE')"
                                 class="msg-snd-btn">
                                 <img src="./../../../../assets/copilot/textareaicon.svg" alt=""
