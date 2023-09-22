@@ -83,7 +83,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.projectendpoint_url + req.url;
         else if (req.url.indexOf('subscriptionservice') > -1)
             url = this.config.subscriptionendpoint_url + req.url;
-        else if (req.url.indexOf('a-square') > -1){
+        else if (req.url.indexOf('a-square/v1') > -1){
             console.log(this.config.copilot,req.url)
             url = this.config.asquare + req.url;
         }

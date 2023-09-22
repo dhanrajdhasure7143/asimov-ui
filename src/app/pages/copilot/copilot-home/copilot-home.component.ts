@@ -41,23 +41,23 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   navigateToCopilotChatScreen(template: any) {
-
-    console.log(this.selectedFunction)
     if(template=='Others')
       this.router.navigate(["./pages/copilot/chat"], { queryParams: { templateId: 'Others' } })
-    else
-      this.router.navigate(["./pages/copilot/chat"], { queryParams: { templateId: template.template_id, process_id:this.selectedFunction.process_id } })
+    else{
+      const templateData:any =  { templateId: template.templateId, templateName:template.templateName,isTemplate:true,processId:template.processId };
+      this.router.navigate(["./pages/copilot/chat"], { queryParams:{templateId:  btoa(JSON.stringify(templateData))}});
+    }
   }
 
-  sendMessage() {
-    this.historyList.push({ label: this.message })
-    this.message = ""
-  }
+  // sendMessage() {
+  //   this.historyList.push({ label: this.message })
+  //   this.message = ""
+  // }
 
   getFunctionsList() {
-    this.restService.getCopilotFunctionsList().subscribe((res)=>{
-      console.log(res)
-    })
+    this.restService.getCopilotFunctionsList().subscribe((response: any) => {
+      console.log(response)
+    });
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
@@ -69,10 +69,8 @@ export class CopilotHomeComponent implements OnInit {
   }
 
   getProcessesByFunctionId(functionItem: any) {
-    console.log(functionItem)
     this.rest_api.getCopilotProcessesList(functionItem.functionId).subscribe((response: any) => {
       this.selectedProcess = functionItem;
-      console.log(response)
       this.copilotFlag = "PROCESS"
       this.processList = response;
     },err=>{
@@ -130,6 +128,7 @@ export class CopilotHomeComponent implements OnInit {
       this.templates[index]["isExicuted"] = true;
     }, 1500);
   }
+
   navigateToCopilotChatScreenWithIntent(intent:any) {
     this.router.navigate(["./pages/copilot/chat"],{ queryParams: { templateId: btoa(intent)}})
   }
