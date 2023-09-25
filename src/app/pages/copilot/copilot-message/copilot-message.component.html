@@ -4,7 +4,7 @@
             <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
             <div class="sys-image">
                 <!-- <img src="../../../../assets/copilot/user.svg" alt="" /> -->
-                <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff'}" shape="circle"></p-avatar>
+                <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff','font-size':'16px'}" shape="circle"></p-avatar>
             </div>
         </div>
         <div></div>
@@ -22,14 +22,17 @@
                         <div *ngFor="let b of sentMessage?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
                             <app-copilot-message-button *ngIf="b?.type!='processLogsUpload' && b?.type!='processLogFileUpload'" [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
                             <span *ngIf="b?.type=='processLogFileUpload'" >
-                                    <span class="process-log-btn-pos" (change)="processUploadFileAction($event)">
+                                    <span class="process-log-btn-pos" [hidden]="b?.disabled" (change)="processUploadFileAction($event)">
                                         <input type="file" id="fileInput" style="display: none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xes, .xes.gz">
                                         <label for="fileInput" class="btn btn-primary text-white">{{b?.label}}</label>    
+                                    </span>
+                                    <span [hidden]="!b?.disabled">
+                                        <button class="btn btn-primary" disabled="true">{{b?.label}}</button>
                                     </span>
                             </span>
                             &nbsp;
                             <span *ngIf="b?.type=='processLogsUpload'" >
-                                <button (click)="processProcessLog()" class="btn btn-primary text-white">{{b?.label}}</button>
+                                <button (click)="processProcessLog()" [disabled]="b?.disabled" class="btn btn-primary text-white">{{b?.label}}</button>
                             </span>
                         </div>
                     </div>

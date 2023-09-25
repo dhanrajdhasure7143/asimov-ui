@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Table } from "primeng/table";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
@@ -77,7 +77,7 @@ export class DynamicTableComponent implements OnInit {
     Stopped:"#FE665D"
   };
   searchValue: string;
-
+  @ViewChild("dt1",{static:true}) table:Table
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
   ngOnInit(): void {
@@ -100,6 +100,11 @@ export class DynamicTableComponent implements OnInit {
     this._selectedColumns = this.columns_list;
     
     if (this.table_data.length > 0) this.loading = false;
+    this.dt.resetTableSearch$.subscribe((res)=>{
+      if (res == true){
+        this.clearTableFilters(this.table);
+      }
+    })
   }
 
   @Input() get selectedColumns(): any[] {
@@ -120,7 +125,7 @@ export class DynamicTableComponent implements OnInit {
     this.viewItem.emit(row);
   }
 
-  clear(table: Table) {
+  clearTableFilters(table: Table) {
     table.clear();
     this.searchValue =""
     table.filterGlobal("","")

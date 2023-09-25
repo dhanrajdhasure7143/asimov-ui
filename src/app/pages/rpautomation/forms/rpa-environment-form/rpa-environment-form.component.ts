@@ -63,6 +63,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
       } else {
         this.isKeyValuePair = true;
         this.keyValueFile = this.updateenvdata["keyValue"]
+        this.environmentForm.get("password").clearValidators();
+        this.environmentForm.get("password").updateValueAndValidity();
       }
       //this.environmentForm.get("password").setValue(this.updateenvdata["password"]);
       this.environmentForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
@@ -124,11 +126,24 @@ export class RpaEnvironmentFormComponent implements OnInit {
       } else {
         envFormValue.activeStatus = 8
       }
+      let connectionDetails:any;
       if (this.isKeyValuePair == false) {
-        let connectionDetails = JSON.parse(JSON.stringify(envFormValue));
+        connectionDetails=JSON.parse(JSON.stringify(envFormValue));
         connectionDetails["password"] = this.cryptoService.encrypt(this.password);
         connectionDetails["categoryId"]=parseInt(connectionDetails["categoryId"])
         this.spinner.show();
+      }else{
+        let formData=new FormData();
+        Object.keys(envFormValue).forEach(key => {
+          if(String(key)!="password")
+            formData.append(key, envFormValue[key])
+        });
+        formData.append("key", this.keyValueFile);
+        this.password = "";
+        formData.append("password","");
+        connectionDetails=formData;
+
+      }
         await this.api.testenvironment(connectionDetails).subscribe(res => {
           this.spinner.hide();
           if (res.errorMessage == undefined) {
@@ -141,11 +156,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
           this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connections.',key:'toast1'})
         });
         this.activestatus();
-      } else {
-        this.spinner.hide()
-        // Swal.fire("Alert", "Test connections for key pair authentication is not configured", "warning")
-        this.messageService.add({severity:'warn',summary:'Warning',detail:'Test connections for key pair authentication are not configured.'})
-      }
+      
     } else {
       this.spinner.hide();
       this.activestatus();
@@ -279,8 +290,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   keypair(event) {
+    console.log("--- sample ---",this.updateenvdata)
     this.isKeyValuePair = !this.isKeyValuePair;
     if (event.target.checked == true) {
+      this.environmentForm.get("password").clearValidators();
+      this.environmentForm.get("password").updateValueAndValidity();
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       }
@@ -293,9 +308,12 @@ export class RpaEnvironmentFormComponent implements OnInit {
         this.keyValueFile = this.updateenvdata.keyValue
       }
     } else {
+      this.environmentForm.get("password").setValidators([Validators.required]);
+      this.environmentForm.get("password").updateValueAndValidity();
       if (this.keyValueFile == undefined) {
         this.keyValueFile = undefined
       }
+      if(this.updateenvdata)
       if (this.updateenvdata.password.password != undefined) {
         this.password = this.updateenvdata.password.password
       } else {

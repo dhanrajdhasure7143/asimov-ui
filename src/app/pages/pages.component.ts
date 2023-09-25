@@ -63,23 +63,24 @@ export class PagesComponent implements OnInit {
   @ViewChild(SidebarComponent) sidebar: SidebarComponent;
   constructor() { }
   ngOnInit(): void {
+    
     this.onToolbarMenuToggle();
   }
 
   onToolbarMenuToggle() {
-
     this.sideBarOpen = !this.sideBarOpen;
-
-    if (!this.sideBarOpen) {
-      this.sidebar.showSubmenu = false
-      this.sidebar.showprocessesSubmenu = false
-      this.sidebar.showadminSubmenu = false
-      this.contentMargin = 62;
-    } else {
-      this.contentMargin = 260;
-    }
+    (!this.sideBarOpen)?this.hideSubMenu():this.contentMargin = 260;
   }
   // sidenavEvents(str) {
   // }
-
+  hideSubMenu()
+  {
+    if(!(this.sidebar)) setTimeout(()=>{this.hideSubMenu()},100);
+    else{
+    this.sidebar.showSubmenu = false
+    this.sidebar.showprocessesSubmenu = false
+    this.sidebar.showadminSubmenu = false
+    this.contentMargin = 62;
+    }
+  }
 }

@@ -4018,3 +4018,10 @@ padding: 0px 30px;}
 .copilotTemplatePreviewSvg svg{
   width:100%;
 }
+.copilot-home .bjs-powered-by{
+  display: none;
+}
+
+.graph-preview-container .bjs-powered-by{
+  display: none !important;
+}

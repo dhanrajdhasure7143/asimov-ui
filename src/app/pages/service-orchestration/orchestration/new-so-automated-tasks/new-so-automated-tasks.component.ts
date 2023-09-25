@@ -118,6 +118,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     Paused:"#FED653",Pause:"#FED653"
   };
   searchValue:string
+  @ViewChild("dt",{static:true}) table:Table
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -210,6 +211,11 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       { name: "Serial",},
       { name: "Parallel"},
     ];
+    this.dataTransfer.resetTableSearch$.subscribe((res)=>{
+      if(res == true){
+        this.clearTableFilters(this.table);
+      }
+    })
  }
 
  sla_bot:any;
@@ -1043,10 +1049,11 @@ resetsla(){
     })
   }
 
-  getprocesslogs(template){
+  getprocesslogs(){
+
     //document.getElementById("filters").style.display = "none";
     // this.logs_modal=this.modalService.show(template,{class:"logs-modal"})
-    this.logs_modal=this.modalService.show(template,{class:"modal-lg"})
+    //this.logs_modal=this.modalService.show(template,{class:"modal-lg"})
     this.processId1 = this.selectedvalue;
     this.popup=true;
    
@@ -1417,7 +1424,7 @@ resetsla(){
     })
   }
 
-  clear(table: Table) {
+  clearTableFilters(table: Table) {
     this.searchValue =""
     table.filterGlobal("","")
     table.sortOrder = 0;

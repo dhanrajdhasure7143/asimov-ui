@@ -116,7 +116,7 @@ export class CopilotMessageListComponent implements OnInit {
   }
 
   processButtonAction(event:any){
-    console.log('message list button action '+JSON.stringify(event))
+    // console.log('message list button action '+JSON.stringify(event))
     if (event?.submitValue?.toUpperCase() ==='SUBMIT'){
       //Selected one of the template
       this.selectedCard();
@@ -134,8 +134,8 @@ export class CopilotMessageListComponent implements OnInit {
   async processResponse(response) {
    
       for (let index = 0; index < response.length; index++) {
-        if(index==0)
-        console.log(response[index].imageURL)
+        // if(index==0)
+        // console.log(response[index].imageURL)
        // document.getElementById('_diagram-chat'+index)?.innerHTML(response[index].imageURL);
        
         // const item = atob(response[index].bpmnXml);

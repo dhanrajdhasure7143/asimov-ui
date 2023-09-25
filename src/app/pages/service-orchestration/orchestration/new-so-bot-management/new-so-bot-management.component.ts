@@ -97,6 +97,7 @@ public slaupdate : boolean = false;
     @ViewChild("sort6") sort6: MatSort;
     @ViewChild("paginator7") paginator7: MatPaginator;
     @ViewChild("sort7") sort7: MatSort;
+    @ViewChild("dt",{static:true}) table:Table
     displayedColumns4: string[] = ['run_id','version','start_date','end_date' , "bot_status"];
     Viewloglist:MatTableDataSource<any>;
     displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
@@ -174,6 +175,11 @@ public slaupdate : boolean = false;
       this.getallbots();
     },1000)
     this.popup=false;
+    this.dataTransfer.resetTableSearch$.subscribe((res)=>{
+      if(res == true){
+      this.clearTableFilters(this.table);
+      }
+    })
   }
 
 
@@ -1264,7 +1270,7 @@ this.display = false
     })
   }
 
-  clear(table: Table) {
+  clearTableFilters(table: Table) {
     this.selected_source = '';
     this.selectedcat = '';
     this.searchValue =""

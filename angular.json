@@ -217,11 +217,40 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
-            "asquare": {
+            "asquaredev": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.asquare.ts"
+                  "with": "src/environments/environment.asquaredev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kb",
+                  "maximumError": "15kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "asquaredemo": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.asquaredemo.ts"
                 }
               ],
               "optimization": true,
@@ -266,6 +295,12 @@
             },
             "staging":{
               "browserTarget": "asimov:build:staging"
+            },
+            "asquaredev":{
+              "browserTarget": "asimov:build:asquaredev"
+            },
+            "asquaredemo":{
+              "browserTarget": "asimov:build:asquaredemo"
             }
           }
         },

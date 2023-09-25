@@ -39,11 +39,15 @@ export class CopilotMessageComponent implements OnInit {
  }
 
  processFormAction(event:any){
-   console.log("processFormAction received from child "+event)
-   this.messageAction.emit({
-     actionType:'Form',
-     data: event
-   });
+   console.log("processFormAction received from child ",event)
+   let eventData={
+    actionType:"Form",
+    data:{
+          message:event.message,
+          jsonData:JSON.stringify(event?.data)
+      }
+    }
+   this.messageAction.emit(eventData);
    this.hideActions= true;
  }
 

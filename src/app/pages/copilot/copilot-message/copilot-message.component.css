@@ -202,7 +202,8 @@ button[disabled]:hover{cursor: no-drop;
 
 .send-msgtext{
   width:80%;
-  user-select: all !important;
+  user-select: text;
+  -webkit-user-select: text;
   text-align: left;
   word-break: break-word;
     color: #000;
