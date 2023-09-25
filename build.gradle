@@ -18,6 +18,12 @@ if (ENV == 'Asquare') {
       def semver = myProperties.getProperty('semver')
       def registryUrl = myProperties.getProperty('registryUrl')
       def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
      }
 else {
       def propertiesFile = file("gradle.properties")
@@ -27,6 +33,13 @@ else {
       def semver = myProperties.getProperty('semver')
       def registryUrl = myProperties.getProperty('registryUrl')
       def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
+      
      }
 
 
@@ -76,10 +89,10 @@ task npmInstallGlobal(type: NpmTask) {
     outputs.upToDateWhen { true }
 }
 
-ext {
-  dockerImage = "${project.registryUrl}/${imageName}"
-  dockerTag   = "${semver}-${semverDevSuffix}"
-}
+//ext {
+//  dockerImage = "${project.registryUrl}/${imageName}"
+//  dockerTag   = "${semver}-${semverDevSuffix}"
+// }
 
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"
