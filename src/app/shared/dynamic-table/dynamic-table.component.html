@@ -20,7 +20,7 @@
                     <i class="pi pi-search"></i>
                     <input type="text" pInputText placeholder="Search" [(ngModel)]="searchValue" class="p-inputtext-lg" (input)="dt1.filterGlobal($event.target.value, 'contains')">
                 </span>
-                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined"  (click)="clear(dt1)"></button>
+                <button *ngIf="show_clear_filter" pButton label="Clear" class="p-button-outlined"  (click)="clearTableFilters(dt1)"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>

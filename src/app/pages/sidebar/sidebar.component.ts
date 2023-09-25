@@ -90,6 +90,7 @@ export class SidebarComponent implements OnInit {
     return "";
   }
   hightlight(element,name){
+    this.dt.triggerReset();
     localStorage.setItem('selectedModule',element+'&'+name)
      $('.link').removeClass('active');
      $('#'+element).addClass("active");
