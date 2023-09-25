@@ -7,6 +7,9 @@ plugins {
 }
 import org.apache.tools.ant.taskdefs.condition.Os  
 
+def ENV = project.property('ENV')
+println "ENV value: $ENV"
+
 task copyJarToBin {
     copy {
         from 'ezflow-service-config/asimov-ui/Dockerfile'
