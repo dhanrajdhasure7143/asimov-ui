@@ -44,7 +44,7 @@ import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { CompareValidatorDirective } from './compare-validator.directive';
+import { CompareValidatorDirective } from '../shared/directives/compare-validator.directive';
 //  import { ChartModule } from 'primeng/chart';
 
 
