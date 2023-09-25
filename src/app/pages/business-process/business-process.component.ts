@@ -171,6 +171,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.dt.bpsHeaderValues("save&approval");
   }
   orchestartion(){
+    this.activatedRoute.queryParams.subscribe(params =>{
+      localStorage.setItem("bpsId", params.bpsId);
+      localStorage.setItem("ver", params.ver);
+      localStorage.setItem("ntype", params.ntype);
+    })
     this.dt.bpsHeaderValues("orchestartion");
   }
  deployNotation(){
