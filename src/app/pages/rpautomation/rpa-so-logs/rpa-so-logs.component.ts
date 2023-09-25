@@ -62,6 +62,7 @@ export class RpaSoLogsComponent implements OnInit {
   };
   errormsg: any;
   display:boolean = true;
+  selectedTask:any;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,
@@ -181,14 +182,16 @@ export class RpaSoLogsComponent implements OnInit {
    }
 
 
-   getChildLogs(task_details,logId,taskId,parentIterationId, traversalType:any){
+   getChildLogs(task_details,logId,taskId,iterationId, traversalType:any){
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
-    this.rest.getChildLogs(task_details,logId,taskId,parentIterationId).subscribe((response:any)=>{ 
-      if(traversalType=="FARWORD"){
-        this.traversalLogs.push(task_details);
-      }     
+    this.rest.getChildLogs(task_details,logId,taskId,iterationId).subscribe((response:any)=>{ 
+      if(traversalType=="FARWORD") this.traversalLogs.push(task_details);
+      this.selectedTask=task_details;
+      this.selectedTask["actual_task_id"]=taskId;
+      this.selectedTask["actual_log_id"]=logId;
+      this.selectedTask["actual_iteration_id"]=iterationId;   
       if(response.errorMessage==undefined){ 
        this.logsDisplayFlag="CHILD-LOGS";  
        this.isDataEmpty=false;
