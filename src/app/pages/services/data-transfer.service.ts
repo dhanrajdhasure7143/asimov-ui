@@ -159,4 +159,11 @@ setScreenList(module:any){
     this.messageSource.next(message)
   }
 
+ // Table Filters, Sort and Search clear.
+
+  private resetTableSearchSubject = new BehaviorSubject<boolean> (false);
+  resetTableSearch$ = this.resetTableSearchSubject.asObservable();
+  triggerReset(){ 
+    this.resetTableSearchSubject.next(true);
+  }
 }
