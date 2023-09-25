@@ -8,7 +8,27 @@ plugins {
 import org.apache.tools.ant.taskdefs.condition.Os  
 
 def ENV = project.property('ENV')
+
 println "ENV value: $ENV"
+if (ENV == 'Asquare') {
+      def propertiesFile = file("gradle/${ENV}/gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+     }
+else {
+      def propertiesFile = file("gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+     }
+
 
 task copyJarToBin {
     copy {
@@ -58,7 +78,7 @@ task npmInstallGlobal(type: NpmTask) {
 
 ext {
   dockerImage = "${project.registryUrl}/${imageName}"
-  dockerTag   = "${project.semver}-${project.semverDevSuffix}"
+  dockerTag   = "${semver}-${semverDevSuffix}"
 }
 
 task cleanAll (type:Delete) {
