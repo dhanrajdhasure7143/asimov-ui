@@ -15,7 +15,7 @@ export class OrchestrationComponent implements OnInit {
   public selectedTab=0;
   public check_tab=0;
   public param:any=0;
-  public back_button=false;
+  public back_button:boolean =false;
   ngOnInit() {
     $('.link').removeClass('active')
     $('#so').addClass("active")
@@ -23,10 +23,14 @@ export class OrchestrationComponent implements OnInit {
     $("#nav-link-2").removeClass("active");
     $("#nav-link-1").removeClass("active");
     $("#nav-link-0").removeClass("active");
-   
-     if(localStorage.getItem('project_id')!="null"){
+    //  if(localStorage.getItem('project_id')!="null"){
+      const queryParams = this.route.snapshot.queryParams;
+      if (Object.keys(queryParams).length > 0) {
       this.back_button = true;
+      }else{
+      this.back_button = false;
      }
+    //  }
 
     //.className+="active"
     this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
@@ -59,8 +63,8 @@ export class OrchestrationComponent implements OnInit {
   }
 
   routeToProjectDetails(){
-   this.router.navigate(["/pages/projects/projectdetails"], 
-   {queryParams:{"id":localStorage.getItem('project_id')}})
+   this.router.navigate(["/pages/businessProcess/uploadProcessModel"], 
+   {queryParams:{"bpsId":localStorage.getItem('bpsId'),"ver":localStorage.getItem("ver"),"ntype":localStorage.getItem("ntype")}})
   }
 
 
