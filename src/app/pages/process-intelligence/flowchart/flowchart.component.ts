@@ -999,6 +999,7 @@ redirectCopilot:boolean=false;
 
   generateBpmn() {      //generate bpmn from process graph
     let categoryName = this.getPCategoryFromPID(this.graphIds)
+    let categoryId = this.getPCategoryIdFromPID(this.graphIds)
     if (this.isFullGraphBPMN == true) {
       var reqObj = {
         pid: this.graphIds,
@@ -1007,7 +1008,7 @@ redirectCopilot:boolean=false;
       this.rest.getFullGraphBPMN(reqObj)
         .subscribe((res:any) => {          
           if(res.data != null){
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname,ntype:"bpmn"}})
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, categoryId:categoryId, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
 
             this.messageService.add({
@@ -1174,6 +1175,15 @@ getPNameFromPID(pnumber){   // get process name
     }
   });
   return piname;
+}
+getPCategoryIdFromPID(pnumber){   // get process name
+  var piCategoryId = '';
+  this.process_graph_list.data.forEach(pData => {
+    if(pData.piId == pnumber){
+      piCategoryId = pData.categoryId
+    }
+  });
+  return piCategoryId;
 }
 
 getPCategoryFromPID(pnumber){

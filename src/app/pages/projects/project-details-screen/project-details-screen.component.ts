@@ -226,6 +226,7 @@ loggedInUserId:any;
 users_List1:any[]=[];
 allFiles:any[]=[];
 documentList=[];
+categoryId: any;
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -460,6 +461,7 @@ async getProjectdetails(){​​​​​​
 // this.spinner.show();
   await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
   this.projectDetails=res
+  console.log("PROJECTDEtals",this.projectDetails);
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
   this.processOwnerFlag=false;
@@ -744,6 +746,8 @@ this.rest_api.getFileCategories().subscribe(data => {
 updateprojectDetails() {
 // this.spinner.show()
 this.projectDetails["type"] = "Project";
+this.projectDetails["categoryId"]=this.categoryId;
+console.log("updateProject",this.projectDetails);
 // this.projectDetails.processOwner = this.processownername
 // this.projectDetails.endDate = this.projectenddate;
 // this.projectDetails.startDate = this.projectStartDate;
@@ -1624,5 +1628,15 @@ selectEnd() {
     return projownername;
   };
 
+  onMapValueChainChange(){
+    const selectedCategoryName = this.mapValueChain
+    console.log("selectedCategoryName",selectedCategoryName);
+    const selectedCategory = this.categories_list.find(category => category.categoryName === selectedCategoryName);
+    // console.log("new",selectedCategory);
+    if (selectedCategory) {
+      this.categoryId = selectedCategory.categoryId;
+      console.log("Selected categoryId:", this.categoryId);
+    }
+  }
 }
 
