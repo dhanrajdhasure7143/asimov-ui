@@ -13,7 +13,8 @@ export interface ButtonData {
 }
 export interface MessageAction {
     actionType?: string,
-    data?:any;
+    data?:any,
+    fileDataEvent?:any
 }
 export interface ChatMessage {
     messageSourceType: string,

@@ -77,18 +77,20 @@ export class CopilotMessageComponent implements OnInit {
  }
 
 
- processUploadFileAction(event:any){
+ processUploadFileAction(event:any, buttonData:any){
     this.messageAction.emit({
       actionType:"UploadFileAction",
-      data:event
+      data:buttonData,
+      fileDataEvent:event,
     })
  }
 
 
- processProcessLog()
+ processProcessLog(buttonData:any)
  {
   this.messageAction.emit({
     actionType:"ProcessLogAction",
+    data:buttonData
   })
  }
 
