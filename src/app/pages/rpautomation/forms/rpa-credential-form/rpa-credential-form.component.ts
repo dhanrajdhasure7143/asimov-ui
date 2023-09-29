@@ -350,13 +350,13 @@ resetCredForm(){
         this.credentialForm.get("inBoundAddress").setValidators([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_ -]*$")]);
         this.credentialForm.get("inBoundAddress").updateValueAndValidity();
 
-        this.credentialForm.get("inBoundAddressPort").setValidators([Validators.required]);;
+        this.credentialForm.get("inBoundAddressPort").setValidators([Validators.required,Validators.maxLength(6)]);;
         this.credentialForm.get("inBoundAddressPort").updateValueAndValidity();
 
         this.credentialForm.get("outBoundAddress").setValidators([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9][a-zA-Z0-9_ -]*$")]);
         this.credentialForm.get("outBoundAddress").updateValueAndValidity();
 
-        this.credentialForm.get("outboundAddressPort").setValidators([Validators.required]);
+        this.credentialForm.get("outboundAddressPort").setValidators([Validators.required,Validators.maxLength(6)]);
         this.credentialForm.get("outboundAddressPort").updateValueAndValidity();
       }
       else{

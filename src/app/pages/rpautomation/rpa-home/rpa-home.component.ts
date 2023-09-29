@@ -118,6 +118,7 @@ export class RpaHomeComponent implements OnInit {
     Running:"#C4B28E"
   };
   searchValue: string;
+  @ViewChild("dt1",{static:true}) table:Table
 
   constructor(
     private rest: RestApiService,
@@ -211,6 +212,11 @@ export class RpaHomeComponent implements OnInit {
     this.getUsersList();
     this._selectedColumns = this.columns_list;
     this.freetrail = localStorage.getItem('freetrail')
+    this.dt.resetTableSearch$.subscribe((res)=>{
+      if(res == true){
+        this.clearTableFilters(this.table);
+      }
+    })
   }
 
   botdelete(bot) {
@@ -589,7 +595,7 @@ export class RpaHomeComponent implements OnInit {
     return index;
   }
 
-  clear(table: Table) {
+  clearTableFilters(table: Table) {
    this.searchValue=""
    table.filterGlobal("","");
    table.clear();

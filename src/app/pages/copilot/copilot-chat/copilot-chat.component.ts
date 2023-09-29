@@ -40,6 +40,8 @@ export class CopilotChatComponent implements OnInit {
   tableForm: FormArray;
   currentMessage:any;
   isGraphLoaded:boolean=false;
+  isTableLoaded:boolean=false;
+  previewLabel:any="";
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
@@ -57,7 +59,6 @@ export class CopilotChatComponent implements OnInit {
         this.loadBpmnContainer();
         (isNaN(params.templateId) && params.templateId != "Others")?this.getAutomatedProcess(atob(params.templateId)):this.getConversationId();
       }
-      this.loader = false;
     });
   }
 
@@ -202,12 +203,16 @@ export class CopilotChatComponent implements OnInit {
   getConversationId(){
     let req_body = {"userId": localStorage.getItem("ProfileuserId")}
     let resdata;
+    this.loader=true;
     this.rest_api.initializeConversation(req_body).subscribe(
       (res:any)=>{
+        this.loader=false
         resdata = res
         this.currentMessage=res;
         this.messages.push(resdata); 
         localStorage.setItem("conversationId", res.conversationId)
+      },err=>{
+        this.loader=false;
       }
     )
   }
@@ -239,6 +244,7 @@ export class CopilotChatComponent implements OnInit {
           this.sendListAction(event?.data?.submitValue)
     }else if (event.actionType=='bpmn'){
       this.isDialogVisible=true;
+      this.previewLabel=event.data.label;
       setTimeout(()=>{this.previewBpmn(event.data)},500)
     }
     else if (event.actionType=='UploadFileAction'){
@@ -250,7 +256,6 @@ export class CopilotChatComponent implements OnInit {
   }
 
   sendProcessLogs(){
-    console.log(this.tableForm.valid) 
     if(this.tableForm.valid){
       let tableData=[...this.tableForm.value];
       tableData=tableData.map((item:any)=>{
@@ -359,12 +364,12 @@ export class CopilotChatComponent implements OnInit {
     this.createForm();
     setTimeout(()=>{
       this.showTable=true;
+      this.isTableLoaded=true;
     },500)
   }
 
 
   getAutomatedProcess(intent:any){
-    console.log(intent)
     let req_body:any= {
       "userId":localStorage.getItem("ProfileuserId"),
       "tenantId":localStorage.getItem("tenantName")
@@ -382,26 +387,32 @@ export class CopilotChatComponent implements OnInit {
     }else{
       req_body["intent"]=intent
     }
+    this.loader=true;
     this.rest_api.getAutomatedProcess(req_body).subscribe(res=>{
+      this.loader=false;
       this.currentMessage=res;
       localStorage.setItem("conversationId", res.conversationId);
       this.messages.push(res);
+    },err=>{
+      this.loader=false;
     })
   }
 
   changefileUploadForm(event){
-    console.log(event.target.files)
+ 
     let selectedFile = <File>event.target.files[0];
-          const fd = new FormData();
+    const fd = new FormData();
     fd.append('file', selectedFile),
     fd.append('permissionStatus', 'yes')
+    this.isChatLoad=true;
     this.main_rest.fileupload(fd).subscribe(res => {
-      console.log(res)
-      let processId = Math.floor(100000 + Math.random() * 900000);
-      this.messages.push({
-        message:selectedFile.name,
-        messageSourceType:localStorage.getItem("ProfileuserId")
+      this.isChatLoad=false;
+      this.sendUserAction({
+        message:"Submit",
+        jsonData:JSON.stringify({fileName:selectedFile.name})
       })
+    },err=>{
+      this.isChatLoad=false;
     })
   }
 
@@ -469,4 +480,11 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
+  autoGrowTextZone(e) {
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  }
 }
