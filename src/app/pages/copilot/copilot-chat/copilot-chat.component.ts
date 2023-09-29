@@ -399,18 +399,21 @@ export class CopilotChatComponent implements OnInit {
   }
 
   changefileUploadForm(event:any, buttonData:any){
- 
     let selectedFile = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('file', selectedFile),
     fd.append('permissionStatus', 'yes')
     this.isChatLoad=true;
-    this.main_rest.fileupload(fd).subscribe(res => {
-      this.isChatLoad=false;
-      this.sendUserAction({
-        message:buttonData.submitValue,
-        jsonData:JSON.stringify({fileName:selectedFile.name})
-      })
+    this.main_rest.fileupload(fd).subscribe((res:any) => {
+      if(res){
+        const dataValue = res.data;
+        const fileName = dataValue.split(':')[1].trim();
+        this.isChatLoad=false;
+        this.sendUserAction({
+          message:buttonData.submitValue,
+          jsonData:JSON.stringify({fileName:fileName})
+        })
+      }
     },err=>{
       this.isChatLoad=false;
     })
