@@ -102,7 +102,7 @@ export class XesdocumentComponent implements OnInit {
         "transforms.InsertField.static.value": this.processId + "-p" + this.processId
       }
     }
-    this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
+    this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName,e.categoryId).subscribe(res => {
       this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
 
     })

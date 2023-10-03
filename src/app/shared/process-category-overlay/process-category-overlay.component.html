@@ -1,9 +1,6 @@
 <div class="h-100">
     <div class="create-header">
         <h3>{{headerTitle}}</h3>
-            <!-- <span class="rpa-modal-close" (click)="slideDown(processCategoryForm);">
-                <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
-            </span>             -->
     </div>
     <div class="createform-overlay">
         <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'create'" class="h-100">
@@ -14,7 +11,6 @@
                             <option value="" disabled hidden>Select Category</option>
                             <option value="null" disabled hidden>Select Category</option>
                             <option value="undefined" disabled hidden>Select Category</option>
-                            <!-- <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName"> -->
                             <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryId">
                                 {{categories.categoryName}}</option>
                         </select>

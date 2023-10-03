@@ -462,6 +462,7 @@ async getProjectdetails(){​​​​​​
   await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
   this.projectDetails=res
   console.log("PROJECTDEtals",this.projectDetails);
+  this.categoryId = this.projectDetails.categoryId
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
   this.processOwnerFlag=false;

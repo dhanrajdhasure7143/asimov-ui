@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
-import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 
@@ -174,7 +173,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         } else {
           data = {
             "processName": this.processName,
-            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryId": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryName": this.categories_list.find(item=>item.categoryId == this.categoryName).categoryName,
           }
         }
       } else {
@@ -191,7 +191,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         } else {
           data = {
             "processName": this.processName,
-            // "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryName": this.categories_list.find(item=>item.categoryId == this.categoryName).categoryName,
             "categoryId": this.categoryName == 'other' ? this.othercategory : this.categoryName,
           }
         }
@@ -265,16 +265,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         setTimeout(() => {
           this.dt.processDetailsUpdateSuccess({"isRfresh":true});
         }, 1500);
-        // Swal.fire({
-        //   title: 'Success',
-        //   text: res.message,
-        //   icon: 'success',
-        //   heightAuto: false,
-        // }).then((result) => {
-        //   if (result.value) {
-        //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-        //   }
-        // });
         this.slideDown(null);
       });
     }else{
@@ -324,36 +314,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
               })
             }
           });
-          // Swal.fire({
-          //   title: 'Are you sure?',
-          //   text: disply_text + " will be update all the versions of the bpmn",
-          //   icon: 'warning',
-          //   showCancelButton: true,
-          //   heightAuto: false,
-          //   customClass: {
-          //     confirmButton: 'btn bluebg-button',
-          //     cancelButton:  'btn new-cancelbtn',
-          //   },
-          //   confirmButtonText: 'Yes'
-          // }).then((result) => {
-          //   if (result.value) {
-          //     this.isLoading=true;
-          //   this.rest.updateBpsData(req_body).subscribe((res:any)=>{
-          //     this.isLoading=false;
-          //     Swal.fire({
-          //       title: 'Success',
-          //       text: res.message,
-          //       icon: 'success',
-          //       heightAuto: false,
-          //     }).then((result) => {
-          //       if (result.value) {
-          //         this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-          //       }
-          //     });
-          //     this.slideDown(null);
-          //   })
-          // }
-          // });
         }else{
           this.isLoading=true;
           this.rest.updateBpsData(req_body).subscribe((res:any)=>{
