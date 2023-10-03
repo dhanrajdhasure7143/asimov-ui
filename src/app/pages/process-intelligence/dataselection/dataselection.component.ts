@@ -222,7 +222,7 @@ export class DataselectionComponent implements OnInit {
         }
       }
 
-      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName,e.categoryId).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       },err=>{
         this.messageService.add({
@@ -273,7 +273,7 @@ export class DataselectionComponent implements OnInit {
               "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
             }
           }
-        this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+        this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName,e.categoryId).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         },err=>{
           this.messageService.add({

@@ -674,7 +674,8 @@ export class BpsHomeComponent implements OnInit {
     // e.stopPropagation();
     this.isEdit = true;
     this.selectedObj = {
-      category: obj.category,
+      categoryId:obj.categoryId,
+      // category: obj.category,
       bpmnProcessName: obj.bpmnProcessName,
       ntype: obj.ntype,
       id: obj.id,
