@@ -856,7 +856,7 @@ testDbConnection(){     // check DB connection with port id and psw
         modekey="timestamp.column.name"
         connectorBody.config[modekey]=this.dbDetails.timestamp
       }
-      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName,e.categoryId).subscribe(res=>{
         this.hiddenPopUp1=false;
         this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
@@ -891,7 +891,7 @@ testDbConnection(){     // check DB connection with port id and psw
           "transforms.InsertField.static.value": this.processId + "-p" + this.processId
         }
       }
-      this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
+      this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName,e.categoryId).subscribe(res => {
         this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
       })
   }

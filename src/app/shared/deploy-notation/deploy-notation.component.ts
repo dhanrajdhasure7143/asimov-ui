@@ -53,6 +53,7 @@ export class DeployNotationComponent implements OnInit {
     formData.append('fieldName', this.data.fileNme)
     formData.append('engine',  splitTenant);
     formData.append('department',  this.data.category);
+    // formData.append('categoryId', this.data.categoryId)
     
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
       .subscribe(res => {

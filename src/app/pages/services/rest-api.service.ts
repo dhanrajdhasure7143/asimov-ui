@@ -405,8 +405,8 @@ export class RestApiService{
       return this.http.get('/rpa-service/process-name');
 
   }
-  saveConnectorConfig(body,categoryName,processName,piId){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body)
+  saveConnectorConfig(body,categoryName,processName,piId,categoryId){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryId='+categoryId+'&categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body)
   }
   getBotVersion(botid)
   {
