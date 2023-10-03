@@ -461,7 +461,6 @@ async getProjectdetails(){​​​​​​
 // this.spinner.show();
   await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
   this.projectDetails=res
-  console.log("PROJECTDEtals",this.projectDetails);
   this.categoryId = this.projectDetails.categoryId
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
@@ -748,7 +747,6 @@ updateprojectDetails() {
 // this.spinner.show()
 this.projectDetails["type"] = "Project";
 this.projectDetails["categoryId"]=this.categoryId;
-console.log("updateProject",this.projectDetails);
 // this.projectDetails.processOwner = this.processownername
 // this.projectDetails.endDate = this.projectenddate;
 // this.projectDetails.startDate = this.projectStartDate;
@@ -1630,13 +1628,9 @@ selectEnd() {
   };
 
   onMapValueChainChange(){
-    const selectedCategoryName = this.mapValueChain
-    console.log("selectedCategoryName",selectedCategoryName);
-    const selectedCategory = this.categories_list.find(category => category.categoryName === selectedCategoryName);
-    // console.log("new",selectedCategory);
+    const selectedCategory = this.categories_list.find(category => category.categoryName === this.mapValueChain);
     if (selectedCategory) {
       this.categoryId = selectedCategory.categoryId;
-      console.log("Selected categoryId:", this.categoryId);
     }
   }
 }
