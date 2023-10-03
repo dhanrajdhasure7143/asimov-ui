@@ -1,31 +1,60 @@
 <div class="messageFormContainer">
+    <br>
     <div class="messageFormHeader" *ngIf="formInputData?.header">{{formInputData?.header}}</div>
     <div class="messageFormDescription" *ngIf="formInputData?.description">{{formInputData?.description}}</div>
     <div class="messageFormElements" *ngIf="formInputData?.elements">
-        <form [formGroup]="formInputData.name">
-        <div *ngFor="let elem of formInputData?.elements">
-            <!-- Text boxes-->
-            <span *ngIf="elem?.type==='text'" >
-                <label class="inputLabel"> {{elem.label}}</label> <span class="inputRequired" *ngIf="elem?.required">&nbsp; *</span><br/>
-                <input placeholder="{{elem?.placeholder}}" [name]="elem.name"  value="{{elem?.value}}"/>
-            </span>
-            <!-- Radio buttons-->
-            <br>
-            <span *ngIf="elem?.type==='radio'" >
-                <p>{{elem.placeholder}}</p>
-                <label class="inputLabel"> {{elem.label}}</label> <span class="inputRequired" *ngIf="elem?.required">&nbsp; *</span><br/>
-                <span *ngFor="let r of elem.options">
-                <input type="radio" [id]="r.key"  [name]="elem.name"   value="{{r?.value}}"/>
-                  <label for="{{r.key}}">{{r.key}}</label><br>
+        <form [formGroup]="userForm">
+            <div *ngFor="let element of formInputData?.elements">
+                <!-- Text boxes-->
+                <span *ngIf="element?.type==='text'">
+                    <label class="inputLabel"> {{element?.label}}</label> <span class="inputRequired" *ngIf="element?.required">&nbsp; *</span><br />
+                    <input class="form-control" placeholder="{{element?.placeholder}}" [formControlName]="element?.name" />
                 </span>
-            </span>
-        </div>
-        <div  *ngIf="formInputData?.actions" [style]='{"display": "inline-block", "text-align":"center"}'>
-            <div *ngFor="let action of formInputData?.actions"   [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
-                <app-copilot-message-button [buttonData]="action" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
+                <!-- Radio buttons-->
+                <br>
+                <span *ngIf="element?.type==='radio'">
+                    <p>{{element?.label}}</p>
+                    <label class="inputLabel"> {{element?.label}}</label> <span class="inputRequired"
+                        *ngIf="element?.required">&nbsp; *</span><br />
+                    <span *ngFor="let r of element?.options">
+                        <input type="radio" [id]="r.key" [name]="element?.name" [formControlName]="element?.name"
+                            value="{{r?.value}}" />
+                        <label for="{{r.key}}">{{r.key}}</label>
+                        <br>
+                    </span>
+                </span>
+                <span *ngIf="element?.type==='select'">
+                    <label>{{element?.label}}</label>
+                    <select [formControlName]="element?.name" class="form-control">
+                        <option hidden disabled value="">{{element?.placeholder}}</option>
+                        <option *ngFor="let option of element?.options" [value]="option?.value">{{option?.key}}</option>
+                    </select>
+                </span>
+                <span *ngIf="element?.type==='checkbox'">
+                    <!-- <p>{{element?.placeholder}}</p> -->
+                    <label class="inputLabel"> {{element?.label}}</label> <span class="inputRequired"
+                        *ngIf="element?.required">&nbsp; *</span><br />
+                    <div [formArrayName]="element?.name">
+                        <span *ngFor="let r of userForm.get(element?.name)?.controls; let j = index">
+                            <div [formGroupName]="j">
+                                <input type="checkbox" [id]="element?.options[j].key" [name]="element?.options[j].value"
+                                    [formControlName]="element?.options[j].value" />
+                                <label for="{{element?.options[j].key}}">{{element?.options[j].key}}</label>
+                                <br>
+                            </div>
+                        </span>
+                    </div>
+                </span>
             </div>
-        </div>
-    </form>
+            <div *ngIf="formInputData?.actions" [style]='{"display": "inline-block", "text-align":"center"}'>
+                <div *ngFor="let action of formInputData?.actions"
+                    [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
+                    <app-copilot-message-button [buttonData]="action"
+                        (buttonAction)="processButtonAction($event)"></app-copilot-message-button>
+                </div>
+            </div>
+        </form>
     </div>
+    <br>
     <div class="messageFormFooter" *ngIf="formInputData?.footer">{{formInputData?.footer}}</div>
 </div>

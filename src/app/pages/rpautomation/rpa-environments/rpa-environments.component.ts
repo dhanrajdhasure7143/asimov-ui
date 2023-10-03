@@ -90,7 +90,7 @@ export class RpaenvironmentsComponent implements OnInit {
         // this.environments.sort((a, b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments = response.map(item => {
           item["checked"] = false;
-          item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
+          item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId)?.categoryName;
           // item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
           item["createdTimeStamp_converted"] = new Date(item.createdTimeStamp)
           item["deploy_status_new"] = item.deployStatus == true?"Yes":"No"

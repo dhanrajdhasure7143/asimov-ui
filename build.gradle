@@ -7,6 +7,42 @@ plugins {
 }
 import org.apache.tools.ant.taskdefs.condition.Os  
 
+def ENV = project.property('ENV')
+
+println "ENV value: $ENV"
+if (ENV == 'Asquare') {
+      def propertiesFile = file("gradle/${ENV}/gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
+     }
+else {
+      def propertiesFile = file("gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
+      
+     }
+
+
 task copyJarToBin {
     copy {
         from 'ezflow-service-config/asimov-ui/Dockerfile'
@@ -53,10 +89,10 @@ task npmInstallGlobal(type: NpmTask) {
     outputs.upToDateWhen { true }
 }
 
-ext {
-  dockerImage = "${project.registryUrl}/${imageName}"
-  dockerTag   = "${project.semver}-${project.semverDevSuffix}"
-}
+//ext {
+//  dockerImage = "${project.registryUrl}/${imageName}"
+//  dockerTag   = "${semver}-${semverDevSuffix}"
+// }
 
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"

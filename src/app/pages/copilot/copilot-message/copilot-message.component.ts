@@ -39,11 +39,15 @@ export class CopilotMessageComponent implements OnInit {
  }
 
  processFormAction(event:any){
-   console.log("processFormAction received from child "+event)
-   this.messageAction.emit({
-     actionType:'Form',
-     data: event
-   });
+   console.log("processFormAction received from child ",event)
+   let eventData={
+    actionType:"Form",
+    data:{
+          message:event.message,
+          jsonData:JSON.stringify(event?.data)
+      }
+    }
+   this.messageAction.emit(eventData);
    this.hideActions= true;
  }
 
@@ -73,18 +77,20 @@ export class CopilotMessageComponent implements OnInit {
  }
 
 
- processUploadFileAction(event:any){
+ processUploadFileAction(event:any, buttonData:any){
     this.messageAction.emit({
       actionType:"UploadFileAction",
-      data:event
+      data:buttonData,
+      fileDataEvent:event,
     })
  }
 
 
- processProcessLog()
+ processProcessLog(buttonData:any)
  {
   this.messageAction.emit({
     actionType:"ProcessLogAction",
+    data:buttonData
   })
  }
 

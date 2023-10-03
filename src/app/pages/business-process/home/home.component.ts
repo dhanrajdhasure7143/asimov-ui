@@ -127,6 +127,7 @@ export class BpsHomeComponent implements OnInit {
   ];
   public expandedRows = {};
   public searchValue:string;
+  @ViewChild("dt1",{static:true}) table:Table
 
   constructor(
     private router: Router,
@@ -198,6 +199,11 @@ export class BpsHomeComponent implements OnInit {
       "approverName",
       "status",
     ];
+    this.dt.resetTableSearch$.subscribe((res)=>{
+      if(res == true){
+        this.clearTableFilters(this.table);
+        }
+    })
   }
 
   async getBPMNList() {
@@ -684,7 +690,7 @@ export class BpsHomeComponent implements OnInit {
     this.refreshSubscription.unsubscribe();
   }
 
-  clear(table: Table) {
+  clearTableFilters(table: Table) {
     table.clear();
     this.searchValue ="";
     table.filterGlobal("","")
