@@ -296,7 +296,7 @@
                               </div>
                           </div>
                           <div class="col-sm-6 pr-0">                
-                              <div class="box_shadw">
+                              <div class="box_shadw topAutomation">
                               <div class=""><h2>Top Automation Opportunities</h2></div>
                               <div class="">
                                 <table class="RPA table table-striped">
@@ -307,6 +307,10 @@
                                             <th class="">Savings</th>
                                         </tr>
                                     </thead>
+                                </table>
+                            </div>
+                              <div class="table-container">
+                                <table class="RPA table table-striped">
                                     <tbody>
                                         <tr *ngFor="let each_data of top10_activityData">
                                             <td>{{each_data.Activity}}</td>
@@ -419,21 +423,6 @@
         </div>
     </div>
 
-</div>
-<div>
-    <p-dialog [(visible)]="allActivityList" [style]="{width: '60vw', height:'40vw'}">
-        <ng-template pTemplate="header">
-            <h2 class="" style="font-size: 18px;">Recommendations</h2>
-        </ng-template>
-        <div>
-            <ul class="business_content">
-                <li *ngFor="let acti of actual_activityData; let i=index"><span><b>{{acti.Activity}}</b> automation saves
-                        <b>{{calculateSavings(acti.Duration_range) | currency}}</b></span></li>
-                <div class="explrlink" (click)="showTop10Rec()">
-                </div>
-            </ul>
-        </div>
-    </p-dialog>
 </div>
 
 <!-- //Variant List Split Overlay Design Code//

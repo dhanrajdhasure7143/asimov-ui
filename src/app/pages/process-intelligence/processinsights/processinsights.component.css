@@ -571,3 +571,12 @@ button.btn.canlrst-btn:hover {
 background: transparent !important;
 color: #098de6;
 }
+
+.topAutomation{
+  height: 303px !important;
+}
+
+.table-container {
+  max-height: 200px !important;
+  overflow-y: auto;
+}
