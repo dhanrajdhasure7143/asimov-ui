@@ -1817,7 +1817,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        // Swal.fire("Error", "Unable to create a bot.", "error");
         this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create a bot.'})
       }
     );
@@ -2004,7 +2003,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
-        // Swal.fire("Warning", "Please check connections", "warning");
         this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections.'})
 
       } else {
@@ -2029,7 +2027,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 ),
               ];
               this.actualEnv = [...response.envIds];
-              // Swal.fire("Success", "Bot updated successfully", "success");
               this.isNavigateCopilot = false;
               if(this.isCopilot)
               this.messageService.add({severity:'success',summary:'Success',detail:'Bot saved successfully!'})
@@ -2069,25 +2066,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                     // this.messageService.add({severity:'success',summary:'Success',detail:'Audit logs updated successfully!'})
 
                   } else {
-                    // Swal.fire("Error", response.errorMessage, "error");
                     this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
                   }
                 },
                 (err) => {
-                  // Swal.fire("Error", "Unable to update audit logs", "error");
                   this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update the audit logs.'})
 
                 }
               );
             } else {
               this.spinner.hide();
-              // Swal.fire("Error", response.errorMesssage, "error");
               this.messageService.add({severity:'error',summary:'Error',detail:response.errorMesssage})
             }
           },
           (err) => {
             this.spinner.hide();
-            // Swal.fire("Error", "Unable to update bot.", "error");
             this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
 
           }
@@ -2327,11 +2320,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      // Swal.fire("Designer Disabled Now", "", "warning");
       this.messageService.add({severity:'warn',summary:'Warning',detail:'Designer is disabled now!'})
 
     } else {
-      // Swal.fire("Designer Enabled Now", "", "success");
       this.messageService.add({severity:'Success',summary:'Success',detail:'Designer is enabled now!'})
 
     }
@@ -2717,13 +2708,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.rest.save_credentials(Credentials).subscribe((res) => {
         let status: any = res;
         this.spinner.hide();
-        // Swal.fire({
-        //   position: "center",
-        //   icon: "success",
-        //   title: status.status,
-        //   showConfirmButton: false,
-        //   timer: 2000,
-        // });
         this.messageService.add({severity:'success',summary:'Success',detail:status.status})
         this.getTaskForm(this.nodedata);
         // this.modalRef.hide();
