@@ -34,6 +34,7 @@ export class CreateProjectFormComponent implements OnInit {
   processOwner: boolean;
   public resources_list: any[] = [];
   activeUsersList:any[]=[];
+  categoryId:any;
 
 
   constructor(
@@ -229,7 +230,14 @@ export class CreateProjectFormComponent implements OnInit {
       this.insertForm2.get("endDate").setValue("0000-00-00");
     this.mindate = this.insertForm2.get("startDate").value;
   }
-
+  onMapValueChainChange() {
+    const selectedCategoryName = this.insertForm2.value.mapValueChain;
+    const selectedCategory = this.categories_list.find(category => category.categoryName === selectedCategoryName);
+    if (selectedCategory) {
+      this.categoryId = selectedCategory.categoryId;
+      console.log("Selected categoryId:", this.categoryId);
+    }
+  }  
   createproject() {
     let userfirstname = localStorage.getItem("firstName");
     let userlastname = localStorage.getItem("lastName");
@@ -245,6 +253,7 @@ export class CreateProjectFormComponent implements OnInit {
     data["projectHealth"] = "Good";
     data["projectPercentage"] = 0;
     data["correlationID"] = selectedBpmn;
+    data["categoryId"] = this.categoryId
 
     // let project=JSON.stringify(data)
 

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
-import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 
@@ -54,10 +53,12 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if(this.overlay_data.type=="edit"){
       this.isValidName=false;
       if(this.overlay_data.module=="pi"){
-        this.categoryName=this.overlay_data.selectedObj.categoryName;
+        // this.categoryName=this.overlay_data.selectedObj.categoryName;
+        this.categoryName=this.overlay_data.selectedObj.categoryId;
         this.processName=this.overlay_data.selectedObj.piName;
       }else{
-        this.categoryName=this.overlay_data.selectedObj.category;
+        // this.categoryName=this.overlay_data.selectedObj.category;
+        this.categoryName=this.overlay_data.selectedObj.categoryId;
         this.notationType=this.overlay_data.selectedObj.ntype;
         this.processName=this.overlay_data.selectedObj.bpmnProcessName;
         this.approver_list.forEach((e,i)=>{
@@ -97,7 +98,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
 
   ngAfterViewChecked(){
     if(this.categories_list.length==1){
-      this.categoryName=this.categories_list[0].categoryName
+      // this.categoryName=this.categories_list[0].categoryName
+      this.categoryName=this.categories_list[0].categoryId
     }
     this.cdRef.detectChanges();
   }
@@ -115,7 +117,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       this.categoriesList=res
       this.categories_list=this.categoriesList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       if(this.categories_list.length==1){
-        this.categoryName=this.categories_list[0].categoryName
+        // this.categoryName=this.categories_list[0].categoryName
+        this.categoryName=this.categories_list[0].categoryId
       }
     });
     this.getApproverList();
@@ -170,7 +173,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         } else {
           data = {
             "processName": this.processName,
-            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryId": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryName": this.categories_list.find(item=>item.categoryId == this.categoryName).categoryName,
           }
         }
       } else {
@@ -178,7 +182,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           let approverobj = this.approver_list[this.process_owner]
           data = {
             "processName": this.processName,
-            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            // "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryId": this.categoryName == 'other' ? this.othercategory : this.categoryName,
             "ntype": this.notationType,
             "processOwner": approverobj.userId,
             "processOwnerName": this.approver_list[this.process_owner].firstName +' ' + this.approver_list[this.process_owner].lastName,
@@ -186,7 +191,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         } else {
           data = {
             "processName": this.processName,
-            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "categoryName": this.categories_list.find(item=>item.categoryId == this.categoryName).categoryName,
+            "categoryId": this.categoryName == 'other' ? this.othercategory : this.categoryName,
           }
         }
       }
@@ -259,16 +265,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         setTimeout(() => {
           this.dt.processDetailsUpdateSuccess({"isRfresh":true});
         }, 1500);
-        // Swal.fire({
-        //   title: 'Success',
-        //   text: res.message,
-        //   icon: 'success',
-        //   heightAuto: false,
-        // }).then((result) => {
-        //   if (result.value) {
-        //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-        //   }
-        // });
         this.slideDown(null);
       });
     }else{
@@ -318,36 +314,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
               })
             }
           });
-          // Swal.fire({
-          //   title: 'Are you sure?',
-          //   text: disply_text + " will be update all the versions of the bpmn",
-          //   icon: 'warning',
-          //   showCancelButton: true,
-          //   heightAuto: false,
-          //   customClass: {
-          //     confirmButton: 'btn bluebg-button',
-          //     cancelButton:  'btn new-cancelbtn',
-          //   },
-          //   confirmButtonText: 'Yes'
-          // }).then((result) => {
-          //   if (result.value) {
-          //     this.isLoading=true;
-          //   this.rest.updateBpsData(req_body).subscribe((res:any)=>{
-          //     this.isLoading=false;
-          //     Swal.fire({
-          //       title: 'Success',
-          //       text: res.message,
-          //       icon: 'success',
-          //       heightAuto: false,
-          //     }).then((result) => {
-          //       if (result.value) {
-          //         this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-          //       }
-          //     });
-          //     this.slideDown(null);
-          //   })
-          // }
-          // });
         }else{
           this.isLoading=true;
           this.rest.updateBpsData(req_body).subscribe((res:any)=>{

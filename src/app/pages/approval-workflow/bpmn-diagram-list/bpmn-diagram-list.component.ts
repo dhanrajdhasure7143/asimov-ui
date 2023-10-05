@@ -257,7 +257,8 @@ this.selectedrow =i;
       "bpmnProcessName": data.bpmnProcessName,
       "bpmnProcessStatus": "APPROVED",
       "bpmnXmlNotation": data.bpmnXmlNotation,
-      "category": data.category,
+      // "category": data.category,
+      "categoryId": data.categoryId,
       //"createdTimestamp": data.createdTimestamp,
       "approverEmail": data.approverEmail,
       "userEmail": data.userEmail,
@@ -336,7 +337,9 @@ this.selectedrow =i;
         "ntype": data.ntype,
         // "bpmnJsonNotation":data.bpmnJsonNotation,
         "processIntelligenceId": data.processIntelligenceId,
-        "category": data.category
+        // "category": data.category,
+        "categoryId": data.categoryId
+
       },
       "approvalStatus": "REJECTED",
       "rejectedBy": data.approverName,

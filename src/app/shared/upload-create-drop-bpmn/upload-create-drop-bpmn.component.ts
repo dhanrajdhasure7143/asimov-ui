@@ -153,7 +153,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       this.bpmnModel.hasConformance = true;
     }
     this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-    this.bpmnModel.category=e.categoryName;
+    // this.bpmnModel.category=e.categoryName;
+    this.bpmnModel.categoryId = e.categoryId;
     if(this.uploaded_file){
       var myReader: FileReader = new FileReader();
       myReader.onloadend = (ev) => {
