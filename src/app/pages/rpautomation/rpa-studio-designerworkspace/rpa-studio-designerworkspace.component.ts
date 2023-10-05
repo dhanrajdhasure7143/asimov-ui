@@ -643,8 +643,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         {
           startNode["x"]="5px";
           startNode["y"]="5px";
-          stopNode["x"]="900px";
-          stopNode["y"]="900px";
+          let dropContainer=document.getElementById("dnd_"+this.dragareaid);
+          stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
+          stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
         }
         this.nodes.push(startNode);
         setTimeout(()=>{
@@ -838,17 +839,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         setTimeout(() => {
           this.populateNodes(node);
         }, 240);
-
+        let dropContainer=document.getElementById("dnd_"+this.dragareaid);
         let stopnode = {
           id: "STOP_" + this.finalbot.botName,
           name: "STOP",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          // x: "941px",
-          // y: "396px",
-          x: "92%",
-          y: "80%",
+          x: (dropContainer.offsetWidth - 100)+"px",
+          y: (dropContainer.offsetHeight - 100) +"px",
         };
         this.stopNodeId = stopnode.id;
         this.nodes.push(stopnode);
