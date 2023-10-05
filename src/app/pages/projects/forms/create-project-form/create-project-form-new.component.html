@@ -22,7 +22,7 @@
                       <p-dropdown [options]="categories_list" formControlName="mapValueChain"
                           autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                           placeholder="Select Department" optionLabel="categoryName"
-                          optionValue="categoryName"></p-dropdown>
+                          optionValue="categoryName" (onChange)="onMapValueChainChange()"></p-dropdown>
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
                           class="required">
                           Department Required

@@ -25,4 +25,5 @@ export class BpmnModel{
     processOwner:string;
     role:string;
     processOwnerName:string;
+    categoryId:number
 }

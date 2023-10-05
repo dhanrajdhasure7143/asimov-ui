@@ -226,6 +226,7 @@ loggedInUserId:any;
 users_List1:any[]=[];
 allFiles:any[]=[];
 documentList=[];
+categoryId: any;
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -392,7 +393,6 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
       summary: "Success",
       detail: response.message
     })
-    // Swal.fire("Success", response.message, "success");
     this.spinner.hide();
   }
   else {
@@ -402,7 +402,6 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
       summary: "Error",
       detail: response.errorMessage
     })
-    // Swal.fire("Error", response.errorMessage, "error");
   }
 })
 }
@@ -460,6 +459,7 @@ async getProjectdetails(){​​​​​​
 // this.spinner.show();
   await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
   this.projectDetails=res
+  this.categoryId = this.projectDetails.categoryId
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
   this.processOwnerFlag=false;
@@ -527,7 +527,6 @@ if (process != undefined) {
       summary: "Error",
       detail: "Unable to find the process owner for the selected process."
     })
-    // Swal.fire("Error", "Unable to find process owner for selected process", "error")
   }
 }
 }
@@ -744,6 +743,7 @@ this.rest_api.getFileCategories().subscribe(data => {
 updateprojectDetails() {
 // this.spinner.show()
 this.projectDetails["type"] = "Project";
+this.projectDetails["categoryId"]=this.categoryId;
 // this.projectDetails.processOwner = this.processownername
 // this.projectDetails.endDate = this.projectenddate;
 // this.projectDetails.startDate = this.projectStartDate;
@@ -1624,5 +1624,11 @@ selectEnd() {
     return projownername;
   };
 
+  onMapValueChainChange(){
+    const selectedCategory = this.categories_list.find(category => category.categoryName === this.mapValueChain);
+    if (selectedCategory) {
+      this.categoryId = selectedCategory.categoryId;
+    }
+  }
 }
 

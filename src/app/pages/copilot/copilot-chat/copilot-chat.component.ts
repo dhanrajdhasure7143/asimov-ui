@@ -7,6 +7,8 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
 import { CopilotService } from "../../services/copilot.service";
+import { DatePipe } from '@angular/common';
+import * as XLSX from 'xlsx';
 interface City {
   name: string;
   code: string;
@@ -248,14 +250,14 @@ export class CopilotChatComponent implements OnInit {
       setTimeout(()=>{this.previewBpmn(event.data)},500)
     }
     else if (event.actionType=='UploadFileAction'){
-      this.changefileUploadForm(event.data)
+      this.changefileUploadForm(event.fileDataEvent, event.data)
     }
     else if(event.actionType=='ProcessLogAction'){
-      this.sendProcessLogs();
+      this.sendProcessLogs(event.data);
     }
   }
 
-  sendProcessLogs(){
+  sendProcessLogs(buttonData:any){
     if(this.tableForm.valid){
       let tableData=[...this.tableForm.value];
       tableData=tableData.map((item:any)=>{
@@ -269,7 +271,7 @@ export class CopilotChatComponent implements OnInit {
       })
       let data={
         conversationId:localStorage.getItem("conversationId"),
-        message:"Submit",
+        message:buttonData?.submitValue,
         jsonData:tableData
       }
       this.messages.push(data);
@@ -398,22 +400,14 @@ export class CopilotChatComponent implements OnInit {
     })
   }
 
-  changefileUploadForm(event){
- 
+  changefileUploadForm(event:any, buttonData:any){
     let selectedFile = <File>event.target.files[0];
-    const fd = new FormData();
-    fd.append('file', selectedFile),
-    fd.append('permissionStatus', 'yes')
     this.isChatLoad=true;
-    this.main_rest.fileupload(fd).subscribe(res => {
-      this.isChatLoad=false;
-      this.sendUserAction({
-        message:"Submit",
-        jsonData:JSON.stringify({fileName:selectedFile.name})
-      })
-    },err=>{
-      this.isChatLoad=false;
-    })
+    let fileName = selectedFile.name.split('.');
+    buttonData.fileType=fileName[fileName.length-1];
+    if(fileName[fileName.length-1]=="xlsx") this.readExcelFile(selectedFile, buttonData);
+    if(fileName[fileName.length-1]=="csv") this.readCSVFile(selectedFile ,buttonData);
+    if(fileName[fileName.length-1]=="xes" || fileName[fileName.length-1]=="gz") this.uploadProcessLogsFile(selectedFile, {...buttonData, ...{fileType:fileName[fileName.length-1]}})
   }
 
   updateCurrentMessageButtonState(state){
@@ -486,5 +480,71 @@ export class CopilotChatComponent implements OnInit {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
     }
+  }
+
+  readExcelFile(evt, buttonData) {    // read xls files
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr,  { type: 'binary', cellText: false, cellDates:true });
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      let excelfile:any[] = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No data was found in the uploaded file!",
+        })
+      } else{
+        buttonData.headers=excelfile[0];
+        this.uploadProcessLogsFile(evt,buttonData);
+      }
+    };
+    reader.readAsBinaryString(evt);
+  }
+
+  readCSVFile(e, buttonData) {        //  read CSV files
+    let reader = new FileReader();
+    reader.readAsText(e);
+    let _self = this;
+    reader.onload = () => {
+      let csvRecordsArray: string[][] = [];
+      (<string>reader.result).split(/\r\n|\n/).forEach((each, i) => {
+        if(each)
+        csvRecordsArray.push(each.split(','));
+      })   
+      let excelfile = [];
+      excelfile = csvRecordsArray;
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No data was found in the uploaded file!",
+        })
+      } else{
+        buttonData.headers=excelfile[0];
+        this.uploadProcessLogsFile(e,buttonData);
+      }
+    };
+  }
+
+  uploadProcessLogsFile(selectedFile,buttonData){
+    const fd = new FormData();
+    fd.append('file', selectedFile),
+    fd.append('permissionStatus', 'yes');
+    this.main_rest.fileupload(fd).subscribe((res:any) => {
+      if(res){
+        const dataValue = res.data;
+        const fileName = dataValue.split(':')[1].trim();
+        this.isChatLoad=false;
+        this.sendUserAction({
+          message:buttonData.submitValue,
+          jsonData:JSON.stringify({fileName:fileName, headers:buttonData.headers,fileType:buttonData.fileType})
+        })
+      }
+    },err=>{
+      this.isChatLoad=false;
+    })
   }
 }
