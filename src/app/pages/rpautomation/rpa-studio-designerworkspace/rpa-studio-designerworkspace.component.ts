@@ -643,8 +643,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         {
           startNode["x"]="5px";
           startNode["y"]="5px";
-          stopNode["x"]="900px";
-          stopNode["y"]="900px";
+          let dropContainer=document.getElementById("dnd_"+this.dragareaid);
+          stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
+          stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
         }
         this.nodes.push(startNode);
         setTimeout(()=>{
