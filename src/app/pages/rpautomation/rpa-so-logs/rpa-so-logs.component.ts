@@ -6,7 +6,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
-import Swal from 'sweetalert2';
 import { MessageService,ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-rpa-so-logs',
@@ -108,7 +107,6 @@ export class RpaSoLogsComponent implements OnInit {
   },err=>{
     this.logsLoading=false;
     this.isDataEmpty=true;
-    //Swal.fire("Error","unable to get logs","error")
     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})
     });
   }

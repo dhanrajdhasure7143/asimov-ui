@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { NgxSpinnerService } from 'ngx-spinner';
-// import Swal from 'sweetalert2';
 import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
@@ -499,19 +498,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
 
-  onChangeExecutionMode()
-  { 
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You want to change version",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, change it!'
-    // }).then(
+  onChangeExecutionMode(){
     this.confirmationService.confirm({
       header: 'Are you sure?',
       message: 'Do you want to change the version?',

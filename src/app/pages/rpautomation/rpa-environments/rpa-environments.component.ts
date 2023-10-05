@@ -118,8 +118,6 @@ export class RpaenvironmentsComponent implements OnInit {
 
   openCreateEnvOverlay() {
     this.isCreate = true;
-    // document.getElementById("createenvironment").style.display = 'block';
-    // document.getElementById("update-popup").style.display = 'none';
     this.isOpenSideOverlay=true;
   }
 
@@ -188,19 +186,6 @@ export class RpaenvironmentsComponent implements OnInit {
     // const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
     const selectedEnvironments = this.selected_list.map(p => p.environmentId);
     if (selectedEnvironments.length != 0) {
-      // Swal.fire({
-      //   title: 'Are you Sure?',
-      //   text: "You won't be able to revert this!",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   customClass: {
-      //     confirmButton: 'btn bluebg-button',
-      //     cancelButton:  'btn new-cancelbtn',
-      //   },
-      //   confirmButtonText: 'Yes, delete it!'
-      // }).then((result)=>{
-// if(result.value){}
-      // }
       this.confirmationService.confirm({
         header: 'Are you sure?',
         message: "Do you want to delete this environment? This can't be undo.",
@@ -295,17 +280,6 @@ export class RpaenvironmentsComponent implements OnInit {
 
   deletebyId(data){
     const selectedEnvironments=[data.environmentId];
-      // Swal.fire({
-      //   title: 'Are you Sure?',
-      //   text: "You won't be able to revert this!",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   customClass: {
-      //     confirmButton: 'btn bluebg-button',
-      //     cancelButton:  'btn new-cancelbtn',
-      //   },
-      //   confirmButtonText: 'Yes, delete it!'
-      // }).then(
         this.confirmationService.confirm({
         header:'Are you sure?',
         message:"You won't be able to revert this!",

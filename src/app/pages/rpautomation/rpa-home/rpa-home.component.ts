@@ -144,19 +144,6 @@ export class RpaHomeComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     if (this.freetrail == 'true') {
       if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-	        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // })
         this.confirmationService.confirm({
           message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
           header: 'Error',
@@ -220,18 +207,6 @@ export class RpaHomeComponent implements OnInit {
   }
 
   botdelete(bot) {
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-    //   if (result.value) {
     this.confirmationService.confirm({
       header: 'Are you sure?',
       message: "Do you want to delete this bot? This can't be undo.",
@@ -435,7 +410,6 @@ export class RpaHomeComponent implements OnInit {
         this.importenv = "";
         this.importfile = "";
         if (response.errorMessage == undefined) {
-          // Swal.fire("Success", response.status, "success");
           this.messageService.add({severity:'success', summary: 'Success', detail:response.status});
           this.getallbots();
         }
@@ -701,20 +675,17 @@ importBot()
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // Swal.fire("Success","Bot imported successfully","success");
         this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // Swal.fire("Error","Unable to bot task configurations","error");
         this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to configure bot task configurations.'});
       })
     }
   },err=>{
     this.spinner.hide();
     this.resetImportBotForm();
-    // Swal.fire("Error","Unable to import bot","error");
     this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot.'});
   })
 }
