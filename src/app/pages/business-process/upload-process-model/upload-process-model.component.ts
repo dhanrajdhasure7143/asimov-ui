@@ -1235,7 +1235,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
-    bpmnModel.category = sel_List['category'];
+    // bpmnModel.category = sel_List['category'];
+    bpmnModel.categoryId = sel_List['categoryId'];
     bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
@@ -1324,7 +1325,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }else{
       bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
       bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
-      bpmnModel.category = sel_List['category'];
+      // bpmnModel.category = sel_List['category'];
+      bpmnModel.categoryId = sel_List['categoryId'];
       bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
       if(sel_List['id'])
         bpmnModel.id = sel_List['id'];

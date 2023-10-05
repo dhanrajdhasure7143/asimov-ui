@@ -34,24 +34,23 @@ getCopilotTemplatesList(id){
   return this.http.get(environment.asquare+"/a-square/v1/template/process/"+id, {headers:this.headers});
 }
 
-getCopilotConversation(){
-  return this.http.get(environment.asquare+"/a-square/v1/conversation", {headers:this.headers})
+initializeConversation(body) {
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/",body,{headers:this.headers});
 }
 
 sendMessageToCopilot(messageBody:any){
-  return this.http.post(environment.asquare+"/a-square/v1/conversation/message", messageBody, {headers:this.headers})
-}
-
-initializeConversation(body) {
-  return this.http.post(environment.asquare+"/a-square/v1/conversation/",body,{headers: new HttpHeaders().set('x-api-key', 'FyNw9kKOupVIz5joICubvWlVUW8m2K0yNEgX'),});
+  let headers_new=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey,'x-api-conversationId':localStorage.getItem('conversationId')})
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/message", messageBody, {headers:headers_new})
 }
 
 getAutomatedProcess(messageBody){
+  let headers_new=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey,'x-api-conversationId':localStorage.getItem('conversationId')})
   return this.http.post(environment.asquare+"/a-square/v1/conversation/modify-template", messageBody, {headers:this.headers})
 }
 
 updateProcessLogGraph(data:any){
-  return this.http.post(environment.asquare+"/a-square/v1/conversation/update-process-bpmn", data);
+  let headers_new=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey,'x-api-conversationId':localStorage.getItem('conversationId')})
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/update-process-bpmn", data,{headers:headers_new});
 }
 
 }

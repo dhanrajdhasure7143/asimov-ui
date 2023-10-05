@@ -140,37 +140,9 @@ export class CreateTasksComponent implements OnInit {
             project_name: this.project_name,
             task_id: response.taskId,
           }});
-       
-        
-      //   Swal.fire({
-      //     title: 'Success',
-      //     text: "Task Created Successfully !",
-      //     position: 'center',
-      //     icon: 'success',
-      //     showCancelButton: false,
-      //     customClass: {
-      //       confirmButton: 'btn bluebg-button',
-      //       cancelButton:  'btn new-cancelbtn',
-      //     },
-         
-      //     confirmButtonText: 'Ok'
-      // }).then((result) => {
-      //   this.resettask();
-      //   this.router.navigate(["/pages/projects/taskDetails"], {
-      //     queryParams: {
-      //       project_id: this.params_data.project_id,
-      //       project_name: this.project_name,
-      //       task_id: response.taskId,
-      //     },
-      //   });
-      //   //this.projectdetailscreen.getTaskandCommentsData();
-      // })
-
       }
       else
         this.messageService.add({ severity: "error", summary: "Error", detail: response.message});
-        // Swal.fire("Error",response.message,"error");
-
     })
   }
 

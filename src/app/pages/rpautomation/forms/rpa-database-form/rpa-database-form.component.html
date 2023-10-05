@@ -106,9 +106,9 @@
                         class="star">*</span></label>
                 <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control"
                     formControlName="password" value="" placeholder="Enter Password" passwordToggle (keydown)="spaceNotAllow($event)">
-                <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                <!-- <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1">
-                </span>
+                </span> -->
                 <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                     <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1">
                 </span>

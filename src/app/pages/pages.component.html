@@ -12,7 +12,7 @@
   <app-header class="shadow"></app-header>
   <mat-drawer-container class="main">
 
-    <mat-drawer mode="side" mode="side" #sidenav id="sidenav" [class.menu-open]="sideBarOpen"
+    <mat-drawer mode="side" mode="side" [disableClose]="true" #sidenav id="sidenav" [class.menu-open]="sideBarOpen"
       [class.menu-close]="!sideBarOpen" opened>
       <app-sidebar></app-sidebar>
     </mat-drawer>
