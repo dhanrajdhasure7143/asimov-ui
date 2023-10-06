@@ -128,20 +128,6 @@ export class InviteUserComponent implements OnInit {
         ) {
           this.api.inviteUserwithoutReg(body).subscribe((resp) => {
             if (resp.message === "User invited successfully!") {
-              // Swal.fire({
-              //   title: "Success",
-              //   text: "User invited successfully!",
-              //   position: "center",
-              //   icon: "success",
-              //   showCancelButton: false,
-              //   customClass: {
-              //     confirmButton: 'btn bluebg-button',
-              //     cancelButton:  'btn new-cancelbtn',
-              //   },
-              //   heightAuto: false,
-               
-              //   confirmButtonText: "Ok",
-              // }).then((result) => {
                 this.confirmationService.confirm({
                   header:'Info',
                   message:'User invited successfully!',
@@ -158,27 +144,16 @@ export class InviteUserComponent implements OnInit {
             })
             }
              else {
-              // Swal.fire(
-              //   "Error",
-              //   "Failed to invite! Check if the user already exists!",
-              //   "error"
-              // );
               this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exist.'})
             }
             this.loader.hide();
           });
         } else if (res.errorMessage) {
-          // Swal.fire("Error", res.errorMessage, "error");
           this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          // Swal.fire(
-          //   "Error",
-          //   "Failed to invite! Check if the user already exists!",
-          //   "error"
-          // );
           this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
         }
       });

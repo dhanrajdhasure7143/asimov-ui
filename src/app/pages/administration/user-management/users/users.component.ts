@@ -110,19 +110,6 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(data) {
-    // Swal.fire({
-    //   title: "Are you Sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   heightAuto: false,
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.value) {
       this.confirmationService.confirm({
         header:'Are you sure?',
         message:"Do you want to delete this user? This can't be undo.",
@@ -140,30 +127,15 @@ export class UsersComponent implements OnInit {
             let value: any = resp;
             if (value.message === "User Deleted Successfully") {
               this.getUsers();
-              // Swal.fire({
-              //   title: "Success",
-              //   text: "User deleted successfully!",
-              //   position: "center",
-              //   icon: "success",
-              //   showCancelButton: false,
-              //   customClass: {
-              //     confirmButton: 'btn bluebg-button',
-              //     cancelButton:  'btn new-cancelbtn',
-              //   },
-              //   heightAuto: false,
-              //   confirmButtonText: "Ok",
-              // });
               this.messageService.add({
                 severity: 'success', summary: 'Success', detail: 'User deleted successfully!'
               })
             } else {
-              // Swal.fire("Error", "Failed to delete the user.", "error");
               this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
               this.loader.hide();
             }
           },
           (err) => {
-            // Swal.fire("Error", "Failed to delete the user.", "error");
             this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
             this.loader.hide();
           }
@@ -175,19 +147,6 @@ export class UsersComponent implements OnInit {
   openInviteUserOverlay(){
     if (this.freetrail == "true") {
       if (this.users.length == this.config.inviteUserfreetraillimit) {
-        // Swal.fire({
-        //   title: "Error",
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: "center",
-        //   icon: "error",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   heightAuto: false,
-        //   confirmButtonText: "Ok",
-        // });
         this.confirmationService.confirm({
           header: 'Error',
           message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
@@ -293,19 +252,6 @@ export class UsersComponent implements OnInit {
     this.loader.show();
     this.rest_api.updateUserRoleDepartment(body).subscribe((resp) => {
       if (resp.message ==="Successfuly updated role of an user for particular application") {
-        // Swal.fire({
-        //   title: "Success",
-        //   text: "User details updated successfully!",
-        //   position: "center",
-        //   icon: "success",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   heightAuto: false,
-        //   confirmButtonText: "Ok",
-        // });
         this.messageService.add({
           severity: 'success', summary: 'Success', detail: "User details updated successfully!"
         });
@@ -313,7 +259,6 @@ export class UsersComponent implements OnInit {
         this.getUsers();
       } else {
         this.loader.hide();
-        // Swal.fire("Error", resp.message, "error");
         this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
 
       }
@@ -402,19 +347,6 @@ export class UsersComponent implements OnInit {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
           this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
             if (resp.message === "User invited Successfully !!") {
-              // Swal.fire({
-              //   title: "Success",
-              //   text: "User invited successfully!",
-              //   position: "center",
-              //   icon: "success",
-              //   showCancelButton: false,
-              //   customClass: {
-              //     confirmButton: 'btn bluebg-button',
-              //     cancelButton:  'btn new-cancelbtn',
-              //   },
-              //   heightAuto: false,
-              //   confirmButtonText: "Ok",
-              // });
               this.messageService.add({
                 severity: 'success', summary: 'Success', detail: "User invited successfully!"
               });
@@ -423,23 +355,16 @@ export class UsersComponent implements OnInit {
             this.hideInvitePopUp= false;
 
             } else {
-              // Swal.fire(
-              //   "Error",
-              //   "Failed to invite! Check if the user already exists!",
-              //   "error"
-              // );
               this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
             this.loader.hide();
             }
           });
         } else if (res.errorMessage) {
-          // Swal.fire("Error", res.errorMessage, "error");
           this.messageService.add({severity:'error',summary:'Error',detail: res.errorMessage})
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          // Swal.fire("Error","Failed to invite! Check if the user already exists!","error");
           this.messageService.add({severity:'error',summary:'Error',detail: 'Failed to invite! Check if the user already exists!'})
         }
       });

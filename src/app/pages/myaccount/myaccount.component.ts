@@ -59,19 +59,6 @@ export class MyaccountComponent implements OnInit {
     let reqObj = { enc: encrypt };
     this.api.updateUser(reqObj).subscribe(
       (data) => {
-        // Swal.fire({
-        //   title: "Success",
-        //   text: "User details updated successfully!",
-        //   position: "center",
-        //   icon: "success",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   heightAuto: false,
-        //   confirmButtonText: "Ok",
-        // });
       this.confirmationService.confirm({
         header:'Success',
         message:'User details updated successfully!',
@@ -89,7 +76,6 @@ export class MyaccountComponent implements OnInit {
       })
       },(err) => {
         this.loader.hide();
-        // Swal.fire("Error", "Please try again!", "error");
         this.messageService.add({severity:'error',summary:'Error',detail:'Please try again!'})
       }
     );
