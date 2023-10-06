@@ -580,3 +580,8 @@ color: #098de6;
   max-height: 200px !important;
   overflow-y: auto;
 }
+
+.table-container {
+  max-height: 240px !important;
+  overflow-y: auto;
+}
