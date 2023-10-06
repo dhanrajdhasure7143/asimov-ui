@@ -393,7 +393,6 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
       summary: "Success",
       detail: response.message
     })
-    // Swal.fire("Success", response.message, "success");
     this.spinner.hide();
   }
   else {
@@ -403,7 +402,6 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
       summary: "Error",
       detail: response.errorMessage
     })
-    // Swal.fire("Error", response.errorMessage, "error");
   }
 })
 }
@@ -529,7 +527,6 @@ if (process != undefined) {
       summary: "Error",
       detail: "Unable to find the process owner for the selected process."
     })
-    // Swal.fire("Error", "Unable to find process owner for selected process", "error")
   }
 }
 }
