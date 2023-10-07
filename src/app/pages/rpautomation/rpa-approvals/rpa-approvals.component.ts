@@ -32,9 +32,6 @@ export class RpaApprovalsComponent implements OnInit {
     private messageService :MessageService
     ) { }
 
-
-
-
   ngOnInit(): void {
     this.spinner.show();
     this.columns_list= this.columnList.approval_column;
@@ -51,7 +48,7 @@ export class RpaApprovalsComponent implements OnInit {
     });
   }
   getApprovalList(){
-    this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo"]
+    this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo","modifiedBy","modfiedAt"]
     let userId:String="";
     if(localStorage.getItem("userRole")=="System Admin")
       userId="SystemAdmin";
@@ -59,9 +56,8 @@ export class RpaApprovalsComponent implements OnInit {
       userId=localStorage.getItem("ProfileuserId");
     this.rest.getRPAApprovalsList(userId).subscribe((response:any)=>{ 
       this.spinner.hide();
-      this.selectedRows=[]
-      if(response.data.length!=0)
-      {
+      this.selectedRows=[];
+      if(response.data.length!=0){
         this.approvalsList=response.data.map((item:any)=>{
           if(this.users_list.find((user:any)=>user.userId.userId==item.approverName))
             item["approverConvertedName"]=this.dt.get_username_by_email(this.users_list,item.approverName);
@@ -69,11 +65,12 @@ export class RpaApprovalsComponent implements OnInit {
             item["approverConvertedName"]=item.approverName.split("@")[0];
           item["createdBy"]=this.dt.get_username_by_email(this.users_list,item.createdBy);
           item["modifiedBy"]=this.dt.get_username_by_email(this.users_list,item.modifiedBy);
+          item["createdAt"]=item.createdAt?new Date(item.createdAt):'';
+          item["modfiedAt"]=item.modfiedAt?new Date(item.modfiedAt):'';
           return item;
         });
       }
     },err=>{
-      console.log(err);
       this.spinner.hide();
       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the approvals list.'})
     })
