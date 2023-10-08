@@ -514,7 +514,7 @@
                 <p-tabPanel [selected]="true">
                     <ng-template pTemplate="header">
                         <h4>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
-                                Users selected) </span></h4>
+                                User<span *ngIf="checkBoxselected.length >1">s</span> selected) </span></h4>
                     </ng-template>
                 </p-tabPanel>
                 <p-tabPanel>
