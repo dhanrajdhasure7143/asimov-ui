@@ -137,7 +137,7 @@ ngOnChanges(changes: SimpleChanges): void {
     } else {
       clearInterval(typingInterval);
       this.scrollToBottom();
-      console.log("this.currentMessageIndex",this.currentMessageIndex)
+      console.log("this.systemResponse",this.systemResponse)
       this.loadComponents(this.messagesList[this.currentMessageIndex-1]);
       setTimeout(() => {
         this.displayNextMessage();
