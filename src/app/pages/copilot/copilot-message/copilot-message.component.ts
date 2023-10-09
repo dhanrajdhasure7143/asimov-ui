@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef,SimpleChanges,OnChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef,SimpleChanges,OnChanges,ViewChild,ElementRef } from '@angular/core';
 import { ChatMessage, MessageAction, MessageData, SelectedItem } from '../copilot-models';
 import { DataTransferService } from '../../services/data-transfer.service';
 
@@ -27,6 +27,9 @@ private previousArrayLength: number = 0;
   currentMessageIndex: number = 0; // Index of the current message within the conversation
   systemResponse: any[] = []; // Array to store the system response text for each conversation
   typingSpeed: number = 30;
+  loadedComponents: string[] = []; // Initialize as an empty array
+  componentIndex: number = 0;
+  @ViewChild('subChat', { static: false }) subChat: ElementRef;
 
  ngOnInit() {
   this.user_firstletter = localStorage.getItem("firstName").charAt(0) + localStorage.getItem("lastName").charAt(0);
@@ -108,81 +111,112 @@ ngOnChanges(changes: SimpleChanges): void {
  }
 
 
- processProcessLog(buttonData:any)
- {
+ processProcessLog(buttonData:any){
   this.messageAction.emit({
     actionType:"ProcessLogAction",
     data:buttonData
   })
  }
 
- simulateTypingEffect(text: string) {
-  let index = 0;
-  let conversationIndex = this.currentConversationIndex;
-
+ simulateTypingEffect(messages: string[], response: any) {
+  let messageIndex = 0;
+  let charIndex = 0;
   const typingInterval = setInterval(() => {
-    // Check if the conversation index has changed (new conversation)
-    if (conversationIndex !== this.currentConversationIndex) {
+    if (messageIndex < messages.length) {
+      const text = messages[messageIndex];
+      if (charIndex < text.length) {
+        response.message += text.charAt(charIndex);
+        charIndex++;
+      } else {
+        messageIndex++;
+        charIndex = 0;
+        if (messageIndex < messages.length) {
+          response.message += '<br><br>'; // Add a newline for the next message
+        }
+      }
+    } else {
       clearInterval(typingInterval);
-      console.log("testing2")
+      this.scrollToBottom();
+      console.log("this.currentMessageIndex",this.currentMessageIndex)
+      this.loadComponents(this.messagesList[this.currentMessageIndex-1]);
       setTimeout(() => {
         this.displayNextMessage();
-      }, 1000); // Add a delay before displaying the next conversation
-    } else {
-      if (!this.systemResponse[conversationIndex]) {
-        this.systemResponse[conversationIndex] = {
-          message: '',
-          messageSourceType: 'SYSTEM'
-        };
-      }
-      this.systemResponse[conversationIndex].message += text.charAt(index);
-      index++;
-
-      if (index > text.length) {
-        clearInterval(typingInterval);
-        console.log("TypingEffectEnd")
-        setTimeout(() => {
-          this.displayNextMessage();
-        }, 1000); // Add a delay before displaying the next message
-      }
+      }, 1000); // Add a delay before displaying the next system message
     }
+    this.scrollToBottom();
   }, this.typingSpeed);
-
-  setTimeout(() => {
-    console.log("this.systemResponse",this.systemResponse)
-  }, 5000);
 }
 
 
 displayNextMessage() {
-  if (this.currentConversationIndex < this.messagesList.length) {
-    const conversation = this.messagesList[this.currentConversationIndex];
-    if (conversation.messageSourceType === "SYSTEM") {
-      const messages = conversation.data.message;
-      if (this.currentMessageIndex < messages.length) {
-        this.simulateTypingEffect(messages[this.currentMessageIndex]);
-        this.currentMessageIndex++;
-      } else {
-        // Move to the next conversation when all messages are displayed
-        this.currentConversationIndex++;
-        this.currentMessageIndex = 0;
-        setTimeout(() => {
-          this.displayNextMessage();
-        }, 1000); // Add a delay before displaying the next conversation
-      }
+  if (this.currentMessageIndex < this.messagesList.length) {
+    const message = this.messagesList[this.currentMessageIndex];
+    // console.log(message)
+    if (message.messageSourceType === "SYSTEM") {
+      const messages = message.data.message;
+      const response = { message: '', messageSourceType: 'SYSTEM',data:message };
+      this.systemResponse.push(response); // Create a new object for this system message
+      this.simulateTypingEffect(messages, response);
+      this.currentMessageIndex++;
     } else {
-      this.currentConversationIndex++;
-
-      console.log(this.currentConversationIndex)
-      console.log(conversation)
-      this.systemResponse[this.currentConversationIndex-1] = {
-        message: conversation.message,
-        messageSourceType: 'MESSAGE'
-      };
       // Skip non-SYSTEM messages
+      // console.log("testing",this.currentMessageIndex)
+      this.systemResponse[this.currentMessageIndex]={ message: message.message,data:message, messageSourceType: 'MESSAGE' };
+      this.currentMessageIndex++;
       this.displayNextMessage();
     }
+  }else{
+    // console.log("testing end case", this.systemResponse);
+    // console.log("latestIndex",this.currentMessageIndex)
+
   }
+}
+
+
+loadComponents(item) {
+  console.log("data",item)
+  const components = item?.data?.components?item.data.components:[];
+  console.log("components",components)
+  this.loadNextComponent(components,item);
+}
+
+loadNextComponent(components,item) {
+  if (this.componentIndex < components.length) {
+    const componentName = components[this.componentIndex];
+    this.loadedComponents.push(componentName);
+    this.componentIndex++;
+
+    // Continue loading the next component with a delay
+    setTimeout(() => {
+      // this.loadNextComponent(components,item);
+      this.scrollToBottom();
+    }, 500); // Add a delay before loading the next component
+  } else {
+    this.scrollToBottom();
+    // All components have been loaded
+    // console.log('All components loaded.',this.loadedComponents);
+  }
+}
+
+isScrollAtBottom() {
+  const objDiv = this.subChat.nativeElement;
+  return objDiv.scrollTop === objDiv.scrollHeight - objDiv.clientHeight;
+}
+
+scrollHandler() {
+  if (this.isScrollAtBottom()) {
+    const objDiv = this.subChat.nativeElement;
+    objDiv.scrollTop = objDiv.scrollHeight;
+    // The scroll is at the bottom, do something
+  } else {
+    console.log("test2")
+    // The scroll is not at the bottom
+  }
+}
+
+scrollToBottom() {
+  const objDiv = this.subChat.nativeElement;
+  objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 

@@ -106,10 +106,10 @@
 }
 
 .chat-grid {
-    height: calc(100vh - 200px) !important;
-    overflow: scroll !important;
+    /* height: calc(100vh - 200px) !important; */
+    /* overflow: scroll !important; */
     width: 100% !important;
-    padding: 15px 20px;
+    /* padding: 15px 20px; */
     margin-bottom:10px;
 }
 

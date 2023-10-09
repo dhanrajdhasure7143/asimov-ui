@@ -171,8 +171,6 @@ textarea.form-control.message-input:focus {
     font-size: 15px;
     /* text-align: justify; */
     line-height:22px;
-    
-
 }
 .user-message .user-msgtext{background-color: #ebf7ff;
     border-radius: 12px 0px 12px 12px !important;
@@ -248,9 +246,6 @@ button[disabled]:hover{cursor: no-drop;
     overflow-x: auto;
 }
 
-
- 
-  
   .new-card{background-color: #F6FCFE !important;
     border-radius: 8px;
     overflow-x:auto;
@@ -473,15 +468,9 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
     font-size: 10px;
 }
 
- #system-response-container {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  display: inline-block; /* Display inline to allow line breaks */
-  white-space: normal; /* Allow text to wrap */
-  overflow: hidden; /* Hide overflowed characters */
-  width: 100%
- }
-
-  #system-response-container span {
-    display: inline-block; /* Display each character/word inline */
-  }
+#subChat{
+    overflow: scroll !important;
+    height: calc(100vh - 200px) !important;
+    padding: 15px 20px;
+    width: 100%;
+}

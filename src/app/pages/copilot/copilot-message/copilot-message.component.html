@@ -1,27 +1,36 @@
+<div id="subChat" #subChat>
+    <div *ngFor="let each of systemResponse" class="py-2">
+            <div *ngIf="each.messageSourceType == 'SYSTEM'" class="d-flex">
+                <div class="sys-image">
+                    <img src="../../../../assets/copilot/systemicon.svg" alt="" />
+                </div>
+                    <div class="ml-2 send-msgtext" [innerHTML]="each.message"></div>
+            </div>
+            <div *ngIf="each.messageSourceType!='SYSTEM'" class="user-message ">
+                <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="each.message"></div>
+                <div class="sys-image">
+                    <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff','font-size':'16px'}" shape="circle"></p-avatar>
+                </div>
+            </div>
+    </div>
 
-    <div *ngFor="let sentMessage of messages" class="py-3 ">
-        <div *ngIf="sentMessage.messageSourceType!='SYSTEM' && sentMessage.messageSourceType!='INPUT'" class="user-message ">
+
+    <div *ngFor="let sentMessage of messages">
+        <!-- <div *ngIf="sentMessage.messageSourceType!='SYSTEM' && sentMessage.messageSourceType!='INPUT'" class="user-message ">
             <div class="py-3 px-3 mr-2 user-msgtext" [innerHTML]="sentMessage.message"></div>
             <div class="sys-image">
-                <!-- <img src="../../../../assets/copilot/user.svg" alt="" /> -->
                 <p-avatar [label]="user_firstletter" styleClass="p-mr-2" size="large" [style]="{'background-color': '#9c27b0','border':'2px solid #098DE6' , 'color': '#ffffff','font-size':'16px'}" shape="circle"></p-avatar>
             </div>
-        </div>
-        <div></div>
+        </div> -->
         <div *ngIf="sentMessage.messageSourceType=='SYSTEM'" class="system-message">
-
-              <!-- <div id="system-response-container">
-                <div *ngFor="let response of systemResponse">{{ response }}</div>
-              </div> -->
-
-              <div *ngFor="let each of systemResponse" class="d-flex" id="system-response-container">
+              <!-- <div *ngFor="let each of systemResponse" class="d-flex" id="system-response-container">
                 <span *ngIf="each.messageSourceType == 'SYSTEM'">
                 <div class="sys-image">
                     <img src="../../../../assets/copilot/systemicon.svg" alt="" />
                 </div>
-                    <span class="ml-2 send-msgtext" [innerHTML]="each.message"></span>
+                    <div class="ml-2 send-msgtext" [innerHTML]="each.message"></div>
             </span>
-            </div>
+            </div> -->
               
               
             <!-- <div *ngFor="let message of (sentMessage?.data?.message??[])" class="d-flex">
@@ -32,7 +41,7 @@
                 </div>
             </div> -->
             <div *ngIf="sentMessage.data.components" style="margin-left:10%;">
-                <div *ngFor="let comp of sentMessage?.data?.components;index as i" > 
+                <div *ngFor="let comp of loadedComponents;index as i" >
                     <div class="messageButton" *ngIf="comp === 'Buttons'">
                         <div *ngFor="let b of sentMessage?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
                             <app-copilot-message-button *ngIf="b?.type!='processLogsUpload' && b?.type!='processLogFileUpload'" [buttonData]="b" (buttonAction) = "processButtonAction($event)"></app-copilot-message-button> 
@@ -68,11 +77,8 @@
                             <app-copilot-message-card [cardData]="b" [mappings]='sentMessage?.data?.mappings'  (response)="processCardAction($event)" ></app-copilot-message-card> 
                         </div>
                     </div>
-
-                   
                 </div>
-                  
             </div>
         </div>
-        <div></div>
     </div>
+</div>
