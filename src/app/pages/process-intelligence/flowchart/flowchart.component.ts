@@ -1176,7 +1176,7 @@ getPNameFromPID(pnumber){   // get process name
   });
   return piname;
 }
-getPCategoryIdFromPID(pnumber){   // get process name
+getPCategoryIdFromPID(pnumber){   // get categoryId
   var piCategoryId = '';
   this.process_graph_list.data.forEach(pData => {
     if(pData.piId == pnumber){
