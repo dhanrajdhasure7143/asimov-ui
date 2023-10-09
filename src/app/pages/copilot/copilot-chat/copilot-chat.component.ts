@@ -100,9 +100,10 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
-            objDiv.scrollTop = objDiv.scrollHeight;
+            // objDiv.scrollTop = objDiv.scrollHeight;
           }, 500)
         });
   }
@@ -283,7 +284,7 @@ export class CopilotChatComponent implements OnInit {
         this.messages.push(this.currentMessage)
         var objDiv = document.getElementById("chat-grid");
         setTimeout(() => {
-          objDiv.scrollTop = objDiv.scrollHeight;
+          // objDiv.scrollTop = objDiv.scrollHeight;
         }, 500)
       })
     }
@@ -342,7 +343,7 @@ export class CopilotChatComponent implements OnInit {
         this.usermessage='';
         var objDiv = document.getElementById("chat-grid");
         setTimeout(() => {
-          objDiv.scrollTop = objDiv.scrollHeight;
+          // objDiv.scrollTop = objDiv.scrollHeight;
           this.isChatLoad=false;
         }, 500)
         if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
@@ -478,7 +479,7 @@ export class CopilotChatComponent implements OnInit {
     const textarea = document.querySelector('textarea');
     if (textarea) {
       textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
+      // textarea.style.height = textarea.scrollHeight + 'px';
     }
   }
 

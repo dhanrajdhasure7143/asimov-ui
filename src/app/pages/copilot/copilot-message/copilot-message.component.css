@@ -461,10 +461,8 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
 
 
 .process-log-btn-pos{
-
     float: right;
     margin-right: 61px;
-
 }
 .process-log-btn{
     padding: 10px; 
@@ -474,3 +472,16 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
     border-radius: 5px;
     font-size: 10px;
 }
+
+ #system-response-container {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  display: inline-block; /* Display inline to allow line breaks */
+  white-space: normal; /* Allow text to wrap */
+  overflow: hidden; /* Hide overflowed characters */
+  width: 100%
+ }
+
+  #system-response-container span {
+    display: inline-block; /* Display each character/word inline */
+  }

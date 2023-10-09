@@ -9,13 +9,26 @@
         </div>
         <div></div>
         <div *ngIf="sentMessage.messageSourceType=='SYSTEM'" class="system-message">
-            <div *ngFor="let message of (sentMessage?.data?.message??[])" class="d-flex">
+
+              <!-- <div id="system-response-container">
+                <div *ngFor="let response of systemResponse">{{ response }}</div>
+              </div> -->
+
+              <div *ngFor="let each of systemResponse" class="d-flex" id="system-response-container">
+                <div class="sys-image">
+                    <img src="../../../../assets/copilot/systemicon.svg" alt="" />
+                </div>
+                    <div class="ml-2 send-msgtext" [innerHTML]="each.message"></div>
+            </div>
+              
+              
+            <!-- <div *ngFor="let message of (sentMessage?.data?.message??[])" class="d-flex">
                 <div class="sys-image">
                     <img src="../../../../assets/copilot/systemicon.svg" alt="" />
                 </div>
                 <div class="ml-2 send-msgtext" [innerHTML]="message">
                 </div>
-            </div>
+            </div> -->
             <div *ngIf="sentMessage.data.components" style="margin-left:10%;">
                 <div *ngFor="let comp of sentMessage?.data?.components;index as i" > 
                     <div class="messageButton" *ngIf="comp === 'Buttons'">
