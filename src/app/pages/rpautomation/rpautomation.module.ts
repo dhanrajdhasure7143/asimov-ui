@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RpautomationComponent } from './rpautomation.component';
 import { RpautomationRoutingModule } from './rpautomation-routing.module';
 import { DndModule } from 'ngx-drag-drop';
@@ -139,7 +139,7 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
     PrimengCustomModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
-  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
+  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,DatePipe,
     {
            provide: MatPaginatorIntl, 
            useClass: CustomMatPaginatorIntl
