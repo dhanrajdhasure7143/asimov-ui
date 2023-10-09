@@ -15,10 +15,12 @@
               </div> -->
 
               <div *ngFor="let each of systemResponse" class="d-flex" id="system-response-container">
+                <span *ngIf="each.messageSourceType == 'SYSTEM'">
                 <div class="sys-image">
                     <img src="../../../../assets/copilot/systemicon.svg" alt="" />
                 </div>
-                    <div class="ml-2 send-msgtext" [innerHTML]="each.message"></div>
+                    <span class="ml-2 send-msgtext" [innerHTML]="each.message"></span>
+            </span>
             </div>
               
               

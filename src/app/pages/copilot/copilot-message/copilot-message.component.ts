@@ -26,7 +26,7 @@ private previousArrayLength: number = 0;
   currentConversationIndex: number = 0; // Index of the current conversation
   currentMessageIndex: number = 0; // Index of the current message within the conversation
   systemResponse: any[] = []; // Array to store the system response text for each conversation
-  typingSpeed: number = 50;
+  typingSpeed: number = 30;
 
  ngOnInit() {
   this.user_firstletter = localStorage.getItem("firstName").charAt(0) + localStorage.getItem("lastName").charAt(0);
@@ -39,8 +39,8 @@ private previousArrayLength: number = 0;
  ngDoCheck() {
   if (this.messages.length > this.previousArrayLength) {
     this.previousArrayLength = this.messages.length;
-    this.messagesList = this.messages.filter(item=> item.messageSourceType == "SYSTEM")
-    // this.messagesList = this.messages
+    // this.messagesList = this.messages.filter(item=> item.messageSourceType == "SYSTEM")
+    this.messagesList = this.messages
     this.displayNextMessage();
 
     // console.log(JSON.stringify(this.messages))
@@ -124,6 +124,7 @@ ngOnChanges(changes: SimpleChanges): void {
     // Check if the conversation index has changed (new conversation)
     if (conversationIndex !== this.currentConversationIndex) {
       clearInterval(typingInterval);
+      console.log("testing2")
       setTimeout(() => {
         this.displayNextMessage();
       }, 1000); // Add a delay before displaying the next conversation
@@ -139,6 +140,7 @@ ngOnChanges(changes: SimpleChanges): void {
 
       if (index > text.length) {
         clearInterval(typingInterval);
+        console.log("TypingEffectEnd")
         setTimeout(() => {
           this.displayNextMessage();
         }, 1000); // Add a delay before displaying the next message
@@ -169,8 +171,15 @@ displayNextMessage() {
         }, 1000); // Add a delay before displaying the next conversation
       }
     } else {
-      // Skip non-SYSTEM messages
       this.currentConversationIndex++;
+
+      console.log(this.currentConversationIndex)
+      console.log(conversation)
+      this.systemResponse[this.currentConversationIndex-1] = {
+        message: conversation.message,
+        messageSourceType: 'MESSAGE'
+      };
+      // Skip non-SYSTEM messages
       this.displayNextMessage();
     }
   }
