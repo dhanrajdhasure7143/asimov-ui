@@ -15,6 +15,7 @@ export class CopilotMessageComponent implements OnInit {
  subscription: any;
  user_firstletter:any;
  messagesList:any=[];
+messageLoaded:boolean=false;
  constructor(private data: DataTransferService,
   private cd:ChangeDetectorRef
   ) { }
@@ -121,6 +122,8 @@ ngOnChanges(changes: SimpleChanges): void {
  simulateTypingEffect(messages: string[], response: any) {
   let messageIndex = 0;
   let charIndex = 0;
+  this.messageLoaded=true;
+      
   const typingInterval = setInterval(() => {
     if (messageIndex < messages.length) {
       const text = messages[messageIndex];
@@ -137,12 +140,16 @@ ngOnChanges(changes: SimpleChanges): void {
     } else {
       clearInterval(typingInterval);
       this.scrollToBottom();
-      console.log("this.systemResponse",this.systemResponse)
+    
+      console.log("this.systemResponse",this.systemResponse);
+
       this.loadComponents(this.messagesList[this.currentMessageIndex-1]);
       setTimeout(() => {
         this.displayNextMessage();
       }, 1000); // Add a delay before displaying the next system message
     }
+    
+    console.log("check-1",this.loadedComponents)
     this.scrollToBottom();
   }, this.typingSpeed);
 }
@@ -174,6 +181,7 @@ displayNextMessage() {
 
 
 loadComponents(item) {
+  this.messageLoaded=false;
   console.log("data",item)
   const components = item?.data?.components?item.data.components:[];
   console.log("components",components)
@@ -181,17 +189,27 @@ loadComponents(item) {
 }
 
 loadNextComponent(components,item) {
-  if (this.componentIndex < components.length) {
-    const componentName = components[this.componentIndex];
-    this.loadedComponents.push(componentName);
+  console.log(this.componentIndex)
+  console.log(components.length)
+
+  if(components.length){
+    console.log("check component",components)
+   
+      this.loadedComponents[this.componentIndex]=components;
+    
+    console.log(this.loadedComponents)
     this.componentIndex++;
 
     // Continue loading the next component with a delay
     setTimeout(() => {
       // this.loadNextComponent(components,item);
+      console.log(this.componentIndex);
+      console.log(this.loadedComponents);
+      console.log(this.currentMessageIndex);
       this.scrollToBottom();
-    }, 500); // Add a delay before loading the next component
-  } else {
+    }, 1000); // Add a delay before loading the next component
+  
+} else {
     this.scrollToBottom();
     // All components have been loaded
     // console.log('All components loaded.',this.loadedComponents);
