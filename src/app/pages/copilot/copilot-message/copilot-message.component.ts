@@ -111,7 +111,6 @@ ngOnChanges(changes: SimpleChanges): void {
     })
  }
 
-
  processProcessLog(buttonData:any){
   this.messageAction.emit({
     actionType:"ProcessLogAction",
@@ -119,11 +118,10 @@ ngOnChanges(changes: SimpleChanges): void {
   })
  }
 
- simulateTypingEffect(messages: string[], response: any) {
+ simulateTypingEffect(messages: string[], response: any,data) {
   let messageIndex = 0;
   let charIndex = 0;
-  this.messageLoaded=true;
-      
+  this.messageLoaded=true; 
   const typingInterval = setInterval(() => {
     if (messageIndex < messages.length) {
       const text = messages[messageIndex];
@@ -139,17 +137,14 @@ ngOnChanges(changes: SimpleChanges): void {
       }
     } else {
       clearInterval(typingInterval);
+      this.systemResponse[this.currentMessageIndex-1]["data"]=data;
       this.scrollToBottom();
-    
       console.log("this.systemResponse",this.systemResponse);
-
-      this.loadComponents(this.messagesList[this.currentMessageIndex-1]);
+      console.log(this.currentMessageIndex)
       setTimeout(() => {
         this.displayNextMessage();
       }, 1000); // Add a delay before displaying the next system message
     }
-    
-    console.log("check-1",this.loadedComponents)
     this.scrollToBottom();
   }, this.typingSpeed);
 }
@@ -161,14 +156,14 @@ displayNextMessage() {
     // console.log(message)
     if (message.messageSourceType === "SYSTEM") {
       const messages = message.data.message;
-      const response = { message: '', messageSourceType: 'SYSTEM',data:message };
+      const response = { message: '', messageSourceType: 'SYSTEM'};
       this.systemResponse.push(response); // Create a new object for this system message
-      this.simulateTypingEffect(messages, response);
+      this.simulateTypingEffect(messages, response,message);
       this.currentMessageIndex++;
     } else {
       // Skip non-SYSTEM messages
       // console.log("testing",this.currentMessageIndex)
-      this.systemResponse[this.currentMessageIndex]={ message: message.message,data:message, messageSourceType: 'MESSAGE' };
+      this.systemResponse[this.currentMessageIndex]={message: message.message,data:message, messageSourceType: 'MESSAGE' };
       this.currentMessageIndex++;
       this.displayNextMessage();
     }
@@ -176,43 +171,6 @@ displayNextMessage() {
     // console.log("testing end case", this.systemResponse);
     // console.log("latestIndex",this.currentMessageIndex)
 
-  }
-}
-
-
-loadComponents(item) {
-  this.messageLoaded=false;
-  console.log("data",item)
-  const components = item?.data?.components?item.data.components:[];
-  console.log("components",components)
-  this.loadNextComponent(components,item);
-}
-
-loadNextComponent(components,item) {
-  console.log(this.componentIndex)
-  console.log(components.length)
-
-  if(components.length){
-    console.log("check component",components)
-   
-      this.loadedComponents[this.componentIndex]=components;
-    
-    console.log(this.loadedComponents)
-    this.componentIndex++;
-
-    // Continue loading the next component with a delay
-    setTimeout(() => {
-      // this.loadNextComponent(components,item);
-      console.log(this.componentIndex);
-      console.log(this.loadedComponents);
-      console.log(this.currentMessageIndex);
-      this.scrollToBottom();
-    }, 1000); // Add a delay before loading the next component
-  
-} else {
-    this.scrollToBottom();
-    // All components have been loaded
-    // console.log('All components loaded.',this.loadedComponents);
   }
 }
 

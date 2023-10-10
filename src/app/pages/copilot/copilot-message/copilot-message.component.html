@@ -40,8 +40,8 @@
                 <div class="ml-2 send-msgtext" [innerHTML]="message">
                 </div>
             </div> -->
-            <div *ngIf="each.data.data.components " style="margin-left:10%;">
-                <div *ngFor="let comp of loadedComponents[componentIndex-1];index as i" >
+            <div *ngIf="each.data?.data?.components " style="margin-left:10%;">
+                <div *ngFor="let comp of each.data.data.components;index as i" >
                     <span >
                         <div class="messageButton" *ngIf="comp === 'Buttons'">
                             <div *ngFor="let b of each.data?.data?.values[i]" [style]="{'display':'inline-block', 'margin-left':'10px', 'margin-top':'5px'}">
