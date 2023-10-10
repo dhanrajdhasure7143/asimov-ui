@@ -10,7 +10,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 export class CopilotMessageComponent implements OnInit {
  @Input() public messages:any[];
  @Output() messageAction = new EventEmitter<MessageAction>();
-
+@Output() logAction=new EventEmitter();
  hideActions:boolean = false;
  subscription: any;
  user_firstletter:any;
@@ -27,7 +27,7 @@ private previousArrayLength: number = 0;
   currentConversationIndex: number = 0; // Index of the current conversation
   currentMessageIndex: number = 0; // Index of the current message within the conversation
   systemResponse: any[] = []; // Array to store the system response text for each conversation
-  typingSpeed: number = 30;
+  typingSpeed: number = 50;
   loadedComponents: string[] = []; // Initialize as an empty array
   componentIndex: number = 0;
   @ViewChild('subChat', { static: false }) subChat: ElementRef;
@@ -75,6 +75,9 @@ ngOnChanges(changes: SimpleChanges): void {
     }
    this.messageAction.emit(eventData);
    this.hideActions= true;
+   setTimeout(()=>{
+    this.scrollToBottom()
+   },100)
  }
 
  processListAction(event:any){
@@ -84,6 +87,9 @@ ngOnChanges(changes: SimpleChanges): void {
      data: event
    });
    this.hideActions= true;
+   setTimeout(()=>{
+    this.scrollToBottom()
+   },100)
  }
 
  processListPreviewAction(event:any){
@@ -93,6 +99,9 @@ ngOnChanges(changes: SimpleChanges): void {
      data: event
    });
    this.hideActions= true;
+   setTimeout(()=>{
+    this.scrollToBottom()
+   },100)
  }
  processCardAction(event:SelectedItem){
    console.log("processCardAction received from child "+JSON.stringify(event))
@@ -100,6 +109,9 @@ ngOnChanges(changes: SimpleChanges): void {
      actionType:'Card',
      data: event
    });
+   setTimeout(()=>{
+    this.scrollToBottom()
+   },100)
  }
 
 
@@ -109,6 +121,9 @@ ngOnChanges(changes: SimpleChanges): void {
       data:buttonData,
       fileDataEvent:event,
     })
+    setTimeout(()=>{
+      this.scrollToBottom()
+     },100)
  }
 
  processProcessLog(buttonData:any){
@@ -116,6 +131,9 @@ ngOnChanges(changes: SimpleChanges): void {
     actionType:"ProcessLogAction",
     data:buttonData
   })
+  setTimeout(()=>{
+    this.scrollToBottom()
+   },400)
  }
 
  simulateTypingEffect(messages: string[], response: any,data) {
@@ -139,14 +157,17 @@ ngOnChanges(changes: SimpleChanges): void {
       clearInterval(typingInterval);
       this.systemResponse[this.currentMessageIndex-1]["data"]=data;
       this.scrollToBottom();
-      console.log("this.systemResponse",this.systemResponse);
-      console.log(this.currentMessageIndex)
+      if(data.data.components.includes("logCollection")) this.logAction.emit(data)
       setTimeout(() => {
         this.displayNextMessage();
       }, 1000); // Add a delay before displaying the next system message
+      setTimeout(()=>{
+        this.scrollToBottom();
+      },this.typingSpeed+100)
     }
     this.scrollToBottom();
   }, this.typingSpeed);
+
 }
 
 
@@ -176,11 +197,12 @@ displayNextMessage() {
 
 isScrollAtBottom() {
   const objDiv = this.subChat.nativeElement;
-  return objDiv.scrollTop === objDiv.scrollHeight - objDiv.clientHeight;
+  return objDiv.scrollTop === (objDiv.scrollHeight - objDiv.clientHeight);
 }
 
 scrollHandler() {
   if (this.isScrollAtBottom()) {
+    console.log("scrollTest")
     const objDiv = this.subChat.nativeElement;
     objDiv.scrollTop = objDiv.scrollHeight;
     // The scroll is at the bottom, do something
@@ -191,6 +213,7 @@ scrollHandler() {
 }
 
 scrollToBottom() {
+  console.log("test sample check")
   const objDiv = this.subChat.nativeElement;
   objDiv.scrollTop = objDiv.scrollHeight;
 }
