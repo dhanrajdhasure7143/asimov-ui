@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef,SimpleChanges,OnChanges,ViewChild,ElementRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef,SimpleChanges,ViewChild,ElementRef } from '@angular/core';
 import { ChatMessage, MessageAction, MessageData, SelectedItem } from '../copilot-models';
 import { DataTransferService } from '../../services/data-transfer.service';
 
@@ -12,25 +12,24 @@ export class CopilotMessageComponent implements OnInit {
  @Output() messageAction = new EventEmitter<MessageAction>();
 @Output() logAction=new EventEmitter();
  hideActions:boolean = false;
- subscription: any;
  user_firstletter:any;
  messagesList:any=[];
-messageLoaded:boolean=false;
- constructor(private data: DataTransferService,
-  private cd:ChangeDetectorRef
-  ) { }
-//  ngOnDestroy() {
-//    this.subscription.unsubscribe();
-//  }
-private previousArrayLength: number = 0;
-
+  messageLoaded:boolean=false;
+  private previousArrayLength: number = 0;
   currentConversationIndex: number = 0; // Index of the current conversation
   currentMessageIndex: number = 0; // Index of the current message within the conversation
   systemResponse: any[] = []; // Array to store the system response text for each conversation
-  typingSpeed: number = 50;
+  typingSpeed: number = 10;
   loadedComponents: string[] = []; // Initialize as an empty array
   componentIndex: number = 0;
+  variancePercentage = 20; // 20% variance
+  finalSpeedValue = 0;
   @ViewChild('subChat', { static: false }) subChat: ElementRef;
+
+ constructor(private data: DataTransferService,
+            private cd:ChangeDetectorRef) 
+            { }
+
 
  ngOnInit() {
   this.user_firstletter = localStorage.getItem("firstName").charAt(0) + localStorage.getItem("lastName").charAt(0);
@@ -43,18 +42,13 @@ private previousArrayLength: number = 0;
  ngDoCheck() {
   if (this.messages.length > this.previousArrayLength) {
     this.previousArrayLength = this.messages.length;
-    // this.messagesList = this.messages.filter(item=> item.messageSourceType == "SYSTEM")
     this.messagesList = this.messages
     this.displayNextMessage();
-
-    // console.log(JSON.stringify(this.messages))
   }
 }
 ngOnChanges(changes: SimpleChanges): void {
   // Your code to handle input property changes
-  console.log("changes",this.messages);
 }
-
 
  processButtonAction(event:any){
    this.messageAction.emit({
@@ -65,7 +59,6 @@ ngOnChanges(changes: SimpleChanges): void {
  }
 
  processFormAction(event:any){
-   console.log("processFormAction received from child ",event)
    let eventData={
     actionType:"Form",
     data:{
@@ -75,45 +68,30 @@ ngOnChanges(changes: SimpleChanges): void {
     }
    this.messageAction.emit(eventData);
    this.hideActions= true;
-   setTimeout(()=>{
-    this.scrollToBottom()
-   },100)
  }
 
  processListAction(event:any){
-   console.log("processListAction received from child "+event)
    this.messageAction.emit({
      actionType:'list',
      data: event
    });
    this.hideActions= true;
-   setTimeout(()=>{
-    this.scrollToBottom()
-   },100)
  }
 
  processListPreviewAction(event:any){
-   console.log("processListPreviewAction received from child "+event)
    this.messageAction.emit({
      actionType:event.bpmnXml?'bpmn':'list',
      data: event
    });
    this.hideActions= true;
-   setTimeout(()=>{
-    this.scrollToBottom()
-   },100)
  }
+
  processCardAction(event:SelectedItem){
-   console.log("processCardAction received from child "+JSON.stringify(event))
    this.messageAction.emit({
      actionType:'Card',
      data: event
    });
-   setTimeout(()=>{
-    this.scrollToBottom()
-   },100)
  }
-
 
  processUploadFileAction(event:any, buttonData:any){
     this.messageAction.emit({
@@ -121,9 +99,6 @@ ngOnChanges(changes: SimpleChanges): void {
       data:buttonData,
       fileDataEvent:event,
     })
-    setTimeout(()=>{
-      this.scrollToBottom()
-     },100)
  }
 
  processProcessLog(buttonData:any){
@@ -131,9 +106,6 @@ ngOnChanges(changes: SimpleChanges): void {
     actionType:"ProcessLogAction",
     data:buttonData
   })
-  setTimeout(()=>{
-    this.scrollToBottom()
-   },400)
  }
 
  simulateTypingEffect(messages: string[], response: any,data) {
@@ -141,6 +113,7 @@ ngOnChanges(changes: SimpleChanges): void {
   let charIndex = 0;
   this.messageLoaded=true; 
   const typingInterval = setInterval(() => {
+    this.finalSpeedValue =  this.typingSpeed * (1 - this.variancePercentage / 100);
     if (messageIndex < messages.length) {
       const text = messages[messageIndex];
       if (charIndex < text.length) {
@@ -163,18 +136,16 @@ ngOnChanges(changes: SimpleChanges): void {
       }, 1000); // Add a delay before displaying the next system message
       setTimeout(()=>{
         this.scrollToBottom();
-      },this.typingSpeed+100)
+      },this.typingSpeed)
     }
     this.scrollToBottom();
   }, this.typingSpeed);
-
 }
 
 
 displayNextMessage() {
   if (this.currentMessageIndex < this.messagesList.length) {
     const message = this.messagesList[this.currentMessageIndex];
-    // console.log(message)
     if (message.messageSourceType === "SYSTEM") {
       const messages = message.data.message;
       const response = { message: '', messageSourceType: 'SYSTEM'};
@@ -183,14 +154,11 @@ displayNextMessage() {
       this.currentMessageIndex++;
     } else {
       // Skip non-SYSTEM messages
-      // console.log("testing",this.currentMessageIndex)
       this.systemResponse[this.currentMessageIndex]={message: message.message,data:message, messageSourceType: 'MESSAGE' };
       this.currentMessageIndex++;
       this.displayNextMessage();
     }
   }else{
-    // console.log("testing end case", this.systemResponse);
-    // console.log("latestIndex",this.currentMessageIndex)
 
   }
 }
@@ -202,18 +170,15 @@ isScrollAtBottom() {
 
 scrollHandler() {
   if (this.isScrollAtBottom()) {
-    console.log("scrollTest")
     const objDiv = this.subChat.nativeElement;
     objDiv.scrollTop = objDiv.scrollHeight;
     // The scroll is at the bottom, do something
   } else {
-    console.log("test2")
     // The scroll is not at the bottom
   }
 }
 
 scrollToBottom() {
-  console.log("test sample check")
   const objDiv = this.subChat.nativeElement;
   objDiv.scrollTop = objDiv.scrollHeight;
 }
