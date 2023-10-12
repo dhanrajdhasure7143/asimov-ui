@@ -176,7 +176,7 @@ export class SoProcesslogComponent implements OnInit {
           if(this.environments[i]["environmentId"]==item.envId)
             item["environmentName"]=this.environments[i]["environmentName"];
         item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
-        item["modifiedVersionNew"]="V"+(item["versionNew"]).toFixed(1);
+        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
         return item;
       })
       return runs;
@@ -194,7 +194,7 @@ export class SoProcesslogComponent implements OnInit {
 
     updateVersion=(logs:any)=>{
       logs=logs.map((item:any)=>{
-        item["modifiedVersionNew"]="V"+item["versionNew"];
+        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
         return item;
       })
       return logs
