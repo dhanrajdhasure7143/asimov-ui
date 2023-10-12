@@ -21,6 +21,7 @@ interface City {
 export class CopilotChatComponent implements OnInit {
   @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
   @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
+  @ViewChild('copilotMessageTemplate', {static:false}) copilotMessageRef:any;
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
@@ -81,6 +82,7 @@ export class CopilotChatComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?: String) {
+     console.log("check",this.copilotMessageRef)
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -100,6 +102,7 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -326,6 +329,11 @@ export class CopilotChatComponent implements OnInit {
   }
 
   public sendUserAction =(data:any)=>{
+    console.log("matter important", this.copilotMessageRef);
+    setTimeout(()=>{
+
+      this.copilotMessageRef.scrollToBottom();
+    },100)
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
         message:data?.message,
@@ -345,7 +353,7 @@ export class CopilotChatComponent implements OnInit {
           objDiv.scrollTop = objDiv.scrollHeight;
           this.isChatLoad=false;
         }, 500)
-        if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
+        //if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
       console.log(err);
     })

@@ -158,7 +158,8 @@ export class ProjectsListScreenComponent implements OnInit {
       "createdDate",
       "lastModifiedBy",
       "updatedDate",
-      "status"
+      "status",
+      "processName"
     ];
     this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [

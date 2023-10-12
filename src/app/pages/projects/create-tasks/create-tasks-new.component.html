@@ -19,7 +19,7 @@
                     <label class="" for="taskCategory">Type of Task<span class="star">*</span></label>
                     <p-dropdown [options]="task_categoriesList" formControlName="taskCategory" autoWidth="false"
                       [(ngModel)]="optionValue" [style]="{'width':'100%'}" placeholder="Select Task Type" [appendTo]="'body'" 
-                      optionLabel="category" optionValue="category" required></p-dropdown>
+                      optionLabel="category" optionValue="category" (onChange)="onTaskTypeChange($event)" required></p-dropdown>
                     <span
                       *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
                       class="required">Type of Task Required</span>
@@ -123,7 +123,7 @@
                       placeholder="Select Approver"
                       formControlName="approvers" optionValue="user_email" optionLabel="fullName" required>
                     </p-dropdown>
-                    <!-- <select class="form-control enteredfield-color" formControlName="approvers">
+                    <select class="form-control enteredfield-color" formControlName="approvers">
                       <option [value]="null" disabled hidden>Select Approver</option>
                       <option [value]="undefined" disabled hidden>Select Approver</option>
                       <option [value]="" disabled hidden>Select Approver</option>

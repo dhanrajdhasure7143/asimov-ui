@@ -20,20 +20,24 @@
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
         &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
-            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >Refresh</span>
-        <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
+            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
+            <span *ngIf="logsLoading">
+              <i class="fa fa-spinner fa-spin"></i> 
+              Loading...
+            </span>
+        <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
        
-        <span (click)="getChildLogs(selectedTask, selectedTask.actual_log_id, selectedTask.actual_task_id, selectedTask.actual_iteration_id,'REFRESH')" *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
+        <span (click)="getChildLogs(selectedTask, selectedTask.actual_log_id, selectedTask.actual_task_id, selectedTask.actual_iteration_id,'REFRESH')" *ngIf="logsDisplayFlag=='CHILD-LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
         
-        <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
+        <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
        
-        <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
+        <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS' && !logsLoading" class="clickable1 refecls">
             Refresh
         </span>
         <!-- <span class="ml-auto">

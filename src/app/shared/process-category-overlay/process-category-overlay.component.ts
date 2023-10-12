@@ -85,6 +85,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         }
       }
     }
+    this.uploadedFileExtension= undefined;
   if(changes['uploadedFileName']){
     let change = changes['uploadedFileName'];
     if(!change.firstChange){

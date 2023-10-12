@@ -176,12 +176,12 @@ export class ProjectTaskListComponent implements OnInit {
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Success', detail: status.message});
+            this.messageService.add({severity:'success', summary: 'Success', detail: status.message, key:'tasklist'});
             this.getTasksList();
           },
           (err) => {
             this.spinner.hide();
-            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!",  key:'tasklist'});
           }
         );
       },
