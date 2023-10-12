@@ -219,7 +219,7 @@ export class columnList{
 
       public orchestration_process_logs_columns=[
         {ColumnName:"bot_name",DisplayName:"Bot Name",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
-        {ColumnName:"versionNew",DisplayName:"Bot Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"modifiedVersionNew",DisplayName:"Bot Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
         {ColumnName:"start_time",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
