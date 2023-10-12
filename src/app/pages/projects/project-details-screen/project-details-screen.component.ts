@@ -1630,5 +1630,17 @@ selectEnd() {
       this.categoryId = selectedCategory.categoryId;
     }
   }
+
+  lettersOnly(event:any){
+    var regex = new RegExp("^[a-zA-Z0-9-_ ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+        if ((event.target.selectionStart === 0 && event.code === 'Space')){
+          event.preventDefault();
+        }
+  }
 }
 
