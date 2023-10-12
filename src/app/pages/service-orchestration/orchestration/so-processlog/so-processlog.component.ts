@@ -175,9 +175,8 @@ export class SoProcesslogComponent implements OnInit {
         for(let i=0;i<this.environments.length;i++)
           if(this.environments[i]["environmentId"]==item.envId)
             item["environmentName"]=this.environments[i]["environmentName"];
-        item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
-        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
-        return item;
+          item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
+          return item;
       })
       return runs;
     }
