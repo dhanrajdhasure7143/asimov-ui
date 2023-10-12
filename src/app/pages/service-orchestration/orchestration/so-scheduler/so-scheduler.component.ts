@@ -135,6 +135,8 @@ export class SoSchedulerComponent implements OnInit {
     }
     this.todaytime=firstchar1+ ":" +firstchar2
     this.getAlltimezones();
+    this.startdate =  moment(new Date()).format("YYYY-MM-DD");
+    this.enddate = moment(new Date()).format("YYYY-MM-DD");
   }
 
   get_schedule()
@@ -172,23 +174,22 @@ export class SoSchedulerComponent implements OnInit {
     }
   }
 
-  close()
-  {
+  close(){
     document.getElementById("sch").style.display="none";
   }
 
-  onTimeZoneChange(timezone)
-  {
+  onTimeZoneChange(timezone){
     let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
-    this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-    this.enddate=this.startdate;
+    // this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    this.startdate =  moment(d).format("YYYY-MM-DD");
+    this.enddate = moment(d).format("YYYY-MM-DD");
+    // this.enddate=this.startdate;
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
 
 
 
-  add_sch()
-  {
+  add_sch(){
     // Scheduler
     if(this.isDateToday(this.selecteddate)){
       this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
@@ -265,17 +266,15 @@ export class SoSchedulerComponent implements OnInit {
         }
         else
         {
-          
-          this.notifier.notify("error","Please provide all inputs.")
-          //Swal.fire("Please provide all inputs.","","warning")
+          this.messageService.add({severity:'warn',summary:'Warning', detail:"Please provide all inputs!", key:"so_Scheduler"})
+          // this.notifier.notify("error","Please provide all inputs.")
         }
       }
     }
     else
     {
-      //Swal.fire("Please fill in all the details.","","warning");
-      
-      this.notifier.notify("error","Please provide all inputs.")
+      this.messageService.add({severity:'warn',summary:'Warning', detail:"Please provide all inputs!", key:"so_Scheduler"})
+      // this.notifier.notify("error","Please provide all inputs.")
     }
   }
   check_all(event)
@@ -313,15 +312,13 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          //(resp.errorMessage,"","warning");
-        
-          this.notifier.notify("error",resp.errorMessage)
+          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",resp.errorMessage)
         }
         else
         {
-         // Swal.fire(resp.status,"","success")
-          
-          this.notifier.notify("success",resp.status)
+          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",resp.status)
           //this.schedule_list.find(data=>data.check==true).run_status="started";
           this.get_schedule();
           this.updateflags();
@@ -335,20 +332,15 @@ export class SoSchedulerComponent implements OnInit {
       schedule.push(checked_schedule);
       this.rest.startprocessschedule(schedule).subscribe(data=>{
         let response:any=data;
-        if(response.errorMessage==undefined)
-        {
-
-        
-          //Swal.fire("Process started sucessfully","","success");
-          
-          this.notifier.notify("success",response.status)
+        if(response.errorMessage==undefined){
+          this.messageService.add({severity:'success',summary:'Success', detail:response.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",response.status)
           // this.schedule_list.find(data=>data.check==true).run_status="started";
           this.get_schedule();
           this.updateflags();
-        }
-        else
-        {  
-          this.notifier.notify("error",response.errorMessage)
+        }else{  
+          this.messageService.add({severity:'error',summary:'Error', detail:response.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",response.errorMessage)
         }
       })
     }
@@ -367,15 +359,13 @@ export class SoSchedulerComponent implements OnInit {
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage!=undefined)
-        {
-          
-          this.notifier.notify("error",resp.errorMessage)
+        if(resp.errorMessage!=undefined){
+          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",resp.errorMessage)
           //Swal.fire(resp.errorMessage,"","warning");
-        }
-        else
-        {
-          this.notifier.notify("success",resp.status)
+        }else{
+          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",resp.status)
           this.get_schedule();
           //this.schedule_list.find(data=>data.check==true).run_status="pause";
           this.updateflags();
@@ -388,23 +378,23 @@ export class SoSchedulerComponent implements OnInit {
         let response:any=resp;
         //Swal.fire(response[0][checked_schedule.scheduleprocessid],"","success")
         //this.schedule_list.find(data=>data.check==true).run_status="pause";
-        if(response.errorMessage==undefined)
-        {
-          this.notifier.notify("success",response.status)
+        if(response.errorMessage==undefined){
+        this.messageService.add({severity:'success',summary:'Success', detail:response.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",response.status)
           this.get_schedule();
           this.updateflags();
         }
         else
         {
-          this.notifier.notify("error",response.errorMessage)
+          this.messageService.add({severity:'error',summary:'Error', detail:response.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",response.errorMessage)
         }
       })
     }
 
   }
 
-  resume_schedule()
-  {
+  resume_schedule(){
     let checked_schedule=this.schedule_list.find(data=>data.check==true)
     if(this.botid!="" && this.botid!=undefined)
     {
@@ -416,14 +406,12 @@ export class SoSchedulerComponent implements OnInit {
       }
       this.rest.resume_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage!=undefined)
-        {
-          //Swal.fire(resp.errorMessage,"","warning");
-          this.notifier.notify("error",resp.errorMessage)
-        }
-        else
-        {
-          this.notifier.notify("success",resp.status)
+        if(resp.errorMessage!=undefined){
+          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",resp.errorMessage)
+        }else{
+        this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",resp.status)
           this.get_schedule();
           this.updateflags();
         }
@@ -433,29 +421,22 @@ export class SoSchedulerComponent implements OnInit {
     {
       this.rest.resumeprocessschedule([checked_schedule]).subscribe(data=>{
         let resp:any=data;
-        if(resp.errorMessage!=undefined)
-        {
-          this.notifier.notify("error",resp.errorMessage)
-        } 
-        else
-        {
-          //Swal.fire(resp.status,"","success")
-          this.notifier.notify("success",resp.status)
+        if(resp.errorMessage!=undefined){
+          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",resp.errorMessage)
+        }else{
+          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          // this.notifier.notify("success",resp.status)
           this.get_schedule();
           this.updateflags();
         }
       })
-
-
     }
-
   }
 
-  stop_schedule()
-  {
+  stop_schedule(){
     let checked_schedule=this.schedule_list.find(data=>data.check==true)
-    if(this.botid!="" && this.botid!=undefined)
-    {
+    if(this.botid!="" && this.botid!=undefined){
       let schedule={
         botId:this.botid,
         "botVersion": checked_schedule.botVersion,
@@ -464,16 +445,15 @@ export class SoSchedulerComponent implements OnInit {
       }
       this.rest.stop_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage!=undefined)
-        {
+        if(resp.errorMessage!=undefined){
           // Swal.fire(resp.errorMessage,"","warning");
-          this.messageService.add({severity:'warn',summary:'Warning',detail:resp.errorMessage})
+          this.messageService.add({severity:'warn',summary:'Warning',detail:resp.errorMessage, key:"so_Scheduler"})
           
         }
         else
         {
           // Swal.fire(resp.status,"","success")
-          this.messageService.add({severity:'success',summary:'Success',detail:resp.status})
+          this.messageService.add({severity:'success',summary:'Success',detail:resp.status, key:"so_Scheduler"})
 
           this.schedule_list.find(data=>data.check==true).run_status="not_started";
           this.updateflags();
@@ -511,14 +491,17 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule deleted successfully!")
+          this.messageService.add({severity:'success',summary:'Success', detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-            this.notifier.notify("error","Schedule not deleted successfully!")
+          this.messageService.add({severity:'error',summary:'Error', detail:"Schedule not deleted successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }else if(unsaved_schedules.length>0)
       {
-          this.notifier.notify("success","Schedule deleted successfully!") 
+        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+          // this.notifier.notify("success","Schedule deleted successfully!") 
       }
       else if(saved_schedules.length==0 && unsaved_schedules.length==0)
       {
@@ -527,15 +510,18 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule deleted successfully!")
+        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-            this.notifier.notify("error","Schedule not deleted successfully!")
+          this.messageService.add({severity:'error',summary:'Error', detail:"Schedule not deleted successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }
       else
       {
-        this.notifier.notify("error","No schedule is selected to delete.");
+        this.messageService.add({severity:'error',summary:'Error', detail:"No schedule is selected to delete!", key:"so_Scheduler"})
+        // this.notifier.notify("error","No schedule is selected to delete.");
       }
     }
     else if(this.processid!="" && this.processid != undefined)
@@ -554,17 +540,20 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=data;
           if(response.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedules deleted sucessfully");
+            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules deleted sucessfully!", key:"so_Scheduler"})
+            // this.notifier.notify("success","Schedules deleted sucessfully");
             this.deletestack=[];
             this.updateflags();
           }else{
-            this.notifier.notify("error","Unable to delete the schedule.")
+            this.messageService.add({severity:'error',summary:'Error', detail:"Unable to delete the schedule!", key:"so_Scheduler"})
+            // this.notifier.notify("error","Unable to delete the schedule.")
           }
           
         })
       }else
       {
-        this.notifier.notify("success","Schedule deleted successfully")
+        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+        // this.notifier.notify("success","Schedule deleted successfully")
       }
     }
 
@@ -596,7 +585,8 @@ export class SoSchedulerComponent implements OnInit {
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
           let resp:any=data;
           if(resp.errorMessage==undefined){
-            this.notifier.notify("success","Schedules saved successfully!")
+            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("success","Schedules saved successfully!")
            
             /*if(resp.botMainSchedulerEntity==null){
             }
@@ -607,7 +597,8 @@ export class SoSchedulerComponent implements OnInit {
             this.updateflags();
             this.spinner.hide();
           }else{  
-            this.notifier.notify("error","Schedule failed to add.")
+            this.messageService.add({severity:'error',summary:'Error',detail:"Schedule failed to add!", key:"so_Scheduler"})
+            // this.notifier.notify("error","Schedule failed to add.")
           }      
     })
     }else if(this.processid!=undefined && this.processid!=""){
@@ -617,12 +608,14 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage==undefined){
-          this.notifier.notify("success","Schedules saved successfully!");
+          this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
+          // this.notifier.notify("success","Schedules saved successfully!");
           this.get_schedule();
           this.updateflags();
           this.spinner.hide();
         }else{
-          this.notifier.notify("error",resp.errorMessage);
+          this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage, key:"so_Scheduler"})
+          // this.notifier.notify("error",resp.errorMessage);
         }
       })
     }else{
@@ -782,7 +775,7 @@ export class SoSchedulerComponent implements OnInit {
     this.beforetime=false;
     this.aftertime=false;
    if(date=='startdate'){
-    this.enddate=this.startdate;
+    // this.enddate=this.startdate;
     $('#enddatepicker').attr('min', this.startdate);
    }
   
@@ -889,8 +882,13 @@ export class SoSchedulerComponent implements OnInit {
         this.timesZones=res;
      })
   }
-}
 
+  get compareScheduleDates(){
+    let startDate:Date=new Date(this.startdate);
+    let endDate:Date=new Date(this.enddate);
+    return (startDate > endDate)?true:false;
+  }
+}
 
 
 
