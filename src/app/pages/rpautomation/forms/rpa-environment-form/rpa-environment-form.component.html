@@ -115,10 +115,10 @@
                     <span
                         *ngIf="(environmentForm.get('password').invalid && environmentForm.get('password').touched) && !environmentForm.controls['password'].hasError('maxlength')&& !environmentForm.controls['password'].hasError('pattern')"
                         class="required"> Password Required</span>
-                    <div *ngIf="environmentForm.controls['password'].hasError('maxlength') && !environmentForm.get('password').hasError('pattern')" class="required">
+                    <div *ngIf="environmentForm.controls['password'].hasError('maxlength')" class="required">
                         Maximum of 50 characters
                     </div>
-                    <div *ngIf="environmentForm.get('password').hasError('pattern') && !environmentForm.controls['password'].hasError('maxlength')"
+                    <div *ngIf="environmentForm.get('password').hasError('pattern')"
                       class="required">
                       Password must be 4-50 characters, Special characters are allowed except (` ~ ") and Spaces are not allowed
                     </div>
