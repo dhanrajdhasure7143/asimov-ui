@@ -6,7 +6,7 @@
       <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="logsBackTraversal()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
-      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.versionNew)">
+      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
       <!-- <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
@@ -76,7 +76,7 @@
                   <tr class="action-desc">
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
-                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'])">{{logs[col.ColumnName]}}</a>
+                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
                           {{logs[col.ColumnName]}}
