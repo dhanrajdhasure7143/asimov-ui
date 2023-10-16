@@ -33,6 +33,10 @@
           &nbsp;
         
           <span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/ &nbsp;{{task.task_name}}&nbsp;</span></span>
+          <span *ngIf="logsLoading">
+            <i class="fa fa-spinner fa-spin"></i> 
+            Loading...
+          </span>
           <span [hidden]="logsLoading">
               <span (click)="getProcessRuns()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
                 Refresh
