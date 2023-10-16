@@ -79,7 +79,7 @@ export class SoProcesslogComponent implements OnInit {
     
     getTaskLogsByBot(botData:any){
       this.logsLoading=true;
-      this.rest.getViewlogbyrunid(botData.bot_id,botData.version,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.logsDisplayFlag="BOT-LOGS";
@@ -175,9 +175,8 @@ export class SoProcesslogComponent implements OnInit {
         for(let i=0;i<this.environments.length;i++)
           if(this.environments[i]["environmentId"]==item.envId)
             item["environmentName"]=this.environments[i]["environmentName"];
-        item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
-        item["versionNew"]="V"+item["versionNew"];
-        return item;
+          item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
+          return item;
       })
       return runs;
     }
@@ -194,7 +193,7 @@ export class SoProcesslogComponent implements OnInit {
 
     updateVersion=(logs:any)=>{
       logs=logs.map((item:any)=>{
-        item["versionNew"]="V"+item["versionNew"];
+        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
         return item;
       })
       return logs
