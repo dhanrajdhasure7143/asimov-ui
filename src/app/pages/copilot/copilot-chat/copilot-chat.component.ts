@@ -106,6 +106,7 @@ export class CopilotChatComponent implements OnInit {
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
+          this.analyzeMessage(response);
           this.isChatLoad = false;
           let res = { ...{}, ...response };
           this.updateTemplateFlag(res);
@@ -292,6 +293,7 @@ export class CopilotChatComponent implements OnInit {
       this.updateCurrentMessageButtonState("DISABLED");
       this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         this.currentMessage=response;
+        this.analyzeMessage(response);
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage)
         var objDiv = document.getElementById("chat-grid");
@@ -503,7 +505,6 @@ export class CopilotChatComponent implements OnInit {
 
 
   analyzeMessage(messageResponse:any){
-    console.log("sample check 1")
     messageResponse?.data?.message?.forEach((message)=>{
     let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
     let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
