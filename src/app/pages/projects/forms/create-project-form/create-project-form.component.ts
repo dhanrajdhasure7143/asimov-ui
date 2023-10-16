@@ -53,7 +53,7 @@ export class CreateProjectFormComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.maxLength(50),
-          Validators.pattern("^[a-zA-Z0-9_-]*$"),
+          Validators.pattern("^[a-zA-Z0-9_ -]*$"),
         ]),
       ],
       processOwner: [""],
@@ -181,7 +181,7 @@ export class CreateProjectFormComponent implements OnInit {
         this.processOwner = false;
       } else {
         this.insertForm2.get("processOwner").setValue("");
-        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process."});
+        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process!", key:"projects"});
         // Swal.fire(
         //   "Error",
         //   "Unable to find process owner for selected process",
@@ -304,10 +304,16 @@ export class CreateProjectFormComponent implements OnInit {
         //   });
         // });
       } else {
-        this.messageService.add({severity: "error",summary: "Error", detail: response.errorMessage});
+        this.messageService.add({severity: "error",summary: "Error", detail: response.errorMessage, key:"projects"});
         // Swal.fire("Error", response.errorMessage, "error");
       }
       
     });
+  }
+
+  spaceNotAllow(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
   }
 }

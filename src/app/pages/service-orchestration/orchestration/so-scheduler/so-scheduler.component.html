@@ -48,9 +48,12 @@
                     <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"(timeChanged)="onChangeHour($event,'endtime')"  [format]="24" [(ngModel)]="endtime" ></ngx-timepicker-field>
                        <span  class='errspan required' *ngIf="aftertime">{{endtimeerror}}</span>
                 </div>
+                <div  *ngIf="compareScheduleDates"  class="col-12 pl-0 form-group">
+                    <span class="required">Start date should be less than end date</span>
+                </div>
             </div>
             <div class="col p-0 form-group">
-                <button class="btn bluebg-button" [disabled]="beforetime==true || aftertime==true" (click)="add_sch()">Add</button>
+                <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button>
             </div>
             <div class="row justify-content-end">
                 <div class="scheduletimer-actionbtns">
@@ -170,4 +173,4 @@
         <button class="btn bluebg-button eiap-btn" (click)="saveschedule()">Save</button>
     </div>
 </div>
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+<p-toast  [style]="{marginTop: '50px'}" key="so_Scheduler"></p-toast>
