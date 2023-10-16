@@ -178,10 +178,9 @@ scrollHandler() {
   }
 }
 
-scrollToBottom() {
-  const objDiv = this.subChat.nativeElement;
-  objDiv.scrollTop = objDiv.scrollHeight;
-}
-
-
+  scrollToBottom() {
+    const objDiv = this.subChat.nativeElement;
+    if(objDiv.scrollTop>(objDiv.scrollHeight-800))
+      objDiv.scrollTop = objDiv.scrollHeight;
+  }
 }
