@@ -104,7 +104,7 @@ export class SoProcesslogComponent implements OnInit {
     getChildLogs(logs,logId, taskId, iterationId, type){
       this.logsLoading=true;
       console.log(logs)
-      this.rest.getChildLogs(logs, logId, taskId, iterationId,"1","2").pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getChildLogs(logs, logId, taskId, iterationId,this.selectedBot.versionNew,this.selectedBot.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         this.columnList=this.columns_list.orchestration_child_logs_columns;
         this.logsDisplayFlag="CHILD-LOGS";
