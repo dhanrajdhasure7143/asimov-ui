@@ -25,6 +25,7 @@ export class RpaSoLogsComponent implements OnInit {
   public respdata1:boolean = false;
   public fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
+  public selectedLogVersionNew:any;
   public filteredLogVersion:any;
   public selectedAutomationTask:any=undefined;
   @Input ('logsbotid') public logsbotid:any;
@@ -123,13 +124,14 @@ export class RpaSoLogsComponent implements OnInit {
   //    this.changeDetector.detectChanges();
   // }
 
-  ViewlogByrunid(runid,version){
+  ViewlogByrunid(runid,versionNew,version){
     this.botrunid=runid;
     this.selectedLogVersion=version 
+    this.selectedLogVersionNew=versionNew 
     this.logsLoading=true;
     this.logsDisplayFlag='LOGS'
     let flag=0;
-    this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((response:any)=>{ 
+    this.rest.getViewlogbyrunid(this.logsbotid,versionNew,runid,version).subscribe((response:any)=>{ 
      
       if(response.errorMessage==undefined)
       { 
@@ -181,10 +183,11 @@ export class RpaSoLogsComponent implements OnInit {
 
 
    getChildLogs(task_details,logId,taskId,iterationId, traversalType:any){
+    console.log(task_details)
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
-    this.rest.getChildLogs(task_details,logId,taskId,iterationId).subscribe((response:any)=>{ 
+    this.rest.getChildLogs(task_details,logId,taskId,iterationId,this.selectedLogVersionNew,this.selectedLogVersion).subscribe((response:any)=>{ 
       if(traversalType=="FARWORD") this.traversalLogs.push(task_details);
       this.selectedTask=task_details;
       this.selectedTask["actual_task_id"]=taskId;
@@ -240,7 +243,7 @@ export class RpaSoLogsComponent implements OnInit {
       if(logData.parent_log_id!=null && logData.parent_task_id!=null)
         this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
       else
-        this.ViewlogByrunid(logData.run_id, logData.version);
+        this.ViewlogByrunid(logData.run_id, logData.versionNew,logData.version);
    }
 
   // sortasc(event){
