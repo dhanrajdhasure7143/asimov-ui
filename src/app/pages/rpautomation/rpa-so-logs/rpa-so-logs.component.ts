@@ -86,7 +86,7 @@ export class RpaSoLogsComponent implements OnInit {
        this.isDataEmpty=false;
        this.columnList=[
         {ColumnName:"run_id",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
-        {ColumnName:"versionNew",DisplayName:"Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        {ColumnName:"versionNewModified",DisplayName:"Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
@@ -94,7 +94,7 @@ export class RpaSoLogsComponent implements OnInit {
        this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM DD, yyyy, HH:mm:ss"):item.end_time;
-          item["versionNew"]="V"+parseFloat(item.versionNew).toFixed(1);
+          item["versionNewModified"]="V"+parseFloat(item.versionNew).toFixed(1);
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
       }

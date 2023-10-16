@@ -54,7 +54,7 @@
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <input type="text" [style]="{'width':'100%'}" pInputText maxlength="50"
-                                                [(ngModel)]="projectName" (keydown)="Space($event)" />
+                                                [(ngModel)]="projectName" (keypress)="lettersOnly($event)" />
                                             <span class="editfields">
                                                 <i class="pi pi-check" *ngIf="projectName"
                                                     (click)="onUpdateDetails('projectName')"></i>
@@ -514,7 +514,7 @@
                 <p-tabPanel [selected]="true">
                     <ng-template pTemplate="header">
                         <h4>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
-                                Users selected) </span></h4>
+                                User<span *ngIf="checkBoxselected.length >1">s</span> selected) </span></h4>
                     </ng-template>
                 </p-tabPanel>
                 <p-tabPanel>
@@ -570,7 +570,7 @@
                     </p-table>
                 </div>
                 <div class="row justify-content-end" *ngIf="users_tabIndex != 1">
-                    <button class="btn new-cancelbtn" (click)="onCancel()">Cancel</button>
+                    <button class="btn new-cancelbtn" (click)="onCancel()">Clear</button>
                     <button class="btn bluebg-button" (click)="addresources()"
                         [disabled]="!(checkBoxselected.length>0)">Onboard Users</button>
                 </div>

@@ -225,15 +225,15 @@ export class RpaHomeComponent implements OnInit {
           if (response.status != undefined) {
             this.spinner.hide()
             this.getallbots();
-            this.messageService.add({ severity: "success",summary: "Success",detail: response.status});   
+            this.messageService.add({ severity: "success",summary: "Success",detail: response.status,key:'rpa-home'});   
           } else {
             this.spinner.hide();
-            this.messageService.add({ severity: 'error', summary: 'Error',detail: response.errorMessage});
+            this.messageService.add({ severity: 'error', summary: 'Error',detail: response.errorMessage,key:'rpa-home'});
           }
         })
-        setTimeout(() => {
-          this.getallbots();
-        }, 550);
+        // setTimeout(() => {
+        //   this.getallbots();
+        // }, 550);
       }
     })
   }

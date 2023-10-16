@@ -112,8 +112,7 @@ export class CreateTasksComponent implements OnInit {
     }, 200);
   }
 
-  savetasks()
-  {
+  savetasks(){
     this.spinner.show();
     this.createtaskForm.value.status="New";
     this.createtaskForm.value.percentageComplete=0;
@@ -128,12 +127,7 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         // let status: any= response;
         //this.createtaskmodalref.hide();
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Task created successfully!",
-          key:"create"
-        })
+        this.messageService.add({severity: "success",summary: "Success",detail: "Task created successfully!",key:"create"})
         this.router.navigate(["/pages/projects/taskDetails"], {
           queryParams: {
             project_id: this.params_data.project_id,
@@ -268,5 +262,17 @@ taskDescriptionMaxLength(value){
     } else {
       this.invalidText = false;
     }
+  }
+
+  onTaskTypeChange(event){
+    const correlationIDControl = this.createtaskForm.get("correlationID");
+    if (event.value === "Analysis" || event.value === "RPA Design") {
+      correlationIDControl.clearValidators();
+      this.createtaskForm.get("correlationID").setValue("");
+    } else {
+      correlationIDControl.setValidators([Validators.required]);
+      if (correlationIDControl.touched) correlationIDControl.markAsUntouched();
+    }
+    correlationIDControl.updateValueAndValidity();
   }
 }

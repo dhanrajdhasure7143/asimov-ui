@@ -84,7 +84,7 @@
                                         <img *ngIf="rowData[col.multiOptions[1]] === 'High'" src="../../../assets/images-n/projects/highpriority_new.svg" alt="High Priority">
                                     </span>
                                     <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">{{rowData[col.multiOptions[0]]}}</span>
-                                    <span *ngIf="col.datePipe" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM d, y HH:mm'}} </span>
+                                    <span *ngIf="col.datePipe" class="prjgridtimestamp"> {{rowData[col.multiOptions[1]]|date:'MMM dd, y HH:mm'}} </span>
                                     <!-- <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span> -->
                                     
                                     <span *ngIf="col.multiOptions[1] == 'roles'" class="resourcerole" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}}</span>
@@ -114,12 +114,13 @@
                                         <span *ngIf="(rowData['status']=='Stopped' && col.ColumnName == 'status')" [pTooltip]="rowData['status']" tooltipPosition="top">
                                             <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                         </span> -->
-                                        <span *ngIf="screenTable == 'taskList'&& col.ColumnName !='status'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM d, y'):(rowData[col.ColumnName]|date:'MMM d, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
+                                        <span *ngIf="screenTable == 'taskList'&& col.ColumnName !='status'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM dd, y'):(rowData[col.ColumnName]|date:'MMM dd, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
                                         <span *ngIf="screenTable == 'taskList' && col.ColumnName =='status'">
                                             <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
                                             {{rowData[col.ColumnName]}} </span>
                                         <span *ngIf="screenTable != 'taskList' && col.ColumnName !='changeActivity' && col.ColumnName !='deploy_status_new' && col.ColumnName!='approvalInfo'">
-                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments' && col.ColumnName !='ColumnName' && col.ColumnName !='DisplayName'  && col.ColumnName !='column_name')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
+                                            <!-- <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments' && col.ColumnName !='ColumnName' && col.ColumnName !='DisplayName'  && col.ColumnName !='column_name')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> -->
+                                            <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && col.status_icon" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
                                             {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
                                         </span>
                                         <span *ngIf="screenTable == 'environment_table' && col.ColumnName =='deploy_status_new'">
