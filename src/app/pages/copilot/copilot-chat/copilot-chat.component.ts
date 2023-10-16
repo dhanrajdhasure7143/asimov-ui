@@ -339,7 +339,6 @@ export class CopilotChatComponent implements OnInit {
   }
 
   public sendUserAction =(data:any)=>{
-    console.log("matter important", this.copilotMessageRef);
     setTimeout(()=>{
 
       this.copilotMessageRef.scrollToBottom();
@@ -504,11 +503,15 @@ export class CopilotChatComponent implements OnInit {
 
 
   analyzeMessage(messageResponse:any){
+    console.log("sample check 1")
     messageResponse?.data?.message?.forEach((message)=>{
     let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
     let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
      if(message.match(piRegexExp)){
+      console.log("-- sample --",message)
       let piId = (message.match(piRegexExp)[0].split("piId="))[1];
+      console.log("sample check 2");
+      console.log(piId);
       this.piId=piId;
       let url=window.location.hash;
       window.history.pushState("", "", url+"&piId="+piId); 
@@ -518,6 +521,8 @@ export class CopilotChatComponent implements OnInit {
       let rpaBotId = (message.match(rpaRegexExp)[0].split("botId="))[1];
       this.botId=rpaBotId;
       let url=window.location.hash;
+      console.log("sample check 2");
+      console.log(rpaBotId);
       window.history.pushState("", "", url+"&botId="+rpaBotId); 
       this.displayFlag=this.displayEnum.displayRPA;   
      }

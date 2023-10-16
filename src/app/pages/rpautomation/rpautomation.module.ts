@@ -138,7 +138,7 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
     CardModule,
     PrimengCustomModule
   ],
-  exports:[RpaSoLogsComponent,RpaSchedulerComponent],
+  exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
     {
            provide: MatPaginatorIntl, 
