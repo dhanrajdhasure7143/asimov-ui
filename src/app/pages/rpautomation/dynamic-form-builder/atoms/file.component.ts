@@ -19,7 +19,7 @@ template:`
     </div>
   `,
   styles: [
-    'input.form-control.custom-file-input {padding-left: 0px !important;}',
+    'input.form-control.custom-file-input {padding-left: 5px !important;}',
     '.custom-file-input::-webkit-file-upload-button { visibility: hidden;}',
     '.custom-file-input::before { text-align: center; content: "Choose File" ; display: inline-block; background: #098de6; border-radius: 6px; padding: 2px 8px; outline: none; color: white; white-space: nowrap; -webkit-user-select: none; cursor: pointer; position: absolute; left: 5px;}',
     '.custom-file-input:hover::before { border-color: none; }'
