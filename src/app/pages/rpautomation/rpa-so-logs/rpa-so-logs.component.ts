@@ -90,7 +90,7 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"versionNewModified",DisplayName:"Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
-        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text", displayKillButton:true},
       ];
        this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;

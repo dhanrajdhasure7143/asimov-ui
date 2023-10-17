@@ -92,7 +92,8 @@
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
                             </span>
                             {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
-                            <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
+                           
+                            <span *ngIf="col?.displayKillButton" class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
                           </span>
                           </span>
                           <span *ngIf="col.ColumnName=='bot_status'">

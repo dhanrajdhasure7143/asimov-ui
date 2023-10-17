@@ -145,10 +145,12 @@ export class SoProcesslogComponent implements OnInit {
     }
 
     killRun(log){
-      console.log(log);
-      this.rest.kill_process_log(log.processId, log.envId, log.runId).subscribe(data=>{
+      this.logsLoading=true;
+      this.rest.kill_process_log(log.processId, log.envId, log.processRunId).subscribe(data=>{
         this.getProcessRuns();
+        
       },err=>{
+        this.logsLoading=false;
         console.log(err);
       })
     }
