@@ -79,7 +79,7 @@ export class SoProcesslogComponent implements OnInit {
     
     getTaskLogsByBot(botData:any){
       this.logsLoading=true;
-      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id,botData.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.logsDisplayFlag="BOT-LOGS";
@@ -103,7 +103,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getChildLogs(logs,logId, taskId, iterationId, type){
       this.logsLoading=true;
-      this.rest.getChildLogs(logs, logId, taskId, iterationId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getChildLogs(logs, logId, taskId, iterationId,this.selectedBot.versionNew,this.selectedBot.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         this.columnList=this.columns_list.orchestration_child_logs_columns;
         this.logsDisplayFlag="CHILD-LOGS";
@@ -145,10 +145,13 @@ export class SoProcesslogComponent implements OnInit {
     }
 
     killRun(log){
-      this.rest.kill_process_log(log.processId, log.envId, log.runId).subscribe(data=>{
+      this.logsLoading=true;
+      this.rest.kill_process_log(log.processId, log.envId, log.processRunId).subscribe(data=>{
         this.getProcessRuns();
+        
       },err=>{
-        console.log(err)
+        this.logsLoading=false;
+        console.log(err);
       })
     }
 
