@@ -183,7 +183,6 @@ export class RpaSoLogsComponent implements OnInit {
 
 
    getChildLogs(task_details,logId,taskId,iterationId, traversalType:any){
-    console.log(task_details)
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
