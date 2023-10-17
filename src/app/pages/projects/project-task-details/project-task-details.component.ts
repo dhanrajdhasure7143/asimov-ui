@@ -5,9 +5,10 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import * as moment from "moment";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 interface Status {
   name: string;
@@ -67,8 +68,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private router: Router,
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private toastService: ToasterService
   ) {
     this.status_list = [
       { name: "New" },
@@ -194,24 +195,15 @@ export class ProjectTaskDetailsComponent implements OnInit {
       acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
-        this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe(
-          (res) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Document deleted successfully!",
-            });
+        this.rest_api.deleteSelectedFileFolder(this.checkBoxselected).subscribe((res) => {
+            this.toastService.showSuccess('Document','delete');
             this.getTheListOfFolders();
             this.getTaskAttachments();
             this.spinner.hide();
           },
           (err) => {
             this.spinner.hide();
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Failed to delete!",
-            });
+            this.toastService.showError("Failed to delete!");
           }
         );
       },
@@ -258,6 +250,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
     // let taskupdatFormValue = this.updatetaskForm.value;
     let taskupdatFormValue = this.task_details;
+    let taskName = this.task_details.taskName
     // taskupdatFormValue["id"] = this.selectedtask.id;
     // taskupdatFormValue["percentageComplete"] = "10";
     taskupdatFormValue["comments"] = this.added_comments_list;
@@ -278,25 +271,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
       (res) => {
         // this.taskcomments_list = this.added_comments_list;
         this.add_comment = "";
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Task updated successfully!",
-        });
+        this.toastService.showSuccess(taskName,'update');
         this.gettask();
-        // let status: any = res;
-        // if (status.errorMessage == undefined) {
-        //   Swal.fire("Success", "Task Updated Successfully !", "success");
-        // } else {
-        //   Swal.fire("Error", status.errorMessage, "error");
-        // }
       },
       (err) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Task update failed.",
-        });
+        this.toastService.showError("Task update failed!");
       }
     );
     // } else {
@@ -344,11 +323,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   uploadFile() {
     if (this.selected_folder.dataType != "folder") {
-      this.messageService.add({
-        severity: "info",
-        summary: "Info",
-        detail: "Please select a folder.",
-      });
+      this.toastService.showInfo("Please select a folder!");
       return;
     }
     this.isFile_upload_dialog = false;
@@ -371,20 +346,12 @@ export class ProjectTaskDetailsComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.getTheListOfFolders()
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "File uploaded successfully!",
-        });
+        this.toastService.showSuccess('File','upload');
         this.getTaskAttachments();
       },
       (err) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Failed to upload!",
-        });
+        this.toastService.showError("Failed to upload!");
       }
     );
   }

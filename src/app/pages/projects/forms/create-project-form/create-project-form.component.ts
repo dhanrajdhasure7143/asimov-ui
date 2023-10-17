@@ -5,10 +5,9 @@ import moment from "moment";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { NotifierService } from "angular-notifier";
-import Swal from "sweetalert2";
-import { MessageService } from 'primeng/api';
 import { Router } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 @Component({
   selector: "app-create-project-form",
   templateUrl: "./create-project-form-new.component.html",
@@ -41,8 +40,8 @@ export class CreateProjectFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private rest_api: RestApiService,
-    private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private toastService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -181,12 +180,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.processOwner = false;
       } else {
         this.insertForm2.get("processOwner").setValue("");
-        this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process!", key:"projects"});
-        // Swal.fire(
-        //   "Error",
-        //   "Unable to find process owner for selected process",
-        //   "error"
-        // );
+        // this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process!", key:"projects"});
+        this.toastService.showError("Unable to find the process owner for the selected process!");
       }
     }
   }
@@ -244,6 +239,7 @@ export class CreateProjectFormComponent implements OnInit {
     let username = userfirstname + " " + userlastname;
     this.insertForm2.value.status = "New";
     this.insertForm2.value.createdBy = username;
+    const projectName = this.insertForm2.value.projectName;
     //this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
     let data = this.insertForm2.value;
     // data["resource"]=data.resource.map(item=>{ return {resource:item}});
@@ -273,39 +269,14 @@ export class CreateProjectFormComponent implements OnInit {
       
         this.rest_api.createFolderByProject(req_body).subscribe(res=>{
         })
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: response.message,
-          key:"create"
-        })
+          this.toastService.showSuccess(projectName,'create');
           this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
           this.router.navigate(["/pages/projects/projectdetails"], {
             queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
           });
-
-        // Swal.fire({
-        //   title: "Success",
-        //   text: response.message,
-        //   position: "center",
-        //   icon: "success",
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-        //   confirmButtonText: "Ok",
-        // }).then((result) => {
-        //   this.resetcreateproject();
-        //   // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
-        //   this.router.navigate(["/pages/projects/projectdetails"], {
-        //     queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
-        //   });
-        // });
       } else {
-        this.messageService.add({severity: "error",summary: "Error", detail: response.errorMessage, key:"projects"});
-        // Swal.fire("Error", response.errorMessage, "error");
+        this.toastService.showError(response.errorMessage);
       }
       
     });
