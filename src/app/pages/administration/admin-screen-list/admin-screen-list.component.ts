@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
 import { columnList } from "src/app/shared/model/table_columns";
 import { DataTransferService } from "../../services/data-transfer.service";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 @Component({
   selector: "app-admin-screen-list",
@@ -25,7 +26,7 @@ export class AdminScreenListComponent implements OnInit {
     private spinner: LoaderService,
     private dt: DataTransferService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private toastService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -56,29 +57,21 @@ export class AdminScreenListComponent implements OnInit {
     });
   }
 
-  deleteScreen(id: any) {
+  deleteScreen(data: any) {
     this.confirmationService.confirm({
       message: "Do you want to delete this record? This can't be undo.",
       header: "Are you sure?",
       key: "positionDialog",
       accept: () => {
         this.spinner.show();
-        this.rest.deleteScreen(id.Screen_ID).subscribe(
+        this.rest.deleteScreen(data.Screen_ID).subscribe(
           (resp) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Sucsess",
-              detail: "Record deleted successfully!",
-            });
+            this.toastService.showSuccess(data.Screen_Name,'delete');
             this.spinner.hide();
             this.getScreenList();
           },
           (err: any) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "rejected",
-              detail: "Unable to delete the record.",
-            });
+            this.toastService.showError('Failed to delete!');
           }
         );
       },

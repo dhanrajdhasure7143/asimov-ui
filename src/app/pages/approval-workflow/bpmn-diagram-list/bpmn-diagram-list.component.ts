@@ -20,7 +20,7 @@ import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { TitleCasePipe } from '@angular/common';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -71,7 +71,9 @@ searchValue:any;
     private rest_Api: RestApiService,
     private router: Router,
     private loader: LoaderService,
-    private titleCase: TitleCasePipe,private messageService: MessageService) { }
+    private titleCase: TitleCasePipe,
+    private toastService: ToasterService
+    ) { }
 
     @Input() get selectedColumns(): any[] {
       return this._selectedColumns;
@@ -133,7 +135,7 @@ searchValue:any;
         
           this.bpmnModeler.importXML(byteBpmn, function(err){
             if(err){
-              this.messageService.add({severity: "error", summary: "Error", detail: "Could not import BPMN notation!"})
+              this.toastService.showError("Could not import BPMN notation!")
               // this.notifier.show({
               //   type: "error",
               //   message: "Could not import Bpmn notation!"
@@ -170,7 +172,7 @@ searchValue:any;
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     let msg="Notation";
-    this.messageService.add({severity: "success", summary: "Success", detail: msg+" is fit to view port!"});
+    this.toastService.showSuccess(msg+" is fit to view port!",'response');
 
   }
 
@@ -248,6 +250,7 @@ this.selectedrow =i;
     let disabled_items = localStorage.getItem("pending_bpmnId")
     let saved_id = disabled_items && disabled_items !="null" && disabled_items != "" ? disabled_items+ ","+data.id: data.id;
     localStorage.setItem("pending_bpmnId", saved_id)
+    let bpmnProcessName = data.bpmnProcessName
     this.disable_panels();
     this.approver_info={
       "approverName": data.approverName,
@@ -277,10 +280,10 @@ this.selectedrow =i;
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
         this.bpmnlist();
-        this.messageService.add({severity: "success", summary: "Success", detail: "Notation Approved Successfully!"});
+        this.toastService.showSuccess(bpmnProcessName+' approved successfully!','response');
       },
       err=>{
-      this.messageService.add({severity: "error", summary: "Error", detail: "Oops Something went wrong!"});
+      this.toastService.showError("Oops Something went wrong!");
     });
     this.bpmnlist();
   }
@@ -316,6 +319,7 @@ this.selectedrow =i;
   }
 
    denyDiagram(data, parentInfo) {
+    let bpmnProcessName =data.bpmnProcessName
      let reqObj = {
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
       "bpmnProcessInfo": {
@@ -350,10 +354,10 @@ this.selectedrow =i;
     this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
         this.bpmnlist();
-        this.messageService.add({severity: "success", summary: "Success", detail: "Notation has been rejected!"});
+        this.toastService.showSuccess(bpmnProcessName+" has been rejected!",'response');
       },
       err=>{
-        this.messageService.add({severity: "error", summary: "Error", detail: "Opps Somthing went wrong!"})
+        this.toastService.showError("Opps Somthing went wrong!");
       });
    }
    sort1(colKey,ind) { // if not asc, desc

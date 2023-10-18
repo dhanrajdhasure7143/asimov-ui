@@ -5,7 +5,7 @@ import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { columnList } from "src/app/shared/model/table_columns";
-import { MessageService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 
 @Component({
@@ -47,7 +47,8 @@ export class AdminAddScreenComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner:LoaderService,
     private columns:columnList,
-    private messageService:MessageService
+    private toastService: ToasterService
+
   ) {
     this.route.queryParams.subscribe((res: any) => {
       this.screen_id = res.id;
@@ -152,12 +153,10 @@ export class AdminAddScreenComponent implements OnInit {
     };
     this.spinner.show();
 
-    this.rest
-      .updateColumn(this.elementId, this.screenId, val)
-      .subscribe((data) => {
+    this.rest.updateColumn(this.elementId, this.screenId, val).subscribe((data) => {
         this.updateColumndata = data;
         this.display = false;
-        this.messageService.add({severity:'success', summary:'Success', detail:'Column updated successfully!'});
+        this.toastService.showSuccess('Column','update');
         this.getScreenDetail();
         this.spinner.hide();
         this.hiddenPopUp = false;
@@ -231,13 +230,13 @@ export class AdminAddScreenComponent implements OnInit {
     payload["fields"] = "";
     this.spinner.show();
     this.rest.updateScreenData(payload, this.screen_id).subscribe((data) => {
-    this.messageService.add({severity:'success', summary:'Success',detail:'Screen updated successfully!'});
+    this.toastService.showSuccess(payload.screen_Name,'update');
     setTimeout(() => {
       this.backToScreenList();
     }, 1000);
     this.spinner.hide();
     },(err: any) => {
-      this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to update screen details!'});
+      this.toastService.showError('Unable to update screen details!')
     })  
   }
 
@@ -251,7 +250,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.columns_list = this.savedata;
       this.tableData = this.savedata;
       this.columns_list = this.columns.saveTable_column;
-      this.messageService.add({severity:'success', summary:'Success', detail:'Screen saved successfully!'});
+      this.toastService.showSuccess(payload.screen_Name,'save');
       setTimeout(() => {
         this.backToScreenList();
       }, 1000);
@@ -259,7 +258,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.buttonDisable = true;
     }),
       (err: any) => {
-        this.messageService.add({severity:'error', summary:'Rejected', detail:'Unable to save!'});
+        this.toastService.showError('Failed to save!')
       };
   }
 
