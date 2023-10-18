@@ -250,14 +250,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.finaldataobjects = this.finalbot.tasks;
       this.actualTaskValue = [...this.finalbot.tasks];
       this.actualEnv = [...this.finalbot.envIds];
+      this.dragareaid = "dragarea__" + this.finalbot.botName;
+      this.outputboxid = "outputbox__" + this.finalbot.botName;
       this.loadGroups("load");
       this.loadnodes();
       this.getAllVersions();
       this.executionMode=this.finalbot.executionMode=="v1"?true:false;
     }
     this.getSelectedEnvironments();
-    this.dragareaid = "dragarea__" + this.finalbot.botName;
-    this.outputboxid = "outputbox__" + this.finalbot.botName;
     //this.getCategories();
     this.validateBotNodes();
     this.route.queryParams.subscribe(res=>{
@@ -643,9 +643,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         {
           startNode["x"]="5px";
           startNode["y"]="5px";
-          let dropContainer=document.getElementById("dnd_"+this.dragareaid);
-          stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
-          stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
+          setTimeout(()=>{
+            let dropContainer=document.getElementById("dnd_"+this.dragareaid);
+            stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
+            stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
+          },100)
+
         }
         this.nodes.push(startNode);
         setTimeout(()=>{
