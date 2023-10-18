@@ -65,7 +65,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getBotLogsByRunId(runData:any){
       this.logsLoading=true;
-      this.rest.getprocessruniddata(runData.processId, runData.processRunId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getprocessruniddata(runData.processId, runData.processRunId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.selectedRun=runData;
@@ -79,7 +79,7 @@ export class SoProcesslogComponent implements OnInit {
     
     getTaskLogsByBot(botData:any){
       this.logsLoading=true;
-      this.rest.getViewlogbyrunid(botData.bot_id,botData.version,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id,botData.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.logsDisplayFlag="BOT-LOGS";
@@ -103,7 +103,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getChildLogs(logs,logId, taskId, iterationId, type){
       this.logsLoading=true;
-      this.rest.getChildLogs(logs, logId, taskId, iterationId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getChildLogs(logs, logId, taskId, iterationId,this.selectedBot.versionNew,this.selectedBot.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         this.columnList=this.columns_list.orchestration_child_logs_columns;
         this.logsDisplayFlag="CHILD-LOGS";
@@ -145,10 +145,15 @@ export class SoProcesslogComponent implements OnInit {
     }
 
     killRun(log){
-      this.rest.kill_process_log(log.processId, log.envId, log.runId).subscribe(data=>{
+      this.logsLoading=true;
+      this.rest.kill_process_log(log.processId, log.envId, log.processRunId).subscribe(response=>{
+        if(this.validateErrorMessage(response))return;
         this.getProcessRuns();
+        
       },err=>{
-        console.log(err)
+        this.logsLoading=false;
+        this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to kill run"})
+        console.log(err);
       })
     }
 
@@ -175,8 +180,8 @@ export class SoProcesslogComponent implements OnInit {
         for(let i=0;i<this.environments.length;i++)
           if(this.environments[i]["environmentId"]==item.envId)
             item["environmentName"]=this.environments[i]["environmentName"];
-        item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
-        return item;
+          item["processStartTime"]=item.processStartTime!=null?(moment(item.processStartTime).format("MMM DD, yyyy, HH:mm:ss")):item.processStartTime;
+          return item;
       })
       return runs;
     }
@@ -191,6 +196,13 @@ export class SoProcesslogComponent implements OnInit {
       return logs;
     }
 
+    updateVersion=(logs:any)=>{
+      logs=logs.map((item:any)=>{
+        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
+        return item;
+      })
+      return logs
+    }
     updateStatus=(logs, column)=>{
       logs=logs.map((item:any)=>{
           if(item[column]==1)
@@ -219,7 +231,3 @@ export class SoProcesslogComponent implements OnInit {
     }
   
 }
-
-
-
-

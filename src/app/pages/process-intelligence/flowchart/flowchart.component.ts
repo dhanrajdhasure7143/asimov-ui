@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
+import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter ,ElementRef, Renderer2,Output ,HostListener, Input} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -34,6 +34,8 @@ enum VariantList {
   styleUrls: ['./flowchart.component.css'],
 })
 export class FlowchartComponent implements OnInit {
+  
+  @Input("copilotPiId") public copilotPiId:any;
   public select_varaint: any = 0;
   public model1:any[]=[];
   public model2:any[]=[];
@@ -155,7 +157,7 @@ pi_fullGraph_data:any=[];
   freetrail = localStorage.getItem("freetrail");
   isGenerate:boolean = false;
 redirectCopilot:boolean=false;
-
+@Output("onBackEvent") backEmitter:any= new EventEmitter();
   constructor(private dt: DataTransferService,
     private router: Router,
     private bpmnservice: SharebpmndiagramService,
@@ -167,7 +169,8 @@ redirectCopilot:boolean=false;
     private location:Location,
     private global:GlobalScript,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {  }
+    private confirmationService: ConfirmationService,
+    ) {  }
 
   @HostListener('document:click', ['$event.target'])  // spinner overlay hide on out side click
   public onClick(targetElement) {
@@ -195,36 +198,49 @@ redirectCopilot:boolean=false;
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     var piId;
-    this.route.queryParams.subscribe(params => {
-      console.log(params)
-      if(params.redirect)
-      {
-        if(params.redirect=="copilot")
-          this.redirectCopilot=true;
-      }
-      if(params['wpiId']!=undefined){
-          this.wpiIdNumber = parseInt(params['wpiId']);
-          piId=this.wpiIdNumber;
-          this.graphIds = piId;
-          this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
-          this.spinner.show();
-          setTimeout(() => {
-            this.onchangegraphId(piId);
-            }, 500);
-        }
-      if(params['piId']!=undefined){
-        this.piIdNumber = parseInt(params['piId']);
-        piId=this.piIdNumber;
-        this.graphIds = piId;        
-        this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
-        this.spinner.show();
-           this.graphgenetaionInterval = setInterval(() => {
-             this.onchangegenerategraphId(piId);
-           }, 10*1000);
-           this.isGenerate = true;
+    if(this.copilotPiId)
+    {
+      this.piIdNumber = parseInt(this.copilotPiId);
+      piId=this.piIdNumber;
+      this.graphIds = piId;        
+      this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
+      this.spinner.show();
+        this.graphgenetaionInterval = setInterval(() => {
+          this.onchangegenerategraphId(piId);
+        }, 10*1000);
+        this.isGenerate = true;
 
-      }
-    });
+    }else{
+      this.route.queryParams.subscribe(params => {
+        console.log(params)
+        if(params.redirect)
+        {
+          if(params.redirect=="copilot")
+            this.redirectCopilot=true;
+        }
+        if(params['wpiId']!=undefined){
+            this.wpiIdNumber = parseInt(params['wpiId']);
+            piId=this.wpiIdNumber;
+            this.graphIds = piId;
+            this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+            this.spinner.show();
+            setTimeout(() => {
+              this.onchangegraphId(piId);
+              }, 500);
+          }
+        if(params['piId']!=undefined){
+          this.piIdNumber = parseInt(params['piId']);
+          piId=this.piIdNumber;
+          this.graphIds = piId;        
+          this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
+          this.spinner.show();
+            this.graphgenetaionInterval = setInterval(() => {
+              this.onchangegenerategraphId(piId);
+            }, 10*1000);
+            this.isGenerate = true;
+        }
+      });
+    }
   }
 
   getAlluserProcessPiIds(){ // List of Process graphs
@@ -2300,17 +2316,25 @@ addWorkingHours(){
     // this.isvariantListOpen=true;
   }
 
-  backtoWorkspace() {
-    if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
-      this.router.navigate(["/pages/projects/projectdetails"], 
-      {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+  backtoWorkspace(){
+    if(this.copilotPiId){
+
     }else{
-      this.router.navigate(["/pages/processIntelligence/upload"]);
+      if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
+        this.router.navigate(["/pages/projects/projectdetails"], 
+        {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+      }else{
+        this.router.navigate(["/pages/processIntelligence/upload"]);
+      }
     }
+    
   }
 
-  backToCopilot()
-  {
+  backToCopilot(){
     this.router.navigate(["/pages/copilot/copilot-chat"])
+  }
+  
+  sendCopilotBackEvent(){
+    this.backEmitter.emit(null);
   }
 }

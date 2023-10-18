@@ -290,13 +290,13 @@ export class RestApiService{
       return this.http.get("/rpa-service/logs/"+botid);
     }
 
-    getViewlogbyrunid(botid,botverid,runid){
-      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid);
+    getViewlogbyrunid(botid,versionNew,runid,version){
+      return this.http.get("/rpa-service/logs/"+botid+"/"+versionNew+"/"+runid+"?version="+version);
     }
 
 
-    getChildLogs(task_details,logId,taskId,iterationId){
-      return this.http.get("/rpa-service/logs/"+task_details.bot_id+"/"+task_details.version+"/"+task_details.run_id+"?parentLogId="+logId+"&parentTaskId="+taskId+"&parentIterationId="+iterationId);
+    getChildLogs(task_details,logId,taskId,iterationId,versionNew,version){
+      return this.http.get("/rpa-service/logs/"+task_details.bot_id+"/"+versionNew+"/"+task_details.run_id+"?parentLogId="+logId+"&parentTaskId="+taskId+"&parentIterationId="+iterationId+"&version="+version);
     }
 
 

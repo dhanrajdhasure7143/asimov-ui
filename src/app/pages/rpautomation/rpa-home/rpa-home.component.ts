@@ -193,7 +193,7 @@ export class RpaHomeComponent implements OnInit {
       botStatus: true,
       description: true,
     }
-    this.spinner.show();
+    //this.spinner.show();
     this.getCategoryList();
     this.getenvironments();
     // this.getallbots();
@@ -634,7 +634,8 @@ export class RpaHomeComponent implements OnInit {
           botType:0,
           botMainSchedulerEntity:null,
           comments:"", 
-          executionMode:response.executionMode   
+          executionMode:response.executionMode,
+          startStopCoordinate:response.startStopCoordinate   
         };
         this.downloadJson(botDetails)
       } else {

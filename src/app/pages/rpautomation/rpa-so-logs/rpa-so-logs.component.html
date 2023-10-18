@@ -6,7 +6,7 @@
       <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="logsBackTraversal()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
-      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
+      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.versionNew, selectedIterationTask.version)">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
       <!-- <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
@@ -20,13 +20,12 @@
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
         &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
-        <span *ngIf="logsLoading">
-          <i class="fa fa-spinner fa-spin"></i> 
-          Loading...
-        </span>
-        <span style="cursor: pointer;">
-        <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
-        <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS' && !logsLoading" class="clickable1 refecls">
+            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
+            <span *ngIf="logsLoading">
+              <i class="fa fa-spinner fa-spin"></i> 
+              Loading...
+            </span>
+        <span (click)="ViewlogByrunid(botrunid,selectedLogVersionNew, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
        
@@ -78,7 +77,7 @@
                   <tr class="action-desc">
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
-                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.ColumnName]}}</a>
+                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
                           {{logs[col.ColumnName]}}
@@ -94,7 +93,8 @@
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
                             </span>
                             {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
-                            <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
+                           
+                            <span *ngIf="col?.displayKillButton" class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
                           </span>
                           </span>
                           <span *ngIf="col.ColumnName=='bot_status'">

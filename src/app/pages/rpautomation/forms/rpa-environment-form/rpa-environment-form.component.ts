@@ -86,7 +86,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId: ["", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50),Validators.pattern(/^(?!.*[`~"]).{4,50}$/)])],
         connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(5)])],
         activeStatus: [true]
