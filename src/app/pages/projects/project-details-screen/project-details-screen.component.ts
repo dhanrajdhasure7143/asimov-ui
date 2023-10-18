@@ -7,18 +7,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
-import { MenuItem , MessageService, ConfirmationService} from 'primeng/api';
+import { MenuItem , ConfirmationService} from 'primeng/api';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
 selector: 'app-project-details-screen',
 templateUrl: './project-details-new.html',
 styleUrls: ['./project-details-new.css'],
-providers: [MessageService,columnList]
+providers: [columnList]
 })
 export class ProjectDetailsScreenComponent implements OnInit {
 @ViewChild("inplace") inplace!: Inplace;
@@ -232,9 +233,9 @@ categoryId: any;
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
 private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
 private spinner: LoaderService,
-private messageService: MessageService,
 private confirmationService: ConfirmationService,
-private columnList: columnList
+private columnList: columnList,
+private toastService: ToasterService
 ) {
   this.route.queryParams.subscribe((data:any)=>{​​​​​​
     this.params_data=data
@@ -388,20 +389,17 @@ this.rest_api.exportproject(this.project_id).subscribe(data => {
     link.download = this.projectDetails.projectName;
     link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
     link.click();
-    this.messageService.add({
-      severity: "success",
-      summary: "Success",
-      detail: response.message
-    })
+    // this.messageService.add({
+    //   severity: "success",
+    //   summary: "Success",
+    //   detail: response.message
+    // })
+    this.toastService.showSuccess(response.message,'response');
     this.spinner.hide();
   }
   else {
     this.spinner.hide();
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: response.errorMessage
-    })
+    this.toastService.showError(response.errorMessage);
   }
 })
 }
@@ -522,11 +520,8 @@ if (process != undefined) {
     this.processownername='';
     this.processOwnerFlag = true;
     //this.createprogram.get("processOwner").setValue("")
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: "Unable to find the process owner for the selected process."
-    })
+    // this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process."})
+    this.toastService.showError("Unable to find the process owner for the selected process!");
   }
 }
 }
@@ -617,17 +612,18 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.checktodelete();
     this.getRecentactivities();
     this.snapShotDetails();
-    this.messageService.add({severity:'success', summary: 'Success', detail: response.status+'!'});
+    // this.messageService.add({severity:'success', summary: 'Success', detail: response.status+'!'});
+    this.toastService.showSuccess(response.status+'!',"response");
     this.checkBoxselected =[];
     // this.onUsersTab(0);
     this.spinner.hide();
   }
   else {
-    this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage+'!'});
+    this.toastService.showError(response.errorMessage+'!');
     this.spinner.hide();
   }
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail:"Failed to add resource!"});
+  this.toastService.showError("Failed to add resource!");
   this.spinner.hide();
 })
 }
@@ -668,7 +664,8 @@ this.confirmationService.confirm({
   accept: () => {
     this.spinner.show();
     this.rest_api.deleteResource(selectedresource).subscribe(res => {
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource deleted successfully!'});
+    // this.messageService.add({severity:'success', summary: 'Success', detail: 'Resource deleted successfully!'});
+    this.toastService.showSuccess('Resource','delete');
     this.getTheExistingUsersList(1);
     // setTimeout(() => {
     //   this.onUsersTab(1);
@@ -677,7 +674,8 @@ this.confirmationService.confirm({
       this.snapShotDetails();
       this.spinner.hide();
     }, err => {
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Oops! Something went wrong.'});
+      // this.messageService.add({severity:'error', summary: 'Error', detail: 'Oops! Something went wrong.'});
+      this.toastService.showError('Oops! Something went wrong!');
       this.spinner.hide();
     })
   },
@@ -744,6 +742,7 @@ updateprojectDetails() {
 // this.spinner.show()
 this.projectDetails["type"] = "Project";
 this.projectDetails["categoryId"]=this.categoryId;
+const projectName = this.projectDetails.projectName;
 // this.projectDetails.processOwner = this.processownername
 // this.projectDetails.endDate = this.projectenddate;
 // this.projectDetails.startDate = this.projectStartDate;
@@ -751,14 +750,15 @@ this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
 this.rest_api.update_project(this.projectDetails).subscribe(res => {
   // this.spinner.hide();
   let response: any = res;
-  if (response.errorMessage == undefined)
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Project updated successfully!'});
+  if (response.errorMessage == undefined)  
+  this.toastService.showSuccess(projectName,'update');
   else
-  this.messageService.add({severity:'error', summary: 'Error', detail: response.errorMessage});
+  this.toastService.showError(response.errorMessage);
   this.getProjectdetails()
   // this.editdata = false;
 },err=>{
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Project update failed!"});
+  // this.messageService.add({severity:'error', summary: 'Error', detail: "Project update failed!"});
+  this.toastService.showError("Failed to update!");
 });
 }
 
@@ -1122,7 +1122,8 @@ navigateToCreateDocument(){
 let objectKey;
 let key;
 if(this.selected_folder.dataType != 'folder'){
-  this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+  // this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder!'});
+  this.toastService.showInfo('Please select a folder!');
   return
 }
 // if(this.selected_folder.parent == undefined){
@@ -1253,7 +1254,8 @@ this.isFile_upload_dialog = false;
 
 createFolder(){
   if(this.selected_folder.dataType != 'folder'){
-    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+    // this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder!'});
+    this.toastService.showInfo('Please select a folder!');
     return
   }
   this.allFiles =[...this.convertToTree(this.documentList)];
@@ -1354,7 +1356,8 @@ saveFolder(){
   let selected_folder:any = this.findNodeByKey(this.selected_folder.key,this.allFiles);
   if(this.selected_folder){
   if(this.selected_folder.dataType != 'folder'){
-    this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder.'});
+    // this.messageService.add({severity:'info', summary: 'Info', detail: 'Please select a folder!'});
+    this.toastService.showInfo('Please select a folder!');
     return
   }
   // let objectKey = this.selected_folder.children ? String(this.selected_folder.children.length+1):"1";
@@ -1381,10 +1384,12 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
   this.spinner.hide();
   this.isDialog=false;
   this.entered_folder_name=''
-  this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
+  // this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
+  this.toastService.showSuccess('Folder','create');
 },err=>{
   this.spinner.hide();
-  this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create!"});
+  // this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create!"});
+  this.toastService.showError("Failed to create!");
 })
 }
 
@@ -1521,11 +1526,8 @@ selectEnd() {
 
   uploadFile() {
     if (this.selected_folder.dataType != "folder") {
-      this.messageService.add({
-        severity: "info",
-        summary: "Info",
-        detail: "Please select a folder.",
-      });
+      // this.messageService.add({severity: "info", summary: "Info", detail: "Please select a folder!",});
+      this.toastService.showInfo("Please select a folder!");
       return;
     }
     this.isFile_upload_dialog = false;
@@ -1558,19 +1560,13 @@ selectEnd() {
       (res) => {
         this.spinner.hide();
         // this.getTheListOfFolders()
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "File uploaded successfully!",
-        });
+        // this.messageService.add({severity: "success", summary: "Success", detail: "File uploaded successfully!",});
+        this.toastService.showSuccess('File','upload');
       },
       (err) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Failed to upload!",
-        });
+        // this.messageService.add({severity: "error", summary: "Error", detail: "Failed to upload!",});
+        this.toastService.showError("Failed to upload!");
       }
     );
   }

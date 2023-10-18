@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from 'js-base64';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import {ConfirmationService, MessageService} from "primeng/api";
+import { ConfirmationService } from "primeng/api";
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-rpa-bot-form',
@@ -26,7 +27,7 @@ export class RpaBotFormComponent implements OnInit {
     private rest:RestApiService,
     private spinner:LoaderService,
     private cd: ChangeDetectorRef,
-    private messageService:MessageService,
+    private toastService: ToasterService,
     public confirmationService:ConfirmationService
     ){
       this.botForm = this.formBuilder.group({
@@ -80,6 +81,7 @@ export class RpaBotFormComponent implements OnInit {
 
   createBot() {
     let botFormValue = this.botForm.value;
+    const botName = this.botForm.value.botName
     if(botFormValue.botName=='' || botFormValue.botName==null)
       this.skipSaveBot()
     else
@@ -90,16 +92,14 @@ export class RpaBotFormComponent implements OnInit {
         if (response.errorMessage == undefined) {
           this.closeBotForm();
           this.event.emit({ botId: response.botId, case: "create" });
-          setTimeout(() => {
-          this.messageService.add({severity:'success', summary:'Success', detail:'Bot created successfully!',key:'rpadesignertoast'});
-          },500);
+          this.toastService.showSuccess(botName,'create');
         } else {
-          this.messageService.add({severity:'error', summary:'Error', detail:response.errorMessage});
+          this.toastService.showError(response.errorMessage);
           this.event.emit(null);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to create a bot.'});
+        this.toastService.showError('Unable to create a bot!');
         this.event.emit(null);
       })
     }
@@ -108,19 +108,22 @@ export class RpaBotFormComponent implements OnInit {
 
   updateBot() {
     let botFormValue = { ...this.botForm.value, ...{ botId: this.botDetails.botId } };
+    let botName = this.botForm.value.botName;
     this.spinner.show();
     this.rest.modifybotdetails(botFormValue).subscribe((response: any) => {
       if (response.errorMessage == undefined) {
-        this.messageService.add({severity:'success',summary:'Success',detail:response.message+'!'})
+        // this.messageService.add({severity:'success',summary:'Success',detail: `${botName} details updated successfully`}) //response.message+'!'
+        this.toastService.showSuccess(botName,'update');
         this.closeBotForm();
         this.spinner.hide();
         this.event.emit({ botId: response.botId, case: "update" });
       } else {
-        this.messageService.add({ severity: "success",summary: "Success", detail: "Updated successfully!" });
+        // this.messageService.add({ severity: "success",summary: "Success", detail: "Updated successfully!" });
+         this.toastService.showSuccess('','update');
         this.event.emit(null);
       }
     }, err => {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
+      this.toastService.showError('Unable to update bot!');
       this.event.emit(null)
       this.spinner.hide();
     })

@@ -3,8 +3,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators,} from "@ang
 import { ActivatedRoute, Router } from "@angular/router";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { MessageService } from "primeng/api";
 import { CryptoService } from "src/app/pages/services/crypto.service";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 @Component({
   selector: "app-rpa-connection-manager-form",
@@ -70,7 +70,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private rest_api: RestApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     private spinner: LoaderService,
     private cryptoService: CryptoService
   ) {
@@ -258,12 +258,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     this.rest_api.saveAction(req_body).subscribe((res:any) => {
       this.spinner.hide();
+      let actionName = req_body.name
       if (res.message === "Successfully saved configured action") {
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Action saved successfully!"
-        })
+        this.toastService.showSuccess(actionName,'save');
           setTimeout(() =>{
             this.router.navigate(["/pages/rpautomation/action-item"], {
               queryParams: {
@@ -275,11 +272,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       } else {
         this.spinner.hide();
         // (err:any) => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Something went wrong.",
-          });
+          this.toastService.showError("Oops! Something went wrong!");
         // };
       }
     });
@@ -324,18 +317,10 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         if (res.data)
           this.connectorForm.get("response").setValue(JSON.stringify(res.data));
         this.spinner.hide();
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: res.message,
-        });
+        this.toastService.showSuccess(res.message,'response');
       },
-      (err: any) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Unable to generate the access token!",
-        });        
+      (err: any) => {      
+        this.toastService.showError("Unable to generate the access token!");
         this.spinner.hide();
       }
     );
@@ -1120,12 +1105,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     }
     this.rest_api.updateAction(this.action_id, req_body).subscribe((res: any) => {
         this.spinner.hide();
+        let actionName = req_body.name;
         if (res.message === "Successfully updated configured action") {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Action updated successfully!",
-          })            
+          this.toastService.showSuccess(actionName,'update');
             setTimeout(()=>{
               this.router.navigate(["/pages/rpautomation/action-item"], {
                 queryParams: {
@@ -1139,11 +1121,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         } else {
           this.spinner.hide();
           // (err) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Something went wrong.",
-            })
+            this.toastService.showError("Oops! Something went wrong!");
           // };
         }
       });
