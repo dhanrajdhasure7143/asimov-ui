@@ -103,9 +103,12 @@ export class RpaSoLogsComponent implements OnInit {
       {
         this.isDataEmpty=true;
         this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+  
       }
       
   },err=>{
+    console.log(err);
     this.logsLoading=false;
     this.isDataEmpty=true;
     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})
@@ -172,7 +175,8 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})     
+    
      }    
      }, err=>{
        this.logsLoading=false;
@@ -381,6 +385,8 @@ export class RpaSoLogsComponent implements OnInit {
         this.logsLoading=false;
         this.selectedIterationTask=undefined;
         this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+   
       }      
     },err=>{
       this.logsLoading=false;
@@ -408,6 +414,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty==true;
        this.errormsg= response.errorMessage;
+       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+   
       }
     },err=>{
       this.logsLoading=false
@@ -425,8 +433,10 @@ export class RpaSoLogsComponent implements OnInit {
     this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
       let response: any = data;
       this.logsLoading = false;
-      if (response.errorMessage)
+      if (response.errorMessage){
       this.errormsg= response.errorMessage;
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+      }
       else
         this.messageService.add({severity:'success',summary:'Success',detail:response.status});
       this.viewRunsByBotId();
