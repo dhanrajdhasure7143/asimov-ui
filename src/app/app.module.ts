@@ -42,7 +42,8 @@ import { ToastModule } from "primeng/toast";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     NotifierModule,
     NotifierModule.withConfig({
       position: {
