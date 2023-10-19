@@ -185,7 +185,7 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": false,
+              "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
             "staging": {
