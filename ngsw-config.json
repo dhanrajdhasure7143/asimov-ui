@@ -27,6 +27,9 @@
         "updateMode": "prefetch",
         "resources": {
           "files": [
+            "/assets/images/favicons/**",
+            "/*-es5*.js",
+            "!/**/_unused/**"
           ]
         }
       }
@@ -47,6 +50,9 @@
       {
         "name": "excluded-http-requests",
         "urls": [
+            "https://ezflow.dev.epsoftinc.com/pcs/platform-service/dashboard/findDashboardListByUser",
+            "https://ezflow.dev.epsoftinc.com/pcs/platform-service/dashboard/findDashboardMetricsList",
+            "https://ezflow.dev.epsoftinc.com/pcs/platform-service/dashboard/findDashboardWidgetsList"
         ],
         "cacheConfig": {
           "strategy": "performance",
