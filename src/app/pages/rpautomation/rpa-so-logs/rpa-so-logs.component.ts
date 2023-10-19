@@ -7,6 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
 import { MessageService,ConfirmationService } from 'primeng/api';
+import { ClipboardService } from 'ngx-clipboard';
+import { OverlayPanel } from 'primeng/overlaypanel';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -63,12 +65,18 @@ export class RpaSoLogsComponent implements OnInit {
   errormsg: any;
   display:boolean = true;
   selectedTask:any;
+  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  isCopied:boolean = false;
+  copyTimer = null;
+  hasTaskLevelLogs:boolean = false;
+
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,
      private spinner:NgxSpinnerService,
      private messageService:MessageService,
-     private confirmationService :ConfirmationService
+     private confirmationService :ConfirmationService,
+     private clipboardService: ClipboardService
      ) { }
   ngOnInit() {
     this.viewRunsByBotId();
@@ -145,7 +153,7 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text",copyButton:true},
       ];
         this.logsData=[...response.filter((item:any)=>{
 
@@ -492,6 +500,31 @@ export class RpaSoLogsComponent implements OnInit {
 // }
 getColor(status) {
   return this.statusColors[status]?this.statusColors[status]:'';
+}
+
+// copyToClipboard(value,event) {
+//   this.clipboardService.copy(value);
+//   this.overlayPanel.show(event);
+//     setTimeout(() => {
+//       this.overlayPanel.hide();
+//     }, 2000);
+// }
+
+copyToClipboard(value, event) {
+  if (this.copyTimer !== null) {
+    // If a timer is active, clear it to cancel the previous setTimeout
+    clearTimeout(this.copyTimer);
+    this.copyTimer = null;
+  }
+
+  this.clipboardService.copy(value);
+  this.overlayPanel.show(event);
+
+  // Set a new setTimeout and store the timer ID in the this.copyTimer variable
+  this.copyTimer = setTimeout(() => {
+    this.overlayPanel.hide();
+    this.copyTimer = null; // Reset the timer variable when the setTimeout completes
+  }, 2000);
 }
   
 }

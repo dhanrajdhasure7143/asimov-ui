@@ -68,6 +68,7 @@ import { CardModule } from 'primeng/card';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 @NgModule({
@@ -136,7 +137,8 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
     ResizableModule,
     PopoverModule,
     CardModule,
-    PrimengCustomModule
+    PrimengCustomModule,
+    ClipboardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

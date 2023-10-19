@@ -81,10 +81,20 @@
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
                           {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.ColumnName=='error_info'">
-                          <span *ngIf="logs[col.ColumnName]!=null && logs[col.ColumnName] != ''"   [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
-                            {{logs[col.ColumnName] | slice :0 : 10}}...
-                          </span>
+                        <span *ngIf="col.ColumnName == 'error_info'" style="display: inline-block; max-width: 100%;">
+                          <div  style="display:flex">
+                            <div class="ellipsis-container" >
+                            <div class="ellipsis-content"  *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
+                              <span  class="text-ellipsis">{{ logs[col.ColumnName] }}</span>
+                            </div>
+                            </div>
+                            <div *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" class="copy-container">
+                              <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy error'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
+                              <p-overlayPanel [dismissable]="'true'" #overlayPanel>
+                                Copied!
+                              </p-overlayPanel>
+                            </div>
+                          </div>
                         </span>
                         <span *ngIf="col.ColumnName=='bot_status'">
                           <span *ngIf="logs['bot_status']=='Running'" class="text-primary" >
