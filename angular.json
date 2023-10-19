@@ -186,7 +186,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": null
             },
             "staging": {
               "fileReplacements": [
