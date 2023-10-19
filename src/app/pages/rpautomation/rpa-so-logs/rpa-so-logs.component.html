@@ -20,6 +20,7 @@
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
         &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
+          <span class="refresh-load">
             <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
             <span *ngIf="logsLoading">
               <i class="fa fa-spinner fa-spin"></i> 
@@ -40,6 +41,10 @@
         <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS' && !logsLoading" class="clickable1 refecls">
             Refresh
         </span>
+      </span>
+        <span class="">
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" class="custom-input-switch"></p-inputSwitch>
+      </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
             <img src="../../../../assets/images/Projects/circle-close.svg" alt="">

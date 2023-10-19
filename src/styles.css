@@ -4025,3 +4025,7 @@ padding: 0px 30px;}
 .graph-preview-container .bjs-powered-by{
   display: none !important;
 }
+
+.custom-input-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #4BD963 !important;
+}
