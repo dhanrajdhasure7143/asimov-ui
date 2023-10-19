@@ -186,7 +186,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": null
+              "ngswConfigPath": "null"
             },
             "staging": {
               "fileReplacements": [
