@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
 
   pi_url: "https://ezflow.dev.epsoftinc.com/prcintel",
   bps_url: "https://ezflow.dev.epsoftinc.com/bpstudio",
