@@ -8,6 +8,7 @@ import { NotifierService } from "angular-notifier";
 import { Router } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 @Component({
   selector: "app-create-project-form",
   templateUrl: "./create-project-form-new.component.html",
@@ -41,7 +42,8 @@ export class CreateProjectFormComponent implements OnInit {
     private spinner: LoaderService,
     private rest_api: RestApiService,
     private router: Router,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -180,8 +182,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.processOwner = false;
       } else {
         this.insertForm2.get("processOwner").setValue("");
-        // this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process!", key:"projects"});
-        this.toastService.showError("Unable to find the process owner for the selected process!");
+        // this.toastService.showError("Unable to find the process owner for the selected process!");
+        this.toastService.showError(this.toastMessages.processOwnerError);
       }
     }
   }

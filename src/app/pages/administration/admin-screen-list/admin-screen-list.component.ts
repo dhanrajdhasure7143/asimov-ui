@@ -7,6 +7,7 @@ import { columnList } from "src/app/shared/model/table_columns";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-admin-screen-list",
@@ -26,7 +27,9 @@ export class AdminScreenListComponent implements OnInit {
     private spinner: LoaderService,
     private dt: DataTransferService,
     private confirmationService: ConfirmationService,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +74,7 @@ export class AdminScreenListComponent implements OnInit {
             this.getScreenList();
           },
           (err: any) => {
-            this.toastService.showError('Failed to delete!');
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },

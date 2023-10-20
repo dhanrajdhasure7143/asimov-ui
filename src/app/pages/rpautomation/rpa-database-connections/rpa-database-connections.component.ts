@@ -11,6 +11,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { ConfirmationService } from 'primeng/api';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -58,7 +59,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     private spinner: LoaderService,
     private columnList : columnList,
     private toastService: ToasterService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastMessages: toastMessages
   ) {
     const ipPattern ="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     this.DBupdateflag = false;
@@ -148,11 +150,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           // this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!'})
           this.toastService.showSuccess('','connect');
         } else {
-          this.toastService.showError('Connection failed!');
+          // this.toastService.showError('Connection failed!');
+          this.toastService.showError(this.toastMessages.connectionError);
         }
       }, err => {
         this.spinner.hide();
-        this.toastService.showError('Unable to test connection details!');
+        // this.toastService.showError('Unable to test connection details!');
+        this.toastService.showError(this.toastMessages.connectionError);
       });
       this.activestatus();
     }
@@ -214,8 +218,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
         }, err => {
           this.spinner.hide();
-          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections!'})
-          this.toastService.showError('Unable to delete database connections!');
+          // this.toastService.showError('Unable to delete database connections!');
+          this.toastService.showError(this.toastMessages.deleteError);
         });
     },
   });
@@ -327,8 +331,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
             this.toastService.showError(status.errorMessage);
         }, err => {
           this.spinner.hide();
-          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connection!'})
-          this.toastService.showError('Unable to delete database connection!');
+          // this.toastService.showError('Unable to delete database connection!');
+          this.toastService.showError(this.toastMessages.deleteError);
         });
       }
     

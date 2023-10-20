@@ -10,6 +10,7 @@ import { ConfirmationService } from 'primeng/api';
 import { CryptoService } from 'src/app/pages/services/crypto.service';
 import * as CryptoJS from 'crypto-js';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-rpa-database-form',
@@ -57,7 +58,8 @@ export class RpaDatabaseFormComponent implements OnInit {
     private spinner: LoaderService,
     private toastService: ToasterService,
     private  confirmationservice:ConfirmationService,
-    private cryptoService:CryptoService
+    private cryptoService:CryptoService,
+    private toastMessages: toastMessages
     ) {
 
       this.dbForm=this.formBuilder.group({
@@ -183,11 +185,13 @@ export class RpaDatabaseFormComponent implements OnInit {
         if (res.errorMessage == undefined) {
           this.toastService.showSuccess(dbConnectionName,'connect');
         } else {
-          this.toastService.showError('Connection failed!');
+          // this.toastService.showError('Connection failed!');
+          this.toastService.showError(this.toastMessages.connectionError);
         }
       }, err => {
         this.spinner.hide();
-        this.toastService.showError('Unable to test connection details!');
+        // this.toastService.showError('Unable to test connection details!');
+        this.toastService.showError(this.toastMessages.connectionError);
       });
       this.activestatus();
     }
@@ -244,8 +248,8 @@ export class RpaDatabaseFormComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           this.submitted = false;
-          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connection!',key:'datamessage'})
-          this.toastService.showError('Unable to save database connection!');
+          // this.toastService.showError('Unable to save database connection!');
+          this.toastService.showError(this.toastMessages.saveError);
         });
       } else {
         this.activestatus();
@@ -292,8 +296,8 @@ export class RpaDatabaseFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details.'})
-        this.toastService.showError('Unable to update database connection details!');
+        // this.toastService.showError('Unable to update database connection details!');
+        this.toastService.showError(this.toastMessages.updateError);
       });
     }
   }

@@ -14,6 +14,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from 'primeng/inplace';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
 selector: 'app-project-details-screen',
@@ -235,7 +236,8 @@ private modalService: BsModalService, private formBuilder: FormBuilder, private 
 private spinner: LoaderService,
 private confirmationService: ConfirmationService,
 private columnList: columnList,
-private toastService: ToasterService
+private toastService: ToasterService,
+private toastMessages: toastMessages
 ) {
   this.route.queryParams.subscribe((data:any)=>{​​​​​​
     this.params_data=data
@@ -520,8 +522,8 @@ if (process != undefined) {
     this.processownername='';
     this.processOwnerFlag = true;
     //this.createprogram.get("processOwner").setValue("")
-    // this.messageService.add({severity: "error", summary: "Error", detail: "Unable to find the process owner for the selected process."})
-    this.toastService.showError("Unable to find the process owner for the selected process!");
+    // this.toastService.showError("Unable to find the process owner for the selected process!");
+    this.toastService.showError(this.toastMessages.processOwnerError);
   }
 }
 }
@@ -623,7 +625,7 @@ this.rest_api.addresourcebyid(item_data).subscribe(data => {
     this.spinner.hide();
   }
 },err=>{
-  this.toastService.showError("Failed to add resource!");
+  this.toastService.showError(this.toastMessages.resourceError);
   this.spinner.hide();
 })
 }
@@ -675,7 +677,7 @@ this.confirmationService.confirm({
       this.spinner.hide();
     }, err => {
       // this.messageService.add({severity:'error', summary: 'Error', detail: 'Oops! Something went wrong.'});
-      this.toastService.showError('Oops! Something went wrong!');
+      this.toastService.showError(this.toastMessages.deleteError);
       this.spinner.hide();
     })
   },
@@ -758,7 +760,7 @@ this.rest_api.update_project(this.projectDetails).subscribe(res => {
   // this.editdata = false;
 },err=>{
   // this.messageService.add({severity:'error', summary: 'Error', detail: "Project update failed!"});
-  this.toastService.showError("Failed to update!");
+  this.toastService.showError(this.toastMessages.updateError);
 });
 }
 
@@ -1389,7 +1391,7 @@ this.rest_api.createFolderByProject(req_body).subscribe(res=>{
 },err=>{
   this.spinner.hide();
   // this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to create!"});
-  this.toastService.showError("Failed to create!");
+  this.toastService.showError(this.toastMessages.createError);
 })
 }
 
@@ -1566,7 +1568,7 @@ selectEnd() {
       (err) => {
         this.spinner.hide();
         // this.messageService.add({severity: "error", summary: "Error", detail: "Failed to upload!",});
-        this.toastService.showError("Failed to upload!");
+        this.toastService.showError(this.toastMessages.uploadError);
       }
     );
   }

@@ -7,6 +7,7 @@ import { Inplace } from "primeng/inplace";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Chart, ChartDataset, ChartOptions, TooltipItem } from "chart.js";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 
 @Component({
@@ -47,7 +48,9 @@ export class DynamicDashboardComponent implements OnInit {
     private rest: RestApiService,
     private loader: LoaderService,
     private confirmationService: ConfirmationService,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+
   ) {
     this.activeRoute.queryParams.subscribe((res) => {
       this._paramsData = res;
@@ -175,7 +178,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.configuration_id = null;
       },
       (err) => {
-        this.toastService.showError("Failed to update!");
+        this.toastService.showError(this.toastMessages.updateError);
       }
     );
   }
@@ -201,7 +204,7 @@ export class DynamicDashboardComponent implements OnInit {
         }
       },err=>{
     this.inplace.deactivate();
-        this.toastService.showError("Failed to update!");
+        this.toastService.showError(this.toastMessages.updateError);
       });
   }
 
@@ -283,13 +286,11 @@ export class DynamicDashboardComponent implements OnInit {
   setDefaultDashboard(dashboard) {
     // this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
     dashboard["defaultDashboard"] = true;
-    this.rest
-      .updateDashBoardNamed(dashboard)
-      .subscribe((response: any) => {
+    this.rest.updateDashBoardNamed(dashboard).subscribe((response: any) => {
         this.getListOfDashBoards();
         this.toastService.showSuccess('Dashboard','update');
       },err=>{
-        this.toastService.showError("Failed to update!");
+        this.toastService.showError(this.toastMessages.updateError);
       });
   }
 
@@ -550,7 +551,7 @@ export class DynamicDashboardComponent implements OnInit {
             });
           },
           (err) => {
-            this.toastService.showError("Failed to delete!");
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },

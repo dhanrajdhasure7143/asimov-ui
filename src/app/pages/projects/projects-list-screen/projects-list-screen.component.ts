@@ -11,6 +11,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { ConfirmationService, } from "primeng/api";
 import { columnList } from "src/app/shared/model/table_columns";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-projects-list-screen",
@@ -64,7 +65,9 @@ export class ProjectsListScreenComponent implements OnInit {
     @Inject(APP_CONFIG) private config,
     private confirmationService: ConfirmationService,
     private columnList: columnList,
-    private toastService:ToasterService
+    private toastService:ToasterService,
+    private toastMessages: toastMessages
+
   ) {}
 
   ngOnInit() {
@@ -275,7 +278,7 @@ export class ProjectsListScreenComponent implements OnInit {
             this.toastService.showInfo(response.warningMessage+"!");
           }
         },err=>{
-          this.toastService.showError("Failed to delete!");
+          this.toastService.showError(this.toastMessages.deleteError);
           this.spinner.hide();
         });
       },

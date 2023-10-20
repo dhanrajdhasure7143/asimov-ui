@@ -7,6 +7,7 @@ import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { columnList } from "src/app/shared/model/table_columns";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-connection-manager",
@@ -48,7 +49,8 @@ export class RpaConnectionManagerComponent implements OnInit {
     private toastService: ToasterService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
-    private columnList: columnList
+    private columnList: columnList,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit() {
@@ -180,7 +182,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.getAllConnections();
       },
       (err: any) => {      
-        this.toastService.showError("Unable to save connector!");
+        this.toastService.showError(this.toastMessages.saveError);
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.spinner.hide();
@@ -205,7 +207,8 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.getAllConnections();
       },
       (err: any) => {   
-        this.toastService.showError("Unable to update Connector!");    
+        // this.toastService.showError("Unable to update Connector!");    
+        this.toastService.showError(this.toastMessages.updateError); 
         this.spinner.hide();
       }
     );

@@ -5,6 +5,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ConfirmationService } from "primeng/api";
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-rpa-bot-form',
@@ -28,7 +29,8 @@ export class RpaBotFormComponent implements OnInit {
     private spinner:LoaderService,
     private cd: ChangeDetectorRef,
     private toastService: ToasterService,
-    public confirmationService:ConfirmationService
+    public confirmationService:ConfirmationService,
+    private toastMessages: toastMessages
     ){
       this.botForm = this.formBuilder.group({
         botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -99,7 +101,7 @@ export class RpaBotFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        this.toastService.showError('Unable to create a bot!');
+        this.toastService.showError(this.toastMessages.createError);
         this.event.emit(null);
       })
     }
@@ -123,7 +125,8 @@ export class RpaBotFormComponent implements OnInit {
         this.event.emit(null);
       }
     }, err => {
-      this.toastService.showError('Unable to update bot!');
+      // this.toastService.showError('Unable to update bot!');
+      this.toastService.showError(this.toastMessages.updateError);
       this.event.emit(null)
       this.spinner.hide();
     })

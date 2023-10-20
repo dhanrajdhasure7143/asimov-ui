@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { columnList } from "src/app/shared/model/table_columns";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 
 @Component({
@@ -47,7 +48,8 @@ export class AdminAddScreenComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner:LoaderService,
     private columns:columnList,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
 
   ) {
     this.route.queryParams.subscribe((res: any) => {
@@ -236,7 +238,7 @@ export class AdminAddScreenComponent implements OnInit {
     }, 1000);
     this.spinner.hide();
     },(err: any) => {
-      this.toastService.showError('Unable to update screen details!')
+      this.toastService.showError(this.toastMessages.updateError)
     })  
   }
 
@@ -258,7 +260,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.buttonDisable = true;
     }),
       (err: any) => {
-        this.toastService.showError('Failed to save!')
+        this.toastService.showError(this.toastMessages.saveError)
       };
   }
 

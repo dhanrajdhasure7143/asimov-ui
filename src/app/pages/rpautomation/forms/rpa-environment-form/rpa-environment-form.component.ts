@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { MessageService } from 'primeng/api';
 import { CryptoService } from 'src/app/pages/services/crypto.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-environment-form',
   templateUrl: './rpa-environment-form.component.html',
@@ -35,7 +36,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
     private cd:ChangeDetectorRef,
     private messageService:MessageService,
     private toastService: ToasterService,
-    private cryptoService : CryptoService
+    private cryptoService : CryptoService,
+    private toastMessages: toastMessages
   ) {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -154,11 +156,13 @@ export class RpaEnvironmentFormComponent implements OnInit {
             this.toastService.showSuccess(environmentName,'connect');
 
           } else {
-            this.toastService.showError('Connection failed!');
+            // this.toastService.showError('Connection failed!');
+            this.toastService.showError(this.toastMessages.connectionError);
           }
         }, err => {
           this.spinner.hide()
-          this.toastService.showError('Unable to test connections!');
+          // this.toastService.showError('Unable to test connections!');
+          this.toastService.showError(this.toastMessages.connectionError);
         });
         this.activestatus();
       
@@ -222,7 +226,8 @@ export class RpaEnvironmentFormComponent implements OnInit {
       }
     }, err => {
       this.spinner.hide();
-      this.toastService.showError('Unable to add environment!');
+      // this.toastService.showError('Unable to add environment!');
+      this.toastService.showError(this.toastMessages.saveError);
       this.submitted = false;
       this.refreshTable.emit(false);
     });
@@ -285,7 +290,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       }, err => {
         this.spinner.hide();
         // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update environment details.'})
-        this.toastService.showError('Unable to update environment details!');
+        this.toastService.showError(this.toastMessages.updateError);
       });
     } else {
       this.spinner.hide();

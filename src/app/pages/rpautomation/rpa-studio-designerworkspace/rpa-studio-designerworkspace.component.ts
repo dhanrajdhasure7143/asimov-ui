@@ -36,6 +36,7 @@ import { ConfirmationService, ConfirmEventType } from "primeng/api";
 import { ActivatedRoute } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -179,7 +180,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private ngZone: NgZone,
     private toastService: ToasterService,
     private confirmationService:ConfirmationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastMessages: toastMessages
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -1178,9 +1180,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
-            // Swal.fire("Error","Failed to get configuration form","error");
             // this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get the configuration form.'})
-            this.toastService.showError('Failed to get the configuration form!');
+            this.toastService.showError(this.toastMessages.formConfigError);
             return;
           }
           this.multiformdata = data;
@@ -1825,7 +1826,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       (err) => {
         this.spinner.hide();
         // this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create a bot!'})
-        this.toastService.showError('Unable to create a bot!');
+        this.toastService.showError(this.toastMessages.createError);
       }
     );
   }
@@ -2012,7 +2013,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (this.checkorderflag == false) {
         this.spinner.hide();
         // this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections!'})
-        this.toastService.showError('Please check the connections!');
+        this.toastService.showError(this.toastMessages.connectionCheckError);
 
       } else {
         let previousBotDetails: any = { ...{}, ...this.finalbot };
@@ -2082,7 +2083,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   }
                 },
                 (err) => {
-                  this.toastService.showError('Unable to update the audit logs!');
+                  // this.toastService.showError('Unable to update the audit logs!');
+                  this.toastService.showError(this.toastMessages.auditLogUpdateError);
                 }
               );
             } else {
@@ -2092,7 +2094,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           },
           (err) => {
             this.spinner.hide();
-            this.toastService.showError('Unable to update bot!');
+            this.toastService.showError(this.toastMessages.updateError);
           }
         );
         //return false;
@@ -2872,7 +2874,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               },
               (err) => {
                 this.spinner.hide();
-                this.toastService.showError('Unable to execute the bot!');
+                this.toastService.showError(this.toastMessages.botExecuteError);
               }
             );
         },
@@ -2906,7 +2908,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             },
             (err) => {
               this.spinner.hide();
-              this.toastService.showError('Unable to execute the bot!');
+              this.toastService.showError(this.toastMessages.botExecuteError);
             }
           );
         },
@@ -2917,7 +2919,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       });
     } else {
       // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot!'})
-      this.toastService.showError('Unable to execute the bot!');
+      this.toastService.showError(this.toastMessages.botExecuteError);
 
     }
   }
@@ -2938,7 +2940,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       (err) => {
         // Swal.fire("Error", "Unable to get versions", "error");
       // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get versions!'});
-      this.toastService.showError('Unable to get versions!');
+      this.toastService.showError(this.toastMessages.versionError);
 
 
       }
@@ -3006,7 +3008,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           },
           (err) => {
             this.spinner.hide();
-            this.toastService.showError('Unable to delete the bot!');
+            // this.toastService.showError('Unable to delete the bot!');
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       }

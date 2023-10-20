@@ -9,6 +9,7 @@ import { ConfirmationService } from "primeng/api";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 interface Status {
   name: string;
@@ -69,7 +70,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
     private confirmationService: ConfirmationService,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {
     this.status_list = [
       { name: "New" },
@@ -203,7 +205,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
           },
           (err) => {
             this.spinner.hide();
-            this.toastService.showError("Failed to delete!");
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },
@@ -275,7 +277,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         this.gettask();
       },
       (err) => {
-        this.toastService.showError("Task update failed!");
+        this.toastService.showError(this.toastMessages.updateError);
       }
     );
     // } else {
@@ -351,7 +353,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        this.toastService.showError("Failed to upload!");
+        this.toastService.showError(this.toastMessages.uploadError);
       }
     );
   }

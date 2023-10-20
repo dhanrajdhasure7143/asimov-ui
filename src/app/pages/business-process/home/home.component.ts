@@ -20,6 +20,7 @@ import * as moment from "moment";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Table } from "primeng/table";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 
 @Component({
@@ -140,6 +141,8 @@ export class BpsHomeComponent implements OnInit {
     private loader: LoaderService,
     private toastService: ToasterService,
     private confirmationService: ConfirmationService,
+    private toastMessages: toastMessages
+
   ) {}
 
   @Input() get selectedColumns(): any[] {
@@ -472,11 +475,11 @@ export class BpsHomeComponent implements OnInit {
         this.rest.sendReminderMailToApprover(data).subscribe(
           (res) => {
             // this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!",key:'toast2'})
-            this.toastService.showSuccess("Reminder sent successfully!",'response');
+            this.toastService.showSuccess(this.toastMessages.reminderSuccess,'response');
           },
           (err) => {
             // this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong.",key:'toast2'})
-            this.toastService.showError("Oops! Something went wrong!");
+            this.toastService.showError(this.toastMessages.reminderError);
 
           }
         );
@@ -568,7 +571,7 @@ export class BpsHomeComponent implements OnInit {
               (err) => {
                   this.loader.hide();
                   // this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong!",key:'toast2'})
-                  this.toastService.showError("Oops! Something went wrong!");
+                  this.toastService.showError(this.toastMessages.deleteError);
 
               }
             );

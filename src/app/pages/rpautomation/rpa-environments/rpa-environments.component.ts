@@ -7,6 +7,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { ConfirmationService } from 'primeng/api';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-environments',
@@ -48,7 +49,8 @@ export class RpaenvironmentsComponent implements OnInit {
     private spinner: LoaderService,
     private columnList: columnList,
     private toastService: ToasterService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastMessages: toastMessages
     ) {
     this.updateflag = false;
     this.deleteflag = false;
@@ -212,8 +214,8 @@ export class RpaenvironmentsComponent implements OnInit {
             }
           }, err => {
             this.spinner.hide();
-            // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment.'})
-            this.toastService.showError('Unable to delete the environment!');
+            // this.toastService.showError('Unable to delete the environment!');
+            this.toastService.showError(this.toastMessages.deleteError);
           })
         }
       })
@@ -243,7 +245,7 @@ export class RpaenvironmentsComponent implements OnInit {
         this.getallData();
       }, err => {
         // this.messageService.add({severity:'success',summary:'Success',detail:'Agent deployed successfully!'})
-        this.toastService.showError("Failed to deploye!");
+        this.toastService.showError(this.toastMessages.deployError);
 
         this.getallData();
         this.spinner.hide();
@@ -314,7 +316,7 @@ export class RpaenvironmentsComponent implements OnInit {
           }, err => {
             this.spinner.hide();
             // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment!'})
-            this.toastService.showError('Unable to delete the environment!');
+            this.toastService.showError(this.toastMessages.deleteError);
           })
         }
       })

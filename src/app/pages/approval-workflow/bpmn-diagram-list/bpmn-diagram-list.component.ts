@@ -21,6 +21,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { TitleCasePipe } from '@angular/common';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -72,7 +73,9 @@ searchValue:any;
     private router: Router,
     private loader: LoaderService,
     private titleCase: TitleCasePipe,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+
     ) { }
 
     @Input() get selectedColumns(): any[] {
@@ -135,7 +138,7 @@ searchValue:any;
         
           this.bpmnModeler.importXML(byteBpmn, function(err){
             if(err){
-              this.toastService.showError("Could not import BPMN notation!")
+              this.toastService.showError(this.toastMessages.bpsImportError)
               // this.notifier.show({
               //   type: "error",
               //   message: "Could not import Bpmn notation!"
@@ -283,7 +286,7 @@ this.selectedrow =i;
         this.toastService.showSuccess(bpmnProcessName+' approved successfully!','response');
       },
       err=>{
-      this.toastService.showError("Oops Something went wrong!");
+      this.toastService.showError(this.toastMessages.bpsApproveError);
     });
     this.bpmnlist();
   }
@@ -357,7 +360,7 @@ this.selectedrow =i;
         this.toastService.showSuccess(bpmnProcessName+" has been rejected!",'response');
       },
       err=>{
-        this.toastService.showError("Opps Somthing went wrong!");
+        this.toastService.showError(this.toastMessages.bpsRejectError);
       });
    }
    sort1(colKey,ind) { // if not asc, desc

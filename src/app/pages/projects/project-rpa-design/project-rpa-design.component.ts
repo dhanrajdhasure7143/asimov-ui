@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-project-rpa-design",
@@ -41,7 +42,8 @@ export class ProjectRpaDesignComponent implements OnInit {
     private spinner: NgxSpinnerService,
     // private messageService: MessageService,
     private toastService: ToasterService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private toastMessages: toastMessages
   ) {
     this.route.queryParams.subscribe((params) => {
       // id=2892&programId=2896
@@ -158,7 +160,7 @@ export class ProjectRpaDesignComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        this.toastService.showError("Something went wrong!");
+        this.toastService.showError(this.toastMessages.createError);
       }
     );
   }
@@ -181,7 +183,7 @@ export class ProjectRpaDesignComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        this.toastService.showError("Something went wrong!");
+        this.toastService.showError(this.toastMessages.updateError);
       }
     );
   }
@@ -211,7 +213,7 @@ export class ProjectRpaDesignComponent implements OnInit {
           },
           (err) => {
             this.spinner.hide();
-            this.toastService.showError("Something went wrong!");
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },

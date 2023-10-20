@@ -15,6 +15,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import {ConfirmationService } from "primeng/api";
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 declare var $: any;
 
 @Component({
@@ -129,7 +130,8 @@ export class RpaHomeComponent implements OnInit {
    @Inject(APP_CONFIG) private appconfig,
     private dt : DataTransferService,
     private confirmationService:ConfirmationService,
-    private toastService: ToasterService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) { }
 
   @Input() get selectedColumns(): any[] {
@@ -369,7 +371,7 @@ export class RpaHomeComponent implements OnInit {
       }, err => {
         this.spinner.hide();
         // this.messageService.add({severity:'error', summary: 'Error', detail:'Error'});
-        this.toastService.showError('Error');
+        this.toastService.showError(this.toastMessages.createError);
       })
     }
     this.insertbot.reset();
@@ -459,7 +461,7 @@ export class RpaHomeComponent implements OnInit {
       downloadLink.download = bot.botName + "-V" + bot.version + ".sql";
       downloadLink.click();
       // this.messageService.add({severity:'success', summary: 'Success', detail:'Bot exported successfully!'});
-      this.toastService.showSuccess('Bot exported successfully!','response');
+      this.toastService.showSuccess(this.toastMessages.botExport,'response');
     })
   }
 
@@ -680,21 +682,21 @@ importBot()
         this.spinner.hide();
         this.resetImportBotForm();
         // this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
-        this.toastService.showSuccess("Bot imported successfully!",'response');
+        this.toastService.showSuccess(this.toastMessages.botImport,'response');
 
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to configure bot task configurations!'});
-        this.toastService.showError('Unable to configure bot task configurations!');
+        // this.toastService.showError('Unable to configure bot task configurations!');
+        this.toastService.showError(this.toastMessages.botConfigError);
       })
     }
   },err=>{
     this.spinner.hide();
     this.resetImportBotForm();
     // this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot!'});
-    this.toastService.showError('Unable to import the bot!');
+    this.toastService.showError(this.toastMessages.botImportError);
   })
 }
 

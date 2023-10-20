@@ -8,6 +8,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { ConfirmationService } from "primeng/api";
 import { columnList } from "src/app/shared/model/table_columns";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-project-task-list",
@@ -46,7 +47,8 @@ export class ProjectTaskListComponent implements OnInit {
     private spinner: LoaderService,
     private confirmationService : ConfirmationService,
     private toastService: ToasterService,
-    private columnList: columnList
+    private columnList: columnList,
+    private toastMessages: toastMessages
     ) {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data
@@ -182,7 +184,7 @@ export class ProjectTaskListComponent implements OnInit {
           },
           (err) => {
             this.spinner.hide();
-            this.toastService.showError("Failed to delete!");
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },

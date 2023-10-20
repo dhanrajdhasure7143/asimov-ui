@@ -5,6 +5,7 @@ import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { CryptoService } from "src/app/pages/services/crypto.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-connection-manager-form",
@@ -72,7 +73,9 @@ export class RpaConnectionManagerFormComponent implements OnInit {
     private route: ActivatedRoute,
     private toastService: ToasterService,
     private spinner: LoaderService,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private toastMessages: toastMessages
+
   ) {
     this.route.queryParams.subscribe((data) => {
       //this.isDisabled = data.formDisabled;
@@ -272,7 +275,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       } else {
         this.spinner.hide();
         // (err:any) => {
-          this.toastService.showError("Oops! Something went wrong!");
+          this.toastService.showError(this.toastMessages.saveError);
         // };
       }
     });
@@ -320,7 +323,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         this.toastService.showSuccess(res.message,'response');
       },
       (err: any) => {      
-        this.toastService.showError("Unable to generate the access token!");
+        this.toastService.showError(this.toastMessages.accessTokenError);
         this.spinner.hide();
       }
     );
@@ -1121,7 +1124,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         } else {
           this.spinner.hide();
           // (err) => {
-            this.toastService.showError("Oops! Something went wrong!");
+            this.toastService.showError(this.toastMessages.updateError);
           // };
         }
       });
