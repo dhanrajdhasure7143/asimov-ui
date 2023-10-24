@@ -42,8 +42,8 @@
             Refresh
         </span>
       </span>
-        <span class="">
-          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" class="custom-input-switch"></p-inputSwitch>
+        <span class="" *ngIf="!logsLoading">
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" class="custom-input-switch"></p-inputSwitch>
       </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
@@ -81,6 +81,7 @@
                   <tr class="action-desc">
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
+                          <!-- <span *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span> -->
                           <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
@@ -94,7 +95,7 @@
                             </div>
                             </div>
                             <div *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" class="copy-container">
-                              <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy error'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
+                              <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
                               <p-overlayPanel [dismissable]="'true'" #overlayPanel>
                                 Copied!
                               </p-overlayPanel>

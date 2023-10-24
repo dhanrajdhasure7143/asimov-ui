@@ -34,6 +34,7 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
   @Output('closeEvent') public closeEvent=new EventEmitter<any>();
+  @Input('hasTaskLevelLogs') public hasTaskLevelLogs:boolean;
   public allLogs:any=[];
   public botrunid:any="";
   public allRuns:any=[];
@@ -68,7 +69,6 @@ export class RpaSoLogsComponent implements OnInit {
   @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
   isCopied:boolean = false;
   copyTimer = null;
-  hasTaskLevelLogs:boolean = false;
 
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
@@ -527,4 +527,14 @@ copyToClipboard(value, event) {
   }, 2000);
 }
   
+handleTaskLevelLogs($event){
+  this.rest.switchTaskLevelLogs(this.logsbotid).subscribe(res=>{
+    this.hasTaskLevelLogs = this.hasTaskLevelLogs;
+    this.messageService.add({severity:'success',summary:'Success',detail:'Successfully changed the toggle!'})    
+  },errormsg =>{
+    this.hasTaskLevelLogs = !this.hasTaskLevelLogs;
+    this.messageService.add({severity:'error',summary:'Error',detail:'Failed to change the toggle'})     
+  })
+}
+
 }
