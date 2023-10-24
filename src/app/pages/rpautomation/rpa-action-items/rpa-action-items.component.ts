@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from "../../services/rest-api.service";
 import { columnList } from "src/app/shared/model/table_columns";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-action-items",
@@ -34,8 +36,9 @@ export class RpaActionItemsComponent implements OnInit {
     private rest_api:RestApiService,
     private route:ActivatedRoute,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private columnList: columnList
+    private toastService: ToasterService,
+    private columnList: columnList,
+    private toastMessages: toastMessages
     ) 
     {
       this.route.queryParams.subscribe((data)=>{
@@ -95,6 +98,7 @@ export class RpaActionItemsComponent implements OnInit {
     deleteById(event) {
       this.loader.show();
       let selectedId = event.id;
+      let selectedName = event.name;
       this.confirmationService.confirm({
         message: "You won't be able to revert this!",
         header: 'Are you sure?',
@@ -103,18 +107,10 @@ export class RpaActionItemsComponent implements OnInit {
           this.loader.show();
           this.rest_api.deleteActionById(selectedId).subscribe((res:any)=>{
             this.getAllActionItems();
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Action deleted successfully!",
-            })
+            this.toastService.showSuccess(selectedName,'delete');
             this.loader.hide();
           },(err) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Something went wrong.",
-            })
+            this.toastService.showError(this.toastMessages.deleteError);
             this.loader.hide();
           })
         },
@@ -139,6 +135,7 @@ export class RpaActionItemsComponent implements OnInit {
   deleteAction() {
     this.loader.show();
     const selectedId = this.selectedData[0].id;
+    const selectedName = this.selectedData[0].name;
     this.confirmationService.confirm({
       message: "Do you want to delete this Action-Item?",
       header: 'Are you sure?',
@@ -146,20 +143,12 @@ export class RpaActionItemsComponent implements OnInit {
       accept: () => {
         this.rest_api.deleteActionById(selectedId).subscribe(
           () => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Action deleted successfully!",
-            });
+            this.toastService.showSuccess(selectedName,'delete');
             this.loader.hide();
             this.getAllActionItems();
           },
           () => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Something went wrong.",
-            });
+            this.toastService.showError(this.toastMessages.deleteError);
             this.loader.hide();
             this.getAllActionItems();
           }

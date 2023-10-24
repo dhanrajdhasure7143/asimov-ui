@@ -1,9 +1,10 @@
 import {Component,OnInit,Output,EventEmitter,ViewChild,Input} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MenuItem, ConfirmationService, MessageService } from "primeng/api";
+import { MenuItem, ConfirmationService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Inplace } from "primeng/inplace";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 interface option {
   option: string;
@@ -56,7 +57,7 @@ export class ConfigureDashboardComponent implements OnInit {
     private rest_api: RestApiService,
     private loader: LoaderService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private toastService: ToasterService
   ) {
     this.activeRoute.queryParams.subscribe((params: any) => {
       this._paramsData = params;
@@ -262,31 +263,20 @@ export class ConfigureDashboardComponent implements OnInit {
       if(type == 'save'){
       this.rest_api.SaveDashBoardData(req_array).subscribe((res) => {
         this.loader.hide();
+        let dashboardName = this.dynamicDashBoard.dashboardName
         this.router.navigate(["/pages/dashboard/dynamicdashboard"], {
           queryParams: this._paramsData,
         });
-          
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Dashboard created successfully!", 
-              key:"test_1"          
-            });
-         
+            this.toastService.showSuccess(dashboardName,'create');
       });
     }else{
       this.rest_api.updateDashboardConfiguration(req_array, this._paramsData.dashboardId).subscribe((res) => {
         this.loader.hide();
+        let dashboardName = this.dynamicDashBoard.dashboardName
         this.router.navigate(["/pages/dashboard/dynamicdashboard"], {
           queryParams: this._paramsData,
         })
-            setTimeout(()=>{
-              this.messageService.add({
-                severity: "success",
-                summary: "Success",
-                detail: "Dashboard updated successfully!",         
-        });
-            },500);
+        this.toastService.showSuccess(dashboardName,'update');
       });
     }
   }
@@ -495,14 +485,9 @@ export class ConfigureDashboardComponent implements OnInit {
     rejectIcon:'null',
      accept: () => {
         this.loader.show();
-        this.rest_api
-          .getdeleteDashBoard(this._paramsData.dashboardId)
-          .subscribe((data) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Dashboard deleted successfully!",
-            });
+        let dashboardName = this.dynamicDashBoard.dashboardName
+        this.rest_api.getdeleteDashBoard(this._paramsData.dashboardId).subscribe((data) => {
+            this.toastService.showSuccess(dashboardName,'delete');
           });
         this.loader.hide();
        if(this.dashaboardcount==1){

@@ -9,6 +9,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
 import { MyFilterPipe } from './pipe/my-filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
    ReactiveFormsModule, 
    BsDropdownModule.forRoot()
   ],
+  providers: [toastMessages],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DashboardModule { }
