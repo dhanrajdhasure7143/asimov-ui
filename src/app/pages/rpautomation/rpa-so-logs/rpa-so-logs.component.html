@@ -20,6 +20,7 @@
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
         &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
+          <span class="refresh-load">
             <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
             <span *ngIf="logsLoading">
               <i class="fa fa-spinner fa-spin"></i> 
@@ -40,6 +41,10 @@
         <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS' && !logsLoading" class="clickable1 refecls">
             Refresh
         </span>
+      </span>
+        <span class="" *ngIf="!logsLoading">
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" class="custom-input-switch"></p-inputSwitch>
+      </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
             <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
@@ -76,15 +81,26 @@
                   <tr class="action-desc">
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
+                          <!-- <span *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span> -->
                           <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
                         </span>
                         <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
                           {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.ColumnName=='error_info'">
-                          <span *ngIf="logs[col.ColumnName]!=null && logs[col.ColumnName] != ''"   [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
-                            {{logs[col.ColumnName] | slice :0 : 10}}...
-                          </span>
+                        <span *ngIf="col.ColumnName == 'error_info'" style="display: inline-block; max-width: 100%;">
+                          <div  style="display:flex">
+                            <div class="ellipsis-container" >
+                            <div class="ellipsis-content"  *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
+                              <span  class="text-ellipsis">{{ logs[col.ColumnName] }}</span>
+                            </div>
+                            </div>
+                            <div *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" class="copy-container">
+                              <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
+                              <p-overlayPanel [dismissable]="'true'" #overlayPanel>
+                                Copied!
+                              </p-overlayPanel>
+                            </div>
+                          </div>
                         </span>
                         <span *ngIf="col.ColumnName=='bot_status'">
                           <span *ngIf="logs['bot_status']=='Running'" class="text-primary" >

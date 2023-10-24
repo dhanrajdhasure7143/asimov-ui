@@ -68,8 +68,10 @@ import { CardModule } from 'primeng/card';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
-import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ClipboardModule } from 'ngx-clipboard';
 
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+ 
 
 @NgModule({
   declarations: [
@@ -137,7 +139,8 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     ResizableModule,
     PopoverModule,
     CardModule,
-    PrimengCustomModule
+    PrimengCustomModule,
+    ClipboardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

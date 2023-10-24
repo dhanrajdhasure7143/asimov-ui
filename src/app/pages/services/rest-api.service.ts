@@ -1831,5 +1831,8 @@ getCopilotFunctionsList(){
   return this.http.get("/a-square/v1/functions");
 }
 
+switchTaskLevelLogs(botId){
+  return this.http.put("/rpa-service/toggle-enable-task-logs/"+botId,{});
+}
 
 }
