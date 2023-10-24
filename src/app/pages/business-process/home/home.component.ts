@@ -12,13 +12,16 @@ import { SharebpmndiagramService } from "../../services/sharebpmndiagram.service
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { GlobalScript } from "src/app/shared/global-script";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs";
 import * as moment from "moment";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Table } from "primeng/table";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
+
 
 @Component({
   selector: "app-bpshome",
@@ -136,8 +139,10 @@ export class BpsHomeComponent implements OnInit {
     private rest: RestApiService,
     private global: GlobalScript,
     private loader: LoaderService,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     private confirmationService: ConfirmationService,
+    private toastMessages: toastMessages
+
   ) {}
 
   @Input() get selectedColumns(): any[] {
@@ -469,10 +474,13 @@ export class BpsHomeComponent implements OnInit {
         };
         this.rest.sendReminderMailToApprover(data).subscribe(
           (res) => {
-            this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!",key:'toast2'})
+            // this.messageService.add({severity: "success", summary: "Success", detail: "Reminder sent successfully!",key:'toast2'})
+            this.toastService.showSuccess(this.toastMessages.reminderSuccess,'response');
           },
           (err) => {
-            this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong.",key:'toast2'})
+            // this.messageService.add({severity: "success", summary: "Success", detail: "Oops! Something went wrong.",key:'toast2'})
+            this.toastService.showError(this.toastMessages.reminderError);
+
           }
         );
       }
@@ -550,17 +558,21 @@ export class BpsHomeComponent implements OnInit {
                 if (
                   res == "It is an ongoing project.Please contact Project Owner(s)"
                 ) {
-                    this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
+                    // this.messageService.add({severity: "info", summary: "Info", detail: res,key:'toast2'});
+                    this.toastService.showInfo(res);
                 } else {
-                      this.messageService.add({severity: "success", summary: "Success", 
-                        detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " Deleted successfully!",key:'toast2'});
+                      // this.messageService.add({severity: "success", summary: "Success", 
+                      //   detail: bpmNotation.bpmnProcessName + " V1." + bpmNotation.version + " deleted successfully!",key:'toast2'});
+                        this.toastService.showSuccess(bpmNotation.bpmnProcessName + " V1." + bpmNotation.version,'delete');   
                       this.loader.show();
                       this.getBPMNList();
                 }
               },
               (err) => {
                   this.loader.hide();
-                  this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong.",key:'toast2'})
+                  // this.messageService.add({severity: "error", summary: "Error", detail: "Oops! Something went wrong!",key:'toast2'})
+                  this.toastService.showError(this.toastMessages.deleteError);
+
               }
             );
           }

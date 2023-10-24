@@ -47,6 +47,7 @@ import { ScreenGenerationDynamicFormComponent } from 'src/app/shared/screen-gene
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 const materialModules: any[] = [
     
@@ -85,7 +86,8 @@ const materialModules: any[] = [
   {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl
-    }
+    },
+    toastMessages
 
   ]
 })

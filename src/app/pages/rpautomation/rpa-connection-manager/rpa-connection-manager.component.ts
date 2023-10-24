@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { columnList } from "src/app/shared/model/table_columns";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-connection-manager",
@@ -44,10 +46,11 @@ export class RpaConnectionManagerComponent implements OnInit {
     private router: Router,
     private hints: Rpa_Hints,
     private spinner: LoaderService,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
-    private columnList: columnList
+    private columnList: columnList,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit() {
@@ -81,6 +84,7 @@ export class RpaConnectionManagerComponent implements OnInit {
 
     this.spinner.show();
     let selectedId = event.id;
+    let selectedName =event.name;
     this.confirmationService.confirm({
       message: "Do you want to delete this connector?",
       header: 'Are you sure?',
@@ -89,20 +93,12 @@ export class RpaConnectionManagerComponent implements OnInit {
         this.spinner.show();
         this.rest_api.deleteConnectorbyId(selectedId).subscribe(
           (resp) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Connector Deleted Successfully !",
-            });
+            this.toastService.showSuccess(selectedName,'delete');
             this.spinner.hide();
             this.getAllConnections();
           },
           (err) => {
-            this.messageService.add({
-              severity:'error', 
-              summary: 'Error', 
-              detail: "Please delete the action items!"
-            });
+            this.toastService.showError("Please delete the action items!");
             this.spinner.hide();
             this.getAllConnections();
           }
@@ -180,21 +176,13 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.rest_api.saveConnector(req_body).subscribe(
       (res: any) => {
         this.spinner.hide();
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Connector Added Successfully !",
-        });
+        this.toastService.showSuccess(this.connectorName,'save');
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.getAllConnections();
       },
-      (err: any) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Unable to Save Connector !",
-        });        
+      (err: any) => {      
+        this.toastService.showError(this.toastMessages.saveError);
         this.createConnectorForm.reset();
         this.isFormOverlay = false;
         this.spinner.hide();
@@ -213,21 +201,14 @@ export class RpaConnectionManagerComponent implements OnInit {
     };
     this.rest_api.updateConnection(id,data).subscribe((res: any) =>{    
         this.spinner.hide();
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Connector updated successfully!",
-        });
+        this.toastService.showSuccess(connectorName1,'update');
         this.isFormOverlay = false;
         this.createConnectorForm.reset();
         this.getAllConnections();
       },
-      (err: any) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Unable to update Connector!",
-        });        
+      (err: any) => {   
+        // this.toastService.showError("Unable to update Connector!");    
+        this.toastService.showError(this.toastMessages.updateError); 
         this.spinner.hide();
       }
     );

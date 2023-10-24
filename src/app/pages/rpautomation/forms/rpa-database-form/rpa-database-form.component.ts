@@ -6,9 +6,11 @@ import { DataTransferService } from 'src/app/pages/services/data-transfer.servic
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Rpa_Hints } from '../../model/RPA-Hints';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { CryptoService } from 'src/app/pages/services/crypto.service';
 import * as CryptoJS from 'crypto-js';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-rpa-database-form',
@@ -54,9 +56,10 @@ export class RpaDatabaseFormComponent implements OnInit {
     private chanref:ChangeDetectorRef,
     private dt:DataTransferService,
     private spinner: LoaderService,
-    private messageService:MessageService,
+    private toastService: ToasterService,
     private  confirmationservice:ConfirmationService,
-    private cryptoService:CryptoService
+    private cryptoService:CryptoService,
+    private toastMessages: toastMessages
     ) {
 
       this.dbForm=this.formBuilder.group({
@@ -169,6 +172,7 @@ export class RpaDatabaseFormComponent implements OnInit {
       formdata = this.dbForm;
     }
     if (formdata.valid) {
+      const dbConnectionName = this.dbForm.value.connectiontName
       if (formdata.value.activeStatus == true) {
         formdata.value.activeStatus = 7
       } else {
@@ -179,13 +183,15 @@ export class RpaDatabaseFormComponent implements OnInit {
       await this.api.testdbconnections(encryptedFormData).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'datamessage'})
+          this.toastService.showSuccess(dbConnectionName,'connect');
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!',key:'datamessage'})
+          // this.toastService.showError('Connection failed!');
+          this.toastService.showError(this.toastMessages.connectionError);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.',key:'datamessage'})
+        // this.toastService.showError('Unable to test connection details!');
+        this.toastService.showError(this.toastMessages.connectionError);
       });
       this.activestatus();
     }
@@ -225,10 +231,11 @@ export class RpaDatabaseFormComponent implements OnInit {
         const encryptedDBConnection = {...DBConnection, password: this.cryptoService.encrypt(DBConnection["password"])};
         this.api.addDBConnection(encryptedDBConnection).subscribe(res => {
           let status: any = res;
+          const dbConnectionName = this.dbForm.value.connectiontName
           this.spinner.hide();
           this.refreshData.emit(true)
           if (status.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status});
+            this.toastService.showSuccess(dbConnectionName,'save');
             document.getElementById('createdbconnection').style.display = "none";
             this.resetDBForm();
             this.closeOverlay.emit(false)
@@ -236,12 +243,13 @@ export class RpaDatabaseFormComponent implements OnInit {
             this.dbForm.get("activeStatus").setValue(true);
           } else {
             this.submitted = false
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage,key:'datamessage'})
+            this.toastService.showError(status.errorMessage);
           }
         }, err => {
           this.spinner.hide();
           this.submitted = false;
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save database connections.',key:'datamessage'})
+          // this.toastService.showError('Unable to save database connection!');
+          this.toastService.showError(this.toastMessages.saveError);
         });
       } else {
         this.activestatus();
@@ -274,20 +282,22 @@ export class RpaDatabaseFormComponent implements OnInit {
       // this.api.updateDBConnection(dbupdatFormValue).subscribe(res => {
       const encryptedDbupdateFormValue = {...dbupdatFormValue, password: this.cryptoService.encrypt(dbupdatFormValue["password"])};
       this.api.updateDBConnection(encryptedDbupdateFormValue).subscribe(res => {
+        const dbConnectionName = this.dbForm.value.connectiontName
         let status: any = res;
         this.spinner.hide();
         this.refreshData.emit(true)
         if (status.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:status.status});
+          this.toastService.showSuccess(dbConnectionName,'update');
           // document.getElementById('Updatedbconnection').style.display = 'none';
           document.getElementById('createdbconnection').style.display = "none";
           this.closeOverlay.emit(false);
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+          this.toastService.showError(status.errorMessage);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update database connection details.'})
+        // this.toastService.showError('Unable to update database connection details!');
+        this.toastService.showError(this.toastMessages.updateError);
       });
     }
   }

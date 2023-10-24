@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MenuItem, SelectItem, MessageService, PrimeNGConfig, ConfirmationService} from "primeng/api";
+import { MenuItem, SelectItem, PrimeNGConfig, ConfirmationService} from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { Inplace } from "primeng/inplace";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Chart, ChartDataset, ChartOptions, TooltipItem } from "chart.js";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 
 @Component({
@@ -42,11 +44,13 @@ export class DynamicDashboardComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
     private rest: RestApiService,
     private loader: LoaderService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+
   ) {
     this.activeRoute.queryParams.subscribe((res) => {
       this._paramsData = res;
@@ -96,11 +100,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.updateWidgetInDashboard(req_body).subscribe(
       (res:any) => {
         this.loader.hide()
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Widget updated successfully!",
-        });
+        this.toastService.showSuccess('Widget','update');
         // this.dashboardData.widgets[index].filterOptions = [
         //   ...this.dashboardData.widgets[index].filterOptions.map(
         //     (item: any) => {
@@ -178,11 +178,7 @@ export class DynamicDashboardComponent implements OnInit {
         this.configuration_id = null;
       },
       (err) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Failed to update!",
-        });
+        this.toastService.showError(this.toastMessages.updateError);
       }
     );
   }
@@ -193,11 +189,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.updateDashBoardNamed(this.selectedDashBoard)
       .subscribe((response: any) => {
         if (response.code == 4200) {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: response.message + '!',
-          });
+          this.toastService.showSuccess(existingdashboard,'update');
           let params1 = {
             dashboardId: this.selectedDashBoard.id,
             dashboardName: this.selectedDashBoard.dashboardName,
@@ -208,19 +200,11 @@ export class DynamicDashboardComponent implements OnInit {
         if (response.code == 8010) {
           this.selectedDashBoardName = existingdashboard;
           this.selectedDashBoard["dashboardName"] = existingdashboard;
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: response.message + '!',
-          });
+          this.toastService.showError(response.message+'!');
         }
       },err=>{
     this.inplace.deactivate();
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Failed to update!",
-        });
+        this.toastService.showError(this.toastMessages.updateError);
       });
   }
 
@@ -302,13 +286,11 @@ export class DynamicDashboardComponent implements OnInit {
   setDefaultDashboard(dashboard) {
     // this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
     dashboard["defaultDashboard"] = true;
-    this.rest
-      .updateDashBoardNamed(dashboard)
-      .subscribe((response: any) => {
+    this.rest.updateDashBoardNamed(dashboard).subscribe((response: any) => {
         this.getListOfDashBoards();
-        this.messageService.add({severity: "success",summary: "Success",detail: "Dashboard updated successfully!"});
+        this.toastService.showSuccess('Dashboard','update');
       },err=>{
-        this.messageService.add({severity: "error",summary: "Error",detail: "Failed to update!"});
+        this.toastService.showError(this.toastMessages.updateError);
       });
   }
 
@@ -333,15 +315,10 @@ export class DynamicDashboardComponent implements OnInit {
      
       accept: () => {
         this.loader.show();
-        this.rest
-          .getdeleteDashBoard(this.selectedDashBoard.id)
+        let dashboardName = this.selectedDashBoard.dashboardName
+        this.rest.getdeleteDashBoard(this.selectedDashBoard.id)
           .subscribe((data) => {
-            this.inplace.deactivate();
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Dashboard deleted successfully!",
-            });
+            this.toastService.showSuccess(dashboardName,'delete');
             this.changeToDefaultDashBoard();
           });
       },
@@ -569,20 +546,12 @@ export class DynamicDashboardComponent implements OnInit {
             this.dashboardData.widgets.forEach((element, index) => {
               if (this.selected_widget.childId == element.childId) {
                 this.dashboardData.widgets.splice(index, 1);
-                this.messageService.add({
-                  severity: "success",
-                  summary: "Success",
-                  detail: "Widget deleted successfully!",
-                });
+                this.toastService.showSuccess('Widget','delete');
               }
             });
           },
           (err) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Failed to delete!",
-            });
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },
@@ -600,19 +569,11 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.createDashBoard(req_data).subscribe((response: any) => {
       if(response.code == 4200){
         let res_data = response.data
-        this.messageService.add({
-          severity: "success",
-          summary: "Success",
-          detail: 'Created successfully!',
-        });
+        // this.toastService.showSuccess( '','create');
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
       }
       if(response.code == 8010){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: response.message+'!',
-        });
+        this.toastService.showError(response.message+'!');
       }
     })
   }

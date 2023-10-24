@@ -70,6 +70,8 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 import { ClipboardModule } from 'ngx-clipboard';
 
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+ 
 
 @NgModule({
   declarations: [
@@ -145,7 +147,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     {
            provide: MatPaginatorIntl, 
            useClass: CustomMatPaginatorIntl
-    }
+    },
+    toastMessages
   ]
 })
 export class RpautomationModule { }
