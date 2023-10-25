@@ -223,6 +223,8 @@ export class columnList{
         {ColumnName:"start_time",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"log_statement",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+      
       ];
 
 
