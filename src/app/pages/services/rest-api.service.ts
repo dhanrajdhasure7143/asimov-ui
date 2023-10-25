@@ -1834,5 +1834,7 @@ getCopilotFunctionsList(){
 switchTaskLevelLogs(botId){
   return this.http.put("/rpa-service/toggle-enable-task-logs/"+botId,{});
 }
-
+getTaskLevelLogsSwitchState(botId:any){
+  return this.http.get(`/rpa-service/get-enable-task-logs/${botId}`);
+}
 }

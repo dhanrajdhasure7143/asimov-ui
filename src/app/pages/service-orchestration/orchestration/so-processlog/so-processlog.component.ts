@@ -1,9 +1,11 @@
-import { Component, OnInit,Input, ChangeDetectorRef, OnDestroy, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit,Input, ChangeDetectorRef, OnDestroy, Output, EventEmitter, ViewChild} from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
 import { MessageService } from 'primeng/api';
 import { filter, map } from 'rxjs/operators';
 import moment from 'moment';
 import {columnList}  from '../../../../shared/model/table_columns'
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { ClipboardService } from 'ngx-clipboard';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -40,10 +42,14 @@ export class SoProcesslogComponent implements OnInit {
   selectedTask:any;
   selectedAutomationTask:any;
   selectedIterationTask:any;
+  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  isCopied:boolean = false;
+  copyTimer = null;
   constructor( private rest:RestApiService, 
     private changeDetectorRef: ChangeDetectorRef,
     private messageService:MessageService,
-    private columns_list:columnList
+    private columns_list:columnList,
+    private clipboardService: ClipboardService
     ) { }
   ngOnInit() {
     this.getProcessRuns();
@@ -229,5 +235,20 @@ export class SoProcesslogComponent implements OnInit {
     handleException=(err)=>{
      return (this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to fetch data"}),this.logsLoading=false);
     }
-  
+    copyToClipboard(value, event) {
+      if (this.copyTimer !== null) {
+        // If a timer is active, clear it to cancel the previous setTimeout
+        clearTimeout(this.copyTimer);
+        this.copyTimer = null;
+      }
+    
+      this.clipboardService.copy(value);
+      this.overlayPanel.show(event);
+    
+      // Set a new setTimeout and store the timer ID in the this.copyTimer variable
+      this.copyTimer = setTimeout(() => {
+        this.overlayPanel.hide();
+        this.copyTimer = null; // Reset the timer variable when the setTimeout completes
+      }, 2000);
+    }
 }

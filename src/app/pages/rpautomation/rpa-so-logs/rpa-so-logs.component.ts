@@ -34,7 +34,7 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
   @Output('closeEvent') public closeEvent=new EventEmitter<any>();
-  @Input('hasTaskLevelLogs') public hasTaskLevelLogs:boolean;
+  public hasTaskLevelLogs:boolean;
   public allLogs:any=[];
   public botrunid:any="";
   public allRuns:any=[];
@@ -80,6 +80,16 @@ export class RpaSoLogsComponent implements OnInit {
      ) { }
   ngOnInit() {
     this.viewRunsByBotId();
+    this.getLogLevelSwitchState(); 
+  }
+
+  getLogLevelSwitchState(){
+    this.rest.getTaskLevelLogsSwitchState(this.logsbotid).subscribe((response:any)=>{
+      if(response?.enableTaskLogs)this.hasTaskLevelLogs=response?.enableTaskLogs;
+    },(err:any)=>{
+      console.log(err);
+      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get log switch state"})
+    })
   }
  
   viewRunsByBotId(){
@@ -99,6 +109,8 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text", displayKillButton:true},
+        {ColumnName:"log_statement",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+      
       ];
        this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
@@ -136,6 +148,8 @@ export class RpaSoLogsComponent implements OnInit {
   // }
 
   ViewlogByrunid(runid,versionNew,version){
+    console.log(versionNew )
+    console.log(version)
     this.botrunid=runid;
     this.selectedLogVersion=version 
     this.selectedLogVersionNew=versionNew 
@@ -254,7 +268,7 @@ export class RpaSoLogsComponent implements OnInit {
       if(logData.parent_log_id!=null && logData.parent_task_id!=null)
         this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
       else
-        this.ViewlogByrunid(logData.run_id, logData.versionNew,logData.version);
+        this.ViewlogByrunid(logData.run_id,this.selectedLogVersionNew,this.selectedLogVersion);
    }
 
   // sortasc(event){
