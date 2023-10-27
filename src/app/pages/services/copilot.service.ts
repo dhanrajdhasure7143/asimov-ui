@@ -53,4 +53,9 @@ updateProcessLogGraph(data:any){
   return this.http.post(environment.asquare+"/a-square/v1/conversation/update-process-bpmn", data,{headers:headers_new});
 }
 
+getUserConversations(userId:any){
+  let headers_new=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey,'x-api-conversationId':localStorage.getItem('conversationId')})
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByUserId/${userId}`,{headers:headers_new});
+}
+
 }
