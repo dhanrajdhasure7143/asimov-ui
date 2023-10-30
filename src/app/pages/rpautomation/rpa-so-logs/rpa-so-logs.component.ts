@@ -541,7 +541,7 @@ copyToClipboard(value, event) {
   }, 2000);
 }
   
-handleTaskLevelLogs($event){
+handleTaskLevelLogs(event){
   this.confirmationService.confirm({
     message: `Do you want to ${(this.hasTaskLevelLogs?"disable":"enable")} Task Logs`,
     header: 'Are you Sure?',
@@ -556,6 +556,7 @@ handleTaskLevelLogs($event){
     },
     reject: (type) => {
       this.spinner.hide();
+      this.hasTaskLevelLogs=!(event.checked);
     },
     key: "positionDialog"
   })
