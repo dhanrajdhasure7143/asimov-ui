@@ -542,12 +542,22 @@ copyToClipboard(value, event) {
 }
   
 handleTaskLevelLogs($event){
-  this.rest.switchTaskLevelLogs(this.logsbotid).subscribe(res=>{
-    this.hasTaskLevelLogs = this.hasTaskLevelLogs;
-    this.messageService.add({severity:'success',summary:'Success',detail:'Successfully changed the toggle!'})    
-  },errormsg =>{
-    this.hasTaskLevelLogs = !this.hasTaskLevelLogs;
-    this.messageService.add({severity:'error',summary:'Error',detail:'Failed to change the toggle'})     
+  this.confirmationService.confirm({
+    message: `Do you want to ${(this.hasTaskLevelLogs?"disable":"enable")} Task Logs`,
+    header: 'Are you Sure?',
+    accept: () => {
+      this.rest.switchTaskLevelLogs(this.logsbotid).subscribe(res=>{
+        this.hasTaskLevelLogs = this.hasTaskLevelLogs;
+        this.messageService.add({severity:'success',summary:'Success',detail:'Successfully changed the toggle!'})    
+      },errormsg =>{
+        this.hasTaskLevelLogs = !this.hasTaskLevelLogs;
+        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to change the toggle'})     
+      })
+    },
+    reject: (type) => {
+      this.spinner.hide();
+    },
+    key: "positionDialog"
   })
 }
 
