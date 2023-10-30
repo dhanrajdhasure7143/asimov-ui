@@ -43,7 +43,7 @@
         </span>
       </span>
         <span class="" *ngIf="!logsLoading">
-          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" class="custom-input-switch"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" [pTooltip]="hasTaskLevelLogs?'Disable Task Logs':'Enable Task Logs'"  tooltipPosition="top" class="custom-input-switch"></p-inputSwitch>
       </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
