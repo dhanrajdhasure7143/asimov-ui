@@ -2397,6 +2397,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
     });
+    if(this.nodes.length>0){
     let startTaskPosition=document.getElementById(this.startNodeId);
     let stopTaskPosition=document.getElementById(this.stopNodeId);
     this.startStopCoordinates=JSON.stringify({
@@ -2407,6 +2408,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       startNodeId:this.startNodeId,
       stopNodeId:this.stopNodeId
     })
+  }
 
 
 
