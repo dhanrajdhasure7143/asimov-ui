@@ -29,7 +29,7 @@ export const environment = {
   // camunda navigation
   camunda_url: "https://ezworkflow.qa.epsoftinc.com",
   //A-Square/Copilot
-  asquare:"https://ezflow.dev.epsoftinc.com",
+  asquare:"https://ezflow.qa.epsoftinc.com",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
@@ -42,9 +42,9 @@ export const environment = {
   webActionAttrId: 580,
   //IPCTenant
   ipcTenant: "c5611383-58c1-4677-839c-a337c9fb102c",
-  isChatEnable : false,
-  isProcessLogsEnable: false,
-  isCopilotEnable : false
+  isChatEnable : true,
+  isProcessLogsEnable: true,
+  isCopilotEnable : true
 };
 
 /*
