@@ -229,6 +229,8 @@ users_List1:any[]=[];
 allFiles:any[]=[];
 documentList=[];
 categoryId: any;
+processInfo: boolean;
+process_name: any;
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -243,6 +245,7 @@ private toastMessages: toastMessages
     this.params_data=data
     this.project_id = this.params_data.project_id
     this.role=this.params_data.role
+    this.process_name = this.params_data.process_name
     if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
     this.spinner.show();
     this.getallusers();
@@ -257,6 +260,10 @@ this.actionsitems = [
   //   label: 'Tasks',
   //   command: () => {this.taskListView()}
   // },
+  { 
+    label: 'Process Info',
+    command: () => { this.openProcessOverlay()}
+  },
   { 
     label: 'Users',
     command: () => { this.openUsersOverlay()}
@@ -891,6 +898,7 @@ this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.pro
 
 closeOverlay(event) {
 this.hiddenPopUp = event;
+this.processInfo = event;
 }
 
 onChangeRole(event,tab){
@@ -1639,6 +1647,14 @@ selectEnd() {
         if ((event.target.selectionStart === 0 && event.code === 'Space')){
           event.preventDefault();
         }
+  }
+
+  openProcessOverlay(){
+    this.processInfo = true
+  }
+
+  onCustomEvent(message: any) {
+    this.processInfo = message;
   }
 }
 
