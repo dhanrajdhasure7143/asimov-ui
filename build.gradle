@@ -10,7 +10,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 def ENV = project.property('ENV')
 
 println "ENV value: $ENV"
-if (ENV == 'Asquare') {
+if (ENV == 'AsquareQA') {
       def propertiesFile = file("gradle/${ENV}/gradle.properties")
       def myProperties = new Properties()
       myProperties.load(new FileInputStream(propertiesFile))
