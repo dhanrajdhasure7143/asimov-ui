@@ -359,9 +359,27 @@ teamConversation:any=[
 
 
   openCompleteChatPreview(messageConversation:any){
-    console.log(messageConversation);
     this.conversationPreviewChat=this.getConversationByConversationId.map((item:any)=>{
-      item["data"]=JSON.parse(item["message"]);
+      let data=JSON.parse(item["message"]);
+      for(let i=0;i<data?.components?.length;i++){
+        if(data?.components[i]=="Buttons"){
+            data.values[i]=data?.values[i].map((componentItem)=>{
+                componentItem["disabled"]=true;
+                return componentItem;
+            })
+        }
+        if(data?.components[i]=="list"){
+         data.values[i]=data?.values[i].map((componentItem:any)=>{
+                if(componentItem?.actions)
+                    componentItem.actions=componentItem?.actions?.map((componentActionItem:any)=>{
+                        componentActionItem["disabled"]=true;
+                        return componentActionItem;    
+                    });
+                    return componentItem;  
+           })
+        }
+      }
+      item["data"]=data;
       return item;
     });
     console.log(this.conversationPreviewChat)
