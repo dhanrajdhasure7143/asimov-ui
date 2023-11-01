@@ -3,15 +3,14 @@ plugins {
   id "java"
   id "com.github.node-gradle.node" version "2.2.4"
   id "com.bmuschko.docker-remote-api" version "6.6.1"
-  id 'com.moowork.node' version '1.3.1'
 }
 import org.apache.tools.ant.taskdefs.condition.Os  
+
 
 def ENV = project.property('ENV')
 
 println "ENV value: $ENV"
-if (ENV == 'QA' || ENV == 'Asquare') {
-      println "ENV value: $ENV"
+if (ENV == 'Asquare') {
       def propertiesFile = file("gradle/${ENV}/gradle.properties")
       def myProperties = new Properties()
       myProperties.load(new FileInputStream(propertiesFile))
@@ -27,7 +26,7 @@ if (ENV == 'QA' || ENV == 'Asquare') {
       
      }
 else {
-      def propertiesFile = file("gradle.properties")
+      def propertiesFile = file("gradle/QA/gradle.properties")
       def myProperties = new Properties()
       myProperties.load(new FileInputStream(propertiesFile))
       def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
@@ -42,6 +41,9 @@ else {
       
       
      }
+
+
+
 
 
 task copyJarToBin {
@@ -85,15 +87,14 @@ node {
   download = true
 }
 
-task npmInstallGlobal(type: NpmTask) {
-    args = ['install', '-g']
-    outputs.upToDateWhen { true }
+npmInstall.outputs.upToDateWhen {
+  false
 }
 
 //ext {
-//  dockerImage = "${project.registryUrl}/${imageName}"
+//  dockerImage = "${registryUrl}/${imageName}"
 //  dockerTag   = "${semver}-${semverDevSuffix}"
-// }
+//}
 
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"
