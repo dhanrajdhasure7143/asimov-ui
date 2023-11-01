@@ -64,6 +64,7 @@ import { ScrollIntoViewDirective } from './directives/scroll-into-view.directive
 import { UserFilterDirective } from './directives/user-filter.directive';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { MentionModule } from 'angular-mentions';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 const materialModules: any[] = [
     
     
@@ -115,8 +116,8 @@ const materialModules: any[] = [
   {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl
-    }
-
+    },
+    toastMessages
   ]
 })
 export class ProjectsModule { }

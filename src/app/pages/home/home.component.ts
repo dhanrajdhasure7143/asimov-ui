@@ -43,6 +43,15 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+        // Disable service worker
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (const registration of registrations) {
+              registration.unregister();
+            }
+          });
+      }
+    
     this.getAllPlans();
     // this.rest_api.getUserRole(2).subscribe(res=>{
     // this.userRole=res.message;
@@ -57,7 +66,7 @@ export class HomeComponent implements OnInit {
     //   //this.error = "Please complete your registration process";
     // })
 
-    //  --- Redirection to rpa ---
+    //  --- Redirection to copilot ---
     if(environment.isCopilotEnable)
         this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
     if(!environment.isCopilotEnable)

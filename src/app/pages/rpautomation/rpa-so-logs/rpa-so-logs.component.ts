@@ -7,6 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
 import { MessageService,ConfirmationService } from 'primeng/api';
+import { ClipboardService } from 'ngx-clipboard';
+import { OverlayPanel } from 'primeng/overlaypanel';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -25,12 +27,14 @@ export class RpaSoLogsComponent implements OnInit {
   public respdata1:boolean = false;
   public fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
+  public selectedLogVersionNew:any;
   public filteredLogVersion:any;
   public selectedAutomationTask:any=undefined;
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
   @Output('closeEvent') public closeEvent=new EventEmitter<any>();
+  public hasTaskLevelLogs:boolean;
   public allLogs:any=[];
   public botrunid:any="";
   public allRuns:any=[];
@@ -62,15 +66,30 @@ export class RpaSoLogsComponent implements OnInit {
   errormsg: any;
   display:boolean = true;
   selectedTask:any;
+  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  isCopied:boolean = false;
+  copyTimer = null;
+
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,
      private spinner:NgxSpinnerService,
      private messageService:MessageService,
-     private confirmationService :ConfirmationService
+     private confirmationService :ConfirmationService,
+     private clipboardService: ClipboardService
      ) { }
   ngOnInit() {
     this.viewRunsByBotId();
+    this.getLogLevelSwitchState(); 
+  }
+
+  getLogLevelSwitchState(){
+    this.rest.getTaskLevelLogsSwitchState(this.logsbotid).subscribe((response:any)=>{
+      if(response?.enableTaskLogs)this.hasTaskLevelLogs=response?.enableTaskLogs;
+    },(err:any)=>{
+      console.log(err);
+      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get log switch state"})
+    })
   }
  
   viewRunsByBotId(){
@@ -89,7 +108,9 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"versionNewModified",DisplayName:"Version",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
-        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text", displayKillButton:true},
+        {ColumnName:"log_statement",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+      
       ];
        this.logsData=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM DD, yyyy, HH:mm:ss"):item.start_time;
@@ -102,9 +123,12 @@ export class RpaSoLogsComponent implements OnInit {
       {
         this.isDataEmpty=true;
         this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+  
       }
       
   },err=>{
+    console.log(err);
     this.logsLoading=false;
     this.isDataEmpty=true;
     this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})
@@ -123,13 +147,16 @@ export class RpaSoLogsComponent implements OnInit {
   //    this.changeDetector.detectChanges();
   // }
 
-  ViewlogByrunid(runid,version){
+  ViewlogByrunid(runid,versionNew,version){
+    console.log(versionNew )
+    console.log(version)
     this.botrunid=runid;
     this.selectedLogVersion=version 
+    this.selectedLogVersionNew=versionNew 
     this.logsLoading=true;
     this.logsDisplayFlag='LOGS'
     let flag=0;
-    this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((response:any)=>{ 
+    this.rest.getViewlogbyrunid(this.logsbotid,versionNew,runid,version).subscribe((response:any)=>{ 
      
       if(response.errorMessage==undefined)
       { 
@@ -140,7 +167,7 @@ export class RpaSoLogsComponent implements OnInit {
         {ColumnName:"bot_status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"startDate",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"text"},
         {ColumnName:"endDate",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"text"},
-        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"error_info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text",copyButton:true},
       ];
         this.logsData=[...response.filter((item:any)=>{
 
@@ -170,7 +197,8 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})     
+    
      }    
      }, err=>{
        this.logsLoading=false;
@@ -184,7 +212,7 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsLoading=true;
     let flag=0;
     this.selectedChildLog=task_details; 
-    this.rest.getChildLogs(task_details,logId,taskId,iterationId).subscribe((response:any)=>{ 
+    this.rest.getChildLogs(task_details,logId,taskId,iterationId,this.selectedLogVersionNew,this.selectedLogVersion).subscribe((response:any)=>{ 
       if(traversalType=="FARWORD") this.traversalLogs.push(task_details);
       this.selectedTask=task_details;
       this.selectedTask["actual_task_id"]=taskId;
@@ -240,7 +268,7 @@ export class RpaSoLogsComponent implements OnInit {
       if(logData.parent_log_id!=null && logData.parent_task_id!=null)
         this.getChildLogs(logData, logData.parent_log_id,logData.parent_task_id,logData.parent_iteration_id, "BACKWARD");
       else
-        this.ViewlogByrunid(logData.run_id, logData.version);
+        this.ViewlogByrunid(logData.run_id,this.selectedLogVersionNew,this.selectedLogVersion);
    }
 
   // sortasc(event){
@@ -379,6 +407,8 @@ export class RpaSoLogsComponent implements OnInit {
         this.logsLoading=false;
         this.selectedIterationTask=undefined;
         this.errormsg= response.errorMessage;
+        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+   
       }      
     },err=>{
       this.logsLoading=false;
@@ -406,6 +436,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty==true;
        this.errormsg= response.errorMessage;
+       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+   
       }
     },err=>{
       this.logsLoading=false
@@ -423,8 +455,10 @@ export class RpaSoLogsComponent implements OnInit {
     this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
       let response: any = data;
       this.logsLoading = false;
-      if (response.errorMessage)
+      if (response.errorMessage){
       this.errormsg= response.errorMessage;
+      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+      }
       else
         this.messageService.add({severity:'success',summary:'Success',detail:response.status});
       this.viewRunsByBotId();
@@ -481,5 +515,51 @@ export class RpaSoLogsComponent implements OnInit {
 getColor(status) {
   return this.statusColors[status]?this.statusColors[status]:'';
 }
+
+// copyToClipboard(value,event) {
+//   this.clipboardService.copy(value);
+//   this.overlayPanel.show(event);
+//     setTimeout(() => {
+//       this.overlayPanel.hide();
+//     }, 2000);
+// }
+
+copyToClipboard(value, event) {
+  if (this.copyTimer !== null) {
+    // If a timer is active, clear it to cancel the previous setTimeout
+    clearTimeout(this.copyTimer);
+    this.copyTimer = null;
+  }
+
+  this.clipboardService.copy(value);
+  this.overlayPanel.show(event);
+
+  // Set a new setTimeout and store the timer ID in the this.copyTimer variable
+  this.copyTimer = setTimeout(() => {
+    this.overlayPanel.hide();
+    this.copyTimer = null; // Reset the timer variable when the setTimeout completes
+  }, 2000);
+}
   
+handleTaskLevelLogs(event){
+  this.confirmationService.confirm({
+    message: `Do you want to ${(this.hasTaskLevelLogs?"disable":"enable")} Task Logs`,
+    header: 'Are you Sure?',
+    accept: () => {
+      this.rest.switchTaskLevelLogs(this.logsbotid).subscribe(res=>{
+        this.hasTaskLevelLogs = this.hasTaskLevelLogs;
+        this.messageService.add({severity:'success',summary:'Success',detail:'Successfully changed the toggle!'})    
+      },errormsg =>{
+        this.hasTaskLevelLogs = !this.hasTaskLevelLogs;
+        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to change the toggle'})     
+      })
+    },
+    reject: (type) => {
+      this.spinner.hide();
+      this.hasTaskLevelLogs=!(event.checked);
+    },
+    key: "positionDialog"
+  })
+}
+
 }

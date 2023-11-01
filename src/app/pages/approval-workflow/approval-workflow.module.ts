@@ -22,6 +22,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 @NgModule({
@@ -43,7 +44,10 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl
-    }]
+    },
+    toastMessages
+  ],
+  
 })
 
 export class ApprovalWorkflowModule { }

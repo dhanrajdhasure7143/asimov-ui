@@ -397,10 +397,10 @@ gettime(){
           botActionStatus:"New",
           modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
-        let scheduleArr=[...this.schedule_list];
-        scheduleArr.push(data);
+       // let scheduleArr=[...this.schedule_list];
+        //scheduleArr.push(data);
         this.loader.show()
-        this.rest.addbotSchedules(scheduleArr).subscribe((response:any)=>{
+        this.rest.addbotSchedules([data]).subscribe((response:any)=>{
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
