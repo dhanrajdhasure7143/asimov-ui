@@ -43,7 +43,7 @@
         </span>
       </span>
         <span class="" *ngIf="!logsLoading">
-          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" class="custom-input-switch"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" [pTooltip]="hasTaskLevelLogs?'Disable Task Logs':'Enable Task Logs'"  tooltipPosition="top" class="custom-input-switch"></p-inputSwitch>
       </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
@@ -82,7 +82,7 @@
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
                           <!-- <span *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span> -->
-                          <a class="clickable" *ngIf="logs['has_task_logs']" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
+                          <a class="clickable hasLogs" *ngIf="logs['has_task_logs']" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
                           <span  *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span>
                       
                         </span>

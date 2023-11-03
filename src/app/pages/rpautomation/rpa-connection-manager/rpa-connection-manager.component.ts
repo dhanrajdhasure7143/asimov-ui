@@ -6,6 +6,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { Rpa_Hints } from "../model/RPA-Hints";
 import { columnList } from "src/app/shared/model/table_columns";
+import { DatePipe } from '@angular/common';
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
 
@@ -50,6 +51,7 @@ export class RpaConnectionManagerComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
     private columnList: columnList,
+    private datePipe: DatePipe,
     private toastMessages: toastMessages
   ) {}
 
@@ -68,6 +70,10 @@ export class RpaConnectionManagerComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getConnectionslist().subscribe((res: any) => {
       this.connectorTable = res.data;
+      this.connectorTable = this.connectorTable.map(item => {
+        item["createdAt"] = this.datePipe.transform(new Date(item.createdAt),'MMM dd, y HH:mm')
+        return item;
+      })
       this.readSelectedData([]); 
       this.spinner.hide();
       this.table_searchFields=["name","actionCount","createdBy","createdAt"]
