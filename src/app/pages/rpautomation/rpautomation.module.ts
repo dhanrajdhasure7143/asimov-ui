@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RpautomationComponent } from './rpautomation.component';
 import { RpautomationRoutingModule } from './rpautomation-routing.module';
 import { DndModule } from 'ngx-drag-drop';
@@ -143,7 +143,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     ClipboardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
-  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
+  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,DatePipe,
     {
            provide: MatPaginatorIntl, 
            useClass: CustomMatPaginatorIntl

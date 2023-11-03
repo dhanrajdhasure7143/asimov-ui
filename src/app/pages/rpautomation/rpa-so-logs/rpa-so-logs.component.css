@@ -437,3 +437,6 @@ ul#versions li:hover {
 .refresh-load{
   width: 80px;
 }
+.hasLogs:hover{
+  text-decoration: underline !important;
+}
