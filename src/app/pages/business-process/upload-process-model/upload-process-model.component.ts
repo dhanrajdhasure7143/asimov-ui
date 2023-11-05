@@ -100,7 +100,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   processName:string;
   fileType:string = "svg";
   selectedNotationType:string;
-  category:string;
+  // category:string;
   randomNumber;
   pidId;
   isfromApprover: any=false;
@@ -154,6 +154,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   showconsfromanceModal:any;
   vcmId:any;
   isopen:boolean=false;
+  categoryId:number;
 
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
@@ -180,7 +181,8 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
     this.route.queryParams.subscribe(params => {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
-      this.category = params['category'];
+      // this.category = params['category'];
+      this.categoryId = params['categoryId'];
       this.processName = params['processName'];
       this.selectedNotationType = params['ntype'];
       this.isShowConformance = params['isShowConformance'] == 'true';
@@ -1218,7 +1220,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     bpmnModel.processOwnerName=e.processOwnerName;
     bpmnModel.bpmnProcessName = this.processName;
     bpmnModel.ntype = this.ntype;
-    bpmnModel.category = this.category;
+    // bpmnModel.category = this.category;
+    bpmnModel.categoryId = this.categoryId;
     bpmnModel.processIntelligenceId = this.pid;
     bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
     let match = this.full_saved_bpmn_list.filter(each_diag => {
@@ -1307,7 +1310,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(this.isShowConformance){
       status = "INPROGRESS";
       bpmnModel.bpmnProcessName = this.processName;
-      bpmnModel.category = this.category;
+      // bpmnModel.category = this.category;
+      bpmnModel.categoryId = this.categoryId;
       bpmnModel.ntype = this.ntype;
       bpmnModel.processIntelligenceId = parseInt(this.pid);
       let match = this.full_saved_bpmn_list.filter(each_diag => {
@@ -1651,7 +1655,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     var dd = fileName+"."+this.selectedNotationType;
      this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
       dataKey: data, fileNme: dd,
-      category:this.saved_bpmn_list[this.selected_notation]['category']
+      category:this.saved_bpmn_list[this.selected_notation]['category'],
+      categoryId:this.saved_bpmn_list[this.selected_notation]['categoryId']
     }});
     
     let deployResponse;

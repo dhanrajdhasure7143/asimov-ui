@@ -59,7 +59,7 @@ export class RpaSchedulerComponent implements OnInit {
   todaytime:any;
   endtime:any="23:59";
   schedules:any=[];
-  startdate:any= new Date();
+  startdate:any;
   enddate:any;
   timezone:any="";
   schedule_list:any=[];
@@ -122,7 +122,8 @@ export class RpaSchedulerComponent implements OnInit {
     //   this.botid=this.data.botid;
     //   this.schedule_list=this.data.schedule_list;
     // }
-    this.enddate=this.startdate;
+    this.startdate =  moment(new Date()).format("YYYY-MM-DD");
+    this.enddate = moment(new Date()).format("YYYY-MM-DD");
    this.gettime();
 
     
@@ -182,22 +183,22 @@ gettime(){
     }
   }
 
-  close()
-  {
+  close(){
     document.getElementById("sch").style.display="none";
     this.closeFormOverlay.emit(true)
   }
 
 
-  onTimeZoneChange(timezone)
-  {
+  onTimeZoneChange(timezone){
     let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
-    this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-    this.enddate=this.startdate;
+    // this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    this.startdate =  moment(d).format("YYYY-MM-DD");
+    this.enddate = moment(d).format("YYYY-MM-DD");
+    // this.enddate=this.startdate;
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
+
   onChangeHour(event,time){ 
- 
 //  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
     this.todaytime = moment().format("HH:mm");
  
@@ -349,9 +350,7 @@ gettime(){
       return false;
     }
   }
-  add_sch()
-  {
-    
+  add_sch(){
     // Scheduler
     if(this.isDateToday(this.selecteddate)){
       this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
@@ -363,22 +362,13 @@ gettime(){
        if(isbefore){
          this.beforetime=true;
          this.starttimeerror="start time should not be before than current time"
-       }
-       else{
+       } else{
          this.beforetime=false
         this.addscheduler()
        }
-       
-    }
-    else{
+    } else{
       this.addscheduler()
     }
-   
-
-   
-   
- 
-
   }
 
   addscheduler(){
@@ -407,10 +397,10 @@ gettime(){
           botActionStatus:"New",
           modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
-        let scheduleArr=[...this.schedule_list];
-        scheduleArr.push(data);
+       // let scheduleArr=[...this.schedule_list];
+        //scheduleArr.push(data);
         this.loader.show()
-        this.rest.addbotSchedules(scheduleArr).subscribe((response:any)=>{
+        this.rest.addbotSchedules([data]).subscribe((response:any)=>{
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
@@ -727,8 +717,7 @@ gettime(){
   }
 
 
-  get compareScheduleDates()
-  {
+  get compareScheduleDates(){
     let startDate:Date=new Date(this.startdate);
     let endDate:Date=new Date(this.enddate);
     return (startDate > endDate)?true:false;

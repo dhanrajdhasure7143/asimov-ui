@@ -80,3 +80,7 @@ span.testtooltip:after {
 .table_responsive.graph_table tr td.gdescrip {
     width:35%;
 }
+
+.tktlist-fields{
+  float: right !important;
+}

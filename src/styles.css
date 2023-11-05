@@ -3788,6 +3788,7 @@ background-color: #D8E0EF !important;
   color:  #fff;
   padding: 1px 10px;
   border-radius: 50px;
+  cursor: pointer;
 }
 .bold {
   font-weight: bold;
@@ -4024,4 +4025,8 @@ padding: 0px 30px;}
 
 .graph-preview-container .bjs-powered-by{
   display: none !important;
+}
+
+.custom-input-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #4BD963 !important;
 }

@@ -91,20 +91,19 @@ export class DepartmentsComponent implements OnInit {
       this.loader.hide(); 
       let selected_department = localStorage.getItem("department_search");
       this.department = selected_department?selected_department:'alldepartments';
+      this.readSelectedData([]);
     })
    }
 
    onDeleteSelectedProcess(data){
     this.selected_list=[];
     this.selected_list.push(data);
-    this.deleteDepartment()
+    this.deleteDepartment();
    }
 
   deleteDepartment() {
     const delbody = this.selected_list.map(p=>{
-      return{
-        "categoryId": p.categoryId
-      }
+      return{"categoryId": p.categoryId}
       });
       this.confirmationService.confirm({
         header:'Are you sure?',
@@ -117,7 +116,7 @@ export class DepartmentsComponent implements OnInit {
         rejectButtonStyleClass:'btn reset-btn',
         defaultFocus:'none',
         accept:()=>{
-            this.rest_api.deleteDepartments(delbody).subscribe(resp => {
+      this.rest_api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         if (value.message === "Successfully deleted the category") {
         this.messageService.add({

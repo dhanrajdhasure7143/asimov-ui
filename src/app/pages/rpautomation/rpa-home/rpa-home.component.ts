@@ -13,7 +13,9 @@ import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { DataTransferService } from '../../services/data-transfer.service';
-import {ConfirmationService, MessageService } from "primeng/api";
+import {ConfirmationService } from "primeng/api";
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 declare var $: any;
 
 @Component({
@@ -128,7 +130,8 @@ export class RpaHomeComponent implements OnInit {
    @Inject(APP_CONFIG) private appconfig,
     private dt : DataTransferService,
     private confirmationService:ConfirmationService,
-    private messageService:MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) { }
 
   @Input() get selectedColumns(): any[] {
@@ -192,7 +195,7 @@ export class RpaHomeComponent implements OnInit {
       botStatus: true,
       description: true,
     }
-    this.spinner.show();
+    //this.spinner.show();
     this.getCategoryList();
     this.getenvironments();
     // this.getallbots();
@@ -225,15 +228,15 @@ export class RpaHomeComponent implements OnInit {
           if (response.status != undefined) {
             this.spinner.hide()
             this.getallbots();
-            this.messageService.add({ severity: "success",summary: "Success",detail: response.status});   
+            this.toastService.showSuccess(bot.botName,'delete');
           } else {
             this.spinner.hide();
-            this.messageService.add({ severity: 'error', summary: 'Error',detail: response.errorMessage});
+            this.toastService.showError(response.errorMessage);
           }
         })
-        setTimeout(() => {
-          this.getallbots();
-        }, 550);
+        // setTimeout(() => {
+        //   this.getallbots();
+        // }, 550);
       }
     })
   }
@@ -339,16 +342,16 @@ export class RpaHomeComponent implements OnInit {
             }
             else {
               this.spinner.hide();
-              this.messageService.add({severity:'error', summary: 'Error', detail:res.errorMessage});
+              this.toastService.showError(res.errorMessage);
             }
           }, err => {
             this.spinner.hide();
-            this.messageService.add({severity:'error', summary: 'Error', detail:catResponse.errorMessage});
+            this.toastService.showError(catResponse.errorMessage);
           });
           // let botId=Base64.encode(JSON.stringify(createBotFormValue));
         }
         else {
-          this.messageService.add({severity:'error', summary: 'Error', detail:catResponse.errorMessage});
+          this.toastService.showError(catResponse.errorMessage);
         }
 
       });
@@ -363,11 +366,12 @@ export class RpaHomeComponent implements OnInit {
         }
         else {
           this.spinner.hide();
-         this.messageService.add({severity:'error', summary: 'Error', detail:res.errorMessage});
+         this.toastService.showError(res.errorMessage);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail:'Error'});
+        // this.messageService.add({severity:'error', summary: 'Error', detail:'Error'});
+        this.toastService.showError(this.toastMessages.createError);
       })
     }
     this.insertbot.reset();
@@ -410,11 +414,11 @@ export class RpaHomeComponent implements OnInit {
         this.importenv = "";
         this.importfile = "";
         if (response.errorMessage == undefined) {
-          this.messageService.add({severity:'success', summary: 'Success', detail:response.status});
+          this.toastService.showSuccess(response.status,'response');
           this.getallbots();
         }
         else
-          this.messageService.add({severity:'error', summary: 'Error', detail:response.errorMessage});
+          this.toastService.showError(response.errorMessage);
         this.modalRef.hide()
         this.getallbots();
       })
@@ -456,7 +460,8 @@ export class RpaHomeComponent implements OnInit {
       downloadLink.target = '_self';
       downloadLink.download = bot.botName + "-V" + bot.version + ".sql";
       downloadLink.click();
-      this.messageService.add({severity:'success', summary: 'Success', detail:'Bot exported successfully!'});
+      // this.messageService.add({severity:'success', summary: 'Success', detail:'Bot exported successfully!'});
+      this.toastService.showSuccess(this.toastMessages.botExport,'response');
     })
   }
 
@@ -631,7 +636,8 @@ export class RpaHomeComponent implements OnInit {
           botType:0,
           botMainSchedulerEntity:null,
           comments:"", 
-          executionMode:response.executionMode   
+          executionMode:response.executionMode,
+          startStopCoordinate:response.startStopCoordinate   
         };
         this.downloadJson(botDetails)
       } else {
@@ -675,18 +681,22 @@ importBot()
       (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
+        // this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
+        this.toastService.showSuccess(this.toastMessages.botImport,'response');
+
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to configure bot task configurations.'});
+        // this.toastService.showError('Unable to configure bot task configurations!');
+        this.toastService.showError(this.toastMessages.botConfigError);
       })
     }
   },err=>{
     this.spinner.hide();
     this.resetImportBotForm();
-    this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot.'});
+    // this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot!'});
+    this.toastService.showError(this.toastMessages.botImportError);
   })
 }
 

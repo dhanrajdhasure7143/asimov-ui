@@ -113,10 +113,14 @@
                         <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1">
                     </span>
                     <span
-                        *ngIf="(environmentForm.get('password').invalid && environmentForm.get('password').touched) && !environmentForm.controls['password'].hasError('maxlength')"
+                        *ngIf="(environmentForm.get('password').invalid && environmentForm.get('password').touched) && !environmentForm.controls['password'].hasError('maxlength')&& !environmentForm.controls['password'].hasError('pattern')"
                         class="required"> Password Required</span>
                     <div *ngIf="environmentForm.controls['password'].hasError('maxlength')" class="required">
                         Maximum of 50 characters
+                    </div>
+                    <div *ngIf="environmentForm.get('password').hasError('pattern')"
+                      class="required">
+                      Password must be 4-50 characters, Special characters are allowed except (` ~ ") and Spaces are not allowed
                     </div>
                 </div>
                 <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==true">
@@ -171,4 +175,3 @@
         </div>
     </div>
 </div>
-<p-toast  [style]="{marginTop: '50px'}" key="toast1" ></p-toast>
