@@ -1,10 +1,9 @@
-import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
+import {Component, OnInit,QueryList,ViewChildren, OnDestroy, ChangeDetectorRef, ViewChild, TemplateRef, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { NgxSpinnerService } from 'ngx-spinner';
-// import Swal from 'sweetalert2';
 import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
@@ -18,6 +17,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   @ViewChildren("designerInstances") designerInstances:QueryList<any>;
   @ViewChild('versionControlPopup') versionControlPopup: PopoverDirective;
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
+  @Input("copilotBotId") copilotBotId:any;
+  @Output("onBackEvent") backEmitter:any= new EventEmitter();
   display:boolean = true
   current_instance:any;
   toolset_instance:any;
@@ -107,14 +108,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
               this.toolsetItems.push(temp)
             });
           }
-
-
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
-            if(params==undefined)
-            {
-              this.router.navigate(["home"])
-            }
+            if(params?.botId==undefined)
+              (this.copilotBotId)? this.loadBotByBotId(this.copilotBotId,"INIT"):this.router.navigate(["home"])
             else
             {
               let botId=params.botId;
@@ -499,19 +496,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
 
-  onChangeExecutionMode()
-  { 
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You want to change version",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, change it!'
-    // }).then(
+  onChangeExecutionMode(){
     this.confirmationService.confirm({
       header: 'Are you sure?',
       message: 'Do you want to change the version?',
@@ -530,6 +515,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         this.executionMode=!this.executionMode;
       }
   })
+  }
+
+
+  sendCopilotBackEvent()
+  {
+    this.backEmitter.emit(null);
   }
 
 }

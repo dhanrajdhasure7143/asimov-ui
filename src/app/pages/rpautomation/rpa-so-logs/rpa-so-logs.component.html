@@ -6,7 +6,7 @@
       <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="logsBackTraversal()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
-      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
+      <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id,selectedLogVersionNew, selectedLogVersion)">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
       <!-- <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
@@ -20,22 +20,31 @@
         &nbsp;
         <!-- <span>{{botrunid}}</span>  -->
         &nbsp;<span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/&nbsp;{{task.task_name}}&nbsp;</span></span>
-            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >Refresh</span>
-        <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
+          <span class="refresh-load">
+            <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag == 'RUNS' && !logsLoading" class="clickable1 refecls">Refresh</span>
+            <span *ngIf="logsLoading">
+              <i class="fa fa-spinner fa-spin"></i> 
+              Loading...
+            </span>
+        <span (click)="ViewlogByrunid(botrunid,selectedLogVersionNew, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
        
-        <span (click)="getChildLogs(selectedTask, selectedTask.actual_log_id, selectedTask.actual_task_id, selectedTask.actual_iteration_id,'REFRESH')" *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
+        <span (click)="getChildLogs(selectedTask, selectedTask.actual_log_id, selectedTask.actual_task_id, selectedTask.actual_iteration_id,'REFRESH')" *ngIf="logsDisplayFlag=='CHILD-LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
         
-        <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
+        <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS' && !logsLoading" class="clickable1 refecls">
           Refresh
         </span>
        
-        <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
+        <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS' && !logsLoading" class="clickable1 refecls">
             Refresh
         </span>
+      </span>
+        <span class="" *ngIf="!logsLoading">
+          <p-inputSwitch [(ngModel)]="hasTaskLevelLogs" (onChange)="handleTaskLevelLogs($event)" [pTooltip]="hasTaskLevelLogs?'Disable Task Logs':'Enable Task Logs'"  tooltipPosition="top" class="custom-input-switch"></p-inputSwitch>
+      </span>
         <!-- <span class="ml-auto">
           <span class="clickable" (click)="closeLogsOverlay()">
             <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
@@ -72,15 +81,30 @@
                   <tr class="action-desc">
                       <td *ngFor="let col of columnList" [style]="col.width">     
                         <span *ngIf="col.ColumnName=='run_id'">
-                          <a class="clickable" (click)="ViewlogByrunid(logs['run_id'], logs['version'])">{{logs[col.ColumnName]}}</a>
+                          <!-- <span *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span> -->
+                          <a class="clickable" *ngIf="logs['has_task_logs']" (click)="ViewlogByrunid(logs['run_id'], logs['versionNew'], logs['version'])">{{logs[col.ColumnName]}}</a>
+                          <span  *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span>
+                      
                         </span>
-                        <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info'">
+                        <span *ngIf="col.ColumnName!='run_id' && col.ColumnName != 'bot_status' && col.ColumnName!='task_name' && col.ColumnName!='error_info' && col.ColumnName!='log_statement'">
                           {{logs[col.ColumnName]}}
                         </span>
-                        <span *ngIf="col.ColumnName=='error_info'">
-                          <span *ngIf="logs[col.ColumnName]!=null && logs[col.ColumnName] != ''"   [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
-                            {{logs[col.ColumnName] | slice :0 : 10}}...
-                          </span>
+                        <span *ngIf="col.ColumnName == 'error_info' || col.ColumnName=='log_statement'" style="display: inline-block; max-width: 100%;">
+                         
+                          <div  style="display:flex">
+                            <div class="ellipsis-container" >
+                            <div class="ellipsis-content"  *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
+                              <span  class="text-ellipsis">{{ logs[col.ColumnName] }}</span>
+                            </div>
+                            </div>
+
+                            <div *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" class="copy-container">
+                              <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
+                              <p-overlayPanel [dismissable]="'true'" #overlayPanel>
+                                Copied!
+                              </p-overlayPanel>
+                            </div>
+                          </div>
                         </span>
                         <span *ngIf="col.ColumnName=='bot_status'">
                           <span *ngIf="logs['bot_status']=='Running'" class="text-primary" >
@@ -88,7 +112,8 @@
                               <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
                             </span>
                             {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
-                            <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
+                           
+                            <span *ngIf="col?.displayKillButton" class="btn btn-xs btn-primary clickable1" (click)="updateLog(logs)" >Kill</span> 
                           </span>
                           </span>
                           <span *ngIf="col.ColumnName=='bot_status'">

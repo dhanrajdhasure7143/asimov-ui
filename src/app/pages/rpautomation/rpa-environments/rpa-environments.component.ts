@@ -5,7 +5,9 @@ import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-environments',
@@ -46,8 +48,9 @@ export class RpaenvironmentsComponent implements OnInit {
   constructor(private rest_api: RestApiService,
     private spinner: LoaderService,
     private columnList: columnList,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private toastService: ToasterService,
+    private confirmationService:ConfirmationService,
+    private toastMessages: toastMessages
     ) {
     this.updateflag = false;
     this.deleteflag = false;
@@ -118,8 +121,6 @@ export class RpaenvironmentsComponent implements OnInit {
 
   openCreateEnvOverlay() {
     this.isCreate = true;
-    // document.getElementById("createenvironment").style.display = 'block';
-    // document.getElementById("update-popup").style.display = 'none';
     this.isOpenSideOverlay=true;
   }
 
@@ -132,7 +133,7 @@ export class RpaenvironmentsComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file.'})
+      this.toastService.showError('Unable to download .ppk file!');
     }
   }
 
@@ -187,20 +188,8 @@ export class RpaenvironmentsComponent implements OnInit {
   async deleteEnvironments() {
     // const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
     const selectedEnvironments = this.selected_list.map(p => p.environmentId);
+    const environmentName = this.selected_list.map(p => p.environmentName)
     if (selectedEnvironments.length != 0) {
-      // Swal.fire({
-      //   title: 'Are you Sure?',
-      //   text: "You won't be able to revert this!",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   customClass: {
-      //     confirmButton: 'btn bluebg-button',
-      //     cancelButton:  'btn new-cancelbtn',
-      //   },
-      //   confirmButtonText: 'Yes, delete it!'
-      // }).then((result)=>{
-// if(result.value){}
-      // }
       this.confirmationService.confirm({
         header: 'Are you sure?',
         message: "Do you want to delete this environment? This can't be undo.",
@@ -216,14 +205,17 @@ export class RpaenvironmentsComponent implements OnInit {
           this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
             this.spinner.hide();
             if (res.errorMessage == undefined) {
-              this.messageService.add({severity:'success',summary:'Success',detail:res.status})
+              // this.messageService.add({severity:'success',summary:'Success',detail:res.status})
+              const message = selectedEnvironments.length > 1 ? "Environments" : `${environmentName}`;
+              this.toastService.showSuccess(message,'delete');
               this.getallData();
             } else {
-              this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
+              this.toastService.showError(res.errorMessage);
             }
           }, err => {
             this.spinner.hide();
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment.'})
+            // this.toastService.showError('Unable to delete the environment!');
+            this.toastService.showError(this.toastMessages.deleteError);
           })
         }
       })
@@ -240,15 +232,21 @@ export class RpaenvironmentsComponent implements OnInit {
       this.spinner.show();
       this.rest_api.deployenvironment(selectedEnvironments).subscribe(res => {
         let data: any = res
+        console.log("deploy",data[0].status);
+        
         this.spinner.hide();
         if (data[0].errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:data[0].status})
+          // this.messageService.add({severity:'success',summary:'Success',detail:data[0].status})
+          this.toastService.showSuccess(data[0].status,'response');
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:data[0].errorMessage})
+          // this.messageService.add({severity:'error',summary:'Error',detail:data[0].errorMessage})
+          this.toastService.showError(data[0].errorMessage);
         }
         this.getallData();
       }, err => {
-        this.messageService.add({severity:'success',summary:'Success',detail:'Agent deployed successfully!'})
+        // this.messageService.add({severity:'success',summary:'Success',detail:'Agent deployed successfully!'})
+        this.toastService.showError(this.toastMessages.deployError);
+
         this.getallData();
         this.spinner.hide();
       })
@@ -295,17 +293,6 @@ export class RpaenvironmentsComponent implements OnInit {
 
   deletebyId(data){
     const selectedEnvironments=[data.environmentId];
-      // Swal.fire({
-      //   title: 'Are you Sure?',
-      //   text: "You won't be able to revert this!",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   customClass: {
-      //     confirmButton: 'btn bluebg-button',
-      //     cancelButton:  'btn new-cancelbtn',
-      //   },
-      //   confirmButtonText: 'Yes, delete it!'
-      // }).then(
         this.confirmationService.confirm({
         header:'Are you sure?',
         message:"You won't be able to revert this!",
@@ -321,14 +308,15 @@ export class RpaenvironmentsComponent implements OnInit {
           this.rest_api.deleteenvironment(selectedEnvironments).subscribe((res: any) => {
             this.spinner.hide();
             if (res.errorMessage == undefined) {
-              this.messageService.add({severity:'success',summary:'Success',detail:res.status})
+              this.toastService.showSuccess(data.environmentName,'delete');
               this.getallData();
             } else {
-              this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
+              this.toastService.showError(res.errorMessage);
             }
           }, err => {
             this.spinner.hide();
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment.'})
+            // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the environment!'})
+            this.toastService.showError(this.toastMessages.deleteError);
           })
         }
       })

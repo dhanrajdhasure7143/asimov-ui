@@ -32,9 +32,11 @@ import domtoimage from "dom-to-image";
 import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { MessageService,ConfirmationService, ConfirmEventType } from "primeng/api";
+import { ConfirmationService, ConfirmEventType } from "primeng/api";
 import { ActivatedRoute } from "@angular/router";
 import { environment } from "src/environments/environment";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -176,9 +178,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private modalService: BsModalService,
     private changesDecorator: ChangeDetectorRef,
     private ngZone: NgZone,
-    private messageService:MessageService,
+    private toastService: ToasterService,
     private confirmationService:ConfirmationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastMessages: toastMessages
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -250,14 +253,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.finaldataobjects = this.finalbot.tasks;
       this.actualTaskValue = [...this.finalbot.tasks];
       this.actualEnv = [...this.finalbot.envIds];
+      this.dragareaid = "dragarea__" + this.finalbot.botName;
+      this.outputboxid = "outputbox__" + this.finalbot.botName;
       this.loadGroups("load");
       this.loadnodes();
       this.getAllVersions();
       this.executionMode=this.finalbot.executionMode=="v1"?true:false;
     }
     this.getSelectedEnvironments();
-    this.dragareaid = "dragarea__" + this.finalbot.botName;
-    this.outputboxid = "outputbox__" + this.finalbot.botName;
     //this.getCategories();
     this.validateBotNodes();
     this.route.queryParams.subscribe(res=>{
@@ -325,7 +328,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (item: any) => item.id == connection.targetId
         );
         if (connectionNodeForTarget.selectedNodeTask == "If condition") {
-          this.messageService.add({severity:'warn',summary:'Alert',detail:'Start Node Should not connect directly to if condition.'})
+          // this.messageService.add({severity:'warn',summary:'Alert',detail:'Start Node Should not connect directly to if condition!'})
+          this.toastService.showWarn('Start Node Should not connect directly to if condition!')
           setTimeout(() => {
             this.changesDecorator.detectChanges();
             this.jsPlumbInstance.deleteConnection(connection);
@@ -516,7 +520,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (connectionNodeForSource != undefined) {
           if (connectionNodeForSource.selectedNodeTask == "If condition") {
        
-            this.messageService.add({severity:'warn',summary:'Warning',detail:'Please configure before adding connections for the if condition.'})
+            // this.messageService.add({severity:'warn',summary:'Warning',detail:'Please configure before adding connections for the if condition.'})
+            this.toastService.showWarn('Please configure before adding connections for the if condition!')
             setTimeout(() => {
               this.changesDecorator.detectChanges();
               this.jsPlumbInstance.deleteConnection(connection);
@@ -643,8 +648,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         {
           startNode["x"]="5px";
           startNode["y"]="5px";
-          stopNode["x"]="900px";
-          stopNode["y"]="900px";
+          setTimeout(()=>{
+            let dropContainer=document.getElementById("dnd_"+this.dragareaid);
+            stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
+            stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
+          },100)
+
         }
         this.nodes.push(startNode);
         setTimeout(()=>{
@@ -838,17 +847,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         setTimeout(() => {
           this.populateNodes(node);
         }, 240);
-
+        let dropContainer=document.getElementById("dnd_"+this.dragareaid);
         let stopnode = {
           id: "STOP_" + this.finalbot.botName,
           name: "STOP",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          // x: "941px",
-          // y: "396px",
-          x: "92%",
-          y: "80%",
+          x: (dropContainer.offsetWidth - 100)+"px",
+          y: (dropContainer.offsetHeight - 100) +"px",
         };
         this.stopNodeId = stopnode.id;
         this.nodes.push(stopnode);
@@ -1173,8 +1180,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.rest.attribute(node.selectedNodeId, node.action_uid).subscribe((data:any) => {
           let attr_response: any = data;
           if(data.errorCode == 3001){
-            // Swal.fire("Error","Failed to get configuration form","error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get the configuration form.'})
+            // this.messageService.add({severity:'error',summary:'Error',detail:'Failed to get the configuration form.'})
+            this.toastService.showError(this.toastMessages.formConfigError);
             return;
           }
           this.multiformdata = data;
@@ -1202,7 +1209,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         });
       }
     } else {
-      this.messageService.add({severity:'warn',summary:'warnibg',detail:'Please select a task.'})
+      // this.messageService.add({severity:'warn',summary:'warnibg',detail:'Please select a task.'})
+      this.toastService.showWarn('Please select a task!')
     }
   }
 
@@ -1817,8 +1825,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        // Swal.fire("Error", "Unable to create a bot.", "error");
-        this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create a bot.'})
+        // this.messageService.add({ severity:'error',summary:'Error',detail:'Unable to create a bot!'})
+        this.toastService.showError(this.toastMessages.createError);
       }
     );
   }
@@ -2004,8 +2012,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       if (this.checkorderflag == false) {
         this.spinner.hide();
-        // Swal.fire("Warning", "Please check connections", "warning");
-        this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections.'})
+        // this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections!'})
+        this.toastService.showError(this.toastMessages.connectionCheckError);
 
       } else {
         let previousBotDetails: any = { ...{}, ...this.finalbot };
@@ -2014,6 +2022,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (response: any) => {
             this.spinner.hide();
             if (response.errorMessage == undefined) {
+              var botName = this.finalbot.botName;
               this.isBotUpdated = false;
               // this.finalbot=response;
               // this.actualTaskValue=[...response.tasks];
@@ -2029,13 +2038,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 ),
               ];
               this.actualEnv = [...response.envIds];
-              // Swal.fire("Success", "Bot updated successfully", "success");
               this.isNavigateCopilot = false;
               if(this.isCopilot)
-              this.messageService.add({severity:'success',summary:'Success',detail:'Bot saved successfully!'})
-              else
-              this.messageService.add({severity:'success',summary:'Success',detail:'Bot updated successfully!'})
+              // this.messageService.add({severity:'success',summary:'Success',detail:`${botName} saved successfully!`}) //'Bot saved successfully!'
+              this.toastService.showSuccess(botName,'save');
 
+              else
+              // this.messageService.add({severity:'success',summary:'Success',detail:`${botName} updated successfully!`}) //'Bot updated successfully!'
+              this.toastService.showSuccess(botName,'update');
               this.uploadfile(response.envIds, response.tasks);
               this.updateBotNodes(true);
               let auditLogsList = [
@@ -2069,27 +2079,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                     // this.messageService.add({severity:'success',summary:'Success',detail:'Audit logs updated successfully!'})
 
                   } else {
-                    // Swal.fire("Error", response.errorMessage, "error");
-                    this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+                    this.toastService.showError(response.errorMessage);
                   }
                 },
                 (err) => {
-                  // Swal.fire("Error", "Unable to update audit logs", "error");
-                  this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update the audit logs.'})
-
+                  // this.toastService.showError('Unable to update the audit logs!');
+                  this.toastService.showError(this.toastMessages.auditLogUpdateError);
                 }
               );
             } else {
               this.spinner.hide();
-              // Swal.fire("Error", response.errorMesssage, "error");
-              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMesssage})
+              this.toastService.showError(response.errorMessage);
             }
           },
           (err) => {
             this.spinner.hide();
-            // Swal.fire("Error", "Unable to update bot.", "error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update bot.'})
-
+            this.toastService.showError(this.toastMessages.updateError);
           }
         );
         //return false;
@@ -2327,13 +2332,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      // Swal.fire("Designer Disabled Now", "", "warning");
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Designer is disabled now!'})
+      // this.messageService.add({severity:'warn',summary:'Warning',detail:'Designer is disabled now!'})
+      this.toastService.showWarn('Designer is disabled now!');
 
     } else {
-      // Swal.fire("Designer Enabled Now", "", "success");
-      this.messageService.add({severity:'Success',summary:'Success',detail:'Designer is enabled now!'})
-
+      // this.messageService.add({severity:'Success',summary:'Success',detail:'Designer is enabled now!'})
+      this.toastService.showSuccess('Designer is enabled now!','response');
     }
   }
 
@@ -2393,6 +2397,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
     });
+    if(this.nodes.length>0){
     let startTaskPosition=document.getElementById(this.startNodeId);
     let stopTaskPosition=document.getElementById(this.stopNodeId);
     this.startStopCoordinates=JSON.stringify({
@@ -2403,6 +2408,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       startNodeId:this.startNodeId,
       stopNodeId:this.stopNodeId
     })
+  }
 
 
 
@@ -2717,14 +2723,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.rest.save_credentials(Credentials).subscribe((res) => {
         let status: any = res;
         this.spinner.hide();
-        // Swal.fire({
-        //   position: "center",
-        //   icon: "success",
-        //   title: status.status,
-        //   showConfirmButton: false,
-        //   timer: 2000,
-        // });
-        this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+        // this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+        this.toastService.showSuccess(status.status,'response');
         this.getTaskForm(this.nodedata);
         // this.modalRef.hide();
         document.getElementById("createcredentials").style.display = "none";
@@ -2851,7 +2851,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.checkorderflag == false) {
       this.spinner.hide();
       // Swal.fire("Warning", "Please check the connections.", "warning");
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please check the connections.'})
+      // this.messageService.add({severity:'warn',summary:'Warning',detail:'Please check the connections.'})
+      this.toastService.showWarn('Please check the connections!');
       return;
     }
 
@@ -2866,15 +2867,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               (response: any) => {
                 this.spinner.hide();
                 if (response.errorMessage == undefined){
-                  this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                  // this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                  this.toastService.showSuccess(response.status,'response');
                   this.updateBotNodes(false);                  
                 } else {
-                this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+                  this.toastService.showError(response.errorMessage);
                 }
               },
               (err) => {
                 this.spinner.hide();
-                this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+                this.toastService.showError(this.toastMessages.botExecuteError);
               }
             );
         },
@@ -2899,18 +2901,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             (response: any) => {
               this.spinner.hide();
               if (response.errorMessage == undefined){
-                // Swal.fire("Success", response.status, "success");
-                this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                // this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+                this.toastService.showSuccess(response.status,'response');
                 this.updateBotNodes(false);                  
               } else {
-              //  Swal.fire("Error", response.errorMessage, "error");
-              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+              this.toastService.showError(response.errorMessage);
               }
             },
             (err) => {
               this.spinner.hide();
-              // Swal.fire("Error", "Unable to execute bot", "error");
-              this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+              this.toastService.showError(this.toastMessages.botExecuteError);
             }
           );
         },
@@ -2920,8 +2920,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         key: "positionDialog"
       });
     } else {
-      // Swal.fire("Error", "Unable to execute bot", "error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot.'})
+      // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to execute the bot!'})
+      this.toastService.showError(this.toastMessages.botExecuteError);
+
     }
   }
 
@@ -2935,14 +2936,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           );
           this.VersionsList = [...sortedversions.reverse()];
         } else {
-          // Swal.fire("Error", response.errorMessage, "error");
-      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+          this.toastService.showError(response.errorMessage);
         }
       },
       (err) => {
         // Swal.fire("Error", "Unable to get versions", "error");
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get versions.'});
+      // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get versions!'});
+      this.toastService.showError(this.toastMessages.versionError);
+
 
       }
     );
@@ -2980,17 +2981,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deleteBot() {
-    // Swal.fire({
-    //   title: "Are you Sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton: 'btn new-cancelbtn',
-    //     },
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then(
     this.confirmationService.confirm({
       header: 'Are you sure?',
       message: "Do you want to delete this bot? This can't be undo.",
@@ -3010,22 +3000,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             let response: any = data;
             this.spinner.hide();
             if (response.status != undefined) {
-              // Swal.fire("Success", response.status, "success");
-              this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+              this.toastService.showSuccess(this.finalbot.botName,'delete');
               setTimeout(() => {
               $("#close_bot_" + this.finalbot.botName).click();
               }, 500);
             } else {
-              // Swal.fire("Error", response.errorMessage, "error");
-              this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
-
+              this.toastService.showError(response.errorMessage);
             }
           },
           (err) => {
             this.spinner.hide();
-            // Swal.fire("Error", "Unable to delete bot", "error");
-            this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete the bot.'})
-
+            // this.toastService.showError('Unable to delete the bot!');
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       }
@@ -3076,7 +3062,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.spinner.hide();
       } else {
         // Swal.fire("Error", response.errorMessage, "error");
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.toastService.showError(response.errorMessage);
       }
     });
   }

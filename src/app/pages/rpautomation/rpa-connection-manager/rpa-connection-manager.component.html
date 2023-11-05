@@ -57,7 +57,7 @@
                                     Maximum of 50 characters
                                 </span>
                                 <span *ngIf="createConnectorForm.get('name').hasError('pattern') && !createConnectorForm.controls['name'].hasError('maxlength')" class="required">
-                                    Only space between words are allowed & Numbers are not allowed.
+                                    Only space between words are allowed,numbers & special characters are not allowed.
                                 </span>
                                 <span *ngIf="connectionNameCheck && createConnectorForm.get('name').value && !createConnectorForm.get('name').hasError('pattern')" class="required">
                                     Connection Name already exists*
@@ -96,7 +96,6 @@
         </app-split-overlay>
 </div>
 
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 
 <p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
     rejectButtonStyleClass="btn bluebg-button" [closable]="false">

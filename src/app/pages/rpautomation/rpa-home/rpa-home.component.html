@@ -548,11 +548,6 @@
 
 </ng-template> -->
 
-<ngx-spinner bdColor="#bebcbc66" type="">
-    <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
-  
-  </ngx-spinner>
-
   <div *ngIf="hiddenPopUp" > 
     <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
     <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
@@ -622,4 +617,5 @@
 <p-confirmDialog  [style]="{width: '30vw'}"  position="center" [baseZIndex]="10000" 
    [closable]="false">
 </p-confirmDialog>
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+<!-- <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
+<p-toast  [style]="{marginTop: '50px'}" key="rpa-home"></p-toast> -->

@@ -7,6 +7,8 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageData, UserMessagePayload } from "../copilot-models";
 import { CopilotService } from "../../services/copilot.service";
+import { DatePipe } from '@angular/common';
+import * as XLSX from 'xlsx';
 interface City {
   name: string;
   code: string;
@@ -19,6 +21,7 @@ interface City {
 export class CopilotChatComponent implements OnInit {
   @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
   @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
+  @ViewChild('copilotMessageTemplate', {static:false}) copilotMessageRef:any;
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
@@ -42,6 +45,15 @@ export class CopilotChatComponent implements OnInit {
   isGraphLoaded:boolean=false;
   isTableLoaded:boolean=false;
   previewLabel:any="";
+  displayFlag:any="";
+  displayEnum:any={
+    displayProcessLogGraph:"PROCESS_LOG_GRAPH",
+    displayRPA:"RPA",
+    displayEventLogTable:"EventLogTable",
+    displayPI:"PI"
+  }
+  piId:any;
+  botId:any;
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
@@ -53,6 +65,7 @@ export class CopilotChatComponent implements OnInit {
 
   ngOnInit() {
     this.loader = true;
+    this.displayFlag=this.displayEnum.displayProcessLogGraph;
     this.createForm();
     this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
@@ -79,6 +92,7 @@ export class CopilotChatComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?: String) {
+     console.log("check",this.copilotMessageRef)
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -92,12 +106,14 @@ export class CopilotChatComponent implements OnInit {
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
+          this.analyzeMessage(response);
           this.isChatLoad = false;
           let res = { ...{}, ...response };
           this.updateTemplateFlag(res);
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -277,6 +293,7 @@ export class CopilotChatComponent implements OnInit {
       this.updateCurrentMessageButtonState("DISABLED");
       this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         this.currentMessage=response;
+        this.analyzeMessage(response);
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage)
         var objDiv = document.getElementById("chat-grid");
@@ -324,6 +341,10 @@ export class CopilotChatComponent implements OnInit {
   }
 
   public sendUserAction =(data:any)=>{
+    setTimeout(()=>{
+
+      this.copilotMessageRef.scrollToBottom();
+    },100)
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
         message:data?.message,
@@ -334,6 +355,7 @@ export class CopilotChatComponent implements OnInit {
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
+        this.analyzeMessage(res)
         this.updateCurrentMessageButtonState("ENABLED");
         this.updateTemplateFlag(res);
         this.messages.push(this.currentMessage);
@@ -343,7 +365,7 @@ export class CopilotChatComponent implements OnInit {
           objDiv.scrollTop = objDiv.scrollHeight;
           this.isChatLoad=false;
         }, 500)
-        if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
+        //if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
       console.log(err);
     })
@@ -363,6 +385,7 @@ export class CopilotChatComponent implements OnInit {
     })
     this.createForm();
     setTimeout(()=>{
+      this.displayFlag=this.displayEnum.displayEventLogTable;
       this.showTable=true;
       this.isTableLoaded=true;
     },500)
@@ -400,23 +423,12 @@ export class CopilotChatComponent implements OnInit {
 
   changefileUploadForm(event:any, buttonData:any){
     let selectedFile = <File>event.target.files[0];
-    const fd = new FormData();
-    fd.append('file', selectedFile),
-    fd.append('permissionStatus', 'yes')
     this.isChatLoad=true;
-    this.main_rest.fileupload(fd).subscribe((res:any) => {
-      if(res){
-        const dataValue = res.data;
-        const fileName = dataValue.split(':')[1].trim();
-        this.isChatLoad=false;
-        this.sendUserAction({
-          message:buttonData.submitValue,
-          jsonData:JSON.stringify({fileName:fileName})
-        })
-      }
-    },err=>{
-      this.isChatLoad=false;
-    })
+    let fileName = selectedFile.name.split('.');
+    buttonData.fileType=fileName[fileName.length-1];
+    if(fileName[fileName.length-1]=="xlsx") this.readExcelFile(selectedFile, buttonData);
+    if(fileName[fileName.length-1]=="csv") this.readCSVFile(selectedFile ,buttonData);
+    if(fileName[fileName.length-1]=="xes" || fileName[fileName.length-1]=="gz") this.uploadProcessLogsFile(selectedFile, {...buttonData, ...{fileType:fileName[fileName.length-1]}})
   }
 
   updateCurrentMessageButtonState(state){
@@ -489,5 +501,103 @@ export class CopilotChatComponent implements OnInit {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
     }
+  }
+
+
+  analyzeMessage(messageResponse:any){
+    messageResponse?.data?.message?.forEach((message)=>{
+    let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
+    let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
+     if(message.match(piRegexExp)){
+      console.log("-- sample --",message)
+      let piId = (message.match(piRegexExp)[0].split("piId="))[1];
+      console.log("sample check 2");
+      console.log(piId);
+      this.piId=piId;
+      let url=window.location.hash;
+      window.history.pushState("", "", url+"&piId="+piId); 
+      this.displayFlag=this.displayEnum.displayPI;   
+     }
+     if(message.match(rpaRegexExp)){
+      let rpaBotId = (message.match(rpaRegexExp)[0].split("botId="))[1];
+      this.botId=rpaBotId;
+      let url=window.location.hash;
+      console.log("sample check 2");
+      console.log(rpaBotId);
+      window.history.pushState("", "", url+"&botId="+rpaBotId); 
+      this.displayFlag=this.displayEnum.displayRPA;   
+     }
+  });
+  }
+  readExcelFile(evt, buttonData) {    // read xls files
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr,  { type: 'binary', cellText: false, cellDates:true });
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      let excelfile:any[] = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No data was found in the uploaded file!",
+        })
+      } else{
+        buttonData.headers=excelfile[0];
+        this.uploadProcessLogsFile(evt,buttonData);
+      }
+    };
+    reader.readAsBinaryString(evt);
+  }
+
+  readCSVFile(e, buttonData) {        //  read CSV files
+    let reader = new FileReader();
+    reader.readAsText(e);
+    let _self = this;
+    reader.onload = () => {
+      let csvRecordsArray: string[][] = [];
+      (<string>reader.result).split(/\r\n|\n/).forEach((each, i) => {
+        if(each)
+        csvRecordsArray.push(each.split(','));
+      })   
+      let excelfile = [];
+      excelfile = csvRecordsArray;
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No data was found in the uploaded file!",
+        })
+      } else{
+        buttonData.headers=excelfile[0];
+        this.uploadProcessLogsFile(e,buttonData);
+      }
+    };
+  }
+
+  uploadProcessLogsFile(selectedFile,buttonData){
+    const fd = new FormData();
+    fd.append('file', selectedFile),
+    fd.append('permissionStatus', 'yes');
+    this.main_rest.fileupload(fd).subscribe((res:any) => {
+      if(res){
+        const dataValue = res.data;
+        const fileName = dataValue.split(':')[1].trim();
+        this.isChatLoad=false;
+        this.sendUserAction({
+          message:buttonData.submitValue,
+          jsonData:JSON.stringify({fileName:fileName, headers:buttonData.headers,fileType:buttonData.fileType})
+        })
+      }
+    },err=>{
+      this.isChatLoad=false;
+    })
+  }
+
+
+
+  onBackPress(type){
+    this.displayFlag=this.displayEnum.displayProcessLogGraph
   }
 }

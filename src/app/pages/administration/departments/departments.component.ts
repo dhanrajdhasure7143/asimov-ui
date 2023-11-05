@@ -91,35 +91,20 @@ export class DepartmentsComponent implements OnInit {
       this.loader.hide(); 
       let selected_department = localStorage.getItem("department_search");
       this.department = selected_department?selected_department:'alldepartments';
+      this.readSelectedData([]);
     })
    }
 
    onDeleteSelectedProcess(data){
     this.selected_list=[];
     this.selected_list.push(data);
-    this.deleteDepartment()
+    this.deleteDepartment();
    }
 
   deleteDepartment() {
     const delbody = this.selected_list.map(p=>{
-      return{
-        "categoryId": p.categoryId
-      }
+      return{"categoryId": p.categoryId}
       });
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   heightAuto: false,
-      
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-    //   if (result.value) {
       this.confirmationService.confirm({
         header:'Are you sure?',
         message:"Do you want to delete this department? This can't be undo.",
@@ -131,29 +116,14 @@ export class DepartmentsComponent implements OnInit {
         rejectButtonStyleClass:'btn reset-btn',
         defaultFocus:'none',
         accept:()=>{
-            this.rest_api.deleteDepartments(delbody).subscribe(resp => {
+      this.rest_api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         if (value.message === "Successfully deleted the category") {
-        //   Swal.fire({
-        //     title: 'Success',
-        //     text: "Department deleted successfully!",
-        //     position: 'center',
-        //     icon: 'success',
-        //     showCancelButton: false,
-        //     customClass: {
-        //       confirmButton: 'btn bluebg-button',
-        //       cancelButton:  'btn new-cancelbtn',
-        //     },
-    
-        //     heightAuto: false,
-        //     confirmButtonText: 'Ok'
-        // })
         this.messageService.add({
           severity: 'success', summary: 'Success', detail: "Department deleted successfully!"
         });
           this.getAllDepartments();
         } else {
-          // Swal.fire("Error", value.message, "error");
           this.messageService.add({severity:'error',summary:'Error',detail: value.message})
         }
       })
@@ -217,19 +187,6 @@ export class DepartmentsComponent implements OnInit {
     this.loader.show();
     this.rest_api.createDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully created the category"){
-      //   Swal.fire({
-      //     title: 'Success',
-      //     text: "Department created successfully!",
-      //     position: 'center',
-      //     icon: 'success',
-      //     showCancelButton: false,
-      //     customClass: {
-      //       confirmButton: 'btn bluebg-button',
-      //       cancelButton:  'btn new-cancelbtn',
-      //     },
-      //     heightAuto: false,
-      //     confirmButtonText: 'Ok'
-      // })
       this.messageService.add({
         severity: 'success', summary: 'Success', detail: "Department created successfully!"
       });
@@ -237,18 +194,13 @@ export class DepartmentsComponent implements OnInit {
       this.createDepartmentForm.reset();
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
-        // Swal.fire("Error","Department already exists..","error");
         this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists!'})
       } else {
-        // Swal.fire("Error",resp.message,"error");
         this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
-
       }
       this.loader.hide();
     },err=>{
-      // Swal.fire("Error","Failed to save.","error");
       this.messageService.add({severity:'error',summary:'Error',detail:'Failed to save.'})
-
       this.loader.hide();
     })
   }
@@ -267,39 +219,20 @@ export class DepartmentsComponent implements OnInit {
     }
     this.rest_api.updateDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully updated the category"){
-      //   Swal.fire({
-      //     title: 'Success',
-      //     text: "Department updated successfully!",
-      //     position: 'center',
-      //     icon: 'success',
-      //     showCancelButton: false,
-      //     customClass: {
-      //       confirmButton: 'btn bluebg-button',
-      //       cancelButton:  'btn new-cancelbtn',
-      //     },
-      //     heightAuto: false,
-      //     confirmButtonText: 'Ok'
-      // })
       this.messageService.add({
         severity: 'success', summary: 'Success', detail: "Department updated successfully!"
       });
       this.hiddenPopUp = false;
       this.getAllDepartments();
       }else if(resp.message==="Category already exists"){
-        // Swal.fire("Error","Department already exists.","error");
       this.messageService.add({severity:'error',summary:'Error',detail:'Department already exists!'})
-
       } else {
-        // Swal.fire("Error",resp.message,"error");
-      this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
-
-        
+      this.messageService.add({severity:'error',summary:'Error',detail:resp.message})        
       }
     })
 }
 
-onChangeDepeartment(event){
-this.userEmail = event.value.user_email
-
-}
+  onChangeDepeartment(event){
+    this.userEmail = event.value.user_email
+  }
 }
