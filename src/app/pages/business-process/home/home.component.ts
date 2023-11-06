@@ -693,6 +693,7 @@ export class BpsHomeComponent implements OnInit {
       id: obj.id,
       bpmnModelId: obj.bpmnModelId,
       processOwner: obj.processOwner,
+      version:obj.version
     };
     setTimeout(() => {
       this.isEdit = false;
