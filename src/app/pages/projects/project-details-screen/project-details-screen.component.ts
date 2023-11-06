@@ -246,7 +246,10 @@ private toastMessages: toastMessages
     this.project_id = this.params_data.project_id
     this.role=this.params_data.role
     this.process_name = this.params_data.process_name
-    if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
+    if(this.params_data.isCreated){
+      this.isCreate = this.params_data.isCreated
+      this.process_name = this.params_data.process_name
+    }
     this.spinner.show();
     this.getallusers();
   });

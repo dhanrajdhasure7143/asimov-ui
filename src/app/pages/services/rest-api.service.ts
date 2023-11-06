@@ -1837,4 +1837,12 @@ switchTaskLevelLogs(botId){
 getTaskLevelLogsSwitchState(botId:any){
   return this.http.get(`/rpa-service/get-enable-task-logs/${botId}`);
 }
+
+getProcessFrequencies(){
+  return this.http.get("/platform-service/dashboard/findProcessFrequencies")
+}
+
+saveProcessInfo(id,body:any){
+  return this.http.put("/platform-service/project/save-process-info/"+id, body)
+}
 }
