@@ -46,8 +46,6 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IntitiativePipe } from './pipes/initiatives-pipe.pipe';
 import { NotifierService } from 'angular-notifier';
-import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
-import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
@@ -70,9 +68,25 @@ const materialModules: any[] = [
   ];
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectsListScreenComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
-    ProjectDetailsScreenComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
-     BacklogsCreateComponent,
+  declarations: [
+    ProjectsComponent,
+    ProjectsListScreenComponent,
+    CreateProjectsComponent,
+    FileSizePipe,
+    UserImagePipe,
+    ProjectDetailsScreenComponent,
+    ProjectsDashboardComponent,
+    ProcessNamePipe,
+    IntitiativePipe, 
+    UserPipePipe, 
+    ProjectRepoScreenComponent,
+    CreateTasksComponent,
+    AddResourcesComponent,
+    ProgramDetailsComponent,
+    UserDetialsPipe,
+    RequestFileComponent,
+    CreateProjectFormComponent,
+    EditTaskComponent,
      ScrollIntoViewDirective,
      ProjectRpaDesignComponent,
      ProjectTaskListComponent,

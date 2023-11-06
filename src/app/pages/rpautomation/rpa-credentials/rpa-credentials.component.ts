@@ -1,5 +1,4 @@
 import { Component,  OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {Rpa_Hints} from "../model/RPA-Hints";
@@ -90,9 +89,9 @@ inputNumberOnly(event){
 
   getallCredentials(){
     this.Credupdateflag = false;
-    this.credentials= [];
     let role=localStorage.getItem('userRole')
     this.api.get_All_Credentials(role).subscribe((data1:any) => {
+      this.credentials= [];
         this.credentials = data1;
         this.isLoading=false;
         if(this.credentials.length>0){ 
@@ -144,17 +143,6 @@ inputNumberOnly(event){
 
   deleteCredentials(){
     const selectedcredentials = this.selectedData.map(p => p.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
 this.confirmationService.confirm({
   message: "Do you want to delete this credential? This can't be undo.",
   header: 'Are you sure?',
@@ -167,7 +155,6 @@ this.confirmationService.confirm({
  acceptIcon: 'null',
  key:"positionDialog",
   accept: (result) => {
-      // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
@@ -244,17 +231,6 @@ this.confirmationService.confirm({
     // const selectedcredentials = this.selectedData.map(p => p.credentialId);
     const selectedcredentials=[]
     selectedcredentials.push(row.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
       this.confirmationService.confirm({
         message: "You won't be able to revert this!",
         header: 'Are you sure?',
@@ -267,27 +243,22 @@ this.confirmationService.confirm({
       acceptIcon: 'null',
       key:"positionDialog",
       accept: (result) => {
-      // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
           if(status.errorMessage==undefined){
-            // Swal.fire("Success",status.status,"success");
             this.messageService.add({severity:'success',summary:'Success',detail:status.status})
             this.getallCredentials();
           }else{
-            // Swal.fire("Error",status.errorMessage,"error")
             this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
 
           }              
         },err=>{
           this.spinner.hide();
-          // Swal.fire("Error","Unable to delete credentails","error");
           this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
 
         });
-      // }
     }
     });
   }

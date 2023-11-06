@@ -23,7 +23,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 import { ProcessinsightsComponent } from './processinsights/processinsights.component';
@@ -76,7 +75,6 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     NgMultiSelectDropDownModule.forRoot(),
     Ng2SearchPipeModule,
     NgxSpinnerModule,
-    MatOptionModule,MatSelectModule,
     NgxPaginationModule,
     BackButtonDisableModule.forRoot({
       preserveScrollPosition: true
@@ -84,8 +82,6 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,
-    MatTooltipModule,MatDialogModule,
     NgbModule,
     NgxMaterialTimepickerModule,
     MatTabsModule,

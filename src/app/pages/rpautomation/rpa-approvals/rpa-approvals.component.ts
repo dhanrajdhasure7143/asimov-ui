@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { columnList } from 'src/app/shared/model/table_columns';
-import Swal from 'sweetalert2';
-
 import { DataTransferService } from "../../services/data-transfer.service";
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { MessageService } from 'primeng/api';
