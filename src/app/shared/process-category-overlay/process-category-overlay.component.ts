@@ -278,7 +278,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         "processOwner":this.approver_list[this.process_owner].userId,
         "processOwnerName": this.approver_list[this.process_owner].firstName +' ' + this.approver_list[this.process_owner].lastName,
         "bpmnProcessName": this.processName,
-        "bpmnVersion": this.overlay_data.selectedObj.version
+        "bpmnVersion": String(this.overlay_data.selectedObj.version)
     }
       this.rest.bpmnVersionChecking(req_body.bpmnModelId).subscribe((res:any)=>{
         this.isLoading=false;
