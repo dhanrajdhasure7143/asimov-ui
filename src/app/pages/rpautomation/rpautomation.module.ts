@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RpautomationComponent } from './rpautomation.component';
 import { RpautomationRoutingModule } from './rpautomation-routing.module';
 import { DndModule } from 'ngx-drag-drop';
@@ -50,8 +50,11 @@ import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-conn
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
-import { Rpa_Hints } from './model/RPA-Hints';
+import { ClipboardModule } from 'ngx-clipboard';
 
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { Rpa_Hints } from './model/RPA-Hints';
+ 
 
 @NgModule({
   declarations: [
@@ -109,9 +112,16 @@ import { Rpa_Hints } from './model/RPA-Hints';
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
-    PrimengCustomModule
+    PrimengCustomModule,
+    ClipboardModule
   ],
-  exports:[RpaSoLogsComponent,RpaSchedulerComponent],
-  providers: [Rpa_Hints, BsModalRef, BsModalService,]
+  exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
+  providers: [MatDatepickerModule,
+    Rpa_Hints, 
+    BsModalRef, 
+    BsModalService,
+    DatePipe,
+    toastMessages
+  ]
 })
 export class RpautomationModule { }

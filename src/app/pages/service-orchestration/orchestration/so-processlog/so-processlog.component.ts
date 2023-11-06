@@ -1,9 +1,11 @@
-import { Component, OnInit,Input, ChangeDetectorRef, OnDestroy, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit,Input, ChangeDetectorRef, OnDestroy, Output, EventEmitter, ViewChild} from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
 import { MessageService } from 'primeng/api';
 import { filter, map } from 'rxjs/operators';
 import moment from 'moment';
 import {columnList}  from '../../../../shared/model/table_columns'
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { ClipboardService } from 'ngx-clipboard';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -40,10 +42,14 @@ export class SoProcesslogComponent implements OnInit {
   selectedTask:any;
   selectedAutomationTask:any;
   selectedIterationTask:any;
+  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  isCopied:boolean = false;
+  copyTimer = null;
   constructor( private rest:RestApiService, 
     private changeDetectorRef: ChangeDetectorRef,
     private messageService:MessageService,
-    private columns_list:columnList
+    private columns_list:columnList,
+    private clipboardService: ClipboardService
     ) { }
   ngOnInit() {
     this.getProcessRuns();
@@ -79,7 +85,7 @@ export class SoProcesslogComponent implements OnInit {
     
     getTaskLogsByBot(botData:any){
       this.logsLoading=true;
-      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getViewlogbyrunid(botData.bot_id,botData.versionNew,botData.run_id,botData.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.logsDisplayFlag="BOT-LOGS";
@@ -103,7 +109,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getChildLogs(logs,logId, taskId, iterationId, type){
       this.logsLoading=true;
-      this.rest.getChildLogs(logs, logId, taskId, iterationId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getChildLogs(logs, logId, taskId, iterationId,this.selectedBot.versionNew,this.selectedBot.version).pipe(filter(data => Array.isArray(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         this.columnList=this.columns_list.orchestration_child_logs_columns;
         this.logsDisplayFlag="CHILD-LOGS";
@@ -145,10 +151,15 @@ export class SoProcesslogComponent implements OnInit {
     }
 
     killRun(log){
-      this.rest.kill_process_log(log.processId, log.envId, log.runId).subscribe(data=>{
+      this.logsLoading=true;
+      this.rest.kill_process_log(log.processId, log.envId, log.processRunId).subscribe(response=>{
+        if(this.validateErrorMessage(response))return;
         this.getProcessRuns();
+        
       },err=>{
-        console.log(err)
+        this.logsLoading=false;
+        this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to kill run"})
+        console.log(err);
       })
     }
 
@@ -224,9 +235,20 @@ export class SoProcesslogComponent implements OnInit {
     handleException=(err)=>{
      return (this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to fetch data"}),this.logsLoading=false);
     }
-  
+    copyToClipboard(value, event) {
+      if (this.copyTimer !== null) {
+        // If a timer is active, clear it to cancel the previous setTimeout
+        clearTimeout(this.copyTimer);
+        this.copyTimer = null;
+      }
+    
+      this.clipboardService.copy(value);
+      this.overlayPanel.show(event);
+    
+      // Set a new setTimeout and store the timer ID in the this.copyTimer variable
+      this.copyTimer = setTimeout(() => {
+        this.overlayPanel.hide();
+        this.copyTimer = null; // Reset the timer variable when the setTimeout completes
+      }, 2000);
+    }
 }
-
-
-
-

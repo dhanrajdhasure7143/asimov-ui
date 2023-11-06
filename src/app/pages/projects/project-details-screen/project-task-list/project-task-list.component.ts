@@ -5,8 +5,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import { columnList } from "src/app/shared/model/table_columns";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-project-task-list",
@@ -44,8 +46,9 @@ export class ProjectTaskListComponent implements OnInit {
     private dataTransfer: DataTransferService,
     private spinner: LoaderService,
     private confirmationService : ConfirmationService,
-    private messageService : MessageService,
-    private columnList: columnList
+    private toastService: ToasterService,
+    private columnList: columnList,
+    private toastMessages: toastMessages
     ) {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data
@@ -176,12 +179,12 @@ export class ProjectTaskListComponent implements OnInit {
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Success', detail: status.message, key:'tasklist'});
+            this.toastService.showSuccess(data.taskName,'delete');
             this.getTasksList();
           },
           (err) => {
             this.spinner.hide();
-            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!",  key:'tasklist'});
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       },

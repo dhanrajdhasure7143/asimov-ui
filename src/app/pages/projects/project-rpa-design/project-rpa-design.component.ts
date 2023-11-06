@@ -5,7 +5,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
-import Swal from "sweetalert2";
+import { MessageService, ConfirmationService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-project-rpa-design",
@@ -37,7 +39,11 @@ export class ProjectRpaDesignComponent implements OnInit {
     private rest_api: RestApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    // private messageService: MessageService,
+    private toastService: ToasterService,
+    private confirmationService: ConfirmationService,
+    private toastMessages: toastMessages
   ) {
     this.route.queryParams.subscribe((params) => {
       // id=2892&programId=2896
@@ -149,23 +155,12 @@ export class ProjectRpaDesignComponent implements OnInit {
     this.rest_api.saveRpaDesign([req_body]).subscribe(
       (res) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Created successfully!",
-          heightAuto: false,
-        }).then((result) => {
-          this.getRPAdesignData();
-        });
+        this.toastService.showSuccess('RpaDesign','create');
+        this.getRPAdesignData();
       },
       (err) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          heightAuto: false,
-        });
+        this.toastService.showError(this.toastMessages.createError);
       }
     );
   }
@@ -182,24 +177,13 @@ export class ProjectRpaDesignComponent implements OnInit {
     this.rest_api.updateRPADesignData(req_body).subscribe(
       (res) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Updated successfully!",
-          heightAuto: false,
-        }).then((result) => {
-          this.getRPAdesignData();
-        });
+        this.toastService.showSuccess('RpaDesign','update');
+        this.getRPAdesignData();
         this.selectedId = null;
       },
       (err) => {
         this.spinner.hide();
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          heightAuto: false,
-        });
+        this.toastService.showError(this.toastMessages.updateError);
       }
     );
   }
@@ -208,48 +192,32 @@ export class ProjectRpaDesignComponent implements OnInit {
     let req_body = {
       id: item.id,
     };
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      heightAuto: false,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
+    this.confirmationService.confirm({
+      message: "You won't be able to revert this!",
+      header: "Are you sure?",
+      rejectLabel: "No",
+      acceptLabel: "Yes",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
         this.spinner.show();
         this.rest_api.deleteRpaDesign(req_body).subscribe(
           (res) => {
             let status: any = res;
             this.spinner.hide();
-            Swal.fire({
-              title: "Success",
-              text: "" + status.message,
-              position: "center",
-              icon: "success",
-              showCancelButton: false,
-              heightAuto: false,
-              confirmButtonColor: "#007bff",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Ok",
-            });
+            this.toastService.showSuccess('RpaDesign','delete');
             this.getRPAdesignData();
           },
           (err) => {
             this.spinner.hide();
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-              heightAuto: false,
-            });
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
-      }
+      },
+      reject: (type) => {}
     });
   }
 }

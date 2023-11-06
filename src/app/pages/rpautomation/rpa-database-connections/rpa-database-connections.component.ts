@@ -8,7 +8,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -55,8 +57,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     private dt: DataTransferService,
     private spinner: LoaderService,
     private columnList : columnList,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private toastService: ToasterService,
+    private confirmationService:ConfirmationService,
+    private toastMessages: toastMessages
   ) {
     const ipPattern ="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     this.DBupdateflag = false;
@@ -143,13 +146,16 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       await this.api.testdbconnections(formdata.value).subscribe(res => {
         this.spinner.hide();
         if (res.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!'})
+          // this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!'})
+          this.toastService.showSuccess('','connect');
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Connection failed!'})
+          // this.toastService.showError('Connection failed!');
+          this.toastService.showError(this.toastMessages.connectionError);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to test connection details.'})
+        // this.toastService.showError('Unable to test connection details!');
+        this.toastService.showError(this.toastMessages.connectionError);
       });
       this.activestatus();
     }
@@ -183,6 +189,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   deletedbconnection() {
     const selecteddbconnection = this.selectedData.map(p => p.connectionId);
+    const dbConnectionName = this.selectedData.map(p => p.connectiontName);
       this.confirmationService.confirm({
         message: "Do you want to delete this connection? This can't be undo.",
         header: 'Are you sure?',
@@ -200,16 +207,18 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           let status: any = res;
           this.spinner.hide();
           if (status.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            const message = selecteddbconnection.length > 1 ? "Database connections" : `${dbConnectionName}`;
+            this.toastService.showSuccess(message,'delete');
             this.getallDBConnection();
             this.readSelectedData([])
           }
           else
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+            this.toastService.showError(status.errorMessage);
 
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
+          // this.toastService.showError('Unable to delete database connections!');
+          this.toastService.showError(this.toastMessages.deleteError);
         });
     },
   });
@@ -308,17 +317,21 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.spinner.show();
         this.api.deleteDBConnection(selecteddbconnection).subscribe(res => {
           let status: any = res;
+          const dbConnectionName = row.connectiontName          
           this.spinner.hide();
           if (status.errorMessage == undefined) {
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            // Swal.fire("Success", status.status, "success")
+            this.toastService.showSuccess(dbConnectionName,'delete');
             this.getallDBConnection();
             this.readSelectedData([])
           }
           else
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+            // Swal.fire("Error", status.errorMessage, "error")
+            this.toastService.showError(status.errorMessage);
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete database connections.'})
+          // this.toastService.showError('Unable to delete database connection!');
+          this.toastService.showError(this.toastMessages.deleteError);
         });
       }
     

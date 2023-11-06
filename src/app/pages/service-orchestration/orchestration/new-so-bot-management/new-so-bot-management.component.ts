@@ -709,7 +709,7 @@ this.display = false
    this.botrunid=runid;
    this.spinner.show();
    this.logflag="Loading"
-   this.rest.getViewlogbyrunid(this.log_botid,this.log_version,runid).subscribe((data:any)=>{
+   this.rest.getViewlogbyrunid(this.log_botid,this.log_version,runid,'1').subscribe((data:any)=>{
       this.spinner.hide();
       if(data.errorMessage==undefined)
       {

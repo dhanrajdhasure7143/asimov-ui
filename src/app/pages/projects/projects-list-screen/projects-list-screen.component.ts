@@ -2,15 +2,16 @@ import { Component, Inject, NgZone, OnInit, ViewChild } from "@angular/core";
 
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
-import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { query } from "@angular/animations";
 import moment from "moment";
 import { APP_CONFIG } from "src/app/app.config";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService, } from "primeng/api";
 import { columnList } from "src/app/shared/model/table_columns";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-projects-list-screen",
@@ -62,9 +63,11 @@ export class ProjectsListScreenComponent implements OnInit {
     private spinner: LoaderService,
     private router: Router,
     @Inject(APP_CONFIG) private config,
-    private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private columnList: columnList,
+    private toastService:ToasterService,
+    private toastMessages: toastMessages
+
   ) {}
 
   ngOnInit() {
@@ -195,17 +198,6 @@ export class ProjectsListScreenComponent implements OnInit {
           accept: () => {},
         });
 
-        // Swal.fire({
-        //   title: "Error",
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: "center",
-        //   icon: "error",
-        //   showCancelButton: false,
-        //   confirmButtonColor: "#007bff",
-        //   cancelButtonColor: "#d33",
-        //   heightAuto: false,
-        //   confirmButtonText: "Ok",
-        // });
         return;
       } else if (this.projectsresponse[1].length >= 1) {
         this.create_Tabs = "projects";
@@ -279,26 +271,14 @@ export class ProjectsListScreenComponent implements OnInit {
           this.spinner.hide();
           let response: any = res;
           if (response.errorMessage == undefined && response.warningMessage == undefined) {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Project deleted successfully!",
-            });
+            this.toastService.showSuccess(project.projectName,'delete');
             this.getallProjects(this.userRoles, this.name, this.email);
           }
           if(response.warningMessage){
-            this.messageService.add({
-              severity: "info",
-              summary: "Info",
-              detail: response.warningMessage+"!",
-            });
+            this.toastService.showInfo(response.warningMessage+"!");
           }
         },err=>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Failed to delete!"
-          });
+          this.toastService.showError(this.toastMessages.deleteError);
           this.spinner.hide();
         });
       },

@@ -4,7 +4,8 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from '../service/toaster.service';
 
 @Component({
   selector: 'process-category-overlay',
@@ -46,7 +47,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
     private cdRef: ChangeDetectorRef, private dt: DataTransferService,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     private confirmationService: ConfirmationService,) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -258,11 +259,12 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }
       this.rest.updatePiData(req_body).subscribe((res:any) => {
         this.isLoading=false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: res.message
-        })
+        // this.messageService.add({
+        //   severity: 'success',
+        //   summary: 'Success',
+        //   detail: res.message
+        // })
+        this.toastService.showSuccess(this.processName,'update');
         setTimeout(() => {
           this.dt.processDetailsUpdateSuccess({"isRfresh":true});
         }, 1500);
@@ -275,7 +277,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         "bpmnModelId":this.overlay_data.selectedObj.bpmnModelId,
         "processOwner":this.approver_list[this.process_owner].userId,
         "processOwnerName": this.approver_list[this.process_owner].firstName +' ' + this.approver_list[this.process_owner].lastName,
-        "bpmnProcessName": this.processName
+        "bpmnProcessName": this.processName,
+        "bpmnVersion": String(this.overlay_data.selectedObj.version)
     }
       this.rest.bpmnVersionChecking(req_body.bpmnModelId).subscribe((res:any)=>{
         this.isLoading=false;
@@ -303,11 +306,12 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             accept: () => {
               this.rest.updateBpsData(req_body).subscribe((res:any)=>{
                 this.isLoading=false;
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Success',
-                  detail: res.message
-                })
+                // this.messageService.add({
+                //   severity: 'success',
+                //   summary: 'Success',
+                //   detail: res.message
+                // })
+                this.toastService.showSuccess(this.processName,'update');
                 setTimeout(() => {
                   this.dt.processDetailsUpdateSuccess({"isRfresh":true});
                 }, 1500);
@@ -319,24 +323,10 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           this.isLoading=true;
           this.rest.updateBpsData(req_body).subscribe((res:any)=>{
             this.isLoading=false;
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: res.message
-            })
+            this.toastService.showSuccess(this.processName,'update');
             setTimeout(() => {
               this.dt.processDetailsUpdateSuccess({"isRfresh":true});
             }, 1500);
-            // Swal.fire({
-            //   title: 'Success',
-            //   text: res.message,
-            //   icon: 'success',
-            //   heightAuto: false,
-            // }).then((result) => {
-            //   if (result.value) {
-            //     this.dt.processDetailsUpdateSuccess({"isRfresh":true});
-            //   }
-            // });
             this.slideDown(null);
           })
         }

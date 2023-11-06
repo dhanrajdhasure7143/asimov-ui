@@ -99,7 +99,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "production": {
               "fileReplacements": [
@@ -128,7 +128,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "qa": {
               "fileReplacements": [
@@ -157,7 +157,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "dev": {
               "fileReplacements": [
@@ -186,7 +186,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "staging": {
               "fileReplacements": [
@@ -214,8 +214,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "asquaredev": {
               "fileReplacements": [
@@ -243,8 +243,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "asquaredemo": {
               "fileReplacements": [
@@ -272,8 +272,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             }
           },
           "defaultConfiguration": ""

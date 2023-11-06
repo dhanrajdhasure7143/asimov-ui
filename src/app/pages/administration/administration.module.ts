@@ -16,6 +16,7 @@ import { AdminAddScreenComponent } from './admin-add-screen/admin-add-screen.com
 import { AdminScreenListComponent } from './admin-screen-list/admin-screen-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 @NgModule({
@@ -41,6 +42,6 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     PrimengCustomModule,
     Ng2TelInputModule
   ],
-  providers:[]
+  providers:[toastMessages]
 })
 export class AdministrationModule { }

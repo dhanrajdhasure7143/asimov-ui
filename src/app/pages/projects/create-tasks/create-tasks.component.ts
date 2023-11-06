@@ -5,10 +5,11 @@ import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-create-tasks',
@@ -45,7 +46,7 @@ export class CreateTasksComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private toastService: ToasterService
     
     ) { }
 
@@ -118,6 +119,7 @@ export class CreateTasksComponent implements OnInit {
     this.createtaskForm.value.percentageComplete=0;
     this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
+    let taskName = this.createtaskForm.value.taskName;
     if(this.createtaskForm.value.taskCategory == 'As-Is Process' || this.createtaskForm.value.taskCategory == 'To-Be Process'){
       data["process"] = this.bpm_process_list.find(each=>each.correlationID == this.createtaskForm.value.correlationID).processId
     }
@@ -127,16 +129,16 @@ export class CreateTasksComponent implements OnInit {
       if(response.code == 4200){
         // let status: any= response;
         //this.createtaskmodalref.hide();
-        this.messageService.add({severity: "success",summary: "Success",detail: "Task created successfully!",key:"create"})
-        this.router.navigate(["/pages/projects/taskDetails"], {
-          queryParams: {
-            project_id: this.params_data.project_id,
-            project_name: this.project_name,
-            task_id: response.taskId,
-          }});
+        this.toastService.showSuccess(taskName,'create');
+          this.router.navigate(["/pages/projects/taskDetails"], {
+            queryParams: {
+              project_id: this.params_data.project_id,
+              project_name: this.project_name,
+              task_id: response.taskId,
+            }});
       }
       else
-        this.messageService.add({ severity: "error", summary: "Error", detail: response.message});
+        this.toastService.showError(response.message);
     })
   }
 

@@ -413,3 +413,33 @@ ul#versions li:hover {
   padding:0px !important;
   margin: 0px;
 }
+
+/* 
+.logs-container .main-content-body{
+  padding:0px !important;
+  margin: 0px;
+} */
+.ellipsis-container {
+  /* display: flex; */
+  /* justify-content: space-between;
+  align-items: center; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto;
+}
+.ellipsis-content{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adjust the gap as needed */
+  padding-left: 5px;
+}
+.refresh-load{
+  width: 80px;
+}

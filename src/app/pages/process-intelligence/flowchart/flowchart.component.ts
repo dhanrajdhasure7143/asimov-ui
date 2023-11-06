@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
+import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter ,ElementRef, Renderer2,Output ,HostListener, Input} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -8,11 +8,12 @@ import { createLoweredSymbol, ThrowStmt } from '@angular/compiler';
 import { NgControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from '../../services/rest-api.service';
-import Swal from 'sweetalert2';
 import { Location} from '@angular/common'
 import { GlobalScript } from 'src/app/shared/global-script';
 import { Subscription } from 'rxjs';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { interval, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -34,6 +35,8 @@ enum VariantList {
   styleUrls: ['./flowchart.component.css'],
 })
 export class FlowchartComponent implements OnInit {
+  
+  @Input("copilotPiId") public copilotPiId:any;
   public select_varaint: any = 0;
   public model1:any[]=[];
   public model2:any[]=[];
@@ -155,6 +158,9 @@ pi_fullGraph_data:any=[];
   freetrail = localStorage.getItem("freetrail");
   isGenerate:boolean = false;
 redirectCopilot:boolean=false;
+@Output("onBackEvent") backEmitter:any= new EventEmitter();
+  private destroy$ = new Subject<void>();
+  private pollingInterval = 10000; // 10 seconds
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -165,9 +171,9 @@ redirectCopilot:boolean=false;
     private route:ActivatedRoute,
     private renderer: Renderer2,
     private location:Location,
-    private global:GlobalScript,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {  }
+    private confirmationService: ConfirmationService,
+    ) {  }
 
   @HostListener('document:click', ['$event.target'])  // spinner overlay hide on out side click
   public onClick(targetElement) {
@@ -195,36 +201,47 @@ redirectCopilot:boolean=false;
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     var piId;
-    this.route.queryParams.subscribe(params => {
-      console.log(params)
-      if(params.redirect)
-      {
-        if(params.redirect=="copilot")
-          this.redirectCopilot=true;
-      }
-      if(params['wpiId']!=undefined){
-          this.wpiIdNumber = parseInt(params['wpiId']);
-          piId=this.wpiIdNumber;
-          this.graphIds = piId;
-          this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
-          this.spinner.show();
-          setTimeout(() => {
-            this.onchangegraphId(piId);
-            }, 500);
-        }
-      if(params['piId']!=undefined){
-        this.piIdNumber = parseInt(params['piId']);
-        piId=this.piIdNumber;
-        this.graphIds = piId;        
-        this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
-        this.spinner.show();
-           this.graphgenetaionInterval = setInterval(() => {
-             this.onchangegenerategraphId(piId);
-           }, 10*1000);
-           this.isGenerate = true;
+    if(this.copilotPiId)
+    {
+      this.piIdNumber = parseInt(this.copilotPiId);
+      piId=this.piIdNumber;
+      this.graphIds = piId;        
+      this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
+      this.spinner.show();
+        this.graphgenetaionInterval = setInterval(() => {
+          this.onchangegenerategraphId(piId);
+        }, 10*1000);
+        this.isGenerate = true;
 
-      }
-    });
+    }else{
+      this.route.queryParams.subscribe(params => {
+        if(params.redirect){
+          if(params.redirect=="copilot")
+            this.redirectCopilot=true;
+        }
+        if(params['wpiId']!=undefined){
+            this.wpiIdNumber = parseInt(params['wpiId']);
+            piId=this.wpiIdNumber;
+            this.graphIds = piId;
+            this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+            this.spinner.show();
+            setTimeout(() => {
+              this.onchangegraphId(piId);
+              }, 500);
+          }
+        if(params['piId']!=undefined){
+          this.piIdNumber = parseInt(params['piId']);
+          piId=this.piIdNumber;
+          this.graphIds = piId;        
+          this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
+          this.spinner.show();
+            this.graphgenetaionInterval = setInterval(() => {
+              this.onchangegenerategraphId(piId);
+            }, 10*1000);
+            this.isGenerate = true;
+        }
+      });
+    }
   }
 
   getAlluserProcessPiIds(){ // List of Process graphs
@@ -261,23 +278,6 @@ redirectCopilot:boolean=false;
     }else{
       endTime=this.workingHours.shiftEndTime
     }
-    const variantListbody= { 
-      "data_type":"varients_list", 
-      "pid":selectedpiId,
-      'timeChange':this.isTimeChange,
-      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-       } 
-    this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
-      this.performanceFilterInput = data;
-      for(var i=0; i<this.varaint_data.data.length; i++){
-          this.varaint_data.data[i].selected= "inactive";
-      }
-
-      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
-      this.onchangeVaraint("0");
-      },err=>{
-        this.spinner.hide();
-      })
       const fullGraphbody= { 
         "data_type":"full_graph", 
         "pid":selectedpiId,
@@ -287,7 +287,6 @@ redirectCopilot:boolean=false;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-
             this.confirmationService.confirm({
               message: "Oops!" +this.fullgraph.display_msg.info,
               header: "Info",
@@ -307,31 +306,6 @@ redirectCopilot:boolean=false;
                 }, 1500)
               }
             });
-
-            // Swal.fire({
-            //   title: 'Oops!',
-            //   text: ""+this.fullgraph.display_msg.info,
-            //   icon: 'error',
-            //   showCancelButton: false,
-            //   heightAuto: false,
-            //   confirmButtonColor: '#007bff',
-            //   cancelButtonColor: '#d33',
-            //   confirmButtonText: 'Okay'
-            // }).then((result) => {
-            //   if (result.isConfirmed) {
-            //     Swal.fire({
-            //       position: 'center',
-            //       icon: 'info',
-            //       title: 'Please wait, Redirecting to workspace',
-            //       showConfirmButton: false,
-            //       heightAuto: false,
-            //       timer: 1500
-            //     })
-            //     setTimeout(() => {
-            //       self.router.navigate(['pages/processIntelligence/upload'])
-            //     }, 1500);
-            //   }
-            // });
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
@@ -340,7 +314,6 @@ redirectCopilot:boolean=false;
           } 
         }
         if(this.fullgraph.hasOwnProperty('display_msg')){
-
           this.confirmationService.confirm({
             message: "Oops! It's not you, it's us. Please try again after some time.",
             header: "Info",
@@ -360,89 +333,45 @@ redirectCopilot:boolean=false;
               }, 1500)
             }
           });
-
-          // Swal.fire({
-          //   title: 'Oops!',
-          //   text: "It is Not You it is Us, Please try again after some time",
-          //   icon: 'error',
-          //   showCancelButton: false,
-          //   heightAuto: false,
-          //   confirmButtonColor: '#007bff',
-          //   cancelButtonColor: '#d33',
-          //   confirmButtonText: 'Okay'
-          // }).then((result) => {
-          //   if (result.isConfirmed) {
-          //     Swal.fire({
-          //       position: 'center',
-          //       icon: 'info',
-          //       title: 'Please wait, Redirecting to workspace',
-          //       showConfirmButton: false,
-          //       heightAuto: false,
-          //       timer: 1500
-          //     })
-          //     setTimeout(() => {
-          //       self.router.navigate(['pages/processIntelligence/upload'])
-          //     }, 1500);
-          //   }
-          // })
-
           this.spinner.hide();
           this.model1=[];
           this.model2=[];
         } else{
-         let fullgraphOne=this.fullgraph.data;
+          this.getVariantList(selectedpiId,endTime);
+          this.getVariantGraphs(selectedpiId,endTime);
+          this.getSliderGraphs(selectedpiId,endTime);
+          let fullgraphOne=this.fullgraph.data;
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
           this.pi_fullGraph_data=fullgraphOne
-        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
-        this.filterPerformData = this.fullgraph_model;
-        this.model2 = this.flowchartData(this.model1)
-        let fullModel2=this.model2
-        this.startArray=[]
-        this.endArray=[]
-        fullModel2.forEach(element => {
-          if(element.from=="Start"){
-            this.startArray.push(element.to)
-          }
-          if(element.to=="End"){
-            this.endArray.push(element.from)
-          }
-        });
-        this.spinner.hide();
-        this.linkmodel2 = this.model2;
-        this.isFullGraphBPMN = true;
-        this.isSingleTraceBPMN = false;
-        this.isMultiTraceBPMN = false;
-        this.isSliderBPMN = false;
-        this.filterOverlay();
-        this.isGraph_changed=false;
-    }
+          this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+          this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
+          this.filterPerformData = this.fullgraph_model;
+          this.model2 = this.flowchartData(this.model1)
+          let fullModel2=this.model2
+          this.startArray=[]
+          this.endArray=[]
+          fullModel2.forEach(element => {
+            if(element.from=="Start"){
+              this.startArray.push(element.to)
+            }
+            if(element.to=="End"){
+              this.endArray.push(element.from)
+            }
+          });
+          this.spinner.hide();
+          this.linkmodel2 = this.model2;
+          this.isFullGraphBPMN = true;
+          this.isSingleTraceBPMN = false;
+          this.isMultiTraceBPMN = false;
+          this.isSliderBPMN = false;
+          this.filterOverlay();
+          this.isGraph_changed=false;
+        }
         },(err =>{
           this.spinner.hide();
         }));
-        const variantGraphbody= { 
-          "data_type":"variant_graph", 
-          "pid":selectedpiId,
-          'timeChange':this.isTimeChange,
-          "cases":[],
-          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-             }
-        this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        },err=>{
-            this.spinner.hide();
-          })
-        const sliderGraphbody= { 
-          "data_type":"slider_graph",
-          "pid":selectedpiId,
-          'timeChange':this.isTimeChange,
-          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-               }
-        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data      
-        },err=>{
-            this.spinner.hide();
-          })
         setTimeout(() => {
           this.process_graph_list.data.forEach(e => {
           if(e.piId==selectedpiId){
@@ -456,7 +385,6 @@ redirectCopilot:boolean=false;
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
-      
       if (token) {
         let url=this.router.url.split('?')
         this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
@@ -464,155 +392,107 @@ redirectCopilot:boolean=false;
         let url=this.router.url.split('?')
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
       }
-  });
-  let endTime:any;
-  if(this.workingHours.shiftEndTime=='23:59'){
-    endTime="24:00"
-  }else{
-    endTime=this.workingHours.shiftEndTime
-  }
-
-    let piId=selectedpiId
-    const variantListbody= { 
-      "data_type":"varients_list", 
-       "pid":selectedpiId,
-       'timeChange':this.isTimeChange,
-       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-       } 
-    this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
-      this.performanceFilterInput = data;
-      if(this.varaint_data.data){ 
-      for(var i=0; i<this.varaint_data.data.length; i++){
-          this.varaint_data.data[i].selected= "inactive";
-      }
-      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
-      this.onchangeVaraint("0");
-      }
-      },err=>{
-        this.spinner.hide();
-        })
+    });
+    let endTime:any;
+    if(this.workingHours.shiftEndTime=='23:59'){
+      endTime="24:00"
+    }else{
+      endTime=this.workingHours.shiftEndTime
+    }
       const fullGraphbody= { 
-        "data_type":"full_graph", 
-         "pid":selectedpiId,
-         'timeChange':this.isTimeChange,
-       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-         }
+          "data_type":"full_graph", 
+          "pid":selectedpiId,
+          "timeChange":this.isTimeChange,
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+        }
          var self = this;
-      this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
-        if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
-          if(this.fullgraph.is_kafka_failure == 'Y'){
-         
-            this.confirmationService.confirm({
-              message: "Oops!" +this.fullgraph.display_msg.info,
-              header: "Info",
-              rejectVisible: false,
-              acceptLabel: "Ok",
-              acceptButtonStyleClass: 'btn bluebg-button',
-              defaultFocus: 'none',
-              acceptIcon: 'null',
-              accept: () => {
-                this.messageService.add({
-                  severity: "info",
-                  summary: "Info",
-                  detail: "Please wait, redirecting to the workspace."
-                })
-                setTimeout(() => {
-                  self.router.navigate(['pages/processIntelligence/upload'])
-                }, 1500)
+        //  interval(this.pollingInterval)
+        //  .pipe(
+        //    takeUntil(this.destroy$),
+        //    switchMap(() => this.rest.getfullGraph(fullGraphbody)),
+        //  )
+         //process graph full data call
+      this.rest.getfullGraph(fullGraphbody)
+      .subscribe(
+        data=>{
+        this.fullgraph=data 
+          if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
+            if(this.fullgraph.is_kafka_failure == 'Y'){ 
+              this.confirmationService.confirm({
+                message: "Oops!" +this.fullgraph.display_msg.info,
+                header: "Info",
+                rejectVisible: false,
+                acceptLabel: "Ok",
+                acceptButtonStyleClass: 'btn bluebg-button',
+                defaultFocus: 'none',
+                acceptIcon: 'null',
+                accept: () => {
+                  this.messageService.add({
+                    severity: "info",
+                    summary: "Info",
+                    detail: "Please wait, redirecting to the workspace."
+                  })
+                  setTimeout(() => {
+                    self.router.navigate(['pages/processIntelligence/upload'])
+                  }, 1500)
+                }
+              });
+              if(this.graphgenetaionInterval){
+                clearInterval(this.graphgenetaionInterval);
               }
-            });
-
-            // Swal.fire({
-            //   title: 'Oops!',
-            //   text: ""+this.fullgraph.display_msg.info,
-            //   icon: 'error',
-            //   showCancelButton: false,
-            //   heightAuto: false,
-            //   confirmButtonColor: '#007bff',
-            //   cancelButtonColor: '#d33',
-            //   confirmButtonText: 'Okay'
-            // }).then((result) => {
-            //   if (result.isConfirmed) {
-            //     Swal.fire({
-            //       position: 'center',
-            //       icon: 'info',
-            //       title: 'Please wait, Redirecting to workspace',
-            //       showConfirmButton: false,
-            //       heightAuto: false,
-            //       timer: 1500
-            //     })
-            //     setTimeout(() => {
-            //       self.router.navigate(['pages/processIntelligence/upload'])
-            //     }, 1500);
-            //   }
-            // });
+              this.spinner.hide();
+              return;
+            } 
+          }
+          if(this.fullgraph.hasOwnProperty('display_msg')){
+            this.spinner.show();
+            this.model1=[];
+            this.model2=[];
+            this.stopPolling();
+          } else{
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
-            this.spinner.hide();
-            return;
-          } 
-        }
-        if(this.fullgraph.hasOwnProperty('display_msg')){
-          this.spinner.show();
-          this.model1=[];
-          this.model2=[];
-        } else{
-          if(this.graphgenetaionInterval){
-            clearInterval(this.graphgenetaionInterval);
-          }
-         let fullgraphOne=this.fullgraph.data; 
-          this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
-          this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
-          this.fullgraph_model1=this.fullgraph_model
-          this.pi_fullGraph_data=fullgraphOne
-        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
-        this.filterPerformData = this.fullgraph_model;
-        this.model2 = this.flowchartData(this.model1)
-        this.startArray=[];
-        this.endArray=[]
-        let fullModel2=this.model2
-        fullModel2.forEach(element => {
-          if(element.from=="Start"){
-            this.startArray.push(element.to)
-          }
-          if(element.to=="End"){
-            this.endArray.push(element.from)
-          }
-        });
-        this.spinner.hide();
-        this.linkmodel2 = this.model2;
-        this.isFullGraphBPMN = true;
-        this.isSingleTraceBPMN = false;
-        this.isMultiTraceBPMN = false;
-        this.isSliderBPMN = false;
-        this.filterOverlay()
-    }
-        },(err =>{
+            this.stopPolling();
+            this.destroy$.complete();
+            this.getVariantGraphs(selectedpiId, endTime);
+            this.getSliderGraphs(selectedpiId, endTime);
+            this.getVariantList(selectedpiId,endTime);
+          let fullgraphOne=this.fullgraph.data; 
+            this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
+            this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+            this.fullgraph_model1=this.fullgraph_model
+            this.pi_fullGraph_data=fullgraphOne
+          this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+          this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
+          this.filterPerformData = this.fullgraph_model;
+          this.model2 = this.flowchartData(this.model1)
+          this.startArray=[];
+          this.endArray=[]
+          let fullModel2=this.model2
+          fullModel2.forEach(element => {
+            if(element.from=="Start"){
+              this.startArray.push(element.to)
+            }
+            if(element.to=="End"){
+              this.endArray.push(element.from)
+            }
+          });
           this.spinner.hide();
-        }));
-        const variantGraphbody= { 
-          "data_type":"variant_graph", 
-          "pid":selectedpiId,
-          "cases":[],
-          'timeChange':true,
-          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-             }
-        this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        },err=>{
-            this.spinner.hide();
-          })
-        const sliderGraphbody= { 
-          "data_type":"slider_graph", 
-           "pid":selectedpiId,
-           'timeChange':this.isTimeChange,
-          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-               }
-        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
-        },err=>{
-            this.spinner.hide();
-          })
+          this.linkmodel2 = this.model2;
+          this.isFullGraphBPMN = true;
+          this.isSingleTraceBPMN = false;
+          this.isMultiTraceBPMN = false;
+          this.isSliderBPMN = false;
+          this.filterOverlay()
+          }
+        },err =>{
+          this.spinner.hide();
+        });
+  }
+
+  stopPolling() {
+    this.destroy$.next();
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -999,47 +879,31 @@ redirectCopilot:boolean=false;
 
   generateBpmn() {      //generate bpmn from process graph
     let categoryName = this.getPCategoryFromPID(this.graphIds)
-    let categoryId = this.getPCategoryIdFromPID(this.graphIds)
+    let categoryId = this.getPCategoryIdFromPID(this.graphIds);
+    this.spinner.show();
     if (this.isFullGraphBPMN == true) {
       var reqObj = {
         pid: this.graphIds,
         pname: this.getPNameFromPID(this.graphIds)
       }
       this.rest.getFullGraphBPMN(reqObj)
-        .subscribe((res:any) => {          
+        .subscribe((res:any) => {
+          this.spinner.hide();
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, categoryId:categoryId, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
-
             this.messageService.add({
               severity: "error",
               summary: "Error",
               detail: "Oops! Failed to generate BPM notation. Please try again later."
             });
-
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: 'Oops...',
-            //   text: "Failed to generate BPM Notation, Please try again later.",
-            //   heightAuto: false,
-            // })
           }
-        },
-        (err =>{
-
+        }, (err =>{
           this.messageService.add({
             severity: "error",
             summary: "Error",
             detail: "Oops! Internal server error. Please try again later."
           });
-
-          // Swal.fire({
-          //     icon: 'error',
-          //     title: 'Oops...',
-          //     text: 'Internal server error, Please try again later !',
-          //     // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
-          //     heightAuto: false,
-          //   });
             this.spinner.hide();
         }))
 
@@ -1051,6 +915,7 @@ redirectCopilot:boolean=false;
       }
       this.rest.getSingleTraceBPMN(reqObj1)
         .subscribe((res:any) => {
+          this.spinner.hide();
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname,ntype:"bpmn"}})
             } else{
@@ -1059,13 +924,6 @@ redirectCopilot:boolean=false;
                 summary: "Error",
                 detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
         },
         (err =>{
@@ -1074,13 +932,6 @@ redirectCopilot:boolean=false;
             summary: "Error",
             detail: "Oops! Internal server error. Please try again later."
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
           this.spinner.hide();
         }))
 
@@ -1092,6 +943,7 @@ redirectCopilot:boolean=false;
       }
       this.rest.getMultiTraceBPMN(reqObj2)
         .subscribe((res:any) => {
+          this.spinner.hide();
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname,ntype:"bpmn"}})
             } else{
@@ -1100,28 +952,15 @@ redirectCopilot:boolean=false;
                 summary: "Error",
                 detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
         },
         (err =>{
+          this.spinner.hide();
           this.messageService.add({
             severity: "error",
             summary: "Error",
             detail: "Oops! Internal server error. Please try again later."
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -1133,6 +972,7 @@ redirectCopilot:boolean=false;
       }
       this.rest.getSliderTraceBPMN(reqObj3)
         .subscribe((res:any) => {
+          this.spinner.hide();
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname,ntype:"bpmn"}})
             } else{
@@ -1141,28 +981,14 @@ redirectCopilot:boolean=false;
                 summary: "Error",
                 detail: "Oops! Failed to generate BPM notation. Please try again later."
               });
-
-              // Swal.fire({
-              //   icon: 'error',
-              //   title: 'Oops...',
-              //   text: 'Failed to generate BPM Notation, Please try again later !',
-              //   heightAuto: false,
-              // });
             }
-        },
-        (err =>{
+        },(err =>{
+          this.spinner.hide();
           this.messageService.add({
             severity: "error",
             summary: "Error",
             detail: "Oops! Internal server error. Please try again later."
           });
-
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops...',
-          //   text: 'Internal server error, Please try again later !',
-          //   heightAuto: false,
-          // });
         }))
     }
   } 
@@ -1955,31 +1781,6 @@ addWorkingHours(){
           }, 1500);
         }
       });
-
-        // Swal.fire({
-        //   title: 'Oops!',
-        //   text: "It is Not You it is Us, Please try again after some time",
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   heightAuto: false,
-        //   confirmButtonColor: '#007bff',
-        //   cancelButtonColor: '#d33',
-        //   confirmButtonText: 'Okay'
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'info',
-        //       title: 'Please wait, Redirecting to workspace',
-        //       showConfirmButton: false,
-        //       heightAuto: false,
-        //       timer: 1500
-        //     })
-        //     setTimeout(() => {
-        //       _self.router.navigate(['pages/processIntelligence/upload'])
-        //     }, 1500);
-        //   }
-        // })
         this.spinner.hide();
         this.model1=[];
         this.model2=[];
@@ -2172,7 +1973,6 @@ addWorkingHours(){
       this.confirmationService.confirm({
         message: "Oops! It's not you, it's us. Please try again after some time.",
         header: "Info",
-        
         rejectVisible: false,
         acceptLabel: "Ok",
         acceptButtonStyleClass: 'btn bluebg-button',
@@ -2189,31 +1989,6 @@ addWorkingHours(){
           }, 1500);
         }
       });
-
-        // Swal.fire({
-        //   title: 'Oops!',
-        //   text: "It is Not You it is Us, Please try again after some time",
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   heightAuto: false,
-        //   confirmButtonColor: '#007bff',
-        //   cancelButtonColor: '#d33',
-        //   confirmButtonText: 'Okay'
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'info',
-        //       title: 'Please wait, Redirecting to workspace',
-        //       showConfirmButton: false,
-        //       heightAuto: false,
-        //       timer: 1500
-        //     })
-        //     setTimeout(() => {
-        //       _self.router.navigate(['pages/processIntelligence/upload'])
-        //     }, 1500);
-        //   }
-        // })
         this.spinner.hide();
         this.model1=[];
         this.model2=[];
@@ -2300,17 +2075,77 @@ addWorkingHours(){
     // this.isvariantListOpen=true;
   }
 
-  backtoWorkspace() {
-    if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
-      this.router.navigate(["/pages/projects/projectdetails"], 
-      {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+  backtoWorkspace(){
+    if(this.copilotPiId){
+
     }else{
-      this.router.navigate(["/pages/processIntelligence/upload"]);
+      if (localStorage.getItem("project_id") && localStorage.getItem("project_id") != "null" && localStorage.getItem("project_id") != "undefined") {
+        this.router.navigate(["/pages/projects/projectdetails"], 
+        {queryParams:{"project_id":localStorage.getItem("project_id"), "project_name":localStorage.getItem("projectName")}});
+      }else{
+        this.router.navigate(["/pages/processIntelligence/upload"]);
+      }
     }
   }
 
-  backToCopilot()
-  {
+  backToCopilot(){
     this.router.navigate(["/pages/copilot/copilot-chat"])
   }
+  
+  sendCopilotBackEvent(){
+    this.backEmitter.emit(null);
+  }
+
+  getVariantList(selectedpiId,endTime){  // Get variant List call
+    const variantListbody= { 
+      "data_type":"varients_list", 
+      "pid":selectedpiId,
+      'timeChange':this.isTimeChange,
+      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+       } 
+    this.rest.getAllVaraintList(variantListbody).subscribe(
+      data=>{
+        this.varaint_data=data
+        this.performanceFilterInput = data;
+        for(var i=0; i<this.varaint_data.data.length; i++){
+            this.varaint_data.data[i].selected= "inactive";
+        }
+        localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
+        this.onchangeVaraint("0");
+      },err=>{
+        this.spinner.hide();
+      });
+  }
+
+  getVariantGraphs(selectedpiId, endTime){ //variant Graphs api call
+    const variantGraphbody= { 
+      "data_type":"variant_graph", 
+      "pid":selectedpiId,
+      'timeChange':this.isTimeChange,
+      "cases":[],
+      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+         }
+    this.rest.getvaraintGraph(variantGraphbody).subscribe(
+      data=>{
+      this.varaint_GraphData=data
+    },err=>{
+      this.spinner.hide();
+    });
+  }
+
+  getSliderGraphs(selectedpiId, endTime){ //Get slider graphs 
+    const sliderGraphbody= { 
+      "data_type":"slider_graph",
+      "pid":selectedpiId,
+      'timeChange':this.isTimeChange,
+      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+           }
+    this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(
+      (data)=>{
+      this.sliderVariant=data      
+    },err=>{
+      this.spinner.hide();
+    });
+  }
+
 }

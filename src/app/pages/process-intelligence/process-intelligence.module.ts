@@ -89,6 +89,9 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     PopoverModule.forRoot(),
     PrimengCustomModule
   ],
+  exports:[
+    FlowchartComponent
+  ],
   providers:[PiHints, 
     {
       provide: MatPaginatorIntl, 
