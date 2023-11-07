@@ -54,8 +54,16 @@ updateProcessLogGraph(data:any){
 }
 
 getUserConversations(userId:any){
-  let headers_new=  new HttpHeaders({'Authorization': 'Bearer '+this.token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey,'x-api-conversationId':localStorage.getItem('conversationId')})
-  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByUserId/${userId}`,{headers:headers_new});
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByUserId/${userId}`,{headers:this.headers});
+}
+
+getConversationByTenantId(tenantId:any){
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByTenantId/${tenantId}`,{headers:this.headers});
+}
+
+
+getAllConversationsByConversationId(conversationId){
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getAllConversationsByConversationId/${conversationId}`,{headers:this.headers});
 }
 
 }
