@@ -71,7 +71,6 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { toastMessages } from 'src/app/shared/model/toast_messages';
-import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
  
 
 @NgModule({
@@ -141,10 +140,7 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
     PopoverModule,
     CardModule,
     PrimengCustomModule,
-    ClipboardModule,
-    BackButtonDisableModule.forRoot({
-      preserveScrollPosition: true
-    }),
+    ClipboardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,DatePipe,
