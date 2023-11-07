@@ -41,13 +41,11 @@ export class ProjectProcessInfoComponent implements OnInit {
     }
 
   ngOnInit(): void {
-      this.project_id
       this.processInfo.get('processName').setValue(this.process_name);
       this.getFrequency();
       this.processInfo.get('metricCheck').setValue(this.projectDetails.includeForDashboardMetrics)
       this.processInfo.get('liveDate').setValue(this.projectDetails.goLiveDate)
       this.processInfo.get('processFrequency').setValue(this.projectDetails.processFrequency)
-      // this.processInfo.get('timeSaved').setValue(this.projectDetails.timeSavedForExecution)
       this.processInfo.get('costSaved').setValue(this.projectDetails.costSavedForExecution)
       this.processInfo.get('comment').setValue(this.projectDetails.comments)
 
@@ -75,8 +73,6 @@ export class ProjectProcessInfoComponent implements OnInit {
           this.processInfo.get('days').setValue(days)
           this.processInfo.get('hours').setValue(hours)
           this.processInfo.get('minutes').setValue(minutes)
-
-          console.log(days +"d", hours +"h",minutes +"m")
         });
       }
 
