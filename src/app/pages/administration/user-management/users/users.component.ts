@@ -163,6 +163,8 @@ export class UsersComponent implements OnInit {
       this.hideInvitePopUp = true;
       this.isUpdate=false;
       this.inviteeMail=null;
+      this.role=null;
+      this.departments=null;
       // this.router.navigate(["/pages/admin/invite-user"]);
     }
   }

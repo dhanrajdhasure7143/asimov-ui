@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigationTenantName:any;
   items = [
     {label: "My Account",icon: 'pi pi-user',command: (e) => {this.myAccount()}},
-    {label: "Change password",icon: 'pi pi-lock',command: (e) => {this.changepassword()}},
+    {label: "Change Password",icon: 'pi pi-lock',command: (e) => {this.changepassword()}},
     {label: "Signout",icon: 'pi pi-sign-out',command: (e) => {this.logout()}},
   ];
   ismyAccount : boolean = false;

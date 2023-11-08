@@ -13,6 +13,8 @@ import { CopilotMessageFormComponent } from './actions/copilot-message-form/copi
 import { CopilotMessageListComponent } from './actions/copilot-message-list/copilot-message-list.component';
 import { CopilotMessageCardComponent } from './actions/copilot-message-card/copilot-message-card.component';
 import { CopilotMessageCardItemComponent } from './actions/copilot-message-card-item/copilot-message-card-item.component';
+import { RpautomationModule } from '../rpautomation/rpautomation.module';
+import { ProcessIntelligenceModule } from '../process-intelligence/process-intelligence.module';
 //import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
@@ -36,7 +38,9 @@ import { CopilotMessageCardItemComponent } from './actions/copilot-message-card-
     FormsModule,
     PrimengCustomModule,
     FormsModule,
-    ReactiveFormsModule
+    RpautomationModule,
+    ProcessIntelligenceModule
+    
     //LoaderService
   ],
   providers:[LoaderService]

@@ -173,7 +173,7 @@
       <div class="row" *ngIf="outputboxresult == undefined">
         <div class="col-md-12 form-group">
           <select class="form-control" [(ngModel)]="SelectedOutputType">
-            <option value="">--Select View Type--</option>
+            <option value="">Select View Type</option>
             <option value="Table">Table</option>
             <option value="Text">Text</option>
             <option value="Image">Image</option>
@@ -369,7 +369,6 @@
         <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
     </ng-template>
 </p-confirmDialog>
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 <p-confirmDialog [style]="{width: '30vw'}" key="designerWorkspace" position="center" [baseZIndex]="10000" [closable]="false"></p-confirmDialog>
 
 <p-confirmDialog #cd2 key="trueFalse" [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"

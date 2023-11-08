@@ -37,6 +37,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatSortModule } from '@angular/material/sort';
 import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -67,7 +68,8 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl
-    }
+    },
+    toastMessages
   ]
 })
 export class BusinessProcessModule { }

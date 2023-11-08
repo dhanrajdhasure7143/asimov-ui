@@ -21,6 +21,7 @@ interface City {
 export class CopilotChatComponent implements OnInit {
   @ViewChild("popupMenu", { static: false }) popupMenuOverlay;
   @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
+  @ViewChild('copilotMessageTemplate', {static:false}) copilotMessageRef:any;
   isDialogVisible: boolean = false;
   bpmnActionDetails: any;
   messages: any = [];
@@ -44,6 +45,15 @@ export class CopilotChatComponent implements OnInit {
   isGraphLoaded:boolean=false;
   isTableLoaded:boolean=false;
   previewLabel:any="";
+  displayFlag:any="";
+  displayEnum:any={
+    displayProcessLogGraph:"PROCESS_LOG_GRAPH",
+    displayRPA:"RPA",
+    displayEventLogTable:"EventLogTable",
+    displayPI:"PI"
+  }
+  piId:any;
+  botId:any;
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
@@ -55,6 +65,7 @@ export class CopilotChatComponent implements OnInit {
 
   ngOnInit() {
     this.loader = true;
+    this.displayFlag=this.displayEnum.displayProcessLogGraph;
     this.createForm();
     this.route.queryParams.subscribe((params: any) => {
       if (params.templateId) {
@@ -81,6 +92,7 @@ export class CopilotChatComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?: String) {
+     console.log("check",this.copilotMessageRef)
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -94,12 +106,14 @@ export class CopilotChatComponent implements OnInit {
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
+          this.analyzeMessage(response);
           this.isChatLoad = false;
           let res = { ...{}, ...response };
           this.updateTemplateFlag(res);
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
+          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -279,6 +293,7 @@ export class CopilotChatComponent implements OnInit {
       this.updateCurrentMessageButtonState("DISABLED");
       this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         this.currentMessage=response;
+        this.analyzeMessage(response);
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage)
         var objDiv = document.getElementById("chat-grid");
@@ -326,6 +341,10 @@ export class CopilotChatComponent implements OnInit {
   }
 
   public sendUserAction =(data:any)=>{
+    setTimeout(()=>{
+
+      this.copilotMessageRef.scrollToBottom();
+    },100)
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
         message:data?.message,
@@ -336,6 +355,7 @@ export class CopilotChatComponent implements OnInit {
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
+        this.analyzeMessage(res)
         this.updateCurrentMessageButtonState("ENABLED");
         this.updateTemplateFlag(res);
         this.messages.push(this.currentMessage);
@@ -345,7 +365,7 @@ export class CopilotChatComponent implements OnInit {
           objDiv.scrollTop = objDiv.scrollHeight;
           this.isChatLoad=false;
         }, 500)
-        if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
+        //if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
       console.log(err);
     })
@@ -365,6 +385,7 @@ export class CopilotChatComponent implements OnInit {
     })
     this.createForm();
     setTimeout(()=>{
+      this.displayFlag=this.displayEnum.displayEventLogTable;
       this.showTable=true;
       this.isTableLoaded=true;
     },500)
@@ -482,6 +503,32 @@ export class CopilotChatComponent implements OnInit {
     }
   }
 
+
+  analyzeMessage(messageResponse:any){
+    messageResponse?.data?.message?.forEach((message)=>{
+    let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
+    let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
+     if(message.match(piRegexExp)){
+      console.log("-- sample --",message)
+      let piId = (message.match(piRegexExp)[0].split("piId="))[1];
+      console.log("sample check 2");
+      console.log(piId);
+      this.piId=piId;
+      let url=window.location.hash;
+      window.history.pushState("", "", url+"&piId="+piId); 
+      this.displayFlag=this.displayEnum.displayPI;   
+     }
+     if(message.match(rpaRegexExp)){
+      let rpaBotId = (message.match(rpaRegexExp)[0].split("botId="))[1];
+      this.botId=rpaBotId;
+      let url=window.location.hash;
+      console.log("sample check 2");
+      console.log(rpaBotId);
+      window.history.pushState("", "", url+"&botId="+rpaBotId); 
+      this.displayFlag=this.displayEnum.displayRPA;   
+     }
+  });
+  }
   readExcelFile(evt, buttonData) {    // read xls files
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
@@ -546,5 +593,11 @@ export class CopilotChatComponent implements OnInit {
     },err=>{
       this.isChatLoad=false;
     })
+  }
+
+
+
+  onBackPress(type){
+    this.displayFlag=this.displayEnum.displayProcessLogGraph
   }
 }

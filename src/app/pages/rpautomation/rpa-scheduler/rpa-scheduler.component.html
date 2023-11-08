@@ -34,7 +34,7 @@
     </div>            
     <div class="row RPA-scheduletimer-body">
         <div class="col pl-0 form-group">
-            <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" [max]="enddate" class="rpa-control form-control form-group" [(ngModel)]="startdate" id="txtDate" >
+            <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" class="rpa-control form-control form-group" [(ngModel)]="startdate" id="txtDate" >
             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"  (timeChanged)="onChangeHour($event,'starttime')" [format]="24"   [(ngModel)]="starttime" ></ngx-timepicker-field>
             <span class='required' *ngIf="beforetime">{{starttimeerror}}</span>
         </div>
@@ -44,12 +44,14 @@
             <span  class='required' *ngIf="aftertime">{{endtimeerror}}</span>
         </div>
         <div  *ngIf="compareScheduleDates"  class="col-12 pl-0 form-group">
-            <span class="required">Start date should be less than end data</span>
+            <span class="required">Start date should be less than end date</span>
         </div>
     </div>
 
     <div class="col p-0 form-group">
-        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button>
+        <!-- <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button> -->
+        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_sch()">Add</button>
+
     </div>
     <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">

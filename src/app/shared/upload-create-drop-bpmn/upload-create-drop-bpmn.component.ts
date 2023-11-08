@@ -5,9 +5,9 @@ import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.s
 import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
-import Swal from 'sweetalert2';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { APP_CONFIG } from 'src/app/app.config';
+import { ToasterService } from '../service/toaster.service';
 
 @Component({
   selector: 'app-upload-create-drop-bpmn',
@@ -46,7 +46,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, 
     private cdRef: ChangeDetectorRef, private confirmationService: ConfirmationService,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -107,20 +107,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           key:'confirm1',
           accept: () => {},
         });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-	
-        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // })
       }
       else {
         this.uploaded_file = null;
@@ -191,30 +177,33 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           this.update.emit(true);
         }else{
           if(target == "create"){
-            console.log("testing")
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail:'Business process created successfully!',
-              })
+              // this.messageService.add({
+              //   severity: 'success',
+              //   summary: 'Success',
+              //   detail:'Business process created successfully!',
+              // })
+              this.toastService.showSuccess(diagramModel.bpmnProcessName,'create');
               this.router.navigateByUrl('/pages/businessProcess/createDiagram');
           }
           if(target == "upload"){
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail:'Uploaded Successfully',
-            })
+            const fileNameWithoutExtension = this.removeFileExtension(this.uploadedFileName);
+            // this.messageService.add({
+            //   severity: 'success',
+            //   summary: 'Success',
+            //   detail:`${this.removeFileExtension(this.uploadedFileName)} uploaded successfully` //'Uploaded Successfully',
+            // })
+              this.toastService.showSuccess(fileNameWithoutExtension,'upload');
               this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
           }
         }
       }else{
         message = "Process name already exists.";
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail:message
-        })
+        // this.messageService.add({
+        //   severity: 'error',
+        //   summary: 'Error',
+        //   detail:message
+        // })
+        this.toastService.showError(message);
       }
     });
   }
@@ -235,20 +224,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
           key:'confirm1',
           accept: () => {},
         });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-	
-        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // });
         return false;
       } else {
         return true;
@@ -261,4 +236,12 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.hiddenPopUp=event;
   }
 
+  removeFileExtension(filename: string): string {
+    const lastDotIndex = filename.lastIndexOf('.');
+    if (lastDotIndex !== -1) {
+      return filename.substring(0, lastDotIndex);
+    } else {
+      return filename;
+    }
+  }
 }
