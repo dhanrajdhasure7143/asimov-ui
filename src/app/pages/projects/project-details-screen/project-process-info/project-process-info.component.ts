@@ -1,7 +1,5 @@
-import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
-import { number } from '@amcharts/amcharts4/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 
@@ -16,10 +14,11 @@ export class ProjectProcessInfoComponent implements OnInit {
   processInfo : FormGroup;
   @Input() process_name : any;
   @Input() project_id : any;
-  @Input() projectDetails : any
+  projectDetails : any = {};
   @Output() customEvent = new EventEmitter<any>();
-  isRequired: boolean = false;
-  isChange: boolean = false;
+  isRequired : boolean = false;
+  isChange : boolean = false;
+  showValidation: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +27,7 @@ export class ProjectProcessInfoComponent implements OnInit {
     ) { 
       this.processInfo=this.formBuilder.group({
         processName: ["",Validators.compose([Validators.required])],
-        metricCheck: [""],
+        metricCheck: [false],
         liveDate: [""],
         processFrequency: [""],
         timeSaved: [""],
@@ -41,41 +40,20 @@ export class ProjectProcessInfoComponent implements OnInit {
     }
 
   ngOnInit(): void {
+      this.getProcessDetails();
       this.processInfo.get('processName').setValue(this.process_name);
+      this.processInfo.get("liveDate").clearValidators();
+      this.processInfo.get("liveDate").updateValueAndValidity()
+      this.processInfo.get("processFrequency").clearValidators();
+      this.processInfo.get("processFrequency").updateValueAndValidity()
       this.getFrequency();
-      this.processInfo.get('metricCheck').setValue(this.projectDetails.includeForDashboardMetrics)
-      this.processInfo.get('liveDate').setValue(this.projectDetails.goLiveDate)
-      this.processInfo.get('processFrequency').setValue(this.projectDetails.processFrequency)
-      this.processInfo.get('costSaved').setValue(this.projectDetails.costSavedForExecution)
-      this.processInfo.get('comment').setValue(this.projectDetails.comments)
+      setTimeout (()=>{ this.getProcessInfo() },400)
+  }
 
-      if( this.projectDetails.costSavedForExecution != null){
-        this.isChange = true
-      } else {
-        this.isChange = false
-      }
-
-      let days : number = 0;
-      let hours : number = 0;
-      let minutes : number = 0;
-
-      const parts = this.projectDetails.timeSavedForExecution.match(/\d+[dhm]/g);
-      if (parts) {
-        parts.forEach(part => {
-          const value = parseInt(part);
-          if (part.endsWith('d')) {
-            days = value;
-          } else if (part.endsWith('h')) {
-            hours = value;
-          } else if (part.endsWith('m')) {
-            minutes = value;
-          }
-          this.processInfo.get('days').setValue(days)
-          this.processInfo.get('hours').setValue(hours)
-          this.processInfo.get('minutes').setValue(minutes)
-        });
-      }
-
+  getProcessDetails(){
+    this.rest.getProjectDetailsById(this.project_id).subscribe( res =>{
+      this.projectDetails = res;
+    })
   }
 
   resetForm(){
@@ -89,14 +67,74 @@ export class ProjectProcessInfoComponent implements OnInit {
       "includeForDashboardMetrics": this.processInfo.value.metricCheck,
       "goLiveDate": this.processInfo.value.liveDate,
       "processFrequency": this.processInfo.value.processFrequency,
-      "timeSavedForExecution": this.processInfo.value.days + "d" + "" + this.processInfo.value.hours + "h"  + "" + this.processInfo.value.minutes + "m",
+      "timeSavedForExecution": this.processInfo.value.days + "d " + this.processInfo.value.hours + "h " + this.processInfo.value.minutes + "m",
       "costSavedForExecution":  this.processInfo.value.costSaved,
       "comments": this.processInfo.value.comment
     }
 
     this.rest.saveProcessInfo(this.project_id,req_body).subscribe((res:any) => {
-      if(res.message == "Saved Successfully")
-      this.toastService.showSuccess(this.processInfo.value.processName,'create');
+      if(res.message == "Saved Successfully"){
+        this.toastService.showSuccess(this.processInfo.value.processName,'create');
+      }
+    })
+        let message = false;
+        this.customEvent.emit(message);
+        this.resetForm();
+  }
+
+  getProcessInfo(){
+    this.processInfo.get('metricCheck').setValue(this.projectDetails.includeForDashboardMetrics)
+    this.processInfo.get('liveDate').setValue(this.projectDetails.goLiveDate)
+    this.processInfo.get('processFrequency').setValue(this.projectDetails.processFrequency)
+    this.processInfo.get('costSaved').setValue(this.projectDetails.costSavedForExecution)
+    this.processInfo.get('comment').setValue(this.projectDetails.comments)
+    if( this.projectDetails.costSavedForExecution != null){
+      this.isChange = true
+    } else {
+      this.isChange = false
+    }
+
+    let days : number;
+    let hours : number;
+    let minutes : number;
+
+      if(this.projectDetails?.timeSavedForExecution){
+        if(this.projectDetails?.timeSavedForExecution!=""){
+          const parts = this.projectDetails.timeSavedForExecution.match(/\d+[dhm]/g);
+          if (parts) {
+            parts.forEach(part => {
+              const value = parseInt(part);
+              if (part.endsWith('d')) {
+                days = value;
+              } else if (part.endsWith('h')) {
+                hours = value;
+              } else if (part.endsWith('m')) {
+                minutes = value;
+              }
+              this.processInfo.get('days').setValue(days)
+              this.processInfo.get('hours').setValue(hours)
+              this.processInfo.get('minutes').setValue(minutes)
+            });
+          }
+        } 
+      }
+  }
+
+  updateInfo(){
+    let req_body = {
+      "roiProcessName": this.processInfo.value.processName,
+      "includeForDashboardMetrics": this.processInfo.value.metricCheck,
+      "goLiveDate": this.processInfo.value.liveDate,
+      "processFrequency": this.processInfo.value.processFrequency,
+      "timeSavedForExecution": this.processInfo.value.days + "d " + this.processInfo.value.hours + "h " + this.processInfo.value.minutes + "m",
+      "costSavedForExecution":  this.processInfo.value.costSaved,
+      "comments": this.processInfo.value.comment
+    }
+
+    this.rest.saveProcessInfo(this.project_id,req_body).subscribe((res:any) => {
+      if(res.message == "Saved Successfully"){
+        this.toastService.showSuccess(this.processInfo.value.processName,'update');
+      }
     })
         let message = false;
         this.customEvent.emit(message);
@@ -129,7 +167,7 @@ export class ProjectProcessInfoComponent implements OnInit {
   }
 
   onlyNumbers(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9"]
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();
@@ -146,4 +184,15 @@ export class ProjectProcessInfoComponent implements OnInit {
       return this.frequency;
     })
   }
+
+  get getTimeSavedPerExecutionValidation(){
+      return (this.processInfo.get("days").value=="" && this.processInfo.get("hours").value=="" &&this.processInfo.get("minutes").value=="" )?true:false;
+  }
+
+  get getTimeSavedPerExecutionMessageValidation(){
+    if(this.processInfo.get("days").touched || this.processInfo.get("hours").touched || this.processInfo.get("minutes").touched  )
+    return (this.processInfo.get("days").value=="" && this.processInfo.get("hours").value=="" &&this.processInfo.get("minutes").value=="" )?true:false;
+  
+  }
+
 }
