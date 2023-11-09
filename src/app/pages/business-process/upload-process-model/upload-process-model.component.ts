@@ -541,11 +541,12 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
 
   toggleChanges(){
     let el = document.getElementById("changes");
+    if(this.confBpmnModeler && this.bpmnModeler) {
     if(el.classList.contains("slide-top"))
       this.clearDifferences();
     else
       this.getBpmnDifferences();
-
+    }
     if(el){
       el.classList.toggle("slide-top");
       el.classList.toggle("slide-bottom");
