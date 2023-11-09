@@ -187,8 +187,5 @@ export class RpaBotFormComponent implements OnInit {
   {
     let botDetails=this.botForm.value;
     this.unsavedOutput.emit(botDetails);
-    setTimeout(() => {
-    window.location.reload();
-    }, 1200);
   }
 }

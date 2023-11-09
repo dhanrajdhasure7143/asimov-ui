@@ -1815,12 +1815,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           index: this.index,
           botName: response.botName,
         });
-        let url = window.location.hash;
-        window.history.pushState(
-          "",
-          "",
-          url.split("botId")[0] + "botId=" + response.botId
-        );
+        // let url = window.location.hash;
+        // window.history.pushState(
+        //   "",
+        //   "",
+        //   url.split("botId")[0] + "botId=" + response.botId
+        // );
         this.updateFinalBot(versionType, comments);
       },
       (err) => {
