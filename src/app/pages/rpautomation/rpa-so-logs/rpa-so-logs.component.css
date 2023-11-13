@@ -420,7 +420,7 @@ ul#versions li:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: auto;
+  max-width: 400px;
 }
 .ellipsis-content{
   white-space: nowrap;
@@ -436,4 +436,7 @@ ul#versions li:hover {
 }
 .refresh-load{
   width: 80px;
+}
+.hasLogs:hover{
+  text-decoration: underline !important;
 }

@@ -251,8 +251,8 @@ export class SoSchedulerComponent implements OnInit {
           data={
             intervalId:this.generateid(),
             scheduleInterval:this.cronExpression,
-            startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
-            endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],  
+            startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
+            endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),  
             // startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
             // endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
             timezone:this.timezone,
@@ -605,22 +605,22 @@ export class SoSchedulerComponent implements OnInit {
       let save_schedule_list:any=[];
       save_schedule_list=this.schedule_list.filter(item=>item.save_status=='unsaved')
       if(save_schedule_list.length!=0){
-      this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
-        let resp:any=data
-        if(resp.errorMessage==undefined){
-          this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
-          // this.notifier.notify("success","Schedules saved successfully!");
-          this.get_schedule();
-          this.updateflags();
-          this.spinner.hide();
-        }else{
-          this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage, key:"so_Scheduler"})
-          // this.notifier.notify("error",resp.errorMessage);
-        }
-      })
-    }else{
-      this.spinner.hide();
-    }
+        this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
+          let resp:any=data
+          if(resp.errorMessage==undefined){
+            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
+            // this.notifier.notify("success","Schedules saved successfully!");
+            this.get_schedule();
+            this.updateflags();
+            this.spinner.hide();
+          }else{
+            this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage, key:"so_Scheduler"})
+            // this.notifier.notify("error",resp.errorMessage);
+          }
+        })
+      }else{
+        this.spinner.hide();
+      }
       // if(this.deletestack.length!=0)
       // {
       //   this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{

@@ -392,3 +392,7 @@ textarea.msgip {
     width:100%;
     height: 98%;
 }
+#changes{
+    background-color: white !important;
+    box-shadow: #5784e999 0px 1px 6px;
+}

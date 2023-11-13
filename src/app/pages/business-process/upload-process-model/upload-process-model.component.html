@@ -236,7 +236,7 @@
         </as-split-area>
     </as-split>
     <div class="changesContainer" [class.hidden]="!isUploaded">
-        <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
+        <div class="changesTitle" *ngIf="isShowConformance"(click)="toggleChanges()">List of Changes</div>
         <div id="changes" class="slide-bottom">
             <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
         </div>

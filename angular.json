@@ -99,7 +99,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "production": {
               "fileReplacements": [
@@ -128,13 +128,17 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "qa": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.qa.ts"
+                },
+                {
+                  "replace": "src/version.ts",
+                  "with": "src/version/version.qa.ts"
                 }
               ],
               "optimization": true,
@@ -157,7 +161,7 @@
                 }
               ],
               "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "null"
             },
             "dev": {
               "fileReplacements": [
@@ -214,8 +218,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "asquaredev": {
               "fileReplacements": [
@@ -243,8 +247,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "asquaredemo": {
               "fileReplacements": [
@@ -272,8 +276,8 @@
                   "maximumError": "15kb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             }
           },
           "defaultConfiguration": ""
