@@ -63,8 +63,10 @@
                     <div *ngIf="widget.widget_type!='table'&& widget.widget_type!='Table'"  class="graph-set">
                       <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
                               <span *ngIf="widget.message !='No Data Found For This Department'">
-                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270"  
-                                [options]="widget.chartOptions"></p-chart>
+                                <p-chart *ngIf="widget.widget_type != 'none'" [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270"  
+                                [options]="widget.chartOptions">
+                              </p-chart>
+                              <h3 class="center-text" *ngIf="widget.widget_type == 'none'"> {{widget.widgetData}} </h3>
                           </span>
                     </div>
                        

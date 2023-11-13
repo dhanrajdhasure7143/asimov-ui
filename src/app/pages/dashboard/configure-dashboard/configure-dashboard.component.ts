@@ -299,9 +299,10 @@ export class ConfigureDashboardComponent implements OnInit {
           if (item.id == 1) {
             item.widgetData.datasets[0]["backgroundColor"] =
               this.execution_Status;
-          } else {
-            item.widgetData.datasets[0]["backgroundColor"] = this.chartColors;
           }
+          //  else {
+          //   item.widgetData.datasets[0]["backgroundColor"] = this.chartColors;
+          // }
           // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
           if (item.widget_type != "Bar") {
             item["chartOptions"] = this.chartOptions;

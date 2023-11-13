@@ -41,6 +41,9 @@ export class DynamicDashboardComponent implements OnInit {
   // Stopped  #FF0131
   // Killed  #AD2626
   interval:any;
+  showTime: boolean = true;
+  showCost: boolean = true;
+  processInfo: any[] = [];
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -59,6 +62,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTable();
     this.getDashBoardData(this._paramsData.dashboardId,true);
     this.primengConfig.ripple = true;
     // this.menuItems = [
@@ -619,5 +623,20 @@ export class DynamicDashboardComponent implements OnInit {
     if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
     }
+  }
+
+  showTimeTable(){
+    this.showTime = !this.showTime;
+  }
+
+  showCostTable(){
+    this.showCost = !this.showCost;
+  }
+
+  getTable(){
+    this.rest.getCostandTimeTable().subscribe((response:any) => {
+      this.processInfo = response.processInfo
+      console.log(this.processInfo,"response")
+    })
   }
 }
