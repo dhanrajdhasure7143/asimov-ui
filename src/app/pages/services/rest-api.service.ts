@@ -1837,4 +1837,7 @@ switchTaskLevelLogs(botId){
 getTaskLevelLogsSwitchState(botId:any){
   return this.http.get(`/rpa-service/get-enable-task-logs/${botId}`);
 }
+getCostandTimeTable(){
+  return this.http.get('/platform-service/dashboard/findProcessInfoSaveAndCaseExecutionTotal');
+}
 }

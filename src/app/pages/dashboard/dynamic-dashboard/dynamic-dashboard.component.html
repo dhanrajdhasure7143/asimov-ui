@@ -92,8 +92,55 @@
                            <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" [ngClass]="widget.message =='No Data Found For This Department' ? 'graph-set-nodata' : 'graph-set' " >
                               <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
                               <span *ngIf="widget.message !='No Data Found For This Department'">
-                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
-                                 [options]="widget.chartOptions"></p-chart>
+                              <p-chart *ngIf="widget.widget_type != 'none'" [type]="widget.widget_type | lowercase" class="w-100" [data]="widget.widgetData" height="270"  
+                              [options]="widget.chartOptions">
+                              </p-chart>
+                              <h3 class="center-text" *ngIf="widget.widget_type == 'none' && widget.name == 'Time Saved For Execution' && showTime" (click)="showTimeTable()"> {{widget.widgetData}} </h3>
+                              <h3 class="center-text" *ngIf="widget.widget_type == 'none' && widget.name == 'Cost Saved For Execution' && showCost" (click)="showCostTable()"> {{widget.widgetData}} </h3>
+                              <p-table #myTab [value]="processInfo" *ngIf="widget.name == 'Time Saved For Execution' && !showTime" (click)="showTimeTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                              [resizableColumns]="true" >
+                                 <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                          <span> Time Saved </span>
+                                       </th>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="body" let-people>
+                                    <tr>
+                                       <td>{{people.processName}}</td>
+                                       <td>{{people.timeSavedForExecution}}</td>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                       <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                    </tr>
+                                 </ng-template>
+                              </p-table>
+                              <p-table #myTab [value]="processInfo" *ngIf="widget.name == 'Cost Saved For Execution' && !showCost" (click)="showCostTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                              [resizableColumns]="true" >
+                                 <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                       <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                          <span> Cost Saved </span>
+                                       </th>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="body" let-people>
+                                    <tr>
+                                       <td>{{people.processName}}</td>
+                                       <td>{{people.costSavedForExecution}}</td>
+                                    </tr>
+                                 </ng-template>
+                                 <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                       <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                    </tr>
+                                 </ng-template>
+                              </p-table>
                               </span>
                            </div>
                            <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
