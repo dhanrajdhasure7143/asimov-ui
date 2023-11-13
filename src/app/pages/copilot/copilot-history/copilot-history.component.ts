@@ -74,6 +74,7 @@ export class CopilotHistoryComponent implements OnInit {
     console.log(conversationMessage);
     if(conversationMessage?.conversation?.conversationId)
     this.router.navigate(["./pages/copilot/chat"], {queryParams:{conversationId:conversationMessage?.conversation?.conversationId}});
+    //this.router.navigate(["./pages/copilot/chat"], {queryParams:{conversationId:conversationMessage?.conversation?.conversationId}});
   }
 
 

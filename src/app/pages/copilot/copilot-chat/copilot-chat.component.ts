@@ -9,6 +9,7 @@ import { MessageData, UserMessagePayload } from "../copilot-models";
 import { CopilotService } from "../../services/copilot.service";
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
+import Swal from "sweetalert2";
 interface City {
   name: string;
   code: string;
@@ -76,6 +77,7 @@ export class CopilotChatComponent implements OnInit {
         (isNaN(params.templateId) && params.templateId != "Others")?this.getAutomatedProcess(atob(params.templateId)):this.getConversationId();
       }
       else if(params?.conversationId){
+        //params.conversationId="ca6f918c-abc1-4631-b298-8e65e1660d35"
         localStorage.setItem("conversationId",params.conversationId)
         this.getChatHistory(params.conversationId);
       }
@@ -608,6 +610,7 @@ export class CopilotChatComponent implements OnInit {
  
     this.loader=true;
     this.rest_api.getAllConversationsByConversationId(conversationId).subscribe((response:any)=>{
+      this.loader=false;
       localStorage.setItem("conversationId", conversationId);
       let conversationChat:any=[];
       conversationChat=response;
@@ -647,11 +650,14 @@ export class CopilotChatComponent implements OnInit {
         delete item?.conversation;      
         return item;
       });
-      this.loader=false;
+
       this.messages=conversationChat;
       conversationChat.forEach((item:any)=>{
         this.analyzeMessage(item);
       })
+    },err=>{
+      this.loader=false;
+      Swal.fire("Error","Unable to get history","error");
     })
     this.loader=false;
 
