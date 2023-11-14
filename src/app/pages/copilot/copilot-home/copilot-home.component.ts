@@ -141,4 +141,8 @@ export class CopilotHomeComponent implements OnInit {
   {
     this.router.navigate(["./pages/copilot/chat"],{queryParams:{templateId:btoa(JSON.stringify({type:'message',message:this.intentData}))}}); 
   }
+
+  navigateToCopilotHistory(){
+    this.router.navigate(["./pages/copilot/history"]);
+  }
 }

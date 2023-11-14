@@ -25,7 +25,6 @@ export class CopilotMessageComponent implements OnInit {
   variancePercentage = 20; // 20% variance
   finalSpeedValue = 0;
   @ViewChild('subChat', { static: false }) subChat: ElementRef;
-
  constructor(private data: DataTransferService,
             private cd:ChangeDetectorRef) 
             { }

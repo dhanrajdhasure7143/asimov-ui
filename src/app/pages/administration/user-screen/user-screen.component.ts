@@ -131,6 +131,9 @@ export class UserScreenComponent implements OnInit {
             }
           );
       },
+      reject: (type) => {
+        this.spinner.hide();
+      }
     });
   }
 
