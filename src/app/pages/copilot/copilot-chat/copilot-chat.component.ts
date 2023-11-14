@@ -102,7 +102,6 @@ export class CopilotChatComponent implements OnInit {
 
 
   sendMessage(value?: any, messageType?: String) {
-     console.log("check",this.copilotMessageRef)
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -123,7 +122,6 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
-          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -219,11 +217,9 @@ export class CopilotChatComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.tableForm. valid)
     if(!this.tableForm.valid){
       this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
     }
-    console.log(this.tableForm.value)
   }
 
   getConversationId(){
@@ -247,7 +243,6 @@ export class CopilotChatComponent implements OnInit {
   loadWidgets(){
     let loadedMessages=[...this.messages];
     try{
-      console.log("loaded messages", loadedMessages);
       (loadedMessages?.reverse())?.forEach((item:any, index)=>{
         if(this.analyzeMessage(item)) throw new Error("BreakException");
         if(this.checkAndLoadBpmnData(item, index))  throw new Error("BreakException");
@@ -260,13 +255,11 @@ export class CopilotChatComponent implements OnInit {
 
 
   checkAndLoadProcessLogTable(message, index){
-    console.log("check",message, index);
     return false;
   }
 
 
   checkAndLoadBpmnData(message, index){
-    console.log("check",message, index)
     return false;
   }
 
@@ -643,7 +636,6 @@ export class CopilotChatComponent implements OnInit {
   getChatHistory(conversationId){
  
     this.loader=true;
-   // console.log("sample check 123")
     this.rest_api.getAllConversationsByConversationId(conversationId).subscribe((response:any)=>{
       this.loader=false;
       localStorage.setItem("conversationId", conversationId);
@@ -690,7 +682,6 @@ export class CopilotChatComponent implements OnInit {
       //this.loadWidgets();
     },err=>{
       this.loader=false;
-      Swal.fire("Error","Unable to get history","error");
     })
     this.loader=false;
 
