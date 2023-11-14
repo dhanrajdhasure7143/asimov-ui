@@ -15,6 +15,8 @@ import { CopilotMessageCardComponent } from './actions/copilot-message-card/copi
 import { CopilotMessageCardItemComponent } from './actions/copilot-message-card-item/copilot-message-card-item.component';
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
 import { ProcessIntelligenceModule } from '../process-intelligence/process-intelligence.module';
+import { CopilotHistoryComponent } from './copilot-history/copilot-history.component';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 //import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
@@ -29,6 +31,7 @@ import { ProcessIntelligenceModule } from '../process-intelligence/process-intel
     CopilotMessageListComponent,
     CopilotMessageCardComponent,
     CopilotMessageCardItemComponent,
+    CopilotHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +46,6 @@ import { ProcessIntelligenceModule } from '../process-intelligence/process-intel
     
     //LoaderService
   ],
-  providers:[LoaderService]
+  providers:[LoaderService,ToasterService]
 })
 export class CopilotModule { }
