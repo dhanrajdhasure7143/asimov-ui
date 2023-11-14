@@ -9,7 +9,7 @@ import { MessageData, UserMessagePayload } from "../copilot-models";
 import { CopilotService } from "../../services/copilot.service";
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
-import Swal from "sweetalert2";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 interface City {
   name: string;
   code: string;
@@ -65,7 +65,8 @@ export class CopilotChatComponent implements OnInit {
     private messageService: MessageService,
     private dt: DataTransferService,
     private fb: FormBuilder,
-    private main_rest:RestApiService
+    private main_rest:RestApiService,
+    private tostService:ToasterService
   ) {}
 
   ngOnInit() {
@@ -97,6 +98,9 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.getCopilotTemplatesList(processId).subscribe((response: any) => {
         let template:any;
         if(response) (template = response.find((item: any) => item.templateId == templateId),this.loadBpmnwithXML({bpmnXml:template.bpmnXml,isUpdate:true}));
+      },err=>{
+        console.log(err);
+        this.tostService.showError("Unable to get templates")
       });
   }
 
@@ -218,7 +222,7 @@ export class CopilotChatComponent implements OnInit {
 
   onSubmit(){
     if(!this.tableForm.valid){
-      this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
+      this.tostService.showError("Please fill all details")
     }
   }
 
@@ -234,6 +238,8 @@ export class CopilotChatComponent implements OnInit {
         this.messages.push(resdata); 
         localStorage.setItem("conversationId", res.conversationId); 
       },err=>{
+        console.log(err);
+        this.tostService.showError("Unable to get conversationId")
         this.loader=false;
       }
     )
@@ -249,6 +255,7 @@ export class CopilotChatComponent implements OnInit {
         if(this.checkAndLoadProcessLogTable(item, index)) throw new Error("BreakException");
       })
     }catch(e){
+      this.tostService.showError("Unable to load widgets")
       console.log(e.message)
     }
   }
@@ -332,12 +339,8 @@ export class CopilotChatComponent implements OnInit {
         }, 500)
       })
     }
-    else
-      this.messageService.add({
-        severity: "error",
-        summary: "Error",
-        detail: "Please fill time in all fields "
-      });
+    else 
+    this.tostService.showError("Please fill time in all fields");
     
   }
   
@@ -398,6 +401,7 @@ export class CopilotChatComponent implements OnInit {
         //if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
       console.log(err);
+      this.tostService.showError("Unable to send message")
     })
   }
 
@@ -449,7 +453,9 @@ export class CopilotChatComponent implements OnInit {
       localStorage.setItem("conversationId", res.conversationId);
       this.messages.push(res);
     },err=>{
+      console.log(err);
       this.loader=false;
+      this.tostService.showError("Unable to get templates list")
     })
   }
 
@@ -569,11 +575,7 @@ export class CopilotChatComponent implements OnInit {
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       let excelfile:any[] = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
+        this.tostService.showError("No data was found in the uploaded file!");
       } else{
         buttonData.headers=excelfile[0];
         this.uploadProcessLogsFile(evt,buttonData);
@@ -595,11 +597,7 @@ export class CopilotChatComponent implements OnInit {
       let excelfile = [];
       excelfile = csvRecordsArray;
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
+        this.tostService.showError("No data was found in the uploaded file!")
       } else{
         buttonData.headers=excelfile[0];
         this.uploadProcessLogsFile(e,buttonData);
@@ -622,6 +620,7 @@ export class CopilotChatComponent implements OnInit {
         })
       }
     },err=>{
+      this.tostService.showError("Unable to upload process log file")
       this.isChatLoad=false;
     })
   }
@@ -681,6 +680,7 @@ export class CopilotChatComponent implements OnInit {
       this.messages=conversationChat;
       //this.loadWidgets();
     },err=>{
+      this.tostService.showError("Unable to get conversation")
       this.loader=false;
     })
     this.loader=false;

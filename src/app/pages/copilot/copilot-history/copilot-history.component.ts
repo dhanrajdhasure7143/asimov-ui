@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CopilotService } from '../../services/copilot.service';
 import { Router } from '@angular/router';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-copilot-history',
@@ -11,7 +12,8 @@ export class CopilotHistoryComponent implements OnInit {
 
   constructor(
     private rest:CopilotService,
-    private router:Router
+    private router:Router,
+    private tostService:ToasterService
     ) { }
   conversationCheck:boolean=true;
   conversationPreviewChat:any=[];
@@ -26,15 +28,14 @@ export class CopilotHistoryComponent implements OnInit {
 
 
   getConversations(type:any){
-    console.log(type)
     this.conversationCheck=((type=="USER")?true:false);
     let conversationFlag:string=this.conversationCheck?"ezflow.developers@epsoftinc.com":localStorage.getItem("tenantName");
     let conversationObservable:any=(this.conversationCheck)?this.rest.getUserConversations(conversationFlag):this.rest.getConversationByTenantId(conversationFlag);
     conversationObservable?.subscribe((response:any)=>{
-        console.log(response);
         this.messagesResponse=response;
     },err=>{
-        console.log("check",err)
+        this.tostService.showError("Unable to get conversations");
+        console.log(err)
     });
  
   }
@@ -65,13 +66,13 @@ export class CopilotHistoryComponent implements OnInit {
             return item;
         });
     },err=>{
-        console.log("error",err);
+        this.tostService.showError("Unable to get conversation chat")
+        console.log(err);
     })
   }
 
 
   resumeConversation(conversationMessage:any){
-    console.log(conversationMessage);
     if(conversationMessage?.conversation?.conversationId)
     this.router.navigate(["./pages/copilot/chat"], {queryParams:{conversationId:conversationMessage?.conversation?.conversationId}});
     //this.router.navigate(["./pages/copilot/chat"], {queryParams:{conversationId:conversationMessage?.conversation?.conversationId}});
