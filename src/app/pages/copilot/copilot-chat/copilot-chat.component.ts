@@ -55,6 +55,7 @@ export class CopilotChatComponent implements OnInit {
   }
   piId:any;
   botId:any;
+  loadHistory:boolean=false;
 
 
   
@@ -77,8 +78,8 @@ export class CopilotChatComponent implements OnInit {
         (isNaN(params.templateId) && params.templateId != "Others")?this.getAutomatedProcess(atob(params.templateId)):this.getConversationId();
       }
       else if(params?.conversationId){
-        //params.conversationId="ca6f918c-abc1-4631-b298-8e65e1660d35"
         localStorage.setItem("conversationId",params.conversationId)
+        this.loadHistory=true;
         this.getChatHistory(params.conversationId);
       }
     });
@@ -235,11 +236,38 @@ export class CopilotChatComponent implements OnInit {
         resdata = res
         this.currentMessage=res;
         this.messages.push(resdata); 
-        localStorage.setItem("conversationId", res.conversationId)
+        localStorage.setItem("conversationId", res.conversationId); 
       },err=>{
         this.loader=false;
       }
     )
+  }
+
+
+  loadWidgets(){
+    let loadedMessages=[...this.messages];
+    try{
+      console.log("loaded messages", loadedMessages);
+      (loadedMessages?.reverse())?.forEach((item:any, index)=>{
+        if(this.analyzeMessage(item)) throw new Error("BreakException");
+        if(this.checkAndLoadBpmnData(item, index))  throw new Error("BreakException");
+        if(this.checkAndLoadProcessLogTable(item, index)) throw new Error("BreakException");
+      })
+    }catch(e){
+      console.log(e.message)
+    }
+  }
+
+
+  checkAndLoadProcessLogTable(message, index){
+    console.log("check",message, index);
+    return false;
+  }
+
+
+  checkAndLoadBpmnData(message, index){
+    console.log("check",message, index)
+    return false;
   }
 
   processMessageAction = (event:any) =>{
@@ -381,23 +409,25 @@ export class CopilotChatComponent implements OnInit {
   }
 
   displaylogCollectionForm(res:any){
-    let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
-    values= JSON.parse( atob(values[0].values));
-    values.forEach((item:any)=>{
-      this.processLogsData.push({
-        stepName:item.stepName,
-        stepId:item.stepId,
-        days:"00",
-        hours:"00",
-        minutes:"00",
+    if(!this.loadHistory){
+      let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
+      values= JSON.parse( atob(values[0].values));
+      values.forEach((item:any)=>{
+        this.processLogsData.push({
+          stepName:item.stepName,
+          stepId:item.stepId,
+          days:"00",
+          hours:"00",
+          minutes:"00",
+        })
       })
-    })
-    this.createForm();
-    setTimeout(()=>{
-      this.displayFlag=this.displayEnum.displayEventLogTable;
-      this.showTable=true;
-      this.isTableLoaded=true;
-    },500)
+      this.createForm();
+      setTimeout(()=>{
+        this.displayFlag=this.displayEnum.displayEventLogTable;
+        this.showTable=true;
+        this.isTableLoaded=true;
+      },500)
+    }
   }
 
 
@@ -514,24 +544,28 @@ export class CopilotChatComponent implements OnInit {
 
 
   analyzeMessage(messageResponse:any){
+    let isLoaded:boolean=false;
     messageResponse?.data?.message?.forEach((message)=>{
     let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
     let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
      if(message.match(piRegexExp)){
       let piId = (message.match(piRegexExp)[0].split("piId="))[1];
       this.piId=piId;
-      let url=window.location.hash;
-      window.history.pushState("", "", url+"&piId="+piId); 
-      this.displayFlag=this.displayEnum.displayPI;   
+      //let url=window.location.hash;
+      //window.history.pushState("", "", url+"&piId="+piId); 
+      this.displayFlag=this.displayEnum.displayPI;  
+      isLoaded=true; 
      }
      if(message.match(rpaRegexExp)){
       let rpaBotId = (message.match(rpaRegexExp)[0].split("botId="))[1];
       this.botId=rpaBotId;
-      let url=window.location.hash;
-      window.history.pushState("", "", url+"&botId="+rpaBotId); 
+      //let url=window.location.hash;
+      //window.history.pushState("", "", url+"&botId="+rpaBotId); 
       this.displayFlag=this.displayEnum.displayRPA;   
+      isLoaded=true;
      }
   });
+  return isLoaded;
   }
   readExcelFile(evt, buttonData) {    // read xls files
     const reader: FileReader = new FileReader();
@@ -609,6 +643,7 @@ export class CopilotChatComponent implements OnInit {
   getChatHistory(conversationId){
  
     this.loader=true;
+   // console.log("sample check 123")
     this.rest_api.getAllConversationsByConversationId(conversationId).subscribe((response:any)=>{
       this.loader=false;
       localStorage.setItem("conversationId", conversationId);
@@ -652,9 +687,7 @@ export class CopilotChatComponent implements OnInit {
       });
 
       this.messages=conversationChat;
-      conversationChat.forEach((item:any)=>{
-        this.analyzeMessage(item);
-      })
+      //this.loadWidgets();
     },err=>{
       this.loader=false;
       Swal.fire("Error","Unable to get history","error");
