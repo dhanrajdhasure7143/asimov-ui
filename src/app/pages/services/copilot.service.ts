@@ -53,4 +53,17 @@ updateProcessLogGraph(data:any){
   return this.http.post(environment.asquare+"/a-square/v1/conversation/update-process-bpmn", data,{headers:headers_new});
 }
 
+getUserConversations(userId:any){
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByUserId/${userId}`,{headers:this.headers});
+}
+
+getConversationByTenantId(tenantId:any){
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getLastConversationByTenantId/${tenantId}`,{headers:this.headers});
+}
+
+
+getAllConversationsByConversationId(conversationId){
+  return this.http.get(environment.asquare+`/a-square/v1/conversation/getAllConversationsByConversationId/${conversationId}`,{headers:this.headers});
+}
+
 }
