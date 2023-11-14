@@ -257,7 +257,8 @@ export class CreateProjectFormComponent implements OnInit {
     data["projectHealth"] = "Good";
     data["projectPercentage"] = 0;
     data["correlationID"] = selectedBpmn;
-    data["categoryId"] = this.categoryId
+    data["categoryId"] = this.categoryId;
+    data['roiProcessName'] = this.selected_process_names.find(each=>each.processId == this.insertForm2.value.process).processName
 
     // let project=JSON.stringify(data)
 

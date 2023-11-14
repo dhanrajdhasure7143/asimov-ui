@@ -245,10 +245,8 @@ private toastMessages: toastMessages
     this.params_data=data
     this.project_id = this.params_data.project_id
     this.role=this.params_data.role
-    this.process_name = this.params_data.process_name
     if(this.params_data.isCreated){
       this.isCreate = this.params_data.isCreated
-      this.process_name = this.params_data.process_name
     }
     this.spinner.show();
     this.getallusers();
@@ -472,6 +470,7 @@ async getProjectdetails(){​​​​​​
   this.categoryId = this.projectDetails.categoryId
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
+  this.process_name = this.projectDetails.roiProcessName?this.projectDetails.roiProcessName:this.getProcessName(this.projectDetails.correlationID);
   this.processOwnerFlag=false;
   if(this.projectDetails.endDate){
   this.projectenddate=moment(this.projectDetails.endDate).format("lll");
@@ -1658,6 +1657,11 @@ selectEnd() {
 
   onCustomEvent(message: any) {
     this.processInfo = message;
+  }
+
+  getProcessName(correlationID){
+    this.spinner.hide();
+    return this.selected_process_names.filter(res=> res.correlationID == correlationID).processName
   }
 }
 
