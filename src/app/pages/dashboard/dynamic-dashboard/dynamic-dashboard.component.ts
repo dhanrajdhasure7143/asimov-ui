@@ -44,6 +44,7 @@ export class DynamicDashboardComponent implements OnInit {
   showTime: boolean = true;
   showCost: boolean = true;
   processInfo: any[] = [];
+  showCount: boolean = true;
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -364,7 +365,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.dashboardData.widgets = data.widgets;
       this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
-        if(element.widget_type!= "Table" && element.widget_type!= "table"){
+        if(element.widget_type!= "Table" && element.widget_type!= "table" && element.widget_type != "label"){
           element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels,element.childId)
           if(element.childId == 1){
             element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
@@ -638,5 +639,16 @@ export class DynamicDashboardComponent implements OnInit {
       this.processInfo = response.processInfo
       console.log(this.processInfo,"response")
     })
+  }
+
+  showCountTable(){
+    this.showCount = !this.showCount;
+  }
+
+  getDynamicClasses(widget: any) {
+    return {
+      'col-md-6': widget.class === undefined,
+      [widget.class]: widget.class !== undefined
+    };
   }
 }

@@ -51,6 +51,8 @@ export class ConfigureDashboardComponent implements OnInit {
   options:option[];
   selectedWidgetslist: any[]=[];
   widgetslistIntialData: any[]=[];
+  addLabelWidget:any[]= [];
+  addOtherWidget:any[]= [];
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -120,10 +122,11 @@ export class ConfigureDashboardComponent implements OnInit {
 
   dropWidget() {
     if (this.draggedProduct1) {
-      this.widgetslist.find(
-        (item) => item.id == this.draggedProduct1.id
-      ).widgetAdded = true;
-      this.addedWidgets.push(this.draggedProduct1);
+      // this.widgetslist.find(
+      //   (item) => item.id == this.draggedProduct1.id
+      // ).widgetAdded = true;
+        let index=this.widgetslist.findIndex((item) => item.id == this.draggedProduct1.id);
+        this.addWidget(this.draggedProduct1, index);
       if (
         this.defaultEmpty_widgets.find((item) => item.widgetAdded == false) !=
         undefined
@@ -186,7 +189,8 @@ export class ConfigureDashboardComponent implements OnInit {
         ).metricAdded = false;
     }
     if (type == "widgets") {
-      this.addedWidgets.splice(index, 1);
+      // this.addedWidgets.splice(index, 1);
+      this.removeWidget(data);
       let itemId2 = data.childId ? data.childId : data.id;
       //this.dynamicDashBoard.widgets.splice(index, 1);
       this.widgetslist.find((item) => item.id == itemId2).widgetAdded = false;
@@ -198,21 +202,29 @@ export class ConfigureDashboardComponent implements OnInit {
   addWidget(widget: any, index) {
     if (widget.widgetAdded == false) {
       this.widgetslist[index].widgetAdded = true;
-      if (
-        this.widgetslist.find((item: any) => item.id == widget.id) != undefined
-      ) {
+      if (this.widgetslist.find((item: any) => item.id == widget.id) != undefined) {
         this.widgetslist.find((item: any) => item.id == widget.id).widgetAdded =
           true;
-        let obj = {};
+        // let obj = {};
         // const widgetData = widgetOptions.widgets;
         // this.tabledata = this.addedWidgets[0].sampleData;
         // obj = widgetData.filter(_widget => _widget.id == widget.id)[0];
-        if (
-          widget["widget_type"] != "Table" &&
-          widget["widget_type"] != "table"
-        )
+        if (widget["widget_type"] != "Table" && widget["widget_type"] != "table")
           widget.chartOptions.plugins.legend["display"] = true;
-        this.addedWidgets.push(widget);
+          //this.addedWidgets=[]
+        if(widget.id == 6 || widget.id == 5){
+          if(this.addLabelWidget.length == 0){
+            this.widgetslist[6]['extraNode'] = true;
+            this.addLabelWidget.push(this.widgetslist[6]);
+            this.addLabelWidget.push({ ...widget });
+          }else{
+            this.addLabelWidget.push(widget)
+          }
+        }else{
+          this.addOtherWidget.push(widget)
+        }
+        this.addedWidgets=[];
+        this.appendToWidgetList();
       }
     } else {
       let itemId = widget.childId ? widget.childId : widget.id;
@@ -224,10 +236,12 @@ export class ConfigureDashboardComponent implements OnInit {
             if (item.id == itemId) findIndex = i;
           }
       });
-      this.addedWidgets.splice(findIndex, 1);
+      this.removeWidget(widget);
+      //this.addedWidgets.splice(findIndex, 1);
       this.widgetslist.find((item) => item.id == itemId).widgetAdded = false;
     }
   }
+  
   get defaultMetricsData(): any[] {
     return this.defaultEmpty_metrics.filter(
       (item) => item.metricAdded == false
@@ -300,9 +314,10 @@ export class ConfigureDashboardComponent implements OnInit {
             item.widgetData.datasets[0]["backgroundColor"] =
               this.execution_Status;
           }
-          //  else {
-          //   item.widgetData.datasets[0]["backgroundColor"] = this.chartColors;
-          // }
+           else {
+            if(item.widget_type != "label")
+            item.widgetData.datasets[0]["backgroundColor"] = this.chartColors;
+          }
           // item.widgetData.datasets[0]["hoverBackgroundColor"] = this.charthoverColors
           if (item.widget_type != "Bar") {
             item["chartOptions"] = this.chartOptions;
@@ -377,7 +392,7 @@ export class ConfigureDashboardComponent implements OnInit {
       this.addedWidgets = this.dynamicDashBoard.widgets;
       this.addedWidgets.forEach((item: any) => {
         this.widgetslist.find((widget_item: any) => widget_item.id == item.childId).widgetAdded = true;
-        if (item["widget_type"] != "Table" && item["widget_type"] != "table") {
+        if (item["widget_type"] != "Table" && item["widget_type"] != "table" && item["widget_type"] != "label") {
           item.childId == 1?item.widgetData.datasets[0]["backgroundColor"] =this.execution_Status:item.widgetData.datasets[0]["backgroundColor"] = this.chartColors;
           if (item["widget_type"] != "Bar") {
             item["chartOptions"].plugins.legend["labels"] = {
@@ -419,6 +434,8 @@ export class ConfigureDashboardComponent implements OnInit {
             },
           };
         }
+        if(item?.widget_type=="label") this.addLabelWidget.push(item);
+        else this.addOtherWidget.push(item);
       });
     });
   }
@@ -527,5 +544,48 @@ export class ConfigureDashboardComponent implements OnInit {
     if(option1.value.option == "All"){
       this.widgetslist=this.widgetslistIntialData;
     }
+  }
+
+  getDynamicClasses(widget: any) {
+    return {
+      'col-md-6': widget.class === undefined,
+      [widget.class]: widget.class !== undefined
+    };
+  }
+
+  removeWidget(data){
+      let itemId = data.childId ? data.childId : data.id;
+      let labelIndex: number;
+      this.addLabelWidget.forEach((e,i)=>{
+        if (e.childId){
+          if (e.childId == itemId) labelIndex = i;
+        }else {
+            if (e.id == itemId) labelIndex = i;
+          }
+      });
+      let otherIndex: number;
+      this.addOtherWidget.forEach((e,i)=>{
+        if (e.childId){
+          if (e.childId == itemId) otherIndex = i;
+        }else {
+          if (e.id == itemId) otherIndex = i;
+        }
+      });
+      if(labelIndex!=undefined) this.addLabelWidget.splice(labelIndex, 1);
+      if(otherIndex!=undefined) this.addOtherWidget.splice(otherIndex, 1);
+      if(this.addLabelWidget.length == 1){
+        this.addLabelWidget = [];
+      }
+      this.addedWidgets = [];
+      this.appendToWidgetList();
+  }
+
+  appendToWidgetList(){
+    this.addLabelWidget.forEach(e=>{
+      this.addedWidgets.push(e);
+    });
+    this.addOtherWidget.forEach(e=>{
+      this.addedWidgets.push(e);
+    })
   }
 }
