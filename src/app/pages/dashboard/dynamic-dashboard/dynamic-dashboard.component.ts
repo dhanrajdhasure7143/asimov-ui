@@ -584,7 +584,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onOpenConfigOptoons(widget){
-    if(widget.widget_type =="Table"){
+    if(widget.widget_type =="Table" || widget.widget_type == "label"){
       this.items = [
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       ];
@@ -637,7 +637,6 @@ export class DynamicDashboardComponent implements OnInit {
   getTable(){
     this.rest.getCostandTimeTable().subscribe((response:any) => {
       this.processInfo = response.processInfo
-      console.log(this.processInfo,"response")
     })
   }
 
