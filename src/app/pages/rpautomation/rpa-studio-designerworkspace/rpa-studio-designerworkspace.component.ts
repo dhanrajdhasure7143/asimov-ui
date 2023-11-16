@@ -33,10 +33,11 @@ import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ConfirmationService, ConfirmEventType } from "primeng/api";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -181,7 +182,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private toastService: ToasterService,
     private confirmationService:ConfirmationService,
     private route: ActivatedRoute,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private router: Router,
+    private location:Location
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -1821,6 +1824,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         //   "",
         //   url.split("botId")[0] + "botId=" + response.botId
         // );
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?botId='+response.botId);
         this.updateFinalBot(versionType, comments);
       },
       (err) => {
