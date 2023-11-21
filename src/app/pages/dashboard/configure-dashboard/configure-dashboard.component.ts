@@ -53,6 +53,7 @@ export class ConfigureDashboardComponent implements OnInit {
   widgetslistIntialData: any[]=[];
   addLabelWidget:any[]= [];
   addOtherWidget:any[]= [];
+  widgetClass: any = 'graph1';
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -588,4 +589,12 @@ export class ConfigureDashboardComponent implements OnInit {
       this.addedWidgets.push(e);
     })
   }
+
+  getDynamicClasses_one(widget: any) {
+    return {
+      'graph': widget.class === undefined,
+      [this.widgetClass] : widget.class !== undefined
+    };
+  }
+  
 }

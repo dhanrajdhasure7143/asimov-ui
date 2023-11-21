@@ -70,7 +70,7 @@
             <div class="row">
                <ng-container *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="pl-0 pr-24" [ngClass]="getDynamicClasses(widget)" >
-                     <div class="well1-dynmic graph">
+                     <div class="well1-dynmic" [ngClass]="getDynamicClasses_one(widget)">
                         <div class="row align-menubtn">
                            <div class="col-10 p-0 d-flex">
                               <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
@@ -98,11 +98,13 @@
                                  </span>
                               </div>
                               <div *ngIf="widget.widget_type == 'label'">
-                                 <h2 class="center-text" *ngIf="widget.childId == '7' && showCount" (click)="showCountTable()"> {{widget.widgetData}} </h2>
-                                 <h2 class="center-text" *ngIf="widget.childId == '5' && showTime" (click)="showTimeTable()"> {{widget.widgetData}} </h2>
-                                 <h2 class="center-text" *ngIf="widget.childId == '6' && showCost" (click)="showCostTable()"> {{widget.widgetData.replace(' ', '')}} </h2>
+                                 <div class="widgetValue">
+                                    <h2 class="center-text" *ngIf="widget.childId == '7' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                    <h2 class="center-text" *ngIf="widget.childId == '5' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                    <h2 class="center-text" *ngIf="widget.childId == '6' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                 </div>
    
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTime" (click)="showTimeTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
                                        <tr>
@@ -124,7 +126,7 @@
                                        </tr>
                                     </ng-template>
                                  </p-table>
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '6' && !showCost" (click)="showCostTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '6' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
                                        <tr>
@@ -146,7 +148,7 @@
                                        </tr>
                                     </ng-template>
                                  </p-table>
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '7' && !showCount" (click)="showCountTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '7' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
                                        <tr>
@@ -159,7 +161,7 @@
                                     <ng-template pTemplate="body" let-pCount>
                                        <tr>
                                           <td>{{ pCount.processName }}</td>
-                                          <td>{{ pCount.goLiveDate }}</td>
+                                          <td>{{ pCount.goLiveDate | date:'MMM dd, yyyy'}}</td>
                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">

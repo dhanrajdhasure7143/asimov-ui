@@ -41,10 +41,9 @@ export class DynamicDashboardComponent implements OnInit {
   // Stopped  #FF0131
   // Killed  #AD2626
   interval:any;
-  showTime: boolean = true;
-  showCost: boolean = true;
   processInfo: any[] = [];
-  showCount: boolean = true;
+  showTableData: boolean = true;
+  widgetClass: any = 'graph1';
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -626,13 +625,6 @@ export class DynamicDashboardComponent implements OnInit {
     }
   }
 
-  showTimeTable(){
-    this.showTime = !this.showTime;
-  }
-
-  showCostTable(){
-    this.showCost = !this.showCost;
-  }
 
   getTable(){
     this.rest.getCostandTimeTable().subscribe((response:any) => {
@@ -640,9 +632,6 @@ export class DynamicDashboardComponent implements OnInit {
     })
   }
 
-  showCountTable(){
-    this.showCount = !this.showCount;
-  }
 
   getDynamicClasses(widget: any) {
     return {
@@ -650,4 +639,17 @@ export class DynamicDashboardComponent implements OnInit {
       [widget.class]: widget.class !== undefined
     };
   }
+
+  showTable(){
+    this.showTableData = !this.showTableData;
+    this.widgetClass = this.showTableData ? 'graph1' : 'graph';
+  }
+
+  getDynamicClasses_one(widget: any) {
+    return {
+      'graph': widget.class === undefined,
+      [this.widgetClass] : widget.class !== undefined
+    };
+  }
+  
 }

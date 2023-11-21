@@ -183,3 +183,14 @@ span.oopstxt label {
     left: 49%;
     transform: translate(-50%, -50%);
   }
+
+.widgetValue h2{
+    color: #098de6;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.graph1 {
+	height: 200px;
+	padding: 15px !important;
+}
