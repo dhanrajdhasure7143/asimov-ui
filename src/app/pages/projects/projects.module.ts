@@ -65,6 +65,7 @@ import { UserFilterDirective } from './directives/user-filter.directive';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { MentionModule } from 'angular-mentions';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ProjectProcessInfoComponent } from './project-details-screen/project-process-info/project-process-info.component';
 const materialModules: any[] = [
     
     
@@ -81,7 +82,8 @@ const materialModules: any[] = [
      ProjectsDocumentComponent,
      ProjectDocumentEditorComponent,
      UserFilterDirective,
-     SanitizeHtmlPipe],
+     SanitizeHtmlPipe,
+     ProjectProcessInfoComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

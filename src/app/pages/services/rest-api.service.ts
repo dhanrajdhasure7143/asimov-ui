@@ -1840,4 +1840,12 @@ getTaskLevelLogsSwitchState(botId:any){
 getCostandTimeTable(){
   return this.http.get('/platform-service/dashboard/findProcessInfoSaveAndCaseExecutionTotal');
 }
+
+getProcessFrequencies(){
+  return this.http.get("/platform-service/dashboard/findProcessFrequencies")
+}
+
+saveProcessInfo(id,body:any){
+  return this.http.put("/platform-service/project/save-process-info/"+id, body)
+}
 }
