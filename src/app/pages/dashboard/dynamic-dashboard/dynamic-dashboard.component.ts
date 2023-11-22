@@ -41,6 +41,9 @@ export class DynamicDashboardComponent implements OnInit {
   // Stopped  #FF0131
   // Killed  #AD2626
   interval:any;
+  processInfo: any[] = [];
+  showTableData: boolean = true;
+  widgetClass: any = 'graph1';
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -59,6 +62,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTable();
     this.getDashBoardData(this._paramsData.dashboardId,true);
     this.primengConfig.ripple = true;
     // this.menuItems = [
@@ -360,7 +364,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.dashboardData.widgets = data.widgets;
       this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
-        if(element.widget_type!= "Table" && element.widget_type!= "table"){
+        if(element.widget_type!= "Table" && element.widget_type!= "table" && element.widget_type != "label"){
           element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels,element.childId)
           if(element.childId == 1){
             element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
@@ -579,7 +583,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onOpenConfigOptoons(widget){
-    if(widget.widget_type =="Table"){
+    if(widget.widget_type =="Table" || widget.widget_type == "label"){
       this.items = [
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       ];
@@ -619,5 +623,35 @@ export class DynamicDashboardComponent implements OnInit {
     if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
     }
+  }
+
+
+  getTable(){
+    this.rest.getCostandTimeTable().subscribe((response:any) => {
+      this.processInfo = response.processInfo
+    })
+  }
+
+
+  getDynamicClasses(widget: any) {
+    return {
+      'col-md-6': widget.class === undefined,
+      [widget.class]: widget.class !== undefined
+    };
+  }
+
+  showTable(){
+    this.showTableData = !this.showTableData;
+    this.widgetClass = this.showTableData ? 'graph1' : 'graph';
+  }
+
+  getDynamicClasses_one(widget: any) {
+    return {
+      'graph': widget.class === undefined,
+      [this.widgetClass] : widget.class !== undefined
+    };
+  }
+  isLabelWidget(widget: any): boolean {
+    return widget.widget_type === 'label';
   }
 }
