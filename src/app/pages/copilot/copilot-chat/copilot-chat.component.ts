@@ -635,11 +635,18 @@ export class CopilotChatComponent implements OnInit {
   getChatHistory(conversationId){
  
     this.loader=true;
+    this.loadBpmnContainer();
     this.rest_api.getAllConversationsByConversationId(conversationId).subscribe((response:any)=>{
       this.loader=false;
       localStorage.setItem("conversationId", conversationId);
+      if(response?.data){
+        let bpmnActionDetails=JSON.parse(response?.data);
+        bpmnActionDetails[0]["isUpdate"]=true;
+        this.loadBpmnwithXML(bpmnActionDetails[0]);
+        delete response?.data;
+      }
       let conversationChat:any=[];
-      conversationChat=response;
+      conversationChat=response?.conversationHistory;
       conversationChat=conversationChat.map((item:any)=>{
         if(item.messageSourceType=="SYSTEM"){
           item["conversationId"]=item?.conversation?.conversationId;
@@ -676,7 +683,6 @@ export class CopilotChatComponent implements OnInit {
         delete item?.conversation;      
         return item;
       });
-
       this.messages=conversationChat;
       //this.loadWidgets();
     },err=>{
