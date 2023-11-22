@@ -651,5 +651,7 @@ export class DynamicDashboardComponent implements OnInit {
       [this.widgetClass] : widget.class !== undefined
     };
   }
-  
+  isLabelWidget(widget: any): boolean {
+    return widget.widget_type === 'label';
+  }
 }

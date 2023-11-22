@@ -51,7 +51,7 @@
                 <div class="pl-0 pr-24" [ngClass]="getDynamicClasses(widget)">
                 <div class="well1-dynmic" [ngClass]="getDynamicClasses_one(widget)">
                   <div class="row align-menubtn">
-                    <div class="col-10 p-0 d-flex">
+                    <div class="col-10 p-0 d-flex" [ngClass]="{'widgetlabel': isLabelWidget(widget)}">
                       <img src="../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
                       <h5 class="graph-text">{{widget.name}}</h5>
                     </div>
@@ -69,8 +69,8 @@
                               </p-chart>
                           </span>
                     </div>
-                    <div *ngIf="widget.widget_type == 'label'">
-                      <h2 class="center-text"> {{ widget.widgetData }} </h2>
+                    <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
+                      <h2> {{ widget.widgetData }} </h2>
                     </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">

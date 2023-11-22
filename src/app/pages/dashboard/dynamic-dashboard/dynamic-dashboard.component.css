@@ -186,10 +186,18 @@ span.oopstxt label {
 
 .widgetValue h2{
     color: #098de6;
-    font-size: 3rem;
+    /* font-size: 4.2rem; */
+    font-size: 3.5rem;
     cursor: pointer;
+    font-weight: bold;
+    text-align: center !important;
+    /* margin-top: 25px; */
+    margin-top: 32px;
 }
 
+.widgetlabel h5{
+    font-weight:bold;
+}
 .graph1 {
 	height: 200px;
 	padding: 15px !important;

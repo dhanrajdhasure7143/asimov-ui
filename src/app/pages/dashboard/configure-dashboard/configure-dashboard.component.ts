@@ -597,4 +597,7 @@ export class ConfigureDashboardComponent implements OnInit {
     };
   }
   
+  isLabelWidget(widget: any): boolean {
+    return widget.widget_type === 'label';
+  }
 }

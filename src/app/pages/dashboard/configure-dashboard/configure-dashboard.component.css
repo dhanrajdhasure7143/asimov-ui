@@ -265,14 +265,16 @@ span.oopstxt label {
     margin-bottom: 0px;
 }
 
-.center-text {
+.widgetValue h2{
     position: absolute;
-    top: 50%;
-    left: 49%;
+    top: 45%;
+    left: 45%;
     transform: translate(-50%, -50%);
     color: #098de6;
-    font-size: 2.5rem;
-  }
+    font-size: 2.3rem;
+    text-align: center !important;
+    font-weight: bolder;
+}
 
 /* .configtabslists .metric-set:hover span.addtooltip,
 .configtabslists .widget-set:hover span.addtooltip {
@@ -300,6 +302,10 @@ span.addtooltip::before {
 } */
 
 .graph1 {
-	height: 200px;
+	height: 180px;
 	padding: 15px !important;
+}
+
+.widgetlabel h5{
+    font-weight: bold;
 }
