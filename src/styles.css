@@ -4030,3 +4030,6 @@ padding: 0px 30px;}
 .custom-input-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
   background: #4BD963 !important;
 }
+.new-box.copilot-pi-flowchart div#exportSVGtoPDF  svg#render:first-child {
+  display: none;
+}
