@@ -1,0 +1,86 @@
+<div class="splitoverlaydiv h-100">
+    <div class="createform-overlay ">
+        <form [formGroup]="processInfo" class="h-100 prj-crt-form">
+            <div class="row">
+                <div class="form-group col p-0">
+                    <label class="" for="processName"> Process Name <span class="star">*</span> </label>
+                    <input type="text" pInputText [style]="{'width':'100%'}" formControlName="processName"
+                        placeholder="Enter Process Name" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col p-0">
+                    <input type="checkbox" formControlName="metricCheck" (change)="onCheckboxChange($event)" />
+                    <label class="checkboxes"> Include for Dashboard Metrics </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col pl-0">
+                    <label class=""> Go Live Date <span *ngIf="isRequired" class="star">*</span> </label>
+                    <input class="form-control" type="date" name="liveDate" max="9999-12-31" formControlName="liveDate">
+                    <span class="required" *ngIf="(processInfo.get('liveDate').invalid && processInfo.get('liveDate').touched) && isRequired">
+                        Go Live Date Required
+                    </span>
+                </div>
+                <div class="form-group col pr-0">
+                    <label class="">Process Frequency <span *ngIf="isRequired" class="star">*</span> </label>
+                    <p-dropdown [options]="frequency" [style]="{'width':'100%'}"  optionLabel="value" optionValue="type"  [autoDisplayFirst]="false"
+                        placeholder="Select Process Frequency" formControlName="processFrequency">
+                    </p-dropdown>
+                    <span class="required" *ngIf="(processInfo.get('processFrequency').invalid && processInfo.get('processFrequency').touched) && isRequired">
+                        Process Frequency Required
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col p-0">
+                    <label class="" for="timeSaved"> Time Saved Per Execution <span class="star">*</span> </label>
+                    <!-- <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" (keydown)="onlyNumbersAllowed($event)"
+                        formControlName="timeSaved" placeholder="Format : 2d 2h 2m" required>
+                    <span class="required" *ngIf="(processInfo.get('timeSaved').invalid && processInfo.get('timeSaved').touched)">
+                        Time Saved Per Execution Required
+                    </span> -->
+                    <div class="row">
+                        <div class="col-md-4 group"> 
+                            <label for="" class="label">Days :</label>
+                            <input type="text" class="input" pInputText [style]="{'width':'100%'}" placeholder="Enter Days" formControlName="days" maxlength="3" (keydown)="onlyNumbers($event)">
+                        </div>
+                        <div class="col-md-4 group">
+                            <label for="" class="label"> Hours :</label>
+                            <input type="text" class="input" pInputText [style]="{'width':'100%'}" placeholder="Enter Hours" formControlName="hours" maxlength="3" (keydown)="onlyNumbers($event)">
+                        </div>
+                        <div class="col-md-4 group">
+                            <label for="" class="label"> Minutes :</label>
+                            <input type="text" class="input" pInputText [style]="{'width':'100%'}" placeholder="Enter Minutes" formControlName="minutes" maxlength="3" (keydown)="onlyNumbers($event)">
+                        </div>
+                    </div>
+                    <span class="required" *ngIf="getTimeSavedPerExecutionMessageValidation"> Time Saved Per Execution Required </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col p-0">
+                    <label class="" for="costSaved">Cost Saved Per Execution <span class="star">*</span> </label>
+                    <input type="text" pInputText [style]="{'width':'100%'}" maxlength="20" (keydown)="onlyNumbersAllowed($event)"
+                        formControlName="costSaved" placeholder="Enter Cost Saved Per Execution ($)" required>
+                    <span class="required" *ngIf="(processInfo.get('costSaved').invalid && processInfo.get('costSaved').touched)">
+                        Cost Saved Per Execution Required
+                    </span>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col p-0">
+                    <label class="" for="taskName"> Comments <span class="star">*</span> </label>
+                    <textarea class="form-control" pInputTextarea [style]="{'width':'100%'}" formControlName="comment" placeholder="Enter Comments" [autoResize]="true"> </textarea>
+                    <span class="required" *ngIf="(processInfo.get('comment').invalid && processInfo.get('comment').touched)">
+                        Comments Required
+                    </span>
+                </div>
+            </div>
+        </form>
+        <div class="createform-footer">
+            <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
+            <button *ngIf="!isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="createInfo()" class="btn bluebg-button"> Create </button>
+            <button *ngIf="isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="updateInfo()" class="btn bluebg-button"> Update </button>
+        </div>
+    </div>
+</div>

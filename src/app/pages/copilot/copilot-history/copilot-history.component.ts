@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CopilotService } from '../../services/copilot.service';
 import { Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 
 @Component({
   selector: 'app-copilot-history',
@@ -21,8 +22,11 @@ export class CopilotHistoryComponent implements OnInit {
   teamConversation:any=[];
   getConversationByConversationId:any[];
   user_firstletter="DP";
-
+  bpmnModeler:any;
+  isDialogVisible:boolean=false;
+  @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
   ngOnInit(): void {
+    this.loadBpmnContainer();
     this.getConversations("USER");
   }
 
@@ -42,7 +46,11 @@ export class CopilotHistoryComponent implements OnInit {
 
   openCompleteChatPreview(messageConversation:any){
     this.rest.getAllConversationsByConversationId(messageConversation.conversationId).subscribe((response:any)=>{
-        this.conversationPreviewChat=response.map((item:any)=>{
+      if(response?.data){
+        let bpmnActionDetails=JSON.parse(response?.data);
+        this.loadBpmnwithXML(bpmnActionDetails[0])
+      }
+      this.conversationPreviewChat=response?.conversationHistory?.map((item:any)=>{
             let data=JSON.parse(item["message"]);
             for(let i=0;i<data?.components?.length;i++){
               if(data?.components[i]=="Buttons"){
@@ -79,5 +87,28 @@ export class CopilotHistoryComponent implements OnInit {
   }
 
 
+  loadBpmnContainer(){
+    let container:any=this.diagramContainer?.nativeElement;
+    (!container)?setTimeout(() => this.loadBpmnContainer(), 100):this.bpmnModeler = new BpmnJS({container});
+  }
 
+  loadBpmnwithXML(bpmnActionDetails:any) {
+    console.log("bpmn action details", bpmnActionDetails);
+    this.isDialogVisible = false;
+    let bpmnPath=atob(bpmnActionDetails.bpmnXml);
+    this.bpmnModeler.importXML(bpmnPath, function (err) {
+      if (err) {
+        console.error("could not import BPMN EZFlow notation", err);
+      }
+    });
+    setTimeout(() => {
+      this.notationFittoScreen();
+    }, 500);
+    this.bpmnModeler.on("element.contextmenu", () => false);
+  }
+
+  notationFittoScreen() {
+    let canvas = this.bpmnModeler.get("canvas");
+    canvas.zoom("fit-viewport");
+  }
 }

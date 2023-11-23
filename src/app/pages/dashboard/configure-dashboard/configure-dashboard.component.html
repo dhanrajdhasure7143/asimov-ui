@@ -47,25 +47,30 @@
             </div>
 
             <div class="row" pDroppable="widget" (onDrop)="dropWidget()">
-              <div class="col-md-6 pl-0 pr-24" *ngFor="let widget of addedWidgets; let j=index" >
-                <div class="well1-dynmic graph">
+              <ng-container *ngFor="let widget of addedWidgets; let j=index">
+                <div class="pl-0 pr-24" [ngClass]="getDynamicClasses(widget)">
+                <div class="well1-dynmic" [ngClass]="getDynamicClasses_one(widget)">
                   <div class="row align-menubtn">
-                    <div class="col-10 p-0 d-flex">
+                    <div class="col-10 p-0 d-flex" [ngClass]="{'widgetlabel': isLabelWidget(widget)}">
                       <img src="../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
                       <h5 class="graph-text">{{widget.name}}</h5>
                     </div>
-                    <div class="col-2 p-0 text-right">
+                    <div class="col-2 p-0 text-right" *ngIf="!widget.extraWidget">
                       <i class="pi pi-times right overlay-icon" (click)="onDeactivate(widget,j, 'widgets')"></i>
                     </div>
                   </div>
                    
                   <div  class="" >
-                    <div *ngIf="widget.widget_type!='table'&& widget.widget_type!='Table'"  class="graph-set">
+                    <div *ngIf="widget.widget_type!='table'&& widget.widget_type!='Table' && widget.widget_type != 'label'"  class="graph-set">
                       <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
                               <span *ngIf="widget.message !='No Data Found For This Department'">
-                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270"  
-                                [options]="widget.chartOptions"></p-chart>
+                                <p-chart *ngIf="widget.widget_type != 'label'" [type]="widget.widget_type | lowercase" class="w-100" [data]="widget.widgetData" height="270"  
+                                [options]="widget.chartOptions">
+                              </p-chart>
                           </span>
+                    </div>
+                    <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
+                      <h2> {{ widget.widgetData }} </h2>
                     </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">
@@ -114,7 +119,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </ng-container>
+
               <div class="col-md-6 pl-0 pr-24" *ngIf="dynamicDashBoard.widgets.length<1" >
                 <div class="well1 emptywidget">
                   <img src="../../../../assets/images-n/dashboard/add-gadget.svg" width="20%" alt="" />
@@ -195,6 +202,7 @@
         <div class="configtabslists">
           
           <div *ngFor="let widget of widgetslist |myFilter:searchText:['name', 'description']; let i=index" >
+            <ng-container *ngIf="!widget.extraWidget">
             <div class="row metricalign"pDraggable="widget" pDroppableDisabled="true"  [ngClass]="(widget.widgetAdded==true) ? 'class1' : 'class2'"(onDragStart)="widgetDragStart(widget)"
             (onDragEnd)="widgetDragEnd()"  (click)="addWidget(widget,i)" >
               <div class="col-md-11 p-0 d-flex widget-set">
@@ -209,6 +217,12 @@
                   <div *ngIf="widget.widget_type =='Bar'|| widget.widget_type =='bar'">
                     <img src="../../../../assets/images-n/dashboard/Bar-chart.svg" alt="" width="60px;" class="dashbrd-img1">
                   </div>
+                  <div *ngIf="widget.id =='5'">
+                    <img src="../../../../assets/images-n/dashboard/timesaved.svg" alt="" width="60px;" class="dashbrd-img1">
+                  </div>
+                  <div *ngIf="widget.id =='6'">
+                    <img src="../../../../assets/images-n/dashboard/costsaved.svg" alt="" width="60px;" class="dashbrd-img1">
+                  </div>
                 </div>
                 <div class="">
                   <h5>{{widget.name}}</h5>
@@ -221,6 +235,7 @@
                 <img src="../../../../assets/images-n/dashboard/tickcircle.svg" alt="" *ngIf="widget.widgetAdded==true" />
               </div>
             </div>
+          </ng-container>
           </div>
         </div>
       </p-tabPanel>

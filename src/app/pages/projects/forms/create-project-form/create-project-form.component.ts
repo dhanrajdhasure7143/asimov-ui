@@ -35,6 +35,7 @@ export class CreateProjectFormComponent implements OnInit {
   public resources_list: any[] = [];
   activeUsersList:any[]=[];
   categoryId:any;
+  process_name: any;
 
 
   constructor(
@@ -242,6 +243,11 @@ export class CreateProjectFormComponent implements OnInit {
     this.insertForm2.value.status = "New";
     this.insertForm2.value.createdBy = username;
     const projectName = this.insertForm2.value.projectName;
+    this.selected_process_names.find(each=> {
+      if(each.processId == this.insertForm2.value.process){
+       this.process_name = each.processName
+      };
+    } )
     //this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
     let data = this.insertForm2.value;
     // data["resource"]=data.resource.map(item=>{ return {resource:item}});
@@ -251,7 +257,8 @@ export class CreateProjectFormComponent implements OnInit {
     data["projectHealth"] = "Good";
     data["projectPercentage"] = 0;
     data["correlationID"] = selectedBpmn;
-    data["categoryId"] = this.categoryId
+    data["categoryId"] = this.categoryId;
+    data['roiProcessName'] = this.selected_process_names.find(each=>each.processId == this.insertForm2.value.process).processName
 
     // let project=JSON.stringify(data)
 
@@ -275,7 +282,7 @@ export class CreateProjectFormComponent implements OnInit {
           this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
           this.router.navigate(["/pages/projects/projectdetails"], {
-            queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
+            queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true,process_name:this.process_name},
           });
       } else {
         this.toastService.showError(response.errorMessage);
