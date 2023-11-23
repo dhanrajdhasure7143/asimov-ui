@@ -27,7 +27,7 @@ export const environment = {
   //BPMN Platform URL
   camunda_url: "https://ezworkflow.demo.epsoftinc.com",
   //A-Square/Copilot
-  asquare:"https://ezflow.dev.epsoftinc.com",
+  asquare:"https://ezflow.demo.epsoftinc.com",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
@@ -40,7 +40,7 @@ export const environment = {
   webActionAttrId: 536,
   //IPCTenant
   ipcTenant: "014bb3a8-a15e-436f-b6fc-f245121d4f20",
-  isChatEnable : false,
-  isProcessLogsEnable: false,
-  isCopilotEnable : false
+  isChatEnable : true,
+  isProcessLogsEnable: true,
+  isCopilotEnable : true
 };
