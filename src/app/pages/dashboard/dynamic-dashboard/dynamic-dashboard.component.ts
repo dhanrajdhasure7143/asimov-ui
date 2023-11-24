@@ -194,11 +194,7 @@ export class DynamicDashboardComponent implements OnInit {
       .subscribe((response: any) => {
         if (response.code == 4200) {
           this.toastService.showSuccess(existingdashboard,'update');
-          let params1 = {
-            dashboardId: this.selectedDashBoard.id,
-            dashboardName: this.selectedDashBoard.dashboardName,
-          };
-          this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
+          this.replaceURL();
         this.inplace.deactivate();
         }
         if (response.code == 8010) {
@@ -262,14 +258,7 @@ export class DynamicDashboardComponent implements OnInit {
   onDropdownChange(event) {
     this.selectedDashBoard = event;
     this.selectedDashBoardName = this.selectedDashBoard.dashboardName;
-    let params1 = {
-      dashboardId: this.selectedDashBoard.id,
-      dashboardName: this.selectedDashBoard.dashboardName,
-    };
-    this.router.navigate([], {
-      relativeTo: this.activeRoute,
-      queryParams: params1,
-    });
+    this.replaceURL();
     this.getDashBoardData(this.selectedDashBoard.id,true);
   }
 
@@ -337,14 +326,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.selectedDashBoard = this.dashbordlist.find(
         (item) => item.defaultDashboard == true
       );
-      let params1 = {
-        dashboardId: this.selectedDashBoard.id,
-        dashboardName: this.selectedDashBoard.dashboardName,
-      };
-      this.router.navigate([], {
-        relativeTo: this.activeRoute,
-        queryParams: params1,
-      });
+      this.replaceURL();
       setTimeout(() => {
         this.selecteddashboard = this.selectedDashBoard
       }, 100);
@@ -541,23 +523,21 @@ export class DynamicDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: "You are trying to remove the widget from the dashboard.",
       header: "Are you sure?",
-      
       rejectVisible: false,
       acceptLabel: "Ok",
       accept: () => {
-        this.rest.onRemoveSelectedWidget(this.selected_widget.id).subscribe(
-          (res) => {
-            this.dashboardData.widgets.forEach((element, index) => {
-              if (this.selected_widget.childId == element.childId) {
-                this.dashboardData.widgets.splice(index, 1);
-                this.toastService.showSuccess('Widget','delete');
-              }
-            });
-          },
-          (err) => {
-            this.toastService.showError(this.toastMessages.deleteError);
-          }
-        );
+      const id6Exists = this.dashboardData.widgets.some(obj => obj.childId === 6);
+      const id5Exists = this.dashboardData.widgets.some(obj => obj.childId === 5);
+      if (id6Exists && id5Exists) {
+        this.deleteWidgetfromDashBoard(this.selected_widget)
+      } else if(id6Exists || id5Exists) {
+        let deleteList = [this.selected_widget, ...this.dashboardData.widgets.filter(item => item.childId == 7)];
+        deleteList.forEach(each=>{
+          this.deleteWidgetfromDashBoard(each)
+        })
+      }else{
+        this.deleteWidgetfromDashBoard(this.selected_widget)
+      }
       },
       key: "positionDialog3",
     });
@@ -653,5 +633,29 @@ export class DynamicDashboardComponent implements OnInit {
   }
   isLabelWidget(widget: any): boolean {
     return widget.widget_type === 'label';
+  }
+
+  deleteWidgetfromDashBoard(item){
+    this.rest.onRemoveSelectedWidget(item.id).subscribe(
+      (res) => {
+        this.dashboardData.widgets.forEach((element, index) => {
+          if (item.childId == element.childId) {
+            this.dashboardData.widgets.splice(index, 1);
+            this.toastService.showSuccess('Widget','delete');
+          }
+        });
+      },
+      (err) => {
+        this.toastService.showError(this.toastMessages.deleteError);
+      }
+    );
+  }
+
+  replaceURL(){
+    let params1 = {
+      dashboardId: this.selectedDashBoard.id,
+      dashboardName: this.selectedDashBoard.dashboardName,
+    };
+    this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
   }
 }

@@ -267,13 +267,13 @@ span.oopstxt label {
 
 .widgetValue h2{
     position: absolute;
-    top: 45%;
+    top: 48%;
     left: 45%;
     transform: translate(-50%, -50%);
     color: #098de6;
     font-size: 2.3rem;
     text-align: center !important;
-    font-weight: bolder;
+    /* font-weight: bolder; */
 }
 
 /* .configtabslists .metric-set:hover span.addtooltip,
@@ -302,10 +302,22 @@ span.addtooltip::before {
 } */
 
 .graph1 {
-	height: 180px;
+	height: 145px;
 	padding: 15px !important;
 }
 
 .widgetlabel h5{
     font-weight: bold;
+    font-size: 20px;
+}
+
+.newwidgetmore {
+    position:absolute;
+    top: 14px;
+    right: 40px;
+}
+ 
+.newwidgettitle {
+    width: 100%;
+    text-align: center;
 }
