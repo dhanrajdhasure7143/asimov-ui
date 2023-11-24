@@ -362,6 +362,9 @@ export class ConfigureDashboardComponent implements OnInit {
                 },
               },
             };
+            if(item.widget_type == "Bar"){
+              item["chartOptions"].plugins.legend["display"]=false;
+            }
           }
         }
         return item;
@@ -423,6 +426,9 @@ export class ConfigureDashboardComponent implements OnInit {
                 return [];
               },
             };
+          }
+          if(item.widget_type == "Bar"){
+            item["chartOptions"].plugins.legend["display"]=false;
           }
         }
         if (item.childId == 2) {
