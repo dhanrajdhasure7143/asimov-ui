@@ -355,7 +355,7 @@ hiddenPopUp:boolean=false;
     }
 
     showTop10Rec() {
-        (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView();
+        (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
 
     getResources(vData) {
