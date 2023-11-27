@@ -526,18 +526,29 @@ export class DynamicDashboardComponent implements OnInit {
       rejectVisible: false,
       acceptLabel: "Ok",
       accept: () => {
-      const id6Exists = this.dashboardData.widgets.some(obj => obj.childId === 6);
-      const id5Exists = this.dashboardData.widgets.some(obj => obj.childId === 5);
-      if (id6Exists && id5Exists) {
-        this.deleteWidgetfromDashBoard(this.selected_widget)
-      } else if(id6Exists || id5Exists) {
-        let deleteList = [this.selected_widget, ...this.dashboardData.widgets.filter(item => item.childId == 7)];
-        deleteList.forEach(each=>{
-          this.deleteWidgetfromDashBoard(each)
-        })
-      }else{
-        this.deleteWidgetfromDashBoard(this.selected_widget)
-      }
+        const id6Exists = this.dashboardData.widgets.some(obj => obj.childId === 6);
+        const id5Exists = this.dashboardData.widgets.some(obj => obj.childId === 5);
+        let successPopupShown = false;
+        if (id6Exists && id5Exists) {
+          this.deleteWidgetfromDashBoard(this.selected_widget, () => {
+            this.showSuccessPopup(successPopupShown);
+          });
+        } else if(id6Exists || id5Exists) {
+          let deleteList = [this.selected_widget, ...this.dashboardData.widgets.filter(item => item.childId == 7)];
+          let deleteCount = 0;
+          deleteList.forEach(each=>{
+            this.deleteWidgetfromDashBoard(each, () => {
+              deleteCount++;
+              if (deleteCount === deleteList.length) {
+                this.showSuccessPopup(successPopupShown);
+              }
+            });
+          });
+        }else{
+          this.deleteWidgetfromDashBoard(this.selected_widget, () => {
+          this.showSuccessPopup(successPopupShown);
+          });
+        }
       },
       key: "positionDialog3",
     });
@@ -635,13 +646,15 @@ export class DynamicDashboardComponent implements OnInit {
     return widget.widget_type === 'label';
   }
 
-  deleteWidgetfromDashBoard(item){
+  deleteWidgetfromDashBoard(item, callback: () => void = null) {
     this.rest.onRemoveSelectedWidget(item.id).subscribe(
       (res) => {
         this.dashboardData.widgets.forEach((element, index) => {
           if (item.childId == element.childId) {
             this.dashboardData.widgets.splice(index, 1);
-            this.toastService.showSuccess('Widget','delete');
+            if(callback){
+              callback();
+            }
           }
         });
       },
@@ -657,5 +670,12 @@ export class DynamicDashboardComponent implements OnInit {
       dashboardName: this.selectedDashBoard.dashboardName,
     };
     this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
+  }
+
+  showSuccessPopup(successPopupShown: boolean) {
+    if (!successPopupShown) {
+      this.toastService.showSuccess('Widget', 'delete');
+      successPopupShown = true;
+    }
   }
 }
