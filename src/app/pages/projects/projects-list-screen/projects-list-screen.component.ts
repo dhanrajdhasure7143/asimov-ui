@@ -243,7 +243,7 @@ export class ProjectsListScreenComponent implements OnInit {
       });
     } else {
       this.router.navigate(["/pages/projects/projectdetails"], {
-        queryParams: { project_id: event.id, project_name: event.projectName },
+        queryParams: { project_id: event.id, project_name: event.projectName, process_name : event.processName },
       });
     }
   }

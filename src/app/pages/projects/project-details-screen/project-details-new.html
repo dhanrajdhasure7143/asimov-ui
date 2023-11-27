@@ -507,6 +507,19 @@
 </div>
 
 
+<div class="onb-usroverlay" *ngIf="processInfo" style="display: block">
+    <app-split-overlay (closeOverlay)="closeOverlay($event)">
+        <div class="h-100">
+            <div class="create-header">
+                <h3>Process Info</h3>
+            </div>
+            <div class="h-100">
+                <app-project-process-info [process_name]="process_name" [project_id]="project_id" (customEvent)="onCustomEvent($event)"> </app-project-process-info>
+            </div>
+        </div>
+    </app-split-overlay>
+</div>            
+
 <div class="onb-usroverlay" *ngIf="hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
         <div class="splitoverlaydiv h-100">
