@@ -68,127 +68,219 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-md-6 pl-0 pr-24" *ngFor="let widget of dashboardData.widgets;let i = index">
-                  <div class="well1-dynmic graph">
-
-                     <div class="row align-menubtn">
-                        <div class="col-10 p-0 d-flex">
-                           <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
-                           <h5 class="graph-text">{{widget.name}}</h5>   
-                        </div>
-                        <div class="col-2 p-0 text-right">
-                           <button class="btn btn-dots widgetactions" type="button" (click)="onOpenConfigOptoons(widget);menu1.toggle($event)" >
-                              <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
-                              <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
-                           </button>
-                           <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" 
-                              [model]="items">
-                           </p-menu>
-                        </div>
-                     </div>
-                     <div>
-                        <div *ngIf="configuration_id != widget.id">
-                           <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
-                           <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table'" [ngClass]="widget.message =='No Data Found For This Department' ? 'graph-set-nodata' : 'graph-set' " >
-                              <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
-                              <span *ngIf="widget.message !='No Data Found For This Department'">
-                              <p-chart [type]="widget.widget_type| lowercase" class="w-100" [data]="widget.widgetData" height="270" 
-                                 [options]="widget.chartOptions"></p-chart>
-                              </span>
+               <ng-container *ngFor="let widget of dashboardData.widgets;let i = index">
+                  <div class="pl-0 pr-24" [ngClass]="getDynamicClasses(widget)" >
+                     <div class="well1-dynmic" [ngClass]="getDynamicClasses_one(widget)">
+                        <div class="row align-menubtn widgetlabel" *ngIf="isLabelWidget(widget)">
+                           <!-- [ngClass]="{'widgetlabel': isLabelWidget(widget)}" -->
+                           <div class="newwidgettitle" >
+                              <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" />
+                              <h5 class="graph-text">{{widget.name}}</h5>  
                            </div>
-                           <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
-                              <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
-                              [resizableColumns]="true" >
-                                 <ng-template pTemplate="header" let-columns>
-                                    <tr>
-                                       <th pReorderableColumn pResizableColumn pSortableColumn="name">Name
-                                          <p-columnFilter [showAddButton]="false" [showOperator]="false"
-                                          matchMode="contains" [showMatchModes]="false" field="name" display="menu"
-                                          [showApplyButton]="false">
-                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                                  class="p-inputtext" placeholder="Search">
-                                          </ng-template>
-                                      </p-columnFilter>
-                                           <p-sortIcon field="name"></p-sortIcon>
-                                       </th>
-                                       <th pReorderableColumn pResizableColumn pSortableColumn="value">
-                                          <span *ngIf="widget.name == 'Upcoming Executions'">Next Run</span>
-                                          <span *ngIf="widget.name != 'Upcoming Executions'">Users</span>
-                                          
-                                          <p-columnFilter [showAddButton]="false" [showOperator]="false"
-                                          matchMode="contains" [showMatchModes]="false" field="value" display="menu"
-                                          [showApplyButton]="false">
-                                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                              <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
-                                                  class="p-inputtext" placeholder="Search">
-                                          </ng-template>
-                                      </p-columnFilter>
-                                      <!-- <p-columnFilter *ngIf="widget.childId == 4" [showAddButton]="false"
-                                          [showOperator]="false" type="date" [showMatchModes]="false" field="value"
-                                          display="menu" [showApplyButton]="true">
-                                       </p-columnFilter> -->
-                                           <p-sortIcon field="value"></p-sortIcon>
-                                       </th>
-                                    </tr>
-                                 </ng-template>
-                                 <ng-template pTemplate="body" let-people>
-                                    <tr>
-                                       <td>{{people.name}}</td>
-                                       <td *ngIf="widget.childId != 4">{{people.value}}</td>
-                                       <td *ngIf="widget.childId == 4">{{people.value|date: 'MMM d, y, HH:mm'}}</td>
-                                    </tr>
-                                 </ng-template>
-                                 <ng-template pTemplate="emptymessage">
-                                    <tr>
-                                       <td style="justify-content: center;" colspan="2">No Records Found</td>
-                                    </tr>
-                                 </ng-template>
-                              </p-table>
+                           <div class="newwidgetmore" *ngIf="!widget.extraWidget">
+                              <button class="btn btn-dots widgetactions" type="button" (click)="onOpenConfigOptoons(widget);menu1.toggle($event)" >
+                                 <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
+                                 <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
+                              </button>
+                              <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)"
+                                 [model]="items">
+                              </p-menu>
                            </div>
-                           <!-- <div *ngIf="widget.widget_type=='pie'">
-                               <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                           </div> -->
-                   
-                           <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
-                       
-                                 <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                        </div>
+                        <div class="row align-menubtn" *ngIf="!isLabelWidget(widget)">
+                           <div class="col-10 p-0 d-flex">
+                              <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
+                              <h5 class="graph-text">{{widget.name}}</h5>   
+                           </div>
+                           <div class="col-2 p-0 text-right">
+                              <button class="btn btn-dots widgetactions" type="button" (click)="onOpenConfigOptoons(widget);menu1.toggle($event)" >
+                                 <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
+                                 <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
+                              </button>
+                              <p-menu class="actionspopmenu p-menu-graph"  #menu1 [popup]="true" (click)="getItemActionDetails($event,widget)" 
+                                 [model]="items">
+                              </p-menu>
+                           </div>
+                        </div>
+                        <div>
+                           <div *ngIf="configuration_id != widget.id">
+                              <!-- <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270" [options]="widget.chartOptions"></p-chart> -->
+                              <div *ngIf="widget.widget_type!='table' && widget.widget_type!='Table' && widget.widget_type != 'label'" [ngClass]="widget.message =='No Data Found For This Department' ? 'graph-set-nodata' : 'graph-set' " >
+                                 <span *ngIf="widget.message =='No Data Found For This Department'" class="oopstxt"><label for="">Oops!</label>No data found for this department.</span>
+                                 <span *ngIf="widget.message !='No Data Found For This Department'">
+                                 <p-chart *ngIf="widget.widget_type != 'none'" [type]="widget.widget_type | lowercase" class="w-100" [data]="widget.widgetData" height="270"  
+                                 [options]="widget.chartOptions">
+                                 </p-chart>
+                                 </span>
                               </div>
-                              <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
-                                 <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                              <div *ngIf="widget.widget_type == 'label'">
+                                 <div class="widgetValue">
+                                    <h2  *ngIf="widget.childId == '7' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                    <h2  *ngIf="widget.childId == '5' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                    <h2  *ngIf="widget.childId == '6' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
+                                 </div>
+   
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 [resizableColumns]="true" >
+                                    <ng-template pTemplate="header" let-columns>
+                                       <tr>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                             <span> Time Saved </span>
+                                          </th>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-people>
+                                       <tr>
+                                          <td>{{people.processName}}</td>
+                                          <td>{{people.timeSavedForExecution}}</td>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                       <tr>
+                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                       </tr>
+                                    </ng-template>
+                                 </p-table>
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '6' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 [resizableColumns]="true" >
+                                    <ng-template pTemplate="header" let-columns>
+                                       <tr>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                             <span> Cost Saved </span>
+                                          </th>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-people>
+                                       <tr>
+                                          <td>{{people.processName}}</td>
+                                          <td>{{people.costSavedForExecution}}</td>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                       <tr>
+                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                       </tr>
+                                    </ng-template>
+                                 </p-table>
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '7' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 [resizableColumns]="true" >
+                                    <ng-template pTemplate="header" let-columns>
+                                       <tr>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                             <span> Go Live Date </span>
+                                          </th>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-pCount>
+                                       <tr>
+                                          <td>{{ pCount.processName }}</td>
+                                          <td>{{ pCount.goLiveDate | date:'MMM dd, yyyy'}}</td>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                       <tr>
+                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                       </tr>
+                                    </ng-template>
+                                 </p-table>
                               </div>
-                              <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
-                                 <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions"
-                                    height="270"></p-chart>
+                              <div *ngIf="widget.widget_type=='table' || widget.widget_type=='Table'">
+                                 <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 [resizableColumns]="true" >
+                                    <ng-template pTemplate="header" let-columns>
+                                       <tr>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="name">Name
+                                             <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                                             matchMode="contains" [showMatchModes]="false" field="name" display="menu"
+                                             [showApplyButton]="false">
+                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                                   class="p-inputtext" placeholder="Search">
+                                             </ng-template>
+                                       </p-columnFilter>
+                                             <p-sortIcon field="name"></p-sortIcon>
+                                          </th>
+                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                             <span *ngIf="widget.name == 'Upcoming Executions'">Next Run</span>
+                                             <span *ngIf="widget.name != 'Upcoming Executions'">Users</span>
+                                             
+                                             <p-columnFilter [showAddButton]="false" [showOperator]="false"
+                                             matchMode="contains" [showMatchModes]="false" field="value" display="menu"
+                                             [showApplyButton]="false">
+                                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                                   class="p-inputtext" placeholder="Search">
+                                             </ng-template>
+                                       </p-columnFilter>
+                                       <!-- <p-columnFilter *ngIf="widget.childId == 4" [showAddButton]="false"
+                                             [showOperator]="false" type="date" [showMatchModes]="false" field="value"
+                                             display="menu" [showApplyButton]="true">
+                                          </p-columnFilter> -->
+                                             <p-sortIcon field="value"></p-sortIcon>
+                                          </th>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-people>
+                                       <tr>
+                                          <td>{{people.name}}</td>
+                                          <td *ngIf="widget.childId != 4">{{people.value}}</td>
+                                          <td *ngIf="widget.childId == 4">{{people.value|date: 'MMM d, y, HH:mm'}}</td>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                       <tr>
+                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                       </tr>
+                                    </ng-template>
+                                 </p-table>
                               </div>
-                              <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
-                                 <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                              </div>
-                              <div *ngIf="widget.widget_type=='LINE_CHART'">
-                                 <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
-                              </div>
-                              <div *ngIf="widget.widget_type=='TABLE'">
+                              <!-- <div *ngIf="widget.widget_type=='pie'">
+                                 <p-chart [type]="widget.widget_type" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
                               </div> -->
-                        
-                        </div>
-
-                        <div  *ngIf="configuration_id == widget.id">                            
-                           <form [formGroup]="dynamicFormConfiure" class="row">
-                              <div class="col-6 form-group" *ngFor="let each of widget.filterOptions">
-                                 <label class="label-control">{{each.label}}</label>
-                                 <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
-                              </div>
                      
-                              <div class="col-12 row justify-content-end">
-                                 <button class="btn new-cancelbtn" (click)="cancelEdit()">Cancel</button>
-                                 <button class="btn bluebg-button" (click)="saveConfigure(i)">Save</button>
-                              </div>
-                           </form>
+                              <!-- <div *ngIf="widget.widget_type=='DONUT_WITHOUT_LEGENDS'">
+                        
+                                    <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                                 </div>
+                                 <div *ngIf="widget.widget_type=='VERTICAL_BAR_CHART'">
+                                    <p-chart type="bar" class="w-100" [data]="widget.sampleData" height="245"></p-chart>
+                                 </div>
+                                 <div *ngIf="widget.widget_type=='HORIZANTAL_BAR_CHART'">
+                                    <p-chart type="bar" class="w-100" [data]="widget.sampleData" [options]="widget.chartOptions"
+                                       height="270"></p-chart>
+                                 </div>
+                                 <div *ngIf="widget.widget_type=='DONUT_WITH_LEGENDS_CHART'">
+                                    <p-chart type="doughnut" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                                 </div>
+                                 <div *ngIf="widget.widget_type=='LINE_CHART'">
+                                    <p-chart type="line" class="w-100" [data]="widget.sampleData" height="270"></p-chart>
+                                 </div>
+                                 <div *ngIf="widget.widget_type=='TABLE'">
+                                 </div> -->
+                           
+                           </div>
+
+                           <div  *ngIf="configuration_id == widget.id">                            
+                              <form [formGroup]="dynamicFormConfiure" class="row">
+                                 <div class="col-6 form-group" *ngFor="let each of widget.filterOptions">
+                                    <label class="label-control">{{each.label}}</label>
+                                    <p-dropdown [formControlName]="each.name" [options]="each.types" [style]="{'width':'100%'}" placeholder="Select"></p-dropdown>
+                                 </div>
+                        
+                                 <div class="col-12 row justify-content-end">
+                                    <button class="btn new-cancelbtn" (click)="cancelEdit()">Cancel</button>
+                                    <button class="btn bluebg-button" (click)="saveConfigure(i)">Save</button>
+                                 </div>
+                              </form>
+                           </div>
                         </div>
                      </div>
+                  
                   </div>
-               
-               </div>
+               </ng-container>
          
             </div>
          </div>

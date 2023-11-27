@@ -135,6 +135,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.qa.ts"
+                },
+                {
+                  "replace": "src/version.ts",
+                  "with": "src/version/version.qa.ts"
                 }
               ],
               "optimization": true,

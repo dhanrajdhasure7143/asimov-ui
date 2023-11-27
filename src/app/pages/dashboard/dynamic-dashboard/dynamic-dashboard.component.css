@@ -176,3 +176,38 @@ span.oopstxt label {
     text-overflow: ellipsis;
     margin: 0px 5px 0px 0px;
 }
+
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+  }
+
+.widgetValue h2{
+    color: #098de6;
+    font-size: 3rem;
+    cursor: pointer;
+    text-align: center !important;
+    margin-top: 25px;
+}
+
+.widgetlabel h5{
+    font-weight:bold;
+    font-size: 22px;
+}
+.graph1 {
+	height: 160px;
+	padding: 15px !important;
+}
+
+.newwidgetmore {
+    position:absolute;
+    top: 14px;
+    right: 45px;
+}
+ 
+.newwidgettitle {
+    width: 100%;
+    text-align: center;
+}

@@ -229,6 +229,8 @@ users_List1:any[]=[];
 allFiles:any[]=[];
 documentList=[];
 categoryId: any;
+processInfo: boolean;
+process_name: any;
 
 
 constructor(private dt: DataTransferService, private route: ActivatedRoute, private rest_api: RestApiService,
@@ -243,7 +245,9 @@ private toastMessages: toastMessages
     this.params_data=data
     this.project_id = this.params_data.project_id
     this.role=this.params_data.role
-    if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
+    if(this.params_data.isCreated){
+      this.isCreate = this.params_data.isCreated
+    }
     this.spinner.show();
     this.getallusers();
   });
@@ -257,6 +261,10 @@ this.actionsitems = [
   //   label: 'Tasks',
   //   command: () => {this.taskListView()}
   // },
+  { 
+    label: 'Process Info',
+    command: () => { this.openProcessOverlay()}
+  },
   { 
     label: 'Users',
     command: () => { this.openUsersOverlay()}
@@ -462,6 +470,7 @@ async getProjectdetails(){​​​​​​
   this.categoryId = this.projectDetails.categoryId
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
+  this.process_name = this.projectDetails.roiProcessName?this.projectDetails.roiProcessName:this.getProcessName(this.projectDetails.correlationID);
   this.processOwnerFlag=false;
   if(this.projectDetails.endDate){
   this.projectenddate=moment(this.projectDetails.endDate).format("lll");
@@ -891,6 +900,7 @@ this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.pro
 
 closeOverlay(event) {
 this.hiddenPopUp = event;
+this.processInfo = event;
 }
 
 onChangeRole(event,tab){
@@ -1639,6 +1649,19 @@ selectEnd() {
         if ((event.target.selectionStart === 0 && event.code === 'Space')){
           event.preventDefault();
         }
+  }
+
+  openProcessOverlay(){
+    this.processInfo = true
+  }
+
+  onCustomEvent(message: any) {
+    this.processInfo = message;
+  }
+
+  getProcessName(correlationID){
+    this.spinner.hide();
+    return this.selected_process_names.filter(res=> res.correlationID == correlationID).processName
   }
 }
 

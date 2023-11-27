@@ -347,6 +347,7 @@ span.PI-frpr-spin {
 .PI-sliderspath {
   position: absolute;
   right: 40px;
+  top: 0px;
 }
 
 span.testtooltip {

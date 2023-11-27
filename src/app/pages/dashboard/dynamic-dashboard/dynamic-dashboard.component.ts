@@ -41,6 +41,9 @@ export class DynamicDashboardComponent implements OnInit {
   // Stopped  #FF0131
   // Killed  #AD2626
   interval:any;
+  processInfo: any[] = [];
+  showTableData: boolean = true;
+  widgetClass: any = 'graph1';
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -59,6 +62,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTable();
     this.getDashBoardData(this._paramsData.dashboardId,true);
     this.primengConfig.ripple = true;
     // this.menuItems = [
@@ -190,11 +194,7 @@ export class DynamicDashboardComponent implements OnInit {
       .subscribe((response: any) => {
         if (response.code == 4200) {
           this.toastService.showSuccess(existingdashboard,'update');
-          let params1 = {
-            dashboardId: this.selectedDashBoard.id,
-            dashboardName: this.selectedDashBoard.dashboardName,
-          };
-          this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
+          this.replaceURL();
         this.inplace.deactivate();
         }
         if (response.code == 8010) {
@@ -258,14 +258,7 @@ export class DynamicDashboardComponent implements OnInit {
   onDropdownChange(event) {
     this.selectedDashBoard = event;
     this.selectedDashBoardName = this.selectedDashBoard.dashboardName;
-    let params1 = {
-      dashboardId: this.selectedDashBoard.id,
-      dashboardName: this.selectedDashBoard.dashboardName,
-    };
-    this.router.navigate([], {
-      relativeTo: this.activeRoute,
-      queryParams: params1,
-    });
+    this.replaceURL();
     this.getDashBoardData(this.selectedDashBoard.id,true);
   }
 
@@ -333,14 +326,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.selectedDashBoard = this.dashbordlist.find(
         (item) => item.defaultDashboard == true
       );
-      let params1 = {
-        dashboardId: this.selectedDashBoard.id,
-        dashboardName: this.selectedDashBoard.dashboardName,
-      };
-      this.router.navigate([], {
-        relativeTo: this.activeRoute,
-        queryParams: params1,
-      });
+      this.replaceURL();
       setTimeout(() => {
         this.selecteddashboard = this.selectedDashBoard
       }, 100);
@@ -360,7 +346,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.dashboardData.widgets = data.widgets;
       this.loader.hide();
       this.dashboardData.widgets.forEach(element => {
-        if(element.widget_type!= "Table" && element.widget_type!= "table"){
+        if(element.widget_type!= "Table" && element.widget_type!= "table" && element.widget_type != "label"){
           element["chartOptions"].onClick = this.handlePieChartClick.bind(this,element.widgetData.labels,element.childId)
           if(element.childId == 1){
             element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
@@ -537,23 +523,32 @@ export class DynamicDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: "You are trying to remove the widget from the dashboard.",
       header: "Are you sure?",
-      
       rejectVisible: false,
       acceptLabel: "Ok",
       accept: () => {
-        this.rest.onRemoveSelectedWidget(this.selected_widget.id).subscribe(
-          (res) => {
-            this.dashboardData.widgets.forEach((element, index) => {
-              if (this.selected_widget.childId == element.childId) {
-                this.dashboardData.widgets.splice(index, 1);
-                this.toastService.showSuccess('Widget','delete');
+        const id6Exists = this.dashboardData.widgets.some(obj => obj.childId === 6);
+        const id5Exists = this.dashboardData.widgets.some(obj => obj.childId === 5);
+        let successPopupShown = false;
+        if (id6Exists && id5Exists) {
+          this.deleteWidgetfromDashBoard(this.selected_widget, () => {
+            this.showSuccessPopup(successPopupShown);
+          });
+        } else if(id6Exists || id5Exists) {
+          let deleteList = [this.selected_widget, ...this.dashboardData.widgets.filter(item => item.childId == 7)];
+          let deleteCount = 0;
+          deleteList.forEach(each=>{
+            this.deleteWidgetfromDashBoard(each, () => {
+              deleteCount++;
+              if (deleteCount === deleteList.length) {
+                this.showSuccessPopup(successPopupShown);
               }
             });
-          },
-          (err) => {
-            this.toastService.showError(this.toastMessages.deleteError);
-          }
-        );
+          });
+        }else{
+          this.deleteWidgetfromDashBoard(this.selected_widget, () => {
+          this.showSuccessPopup(successPopupShown);
+          });
+        }
       },
       key: "positionDialog3",
     });
@@ -579,7 +574,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onOpenConfigOptoons(widget){
-    if(widget.widget_type =="Table"){
+    if(widget.widget_type =="Table" || widget.widget_type == "label"){
       this.items = [
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       ];
@@ -618,6 +613,69 @@ export class DynamicDashboardComponent implements OnInit {
   spaceNotAllow(event: any) {
     if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
+    }
+  }
+
+
+  getTable(){
+    this.rest.getCostandTimeTable().subscribe((response:any) => {
+      this.processInfo = response.processInfo
+    })
+  }
+
+
+  getDynamicClasses(widget: any) {
+    return {
+      'col-md-6': widget.class === undefined,
+      [widget.class]: widget.class !== undefined
+    };
+  }
+
+  showTable(){
+    this.showTableData = !this.showTableData;
+    this.widgetClass = this.showTableData ? 'graph1' : 'graph';
+  }
+
+  getDynamicClasses_one(widget: any) {
+    return {
+      'graph': widget.class === undefined,
+      [this.widgetClass] : widget.class !== undefined
+    };
+  }
+  isLabelWidget(widget: any): boolean {
+    return widget.widget_type === 'label';
+  }
+
+  deleteWidgetfromDashBoard(item, callback: () => void = null) {
+    this.rest.onRemoveSelectedWidget(item.id).subscribe(
+      (res) => {
+        this.dashboardData.widgets.forEach((element, index) => {
+          if (item.childId == element.childId) {
+            this.dashboardData.widgets.splice(index, 1);
+            if(callback){
+              callback();
+            }
+          }
+        });
+      },
+      (err) => {
+        this.toastService.showError(this.toastMessages.deleteError);
+      }
+    );
+  }
+
+  replaceURL(){
+    let params1 = {
+      dashboardId: this.selectedDashBoard.id,
+      dashboardName: this.selectedDashBoard.dashboardName,
+    };
+    this.router.navigate([], {relativeTo: this.activeRoute,queryParams: params1});
+  }
+
+  showSuccessPopup(successPopupShown: boolean) {
+    if (!successPopupShown) {
+      this.toastService.showSuccess('Widget', 'delete');
+      successPopupShown = true;
     }
   }
 }

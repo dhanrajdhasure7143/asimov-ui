@@ -55,9 +55,9 @@ export class CopilotHomeComponent implements OnInit {
   // }
 
   getFunctionsList() {
-    this.restService.getCopilotFunctionsList().subscribe((response: any) => {
-      console.log(response)
-    });
+    // this.restService.getCopilotFunctionsList().subscribe((response: any) => {
+    //   console.log(response)
+    // });
     this.rest_api.getCopilotFunctionsList().subscribe((response: any) => {
       this.copilotFlag = "FUNCTIONS"
       this.display = true;
@@ -140,5 +140,9 @@ export class CopilotHomeComponent implements OnInit {
   navigateToChatScreenWithMessage()
   {
     this.router.navigate(["./pages/copilot/chat"],{queryParams:{templateId:btoa(JSON.stringify({type:'message',message:this.intentData}))}}); 
+  }
+
+  navigateToCopilotHistory(){
+    this.router.navigate(["./pages/copilot/history"]);
   }
 }

@@ -9,6 +9,7 @@ import { MessageData, UserMessagePayload } from "../copilot-models";
 import { CopilotService } from "../../services/copilot.service";
 import { DatePipe } from '@angular/common';
 import * as XLSX from 'xlsx';
+import { ToasterService } from "src/app/shared/service/toaster.service";
 interface City {
   name: string;
   code: string;
@@ -54,13 +55,18 @@ export class CopilotChatComponent implements OnInit {
   }
   piId:any;
   botId:any;
+  loadHistory:boolean=false;
+
+
+  
   constructor(
     private rest_api: CopilotService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private dt: DataTransferService,
     private fb: FormBuilder,
-    private main_rest:RestApiService
+    private main_rest:RestApiService,
+    private tostService:ToasterService
   ) {}
 
   ngOnInit() {
@@ -71,6 +77,11 @@ export class CopilotChatComponent implements OnInit {
       if (params.templateId) {
         this.loadBpmnContainer();
         (isNaN(params.templateId) && params.templateId != "Others")?this.getAutomatedProcess(atob(params.templateId)):this.getConversationId();
+      }
+      else if(params?.conversationId){
+        localStorage.setItem("conversationId",params.conversationId)
+        this.loadHistory=true;
+        this.getChatHistory(params.conversationId);
       }
     });
   }
@@ -87,12 +98,14 @@ export class CopilotChatComponent implements OnInit {
     this.rest_api.getCopilotTemplatesList(processId).subscribe((response: any) => {
         let template:any;
         if(response) (template = response.find((item: any) => item.templateId == templateId),this.loadBpmnwithXML({bpmnXml:template.bpmnXml,isUpdate:true}));
+      },err=>{
+        console.log(err);
+        this.tostService.showError("Unable to get templates")
       });
   }
 
 
   sendMessage(value?: any, messageType?: String) {
-     console.log("check",this.copilotMessageRef)
     this.isChatLoad = true;
         let data = {
           conversationId: localStorage.getItem("conversationId"),
@@ -113,7 +126,6 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
-          console.log(this.messages)
           var objDiv = document.getElementById("chat-grid");
           setTimeout(() => {
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -209,11 +221,9 @@ export class CopilotChatComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.tableForm. valid)
     if(!this.tableForm.valid){
-      this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'});
+      this.tostService.showError("Please fill all details")
     }
-    console.log(this.tableForm.value)
   }
 
   getConversationId(){
@@ -226,11 +236,38 @@ export class CopilotChatComponent implements OnInit {
         resdata = res
         this.currentMessage=res;
         this.messages.push(resdata); 
-        localStorage.setItem("conversationId", res.conversationId)
+        localStorage.setItem("conversationId", res.conversationId); 
       },err=>{
+        console.log(err);
+        this.tostService.showError("Unable to get conversationId")
         this.loader=false;
       }
     )
+  }
+
+
+  loadWidgets(){
+    let loadedMessages=[...this.messages];
+    try{
+      (loadedMessages?.reverse())?.forEach((item:any, index)=>{
+        if(this.analyzeMessage(item)) throw new Error("BreakException");
+        if(this.checkAndLoadBpmnData(item, index))  throw new Error("BreakException");
+        if(this.checkAndLoadProcessLogTable(item, index)) throw new Error("BreakException");
+      })
+    }catch(e){
+      this.tostService.showError("Unable to load widgets")
+      console.log(e.message)
+    }
+  }
+
+
+  checkAndLoadProcessLogTable(message, index){
+    return false;
+  }
+
+
+  checkAndLoadBpmnData(message, index){
+    return false;
   }
 
   processMessageAction = (event:any) =>{
@@ -302,12 +339,8 @@ export class CopilotChatComponent implements OnInit {
         }, 500)
       })
     }
-    else
-      this.messageService.add({
-        severity: "error",
-        summary: "Error",
-        detail: "Please fill time in all fields "
-      });
+    else 
+    this.tostService.showError("Please fill time in all fields");
     
   }
   
@@ -368,27 +401,30 @@ export class CopilotChatComponent implements OnInit {
         //if (res.data?.components?.includes('logCollection')) this.displaylogCollectionForm(res);
     }, err =>{
       console.log(err);
+      this.tostService.showError("Unable to send message")
     })
   }
 
   displaylogCollectionForm(res:any){
-    let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
-    values= JSON.parse( atob(values[0].values));
-    values.forEach((item:any)=>{
-      this.processLogsData.push({
-        stepName:item.stepName,
-        stepId:item.stepId,
-        days:"00",
-        hours:"00",
-        minutes:"00",
+    if(!this.loadHistory){
+      let values =res.data?.values[ res.data?.components?.indexOf('logCollection')];
+      values= JSON.parse( atob(values[0].values));
+      values.forEach((item:any)=>{
+        this.processLogsData.push({
+          stepName:item.stepName,
+          stepId:item.stepId,
+          days:"00",
+          hours:"00",
+          minutes:"00",
+        })
       })
-    })
-    this.createForm();
-    setTimeout(()=>{
-      this.displayFlag=this.displayEnum.displayEventLogTable;
-      this.showTable=true;
-      this.isTableLoaded=true;
-    },500)
+      this.createForm();
+      setTimeout(()=>{
+        this.displayFlag=this.displayEnum.displayEventLogTable;
+        this.showTable=true;
+        this.isTableLoaded=true;
+      },500)
+    }
   }
 
 
@@ -417,7 +453,9 @@ export class CopilotChatComponent implements OnInit {
       localStorage.setItem("conversationId", res.conversationId);
       this.messages.push(res);
     },err=>{
+      console.log(err);
       this.loader=false;
+      this.tostService.showError("Unable to get templates list")
     })
   }
 
@@ -505,29 +543,28 @@ export class CopilotChatComponent implements OnInit {
 
 
   analyzeMessage(messageResponse:any){
+    let isLoaded:boolean=false;
     messageResponse?.data?.message?.forEach((message)=>{
     let piRegexExp=/#\/pages\/processIntelligence\/flowChart\?piId=\d+/g
     let rpaRegexExp=/#\/pages\/rpautomation\/designer\?botId=\d+/g
      if(message.match(piRegexExp)){
-      console.log("-- sample --",message)
       let piId = (message.match(piRegexExp)[0].split("piId="))[1];
-      console.log("sample check 2");
-      console.log(piId);
       this.piId=piId;
-      let url=window.location.hash;
-      window.history.pushState("", "", url+"&piId="+piId); 
-      this.displayFlag=this.displayEnum.displayPI;   
+      //let url=window.location.hash;
+      //window.history.pushState("", "", url+"&piId="+piId); 
+      this.displayFlag=this.displayEnum.displayPI;  
+      isLoaded=true; 
      }
      if(message.match(rpaRegexExp)){
       let rpaBotId = (message.match(rpaRegexExp)[0].split("botId="))[1];
       this.botId=rpaBotId;
-      let url=window.location.hash;
-      console.log("sample check 2");
-      console.log(rpaBotId);
-      window.history.pushState("", "", url+"&botId="+rpaBotId); 
+      //let url=window.location.hash;
+      //window.history.pushState("", "", url+"&botId="+rpaBotId); 
       this.displayFlag=this.displayEnum.displayRPA;   
+      isLoaded=true;
      }
   });
+  return isLoaded;
   }
   readExcelFile(evt, buttonData) {    // read xls files
     const reader: FileReader = new FileReader();
@@ -538,11 +575,7 @@ export class CopilotChatComponent implements OnInit {
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       let excelfile:any[] = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: true, range: 0, dateNF:'YYYY-MM-DD HH:mm:ss' }));
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
+        this.tostService.showError("No data was found in the uploaded file!");
       } else{
         buttonData.headers=excelfile[0];
         this.uploadProcessLogsFile(evt,buttonData);
@@ -564,11 +597,7 @@ export class CopilotChatComponent implements OnInit {
       let excelfile = [];
       excelfile = csvRecordsArray;
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
+        this.tostService.showError("No data was found in the uploaded file!")
       } else{
         buttonData.headers=excelfile[0];
         this.uploadProcessLogsFile(e,buttonData);
@@ -591,6 +620,7 @@ export class CopilotChatComponent implements OnInit {
         })
       }
     },err=>{
+      this.tostService.showError("Unable to upload process log file")
       this.isChatLoad=false;
     })
   }
@@ -599,5 +629,67 @@ export class CopilotChatComponent implements OnInit {
 
   onBackPress(type){
     this.displayFlag=this.displayEnum.displayProcessLogGraph
+  }
+
+
+  getChatHistory(conversationId){
+ 
+    this.loader=true;
+    this.loadBpmnContainer();
+    this.rest_api.getAllConversationsByConversationId(conversationId).subscribe((response:any)=>{
+      this.loader=false;
+      localStorage.setItem("conversationId", conversationId);
+      if(response?.data){
+        let bpmnActionDetails=JSON.parse(response?.data);
+        bpmnActionDetails[0]["isUpdate"]=true;
+        this.loadBpmnwithXML(bpmnActionDetails[0]);
+        delete response?.data;
+      }
+      let conversationChat:any=[];
+      conversationChat=response?.conversationHistory;
+      conversationChat=conversationChat.map((item:any)=>{
+        if(item.messageSourceType=="SYSTEM"){
+          item["conversationId"]=item?.conversation?.conversationId;
+          item["data"]=JSON.parse(item["message"]);
+          item["endConversation"]=false;
+          delete item?.message;
+        }
+        else if(item.messageSourceType=="USER"){
+          let parsedMessage=JSON.parse(item?.message);
+          item["message"]=parsedMessage?.message;
+          delete item?.data;
+        }
+        let data=item?.data
+        for(let i=0;i<data?.components?.length;i++){
+
+          if(data?.components[i]=="Buttons"){
+              data.values[i]=data?.values[i].map((componentItem)=>{
+                  componentItem["disabled"]=true;
+                  return componentItem;
+              })
+          }
+          if(data?.components[i]=="list"){
+           data.values[i]=data?.values[i].map((componentItem:any)=>{
+                  if(componentItem?.actions)
+                      componentItem.actions=componentItem?.actions?.map((componentActionItem:any)=>{
+                          componentActionItem["disabled"]=true;
+                          return componentActionItem;    
+                      });
+                      return componentItem;  
+             })
+          }
+        }
+        item["data"]=data;
+        delete item?.conversation;      
+        return item;
+      });
+      this.messages=conversationChat;
+      //this.loadWidgets();
+    },err=>{
+      this.tostService.showError("Unable to get conversation")
+      this.loader=false;
+    })
+    this.loader=false;
+
   }
 }

@@ -42,7 +42,7 @@
                         <div class="graph-designer">
                             <div class="studio_main">
                                 <div class="drag-area">
-                                    <div class="diagram_container-copilot" #diagramContainer id="_diagram">
+                                    <div class="diagram_container-copilot"  #diagramContainer id="_diagram">
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                     <div class="col-md-9 model-box new-box "  *ngIf="(displayFlag == displayEnum.displayRPA)" >
                         <app-rpa-studio-designer (onBackEvent)="onBackPress('RPA')" [copilotBotId]="botId"></app-rpa-studio-designer>
                     </div>
-                    <div class="col-md-9 model-box new-box "  *ngIf="(displayFlag == displayEnum.displayPI)" >
+                    <div class="col-md-9 model-box new-box copilot-pi-flowchart"  *ngIf="(displayFlag == displayEnum.displayPI)" >
                         <app-flowchart (onBackEvent)="onBackPress('PI')" [copilotPiId]="piId"></app-flowchart>
                     </div>
                     <div class="col-md-3 chat-box">
@@ -146,7 +146,7 @@
     </ng-template>
 </p-confirmDialog>
 
-<p-dialog header="Employee on boarding Process Log Graph" class="dialogHeader" [(visible)]="isDialogVisible"
+<p-dialog header="{{previewLabel}} Process Log Graph" class="dialogHeader" [(visible)]="isDialogVisible"
     [style]="{width: '50vw'}" class="bps_overlay" [modal]="true" [baseZIndex]="1000">
     <div class="">
         <div id="_diagram" *ngIf="isDialogVisible" class="graph-preview-container readOnly"
