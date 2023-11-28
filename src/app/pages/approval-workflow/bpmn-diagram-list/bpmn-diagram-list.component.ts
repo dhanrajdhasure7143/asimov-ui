@@ -9,19 +9,12 @@ import { ApprovalHomeHints } from './model/bpmn_approval_workflow';
 import { GlobalScript } from 'src/app/shared/global-script';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { fromMatPaginator, paginateRows, fromMatSort, sortRows } from './../../business-process/model/datasource-utils';
-import { Observable  } from 'rxjs/Observable';
-import { of  } from 'rxjs/observable/of';
-import { map } from 'rxjs/operators';
-import {MatTableDataSource} from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
-import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { TitleCasePipe } from '@angular/common';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -47,11 +40,6 @@ export class BpmnDiagramListComponent implements OnInit {
   approval_msg: string="";
   selected_processInfo;
   pendingStatus="PENDING...";
-  displayedRows$: Observable<any[]>;
-  totalRows$: Observable<number>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  dataSource:MatTableDataSource<any>;
-  @ViewChild(MatSort) sort: MatSort;
   search_fields:any[]=[];
   _selectedColumns: any[];
   categories_list_new:any[]=[];
@@ -139,10 +127,6 @@ searchValue:any;
           this.bpmnModeler.importXML(byteBpmn, function(err){
             if(err){
               this.toastService.showError(this.toastMessages.bpsImportError)
-              // this.notifier.show({
-              //   type: "error",
-              //   message: "Could not import Bpmn notation!"
-              // });
             }
           })
     },100)
@@ -396,41 +380,6 @@ this.selectedrow =i;
        splitTenant = selecetedTenant.split('-')[0];
     }
     window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
-  }
-  
-  
-  assignPagenation(data){
-    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
-    const rows$ = of(data);
-    this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-  }
-  
-  searchList(event: Event) {       // search entered process ids from search input
-    const filterValue = (event.target as HTMLInputElement).value;
-    let listArray:any=[];
-    if(!filterValue){
-      this.assignPagenation(this.griddata);
-      return;
-    }
-    this.griddata.filter(item =>{
-      item['bpmnProcessInfo'].filter(x=>{
-        Object.keys(x).some(k =>{ 
-          if(x != null && x[k].toString().toLowerCase().includes(filterValue.toLowerCase()) && !x['bpmnXmlNotation'].toString().toLowerCase().includes(filterValue.toLowerCase())){
-            listArray.push(item);
-          }
-        })
-      })
-      
-      });
-
-    var filtered = listArray.reduce((filtered, item) => {
-      if( !filtered.some(filteredItem => JSON.stringify(filteredItem.bpmnModelId) == JSON.stringify(item.bpmnModelId)) )
-        filtered.push(item)
-      return filtered
-    }, [])
-    this.assignPagenation(filtered);
   }
 
   clear(table: Table) {
