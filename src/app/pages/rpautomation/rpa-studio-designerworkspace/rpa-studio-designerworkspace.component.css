@@ -9,10 +9,17 @@
   min-height: 75vh;
   width:100%;
   position: absolute;
-  overflow: auto;
+  /* overflow: auto; */
   /* float: left;
   transform-origin:0% 0%;
   display: inline; */
+}
+
+.studio_main_desginer {
+  min-height: 75vh;
+  width: 100%;
+  position: absolute;
+  overflow: auto;
 }
 
 .outputtextareastyle{

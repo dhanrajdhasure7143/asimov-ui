@@ -28,7 +28,7 @@ import { Rpa_Hints } from "../model/RPA-Hints";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient } from "@angular/common/http";
 // import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
-import domtoimage from "dom-to-image";
+import * as domtoimage from 'dom-to-image-more-scroll-fix';
 import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
@@ -2228,7 +2228,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-      var element = document.getElementById(this.dragareaid);
+      var element = document.getElementById("dnd_"+this.dragareaid);
       if (element) {
         element.style.transform = `scale(${this.dagvalue})`;
       }
@@ -2240,7 +2240,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       document.getElementById(
-       this.dragareaid
+       "dnd_"+this.dragareaid
       ).style.transform = `scale(${this.dagvalue})`;
       this.jsPlumbInstance.repaintEverything();
     }
@@ -2251,7 +2251,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.indexofArr -= 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       document.getElementById(
-        this.dragareaid
+        "dnd_"+this.dragareaid
       ).style.transform = `scale(${this.dagvalue})`;
     }
   }
@@ -2265,7 +2265,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   downloadPng() {
     //this.spinner.show()
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element, { quality: 1, bgcolor: "white" })
@@ -2280,7 +2280,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   downloadJpeg() {
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element, { quality: 1, bgcolor: "white" })
@@ -2294,7 +2294,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   downloadPdf() {
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element)

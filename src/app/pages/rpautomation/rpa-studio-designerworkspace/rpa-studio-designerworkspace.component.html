@@ -1,94 +1,96 @@
 <div [id]="dragareaid">
   <div  class="studio_main">
-    <div class="drag-area" [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
-        workspace: disable,
-        dndDropzoneDisabled: false,
-        lightTheme: lightTheme
-      }">
-      <!--Nodes inside designer-->
-      <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
-          (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
-            left: node.x,
-            top: node.y,
-            'background-image': 'url(' + node.path + ')'
-          }">
-          <!--Node close button-->
-          <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
-            <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
-            <i class="ri-close-circle-fill"></i>
-          </span>
-          <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
-            {{ node.name }}
-          </div>
-          <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
-            {{ node.selectedNodeTask }}
-          </div>
-          <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
-          <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
-                    <nav id="context-menu" class="context-menu contextmenu">
-                        <div class="context-menu1">
-                            <div class="context-menu__item" *ngFor="let menu of stud">
-                                <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
-                            </div>
-                        </div>
-                    </nav>
-                </div> -->
-          <div [id]="'output_' + node.id" *ngIf="
-              finalbot.botId != undefined &&
-              node.selectedNodeTask == 'Output Box' &&
-              (node | Checkoutputbox: finalbot)
-            " style="display: none" class="node_tooltip">
-            <nav id="context-menu" class="context-menu contextmenu">
-              <div class="context-menu1">
-                <div class="context-menu__item">
-                  <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open
-                    Output Box
-                  </a>
-                </div>
+    <div class="studio_main_desginer">
+      <div class="drag-area" [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
+          workspace: disable,
+          dndDropzoneDisabled: false,
+          lightTheme: lightTheme
+        }">
+          <!--Nodes inside designer-->
+          <ng-container *ngFor="let node of nodes; let i = index">
+            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+              (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
+                left: node.x,
+                top: node.y,
+                'background-image': 'url(' + node.path + ')'
+              }">
+              <!--Node close button-->
+              <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
+                <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
+                <i class="ri-close-circle-fill"></i>
+              </span>
+              <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
+                {{ node.name }}
               </div>
-            </nav>
+              <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
+                {{ node.selectedNodeTask }}
+              </div>
+              <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
+              <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+                        <nav id="context-menu" class="context-menu contextmenu">
+                            <div class="context-menu1">
+                                <div class="context-menu__item" *ngFor="let menu of stud">
+                                    <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div> -->
+              <div [id]="'output_' + node.id" *ngIf="
+                  finalbot.botId != undefined &&
+                  node.selectedNodeTask == 'Output Box' &&
+                  (node | Checkoutputbox: finalbot)
+                " style="display: none" class="node_tooltip">
+                <nav id="context-menu" class="context-menu contextmenu">
+                  <div class="context-menu1">
+                    <div class="context-menu__item">
+                      <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open
+                        Output Box
+                      </a>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </ng-container>
+          <!--Added Grouping Task in RPA Designer-->
+          <ng-container *ngFor="let group of groupsData; let i = index">
+            <div [id]="group.id" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, group.id)"
+              [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
+                left: group.x,
+                top: group.y,
+                height: group.height,
+                width: group.width,
+                'border-color': group.color
+              }" class="groupElement">
+              <div class="groupHeader">
+                <span class="groupTitle" *ngIf="group.edit == false">{{
+                  group.groupName
+                  }}</span>
+                <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
+                  <i class="ri-delete-bin-line text-danger"></i>
+                </span>
+                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
+                  <i class="ri-pencil-line text-primary"></i>
+                </span>
+                <span class="groupTitle clickable" *ngIf="group.edit == true">
+                  <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
+                </span>
+                <span class="groupTitle clickable" *ngIf="group.edit == true">
+                  &nbsp;
+                  <input type="color" (change)="group.color = $event.target.value" [value]="group.color"
+                    class="custom-color-picker" />
+                  &nbsp;
+                </span>
+                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
+                    class="ri-check-line"></i></span>
+              </div>
+            </div>
+          </ng-container>
+          <!--Show bot Image when no nodes in designer-->
+          <div *ngIf="nodes.length == 0" class="dragactionsdiv">
+            <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
+            <span>Drag an action here...</span>
           </div>
-        </div>
-      </ng-container>
-      <!--Added Grouping Task in RPA Designer-->
-      <ng-container *ngFor="let group of groupsData; let i = index">
-        <div [id]="group.id" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, group.id)"
-          [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
-            left: group.x,
-            top: group.y,
-            height: group.height,
-            width: group.width,
-            'border-color': group.color
-          }" class="groupElement">
-          <div class="groupHeader">
-            <span class="groupTitle" *ngIf="group.edit == false">{{
-              group.groupName
-              }}</span>
-            <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
-              <i class="ri-delete-bin-line text-danger"></i>
-            </span>
-            <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
-              <i class="ri-pencil-line text-primary"></i>
-            </span>
-            <span class="groupTitle clickable" *ngIf="group.edit == true">
-              <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
-            </span>
-            <span class="groupTitle clickable" *ngIf="group.edit == true">
-              &nbsp;
-              <input type="color" (change)="group.color = $event.target.value" [value]="group.color"
-                class="custom-color-picker" />
-              &nbsp;
-            </span>
-            <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
-                class="ri-check-line"></i></span>
-          </div>
-        </div>
-      </ng-container>
-      <!--Show bot Image when no nodes in designer-->
-      <div *ngIf="nodes.length == 0" class="dragactionsdiv">
-        <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
-        <span>Drag an action here...</span>
       </div>
     </div>
   </div>
