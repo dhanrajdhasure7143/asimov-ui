@@ -23,18 +23,18 @@ import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-
 import { RpaToolsetComponent } from './rpa-toolset/rpa-toolset.component';
 import { RpaStudioDesignerComponent} from './rpa-studio-designer/rpa-studio-designer.component';
 import {MatMenuModule} from '@angular/material/menu';
-import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
+import{ipcustompipecreation} from '../../pipes/IPAddressCustompipe';
 import { RpaStudioDesignerworkspaceComponent, Checkoutputbox } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa-scheduler.component';
+import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { TaskPipe } from './custom-pipes/task.pipe';
-import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
+import { TaskPipe } from './../../pipes/task.pipe';
+import { TasksearchPipe } from './../../pipes/tasksearch.pipe';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
@@ -44,14 +44,12 @@ import { RpaBotFormComponent } from './forms/rpa-bot-form/rpa-bot-form.component
 import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database-form.component';
 import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
-import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 import { ClipboardModule } from 'ngx-clipboard';
-
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { Rpa_Hints } from './model/RPA-Hints';
  
@@ -69,8 +67,6 @@ import { Rpa_Hints } from './model/RPA-Hints';
     RpaStudioDesignerworkspaceComponent,
     RpaSchedulerComponent,
     Checkoutputbox,
-    ReverseRpa,
-    EnvnameRpa,
     RpaCredentialsComponent,
     TaskPipe,
     TasksearchPipe,
@@ -80,7 +76,6 @@ import { Rpa_Hints } from './model/RPA-Hints';
     RpaDatabaseFormComponent,
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
-    SearchRpaPipe,
     RpaConnectionManagerFormComponent,
     RpaConnectionManagerComponent,
     RpaActionItemsComponent,
