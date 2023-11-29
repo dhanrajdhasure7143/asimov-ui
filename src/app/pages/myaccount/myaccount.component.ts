@@ -143,13 +143,6 @@ export class MyaccountComponent implements OnInit {
     }
   }
 
-  onKeydown(event) {
-    let numArray = ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab",];
-    let temp = numArray.includes(event.key); //gives true or false
-    if (!temp) {
-      event.preventDefault();
-    }
-  }
 
   lettersOnly(event): boolean {
     var regex = new RegExp("^[a-zA-Z ]+$");
