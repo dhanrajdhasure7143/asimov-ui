@@ -668,6 +668,7 @@ importBot()
   this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
     if(response.errorMessage==undefined)
     {
+      this.importBotJson=this.updateNodeIds(this.importBotJson, basicBotDetails);
       this.finaldataobjects=[...this.importBotJson.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
@@ -724,6 +725,7 @@ importBot()
   downloadJson(payload:any)
   {
     payload=this.removeDuplicateTasks(payload);
+   // payload=this.updateNodeIds(payload);
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
     let dlAnchorElem = document.createElement('a');
     dlAnchorElem.setAttribute("href",dataStr);
@@ -819,6 +821,66 @@ importBot()
   approvalsList()
   {
     this.router.navigate(["/pages/rpautomation/approvals"])
+  }
+
+
+  updateNodeIds(payload, botDetails){
+    
+    payload.tasks.forEach((item:any, index)=>{
+      let nodeId=payload.tasks[index].nodeId;
+      if(item.inSeqId.split("_")[0]=="START"){
+        payload.tasks[index].inSeqId="START_"+botDetails.botName;
+      }
+      if(item.outSeqId.split("_")[0]=="STOP"){
+        payload.tasks[index].outSeqId="STOP_"+botDetails.botName;
+      }
+      
+      let nodeSplitId=nodeId.split("__");
+      if(nodeSplitId[0]!="START" && nodeSplitId[0]!="STOP"){
+        let actualNodeID=nodeSplitId[1];
+        let newNodeId=this.idGenerator()
+        payload.tasks[index].nodeId=nodeSplitId[0]+"__"+newNodeId;
+        if(payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID).inSeqId=newNodeId;
+        if(payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID).outSeqId=newNodeId;
+        payload.sequences.forEach((item, index2)=>{
+          if(item.sourceTaskId.split("_")[0]=="START"){
+            payload.sequences[index2].sourceTaskId="START_"+botDetails.botName
+          }
+          if(item.targetTaskId.split("_")[0]=="STOP"){
+            payload.sequences[index2].targetTaskId="STOP_"+botDetails.botName
+          }
+          if(item.sourceTaskId==actualNodeID){
+              payload.sequences[index2].sourceTaskId=newNodeId;
+          }
+          else if(item.targetTaskId==actualNodeID){
+            payload.sequences[index2].targetTaskId=newNodeId;
+          }
+        })
+      }
+
+    });
+    return payload;
+  }
+
+
+  idGenerator() {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (
+      S4() +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      S4() +
+      S4()
+    );
   }
 }
 

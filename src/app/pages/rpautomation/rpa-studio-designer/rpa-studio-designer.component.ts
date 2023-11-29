@@ -457,9 +457,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           botDetails["categoryId"]=botDetails.department;
           botDetails["envIds"]=[];
           this.loadedBotsList.push(botDetails);
-          let url=window.location.hash;
           this.tabActiveId=botDetails.botName;
-          window.history.pushState("", "", url.split("botId=")[0]+"botId="+event.botId);
+          // let url=window.location.hash;
+          // window.history.pushState("", "", url.split("botId=")[0]+"botId="+event.botId);
           document.getElementById("bot-form").style.display='none';
         }
         this.botFormVisibility=false;
