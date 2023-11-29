@@ -33,7 +33,7 @@ export class CopilotHistoryComponent implements OnInit {
 
   getConversations(type:any){
     this.conversationCheck=((type=="USER")?true:false);
-    let conversationFlag:string=this.conversationCheck?"ezflow.developers@epsoftinc.com":localStorage.getItem("tenantName");
+    let conversationFlag:string=this.conversationCheck?localStorage.getItem("ProfileuserId"):localStorage.getItem("tenantName");
     let conversationObservable:any=(this.conversationCheck)?this.rest.getUserConversations(conversationFlag):this.rest.getConversationByTenantId(conversationFlag);
     conversationObservable?.subscribe((response:any)=>{
         this.messagesResponse=response;
@@ -49,6 +49,9 @@ export class CopilotHistoryComponent implements OnInit {
       if(response?.data){
         let bpmnActionDetails=JSON.parse(response?.data);
         this.loadBpmnwithXML(bpmnActionDetails[0])
+      }
+      else{
+        this.bpmnModeler.clear();
       }
       this.conversationPreviewChat=response?.conversationHistory?.map((item:any)=>{
             let data=JSON.parse(item["message"]);
