@@ -3,15 +3,11 @@ plugins {
   id "java"
   id "com.github.node-gradle.node" version "2.2.4"
   id "com.bmuschko.docker-remote-api" version "6.6.1"
+  id 'com.moowork.node' version '1.3.1'
 }
 import org.apache.tools.ant.taskdefs.condition.Os  
 
-
-def ENV = project.property('ENV')
-
-println "ENV value: $ENV"
-if (ENV == 'Asquare') {
-      def propertiesFile = file("gradle/${ENV}/gradle.properties")
+      def propertiesFile = file("gradle.properties")
       def myProperties = new Properties()
       myProperties.load(new FileInputStream(propertiesFile))
       def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
@@ -24,28 +20,6 @@ if (ENV == 'Asquare') {
           dockerTag   = "${semver}-${semverDevSuffix}"
         }
       
-     }
-else {
-      def propertiesFile = file("gradle/QA/gradle.properties")
-      def myProperties = new Properties()
-      myProperties.load(new FileInputStream(propertiesFile))
-      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
-      def semver = myProperties.getProperty('semver')
-      def registryUrl = myProperties.getProperty('registryUrl')
-      def imageName = myProperties.getProperty('imageName')
-      
-      ext {
-          dockerImage = "${project.registryUrl}/${imageName}"
-          dockerTag   = "${semver}-${semverDevSuffix}"
-        }
-      
-      
-     }
-
-
-
-
-
 task copyJarToBin {
     copy {
         from 'ezflow-service-config/asimov-ui/Dockerfile'
@@ -87,14 +61,15 @@ node {
   download = true
 }
 
-npmInstall.outputs.upToDateWhen {
-  false
+task npmInstallGlobal(type: NpmTask) {
+    args = ['install', '-g']
+    outputs.upToDateWhen { true }
 }
 
 //ext {
-//  dockerImage = "${registryUrl}/${imageName}"
+//  dockerImage = "${project.registryUrl}/${imageName}"
 //  dockerTag   = "${semver}-${semverDevSuffix}"
-//}
+// }
 
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"
