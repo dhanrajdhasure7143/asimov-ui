@@ -9,7 +9,9 @@ import { columnList } from "src/app/shared/model/table_columns";
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { TitleCasePipe } from "@angular/common";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
-import { MessageService,ConfirmationService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-users",
@@ -51,8 +53,9 @@ export class UsersComponent implements OnInit {
     private columnList: columnList,
     private titlecasePipe:TitleCasePipe,
     private dataTransfer: DataTransferService,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -127,16 +130,14 @@ export class UsersComponent implements OnInit {
             let value: any = resp;
             if (value.message === "User Deleted Successfully") {
               this.getUsers();
-              this.messageService.add({
-                severity: 'success', summary: 'Success', detail: 'User deleted successfully!'
-              })
+              this.toastService.showSuccess(this.toastMessages.userDelete,'response');
             } else {
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
+              this.toastService.showError(this.toastMessages.deleteError);
               this.loader.hide();
             }
           },
           (err) => {
-            this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the user.'})
+            this.toastService.showError(this.toastMessages.deleteError);
             this.loader.hide();
           }
         );
@@ -254,14 +255,13 @@ export class UsersComponent implements OnInit {
     this.loader.show();
     this.rest_api.updateUserRoleDepartment(body).subscribe((resp) => {
       if (resp.message ==="Successfuly updated role of an user for particular application") {
-        this.messageService.add({
-          severity: 'success', summary: 'Success', detail: "User details updated successfully!"
-        });
+        this.toastService.showSuccess(this.toastMessages.userUpdate, 'response');
         this.hideInvitePopUp = false;
         this.getUsers();
       } else {
         this.loader.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
+        // this.messageService.add({severity:'error',summary:'Error',detail:resp.message})
+        this.toastService.showError(resp.message);
 
       }
     });
@@ -349,25 +349,23 @@ export class UsersComponent implements OnInit {
         if (res.Message &&res.Message === "White listed domain.. Please proceed with invite") {
           this.rest_api.inviteUserwithoutReg(body).subscribe((resp) => {
             if (resp.message === "User invited Successfully !!") {
-              this.messageService.add({
-                severity: 'success', summary: 'Success', detail: "User invited successfully!"
-              });
+              this.toastService.showSuccess(this.toastMessages.userInvite, 'response');
               this.getUsers();
               this.loader.hide();
             this.hideInvitePopUp= false;
 
             } else {
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
+              this.toastService.showError(this.toastMessages.InviteFail);
             this.loader.hide();
             }
           });
         } else if (res.errorMessage) {
-          this.messageService.add({severity:'error',summary:'Error',detail: res.errorMessage})
+          this.toastService.showError(res.errorMessage);
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail: 'Failed to invite! Check if the user already exists!'})
+          this.toastService.showError(this.toastMessages.InviteFail);
         }
       });
   }

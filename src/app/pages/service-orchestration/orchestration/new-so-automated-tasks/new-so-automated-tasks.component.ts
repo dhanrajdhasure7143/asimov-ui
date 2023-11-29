@@ -13,7 +13,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { moveItemInArray} from '@angular/cdk/drag-drop';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -131,8 +133,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private modalService:BsModalService,
     private cd:ChangeDetectorRef,
     private dataTransfer: DataTransferService,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
    )
 
   {
@@ -384,7 +387,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  
      });*/
      setTimeout(()=>{
-       this.messageService.add({severity:'success',summary:'Success',detail:'SLA configuration saved successfully!'})
+       this.toastService.showSuccess(this.toastMessages.SLAConfigSave,'response');
        this.SLAclose();
      },1000)
  
@@ -659,12 +662,12 @@ resetsla(){
         // this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
-       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to re-order tasks.'})
+       this.toastService.showError(this.toastMessages.reorderTaskErr);
       }))
     }
     else
     {
-      this.messageService.add({severity:'warn',summary:'Success',detail:'Please select process to re-oder tasks.'})
+      this.toastService.showWarn(this.toastMessages.reorderTaskWarn);
     }
     // if (event.previousContainer === event.container) {
     //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
@@ -824,11 +827,11 @@ resetsla(){
               this.applyFilter(this.selectedvalue);
             }
           }
-       this.messageService.add({severity:'success',summary:'Success',detail:'Resource assigned successfully!'})
+          this.toastService.showSuccess(this.toastMessages.aissignResource,'response'); 
           this.checkTaskAssigned(processId);
         }else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:'Failed to assign a resource.'})
+          this.toastService.showError(this.toastMessages.aissignResourceErr);
         }
       })
     }
@@ -845,13 +848,13 @@ resetsla(){
         if(response.status!=undefined){
           this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
-          this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          this.toastService.showSuccess(response.status,'response'); 
           if(this.selectedvalue!=""){
             this.checkTaskAssigned(task.processId)
           }
         }else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+         this.toastService.showError(response.errorMessage);
         }
       })
     }
@@ -892,12 +895,11 @@ resetsla(){
       let response:any=data;
       this.spinner.hide();
       if(response.errorMessage==undefined){
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        this.toastService.showSuccess(response.status,'response');
         this.update_task_status()
       }else
       {
-        Swal.fire("Error",response.errorMessage,"error");
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
+       this.toastService.showError(response.errorMessage);
       }
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
@@ -1157,11 +1159,12 @@ resetsla(){
       response.port=parseInt(response.port);
       this.rest.testcon_blueprism_config(response).subscribe(resp=>{
         let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        this.toastService.showSuccess(response.status,'response');
         if(response.errorCode==undefined){
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        this.toastService.showSuccess(response.status,'response');
           }else{
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})          }
+          this.toastService.showError(response.errorMessage);
+        }
       })
     }
     else
@@ -1183,7 +1186,7 @@ resetsla(){
       {
       this.rest.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+       this.toastService.showSuccess(response.status,'response');
         this.BluePrismConfigForm.reset();
         this.getblueprismconnections();
       })
@@ -1193,7 +1196,7 @@ resetsla(){
         response["bluePrismId"]=this.bpid;
         this.rest.edit_blueprism_config(response).subscribe(resp=>{
           let response:any=resp
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+          this.toastService.showSuccess(response.status,'response');
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
         })
@@ -1236,7 +1239,7 @@ resetsla(){
     let Id = [parseInt(id)];
     this.rest.delete_blueprism_config(Id).subscribe(data=>{
       let response:any=data;
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+       this.toastService.showSuccess(response.status,'response');
           this.getblueprismconnections();
     })
   }
@@ -1286,20 +1289,20 @@ resetsla(){
         let response:any=resp;
         if(response.status!=undefined)
         {
-       this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+        this.toastService.showSuccess(response.status,'response');
           this.configuration();
         }
         else
         {
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+          this.toastService.showError(response.errorMessage);
         }
       })
       this.accountName="";this.tenantId="";this.userKey="";this.clientId="";this.activeStatus=false;
-      this.messageService.add({severity:'success',summary:'Success',detail:'Configuration added successfully!'})
+      this.toastService.showSuccess(this.toastMessages.configAddSucss,'response');
       this.addconfigstatus=false;
     }else
     {
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Please fill in the data.'})
+      this.toastService.showWarn(this.toastMessages.fillDetails);
     }
   }
 
@@ -1366,10 +1369,10 @@ resetsla(){
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
           this.getautomatedtasks(this.selectedvalue);
-          this.messageService.add({severity:'success',summary:'Success',detail:'Task deleted successfully!'})
+          this.toastService.showSuccess(this.toastMessages.TaskDelete,'response'); 
         }
         else {
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to delete the task.'})
+          this.toastService.showError(this.toastMessages.deleteError);
         }
         this.spinner.hide();
         })
@@ -1395,10 +1398,10 @@ resetsla(){
    
     if (value.message === "Task Added Successfully!!") {
       this.getautomatedtasks(this.selectedvalue);
-      this.messageService.add({severity:'success',summary:'Success',detail:'Task added successfully!'})
+      this.toastService.showSuccess(this.toastMessages.addTask,'response'); 
     }
     else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Failed to add the task.'})
+      this.toastService.showError(this.toastMessages.deleteError);
     }
     // this.spinner.hide();
     this.logs_modal.hide();

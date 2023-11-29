@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
-import Swal from 'sweetalert2';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -43,8 +43,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
   disableShowConformance:boolean = false;
   isConfNavigation:boolean=false;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, 
-    private dt: DataTransferService,private rest:RestApiService, private messageService: MessageService,
-              @Inject(APP_CONFIG) private config, ) { }
+    private dt: DataTransferService,private rest:RestApiService, 
+    private toastService: ToasterService,
+    private toastMessages: toastMessages,
+    @Inject(APP_CONFIG) private config, ) { }
 
   ngOnInit(){
     $('.link').removeClass('active');
@@ -231,12 +233,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     let obj
     if(this.isShowConformance){
       if(!this.process_owner){
-        this.messageService.add({severity: "error", summary: "Error", detail: "Please select the process owner!"})
-        // Swal.fire({
-        //   icon: 'error',
-        //   text: 'Please select process owner !',
-        //   heightAuto: false,
-        // });
+        this.toastService.showError(this.toastMessages.SlctPownerErr);
         return;
       }
       obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.processowner_list[this.process_owner].userId,processOwnerName:this.processowner_list[this.process_owner].firstName + ' ' + this.processowner_list[this.process_owner].lastName}

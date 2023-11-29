@@ -6,7 +6,8 @@ import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {MessageService} from'primeng/api'
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-so-scheduler',
   templateUrl: './so-scheduler.component.html',
@@ -83,8 +84,12 @@ export class SoSchedulerComponent implements OnInit {
   currenttime: any;
   start_time:any;
   end_time:any;
-  constructor(private rest:RestApiService, private notifier: NotifierService,
-    private spinner:NgxSpinnerService,private messageService:MessageService) { }
+  constructor(private rest:RestApiService,
+    private notifier: NotifierService,
+    private spinner:NgxSpinnerService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+    ) { }
   mindate= moment().format("YYYY-MM-DD");
   
   ngOnInit() {
@@ -266,14 +271,14 @@ export class SoSchedulerComponent implements OnInit {
         }
         else
         {
-          this.messageService.add({severity:'warn',summary:'Warning', detail:"Please provide all inputs!", key:"so_Scheduler"})
+          this.toastService.showWarn(this.toastMessages.fillDetails);
           // this.notifier.notify("error","Please provide all inputs.")
         }
       }
     }
     else
     {
-      this.messageService.add({severity:'warn',summary:'Warning', detail:"Please provide all inputs!", key:"so_Scheduler"})
+      this.toastService.showWarn(this.toastMessages.fillDetails);
       // this.notifier.notify("error","Please provide all inputs.")
     }
   }
@@ -312,12 +317,12 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(resp.errorMessage);
           // this.notifier.notify("error",resp.errorMessage)
         }
         else
         {
-          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          this.toastService.showSuccess(resp.status,'response'); 
           // this.notifier.notify("success",resp.status)
           //this.schedule_list.find(data=>data.check==true).run_status="started";
           this.get_schedule();
@@ -333,13 +338,13 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.startprocessschedule(schedule).subscribe(data=>{
         let response:any=data;
         if(response.errorMessage==undefined){
-          this.messageService.add({severity:'success',summary:'Success', detail:response.status, key:"so_Scheduler"})
+          this.toastService.showSuccess(response.status,'response'); 
           // this.notifier.notify("success",response.status)
           // this.schedule_list.find(data=>data.check==true).run_status="started";
           this.get_schedule();
           this.updateflags();
         }else{  
-          this.messageService.add({severity:'error',summary:'Error', detail:response.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(response.errorMessage);
           // this.notifier.notify("error",response.errorMessage)
         }
       })
@@ -360,11 +365,10 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined){
-          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(resp.errorMessage);
           // this.notifier.notify("error",resp.errorMessage)
-          //Swal.fire(resp.errorMessage,"","warning");
         }else{
-          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          this.toastService.showSuccess(resp.status,'response'); 
           // this.notifier.notify("success",resp.status)
           this.get_schedule();
           //this.schedule_list.find(data=>data.check==true).run_status="pause";
@@ -379,14 +383,14 @@ export class SoSchedulerComponent implements OnInit {
         //Swal.fire(response[0][checked_schedule.scheduleprocessid],"","success")
         //this.schedule_list.find(data=>data.check==true).run_status="pause";
         if(response.errorMessage==undefined){
-        this.messageService.add({severity:'success',summary:'Success', detail:response.status, key:"so_Scheduler"})
+        this.toastService.showSuccess(response.status,'response'); 
           // this.notifier.notify("success",response.status)
           this.get_schedule();
           this.updateflags();
         }
         else
         {
-          this.messageService.add({severity:'error',summary:'Error', detail:response.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(response.errorMessage);
           // this.notifier.notify("error",response.errorMessage)
         }
       })
@@ -407,10 +411,10 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.resume_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined){
-          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(resp.errorMessage);
           // this.notifier.notify("error",resp.errorMessage)
         }else{
-        this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+        this.toastService.showSuccess(resp.status,'response'); 
           // this.notifier.notify("success",resp.status)
           this.get_schedule();
           this.updateflags();
@@ -422,10 +426,10 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.resumeprocessschedule([checked_schedule]).subscribe(data=>{
         let resp:any=data;
         if(resp.errorMessage!=undefined){
-          this.messageService.add({severity:'error',summary:'Error', detail:resp.errorMessage, key:"so_Scheduler"})
+          this.toastService.showError(resp.errorMessage);
           // this.notifier.notify("error",resp.errorMessage)
         }else{
-          this.messageService.add({severity:'success',summary:'Success', detail:resp.status, key:"so_Scheduler"})
+          this.toastService.showSuccess(resp.status,'response'); 
           // this.notifier.notify("success",resp.status)
           this.get_schedule();
           this.updateflags();
@@ -446,15 +450,12 @@ export class SoSchedulerComponent implements OnInit {
       this.rest.stop_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined){
-          // Swal.fire(resp.errorMessage,"","warning");
-          this.messageService.add({severity:'warn',summary:'Warning',detail:resp.errorMessage, key:"so_Scheduler"})
+          this.toastService.showWarn(resp.errorMessage);
           
         }
         else
         {
-          // Swal.fire(resp.status,"","success")
-          this.messageService.add({severity:'success',summary:'Success',detail:resp.status, key:"so_Scheduler"})
-
+          this.toastService.showSuccess(resp.status,'response'); 
           this.schedule_list.find(data=>data.check==true).run_status="not_started";
           this.updateflags();
         }
@@ -491,16 +492,16 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-          this.messageService.add({severity:'success',summary:'Success', detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+          this.toastService.showSuccess(this.toastMessages.schDeleteSccs,'response'); 
             // this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-          this.messageService.add({severity:'error',summary:'Error', detail:"Schedule not deleted successfully!", key:"so_Scheduler"})
+          this.toastService.showError(this.toastMessages.deleteError);
             // this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }else if(unsaved_schedules.length>0)
       {
-        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+        this.toastService.showSuccess(this.toastMessages.schDeleteSccs,'response'); 
           // this.notifier.notify("success","Schedule deleted successfully!") 
       }
       else if(saved_schedules.length==0 && unsaved_schedules.length==0)
@@ -510,17 +511,17 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+            this.toastService.showSuccess(this.toastMessages.schDeleteSccs,'response'); 
             // this.notifier.notify("success","Schedule deleted successfully!")
           }
           else
-          this.messageService.add({severity:'error',summary:'Error', detail:"Schedule not deleted successfully!", key:"so_Scheduler"})
+          this.toastService.showError(this.toastMessages.deleteError);
             // this.notifier.notify("error","Schedule not deleted successfully!")
         })
       }
       else
       {
-        this.messageService.add({severity:'error',summary:'Error', detail:"No schedule is selected to delete!", key:"so_Scheduler"})
+        this.toastService.showError(this.toastMessages.noScheduleSelected);
         // this.notifier.notify("error","No schedule is selected to delete.");
       }
     }
@@ -540,19 +541,19 @@ export class SoSchedulerComponent implements OnInit {
           let response:any=data;
           if(response.errorMessage==undefined)
           {
-            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules deleted sucessfully!", key:"so_Scheduler"})
+          this.toastService.showSuccess(this.toastMessages.schDeleteSccs,'response'); 
             // this.notifier.notify("success","Schedules deleted sucessfully");
             this.deletestack=[];
             this.updateflags();
           }else{
-            this.messageService.add({severity:'error',summary:'Error', detail:"Unable to delete the schedule!", key:"so_Scheduler"})
+            this.toastService.showError(this.toastMessages.schDeleteErr);
             // this.notifier.notify("error","Unable to delete the schedule.")
           }
           
         })
       }else
       {
-        this.messageService.add({severity:'success',summary:'Success',detail:"Schedule deleted successfully!", key:"so_Scheduler"})
+        this.toastService.showSuccess(this.toastMessages.schDeleteSccs,'response'); 
         // this.notifier.notify("success","Schedule deleted successfully")
       }
     }
@@ -585,7 +586,7 @@ export class SoSchedulerComponent implements OnInit {
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
           let resp:any=data;
           if(resp.errorMessage==undefined){
-            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
+          this.toastService.showSuccess(this.toastMessages.schSaveSccs,'response'); 
             // this.notifier.notify("success","Schedules saved successfully!")
            
             /*if(resp.botMainSchedulerEntity==null){
@@ -597,7 +598,7 @@ export class SoSchedulerComponent implements OnInit {
             this.updateflags();
             this.spinner.hide();
           }else{  
-            this.messageService.add({severity:'error',summary:'Error',detail:"Schedule failed to add!", key:"so_Scheduler"})
+            this.toastService.showError(this.toastMessages.schAddErr);
             // this.notifier.notify("error","Schedule failed to add.")
           }      
     })
@@ -608,13 +609,13 @@ export class SoSchedulerComponent implements OnInit {
         this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
           let resp:any=data
           if(resp.errorMessage==undefined){
-            this.messageService.add({severity:'success',summary:'Success', detail:"Schedules saved successfully!", key:"so_Scheduler"})
+            this.toastService.showSuccess(this.toastMessages.schSaveSccs,'response'); 
             // this.notifier.notify("success","Schedules saved successfully!");
             this.get_schedule();
             this.updateflags();
             this.spinner.hide();
           }else{
-            this.messageService.add({severity:'error',summary:'Error',detail:resp.errorMessage, key:"so_Scheduler"})
+            this.toastService.showError(resp.errorMessage);
             // this.notifier.notify("error",resp.errorMessage);
           }
         })

@@ -6,7 +6,8 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { MessageService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 @Component({
   selector: "app-so-incident-management",
   templateUrl: "./so-incident-management.component.html",
@@ -23,7 +24,8 @@ export class SoIncidentManagementComponent implements OnInit {
   constructor(
     private rest: RestApiService,
     private spinner: LoaderService,
-    private messageService:MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -166,9 +168,7 @@ export class SoIncidentManagementComponent implements OnInit {
       (err) => {
         this.loadingFlag = false;
         this.spinner.hide();
-        // Swal.fire("Error", "Unable to get incidents", "error");
-        this.messageService.add({severity:'error' , summary:'Error',detail:'Unable to get incidents.'})
-
+        this.toastService.showSuccess(this.toastMessages.getIncidentErr,'response'); 
       }
     );
   }

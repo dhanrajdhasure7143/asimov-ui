@@ -4,7 +4,8 @@ import { UserIdleService } from 'angular-user-idle';
 import { APP_CONFIG } from './app.config';
 import { RestApiService } from './pages/services/rest-api.service';
 import { AuthenticationService } from './services';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from './shared/service/toaster.service';
+import { toastMessages } from './shared/model/toast_messages';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,9 @@ export class AppComponent {
   constructor(private userIdle: UserIdleService, private apiservice: RestApiService,
      private authservice: AuthenticationService, @Inject(APP_CONFIG) private config,
      private router: Router,private route:ActivatedRoute,
-     private messageService: MessageService) {
+     private toastService: ToasterService,
+     private toastMessages: toastMessages
+     ) {
       this.route.queryParams.subscribe(res=>{
         this.isApprovalScreen = false;
         if(res)
@@ -29,10 +32,10 @@ export class AppComponent {
 
   ngOnInit() {
     addEventListener("offline",(e)=>{
-      this.messageService.add({key: 'tc',severity:'error', summary: '', detail: 'Please check your internet connection.'});
+      this.toastService.showError(this.toastMessages.checkOffline);
     });
     addEventListener("online",(e)=>{
-      this.messageService.add({key: 'tc',severity:'success', summary: '', detail: 'You are now online.'});
+      this.toastService.showError(this.toastMessages.checkOnline);
 
     });
     //Start watching for user inactivity.

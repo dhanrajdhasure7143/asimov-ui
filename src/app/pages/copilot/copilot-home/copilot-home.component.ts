@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { RestApiService } from '../../services/rest-api.service';
-import { MessageService } from 'primeng/api';
 import { CopilotService } from '../../services/copilot.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-copilot-home',
@@ -28,8 +29,9 @@ export class CopilotHomeComponent implements OnInit {
   constructor(private router: Router, 
     private dt: DataTransferService,
     private rest_api:CopilotService ,
-    private messageService:MessageService,
-    private restService: RestApiService
+    private restService: RestApiService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class CopilotHomeComponent implements OnInit {
       this.funtionsList = response;
     },(err:any)=>{
       console.log(err);
-      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Functions!'});
+      this.toastService.showError(this.toastMessages.functionError);
     })
   }
 
@@ -75,7 +77,7 @@ export class CopilotHomeComponent implements OnInit {
       this.processList = response;
     },err=>{
       console.log(err);
-      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Processes!'});
+      this.toastService.showError(this.toastMessages.processError);
     })
   }
 
@@ -87,7 +89,7 @@ export class CopilotHomeComponent implements OnInit {
       this.processResponse(this.templates);
     },(err:any)=>{
       console.log(err);
-      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to get Templates!'});
+      this.toastService.showError(this.toastMessages.templateError);
     })
   }
 

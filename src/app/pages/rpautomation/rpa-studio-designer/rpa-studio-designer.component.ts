@@ -7,7 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
@@ -56,8 +58,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     private formGroup:FormBuilder,
     private activatedRoute:ActivatedRoute,
     private changeDecoratorRef:ChangeDetectorRef,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) { }
 
   ngOnInit() {
@@ -142,12 +145,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       else
       {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'
-      })
+        this.toastService.showError(response.errorMessage);
       }
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the toolset.',key:'rpadesignertoast'})
+      this.toastService.showError(this.toastMessages.getToolsetErr);
     })
   }
 
@@ -160,10 +162,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       } 
       else
       {  
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
+        this.toastService.showError(response.errorMessage);
+
       }
     },err=>{
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load the data.',key:'rpadesignertoast'})
+      this.toastService.showError(this.toastMessages.loadDataErr);
     })
   }
 
@@ -174,7 +177,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           this.environmentsList=response;
         }
         else{
-          this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
+          this.toastService.showError(response.errorMessage);
         }
       });
   }
@@ -186,7 +189,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
         this.categoriesList = response.data;
       }
       else {
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
+        this.toastService.showError(response.errorMessage);
       }
     })
   }
@@ -215,16 +218,16 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           
           this.spinner.hide();
           if(localStorage.getItem('bot_id')=="null")
-        this.messageService.add({severity:'warn',summary:'Warning',detail:'The selected bot is already loaded.',key:'rpadesignertoast'})
+          this.toastService.showWarn(this.toastMessages.selectedBotWarn);
         }
       }
       else
       {
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
+        this.toastService.showError(response.errorMessage);
       }
     },(err)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to load bot',key:'rpadesignertoast'})
+      this.toastService.showError(this.toastMessages.loadBotErr);
       //this.router.navigate(["/home"])
     })
 
@@ -411,10 +414,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
       else
-      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage,key:'rpadesignertoast'})
+      this.toastService.showError(response.errorMessage);
     },(err:any)=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the predefined bots.',key:'rpadesignertoast'})
+      this.toastService.showError(this.toastMessages.preDefineBotErr);
     })
   }
 
