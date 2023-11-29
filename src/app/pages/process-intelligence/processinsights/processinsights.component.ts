@@ -322,7 +322,8 @@ hiddenPopUp:boolean=false;
         this.actual_activityData.forEach(each => {
             if (each.Duration_range > 10 * 60 * 1000) tmp.push(each)
         })
-        this.top10_activityData = tmp.slice(0, 5);
+        // this.top10_activityData = tmp.slice(0, 5);
+        this.top10_activityData = tmp
         var dd = this.timeConversion(7187760000);
     }
 
@@ -354,7 +355,7 @@ hiddenPopUp:boolean=false;
     }
 
     showTop10Rec() {
-        (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView();
+        (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
 
     getResources(vData) {

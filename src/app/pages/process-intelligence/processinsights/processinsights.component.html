@@ -168,7 +168,7 @@
                                   <ul class="business_content">
                                         <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><span><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range) | currency}}</b></span></li>
                                         <div class="explrlink" (click)="showTop10Rec()">
-                                            <a href="#">
+                                            <a>
                                                 Explore More<i class="fa fa-arrow-right"></i>
                                             </a>
                                         </div>
@@ -296,9 +296,9 @@
                               </div>
                           </div>
                           <div class="col-sm-6 pr-0">                
-                              <div class="box_shadw">
+                              <div class="box_shadw topAutomation">
                               <div class=""><h2>Top Automation Opportunities</h2></div>
-                              <div class="">
+                              <div class="table-container">
                                 <table class="RPA table table-striped">
                                     <thead>
                                         <tr>
@@ -418,7 +418,7 @@
             </div>
         </div>
     </div>
-        
+
 </div>
 
 <!-- //Variant List Split Overlay Design Code//
