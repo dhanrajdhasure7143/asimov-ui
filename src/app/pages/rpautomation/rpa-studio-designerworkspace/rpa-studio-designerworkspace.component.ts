@@ -28,15 +28,16 @@ import { Rpa_Hints } from "../model/RPA-Hints";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient } from "@angular/common/http";
 // import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
-import domtoimage from "dom-to-image";
+import * as domtoimage from 'dom-to-image-more-scroll-fix';
 import * as $ from "jquery";
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ConfirmationService, ConfirmEventType } from "primeng/api";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-rpa-studio-designerworkspace",
@@ -181,7 +182,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private toastService: ToasterService,
     private confirmationService:ConfirmationService,
     private route: ActivatedRoute,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private router: Router,
+    private location:Location
   ) {
     this.insertForm = this.formBuilder.group({
       userName: [
@@ -1815,12 +1818,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           index: this.index,
           botName: response.botName,
         });
-        let url = window.location.hash;
-        window.history.pushState(
-          "",
-          "",
-          url.split("botId")[0] + "botId=" + response.botId
-        );
+        // let url = window.location.hash;
+        // window.history.pushState(
+        //   "",
+        //   "",
+        //   url.split("botId")[0] + "botId=" + response.botId
+        // );
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?botId='+response.botId);
         this.updateFinalBot(versionType, comments);
       },
       (err) => {
@@ -2228,7 +2233,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-      var element = document.getElementById(this.dragareaid);
+      var element = document.getElementById("dnd_"+this.dragareaid);
       if (element) {
         element.style.transform = `scale(${this.dagvalue})`;
       }
@@ -2240,7 +2245,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       document.getElementById(
-       this.dragareaid
+       "dnd_"+this.dragareaid
       ).style.transform = `scale(${this.dagvalue})`;
       this.jsPlumbInstance.repaintEverything();
     }
@@ -2251,7 +2256,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.indexofArr -= 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       document.getElementById(
-        this.dragareaid
+        "dnd_"+this.dragareaid
       ).style.transform = `scale(${this.dagvalue})`;
     }
   }
@@ -2265,7 +2270,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   downloadPng() {
     //this.spinner.show()
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element, { quality: 1, bgcolor: "white" })
@@ -2280,7 +2285,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   downloadJpeg() {
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element, { quality: 1, bgcolor: "white" })
@@ -2294,7 +2299,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   downloadPdf() {
-    var element = document.getElementById(this.dragareaid);
+    var element = document.getElementById("dnd_"+this.dragareaid);
     var botName = this.finalbot.botName;
     domtoimage
       .toPng(element)
