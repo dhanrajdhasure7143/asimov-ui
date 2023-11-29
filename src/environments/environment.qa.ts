@@ -35,9 +35,9 @@ export const environment = {
   // PI Connectors
   connector_topic: "nodeq",
   //DB Connector
-  dbConnectorHost: "pgpooldev",
-  dbName: "eiap_dev",
-  dbPort: "5430",
+  dbConnectorHost: "pgpoolqa",
+  dbName: "eiap_qa",
+  dbPort: "5431",
   //RPA WebActions Action AttrId
   webActionAttrId: 580,
   //IPCTenant
