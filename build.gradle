@@ -7,53 +7,14 @@ plugins {
 }
 import org.apache.tools.ant.taskdefs.condition.Os  
 
-      def propertiesFile = file("gradle.properties")
-      def myProperties = new Properties()
-      myProperties.load(new FileInputStream(propertiesFile))
-      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
-      def semver = myProperties.getProperty('semver')
-      def registryUrl = myProperties.getProperty('registryUrl')
-      def imageName = myProperties.getProperty('imageName')
+     
       
       ext {
           dockerImage = "${project.registryUrl}/${imageName}"
           dockerTag   = "${semver}-${semverDevSuffix}"
         }
       
-task copyJarToBin {
-    copy {
-        from 'ezflow-service-config/asimov-ui/Dockerfile'
-        into '.'
-    }
-    }
-task copyJarToBinA {
-    copy {
-        from 'ezflow-service-config/asimov-ui/docker-compose.yml'
-        into '.'
-    }
-    }
 
-task copyJarToBinC {
-    copy {
-        from 'ezflow-service-config/asimov-ui/environment.ts'
-        into 'src/environments'
-    }
-}
-
-
-task copyJarToBinD {
-    copy {
-        from 'ezflow-service-config/asimov-ui/app.config.ts'
-        into 'src/app'
-    }
-}
-
-task copyJarToBinE {
-    copy {
-        from 'ezflow-service-config/asimov-ui/package.json'
-        into '.'
-    }
-}
 
 node {
   version = "14.20.0"
