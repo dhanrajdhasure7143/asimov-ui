@@ -56,7 +56,7 @@ export class CopilotChatComponent implements OnInit {
   piId:any;
   botId:any;
   loadHistory:boolean=false;
-  lastLoadedBpmn:any;
+
 
   
   constructor(
@@ -135,7 +135,6 @@ export class CopilotChatComponent implements OnInit {
 
   loadBpmnwithXML(bpmnActionDetails:any) {
     this.isDialogVisible = false;
-    this.lastLoadedBpmn=bpmnActionDetails;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
     this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
@@ -630,10 +629,6 @@ export class CopilotChatComponent implements OnInit {
 
   onBackPress(type){
     this.displayFlag=this.displayEnum.displayProcessLogGraph
-    setTimeout(()=>{
-      this.loadBpmnContainer();
-      this.loadBpmnwithXML(this.lastLoadedBpmn);
-    },100)
   }
 
 
