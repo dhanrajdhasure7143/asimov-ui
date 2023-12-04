@@ -4033,3 +4033,6 @@ padding: 0px 30px;}
 .new-box.copilot-pi-flowchart div#exportSVGtoPDF  svg#render:first-child {
   display: none;
 }
+.pi-xes .p-datatable-wrapper {
+  height: calc(100vh - 230px);
+}
