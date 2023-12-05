@@ -38,7 +38,7 @@
                 <div class="hr"></div>
 
                 <div class="main-content-body row">
-                    <div class="col-md-9 model-box " [hidden]="(displayFlag != displayEnum.displayProcessLogGraph)">
+                    <div class="col-md-9 model-box " *ngIf="(displayFlag == displayEnum.displayProcessLogGraph)">
                         <div class="graph-designer">
                             <div class="studio_main">
                                 <div class="drag-area">
