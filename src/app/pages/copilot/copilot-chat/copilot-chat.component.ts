@@ -276,6 +276,7 @@ export class CopilotChatComponent implements OnInit {
             message:event?.data?.label,
             messageSourceType:localStorage.getItem("ProfileuserId")
           })
+          this.scrollToBottom();
           this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
     }else if (event.actionType==='Form'){
       this.messages.push({
@@ -696,10 +697,10 @@ export class CopilotChatComponent implements OnInit {
   }
 
   scrollToBottom(){
-    var objDiv = document.getElementById("chat-grid");
     setTimeout(() => {
+      const objDiv = document.getElementById("subChat");
       objDiv.scrollTop = objDiv.scrollHeight;
-    }, 500)
+    }, 100)
  
   }
 }
