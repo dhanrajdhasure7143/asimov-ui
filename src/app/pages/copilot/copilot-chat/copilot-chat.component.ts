@@ -56,7 +56,7 @@ export class CopilotChatComponent implements OnInit {
   piId:any;
   botId:any;
   loadHistory:boolean=false;
-
+  lastLoadedBpmn:any={};
 
   
   constructor(
@@ -116,6 +116,7 @@ export class CopilotChatComponent implements OnInit {
           message: value,
           messageType: messageType,
         });
+        this.scrollToBottom();
         this.updateCurrentMessageButtonState("DISABLED");
         this.usermessage = "";
           this.rest_api.sendMessageToCopilot(data).subscribe((response: any) => {
@@ -126,15 +127,13 @@ export class CopilotChatComponent implements OnInit {
           this.currentMessage=res;
           this.updateCurrentMessageButtonState("ENABLED")
           this.messages.push(this.currentMessage);
-          var objDiv = document.getElementById("chat-grid");
-          setTimeout(() => {
-            objDiv.scrollTop = objDiv.scrollHeight;
-          }, 500)
+          this.scrollToBottom();
         });
   }
 
   loadBpmnwithXML(bpmnActionDetails:any) {
     this.isDialogVisible = false;
+    this.lastLoadedBpmn=bpmnActionDetails;
     let bpmnPath=atob(bpmnActionDetails.bpmnXml);
     this.bpmnModeler.importXML(bpmnPath, function (err) {
       if (err) {
@@ -143,6 +142,7 @@ export class CopilotChatComponent implements OnInit {
     });
     if(!(bpmnActionDetails?.isUpdate)){
       this.messages.push({message:bpmnActionDetails.label,messageSourceType:localStorage.getItem("ProfileuserId")})
+      this.scrollToBottom()
       this.sendBpmnAction(bpmnActionDetails.submitValue)
     }
     setTimeout(() => {
@@ -276,24 +276,28 @@ export class CopilotChatComponent implements OnInit {
             message:event?.data?.label,
             messageSourceType:localStorage.getItem("ProfileuserId")
           })
+          this.scrollToBottom();
           this.sendButtonAction(event?.data?.submitValue|| event?.data?.label)
     }else if (event.actionType==='Form'){
       this.messages.push({
         message:event?.data?.message,
         messageSourceType:localStorage.getItem("ProfileuserId")
       })
+      this.scrollToBottom();
       this.sendFormAction(event.data)
     }else if (event.actionType==='Card'){
       this.messages.push({
         message:event?.data?.label,
         messageSourceType:localStorage.getItem("ProfileuserId")
-      })
+      });
+      this.scrollToBottom();
           this.sendCardAction(event?.data?.submitValue)
     }else if (event.actionType==='list'){
       this.messages.push({
         message:event?.data?.label,
         messageSourceType:localStorage.getItem("ProfileuserId")
       })
+      this.scrollToBottom();
           this.sendListAction(event?.data?.submitValue)
     }else if (event.actionType=='bpmn'){
       this.isDialogVisible=true;
@@ -326,17 +330,18 @@ export class CopilotChatComponent implements OnInit {
         jsonData:tableData
       }
       this.messages.push(data);
-
+      this.scrollToBottom()
       this.updateCurrentMessageButtonState("DISABLED");
+      this.isChatLoad=true;
       this.rest_api.sendMessageToCopilot(data).subscribe((response:any)=>{
         this.currentMessage=response;
         this.analyzeMessage(response);
         this.updateCurrentMessageButtonState("ENABLED");
         this.messages.push(this.currentMessage)
-        var objDiv = document.getElementById("chat-grid");
-        setTimeout(() => {
-          objDiv.scrollTop = objDiv.scrollHeight;
-        }, 500)
+        this.isChatLoad=false;
+      },err=>{
+        this.isChatLoad=false;
+        this.tostService.showError("Unable to get response");
       })
     }
     else 
@@ -374,10 +379,6 @@ export class CopilotChatComponent implements OnInit {
   }
 
   public sendUserAction =(data:any)=>{
-    setTimeout(()=>{
-
-      this.copilotMessageRef.scrollToBottom();
-    },100)
     let userMessage: UserMessagePayload={
         conversationId:localStorage.getItem("conversationId"),
         message:data?.message,
@@ -385,6 +386,7 @@ export class CopilotChatComponent implements OnInit {
     }
     this.updateCurrentMessageButtonState("DISABLED");
     this.isChatLoad=true;
+    this.copilotMessageRef
     let response = this.rest_api.sendMessageToCopilot(userMessage);
     response.subscribe((res:any) =>{
         this.currentMessage=res;
@@ -629,6 +631,7 @@ export class CopilotChatComponent implements OnInit {
 
   onBackPress(type){
     this.displayFlag=this.displayEnum.displayProcessLogGraph
+    this.loadBpmnwithXML(this.lastLoadedBpmn);
   }
 
 
@@ -691,5 +694,13 @@ export class CopilotChatComponent implements OnInit {
     })
     this.loader=false;
 
+  }
+
+  scrollToBottom(){
+    setTimeout(() => {
+      const objDiv = document.getElementById("subChat");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 100)
+ 
   }
 }

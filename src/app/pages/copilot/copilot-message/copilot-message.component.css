@@ -456,8 +456,10 @@ button.msg-snd-btn:disabled{background-color: transparent !important;}
 
 
 .process-log-btn-pos{
-    float: right;
-    margin-right: 61px;
+    /* float: right;
+    margin-right: 61px; */
+    position: relative;
+    top: 4px;
 }
 .process-log-btn{
     padding: 10px; 
