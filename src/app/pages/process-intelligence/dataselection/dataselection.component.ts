@@ -12,7 +12,9 @@ import { fromMatPaginator, paginateRows } from './../../business-process/model/d
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-dataselection',
@@ -72,7 +74,8 @@ export class DataselectionComponent implements OnInit {
                 private hints:PiHints, 
                 private global:GlobalScript,
                 private rest:RestApiService,
-                private messageService: MessageService,
+                private toastService: ToasterService,
+    	          private toastMessages: toastMessages,
                 private confirmationService: ConfirmationService,
                 @Inject(APP_CONFIG) private config) {
                 
@@ -225,12 +228,7 @@ export class DataselectionComponent implements OnInit {
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName,e.categoryId).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       },err=>{
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Oops! Internal server error. Please try again later."
-        });
-        // Swal.fire("Error", "Internal server error, Please try again later", "error");
+        this.toastService.showError(this.toastMessages.internalServrErr);
       })
     }else{
           const xlsxConnectorBody={
@@ -276,12 +274,7 @@ export class DataselectionComponent implements OnInit {
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName,e.categoryId).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         },err=>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
-        // Swal.fire("Error", "Internal server error, Please try again later", "error");
+        this.toastService.showSuccess(this.toastMessages.internalServrErr,'response'); 
         })
     }
   }

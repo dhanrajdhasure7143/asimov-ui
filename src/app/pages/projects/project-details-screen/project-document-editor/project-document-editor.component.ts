@@ -5,7 +5,8 @@ import { saveAs } from "file-saver";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
-import { MessageService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 declare const CKEDITOR: any;
 @Component({
   selector: "app-project-document-editor",
@@ -28,7 +29,8 @@ export class ProjectDocumentEditorComponent implements OnInit {
     private router: Router,
     private rest_api: RestApiService,
     private loader: LoaderService,
-    private messageService: MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -95,10 +97,10 @@ export class ProjectDocumentEditorComponent implements OnInit {
         this.loader.hide();
         this.isDialog = false;
         this.onNavigate();
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
+          this.toastService.showSuccess(this.toastMessages.fileUpldScss,'response'); 
       },err=>{
         this.loader.hide();
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+          this.toastService.showError(this.toastMessages.uploadError);
       });
     });
   }

@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService } from 'primeng/api';
 import { CryptoService } from 'src/app/pages/services/crypto.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
@@ -34,7 +33,6 @@ export class RpaEnvironmentFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private cd:ChangeDetectorRef,
-    private messageService:MessageService,
     private toastService: ToasterService,
     private cryptoService : CryptoService,
     private toastMessages: toastMessages
@@ -152,16 +150,13 @@ export class RpaEnvironmentFormComponent implements OnInit {
           this.spinner.hide();
           if (res.errorMessage == undefined) {
             const environmentName = this.environmentForm.value.environmentName;
-            // this.messageService.add({severity:'success',summary:'Success',detail:'Connected successfully!',key:'toast1'});
             this.toastService.showSuccess(environmentName,'connect');
 
           } else {
-            // this.toastService.showError('Connection failed!');
             this.toastService.showError(this.toastMessages.connectionError);
           }
         }, err => {
           this.spinner.hide()
-          // this.toastService.showError('Unable to test connections!');
           this.toastService.showError(this.toastMessages.connectionError);
         });
         this.activestatus();
@@ -208,7 +203,6 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.refreshTable.emit(true);
       if (response.errorMessage == undefined) {
         const environmentName = this.environmentForm.value.environmentName;
-        // this.messageService.add({severity:'success',summary:'Success',detail:response.status})
         this.toastService.showSuccess(environmentName,'save');
         document.getElementById("createenvironment").style.display = 'none';
         this.environmentForm.reset();
@@ -242,8 +236,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       document.body.appendChild(element);
       element.click();
     } else {
-    //  this.messageService.add({severity:'error',summary:'Error',detail:'Unable to download .ppk file.',key:'toast1'});
-     this.toastService.showError('Unable to download .ppk file!');
+     this.toastService.showError(this.toastMessages.ppkFileErr);
 
     }
   }
@@ -281,7 +274,6 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.refreshTable.emit(true);
         if (response.errorMessage == undefined) {
           const environmentName = this.environmentForm.value.environmentName;
-          // this.messageService.add({severity:'success',summary:'Success',detail:res.status})
           this.toastService.showSuccess(environmentName,'update');
           document.getElementById("createenvironment").style.display = 'none';
         } else {
@@ -289,13 +281,11 @@ export class RpaEnvironmentFormComponent implements OnInit {
         }
       }, err => {
         this.spinner.hide();
-        // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update environment details.'})
         this.toastService.showError(this.toastMessages.updateError);
       });
     } else {
       this.spinner.hide();
-    //  this.messageService.add({severity:'warn',summary:'Alert',detail:'Update Environment is not configured for key pair authentication.'})
-     this.toastService.showWarn('Update Environment is not configured for key pair authentication!');
+     this.toastService.showWarn(this.toastMessages.keyPairWarn);
       this.refreshTable.emit(false);
     }
   }

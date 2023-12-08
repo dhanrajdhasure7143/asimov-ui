@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { RestApiService } from '../../services/rest-api.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 @Component({
   selector: 'app-create-dashboard',
   templateUrl: './create-dashboard.component.html',
@@ -16,7 +17,8 @@ export class CreateDashboardComponent implements OnInit {
   constructor(private primengConfig: PrimeNGConfig,
     private router: Router,
     private rest:RestApiService,
-    private messageService : MessageService) {}
+    private toastService: ToasterService
+    ) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -40,11 +42,7 @@ export class CreateDashboardComponent implements OnInit {
         this.router.navigate(["pages/dashboard/configure-dashboard"], { queryParams: {dashboardId:res_data.id,dashboardName:res_data.dashboardName,isCreate:1}});
       }
       if(response.code == 8010){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: response.message+' !',
-        });
+        this.toastService.showError(response.message+'!');
       }
     })
   }

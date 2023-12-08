@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit,Output,TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { RestApiService } from '../services/rest-api.service';
-import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CryptoService } from 'src/app/services/crypto.service';
 import countries from 'src/app/../assets/jsons/countries.json';
 import { DataTransferService } from '../services/data-transfer.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-myaccount',
@@ -40,8 +40,8 @@ export class MyaccountComponent implements OnInit {
     private api: RestApiService,
     private loader: LoaderService,
     private cryptoService: CryptoService,
-    private dt: DataTransferService,
-    private messageService:MessageService,
+    private dt: DataTransferService,	
+    private toastService: ToasterService,
     private confirmationService:ConfirmationService
   ) {
 
@@ -76,7 +76,7 @@ export class MyaccountComponent implements OnInit {
       })
       },(err) => {
         this.loader.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Please try again!'})
+        this.toastService.showError('Please try again!')
       }
     );
   }

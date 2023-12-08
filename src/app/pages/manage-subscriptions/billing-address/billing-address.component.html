@@ -76,7 +76,7 @@
             <div *ngIf="!isInput" class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
-                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" ng2TelInput
+                    placeholder="Enter Phone Number" appOnlyNumbers (countryChange)="OnFlagChange($event)" ng2TelInput
                     [ng2TelInputOptions]="{initialCountry: phnCountryCode}" onKeyPress="if(this.value.length==10) return false;"
                     pattern="^((\\+91-?)|0)?[0-9]{10}$" required />
                 <span
@@ -90,7 +90,7 @@
             <div *ngIf="isInput" class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
                 <input pInputText type="text" [style]="{'width':'100%'}" maxlength="10" formControlName="phoneNumber"
-                    placeholder="Enter Phone Number" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" ng2TelInput
+                    placeholder="Enter Phone Number" appOnlyNumbers (countryChange)="OnFlagChange($event)" ng2TelInput
                     [ng2TelInputOptions]="{initialCountry: phnCountryCode}" onKeyPress="if(this.value.length==10) return false;"
                     pattern="^((\\+91-?)|0)?[0-9]{10}$" required />
                 <span
@@ -151,4 +151,3 @@
         <button  [disabled]="!(billingForm.valid && (billingForm.touched ||  billingForm.dirty))" (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button>
     </div>
 </div>
-<p-toast  [style]="{marginTop: '50px'}"></p-toast>

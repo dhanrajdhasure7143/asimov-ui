@@ -5,7 +5,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
-import { MessageService, ConfirmationService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
 
@@ -40,7 +40,6 @@ export class ProjectRpaDesignComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    // private messageService: MessageService,
     private toastService: ToasterService,
     private confirmationService: ConfirmationService,
     private toastMessages: toastMessages
