@@ -16,7 +16,7 @@
 }
 
 .studio_main_desginer {
-  min-height: 75vh;
+  min-height: calc(100vh - 167px);
   width: 100%;
   position: absolute;
   overflow: auto;
