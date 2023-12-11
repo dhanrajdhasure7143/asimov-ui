@@ -9,7 +9,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as $ from 'jquery'
 // import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 @Component({
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
@@ -20,7 +20,7 @@ export class MonitoringComponent implements OnInit {
   constructor(
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
-    private messageService:MessageService
+    private toastService: ToasterService
   ) { }
     q:any;
     columns_list:any=[]
@@ -108,7 +108,7 @@ export class MonitoringComponent implements OnInit {
       this.botruntimestats();
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to add.'})
+      this.toastService.showError('Unable to add');
     })
   }
 

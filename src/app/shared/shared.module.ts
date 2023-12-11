@@ -28,10 +28,11 @@ import { UserLettersPipe } from './pipes/user-letters.pipe';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import { ProcessLogsComponent } from './process-logs/process-logs.component';
 import { AddZeroPipe } from './pipes/add-zero.pipe';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe, OnlyNumbersDirective],
     imports: [
         CommonModule,
         NgxDropzoneModule,
@@ -50,6 +51,6 @@ import { AddZeroPipe } from './pipes/add-zero.pipe';
     ],
     providers: [],
     exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent,
-        SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe]
+        SplitOverlayComponent, UserLettersPipe, ChatBotComponent, ProcessLogsComponent, AddZeroPipe, OnlyNumbersDirective]
 })
 export class SharedModule { }

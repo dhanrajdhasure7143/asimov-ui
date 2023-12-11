@@ -6,9 +6,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import moment from 'moment';
-import { MessageService,ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ClipboardService } from 'ngx-clipboard';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -74,9 +76,10 @@ export class RpaSoLogsComponent implements OnInit {
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,
      private spinner:NgxSpinnerService,
-     private messageService:MessageService,
      private confirmationService :ConfirmationService,
-     private clipboardService: ClipboardService
+     private clipboardService: ClipboardService,
+     private toastService: ToasterService,
+    	private toastMessages: toastMessages
      ) { }
   ngOnInit() {
     this.viewRunsByBotId();
@@ -88,7 +91,7 @@ export class RpaSoLogsComponent implements OnInit {
       if(response?.enableTaskLogs)this.hasTaskLevelLogs=response?.enableTaskLogs;
     },(err:any)=>{
       console.log(err);
-      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get log switch state"})
+      this.toastService.showError(this.toastMessages.logSwitchState);
     })
   }
  
@@ -123,7 +126,8 @@ export class RpaSoLogsComponent implements OnInit {
       {
         this.isDataEmpty=true;
         this.errormsg= response.errorMessage;
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.toastService.showError(response.errorMessage);
+
   
       }
       
@@ -131,7 +135,8 @@ export class RpaSoLogsComponent implements OnInit {
     console.log(err);
     this.logsLoading=false;
     this.isDataEmpty=true;
-    this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})
+    this.toastService.showError(this.toastMessages.getlogsError);
+
     });
   }
 
@@ -197,13 +202,13 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})     
+        this.toastService.showError(response.errorMessage);
     
      }    
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})     
+       this.toastService.showError(this.toastMessages.getlogsError);
     })
    }
 
@@ -251,12 +256,12 @@ export class RpaSoLogsComponent implements OnInit {
      {
         this.isDataEmpty=true;
         this.logsLoading=false;
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage});
+        this.toastService.showError(response.errorMessage);
      }    
      }, err=>{
        this.logsLoading=false;
        this.isDataEmpty=true;
-       this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the logs.'})     
+       this.toastService.showError(this.toastMessages.getlogsError);
     })
    }
 
@@ -407,14 +412,14 @@ export class RpaSoLogsComponent implements OnInit {
         this.logsLoading=false;
         this.selectedIterationTask=undefined;
         this.errormsg= response.errorMessage;
-        this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+        this.toastService.showError(response.errorMessage);
    
       }      
     },err=>{
       this.logsLoading=false;
       
       this.isDataEmpty=true;
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to open the loop logs.'})
+      this.toastService.showError(this.toastMessages.loopLogsErr);
     })
   }
 
@@ -436,13 +441,13 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty==true;
        this.errormsg= response.errorMessage;
-       this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+       this.toastService.showError(response.errorMessage);
    
       }
     },err=>{
       this.logsLoading=false
       this.isDataEmpty==true;
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the automation logs.'})
+      this.toastService.showError(this.toastMessages.automationLogsErr);
     })
   }
 
@@ -457,10 +462,10 @@ export class RpaSoLogsComponent implements OnInit {
       this.logsLoading = false;
       if (response.errorMessage){
       this.errormsg= response.errorMessage;
-      this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})
+      this.toastService.showError(response.errorMessage);
       }
       else
-        this.messageService.add({severity:'success',summary:'Success',detail:response.status});
+        this.toastService.showSuccess(response.status,'response');
       this.viewRunsByBotId();
     });
   }
@@ -548,10 +553,11 @@ handleTaskLevelLogs(event){
     accept: () => {
       this.rest.switchTaskLevelLogs(this.logsbotid).subscribe(res=>{
         this.hasTaskLevelLogs = this.hasTaskLevelLogs;
-        this.messageService.add({severity:'success',summary:'Success',detail:'Successfully changed the toggle!'})    
+        this.toastService.showSuccess(this.toastMessages.toggleChangeSuccss,'response');  
       },errormsg =>{
         this.hasTaskLevelLogs = !this.hasTaskLevelLogs;
-        this.messageService.add({severity:'error',summary:'Error',detail:'Failed to change the toggle'})     
+        this.toastService.showError(this.toastMessages.toggleChangeErr);
+    
       })
     },
     reject: (type) => {

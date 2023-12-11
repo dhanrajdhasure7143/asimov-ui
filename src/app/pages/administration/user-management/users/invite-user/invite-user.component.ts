@@ -5,7 +5,9 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { inject } from '@angular/core/testing';
 import { APP_CONFIG } from 'src/app/app.config';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import {MessageService ,ConfirmationService} from 'primeng/api'
+import { ConfirmationService} from 'primeng/api'
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: "app-invite-user",
@@ -28,8 +30,9 @@ export class InviteUserComponent implements OnInit {
     private router: Router,
     private loader: LoaderService,
     @Inject(APP_CONFIG) private config,
-    private messageService:MessageService,
-    private confirmationService:ConfirmationService
+    private confirmationService:ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -144,17 +147,18 @@ export class InviteUserComponent implements OnInit {
             })
             }
              else {
-              this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exist.'})
+              this.toastService.showError(this.toastMessages.InviteFail);
             }
             this.loader.hide();
           });
         } else if (res.errorMessage) {
-          this.messageService.add({severity:'error',summary:'Error',detail:res.errorMessage})
+          this.toastService.showError(res.errorMessage);
           this.loader.hide();
           return;
         } else {
           this.loader.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Failed to invite! Check if the user already exists!'})
+          this.toastService.showError(this.toastMessages.InviteFail);
+
         }
       });
   }

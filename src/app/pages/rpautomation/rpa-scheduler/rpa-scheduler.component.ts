@@ -5,7 +5,8 @@ import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService} from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 
@@ -91,7 +92,8 @@ export class RpaSchedulerComponent implements OnInit {
     private rest:RestApiService, 
     private notifier: NotifierService,
     private loader:LoaderService,
-    private messageService:MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages,
      ) { }
   mindate= moment().format("YYYY-MM-DD");
   ngOnInit() {
@@ -175,10 +177,10 @@ gettime(){
           }
         }
         else
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
+         this.toastService.showError(response.errorMessage+'!');
         },err=>{
         this.loader.hide()
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to load schedules!'})
+        this.toastService.showError(this.toastMessages.schLoadFail);
       })
     }
   }
@@ -404,21 +406,21 @@ gettime(){
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule saved successfully!"});   
+            this.toastService.showSuccess(this.toastMessages.saveSchedule, 'response');   
             this.get_schedule();
           }  
           else
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'});
+         this.toastService.showError(response.errorMessage+'!');
         },err=>{
           this.loader.hide();
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to save the schedule!'})
+          this.toastService.showError(this.toastMessages.saveError)
         })
       }
     }
     else
     {
       this.loader.hide();
-      this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Please fill in all inputs!'})
+      this.toastService.showError(this.toastMessages.fillDetails)
     }
   }
 
@@ -468,11 +470,11 @@ gettime(){
       this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule started successfully!"});   
+          this.toastService.showSuccess(this.toastMessages.scheduleStart,'response');   
           this.get_schedule();
         }
         else
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+          this.toastService.showError(resp.errorMessage+'!');
       })
     }
   }
@@ -489,10 +491,10 @@ gettime(){
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage==undefined){
-          this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule paused successfully!"});   
+          this.toastService.showSuccess(this.toastMessages.schedulePause,'response');
           this.get_schedule();
         } else{
-         this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+         this.toastService.showError(resp.errorMessage+'!');
         }
       })
   }
@@ -509,10 +511,10 @@ gettime(){
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
       if(resp.errorMessage==undefined){
-        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule resumed successfully!"});   
+        this.toastService.showSuccess(this.toastMessages.scheduleResume,'response');   
         this.get_schedule();
       }else
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:resp.errorMessage+'!'})
+        this.toastService.showError(resp.errorMessage+'!');
     })
 
   }
@@ -527,14 +529,14 @@ gettime(){
       this.rest.stop_schedule(list).subscribe((response:any)=>{
         this.loader.hide();
         if(response.errorMessage==undefined){
-        this.messageService.add({key:'schedular', severity: "success",summary: "Success",detail: "Schedule deleted successfully!"});   
+        this.toastService.showSuccess(this.toastMessages.scheduleDelete, 'response')
           this.get_schedule();
         } else{
-          this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:response.errorMessage+'!'})
+          this.toastService.showError(response.errorMessage+'!');
         }
       },err=>{
         this.loader.hide()
-        this.messageService.add({key:'schedular',severity:'error',summary:'Error',detail:'Unable to delete the schedule!'})
+        this.toastService.showError(this.toastMessages.deleteError);
 
         
       })

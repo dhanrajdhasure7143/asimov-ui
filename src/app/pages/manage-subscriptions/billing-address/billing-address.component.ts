@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MessageService } from "primeng/api";
 // import countries from "src/app/../assets/jsons/countries.json";
 import { Country, State, City }  from 'country-state-city';
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 @Component({
   selector: "app-billing-address",
@@ -36,7 +36,7 @@ export class BillingAddressComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private api: RestApiService,
-    private messageService: MessageService
+    private toastService: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -121,26 +121,6 @@ export class BillingAddressComponent implements OnInit {
     }
   }
 
-  onKeydown(event) {
-    let numArray = [
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "Backspace",
-      "Tab",
-    ];
-    let temp = numArray.includes(event.key); //gives true or false
-    if (!temp) {
-      event.preventDefault();
-    }
-  }
 
   saveBillingInfo() {
     this.spinner.show();
@@ -155,44 +135,26 @@ export class BillingAddressComponent implements OnInit {
       this.editButton = true;
       this.spinner.hide();
       this.id = this.billingInfo.id;
-      this.messageService.add({
-        severity: "success",
-        summary: "Success",
-        detail: "Saved successfully!",
-      });
+      this.toastService.showSuccess("Saved successfully!",'response');
       this.billingForm.reset();
       this.getBillingInfo();
       this.spinner.hide();
     }
   },(err) => {
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: "Please save again!",
-    });
-    
+    this.toastService.showError("Please save again!");
    this.spinner.hide();
   })}
     else {
       this.editButton = true;
       this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
         if (data) {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Updated successfully!",
-          });
+          this.toastService.showSuccess("Updated successfully!",'response');
           this.billingForm.reset();
           this.getBillingInfo();
           this.spinner.hide();
         }
       }),(err) => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Please update again!",
-          });
-          
+          this.toastService.showError("Please update again!");
          this.spinner.hide();
         };
     }
@@ -224,11 +186,7 @@ export class BillingAddressComponent implements OnInit {
       }
       },
       (err) => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Unable to get the data!",
-        });
+        this.toastService.showError("Unable to get the data!");
         this.spinner.hide();
       }
     );

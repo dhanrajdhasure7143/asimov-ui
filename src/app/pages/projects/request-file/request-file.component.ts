@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 @Component({
   selector: 'app-request-file',
   templateUrl: './request-file.component.html',
@@ -27,7 +27,7 @@ export class RequestFileComponent implements OnInit {
   filecategories: any;
   uploadFileDescriptionFlag: boolean = false;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router,private messageService: MessageService) { }
+    private router: Router,private toastService: ToasterService) { }
 
   ngOnInit(): void {
 
@@ -75,34 +75,10 @@ export class RequestFileComponent implements OnInit {
           if(response.message!=undefined)
           {
             let status: any= response;
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: status.message
-            });
-          //   Swal.fire({
-          //     title: 'Success',
-          //     text: ""+status.message,
-          //     position: 'center',
-          //     icon: 'success',
-          //     showCancelButton: false,
-          //     customClass: {
-          //       confirmButton: 'btn bluebg-button',
-          //       cancelButton:  'btn new-cancelbtn',
-          //     },
-      
-          //     confirmButtonText: 'Ok'
-          // }).then((result) => {
-          // }) 
-            
+            this.toastService.showSuccess(status.message,'response');
           }
           else {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: response.message
-            });
-            // Swal.fire("Error",response.message,"error");
+            this.toastService.showError(response.message);
           }
           
         })

@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService } from 'primeng/api';
 import { CryptoService } from 'src/app/services/crypto.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-credential-form',
   templateUrl: './rpa-credential-form.component.html',
@@ -31,8 +32,9 @@ export class RpaCredentialFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private spinner: LoaderService,
-    private messageService:MessageService,
-    private cryptoService:CryptoService
+    private cryptoService:CryptoService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) {
 
       this.credentialForm=this.formBuilder.group({
@@ -182,16 +184,16 @@ export class RpaCredentialFormComponent implements OnInit {
           this.spinner.hide();
           if (status.errorMessage == undefined) {
             this.refreshTable.emit(true)
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            this.toastService.showSuccess(status.status,'response'); 
             document.getElementById('createcredentials').style.display = "none";
             this.resetCredForm();
             this.submitted = false;
           }
           else
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage});
+            this.toastService.showError(status.errorMessage);
         }, err => {
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to save credentials.'});
+          this.toastService.showError(this.toastMessages.saveError);
           this.refreshTable.emit(false)
         });
       }
@@ -272,19 +274,19 @@ resetCredForm(){
         this.spinner.hide();
         this.refreshTable.emit(true)
         if (status.errorMessage == undefined) {
-          this.messageService.add({severity:'success',summary:'Success',detail:status.status});
+          this.toastService.showSuccess(status.status,'response'); 
           // document.getElementById('Updatecredntials').style.display = 'none';
           document.getElementById('createcredentials').style.display = 'none';
         } else {
-          this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage});
+          this.toastService.showError(status.errorMessage);
         }
       }, err => {
         this.spinner.hide();
-        this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update credentials.'});
+        this.toastService.showError(this.toastMessages.updateError);
         this.refreshTable.emit(false);
       });
     } else {
-      this.messageService.add({severity:'error',summary:'Error',detail:'Please fill in all the details.'});
+      this.toastService.showError(this.toastMessages.fillDetails);
     }
   }
 

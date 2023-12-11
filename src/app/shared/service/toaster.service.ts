@@ -58,6 +58,6 @@ export class ToasterService {
   }
   
   showWarn(message:string){
-    this.messageService.add({ severity:'warn', summary:'Alert', detail: message })
+    this.messageService.add({ severity:'warn', summary:'Warning', detail: message })
   }
 }

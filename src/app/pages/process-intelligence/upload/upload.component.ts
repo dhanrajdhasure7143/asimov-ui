@@ -17,8 +17,10 @@ import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from "src/app/shared/model/table_columns"
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { CryptoService } from 'src/app/services/crypto.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 declare var target: any;
 @Component({
@@ -93,10 +95,11 @@ export class UploadComponent implements OnInit {
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
     private loader: LoaderService,
-    private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private columnList: columnList,
     private cryptoService : CryptoService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -157,33 +160,9 @@ export class UploadComponent implements OnInit {
           acceptIcon: 'null',
           accept: () => {}
         });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: "You have limited access to this product. Please contact EZFlow support team for more details.",
-        //   position: 'center',
-        //   icon: 'error',
-        //   showCancelButton: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-	
-        //   heightAuto: false,
-        //   confirmButtonText: 'Ok'
-        // })
       } else {
         if (event.addedFiles.length == 0) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Please upload a file with the proper extension!'
-          });
-          // Swal.fire({
-          //   title: 'Error',
-          //   text: 'Please upload file with proper extension!',
-          //   icon: 'error',
-          //   heightAuto: false
-          // })
+          this.toastService.showError(this.toastMessages.fileExtensionErr);
         } else {
           this.loader.show();
           this.selectedFile = <File>event.addedFiles[0];
@@ -197,34 +176,14 @@ export class UploadComponent implements OnInit {
               this.onSelect(event, id)
               this.loader.hide();
             }, err => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Please try again!'
-              });
-              // Swal.fire({
-              //   title: 'Error',
-              //   text: 'Please try again!',
-              //   icon: 'error',
-              //   heightAuto: false,
-              // })
+              this.toastService.showError('Please try again!');
               this.loader.hide();
             });
         }
       }
     } else {
       if (event.addedFiles.length == 0) {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Please upload a file with the proper extension!'
-        });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: 'Please upload file with proper extension!',
-        //   icon: 'error',
-        //   heightAuto: false
-        // })
+        this.toastService.showError(this.toastMessages.fileExtensionErr);
       } else {
         this.loader.show();
         this.selectedFile = <File>event.addedFiles[0];
@@ -238,17 +197,7 @@ export class UploadComponent implements OnInit {
             this.onSelect(event, id)
             this.loader.hide();
           }, err => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Please try again!'
-            });
-            // Swal.fire({
-            //   title: 'Error',
-            //   text: 'Please try again!',
-            //   icon: 'error',
-            //   heightAuto: false,
-            // })
+            this.toastService.showError(this.toastMessages.plzTryAgain);
             this.loader.hide();
           });
       }
@@ -287,17 +236,7 @@ export class UploadComponent implements OnInit {
     }
     if (upload_id == 2){
       if(this.freetrail == 'true'){
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'You only have access to upload Excel files.'
-        });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: 'You have access to upload only excel file',
-        //   icon: 'error',
-        //   heightAuto: false
-        // })
+        this.toastService.showError(this.toastMessages.onlyExlAccss);
       }else{
       this.readCSVFile(event);
       }
@@ -376,17 +315,7 @@ export class UploadComponent implements OnInit {
       }
      } else{
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: 'No data found in uploaded file!',
-        //   icon: 'error',
-        //   heightAuto: false,
-        // })
+        this.toastService.showError(this.toastMessages.noDataFoundErr);
       }else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
@@ -409,17 +338,7 @@ export class UploadComponent implements OnInit {
       let excelfile = [];
       excelfile = csvRecordsArray;
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        })
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: 'No data found in uploaded file!',
-        //   icon: 'error',
-        //   heightAuto: false
-        // })
+        this.toastService.showError(this.toastMessages.noDataFoundErr);
       }else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
@@ -434,7 +353,8 @@ export class UploadComponent implements OnInit {
     let file = e.addedFiles[0];
     let fileReader: FileReader = new FileReader();
     var _self = this;
-    let message=this.messageService;
+    let toastSrvce = this.toastService;
+    let toastMsg = this.toastMessages
     fileReader.onload = function (x) {
       let _xml = `${fileReader.result}`
       const parser = new DOMParser();
@@ -513,17 +433,12 @@ export class UploadComponent implements OnInit {
       }
       _self.dt.changePiData(xesData)
       if(xesData.length<=2||(xesData[0].length==0 && xesData[1].length==0)){
-        message.add({
-          severity: "error",
-          summary: "Error",
-          detail: "No data was found in the uploaded file!",
-        });
-        // Swal.fire({
-        //   title: 'Error',
-        //   text: 'No data found in uploaded file!',
-        //   icon: 'error',
-        //   heightAuto: false,
-        // })
+        // message.add({
+        //   severity: "error",
+        //   summary: "Error",
+        //   detail: "No data was found in the uploaded file!",
+        // });
+        toastSrvce.showError(toastMsg.noDataFoundErr);
       }else{
         _self.router.navigateByUrl('/pages/processIntelligence/xesdocument');
       }
@@ -961,56 +876,15 @@ getDBTables(){      //get DB tables list
           defaultFocus: 'none',
           acceptIcon: 'null',
           accept: () => {
-            this.messageService.add({
-              severity: "info",
-              summary: "Info",
-              detail: "Please wait, redirecting to the process map."
-            })
+            this.toastService.showInfo(this.toastMessages.redirect2PrcssMap);
             setTimeout(() => {
               _self.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { piId: processDt.piId } });
             }, 1500);
           }
         });
-        // Swal.fire({
-        //   title: 'Great',
-        //   text: ""+res.display_msg.info,
-        //   icon: 'success',
-        //   showCancelButton: false,
-        //   heightAuto: false,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton:  'btn new-cancelbtn',
-        //   },
-	
-        //   confirmButtonText: 'Ok'
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'info',
-        //       title: 'Please wait, Redirecting to process map',
-        //       showConfirmButton: false,
-        //       heightAuto: false,
-        //       timer: 1500
-        //     })
-        //     setTimeout(() => {
-        //       _self.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { piId: processDt.piId } });
-        //     }, 1500);
-        //   }
-        // })
        
       } else{
-        this.messageService.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Oops! " + res.display_msg.info
-        });
-        // Swal.fire({
-        //   title: 'Oops!',
-        //   text: ""+res.display_msg.info,
-        //   icon: 'error',
-        //   heightAuto: false,
-        // })
+        this.toastService.showError("Oops!" + res.display_msg.info);
       }
     },(err)=>{
     })
@@ -1034,19 +908,11 @@ getDBTables(){      //get DB tables list
       accept: () => {
         this.rest.deleteSelectedProcessID(req_body).subscribe(
           (res) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: ele.piName + " deleted successfully!",
-            });
+            this.toastService.showSuccess(ele.piName,'delete'); 
             this.getAlluserProcessPiIds();
           },
           (err) => {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Something went wrong.",
-            });
+            this.toastService.showError(this.toastMessages.deleteError);
           }
         );
       }
@@ -1109,12 +975,6 @@ getDBTables(){      //get DB tables list
         acceptLabel: "Ok",
         accept: () => {}
       });
-      // Swal.fire({
-      //   icon: 'info',
-      //   title: 'Oops...',
-      //   text: "You can't delete inprogress process!",
-      //   heightAuto: false,
-      // })
       return;
     }
     Swal.fire({
@@ -1136,54 +996,14 @@ getDBTables(){      //get DB tables list
         this.loader.show();
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           this.getAlluserProcessPiIds();
-
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Process deleted successfully!'
-          })
-
-          // Swal.fire({
-          //   icon: 'success',
-          //   title: 'Success',
-          //   customClass: {
-          //     confirmButton: 'btn bluebg-button',
-          //     cancelButton:  'btn new-cancelbtn',
-          //   },
-          //   text: 'Process Deleted Successfully !!',
-          //   heightAuto: false
-          // })
+          this.toastService.showSuccess(this.toastMessages.processDelete,'response'); 
           this.loader.hide();
         },err => {
-
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Oops! Something went wrong.'
-          })
-
-                  // Swal.fire({
-                  //   icon: 'error',
-                  //   title: 'Oops...',
-                  //   text: 'Something went wrong!',
-                  //   heightAuto: false,
-                  // })
-                  this.loader.hide();
+          this.toastService.showError(this.toastMessages.deleteError);
+          this.loader.hide();
           })
       }else{
-        
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Entered Process ID is invalid!'
-        })
-
-        // Swal.fire({
-        //   icon: 'error',
-        //   title: 'Error',
-        //   text: 'Entered Process ID is Invalid !!',
-        //   heightAuto: false
-        // })
+        this.toastService.showError(this.toastMessages.processIdErr);
       }
     })
   }

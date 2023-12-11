@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-copilot-message-form',
@@ -16,7 +17,8 @@ export class CopilotMessageFormComponent implements OnInit {
   userForm:FormGroup;
   constructor(
     private fb: FormBuilder,
-    private messageService:MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) {
   }
 
@@ -41,7 +43,7 @@ export class CopilotMessageFormComponent implements OnInit {
 
   processButtonAction(event:any){
     (event?.type=="submit")?((this.userForm.valid)?this.formAction.emit({message:"submit",data:this.userForm.value}):
-    this.messageService.add({severity:'error', summary:'Invalid Data', detail:'Please fill all fields'})):
+    this.toastService.showError(this.toastMessages.fillDetails)):
     this.formAction.emit(event);
   }
   processInputAction(event:any){

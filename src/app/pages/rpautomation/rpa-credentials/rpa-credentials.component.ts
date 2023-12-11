@@ -8,6 +8,8 @@ import { columnList } from 'src/app/shared/model/table_columns';
 import { Router } from '@angular/router';
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { CryptoService } from 'src/app/services/crypto.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-credentials',
   templateUrl: './rpa-credentials.component.html',
@@ -47,9 +49,10 @@ export class RpaCredentialsComponent implements OnInit {
       private dt:DataTransferService,
       private spinner: LoaderService,
       private columnList: columnList,
-      private messageService:MessageService,
       private confirmationService:ConfirmationService,
-      private cryptoService:CryptoService
+      private cryptoService:CryptoService,
+      private toastService: ToasterService,
+    	private toastMessages: toastMessages
       ) { 
   
       this.Credupdateflag=false;
@@ -80,13 +83,6 @@ export class RpaCredentialsComponent implements OnInit {
         })
   }
 
-inputNumberOnly(event){
-      let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
-      let temp =numArray.includes(event.key); //gives true or false
-     if(!temp){
-      event.preventDefault();
-     } 
-    }
 
   getallCredentials(){
     this.Credupdateflag = false;
@@ -142,45 +138,36 @@ inputNumberOnly(event){
     this.credupdatedata = this.selectedData[0];
   }
 
-  deleteCredentials(){
-    const selectedcredentials = this.selectedData.map(p => p.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-this.confirmationService.confirm({
-  message: "Do you want to delete this credential? This can't be undo.",
-  header: 'Are you sure?',
-  acceptLabel:'Yes',
- rejectLabel:'No',
- rejectButtonStyleClass: ' btn reset-btn',
- acceptButtonStyleClass: 'btn bluebg-button',
- defaultFocus: 'none',
- rejectIcon: 'null',
- acceptIcon: 'null',
- key:"positionDialog",
-  accept: (result) => {
+deleteCredentials(){
+  const selectedcredentials = this.selectedData.map(p => p.credentialId);
+  this.confirmationService.confirm({
+    message: "Do you want to delete this credential? This can't be undo.",
+    header: 'Are you sure?',
+    acceptLabel:'Yes',
+    rejectLabel:'No',
+    rejectButtonStyleClass: ' btn reset-btn',
+    acceptButtonStyleClass: 'btn bluebg-button',
+    defaultFocus: 'none',
+    rejectIcon: 'null',
+    acceptIcon: 'null',
+    key:"positionDialog",
+    accept: (result) => {
       // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
           if(status.errorMessage==undefined){
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            this.toastService.showSuccess(status.status,'response'); 
+
             this.getallCredentials();
           }else{
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+            this.toastService.showError(status.errorMessage);
           }              
         },err=>{
           this.spinner.hide();
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
+          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
+          this.toastService.showError(this.toastMessages.deleteError);
         });
       // }
   },
@@ -244,28 +231,17 @@ this.confirmationService.confirm({
     // const selectedcredentials = this.selectedData.map(p => p.credentialId);
     const selectedcredentials=[]
     selectedcredentials.push(row.credentialId);
-    // Swal.fire({
-    //   title: 'Are you Sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   customClass: {
-    //     confirmButton: 'btn bluebg-button',
-    //     cancelButton:  'btn new-cancelbtn',
-    //   },
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
       this.confirmationService.confirm({
         message: "You won't be able to revert this!",
         header: 'Are you sure?',
-      acceptLabel:'Yes',
-      rejectLabel:'No',
-      rejectButtonStyleClass: ' btn reset-btn',
-      acceptButtonStyleClass: 'btn bluebg-button',
-      defaultFocus: 'none',
-      rejectIcon: 'null',
-      acceptIcon: 'null',
-      key:"positionDialog",
+        acceptLabel:'Yes',
+        rejectLabel:'No',
+        rejectButtonStyleClass: ' btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+        key:"positionDialog",
       accept: (result) => {
       // if (result.value) {
         this.spinner.show();
@@ -273,18 +249,16 @@ this.confirmationService.confirm({
           let status:any = res;
           this.spinner.hide();
           if(status.errorMessage==undefined){
-            // Swal.fire("Success",status.status,"success");
-            this.messageService.add({severity:'success',summary:'Success',detail:status.status})
+            this.toastService.showSuccess(status.status,'response');
             this.getallCredentials();
           }else{
-            // Swal.fire("Error",status.errorMessage,"error")
-            this.messageService.add({severity:'error',summary:'Error',detail:status.errorMessage})
+            this.toastService.showError(status.errorMessage);
 
           }              
         },err=>{
           this.spinner.hide();
-          // Swal.fire("Error","Unable to delete credentails","error");
-          this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
+          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
+          this.toastService.showError(this.toastMessages.deleteError);
 
         });
       // }

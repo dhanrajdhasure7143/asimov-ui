@@ -7,7 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Table } from 'primeng/table';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
@@ -31,7 +32,8 @@ export class SoInboxComponent implements OnInit {
       private dt:DataTransferService,
       private spinner:LoaderService,
       private columnList: columnList,
-      private messageService:MessageService
+      private toastService: ToasterService,
+    	private toastMessages: toastMessages
       )
     {}
 
@@ -91,24 +93,10 @@ export class SoInboxComponent implements OnInit {
     this.rest.updateInboxstatus(obj).subscribe(data =>{
       this.spinner.hide();
         if(obj.status == "Approved"){
-        // Swal.fire({
-        //   position: 'center',
-        //   icon: 'success',
-        //   title: 'Task Approved Successfully !!',
-        //   showConfirmButton: false,
-        //   timer: 2000
-        // });
-        this.messageService.add({severity:'success',summary:'Success',detail:'Task approved successfully!'})
+        this.toastService.showSuccess(this.toastMessages.taskApprove,'response'); 
       }
       if(obj.status == "Rejected"){
-        // Swal.fire({
-        //   position: 'center',
-        //   icon: 'success',
-        //   title: 'Task Rejected Successfully !!',
-        //   showConfirmButton: false,
-        //   timer: 2000
-        // });
-        this.messageService.add({severity:'success',summary:'Success',detail:'Task rejected successfully!'})
+        this.toastService.showSuccess(this.toastMessages.taskReject,'response'); 
 
       }
         /* let res:any= data;

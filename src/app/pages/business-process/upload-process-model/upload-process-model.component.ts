@@ -24,7 +24,7 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { GlobalScript } from 'src/app/shared/global-script';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
@@ -39,6 +39,8 @@ import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
 import { Observable } from 'rxjs/Observable';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 declare var require:any;
 
 
@@ -166,7 +168,8 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut,
-      private loader: LoaderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+      private loader: LoaderService, private confirmationService: ConfirmationService,private toastService: ToasterService,
+    	private toastMessages: toastMessages) { }
 
   canDeactivate(): Observable<boolean> | boolean {
     return !this.isDiagramChanged 
@@ -972,12 +975,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      this.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Tasks automated successfully!"});
-      // Swal.fire(
-      //   'Tasks automated successfully!',
-      //   '',
-      //   'success'
-      // );
+      this.toastService.showSuccess(this.toastMessages.taskAutomate,'response'); 
     })
   }
 
@@ -1193,13 +1191,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let bpmnModel:BpmnModel = new BpmnModel();
     this.selected_approver=e.selectedApprovar
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      this.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Please select an approver from the list given above!"});
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'No approver',
-      //   text: 'Please select approver from the list given above !',
-      //   heightAuto: false,
-      // });
+      this.toastService.showError(this.toastMessages.slctApproverErr);
       return;
     }
     this.loader.show();
@@ -1255,36 +1247,18 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           _self.loader.hide();
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
-            _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: 'Already exists!',
-            //   text: 'The notation is already in "PENDING" status !',
-            //   heightAuto: false,
-            // });
+            _self.toastService.showError(_self.toastMessages.notationPendingErr);
           }else{
             _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            _self.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Your changes have been saved and submitted for approval successfully!"})
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: 'Saved!',
-            //   text: 'Your changes has been saved and submitted for approval successfully !',
-            //   heightAuto: false,
-            // });
+            _self.toastService.showSuccess(_self.toastMessages.submitApproval,'response'); 
           }
         },err => {
           _self.loader.hide();
-          _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops!',
-          //   text: 'Something went wrong. Please try again !',
-          //   heightAuto: false,
-          // });
+          _self.toastService.showError(_self.toastMessages.OopsErr);
         })
     })
   }
@@ -1364,13 +1338,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         data=>{
           _self.loader.hide();
           if(data["errorCode"] == "2005"){
-            _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "The notation is already in 'PENDING' status!"});
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: 'Already exists!',
-            //   text: 'The notation is already in "PENDING" status !',
-            //   heightAuto: false,
-            // });
+            _self.toastService.showError(_self.toastMessages.notationPendingErr);
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
               
@@ -1407,13 +1375,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             _self.modalRef.hide();
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            _self.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Your changes have been saved successfully!"});
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: 'Saved!',
-            //   text: 'Your changes has been saved successfully !',
-            //   heightAuto: false,
-            // });
+            _self.toastService.showSuccess(_self.toastMessages.saveChanges,'response'); 
             _self.process_owner='';
             if(newVal){
               _self.selected_notation = newVal;
@@ -1443,22 +1405,9 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               acceptIcon: 'null',
               accept: () => {},
             });
-            
-            // Swal.fire({
-            //   icon: 'warning',
-            //   title: 'Oops!',
-            //   text: 'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation !',
-            //   heightAuto: false,
-            // });
           }         
           else
-          _self.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: "Oops! Something went wrong. Please try again."});
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Oops!',
-          //   text: 'Something went wrong. Please try again !',
-          //   heightAuto: false,
-          // });
+          _self.toastService.showError(_self.toastMessages.OopsErr);
         })
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
@@ -1704,19 +1653,9 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let response;
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{response=res
       if(response.failure){
-        this.messageService.add({key: 'bpmn',severity: "error", summary: "Error", detail: response.failure });
-        // Swal.fire(
-        //   'Error!',
-        //   response.failure,
-        //   'error'
-        // )
+        this.toastService.showError(response.failure);
       }else{
-        this.messageService.add({key: 'bpmn',severity: "success", summary: "Success", detail: "Process started successfully!"});
-        // Swal.fire(
-        //   'Success!',
-        //   'Process started successfully',
-        //   'success'
-        // )
+        this.toastService.showSuccess(this.toastMessages.startProcess,'response'); 
       }
       
       this.cancelProcess();
