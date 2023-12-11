@@ -5,6 +5,8 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-payment-history',
@@ -23,7 +25,13 @@ export class PaymentHistoryComponent implements OnInit {
   table_searchFields: any=[];
   columns_list:any[]
 
-  constructor(private rest:RestApiService,private spinner:LoaderService,private columns:columnList) { }
+  constructor(
+    private rest:RestApiService,
+    private spinner:LoaderService,
+    private columns:columnList,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+  ) { }
 
   ngOnInit(): void {
     this.getAllSubscrptions();
@@ -77,20 +85,21 @@ export class PaymentHistoryComponent implements OnInit {
     // });
     this.spinner.hide();
   }, err => {
-    Swal.fire({
-      title: 'Error',
-      text: "Download failed!",
-      position: 'center',
-      icon: 'error',
-      showCancelButton: false,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
-      },
+    this.toastService.showError(this.toastMessages.downloadErr);
+    // Swal.fire({
+    //   title: 'Error',
+    //   text: "Download failed!",
+    //   position: 'center',
+    //   icon: 'error',
+    //   showCancelButton: false,
+    //   customClass: {
+    //     confirmButton: 'btn bluebg-button',
+    //     cancelButton:  'btn new-cancelbtn',
+    //   },
 
-      heightAuto: false,
-      confirmButtonText: 'Ok'
-    })
+    //   heightAuto: false,
+    //   confirmButtonText: 'Ok'
+    // })
   }
   )
 }

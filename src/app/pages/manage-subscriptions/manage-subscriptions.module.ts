@@ -40,6 +40,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { OverviewComponent } from './overview/overview.component';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
 
   providers:[
-    BsModalRef
+    BsModalRef,
+    toastMessages
   ]
   
 })

@@ -49,7 +49,7 @@ export class BillingAddressComponent implements OnInit {
         "",
         Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)]),
       ],
-      country: ["India", Validators.compose([Validators.required])],
+      country: ["", Validators.compose([Validators.required])],
       city: [
         "",
         Validators.compose([Validators.required, Validators.maxLength(50)]),
