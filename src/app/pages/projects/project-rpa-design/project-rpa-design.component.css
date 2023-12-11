@@ -84,3 +84,7 @@ span.testtooltip:after {
 .tktlist-fields{
   float: right !important;
 }
+
+tr.pList.edit-mode {
+  height: 100px;
+}

@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
+import { Table } from "primeng/table";
 
 @Component({
   selector: "app-project-rpa-design",
@@ -15,9 +13,7 @@ import { toastMessages } from "src/app/shared/model/toast_messages";
   styleUrls: ["./project-rpa-design.component.css"],
 })
 export class ProjectRpaDesignComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild("paginator") paginator: MatPaginator;
-
+  @ViewChild("dt1",{static:true}) table:Table
   displayedColumns: string[] = [
     "stepNo",
     "steps",
@@ -25,7 +21,6 @@ export class ProjectRpaDesignComponent implements OnInit {
     "configuration",
     "Action",
   ];
-  dataSource: MatTableDataSource<any[]>;
   USER_DATA: any[] = [];
   public myDataArray: any;
   selectedId: any;
@@ -34,13 +29,23 @@ export class ProjectRpaDesignComponent implements OnInit {
   taskId: any;
   rpaDesignsLength: any;
   isAddEnable: boolean;
-
+  searchValue: string;
+  search_fields:any[]=[];
+  _selectedColumns: any[];
+  dataSource: any=[];
+  columns_list = [
+    { ColumnName: 'stepNo', DisplayName: 'S.No',filterType:"text",filterWidget:"normal",ShowFilter:false,showTooltip:true},
+    { ColumnName: 'steps', DisplayName: 'Steps',filterType:"text",filterWidget:"normal", ShowFilter:true,showTooltip:true},
+    { ColumnName: 'description', DisplayName: 'Description',filterType:"text",filterWidget:"dropdown",ShowFilter:true},
+    { ColumnName: 'configuration', DisplayName: 'Configuration',filterType:"text",filterWidget:"normal",ShowFilter:true},
+    { ColumnName: '', DisplayName: 'Actions' }
+  ];
+  isRowInEditMode: boolean = false;
   constructor(
     private rest_api: RestApiService,
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    // private messageService: MessageService,
     private toastService: ToasterService,
     private confirmationService: ConfirmationService,
     private toastMessages: toastMessages
@@ -52,9 +57,18 @@ export class ProjectRpaDesignComponent implements OnInit {
       this.programId = params.programId;
     });
   }
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
 
+  set selectedColumns(val: any[]) {
+    this._selectedColumns = this.columns_list.filter((col) =>
+      val.includes(col)
+    );
+  }
   ngOnInit(): void {
     this.getRPAdesignData();
+    this._selectedColumns = this.columns_list;
   }
 
   getRPAdesignData() {
@@ -65,13 +79,10 @@ export class ProjectRpaDesignComponent implements OnInit {
       this.isAddEnable = false;
       this.rpaDesignsLength = res_data.data.length;
       this.USER_DATA = res_data.data;
-      this.dataSource = new MatTableDataSource(this.USER_DATA);
+      this.dataSource = this.USER_DATA;
       this.spinner.hide();
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort=this.sort;
-      }, 2000);
     });
+    this.search_fields =["steps","description","configuration"]
   }
 
   addUser() {
@@ -82,44 +93,47 @@ export class ProjectRpaDesignComponent implements OnInit {
       id: 122,
       new: true,
     };
-    this.USER_DATA.splice(0, 0, newUser1);
-    this.dataSource = new MatTableDataSource(this.USER_DATA);
+    const insertIndex = this.findInsertIndex(newUser1);
+    this.USER_DATA.splice(insertIndex, 0, newUser1);
+    this.dataSource = [...this.USER_DATA];
+    // this.USER_DATA.splice(0, 0, newUser1);
+    // this.dataSource = this.USER_DATA
     this.selectedId = null;
+    this.isRowInEditMode = true;
     if (this.USER_DATA.length == this.rpaDesignsLength) {
       this.isAddEnable = false;
     } else {
       this.isAddEnable = true;
     }
-  }
+  }  
 
+  findInsertIndex(newUser: any): number {
+    return this.USER_DATA.findIndex((user) => user.steps > newUser.steps);
+  }
+  
   cancelUpdaterow() {
+    this.isRowInEditMode = false;
     this.selectedId = null;
   }
 
   cancelCreateNewrow(i) {
+    this.isRowInEditMode = false;
     this.USER_DATA.splice(i, 1);
-    this.dataSource = new MatTableDataSource(this.USER_DATA);
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-    }, 200);
-
+    this.dataSource = this.USER_DATA;
     if (this.USER_DATA.length == this.rpaDesignsLength) {
       this.isAddEnable = false;
     } else {
       this.isAddEnable = true;
     }
-
     // this.myDataArray = [...this.USER_DATA];
   }
 
   onEdit(item) {
+    this.isRowInEditMode = true;
     this.USER_DATA.forEach((ele, index) => {
       if (ele.new) {
         this.USER_DATA.splice(index, 1);
-        this.dataSource = new MatTableDataSource(this.USER_DATA);
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        }, 200);
+        this.dataSource = this.USER_DATA;
         if (this.USER_DATA.length == this.rpaDesignsLength) {
           this.isAddEnable = false;
         } else {
@@ -137,6 +151,7 @@ export class ProjectRpaDesignComponent implements OnInit {
   }
 
   saveConfiguration(element, i) {
+    this.isRowInEditMode = false;
     this.spinner.show();
     let req_body = {
       projectId: this.projectId,
@@ -145,10 +160,7 @@ export class ProjectRpaDesignComponent implements OnInit {
       steps: element.steps,
       description: element.description,
       configuration: element.configuration,
-      createdBy:
-        localStorage.getItem("firstName") +
-        " " +
-        localStorage.getItem("lastName"),
+      createdBy: localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       createdUserId: localStorage.getItem("ProfileuserId"),
     };
 
@@ -167,6 +179,7 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   updateConfiguration(element) {
     this.spinner.show();
+    this.isRowInEditMode = false;
     let req_body = {
       id: element.id,
       steps: element.steps,
@@ -220,4 +233,11 @@ export class ProjectRpaDesignComponent implements OnInit {
       reject: (type) => {}
     });
   }
+  
+  clearTableFilters(table: Table) {
+    this.searchValue=""
+    table.filterGlobal("","");
+    table.clear();
+  }
+
 }

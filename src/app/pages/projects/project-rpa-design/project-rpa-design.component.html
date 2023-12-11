@@ -1,117 +1,123 @@
 <div class="prj-rpadesign-main h-100">
     <div class="h-100" id="my_workspace">
-        <div class="module-heading title">
-            <div class="col-md-2 p-0">
-                <span class="module-header-title">
-                    <span class="module-back-button" (click)="backToProjects()">
-                        <i aria-hidden="true" class="fas fa-arrow-left"></i>
-                    </span>
-                    <span class="module-parent-title">Rpa Design</span>
-                </span>
+      <div class="module-heading title">
+        <div class="col-md-2 p-0">
+          <span class="module-header-title">
+            <span class="module-back-button" (click)="backToProjects()">
+              <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-parent-title">Rpa Design</span>
+          </span>
+        </div>
+        <div class="col-md-10 p-0">
+          <div class="tktlist-body-header">
+            <div class="tktlist-fields">
+              <button [disabled]="isAddEnable" pButton type="button" label="Add New" class="btn bluebg-button pull-right" (click)="addUser()" [class.edit-mode]="isRowInEditMode"></button>
             </div>
-            <div class="col-md-10 p-0">
-                <div class="tktlist-body-header">
-                    <div class="tktlist-fields">
-                        <button [disabled]="isAddEnable" class="btn bluebg-button pull-right" (click)="addUser()">
-                            <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
-                            Add New
+          </div>
+        </div>
+      </div>
+      <div class="prj-rpadesign-body">
+        <p-table #dt1 [value]="dataSource" [columns]="selectedColumns" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true"  [reorderableColumns]="true" [scrollable]="true">
+            <ng-template pTemplate="caption">
+                <div class="table-header">
+                    <div class="d-flex">                    
+                        <span class="p-input-icon-right gridsearch">
+                            <i class="pi pi-search"></i>
+                            <input type="text" pInputText placeholder="Search"  [(ngModel)]="searchValue" class="p-inputtext-lg" 
+                                (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                        </span>
+                        <button pButton label="Clear" class="p-button-outlined"  (click)="clearTableFilters(dt1)">
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="prj-rpadesign-body">
-            <div class="table_responsive graph_table">
-                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
-                    <ng-container matColumnDef="stepNo">
-                        <th mat-sort-header mat-header-cell *matHeaderCellDef class="sno" >S.No</th>
-                        <td mat-cell *matCellDef="let element;let i=index"  class="sno" >{{i+1}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="steps">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header  class="gsteps" >Steps</th>
-                        <td mat-cell *matCellDef="let element"  class="gsteps" >
-                            <span *ngIf="element.id != selectedId && !element.new">{{element.steps}}</span>
-                            <span *ngIf="element.id == selectedId || element.new">
-                                <input type="text" class="form-control" placeholder="Enter Steps" [(ngModel)]="element.steps" name="_steps" #_steps>
-                            </span>
-                        </td>
-                    </ng-container>
+            </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.ColumnName" pReorderableColumn pResizableColumn [style]="col.width">
+                  {{col.DisplayName}}
+                  <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'date'" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.ColumnName" display="menu"></p-columnFilter>
+                  <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'text'"
+                  [showAddButton]="false" [showOperator]="false" matchMode="contains" [showMatchModes]="false" [field]="col.ColumnName"
+                          display="menu" [showApplyButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
+                      </ng-template>
+                  </p-columnFilter>
+                  <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'dropdown'"
+                  [field]="col.ColumnName" matchMode="equals" [showMatchModes]="false"
+                      [showOperator]="false" [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown [ngModel]="value" [options]="col.dropdownList"
+                              (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
+                      </ng-template>
+                  </p-columnFilter>
+                  <p-sortIcon [field]="col.ColumnName" *ngIf="col.ShowFilter"></p-sortIcon>
+              </th>
+          </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-element let-i="rowIndex">
+            <tr class="pList" (dblclick)="onEdit(element)" [class.edit-mode]="isRowInEditMode  && element.id === selectedId">
+              <td class="sno">{{ i + 1 }}</td>
+              <td class="gsteps">
+                <span *ngIf="element.id != selectedId && !element.new">{{ element.steps }}</span>
+                <span *ngIf="element.id == selectedId || element.new">
+                  <input type="text" class="form-control" placeholder="Enter Steps" [(ngModel)]="element.steps" name="_steps">
+                </span>
+              </td>
+              <td class="gdescrip">
+                <span *ngIf="element.id != selectedId && !element.new">{{ element.description }}</span>
+                <span *ngIf="element.id == selectedId || element.new">
+                  <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.description" name="descr"
+                    placeholder="Enter Description"></textarea>
+                </span>
+              </td>
+              <td class="gconfig">
+                <span *ngIf="element.id != selectedId && !element.new" class="confi-div">{{ element.configuration }}</span>
+                <span *ngIf="element.id == selectedId || element.new">
+                  <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.configuration" name="config"
+                    placeholder="Enter Configuration"></textarea>
+                </span>
+              </td>
+              <td class="gactions">
+                <span *ngIf="!element.new">
+                    <span class="tsttooltipbtn" *ngIf="element.id != selectedId" (click)="onEdit(element)">
+                        <img src="../../../../assets/images-n/gridicons/edit-default.svg" class="testplus default-img" pTooltip="Edit" tooltipPosition="top">
+                        <img src="../../../../assets/images-n/gridicons/edit-hover.svg" class="testplus hover-img" pTooltip="Edit" tooltipPosition="top">
+                    </span>
+                    <span *ngIf="element.id != selectedId" (click)="deleteConfiguration(element)" class="tsttooltipbtn">
+                        <img src="../../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-img" alt="delete" pTooltip="Delete" tooltipPosition="top">
+                        <img src="../../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-img" alt="delete" pTooltip="Delete" tooltipPosition="top">
+                    </span>
+                </span>
 
-                    <ng-container matColumnDef="description">
-                        <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gdescrip" >Description</th>
-                        <td mat-cell *matCellDef="let element"  class="gdescrip" >
-                            <span *ngIf="element.id != selectedId && !element.new" >{{element.description}}</span>
-                            <span *ngIf="element.id == selectedId || element.new">
-                                <!-- <input type="text" class="form-control" [(ngModel)]="element.description" name="descr" #descr placeholder="Enter Description"> -->
-                                <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.description" name="descr" #descr  placeholder="Enter Description"></textarea>
-                            </span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="configuration">
-                        <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gconfig" >Configuration</th>
-                        <td mat-cell *matCellDef="let element"  class="gconfig" > 
-                            <span *ngIf="element.id != selectedId && !element.new" class="confi-div">{{element.configuration}}</span>
-                            <span *ngIf="element.id == selectedId || element.new">
-                                <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.configuration" name="config" #config  placeholder="Enter Configuration"></textarea>
-                            </span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="Action">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="gactions" >Actions</th>
-                        <td mat-cell *matCellDef="let element;let i = index" class="gactions">
-                            <span *ngIf="!element.new">
-                                <span class="tsttooltipbtn" *ngIf="element.id != selectedId" (click)="onEdit(element)">
-                                    <img src="../../../../assets/images-n/gridicons/edit-default.svg" class="testplus default-img">
-                                    <img src="../../../../assets/images-n/gridicons/edit-hover.svg" class="testplus hover-img">
-                                    <span class="testtooltip">Edit</span>
-                                </span>
-                                <span *ngIf="element.id != selectedId" (click)="deleteConfiguration(element)" class="tsttooltipbtn">
-                                    <img src="../../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-img" alt="delete">
-                                    <img src="../../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-img" alt="delete">
-                                    <span class="testtooltip">Delete</span>
-                                </span>
-                            </span>
+                <span *ngIf="element.id == selectedId">
+                        <span class="tsttooltipbtn" (click)="updateConfiguration(element)">
+                            <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" pTooltip="Update" tooltipPosition="top"/>
+                        </span>
+                        <span class="tsttooltipbtn"  (click)="cancelUpdaterow()">
+                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" pTooltip="Cancel" tooltipPosition="top"/>
+                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" pTooltip="Cancel" tooltipPosition="top"/>
+                        </span>
+                </span>
 
-                            <span *ngIf="element.id == selectedId">
-                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element)">
-                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
-                                        <span class="testtooltip">Update</span>
-                                    </span>
-                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow()">
-                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
-                                        <span class="testtooltip">Cancel</span>
-                                    </span>
-                            </span>
-
-                            <span *ngIf="element.new ">
-                                <span *ngIf="!element.id != element.steps && element.description && element.configuration" class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
-                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
-                                    <span class="testtooltip">Save</span>
-                                </span>
-                                <span class="tsttooltipbtn" (click)="cancelCreateNewrow(i)">
-                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
-                                    <span class="testtooltip">Cancel</span>
-                                </span>
-                            </span>
-
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                </table>
-            </div>
-            <div class="supportpaginationdiv">
-                <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
-                    [showFirstLastButtons]="true"></mat-paginator>
-            </div>
-        </div>
-
+                <span *ngIf="element.new ">
+                    <span *ngIf="!element.id != element.steps && element.description && element.configuration" class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
+                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" pTooltip="Save" tooltipPosition="top"/>
+                    </span>
+                    <span class="tsttooltipbtn" (click)="cancelCreateNewrow(i)">
+                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" pTooltip="Cancel" tooltipPosition="top"/>
+                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" pTooltip="Cancel" tooltipPosition="top"/>
+                    </span>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
-</div>
-
-<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
- [closable]="false">
-</p-confirmDialog>
+  </div>
+  
+  <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000"
+   [closable]="false">
+  </p-confirmDialog>
