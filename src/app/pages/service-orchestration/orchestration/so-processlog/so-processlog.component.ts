@@ -6,6 +6,8 @@ import moment from 'moment';
 import {columnList}  from '../../../../shared/model/table_columns'
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ClipboardService } from 'ngx-clipboard';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -47,9 +49,11 @@ export class SoProcesslogComponent implements OnInit {
   copyTimer = null;
   constructor( private rest:RestApiService, 
     private changeDetectorRef: ChangeDetectorRef,
-    private messageService:MessageService,
+    // private messageService:MessageService,
     private columns_list:columnList,
-    private clipboardService: ClipboardService
+    private clipboardService: ClipboardService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) { }
   ngOnInit() {
     this.getProcessRuns();
@@ -158,7 +162,8 @@ export class SoProcesslogComponent implements OnInit {
         
       },err=>{
         this.logsLoading=false;
-        this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to kill run"})
+        // this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to kill run"})
+        this.toastService.showError(err?.error?.message??"Unable to kill run");
         console.log(err);
       })
     }
@@ -229,11 +234,13 @@ export class SoProcesslogComponent implements OnInit {
     }
 
     validateErrorMessage(response:any){
-      return (response.errorMessage)?(this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})):false;    
+      // return (response.errorMessage)?(this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:response.errorMessage})):false;    
+      return (response.errorMessage)?(this.isDataEmpty=true,this.toastService.showError(response.errorMessage)):false;    
     }
 
     handleException=(err)=>{
-     return (this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to fetch data"}),this.logsLoading=false);
+    //  return (this.isDataEmpty=true,this.messageService.add({severity:'error',summary:'Error',detail:err?.error?.message??"Unable to fetch data"}),this.logsLoading=false);
+     return (this.isDataEmpty=true,this.toastService.showError(err?.error?.message??"Unable to fetch data"),this.logsLoading=false);
     }
     copyToClipboard(value, event) {
       if (this.copyTimer !== null) {

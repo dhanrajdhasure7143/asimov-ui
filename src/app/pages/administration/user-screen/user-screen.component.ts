@@ -3,7 +3,9 @@ import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-user-screen",
@@ -26,8 +28,9 @@ export class UserScreenComponent implements OnInit {
     private datatransfer: DataTransferService,
     private route: ActivatedRoute,
     private spinner: LoaderService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((res: any) => {
@@ -103,31 +106,19 @@ export class UserScreenComponent implements OnInit {
           .subscribe(
             (resp: any) => {
               if (resp.Code == 8011) {
-                this.messageService.add({
-                  severity: "error",
-                  summary: "Rejected",
-                  detail: resp.message + "!",
-                });
+                this.toastService.showError(resp.message + "!");
                 this.spinner.hide();
               } else {
-                this.messageService.add({
-                  severity: "success",
-                  summary: "Success",
-                  detail: resp.message + "!",
-                });
-                this.spinner.hide();
+                this.toastService.showSuccess(resp.message + "!",'response');
                 this.getUserScreenData();
+                this.spinner.hide();
                 setTimeout(() => {
                   window.location.reload();
                 }, 1000);
               }
             },
             (err: any) => {
-              this.messageService.add({
-                severity: "error",
-                summary: "rejected",
-                detail: "Unable to delete the record.",
-              });
+              this.toastService.showError(this.toastMessages.deleteError);
             }
           );
       },
@@ -139,19 +130,11 @@ export class UserScreenComponent implements OnInit {
 
   caputreFormValues(values: any) {
     let val: any;
+    let tenantName = values.tenant_name
     if (this.updateDetails == undefined) {
       this.spinner.show();
-      this.rest
-        .postUserscreenData(
-          this.selectedScreen.Table_Name,
-          (val = { objects: [values] })
-        )
-        .subscribe((data) => {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success",
-            detail: "Record saved successfully!",
-          });
+      this.rest.postUserscreenData(this.selectedScreen.Table_Name, (val = { objects: [values] })).subscribe((data) => {      
+          this.toastService.showSuccess(tenantName,'save');
             this.getUserScreenData();
             setTimeout(() => {
               window.location.reload();
@@ -172,19 +155,11 @@ export class UserScreenComponent implements OnInit {
         )
         .subscribe((response: any) => {
           if (response.Code == 8012) {
-            this.messageService.add({
-              severity: "error",
-              summary: "rejected",
-              detail: response.message +"!",
-            });
+            this.toastService.showError(response.message+"!");
   
             this.getUserScreenData();
           } else {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: response.message +"!",
-            });         
+            this.toastService.showSuccess(response.message+"!",'response');
               this.getUserScreenData();
           }
           this.displayFlag = DisplayEnum.DISPLAYTABLE;

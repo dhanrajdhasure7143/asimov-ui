@@ -158,21 +158,6 @@ export class ProjectProcessInfoComponent implements OnInit {
     }
   }
 
-  onlyNumbersAllowed(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","."]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   }
-  }
-
-  onlyNumbers(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   }
-  }
 
   getFrequency(){
     this.rest.getProcessFrequencies().subscribe((res : any) => {

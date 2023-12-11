@@ -11,9 +11,11 @@ import { RestApiService } from '../../services/rest-api.service';
 import { Location} from '@angular/common'
 import { GlobalScript } from 'src/app/shared/global-script';
 import { Subscription } from 'rxjs';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { interval, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -171,7 +173,8 @@ redirectCopilot:boolean=false;
     private route:ActivatedRoute,
     private renderer: Renderer2,
     private location:Location,
-    private messageService: MessageService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages,
     private confirmationService: ConfirmationService,
     ) {  }
 
@@ -296,11 +299,7 @@ redirectCopilot:boolean=false;
               defaultFocus: 'none',
               acceptIcon: 'null',
               accept: () => {
-                this.messageService.add({
-                  severity: "info",
-                  summary: "Info",
-                  detail: "Please wait, redirecting to the workspace."
-                })
+                this.toastService.showInfo(this.toastMessages.redirectInfo);
                 setTimeout(() => {
                   self.router.navigate(['pages/processIntelligence/upload'])
                 }, 1500)
@@ -323,11 +322,7 @@ redirectCopilot:boolean=false;
             defaultFocus: 'none',
             acceptIcon: 'null',
             accept: () => {
-              this.messageService.add({
-                severity: "info",
-                summary: "Info",
-                detail: "Please wait, redirecting to the workspace."
-              })
+              this.toastService.showInfo(this.toastMessages.redirectInfo);
               setTimeout(() => {
                 self.router.navigate(['pages/processIntelligence/upload'])
               }, 1500)
@@ -427,11 +422,7 @@ redirectCopilot:boolean=false;
                 defaultFocus: 'none',
                 acceptIcon: 'null',
                 accept: () => {
-                  this.messageService.add({
-                    severity: "info",
-                    summary: "Info",
-                    detail: "Please wait, redirecting to the workspace."
-                  })
+                  this.toastService.showInfo(this.toastMessages.redirectInfo);
                   setTimeout(() => {
                     self.router.navigate(['pages/processIntelligence/upload'])
                   }, 1500)
@@ -892,18 +883,10 @@ redirectCopilot:boolean=false;
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, categoryId:categoryId, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Oops! Failed to generate BPM notation. Please try again later."
-            });
+            this.toastService.showError(this.toastMessages.BpmGenerateFail);
           }
         }, (err =>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
+            this.toastService.showError(this.toastMessages.internalServrErr);
             this.spinner.hide();
         }))
 
@@ -919,19 +902,11 @@ redirectCopilot:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
-              });
+              this.toastService.showError(this.toastMessages.BpmGenerateFail);
             }
         },
         (err =>{
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
+          this.toastService.showError(this.toastMessages.internalServrErr);
           this.spinner.hide();
         }))
 
@@ -947,20 +922,12 @@ redirectCopilot:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
-              });
+              this.toastService.showError(this.toastMessages.BpmGenerateFail);
             }
         },
         (err =>{
           this.spinner.hide();
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
+          this.toastService.showError(this.toastMessages.internalServrErr);
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -976,19 +943,11 @@ redirectCopilot:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname,ntype:"bpmn"}})
             } else{
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: "Oops! Failed to generate BPM notation. Please try again later."
-              });
+              this.toastService.showError(this.toastMessages.BpmGenerateFail);
             }
         },(err =>{
           this.spinner.hide();
-          this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Oops! Internal server error. Please try again later."
-          });
+          this.toastService.showError(this.toastMessages.internalServrErr);
         }))
     }
   } 
@@ -1771,11 +1730,7 @@ addWorkingHours(){
         defaultFocus: 'none',
         acceptIcon: 'null',
         accept: () => {
-          this.messageService.add({
-            severity: "info",
-            summary: "Info",
-            detail: "Please wait, redirecting to the workspace.",
-          })
+          this.toastService.showInfo(this.toastMessages.redirectInfo);
           setTimeout(() => {
             _self.router.navigate(['pages/processIntelligence/upload'])
           }, 1500);
@@ -1852,12 +1807,13 @@ addWorkingHours(){
   }
 
   redirectToWorkspace(){
-    let timerInterval
-    this.messageService.add({
-      severity: "info",
-      summary: "Info",
-      detail: "Auto-close alert! I will close in <b></b> milliseconds."
-    })
+    // let timerInterval
+    // this.messageService.add({
+    //   severity: "info",
+    //   summary: "Info",
+    //   detail: "Auto-close alert! I will close in <b></b> milliseconds."
+    // })
+    this.toastService.showInfo(this.toastMessages.autoClose);
     // Swal.fire({
     //   title: 'Auto close alert!',
     //   html: 'I will close in <b></b> milliseconds.',
@@ -1979,11 +1935,7 @@ addWorkingHours(){
         defaultFocus: 'none',
         acceptIcon: 'null',
         accept: () => {
-          this.messageService.add({
-            severity: "info",
-            summary: "Info",
-            detail: "Please wait, redirecting to the workspace.",
-          })
+          this.toastService.showInfo(this.toastMessages.redirectInfo);
           setTimeout(() => {
             _self.router.navigate(['pages/processIntelligence/upload'])
           }, 1500);

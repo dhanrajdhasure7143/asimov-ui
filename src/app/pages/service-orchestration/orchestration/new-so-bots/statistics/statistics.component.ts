@@ -7,7 +7,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 // import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -29,7 +30,8 @@ export class StatisticsComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private rest:RestApiService,
     private dataTransfer:DataTransferService,
-    private messageService:MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) { }
 
     public allbots:any;
@@ -115,7 +117,7 @@ this.getEnvironments();
     }
   
       else{
-        this.messageService.add({severity:'error',summary:'Error',detail:item.errorMessage})
+        this.toastService.showError(item.errorMessage);
       }
       
       
@@ -125,7 +127,7 @@ this.getEnvironments();
     },
     err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:"Unable to get the bot's list."})
+      this.toastService.showError(this.toastMessages.getBotListErr);
     })
   }
 

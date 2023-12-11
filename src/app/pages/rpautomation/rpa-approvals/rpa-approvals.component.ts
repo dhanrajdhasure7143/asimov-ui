@@ -3,7 +3,8 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { MessageService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 @Component({
   selector: 'app-rpa-approvals',
   templateUrl: './rpa-approvals.component.html',
@@ -27,7 +28,8 @@ export class RpaApprovalsComponent implements OnInit {
     private columnList: columnList,
     private dt:DataTransferService,
     private spinner: LoaderService,
-    private messageService :MessageService
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class RpaApprovalsComponent implements OnInit {
       }
     },err=>{
       this.spinner.hide();
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to get the approvals list.'})
+      this.toastService.showError(this.toastMessages.apprvrListErr);
     })
   }
 
@@ -79,12 +81,12 @@ export class RpaApprovalsComponent implements OnInit {
     
     if(data.status==status)
     {
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'This is already'+status})
+      this.toastService.showWarn('This is already'+status);
       return;
     }
     if(data.status=="Completed")
     {
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Status updation is not allowed for completed approvals.'})
+      this.toastService.showWarn(this.toastMessages.cmpltedApprvrErr);
       return;
     }
     this.statusType=status;
@@ -114,13 +116,13 @@ export class RpaApprovalsComponent implements OnInit {
     });
     this.rest.updateApprovalList(data).subscribe((response:any)=>{
       this.isDialogShow=false;
-      this.messageService.add({severity:'success',summary:'Success',detail:response.status})
+      this.toastService.showSuccess(response.status,'response'); 
       this.selectedRows=[];
       this.comments="";
       this.getApprovalList();
     }, err=>{
       console.log(err);
-      this.messageService.add({severity:'error',summary:'Error',detail:'Unable to update approval'})
+      this.toastService.showError(this.toastMessages.apprvlUpdateErr);
       this.spinner.hide();
     })
   }
@@ -134,11 +136,13 @@ export class RpaApprovalsComponent implements OnInit {
     
     if(this.selectedRows.filter((item:any)=>item.status==statusType).length>0)
     {
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'In selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType +'.'})
+      // this.messageService.add({severity:'warn',summary:'Warning',detail:'In selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType +'.'})
+      this.toastService.showWarn('In selected approvals '+this.selectedRows.filter((item:any)=>item.status==statusType).length+' records are already '+statusType +'!');
       return;
     }
     if(this.selectedRows.filter((item:any)=>item.status=='Completed').length>0){
-      this.messageService.add({severity:'warn',summary:'Warning',detail:'Status will not update for completed approvals.'})
+      // this.messageService.add({severity:'warn',summary:'Warning',detail:'Status will not update for completed approvals.'})
+      this.toastService.showWarn(this.toastMessages.statusUpdateErr_apprvls);
     }
     else
     {

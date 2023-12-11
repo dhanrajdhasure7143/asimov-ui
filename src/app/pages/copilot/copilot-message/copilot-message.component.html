@@ -42,7 +42,6 @@
                                             <button class="btn btn-primary" disabled="true">{{b?.label}}</button>
                                         </span>
                                 </span>
-                                &nbsp;
                                 <span *ngIf="b?.type=='processLogsUpload'" >
                                     <button (click)="processProcessLog(b)" [disabled]="b?.disabled" class="btn btn-primary text-white">{{b?.label}}</button>
                                 </span>

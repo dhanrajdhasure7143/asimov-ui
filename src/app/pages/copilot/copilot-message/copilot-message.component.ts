@@ -179,7 +179,7 @@ scrollHandler() {
 
   scrollToBottom() {
     const objDiv = this.subChat.nativeElement;
-    if(objDiv.scrollTop>(objDiv.scrollHeight-800))
+    if(objDiv.scrollTop>(objDiv.scrollHeight-(objDiv.clientHeight*2)))
       objDiv.scrollTop = objDiv.scrollHeight;
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ConfirmationService, MessageService, ConfirmEventType } from "primeng/api";
+import { ConfirmationService, ConfirmEventType } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import * as JSZip from "jszip";
@@ -10,13 +10,14 @@ import moment from 'moment';
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { asBlob } from "html-docx-js-typescript";
 import { saveAs } from "file-saver";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 declare const CKEDITOR: any;
 
 @Component({
   selector: "app-projects-document",
   templateUrl: "./projects-document.component.html",
   styleUrls: ["./projects-document.component.css"],
-  providers: [MessageService]
 })
 export class ProjectsDocumentComponent implements OnInit {
   files: any[]=[];
@@ -95,9 +96,10 @@ export class ProjectsDocumentComponent implements OnInit {
     private route : ActivatedRoute,
     private router : Router,
     private loader: LoaderService,
-    private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private dt: DataTransferService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
     ) {
 
     this.route.queryParams.subscribe((data) => {
@@ -526,7 +528,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.createTreeFolderOverlay=false;
     // this.getTheListOfFolders();
     let res_data:any= res
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Uploaded successfully!'});
+    this.toastService.showSuccess(this.toastMessages.fileUpldScss,'response'); 
     // let obj = res_data.data[0]
     res_data.data.forEach(item=>{
       let obj = item
@@ -544,7 +546,7 @@ export class ProjectsDocumentComponent implements OnInit {
     // this.selectedFile.parent.children.push(obj)
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to upload!'});
+      this.toastService.showError(this.toastMessages.uploadError);
     })
   }
 
@@ -594,7 +596,7 @@ export class ProjectsDocumentComponent implements OnInit {
     let req_body:any;
     if(type == 'folderView'){
       if(this.checkDuplicateFolder(this.entered_folder_name)){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+        this.toastService.showError(this.toastMessages.fldrNameExists);
         return;
       }
       req_body = this.selectedItem_new[0]
@@ -605,7 +607,7 @@ export class ProjectsDocumentComponent implements OnInit {
     }
     
     this.rest_api.updateFolderNameByProject(req_body).subscribe(res=>{
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Updated successfully!'});
+      this.toastService.showSuccess(this.toastMessages.fldrNameUpdate,'response'); 
       this.renameDialog = false;
       if(type == 'folderView'){
         this.selectedItem_new[0].label = this.entered_folder_name;
@@ -615,7 +617,7 @@ export class ProjectsDocumentComponent implements OnInit {
         this.selectedItem.node.type ='default';
       }
     },err=>{
-      this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to update!"});
+      this.toastService.showError(this.toastMessages.updateError);
     })
   }
 
@@ -635,10 +637,11 @@ export class ProjectsDocumentComponent implements OnInit {
      
       accept: () => {
         this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+          // this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+          this.toastService.showSuccess(this.toastMessages.deleteScss,'response'); 
           this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         },err=>{
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+          this.toastService.showError(this.toastMessages.deleteError);
         })
       },
       reject: (type) => {
@@ -676,7 +679,7 @@ export class ProjectsDocumentComponent implements OnInit {
         // }
       }
       if(this.checkDuplicateFolder(folderName)){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+        this.toastService.showError(this.toastMessages.fldrNameExists);
         return;
       }
       let req_body = [{
@@ -710,14 +713,14 @@ export class ProjectsDocumentComponent implements OnInit {
         this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
         this.createFolderPopUP=false;
         this.createTreeFolderOverlay =false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder uploaded successfully!'});
+        this.toastService.showSuccess(this.toastMessages.fileUpldScss,'response'); 
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+        this.toastService.showError(this.toastMessages.uploadError);
       })
       },err=>{
         this.loader.hide();
-        this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+        this.toastService.showError(this.toastMessages.uploadError);
       })
     }
   }
@@ -751,7 +754,7 @@ export class ProjectsDocumentComponent implements OnInit {
       folderName = this.selected_folder_rename.label.split('.')[0]
       }
       if(req_body.length == 0){
-        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder!'});
+        this.toastService.showInfo(this.toastMessages.noDocumentInfo);
         return
       }
       this.loader.show();
@@ -1006,7 +1009,7 @@ export class ProjectsDocumentComponent implements OnInit {
   addParentFolder() {
      let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.folder_name.toLowerCase() && e.dataType == "folder");
      if(existValue.length > 0) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+      this.toastService.showError(this.toastMessages.fldrNameExists);
       return;
      }
     let req_body = [{
@@ -1025,7 +1028,7 @@ export class ProjectsDocumentComponent implements OnInit {
   addSubfolder() {
     let existValue = this.folder_files.filter(e=> e.label.toLowerCase()=== this.entered_folder_name.toLowerCase() && e.dataType == "folder") 
      if(existValue.length > 0) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Folder name already exists!" });
+      this.toastService.showError(this.toastMessages.fldrNameExists);
       return;
      }
     if (this.entered_folder_name) {
@@ -1051,7 +1054,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.isDialogBox = false;
       this.selectedFolder_new={};
       this.folder_name='';
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'Folder created successfully!'});
+      this.toastService.showSuccess(this.toastMessages.fldrCreateScss,'response'); 
       let obj = res_data.data[0];
       obj['icon'] = "folder.svg"
       obj["children"]= []
@@ -1062,7 +1065,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.subFolderDialog = false;
     },err=>{
       this.loader.hide();
-      this.messageService.add({severity:'error', summary: 'Error', detail: "Folder creation failed!"});
+      this.toastService.showError(this.toastMessages.createError);
     })
   }
 
@@ -1081,12 +1084,14 @@ export class ProjectsDocumentComponent implements OnInit {
         accept: () => {
           this.loader.show();
           this.rest_api.deleteSelectedFileFolder(req_body).subscribe(res=>{
-            this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+            // this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted successfully!'});
+            this.toastService.showSuccess(this.toastMessages.deleteScss,'response'); 
+
             this.loader.hide();
             this.selectedItem_new = [];
             this.breadcrumbItems.length > 0 ? this.getTheListOfFolders1(): this.getTheListOfFolders();
           },err=>{
-            this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to delete!"});
+          this.toastService.showError(this.toastMessages.deleteError);
             this.loader.hide();
           })
         },
@@ -1142,7 +1147,7 @@ export class ProjectsDocumentComponent implements OnInit {
       if (file) {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
         if (fileExtension === 'exe') {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: "This file not Allowed!"});
+          this.toastService.showError(this.toastMessages.fileNotAllow);
           e.target.value = ''; // Clear the file input
           return;
         }
@@ -1162,11 +1167,12 @@ export class ProjectsDocumentComponent implements OnInit {
         }
 
         if(isFileExist == 1){
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: existingFiles[0].name +" already exists!"});
+          // this.messageService.add({ severity: 'error', summary: 'Error', detail: existingFiles[0].name +" already exists!"});
+          this.toastService.showError(existingFiles[0].name +" already exists!");
         }
 
         if(isFileExist > 1){
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: "Some files already exists!"});
+          this.toastService.showError(this.toastMessages.someFileExists);
         };
        if(nonExistingFiles.length == 0) return;
 
@@ -1188,7 +1194,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.rest_api.uploadfilesByProject(fileData).subscribe(res=>{
         this.createFolderPopUP=false;
         let res_data:any = res;
-      this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
+        this.toastService.showSuccess(this.toastMessages.fileUpldScss,'response'); 
       res_data.data.forEach(item=>{
         let obj = item
         if(obj.dataType == 'png' || obj.dataType == 'jpg' || obj.dataType == 'svg' || obj.dataType == 'gif'){
@@ -1410,7 +1416,7 @@ async getFileDataById(fileId) {
       }
 
       if(req_body.length == 0){
-        this.messageService.add({severity:'info', summary: 'Info', detail: 'No documents in selected folder!'});
+        this.toastService.showInfo(this.toastMessages.noDocumentInfo);
         return
       }
       this.loader.show();
@@ -1489,7 +1495,7 @@ async getFileDataById(fileId) {
     uploadCreatedDocument(){
     let existValue = this.folder_files.filter(e=> (e.label.toLowerCase() == (this.enterDocumentName+'.docx').toLowerCase()) && (e.dataType != "folder"));
     if(existValue.length > 0){
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "File name already exists!" });
+      this.toastService.showError(this.toastMessages.FileNameExists);
       return;
     };
 
@@ -1522,10 +1528,10 @@ async getFileDataById(fileId) {
         if(!this.selectedAction){
           this.getTheListOfFolders1()
         }
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'File uploaded successfully!'});
+          this.toastService.showSuccess(this.toastMessages.fileUpldScss,'response'); 
       },err=>{
         this.loader.hide();
-          this.messageService.add({severity:'error', summary: 'Error', detail: "Failed to upload!"});
+          this.toastService.showError(this.toastMessages.uploadError);
       });
     });
   }

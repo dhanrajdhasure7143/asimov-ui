@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
-import { MessageService, ConfirmationService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
 import { Table } from "primeng/table";

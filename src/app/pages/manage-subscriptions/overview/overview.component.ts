@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
+import { ToasterService } from "src/app/shared/service/toaster.service";
 
 @Component({
   selector: "app-overview",
@@ -28,7 +29,7 @@ export class OverviewComponent implements OnInit {
     private spinner: LoaderService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
+    private toastService: ToasterService,
     private dt:DataTransferService
   ) {}
 
@@ -118,11 +119,7 @@ export class OverviewComponent implements OnInit {
         this.api.cancelSubscription(this.result[0]).subscribe((res) => {
           this.spinner.hide();
           if (res == null) {
-            this.messageService.add({
-              severity: "success",
-              summary: "Success",
-              detail: "Subscription Cancelled Successfully !",
-            });
+            this.toastService.showSuccess("Subscription Cancelled Successfully!",'response');
           }
         });
       },

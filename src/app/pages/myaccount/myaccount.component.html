@@ -75,7 +75,7 @@
                 </div>
                 <div *ngIf="!isRefresh && !show" class="form-group col-md-6 pl-0 Admin-countrylist">
                     <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                    <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                    <input type="text" appOnlyNumbers  (countryChange)="OnFlagChange($event)"
                         id="phoneNumber" name="phoneumber" placeholder="Enter Phone number"
                         class="form-control data phonenumber" ng2TelInput
                         [ng2TelInputOptions]="{initialCountry: phnCountryCode}" #phoneumber="ngModel"
@@ -90,7 +90,7 @@
                 </div>
                 <div *ngIf="isRefresh" class="form-group col-md-6 pl-0 Admin-countrylist">
                     <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                    <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                    <input type="text" appOnlyNumbers  (countryChange)="OnFlagChange($event)"
                         id="phoneNumber" name="phoneumber" placeholder="Enter Phone number"
                         class="form-control data phonenumber" ng2TelInput
                         [ng2TelInputOptions]="{initialCountry: phnCountryCode}" #phoneumber="ngModel"
@@ -110,5 +110,4 @@
                 [disabled]="!(updateUser.valid && (updateUser.touched ||  updateUser.dirty)) || errorMessage">Update</button>
         </div>
 </div>
-<p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="false" ></p-confirmDialog>
