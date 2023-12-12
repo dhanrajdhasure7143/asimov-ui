@@ -38,6 +38,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
   exports:[
     FlowchartComponent
   ],
-  providers:[PiHints, 
+  providers:[PiHints, toastMessages,
     {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl
