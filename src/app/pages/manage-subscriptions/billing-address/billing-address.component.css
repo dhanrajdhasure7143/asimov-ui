@@ -2,3 +2,7 @@
     height: calc(100vh - 245px);
     overflow: auto;
 }
+.maindivfoprm.billingformdiv {
+    width: 75% !important;
+    margin: 15px auto 0px auto;
+  }

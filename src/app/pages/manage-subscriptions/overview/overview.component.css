@@ -23,3 +23,16 @@ h4 {
     border: 1px solid #d0d0d0;
     border-radius: 4px;
 }
+
+button:disabled,
+.btn.bluebg-button:disabled {
+  background: transparent !important;
+  color: #7D7D7D !important;
+  opacity: 1 !important;
+}
+
+.cancel-subscrip[disabled] .link {
+    cursor: not-allowed;
+    background-color: transparent !important;
+    color: #999 !important;
+  }

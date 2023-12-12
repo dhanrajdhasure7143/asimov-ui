@@ -61,7 +61,7 @@
             </div>
             <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
-                <input class="pt-3" pInputText type="text" [style]="{'width':'100%'}" formControlName="postalcode"
+                <input pInputText type="text" maxlength="10" [style]="{'width':'100%'}" formControlName="postalcode"
                     placeholder="Enter Postal Code">
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Postal Code Required 
