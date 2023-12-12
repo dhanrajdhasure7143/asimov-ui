@@ -3,6 +3,7 @@ import { CopilotService } from '../../services/copilot.service';
 import { Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
+import { ConfirmationService, MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-copilot-history',
@@ -14,7 +15,8 @@ export class CopilotHistoryComponent implements OnInit {
   constructor(
     private rest:CopilotService,
     private router:Router,
-    private tostService:ToasterService
+    private toastService:ToasterService,
+    private confirmationService: ConfirmationService,
     ) { }
   conversationCheck:boolean=true;
   conversationPreviewChat:any=[];
@@ -24,6 +26,7 @@ export class CopilotHistoryComponent implements OnInit {
   user_firstletter="DP";
   bpmnModeler:any;
   isDialogVisible:boolean=false;
+  items: MenuItem[];
   @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
   ngOnInit(): void {
     this.loadBpmnContainer();
@@ -38,7 +41,7 @@ export class CopilotHistoryComponent implements OnInit {
     conversationObservable?.subscribe((response:any)=>{
         this.messagesResponse=response;
     },err=>{
-        this.tostService.showError("Unable to get conversations");
+        this.toastService.showError("Unable to get conversations");
         console.log(err)
     });
  
@@ -77,7 +80,7 @@ export class CopilotHistoryComponent implements OnInit {
             return item;
         });
     },err=>{
-        this.tostService.showError("Unable to get conversation chat")
+        this.toastService.showError("Unable to get conversation chat")
         console.log(err);
     })
   }
@@ -114,4 +117,45 @@ export class CopilotHistoryComponent implements OnInit {
     let canvas = this.bpmnModeler.get("canvas");
     canvas.zoom("fit-viewport");
   }
+
+  deleteChat(conversationId: any){
+        let data :any = {
+          "conversationIds": [  
+            conversationId
+          ]
+        }
+        this.confirmationService.confirm({
+          message: "Do you want to delete this conversation? This can't be undo.",
+          header: "Are you sure?",
+          acceptLabel: "Yes",
+          rejectLabel: "No",
+          rejectButtonStyleClass: 'btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
+          accept: () => {
+            this.rest.deleteConversation(data).subscribe(() => {
+              this.toastService.showSuccess('Conversation deleted successfully.',"response");
+              this.getConversations(this.conversationCheck ? "USER" : "TEAM");
+              this.conversationPreviewChat = [];
+              this.bpmnModeler.clear();
+            },
+            (err) => {
+              this.toastService.showError('Unable to delete conversation.');
+              console.error("consoleError",err);
+            }
+          );
+          },
+          reject: (type) => {}
+        })
+      }
+  
+
+  openContextMenu(event: Event,conversationId: any) {
+    this.items= [
+      {label: 'Delete', command: () => this.deleteChat(conversationId)}
+    ];
+  }
+
 }

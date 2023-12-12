@@ -92,3 +92,8 @@ margin-left:10%;}
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
 }
+
+.delete_chat {
+    min-width: auto;
+    float: right !important;
+}

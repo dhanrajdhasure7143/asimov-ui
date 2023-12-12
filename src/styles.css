@@ -4033,3 +4033,13 @@ padding: 0px 30px;}
 .new-box.copilot-pi-flowchart div#exportSVGtoPDF  svg#render:first-child {
   display: none;
 }
+.chatpopmenu .p-menu-overlay {
+  position: absolute;
+  right: 0px !important;
+  top: 30px !important;
+  left: unset !important;
+  width: max-content;
+}
+.chatpopmenu.chatactmenu .p-menu-overlay {
+  top: 20px !important;
+}
