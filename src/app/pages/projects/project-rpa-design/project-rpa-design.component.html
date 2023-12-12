@@ -12,13 +12,13 @@
         <div class="col-md-10 p-0">
           <div class="tktlist-body-header">
             <div class="tktlist-fields">
-              <button [disabled]="isAddEnable" pButton type="button" label="Add New" class="btn bluebg-button pull-right" (click)="addUser()" [class.edit-mode]="isRowInEditMode"></button>
+              <button [disabled]="isAddEnable" pButton type="button" label="Add New" class="btn bluebg-button pull-right" (click)="addUser()"></button>
             </div>
           </div>
         </div>
       </div>
       <div class="prj-rpadesign-body">
-        <p-table #dt1 [value]="dataSource" [columns]="selectedColumns" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true"  [reorderableColumns]="true" [scrollable]="true">
+        <p-table #dt1 [value]="dataSource" [columns]="selectedColumns" [globalFilterFields]="search_fields"  [resizableColumns]="true"  [reorderableColumns]="true">
             <ng-template pTemplate="caption">
                 <div class="table-header">
                     <div class="d-flex">                    
@@ -33,7 +33,7 @@
                 </div>
             </ng-template>
           <ng-template pTemplate="header" let-columns>
-            <tr>
+            <tr class="sticky-table-header">
               <th *ngFor="let col of columns" [pSortableColumn]="col.ColumnName" pReorderableColumn pResizableColumn [style]="col.width">
                   {{col.DisplayName}}
                   <p-columnFilter *ngIf="col.ShowFilter &&col.filterWidget == 'normal'&& col.filterType == 'date'" [showAddButton]="false" [showOperator]="false" [showMatchModes]="false" type="{{col.filterType}}" [field]="col.ColumnName" display="menu"></p-columnFilter>
@@ -56,8 +56,8 @@
               </th>
           </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-element let-i="rowIndex">
-            <tr class="pList" (dblclick)="onEdit(element)" [class.edit-mode]="isRowInEditMode  && element.id === selectedId">
+          <ng-template class="table-body-scrollable" pTemplate="body" let-element let-i="rowIndex">
+            <tr class="pList" (dblclick)="onEdit(element)">
               <td class="sno">{{ i + 1 }}</td>
               <td class="gsteps">
                 <span *ngIf="element.id != selectedId && !element.new">{{ element.steps }}</span>

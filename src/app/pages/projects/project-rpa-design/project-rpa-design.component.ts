@@ -40,7 +40,6 @@ export class ProjectRpaDesignComponent implements OnInit {
     { ColumnName: 'configuration', DisplayName: 'Configuration',filterType:"text",filterWidget:"normal",ShowFilter:true},
     { ColumnName: '', DisplayName: 'Actions' }
   ];
-  isRowInEditMode: boolean = false;
   constructor(
     private rest_api: RestApiService,
     private router: Router,
@@ -99,7 +98,6 @@ export class ProjectRpaDesignComponent implements OnInit {
     // this.USER_DATA.splice(0, 0, newUser1);
     // this.dataSource = this.USER_DATA
     this.selectedId = null;
-    this.isRowInEditMode = true;
     if (this.USER_DATA.length == this.rpaDesignsLength) {
       this.isAddEnable = false;
     } else {
@@ -112,12 +110,10 @@ export class ProjectRpaDesignComponent implements OnInit {
   }
   
   cancelUpdaterow() {
-    this.isRowInEditMode = false;
     this.selectedId = null;
   }
 
   cancelCreateNewrow(i) {
-    this.isRowInEditMode = false;
     this.USER_DATA.splice(i, 1);
     this.dataSource = this.USER_DATA;
     if (this.USER_DATA.length == this.rpaDesignsLength) {
@@ -129,7 +125,6 @@ export class ProjectRpaDesignComponent implements OnInit {
   }
 
   onEdit(item) {
-    this.isRowInEditMode = true;
     this.USER_DATA.forEach((ele, index) => {
       if (ele.new) {
         this.USER_DATA.splice(index, 1);
@@ -151,7 +146,6 @@ export class ProjectRpaDesignComponent implements OnInit {
   }
 
   saveConfiguration(element, i) {
-    this.isRowInEditMode = false;
     this.spinner.show();
     let req_body = {
       projectId: this.projectId,
@@ -179,7 +173,6 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   updateConfiguration(element) {
     this.spinner.show();
-    this.isRowInEditMode = false;
     let req_body = {
       id: element.id,
       steps: element.steps,
