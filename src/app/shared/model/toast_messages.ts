@@ -117,5 +117,15 @@ export class toastMessages{
   public apprvlUpdateErr = "Unable to update approval!";
   public statusUpdateErr_apprvls = "Status will not update for completed approvals!";
   public chatDelete = "Conversation deleted successfully!";
+  public cardDelete = "Card deleted successfully!";
+  public defualtCard = "Default card is set successfully!";
+  public addCard = "Card added successfully!";
+  public validCardErr = "Please enter valid card details!";
+  public cardExists = "Card already exists!";
+  public addCardErr = "Failed to add card!";
+  public cancelSubscription = "Subscription cancelled successfully!";
+  public cancelErr = "Failed to cancel subscription";
+  public downloadErr = "Failed to download!";
+  
   
 }
