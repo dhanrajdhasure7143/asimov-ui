@@ -4043,3 +4043,10 @@ padding: 0px 30px;}
 .chatpopmenu.chatactmenu .p-menu-overlay {
   top: 20px !important;
 }
+.chatpopmenu.chatactmenu .p-menu .p-menuitem-link {
+  padding: 0.4rem !important;
+  color: #495057 !important;
+  border-radius: 0 !important;
+  transition: box-shadow 0.2s;
+  user-select: none;
+}

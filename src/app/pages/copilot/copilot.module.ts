@@ -6,7 +6,6 @@ import { CopilotHomeComponent } from './copilot-home/copilot-home.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { CopilotChatComponent } from './copilot-chat/copilot-chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoaderService } from 'src/app/services/loader/loader.service';
 import { CopilotMessageComponent } from './copilot-message/copilot-message.component';
 import { CopilotMessageButtonComponent } from './actions/copilot-message-button/copilot-message-button.component';
 import { CopilotMessageFormComponent } from './actions/copilot-message-form/copilot-message-form.component';
@@ -17,7 +16,6 @@ import { RpautomationModule } from '../rpautomation/rpautomation.module';
 import { ProcessIntelligenceModule } from '../process-intelligence/process-intelligence.module';
 import { CopilotHistoryComponent } from './copilot-history/copilot-history.component';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
-//import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @NgModule({
@@ -44,8 +42,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
     RpautomationModule,
     ProcessIntelligenceModule
     
-    //LoaderService
   ],
-  providers:[LoaderService,ToasterService]
+  providers:[ToasterService]
 })
 export class CopilotModule { }

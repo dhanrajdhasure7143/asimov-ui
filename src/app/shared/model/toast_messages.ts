@@ -115,6 +115,7 @@ export class toastMessages{
   public apprvrListErr = "Unable to get the approvals list!";
   public cmpltedApprvrErr = "Status updation is not allowed for completed approvals!";
   public apprvlUpdateErr = "Unable to update approval!";
-  public statusUpdateErr_apprvls = "Status will not update for completed approvals.";
+  public statusUpdateErr_apprvls = "Status will not update for completed approvals!";
+  public chatDelete = "Conversation deleted successfully!";
   
 }

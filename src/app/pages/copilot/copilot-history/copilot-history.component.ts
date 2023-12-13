@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import * as BpmnJS from "../../../bpmn-modeler-copilot.development.js";
 import { ConfirmationService, MenuItem } from 'primeng/api';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-copilot-history',
@@ -17,6 +19,8 @@ export class CopilotHistoryComponent implements OnInit {
     private router:Router,
     private toastService:ToasterService,
     private confirmationService: ConfirmationService,
+    private spinner: LoaderService,
+    private toastMessages: toastMessages
     ) { }
   conversationCheck:boolean=true;
   conversationPreviewChat:any=[];
@@ -27,20 +31,29 @@ export class CopilotHistoryComponent implements OnInit {
   bpmnModeler:any;
   isDialogVisible:boolean=false;
   items: MenuItem[];
+  switchingConversations = false;
   @ViewChild('diagramContainer', { static: false }) diagramContainer: ElementRef;
   ngOnInit(): void {
+    this.spinner.show();
     this.loadBpmnContainer();
     this.getConversations("USER");
   }
 
 
   getConversations(type:any){
+    if (this.conversationCheck !== (type === "USER")) {
+      this.switchingConversations = true;
+    }
     this.conversationCheck=((type=="USER")?true:false);
     let conversationFlag:string=this.conversationCheck?localStorage.getItem("ProfileuserId"):localStorage.getItem("tenantName");
     let conversationObservable:any=(this.conversationCheck)?this.rest.getUserConversations(conversationFlag):this.rest.getConversationByTenantId(conversationFlag);
     conversationObservable?.subscribe((response:any)=>{
         this.messagesResponse=response;
+        this.switchingConversations = false;
+        this.spinner.hide();
     },err=>{
+        this.switchingConversations = false;
+        this.spinner.hide();
         this.toastService.showError("Unable to get conversations");
         console.log(err)
     });
@@ -48,6 +61,8 @@ export class CopilotHistoryComponent implements OnInit {
   }
 
   openCompleteChatPreview(messageConversation:any){
+    this.messagesResponse.forEach(message => message.isSelected = false);
+    messageConversation.isSelected = true;
     this.rest.getAllConversationsByConversationId(messageConversation.conversationId).subscribe((response:any)=>{
       if(response?.data){
         let bpmnActionDetails=JSON.parse(response?.data);
@@ -135,14 +150,17 @@ export class CopilotHistoryComponent implements OnInit {
           rejectIcon: 'null',
           acceptIcon: 'null',
           accept: () => {
+            this.spinner.show();
             this.rest.deleteConversation(data).subscribe(() => {
-              this.toastService.showSuccess('Conversation deleted successfully.',"response");
+              this.toastService.showSuccess(this.toastMessages.chatDelete,"response");
               this.getConversations(this.conversationCheck ? "USER" : "TEAM");
               this.conversationPreviewChat = [];
               this.bpmnModeler.clear();
+              this.spinner.hide();
             },
             (err) => {
-              this.toastService.showError('Unable to delete conversation.');
+              this.spinner.hide();
+              this.toastService.showError(this.toastMessages.deleteError);
               console.error("consoleError",err);
             }
           );
@@ -156,6 +174,19 @@ export class CopilotHistoryComponent implements OnInit {
     this.items= [
       {label: 'Delete', command: () => this.deleteChat(conversationId)}
     ];
+  }
+
+  isButtonHidden() {
+    const currentUserRole = localStorage.getItem('userRole');
+    if (currentUserRole !== 'Process Owner') {
+      if (this.conversationCheck) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
 }

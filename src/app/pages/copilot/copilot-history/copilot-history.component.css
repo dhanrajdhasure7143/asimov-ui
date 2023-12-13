@@ -1,5 +1,5 @@
 .h-100{
-    height: calc(100vh - 64px) !important;
+    height: calc(100vh - 156px) !important;
 }
 
 
@@ -94,6 +94,14 @@ margin-left:10%;}
 }
 
 .delete_chat {
-    min-width: auto;
-    float: right !important;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 10px;
+    background: none !important; 
+    margin-top: 5px;
+}
+
+.selected-conversation {
+    border: 1px solid#098de6;
+    box-shadow: 0 0 5px rgba(9, 141, 230, 0.5);
 }
