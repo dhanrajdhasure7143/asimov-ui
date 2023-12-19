@@ -45,6 +45,7 @@ import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CompareValidatorDirective } from '../shared/directives/compare-validator.directive';
+import { toastMessages } from '../shared/model/toast_messages';
 //  import { ChartModule } from 'primeng/chart';
 
 
@@ -99,7 +100,7 @@ export function jwtTokenGetter() {
     PopoverModule.forRoot(),
     PrimengCustomModule
   ],
-  providers: [SharebpmndiagramService, PagesHints,sohints,
+  providers: [SharebpmndiagramService, PagesHints,sohints, toastMessages,
     {
     provide: MatPaginatorIntl, 
     useClass: CustomMatPaginatorIntl
