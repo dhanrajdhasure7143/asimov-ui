@@ -108,7 +108,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         })
       }      
 
-      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","activeStatus","createdTimeStamp_converted","schemaName","createdBy"]
+      this.table_searchFields=["connectiontName","categoryName","dataBaseType","databasename","hostAddress","portNumber","status","createdTimeStamp_converted","schemaName","createdBy"]
 
       this.spinner.hide();
     });
