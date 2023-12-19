@@ -116,6 +116,7 @@ export class toastMessages{
   public cmpltedApprvrErr = "Status updation is not allowed for completed approvals!";
   public apprvlUpdateErr = "Unable to update approval!";
   public statusUpdateErr_apprvls = "Status will not update for completed approvals!";
+  public chatDelete = "Conversation deleted successfully!";
   public cardDelete = "Card deleted successfully!";
   public defualtCard = "Default card is set successfully!";
   public addCard = "Card added successfully!";

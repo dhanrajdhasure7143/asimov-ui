@@ -66,4 +66,8 @@ getAllConversationsByConversationId(conversationId){
   return this.http.get(environment.asquare+`/a-square/v1/conversation/getAllConversationsByConversationId/${conversationId}`,{headers:this.headers});
 }
 
+deleteConversation(data){
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/purge", data, {headers:this.headers})
+}
+
 }

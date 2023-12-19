@@ -1,18 +1,28 @@
 <div class="container-fluid" style="padding-right:0px; padding-left:0px;">
     <div class="row no-gutters">
-        <div class="col-3 px-2 py-2 h-100 border overflow-x">
+        <div class="col-3 px-2 py-2  border">
             <div class="card px-2">
                 <div class="py-2 px-1">
-                    <input (click)="getConversations('USER')" [checked]="conversationCheck"
-                        type="checkbox">&nbsp;My Conversations
+                    <input (click)="getConversations('USER');messagesResponse=[];" [checked]="conversationCheck"
+                        type="checkbox">&nbsp;&nbsp;
+                        <span style="align-items: center;">My Conversations</span>
                     <br>
-                    <input (click)="getConversations('TEAM')" [checked]="!conversationCheck"
-                        type="checkbox">&nbsp;Team Conversations
+                    <input (click)="getConversations('TEAM');messagesResponse=[];" [checked]="!conversationCheck"
+                        type="checkbox">&nbsp;&nbsp;Team Conversations
                 </div>
             </div>
+            <div *ngIf="switchingConversations" class="text-center">
+                <span >Loading...</span>
+            </div>
             <br />
-            <div *ngFor="let message of messagesResponse" >
-                <div class="card py-2 px-2 clickable" (click)="openCompleteChatPreview(message)">
+        <div class="overflow-x h-100">
+            <div *ngFor="let message of messagesResponse">
+                <div class="card" [ngClass]="{'selected-conversation': message.isSelected}">
+                    <button class="delete_chat" [hidden]="isButtonHidden()" type="button" (click)="openContextMenu($event, message.conversationId);menu1.toggle($event)">
+                        <i class="pi pi-ellipsis-h" style="font-size: 1rem"></i>
+                    </button>
+                    <p-menu class="chatpopmenu chatactmenu" #menu1 [popup]="true" [model]="items"></p-menu>
+                <div class="py-2 px-2 clickable" (click)="openCompleteChatPreview(message)">
                     <div class="py-2 px-1">
 
                         <div *ngFor="let each of message.data;index as mi" class="py-2">
@@ -35,10 +45,12 @@
                         <div class="text-right text-bold">{{message?.createdDate | date:'short'}}</div>
                     </div>
                 </div>
+                </div>
                 <br/>
             </div>
         </div>
-        <div class="col-6 border">
+        </div>
+        <div class="col-6 border copilot-home">
             <div class="diagram_container-copilot" style="height:calc(100vh - 65px);" #diagramContainer id="_diagram">
             </div>
         </div>
@@ -131,3 +143,5 @@
         </div>
     </div>
 </div>
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+[closable]="false"></p-confirmDialog>
