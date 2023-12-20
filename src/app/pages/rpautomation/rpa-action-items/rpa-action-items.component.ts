@@ -62,7 +62,7 @@ export class RpaActionItemsComponent implements OnInit {
     this.actionTable = res.data; 
     this.readSelectedData([]); 
     this.loader.hide();
-    this.table_searchFields=["name","actionType","endPoint","methodType"];
+    this.table_searchFields=["name","actionType","endPoint","methodType","authenticationType"];
     });
   }
 
