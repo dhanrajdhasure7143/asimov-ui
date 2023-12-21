@@ -16,6 +16,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import {ConfirmationService } from "primeng/api";
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { environment } from 'src/environments/environment';
 declare var $: any;
 
 @Component({
@@ -121,6 +122,7 @@ export class RpaHomeComponent implements OnInit {
   };
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
+  isConfigurationEnable : boolean = false;
 
   constructor(
     private rest: RestApiService,
@@ -207,6 +209,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
+    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled
   }
 
   botdelete(bot) {
@@ -620,7 +623,9 @@ export class RpaHomeComponent implements OnInit {
               delete attrItem.botTaskId;
               delete attrItem.attrId;
               delete attrItem.botId;
-              attrItem.attrValue="";
+              if(!this.isConfigurationEnable){
+                attrItem.attrValue="";
+              }
               return attrItem;
             })
             return item;
