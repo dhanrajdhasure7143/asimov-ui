@@ -44,11 +44,11 @@
     </div>
 </div>
 
-<p-dialog header="Enter File Name" [(visible)]="isDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
+<p-dialog header="File Name" [(visible)]="isDialog" [modal]="true" [baseZIndex]="10000" class="docfldnam">
     <span class="p-float-label">
-        <input type="text" pInputText placeholder="Enter File Name" [(ngModel)]="entered_folderName" name="folder"
-            maxlength="50" />
-        <button type="button" class="btn bluebg-button" (click)="uploadFile()" [disabled]="!(entered_folderName.length > 0)">
+        <input type="text" pInputText placeholder="Enter file name" [(ngModel)]="entered_folderName" name="folder" maxlength="51"/>
+            <span *ngIf="entered_folderName?.length > 50" class='required' > Maximum of 50 characters</span>
+        <button type="button" class="btn bluebg-button" (click)="uploadFile()" [disabled]="entered_folderName.length == 0 || entered_folderName.length == 51">
             Save
         </button>
     </span>
