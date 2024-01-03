@@ -211,3 +211,8 @@ span.oopstxt label {
     width: 100%;
     text-align: center;
 }
+
+.time{
+    font-size: 25px; 
+    font-weight: 500;
+}
