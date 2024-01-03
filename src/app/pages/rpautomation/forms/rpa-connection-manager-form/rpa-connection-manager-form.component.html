@@ -115,7 +115,7 @@
                                 </span>
                             </div>
                             
-                            <div class="col-md-12 form-group p-0" >
+                            <div class="col-md-6 form-group pl-0" >
                                     <label class="label-control"> API/URL <span class="star">*</span> </label>
                                     <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="endPoint" (keyup)="onEnterEndpoint()"
                                     type="url" name="url" id="url" placeholder="Enter API/URL">
@@ -127,6 +127,16 @@
                                     <span *ngIf="connectorForm.get('endPoint').hasError('pattern')" class="required">
                                         API/URL or Dynamic Pattern Incorrect.
                                     </span>
+                            </div>
+                            <div class="col-md-6 form-group pr-0" >
+                                <label class="label-control"> Description <span class="star">*</span> </label>
+                                <textarea pInputTextarea [style]="{'width':'100%'}" row="3" formControlName="description"
+                                type="text" name="url" placeholder="Enter Description">
+                                </textarea>
+                                <span
+                                    *ngIf="connectorForm.get('description').invalid && connectorForm.get('description').touched && !connectorForm.get('description').hasError('pattern')"
+                                    class="required"> Description Required
+                                </span>
                             </div>
                             <div class="col-md-6 form-group pl-0" *ngIf="isAction">
                                     <label class="label-control" for="programname"> Authentication Type

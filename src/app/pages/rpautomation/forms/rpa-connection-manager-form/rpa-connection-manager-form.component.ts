@@ -126,7 +126,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       refreshToken: [""],
       addTo:[""],
       requestKey:["",],
-      requestValue:[""]
+      requestValue:[""],
+      description: ["", Validators.compose([Validators.required])],
     });
 
     this.methodTypes();
@@ -153,7 +154,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "audit": null,
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
-        // "description": "login for zoho", //we dont have description in UI
+        "description": this.connectorForm.value.description,
         "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
@@ -219,7 +220,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         "actionLogo": this.action_logo == undefined ? '' : new String(this.action_logo.split(",")[1]),
         "actionType": this.connectorForm.value.actionType,
         "configuredConnectionId": this.selectedId,
-        "description": "",
+        "description": this.connectorForm.value.description,
       }
 
       let headers = []
@@ -382,7 +383,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
   }
 
   actionChange(event) {
-    const exclude: string[] = ['actionName', 'actionType'];
+    const exclude: string[] = ['actionName', 'actionType', 'description'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
             this.connectorForm.get(key).reset();
@@ -459,7 +460,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isKeyValueTab = false;
       this.connectorForm.get('endPoint').enable();
       const setValidators: string[] = ['endPoint', 'grantType'];
-      const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
+      const exclude: string[] = ['actionName', 'actionType','methodType',"authType" ,'description'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
             this.connectorForm.get(key).reset();
@@ -491,7 +492,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.isRefreshToken = false;
       this.connectorForm.get('endPoint').disable();
       const setValidators: string[] = ['requestKey', 'requestValue', 'addTo'];
-      const exclude: string[] = ['actionName', 'actionType','methodType',"authType"];
+      const exclude: string[] = ['actionName', 'actionType','methodType',"authType", 'description'];
       Object.keys(this.connectorForm.controls).forEach(key => {
         if (exclude.findIndex(q => q === key) === -1) {
             this.connectorForm.get(key).reset();
@@ -516,7 +517,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
 
   grantChange(event) {
     const setValidators: string[] = ['clientId', 'clientSecret'];
-    const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType","grantType"]
+    const exclude: string[] = ['actionName', 'actionType','methodType','endPoint',"authType","grantType",'description']
     Object.keys(this.connectorForm.controls).forEach(key => {
       if (exclude.findIndex(q => q === key) === -1) {
         this.connectorForm.get(key).reset();
@@ -904,6 +905,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
       this.connectorForm.get("scope").setValue(this.actionData.configuration["scope"]);
       this.connectorForm.get("refreshToken").setValue(this.actionData.configuration["refreshToken"]);
       this.connectorForm.get("addTo").setValue(this.actionData.configuration["addTo"]);
+      this.connectorForm.get("description").setValue(this.actionData["description"]);
       if(this.actionData.configuration.httpHeaders || this.actionData.configuration.queryParams){
       if(this.actionData.configuration.httpHeaders.length>0){
         let data= Object.keys(this.actionData.configuration["httpHeaders"][0]).map((key) => (
@@ -1002,8 +1004,8 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         audit: null,
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
-        // "description": "login for zoho", //we dont have description in UI
-         actionLogo: this.action_logo == undefined ? this.actionData["actionLogo"] : new String(this.action_logo.split(",")[1]),
+        description: this.connectorForm.value.description,
+        actionLogo: this.action_logo == undefined ? this.actionData["actionLogo"] : new String(this.action_logo.split(",")[1]),
         // "endPoint": this.connectorForm.value.endPoint
       };
       this.onChangeAddTo(this.connectorForm.value.addTo);
@@ -1070,7 +1072,7 @@ export class RpaConnectionManagerFormComponent implements OnInit {
         actionLogo: this.action_logo==undefined ? this.actionData["actionLogo"] :new String(this.action_logo.split(",")[1]),
         actionType: this.connectorForm.value.actionType,
         configuredConnectionId: this.selectedId,
-        description: "",
+        description: this.connectorForm.value.description,
       };
       this.requestJson_body.push(this.connectorForm.get("request").value);
       let headers=[]
