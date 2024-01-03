@@ -80,40 +80,46 @@ export class CheckBoxComponent implements OnInit  {
       }
     }
     
-    change()
-    {
+    change(){
       this.fields=this.dynamic_forms.fields;
       let dependencydata:any=this.field.dependency;
       let dependency1=dependencydata.split(",")[0].split(":");
       let dependency2=dependencydata.split(",")[1].split(":");
-
       let check:any=document.getElementById(this.field.id);
+      let selected_dependency_field1 = this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]))
+      let selected_dependency_field2 = this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0]));
       let value=check.checked;
-      if(value==true)
-      {
-        
+      this.form.get(selected_dependency_field1.name+'_'+selected_dependency_field1.id).reset();
+      this.form.get(selected_dependency_field2.name+'_'+selected_dependency_field2.id).reset();
+      if(value==true){
+
         $("#"+dependency1[0]+"_form_data").show();
         $("#"+dependency2[0]+"_form_data").hide();
-        
-        this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
-     
-       
-      }
-      else
-      {
-        
+        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
+        if(selected_dependency_field1.required){
+          this.form.get(selected_dependency_field1.name+'_'+selected_dependency_field1.id).setValidators([Validators.required]);
+          this.form.get(selected_dependency_field1.name+'_'+selected_dependency_field1.id).updateValueAndValidity();
+        }
+        if(selected_dependency_field2.required){
+          this.form.get(selected_dependency_field2.name+'_'+selected_dependency_field2.id).clearValidators();
+          this.form.get(selected_dependency_field2.name+'_'+selected_dependency_field2.id).updateValueAndValidity();
+        }
+      } else{
         $("#"+dependency2[0]+"_form_data").show();
         $("#"+dependency1[0]+"_form_data").hide();
-        this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
-      
-
+        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
+        if(selected_dependency_field2.required){
+          this.form.get(selected_dependency_field2.name+'_'+selected_dependency_field2.id).setValidators([Validators.required]);
+          this.form.get(selected_dependency_field2.name+'_'+selected_dependency_field2.id).updateValueAndValidity();
+        }
+        if(selected_dependency_field1.required){
+          this.form.get(selected_dependency_field1.name+'_'+selected_dependency_field1.id).clearValidators();
+          this.form.get(selected_dependency_field1.name+'_'+selected_dependency_field1.id).updateValueAndValidity();
+        }
       }
-     
-      
-        
     }
-    updateFields()
-    {
+
+    updateFields(){
       let check:any=document.getElementById(this.field.id);
       let value=check.checked;
       if(this.field.name=="isDownloadClick")
