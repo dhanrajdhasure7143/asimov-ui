@@ -44,7 +44,8 @@ export const environment = {
   ipcTenant: "c5611383-58c1-4677-839c-a337c9fb102c",
   isChatEnable : true,
   isProcessLogsEnable: true,
-  isCopilotEnable : true
+  isCopilotEnable : true,
+  isRPAConfigurationsImportEnabled : true
 };
 
 /*
