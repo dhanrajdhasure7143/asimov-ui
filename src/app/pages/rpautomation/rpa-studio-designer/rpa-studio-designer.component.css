@@ -167,7 +167,7 @@ ul#predefinedBotDropdown li.clickable:hover {
 }
 
 .rpa-layout-header {
-    background-color: #f9f9f9;
+    background-color: #f3f3f3;
     padding: 12px 15px 5px !important;
     height: 97px !important;
     position: relative;
@@ -681,3 +681,6 @@ ul#versions li:hover {
   border:none !important;
 }
 
+.main-content1{
+  margin-left: 5px !important;
+}
