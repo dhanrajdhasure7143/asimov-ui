@@ -751,6 +751,7 @@ mat-list-item.mat-list-item.activeMenu {
 }
 .main-content1.pi_mcont1 {
   height: 100%;
+  margin-left: 5px;
 }
 
 .content-area {

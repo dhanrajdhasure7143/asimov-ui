@@ -161,3 +161,7 @@ img.hover-img {
 .custom-footer-content {
     text-align: right;
 }
+
+.maincont{
+    margin-left: 5px !important;
+}
