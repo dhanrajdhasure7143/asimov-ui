@@ -245,7 +245,7 @@ export class RpaenvironmentsComponent implements OnInit {
         this.getallData();
       }, err => {
         // this.messageService.add({severity:'success',summary:'Success',detail:'Agent deployed successfully!'})
-        this.toastService.showError(this.toastMessages.deployError);
+        this.toastService.showSuccess('Agent deployed successfully!','response');
 
         this.getallData();
         this.spinner.hide();
