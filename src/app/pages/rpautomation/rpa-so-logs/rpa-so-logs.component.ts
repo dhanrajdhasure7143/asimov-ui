@@ -457,18 +457,21 @@ export class RpaSoLogsComponent implements OnInit {
     // clearInterval(this.interval3)
     // clearInterval(this.interval2)
     this.logsLoading = true;
-    this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
-      let response: any = data;
-      if (response.errorMessage){
-      this.logsLoading = false;
-      this.errormsg= response.errorMessage;
-      this.toastService.showError(response.errorMessage);
+    this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe((data) => {
+        let response: any = data;
+        this.logsLoading = false;
+        if (response.errorMessage) {
+          this.errormsg= response.errorMessage;
+          this.toastService.showError(response.errorMessage);
+        }else{
+          this.toastService.showSuccess(response.status,'response');
+        }
+        this.viewRunsByBotId();
+      },
+      (error) => {
+        this.logsLoading = false;
       }
-      else
-      this.logsLoading = false;
-      this.toastService.showSuccess(response.status,'response');
-      this.viewRunsByBotId();
-    });
+    );
   }
 
 
