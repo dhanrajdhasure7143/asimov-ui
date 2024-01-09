@@ -459,13 +459,14 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsLoading = true;
     this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
       let response: any = data;
-      this.logsLoading = false;
       if (response.errorMessage){
+      this.logsLoading = false;
       this.errormsg= response.errorMessage;
       this.toastService.showError(response.errorMessage);
       }
       else
-        this.toastService.showSuccess(response.status,'response');
+      this.logsLoading = false;
+      this.toastService.showSuccess(response.status,'response');
       this.viewRunsByBotId();
     });
   }

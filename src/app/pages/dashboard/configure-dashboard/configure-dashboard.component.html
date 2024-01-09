@@ -79,9 +79,15 @@
                               </p-chart>
                           </span>
                     </div>
-                    <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
+                    <!-- <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
                       <h2> {{ widget.widgetData }} <span *ngIf="widget.id == '5'|| widget.childId == '5'" class="time"> hrs </span> </h2>
-                    </div>
+                    </div> -->
+                    <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
+                      <h2 [ngStyle]="{'margin-left.px': widget.id == '5' || widget.childId == '5' ? 20 : 0}">
+                          {{ widget.widgetData }}
+                          <span *ngIf="widget.id == '5' || widget.childId == '5'" class="time"> hrs </span>
+                      </h2>
+                  </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">
                       <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll" [scrollable]="true" [reorderableColumns]="true"
