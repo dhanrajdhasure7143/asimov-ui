@@ -115,47 +115,38 @@
                               </div>
                               <div *ngIf="widget.widget_type == 'label'">
                                  <div class="widgetValue">
-                                    <h2  *ngIf="widget.childId == '7' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
-                                    <h2  *ngIf="widget.childId == '5' && showTableData" (click)="showTable()"> {{widget.widgetData}} <span class="time"> hrs </span> </h2>
-                                    <h2  *ngIf="widget.childId == '6' && showTableData" (click)="showTable()"> {{widget.widgetData}} </h2>
-                                 </div>
+                                    <h2 *ngIf="widget.childId == '7' && showTableData" >
+                                        <span (click)="showTable()">{{widget.widgetData}}</span>
+                                    </h2>
+                                    <h2 *ngIf="widget.childId == '5' && showTableData">
+                                       <span class="timeSavedHrs">
+                                          <span (click)="showTable()">{{widget.widgetData}}</span> <span (click)="showTable()" class="time"> hrs </span>
+                                       </span>
+                                    </h2>
+                                    <h2 *ngIf="widget.childId == '6' && showTableData">
+                                        <span (click)="showTable()">{{widget.widgetData}}</span>
+                                    </h2>
+                                </div>
    
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTableData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
                                        <tr>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                          <th class="no-cursor-pointer" pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th class="headerWidth" pResizableColumn pSortableColumn="value">
                                              <span> Time Saved </span>
                                           </th>
-                                       </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-people>
-                                       <tr>
-                                          <td>{{people.processName}}</td>
-                                          <td>{{people.timeSavedForExecution}}</td>
-                                       </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="emptymessage">
-                                       <tr>
-                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
-                                       </tr>
-                                    </ng-template>
-                                 </p-table>
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '6' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
-                                 [resizableColumns]="true" >
-                                    <ng-template pTemplate="header" let-columns>
-                                       <tr>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
-                                             <span> Cost Saved </span>
+                                          <th class="cross-mark">
+                                             <span (click)="showTable()">
+                                                 <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="">
+                                             </span>
                                           </th>
                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-people>
-                                       <tr>
+                                       <tr class="no-cursor-pointer">
                                           <td>{{people.processName}}</td>
-                                          <td>{{people.costSavedForExecution}}</td>
+                                          <td class="tdWidth">{{people.timeSavedForExecution}}</td>
                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
@@ -164,20 +155,52 @@
                                        </tr>
                                     </ng-template>
                                  </p-table>
-                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '7' && !showTableData" (click)="showTable()" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '6' && !showTableData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
                                        <tr>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
-                                          <th pReorderableColumn pResizableColumn pSortableColumn="value">
+                                          <th class="no-cursor-pointer" pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th class="headerWidth" pReorderableColumn pResizableColumn pSortableColumn="value">
+                                             <span> Cost Saved </span>
+                                          </th>
+                                          <th class="cross-mark">
+                                             <span (click)="showTable()">
+                                                 <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="">
+                                             </span>
+                                          </th>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-people>
+                                       <tr class="no-cursor-pointer">
+                                          <td>{{people.processName}}</td>
+                                          <td class="tdWidth">{{people.costSavedForExecution}}</td>
+                                       </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                       <tr>
+                                          <td style="justify-content: center;" colspan="2">No Records Found</td>
+                                       </tr>
+                                    </ng-template>
+                                 </p-table>
+                                 <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '7' && !showTableData"  responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
+                                 [resizableColumns]="true" >
+                                    <ng-template pTemplate="header" let-columns>
+                                       <tr>
+                                          <th class="no-cursor-pointer" pReorderableColumn pResizableColumn pSortableColumn="name"> Process Name </th>
+                                          <th class="headerWidth_" pResizableColumn pSortableColumn="value">
                                              <span> Go Live Date </span>
+                                          </th>
+                                          <th class="cross-mark">
+                                             <span (click)="showTable()">
+                                                <img src="../../../../../assets/images-n/projects/close-circle-line.svg" alt="">
+                                             </span>
                                           </th>
                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-pCount>
-                                       <tr>
+                                       <tr class="no-cursor-pointer">
                                           <td>{{ pCount.processName }}</td>
-                                          <td>{{ pCount.goLiveDate | date:'MMM dd, yyyy'}}</td>
+                                          <td class="tdDateWidth">{{ pCount.goLiveDate | date:'MMM dd, yyyy'}}</td>
                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
