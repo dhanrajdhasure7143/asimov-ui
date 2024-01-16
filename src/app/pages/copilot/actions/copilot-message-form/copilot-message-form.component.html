@@ -27,7 +27,8 @@
                     <label>{{element?.label}}</label>
                     <select [formControlName]="element?.name" class="form-control">
                         <option hidden disabled value="">{{element?.placeholder}}</option>
-                        <option *ngFor="let option of element?.options" [value]="option?.value">{{option?.key}}</option>
+                        <!-- <option *ngFor="let option of element?.options" [value]="option?.value">{{option?.key}}</option> -->
+                        <option *ngFor="let option of element?.value" [value]="option">{{option}}</option>
                     </select>
                 </span>
                 <span *ngIf="element?.type==='checkbox'">
