@@ -48,6 +48,10 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ManageCustomerBotComponent } from './manage-customer-bot/manage-customer-bot.component';
+import { TrainCustomerSupportBotComponent } from './train-customer-support-bot/train-customer-support-bot.component';
+import { columnList } from 'src/app/shared/model/table_columns';
+import { ViewCustomerBotDetailsComponent } from './view-customer-bot-details/view-customer-bot-details.component';
 
 const materialModules: any[] = [
     
@@ -57,7 +61,7 @@ const materialModules: any[] = [
 @NgModule({
   declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent, UserPipePipe, UsersComponent, InviteUserComponent, ModifyUserComponent,
     UserScreenComponent,
-    AdminAddScreenComponent,AdminScreenListComponent],
+    AdminAddScreenComponent,AdminScreenListComponent, ManageCustomerBotComponent, TrainCustomerSupportBotComponent, ViewCustomerBotDetailsComponent],
   imports: [
     Ng2TelInputModule,
     CommonModule,
@@ -83,6 +87,7 @@ const materialModules: any[] = [
   ],
   providers:[
     BsModalRef, 
+    columnList ,
   {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl

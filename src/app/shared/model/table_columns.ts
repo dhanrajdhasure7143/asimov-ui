@@ -246,4 +246,25 @@ export class columnList{
         {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
         {ColumnName:"error_info",DisplayName:"Error Info",ShowFilter: false,width:"",filterType:"text"}
       ];
+
+     //EzAsk Admin screens coloumns
+     
+      public manage_cutomer_support_bot_coloumns = [
+        {ColumnName: "manageBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "botContentType",DisplayName: "Bot Data Source Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        // {ColumnName: "isActive",DisplayName: "Active",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+      
+      public train_cutomer_support_bot_coloumns = [
+        {ColumnName: "trainBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "trainData",DisplayName: "Train Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+      
+      public view_cutomer_support_bot_coloumns = [
+        {ColumnName: "fileName",DisplayName: "File Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "fileDetails",DisplayName: "File Details",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
 }

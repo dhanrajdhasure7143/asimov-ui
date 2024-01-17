@@ -44,5 +44,6 @@ export const environment = {
   isProcessLogsEnable: true,
   isCopilotEnable : true,
   isRPAConfigurationsImportEnabled : false,
-  isSubscrptionEnabled : false
+  isSubscrptionEnabled : false,
+  isCustomerBots : false
 };

@@ -42,6 +42,7 @@ export class DynamicTableComponent implements OnInit {
   @Output("viewApprovalInfo") public viewAprrovalInfo:any = new EventEmitter<any>();
   @Output() approvedItem = new EventEmitter<any[]>();
   @Output() rejectItem = new EventEmitter<any[]>();
+  @Output("openEzAsk") openEzAsk:any= new EventEmitter<any>();
   public loggedUserRole: any[]=[];
   _selectedColumns: any[];
   customers: any = [];
@@ -175,4 +176,7 @@ export class DynamicTableComponent implements OnInit {
     this.viewAprrovalInfo.emit(rowData);
   }
 
+  openEzAsk_Chat(rowData:any){
+    this.openEzAsk.emit(rowData);
+  }
 }

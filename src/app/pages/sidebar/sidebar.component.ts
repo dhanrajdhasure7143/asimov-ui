@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   showSubmenu: boolean = false;
   showprocessesSubmenu: boolean = false;
   showadminSubmenu: boolean = false;
+  showCustomerSupportBotsSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
@@ -31,6 +32,7 @@ export class SidebarComponent implements OnInit {
   isProcessLogsEnable:boolean = false;
   isCopilotEnable:boolean = false;
   dashboardDetails:any={};
+  isCustomerBots:boolean = false;
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -72,6 +74,7 @@ export class SidebarComponent implements OnInit {
   this.getAllPlans();
   // this.getUserScreenList();
   this.isCopilotEnable = environment.isCopilotEnable
+  this.isCustomerBots = environment.isCustomerBots
 
   }
   getCookie(cname) {
@@ -101,6 +104,7 @@ export class SidebarComponent implements OnInit {
      this.obj.sidebar.showSubmenu=false;
      this.obj.sidebar.showprocessesSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
+      this.obj.sidebar.showCustomerSupportBotsSubmenu=false;
       this.obj.sidebar.showProjectsSubmenu=false;
       this.obj.contentMargin = 62;
       if(element=='dashboard')

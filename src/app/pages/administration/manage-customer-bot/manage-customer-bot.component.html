@@ -1,0 +1,190 @@
+<div class="maincontent">
+  <div class="row main-content-head">
+    <div class="col-md-8 pl-0">
+      <h3>
+        <span class="title_text">
+          Manage Customer Support Bot
+        </span>
+      </h3>
+    </div>
+    <div class="col-md-4 pr-0 text-right">
+      <button class="btn grey-btn configure-pad" (click)="addNew()">
+        <img src="./../../../../assets/images-n/dashboard/plus-square_grey.svg" alt="Add New" class="imgicon-width">
+        <span class="plus">Add New</span>
+      </button>
+    </div>
+  </div>
+  <div class="main-content-body  table-height-adj">
+    <div class="tabs_screen h-100">
+      <div class="gridparentdiv">
+        <app-dynamic-table 
+        [table_data]="manageBotList" 
+        [screenTable]="'customerSupportBots'"
+        [columns_list]="columns_list" 
+        (updateItem)="openUpdateOverlay($event)" 
+        (openEzAsk)="openEzAsk_Chat($event)" 
+        (deleteItem)="deleteBot($event)"
+        [show_delete_btn]="true" 
+        [show_edit_btn]="true" 
+        [show_column_filter]="true" 
+        [show_search_field]="true"
+        [search_fields]="table_searchFields" 
+        [show_clear_filter]="true" 
+        [show_view_btn]="true"
+        (viewItem)="viewDetails($event)" 
+        (onRowDoubleClick)="openUpdateOverlay($event)">
+      </app-dynamic-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="hiddenPopUp">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3 *ngIf="isCreate">Add new bot</h3>
+        <h3 *ngIf="!isCreate">Update bot</h3>
+      </div>
+      <div class="createform-overlay ">
+        <form [formGroup]="manageBotForm" #adddept="ngForm" class="h-100">
+          <div class="h-100">
+            <div class="row">
+            <div class="form-group col pl-0">
+              <label class="label-control">Bot Name<span class="star">*</span></label>
+              <input type="text" formControlName="manageBotName" pInputText placeholder="Enter bot name" maxlength="51"
+                class="form-control data">
+              <span
+                *ngIf="manageBotForm.get('manageBotName').invalid && manageBotForm.get('manageBotName').touched && !manageBotForm.get('manageBotName').hasError('maxlength') && manageBotForm.get('manageBotName').value=='' && !manageBotForm.get('manageBotName').hasError('pattern')"
+                class="required">Bot Name Required</span>
+              <span
+                *ngIf="manageBotForm.get('manageBotName').hasError('maxlength') && !manageBotForm.get('manageBotName').hasError('pattern')"
+                class="required">Maximum of 50 characters</span>
+              <span *ngIf="manageBotForm.get('manageBotName').hasError('pattern')" class="required">Spaces and special
+                characters are not allowed (Excluding _ & -)</span>
+            </div>
+
+            <div class="form-group col pr-0">
+              <label class="label-control">Bot Greeting Message<span class="star">*</span></label>
+              <input type="text" formControlName="botGreetingMessage" pInputText
+                placeholder="Enter bot greeting message" class="form-control data">
+              <span
+                *ngIf="manageBotForm.get('botGreetingMessage').invalid && manageBotForm.get('botGreetingMessage').touched"
+                class="required">Bot Greeting Message Required</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col pl-0">
+              <label class="label-control">Primary Prompt</label>
+              <input type="text" formControlName="primaryPrompt" pInputText
+                placeholder="Enter primary prompt" class="form-control data">
+              <!-- <span
+                *ngIf="manageBotForm.get('primaryPrompt').invalid && manageBotForm.get('primaryPrompt').touched"
+                class="required">Primary Prompt Required</span> -->
+            </div>
+           
+            <div class="form-group col pr-0">
+              <label class="label-control">Response Prefix</label>
+              <input type="text" formControlName="responsePrefix" pInputText
+                placeholder="Enter response prefix" class="form-control data">
+              <!-- <span
+                *ngIf="manageBotForm.get('responsePrefix').invalid && manageBotForm.get('responsePrefix').touched"
+                class="required">Response Prefix Required</span> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col pl-0">
+              <label class="label-control">Bot Embed URL<span class="star">*</span></label>
+              <input type="text" formControlName="embedUrl" placeholder="Enter embed URL"
+                class="form-control" readonly>
+              <span *ngIf="manageBotForm.get('embedUrl').invalid && manageBotForm.get('embedUrl').touched"
+                class="required">Embed URL Required</span>
+            </div>
+
+            <div class="form-group col pr-0">
+              <label class="label-control">Bot Key<span class="star">*</span></label>
+              <input type="text" formControlName="botKey" placeholder="Enter Bot key"
+                class="form-control" readonly>
+              <span *ngIf="manageBotForm.get('botKey').invalid && manageBotForm.get('botKey').touched"
+                class="required">Bot key Required</span>
+            </div>
+          </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="checkbox" formControlName="isActive">
+                <span class="ml-2">Is Hallucination allowed</span>
+              </div>
+              <div class="form-group col-md-3">
+                <input type="checkbox" formControlName="isHallucination">
+                <span class="ml-2">Is Active</span>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="checkbox" formControlName="isDelete">
+                <span class="ml-2">Is Delete</span>
+              </div>
+            </div>
+
+            <!-- <div class="form-group col-md-12 p-0">
+              <label class="label-control">Bot Content Type<span class="star">*</span></label>
+              <input type="text" formControlName="botContentType" pInputText placeholder="Enter bot content source"
+                class="form-control data">
+              <span
+                *ngIf="manageBotForm.get('botContentType').invalid && manageBotForm.get('botContentType').touched"
+                class="required">Bot Content Source Required</span>
+            </div> -->
+
+            <div class="form-group col-md-12 p-0">
+              <label class="label-control">Bot Content Type<span class="star">*</span></label>
+              <p-dropdown formControlName="botContentType" [options]="botContentOptions" placeholder="Select bot content type"
+              (onChange)="onBotContentTypeChange($event.value)"></p-dropdown>
+              <span *ngIf="manageBotForm.get('botContentType').invalid && manageBotForm.get('botContentType').touched"
+                    class="required">Bot Content Type Required</span>
+            </div>
+            
+            <div class="form-group col-md-12 p-0">
+              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('botContentType').value == 'Web'">*</span></label>
+              <!-- <input type="text" formControlName="include_sites" placeholder="Enter Include Sites"
+                class="form-control data" > -->
+                <div class="p-fluid">
+                  <p-chips formControlName="include_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <p-chips formControlName="include_sites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  
+                </div>
+              <span *ngIf="manageBotForm.get('include_sites').invalid && manageBotForm.get('include_sites').touched"
+                class="required">Includes Sites Required</span>
+            </div>
+
+            <div class="form-group col-md-12 p-0">
+              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('botContentType').value == 'Web'">*</span></label>
+              <!-- <input type="text" formControlName="exclude_sites" placeholder="Enter Exclude Sites"
+                class="form-control data" > -->
+                <div class="p-fluid">
+                  <p-chips formControlName="exclude_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <p-chips formControlName="exclude_sites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  
+                </div>
+              <span *ngIf="manageBotForm.get('exclude_sites').invalid && manageBotForm.get('exclude_sites').touched"
+                class="required">Exclude Sites Required</span>
+            </div>
+
+          </div>
+        </form>
+        <div class="createform-footer">
+          <button (click)="resetbotform()" class="btn new-cancelbtn">Reset</button>
+          <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="formSubmit()"
+            class="btn bluebg-button">Save</button>
+          <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateDatails()"
+            class="btn bluebg-button">Update</button>
+        </div>
+      </div>
+    </div>
+  </app-split-overlay>
+</div>
+
+<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
+  rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+  <ng-template pTemplate="footer">
+    <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+    <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
