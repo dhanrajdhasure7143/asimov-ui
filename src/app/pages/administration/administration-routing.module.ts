@@ -12,6 +12,9 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { InviteUserComponent } from './user-management/users/invite-user/invite-user.component';
 import { ModifyUserComponent } from './user-management/users/modify-user/modify-user.component';
 import { UserScreenComponent } from './user-screen/user-screen.component';
+import { ManageCustomerBotComponent } from './manage-customer-bot/manage-customer-bot.component';
+import { TrainCustomerSupportBotComponent } from './train-customer-support-bot/train-customer-support-bot.component';
+import { ViewCustomerBotDetailsComponent } from './view-customer-bot-details/view-customer-bot-details.component';
 
 
 const routes: Routes = [
@@ -27,6 +30,9 @@ const routes: Routes = [
     {path:'admin-screen-list', component:AdminScreenListComponent},
     {path:'admin-screen-create', component:AdminAddScreenComponent},
     {path:'user', component:UserScreenComponent},
+    {path:'manage-customer-bot', component:ManageCustomerBotComponent},
+    {path:'train-cutomer-bot', component:TrainCustomerSupportBotComponent},
+    {path:'view-customer-bot-details', component:ViewCustomerBotDetailsComponent}
   ]}
 ];
 

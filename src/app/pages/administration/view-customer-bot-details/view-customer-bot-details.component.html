@@ -1,0 +1,61 @@
+<div class="maincont">
+    <div class="maincont-contentarea">
+        <div class="h-100">
+            <div class="row main-content-head">
+                <h3>
+                    <label id="popup_title">
+                        <a (click)="backToManageBot()" class="imageBox">
+                            <img class="default-arrow"
+                                src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
+                            <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg"
+                                alt="">
+                        </a>
+                    </label>
+                    <span class="title_text_haspath">
+                        <span class="breadcrum-back" (click)="backToManageBot()">Manage Customer Support Bot </span> <span
+                            class="breadcrum-align">/</span>
+                        <span class="sub_title_text">{{ selectedName }}</span>
+                    </span>
+                </h3>
+            </div>
+
+            <div class="main-content-body">
+                <div class="actionitems-grid">
+                    <div class="row credential-search-tools">
+                        <!-- <div *ngIf="addflag" class="env-btn credential-btntool">
+                                <button *ngIf="(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create" id="addbtn"
+                                    (click)="addNewAction()" pTooltip="New" tooltipPosition="top">
+                                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
+                                </button>
+                                <button *ngIf="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="disbtn">
+                                    <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" alt="">
+                                </button>
+                        </div> -->
+                    </div>
+                    <div class="gridparentdiv">
+                        <app-dynamic-table
+                        [representatives]="representatives" 
+                        [columns_list]="columns_list"
+                        [table_data]="viewData" 
+                        (viewItem)="viewDetails($event)" 
+                        (deleteItem)="deleteById($event)"
+                        [screenTable]="'common'" 
+                        [checkBoxShow]="false" 
+                        (selectedData)="readSelectedData($event)"
+                        [dataKeyId]="'id'" 
+                        [show_search_field]="true" 
+                        [show_column_filter]="true"
+                        [show_clear_filter]="true"
+                        [search_fields]="table_searchFields"
+                        [selectionMode]="'single'"
+                        (onRowDoubleClick)="viewDetails($event)"
+                        [show_delete_btn]="true" 
+                        [show_edit_btn]="true" 
+                        >
+                       </app-dynamic-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

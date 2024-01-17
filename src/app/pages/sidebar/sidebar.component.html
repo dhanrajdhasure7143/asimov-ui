@@ -168,11 +168,11 @@
           <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}">&#xe5cf;
           </mat-icon>
         </mat-list-item>
-        <div class="submenus adminsubmenus" [ngClass]="{'expanded' : showadminSubmenu}">
+        <div class="submenus adminsubmenus scrollable" [ngClass]="{'expanded' : showadminSubmenu}" [style.overflow]="isCustomerBots ? 'auto' : 'hidden'">
           <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
             *ngIf="this.userRoles.includes('System Admin')" (click)="userManagement()">
             <span class="side-icon">
-              <mat-icon>settings</mat-icon>
+              <!-- <mat-icon>settings</mat-icon> -->
             </span>
             <span class="side-menu-font">User Management</span>
           </a>
@@ -208,11 +208,30 @@
                 <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
           *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/admin-screen-list">
           <span class="side-icon">
-            <mat-icon>settings</mat-icon>
+            <!-- <mat-icon>settings</mat-icon> -->
           </span>
           <span class="side-menu-font">Screen Generation</span>
         </a>
-
+        <div class="CS_botHeader" *ngIf="isCustomerBots">
+          <mat-list-item (click)="showCustomerSupportBotsSubmenu = !showCustomerSupportBotsSubmenu;"
+            [ngClass]="{'activeMenu' : showCustomerSupportBotsSubmenu}" class="link">
+            <span class="side-menu-font">Customer Support Bots</span>
+            <mat-icon class="menu-button arrow" [ngClass]="{'rotated' : showCustomerSupportBotsSubmenu}">&#xe5cf;
+            </mat-icon>
+          </mat-list-item>
+        
+          <div class="submenus customerSupportBotsSubmenus" [ngClass]="{'expanded' : showCustomerSupportBotsSubmenu}">
+            <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
+              *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/manage-customer-bot">
+              <span class="side-menu-font">Manage Support Bot</span>
+            </a>
+        
+            <!-- <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
+              *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/train-cutomer-bot">
+              <span class="side-menu-font">Train Support Bot</span>
+            </a> -->
+          </div>
+        </div>
         <!-- <span *ngFor="let screen of screensList">
           <a mat-list-item class="link" (click)="onClickScreen(screen)" (click)="hightlight('usermanagement','expand_admin')">
             <div class="side-menu-font scrngenitems">{{screen.Screen_Name}}</div>

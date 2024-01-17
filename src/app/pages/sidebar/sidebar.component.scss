@@ -345,3 +345,16 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .mat-list-item.active:hover mat-icon.mat-icon-no-color {
   color: #fff !important;
 }
+
+.mat-icon.arrow {
+  right: -25px !important;
+}
+
+.submenus.adminsubmenus.scrollable {
+  max-height: 107px !important; 
+  overflow-y: auto;
+  min-height: 107px !important;
+}
+.CS_botHeader {
+  max-height: 30px;
+}
