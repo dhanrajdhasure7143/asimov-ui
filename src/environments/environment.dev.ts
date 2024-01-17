@@ -43,6 +43,7 @@ export const environment = {
     isChatEnable : true,
     isProcessLogsEnable: true,
     isCopilotEnable : true,
-    isRPAConfigurationsImportEnabled : true
+    isRPAConfigurationsImportEnabled : true,
+    isSubscrptionEnabled : true
   };
   
