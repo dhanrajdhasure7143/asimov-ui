@@ -115,11 +115,11 @@
                 <span class="ml-2">Is Hallucination allowed</span>
               </div>
               <div class="form-group col-md-3">
-                <input type="checkbox" formControlName="isActive">
+                <input type="checkbox" formControlName="active">
                 <span class="ml-2">Is Active</span>
               </div>
               <div class="form-group col-md-4">
-                <input type="checkbox" formControlName="isDelete">
+                <input type="checkbox" formControlName="deleted">
                 <span class="ml-2">Is Delete</span>
               </div>
             </div>
@@ -142,40 +142,40 @@
             </div>
             
             <div class="form-group col-md-12 p-0">
-              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'Web'">*</span></label>
-              <!-- <input type="text" formControlName="include_sites" placeholder="Enter Include Sites"
+              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+              <!-- <input type="text" formControlName="includeSites" placeholder="Enter Include Sites"
                 class="form-control data" > -->
                 <div class="p-fluid">
-                  <!-- <p-chips formControlName="include_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips> -->
-                  <input formControlName="include_sites" separator="," placeholder="Enter Include sites" class="form-control"  styleClass="customChip">
-                  <!-- <p-chips formControlName="include_sites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  <p-chips formControlName="includeSites" separator="," placeholder="Enter include sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <input formControlName="includeSites" separator="," placeholder="Enter Include sites" class="form-control"  styleClass="customChip"> -->
+                  <!-- <p-chips formControlName="includeSites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
                   
                 </div>
-              <span *ngIf="manageBotForm.get('include_sites').invalid && manageBotForm.get('include_sites').touched"
+              <span *ngIf="manageBotForm.get('includeSites').invalid && manageBotForm.get('includeSites').touched"
                 class="required">Includes Sites Required</span>
             </div>
 
             <div class="form-group col-md-12 p-0">
-              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'Web'">*</span></label>
-              <!-- <input type="text" formControlName="exclude_sites" placeholder="Enter Exclude Sites"
+              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+              <!-- <input type="text" formControlName="excludeSites" placeholder="Enter Exclude Sites"
                 class="form-control data" > -->
                 <div class="p-fluid">
-                  <!-- <p-chips formControlName="exclude_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips> -->
-                  <input formControlName="exclude_sites" separator="," placeholder="Enter Exclude sites" class="form-control" styleClass="customChip">
-                  <!-- <p-chips formControlName="exclude_sites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  <p-chips formControlName="excludeSites" separator="," placeholder="Enter exclude sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <input formControlName="excludeSites" separator="," placeholder="Enter Exclude sites" class="form-control" styleClass="customChip"> -->
+                  <!-- <p-chips formControlName="excludeSites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
                   
                 </div>
-              <span *ngIf="manageBotForm.get('exclude_sites').invalid && manageBotForm.get('exclude_sites').touched"
+              <span *ngIf="manageBotForm.get('excludeSites').invalid && manageBotForm.get('excludeSites').touched"
                 class="required">Exclude Sites Required</span>
             </div>
 
           </div>
         </form>
         <div class="createform-footer">
-          <button (click)="resetbotform()" class="btn new-cancelbtn">Reset</button>
+          <button (click)="resetBotForm()" class="btn new-cancelbtn">Reset</button>
           <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="saveCustomerSupportBot()"
             class="btn bluebg-button">Save</button>
-          <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateDatails()"
+          <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateCustomerSupportBot()"
             class="btn bluebg-button">Update</button>
         </div>
       </div>
