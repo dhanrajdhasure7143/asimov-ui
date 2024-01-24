@@ -52,7 +52,7 @@
                   </button>
             </div>
          </div>
-     
+         
          <div class="main-content-body">
             <div class="row">
                <div *ngFor="let item of dashboardData.metrics" class="col-md-3 pl-0 pr-24">
@@ -127,7 +127,7 @@
                                         <span (click)="showTable()">{{widget.widgetData}}</span>
                                     </h2>
                                 </div>
-   
+
                                  <p-table #myTab [value]="processInfo" *ngIf="widget.childId == '5' && !showTableData" responsiveLayout="scroll"  [scrollable]="true" [reorderableColumns]="true"
                                  [resizableColumns]="true" >
                                     <ng-template pTemplate="header" let-columns>
@@ -286,7 +286,7 @@
                            
                            </div>
 
-                           <div  *ngIf="configuration_id == widget.id">                            
+                           <div  *ngIf="configuration_id == widget.id && widget.widget_type != 'label'">                            
                               <form [formGroup]="dynamicFormConfiure" class="row">
                                  <div class="col-6 form-group" *ngFor="let each of widget.filterOptions">
                                     <label class="label-control">{{each.label}}</label>
@@ -299,6 +299,19 @@
                                  </div>
                               </form>
                            </div>
+
+                           <div *ngIf="showWidgetValue && configuration_id == widget.id && widget.widget_type == 'label'">
+                              <div>
+                                 <p-dropdown [options]="projects_list" [ngModel]="selected_project"
+                                    autoWidth="false" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
+                                    placeholder="Select Department" optionLabel="projectName"
+                                    optionValue="id"></p-dropdown>
+                              </div>
+                              <div id="btn-viewProject">
+                                 <button id="btn" class="btn new-cancelbtn" (click)="cancelProject()">Cancel</button>
+                                 <button id="btn" class="btn bluebg-button" (click)="saveConfigure(i)">Process Info</button>
+                              </div>
+                              </div>
                         </div>
                      </div>
                   
