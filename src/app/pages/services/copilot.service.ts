@@ -79,8 +79,12 @@ saveCustomerBot(body:any){
 }
 
 deleteCustomerBot(botId:any){
-  // return this.http.delete(environment.asquare+"/a-square/admin/v1/customer-support-bot", botId, {headers:this.headers})
   const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
   return this.http.delete(url, { headers: this.headers });
+}
+
+updateCustomerBot(botId:any, requestBody: any){
+  const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
+  return this.http.put(url,requestBody, { headers: this.headers });
 }
 }
