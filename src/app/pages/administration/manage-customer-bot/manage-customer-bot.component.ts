@@ -6,12 +6,13 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { CopilotService } from '../../services/copilot.service';
 
 enum BotContentType {
-  Web = 'Web',
-  Document = 'Document',
-  WebAndDocument = 'Web and Document',
-  Public = 'Public',
+  Web = 'WEB',
+  Document = 'DOC',
+  WebandDocument = 'WEB_DOC',
+  Public = 'PUB',
 }
 
 @Component({
@@ -27,16 +28,14 @@ export class ManageCustomerBotComponent implements OnInit {
   isCreate = false;
   updateOverlayData: any;
   nextRecordId = 1;
-
-  manageBotList = [
-    { id: '1', manageBotName: 'Customer Support Bot', botGreetingMessage: 'Sample Message', primaryPrompt: 'Sample prompt', responsePrefix: 'Sample prefix', isHallucination: false, isActive: true, isDelete: true, botKey: 'SampleKey', embedUrl: 'http://www.google.com', botContentType: 'Document', include_sites: '', exclude_sites: '' },
-    { id: '2', manageBotName: 'Agent Support Bot', botGreetingMessage: 'Sample', primaryPrompt: 'Sample prompt', responsePrefix: 'Sample prefix', isHallucination: true, isActive: true, isDelete: false, botKey: 'SampleKey', embedUrl: 'http://www.google.com', botContentType: 'Web', include_sites: 'SampleSite', exclude_sites: 'SampleSite' },
-    { id: '3', manageBotName: 'Employee Support Bot', botGreetingMessage: 'Sample Greeting', primaryPrompt: 'Sample prompt', responsePrefix: 'Sample prefix', isHallucination: false, isActive: true, isDelete: true, botKey: 'SampleKey', embedUrl: 'http://www.google.com', botContentType: 'Document and Web', include_sites: '', exclude_sites: '' },
-    { id: '4', manageBotName: 'Sample Record', botGreetingMessage: 'Sample Data', primaryPrompt: 'Sample prompt', responsePrefix: 'Sample prefix', isHallucination: true, isActive: true, isDelete: false, botKey: 'SampleKey', embedUrl: 'http://www.google.com', botContentType: 'Sample Data', include_sites: '', exclude_sites: '' },
-  ];
-
-  botContentOptions: SelectItem[] = Object.values(BotContentType).map((value) => ({ label: value, value }));
+  manageBotList = [];
   table_searchFields: string[];
+  botContentOptions = [
+    { label: 'Document', value: 'DOC' },
+    { label: 'Web', value: 'WEB' },
+    // { label: 'Web and Document', value: 'WEB_DOC' },
+    { label: 'Public', value: 'PUB' },
+  ];
 
   constructor(
     private columns: columnList,
@@ -46,13 +45,14 @@ export class ManageCustomerBotComponent implements OnInit {
     private toastMessages: toastMessages,
     private confirmationService: ConfirmationService,
     private router: Router,
+    private rest_api: CopilotService,
   ) { }
 
   ngOnInit(): void {
     this.loader.show();
     this.columns_list = this.columns.manage_cutomer_support_bot_coloumns;
-    this.table_searchFields = ['manageBotName', 'botContentType'];
     this.initializeBotForm();
+    this.getAllCustomerBots();
     setTimeout(() => {
       this.loader.hide();
     }, 1000);
@@ -60,18 +60,18 @@ export class ManageCustomerBotComponent implements OnInit {
 
   private initializeBotForm() {
     const formControls = {
-      manageBotName: ['', [Validators.required, Validators.maxLength(50)]],
-      botGreetingMessage: ['', [Validators.required, Validators.maxLength(50)]],
+      customerSupportBotName: ['', [Validators.required, Validators.maxLength(50)]],
+      greetingMessage: ['', [Validators.required, Validators.maxLength(50)]],
       primaryPrompt: [''],
-      responsePrefix: [''],
-      embedUrl: ['www.google.com', [Validators.required, Validators.maxLength(50)]],
-      botKey: ['SampleKey', [Validators.required, Validators.maxLength(50)]],
-      isHallucination: [false],
-      isActive: [false],
-      isDelete: [false],
-      botContentType: ['', [Validators.required, Validators.maxLength(50)]],
-      include_sites: [{ value: '', disabled: true }, [Validators.required]],
-      exclude_sites: [{ value: '', disabled: true }, [Validators.required]],
+      respPrefix: [''],
+      customerSupportBotEmbedUrl: [''],
+      botKey: [''],
+      hallucinationAllowed: [false],
+      active: [false],
+      deleted: [false],
+      customerSupportBotSource: ['', [Validators.required]],
+      includeSites: ['', [Validators.required]],
+      excludeSites: ['', [Validators.required]],
     };
     this.manageBotForm = this.formBuilder.group(formControls);
   }
@@ -82,16 +82,29 @@ export class ManageCustomerBotComponent implements OnInit {
     this.initializeBotForm();
   }
 
+  getAllCustomerBots() {
+    this.loader.show();
+    this.rest_api.getCustomerBots().subscribe((botlist) => {
+      this.manageBotList = botlist;
+      this.loader.hide();
+      this.table_searchFields = ['customerSupportBotName', 'customerSupportBotSource'];
+      },
+      (err)=>{
+        this.toastService.showError("Error fetching customer bots");
+      }
+    );
+  }
+  
   viewDetails(event: any) {
-    console.log(event);
     this.router.navigate(["/pages/admin/view-customer-bot-details"], {
-      queryParams: { id: event.id, name : event.manageBotName, },
+      queryParams: { id: event.customerSupportBotId, name : event.customerSupportBotName, },
     });
   }
  
 
-  deleteBot(event) {
-    const recordIdToDelete = event.id;
+  deleteCustomerSupportBot(event) {
+    const recordIdToDelete = event.customerSupportBotId;
+    const recordName = event.customerSupportBotName;
     this.confirmationService.confirm({
       message: 'Do you want to delete this record? This can\'t be undone.',
       header: 'Are you sure?',
@@ -105,9 +118,20 @@ export class ManageCustomerBotComponent implements OnInit {
       key: 'positionDialog',
       accept: () => {
         this.loader.show();
-        this.manageBotList = this.manageBotList.filter((record) => record.id !== recordIdToDelete);
-        this.loader.hide();
-        this.toastService.showSuccess('Deleted Successfully', 'response');
+        this.rest_api.deleteCustomerBot(recordIdToDelete).subscribe((res: any) => {
+          this.loader.hide();
+          if (res.errorMessage == undefined) {
+            this.toastService.showSuccess(recordName, 'delete');
+            this.getAllCustomerBots();
+          } else {
+            this.loader.hide();
+            this.toastService.showError(res.errorMessage);
+          }
+        }, (err) => {
+          this.loader.hide();
+          this.toastService.showError(this.toastMessages.deleteError);
+          this.getAllCustomerBots();
+        })
       },
       reject: () => { },
     });
@@ -117,87 +141,128 @@ export class ManageCustomerBotComponent implements OnInit {
     this.hiddenPopUp = true;
     this.isCreate = false;
     this.updateOverlayData = event;
-    // this.manageBotForm.patchValue(this.updateOverlayData);
+    const includeSitesControl = this.manageBotForm.get('includeSites');
+    const excludeSitesControl = this.manageBotForm.get('excludeSites');
+    if (this.updateOverlayData.customerSupportBotSource == 'WEB') {
+      this.manageBotForm.get('includeSites').enable();
+      this.manageBotForm.get('excludeSites').enable();
+      includeSitesControl.setValidators([Validators.required]);
+      excludeSitesControl.setValidators([Validators.required]);
+    } else {
+      this.manageBotForm.get('includeSites').disable();
+      this.manageBotForm.get('excludeSites').disable();
+      includeSitesControl.clearValidators();
+      excludeSitesControl.clearValidators();
+      includeSitesControl.reset();
+      excludeSitesControl.reset();
+    }
+    includeSitesControl.updateValueAndValidity();
+    excludeSitesControl.updateValueAndValidity();
     if (this.updateOverlayData) {
+      if (typeof this.updateOverlayData.excludeSites === 'string') {
+        this.updateOverlayData.excludeSites = this.updateOverlayData.excludeSites.split(';');
+        this.updateOverlayData.includeSites = this.updateOverlayData.includeSites.split(';');
+      } else {
+        // Handle the case where excludeSites is not a string (e.g., set it to an empty array)
+        this.updateOverlayData.excludeSitesArray = [];
+        this.updateOverlayData.includeSitesArray = [];
+      }
       this.manageBotForm.patchValue(this.updateOverlayData);
     } else {
-      console.error('updateOverlayData is undefined or null.');
+      console.error('update Overlay Data is undefined or null.');
     }
   }
 
-  formSubmit() {
+  saveCustomerSupportBot() {
     this.loader.show();
-    const recordId = Date.now();
-    const sampleObj = {
-      id: recordId,
-      ...this.manageBotForm.value,
-    };
-    console.log("SamplePayload",sampleObj);
-    
-    this.manageBotList.push(sampleObj);
-    this.toastService.showSuccess('Saved Successfully', 'response');
-    setTimeout(() => {
-      this.loader.hide();
-    }, 1000);
-    this.nextRecordId++;
-    this.hiddenPopUp = false;
-    this.manageBotForm.reset();
-  }
-
-
-  // formSubmit() {
-  //   this.loader.show();
-  
-  //   const excludeSitesControl = this.manageBotForm.get('exclude_sites');
-  //   const excludeSitesArray = excludeSitesControl.value || [];
-  
-  //   // Join the array elements with a semicolon for logging or display
-  //   const excludeSitesString = excludeSitesArray.join(';');
-  
-  //   // Create the payload with the original array
-  //   const recordId = Date.now();
-  //   const sampleObj = {
-  //     id: recordId,
-  //     ...this.manageBotForm.value,
-  //     exclude_sites: excludeSitesArray,
-  //   };
-  
-  //   console.log("SamplePayload", sampleObj);
-  //   console.log("Exclude Sites String", excludeSitesString);
-  
-  //   this.manageBotList.push(sampleObj);
-  //   this.toastService.showSuccess('Saved Successfully', 'response');
-  //   setTimeout(() => {
-  //     this.loader.hide();
-  //   }, 1000);
-  
-  //   this.nextRecordId++;
-  //   this.hiddenPopUp = false;
-  //   this.manageBotForm.reset();
-  // }
-  
-  
-  updateDatails() {
-    this.loader.show();
-    const updatedRecordId = this.updateOverlayData.id;
-    const updatedRecordIndex = this.manageBotList.findIndex((record) => record.id === updatedRecordId);
-    if (updatedRecordIndex !== -1) {
-      this.manageBotList[updatedRecordIndex] = { ...this.manageBotForm.value, id: updatedRecordId };
-      this.hiddenPopUp = false;
-      this.manageBotForm.reset();
-      this.toastService.showSuccess('Updated Successfully', 'response');
-      setTimeout(() => {
+    const includeSites = this.manageBotForm.value.includeSites.join(';');
+    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    let req_body={
+        "createdDate": "",
+        "customerSupportBotId": "",
+        "userId": "",
+        "tenantId": "",
+        "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
+        "greetingMessage": this.manageBotForm.value.greetingMessage,
+        "primaryPrompt": this.manageBotForm.value.primaryPrompt,
+        "respPrefix": this.manageBotForm.value.respPrefix,
+        "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
+        "customerSupportBotEmbedUrl": "",
+        "botKey": "",
+        "customerSupportBotCollection": "",
+        "includeSites": includeSites,
+        "excludeSites": excludeSites,
+        "botDisplayName": this.manageBotForm.value.customerSupportBotName,
+        "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
+        "active": this.manageBotForm.value.active,
+        "deleted": this.manageBotForm.value.deleted
+      }
+      this.rest_api.saveCustomerBot(req_body).subscribe((res: any) => {
+        let response = res;
+        let bot_Name = req_body.customerSupportBotName;
         this.loader.hide();
-      }, 1000);
-    } else {
-      console.error('Record not found for update.');
-    }
+        if (response.errorMessage == undefined) {
+          this.toastService.showSuccess(bot_Name, 'save');
+          this.manageBotForm.reset();
+          this.hiddenPopUp = false;
+          this.getAllCustomerBots();
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }        
+      },(err: any) => {
+          this.loader.hide();
+          this.toastService.showError(this.toastMessages.saveError);
+        })
+  }
+    
+  updateCustomerSupportBot() {
+    this.loader.show();
+    const includeSites = this.manageBotForm.value.includeSites.join(';');
+    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    let cutomerBotId = this.updateOverlayData.customerSupportBotId
+    let req_body={
+        "customerSupportBotId": cutomerBotId,
+        "userId": "",
+        "tenantId": "",
+        "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
+        "greetingMessage": this.manageBotForm.value.greetingMessage,
+        "primaryPrompt": this.manageBotForm.value.primaryPrompt,
+        "respPrefix": this.manageBotForm.value.respPrefix,
+        "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
+        "customerSupportBotEmbedUrl": this.manageBotForm.value.customerSupportBotEmbedUrl,
+        "botKey": this.manageBotForm.value.botKey,
+        "customerSupportBotCollection": "",
+        "includeSites": includeSites,
+        "excludeSites": excludeSites,
+        "botDisplayName": this.manageBotForm.value.customerSupportBotName,
+        "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
+        "active": this.manageBotForm.value.active,
+        "deleted": this.manageBotForm.value.deleted
+      }
+      this.rest_api.updateCustomerBot(cutomerBotId, req_body).subscribe((res: any) => {
+        let response = res;
+        let bot_Name = req_body.customerSupportBotName;
+        this.loader.hide();
+        if (response.errorMessage == undefined) {
+          this.toastService.showSuccess(bot_Name, 'update');
+          this.manageBotForm.reset();
+          this.hiddenPopUp = false;
+          this.getAllCustomerBots();
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }        
+      },(err: any) => {
+          this.loader.hide();
+          this.toastService.showError(this.toastMessages.updateError);
+        })
   }
 
-  resetbotform() {
+  resetBotForm() {
+    const embedUrlValue = this.manageBotForm.get('customerSupportBotEmbedUrl').value;
+    const botKeyValue = this.manageBotForm.get('botKey').value;
     this.manageBotForm.reset();
-    this.manageBotForm.get('embedUrl').setValue('http://www.google.com');
-    this.manageBotForm.get('botKey').setValue('SampleKey');
+    this.manageBotForm.get('customerSupportBotEmbedUrl').setValue(embedUrlValue);
+    this.manageBotForm.get('botKey').setValue(botKeyValue);
   }
 
   closeOverlay(event: any) {
@@ -206,31 +271,30 @@ export class ManageCustomerBotComponent implements OnInit {
   }
 
   onBotContentTypeChange(selectedValue: any) {
-    const includeSitesControl = this.manageBotForm.get('include_sites');
-    const excludeSitesControl = this.manageBotForm.get('exclude_sites');
-    const isWebContentType = selectedValue === BotContentType.Web;
-
-    if (isWebContentType) {
-      includeSitesControl.enable();
-      excludeSitesControl.enable();
+    const includeSitesControl = this.manageBotForm.get('includeSites');
+    const excludeSitesControl = this.manageBotForm.get('excludeSites');
+    if (selectedValue == "WEB"){
+      this.manageBotForm.get('includeSites').enable();
+      this.manageBotForm.get('excludeSites').enable();
       includeSitesControl.setValidators([Validators.required]);
       excludeSitesControl.setValidators([Validators.required]);
-    } else {
-      includeSitesControl.disable();
-      excludeSitesControl.disable();
+    }else{
+      this.manageBotForm.get('includeSites').disable();
+      this.manageBotForm.get('excludeSites').disable();
       includeSitesControl.clearValidators();
       excludeSitesControl.clearValidators();
       includeSitesControl.reset();
       excludeSitesControl.reset();
     }
-
     includeSitesControl.updateValueAndValidity();
     excludeSitesControl.updateValueAndValidity();
   }
 
   openEzAsk_Chat(rowData: any) {
-    window.location.href = '<iframe src="https://ezflowezask.dev.epsoftinc.com/?q=0RsxA5iDRyJg2kIJF91sHykOFng0qfQo5WnfLahWspb%20C7QCS5JXREVmQoNxazwVDgcsKyI%202%2FzjdI5p9GgnxYHS91V%20NBNXtNg%3D%27" width="800" height="600" style="border:none;"></iframe>';
-  }  
+    const embedUrl = rowData.customerSupportBotEmbedUrl;
+    const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
+    window.open(fullUrl);
+  }
 
 semicolumn(event: KeyboardEvent) {
   if (event.key === ";") {

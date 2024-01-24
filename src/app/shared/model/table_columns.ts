@@ -250,8 +250,8 @@ export class columnList{
      //EzAsk Admin screens coloumns
      
       public manage_cutomer_support_bot_coloumns = [
-        {ColumnName: "manageBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "botContentType",DisplayName: "Bot Data Source Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "customerSupportBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "customerSupportBotSource",DisplayName: "Bot Data Source Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
         // {ColumnName: "isActive",DisplayName: "Active",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
