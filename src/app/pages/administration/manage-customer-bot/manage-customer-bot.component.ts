@@ -159,8 +159,14 @@ export class ManageCustomerBotComponent implements OnInit {
     includeSitesControl.updateValueAndValidity();
     excludeSitesControl.updateValueAndValidity();
     if (this.updateOverlayData) {
-      // this.updateOverlayData.includeSites = this.updateOverlayData.excludeSites.split(';');
-      // this.updateOverlayData.excludeSites = this.updateOverlayData.excludeSites.split(';');
+      if (typeof this.updateOverlayData.excludeSites === 'string') {
+        this.updateOverlayData.excludeSites = this.updateOverlayData.excludeSites.split(';');
+        this.updateOverlayData.includeSites = this.updateOverlayData.includeSites.split(';');
+      } else {
+        // Handle the case where excludeSites is not a string (e.g., set it to an empty array)
+        this.updateOverlayData.excludeSitesArray = [];
+        this.updateOverlayData.includeSitesArray = [];
+      }
       this.manageBotForm.patchValue(this.updateOverlayData);
     } else {
       console.error('update Overlay Data is undefined or null.');
@@ -169,8 +175,8 @@ export class ManageCustomerBotComponent implements OnInit {
 
   saveCustomerSupportBot() {
     this.loader.show();
-    // const includeSites = this.manageBotForm.value.includeSites.join(';');
-    // const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    const includeSites = this.manageBotForm.value.includeSites.join(';');
+    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
     let req_body={
         "createdDate": "",
         "customerSupportBotId": "",
@@ -184,8 +190,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "customerSupportBotEmbedUrl": "",
         "botKey": "",
         "customerSupportBotCollection": "",
-        "includeSites": this.manageBotForm.value.includeSites,
-        "excludeSites": this.manageBotForm.value.excludeSites,
+        "includeSites": includeSites,
+        "excludeSites": excludeSites,
         "botDisplayName": this.manageBotForm.value.customerSupportBotName,
         "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
         "active": this.manageBotForm.value.active,
@@ -211,8 +217,8 @@ export class ManageCustomerBotComponent implements OnInit {
     
   updateCustomerSupportBot() {
     this.loader.show();
-    // const includeSites = this.manageBotForm.value.includeSites.join(';');
-    // const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    const includeSites = this.manageBotForm.value.includeSites.join(';');
+    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
     let cutomerBotId = this.updateOverlayData.customerSupportBotId
     let req_body={
         "customerSupportBotId": cutomerBotId,
@@ -226,8 +232,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "customerSupportBotEmbedUrl": this.manageBotForm.value.customerSupportBotEmbedUrl,
         "botKey": this.manageBotForm.value.botKey,
         "customerSupportBotCollection": "",
-        "includeSites": this.manageBotForm.value.includeSites,
-        "excludeSites": this.manageBotForm.value.excludeSites,
+        "includeSites": includeSites,
+        "excludeSites": excludeSites,
         "botDisplayName": this.manageBotForm.value.customerSupportBotName,
         "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
         "active": this.manageBotForm.value.active,
