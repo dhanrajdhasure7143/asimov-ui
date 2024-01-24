@@ -1,0 +1,27 @@
+<div class="rpa-content-div">
+    <div class="row credential-search-tools">
+      <div class="env-data-tool credential-tools">
+        <div class="env-btn credential-btntool">
+          <button class="tsttooltipbtn" value="Create" id="addbtn" (click)="openCreateCredential()" pTooltip="New" tooltipPosition="top">
+            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"  alt="add" class="testplus"/>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div *ngIf="hiddenPopUp" > 
+    <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+      <!-- <app-rpa-sdk-form
+        [isCreateForm]="isCreateForm"
+        [hideLabels]="hideLables"
+        [credupdatedata]="credupdatedata"
+        (refreshTable)="refreshCredentialList($event)"
+        ></app-rpa-sdk-form> -->
+        <app-rpa-sdk-form></app-rpa-sdk-form>
+    </app-split-overlay>
+  </div>
+
+  <p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000" [closable]="false">
+  </p-confirmDialog>
+  <p-toast [style]="{marginTop: '50px'}"></p-toast>
