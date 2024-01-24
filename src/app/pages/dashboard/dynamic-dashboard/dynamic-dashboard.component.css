@@ -276,3 +276,14 @@ span.oopstxt label {
 .tdDateWidth{
     max-width: 155px;
 }
+
+#btn{
+    margin-top: 10px;
+    float: right;
+}
+
+#btn-viewProject {
+    display: flex;
+    justify-content: flex-end;
+}
+  
