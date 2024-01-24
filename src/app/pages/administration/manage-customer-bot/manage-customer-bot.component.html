@@ -23,7 +23,7 @@
         [columns_list]="columns_list" 
         (updateItem)="openUpdateOverlay($event)" 
         (openEzAsk)="openEzAsk_Chat($event)" 
-        (deleteItem)="deleteBot($event)"
+        (deleteItem)="deleteCustomerSupportBot($event)"
         [show_delete_btn]="true" 
         [show_edit_btn]="true" 
         [show_column_filter]="true" 
@@ -52,24 +52,24 @@
             <div class="row">
             <div class="form-group col pl-0">
               <label class="label-control">Bot Name<span class="star">*</span></label>
-              <input type="text" formControlName="manageBotName" pInputText placeholder="Enter bot name" maxlength="51"
+              <input type="text" formControlName="customerSupportBotName" pInputText placeholder="Enter bot name" maxlength="51"
                 class="form-control data">
               <span
-                *ngIf="manageBotForm.get('manageBotName').invalid && manageBotForm.get('manageBotName').touched && !manageBotForm.get('manageBotName').hasError('maxlength') && manageBotForm.get('manageBotName').value=='' && !manageBotForm.get('manageBotName').hasError('pattern')"
+                *ngIf="manageBotForm.get('customerSupportBotName').invalid && manageBotForm.get('customerSupportBotName').touched && !manageBotForm.get('customerSupportBotName').hasError('maxlength') && manageBotForm.get('customerSupportBotName').value=='' && !manageBotForm.get('customerSupportBotName').hasError('pattern')"
                 class="required">Bot Name Required</span>
               <span
-                *ngIf="manageBotForm.get('manageBotName').hasError('maxlength') && !manageBotForm.get('manageBotName').hasError('pattern')"
+                *ngIf="manageBotForm.get('customerSupportBotName').hasError('maxlength') && !manageBotForm.get('customerSupportBotName').hasError('pattern')"
                 class="required">Maximum of 50 characters</span>
-              <span *ngIf="manageBotForm.get('manageBotName').hasError('pattern')" class="required">Spaces and special
+              <span *ngIf="manageBotForm.get('customerSupportBotName').hasError('pattern')" class="required">Spaces and special
                 characters are not allowed (Excluding _ & -)</span>
             </div>
 
             <div class="form-group col pr-0">
               <label class="label-control">Bot Greeting Message<span class="star">*</span></label>
-              <input type="text" formControlName="botGreetingMessage" pInputText
+              <input type="text" formControlName="greetingMessage" pInputText
                 placeholder="Enter bot greeting message" class="form-control data">
               <span
-                *ngIf="manageBotForm.get('botGreetingMessage').invalid && manageBotForm.get('botGreetingMessage').touched"
+                *ngIf="manageBotForm.get('greetingMessage').invalid && manageBotForm.get('greetingMessage').touched"
                 class="required">Bot Greeting Message Required</span>
             </div>
           </div>
@@ -85,19 +85,19 @@
            
             <div class="form-group col pr-0">
               <label class="label-control">Response Prefix</label>
-              <input type="text" formControlName="responsePrefix" pInputText
+              <input type="text" formControlName="respPrefix" pInputText
                 placeholder="Enter response prefix" class="form-control data">
               <!-- <span
-                *ngIf="manageBotForm.get('responsePrefix').invalid && manageBotForm.get('responsePrefix').touched"
+                *ngIf="manageBotForm.get('respPrefix').invalid && manageBotForm.get('respPrefix').touched"
                 class="required">Response Prefix Required</span> -->
             </div>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="!isCreate">
             <div class="form-group col pl-0">
               <label class="label-control">Bot Embed URL<span class="star">*</span></label>
-              <input type="text" formControlName="embedUrl" placeholder="Enter embed URL"
+              <input type="text" formControlName="customerSupportBotEmbedUrl" placeholder="Enter embed URL"
                 class="form-control" readonly>
-              <span *ngIf="manageBotForm.get('embedUrl').invalid && manageBotForm.get('embedUrl').touched"
+              <span *ngIf="manageBotForm.get('customerSupportBotEmbedUrl').invalid && manageBotForm.get('customerSupportBotEmbedUrl').touched"
                 class="required">Embed URL Required</span>
             </div>
 
@@ -111,69 +111,71 @@
           </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <input type="checkbox" formControlName="isActive">
+                <input type="checkbox" formControlName="hallucinationAllowed">
                 <span class="ml-2">Is Hallucination allowed</span>
               </div>
               <div class="form-group col-md-3">
-                <input type="checkbox" formControlName="isHallucination">
+                <input type="checkbox" formControlName="active">
                 <span class="ml-2">Is Active</span>
               </div>
               <div class="form-group col-md-4">
-                <input type="checkbox" formControlName="isDelete">
+                <input type="checkbox" formControlName="deleted">
                 <span class="ml-2">Is Delete</span>
               </div>
             </div>
 
             <!-- <div class="form-group col-md-12 p-0">
               <label class="label-control">Bot Content Type<span class="star">*</span></label>
-              <input type="text" formControlName="botContentType" pInputText placeholder="Enter bot content source"
+              <input type="text" formControlName="customerSupportBotSource" pInputText placeholder="Enter bot content source"
                 class="form-control data">
               <span
-                *ngIf="manageBotForm.get('botContentType').invalid && manageBotForm.get('botContentType').touched"
+                *ngIf="manageBotForm.get('customerSupportBotSource').invalid && manageBotForm.get('customerSupportBotSource').touched"
                 class="required">Bot Content Source Required</span>
             </div> -->
 
             <div class="form-group col-md-12 p-0">
               <label class="label-control">Bot Content Type<span class="star">*</span></label>
-              <p-dropdown formControlName="botContentType" [options]="botContentOptions" placeholder="Select bot content type"
+              <p-dropdown formControlName="customerSupportBotSource" [options]="botContentOptions" placeholder="Select bot content type"
               (onChange)="onBotContentTypeChange($event.value)"></p-dropdown>
-              <span *ngIf="manageBotForm.get('botContentType').invalid && manageBotForm.get('botContentType').touched"
+              <span *ngIf="manageBotForm.get('customerSupportBotSource').invalid && manageBotForm.get('customerSupportBotSource').touched"
                     class="required">Bot Content Type Required</span>
             </div>
             
             <div class="form-group col-md-12 p-0">
-              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('botContentType').value == 'Web'">*</span></label>
-              <!-- <input type="text" formControlName="include_sites" placeholder="Enter Include Sites"
+              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+              <!-- <input type="text" formControlName="includeSites" placeholder="Enter Include Sites"
                 class="form-control data" > -->
                 <div class="p-fluid">
-                  <p-chips formControlName="include_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
-                  <!-- <p-chips formControlName="include_sites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  <p-chips formControlName="includeSites" separator="," placeholder="Enter include sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <input formControlName="includeSites" separator="," placeholder="Enter Include sites" class="form-control"  styleClass="customChip"> -->
+                  <!-- <p-chips formControlName="includeSites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
                   
                 </div>
-              <span *ngIf="manageBotForm.get('include_sites').invalid && manageBotForm.get('include_sites').touched"
+              <span *ngIf="manageBotForm.get('includeSites').invalid && manageBotForm.get('includeSites').touched"
                 class="required">Includes Sites Required</span>
             </div>
 
             <div class="form-group col-md-12 p-0">
-              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('botContentType').value == 'Web'">*</span></label>
-              <!-- <input type="text" formControlName="exclude_sites" placeholder="Enter Exclude Sites"
+              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+              <!-- <input type="text" formControlName="excludeSites" placeholder="Enter Exclude Sites"
                 class="form-control data" > -->
                 <div class="p-fluid">
-                  <p-chips formControlName="exclude_sites" separator="," placeholder="Hint: a, b, c"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
-                  <!-- <p-chips formControlName="exclude_sites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                  <p-chips formControlName="excludeSites" separator="," placeholder="Enter exclude sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                  <!-- <input formControlName="excludeSites" separator="," placeholder="Enter Exclude sites" class="form-control" styleClass="customChip"> -->
+                  <!-- <p-chips formControlName="excludeSites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
                   
                 </div>
-              <span *ngIf="manageBotForm.get('exclude_sites').invalid && manageBotForm.get('exclude_sites').touched"
+              <span *ngIf="manageBotForm.get('excludeSites').invalid && manageBotForm.get('excludeSites').touched"
                 class="required">Exclude Sites Required</span>
             </div>
 
           </div>
         </form>
         <div class="createform-footer">
-          <button (click)="resetbotform()" class="btn new-cancelbtn">Reset</button>
-          <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="formSubmit()"
+          <button (click)="resetBotForm()" class="btn new-cancelbtn">Reset</button>
+          <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="saveCustomerSupportBot()"
             class="btn bluebg-button">Save</button>
-          <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateDatails()"
+          <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateCustomerSupportBot()"
             class="btn bluebg-button">Update</button>
         </div>
       </div>
