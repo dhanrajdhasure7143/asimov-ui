@@ -123,6 +123,11 @@ export class RpaHomeComponent implements OnInit {
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
   isConfigurationEnable : boolean = false;
+  isExportBot:boolean = false;
+  exportType:any;
+  selectedTskaList:any[]=[];
+  bot_tasksList:any[]=[];
+  isExportDisable:boolean = false;
 
   constructor(
     private rest: RestApiService,
@@ -605,8 +610,9 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
-  exportBot(botId)
-  {
+  exportBot(botId){
+    this.isExportBot = true
+
     this.rest.getbotdata(botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
       {
@@ -886,6 +892,18 @@ importBot()
       S4() +
       S4()
     );
+  }
+
+  closeExportOverlay(event) {
+    this.isExportBot = event;
+  }
+
+  onchangeCustomConfig(){
+        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTskaList = []);
+  }
+  
+  ontaskListChange(){
+    this. selectedTskaList .length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
   }
 }
 
