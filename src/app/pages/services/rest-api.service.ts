@@ -1852,4 +1852,9 @@ saveProcessInfo(id,body:any){
 getbotTaskList(botId){
   return this.http.get("/rpa-service/list-of-actions/"+botId);
 }
+
+getEncryptedbotData(botId,body){
+  return this.http.post("/rpa-service/get-bot/"+botId, body);
+}
+
 }
