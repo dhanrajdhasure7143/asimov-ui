@@ -71,13 +71,15 @@
                <ng-container *ngFor="let widget of dashboardData.widgets;let i = index">
                   <div class="pl-0 pr-24" [ngClass]="getDynamicClasses(widget)" >
                      <div class="well1-dynmic" [ngClass]="getDynamicClasses_one(widget)">
+                        <!-- this is for ROI -->
                         <div class="row align-menubtn widgetlabel" *ngIf="isLabelWidget(widget)">
                            <!-- [ngClass]="{'widgetlabel': isLabelWidget(widget)}" -->
                            <div class="newwidgettitle" >
                               <img src="./../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" />
                               <h5 class="graph-text">{{widget.name}}</h5>  
                            </div>
-                           <div class="newwidgetmore" *ngIf="!widget.extraWidget">
+                           <!-- *ngIf="widget.extraWidget" -->
+                           <div class="newwidgetmore">
                               <button class="btn btn-dots widgetactions" type="button" (click)="onOpenConfigOptoons(widget);menu1.toggle($event)" >
                                  <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
                                  <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
