@@ -1852,4 +1852,8 @@ saveProcessInfo(id,body:any){
 getbotTaskList(botId){
   return this.http.get("/rpa-service/list-of-actions/"+botId);
 }
+
+getCustomTasks(){
+  return this.http.get('/rpa-service/custom-task/listCustomTasks')
+}
 }
