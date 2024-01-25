@@ -60,4 +60,8 @@ export class ToasterService {
   showWarn(message:string){
     this.messageService.add({ severity:'warn', summary:'Warning', detail: message })
   }
+
+  toastSuccess(message){
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: message});
+  }
 }

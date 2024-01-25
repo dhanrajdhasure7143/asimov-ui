@@ -586,12 +586,12 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onOpenConfigOptoons(widget){
-    if(widget.widget_type == "label"){
+    if(widget.widget_type == "label" && widget.extraWidget){
       this.items = [
-        {label: "Remove",command: (e) => {this.onRmoveWidget();}},
+        // {label: "Remove",command: (e) => {this.onRmoveWidget();}},
         {label: "Configure",command: (e) => {this.toggleConfigureDropdown(e)}},
       ];
-    }else if(widget.widget_type =="Table"){
+    }else if(widget.widget_type =="Table" || (widget.widget_type == "label"  && !widget.extraWidget)){
       this.items = [
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       ];

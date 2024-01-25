@@ -123,13 +123,13 @@ export class RpaHomeComponent implements OnInit {
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
   isConfigurationEnable : boolean = false;
-  showLoader:boolean = true;
+  showLoader:boolean = false;
   isExportBot:boolean = false;
   exportType:any;
   selectedTaskList:any[]=[];
   bot_tasksList:any[]=[];
   isExportDisable:boolean = false;
-  exportBotName:any;
+  bot_toExport:any={};
 
   constructor(
     private rest: RestApiService,
@@ -616,11 +616,12 @@ export class RpaHomeComponent implements OnInit {
     this.isExportBot = true;
     this.exportType = null;
     this.selectedTaskList =[];
-    this.exportBotName = item.botName + " (V"+ item.version_new +")"
+    this.bot_toExport={};
+    this.bot_toExport["botName"]= item.botName + " (V"+ item.version_new +")"
+    this.bot_toExport["botId"]= item.botId
     this.rest.getbotTaskList(item.botId).subscribe((res:any)=>{
       this.bot_tasksList = res.actionItems
     })
-    return
     this.rest.getbotdata(item.botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
       {
@@ -903,21 +904,7 @@ importBot()
   }
 
   closeLoader(){
-    this.downloadEncryptedData("hfuwefhuhwefhwef jefwejfiwefij")
-  }
-
-  downloadEncryptedData(encryptedData): void {
-    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
-
-    const downloadLink = document.createElement('a');
-    downloadLink.href = window.URL.createObjectURL(blob);
-    downloadLink.download = 'encrypted_data.txt'; // Set the desired filename
-
-    document.body.appendChild(downloadLink);
-
-    downloadLink.click();
-
-    document.body.removeChild(downloadLink);
+    // this.downloadEncryptedData("hfuwefhuhwefhwef jefwejfiwefij")
   }
   
   closeExportOverlay(event) {
@@ -925,11 +912,43 @@ importBot()
   }
 
   onchangeCustomConfig(){
-        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTaskList = []);
+        this.exportType === 'customConfig' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTaskList = []);
   }
   
   ontaskListChange(){
     this.selectedTaskList.length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
+  }
+
+  getEncryptedData(){
+    let req_body={
+      "exportType": this.exportType,
+      "taskList": this.selectedTaskList
+    }
+    this.showLoader = true;
+    this.isExportBot = false;
+    this.rest.getEncryptedbotData(this.bot_toExport.botId,req_body).subscribe((res:any)=>{
+      console.log(res);
+      let data:any = res;
+      if(data.message){
+        this.downloadEncryptedData(data.encryptedData)
+        this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
+        this.showLoader = false;
+      }
+    },err=>{
+      this.toastService.showError(this.bot_toExport.botName+" "+this.toastMessages.exportError);
+      this.showLoader = false;
+    })
+  }
+
+  downloadEncryptedData(encryptedData): void {
+    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.download = this.bot_toExport.botName+'.txt'; // Set the desired filename
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    this.showLoader = false;
   }
 }
 
