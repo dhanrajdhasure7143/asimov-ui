@@ -291,7 +291,8 @@ export class ManageCustomerBotComponent implements OnInit {
   }
 
   openEzAsk_Chat(rowData: any) {
-    const embedUrl = rowData.customerSupportBotEmbedUrl;
+    // const embedUrl = rowData.customerSupportBotEmbedUrl;
+    const embedUrl = rowData.botKey;
     const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
     window.open(fullUrl);
   }
