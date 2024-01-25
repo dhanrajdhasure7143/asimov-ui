@@ -619,3 +619,14 @@
 </p-confirmDialog>
 <!-- <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
 <p-toast  [style]="{marginTop: '50px'}" key="rpa-home"></p-toast> -->
+
+
+<div *ngIf="showLoader" class="loader-overlay">
+    <div class="close-button-container">
+      <button class="close-button" (click)="closeLoader()">X</button>
+    </div>
+    <div class="overlay-content">
+      <p class="loading-text">Exporting Bot ...</p>
+    </div>
+    <span class="loader"></span>
+  </div>

@@ -123,6 +123,7 @@ export class RpaHomeComponent implements OnInit {
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
   isConfigurationEnable : boolean = false;
+  showLoader:boolean = true;
 
   constructor(
     private rest: RestApiService,
@@ -886,6 +887,24 @@ importBot()
       S4() +
       S4()
     );
+  }
+
+  closeLoader(){
+    this.downloadEncryptedData("hfuwefhuhwefhwef jefwejfiwefij")
+  }
+
+  downloadEncryptedData(encryptedData): void {
+    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.download = 'encrypted_data.txt'; // Set the desired filename
+
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
   }
 }
 
