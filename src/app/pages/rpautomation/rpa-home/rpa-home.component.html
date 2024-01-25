@@ -656,14 +656,13 @@
                         <label class="export-type-label" for="configurations3">Custom Configurations</label>
                     </div>
                 </div>
-                    <div class="form-group col pr-0" *ngIf="exportType == 'custom_configurations'">
-                        <label class="">Tasks List<span class="star">*</span></label>
-                    <p-multiSelect [options]="bot_tasksList" name="depart" (onChange)="ontaskListChange()"
-                        [(ngModel)]="selectedTskaList" #depart="ngModel" id="depart" optionLabel="categoryName"
-                        optionValue="categoryId" [filter]="true" [style]="{'width':'100%'}" filterBy="categoryName"
+                    <div class="form-group col pr-0" style="margin-left: 20px;" *ngIf="exportType == 'custom_configurations'">
+                        <label class="label-control">Tasks List<span class="star">*</span></label>
+                    <p-multiSelect [options]="bot_tasksList" name="tasklist" (onChange)="ontaskListChange()"
+                        [(ngModel)]="selectedTaskList" #depart="ngModel" id="tasklist" optionLabel="taskName"
+                        optionValue="tMetaId" [filter]="true" [style]="{'width':'50%'}" filterBy="taskName"
                         placeholder="Select Task" required>
                     </p-multiSelect>
-                        
                     </div>
                 </form>
                 <div class="createform-footer">

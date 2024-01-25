@@ -1848,4 +1848,8 @@ getProcessFrequencies(){
 saveProcessInfo(id,body:any){
   return this.http.put("/platform-service/project/save-process-info/"+id, body)
 }
+
+getbotTaskList(botId){
+  return this.http.get("/rpa-service/list-of-actions/"+botId);
+}
 }

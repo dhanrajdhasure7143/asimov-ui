@@ -126,7 +126,7 @@ export class RpaHomeComponent implements OnInit {
   showLoader:boolean = true;
   isExportBot:boolean = false;
   exportType:any;
-  selectedTskaList:any[]=[];
+  selectedTaskList:any[]=[];
   bot_tasksList:any[]=[];
   isExportDisable:boolean = false;
   exportBotName:any;
@@ -613,9 +613,13 @@ export class RpaHomeComponent implements OnInit {
   }
 
   exportBot(item){
-    console.log(item)
     this.isExportBot = true;
-    this.exportBotName = item.botName + " ("+ item.version_new +")"
+    this.exportType = null;
+    this.selectedTaskList =[];
+    this.exportBotName = item.botName + " (V"+ item.version_new +")"
+    this.rest.getbotTaskList(item.botId).subscribe((res:any)=>{
+      this.bot_tasksList = res.actionItems
+    })
     return
     this.rest.getbotdata(item.botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
@@ -921,11 +925,11 @@ importBot()
   }
 
   onchangeCustomConfig(){
-        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTskaList = []);
+        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTaskList = []);
   }
   
   ontaskListChange(){
-    this. selectedTskaList .length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
+    this.selectedTaskList.length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
   }
 }
 
