@@ -8,7 +8,28 @@
         </div>
       </div>
     </div>
+    <div class="col-md-12 con-envr p-0">
+        <div class="credential-tablegrid">
+          <app-dynamic-table
+            [table_data]="customTasks"
+            [screenTable]="'common'"
+            [columns_list]="columns_list"
+            [checkBoxShow]="true"
+            (selectedData)="readSelectedData($event)"
+            [show_column_filter]="true"
+            [show_clear_filter]="true"
+            [show_search_field]="true"
+            show_edit_btn="true"
+            show_delete_btn="true"
+            (onRowDoubleClick)="updateCredential($event)"
+            (updateItem)="updateCredential($event)" 
+            (deleteItem)="deleteEmailByRow($event)"
+    
+          ></app-dynamic-table>
+        </div>
+      </div>
 </div>
+
 
 <div *ngIf="hiddenPopUp" > 
     <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
