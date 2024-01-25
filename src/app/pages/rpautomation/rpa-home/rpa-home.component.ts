@@ -124,6 +124,12 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild("dt1",{static:true}) table:Table
   isConfigurationEnable : boolean = false;
   showLoader:boolean = true;
+  isExportBot:boolean = false;
+  exportType:any;
+  selectedTskaList:any[]=[];
+  bot_tasksList:any[]=[];
+  isExportDisable:boolean = false;
+  exportBotName:any;
 
   constructor(
     private rest: RestApiService,
@@ -606,9 +612,12 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
-  exportBot(botId)
-  {
-    this.rest.getbotdata(botId).subscribe((response:any)=>{
+  exportBot(item){
+    console.log(item)
+    this.isExportBot = true;
+    this.exportBotName = item.botName + " ("+ item.version_new +")"
+    return
+    this.rest.getbotdata(item.botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
       {
         let botDetails:any={
@@ -905,6 +914,18 @@ importBot()
     downloadLink.click();
 
     document.body.removeChild(downloadLink);
+  }
+  
+  closeExportOverlay(event) {
+    this.isExportBot = event;
+  }
+
+  onchangeCustomConfig(){
+        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTskaList = []);
+  }
+  
+  ontaskListChange(){
+    this. selectedTskaList .length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
   }
 }
 

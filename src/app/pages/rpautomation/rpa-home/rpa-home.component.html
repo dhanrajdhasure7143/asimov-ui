@@ -172,7 +172,7 @@
                                                     <img src="../../../../assets/images-n/gridicons/delete-hover.svg" alt="" class="testplus hover-icon"> 
                                                     <!-- <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus "> -->
                                                 </button>
-                                                <button pTooltip="Export Bot" tooltipPosition="top" (click)="exportBot(rowData['botId'])">
+                                                <button pTooltip="Export Bot" tooltipPosition="top" (click)="exportBot(rowData)">
                                                     <img src="../../../../assets/images-n/gridicons/download-default.svg" alt="" class="testplus default-icon"> 
                                                     <img src="../../../../assets/images-n/gridicons/download-hover.svg" alt="" class="testplus hover-icon"> 
                                                     <!-- <img src="../../../../assets/images/Projects/Download.svg" alt="" class="testplus">  -->
@@ -621,7 +621,7 @@
 <p-toast  [style]="{marginTop: '50px'}" key="rpa-home"></p-toast> -->
 
 
-<div *ngIf="showLoader" class="loader-overlay">
+<!-- <div *ngIf="showLoader" class="loader-overlay">
     <div class="close-button-container">
       <button class="close-button" (click)="closeLoader()">X</button>
     </div>
@@ -629,4 +629,49 @@
       <p class="loading-text">Exporting Bot ...</p>
     </div>
     <span class="loader"></span>
+  </div> -->
+
+<div *ngIf="isExportBot" > 
+    <app-split-overlay (closeOverlay)="closeExportOverlay($event)"  >
+
+        <div class="h-100">
+            <div class="create-header">
+                <h3>Export Bot</h3>
+            </div>
+            <div class="createform-overlay">
+                <h5 class="export-bot">Bot Name: <strong>{{exportBotName}}</strong></h5>
+                <form class="h-100">
+                <div class="form-group col pr-0">
+                    <h5 style="padding: 15px;">Use below any one option to export the bot</h5>
+                    <div class="p-field-radiobutton form-group col">
+                        <p-radioButton name="configurations" value="with_configurations" (onClick)="onchangeCustomConfig()" [(ngModel)]="exportType" inputId="configurations1"></p-radioButton>
+                        <label class="export-type-label" for="configurations1">With Configurations</label>
+                    </div>
+                    <div class="p-field-radiobutton form-group col">
+                        <p-radioButton name="configurations" value="without_configurations" (onClick)="onchangeCustomConfig()" [(ngModel)]="exportType" inputId="configurations2"></p-radioButton>
+                        <label class="export-type-label" for="configurations2">Without Configurations</label>
+                    </div>
+                    <div class="p-field-radiobutton form-group col">
+                        <p-radioButton name="configurations" value="custom_configurations" (onClick)="onchangeCustomConfig()" [(ngModel)]="exportType" inputId="configurations3"></p-radioButton>
+                        <label class="export-type-label" for="configurations3">Custom Configurations</label>
+                    </div>
+                </div>
+                    <div class="form-group col pr-0" *ngIf="exportType == 'custom_configurations'">
+                        <label class="">Tasks List<span class="star">*</span></label>
+                    <p-multiSelect [options]="bot_tasksList" name="depart" (onChange)="ontaskListChange()"
+                        [(ngModel)]="selectedTskaList" #depart="ngModel" id="depart" optionLabel="categoryName"
+                        optionValue="categoryId" [filter]="true" [style]="{'width':'100%'}" filterBy="categoryName"
+                        placeholder="Select Task" required>
+                    </p-multiSelect>
+                        
+                    </div>
+                </form>
+                <div class="createform-footer">
+                    <button (click)="closeExportOverlay(false)" class="btn new-cancelbtn">Cancel</button>
+                    <button [disabled]="exportType == null || isExportDisable" class="btn bluebg-button">Export</button>
+                </div>
+            </div>
+        </div>
+    
+    </app-split-overlay>
   </div>
