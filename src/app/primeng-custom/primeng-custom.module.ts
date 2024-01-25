@@ -45,6 +45,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {SkeletonModule} from 'primeng/skeleton';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [],
@@ -93,7 +94,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     ToggleButtonModule,
     SplitButtonModule,
     SkeletonModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ProgressSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -140,7 +142,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     ToggleButtonModule,
     SplitButtonModule,
     SkeletonModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ProgressSpinnerModule
   ],
   providers: [ConfirmationService, MessageService]
 })

@@ -123,11 +123,13 @@ export class RpaHomeComponent implements OnInit {
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
   isConfigurationEnable : boolean = false;
+  showLoader:boolean = true;
   isExportBot:boolean = false;
   exportType:any;
-  selectedTskaList:any[]=[];
+  selectedTaskList:any[]=[];
   bot_tasksList:any[]=[];
   isExportDisable:boolean = false;
+  exportBotName:any;
 
   constructor(
     private rest: RestApiService,
@@ -610,10 +612,16 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
-  exportBot(botId){
-    this.isExportBot = true
-
-    this.rest.getbotdata(botId).subscribe((response:any)=>{
+  exportBot(item){
+    this.isExportBot = true;
+    this.exportType = null;
+    this.selectedTaskList =[];
+    this.exportBotName = item.botName + " (V"+ item.version_new +")"
+    this.rest.getbotTaskList(item.botId).subscribe((res:any)=>{
+      this.bot_tasksList = res.actionItems
+    })
+    return
+    this.rest.getbotdata(item.botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
       {
         let botDetails:any={
@@ -894,16 +902,34 @@ importBot()
     );
   }
 
+  closeLoader(){
+    this.downloadEncryptedData("hfuwefhuhwefhwef jefwejfiwefij")
+  }
+
+  downloadEncryptedData(encryptedData): void {
+    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.download = 'encrypted_data.txt'; // Set the desired filename
+
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
+  }
+  
   closeExportOverlay(event) {
     this.isExportBot = event;
   }
 
   onchangeCustomConfig(){
-        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTskaList = []);
+        this.exportType === 'custom_configurations' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTaskList = []);
   }
   
   ontaskListChange(){
-    this. selectedTskaList .length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
+    this.selectedTaskList.length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
   }
 }
 
