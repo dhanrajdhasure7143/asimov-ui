@@ -51,7 +51,7 @@
                 <a class="link">Change Email</a></button>
         </p>
     </div>
-    <button class="cancel-subscrip" (click)="subscriptionCancel()">
+    <button class="cancel-subscrip" (click)="subscriptionCancel()" [disabled]="error">
             <a class="link">Cancel Subscription</a>
     </button>
     <p class="userhint">

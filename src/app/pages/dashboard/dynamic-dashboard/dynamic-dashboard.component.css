@@ -186,12 +186,17 @@ span.oopstxt label {
 
 .widgetValue h2{
     color: #098de6;
-    font-size: 3rem;
-    cursor: pointer;
     text-align: center !important;
     margin-top: 25px;
 }
-
+.widgetValue h2 span {
+    position: relative;
+    font-size: 3rem;
+    font-weight: 450 !important;
+}
+.widgetValue h2 span:hover {
+    cursor: pointer;
+}
 .widgetlabel h5{
     font-weight:bold;
     font-size: 22px;
@@ -211,3 +216,74 @@ span.oopstxt label {
     width: 100%;
     text-align: center;
 }
+
+.widgetValue h2 span.time{
+    font-size: 25px; 
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+.widgetValue h2 span.time:hover {
+    border-bottom: none;
+}
+
+.cross-mark {
+    width: 50px !important;
+    max-width: 40px !important;
+    cursor: pointer;
+}
+
+.no-cursor-pointer td {
+    cursor: default !important;
+}
+
+.no-cursor-pointer{
+    cursor: default !important;
+}
+
+.widgetValue h2 .timeSavedHrs{
+    margin-left: 50px !important;
+}
+
+.widgetValue h2 span:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    width: 100%;
+    height: 2px;
+    background-color: #098de6;
+}
+
+.widgetValue h2 span.time:hover::after {
+    content: none;
+}
+
+.headerWidth{
+    max-width: 100px;
+    cursor: default !important;
+}
+
+.headerWidth_{
+    max-width: 115px;
+    cursor: default !important;
+}
+
+.tdWidth{
+    max-width: 135px;
+}
+
+.tdDateWidth{
+    max-width: 155px;
+}
+
+#btn{
+    margin-top: 10px;
+    float: right;
+}
+
+#btn-viewProject {
+    display: flex;
+    justify-content: flex-end;
+}
+  

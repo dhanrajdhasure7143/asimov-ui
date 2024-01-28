@@ -16,6 +16,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import {ConfirmationService } from "primeng/api";
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { environment } from 'src/environments/environment';
 declare var $: any;
 
 @Component({
@@ -121,6 +122,14 @@ export class RpaHomeComponent implements OnInit {
   };
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table
+  isConfigurationEnable : boolean = false;
+  showLoader:boolean = false;
+  isExportBot:boolean = false;
+  exportType:any;
+  selectedTaskList:any[]=[];
+  bot_tasksList:any[]=[];
+  isExportDisable:boolean = false;
+  bot_toExport:any={};
 
   constructor(
     private rest: RestApiService,
@@ -207,6 +216,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
+    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled
   }
 
   botdelete(bot) {
@@ -602,9 +612,17 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
-  exportBot(botId)
-  {
-    this.rest.getbotdata(botId).subscribe((response:any)=>{
+  exportBot(item){
+    this.isExportBot = true;
+    this.exportType = null;
+    this.selectedTaskList =[];
+    this.bot_toExport={};
+    this.bot_toExport["botName"]= item.botName + " (V"+ item.version_new +")"
+    this.bot_toExport["botId"]= item.botId
+    this.rest.getbotTaskList(item.botId).subscribe((res:any)=>{
+      this.bot_tasksList = res.actionItems
+    })
+    this.rest.getbotdata(item.botId).subscribe((response:any)=>{
       if(response.errorMessage==undefined)
       {
         let botDetails:any={
@@ -620,7 +638,9 @@ export class RpaHomeComponent implements OnInit {
               delete attrItem.botTaskId;
               delete attrItem.attrId;
               delete attrItem.botId;
-              attrItem.attrValue="";
+              if(!this.isConfigurationEnable){
+                attrItem.attrValue="";
+              }
               return attrItem;
             })
             return item;
@@ -881,6 +901,54 @@ importBot()
       S4() +
       S4()
     );
+  }
+
+  closeLoader(){
+    // this.downloadEncryptedData("hfuwefhuhwefhwef jefwejfiwefij")
+  }
+  
+  closeExportOverlay(event) {
+    this.isExportBot = event;
+  }
+
+  onchangeCustomConfig(){
+        this.exportType === 'customConfig' ? (this.isExportDisable = true) : (this.isExportDisable = false, this.selectedTaskList = []);
+  }
+  
+  ontaskListChange(){
+    this.selectedTaskList.length >0 ? this.isExportDisable= false : this.isExportDisable= true; 
+  }
+
+  getEncryptedData(){
+    let req_body={
+      "exportType": this.exportType,
+      "taskList": this.selectedTaskList
+    }
+    this.showLoader = true;
+    this.isExportBot = false;
+    this.rest.getEncryptedbotData(this.bot_toExport.botId,req_body).subscribe((res:any)=>{
+      console.log(res);
+      let data:any = res;
+      if(data.message){
+        this.downloadEncryptedData(data.encryptedData)
+        this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
+        this.showLoader = false;
+      }
+    },err=>{
+      this.toastService.showError(this.bot_toExport.botName+" "+this.toastMessages.exportError);
+      this.showLoader = false;
+    })
+  }
+
+  downloadEncryptedData(encryptedData): void {
+    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.download = this.bot_toExport.botName+'.txt'; // Set the desired filename
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    this.showLoader = false;
   }
 }
 

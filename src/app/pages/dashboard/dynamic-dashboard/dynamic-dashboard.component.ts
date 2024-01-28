@@ -44,6 +44,13 @@ export class DynamicDashboardComponent implements OnInit {
   processInfo: any[] = [];
   showTableData: boolean = true;
   widgetClass: any = 'graph1';
+  public userRoles: any;
+  public name: any;
+  email: any;
+  showWidgetValue: boolean = false;
+  projects_list: any[]=[];
+  selected_project:any;
+
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -69,12 +76,17 @@ export class DynamicDashboardComponent implements OnInit {
     //   {label: "Delete",command: () => { this.deletedashbord()}},
     // ];
     if (this._paramsData.dashboardId === undefined) {
-         this.changeToDefaultDashBoard();
+      this.changeToDefaultDashBoard();
 
     } else {
-         this.getListOfDashBoards();
+      this.getListOfDashBoards();
     }
-    this.getInterval()
+    this.getInterval();
+    this.userRoles = localStorage.getItem("userRole")
+    this.userRoles = this.userRoles.split(',');
+    this.name = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
+    this.email = localStorage.getItem('ProfileuserId');
+    this.getallProjects(this.userRoles,this.name,this.email);
   }
 
   openConfiguration(widget: any) {
@@ -122,9 +134,9 @@ export class DynamicDashboardComponent implements OnInit {
         // res.data[0].widgetData.datasets[0]["borderWidth"] = 2
         // borderColor: 'white', // color of the stroke
         // var options = {
-      //     cutoutPercentage: 80, // adjust the cutout to show the stroke
-      //     // additional options for the chart
-      // };
+        //     cutoutPercentage: 80, // adjust the cutout to show the stroke
+        //     // additional options for the chart
+        // };
         // borderWidth: 2 
         if(res.data[0].widget_type != "Bar"){
           res.data[0]["chartOptions"].onClick = this.handlePieChartClick.bind(this,res.data[0].widgetData.labels,res.data[0].childId)
@@ -155,7 +167,7 @@ export class DynamicDashboardComponent implements OnInit {
               return [];
             }
 
-           }
+          }
         }
         if(res.data[0].childId == 2){
           res.data[0].chartOptions.plugins["tooltip"] = {
@@ -195,7 +207,7 @@ export class DynamicDashboardComponent implements OnInit {
         if (response.code == 4200) {
           this.toastService.showSuccess(existingdashboard,'update');
           this.replaceURL();
-        this.inplace.deactivate();
+          this.inplace.deactivate();
         }
         if (response.code == 8010) {
           this.selectedDashBoardName = existingdashboard;
@@ -203,7 +215,7 @@ export class DynamicDashboardComponent implements OnInit {
           this.toastService.showError(response.message+'!');
         }
       },err=>{
-    this.inplace.deactivate();
+        this.inplace.deactivate();
         this.toastService.showError(this.toastMessages.updateError);
       });
   }
@@ -280,11 +292,11 @@ export class DynamicDashboardComponent implements OnInit {
     // this.selectedDashBoard = this.selectedDashBoard.defaultDashboard;
     dashboard["defaultDashboard"] = true;
     this.rest.updateDashBoardNamed(dashboard).subscribe((response: any) => {
-        this.getListOfDashBoards();
-        this.toastService.showSuccess('Dashboard','update');
-      },err=>{
-        this.toastService.showError(this.toastMessages.updateError);
-      });
+      this.getListOfDashBoards();
+      this.toastService.showSuccess('Dashboard','update');
+    },err=>{
+      this.toastService.showError(this.toastMessages.updateError);
+    });
   }
 
   deletedashbord() {
@@ -292,7 +304,7 @@ export class DynamicDashboardComponent implements OnInit {
       this.confirmationService.confirm({
         message: "Change your default dashboard before deleting it.",
         header: "Info",
-       
+
         rejectVisible: false,
         acceptLabel: "Ok",
         accept: () => {},
@@ -305,7 +317,7 @@ export class DynamicDashboardComponent implements OnInit {
     this.confirmationService.confirm({
       message: confrmMessage,
       header: "Are you sure?",
-     
+
       accept: () => {
         this.loader.show();
         let dashboardName = this.selectedDashBoard.dashboardName
@@ -323,19 +335,19 @@ export class DynamicDashboardComponent implements OnInit {
     this.rest.getDashBoardsList().subscribe((res: any) => {
       this.dashbordlist = res.data;
       if(this.dashbordlist.length>=1){
-      this.selectedDashBoard = this.dashbordlist.find(
-        (item) => item.defaultDashboard == true
-      );
-      this.replaceURL();
-      setTimeout(() => {
-        this.selecteddashboard = this.selectedDashBoard
-      }, 100);
-      this.selectedDashBoardName = this.selectedDashBoard.dashboardName
-      this.getDashBoardData(this.selectedDashBoard.id,true);
-    }else{
-      this.loader.hide();
-      this.router.navigate(["/pages/dashboard/create-dashboard"])
-    }
+        this.selectedDashBoard = this.dashbordlist.find(
+          (item) => item.defaultDashboard == true
+        );
+        this.replaceURL();
+        setTimeout(() => {
+          this.selecteddashboard = this.selectedDashBoard
+        }, 100);
+        this.selectedDashBoardName = this.selectedDashBoard.dashboardName
+        this.getDashBoardData(this.selectedDashBoard.id,true);
+      }else{
+        this.loader.hide();
+        this.router.navigate(["/pages/dashboard/create-dashboard"])
+      }
     });
   }
 
@@ -351,7 +363,7 @@ export class DynamicDashboardComponent implements OnInit {
           if(element.childId == 1){
             element.widgetData.datasets[0]["backgroundColor"] = this.execution_Status
           }else{
-          element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
+            element.widgetData.datasets[0]["backgroundColor"] = this.chartColors
           }
           if(element.widget_type != "Bar"){
             element["chartOptions"].plugins.legend["labels"] ={
@@ -362,12 +374,12 @@ export class DynamicDashboardComponent implements OnInit {
                   return data.labels.map(function (label, i) {
                     var ds = data.datasets[0];
                     // let value;
-                  // if(element.childId == 2){
-                  //   value = Math.floor(Number(ds.data[i]) / 60) +"Min"
-                  // }else value = ds.data[i];
-                 let total = ds['data'].reduce((accumulator, currentValue) => accumulator + currentValue);
-                  return {
-                    text: label + ": " + ((ds.data[i] / total) * 100).toFixed(2)+ '%',
+                    // if(element.childId == 2){
+                    //   value = Math.floor(Number(ds.data[i]) / 60) +"Min"
+                    // }else value = ds.data[i];
+                    let total = ds['data'].reduce((accumulator, currentValue) => accumulator + currentValue);
+                    return {
+                      text: label + ": " + ((ds.data[i] / total) * 100).toFixed(2)+ '%',
                       fillStyle: datasets[0].backgroundColor[i],
                       strokeStyle: "white",
                       lineWidth: 8,
@@ -380,8 +392,8 @@ export class DynamicDashboardComponent implements OnInit {
                 }
                 return [];
               }
-  
-             }
+
+            }
           }
         }
         if(element.widget_type == "Bar"){
@@ -410,17 +422,17 @@ export class DynamicDashboardComponent implements OnInit {
         widgetData: {
           labels: ["Mac", "Windows", "Linux","Mac", "Windows", "Linux"],
           datasets : [
-              {
-                label: "My First dataset",
-                // backgroundColor: this.poolColors(20),
-                // // "hoverBackgroundColor": this.poolColors(10),
-                // fillColor: this.poolColors(20), 
-                // strokeColor: this.poolColors(20), 
-                // highlightFill: this.poolColors(20),
-                // highlightStroke: this.poolColors(20),
-                backgroundColor: ['#3B55E6', '#EB4E36', '#43D29E', '#32CBD8', '#E8C63B', '#28C63B', '#38C63B', '#48C63B', '#58C63B', '#68C63B', '#78C63B'],
-                  data : [28,48,40,19,96,87]
-              }
+            {
+              label: "My First dataset",
+              // backgroundColor: this.poolColors(20),
+              // // "hoverBackgroundColor": this.poolColors(10),
+              // fillColor: this.poolColors(20), 
+              // strokeColor: this.poolColors(20), 
+              // highlightFill: this.poolColors(20),
+              // highlightStroke: this.poolColors(20),
+              backgroundColor: ['#3B55E6', '#EB4E36', '#43D29E', '#32CBD8', '#E8C63B', '#28C63B', '#38C63B', '#48C63B', '#58C63B', '#68C63B', '#78C63B'],
+              data : [28,48,40,19,96,87]
+            }
           ]
         },
         chartOptions: {
@@ -430,26 +442,26 @@ export class DynamicDashboardComponent implements OnInit {
               position: "right",
               labels: {
                 generateLabels: function(chart) {
-                    var data = chart.data;
-                    const datasets = chart.data.datasets;
-                    if (data.labels.length && data.datasets.length) {
-                        return data.labels.map(function(label, i) {
-                            var ds = data.datasets[0];
-                            return {
-                                text: label + ': ' + ds.data[i],
-                                fillStyle: datasets[0].backgroundColor[i],
-                                strokeStyle: "white",
-                                lineWidth: 8,
-                                borderColor:"white",
-                                borderRadius:8,
-                                usePointStyle: true,
-                                // borderWidth: 2,
-                                // hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                                index: i,
-                            };
-                        });
-                    }
-                    return [];
+                  var data = chart.data;
+                  const datasets = chart.data.datasets;
+                  if (data.labels.length && data.datasets.length) {
+                    return data.labels.map(function(label, i) {
+                      var ds = data.datasets[0];
+                      return {
+                        text: label + ': ' + ds.data[i],
+                        fillStyle: datasets[0].backgroundColor[i],
+                        strokeStyle: "white",
+                        lineWidth: 8,
+                        borderColor:"white",
+                        borderRadius:8,
+                        usePointStyle: true,
+                        // borderWidth: 2,
+                        // hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                        index: i,
+                      };
+                    });
+                  }
+                  return [];
                 },
                 // generateLabels: (chart) => {
                 //   const datasets = chart.data.datasets;
@@ -458,30 +470,30 @@ export class DynamicDashboardComponent implements OnInit {
                 //     fillStyle: datasets[0].backgroundColor[i],
                 //   }))
                 // }
-               },
-            onClick: function(evt, legendItem) {
+              },
+              onClick: function(evt, legendItem) {
                 var chart = this.chart;
                 var index = legendItem.index;
                 var meta = chart.getDatasetMeta(0);
                 var arc = meta.data[index];
                 arc.hidden = !arc.hidden;
                 chart.update();
-            }
+              }
             },
-          //   beforeInit: function(chart, options) {
-          //     chart.legendCallback = function(chart) {
-          //         var text = [];
-          //         text.push('<ul class="' + chart.id + '-legend">');
-          //         for (var i = 0; i < chart.data.labels.length; i++) {
-          //             text.push('<li>');
-          //             // text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
-          //             text.push(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
-          //             text.push('</li>');
-          //         }
-          //         text.push('</ul>');
-          //         return text.join('');
-          //     };
-          // },
+            //   beforeInit: function(chart, options) {
+            //     chart.legendCallback = function(chart) {
+            //         var text = [];
+            //         text.push('<ul class="' + chart.id + '-legend">');
+            //         for (var i = 0; i < chart.data.labels.length; i++) {
+            //             text.push('<li>');
+            //             // text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
+            //             text.push(chart.data.labels[i] + ': ' + chart.data.datasets[0].data[i]);
+            //             text.push('</li>');
+            //         }
+            //         text.push('</ul>');
+            //         return text.join('');
+            //     };
+            // },
             tooltip: {
               callbacks: {
                 label: (tooltipItem, data) => {
@@ -497,21 +509,21 @@ export class DynamicDashboardComponent implements OnInit {
         filterValue:[
           {filterId:"123",filtername:"department",value:"Engineering"},
           {filterId:"123",filtername:"department",value:"Engineering"}
-      ],
+        ],
         filterOptions: [{
-            filter: "widget",
-            name: "widget_type",
-            fieldType: "dropdown",
-            types: ["bar", "pie", "doughnut", "line"],
-            label: "Chart Type",
-          },
-          {
-            filter: "department",
-            name: "department",
-            fieldType: "dropdown",
-            types: ["All", "Engineering", "QA", "Finance"],
-            label: "Department",
-          },
+          filter: "widget",
+          name: "widget_type",
+          fieldType: "dropdown",
+          types: ["bar", "pie", "doughnut", "line"],
+          label: "Chart Type",
+        },
+        {
+          filter: "department",
+          name: "department",
+          fieldType: "dropdown",
+          types: ["All", "Engineering", "QA", "Finance"],
+          label: "Department",
+        },
         ],
       };
       // this.dashboardData.widgets.push(array);
@@ -546,7 +558,7 @@ export class DynamicDashboardComponent implements OnInit {
           });
         }else{
           this.deleteWidgetfromDashBoard(this.selected_widget, () => {
-          this.showSuccessPopup(successPopupShown);
+            this.showSuccessPopup(successPopupShown);
           });
         }
       },
@@ -574,7 +586,12 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   onOpenConfigOptoons(widget){
-    if(widget.widget_type =="Table" || widget.widget_type == "label"){
+    if(widget.widget_type == "label" && widget.extraWidget){
+      this.items = [
+        // {label: "Remove",command: (e) => {this.onRmoveWidget();}},
+        {label: "Configure",command: (e) => {this.toggleConfigureDropdown(e)}},
+      ];
+    }else if(widget.widget_type =="Table" || (widget.widget_type == "label"  && !widget.extraWidget)){
       this.items = [
         {label: "Remove",command: (e) => {this.onRmoveWidget();}},
       ];
@@ -588,10 +605,10 @@ export class DynamicDashboardComponent implements OnInit {
 
   getInterval(){
     this.interval=setInterval(()=>{
-        this.getListOfDashBoards();
-        this.getDashBoardData(this._paramsData.dashboardId,false);
-      },45000)
-    }
+      this.getListOfDashBoards();
+      this.getDashBoardData(this._paramsData.dashboardId,false);
+    },45000)
+  }
 
   ngOnDestroy() {
     if (this.interval) {
@@ -678,4 +695,27 @@ export class DynamicDashboardComponent implements OnInit {
       successPopupShown = true;
     }
   }
+
+  
+  getallProjects(roles, name, email) {
+    this.rest.getAllProjects(roles, name, email).subscribe(data => {
+      this.projects_list = data[1];
+      console.log(this.projects_list)
+    });
+  }
+
+  cancelProject() {
+    this.showWidgetValue = false;
+    this.configuration_id = null;
+    // Toggle the visibility of the other table
+  }
+
+  toggleConfigureDropdown(e) {
+    setTimeout(() => {
+      this.showWidgetValue = true;
+      // Toggle the visibility of the Configure dropdown
+      this.showTableData = true;
+      this.configuration_id = this.selected_widget.id?this.selected_widget.id: this.selected_widget.childId;
+    }, 100);
+    }
 }

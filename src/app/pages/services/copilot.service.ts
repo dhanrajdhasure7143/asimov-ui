@@ -66,4 +66,25 @@ getAllConversationsByConversationId(conversationId){
   return this.http.get(environment.asquare+`/a-square/v1/conversation/getAllConversationsByConversationId/${conversationId}`,{headers:this.headers});
 }
 
+deleteConversation(data){
+  return this.http.post(environment.asquare+"/a-square/v1/conversation/purge", data, {headers:this.headers})
+}
+
+getCustomerBots(){
+  return this.http.get(environment.asquare+"/a-square/admin/v1/customer-support-bot", {headers:this.headers})
+}
+
+saveCustomerBot(body:any){
+  return this.http.post(environment.asquare+"/a-square/admin/v1/customer-support-bot", body, {headers:this.headers})
+}
+
+deleteCustomerBot(botId:any){
+  const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
+  return this.http.delete(url, { headers: this.headers });
+}
+
+updateCustomerBot(botId:any, requestBody: any){
+  const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
+  return this.http.put(url,requestBody, { headers: this.headers });
+}
 }

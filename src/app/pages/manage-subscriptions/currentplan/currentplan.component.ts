@@ -6,6 +6,8 @@ import { CryptoService } from "src/app/services/crypto.service";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import Swal from "sweetalert2";
 import { RestApiService } from "../../services/rest-api.service";
+import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-currentplan",
@@ -57,7 +59,9 @@ export class CurrentplanComponent implements OnInit {
     private spinner: LoaderService,
     private modalService: BsModalService,
     private cryptoService: CryptoService,
-    private router: Router
+    private router: Router,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -212,23 +216,22 @@ export class CurrentplanComponent implements OnInit {
       this.spinner.show();
       this.paymentToken = res;
       if (this.paymentToken.message == "Failed To Generate Payment Token") {
-        Swal.fire({
-          title: "Error",
-          text: `Invalid card details!`,
-          position: "center",
-          icon: "error",
-          showCancelButton: false,
-          confirmButtonColor: "#007bff",
-          cancelButtonColor: "#d33",
-          heightAuto: false,
-          confirmButtonText: "Ok",
-        });
+        this.toastService.showError(this.toastMessages.validCardErr);
+        // Swal.fire({
+        //   title: "Error",
+        //   text: `Invalid card details!`,
+        //   position: "center",
+        //   icon: "error",
+        //   showCancelButton: false,
+        //   confirmButtonColor: "#007bff",
+        //   cancelButtonColor: "#d33",
+        //   heightAuto: false,
+        //   confirmButtonText: "Ok",
+        // });
         this.spinner.hide();
         this.isdiable = false;
       } else {
-        this.api
-          .subscribePlan(this.paymentToken.message, plandetails)
-          .subscribe((data) => {
+        this.api.subscribePlan(this.paymentToken.message, plandetails).subscribe((data) => {
             this.subscriptionDetails = data;
             this.spinner.hide();
             this.finalAmount = this.subscriptionDetails.amountPaid;
@@ -261,7 +264,7 @@ export class CurrentplanComponent implements OnInit {
   }
 
   contactUs() {
-    window.location.href = "https://www.epsoftinc.com/";
+      window.open("https://www.epsoftinc.com/");
   }
 
   loopTrackBy(index, term) {

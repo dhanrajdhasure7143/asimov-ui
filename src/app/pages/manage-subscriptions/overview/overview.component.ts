@@ -6,6 +6,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { toastMessages } from "src/app/shared/model/toast_messages";
 
 @Component({
   selector: "app-overview",
@@ -23,14 +24,15 @@ export class OverviewComponent implements OnInit {
   email: any;
   due_timestamp: string;
   due_timestamp1: string;
-
+  
   constructor(
     private api: RestApiService,
     private spinner: LoaderService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private toastService: ToasterService,
-    private dt:DataTransferService
+    private dt:DataTransferService,
+    private toastMessages: toastMessages
   ) {}
 
   ngOnInit(): void {
@@ -112,15 +114,18 @@ export class OverviewComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Do you really want to cancel your subscription?",
       header: "Are you sure?",
-      
       key: "positionDialog",
       accept: (result) => {
         this.spinner.show();
         this.api.cancelSubscription(this.result[0]).subscribe((res) => {
           this.spinner.hide();
           if (res == null) {
-            this.toastService.showSuccess("Subscription Cancelled Successfully!",'response');
+            this.toastService.showSuccess(this.toastMessages.cancelSubscription,'response');
+            this.getCurrentPlan()
           }
+        },err=>{
+          this.toastService.showError(this.toastMessages.cancelErr);
+          this.spinner.hide();
         });
       },
     });

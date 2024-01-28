@@ -26,6 +26,7 @@ import { ApprovalsComponent } from './approvals/approvals.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SharedModule } from './shared/shared.module';
 import { ToastModule } from "primeng/toast";
+import { toastMessages } from './shared/model/toast_messages';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { ToastModule } from "primeng/toast";
     BackendURLProvider,
     GlobalScript,
     NotifierService,
-    TitleCasePipe
+    TitleCasePipe,
+    toastMessages
   ],
   bootstrap: [AppComponent]
 })

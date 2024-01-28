@@ -4,6 +4,9 @@ import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ConfirmationService } from 'primeng/api';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-payment-methods',
@@ -14,7 +17,14 @@ export class PaymentMethodsComponent implements OnInit {
   paymentMode: any;
   error: string;
   showcarddetails:boolean=false;
-  constructor(private api:RestApiService,private spinner:LoaderService,private router: Router) { }
+  constructor(
+    private api:RestApiService,
+    private spinner:LoaderService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+    ) { }
 
   ngOnInit(): void {
     this.getAllPaymentmodes();
@@ -29,89 +39,50 @@ export class PaymentMethodsComponent implements OnInit {
     this.getAllPaymentmodes();
   }
   confrmDeleteCard(index) {
-    Swal.fire({
-      // title: 'Confirmation',
-      // // text: `Updated failed, Please try again.`,
-      // html: '<h4> Do you want to set this card as the default?</h4> ',
-    
-      // showCancelButton: true,
-      // allowOutsideClick: true,
-      title: 'Confirmation',
-      text: "Do you want to remove this card?",
-      showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn bluebg-button',
-        cancelButton:  'btn new-cancelbtn',
+    this.confirmationService.confirm({
+      message: 'Do you want to remove this card?',
+      header: 'Are you sure?',
+      accept: () => {
+        this.spinner.show();
+        this.api.deletePaymentMode(index.id).subscribe((res) => {
+            this.spinner.hide();
+            this.toastService.showSuccess(this.toastMessages.cardDelete,'response');
+            this.getAllPaymentmodes();
+          },err=>{
+            this.toastService.showError(this.toastMessages.deleteError);
+            this.spinner.hide();
+          });
       },
-      heightAuto: false,
-      confirmButtonText: 'Yes!'
-    }).then((result)=>{
-      if(result.value){
-        this.spinner.show()
-        this.api.deletePaymentMode(index.id).subscribe(data => {
-          this.getAllPaymentmodes();
-         })
-      }
-    })
-      
-     
-  
-  
+      reject: () => {
+      },
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+    });
+
     }
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
-      Swal.fire({
-        // title: 'Confirmation',
-        // // text: `Updated failed, Please try again.`,
-        // html: '<h4> Do you want to set this card as the default?</h4> ',
-      
-        // showCancelButton: true,
-        // allowOutsideClick: true,
-        title: 'Confirmation',
-        text: "Do you want to set this card as the default?",
-        showCancelButton: true,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
-        heightAuto: false,
-        confirmButtonText: 'Yes!'
-      }).then((result) => {
-        if (result.value) {
+      this.confirmationService.confirm({
+        message: 'Do you want to set this card as the default?',
+        header: 'Are you sure?',
+        accept: () => {
           this.spinner.show();
-          this.api.setasDefaultCard(cardId).subscribe(res=>{
-            this.spinner.hide();
-            Swal.fire({
-              title: 'Success',
-              text: "Default card is set successfully!",
-              position: 'center',
-              icon: 'success',
-              showCancelButton: false,
-              customClass: {
-                confirmButton: 'btn bluebg-button',
-                cancelButton:  'btn new-cancelbtn',
-              },
-      
-              heightAuto: false,
-              confirmButtonText: 'Ok'
-            })
-           
-            this.getAllPaymentmodes(); 
-          },err=>{
-            this.spinner.hide();
-            Swal.fire({
-              title: 'Error!',
-              text: 'Please try again.',
-             // type: 'error',
-              showCancelButton: false,
-              allowOutsideClick: true
-            })
-          })
-          // this.getAllPaymentmodes();
-        }
-      })
-      
+          this.api.setasDefaultCard(cardId).subscribe((res) => {
+              this.spinner.hide();
+              this.toastService.showSuccess(this.toastMessages.defualtCard,'response');
+              this.getAllPaymentmodes();
+            },err=>{
+              this.spinner.hide();
+              this.toastService.showError(this.toastMessages.plzTryAgain);
+            });
+        },
+        reject: () => {
+        },
+        acceptLabel: 'Yes',
+        rejectLabel: 'No',
+      });
     }
+
   getAllPaymentmodes() {
     this.spinner.show();
     this.api.listofPaymentModes().subscribe(response => {

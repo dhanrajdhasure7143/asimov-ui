@@ -751,6 +751,7 @@ mat-list-item.mat-list-item.activeMenu {
 }
 .main-content1.pi_mcont1 {
   height: 100%;
+  margin-left: 5px;
 }
 
 .content-area {
@@ -4035,4 +4036,21 @@ padding: 0px 30px;}
 }
 .pi-xes .p-datatable-wrapper {
   height: calc(100vh - 230px);
+}
+.chatpopmenu .p-menu-overlay {
+  position: absolute;
+  right: 0px !important;
+  top: 30px !important;
+  left: unset !important;
+  width: max-content;
+}
+.chatpopmenu.chatactmenu .p-menu-overlay {
+  top: 20px !important;
+}
+.chatpopmenu.chatactmenu .p-menu .p-menuitem-link {
+  padding: 0.4rem !important;
+  color: #495057 !important;
+  border-radius: 0 !important;
+  transition: box-shadow 0.2s;
+  user-select: none;
 }

@@ -68,7 +68,7 @@ export class columnList{
         {ColumnName: "connectiontName",DisplayName: "Connection Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true,width:"flex: 0 0 13rem"},
         {ColumnName: "categoryName",DisplayName: "Category",ShowFilter: true,ShowGrid: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":'',width:"flex: 0 0 10rem"},
         {ColumnName: "databasename",DisplayName: "Database Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
-        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":'',width:"flex: 0 0 11rem"},
+        {ColumnName: "dataBaseType",DisplayName: "Database Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",sort: true,multi: false,"dropdownList":["My Sql","MongoDB","PostgreSQL","Snowflake","Oracle","H2","SQL Server","Cassandra"],width:"flex: 0 0 11rem"},
         {ColumnName: "hostAddress",DisplayName: "IP Address / Host",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 12rem"},
         {ColumnName: "portNumber",DisplayName: "Port",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,width:"flex: 0 0 7rem"},
         // {ColumnName: "username",DisplayName: "Username",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,showTooltip:true},
@@ -245,5 +245,33 @@ export class columnList{
         {ColumnName:"end_time",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
         {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
         {ColumnName:"error_info",DisplayName:"Error Info",ShowFilter: false,width:"",filterType:"text"}
+      ];
+
+     //EzAsk Admin screens coloumns
+     
+      public manage_cutomer_support_bot_coloumns = [
+        {ColumnName: "customerSupportBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "customerSupportBotSource",DisplayName: "Bot Data Source Type",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        // {ColumnName: "isActive",DisplayName: "Active",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+      
+      public train_cutomer_support_bot_coloumns = [
+        {ColumnName: "trainBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "trainData",DisplayName: "Train Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+      
+      public view_cutomer_support_bot_coloumns = [
+        {ColumnName: "fileName",DisplayName: "File Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "fileDetails",DisplayName: "File Details",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+
+      public custom_tasks = [
+        {ColumnName: "customTaskName",DisplayName: "Custom Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java','Phyton','JavaScript'],sort: true,},
+        {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+        {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
       ];
 }

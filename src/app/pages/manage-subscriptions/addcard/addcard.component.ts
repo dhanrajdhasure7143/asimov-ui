@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {CryptoService} from '../../../services/crypto.service'
 import { RestApiService } from '../../services/rest-api.service';
-import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-addcard',
@@ -30,7 +31,10 @@ export class AddcardComponent implements OnInit {
   cards:any;
   @Output() onBack = new EventEmitter<any>();
  
-  constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:LoaderService) { }
+  constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:LoaderService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages
+  ) { }
 
   ngOnInit(): void {
   }
@@ -50,118 +54,162 @@ export class AddcardComponent implements OnInit {
     this.onBack.emit(false)
   }
 
-  addNewCard(){
-    this.spinner.show()
+  addNewCard() {
+    this.spinner.show();
     this.cardDetails = {
       "name": this.cardHoldername,
       "exp_month": this.cardmonth,
       "number": this.cardnumber1 + this.cardnumber2 + this.cardnumber3 + this.cardnumber4,
       "exp_year": this.cardyear,
       "cvc": this.cvvNumber,
-    }
+    };
+  
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
     let reqObj = {"enc": encrypt};
-    this.api.getMyAccountPaymentToken(reqObj).subscribe(res=>{
-     
-      this.paymentToken=res
-      if(this.paymentToken.errorMessage==="Failed to generate payment token"){
-        this.spinner.hide()
-        Swal.fire({
-          title: 'Error',
-          text:"Please enter valid card details.",
-          position: 'center',
-          icon: 'error',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
-	
-          heightAuto: false,
-          confirmButtonText: 'Ok'
-        })
+    this.api.getMyAccountPaymentToken(reqObj).subscribe((res) => {
+        this.paymentToken = res;
+        if (this.paymentToken.errorMessage === "Failed to generate payment token"){
+          this.spinner.hide();
+          this.toastService.showError(this.toastMessages.validCardErr);
+        }
+        if (this.paymentToken.message === "Card already exists") {
+          this.spinner.hide();
+          this.toastService.showError(this.toastMessages.cardExists);
+        } else {
+          this.api.addNewCard(this.paymentToken.message, this.isdefault).subscribe((res) => {
+              this.spinner.hide();
+              if (res === null) {
+                this.toastService.showSuccess(this.toastMessages.addCard,'response');
+                this.Back();
+              }
+              if (res.errorMessage === "Failed to create payment method") {
+                this.toastService.showError(this.toastMessages.addCardErr);
+              }
+            },
+            (error) => {
+              this.toastService.showError(this.toastMessages.addCardErr);
+            }
+          );
+        }
+      },
+      (error) => {
+        this.toastService.showError(this.toastMessages.addCardErr);
       }
-      if(this.paymentToken.message==="Card already exists"){
-        this.spinner.hide()
-        Swal.fire({
-          title: 'Error',
-          text:"Card already exists.",
-          position: 'center',
-          icon: 'error',
-          showCancelButton: false,
-          customClass: {
-            confirmButton: 'btn bluebg-button',
-            cancelButton:  'btn new-cancelbtn',
-          },
+    );
+  }
+
+  // addNewCard(){
+  //   this.spinner.show()
+  //   this.cardDetails = {
+  //     "name": this.cardHoldername,
+  //     "exp_month": this.cardmonth,
+  //     "number": this.cardnumber1 + this.cardnumber2 + this.cardnumber3 + this.cardnumber4,
+  //     "exp_year": this.cardyear,
+  //     "cvc": this.cvvNumber,
+  //   }
+  //   let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
+  //   let reqObj = {"enc": encrypt};
+  //   this.api.getMyAccountPaymentToken(reqObj).subscribe(res=>{
+     
+  //     this.paymentToken=res
+  //     if(this.paymentToken.errorMessage==="Failed to generate payment token"){
+  //       this.spinner.hide()
+  //       Swal.fire({
+  //         title: 'Error',
+  //         text:"Please enter valid card details.",
+  //         position: 'center',
+  //         icon: 'error',
+  //         showCancelButton: false,
+  //         customClass: {
+  //           confirmButton: 'btn bluebg-button',
+  //           cancelButton:  'btn new-cancelbtn',
+  //         },
 	
-          heightAuto: false,
-          confirmButtonText: 'Ok'
-        })
-      } 
-      else {
+  //         heightAuto: false,
+  //         confirmButtonText: 'Ok'
+  //       })
+  //     }
+  //     if(this.paymentToken.message==="Card already exists"){
+  //       this.spinner.hide()
+  //       Swal.fire({
+  //         title: 'Error',
+  //         text:"Card already exists.",
+  //         position: 'center',
+  //         icon: 'error',
+  //         showCancelButton: false,
+  //         customClass: {
+  //           confirmButton: 'btn bluebg-button',
+  //           cancelButton:  'btn new-cancelbtn',
+  //         },
+	
+  //         heightAuto: false,
+  //         confirmButtonText: 'Ok'
+  //       })
+  //     } 
+  //     else {
         
     
-    this.api.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
-        this.spinner.hide()
-       // this.getAllPaymentmodes();
-        if(res===null){
-          Swal.fire({
+  //   this.api.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
+  //       this.spinner.hide()
+  //      // this.getAllPaymentmodes();
+  //       if(res===null){
+  //         Swal.fire({
             
-            title: 'Success',
-            text: "Card added successfully!",
-            position: 'center',
-            icon: 'success',
-            showCancelButton: false,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton:  'btn new-cancelbtn',
-            },
+  //           title: 'Success',
+  //           text: "Card added successfully!",
+  //           position: 'center',
+  //           icon: 'success',
+  //           showCancelButton: false,
+  //           customClass: {
+  //             confirmButton: 'btn bluebg-button',
+  //             cancelButton:  'btn new-cancelbtn',
+  //           },
     
-            heightAuto: false,
-            confirmButtonText: 'Ok'
-          }).then((result) => {
-            if (result.value) {
-                 this.Back()
-            }
-          });
+  //           heightAuto: false,
+  //           confirmButtonText: 'Ok'
+  //         }).then((result) => {
+  //           if (result.value) {
+  //                this.Back()
+  //           }
+  //         });
 
-        }
-        if(res.errorMessage==="Failed to create payment method"){
-          this.spinner.hide()
-          Swal.fire({
-            title: 'Error',
-            text:"Failed to add card",
-            position: 'center',
-            icon: 'error',
-            showCancelButton: false,
-            customClass: {
-              confirmButton: 'btn bluebg-button',
-              cancelButton:  'btn new-cancelbtn',
-            },
+  //       }
+  //       if(res.errorMessage==="Failed to create payment method"){
+  //         this.spinner.hide()
+  //         Swal.fire({
+  //           title: 'Error',
+  //           text:"Failed to add card",
+  //           position: 'center',
+  //           icon: 'error',
+  //           showCancelButton: false,
+  //           customClass: {
+  //             confirmButton: 'btn bluebg-button',
+  //             cancelButton:  'btn new-cancelbtn',
+  //           },
     
-            heightAuto: false,
-            confirmButtonText: 'Ok'
-          })
-        }
+  //           heightAuto: false,
+  //           confirmButtonText: 'Ok'
+  //         })
+  //       }
 
-    })
-  }
-    }),err=>{
-      Swal.fire({
-        title: 'Error',
-        text:"Failed to add card",
-        position: 'center',
-        icon: 'error',
-        showCancelButton: false,
-        customClass: {
-          confirmButton: 'btn bluebg-button',
-          cancelButton:  'btn new-cancelbtn',
-        },
+  //   })
+  // }
+  //   }),err=>{
+  //     Swal.fire({
+  //       title: 'Error',
+  //       text:"Failed to add card",
+  //       position: 'center',
+  //       icon: 'error',
+  //       showCancelButton: false,
+  //       customClass: {
+  //         confirmButton: 'btn bluebg-button',
+  //         cancelButton:  'btn new-cancelbtn',
+  //       },
 
-        heightAuto: false,
-        confirmButtonText: 'Ok'
-      })
-    }
-  }
+  //       heightAuto: false,
+  //       confirmButtonText: 'Ok'
+  //     })
+  //   }
+  // }
   
 }

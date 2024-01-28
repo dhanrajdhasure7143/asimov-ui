@@ -630,9 +630,17 @@ export class CopilotChatComponent implements OnInit {
 
 
   onBackPress(type){
-    this.displayFlag=this.displayEnum.displayProcessLogGraph
-    this.loadBpmnwithXML(this.lastLoadedBpmn);
+    this.diagramContainer.nativeElement.innerHTML="";
+    setTimeout(()=>{
+      this.loadBpmnContainer();
+      this.displayFlag=this.displayEnum.displayProcessLogGraph
+      setTimeout(()=>{
+        this.loadBpmnwithXML(this.lastLoadedBpmn);
+      },100)
+    },100)
+   
   }
+
 
 
   getChatHistory(conversationId){

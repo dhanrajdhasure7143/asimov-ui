@@ -54,7 +54,7 @@
                     <!-- [ngClass]="{'widgetlabel': isLabelWidget(widget)}" -->
                     <div class="newwidgettitle">
                       <img src="../../../../assets/images-n/dashboard/movable.svg" class="vertcl-img" alt="" /> 
-                      <h5 class="graph-text">{{widget.name}}</h5>
+                      <h5 class="graph-text">{{widget.name}} </h5>
                     </div>
                     <div class="newwidgetmore" *ngIf="!widget.extraWidget">
                       <i class="pi pi-times right overlay-icon" (click)="onDeactivate(widget,j, 'widgets')"></i>
@@ -79,9 +79,15 @@
                               </p-chart>
                           </span>
                     </div>
+                    <!-- <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
+                      <h2> {{ widget.widgetData }} <span *ngIf="widget.id == '5'|| widget.childId == '5'" class="time"> hrs </span> </h2>
+                    </div> -->
                     <div *ngIf="widget.widget_type == 'label'" class="widgetValue">
-                      <h2> {{ widget.widgetData }} </h2>
-                    </div>
+                      <h2 [ngStyle]="{'margin-left.px': widget.id == '5' || widget.childId == '5' ? 20 : 0}">
+                          {{ widget.widgetData }}
+                          <span *ngIf="widget.id == '5' || widget.childId == '5'" class="time"> hrs </span>
+                      </h2>
+                  </div>
                        
                     <div *ngIf="widget.widget_type=='Table' || widget.widget_type =='table'">
                       <p-table #myTab [value]="widget.widgetData" responsiveLayout="scroll" [scrollable]="true" [reorderableColumns]="true"

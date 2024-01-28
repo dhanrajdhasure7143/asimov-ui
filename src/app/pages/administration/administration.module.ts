@@ -17,6 +17,10 @@ import { AdminScreenListComponent } from './admin-screen-list/admin-screen-list.
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ManageCustomerBotComponent } from './manage-customer-bot/manage-customer-bot.component';
+import { TrainCustomerSupportBotComponent } from './train-customer-support-bot/train-customer-support-bot.component';
+import { columnList } from 'src/app/shared/model/table_columns';
+import { ViewCustomerBotDetailsComponent } from './view-customer-bot-details/view-customer-bot-details.component';
 
 
 @NgModule({
@@ -30,9 +34,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     UserPipePipe,
     UsersComponent,
     UserScreenComponent,
-    AdminAddScreenComponent,
-    AdminScreenListComponent
-  ],
+    AdminAddScreenComponent,AdminScreenListComponent, ManageCustomerBotComponent, TrainCustomerSupportBotComponent, ViewCustomerBotDetailsComponent],
   imports: [
     CommonModule,
     AdministrationRoutingModule,
@@ -42,6 +44,9 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     PrimengCustomModule,
     Ng2TelInputModule
   ],
-  providers:[toastMessages]
+  providers:[
+    columnList ,
+    toastMessages
+  ]
 })
 export class AdministrationModule { }

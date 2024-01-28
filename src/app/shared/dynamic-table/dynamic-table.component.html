@@ -127,6 +127,10 @@
                                             <span [ngClass]="rowData['deploy_status_new']=='Yes' ? 'deploy_yes' : 'deploy_no' ">
                                             {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
                                         </span>
+                                        <!-- <span *ngIf="screenTable == 'customerSupportBots'  && col.ColumnName == 'isActive' ">
+                                            <span [ngClass]="rowData['deploy_status_new']=='Yes' ? 'deploy_yes' : 'deploy_no' ">
+                                            {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}</span>
+                                        </span> -->
                                         <span *ngIf="screenTable == 'auditLogs' && col.ColumnName =='changeActivity'">
                                             <span *ngIf="rowData.Status=='UpdatedConfig'">
                                                 Updated <b>{{rowData.taskName}}</b> task input field <b>{{rowData.changeActivity}}</b> from
@@ -196,6 +200,15 @@
                             <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
+                            <span *ngIf="screenTable == 'customerSupportBots'">
+                            <a class="" (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
+                                <i class="pi pi-external-link" style="color: #232832"></i>
+                                <i class="pi pi-external-link" style="color: #507cd3" class="testplus hover-icon"></i>
+                            </a>
+                            <a *ngIf="!(this.loggedUserRole.includes('System Admin'))"  class="disbtn">
+                                <i class="pi pi-external-link" style="color: #708090"></i>
+                            </a>
+                            </span>
                             <a *ngIf="!isdisabled_edit" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                 <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">

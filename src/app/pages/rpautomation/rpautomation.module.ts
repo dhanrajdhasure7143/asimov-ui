@@ -52,6 +52,8 @@ import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { Rpa_Hints } from './model/RPA-Hints';
+import { RpaSdkComponent } from './rpa-sdk/rpa-sdk.component';
+import { RpaSdkFormComponent } from './forms/rpa-sdk-form/rpa-sdk-form.component';
  
 
 @NgModule({
@@ -79,7 +81,9 @@ import { Rpa_Hints } from './model/RPA-Hints';
     RpaConnectionManagerFormComponent,
     RpaConnectionManagerComponent,
     RpaActionItemsComponent,
-    RpaApprovalsComponent
+    RpaApprovalsComponent,
+    RpaSdkComponent,
+    RpaSdkFormComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
