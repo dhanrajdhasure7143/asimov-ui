@@ -79,7 +79,7 @@
                               <h5 class="graph-text">{{widget.name}}</h5>  
                            </div>
                            <!-- *ngIf="widget.extraWidget" -->
-                           <div class="newwidgetmore">
+                           <div class="newwidgetmore" *ngIf="widget.childId != '7'">
                               <button class="btn btn-dots widgetactions" type="button" (click)="onOpenConfigOptoons(widget);menu1.toggle($event)" >
                                  <img src="./../../../../assets/images-n/dashboard/blackdots.svg" alt="Actions" class="default-img">
                                  <img src="./../../../../assets/images-n/dashboard/whitedots.svg" alt="Actions"  class="hover-img">
