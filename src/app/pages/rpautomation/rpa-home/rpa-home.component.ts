@@ -995,7 +995,7 @@ importBot(){
         req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
         req_body["department"]=response.department;
         req_body["getEncryptedData"]  = this.import_BotData.encryptedData;
-      (await this.rest.updateBot(req_body)).subscribe((response:any)=>{
+      (await this.rest.importBotwithEncryptedData(req_body)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
         this.toastService.showSuccess(this.toastMessages.botImport,'response');

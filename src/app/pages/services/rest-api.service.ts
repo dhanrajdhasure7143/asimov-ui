@@ -1857,7 +1857,10 @@ getCustomTasks(){
   return this.http.get('/rpa-service/custom-task/listCustomTasks')
 }
 getEncryptedbotData(botId,body){
-  return this.http.post("/rpa-service/get-bot/"+botId, body);
+  return this.http.post("/rpa-service/export-bot/"+botId, body);
 }
 
+importBotwithEncryptedData(body){
+  return this.http.post("/rpa-service/import-bot", body);
+}
 }
