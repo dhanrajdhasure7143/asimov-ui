@@ -994,7 +994,7 @@ importBot(){
         req_body["botName"]=this.importBotForm.get("botName").value;
         req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
         req_body["department"]=response.department;
-        req_body["getEncryptedData"]  = this.import_BotData.encryptedData;
+        req_body["encryptedData"]  = this.import_BotData.encryptedData;
       (await this.rest.importBotwithEncryptedData(req_body)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
