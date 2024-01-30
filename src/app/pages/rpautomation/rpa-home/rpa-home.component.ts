@@ -929,7 +929,8 @@ importBot(){
       console.log(res);
       let data:any = res;
       if(data.message){
-        this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
+        // this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
+        this.downloadEncryptedData(JSON.stringify(data.data));
         this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
         this.showLoader = false;
       }
@@ -965,7 +966,8 @@ importBot(){
       };
       reader.readAsText(file);
       reader.onload = (e) => {
-        this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
+        // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
+        this.import_BotData  = JSON.parse(reader.result.toString());
         console.log(this.import_BotData)
         this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
