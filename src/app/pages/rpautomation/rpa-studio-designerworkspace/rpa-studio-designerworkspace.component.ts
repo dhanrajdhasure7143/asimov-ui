@@ -2794,6 +2794,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       color: "black",
     };
 
+    this.groupsData.push(GroupData);
 
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
@@ -2831,8 +2832,9 @@ if (GroupData && GroupData.el) {
   // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
   GroupData.el.style.width = dimensions.width + "px";
   GroupData.el.style.height = dimensions.height + "px";
+  this.groupsData.find((item: any) => item.id == GroupData.id).el.style.width = dimensions.width + "px" ;
+  this.groupsData.find((item: any) => item.id == GroupData.id).el.style.height = dimensions.height + "px";
   this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
-  this.groupsData.push(GroupData);
 
 } else {
   console.error("Failed to create the group or group is undefined.");
