@@ -2891,13 +2891,13 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  minimize(){
+  onExpandCollapsegroup(groupId){
     console.log(this.groupsData)
-    this.jsPlumbInstance.toggleGroup(this.groupsData[1].id);
+    this.jsPlumbInstance.toggleGroup(groupId);
 
-    this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
-    this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
-    this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
+    // this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
+    // this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
+    // this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
   }
 
   calculateAdjustedPosition(averagePosition, dimensions) {

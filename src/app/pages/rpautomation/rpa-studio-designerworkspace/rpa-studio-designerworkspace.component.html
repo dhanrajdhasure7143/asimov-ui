@@ -1,6 +1,5 @@
 <div [id]="dragareaid">
   <div  class="studio_main">
-    <button class="btn btn-primary" (click)="minimize()">test...</button>
     <div class="studio_main_desginer" >
       <div class="drag-area" id="group" #group [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
           workspace: disable,
@@ -72,6 +71,9 @@
                 </span>
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
                   <i class="ri-pencil-line text-primary"></i>
+                </span>
+                <span class="groupTitle clickable" (click)="onExpandCollapsegroup(group.id)" *ngIf="group.edit == false">
+                  <i class="pi pi-angle-down"></i>
                 </span>
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
                   <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
