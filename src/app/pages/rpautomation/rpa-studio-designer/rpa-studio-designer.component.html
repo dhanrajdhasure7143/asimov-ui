@@ -108,6 +108,14 @@
                 </div>
               
                 <div class="actionsmenu-right" *ngIf="!isActionsShow && current_instance != undefined">
+                  <!-- TODO -- Enable below for grouping feature in RPA designer -->
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
+                      (click)="current_instance.addGroup()">
+                      <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2" alt="">
+                      <span class="testtooltip">Activity Grouping</span>
+                    </button>
+                  </div>
                   <div class="action-item" *ngIf="current_instance != undefined" dropdown #dropdown="bs-dropdown"
                     [insideClick]="true">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="Environments" dropdownToggle type="button" aria-controls="environments">
@@ -185,14 +193,6 @@
                       <span class="testtooltip">Audit Logs</span>
                     </button>
                   </div>
-                  <!-- TODO -- Enable below for grouping feature in RPA designer -->
-                  <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
-                      (click)="current_instance.addGroup()">
-                      <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2">
-                      <span class="testtooltip">Activity Grouping</span>
-                    </button>
-                  </div> -->
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot.botId==undefined || freetrail=='true'"

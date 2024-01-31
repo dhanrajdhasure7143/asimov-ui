@@ -1,19 +1,20 @@
 <div [id]="dragareaid">
   <div  class="studio_main">
-    <div class="studio_main_desginer">
-      <div class="drag-area" [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
+    <button class="btn btn-primary" (click)="minimize()">test...</button>
+    <div class="studio_main_desginer" >
+      <div class="drag-area" id="group" #group [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
           workspace: disable,
           dndDropzoneDisabled: false,
           lightTheme: lightTheme
         }">
           <!--Nodes inside designer-->
           <ng-container *ngFor="let node of nodes; let i = index">
-            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (click)="onselectNodes(i)"
               (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
                 left: node.x,
                 top: node.y,
                 'background-image': 'url(' + node.path + ')'
-              }">
+              }" [ngClass]="node.isSelected?'nodeActive':''">
               <!--Node close button-->
               <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
                 <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->

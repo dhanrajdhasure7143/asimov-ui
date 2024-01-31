@@ -286,3 +286,6 @@
   bottom: 10px;
   right: 10px;
 }
+.nodeActive{
+  border: 2px solid rgb(196, 184, 89) !important;
+}

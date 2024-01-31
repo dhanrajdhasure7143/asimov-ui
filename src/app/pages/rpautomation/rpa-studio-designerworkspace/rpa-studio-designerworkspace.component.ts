@@ -576,7 +576,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified
+        isModified:element.isModified,
+        isSelected:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -2021,6 +2022,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.toastService.showError(this.toastMessages.connectionCheckError);
 
       } else {
+        console.log(this.saveBotdata)
+
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
@@ -2772,17 +2775,103 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   addGroup() {
+    var selectedNodeIds =[]
+    this.nodes.forEach(item =>{
+      if(item.isSelected){
+        selectedNodeIds.push(item.id)
+
+      }
+    })
+    console.log(this.nodes)
+    // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
+
+
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
       groupName: "Activity Group",
-      x: "10px",
-      y: "20px",
-      height: "150px",
-      width: "250px",
       edit: false,
       color: "black",
     };
+
+    this.groupsData.push(GroupData);
+
+    setTimeout(() => {
+      let element: any = document.getElementById(GroupData.id);
+      console.log(element)
+
+      this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
+      this.jsPlumbInstance.addGroup(
+        this.groupsData.find((item: any) => item.id == GroupData.id)
+      );
+
+
+
+
+      // let groupIds: any = [];
+      // groupIds = this.groupsData.map((item: any) => {
+      //   return item.id;
+      // });
+      // console.log(this.groupsData)
+      // this.jsPlumbInstance.draggable(groupIds, {
+      //   containment: true,
+      // });
+    // Add elements to the group
+    // this.jsPlumbInstance.addToGroup(group, "element1");
+    var selectedNodes = selectedNodeIds.map(function (id) {
+      return document.getElementById(id);
+    });
+  
+    // Calculate the average position of selected nodes
+    var averagePosition = this.calculateAveragePosition(selectedNodes);
+    var dimensions = this.calculateGroupDimensions(selectedNodes);
+    setTimeout(() => {
+// Check if the group was successfully created
+if (GroupData && GroupData.el) {
+  // Move the group to the average position of the selected nodes
+  // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
+  GroupData.el.style.width = dimensions.width + "px";
+  GroupData.el.style.height = dimensions.height + "px";
+  this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
+
+} else {
+  console.error("Failed to create the group or group is undefined.");
+}
+      
+    }, 1000);
+
+
+    setTimeout(() => {
+    
+      selectedNodeIds.forEach((node: any) => {
+        let nodeElement: any = document.getElementById(node);
+        var position = this.calculateRelativePosition(nodeElement, averagePosition);
+        setTimeout(() => {
+          this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
+          console.log("testing")   
+               
+        }, 1500);
+      });
+        this.jsPlumbInstance.repaintEverything();
+    }, 500);
+    });
+  
+
+  
+
+    return
+
+    // let GroupData: any = {
+    //   id: this.idGenerator(),
+    //   el: undefined,
+    //   groupName: "Activity Group",
+    //   x: "10px",
+    //   y: "20px",
+    //   height: "150px",
+    //   width: "250px",
+    //   edit: false,
+    //   color: "black",
+    // };
     this.groupsData.push(GroupData);
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
@@ -2798,6 +2887,73 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         containment: true,
       });
     }, 500);
+  }
+
+  minimize(){
+    console.log(this.groupsData)
+    this.jsPlumbInstance.toggleGroup(this.groupsData[1].id);
+
+    this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
+    this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
+    this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
+  }
+
+  calculateAdjustedPosition(averagePosition, dimensions) {
+    // You may need to adjust these values based on your specific layout
+    var xOffset = 0; // Adjust this value to fine-tune the horizontal position
+    var yOffset = 0; // Adjust this value to fine-tune the vertical position
+  
+    return { left: averagePosition.left + xOffset, top: averagePosition.top + yOffset };
+  }
+
+  calculateAveragePosition(nodes) {
+    var totalX = 0;
+  var totalY = 0;
+
+  for (var i = 0; i < nodes.length; i++) {
+    var nodeRect = nodes[i].getBoundingClientRect();
+    totalX += nodeRect.left;
+    totalY += nodeRect.top;
+  }
+
+  var averageX = totalX / nodes.length;
+  var averageY = totalY / nodes.length;
+
+  return { left: averageX-200, top: averageY-200 };
+
+  }
+  
+   calculateRelativePosition(node, averagePosition) {
+    var nodeRect = node.getBoundingClientRect();
+    var deltaX = nodeRect.left - averagePosition.x;
+    var deltaY = nodeRect.top - averagePosition.y;
+    // setTimeout(() => {
+    //   this.jsPlumbInstance.setPosition(node, { left: deltaX, top: deltaY });
+      
+    // }, 1000);
+
+  
+    return { left: deltaX, top: deltaY };
+  }
+
+  calculateGroupDimensions(nodes) {
+    var minX = Number.MAX_SAFE_INTEGER;
+    var minY = Number.MAX_SAFE_INTEGER;
+    var maxX = Number.MIN_SAFE_INTEGER;
+    var maxY = Number.MIN_SAFE_INTEGER;
+  
+    for (var i = 0; i < nodes.length; i++) {
+      var nodeRect = nodes[i].getBoundingClientRect();
+      minX = Math.min(minX, nodeRect.left);
+      minY = Math.min(minY, nodeRect.top);
+      maxX = Math.max(maxX, nodeRect.right);
+      maxY = Math.max(maxY, nodeRect.bottom);
+    }
+  
+    var width = maxX - minX;
+    var height = maxY - minY;
+  
+    return { width: width, height: height };
   }
 
   removeGroup(groupId: any) {
@@ -3142,6 +3298,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //       })
   //   }
   // }
+
+  onselectNodes(index){
+    this.nodes[index]["isSelected"]= true;
+  }
 
 }
 
