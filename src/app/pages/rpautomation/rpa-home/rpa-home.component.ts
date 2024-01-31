@@ -624,8 +624,7 @@ export class RpaHomeComponent implements OnInit {
     })
     return
     this.rest.getbotdata(item.botId).subscribe((response:any)=>{
-      if(response.errorMessage==undefined)
-      {
+      if(response.errorMessage==undefined){
         let botDetails:any={
           botName:response.botName,
           botDescription:response.description,
@@ -660,7 +659,7 @@ export class RpaHomeComponent implements OnInit {
           executionMode:response.executionMode,
           startStopCoordinate:response.startStopCoordinate   
         };
-        this.downloadJson(botDetails)
+        // this.downloadJson(botDetails)
       } else {
 
       }
@@ -668,8 +667,7 @@ export class RpaHomeComponent implements OnInit {
   }
 
   filteredEnvironments:any=[];
-  filterEnvironments(categoryId)
-  {
+  filterEnvironments(categoryId){
     this.importBotForm.get("environmentId").setValue("");
     this.filteredEnvironments=this.environments.filter(item=>item.categoryId==categoryId);
   }
@@ -686,10 +684,10 @@ importBot(){
   }
   this.modalRef.hide();
   this.spinner.show();
-  this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
+  this.rest.createBot(basicBotDetails).subscribe( async (response:any)=>{
     if(response.errorMessage==undefined){
       this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
-      this.finaldataobjects=[...this.import_BotData.tasks]
+      this.finaldataobjects = [...this.import_BotData.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
       if(this.import_BotData.executionMode=="v1") this.arrange_task_order(start);
@@ -702,20 +700,17 @@ importBot(){
       (await this.rest.updateBot(this.import_BotData)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
         this.toastService.showSuccess(this.toastMessages.botImport,'response');
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // this.toastService.showError('Unable to configure bot task configurations!');
         this.toastService.showError(this.toastMessages.botConfigError);
-      })
+      });
     }
   },err=>{
     this.spinner.hide();
     this.resetImportBotForm();
-    // this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot!'});
     this.toastService.showError(this.toastMessages.botImportError);
   })
 }
@@ -741,15 +736,15 @@ importBot(){
     })
   }
 
-  downloadJson(payload:any)
-  {
+  downloadJson(payload:any){
     payload=this.removeDuplicateTasks(payload);
-   // payload=this.updateNodeIds(payload);
+  //  payload=this.updateNodeIds(payload);
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
     let dlAnchorElem = document.createElement('a');
     dlAnchorElem.setAttribute("href",dataStr);
     dlAnchorElem.setAttribute("download", payload.botName+".json");
     dlAnchorElem.click();
+    this.downloadEncryptedData(JSON.stringify(payload))
   }
 
 
@@ -811,8 +806,7 @@ importBot(){
   }
 
 
-  removeDuplicateTasks(payload)
-  {
+  removeDuplicateTasks(payload){
     
     payload.tasks.forEach((item:any, index:number)=>{
       if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
@@ -930,14 +924,58 @@ importBot(){
       let data:any = res;
       if(data.message){
         // this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
-        this.downloadEncryptedData(JSON.stringify(data.data));
+        // this.downloadEncryptedData(JSON.stringify(data.data));
         this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
         this.showLoader = false;
+        this.removeUnusedData(data.data.botData)
       }
     },err=>{
       this.toastService.showError(this.bot_toExport.botName+" "+this.toastMessages.exportError);
       this.showLoader = false;
     })
+  }
+
+  removeUnusedData(response){
+    if(response.errorMessage==undefined){
+      let botDetails:any={
+        botName:response.botName,
+        botDescription:response.description,
+        department:response.department,
+        tasks:[...response.tasks.map((item:any)=>{
+          delete item.botTId;
+          delete item.version;
+          delete item.botId;
+          delete item.versionNew;
+          item.attributes=item.attributes.map((attrItem)=>{
+            delete attrItem.botTaskId;
+            delete attrItem.attrId;
+            delete attrItem.botId;
+            // if(!this.isConfigurationEnable){
+            //   attrItem.attrValue="";
+            // }
+            return attrItem;
+          })
+          return item;
+        })],
+        sequences:[...response.sequences.map((item:any)=>{
+          delete item.botId;
+          delete item.version;
+          delete item.sequenceId;
+          return item;
+        })],
+        envIds:[],
+        versionType:'',
+        botType:0,
+        botMainSchedulerEntity:null,
+        comments:"", 
+        executionMode:response.executionMode,
+        startStopCoordinate:response.startStopCoordinate   
+      };
+      // this.downloadJson(botDetails)
+       this.downloadEncryptedData(JSON.stringify(botDetails));
+    } else {
+
+    }
   }
 
   downloadEncryptedData(encryptedData): void {
@@ -989,17 +1027,28 @@ importBot(){
     this.spinner.show();
     let req_body:any={};
     this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
-      console.log(response)
-        req_body["botId"]=response.botId;
-        req_body["botName"]=this.importBotForm.get("botName").value;
-        req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
-        req_body["department"]=response.department;
-        req_body["encryptedData"]  = this.import_BotData.encryptedData;
-      (await this.rest.importBotwithEncryptedData(req_body)).subscribe((response:any)=>{
+
+      this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
+      this.finaldataobjects = [...this.import_BotData.tasks]
+      let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
+      this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
+      if(this.import_BotData.executionMode=="v1") this.arrange_task_order(start);
+      else this.final_tasks=[...this.finaldataobjects];
+      this.import_BotData["botId"]=response.botId;
+      this.import_BotData["botName"]=this.importBotForm.get("botName").value;
+      this.import_BotData["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+      this.import_BotData["tasks"]=[...this.final_tasks];
+
+        // req_body["botId"]=response.botId;
+        // req_body["botName"]=this.importBotForm.get("botName").value;
+        // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+        // req_body["department"]=response.department;
+        req_body["botData"]  = this.import_BotData;
+      (await this.rest.importBotwithEncryptedData(this.import_BotData)).subscribe((response:any)=>{
         this.spinner.hide();
         this.resetImportBotForm();
         this.toastService.showSuccess(this.toastMessages.botImport,'response');
-        this.getallbots();
+        // this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
