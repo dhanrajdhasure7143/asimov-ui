@@ -167,11 +167,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
   recordandplay:boolean = false;
-  isExpand:boolean = false;
-  showOverlay: boolean = false;
+  isExpand:boolean = true;
+  showGroup_Overlay: boolean = false;
   groupName: string = '';
   groupDescription: string = '';
   groupForm: FormGroup;
+  path: "/assets/images/RPA/Start.png";
+
+
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -588,10 +591,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         action_uid:element.actionUUID,
         isModified:element.isModified,
         isSelected:false,
-        hide:false
+        isHide:false
       };
-      if(node.tasks.find((item)=>item.taskId==element.tMetaId))
-      {
+      if(node.tasks.find((item)=>item.taskId==element.tMetaId)){
         let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
         if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
           node.path=this.toolset.find((data) => data.name == nodename).path
@@ -608,14 +610,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         node["y"] = element.y;
       } else {
         let group: any = checkFlag[0];
-        node["x"] =
-          parseFloat(group.x.split("px")[0]) +
-          parseFloat(element.x.split("px")[0]) +
-          "px";
-        node["y"] =
-          parseFloat(group.y.split("px")[0]) +
-          parseFloat(element.y.split("px")[0]) +
-          "px";
+        node["x"] = parseFloat(group.x.split("px")[0]) + parseFloat(element.x.split("px")[0]) +"px";
+        node["y"] = parseFloat(group.y.split("px")[0]) + parseFloat(element.y.split("px")[0]) +"px";
       }
       if (this.nodes.find((item) => item.id == node.id) == undefined) {
         this.nodes.push(node);
@@ -625,8 +621,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     });
     //load start and stop node
-    if(this.nodes.length>0)
-    {
+    if(this.nodes.length>0){
         let startNode:any={
           id:"",
           name: "START",
@@ -651,16 +646,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         (stopNodeId)?stopNode["id"]=stopNodeId:stopNode["id"]=((this.startStopCoordinates.stopNodeId)?this.startStopCoordinates.stopNodeId:"STOP_"+this.finalbot.botName);
         this.startNodeId=startNode["id"];
         this.stopNodeId=stopNode["id"];
-        if(this.finalbot.startStopCoordinate!=null && this.finalbot.startStopCoordinate!="")
-        {
+        if(this.finalbot.startStopCoordinate!=null && this.finalbot.startStopCoordinate!=""){
           let coordinates=JSON.parse(this.finalbot.startStopCoordinate);
           startNode["x"]=coordinates.startTaskX;
           startNode["y"]=coordinates.startTaskY;
           stopNode["x"]=coordinates.stopTaskX;
           stopNode["y"]=coordinates.stopTaskY;
-        }
-        else
-        {
+        } else {
           startNode["x"]="5px";
           startNode["y"]="5px";
           setTimeout(()=>{
@@ -668,7 +660,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             stopNode["x"]=(dropContainer.offsetWidth - 100)+"px";
             stopNode["y"]=(dropContainer.offsetHeight - 100) +"px";
           },100)
-
         }
         this.nodes.push(startNode);
         setTimeout(()=>{
@@ -1937,30 +1928,23 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateFinalBot(version_type:any, comments:any){
-    let env = [
-      ...this.filteredEnvironments
-        .filter((item: any) => item.check == true)
-        .map((item2: any) => {
+    let env = [...this.filteredEnvironments.filter((item: any) => item.check == true).map((item2: any) => {
           return item2.environmentId;
-        }),
-    ];
-    this.spinner.show();
+        }),];
+    // this.spinner.show();
     this.checkorderflag = true;
     this.addsquences();
     if(this.executionMode){
       this.arrange_task_order(this.startNodeId);
-    }
-    else
-    {
+    } else {
       this.final_tasks=this.finaldataobjects;
+      console.log("this.final_tasks",this.final_tasks)
     }
     await this.getsvg()
     this.get_coordinates();
     this.rpaAuditLogs(env);
     await this.validateBotNodes();
-    if(this.executionMode)
-    {
-      
+    if(this.executionMode){
       let finalTasksData=[...this.final_tasks];
       finalTasksData.forEach((item, finalIndex)=>{
         if(this.actualTaskValue.length != 0 && item.validated==undefined)
@@ -2033,7 +2017,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.toastService.showError(this.toastMessages.connectionCheckError);
 
       } else {
-        console.log(this.saveBotdata)
+        console.log("saveBotdata",this.saveBotdata)
 
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         this.assignTaskConfiguration();
@@ -2121,8 +2105,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
-  assignTaskConfiguration()
-  {
+  assignTaskConfiguration(){
     let tasksList:any=[]
     this.toolset.forEach((toolsetItem:any)=>{
       toolsetItem.tasks.forEach((item:any)=>{
@@ -2131,8 +2114,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
     this.final_tasks=[...this.final_tasks.map((item:any)=>{
       let selectedTask=tasksList.find((task:any)=>task.taskId==item.tMetaId && task.action_uid == item.actionUUID);
-      if(selectedTask)
-      {
+      if(selectedTask){
         item["taskConfiguration"]=selectedTask.taskConfiguration==undefined?"null":selectedTask.taskConfiguration;
         item["isConnectionManagerTask"] = selectedTask.isConnectionManagerTask == undefined?"null":selectedTask.isConnectionManagerTask;
       }
@@ -2165,36 +2147,29 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
+        let _selectedGroup = this.groupsData.find((group: any) => group.id == GroupData.id)
         let element: any = document.getElementById(GroupData.id);
-        this.groupsData.find((item: any) => item.id == GroupData.id).el =
-          element;
+        _selectedGroup.el = element;
         let groupIds: any = [];
         groupIds = this.groupsData.map((group: any) => {
           return group.id;
         });
         if (check == "load")
-          this.jsPlumbInstance.addGroup(
-            this.groupsData.find((group: any) => group.id == GroupData.id)
-          );
-        this.jsPlumbInstance.draggable(groupIds, {
-          containment: true,
-        });
+          this.jsPlumbInstance.addGroup(_selectedGroup);
+        this.jsPlumbInstance.draggable(groupIds, {containment: true,});
         i++;
         if (check == "update") {
-          this.jsPlumbInstance.addGroup(
-            this.groupsData.find((group: any) => group.id == GroupData.id)
-          );
-          this.jsPlumbInstance.draggable(groupIds, {
-            containment: true,
-          });
-          this.savedGroupsData
-            .find((savedGrp) => savedGrp.groupId == GroupData.id)
-            .nodeIds.forEach((sampleItem) => {
+          this.jsPlumbInstance.addGroup( _selectedGroup);
+          this.jsPlumbInstance.draggable(groupIds, {containment: true,});
+          this.savedGroupsData.find((savedGrp) => savedGrp.groupId == GroupData.id).nodeIds.forEach((sampleItem) => {
               let nodeElement: any = document.getElementById(sampleItem);
               this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement);
             });
         }
-        this.jsPlumbInstance.repaintEverything();
+        setTimeout(() => {
+          this.minimizeGroup(this.savedGroupsData.find((group: any) => group.groupId == GroupData.id))
+          // this.jsPlumbInstance.repaintEverything();
+        }, 500);
       }, 50);
     });
   }
@@ -2796,14 +2771,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     console.log(this.nodes)
     // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
 
-
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
-      groupName: "Activity Group",
+      groupName: this.groupForm.get('groupName').value,
       edit: false,
-      color: "black",
-      expanded:true
+      color: "#4AB0F5",
+      expanded:true,
+      cssClass: "custom-group-class"
     };
 
     this.groupsData.push(GroupData);
@@ -2816,9 +2791,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.addGroup(
         this.groupsData.find((item: any) => item.id == GroupData.id)
       );
-
-
-
 
       // let groupIds: any = [];
       // groupIds = this.groupsData.map((item: any) => {
@@ -2854,7 +2826,6 @@ if (GroupData && GroupData.el) {
       
     }, 1000);
 
-
     setTimeout(() => {
     
       selectedNodeIds.forEach((node: any) => {
@@ -2870,8 +2841,7 @@ if (GroupData && GroupData.el) {
     }, 500);
     });
   
-
-    this.showOverlay = true;
+    this.showGroup_Overlay = false;
 
     return
 
@@ -2901,92 +2871,6 @@ if (GroupData && GroupData.el) {
         containment: true,
       });
     }, 500);
-  }
-
-  onExpandCollapsegroup(group){
-    console.log(group)
-    this.isExpand = !this.isExpand;
-    let connectedNodes = this.jsPlumbInstance
-          .getGroup(group.id)
-          .getMembers();
-    let nodes = connectedNodes.map((item2: any) => {
-      return item2.id;
-    });
-    console.log()
-    nodes.forEach(each=>{
-    this.nodes.forEach(item=>{
-      if(each == item.id){
-        item.hide = true
-      }
-    })
-  })
-  
-
-
-
-    this.jsPlumbInstance.toggleGroup(group.id);
-
-    // this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
-    // this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
-    // this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
-  }
-
-  calculateAdjustedPosition(averagePosition, dimensions) {
-    // You may need to adjust these values based on your specific layout
-    var xOffset = 0; // Adjust this value to fine-tune the horizontal position
-    var yOffset = 0; // Adjust this value to fine-tune the vertical position
-  
-    return { left: averagePosition.left + xOffset, top: averagePosition.top + yOffset };
-  }
-
-  calculateAveragePosition(nodes) {
-    var totalX = 0;
-  var totalY = 0;
-
-  for (var i = 0; i < nodes.length; i++) {
-    var nodeRect = nodes[i].getBoundingClientRect();
-    totalX += nodeRect.left;
-    totalY += nodeRect.top;
-  }
-
-  var averageX = totalX / nodes.length;
-  var averageY = totalY / nodes.length;
-
-  return { left: averageX-200, top: averageY-200 };
-
-  }
-  
-   calculateRelativePosition(node, averagePosition) {
-    var nodeRect = node.getBoundingClientRect();
-    var deltaX = nodeRect.left - averagePosition.x;
-    var deltaY = nodeRect.top - averagePosition.y;
-    // setTimeout(() => {
-    //   this.jsPlumbInstance.setPosition(node, { left: deltaX, top: deltaY });
-      
-    // }, 1000);
-
-  
-    return { left: deltaX, top: deltaY };
-  }
-
-  calculateGroupDimensions(nodes) {
-    var minX = Number.MAX_SAFE_INTEGER;
-    var minY = Number.MAX_SAFE_INTEGER;
-    var maxX = Number.MIN_SAFE_INTEGER;
-    var maxY = Number.MIN_SAFE_INTEGER;
-  
-    for (var i = 0; i < nodes.length; i++) {
-      var nodeRect = nodes[i].getBoundingClientRect();
-      minX = Math.min(minX, nodeRect.left);
-      minY = Math.min(minY, nodeRect.top);
-      maxX = Math.max(maxX, nodeRect.right);
-      maxY = Math.max(maxY, nodeRect.bottom);
-    }
-  
-    var width = maxX - minX;
-    var height = maxY - minY;
-  
-    return { width: width, height: height };
   }
 
   removeGroup(groupId: any) {
@@ -3344,102 +3228,110 @@ if (GroupData && GroupData.el) {
   //   }
   // }
 
-  
-  
-  submitForm() {
-    if (this.groupForm.valid) {
-      const dynamicGroupName = this.groupForm.get('groupName').value;
-      // console.log('Group Name:', this.groupForm.get('groupName').value);
-      console.log('Group Description:', this.groupForm.get('groupDescription').value);
-      this.showOverlay = false;
-      var selectedNodeIds =[]
-      this.nodes.forEach(item =>{
-        if(item.isSelected){
-          selectedNodeIds.push(item.id)
-  
-        }
-      })
-      console.log(this.nodes)
-      // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
-  
-  
-      let GroupData: any = {
-        id: this.idGenerator(),
-        el: undefined,
-        groupName: dynamicGroupName,
-        edit: false,
-        color: "black",
-      };
-  
-      this.groupsData.push(GroupData);
-  
-      setTimeout(() => {
-        let element: any = document.getElementById(GroupData.id);
-        console.log(element)
-        this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
-        this.jsPlumbInstance.addGroup(
-          this.groupsData.find((item: any) => item.id == GroupData.id)
-        );
-  
-        // let groupIds: any = [];
-        // groupIds = this.groupsData.map((item: any) => {
-        //   return item.id;
-        // });
-        // console.log(this.groupsData)
-        // this.jsPlumbInstance.draggable(groupIds, {
-        //   containment: true,
-        // });
-      // Add elements to the group
-      // this.jsPlumbInstance.addToGroup(group, "element1");
-      var selectedNodes = selectedNodeIds.map(function (id) {
-        return document.getElementById(id);
-      });
-    
-      // Calculate the average position of selected nodes
-      var averagePosition = this.calculateAveragePosition(selectedNodes);
-      var dimensions = this.calculateGroupDimensions(selectedNodes);
-      setTimeout(() => {
-  // Check if the group was successfully created
-  if (GroupData && GroupData.el) {
-    // Move the group to the average position of the selected nodes
-    // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
-    GroupData.el.style.width = dimensions.width + "px";
-    GroupData.el.style.height = dimensions.height + "px";
-    this.groupsData.find((item: any) => item.id == GroupData.id).el.style.width = dimensions.width + "px" ;
-    this.groupsData.find((item: any) => item.id == GroupData.id).el.style.height = dimensions.height + "px";
-    this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
-  
-  } else {
-    console.error("Failed to create the group or group is undefined.");
-  }
-        
-      }, 1000);
-  
-  
-      setTimeout(() => {
-      
-        selectedNodeIds.forEach((node: any) => {
-          let nodeElement: any = document.getElementById(node);
-          var position = this.calculateRelativePosition(nodeElement, averagePosition);
-          setTimeout(() => {
-            this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
-            console.log("testing")   
-                 
-          }, 1500);
-        });
-          this.jsPlumbInstance.repaintEverything();
-      }, 500);
-      });
-      this.groupForm.reset();
-    } else {
-      this.groupForm.markAllAsTouched();
-    }
+  onOpenGroupOverlay(){
+    // this.showGroup_Overlay = true;
+    this.addGroup()
+
+
   }
   
   onDialogClose(isVisible: boolean) {
     if (!isVisible) {
       this.groupForm.reset();
     }
+  }
+
+  minimizeGroup(groupData){
+    console.log("groupData",this.groupsData)
+    // console.log(this.groupsData.find((group: any) => group.id == groupData.id))
+    // this.groupsData[0]['height'] = "100px";
+    // this.groupsData[0]['width'] = "90px";
+
+    groupData.nodeIds.forEach(id=>{
+      this.nodes.forEach(element => {
+        if(id == element.id)
+        element.isHide = true
+      });
+    })
+    this.isExpand = false;
+    this.jsPlumbInstance.toggleGroup(groupData.groupId);
+    this.re_ArrangeNodes();
+  }
+
+  
+  onExpandCollapseGroup(group){
+    this.isExpand = !this.isExpand;
+    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
+    let nodesIds = connectedNodes.map((item2: any) => {
+      return item2.id;
+    });
+    nodesIds.forEach(each=>{
+    this.nodes.forEach(node=>{
+      if(each == node.id){
+        console.log("testing",each)
+        node.isHide = !node.isHide
+      }
+    })
+  });
+  this.jsPlumbInstance.toggleGroup(group.id);
+  this.re_ArrangeNodes();
+  }
+
+  calculateAdjustedPosition(averagePosition, dimensions) {
+    // You may need to adjust these values based on your specific layout
+    var xOffset = 0; // Adjust this value to fine-tune the horizontal position
+    var yOffset = 0; // Adjust this value to fine-tune the vertical position
+  
+    return { left: averagePosition.left + xOffset, top: averagePosition.top + yOffset };
+  }
+
+  calculateAveragePosition(nodes) {
+    var totalX = 0;
+  var totalY = 0;
+
+  for (var i = 0; i < nodes.length; i++) {
+    var nodeRect = nodes[i].getBoundingClientRect();
+    totalX += nodeRect.left;
+    totalY += nodeRect.top;
+  }
+
+  var averageX = totalX / nodes.length;
+  var averageY = totalY / nodes.length;
+  return { left: averageX-200, top: averageY-200 };
+  }
+  
+   calculateRelativePosition(node, averagePosition) {
+    var nodeRect = node.getBoundingClientRect();
+    var deltaX = nodeRect.left - averagePosition.x;
+    var deltaY = nodeRect.top - averagePosition.y;
+    // setTimeout(() => {
+    //   this.jsPlumbInstance.setPosition(node, { left: deltaX, top: deltaY });
+    // }, 1000);
+    return { left: deltaX, top: deltaY };
+  }
+
+  calculateGroupDimensions(nodes) {
+    var minX = Number.MAX_SAFE_INTEGER;
+    var minY = Number.MAX_SAFE_INTEGER;
+    var maxX = Number.MIN_SAFE_INTEGER;
+    var maxY = Number.MIN_SAFE_INTEGER;
+  
+    for (var i = 0; i < nodes.length; i++) {
+      var nodeRect = nodes[i].getBoundingClientRect();
+      minX = Math.min(minX, nodeRect.left);
+      minY = Math.min(minY, nodeRect.top);
+      maxX = Math.max(maxX, nodeRect.right);
+      maxY = Math.max(maxY, nodeRect.bottom);
+    }
+    var width = maxX - minX;
+    var height = maxY - minY;
+    return { width: width, height: height };
+  }
+
+  re_ArrangeNodes(){
+    setTimeout(() => {
+      this.jsPlumbInstance.repaintEverything();
+    }, 50);
   }
 }
 

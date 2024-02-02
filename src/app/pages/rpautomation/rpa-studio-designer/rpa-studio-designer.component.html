@@ -111,7 +111,7 @@
                   <!-- TODO -- Enable below for grouping feature in RPA designer -->
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" [disabled]="buttonDisabled"
-                      (click)="current_instance.addGroup()">
+                      (click)="current_instance.onOpenGroupOverlay()">
                       <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2" alt="">
                       <!-- <span class="testtooltip">Activity Grouping</span> -->
                       <span class="testtooltip">Group</span>

@@ -289,3 +289,7 @@
 .nodeActive{
   border: 2px solid rgb(196, 184, 89) !important;
 }
+.custom-group-class{
+  border-style: dotted !important;
+  color: #4AB0F5
+}

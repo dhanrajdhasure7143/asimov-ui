@@ -84,7 +84,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.getToolsetItems();
     // this.getAllBots();
     this.getAllCategories();
-    this.getPredefinedBots();
+    // this.getPredefinedBots();
     setTimeout(() => {
     this.getAllEnvironments();
     }, 1000);
@@ -419,16 +419,17 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   getPredefinedBots() {
     this.spinner.show()
-    this.rest.getpredefinedbots().subscribe((response:any)=>{
-      // this.spinner.hide()
-      if(response.errorMessage==undefined)
-        this.predefinedBotsList=response
-      else
-      this.toastService.showError(response.errorMessage);
-    },(err:any)=>{
-      this.spinner.hide();
-      this.toastService.showError(this.toastMessages.preDefineBotErr);
-    })
+    //Enable below code to get predefined bots
+    // this.rest.getpredefinedbots().subscribe((response:any)=>{
+    //   // this.spinner.hide()
+    //   if(response.errorMessage==undefined)
+    //     this.predefinedBotsList=response
+    //   else
+    //   this.toastService.showError(response.errorMessage);
+    // },(err:any)=>{
+    //   this.spinner.hide();
+    //   this.toastService.showError(this.toastMessages.preDefineBotErr);
+    // })
   }
 
   openBotForm() {
