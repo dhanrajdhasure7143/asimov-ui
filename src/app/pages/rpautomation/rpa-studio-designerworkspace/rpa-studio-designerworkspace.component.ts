@@ -2902,14 +2902,14 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  onExpandCollapseGroup(){
+  onExpandCollapseGroup(groupId){
     this.isExpand = !this.isExpand;
     console.log(this.groupsData)
-    this.jsPlumbInstance.toggleGroup(this.groupsData[1].id);
+    this.jsPlumbInstance.toggleGroup(groupId);
 
-    this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
-    this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
-    this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
+    // this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
+    // this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
+    // this.jsPlumbInstance.connect({ source: "group1-node1", target: "group2-node1" });
   }
 
   calculateAdjustedPosition(averagePosition, dimensions) {
@@ -3332,7 +3332,7 @@ if (GroupData && GroupData.el) {
       this.groupForm.markAllAsTouched();
     }
   }
-  
+
   onDialogClose(isVisible: boolean) {
     if (!isVisible) {
       this.groupForm.reset();
