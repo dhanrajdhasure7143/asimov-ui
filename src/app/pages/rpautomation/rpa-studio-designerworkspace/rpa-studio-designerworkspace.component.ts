@@ -577,7 +577,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         path:"",
         action_uid:element.actionUUID,
         isModified:element.isModified,
-        isSelected:false
+        isSelected:false,
+        hide:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -2792,6 +2793,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       groupName: "Activity Group",
       edit: false,
       color: "black",
+      expanded:true
     };
 
     this.groupsData.push(GroupData);
@@ -2891,9 +2893,26 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  onExpandCollapsegroup(groupId){
-    console.log(this.groupsData)
-    this.jsPlumbInstance.toggleGroup(groupId);
+  onExpandCollapsegroup(group){
+    console.log(group)
+    let connectedNodes = this.jsPlumbInstance
+          .getGroup(group.id)
+          .getMembers();
+    let nodes = connectedNodes.map((item2: any) => {
+      return item2.id;
+    });
+    console.log()
+    nodes.forEach(each=>{
+    this.nodes.forEach(item=>{
+      if(each == item.id){
+        item.hide = true
+      }
+    })
+  })
+
+
+
+    this.jsPlumbInstance.toggleGroup(group.id);
 
     // this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
     // this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
