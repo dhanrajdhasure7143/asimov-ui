@@ -2902,10 +2902,10 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  onExpandCollapseGroup(groupId){
+  onExpandCollapseGroup(){
     this.isExpand = !this.isExpand;
     console.log(this.groupsData)
-    this.jsPlumbInstance.toggleGroup(groupId);
+    this.jsPlumbInstance.toggleGroup(this.groupsData[1].id);
 
     // this.jsPlumbInstance.connect({ source: "node1", target: "group1-node1" });
     // this.jsPlumbInstance.connect({ source: "node2", target: "group1-node2" });
@@ -3314,14 +3314,19 @@ if (GroupData && GroupData.el) {
   // }
 
   onselectNodes(index){
-    // this.nodes[index]["isSelected"]= true;
-    // this.dt.updateSelectedNodes(this.nodes);
-    this.nodes[index]["isSelected"] = !this.nodes[index]["isSelected"];
+    this.nodes[index]["isSelected"]= true;
     this.dt.updateSelectedNodes(this.nodes);
-    const selectedNodesCount = this.nodes.filter(node => node.isSelected).length;
-    this.dt.setButtonDisabled(selectedNodesCount <= 1);
   }
+  // onselectNodes(index) {
+  //   this.dt.updateSelectedNodes(this.nodes);
+  //   this.nodes[index]["isSelected"] = !this.nodes[index]["isSelected"];
+  //   if (!this.nodes[index]["isSelected"]) {
+  //     this.nodes[index]["isSelected"] = false;
+  //   }
+  // }
 
+  
+  
   submitForm() {
     if (this.groupForm.valid) {
       console.log('Group Name:', this.groupForm.get('groupName').value);
@@ -3332,7 +3337,7 @@ if (GroupData && GroupData.el) {
       this.groupForm.markAllAsTouched();
     }
   }
-
+  
   onDialogClose(isVisible: boolean) {
     if (!isVisible) {
       this.groupForm.reset();
