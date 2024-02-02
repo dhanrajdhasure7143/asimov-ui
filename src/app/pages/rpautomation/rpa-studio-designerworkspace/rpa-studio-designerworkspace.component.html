@@ -1,6 +1,5 @@
 <div [id]="dragareaid">
   <div  class="studio_main">
-    <button class="btn btn-primary" (click)="minimize()">test...</button>
     <div class="studio_main_desginer" >
       <div class="drag-area" id="group" #group [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
           workspace: disable,
@@ -72,6 +71,10 @@
                 </span>
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
                   <i class="ri-pencil-line text-primary"></i>
+                </span>
+                <span class="groupTitle clickable" (click)="onExpandCollapseGroup()">
+                  <i *ngIf="isExpand" class="pi pi-angle-right"></i>
+                  <i *ngIf="!isExpand" class="pi pi-angle-down"></i>
                 </span>
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
                   <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
@@ -351,7 +354,28 @@
   <app-rpa-so-logs [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
   [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version" (closeEvent)="closeLogsOverlay()"></app-rpa-so-logs>
 </div>
-
+<div *ngIf="showOverlay" class="overlay">
+  <p-dialog header="Action Items Grouping" [(visible)]="showOverlay" [style]="{width: '50vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
+    <form [formGroup]="groupForm" (ngSubmit)="submitForm()">
+      <div class="p-field">
+        <label for="groupName">Group Name <span class="star">*</span></label>
+        <input id="groupName" type="text" formControlName="groupName" class="form-control">
+        <div *ngIf="groupForm.get('groupName').hasError('required') && groupForm.get('groupName').touched" class="required">
+          Group Name is required.
+        </div>
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="groupDescription">Group Description <span class="star">*</span></label>
+        <textarea id="groupDescription" formControlName="groupDescription" class="form-control"></textarea>
+        <div *ngIf="groupForm.get('groupDescription').hasError('required') && groupForm.get('groupDescription').touched" class="required">
+          Group Description is required.
+        </div>
+      </div>
+      <button style="float: right; margin-top: 15px;" class="btn btn-primary" type="submit">Group</button>
+    </form>
+  </p-dialog>
+</div>
 
 
 

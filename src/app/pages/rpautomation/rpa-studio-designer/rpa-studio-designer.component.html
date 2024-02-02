@@ -110,10 +110,11 @@
                 <div class="actionsmenu-right" *ngIf="!isActionsShow && current_instance != undefined">
                   <!-- TODO -- Enable below for grouping feature in RPA designer -->
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
+                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" [disabled]="buttonDisabled"
                       (click)="current_instance.addGroup()">
                       <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2" alt="">
-                      <span class="testtooltip">Activity Grouping</span>
+                      <!-- <span class="testtooltip">Activity Grouping</span> -->
+                      <span class="testtooltip">Group</span>
                     </button>
                   </div>
                   <div class="action-item" *ngIf="current_instance != undefined" dropdown #dropdown="bs-dropdown"
@@ -161,7 +162,10 @@
                        <span class="testtooltip">Stop Bot</span>
                      </button>
                   </div> -->
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0"
+
+                <!-- Enable below for Predifined Bot feature in RPA designer -->
+
+                  <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0"
                     dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle
                       type="button" aria-controls="predefinedBotDropdown">
@@ -177,7 +181,7 @@
                       </li>
                     </ul>
               
-                  </div>
+                  </div> -->
                   <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"

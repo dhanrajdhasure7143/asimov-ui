@@ -167,6 +167,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
   recordandplay:boolean = false;
+  isExpand:boolean = false;
+  showOverlay: boolean = false;
+  groupName: string = '';
+  groupDescription: string = '';
+  groupForm: FormGroup;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -228,6 +233,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       ],
       description: ["", Validators.compose([Validators.maxLength(500)])],
       isPredefined: [false],
+    });
+
+    this.groupForm = this.formBuilder.group({
+      groupName: ['', Validators.required],
+      groupDescription: ['', Validators.required],
     });
   }
 
@@ -2775,6 +2785,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   addGroup() {
+    this.showOverlay = true;
     var selectedNodeIds =[]
     this.nodes.forEach(item =>{
       if(item.isSelected){
@@ -2891,7 +2902,8 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  minimize(){
+  onExpandCollapseGroup(){
+    this.isExpand = !this.isExpand;
     console.log(this.groupsData)
     this.jsPlumbInstance.toggleGroup(this.groupsData[1].id);
 
@@ -3302,9 +3314,30 @@ if (GroupData && GroupData.el) {
   // }
 
   onselectNodes(index){
-    this.nodes[index]["isSelected"]= true;
+    // this.nodes[index]["isSelected"]= true;
+    // this.dt.updateSelectedNodes(this.nodes);
+    this.nodes[index]["isSelected"] = !this.nodes[index]["isSelected"];
+    this.dt.updateSelectedNodes(this.nodes);
+    const selectedNodesCount = this.nodes.filter(node => node.isSelected).length;
+    this.dt.setButtonDisabled(selectedNodesCount <= 1);
   }
 
+  submitForm() {
+    if (this.groupForm.valid) {
+      console.log('Group Name:', this.groupForm.get('groupName').value);
+      console.log('Group Description:', this.groupForm.get('groupDescription').value);
+      this.showOverlay = false;
+      this.groupForm.reset();
+    } else {
+      this.groupForm.markAllAsTouched();
+    }
+  }
+  
+  onDialogClose(isVisible: boolean) {
+    if (!isVisible) {
+      this.groupForm.reset();
+    }
+  }
 }
 
 @Pipe({ name: "Checkoutputbox" })
