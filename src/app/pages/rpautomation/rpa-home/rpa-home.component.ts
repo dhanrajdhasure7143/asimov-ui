@@ -972,7 +972,7 @@ importBot(){
         startStopCoordinate:response.startStopCoordinate   
       };
       // this.downloadJson(botDetails)
-       this.downloadEncryptedData(JSON.stringify(botDetails));
+       this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
     } else {
 
     }
@@ -1005,7 +1005,7 @@ importBot(){
       reader.readAsText(file);
       reader.onload = (e) => {
         // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
-        this.import_BotData  = JSON.parse(reader.result.toString());
+        this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
         console.log(this.import_BotData)
         this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
