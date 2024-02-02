@@ -166,4 +166,18 @@ setScreenList(module:any){
   triggerReset(){ 
     this.resetTableSearchSubject.next(true);
   }
+  
+  private selectedNodesSubject = new BehaviorSubject<string[]>([]);
+  selectedNodes$ = this.selectedNodesSubject.asObservable();
+
+  private buttonDisabledSubject = new BehaviorSubject<boolean>(false);
+  buttonDisabled$ = this.buttonDisabledSubject.asObservable();
+
+  updateSelectedNodes(nodes: string[]) {
+    this.selectedNodesSubject.next(nodes);
+  }
+
+  setButtonDisabled(disabled: boolean) {
+    this.buttonDisabledSubject.next(disabled);
+  }
 }

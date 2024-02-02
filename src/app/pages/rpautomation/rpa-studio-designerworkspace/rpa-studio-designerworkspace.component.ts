@@ -167,6 +167,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
   recordandplay:boolean = false;
+  isExpand:boolean = false;
+  showOverlay: boolean = false;
+  groupName: string = '';
+  groupDescription: string = '';
+  groupForm: FormGroup;
   constructor(
     private rest: RestApiService,
     private notifier: NotifierService,
@@ -228,6 +233,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       ],
       description: ["", Validators.compose([Validators.maxLength(500)])],
       isPredefined: [false],
+    });
+
+    this.groupForm = this.formBuilder.group({
+      groupName: ['', Validators.required],
+      groupDescription: ['', Validators.required],
     });
   }
 
@@ -2861,7 +2871,7 @@ if (GroupData && GroupData.el) {
     });
   
 
-  
+    this.showOverlay = true;
 
     return
 
@@ -2895,6 +2905,7 @@ if (GroupData && GroupData.el) {
 
   onExpandCollapsegroup(group){
     console.log(group)
+    this.isExpand = !this.isExpand;
     let connectedNodes = this.jsPlumbInstance
           .getGroup(group.id)
           .getMembers();
@@ -2909,6 +2920,7 @@ if (GroupData && GroupData.el) {
       }
     })
   })
+  
 
 
 
@@ -3322,8 +3334,113 @@ if (GroupData && GroupData.el) {
 
   onselectNodes(index){
     this.nodes[index]["isSelected"]= true;
+    this.dt.updateSelectedNodes(this.nodes);
   }
+  // onselectNodes(index) {
+  //   this.dt.updateSelectedNodes(this.nodes);
+  //   this.nodes[index]["isSelected"] = !this.nodes[index]["isSelected"];
+  //   if (!this.nodes[index]["isSelected"]) {
+  //     this.nodes[index]["isSelected"] = false;
+  //   }
+  // }
 
+  
+  
+  submitForm() {
+    if (this.groupForm.valid) {
+      const dynamicGroupName = this.groupForm.get('groupName').value;
+      // console.log('Group Name:', this.groupForm.get('groupName').value);
+      console.log('Group Description:', this.groupForm.get('groupDescription').value);
+      this.showOverlay = false;
+      var selectedNodeIds =[]
+      this.nodes.forEach(item =>{
+        if(item.isSelected){
+          selectedNodeIds.push(item.id)
+  
+        }
+      })
+      console.log(this.nodes)
+      // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
+  
+  
+      let GroupData: any = {
+        id: this.idGenerator(),
+        el: undefined,
+        groupName: dynamicGroupName,
+        edit: false,
+        color: "black",
+      };
+  
+      this.groupsData.push(GroupData);
+  
+      setTimeout(() => {
+        let element: any = document.getElementById(GroupData.id);
+        console.log(element)
+        this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
+        this.jsPlumbInstance.addGroup(
+          this.groupsData.find((item: any) => item.id == GroupData.id)
+        );
+  
+        // let groupIds: any = [];
+        // groupIds = this.groupsData.map((item: any) => {
+        //   return item.id;
+        // });
+        // console.log(this.groupsData)
+        // this.jsPlumbInstance.draggable(groupIds, {
+        //   containment: true,
+        // });
+      // Add elements to the group
+      // this.jsPlumbInstance.addToGroup(group, "element1");
+      var selectedNodes = selectedNodeIds.map(function (id) {
+        return document.getElementById(id);
+      });
+    
+      // Calculate the average position of selected nodes
+      var averagePosition = this.calculateAveragePosition(selectedNodes);
+      var dimensions = this.calculateGroupDimensions(selectedNodes);
+      setTimeout(() => {
+  // Check if the group was successfully created
+  if (GroupData && GroupData.el) {
+    // Move the group to the average position of the selected nodes
+    // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
+    GroupData.el.style.width = dimensions.width + "px";
+    GroupData.el.style.height = dimensions.height + "px";
+    this.groupsData.find((item: any) => item.id == GroupData.id).el.style.width = dimensions.width + "px" ;
+    this.groupsData.find((item: any) => item.id == GroupData.id).el.style.height = dimensions.height + "px";
+    this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
+  
+  } else {
+    console.error("Failed to create the group or group is undefined.");
+  }
+        
+      }, 1000);
+  
+  
+      setTimeout(() => {
+      
+        selectedNodeIds.forEach((node: any) => {
+          let nodeElement: any = document.getElementById(node);
+          var position = this.calculateRelativePosition(nodeElement, averagePosition);
+          setTimeout(() => {
+            this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
+            console.log("testing")   
+                 
+          }, 1500);
+        });
+          this.jsPlumbInstance.repaintEverything();
+      }, 500);
+      });
+      this.groupForm.reset();
+    } else {
+      this.groupForm.markAllAsTouched();
+    }
+  }
+  
+  onDialogClose(isVisible: boolean) {
+    if (!isVisible) {
+      this.groupForm.reset();
+    }
+  }
 }
 
 @Pipe({ name: "Checkoutputbox" })
