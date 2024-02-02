@@ -1007,7 +1007,7 @@ importBot(){
         // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
         this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
         console.log(this.import_BotData)
-        this.importBotForm.get("botName").setValue(this.import_BotData.botName);
+        // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
       }
     }
@@ -1048,7 +1048,7 @@ importBot(){
         this.spinner.hide();
         this.resetImportBotForm();
         this.toastService.showSuccess(this.toastMessages.botImport,'response');
-        // this.getallbots();
+        this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
