@@ -72,7 +72,7 @@
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
                   <i class="ri-pencil-line text-primary"></i>
                 </span>
-                <span class="groupTitle clickable" (click)="onExpandCollapseGroup()" *ngIf="group.edit == false">
+                <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group.id)" *ngIf="group.edit == false">
                   <i *ngIf="isExpand" class="pi pi-angle-right"></i>
                   <i *ngIf="!isExpand" class="pi pi-angle-down"></i>
                 </span>
@@ -372,7 +372,7 @@
           Group Description is required.
         </div>
       </div>
-      <button style="float: right; margin-top: 15px;" class="btn btn-primary" type="submit">Group</button>
+      <button style="float: right; margin-top: 15px;" class="btn btn-primary" [disabled]="groupForm.invalid" type="submit">Group</button>
     </form>
   </p-dialog>
 </div>
