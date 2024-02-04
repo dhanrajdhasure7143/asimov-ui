@@ -172,7 +172,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   groupName: string = '';
   groupDescription: string = '';
   groupForm: FormGroup;
-  path: "/assets/images/RPA/Start.png";
+  path: string = "/assets/images-n/MicroBot_New.jpg";
+  showPublishButton: boolean = false;
 
 
   constructor(
@@ -2842,6 +2843,7 @@ if (GroupData && GroupData.el) {
     });
   
     this.showGroup_Overlay = false;
+    this.groupForm.reset();
 
     return
 
@@ -3229,8 +3231,8 @@ if (GroupData && GroupData.el) {
   // }
 
   onOpenGroupOverlay(){
-    // this.showGroup_Overlay = true;
-    this.addGroup()
+    this.showGroup_Overlay = true;
+    // this.addGroup()
 
 
   }
@@ -3332,6 +3334,10 @@ if (GroupData && GroupData.el) {
     setTimeout(() => {
       this.jsPlumbInstance.repaintEverything();
     }, 50);
+  }
+
+  publishGroup(groupId:any) {
+    console.log(`Publishing group with ID: ${groupId}`);
   }
 }
 

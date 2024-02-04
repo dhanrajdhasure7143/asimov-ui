@@ -63,22 +63,27 @@
                 'border-color': group.color,
                 'border-style': isExpand?'dotted':'',
                 'border-radius': !isExpand?'0.2em':'',
-                'background-image': 'url('+path+')'
-              }" class="groupElement">
+                'background-image': !isExpand ? 'url(' + path + ')' : ''
+              }" class="groupElement" (mouseenter)="group.showPublishButton = !isExpand" (mouseleave)="group.showPublishButton = false">
               <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
 
               <div *ngIf="!isExpand">
                 <span class="node-delete" (click)="removeGroup(group.id)">
                   <i class="ri-close-circle-fill"></i>
                 </span>
-                <div>
+                <div class="row">
+                  <span class="clickable" (click)="onExpandCollapseGroup(group)">
+                    <i class="pi pi-angle-down"></i>
+                  </span>
+                  <span *ngIf="!isExpand" class="groupHeader">
+                    <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group.id)">Publish</button>
+                  </span>
+                </div>
+                <div class="groupName">
                   {{ group.groupName }}
                 </div>
-                <span class="clickable" (click)="onExpandCollapseGroup(group)">
-                  <i class="pi pi-angle-down"></i>
-                </span>
               </div>
-
+              
               <div *ngIf="isExpand" class="groupHeader">
                 <span class="groupTitle" *ngIf="group.edit == false">{{
                   group.groupName

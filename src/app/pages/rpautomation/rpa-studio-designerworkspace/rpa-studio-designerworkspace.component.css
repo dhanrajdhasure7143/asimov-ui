@@ -293,3 +293,30 @@
   border-style: dotted !important;
   color: #4AB0F5
 }
+
+.publishButton{
+  margin-left: 60px;
+}
+.groupName {
+  margin-top: 45px;
+  position: absolute;
+  top: 14px;
+  text-align: center !important;
+}
+
+.publishButton {
+  position: relative;
+  /* background-color: #4caf50; */
+  background-color: #56b459;
+  color: #fff;
+  border: none;
+  padding: 3px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+  z-index: 2;
+}
+.publishButton:hover {
+  background-color: #45a049;
+}
