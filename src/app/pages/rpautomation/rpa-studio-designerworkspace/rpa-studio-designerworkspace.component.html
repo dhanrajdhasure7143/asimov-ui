@@ -54,20 +54,20 @@
           </ng-container>
           <!--Added Grouping Task in RPA Designer-->
           <ng-container *ngFor="let group of groupsData; let i = index">
-            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="!isExpand?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
+            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="!group.isExpand?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
               [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
                 left: group.x,
                 top: group.y,
-                height: isExpand? group.height : '60px',
-                width: isExpand? group.width : '60px',
+                height: group.isExpand? group.height : '60px',
+                width: group.isExpand? group.width : '60px',
                 'border-color': group.color,
-                'border-style': isExpand?'dotted':'',
-                'border-radius': !isExpand?'0.2em':'',
-                'background-image': !isExpand ? 'url(' + path + ')' : ''
-              }" class="groupElement" (mouseenter)="group.showPublishButton = !isExpand" (mouseleave)="group.showPublishButton = false">
+                'border-style': group.isExpand?'dotted':'',
+                'border-radius': !group.isExpand?'0.2em':'',
+                'background-image': !group.isExpand ? 'url(' + path + ')' : ''
+              }" class="groupElement" (mouseenter)="group.showPublishButton = !group.isExpand" (mouseleave)="group.showPublishButton = false">
               <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
 
-              <div *ngIf="!isExpand">
+              <div *ngIf="!group.isExpand">
                 <span class="node-delete" (click)="removeGroup(group.id)">
                   <i class="ri-close-circle-fill"></i>
                 </span>
@@ -75,28 +75,27 @@
                   <span class="clickable" (click)="onExpandCollapseGroup(group)">
                     <i class="pi pi-angle-down"></i>
                   </span>
-                  <span *ngIf="!isExpand" class="groupHeader">
-                    <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group.id)">Publish</button>
+                  <span class="groupHeader">
+                    <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
                   </span>
                 </div>
-                <div class="groupName">
-                  {{ group.groupName }}
-                </div>
+                <div class="groupName">{{ group.groupName }}</div>
               </div>
               
-              <div *ngIf="isExpand" class="groupHeader">
-                <span class="groupTitle" *ngIf="group.edit == false">{{
-                  group.groupName
-                  }}</span>
+              <div *ngIf="group.isExpand" class="groupHeader">
+                <span class="groupTitle" *ngIf="group.edit == false">{{group.groupName}}</span>
                 <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
+                </span>
+                <span class="groupHeader">
+                  <button class="publishButton" (click)="publishGroup(group)">Publish</button>
                 </span>
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
                   <i class="ri-pencil-line text-primary"></i>
                 </span>
                 <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group)" *ngIf="group.edit == false">
-                  <i *ngIf="isExpand" class="pi pi-angle-right"></i>
-                  <i *ngIf="!isExpand" class="pi pi-angle-down"></i>
+                  <i class="pi pi-angle-right"></i>
+                  <!-- <i class="pi pi-angle-down"></i> -->
                 </span>
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
                   <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />

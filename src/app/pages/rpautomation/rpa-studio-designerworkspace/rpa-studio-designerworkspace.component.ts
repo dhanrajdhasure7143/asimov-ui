@@ -167,7 +167,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
   recordandplay:boolean = false;
-  isExpand:boolean = true;
+  // isExpand:boolean = true;
   showGroup_Overlay: boolean = false;
   groupName: string = '';
   groupDescription: string = '';
@@ -805,6 +805,88 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     list.splice(list.indexOf(item), 1);
   }
 
+  dragData={
+    "versionType": "",
+    "comments": "",
+    "version": 2,
+    "botId": "6346",
+    "botName": "GroupTest",
+    "botType": 0,
+    "microBot":true,
+    "tasks": [
+
+      {
+        "botTId": 54351,
+        "botId": 6291,
+        "tMetaId": 36,
+        "name": "Add",
+        "inSeqId": 0,
+        "outSeqId": "f4d94a07-fd2b-54b6-9379-cab9143f9b99",
+        "version": 2,
+        "versionNew": "1",
+        "nodeId": "Arithmetic Operations__e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
+        "taskConfiguration": "null",
+        "actionUUID": "null",
+        "attributes": [],
+        "isConnectionManagerTask": false,
+        "isModified": false,
+        "x": "27px",
+        "y": "38px",
+        "taskSubCategoryId": null
+      },
+      {
+        "botTId": 54352,
+        "botId": 6291,
+        "tMetaId": 37,
+        "name": "Multiply",
+        "inSeqId": "e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
+        "outSeqId": 0,
+        "version": 2,
+        "versionNew": "1",
+        "nodeId": "Arithmetic Operations__f4d94a07-fd2b-54b6-9379-cab9143f9b99",
+        "taskConfiguration": "null",
+        "actionUUID": "null",
+        "attributes": [],
+        "isConnectionManagerTask": false,
+        "isModified": false,
+        "x": "149px",
+        "y": "38px",
+        "taskSubCategoryId": null
+      }
+   
+    ],
+    "groups": [
+      {
+        "id": 20348,
+        "groupName": "Activity Group",
+        "x": "305px",
+        "y": "60.96875px",
+        "height": "150px",
+        "width": "250px",
+        "color": "black",
+        "isExpand":false,
+        "showPublishButton": true,
+        "groupId": "3c79dead-e9d1-a049-103a-c7581ee7967a",
+        "nodeIds": [
+          "f4d94a07-fd2b-54b6-9379-cab9143f9b99",
+          "e8851c0c-8eed-3d32-3c15-cc20d7cf3764"
+        ]
+      }
+    ],
+    "sequences": [
+      {
+        "sequenceName": "_jsplumb_c_1707229397418",
+        "sourceTaskId": "e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
+        "targetTaskId": "f4d94a07-fd2b-54b6-9379-cab9143f9b99"
+      },
+      // {
+      //   "sequenceName": "_jsplumb_c_1707229397418",
+      //   "sourceTaskId": "e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
+      //   "targetTaskId": "f4d94a07-fd2b-54b6-9379-cab9143f9b99"
+      // }
+    ]
+  }
+
   onDrop(event: DndDropEvent, e: any) {
     this.dragelement = document.querySelector("#" + this.dragareaid);
     this.dagvalue =
@@ -825,13 +907,56 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (event.data.botId != undefined) {
       this.loadPredefinedBot(event.data.botId, dropCoordinates);
       //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
-    } else {
+    } else if(event.data.microBot){
+
+      // this.dragData.tasks.forEach((element:any,i) => {
+      //   var mousePos = this.getMousePos(event);
+      let microBotTasks=[]
+      this.dragData.tasks.forEach((item,i)=>{
+        const dropCoordinates1 = {
+          x: (i*80)+mousePos.x + "px",
+          y: mousePos.y + "px",
+        };
+                
+        const node:any={};
+        // node.id = this.idGenerator();
+        node.id = item.nodeId.split("__")[1];
+        node.name = item.nodeId.split("__")[0]
+        node.selectedNodeTask= item.name
+        node.isCompiled = false;
+        node.isHide= false
+        node.isModified= false
+        node.isSelected= false
+        node.action_uid = null
+        node.tasks =[] 
+        node.path =''
+        node.selectedNodeId = item.tMetaId
+        node.isConnectionManagerTask.item.isConnectionManagerTask
+        const nodeWithCoordinates = Object.assign({}, node, dropCoordinates1)
+        console.log(nodeWithCoordinates);
+        console.log(this.nodes);
+        this.nodes.push(nodeWithCoordinates);
+        microBotTasks.push(nodeWithCoordinates)
+        setTimeout(() => {
+          this.populateNodes(nodeWithCoordinates);
+          // this.autoSaveTaskConfig(nodeWithCoordinates);
+        }, 50);
+      })
+      setTimeout(() => {
+        console.log(this.nodes)
+        this.addconnections(this.dragData.sequences)
+      }, 2000);
+
+      this.addGroupOnLoad(this.dragData.groups[0],dropCoordinates,microBotTasks)
+      // });
+
+    }else {
       const node = event.data;
       node.isCompiled = false;
       node.id = this.idGenerator();
       // node.selectedNodeTask = "";
       // node.selectedNodeId = "";
-      const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
+      const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);    
       this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
@@ -2019,7 +2144,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       } else {
         console.log("saveBotdata",this.saveBotdata)
-
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
@@ -2778,7 +2902,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       groupName: this.groupForm.get('groupName').value,
       edit: false,
       color: "#4AB0F5",
-      expanded:true,
+      isExpand:true,
       cssClass: "custom-group-class"
     };
 
@@ -3255,14 +3379,14 @@ if (GroupData && GroupData.el) {
         element.isHide = true
       });
     })
-    this.isExpand = false;
+    // groupData.isExpand = false;
     this.jsPlumbInstance.toggleGroup(groupData.groupId);
     this.re_ArrangeNodes();
   }
 
   
   onExpandCollapseGroup(group){
-    this.isExpand = !this.isExpand;
+    group.isExpand = !group.isExpand;
     let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
     let nodesIds = connectedNodes.map((item2: any) => {
       return item2.id;
@@ -3336,9 +3460,200 @@ if (GroupData && GroupData.el) {
     }, 50);
   }
 
-  publishGroup(groupId:any) {
-    console.log(`Publishing group with ID: ${groupId}`);
+  publishGroup(group:any) {
+    console.log(`Publishing group with ID: ${group.id}`);
+    this.generatePayload("","",group);
   }
+
+  generatePayload(version_type:any, comments:any,group){
+    // this.spinner.show();
+    this.checkorderflag = true;
+    this.addsquences();
+    if(this.executionMode){
+      // this.arrange_task_order(this.startNodeId);
+    } else {
+      this.final_tasks=this.finaldataobjects;
+      console.log("this.final_tasks",this.final_tasks)
+    }
+    // this.get_coordinates();
+
+    if(this.executionMode){
+      let finalTasksData=[...this.final_tasks];
+      finalTasksData.forEach((item, finalIndex)=>{
+        if(this.actualTaskValue.length != 0 && item.validated==undefined)
+        {    
+          if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1)
+          {
+            let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
+            if(actualTasks.length!=0)
+            {
+              let indexList:any=[];
+              this.final_tasks.forEach((tempTask, index)=>{
+                if(tempTask.nodeId==item.nodeId)
+                  indexList.push(index);
+              });
+              indexList.forEach((indexItem, indexmeta)=>{
+                  if(finalTasksData[indexItem] && actualTasks[indexmeta])
+                  {
+                  let task={...{},...finalTasksData[indexItem]}
+                  task.botTId=actualTasks[indexmeta].botTId;
+                  this.final_tasks[indexItem]=task;
+                }
+              })
+            }
+          }
+        
+        }
+      })
+    }
+
+    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
+    let nodesIds = connectedNodes.map((item2: any) => {
+      return item2.id;
+    });
+    let microBot_TasksList=[]
+
+    nodesIds.forEach(node => {
+      this.final_tasks.forEach(element => {
+        let id= element.nodeId.split("__")[1];
+        if(id == node){
+          element.attributes=[]
+          microBot_TasksList.push(element)
+        }
+      });
+    });
+
+
+
+      let _microBot_payload = {
+        // versionType: "",
+        // comments: "",
+        // version: ,
+        botId: "6346",
+        botName: group.name,
+        // botType: this.finalbot.botType,
+        description: "",
+        department: this.finalbot.botDepartment,
+        // botMainSchedulerEntity: null,
+        // envIds: env,
+        // isPredefined: this.finalbot.predefinedBot,
+        tasks: microBot_TasksList,
+        // createdBy: "admin",
+        groups: this.getGroupsInfo(),
+        // lastSubmittedBy: "admin",
+        // scheduler: null,
+        // svg: "",
+        sequences: this.getGroupSequences(group),
+        // isBotCompiled: this.isBotCompiled,
+        // executionMode: this.executionMode?"v1":"v2",
+        // startStopCoordinate:this.startStopCoordinates,
+      };
+
+        console.log("_microBot_payload",_microBot_payload)
+  }
+
+
+  getGroupSequences(group) {
+    let connectedNodes = this.jsPlumbInstance
+          .getGroup(group.id)
+          .getMembers();
+    let nodesIds = connectedNodes.map((item2: any) => {
+            return item2.id;
+      });
+
+    let connections: any = [];
+    let nodeconn: any;
+    this.jsPlumbInstance.getAllConnections().forEach((data) => {
+
+      nodeconn = {
+        sequenceName: data.getId(),
+        sourceTaskId: data.sourceId,
+        targetTaskId: data.targetId,
+      };
+      // nodesIds.forEach(element => {
+      //   if(element != data.sourceId && element == data.targetId){
+      //     nodeconn = {
+      //       sequenceName: data.getId(),
+      //       sourceTaskId: data.sourceId,
+      //       targetTaskId: data.targetId,
+      //     };
+      //     connections.push(nodeconn);
+      //   }
+      //   if(element == data.sourceId && element != data.targetId){
+      //     nodeconn = {
+      //       sequenceName: data.getId(),
+      //       sourceTaskId: data.sourceId,
+      //       targetTaskId: data.targetId,
+      //     };
+          connections.push(nodeconn);
+      //   }
+      // });
+
+    });
+    return connections;
+  }
+
+  addGroupOnLoad(item,dropCoordinates,nodes){
+    let GroupData: any = {
+      id: this.idGenerator(),
+      el: undefined,
+      groupName: "Activity Group",
+      x: dropCoordinates.x,
+      y: dropCoordinates.y,
+      height: item.height,
+      width: item.width,
+      edit: false,
+      color: "black",
+      isExpand: true
+    };
+    this.groupsData.push(GroupData);
+    console.log(this.groupsData)
+    setTimeout(() => {
+      let element: any = document.getElementById(GroupData.id);
+      this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
+      this.jsPlumbInstance.addGroup(
+        this.groupsData.find((item: any) => item.id == GroupData.id)
+      );
+      let groupIds: any = [];
+      groupIds = this.groupsData.map((item: any) => {
+        return item.id;
+      });
+      this.jsPlumbInstance.draggable(groupIds, {
+        containment: true,
+      });
+    }, 500);
+    setTimeout(() => {
+      this.addTasksToGroups1(GroupData.id,nodes);
+    }, 1000);
+  }
+
+  addTasksToGroups1(gId,nodes) {
+    setTimeout(() => {
+
+      let connectedNodes = this.jsPlumbInstance.getGroup(gId).getMembers();
+      let nodesIds = connectedNodes.map((item2: any) => {
+              return item2.id;
+        });
+        setTimeout(() => {
+          nodes.forEach(item => {
+            let nodeElement: any = document.getElementById(item.id);
+            setTimeout(() => {
+              this.jsPlumbInstance.addToGroup(gId, nodeElement);
+              this.re_ArrangeNodes();
+            }, 50);
+          });
+        }, 1000);
+        // nodesIds.forEach((node: any) => {
+        //   let nodeElement: any = document.getElementById("840ddcbc-b0e6-3d36-6922-c880c0379088");
+        //   this.jsPlumbInstance.addToGroup(gId, nodeElement);
+        //   setTimeout(() => {
+        //     console.log(this.groupsData)
+        //     this.re_ArrangeNodes();
+        //   }, 1000);
+        // });
+    });
+  }
+ 
 }
 
 @Pipe({ name: "Checkoutputbox" })
