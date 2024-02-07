@@ -2490,7 +2490,7 @@ input.p-inputtext {
 .p-tabview .p-tabview-nav {
   border: none !important;
   background: transparent !important;
-  height: 70px;
+  height: 20px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
@@ -4050,4 +4050,10 @@ padding: 0px 30px;}
   border-radius: 0 !important;
   transition: box-shadow 0.2s;
   user-select: none;
+}
+
+.left-panel-header .p-tabview-title {
+  font-size: 14px; /* Adjust the font size as needed */
+  color:white; 
+  font-weight: 600; /* Text color */
 }

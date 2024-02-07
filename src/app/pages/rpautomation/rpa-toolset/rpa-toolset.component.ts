@@ -9,7 +9,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
   styleUrls: ['./rpa-toolset.component.css']
 })
 export class RpaToolsetComponent implements OnInit {
-
+  
     constructor(private rest:RestApiService,
       public dt:DataTransferService,
       ) { }
@@ -21,6 +21,16 @@ export class RpaToolsetComponent implements OnInit {
     userRole:any;
     search:any=false;
     sidenavbutton:Boolean=false;
+    isMicroBotsTabActive: boolean = false;
+    isToolSetTabActive: boolean = false;
+    public microBotsUserFilter: any = { name: "" };
+    microBotsList: any[] = [
+      { name: 'Micro Bot 1'  },
+      { name: 'Micro Bot 2' },
+      { name: 'Micro Bot 3' },
+      // Add more items as needed
+  ];
+
     ngOnInit() {
       this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
       this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
@@ -33,6 +43,20 @@ export class RpaToolsetComponent implements OnInit {
     {
       this.closeToolset.emit(null);
     }
+
+    onTabChange(event: any) {
+      // Update the flag based on the active tab
+      this.isMicroBotsTabActive = event.index === 1;
+      this.isToolSetTabActive = event.index === 0; // Assuming Micro Bots tab index is 1
+    }
+
+    get filteredMicroBotsList(): any[] {
+      return this.microBotsList.filter(microBot =>
+          microBot.name.toLowerCase().includes(this.microBotsUserFilter.name.toLowerCase())
+      );
+  }
+  
+    
   }
 
 
