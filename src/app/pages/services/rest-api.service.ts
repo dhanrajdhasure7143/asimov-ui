@@ -1867,4 +1867,8 @@ importBotwithEncryptedData(body){
 saveMicroBot(body){
   return this.http.post("/rpa-service/save-micro-bot",body)
 }
+
+getMicroBots(){
+  return this.http.get<any[]>("/rpa-service/microbots-list");
+}
 }
