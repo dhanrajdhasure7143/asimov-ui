@@ -1854,7 +1854,7 @@ getbotTaskList(botId){
 }
 
 getCustomTasks(){
-  return this.http.get('/rpa-service/custom-task/listCustomTasks')
+  return this.http.get('/rpa-service/sdk-custom/get-sdk-tasks')
 }
 getEncryptedbotData(botId,body){
   return this.http.post("/rpa-service/export-bot/"+botId, body);
@@ -1862,5 +1862,17 @@ getEncryptedbotData(botId,body){
 
 importBotwithEncryptedData(body){
   return this.http.post("/rpa-service/import-bot", body);
+}
+
+createSdkCustomTasks(data : any){
+  return this.http.post('/rpa-service/sdk-custom/create-sdk-task', data)
+}
+
+deleteCustomTasksbyId(id:any){
+  return this.http.delete(`/rpa-service/sdk-custom/delete-sdk-task/${id}`)
+}
+
+getCustomTasksbyId(id : any){
+  return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
 }
 }

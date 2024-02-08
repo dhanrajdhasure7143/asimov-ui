@@ -28,6 +28,8 @@ export class RpaSdkFormComponent implements OnInit {
     { name: 'Path', key: 'A' },
     { name: 'Code', key: 'M' }
   ];
+  showCodeField : boolean = false;
+  showPathField : boolean = false;
   constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
@@ -38,18 +40,13 @@ export class RpaSdkFormComponent implements OnInit {
     ) {
 
       this.customTaskForm=this.formBuilder.group({
-        //Removed email validator because we can also add organization name
-        // userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        // password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
-        // categoryId:["", Validators.compose([Validators.required])],
-        // serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inputRef:[""],
-        taskName:[""],
-        languageType:[""],
+        inputRef:["",Validators.compose([Validators.required])],
+        taskName:["",Validators.compose([Validators.required])],
+        languageType:["",Validators.compose([Validators.required])],
         selectedCategory:[""],
         executablePath:[""],
         codeEditor:[""],
-        outputRef:[""]
+        outputRef:["",Validators.compose([Validators.required])]
     })
 
       this.Credupdateflag=false;
@@ -78,13 +75,30 @@ export class RpaSdkFormComponent implements OnInit {
   }
 
   radioChange(event : any){
-    console.log(event.value,"event")
+    if(event == "Path"){
+      this.showPathField = true;
+      this.showCodeField = false
+    } else {
+      this.showPathField = false;
+      this.showCodeField = true
+    }
   }
 
+  resetCustomTasks(){}
 
-  resetCredForm(){}
+  saveCustomTasks(){
+    let reqBody
+    reqBody = {
+      "code": this.customTaskForm.value.codeEditor,
+      "customTaskName": this.customTaskForm.value.taskName,
+      "executablePath": this.customTaskForm.value.executablePath,
+      "inputReference": this.customTaskForm.value.inputRef,
+      "languageType": this.customTaskForm.value.languageType,
+      "outputReference": this.customTaskForm.value.outputRef,
+    }
 
-  saveCredentials(){
+    this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
+    })
 
   }
 

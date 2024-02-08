@@ -273,5 +273,6 @@ export class columnList{
         {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java','Phyton','JavaScript'],sort: true,},
         {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
         {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 }
