@@ -908,6 +908,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.loadPredefinedBot(event.data.botId, dropCoordinates);
       //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
     } else if(event.data.microBot){
+    // else{
 
       // this.dragData.tasks.forEach((element:any,i) => {
       //   var mousePos = this.getMousePos(event);
@@ -3343,8 +3344,8 @@ if (GroupData && GroupData.el) {
   // }
 
   onselectNodes(index){
-    this.nodes[index]["isSelected"]= true;
-    this.dt.updateSelectedNodes(this.nodes);
+    // this.nodes[index]["isSelected"]= true;
+    // this.dt.updateSelectedNodes(this.nodes);
   }
   // onselectNodes(index) {
   //   this.dt.updateSelectedNodes(this.nodes);
@@ -3461,11 +3462,24 @@ if (GroupData && GroupData.el) {
   }
 
   publishGroup(group:any) {
+    // this.generatePayload("","",group);
     console.log(`Publishing group with ID: ${group.id}`);
-    this.generatePayload("","",group);
+    this.spinner.show();
+    const payload = this.generatePayload(group);
+    this.rest.saveMicroBot(payload).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.errorMessage == undefined) {
+        this.toastService.showSuccess('Microbot published successfully!', 'response');
+      } else {
+        this.toastService.showError('Error occurred while saving micro bot:');
+      }
+    },error => {
+      this.spinner.hide();
+      this.toastService.showError('Error occurred while saving micro bot:');
+    });
   }
 
-  generatePayload(version_type:any, comments:any,group){
+  generatePayload(group){
     // this.spinner.show();
     this.checkorderflag = true;
     this.addsquences();
@@ -3523,40 +3537,37 @@ if (GroupData && GroupData.el) {
       });
     });
 
-
-
       let _microBot_payload = {
+        id:"",
+        microBotName: group.groupName,
+        botId: "6346",
+        description: "test",
+        department: this.finalbot.department,
+        botTasks: microBot_TasksList,
+        groupNodes: this.getGroupsInfo(),
+        botSequences: this.getGroupSequences(group),
         // versionType: "",
         // comments: "",
         // version: ,
-        botId: "6346",
-        botName: group.name,
         // botType: this.finalbot.botType,
-        description: "",
-        department: this.finalbot.botDepartment,
         // botMainSchedulerEntity: null,
         // envIds: env,
         // isPredefined: this.finalbot.predefinedBot,
-        tasks: microBot_TasksList,
         // createdBy: "admin",
-        groups: this.getGroupsInfo(),
         // lastSubmittedBy: "admin",
         // scheduler: null,
         // svg: "",
-        sequences: this.getGroupSequences(group),
         // isBotCompiled: this.isBotCompiled,
         // executionMode: this.executionMode?"v1":"v2",
         // startStopCoordinate:this.startStopCoordinates,
       };
-
         console.log("_microBot_payload",_microBot_payload)
+        return _microBot_payload;
   }
 
 
   getGroupSequences(group) {
-    let connectedNodes = this.jsPlumbInstance
-          .getGroup(group.id)
-          .getMembers();
+    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
     let nodesIds = connectedNodes.map((item2: any) => {
             return item2.id;
       });
