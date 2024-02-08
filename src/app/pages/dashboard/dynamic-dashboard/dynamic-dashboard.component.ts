@@ -50,6 +50,12 @@ export class DynamicDashboardComponent implements OnInit {
   showWidgetValue: boolean = false;
   projects_list: any[]=[];
   selected_project:any;
+  process_name: any;
+  roiProcessName: any;
+  correlationID: any;
+  showOverlay: boolean;
+  showInputField: boolean = false;
+  NameProject: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -649,6 +655,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   showTable(){
+    console.log(this.showTableData);
     this.showTableData = !this.showTableData;
     this.widgetClass = this.showTableData ? 'graph1' : 'graph';
   }
@@ -707,7 +714,7 @@ export class DynamicDashboardComponent implements OnInit {
   cancelProject() {
     this.showWidgetValue = false;
     this.configuration_id = null;
-    // Toggle the visibility of the other table
+    this.showOverlay = false;
   }
 
   toggleConfigureDropdown(e) {
@@ -718,4 +725,30 @@ export class DynamicDashboardComponent implements OnInit {
       this.configuration_id = this.selected_widget.id?this.selected_widget.id: this.selected_widget.childId;
     }, 100);
     }
+
+    viewProcessInfo() {
+      this.showOverlay = true;
+      this.showInputField = true; 
+    }
+
+    onProjectChange() {  
+      this.rest.getProjectDetailsById(this.selected_project).subscribe(res => {
+        this.correlationID = res.correlationID;
+        this.roiProcessName = res.roiProcessName;
+        this.NameProject=res.projectName;
+        console.log('correlationID:', this.correlationID);
+        console.log('roiProcessName:', this.roiProcessName);
+      })
+    }
+  
+    // getProcessDetails() {
+    //   console.log('Selected Project:', this.selected_project);
+    // }
+
+    closeOverlay(event) {
+      this.processInfo = event;
+      this.showOverlay = false;
+      // this.showInputField = false;
+      console.log(this.showTableData);
+      }
 }

@@ -1,6 +1,13 @@
 <div class="splitoverlaydiv h-100">
     <div class="createform-overlay ">
         <form [formGroup]="processInfo" class="h-100 prj-crt-form">
+            <div class="row" *ngIf="isDashboardOverlay">
+                <div class="form-group col p-0">
+                    <label class="" for="projectName"> Project Name  </label>
+                    <input type="text" pInputText [style]="{'width':'100%'}" formControlName="projectName"
+                        placeholder="Enter Project Name" disabled>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col p-0">
                     <label class="" for="processName"> Process Name <span class="star">*</span> </label>
@@ -10,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="form-group col p-0">
-                    <input type="checkbox" formControlName="metricCheck" (change)="onCheckboxChange($event)" />
+                    <input type="checkbox" formControlName="metricCheck" [checked]="isChecked" (change)="onCheckboxChange($event)"  />
                     <label class="checkboxes"> Include for Dashboard Metrics </label>
                 </div>
             </div>

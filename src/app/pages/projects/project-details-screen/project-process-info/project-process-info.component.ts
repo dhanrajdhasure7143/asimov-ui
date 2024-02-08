@@ -19,6 +19,9 @@ export class ProjectProcessInfoComponent implements OnInit {
   isRequired : boolean = false;
   isChange : boolean = false;
   showValidation: boolean;
+  @Input() isDashboardOverlay: boolean = false;
+  @Input() projectName: string = '';
+  @Input() isChecked: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +38,8 @@ export class ProjectProcessInfoComponent implements OnInit {
         hours: [""],
         minutes: [""],      
         costSaved: ["",Validators.compose([Validators.required])],
-        comment: ["",Validators.compose([Validators.required])]
+        comment: ["",Validators.compose([Validators.required])],
+        projectName:[""]
         })
     }
 
@@ -46,6 +50,7 @@ export class ProjectProcessInfoComponent implements OnInit {
       this.processInfo.get("liveDate").updateValueAndValidity()
       this.processInfo.get("processFrequency").clearValidators();
       this.processInfo.get("processFrequency").updateValueAndValidity()
+      this.processInfo.get("projectName").setValue(this.projectName)
       this.getFrequency();
       setTimeout (()=>{ this.getProcessInfo() },400)
   }
