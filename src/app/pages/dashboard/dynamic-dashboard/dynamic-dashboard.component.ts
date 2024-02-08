@@ -54,8 +54,7 @@ export class DynamicDashboardComponent implements OnInit {
   roiProcessName: any;
   correlationID: any;
   showOverlay: boolean;
-  showInputField: boolean = false;
-  NameProject: string = '';
+  isfromDashBoard:boolean = false
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -88,11 +87,6 @@ export class DynamicDashboardComponent implements OnInit {
       this.getListOfDashBoards();
     }
     this.getInterval();
-    this.userRoles = localStorage.getItem("userRole")
-    this.userRoles = this.userRoles.split(',');
-    this.name = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
-    this.email = localStorage.getItem('ProfileuserId');
-    this.getallProjects(this.userRoles,this.name,this.email);
   }
 
   openConfiguration(widget: any) {
@@ -595,7 +589,7 @@ export class DynamicDashboardComponent implements OnInit {
     if(widget.widget_type == "label" && widget.extraWidget){
       this.items = [
         // {label: "Remove",command: (e) => {this.onRmoveWidget();}},
-        {label: "Configure",command: (e) => {this.toggleConfigureDropdown(e)}},
+        {label: "Configure",command: (e) => {this.viewProcessInfo()}},
       ];
     }else if(widget.widget_type =="Table" || (widget.widget_type == "label"  && !widget.extraWidget)){
       this.items = [
@@ -703,14 +697,6 @@ export class DynamicDashboardComponent implements OnInit {
     }
   }
 
-  
-  getallProjects(roles, name, email) {
-    this.rest.getAllProjects(roles, name, email).subscribe(data => {
-      this.projects_list = data[1];
-      console.log(this.projects_list)
-    });
-  }
-
   cancelProject() {
     this.showWidgetValue = false;
     this.configuration_id = null;
@@ -728,27 +714,17 @@ export class DynamicDashboardComponent implements OnInit {
 
     viewProcessInfo() {
       this.showOverlay = true;
-      this.showInputField = true; 
+      this.isfromDashBoard = true; 
     }
-
-    onProjectChange() {  
-      this.rest.getProjectDetailsById(this.selected_project).subscribe(res => {
-        this.correlationID = res.correlationID;
-        this.roiProcessName = res.roiProcessName;
-        this.NameProject=res.projectName;
-        console.log('correlationID:', this.correlationID);
-        console.log('roiProcessName:', this.roiProcessName);
-      })
-    }
-  
-    // getProcessDetails() {
-    //   console.log('Selected Project:', this.selected_project);
-    // }
 
     closeOverlay(event) {
       this.processInfo = event;
       this.showOverlay = false;
-      // this.showInputField = false;
       console.log(this.showTableData);
-      }
+    }
+
+    onCustomEvent(event){
+      this.showOverlay = event
+      this.getDashBoardData(this._paramsData.dashboardId,false);
+    }
 }

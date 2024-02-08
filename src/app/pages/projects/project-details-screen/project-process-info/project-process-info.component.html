@@ -3,9 +3,13 @@
         <form [formGroup]="processInfo" class="h-100 prj-crt-form">
             <div class="row" *ngIf="isDashboardOverlay">
                 <div class="form-group col p-0">
-                    <label class="" for="projectName"> Project Name  </label>
+                        <p-dropdown [options]="projects_list" formControlName="projectId" (onChange)="onProjectChange()"
+                                    [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
+                                    placeholder="Select Project" optionLabel="projectName" optionValue="id" [dropdownIcon]="isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">
+                        </p-dropdown>                            
+                    <!-- <label class="" for="projectName"> Project Name  </label>
                     <input type="text" pInputText [style]="{'width':'100%'}" formControlName="projectName"
-                        placeholder="Enter Project Name" disabled>
+                        placeholder="Enter Project Name" disabled> -->
                 </div>
             </div>
             <div class="row">
@@ -86,7 +90,10 @@
         </form>
         <div class="createform-footer">
             <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
-            <button *ngIf="!isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="createInfo()" class="btn bluebg-button"> Create </button>
+            <button *ngIf="!isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="createInfo()" class="btn bluebg-button"> 
+                <span *ngIf="!isDashboardOverlay">Add</span>
+                <span *ngIf="isDashboardOverlay">Create</span> 
+            </button>
             <button *ngIf="isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="updateInfo()" class="btn bluebg-button"> Update </button>
         </div>
     </div>

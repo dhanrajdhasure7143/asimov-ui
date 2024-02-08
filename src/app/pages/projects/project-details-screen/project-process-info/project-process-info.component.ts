@@ -22,12 +22,14 @@ export class ProjectProcessInfoComponent implements OnInit {
   @Input() isDashboardOverlay: boolean = false;
   @Input() projectName: string = '';
   @Input() isChecked: boolean = false;
+  projects_list:any[]=[];
+  selected_project:any;
+  isLoading:boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private rest: RestApiService,
-    private toastService: ToasterService
-    ) { 
+    private toastService: ToasterService) { 
       this.processInfo=this.formBuilder.group({
         processName: ["",Validators.compose([Validators.required])],
         metricCheck: [false],
@@ -39,25 +41,53 @@ export class ProjectProcessInfoComponent implements OnInit {
         minutes: [""],      
         costSaved: ["",Validators.compose([Validators.required])],
         comment: ["",Validators.compose([Validators.required])],
-        projectName:[""]
+        projectName:[""],
+        projectId: [""]
         })
     }
 
   ngOnInit(): void {
-      this.getProcessDetails();
       this.processInfo.get('processName').setValue(this.process_name);
       this.processInfo.get("liveDate").clearValidators();
       this.processInfo.get("liveDate").updateValueAndValidity()
       this.processInfo.get("processFrequency").clearValidators();
       this.processInfo.get("processFrequency").updateValueAndValidity()
       this.processInfo.get("projectName").setValue(this.projectName)
+      this.processInfo.get("projectId").setValue(this.project_id)
       this.getFrequency();
-      setTimeout (()=>{ this.getProcessInfo() },400)
+  }
+  ngOnChanges(){
+    console.log("testing",this.isDashboardOverlay)
+    if(this.isDashboardOverlay){
+      let userRoles = localStorage.getItem("userRole")
+      let name = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
+      let email = localStorage.getItem('ProfileuserId');
+      this.getallProjects(userRoles,name,email);
+      this.processInfo.get('metricCheck').setValue(true);
+      // this.processInfo.controls['metricCheck'].disable();
+    }else{
+      this.processInfo.get('metricCheck').setValue(false);
+      this.getProcessDetails(this.project_id);
+    }
   }
 
-  getProcessDetails(){
-    this.rest.getProjectDetailsById(this.project_id).subscribe( res =>{
+  getProcessDetails(project_id){
+    this.rest.getProjectDetailsById(project_id).subscribe( res =>{
       this.projectDetails = res;
+      console.log(this.projectDetails)
+      this.getProcessInfo();
+      if(this.isDashboardOverlay){
+        this.process_name = this.projectDetails.roiProcessName?this.projectDetails.roiProcessName:''
+        this.projectName = this.projectDetails.projectName
+        this.processInfo.get('processName').setValue(this.process_name);
+        this.processInfo.get("projectName").setValue(this.projectName)
+        this.processInfo.get("projectId").setValue(this.project_id);
+        this.addValidators();
+        this.processInfo.get("projectId").setValidators([Validators.required]);
+        this.processInfo.get("projectId").updateValueAndValidity();
+        this.processInfo.get('metricCheck').setValue(true);
+        this.isRequired = true
+      }
     })
   }
 
@@ -80,15 +110,15 @@ export class ProjectProcessInfoComponent implements OnInit {
     this.rest.saveProcessInfo(this.project_id,req_body).subscribe((res:any) => {
       if(res.message == "Saved Successfully"){
         this.toastService.showSuccess(this.processInfo.value.processName,'create');
-      }
-    })
         let message = false;
         this.customEvent.emit(message);
         this.resetForm();
+      }
+    })
   }
 
   getProcessInfo(){
-    this.processInfo.get('metricCheck').setValue(this.projectDetails.includeForDashboardMetrics)
+    if(!this.isDashboardOverlay) this.processInfo.get('metricCheck').setValue(this.projectDetails.includeForDashboardMetrics)
     this.processInfo.get('liveDate').setValue(this.projectDetails.goLiveDate)
     this.processInfo.get('processFrequency').setValue(this.projectDetails.processFrequency)
     this.processInfo.get('costSaved').setValue(this.projectDetails.costSavedForExecution)
@@ -139,11 +169,11 @@ export class ProjectProcessInfoComponent implements OnInit {
     this.rest.saveProcessInfo(this.project_id,req_body).subscribe((res:any) => {
       if(res.message == "Saved Successfully"){
         this.toastService.showSuccess(this.processInfo.value.processName,'update');
-      }
-    })
         let message = false;
         this.customEvent.emit(message);
         this.resetForm();
+      }
+    })
   }
 
   onCheckboxChange(event : any){
@@ -151,10 +181,7 @@ export class ProjectProcessInfoComponent implements OnInit {
     this.processInfo.get("liveDate").clearValidators();
     this.processInfo.get("processFrequency").clearValidators();
     if(event.target.checked == true){
-      this.processInfo.get("liveDate").setValidators([Validators.required]);
-      this.processInfo.get("liveDate").updateValueAndValidity();
-      this.processInfo.get("processFrequency").setValidators([Validators.required]);
-      this.processInfo.get("processFrequency").updateValueAndValidity();
+      this.addValidators();
     } else {
       this.processInfo.get("liveDate").setValidators([]);
       this.processInfo.get("liveDate").updateValueAndValidity();
@@ -183,6 +210,30 @@ export class ProjectProcessInfoComponent implements OnInit {
     if(this.processInfo.get("days").touched || this.processInfo.get("hours").touched || this.processInfo.get("minutes").touched  )
     return (this.processInfo.get("days").value=="" && this.processInfo.get("hours").value=="" &&this.processInfo.get("minutes").value=="" )?true:false;
   
+  }
+
+  getallProjects(roles, name, email) {
+    this.isLoading = true
+    this.rest.getAllProjects(roles, name, email).subscribe(data => {
+      data[1].forEach(element => {
+        if(!element.includeForDashboardMetrics)
+        this.projects_list.push(element)
+      });
+      this.isLoading = false
+      console.log(this.projects_list)
+    });
+  }
+
+  onProjectChange() { 
+    this.getProcessDetails(this.processInfo.value.projectId)
+    this.project_id = this.processInfo.value.projectId
+  }
+
+  addValidators(){
+    this.processInfo.get("liveDate").setValidators([Validators.required]);
+    this.processInfo.get("liveDate").updateValueAndValidity();
+    this.processInfo.get("processFrequency").setValidators([Validators.required]);
+    this.processInfo.get("processFrequency").updateValueAndValidity();
   }
 
 }

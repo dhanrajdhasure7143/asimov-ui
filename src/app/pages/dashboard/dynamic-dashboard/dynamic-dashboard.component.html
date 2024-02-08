@@ -302,7 +302,7 @@
                               </form>
                            </div>
 
-                           <div *ngIf="showWidgetValue && configuration_id == widget.id && widget.widget_type == 'label'">
+                           <!-- <div *ngIf="showWidgetValue && configuration_id == widget.id && widget.widget_type == 'label'">
                               <div class="text-center">
                                  <p-dropdown [options]="projects_list" [(ngModel)]="selected_project" (onChange)="onProjectChange()"
                                              [filter]="true" [style]="{'width':'70%'}" [appendTo]="'body'"
@@ -313,7 +313,7 @@
                                  <button id="btn" class="btn new-cancelbtn" (click)="cancelProject()">Cancel</button>
                                  <button id="btn" class="btn bluebg-button" (click)="viewProcessInfo()" [disabled]="!selected_project">Configure</button>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                   </div>
@@ -331,7 +331,7 @@
                <h3>Process Info</h3>
            </div>
            <div class="h-100">
-               <app-project-process-info [isChecked]="true" [isDashboardOverlay]="showInputField" [process_name]="roiProcessName" [projectName]="NameProject" [project_id]="selected_project" > </app-project-process-info>
+               <app-project-process-info [isChecked]="true" [isDashboardOverlay]="isfromDashBoard" (customEvent)="onCustomEvent($event)"> </app-project-process-info>
            </div>
        </div>
    </app-split-overlay>
