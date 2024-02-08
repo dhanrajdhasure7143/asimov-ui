@@ -172,7 +172,7 @@
                                                     <img src="../../../../assets/images-n/gridicons/delete-hover.svg" alt="" class="testplus hover-icon"> 
                                                     <!-- <img src="../../../../assets/images-n/common/delete-blue.svg" alt="" class="testplus "> -->
                                                 </button>
-                                                <button pTooltip="Export Bot" tooltipPosition="top" (click)="exportBot(rowData)">
+                                                <button pTooltip="Export Bot" tooltipPosition="top" (click)="onclickDownload(rowData)">
                                                     <img src="../../../../assets/images-n/gridicons/download-default.svg" alt="" class="testplus default-icon"> 
                                                     <img src="../../../../assets/images-n/gridicons/download-hover.svg" alt="" class="testplus hover-icon"> 
                                                     <!-- <img src="../../../../assets/images/Projects/Download.svg" alt="" class="testplus">  -->
@@ -564,7 +564,7 @@
     </div>
     <div class="modal-body modelprbody">
         <div class="container p-0" style="width:100%">
-            <form [formGroup]="importBotForm" class="row" *ngIf="(importBotJson)" >
+            <form [formGroup]="importBotForm" class="row" *ngIf="(import_BotData)" >
                 <div class="form-fields col-md-12 p-0">
                     <label>Bot Name</label>
                     <input type="text" (input)="validateBotName()" formControlName="botName" placeholder="Enter Bot Name" class="form-control" >
@@ -597,10 +597,10 @@
                   </select>
                 </div>
             </form>
-            <div class="row" *ngIf="!(importBotJson)" >
+            <div class="row" *ngIf="!(import_BotData)" >
                 <div class="form-fields col-md-12 p-0">
                     <label>Browse File</label>
-                    <input type="file"  pInputText [style]="{'width':'100%'}"    name="file" (change)="upload($event.target.files[0])" id="file"   />
+                    <input type="file"  pInputText [style]="{'width':'100%'}"    name="file" (change)="onFileChange($event)" id="file"   />
                     <span class="required">{{file_error}}</span>
                 </div>
             </div>
@@ -608,8 +608,8 @@
     </div>
     <div  class="modal-footer modelprfooter">
         <div class="pull-right">
-            <button (click)="importBotForm.reset();importBotJson=undefined;file_error='';modalRef.hide()" class="btn new-cancelbtn">Cancel</button>
-            <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importBot()">Import</button>
+            <button (click)="importBotForm.reset();import_BotData=undefined;file_error='';modalRef.hide()" class="btn new-cancelbtn">Cancel</button>
+            <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importEncryptedBotData()">Import</button>
         </div>
     </div>
 
@@ -667,7 +667,7 @@
                 </form>
                 <div class="createform-footer">
                     <button (click)="closeExportOverlay(false)" class="btn new-cancelbtn">Cancel</button>
-                    <button [disabled]="exportType == null || isExportDisable" class="btn bluebg-button" >Export</button>
+                    <button [disabled]="exportType == null || isExportDisable" (click)="getEncryptedData()" class="btn bluebg-button" >Export</button>
                 </div>
             </div>
         </div>
