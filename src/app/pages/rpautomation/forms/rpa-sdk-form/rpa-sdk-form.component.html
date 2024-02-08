@@ -1,34 +1,34 @@
 <div id="createcredentials" class="h-100">
     <div class="create-header">
-        <!-- <h3 *ngIf="!isCreateForm">Update Credentials</h3> -->
-        <h3>Create Custom Task</h3>
+        <h3 *ngIf="isupdateform">Update Custom Task</h3>
+        <h3 *ngIf="!isupdateform">Create Custom Task</h3>
     </div>
     <div class="createform-overlay">
         <form [formGroup]="customTaskForm" class="h-100">
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Task Name <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="taskName" 
+                <input type="text" maxlength="51" class="form-control data" formControlName="customTaskName" 
                 value="" placeholder="Enter Task Name">
                 <span
-                    *ngIf="(customTaskForm.get('taskName').invalid && customTaskForm.get('taskName').touched) && !customTaskForm.controls['taskName'].hasError('pattern') && !customTaskForm.controls['taskName'].hasError('maxlength')"
+                    *ngIf="(customTaskForm.get('customTaskName').invalid && customTaskForm.get('customTaskName').touched) && !customTaskForm.controls['customTaskName'].hasError('pattern') && !customTaskForm.controls['customTaskName'].hasError('maxlength')"
                     class="required"> Task Name Required
                 </span>
             </div>
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Input Reference <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="inputRef" 
+                <input type="text" maxlength="51" class="form-control data" formControlName="inputReference" 
                 value="" placeholder="Enter Input Reference">
                 <span
-                *ngIf="(customTaskForm.get('inputRef').invalid && customTaskForm.get('inputRef').touched) && !customTaskForm.controls['inputRef'].hasError('pattern') && !customTaskForm.controls['inputRef'].hasError('maxlength')"
+                *ngIf="(customTaskForm.get('inputReference').invalid && customTaskForm.get('inputReference').touched) && !customTaskForm.controls['inputReference'].hasError('pattern') && !customTaskForm.controls['inputReference'].hasError('maxlength')"
                 class="required"> Input Reference Required
                 </span>
             </div>
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Output Reference <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="outputRef" 
+                <input type="text" maxlength="51" class="form-control data" formControlName="outputReference" 
                  value="" placeholder="Enter Output Reference">
                  <span
-                 *ngIf="(customTaskForm.get('outputRef').invalid && customTaskForm.get('outputRef').touched) && !customTaskForm.controls['outputRef'].hasError('pattern') && !customTaskForm.controls['outputRef'].hasError('maxlength')"
+                 *ngIf="(customTaskForm.get('outputReference').invalid && customTaskForm.get('outputReference').touched) && !customTaskForm.controls['outputReference'].hasError('pattern') && !customTaskForm.controls['outputReference'].hasError('maxlength')"
                  class="required"> Output Reference Required
                 </span>
             </div>
@@ -36,7 +36,7 @@
                 <label class="label-control" for="userName"> Language Type <span class="star">*</span></label>
                 <!-- <input type="text" maxlength="51" class="form-control data" formControlName="languageType" #userName -->
                 <p-dropdown [options]="languages" formControlName="languageType"
-                [style]="{'width':'100%'}" placeholder="Select Language Type"></p-dropdown>
+                [style]="{'width':'100%'}" placeholder="Select Language Type" optionLabel="language" optionValue="language"></p-dropdown>
                 <span
                 *ngIf="(customTaskForm.get('languageType').invalid && customTaskForm.get('languageType').touched) && !customTaskForm.controls['languageType'].hasError('pattern') && !customTaskForm.controls['languageType'].hasError('maxlength')"
                 class="required"> Language Type Required
@@ -53,17 +53,16 @@
             </div>
             <div class="col-md-12 p-0 form-group" *ngIf="showCodeField">
                 <label class="label-control" for="userName"> Code Editor <span class="star">*</span></label>
-                <!-- <input type="text" maxlength="51" class="form-control data" formControlName="codeEditor" #userName
+                <!-- <input type="text" maxlength="51" class="form-control data" formControlName="code" #userName
                 value="" placeholder="Enter Email"> -->
-                <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="codeEditor"></textarea>
+                <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="code"></textarea>
             </div>
         </form>
         <div class="createform-footer">
-            <button class="btn new-cancelbtn" (click)="resetCustomTasks()">Reset</button>
-            <button class="btn bluebg-button" (click)="saveCustomTasks()"> Save
-            </button>
-            <!-- <button *ngIf="!isCreateForm" class="btn bluebg-button" (click)="saveCredentials()">Update
-            </button> -->
+            <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
+            <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks()"> Save</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks()"> Update</button>
         </div>
     </div>
 </div>
