@@ -69,9 +69,9 @@
           </div>
           <div id="dragicons2" class="dragicons" *ngIf="isMicroBotsTabActive">
             <ul>
-              <li *ngFor="let microBot of filteredMicroBotsList">
+              <li style="list-style-type: none;" *ngFor="let microBot of filteredMicroBotsList" [dndDraggable]="microBot">
                 <img src="../../../../assets/images/robot.png" alt="{{ microBot.name }}" class="micro-bot-image">
-                {{ microBot.name }}
+                {{ microBot.microBotName }}
               </li>
             </ul>
           </div>

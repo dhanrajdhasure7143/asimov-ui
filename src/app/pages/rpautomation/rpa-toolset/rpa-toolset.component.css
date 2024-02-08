@@ -270,3 +270,9 @@ span.con-text {
   padding:3px;
  }
 }
+
+.dragicons ul li {
+  margin-bottom: 10px; 
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 5px;
+}

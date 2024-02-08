@@ -1863,4 +1863,8 @@ getEncryptedbotData(botId,body){
 importBotwithEncryptedData(body){
   return this.http.post("/rpa-service/import-bot", body);
 }
+
+getMicroBots(){
+  return this.http.get<any[]>("/rpa-service/microbots-list");
+}
 }

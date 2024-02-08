@@ -17,23 +17,19 @@ export class RpaToolsetComponent implements OnInit {
     public userFilter:any={name:""};
     @ViewChild('section') section: ElementRef<any>;
     @Input("toolsetItems") public templateNodes:any=[];
-   @Output("closeToolset") closeToolset=new EventEmitter();
+    @Output("closeToolset") closeToolset=new EventEmitter();
     userRole:any;
     search:any=false;
     sidenavbutton:Boolean=false;
     isMicroBotsTabActive: boolean = false;
     isToolSetTabActive: boolean = false;
     public microBotsUserFilter: any = { name: "" };
-    microBotsList: any[] = [
-      { name: 'Micro Bot 1'  },
-      { name: 'Micro Bot 2' },
-      { name: 'Micro Bot 3' },
-      // Add more items as needed
-  ];
+    microBotsList: any[] = [];
 
     ngOnInit() {
       this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
       this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
+      this.getMicroBots();
     }
     searchclear(){
       this.search=false
@@ -52,8 +48,14 @@ export class RpaToolsetComponent implements OnInit {
 
     get filteredMicroBotsList(): any[] {
       return this.microBotsList.filter(microBot =>
-          microBot.name.toLowerCase().includes(this.microBotsUserFilter.name.toLowerCase())
+          microBot.microBotName.toLowerCase().includes(this.microBotsUserFilter.name.toLowerCase())
       );
+  }
+  
+  getMicroBots(){
+    this.rest.getMicroBots().subscribe((data: any[]) => {
+      this.microBotsList = data;
+    });
   }
   
     
