@@ -10,6 +10,9 @@ import { CreateDashboardComponent } from './create-dashboard/create-dashboard.co
 import { MyFilterPipe } from './pipe/my-filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ProjectsModule } from '../projects/projects.module';
+import { AngularSplitModule } from 'angular-split';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
    PrimengCustomModule,
    FormsModule,
    ReactiveFormsModule, 
-   BsDropdownModule.forRoot()
+   BsDropdownModule.forRoot(),
+   ProjectsModule,
+   AngularSplitModule.forRoot(),
+   SharedModule
   ],
   providers: [toastMessages],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
