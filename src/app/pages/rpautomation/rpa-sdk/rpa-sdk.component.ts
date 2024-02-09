@@ -14,13 +14,12 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   providers : [columnList]
 })
 export class RpaSdkComponent implements OnInit {
-  isCreateForm: boolean;
-  hideLables: boolean;
   hiddenPopUp: boolean;
   columns_list:any =[];
   public customTasks:any[]=[];
   table_searchFields: any[]=[];
-
+  isupdateform:boolean= false;
+  updatetaskDetails:any={};
 
 
   constructor(
@@ -28,7 +27,6 @@ export class RpaSdkComponent implements OnInit {
     private columnList: columnList,
     private spinner: LoaderService,
     private confirmationService:ConfirmationService,
-    private cryptoService:CryptoService,
     private toastService: ToasterService,
     private toastMessages: toastMessages) { }
 
@@ -38,21 +36,32 @@ export class RpaSdkComponent implements OnInit {
   }
 
   getTaskDetails(){
+    this.spinner.show();
     this.rest.getCustomTasks().subscribe((res : any) =>{
       console.log(res,"res")
       this.customTasks = res
+      this.spinner.hide();
     })
+
     this.table_searchFields=["customTaskName","languageType","inputReference","outputReference"]
 
   }
 
   readSelectedData(e){}
 
-  updateCustomTasks(e){
-    console.log(e)
-    this.rest.getCustomTasksbyId(e.customTaskId).subscribe((response : any) =>{
-      console.log(response)
-    })
+  updateCustomTasks(item){
+    console.log(item)
+    this.isupdateform = true;
+    this.updatetaskDetails = item
+    this.hiddenPopUp = true;
+
+    // this.rest.getCustomTasksbyId(item.customTaskId).subscribe((response : any) =>{
+    //   this.hiddenPopUp = true;
+    //   if(response.code == 4200){
+    //     this.updatetaskDetails = response.data
+    //   }
+    //   console.log(response)
+    // })
   }
 
   deleteCustomTask(row){
@@ -70,7 +79,7 @@ export class RpaSdkComponent implements OnInit {
         rejectIcon: 'null',
         acceptIcon: 'null',
         key:"positionDialog",
-      accept: () => {
+        accept: () => {
         this.spinner.show();
         this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
           console.log(res,"say")
@@ -78,9 +87,10 @@ export class RpaSdkComponent implements OnInit {
           let status:any = res;
           console.log(status)
           this.spinner.hide();
+          this.toastService.showSuccess(row.customTaskName,'delete');
+
         },err=>{
           this.spinner.hide();
-          // this.messageService.add({severity:'error',summary:'Error',detail:'Unable to delete credentails.'})
           this.toastService.showError(this.toastMessages.deleteError);
 
         });
@@ -90,19 +100,13 @@ export class RpaSdkComponent implements OnInit {
   }
 
   openCreateCredential(){
-    this.isCreateForm = true;
-    this.hideLables = false
     this.hiddenPopUp=true;
-  }
-
-  refreshCredentialList(event){
-    if(event){
-      this.hiddenPopUp=false;
-    }
+    this.isupdateform = false;
   }
 
   closeOverlay(event){
     this.hiddenPopUp=false;
+    this.getTaskDetails();
   }
 
 }

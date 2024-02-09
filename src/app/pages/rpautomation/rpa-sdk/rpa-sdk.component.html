@@ -32,14 +32,14 @@
 
 
 <div *ngIf="hiddenPopUp" > 
-    <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+    <app-split-overlay (closeOverlay)="closeOverlay($event)" >
       <!-- <app-rpa-sdk-form
         [isCreateForm]="isCreateForm"
         [hideLabels]="hideLables"
         [credupdatedata]="credupdatedata"
         (refreshTable)="refreshCredentialList($event)"
         ></app-rpa-sdk-form> -->
-        <app-rpa-sdk-form></app-rpa-sdk-form>
+        <app-rpa-sdk-form [isupdateform]="isupdateform" [updatetaskDetails]="updatetaskDetails" (closeOverlay)="closeOverlay($event)"></app-rpa-sdk-form>
     </app-split-overlay>
   </div>
 

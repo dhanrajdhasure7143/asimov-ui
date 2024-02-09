@@ -1868,6 +1868,10 @@ createSdkCustomTasks(data : any){
   return this.http.post('/rpa-service/sdk-custom/create-sdk-task', data)
 }
 
+updateSdkCustomTasks(id,data : any){
+  return this.http.put('/rpa-service/sdk-custom/update-sdk-task/'+id, data)
+}
+
 deleteCustomTasksbyId(id:any){
   return this.http.delete(`/rpa-service/sdk-custom/delete-sdk-task/${id}`)
 }
