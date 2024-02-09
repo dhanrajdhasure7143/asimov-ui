@@ -79,7 +79,7 @@ export class RpaSdkComponent implements OnInit {
         rejectIcon: 'null',
         acceptIcon: 'null',
         key:"positionDialog",
-      accept: () => {
+        accept: () => {
         this.spinner.show();
         this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
           console.log(res,"say")
@@ -87,6 +87,8 @@ export class RpaSdkComponent implements OnInit {
           let status:any = res;
           console.log(status)
           this.spinner.hide();
+          this.toastService.showSuccess(row.customTaskName,'delete');
+
         },err=>{
           this.spinner.hide();
           this.toastService.showError(this.toastMessages.deleteError);

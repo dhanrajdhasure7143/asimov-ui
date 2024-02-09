@@ -34,6 +34,9 @@ export class RpaSdkFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private spinner: LoaderService,
+    private toastService : ToasterService,
+    private toastMessages: toastMessages
+
     ) {
 
       this.customTaskForm=this.formBuilder.group({
@@ -101,7 +104,7 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      "executablePath": this.customTaskForm.value.executablePath,
+      // "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
@@ -111,8 +114,10 @@ export class RpaSdkFormComponent implements OnInit {
       console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
       this.spinner.hide();
+      this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
     },err=>{
     this.spinner.hide();
+    this.toastService.showError(this.toastMessages.saveError);
     });
   }
 
@@ -121,7 +126,7 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      "executablePath": this.customTaskForm.value.executablePath,
+      // "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
@@ -131,8 +136,10 @@ export class RpaSdkFormComponent implements OnInit {
       this.spinner.hide();
       console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
+      this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
     },err=>{
       this.spinner.hide();
+      this.toastService.showError(this.toastMessages.updateError);
     })
   }
 
