@@ -120,6 +120,10 @@ const materialModules: any[] = [
       useClass: CustomMatPaginatorIntl
     },
     toastMessages
+  ],
+  exports: [
+    // export the ProjectProcessInfoComponent here
+    ProjectProcessInfoComponent,
   ]
 })
 export class ProjectsModule { }
