@@ -53,7 +53,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   params:any={};
   executionMode:boolean=false;
   subscription: Subscription;
-  buttonDisabled: boolean = false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -88,10 +87,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     setTimeout(() => {
     this.getAllEnvironments();
     }, 1000);
-
-    this.subscription = this.dt.buttonDisabled$.subscribe(disabled => {
-      this.buttonDisabled = disabled;
-    });
   }
 
   getToolsetItems()
