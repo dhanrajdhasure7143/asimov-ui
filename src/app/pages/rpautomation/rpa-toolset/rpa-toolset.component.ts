@@ -31,9 +31,9 @@ export class RpaToolsetComponent implements OnInit {
       this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
       this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
       this.getMicroBots();
-      // this.dt.microBotsList$.subscribe((microBotsList: any[]) => {
-      //   this.microBotsList = microBotsList;
-      // });
+      this.dt.microBotsList$.subscribe((microBotsList: any[]) => {
+        this.microBotsList = microBotsList;
+      });
     }
 
     searchclear(){
