@@ -104,7 +104,7 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      // "executablePath": this.customTaskForm.value.executablePath,
+      "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
@@ -124,7 +124,7 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      // "executablePath": this.customTaskForm.value.executablePath,
+      "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
