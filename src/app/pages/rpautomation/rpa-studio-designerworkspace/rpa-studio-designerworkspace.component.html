@@ -77,24 +77,27 @@
                   </span>
                   <span class="groupHeader">
                     <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
+                    <!-- <button *ngIf="!group.isExpand" class="publishButton" (click)="publishGroup(group)">Publish</button> -->
                   </span>
                 </div>
                 <div class="groupName">{{ group.groupName }}</div>
               </div>
               
               <div *ngIf="group.isExpand" class="groupHeader">
-                <span class="groupTitle" *ngIf="group.edit == false">{{group.groupName}}</span>
+                <!-- <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{group.groupName}}</span> -->
+                <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 25 ? (group.groupName | slice:0:25) + '...' : group.groupName }}</span>
                 <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
-                </span>
-                <span class="groupHeader">
-                  <button class="publishButton" (click)="publishGroup(group)">Publish</button>
                 </span>
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
                   <i class="ri-pencil-line text-primary"></i>
                 </span>
+                <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
+                  <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
+                  <i class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                </span>
                 <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group)" *ngIf="group.edit == false">
-                  <i class="pi pi-angle-right"></i>
+                  <i class="pi pi-angle-up"></i>
                   <!-- <i class="pi pi-angle-down"></i> -->
                 </span>
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
@@ -106,8 +109,9 @@
                     class="custom-color-picker" />
                   &nbsp;
                 </span>
-                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
-                    class="ri-check-line"></i></span>
+                <!-- <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
+                    class="ri-check-line"></i></span> -->
+                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true && group.groupName.trim() !== ''" (click)="group.edit = false"><i class="ri-check-line"></i></span>
               </div>
             </div>
           </ng-container>
@@ -381,7 +385,7 @@
     <form [formGroup]="groupForm" (ngSubmit)="addGroup()">
       <div class="p-field">
         <label for="groupName">Group Name <span class="star">*</span></label>
-        <input id="groupName" type="text" formControlName="groupName" class="form-control">
+        <input id="groupName" type="text" formControlName="groupName" class="form-control" autocomplete="off">
         <div *ngIf="groupForm.get('groupName').hasError('required') && groupForm.get('groupName').touched" class="required">
           Group Name is required.
         </div>

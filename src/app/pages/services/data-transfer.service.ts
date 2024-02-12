@@ -167,17 +167,10 @@ setScreenList(module:any){
     this.resetTableSearchSubject.next(true);
   }
   
-  private selectedNodesSubject = new BehaviorSubject<string[]>([]);
-  selectedNodes$ = this.selectedNodesSubject.asObservable();
+  private _microBotsList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public readonly microBotsList$: Observable<any[]> = this._microBotsList.asObservable();
 
-  private buttonDisabledSubject = new BehaviorSubject<boolean>(false);
-  buttonDisabled$ = this.buttonDisabledSubject.asObservable();
-
-  updateSelectedNodes(nodes: string[]) {
-    this.selectedNodesSubject.next(nodes);
-  }
-
-  setButtonDisabled(disabled: boolean) {
-    this.buttonDisabledSubject.next(disabled);
+  updateMicroBotsList(newList: any[]) {
+    this._microBotsList.next(newList);
   }
 }

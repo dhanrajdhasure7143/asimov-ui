@@ -1871,4 +1871,8 @@ saveMicroBot(body){
 getMicroBots(){
   return this.http.get<any[]>("/rpa-service/microbots-list");
 }
+
+fetchMicroBot(id:any){
+  return this.http.get("/rpa-service/fetch-microbot/"+id)
+}
 }
