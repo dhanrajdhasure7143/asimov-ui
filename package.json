@@ -2,13 +2,14 @@
   "name": "asimov",
   "version": "3.2.5",
   "scripts": {
-    "ng": "ng",
+    
     "start": "ng serve",
     "build": "ng build --configuration=dev --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "ng": "node --max_old_space_size=4096 ./node_modules/.bin/ng"
   },
   "private": true,
   "dependencies": {
@@ -149,4 +150,5 @@
     "tslint": "~6.1.0",
     "typescript": "~4.3.5"
   }
+  
 }
