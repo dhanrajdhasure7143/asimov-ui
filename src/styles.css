@@ -4053,7 +4053,28 @@ padding: 0px 30px;}
 }
 
 .left-panel-header .p-tabview-title {
-  font-size: 14px; /* Adjust the font size as needed */
-  color:white; 
-  font-weight: 600; /* Text color */
+  font-size: 14px;
+  color:black; 
+  font-weight: 600;
+  margin-bottom: 20px;
 }
+
+.p-tabview.p-tabview-custom .p-tabview-nav {
+  border: none !important;
+  background: transparent !important;
+  height: 25px;
+}
+
+.p-tabview-custom .p-tabview-panels {
+  top: -15px;
+}
+/* 
+.toolset {
+  height: 100vh; 
+  overflow-y: hidden;
+}
+
+.scrollable-content {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+} */

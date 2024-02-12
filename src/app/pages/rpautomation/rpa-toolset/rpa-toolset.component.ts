@@ -10,7 +10,8 @@ import { DataTransferService } from '../../services/data-transfer.service';
 })
 export class RpaToolsetComponent implements OnInit {
   
-    constructor(private rest:RestApiService,
+    constructor(
+      private rest:RestApiService,
       public dt:DataTransferService,
       ) { }
 
@@ -30,20 +31,25 @@ export class RpaToolsetComponent implements OnInit {
       this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
       this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
       this.getMicroBots();
+      // this.dt.microBotsList$.subscribe((microBotsList: any[]) => {
+      //   this.microBotsList = microBotsList;
+      // });
     }
+
     searchclear(){
       this.search=false
       this.userFilter.name=""
+      this.microBotsUserFilter.name = ""
     }
-    closeToolsetEvent()
-    {
+
+    closeToolsetEvent(){
       this.closeToolset.emit(null);
     }
 
     onTabChange(event: any) {
-      // Update the flag based on the active tab
       this.isMicroBotsTabActive = event.index === 1;
-      this.isToolSetTabActive = event.index === 0; // Assuming Micro Bots tab index is 1
+      this.isToolSetTabActive = event.index === 0;
+      this.searchclear();
     }
 
     get filteredMicroBotsList(): any[] {
@@ -58,9 +64,4 @@ export class RpaToolsetComponent implements OnInit {
     });
   }
   
-    
-  }
-
-
-
-
+}
