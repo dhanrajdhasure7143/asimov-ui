@@ -109,9 +109,7 @@ export class RpaSdkFormComponent implements OnInit {
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
     }
-    console.log(this.customTaskForm)
     this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
-      console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
       this.spinner.hide();
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
@@ -134,7 +132,6 @@ export class RpaSdkFormComponent implements OnInit {
     }
     this.api.updateSdkCustomTasks(this.updatetaskDetails.customTaskId,reqBody).subscribe((data : any) =>{
       this.spinner.hide();
-      console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
     },err=>{
