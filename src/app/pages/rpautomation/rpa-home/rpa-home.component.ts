@@ -7,7 +7,6 @@ import 'rxjs/add/operator/filter';
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
@@ -52,7 +51,6 @@ export class RpaHomeComponent implements OnInit {
   enableConfiguration: boolean = false;
   enablecreatebot: boolean = false;
   showWorkspace: boolean = false;
-  modalRef: BsModalRef;
   exportid: any;
   allbots: any = [];
   botFormVisibility:boolean=false;
@@ -131,10 +129,11 @@ export class RpaHomeComponent implements OnInit {
   isExportDisable:boolean = false;
   bot_toExport:any={};
   import_BotData:any;
+  importBot_overlay:boolean = false;
+  filteredEnvironments:any=[];
 
   constructor(
     private rest: RestApiService,
-    private modalService: BsModalService,
     private router: Router,
     private spinner: LoaderService,
    @Inject(APP_CONFIG) private appconfig,
@@ -155,34 +154,6 @@ export class RpaHomeComponent implements OnInit {
     );
   }
 
-  openModal(template: TemplateRef<any>) {
-    if (this.freetrail == 'true') {
-      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
-        this.confirmationService.confirm({
-          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
-          header: 'Error',
-          rejectVisible: false,
-          acceptLabel: "Ok",
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          acceptIcon: 'null',
-          accept: () => {},
-        });
-      }
-      else {
-        this.importfile = "";
-        this.file_error = "";
-        this.importcat = "";
-        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
-      }
-    }
-    else {
-      this.importfile = "";
-      this.file_error = "";
-      this.importcat = "";
-      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
-    }
-  }
 
   ngOnInit() {
     $('.link').removeClass('active');
@@ -431,7 +402,6 @@ export class RpaHomeComponent implements OnInit {
         }
         else
           this.toastService.showError(response.errorMessage);
-        this.modalRef.hide()
         this.getallbots();
       })
 
@@ -666,10 +636,10 @@ export class RpaHomeComponent implements OnInit {
     })
   }
 
-  filteredEnvironments:any=[];
-  filterEnvironments(categoryId){
+  filterEnvironments(event){
+    console.log(event)
     this.importBotForm.get("environmentId").setValue("");
-    this.filteredEnvironments=this.environments.filter(item=>item.categoryId==categoryId);
+    this.filteredEnvironments=this.environments.filter(item=>item.categoryId==event.value);
   }
 
 importBot(){
@@ -682,7 +652,6 @@ importBot(){
     isPredefined:this.import_BotData.isPredefined,
     categoryId:this.importBotForm.get("categoryId").value
   }
-  this.modalRef.hide();
   this.spinner.show();
   this.rest.createBot(basicBotDetails).subscribe( async (response:any)=>{
     if(response.errorMessage==undefined){
@@ -699,8 +668,8 @@ importBot(){
       this.import_BotData["department"]=response.department;
       (await this.rest.updateBot(this.import_BotData)).subscribe((response:any)=>{
         this.spinner.hide();
-        this.resetImportBotForm();
         this.toastService.showSuccess(this.toastMessages.botImport,'response');
+        this.resetImportBotForm();
         this.getallbots();
       },err=>{
         this.spinner.hide();
@@ -716,8 +685,7 @@ importBot(){
 }
 
 
-  resetImportBotForm()
-  {
+  resetImportBotForm(){
     this.import_BotData=undefined;
     this.file_error="";
     this.importBotForm.reset();
@@ -749,8 +717,7 @@ importBot(){
 
 
 
-  get importedBotName()
-  {
+  get importedBotName(){
     return this.importBotForm.get("botName").value;
   }
 
@@ -939,8 +906,9 @@ importBot(){
     if(response.errorMessage==undefined){
       let botDetails:any={
         botName:response.botName,
-        botDescription:response.description,
+        // botDescription:response.description,
         department:response.department,
+        categoryId:response.categoryId,
         tasks:[...response.tasks.map((item:any)=>{
           delete item.botTId;
           delete item.version;
@@ -1023,11 +991,9 @@ importBot(){
       isPredefined:this.import_BotData.isPredefined,
       categoryId:this.importBotForm.get("categoryId").value
     }
-    this.modalRef.hide();
     this.spinner.show();
     let req_body:any={};
     this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
-
       this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
       this.finaldataobjects = [...this.import_BotData.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
@@ -1038,23 +1004,61 @@ importBot(){
       this.import_BotData["botName"]=this.importBotForm.get("botName").value;
       this.import_BotData["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
       this.import_BotData["tasks"]=[...this.final_tasks];
-
+      this.importBot_overlay= false;
         // req_body["botId"]=response.botId;
         // req_body["botName"]=this.importBotForm.get("botName").value;
         // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
         // req_body["department"]=response.department;
         req_body["botData"]  = this.import_BotData;
-      (await this.rest.importBotwithEncryptedData(this.import_BotData)).subscribe((response:any)=>{
+        let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
+      (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
         this.spinner.hide();
+        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
         this.resetImportBotForm();
-        this.toastService.showSuccess(this.toastMessages.botImport,'response');
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
         this.toastService.showError(this.toastMessages.botConfigError);
       })
+    },err=>{
+      this.toastService.showError("Failed to import bot");
+      this.spinner.hide();
     })
+  }
+
+  onCancelImport(){
+    this.resetImportBotForm();
+    this.importBotForm.get("botName").setValue('')
+    this.importBot_overlay= false;
+  }
+
+  openModal() {
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
+        this.confirmationService.confirm({
+          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
+          header: 'Error',
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {},
+        });
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.importBot_overlay = true;
+      }
+    }else {
+      this.importBot_overlay = true;
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+    }
   }
 
 }
