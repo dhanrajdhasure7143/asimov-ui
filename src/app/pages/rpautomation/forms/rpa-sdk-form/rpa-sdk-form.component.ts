@@ -55,7 +55,7 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnInit(): void {
   // this.spinner.show();
-   this.languages = [{language:"Java"},{language:"Phyton"},{language:"Javascript"}];
+   this.languages = [{language:"Java"},{language:"Python"},{language:"Javascript"}];
    this.categories
   }
 
