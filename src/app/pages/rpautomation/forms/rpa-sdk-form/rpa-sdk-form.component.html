@@ -1,69 +1,68 @@
 <div id="createcredentials" class="h-100">
     <div class="create-header">
-        <!-- <h3 *ngIf="!isCreateForm">Update Credentials</h3> -->
-        <h3>Create Custom Task</h3>
+        <h3 *ngIf="isupdateform">Update Custom Task</h3>
+        <h3 *ngIf="!isupdateform">Create Custom Task</h3>
     </div>
     <div class="createform-overlay">
         <form [formGroup]="customTaskForm" class="h-100">
-            <!-- <div class="col-md-12 p-0 form-group">
-                <label class="label-control" for="userName"> Input Reference <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="inputRef" #userName
-                    value="" placeholder="Enter Email"> -->
-                    <!-- Removed Pattern Validator For Email -->
-                 <!-- pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" -->
-                    <!-- <span
-                    *ngIf="(credentialForm.get('userName').invalid && credentialForm.get('userName').touched) && !credentialForm.controls['userName'].hasError('pattern') && !credentialForm.controls['userName'].hasError('maxlength')"
-                    class="required">Email Required</span>
-                <span
-                    *ngIf="(credentialForm.controls['userName'].hasError('pattern') || credentialForm.get('userName').hasError('required')) && !credentialForm.get('userName').hasError('required') && !credentialForm.controls['userName'].hasError('maxlength')"
-                    class="required">Enter valid email address</span>
-                <div *ngIf="credentialForm.controls['userName'].hasError('maxlength')" class="required">
-                    Maximum of 50 characters
-                </div> -->
-            <!-- </div> -->
-            <div class="col-md-12 p-0 form-group">
-                <label class="label-control" for="userName"> Input Reference <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="inputRef" #userName
-                value="" placeholder="Enter Input Reference">
-            </div>
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Task Name <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="taskName" #userName
+                <input type="text" maxlength="51" class="form-control data" formControlName="customTaskName" 
                 value="" placeholder="Enter Task Name">
+                <span
+                    *ngIf="(customTaskForm.get('customTaskName').invalid && customTaskForm.get('customTaskName').touched) && !customTaskForm.controls['customTaskName'].hasError('pattern') && !customTaskForm.controls['customTaskName'].hasError('maxlength')"
+                    class="required"> Task Name Required
+                </span>
+            </div>
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="userName"> Input Reference <span class="star">*</span></label>
+                <input type="text" maxlength="51" class="form-control data" formControlName="inputReference" 
+                value="" placeholder="Enter Input Reference">
+                <span
+                *ngIf="(customTaskForm.get('inputReference').invalid && customTaskForm.get('inputReference').touched) && !customTaskForm.controls['inputReference'].hasError('pattern') && !customTaskForm.controls['inputReference'].hasError('maxlength')"
+                class="required"> Input Reference Required
+                </span>
+            </div>
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="userName"> Output Reference <span class="star">*</span></label>
+                <input type="text" maxlength="51" class="form-control data" formControlName="outputReference" 
+                 value="" placeholder="Enter Output Reference">
+                 <span
+                 *ngIf="(customTaskForm.get('outputReference').invalid && customTaskForm.get('outputReference').touched) && !customTaskForm.controls['outputReference'].hasError('pattern') && !customTaskForm.controls['outputReference'].hasError('maxlength')"
+                 class="required"> Output Reference Required
+                </span>
             </div>
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Language Type <span class="star">*</span></label>
                 <!-- <input type="text" maxlength="51" class="form-control data" formControlName="languageType" #userName -->
                 <p-dropdown [options]="languages" formControlName="languageType"
-                [style]="{'width':'100%'}" placeholder="Select Language Type"></p-dropdown>
+                [style]="{'width':'100%'}" placeholder="Select Language Type" optionLabel="language" optionValue="language"></p-dropdown>
+                <span
+                *ngIf="(customTaskForm.get('languageType').invalid && customTaskForm.get('languageType').touched) && !customTaskForm.controls['languageType'].hasError('pattern') && !customTaskForm.controls['languageType'].hasError('maxlength')"
+                class="required"> Language Type Required
+                </span>
             </div>
             <div class="col-md-12 p-0 form-group" *ngFor="let category of categories">
-                    <p-radioButton [style]="{'width':'100%'}" [value]="category.name" formControlName="selectedCategory" (onClick)="radioChange(category.name)" ></p-radioButton>
+                    <p-radioButton [style]="{'width':'100%'}" [value]="category.name" formControlName="selectedCategory" (click)="radioChange(category.name)" ></p-radioButton>
                     <label class="ml-2">{{ category.name }}</label>
             </div>
-            <div class="col-md-12 p-0 form-group">
+            <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
                 <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="executablePath" #userName
+                <input type="text" maxlength="51" class="form-control data" formControlName="executablePath" 
                 value="" placeholder="Enter Executable Path">
             </div>
-            <div class="col-md-12 p-0 form-group">
+            <div class="col-md-12 p-0 form-group" *ngIf="showCodeField">
                 <label class="label-control" for="userName"> Code Editor <span class="star">*</span></label>
-                <!-- <input type="text" maxlength="51" class="form-control data" formControlName="codeEditor" #userName
+                <!-- <input type="text" maxlength="51" class="form-control data" formControlName="code" #userName
                 value="" placeholder="Enter Email"> -->
-                <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="codeEditor"></textarea>
-            </div>
-            <div class="col-md-12 p-0 form-group">
-                <label class="label-control" for="userName"> Output Reference <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="outputRef" #userName
-                 value="" placeholder="Enter Output Reference">
+                <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="code"></textarea>
             </div>
         </form>
         <div class="createform-footer">
-            <button class="btn new-cancelbtn" (click)="resetCredForm()">Reset</button>
-            <button class="btn bluebg-button" (click)="saveCredentials()"> Compile
-            </button>
-            <!-- <button *ngIf="!isCreateForm" class="btn bluebg-button" (click)="saveCredentials()">Update
-            </button> -->
+            <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
+            <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks()"> Save</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks()"> Update</button>
         </div>
     </div>
 </div>

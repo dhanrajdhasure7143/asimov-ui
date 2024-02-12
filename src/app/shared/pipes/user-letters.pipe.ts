@@ -14,10 +14,13 @@ export class UserLettersPipe implements PipeTransform {
         // }
       }
     } else {
+      let usernames
+      let finalName='';
       if(userId){
-      let usernames = userId.split(' ');
-      return usernames[0].replace(/\s/g, "").charAt(0) + usernames[1].replace(/\s/g, "").charAt(0);
+        usernames = userId.split(' ');
+        finalName = usernames[0].replace(/\s/g, "").charAt(0) + usernames[1].replace(/\s/g, "").charAt(0)
       }
+      return finalName;
     }
 }
 

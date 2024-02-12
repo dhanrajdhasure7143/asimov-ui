@@ -302,30 +302,40 @@
                               </form>
                            </div>
 
-                           <div *ngIf="showWidgetValue && configuration_id == widget.id && widget.widget_type == 'label'">
-                              <div>
-                                 <p-dropdown [options]="projects_list" [ngModel]="selected_project"
-                                    autoWidth="false" [filter]="true" [style]="{'width':'70%'}" [appendTo]="'body'"
-                                    placeholder="Select Project" optionLabel="projectName"
-                                    optionValue="id"></p-dropdown>
-                              </div>
+                           <!-- <div *ngIf="showWidgetValue && configuration_id == widget.id && widget.widget_type == 'label'">
+                              <div class="text-center">
+                                 <p-dropdown [options]="projects_list" [(ngModel)]="selected_project" (onChange)="onProjectChange()"
+                                             [filter]="true" [style]="{'width':'70%'}" [appendTo]="'body'"
+                                             placeholder="Select Project" optionLabel="projectName" optionValue="id"></p-dropdown>
+                               </div>                               
+                               
                               <div id="btn-viewProject">
                                  <button id="btn" class="btn new-cancelbtn" (click)="cancelProject()">Cancel</button>
-                                 <button id="btn" class="btn bluebg-button" (click)="saveConfigure(i)">Process Info</button>
+                                 <button id="btn" class="btn bluebg-button" (click)="viewProcessInfo()" [disabled]="!selected_project">Configure</button>
                               </div>
-                              </div>
+                           </div> -->
                         </div>
                      </div>
-                  
                   </div>
-               </ng-container>
-         
+               </ng-container>      
             </div>
          </div>
       </div>
    </div>
 </div>
 
+<div class="onb-usroverlay" *ngIf="showOverlay" style="display: block">
+   <app-split-overlay (closeOverlay)="closeOverlay($event)">
+       <div class="h-100">
+           <div class="create-header">
+               <h3>Process Info</h3>
+           </div>
+           <div class="h-100">
+               <app-project-process-info [isChecked]="true" [isDashboardOverlay]="isfromDashBoard" (customEvent)="onCustomEvent($event)"> </app-project-process-info>
+           </div>
+       </div>
+   </app-split-overlay>
+</div> 
 
 <p-confirmDialog #cd1 [style]="{width: '30vw'}" key="positionDialog2" position="center" [baseZIndex]="10000" 
  rejectButtonStyleClass="btn bluebg-button" [closable]="false">

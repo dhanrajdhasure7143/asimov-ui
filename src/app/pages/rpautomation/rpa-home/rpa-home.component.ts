@@ -7,7 +7,6 @@ import 'rxjs/add/operator/filter';
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG } from 'src/app/app.config';
 import { Table } from 'primeng/table';
@@ -17,6 +16,7 @@ import {ConfirmationService } from "primeng/api";
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { environment } from 'src/environments/environment';
+import { CryptoService } from 'src/app/services/crypto.service';
 declare var $: any;
 
 @Component({
@@ -51,7 +51,6 @@ export class RpaHomeComponent implements OnInit {
   enableConfiguration: boolean = false;
   enablecreatebot: boolean = false;
   showWorkspace: boolean = false;
-  modalRef: BsModalRef;
   exportid: any;
   allbots: any = [];
   botFormVisibility:boolean=false;
@@ -104,9 +103,9 @@ export class RpaHomeComponent implements OnInit {
   importBotForm=new FormGroup({
     botName:new FormControl("", Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(1), Validators.pattern("^[a-zA-Z0-9_-]*$")])),
     categoryId:new FormControl("", Validators.compose([Validators.required])),
-    environmentId:new FormControl("", Validators.compose([Validators.required]))
+    environmentId:new FormControl("", Validators.compose([Validators.required])),
+    description:new FormControl("", )
   })
-  importBotJson:any= undefined;
   final_tasks:any=[];
   finaldataobjects:any=[];
   checkorderflag:boolean=true;
@@ -130,17 +129,20 @@ export class RpaHomeComponent implements OnInit {
   bot_tasksList:any[]=[];
   isExportDisable:boolean = false;
   bot_toExport:any={};
+  import_BotData:any;
+  importBot_overlay:boolean = false;
+  filteredEnvironments:any=[];
 
   constructor(
     private rest: RestApiService,
-    private modalService: BsModalService,
     private router: Router,
     private spinner: LoaderService,
    @Inject(APP_CONFIG) private appconfig,
     private dt : DataTransferService,
     private confirmationService:ConfirmationService,
     private toastService: ToasterService,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private crypto : CryptoService
   ) { }
 
   @Input() get selectedColumns(): any[] {
@@ -153,34 +155,6 @@ export class RpaHomeComponent implements OnInit {
     );
   }
 
-  openModal(template: TemplateRef<any>) {
-    if (this.freetrail == 'true') {
-      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
-        this.confirmationService.confirm({
-          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
-          header: 'Error',
-          rejectVisible: false,
-          acceptLabel: "Ok",
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          acceptIcon: 'null',
-          accept: () => {},
-        });
-      }
-      else {
-        this.importfile = "";
-        this.file_error = "";
-        this.importcat = "";
-        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
-      }
-    }
-    else {
-      this.importfile = "";
-      this.file_error = "";
-      this.importcat = "";
-      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
-    }
-  }
 
   ngOnInit() {
     $('.link').removeClass('active');
@@ -429,25 +403,26 @@ export class RpaHomeComponent implements OnInit {
         }
         else
           this.toastService.showError(response.errorMessage);
-        this.modalRef.hide()
         this.getallbots();
       })
 
     }
   }
 
-  upload(file) {
+  Change(event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+      const file = files[0];
     var reader = new FileReader();
     var extarr = file.name.split('.');
     var ext = extarr.reverse()[0];
     this.file_error = "";
-    if (ext == "json")
-    {
+    if (ext == "json"){
       reader.readAsText(file);
       this.spinner.show();
       reader.onload = (e) => {
         let botDetails=(JSON.parse(reader.result.toString()));
-        this.importBotJson=botDetails;
+        this.import_BotData=botDetails;
         this.importBotForm.get("botName").setValue(botDetails.botName);
         this.validateBotName();
       }
@@ -455,17 +430,13 @@ export class RpaHomeComponent implements OnInit {
     }
     else
       this.file_error = "Invalid file format, only it allows .sql format"
-
-
-  }
+}
 
   exportbot(bot) {
     this.rest.bot_export(bot.botId).subscribe((data) => {
-
       const linkSource = `data:application/txt;base64,${data}`;
       const downloadLink = document.createElement('a');
       document.body.appendChild(downloadLink);
-
       downloadLink.href = linkSource;
       downloadLink.target = '_self';
       downloadLink.download = bot.botName + "-V" + bot.version + ".sql";
@@ -612,7 +583,7 @@ export class RpaHomeComponent implements OnInit {
     return description;
   }
 
-  exportBot(item){
+  onclickDownload(item){
     this.isExportBot = true;
     this.exportType = null;
     this.selectedTaskList =[];
@@ -622,9 +593,9 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getbotTaskList(item.botId).subscribe((res:any)=>{
       this.bot_tasksList = res.actionItems
     })
+    return
     this.rest.getbotdata(item.botId).subscribe((response:any)=>{
-      if(response.errorMessage==undefined)
-      {
+      if(response.errorMessage==undefined){
         let botDetails:any={
           botName:response.botName,
           botDescription:response.description,
@@ -659,76 +630,69 @@ export class RpaHomeComponent implements OnInit {
           executionMode:response.executionMode,
           startStopCoordinate:response.startStopCoordinate   
         };
-        this.downloadJson(botDetails)
+        // this.downloadJson(botDetails)
       } else {
 
       }
     })
   }
 
-  filteredEnvironments:any=[];
-  filterEnvironments(categoryId)
-  {
+  filterEnvironments(event){
+    console.log(event)
     this.importBotForm.get("environmentId").setValue("");
-    this.filteredEnvironments=this.environments.filter(item=>item.categoryId==categoryId);
+    this.filteredEnvironments=this.environments.filter(item=>item.categoryId==event.value);
   }
-importBot()
-{
+
+importBot(){
   this.final_tasks=[];
   this.finaldataobjects=[];
   let basicBotDetails={
     botName:this.importBotForm.get("botName").value,
-    botDescription:this.importBotJson.botDescription,
+    botDescription:this.import_BotData.botDescription,
     department:this.importBotForm.get("categoryId").value,
-    isPredefined:this.importBotJson.isPredefined,
+    isPredefined:this.import_BotData.isPredefined,
     categoryId:this.importBotForm.get("categoryId").value
   }
-  this.modalRef.hide();
   this.spinner.show();
-  this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
-    if(response.errorMessage==undefined)
-    {
-      this.importBotJson=this.updateNodeIds(this.importBotJson, basicBotDetails);
-      this.finaldataobjects=[...this.importBotJson.tasks]
+  this.rest.createBot(basicBotDetails).subscribe( async (response:any)=>{
+    if(response.errorMessage==undefined){
+      this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
+      this.finaldataobjects = [...this.import_BotData.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
       this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
-      if(this.importBotJson.executionMode=="v1") this.arrange_task_order(start);
+      if(this.import_BotData.executionMode=="v1") this.arrange_task_order(start);
       else this.final_tasks=[...this.finaldataobjects];
-      this.importBotJson["botId"]=response.botId;
-      this.importBotJson["botName"]=this.importBotForm.get("botName").value;
-      this.importBotJson["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
-      this.importBotJson["tasks"]=[...this.final_tasks];
-      this.importBotJson["department"]=response.department;
-      (await this.rest.updateBot(this.importBotJson)).subscribe((response:any)=>{
+      this.import_BotData["botId"]=response.botId;
+      this.import_BotData["botName"]=this.importBotForm.get("botName").value;
+      this.import_BotData["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+      this.import_BotData["tasks"]=[...this.final_tasks];
+      this.import_BotData["department"]=response.department;
+      (await this.rest.updateBot(this.import_BotData)).subscribe((response:any)=>{
         this.spinner.hide();
-        this.resetImportBotForm();
-        // this.messageService.add({ severity: "success",summary: "Success",detail: "Bot imported successfully!"});
         this.toastService.showSuccess(this.toastMessages.botImport,'response');
-
+        this.resetImportBotForm();
         this.getallbots();
       },err=>{
         this.spinner.hide();
         this.resetImportBotForm();
-        // this.toastService.showError('Unable to configure bot task configurations!');
         this.toastService.showError(this.toastMessages.botConfigError);
-      })
+      });
     }
   },err=>{
     this.spinner.hide();
     this.resetImportBotForm();
-    // this.messageService.add({ severity: 'error',summary: 'Error',detail: 'Unable to import the bot!'});
     this.toastService.showError(this.toastMessages.botImportError);
   })
 }
 
 
-  resetImportBotForm()
-  {
-    this.importBotJson=undefined;
+  resetImportBotForm(){
+    this.import_BotData=undefined;
     this.file_error="";
     this.importBotForm.reset();
     this.importBotForm.get("categoryId").setValue("");
-    this.importBotForm.get("environmentId").setValue("")
+    this.importBotForm.get("environmentId").setValue("");
+    this.importBotForm.get("botName").setValue('');
   }
   validateBotName() {
     let botname = this.importBotForm.get("botName").value;
@@ -742,21 +706,20 @@ importBot()
     })
   }
 
-  downloadJson(payload:any)
-  {
+  downloadJson(payload:any){
     payload=this.removeDuplicateTasks(payload);
-   // payload=this.updateNodeIds(payload);
+  //  payload=this.updateNodeIds(payload);
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
     let dlAnchorElem = document.createElement('a');
     dlAnchorElem.setAttribute("href",dataStr);
     dlAnchorElem.setAttribute("download", payload.botName+".json");
     dlAnchorElem.click();
+    this.downloadEncryptedData(JSON.stringify(payload))
   }
 
 
 
-  get importedBotName()
-  {
+  get importedBotName(){
     return this.importBotForm.get("botName").value;
   }
 
@@ -812,8 +775,7 @@ importBot()
   }
 
 
-  removeDuplicateTasks(payload)
-  {
+  removeDuplicateTasks(payload){
     
     payload.tasks.forEach((item:any, index:number)=>{
       if(payload.tasks.filter((taskItem:any)=>taskItem.nodeId==item.nodeId).length>1)
@@ -930,14 +892,60 @@ importBot()
       console.log(res);
       let data:any = res;
       if(data.message){
-        this.downloadEncryptedData(data.encryptedData)
+        // this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
+        // this.downloadEncryptedData(JSON.stringify(data.data));
         this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
         this.showLoader = false;
+        this.removeUnusedData(data.data.botData)
       }
     },err=>{
       this.toastService.showError(this.bot_toExport.botName+" "+this.toastMessages.exportError);
       this.showLoader = false;
     })
+  }
+
+  removeUnusedData(response){
+    if(response.errorMessage==undefined){
+      let botDetails:any={
+        botName:response.botName,
+        // botDescription:response.description,
+        department:response.department,
+        categoryId:response.categoryId,
+        tasks:[...response.tasks.map((item:any)=>{
+          delete item.botTId;
+          delete item.version;
+          delete item.botId;
+          delete item.versionNew;
+          item.attributes=item.attributes.map((attrItem)=>{
+            delete attrItem.botTaskId;
+            delete attrItem.attrId;
+            delete attrItem.botId;
+            // if(!this.isConfigurationEnable){
+            //   attrItem.attrValue="";
+            // }
+            return attrItem;
+          })
+          return item;
+        })],
+        sequences:[...response.sequences.map((item:any)=>{
+          delete item.botId;
+          delete item.version;
+          delete item.sequenceId;
+          return item;
+        })],
+        envIds:[],
+        versionType:'',
+        botType:0,
+        botMainSchedulerEntity:null,
+        comments:"", 
+        executionMode:response.executionMode,
+        startStopCoordinate:response.startStopCoordinate   
+      };
+      // this.downloadJson(botDetails)
+       this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
+    } else {
+
+    }
   }
 
   downloadEncryptedData(encryptedData): void {
@@ -950,6 +958,111 @@ importBot()
     document.body.removeChild(downloadLink);
     this.showLoader = false;
   }
+
+  onFileChange(event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        const content = event.target?.result as string;
+        console.log('File content:', content);
+      };
+      reader.onerror = (event: ProgressEvent<FileReader>) => {
+        console.error('Error reading file.');
+      };
+      reader.readAsText(file);
+      reader.onload = (e) => {
+        // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
+        this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
+        console.log(this.import_BotData)
+        // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
+        this.validateBotName();
+      }
+    }
+  }
+
+  importEncryptedBotData(){
+    this.final_tasks=[];
+    this.finaldataobjects=[];
+    let basicBotDetails={
+      botName:this.importBotForm.get("botName").value,
+      description:this.importBotForm.get("description").value,
+      department:this.importBotForm.get("categoryId").value,
+      isPredefined:this.import_BotData.isPredefined,
+      categoryId:this.importBotForm.get("categoryId").value
+    }
+    this.spinner.show();
+    let req_body:any={};
+    this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
+      this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
+      this.finaldataobjects = [...this.import_BotData.tasks]
+      let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
+      this.stopNodeId=this.finaldataobjects.find((item:any)=>item.outSeqId.split("_")[0]=="STOP")?.outSeqId??undefined;
+      if(this.import_BotData.executionMode=="v1") this.arrange_task_order(start);
+      else this.final_tasks=[...this.finaldataobjects];
+      this.import_BotData["botId"]=response.botId;
+      this.import_BotData["botName"]=this.importBotForm.get("botName").value;
+      this.import_BotData["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+      this.import_BotData["tasks"]=[...this.final_tasks];
+      this.importBot_overlay= false;
+        // req_body["botId"]=response.botId;
+        // req_body["botName"]=this.importBotForm.get("botName").value;
+        // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
+        // req_body["department"]=response.department;
+        req_body["botData"]  = this.import_BotData;
+        let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
+      (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
+        this.spinner.hide();
+        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        this.resetImportBotForm();
+        this.getallbots();
+      },err=>{
+        this.spinner.hide();
+        this.resetImportBotForm();
+        this.toastService.showError(this.toastMessages.botConfigError);
+      })
+    },err=>{
+      this.toastService.showError("Failed to import bot");
+      this.spinner.hide();
+    })
+  }
+
+  onCancelImport(){
+    this.resetImportBotForm();
+    this.importBotForm.get("botName").setValue('')
+    this.importBot_overlay= false;
+  }
+
+  openModal() {
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
+        this.confirmationService.confirm({
+          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
+          header: 'Error',
+          rejectVisible: false,
+          acceptLabel: "Ok",
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          acceptIcon: 'null',
+          accept: () => {},
+        });
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.importBot_overlay = true;
+      }
+    }else {
+      this.importBot_overlay = true;
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+    }
+  }
+
 }
 
 

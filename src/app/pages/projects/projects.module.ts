@@ -100,6 +100,10 @@ const materialModules: any[] = [
   providers:[
     BsModalRef, NotifierService,
     toastMessages
+  ],
+  exports: [
+    // export the ProjectProcessInfoComponent here
+    ProjectProcessInfoComponent,
   ]
 })
 export class ProjectsModule { }
