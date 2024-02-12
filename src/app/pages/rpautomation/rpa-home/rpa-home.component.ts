@@ -103,7 +103,8 @@ export class RpaHomeComponent implements OnInit {
   importBotForm=new FormGroup({
     botName:new FormControl("", Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(1), Validators.pattern("^[a-zA-Z0-9_-]*$")])),
     categoryId:new FormControl("", Validators.compose([Validators.required])),
-    environmentId:new FormControl("", Validators.compose([Validators.required]))
+    environmentId:new FormControl("", Validators.compose([Validators.required])),
+    description:new FormControl("", )
   })
   final_tasks:any=[];
   finaldataobjects:any=[];
@@ -690,7 +691,8 @@ importBot(){
     this.file_error="";
     this.importBotForm.reset();
     this.importBotForm.get("categoryId").setValue("");
-    this.importBotForm.get("environmentId").setValue("")
+    this.importBotForm.get("environmentId").setValue("");
+    this.importBotForm.get("botName").setValue('');
   }
   validateBotName() {
     let botname = this.importBotForm.get("botName").value;
@@ -986,7 +988,7 @@ importBot(){
     this.finaldataobjects=[];
     let basicBotDetails={
       botName:this.importBotForm.get("botName").value,
-      botDescription:this.import_BotData.botDescription,
+      description:this.importBotForm.get("description").value,
       department:this.importBotForm.get("categoryId").value,
       isPredefined:this.import_BotData.isPredefined,
       categoryId:this.importBotForm.get("categoryId").value

@@ -11,9 +11,13 @@
                     <label class="main-subtitle">Let’s Automate !</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
-                        <div class="rpa-home-block" id="createbot-Home">
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner')">
                             <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openModal()" aria-hidden="true" placement="bottom">Import</button>
                         </div>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
+                            <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" placement="bottom">Import</button>
+                        </div>
+
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                             <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
@@ -560,7 +564,7 @@
         <div class="container p-0" style="width:100%">
             <form [formGroup]="importBotForm" class="row" *ngIf="(import_BotData)" >
                 <div class="form-fields col-md-12 p-0">
-                    <label>Bot Name</label>
+                    <label class="label-control">Bot Name <span class="star">*</span></label>
                     <input type="text" (input)="validateBotName()" formControlName="botName" placeholder="Enter Bot Name" class="form-control" >
                     <div *ngIf="(importBotForm.get('botName').hasError('required') && importBotForm.get('botName').touched) && !importBotForm.controls['botName'].hasError('maxlength')" class="errspan required">
                         Bot Name Required
@@ -576,24 +580,23 @@
                     </div>
                 </div>
                 <div class="form-fields col-md-12 p-0">
-                    <label>Select Category</label>
-                    <!-- <select class="form-control"  formControlName="categoryId" (change)="filterEnvironments($event.target.value)">                        
-                    <option value="" hidden disabled>Select Category</option>
-                    <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
-                  </select> -->
-
+                    <label class="label-control">Select Category <span class="star">*</span></label>
                   <p-dropdown [options]="categaoriesList" formControlName="categoryId" autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
                           placeholder="Select Category" optionLabel="categoryName" optionValue="categoryId" (onChange)="filterEnvironments($event)"></p-dropdown>
                 </div>
                 <div class="form-fields col-md-12 p-0">
-                    <label>Select Environment</label>
+                    <label class="label-control">Select Environment <span class="star">*</span></label>
                     <p-dropdown [options]="filteredEnvironments" formControlName="environmentId" autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
                           placeholder="Select Environment" optionLabel="environmentName" optionValue="environmentId"></p-dropdown>
-
-                    <!-- <select  formControlName="environmentId" class="form-control"  >                        
-                      <option value="" hidden disabled>Select Environment</option>
-                      <option *ngFor="let env of filteredEnvironments" [value]="env.environmentId">{{env.environmentName}}</option>
-                  </select> -->
+                </div>
+                <div class="form-fields col-md-12 p-0">
+                    <label class="label-control" for="description">Bot Description</label>
+                    <textarea type="text" autocomplete="off" formControlName="description"
+                        placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
+                        name="botDescription" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+                    <div *ngIf="importBotForm.controls['description'].hasError('maxlength')" class="required">
+                        Maximum of 150 characters exceeded
+                    </div>
                 </div>
             </form>
             <div class="row" *ngIf="!(import_BotData)" >
