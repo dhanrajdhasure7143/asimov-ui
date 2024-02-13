@@ -1057,6 +1057,8 @@ importBot(){
         this.importBot_overlay = true;
       }
     }else {
+      this.resetImportBotForm();
+      this.importBotForm.get("botName").setValue('');
       this.importBot_overlay = true;
       this.importfile = "";
       this.file_error = "";
