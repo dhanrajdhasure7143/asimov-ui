@@ -116,7 +116,7 @@ export class columnList{
 
       public schedularInbox_column =[
         {ColumnName: "processName",DisplayName: "Process Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        {ColumnName: "processRunId",DisplayName: "Run Id",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "runId",DisplayName: "Run Id",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "previousTask",DisplayName: "Previous Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextSuccessTask",DisplayName: "Next Task (Upon Success)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
