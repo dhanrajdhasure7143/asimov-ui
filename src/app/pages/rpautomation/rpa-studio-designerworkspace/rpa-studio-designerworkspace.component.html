@@ -8,7 +8,7 @@
         }">
           <!--Nodes inside designer-->
           <ng-container *ngFor="let node of nodes; let i = index">
-            <div id="{{ node.id }}" class="dndDropzone" [hidden]="node.isHide" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (click)="onselectNodes(i)"
+            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) )?'hide-node':''):node.isModified?'hide-node':'' " [pTooltip]="node.isModified ? 'This task is deprecated!' : ''" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (click)="onselectNodes(i)"
               (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
                 left: node.x,
                 top: node.y,
