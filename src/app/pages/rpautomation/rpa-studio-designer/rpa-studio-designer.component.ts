@@ -10,7 +10,6 @@ import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworks
 import { ConfirmationService } from 'primeng/api';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
-import { Subscription } from 'rxjs';
 import { DataTransferService } from '../../services/data-transfer.service';
 @Component({
   selector: 'app-rpa-studio-designer',
@@ -52,7 +51,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isOpenSideOverlay:boolean=false;
   params:any={};
   executionMode:boolean=false;
-  subscription: Subscription;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -367,7 +365,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   ngOnDestroy() {
     localStorage.removeItem("bot_id")
-    this.subscription.unsubscribe();
   }
 
   SaveBot(){
