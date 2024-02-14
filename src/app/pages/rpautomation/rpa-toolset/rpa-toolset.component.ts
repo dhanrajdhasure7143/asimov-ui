@@ -1,7 +1,6 @@
 import {ViewChild,Input, Output, Component,Injectable, OnInit, ElementRef, EventEmitter  } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
-
 @Injectable()
 @Component({
   selector: 'app-rpa-toolset',
@@ -35,13 +34,11 @@ export class RpaToolsetComponent implements OnInit {
         this.microBotsList = microBotsList;
       });
     }
-
     searchclear(){
       this.search=false
       this.userFilter.name=""
       this.microBotsUserFilter.name = ""
     }
-
     closeToolsetEvent(){
       this.closeToolset.emit(null);
     }
@@ -62,6 +59,5 @@ export class RpaToolsetComponent implements OnInit {
     this.rest.getMicroBots().subscribe((data: any[]) => {
       this.microBotsList = data;
     });
-  }
-  
+  }   
 }

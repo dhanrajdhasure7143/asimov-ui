@@ -126,7 +126,7 @@ export class toastMessages{
   public cancelSubscription = "Subscription cancelled successfully!";
   public cancelErr = "Failed to cancel subscription";
   public downloadErr = "Failed to download!";
-  public exportError = "Failed to export vot!";
+  public exportError = "Failed to export bot!";
   public exportSuccess = "Exported successfully!"
   
   

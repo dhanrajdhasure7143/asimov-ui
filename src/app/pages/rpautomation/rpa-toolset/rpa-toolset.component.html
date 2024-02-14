@@ -1,9 +1,9 @@
 <div class="toolset"> 
   <div class="actionsheaderdiv">
-    <button type="button" class="toolset-close" (click)="closeToolsetEvent()" aria-label="Close">
-          <span aria-hidden="true"><img src="../../../../../assets/images-n/projects/close-circle-line.svg"  class="textplus"></span>
-    </button> 
-    <div class="p-tabview p-tabview-custom">
+        <button type="button" class="toolset-close" (click)="closeToolsetEvent()" aria-label="Close">
+              <span aria-hidden="true"><img src="../../../../../assets/images-n/projects/close-circle-line.svg"  class="textplus"></span>
+        </button> 
+    <div class="p-tabview p-tabview-custom">  
       <p-tabView class="left-panel-header" (onChange)="onTabChange($event)">
         <p-tabPanel header="Toolset & Actions">
           <div id="search"  *ngIf="!isMicroBotsTabActive" class="scrollable-content">
@@ -14,7 +14,7 @@
                 <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="testplus1">
               </div>
             </div>
-            <div #section class="section">
+            <div #section class="section content-container">
               <mat-accordion multi>
                 <div class="nodes rpa-dragicon" placement="bottom"
                   *ngFor="let node of templateNodes | tasksearch:userFilter.name">
@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div id="dragicons2" class="dragicons" *ngIf="isMicroBotsTabActive">
+          <div id="dragicons2" class="dragicons content-container" *ngIf="isMicroBotsTabActive">
             <ul>
               <li style="list-style-type: none;" *ngFor="let microBot of filteredMicroBotsList" [dndDraggable]="microBot">
                 <img src="../../../../assets/images/robot.png" alt="{{ microBot.name }}" class="micro-bot-image"> &nbsp;
