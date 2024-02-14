@@ -50,6 +50,11 @@ export class DynamicDashboardComponent implements OnInit {
   showWidgetValue: boolean = false;
   projects_list: any[]=[];
   selected_project:any;
+  process_name: any;
+  roiProcessName: any;
+  correlationID: any;
+  showOverlay: boolean;
+  isfromDashBoard:boolean = false
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -82,11 +87,6 @@ export class DynamicDashboardComponent implements OnInit {
       this.getListOfDashBoards();
     }
     this.getInterval();
-    this.userRoles = localStorage.getItem("userRole")
-    this.userRoles = this.userRoles.split(',');
-    this.name = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
-    this.email = localStorage.getItem('ProfileuserId');
-    this.getallProjects(this.userRoles,this.name,this.email);
   }
 
   openConfiguration(widget: any) {
@@ -589,7 +589,7 @@ export class DynamicDashboardComponent implements OnInit {
     if(widget.widget_type == "label" && widget.extraWidget){
       this.items = [
         // {label: "Remove",command: (e) => {this.onRmoveWidget();}},
-        {label: "Configure",command: (e) => {this.toggleConfigureDropdown(e)}},
+        {label: "Configure",command: (e) => {this.viewProcessInfo()}},
       ];
     }else if(widget.widget_type =="Table" || (widget.widget_type == "label"  && !widget.extraWidget)){
       this.items = [
@@ -649,6 +649,7 @@ export class DynamicDashboardComponent implements OnInit {
   }
 
   showTable(){
+    console.log(this.showTableData);
     this.showTableData = !this.showTableData;
     this.widgetClass = this.showTableData ? 'graph1' : 'graph';
   }
@@ -696,18 +697,10 @@ export class DynamicDashboardComponent implements OnInit {
     }
   }
 
-  
-  getallProjects(roles, name, email) {
-    this.rest.getAllProjects(roles, name, email).subscribe(data => {
-      this.projects_list = data[1];
-      console.log(this.projects_list)
-    });
-  }
-
   cancelProject() {
     this.showWidgetValue = false;
     this.configuration_id = null;
-    // Toggle the visibility of the other table
+    this.showOverlay = false;
   }
 
   toggleConfigureDropdown(e) {
@@ -717,5 +710,21 @@ export class DynamicDashboardComponent implements OnInit {
       this.showTableData = true;
       this.configuration_id = this.selected_widget.id?this.selected_widget.id: this.selected_widget.childId;
     }, 100);
+    }
+
+    viewProcessInfo() {
+      this.showOverlay = true;
+      this.isfromDashBoard = true; 
+    }
+
+    closeOverlay(event) {
+      this.processInfo = event;
+      this.showOverlay = false;
+      console.log(this.showTableData);
+    }
+
+    onCustomEvent(event){
+      this.showOverlay = event
+      this.getDashBoardData(this._paramsData.dashboardId,false);
     }
 }

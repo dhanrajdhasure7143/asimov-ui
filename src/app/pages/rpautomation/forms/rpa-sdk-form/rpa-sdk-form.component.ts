@@ -12,10 +12,10 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
   styleUrls: ['./rpa-sdk-form.component.css']
 })
 export class RpaSdkFormComponent implements OnInit {
-  @Input() isCreateForm:boolean;
+  @Input() isupdateform:boolean;
   @Input() hideLabels:boolean;
-  @Input() credupdatedata:any=[];
-  @Output() refreshTable = new EventEmitter<any>();
+  @Input() updatetaskDetails:any;
+  @Output() closeOverlay = new EventEmitter<any>();
   categoryList: any;
   public customTaskForm: FormGroup;
   public Credupdateflag: Boolean;
@@ -28,28 +28,25 @@ export class RpaSdkFormComponent implements OnInit {
     { name: 'Path', key: 'A' },
     { name: 'Code', key: 'M' }
   ];
+  showCodeField : boolean = false;
+  showPathField : boolean = false;
   constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
     private spinner: LoaderService,
-    private cryptoService:CryptoService,
-    private toastService: ToasterService,
+    private toastService : ToasterService,
     private toastMessages: toastMessages
+
     ) {
 
       this.customTaskForm=this.formBuilder.group({
-        //Removed email validator because we can also add organization name
-        // userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        // password: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
-        // categoryId:["", Validators.compose([Validators.required])],
-        // serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inputRef:[""],
-        taskName:[""],
-        languageType:[""],
-        selectedCategory:[""],
+        inputReference:["",Validators.compose([Validators.required])],
+        customTaskName:["",Validators.compose([Validators.required])],
+        languageType:["",Validators.compose([Validators.required])],
+        selectedCategory:["",Validators.compose([Validators.required])],
         executablePath:[""],
-        codeEditor:[""],
-        outputRef:[""]
+        code:[""],
+        outputReference:["",Validators.compose([Validators.required])]
     })
 
       this.Credupdateflag=false;
@@ -57,18 +54,29 @@ export class RpaSdkFormComponent implements OnInit {
      }
 
   ngOnInit(): void {
-   this.languages = ["Java", "Phyton", "Javascript"];
+  // this.spinner.show();
+   this.languages = [{language:"Java"},{language:"Python"},{language:"Javascript"}];
    this.categories
   }
 
-  inputNumberOnly(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   }
+  ngOnChanges(){
+    if (this.isupdateform) {
+      this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
+      this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
+      this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
+      if(this.updatetaskDetails.executablePath != null){
+        this.customTaskForm.get("selectedCategory").setValue("Path");
+        this.radioChange("Path")
+      }
+      if(this.updatetaskDetails.code != null){
+        this.customTaskForm.get("selectedCategory").setValue("Code");
+        this.radioChange("Code")
+      }
+      this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath)
+      this.customTaskForm.get("code").setValue(this.updatetaskDetails.code)
+      this.customTaskForm.get("outputReference").setValue(this.updatetaskDetails.outputReference)
+    }
   }
-
  
   getCategories() {
     this.api.getCategoriesList().subscribe(data => {
@@ -78,14 +86,65 @@ export class RpaSdkFormComponent implements OnInit {
   }
 
   radioChange(event : any){
-    console.log(event.value,"event")
+    if(event == "Path"){
+      this.showPathField = true;
+      this.showCodeField = false
+    } else {
+      this.showPathField = false;
+      this.showCodeField = true
+    }
   }
 
+  resetCustomTasks(){
+    this.customTaskForm.reset();
+  }
 
-  resetCredForm(){}
+  saveCustomTasks(){
+    this.spinner.show();
+    let reqBody = {
+      "code": this.customTaskForm.value.code,
+      "customTaskName": this.customTaskForm.value.customTaskName,
+      // "executablePath": this.customTaskForm.value.executablePath,
+      "inputReference": this.customTaskForm.value.inputReference,
+      "languageType": this.customTaskForm.value.languageType,
+      "outputReference": this.customTaskForm.value.outputReference,
+    }
+    console.log(this.customTaskForm)
+    this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
+      console.log("Successfully created custom task");
+      this.closeOverlay.emit(true);
+      this.spinner.hide();
+      this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
+    },err=>{
+    this.spinner.hide();
+    this.toastService.showError(this.toastMessages.saveError);
+    });
+  }
 
-  saveCredentials(){
+  updateCustomTasks(){
+    this.spinner.show();
+    let reqBody = {
+      "code": this.customTaskForm.value.code,
+      "customTaskName": this.customTaskForm.value.customTaskName,
+      // "executablePath": this.customTaskForm.value.executablePath,
+      "inputReference": this.customTaskForm.value.inputReference,
+      "languageType": this.customTaskForm.value.languageType,
+      "outputReference": this.customTaskForm.value.outputReference,
+      "taskId": this.updatetaskDetails.customTaskId,
+    }
+    this.api.updateSdkCustomTasks(this.updatetaskDetails.customTaskId,reqBody).subscribe((data : any) =>{
+      this.spinner.hide();
+      console.log("Successfully created custom task");
+      this.closeOverlay.emit(true);
+      this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
+    },err=>{
+      this.spinner.hide();
+      this.toastService.showError(this.toastMessages.updateError);
+    })
+  }
 
+  cancelUpdate(){
+    this.closeOverlay.emit(true);
   }
 
 }
