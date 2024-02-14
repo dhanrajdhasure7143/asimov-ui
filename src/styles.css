@@ -4078,3 +4078,7 @@ padding: 0px 30px;}
   height: calc(100vh - 200px);
   overflow-y: auto;
 } */
+
+.mat-drawer .mat-drawer-inner-container .toolset{
+  overflow: hidden !important;
+}
