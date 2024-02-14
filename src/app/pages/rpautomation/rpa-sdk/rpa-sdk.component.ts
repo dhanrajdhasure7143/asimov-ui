@@ -38,7 +38,6 @@ export class RpaSdkComponent implements OnInit {
   getTaskDetails(){
     this.spinner.show();
     this.rest.getCustomTasks().subscribe((res : any) =>{
-      console.log(res,"res")
       this.customTasks = res
       this.spinner.hide();
     })
@@ -50,22 +49,12 @@ export class RpaSdkComponent implements OnInit {
   readSelectedData(e){}
 
   updateCustomTasks(item){
-    console.log(item)
     this.isupdateform = true;
     this.updatetaskDetails = item
     this.hiddenPopUp = true;
-
-    // this.rest.getCustomTasksbyId(item.customTaskId).subscribe((response : any) =>{
-    //   this.hiddenPopUp = true;
-    //   if(response.code == 4200){
-    //     this.updatetaskDetails = response.data
-    //   }
-    //   console.log(response)
-    // })
   }
 
   deleteCustomTask(row){
-    console.log(row)
     const selectedCustomTasks=[]
     selectedCustomTasks.push(row.customTaskId);
       this.confirmationService.confirm({
@@ -82,10 +71,8 @@ export class RpaSdkComponent implements OnInit {
         accept: () => {
         this.spinner.show();
         this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
-          console.log(res,"say")
           this.getTaskDetails();
           let status:any = res;
-          console.log(status)
           this.spinner.hide();
           this.toastService.showSuccess(row.customTaskName,'delete');
 

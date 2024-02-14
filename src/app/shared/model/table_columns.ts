@@ -116,7 +116,7 @@ export class columnList{
 
       public schedularInbox_column =[
         {ColumnName: "processName",DisplayName: "Process Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        {ColumnName: "processRunId",DisplayName: "Run Id",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "runId",DisplayName: "Run Id",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "taskName",DisplayName: "Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "previousTask",DisplayName: "Previous Task",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
         {ColumnName: "nextSuccessTask",DisplayName: "Next Task (Upon Success)",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false},
@@ -197,16 +197,16 @@ export class columnList{
 
       public approval_column=[
         {ColumnName:"botId",DisplayName:"Bot Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 7rem"} ,
-        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem"},
-        {ColumnName:"taskId",DisplayName:"Task Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem"},
-        {ColumnName:"processRunId",DisplayName:"Process Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem",},
-        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 12rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"processName",DisplayName:"Process Name",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"processId",DisplayName:"Process Id",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        // {ColumnName:"processId",DisplayName:"Process Id",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"runId",DisplayName:"Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem"},
+        // {ColumnName:"taskId",DisplayName:"Task Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem"},
+        // {ColumnName:"processRunId",DisplayName:"Process Run Id",filterWidget: "normal",ShowFilter: true,filterType:"text",ShowGrid: true,sort: true, width:"flex: 0 0 8rem",},
+        {ColumnName:"approverConvertedName",DisplayName:"Approver Name",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 12rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"taskName",DisplayName:"Task Name",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"previousTask",DisplayName:"Previous Task",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"nextSuccessTask",DisplayName:"Next Sucess Task",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
-        {ColumnName:"nextFailureTask",DisplayName:"Next Failure Task",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"nextSuccessTask",DisplayName:"Next Task (Upon Success)",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
+        {ColumnName:"nextFailureTask",DisplayName:"Next Task (Upon Failure)",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"comments",DisplayName:"Comments",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName:"createdBy",DisplayName:"Created By",filterWidget: "normal",ShowFilter: true,width:"flex: 0 0 10rem",filterType:"text",ShowGrid: true,sort: true,},

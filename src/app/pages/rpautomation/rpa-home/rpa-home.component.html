@@ -11,9 +11,13 @@
                     <label class="main-subtitle">Let’s Automate !</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
-                        <div class="rpa-home-block" id="createbot-Home">
-                            <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openModal(template)" aria-hidden="true" placement="bottom">Import</button>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner')">
+                            <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openModal()" aria-hidden="true" placement="bottom">Import</button>
                         </div>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
+                            <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" placement="bottom">Import</button>
+                        </div>
+
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                             <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
@@ -554,8 +558,64 @@
     </app-split-overlay>
   </div>
 
+  <p-dialog header="Import Bot" [(visible)]="importBot_overlay" [modal]="true" [breakpoints]="{'960px': '75vw'}" [style]="{width: '30vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="modal-body">
+        <div class="container p-0" style="width:100%">
+            <form [formGroup]="importBotForm" class="row" *ngIf="(import_BotData)" >
+                <div class="form-fields col-md-12 p-0">
+                    <label class="label-control">Bot Name <span class="star">*</span></label>
+                    <input type="text" (input)="validateBotName()" formControlName="botName" placeholder="Enter Bot Name" class="form-control" >
+                    <div *ngIf="(importBotForm.get('botName').hasError('required') && importBotForm.get('botName').touched) && !importBotForm.controls['botName'].hasError('maxlength')" class="errspan required">
+                        Bot Name Required
+                    </div>
+                    <div *ngIf="checkbotname && importedBotName!=''" class="errspan required">
+                        Bot Name is already exists
+                    </div>
+                    <div *ngIf="importBotForm.get('botName').hasError('pattern')" class="required">
+                        Spaces and special characters are not allowed Excluding( _ & - )
+                    </div>
+                    <div *ngIf="importBotForm.controls['botName'].hasError('maxlength')" class="required">
+                        Maximum of 30 characters exceeded
+                    </div>
+                </div>
+                <div class="form-fields col-md-12 p-0">
+                    <label class="label-control">Select Category <span class="star">*</span></label>
+                  <p-dropdown [options]="categaoriesList" formControlName="categoryId" autoWidth="false" [filter]="false" [style]="{'width':'100%'}"
+                          placeholder="Select Category" optionLabel="categoryName" optionValue="categoryId" (onChange)="filterEnvironments($event)"></p-dropdown>
+                </div>
+                <div class="form-fields col-md-12 p-0">
+                    <label class="label-control">Select Environment <span class="star">*</span></label>
+                    <p-dropdown [options]="filteredEnvironments" formControlName="environmentId" autoWidth="false" [filter]="false" [style]="{'width':'100%'}"
+                          placeholder="Select Environment" optionLabel="environmentName" optionValue="environmentId"></p-dropdown>
+                </div>
+                <div class="form-fields col-md-12 p-0">
+                    <label class="label-control" for="description">Bot Description</label>
+                    <textarea type="text" autocomplete="off" formControlName="description"
+                        placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
+                        name="botDescription" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+                    <div *ngIf="importBotForm.controls['description'].hasError('maxlength')" class="required">
+                        Maximum of 150 characters exceeded
+                    </div>
+                </div>
+            </form>
+            <div class="row" *ngIf="!(import_BotData)" >
+                <div class="form-fields col-md-12 p-0">
+                    <label>Browse File</label>
+                    <input type="file"  pInputText [style]="{'width':'100%'}"    name="file" (change)="onFileChange($event)" id="file"   />
+                    <span class="required">{{file_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+        <ng-template pTemplate="footer">
+        <button (click)="onCancelImport()" class="btn new-cancelbtn"> Cancel</button>
+        <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importEncryptedBotData()">Import</button>
+        </ng-template>
+</p-dialog>
 
-  <ng-template #template>
+
+  <!-- <ng-template #template>
     <div class="modal-header modelprhead">
         <h4 class="modal-title pull-left">Import Bot</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();resetImportBotForm();">
@@ -585,14 +645,14 @@
                 <div class="form-fields col-md-12 p-0">
                     <label>Select Category</label>
                     <select class="form-control"  formControlName="categoryId" (change)="filterEnvironments($event.target.value)">                        
-                    <option value="">Select Category</option>
+                    <option value="" hidden disabled>Select Category</option>
                     <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
                   </select>
                 </div>
                 <div class="form-fields col-md-12 p-0">
                     <label>Select Environment</label>
                     <select  formControlName="environmentId" class="form-control"  >                        
-                      <option value="">Select Environment</option>
+                      <option value="" hidden disabled>Select Environment</option>
                       <option *ngFor="let env of filteredEnvironments" [value]="env.environmentId">{{env.environmentName}}</option>
                   </select>
                 </div>
@@ -612,8 +672,7 @@
             <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importEncryptedBotData()">Import</button>
         </div>
     </div>
-
-</ng-template>
+</ng-template> -->
 <p-confirmDialog  [style]="{width: '30vw'}"  position="center" [baseZIndex]="10000" 
    [closable]="false">
 </p-confirmDialog>
@@ -633,7 +692,6 @@
 
 <div *ngIf="isExportBot" > 
     <app-split-overlay (closeOverlay)="closeExportOverlay($event)"  >
-
         <div class="h-100">
             <div class="create-header">
                 <h3>Export Bot</h3>
@@ -671,6 +729,5 @@
                 </div>
             </div>
         </div>
-    
     </app-split-overlay>
   </div>

@@ -104,14 +104,12 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      // "executablePath": this.customTaskForm.value.executablePath,
+      "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
     }
-    console.log(this.customTaskForm)
     this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
-      console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
       this.spinner.hide();
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
@@ -126,7 +124,7 @@ export class RpaSdkFormComponent implements OnInit {
     let reqBody = {
       "code": this.customTaskForm.value.code,
       "customTaskName": this.customTaskForm.value.customTaskName,
-      // "executablePath": this.customTaskForm.value.executablePath,
+      "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
       "outputReference": this.customTaskForm.value.outputReference,
@@ -134,7 +132,6 @@ export class RpaSdkFormComponent implements OnInit {
     }
     this.api.updateSdkCustomTasks(this.updatetaskDetails.customTaskId,reqBody).subscribe((data : any) =>{
       this.spinner.hide();
-      console.log("Successfully created custom task");
       this.closeOverlay.emit(true);
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
     },err=>{
