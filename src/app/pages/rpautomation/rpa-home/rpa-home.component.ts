@@ -889,15 +889,20 @@ importBot(){
     this.showLoader = true;
     this.isExportBot = false;
     this.rest.getEncryptedbotData(this.bot_toExport.botId,req_body).subscribe((res:any)=>{
-      console.log(res);
-      let data:any = res;
-      if(data.message){
-        // this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
-        // this.downloadEncryptedData(JSON.stringify(data.data));
-        this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
+      if(res)
+      if(res.code != 4200){
         this.showLoader = false;
-        this.removeUnusedData(data.data.botData)
+        this.toastService.showError(this.bot_toExport.botName+" "+res.message);
+      }else{
+        let data:any = res;
+        if(data.message){
+          // this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(data.data)));
+          // this.downloadEncryptedData(JSON.stringify(data.data));
+          this.toastService.toastSuccess(this.bot_toExport.botName+" "+this.toastMessages.exportSuccess);
+          this.showLoader = false;
+          this.removeUnusedData(data.data.botData)
       }
+    }
     },err=>{
       this.toastService.showError(this.bot_toExport.botName+" "+this.toastMessages.exportError);
       this.showLoader = false;
