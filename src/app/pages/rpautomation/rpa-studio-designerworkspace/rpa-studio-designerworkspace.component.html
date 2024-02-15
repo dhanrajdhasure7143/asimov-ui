@@ -89,14 +89,14 @@
                 <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
                 </span>
-                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
+                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false && !group.isMicroBot">
                   <i class="ri-pencil-line text-primary"></i>
                 </span>
                 <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
                   <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
                   <!-- <i class="pi pi-cloud-upload" [ngClass]="{'disabled-icon': isMicroBot}" [attr.disabled]="isMicroBot ? true : null" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i> -->
-                  <i *ngIf="!isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
-                  <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i>
+                  <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
                 </span>
                 <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group)" *ngIf="group.edit == false">
                   <i class="pi pi-angle-up"></i>

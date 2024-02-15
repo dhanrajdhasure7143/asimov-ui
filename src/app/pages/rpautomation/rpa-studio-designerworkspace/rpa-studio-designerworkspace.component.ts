@@ -905,7 +905,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if(event.data.microBotName){
       // this.dragData.tasks.forEach((element:any,i) => {
       //   var mousePos = this.getMousePos(event);
-      console.log(event.data)
+      this.spinner.show();
       console.log(event)
       const id = event.data.id;
       this.rest.fetchMicroBot(id).subscribe((microbotData: any) => {
@@ -938,20 +938,24 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               // if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
               //   node.path=this.toolset.find((data) => data.name == nodename).path
               // console.log(nodeWithCoordinates);
-              console.log(this.nodes);
+              if (this.nodes.length == 1) {
+                this.addStartStopNodes()
+              }
               this.nodes.push(nodeWithCoordinates);
               microBotTasks.push(nodeWithCoordinates);
               setTimeout(() => {
                   this.populateNodes(nodeWithCoordinates);
-              }, 50);
+                  this.autoSaveTaskConfigMicroBot(nodeWithCoordinates);
+              }, 500);
           });
           setTimeout(() => {
-              console.log(this.nodes)
               this.addconnections(microResponse.sequences);
-          }, 2000);
-  
+          }, 500);
           this.addGroupOnLoad(microResponse.groups[0], dropCoordinates, microBotTasks, microResponse.botName);
           // });
+      },err=>{
+        this.spinner.hide();
+
       });
     }else{
     if (event.data.botId != undefined) {
@@ -969,43 +973,46 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.populateNodes(nodeWithCoordinates);
         // this.autoSaveLoopEnd(nodeWithCoordinates)
         this.autoSaveTaskConfig(nodeWithCoordinates);
-        console.log(this.nodes)
       }, 240);
 
       if (this.nodes.length == 1) {
-        let node = {
-          id: "START_" + this.finalbot.botName,
-          name: "START",
-          selectedNodeTask: "",
-          selectedNodeId: "",
-          path: "/assets/images/RPA/Start.png",
-          x: "2px",
-          y: "9px",
-        };
-        this.startNodeId = node.id;
-        this.nodes.push(node);
-        setTimeout(() => {
-          this.populateNodes(node);
-        }, 240);
-        let dropContainer=document.getElementById("dnd_"+this.dragareaid);
-        let stopnode = {
-          id: "STOP_" + this.finalbot.botName,
-          name: "STOP",
-          selectedNodeTask: "",
-          selectedNodeId: "",
-          path: "/assets/images/RPA/Stop.png",
-          x: (dropContainer.offsetWidth - 100)+"px",
-          y: (dropContainer.offsetHeight - 100) +"px",
-        };
-        this.stopNodeId = stopnode.id;
-        this.nodes.push(stopnode);
-        setTimeout(() => {
-          this.populateNodes(stopnode);
-        }, 240);
+        this.addStartStopNodes()
       }
     }
   }
     this.validateBotNodes();
+  }
+
+  addStartStopNodes(){
+    let node = {
+      id: "START_" + this.finalbot.botName,
+      name: "START",
+      selectedNodeTask: "",
+      selectedNodeId: "",
+      path: "/assets/images/RPA/Start.png",
+      x: "2px",
+      y: "9px",
+    };
+    this.startNodeId = node.id;
+    this.nodes.push(node);
+    setTimeout(() => {
+      this.populateNodes(node);
+    }, 240);
+    let dropContainer=document.getElementById("dnd_"+this.dragareaid);
+    let stopnode = {
+      id: "STOP_" + this.finalbot.botName,
+      name: "STOP",
+      selectedNodeTask: "",
+      selectedNodeId: "",
+      path: "/assets/images/RPA/Stop.png",
+      x: (dropContainer.offsetWidth - 100)+"px",
+      y: (dropContainer.offsetHeight - 100) +"px",
+    };
+    this.stopNodeId = stopnode.id;
+    this.nodes.push(stopnode);
+    setTimeout(() => {
+      this.populateNodes(stopnode);
+    }, 240);
   }
 
   autoSaveLoopEnd(node) {
@@ -1661,6 +1668,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   //Normal Task Form Submit
   async onFormSubmit(event: any, notifierflag: boolean) {
+    console.log("testing....form",event)
     this.fieldValues = event;
     this.isBotUpdated = true;
     if (this.fieldValues["file1"]) {
@@ -1778,21 +1786,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let index = this.finaldataobjects.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
     );
+    console.log(index,cutedata.nodeId,this.finaldataobjects,"...............791272779238")
     let savedTaskIndex = this.actualTaskValue.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
     );
+    // console.log(index ,savedTaskIndex ,"3333333333333333")
     if (
       index != undefined &&
       index >= 0 &&
       savedTaskIndex != undefined &&
       savedTaskIndex >= 0
     ) {
+      console.log("test................")
       cutedata["botTId"] = this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else if (index != undefined && index >= 0 && savedTaskIndex < 0) {
       this.finaldataobjects[index] = cutedata;
+      console.log("test................00000000",this.finaldataobjects)
     } else {
       this.finaldataobjects.push(cutedata);
+      console.log("test................000000000999999999999999",this.finaldataobjects)
+
     }
     if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
@@ -2156,9 +2170,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       } else {
 
-        console.log("saveBotdata",this.saveBotdata)
-        console.log("saveBotdata",JSON.stringify(this.saveBotdata))
-        // return
+        console.log("saveBotdata",this.saveBotdata);
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
@@ -3274,6 +3286,7 @@ if (GroupData && GroupData.el) {
   }
 
   autoSaveTaskConfig(nodeData: any) {
+    console.log(nodeData)
     if (nodeData.selectedNodeTask != "") {
       this.selectedTask = {
         name: nodeData.selectedNodeTask,
@@ -3370,7 +3383,6 @@ if (GroupData && GroupData.el) {
   }
 
   minimizeGroup(groupData){
-    console.log("groupData",this.groupsData)
     // console.log(this.groupsData.find((group: any) => group.id == groupData.id))
     // this.groupsData[0]['height'] = "100px";
     // this.groupsData[0]['width'] = "90px";
@@ -3382,17 +3394,22 @@ if (GroupData && GroupData.el) {
       });
     })
     groupData.isExpand = false;
-    this.jsPlumbInstance.toggleGroup(groupData.groupId);
+    this.jsPlumbInstance.collapseGroup(groupData.groupId);
     this.re_ArrangeNodes();
+    setTimeout(() => {
+      groupData.nodeIds.forEach(element => {
+        // If the group is collapsed, hide the node
+        // document.getElementById(element).style.display = 'none';
+    });
+    }, 500);
   }
 
   
   onExpandCollapseGroup(group){
+    console.log("seletedGroup",group)
     group.isExpand = !group.isExpand;
-    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
-    let nodesIds = connectedNodes.map((item2: any) => {
-      return item2.id;
-    });
+    // let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
+    let nodesIds = this.collectGroupIds(group.id)
     nodesIds.forEach(each=>{
     this.nodes.forEach(node=>{
       if(each == node.id){
@@ -3402,6 +3419,15 @@ if (GroupData && GroupData.el) {
     })
   });
   // group["endpoint"]={ type:"Dot", options:{ radius:3 } }
+  nodesIds.forEach(element => {
+  if (group && !group.isExpand) {
+    // If the group is collapsed, hide the node
+    document.getElementById(element).style.display = 'none';
+} else {
+    // If the group is expanded, show the node
+    document.getElementById(element).style.display = 'block'; // or 'inline' or any other appropriate value
+}
+});
 
   this.jsPlumbInstance.toggleGroup(group.id);
   this.re_ArrangeNodes();
@@ -3617,6 +3643,7 @@ if (GroupData && GroupData.el) {
       edit: false,
       color: "#4AB0F5",
       isExpand: true,
+      isMicroBot: true,
       // endpoint:{ type:"Dot", options:{ radius:3 } }
     };
     this.groupsData.push(GroupData);
@@ -3672,6 +3699,10 @@ if (GroupData && GroupData.el) {
     this.groupsData.forEach(group => {group.id
         this.jsPlumbInstance.collapseGroup(group.id);
         group.isExpand = false;
+        this.collectGroupIds(group.id).forEach(element => {
+            // If the group is collapsed, hide the node
+            // document.getElementById(element).style.display = 'none';
+        });
       });
   }
 
@@ -3757,6 +3788,149 @@ if (GroupData && GroupData.el) {
       });
     });
     return tasksList
+  }
+
+  autoSaveTaskConfigMicroBot(nodeData: any) {
+    let selectedTask={}
+    if (nodeData.selectedNodeTask != "") {
+      selectedTask = {
+        name: nodeData.selectedNodeTask,
+        id: parseInt(nodeData.selectedNodeId),
+      };
+    }
+    let selectedNode = nodeData;
+    this.rest.attribute(nodeData.selectedNodeId,nodeData.action_uid).subscribe((res: any) => {
+      this.formVales = res;
+      let data = res;
+      let obj = {};
+      data.map((ele) => {
+        obj[ele.name + "_" + ele.id] = ele.value;
+      });
+      this.onFormSubmitMicroBot(obj, false,selectedNode,selectedTask);
+    });
+    this.spinner.hide();
+  }
+
+  async onFormSubmitMicroBot(event: any, notifierflag: boolean,selectedNode,selectedTask) {
+    this.fieldValues = event;
+    this.isBotUpdated = true;
+    if (this.fieldValues["file1"]) {
+      this.fieldValues["file1"] = this.fieldValues["file1"].substring(12);
+    }
+    if (this.fieldValues["file2"]) {
+      this.fieldValues["file2"] = this.fieldValues["file2"].substring(12);
+    }
+    if (this.fileData != undefined) {
+      this.fieldValues["file"] = this.fileData;
+    }
+    this.hiddenPopUp = false;
+    let objAttr: any;
+    let obj: any = [];
+    this.formVales.forEach((ele, i) => {
+      if (ele.visibility == true) {
+        //let objKeys = Object.keys(this.fieldValues);
+        objAttr = {
+          metaAttrId: ele.id,
+          metaAttrValue: ele.name,
+          attrValue: "",
+          label: ele.label,
+        };
+        let index = this.finaldataobjects.findIndex((sweetdata) =>sweetdata.nodeId == selectedNode.name + "__" + selectedNode.id);
+        let savedTaskIndex = this.actualTaskValue.findIndex((sweetdata) => sweetdata.nodeId == selectedNode.name + "__" + selectedNode.id);
+        if (
+          index != undefined &&
+          index >= 0 &&
+          savedTaskIndex != undefined &&
+          savedTaskIndex >= 0
+        ) {
+          if (
+            this.actualTaskValue[savedTaskIndex].attributes.find(
+              (attrItem: any) => attrItem.metaAttrId == ele.id
+            ) != undefined
+          )
+            objAttr["attrId"] = this.actualTaskValue[
+              savedTaskIndex
+            ].attributes.find(
+              (attrItem: any) => attrItem.metaAttrId == ele.id
+            ).attrId;
+          objAttr["botTaskId"] = this.actualTaskValue[savedTaskIndex].botTId;
+        }
+        if (
+          ele.type == "checkbox" &&
+          this.fieldValues[ele.name + "_" + ele.id] == ""
+        ) {
+          objAttr["attrValue"] = "false";
+        } else if (ele.type == "restapi") {
+          if (
+            this.fieldValues[ele.name + "_" + ele.id] != "" &&
+            this.fieldValues[ele.name + "_" + ele.id] != undefined
+          ) {
+            let attrnames = Object.getOwnPropertyNames(this.restapiresponse[0]);
+            objAttr["attrValue"] = JSON.stringify(
+              this.restapiresponse.find(
+                (data) =>
+                  this.fieldValues[ele.name + "_" + ele.id] ==
+                  data[attrnames[0]]
+              )
+            );
+          }
+        } else if (ele.type == "multipart") {
+          if (this.fieldValues[ele.name + "_" + ele.id] == "") {
+            let task = this.finaldataobjects.find(
+              (x) => x.nodeId == selectedNode.id
+            );
+            if (task != undefined) {
+              let attval = task.attributes.find((a) => a.metaAttrId == ele.id);
+              if (attval != undefined) {
+                objAttr["attrValue"] = attval.attrValue;
+              }
+            } else {
+              objAttr["attrValue"] = this.fieldValues[ele.name + "_" + ele.id];
+            }
+          } else {
+            objAttr["attrValue"] = this.fieldValues[ele.name + "_" + ele.id];
+            let file_res: any = this.files_data.find(
+              (rec) =>
+                rec.attrId == ele.id && rec.nodeId == selectedNode.id
+            );
+            if (file_res != undefined) {
+              objAttr["file"] = file_res.file;
+              objAttr["attrValue"] = file_res.file.name;
+            }
+          }
+        } else {
+          objAttr["attrValue"] = this.fieldValues[ele.name + "_" + ele.id];
+        }
+        obj.push(objAttr);
+      }
+    });
+    let cutedata = {
+      taskName: selectedTask.name,
+      tMetaId: parseInt(selectedTask.id),
+      inSeqId: 1,
+      taskSubCategoryId: "1",
+      isCompiled: await this.validateNode(parseInt(selectedTask.id), obj),
+      outSeqId: 2,
+      nodeId: selectedNode.name + "__" + selectedNode.id,
+      x: selectedNode.x,
+      y: selectedNode.y,
+      attributes: obj,
+      actionUUID:selectedNode.action_uid
+    };
+    let index = this.finaldataobjects.findIndex((sweetdata) => sweetdata.nodeId == cutedata.nodeId);
+    let savedTaskIndex = this.actualTaskValue.findIndex((sweetdata) => sweetdata.nodeId == cutedata.nodeId);
+    // console.log(index ,savedTaskIndex ,"3333333333333333")
+    if (index != undefined &&index >= 0 &&savedTaskIndex != undefined &&savedTaskIndex >= 0) {
+      cutedata["botTId"] = this.actualTaskValue[savedTaskIndex].botTId;
+      this.finaldataobjects[index] = cutedata;
+    } else if (index != undefined && index >= 0 && savedTaskIndex < 0) {
+      this.finaldataobjects[index] = cutedata;
+      console.log("this.finaldataobjects",this.finaldataobjects)
+    } else {
+      this.finaldataobjects.push(cutedata);
+      console.log("this.finaldataobjects",this.finaldataobjects)
+    }
+    if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
 
 }
