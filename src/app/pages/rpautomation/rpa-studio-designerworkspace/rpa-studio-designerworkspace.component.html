@@ -75,10 +75,10 @@
                   <span class="clickable" (click)="onExpandCollapseGroup(group)">
                     <i class="pi pi-angle-down"></i>
                   </span>
-                  <span class="groupHeader">
+                  <!-- <span class="groupHeader">
                     <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
-                    <!-- <button *ngIf="!group.isExpand" class="publishButton" (click)="publishGroup(group)">Publish</button> -->
-                  </span>
+                    <button *ngIf="!group.isExpand" class="publishButton" (click)="publishGroup(group)">Publish</button>
+                  </span> -->
                 </div>
                 <div class="groupName">{{ group.groupName }}</div>
               </div>
@@ -94,7 +94,9 @@
                 </span>
                 <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
                   <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
-                  <i class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <!-- <i class="pi pi-cloud-upload" [ngClass]="{'disabled-icon': isMicroBot}" [attr.disabled]="isMicroBot ? true : null" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i> -->
+                  <i *ngIf="!isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i>
                 </span>
                 <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group)" *ngIf="group.edit == false">
                   <i class="pi pi-angle-up"></i>
@@ -381,7 +383,7 @@
 </div>
 
 <div *ngIf="showGroup_Overlay" class="overlay">
-  <p-dialog header="Action Items Grouping" [(visible)]="showGroup_Overlay" [style]="{width: '30vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
+  <p-dialog header="Action Items Grouping" [(visible)]="showGroup_Overlay" [modal]="true" [style]="{width: '30vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
     <form [formGroup]="groupForm" (ngSubmit)="addGroup()">
       <div class="p-field">
         <label for="groupName">Group Name <span class="star">*</span></label>

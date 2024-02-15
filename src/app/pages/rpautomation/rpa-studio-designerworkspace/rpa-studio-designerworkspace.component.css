@@ -320,3 +320,8 @@
 .publishButton:hover {
   background-color: #45a049;
 }
+
+.disabled-icon {
+  opacity: 0.5; 
+  pointer-events: none;
+}

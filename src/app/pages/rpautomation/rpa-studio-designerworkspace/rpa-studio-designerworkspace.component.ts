@@ -170,10 +170,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // isExpand:boolean = true;
   showGroup_Overlay: boolean = false;
   groupName: string = '';
-  groupDescription: string = '';
+  // groupDescription: any;
   groupForm: FormGroup;
   path: string = "/assets/images-n/MicroBot_New.jpg";
   showPublishButton: boolean = false;
+  isMicroBot: boolean = false;
 
 
   constructor(
@@ -560,6 +561,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       //this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector("#" + this.dragareaid);
     }
+    this.re_ArrangeNodes();
   }
 
   addTasksToGroups() {
@@ -882,6 +884,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   onDrop(event: DndDropEvent, e: any) {
+    console.log(event)
+
     this.dragelement = document.querySelector("#" + this.dragareaid);
     this.dagvalue =
       this.dragelement.getBoundingClientRect().width /
@@ -898,15 +902,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       x: mousePos.x + "px",
       y: mousePos.y + "px",
     };
-    if (event.data.botId != undefined) {
-      this.loadPredefinedBot(event.data.botId, dropCoordinates);
-      //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
-    } else if(event.data.isMicroBot){
+    if(event.data.microBotName){
       // this.dragData.tasks.forEach((element:any,i) => {
       //   var mousePos = this.getMousePos(event);
+      console.log(event.data)
+      console.log(event)
       const id = event.data.id;
       this.rest.fetchMicroBot(id).subscribe((microbotData: any) => {
           console.log("Microbot fetched:", microbotData);
+          this.isMicroBot = microbotData.isMicroBot;
           let microResponse = microbotData;
           let microBotTasks=[];
           microResponse.tasks.forEach((item, i) => {
@@ -916,20 +920,24 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               };
   
               const node: any = {};
+              let nodename = item.nodeId.split("__")[0];
               node.id = item.nodeId.split("__")[1];
-              node.name = item.nodeId.split("__")[0]
-              node.selectedNodeTask = item.name
+              node.name = nodename
+              node.selectedNodeTask = item.taskName
               node.isCompiled = false;
               node.isHide = false
               node.isModified = false
               node.isSelected = false
               node.action_uid = null
               node.tasks = []
-              node.path = ''
+              node.path = this.toolset.find((data) => data.name == nodename).path
               node.selectedNodeId = item.tMetaId
-              // node.isConnectionManagerTask.item.isConnectionManagerTask
+              node.isConnectionManagerTask = item.isConnectionManagerTask
               const nodeWithCoordinates = Object.assign({}, node, dropCoordinates1);
-              console.log(nodeWithCoordinates);
+              // let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
+              // if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
+              //   node.path=this.toolset.find((data) => data.name == nodename).path
+              // console.log(nodeWithCoordinates);
               console.log(this.nodes);
               this.nodes.push(nodeWithCoordinates);
               microBotTasks.push(nodeWithCoordinates);
@@ -945,7 +953,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.addGroupOnLoad(microResponse.groups[0], dropCoordinates, microBotTasks, microResponse.botName);
           // });
       });
-    }else {
+    }else{
+    if (event.data.botId != undefined) {
+      this.loadPredefinedBot(event.data.botId, dropCoordinates);
+      //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
+    } else {
       const node = event.data;
       node.isCompiled = false;
       node.id = this.idGenerator();
@@ -957,6 +969,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.populateNodes(nodeWithCoordinates);
         // this.autoSaveLoopEnd(nodeWithCoordinates)
         this.autoSaveTaskConfig(nodeWithCoordinates);
+        console.log(this.nodes)
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -991,6 +1004,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }, 240);
       }
     }
+  }
     this.validateBotNodes();
   }
 
@@ -1863,8 +1877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   getsequences() {
     let connections: any = [];
     let nodeconn: any;
-    this.jsPlumbInstance.toggleGroup("d2c25baa-6c97-db74-ca91-5dbd68c24de4")
-
+    this.toggleAllgroups();
     this.jsPlumbInstance.getAllConnections().forEach((data) => {
       nodeconn = {
         sequenceName: data.getId(),
@@ -1873,8 +1886,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       connections.push(nodeconn);
     });
-    this.jsPlumbInstance.toggleGroup("d2c25baa-6c97-db74-ca91-5dbd68c24de4")
-
+    this.collapseAllgroups();
     return connections;
   }
 
@@ -2056,8 +2068,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let env = [...this.filteredEnvironments.filter((item: any) => item.check == true).map((item2: any) => {
           return item2.environmentId;
         }),];
-    // this.spinner.show();
+    this.spinner.show();
     this.checkorderflag = true;
+    this.collapseAllgroups();
     this.addsquences();
     if(this.executionMode){
       this.arrange_task_order(this.startNodeId);
@@ -2467,7 +2480,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.finaldataobjects[i].inSeqId = 0;
       this.finaldataobjects[i].outSeqId = 0;
     }
-    this.jsPlumbInstance.toggleGroup("d2c25baa-6c97-db74-ca91-5dbd68c24de4")
+    this.toggleAllgroups();
     this.jsPlumbInstance.getAllConnections().forEach((dataobject) => {
       // console.log(dataobject)
       let source = dataobject.sourceId;
@@ -2501,7 +2514,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       });
     });
-    this.jsPlumbInstance.toggleGroup("d2c25baa-6c97-db74-ca91-5dbd68c24de4")
+    this.collapseAllgroups()
   }
 
   get_coordinates() {
@@ -2897,7 +2910,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
     console.log(this.nodes)
     // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
-
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
@@ -2906,8 +2918,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       edit: false,
       color: "#4AB0F5",
       isExpand:true,
-      cssClass: "custom-group-class",
-      endpoint:{ type:"Dot", options:{ radius:3 } }
+      // cssClass: "custom-group-class",
+      // endpoint:{ type:"Dot", options:{ radius:3 } }
     };
 
     this.groupsData.push(GroupData);
@@ -2917,9 +2929,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       console.log(element)
 
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
-      this.jsPlumbInstance.addGroup(
-        this.groupsData.find((item: any) => item.id == GroupData.id)
-      );
+      this.jsPlumbInstance.addGroup(this.groupsData.find((item: any) => item.id == GroupData.id));
 
       // let groupIds: any = [];
       // groupIds = this.groupsData.map((item: any) => {
@@ -3019,19 +3029,11 @@ if (GroupData && GroupData.el) {
   }
 
   getGroupsInfo() {
-    return [
-      ...this.groupsData.map((item: any) => {
+    return [...this.groupsData.map((item: any) => {
         let tempGroupData = { ...{}, ...item };
-        let connectedNodes = this.jsPlumbInstance
-          .getGroup(item.id)
-          .getMembers();
-        if (
-          this.savedGroupsData.find((group: any) => group.groupId == item.id) !=
-          undefined
-        )
-          tempGroupData["id"] = this.savedGroupsData.find(
-            (group: any) => group.groupId == item.id
-          ).id;
+        let connectedNodes = this.jsPlumbInstance.getGroup(item.id).getMembers();
+        if (this.savedGroupsData.find((group: any) => group.groupId == item.id) !=undefined)
+          tempGroupData["id"] = this.savedGroupsData.find((group: any) => group.groupId == item.id).id;
         tempGroupData["groupId"] = item.id;
         if (connectedNodes.length != 0) {
           tempGroupData["nodeIds"] = connectedNodes.map((item2: any) => {
@@ -3043,11 +3045,7 @@ if (GroupData && GroupData.el) {
           tempGroupData.y = position.top + "px";
           delete tempGroupData.edit;
           delete tempGroupData.el;
-          if (
-            this.savedGroupsData.find(
-              (group: any) => group.groupId == item.id
-            ) == undefined
-          )
+          if (this.savedGroupsData.find((group: any) => group.groupId == item.id) == undefined)
             delete tempGroupData.id;
           return tempGroupData;
         }
@@ -3469,45 +3467,46 @@ if (GroupData && GroupData.el) {
   publishGroup(group:any) {
     // this.generatePayload("","",group);
     // console.log(`Publishing group with ID: ${group.id}`);
-    // this.spinner.show();
-    const payload = this.generatePayload(group);
-    console.log("micro bot payload",payload);
-
-    // this.rest.saveMicroBot(payload).subscribe((response: any) => {
-    //   this.spinner.hide();
-    //   if (response.errorMessage == undefined) {
-    //     this.toastService.showSuccess('Microbot published successfully!', 'response');
-    //     this.refreshMicroBotsList();
-    //   } else {
-    //     this.toastService.showError('Error occurred while saving micro bot!');
-    //   }
-    // },error => {
-    //   this.spinner.hide();
-    //   this.toastService.showError('Error occurred while saving micro bot!');
-    // });
+    this.spinner.show();
+    let payload = this.generateMicroBotPayload(group);
+  console.log(payload)
+  console.log("micro bot payload---",JSON.stringify(payload));
+    this.rest.saveMicroBot(payload).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.errorMessage == undefined) {
+        this.toastService.showSuccess('Microbot published successfully!', 'response');
+        this.refreshMicroBotsList();
+          this.isMicroBot = true;
+      } else{
+        this.toastService.showError('Error occurred while saving micro bot!');
+      }
+    },error => {
+      this.spinner.hide();
+      this.toastService.showError('Error occurred while saving micro bot!');
+    });
   }
 
-  generatePayload(group){
+  generateMicroBotPayload(group){
     // this.spinner.show();
     this.checkorderflag = true;
-    this.addsquences();
+    let final_tasks:any;
     if(this.executionMode){
       // this.arrange_task_order(this.startNodeId);
     } else {
-      this.final_tasks=this.finaldataobjects;
-      // console.log("this.final_tasks",this.final_tasks)
+      final_tasks=this.addSquencesMicroBot(group);
+      console.log("this.final_tasks",this.final_tasks)
     }
     // this.get_coordinates();
 
     if(this.executionMode){
-      let finalTasksData=[...this.final_tasks];
+      let finalTasksData=[...final_tasks];
       finalTasksData.forEach((item, finalIndex)=>{
         if(this.actualTaskValue.length != 0 && item.validated==undefined){    
-          if(this.final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1){
+          if(final_tasks.filter(item2=>item2.nodeId==item.nodeId).length>1){
             let actualTasks=[...this.actualTaskValue.filter((actualTask:any)=>actualTask.nodeId==item.nodeId)];
             if(actualTasks.length!=0){
               let indexList:any=[];
-              this.final_tasks.forEach((tempTask, index)=>{
+              final_tasks.forEach((tempTask, index)=>{
                 if(tempTask.nodeId==item.nodeId)
                   indexList.push(index);
               });
@@ -3515,24 +3514,20 @@ if (GroupData && GroupData.el) {
                   if(finalTasksData[indexItem] && actualTasks[indexmeta]){
                   let task={...{},...finalTasksData[indexItem]}
                   task.botTId=actualTasks[indexmeta].botTId;
-                  this.final_tasks[indexItem]=task;
+                  final_tasks[indexItem]=task;
                 }
               })
             }
           }
-        
         }
       })
     }
 
-    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
-    let nodesIds = connectedNodes.map((item2: any) => {
-      return item2.id;
-    });
+    let nodesIds=this.collectGroupIds(group.id);
     let microBot_TasksList=[]
 
     nodesIds.forEach(node => {
-      this.final_tasks.forEach(element => {
+      final_tasks.forEach(element => {
         let id= element.nodeId.split("__")[1];
         if(id == node){
           element.attributes=[]
@@ -3544,13 +3539,13 @@ if (GroupData && GroupData.el) {
       let _microBot_payload = {
         id:"",
         botName: group.groupName,
-        botId: group.id,
+        // botId: group.id,
         description: group.description,
         department: this.finalbot.department,
         // tasks: microBot_TasksList,
-        tasks: this.final_tasks,
-        groups: this.getGroupsInfo(),
-        sequences: this.getGroupSequences(group),
+        tasks: final_tasks,
+        groups: this.getMicroBotGroupsInfo(group),
+        sequences: this.getMicroBotGroupSequences(group),
         isMicroBot: true,
         // versionType: "",
         // comments: "",
@@ -3567,60 +3562,47 @@ if (GroupData && GroupData.el) {
         // executionMode: this.executionMode?"v1":"v2",
         // startStopCoordinate:this.startStopCoordinates,
       };
-        // console.log("_microBot_payload",_microBot_payload)
+        console.log("_microBot_payload8888888",_microBot_payload)
         return _microBot_payload;
   }
 
-  getGroupSequences(group) {
-    let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
-    let nodesIds = connectedNodes.map((item2: any) => {
-            return item2.id;
-      });
-
-      var connectionsInCollapsedGroup = this.jsPlumbInstance.getAllConnections().filter(function(connection) {
-        var sourceId = connection.sourceId;
-        var targetId = connection.targetId;
-        return nodesIds.some(function(node) {
-            return node.id === sourceId || node.id === targetId;
-        });
-      })
-      setTimeout(() => {
-        console.log(connectionsInCollapsedGroup)
-      }, 2000);
+  getMicroBotGroupSequences(group) {
+    let groupNodesId=this.collectGroupIds(group.id);
+      // var connectionsInCollapsedGroup = this.jsPlumbInstance.getAllConnections().filter(function(connection) {
+      //   var sourceId = connection.sourceId;
+      //   var targetId = connection.targetId;
+      //   return nodesIds.some(function(node) {
+      //       return node.id === sourceId || node.id === targetId;
+      //   });
+      // })
 
     let connections: any = [];
-    let nodeconn: any;
-    this.jsPlumbInstance.collapseGroup(group.id);
+    // this.jsPlumbInstance.collapseGroup(group.id);
+    
     this.jsPlumbInstance.getAllConnections().forEach((data) => {
-
-      nodeconn = {
-        sequenceName: data.getId(),
-        sourceTaskId: data.sourceId,
-        targetTaskId: data.targetId,
-      };
-      // nodesIds.forEach(element => {
-      //   if(element != data.sourceId && element == data.targetId){
-      //     nodeconn = {
-      //       sequenceName: data.getId(),
-      //       sourceTaskId: data.sourceId,
-      //       targetTaskId: data.targetId,
-      //     };
-      //     connections.push(nodeconn);
-      //   }
-      //   if(element == data.sourceId && element != data.targetId){
-      //     nodeconn = {
-      //       sequenceName: data.getId(),
-      //       sourceTaskId: data.sourceId,
-      //       targetTaskId: data.targetId,
-      //     };
+      groupNodesId.forEach(element => {
+        if ((element == data.sourceId && element != data.targetId) || (element != data.sourceId && element == data.targetId)) {
+          const nodeconn = {
+            sequenceName: data.getId(),
+            sourceTaskId: data.sourceId,
+            targetTaskId: data.targetId,
+          };
           connections.push(nodeconn);
-      //   }
-      // });
-
+        }
+      });
     });
-    // this.jsPlumbInstance.toggleGroup(group.id);
 
-    return connections;
+    return this.removeDuplicates(connections);
+  }
+
+  removeDuplicates(sequences) {
+    return sequences.filter((obj, index, self) =>
+      index === self.findIndex((t) => (
+        t.sequenceName === obj.sequenceName &&
+        t.sourceTaskId === obj.sourceTaskId &&
+        t.targetTaskId === obj.targetTaskId
+      ))
+    );
   }
 
   addGroupOnLoad(item,dropCoordinates,nodes,botName){
@@ -3633,9 +3615,9 @@ if (GroupData && GroupData.el) {
       height: item.height,
       width: item.width,
       edit: false,
-      color: "black",
+      color: "#4AB0F5",
       isExpand: true,
-      endpoint:{ type:"Dot", options:{ radius:3 } }
+      // endpoint:{ type:"Dot", options:{ radius:3 } }
     };
     this.groupsData.push(GroupData);
     console.log(this.groupsData)
@@ -3660,11 +3642,6 @@ if (GroupData && GroupData.el) {
 
   addTasksToGroups1(gId,nodes) {
     setTimeout(() => {
-
-      let connectedNodes = this.jsPlumbInstance.getGroup(gId).getMembers();
-      let nodesIds = connectedNodes.map((item2: any) => {
-              return item2.id;
-        });
         setTimeout(() => {
           nodes.forEach(item => {
             let nodeElement: any = document.getElementById(item.id);
@@ -3690,7 +3667,98 @@ if (GroupData && GroupData.el) {
       this.dt.updateMicroBotsList(data);
     });
   }
- 
+  
+  collapseAllgroups(){
+    this.groupsData.forEach(group => {group.id
+        this.jsPlumbInstance.collapseGroup(group.id);
+        group.isExpand = false;
+      });
+  }
+
+  toggleAllgroups(){
+    this.groupsData.forEach(group => {group.id
+        this.jsPlumbInstance.toggleGroup(group.id)
+        group.isExpand = !group.isExpand
+      });
+  }
+
+  collectGroupIds(gId){
+    let connectedNodes = this.jsPlumbInstance.getGroup(gId).getMembers();
+    let nodesIds = connectedNodes.map((item2: any) => {
+            return item2.id;
+      });
+      return nodesIds
+  }
+
+  getMicroBotGroupsInfo(selectedgroup) {
+    let _selectedGroup = this.groupsData.filter((item: any) =>{ return item.id == selectedgroup.id})  
+    console.log("_selectedGroup",_selectedGroup);
+    
+    return [..._selectedGroup.map((item: any) => {
+        let tempGroupData = { ...{}, ...item };
+        let connectedNodes = this.jsPlumbInstance.getGroup(item.id).getMembers();
+        if (this.savedGroupsData.find((group: any) => group.groupId == item.id) !=undefined)
+          tempGroupData["id"] = this.savedGroupsData.find((group: any) => group.groupId == item.id).id;
+        tempGroupData["groupId"] = item.id;
+        if (connectedNodes.length != 0) {
+          tempGroupData["nodeIds"] = connectedNodes.map((item2: any) => {
+            return item2.id;
+          });
+          let pn: any = $("#" + item.id).first();
+          let position: any = pn.position();
+          tempGroupData.x = position.left + "px";
+          tempGroupData.y = position.top + "px";
+          delete tempGroupData.edit;
+          delete tempGroupData.el;
+          if (this.savedGroupsData.find((group: any) => group.groupId == item.id) == undefined)
+            delete tempGroupData.id;
+          return tempGroupData;
+        }
+      }),
+    ];
+  }
+
+  addSquencesMicroBot(group) {
+    let groupNodesId=this.collectGroupIds(group.id);
+    let tasksList = [];
+    this.finaldataobjects.forEach(element => {
+      element.inSeqId = 0;
+      element.outSeqId = 0;
+      let nodeId= element.nodeId.split("__")[1]
+      groupNodesId.forEach(item => {
+        if(item == nodeId){
+          tasksList.push(element);
+        }
+      });
+    });
+    // for (let i = 0; i < this.finaldataobjects.length; i++) {
+    //   tasksList[i].inSeqId = 0;
+    //   tasksList[i].outSeqId = 0;
+    // }
+    this.jsPlumbInstance.getAllConnections().forEach((dataobject) => {
+      let source = dataobject.sourceId;
+      let target = dataobject.targetId;
+      tasksList.forEach((tasknode) => {
+        if (tasknode.taskName == "If condition") {
+          let out: any = [];
+          let connections: any = this.jsPlumbInstance.getAllConnections().filter((data) => data.sourceId == tasknode.nodeId.split("__")[1]);
+          connections.forEach((process) => {out.push(process.targetId);});
+          tasksList.find((checkdata) => checkdata.nodeId == tasknode.nodeId).outSeqId = JSON.stringify(out);
+          let inseq: any = this.jsPlumbInstance.getAllConnections().find((data) => data.targetId == tasknode.nodeId.split("__")[1]);
+          tasksList.find((checkdata) => checkdata.nodeId == tasknode.nodeId).inSeqId = inseq.targetId;
+        } else {
+          if (tasknode.nodeId.split("__")[1] == target) {
+            tasksList.find((data) => data.nodeId == tasknode.nodeId).inSeqId = String(source);
+          }
+          if (tasknode.nodeId.split("__")[1] == source) {
+            tasksList.find((data) => data.nodeId == tasknode.nodeId).outSeqId = String(target);
+          }
+        }
+      });
+    });
+    return tasksList
+  }
+
 }
 
 @Pipe({ name: "Checkoutputbox" })

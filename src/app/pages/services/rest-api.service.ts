@@ -1865,7 +1865,7 @@ importBotwithEncryptedData(body){
 }
 
 saveMicroBot(body){
-  return this.http.post("/rpa-service/save-micro-bot",body)
+  return this.http.post("/rpa-service/save-micro-bot",body,{responseType: "text" })
 }
 
 getMicroBots(){
