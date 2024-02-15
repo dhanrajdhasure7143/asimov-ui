@@ -50,7 +50,7 @@ export class RpaApprovalsComponent implements OnInit {
     });
   }
   getApprovalList(){
-    this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo","modifiedBy","modfiedAt"]
+    this.table_searchFields=["botId","runId","approverConvertedName","comments","status","createdAt","createdBy","approvalInfo","modifiedBy","modfiedAt","processName","nextSuccessTask","nextFailureTask"]
     let userId:String="";
     if(localStorage.getItem("userRole")=="System Admin")
       userId="SystemAdmin";
@@ -72,6 +72,7 @@ export class RpaApprovalsComponent implements OnInit {
           return item;
         });
       }
+      console.log(this.approvalsList)
     },err=>{
       this.spinner.hide();
       this.toastService.showError(this.toastMessages.apprvrListErr);

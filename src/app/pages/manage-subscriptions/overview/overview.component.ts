@@ -7,11 +7,13 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
+import { columnList } from "src/app/shared/model/table_columns";
 
 @Component({
   selector: "app-overview",
   templateUrl: "./overview.component.html",
   styleUrls: ["./overview.component.css"],
+  providers:[columnList]
 })
 export class OverviewComponent implements OnInit {
   plansList: any =[];
@@ -24,6 +26,9 @@ export class OverviewComponent implements OnInit {
   email: any;
   due_timestamp: string;
   due_timestamp1: string;
+  table_columns:any[]=[];
+  table_searchFields:any=[];
+  subscrptionsList:any[]=[]
   
   constructor(
     private api: RestApiService,
@@ -32,7 +37,8 @@ export class OverviewComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private toastService: ToasterService,
     private dt:DataTransferService,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private columns:columnList,
   ) {}
 
   ngOnInit(): void {
@@ -99,8 +105,18 @@ export class OverviewComponent implements OnInit {
 
   getAllSubscrptions() {
     this.spinner.show();
+    this.table_columns= this.columns.subscrption_overview
     this.api.listofsubscriptions().subscribe((response) => {
+      console.log(response)
+      this.table_searchFields=["planname","plan","amount","term","nextBillingDate","userId","status"]
       this.tableData = response;
+      this.tableData.forEach(element => {
+        element['planname'] = element.planEntity.nickName
+        element['plan'] = 'Predefined Bots'
+        element['amount'] = element.planEntity.amount
+        element['term'] = element.planEntity.term
+
+      });
       this.result = this.tableData.filter((obj) => {
         return obj.status == "Active";
       });
