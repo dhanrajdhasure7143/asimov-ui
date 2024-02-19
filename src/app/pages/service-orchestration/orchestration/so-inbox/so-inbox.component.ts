@@ -55,7 +55,7 @@ export class SoInboxComponent implements OnInit {
       this.response=data; 
       this.table_searchFields = [
         "processName",
-        "runId",
+        "processRunId",
         "taskName",
         "previousTask",
         "nextSuccessTask",
@@ -87,7 +87,7 @@ export class SoInboxComponent implements OnInit {
       "processId": rowData.processId,
       "status" : status,
       "taskId" : rowData.taskId,
-      "processRunId":rowData.runId,
+      "processRunId":rowData.processRunId,
       "envId": rowData.envId
     }
     this.rest.updateInboxstatus(obj).subscribe(data =>{
