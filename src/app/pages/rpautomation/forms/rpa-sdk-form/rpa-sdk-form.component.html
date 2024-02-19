@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
                 <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="executablePath" 
+                <input type="text" maxlength="250" class="form-control data" formControlName="executablePath" 
                 value="" placeholder="Enter Executable Path">
                 <span
                 *ngIf="(customTaskForm.get('executablePath').invalid && customTaskForm.get('executablePath').touched) && !customTaskForm.controls['executablePath'].hasError('pattern') && !customTaskForm.controls['executablePath'].hasError('maxlength')"
