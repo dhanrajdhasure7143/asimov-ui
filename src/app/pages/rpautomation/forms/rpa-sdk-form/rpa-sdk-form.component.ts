@@ -89,9 +89,17 @@ export class RpaSdkFormComponent implements OnInit {
     if(event == "Path"){
       this.showPathField = true;
       this.showCodeField = false
+      this.customTaskForm.get('executablePath').setValidators([Validators.required]);
+      this.customTaskForm.get('executablePath').updateValueAndValidity();
+      this.customTaskForm.get('code').clearValidators();
+      this.customTaskForm.get('code').updateValueAndValidity();
     } else {
       this.showPathField = false;
       this.showCodeField = true
+      this.customTaskForm.get('code').setValidators([Validators.required]);
+      this.customTaskForm.get('code').updateValueAndValidity();
+      this.customTaskForm.get('executablePath').clearValidators();
+      this.customTaskForm.get('executablePath').updateValueAndValidity();
     }
   }
 

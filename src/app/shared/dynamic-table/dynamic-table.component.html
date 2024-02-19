@@ -152,7 +152,6 @@
                                         </span>
                                         <span *ngIf="screenTable == 'aprovalList' && col.ColumnName=='approvalInfo' ">
                                             <span *ngIf="rowData[col.ColumnName]!=''" class="tsttooltipbtn">
-                                                <span *ngIf="rowData[col.ColumnName]">
                                                 <span *ngIf="rowData[col.ColumnName].length>20">
                                                     <a (click)="getApprovalInfo(rowData)" class="approvalLink clickable">{{(rowData[col.ColumnName] | slice : 0: 20)}}...&nbsp;</a>
                                                 </span>
@@ -160,10 +159,9 @@
                                                     {{rowData[col.ColumnName]}}
                                                 </span>
                                                 <span class="testtooltip">{{(rowData[col.ColumnName] | slice : 0: 100)}} <span *ngIf="rowData[col.ColumnName].length>100">...</span></span>
-                                                </span>
                                             </span>                                 
-                                            <span *ngIf="rowData[col.ColumnName]">
-                                                <span *ngIf="rowData[col.ColumnName].length">-</span>
+                                            <span *ngIf="rowData[col.ColumnName].length==''">
+                                                -
                                             </span>
                                         </span>
                                     </span>

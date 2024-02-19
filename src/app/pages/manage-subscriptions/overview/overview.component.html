@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<!-- <div class="col-md-12">
     <div class="row">
         <h4>Plan Details</h4>
         <div *ngIf='error' class="row">
@@ -65,4 +65,22 @@
         </ng-template>
     </p-confirmDialog>
     
+</div> -->
+<div class="rpa-content-div">
+<div class="row">
+    <div class="col-md-12 con-envr p-0">
+        <div class="credential-tablegrid">
+    <app-dynamic-table
+        [table_data]="tableData" 
+        [columns_list]="table_columns"
+        [show_column_filter]="true"
+        [show_clear_filter]="true" 
+        [show_search_field]="true"
+        [search_fields]="table_searchFields"
+        [dataKeyId]="'id'"
+        >
+    </app-dynamic-table>
+    </div> 
+</div>
+</div>
 </div>

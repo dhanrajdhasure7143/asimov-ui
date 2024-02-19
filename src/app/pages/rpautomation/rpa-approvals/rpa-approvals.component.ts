@@ -64,7 +64,7 @@ export class RpaApprovalsComponent implements OnInit {
           if(this.users_list.find((user:any)=>user.userId.userId==item.approverName))
             item["approverConvertedName"]=this.dt.get_username_by_email(this.users_list,item.approverName);
           else
-            item["approverConvertedName"]=item.approverName?item.approverName.split("@")[0]:null;
+            item["approverConvertedName"]=item.approverName.split("@")[0];
           item["createdBy"]=this.dt.get_username_by_email(this.users_list,item.createdBy);
           item["modifiedBy"]=this.dt.get_username_by_email(this.users_list,item.modifiedBy);
           item["createdAt"]=item.createdAt?new Date(item.createdAt):'';
@@ -81,31 +81,20 @@ export class RpaApprovalsComponent implements OnInit {
 
   onApproveItem(data:any, status:string){
     
-    if(data.status==status){
-      this.toastService.showWarn('This is already '+status);
+    if(data.status==status)
+    {
+      this.toastService.showWarn('This is already'+status);
       return;
     }
-    if(data.status=="Completed"){
+    if(data.status=="Completed")
+    {
       this.toastService.showWarn(this.toastMessages.cmpltedApprvrErr);
       return;
     }
-    if(data.processId){
-    let req_body = [{
-          "processId": data.processId,
-          "status": status,
-          "taskId": data.taskId,
-          "processRunId": data.runId,
-          "envId":data.envId
-        }
-      ]
-    this.doAction(req_body);
-    }else{
-      this.statusType=status;
-      this.selectedRows=[data];
-      this.comments="";
-      this.isDialogShow=true;
-    }
-
+    this.statusType=status;
+    this.selectedRows=[data];
+    this.comments="";
+    this.isDialogShow=true;
   }
 
 
@@ -127,7 +116,17 @@ export class RpaApprovalsComponent implements OnInit {
       obj["status"]=this.statusType;
       data.push(obj);
     });
-    this.doAction(data);
+    this.rest.updateApprovalList(data).subscribe((response:any)=>{
+      this.isDialogShow=false;
+      this.toastService.showSuccess(response.status,'response'); 
+      this.selectedRows=[];
+      this.comments="";
+      this.getApprovalList();
+    }, err=>{
+      console.log(err);
+      this.toastService.showError(this.toastMessages.apprvlUpdateErr);
+      this.spinner.hide();
+    })
   }
 
   readSelectedData(selectedRows:any){
@@ -155,23 +154,10 @@ export class RpaApprovalsComponent implements OnInit {
     }
   }
 
-  showApprovalInfo(data:any){
+  showApprovalInfo(data:any)
+  {
     this.approvalInfo=data.approvalInfo;
     this.isApprovalInfoShow=true;
-  }
-
-  doAction(data){
-    this.rest.updateApprovalList(data).subscribe((response:any)=>{
-      this.isDialogShow=false;
-      this.toastService.showSuccess(response.status,'response'); 
-      this.selectedRows=[];
-      this.comments="";
-      this.getApprovalList();
-    }, err=>{
-      console.log(err);
-      this.toastService.showError(this.toastMessages.apprvlUpdateErr);
-      this.spinner.hide();
-    })
   }
 
 
