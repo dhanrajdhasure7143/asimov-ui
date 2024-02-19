@@ -50,12 +50,20 @@
                 <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="executablePath" 
                 value="" placeholder="Enter Executable Path">
+                <span
+                *ngIf="(customTaskForm.get('executablePath').invalid && customTaskForm.get('executablePath').touched) && !customTaskForm.controls['executablePath'].hasError('pattern') && !customTaskForm.controls['executablePath'].hasError('maxlength')"
+                class="required"> Executable Path Required
+                </span>
             </div>
             <div class="col-md-12 p-0 form-group" *ngIf="showCodeField">
                 <label class="label-control" for="userName"> Code Editor <span class="star">*</span></label>
                 <!-- <input type="text" maxlength="51" class="form-control data" formControlName="code" #userName
                 value="" placeholder="Enter Email"> -->
                 <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="code"></textarea>
+                <span
+                *ngIf="(customTaskForm.get('code').invalid && customTaskForm.get('code').touched) && !customTaskForm.controls['code'].hasError('pattern') && !customTaskForm.controls['code'].hasError('maxlength')"
+                class="required"> Code Editor Required
+                </span>
             </div>
         </form>
         <div class="createform-footer">
