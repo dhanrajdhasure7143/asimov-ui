@@ -272,7 +272,7 @@ export class columnList{
       public custom_tasks = [
         {ColumnName: "customTaskName",DisplayName: "Custom Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java','Python','JavaScript'],sort: true,},
-        {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+        {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
