@@ -407,17 +407,18 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     return this.current_instance.filteredEnvironments.filter((item:any)=>item.check==true);
   }
 
+  //  Enable below code for predefined Bot feature in RPA Designer 
   getPredefinedBots() {
-    this.spinner.show()
+    // this.spinner.show()
     this.rest.getpredefinedbots().subscribe((response:any)=>{
       // this.spinner.hide()
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
-      else
-      this.toastService.showError(response.errorMessage);
+      // else
+      // this.toastService.showError(response.errorMessage);
     },(err:any)=>{
       this.spinner.hide();
-      this.toastService.showError(this.toastMessages.preDefineBotErr);
+      // this.toastService.showError(this.toastMessages.preDefineBotErr);
     })
   }
 
