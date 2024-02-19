@@ -24,6 +24,8 @@
             (onRowDoubleClick)="updateCustomTasks($event)"
             (updateItem)="updateCustomTasks($event)" 
             (deleteItem)="deleteCustomTask($event)"
+            [search_fields]="table_searchFields"
+            [dataKeyId]="'customTaskId'"
     
           ></app-dynamic-table>
         </div>
