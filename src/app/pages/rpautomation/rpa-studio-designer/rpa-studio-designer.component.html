@@ -149,11 +149,14 @@
                   </div>
                   <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.pausebot==false" (click)=" current_instance.stopBot()">
-                       <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
-                       <span class="testtooltip">Stop Bot</span>
-                     </button>
+                      <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
+                      <span class="testtooltip">Stop Bot</span>
+                    </button>
                   </div> -->
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0"
+                  
+                  <!-- Enable below code for predefined Bot feature in RPA Designer -->
+
+                  <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0"
                     dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle
                       type="button" aria-controls="predefinedBotDropdown">
@@ -169,7 +172,7 @@
                       </li>
                     </ul>
               
-                  </div>
+                  </div> -->
                   <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
