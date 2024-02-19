@@ -325,3 +325,14 @@
   opacity: 0.5; 
   pointer-events: none;
 }
+#arrow-button{
+  margin: 50px 0 0 50px;
+  background: white;
+}
+
+.groupHeader{
+  color:black;
+  font-weight: 300;
+  /* margin-top:-13px; */
+  text-align: center;
+}

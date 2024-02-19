@@ -72,8 +72,11 @@
                   <i class="ri-close-circle-fill"></i>
                 </span>
                 <div class="row">
-                  <span class="clickable" (click)="onExpandCollapseGroup(group)">
+                  <!-- <span class="clickable" (click)="onExpandCollapseGroup(group)">
                     <i class="pi pi-angle-down"></i>
+                  </span> -->
+                  <span class="clickable" id="arrow-button" (click)="onExpandCollapseGroup(group)">
+                    <i class="pi pi-arrow-circle-down"></i>
                   </span>
                   <!-- <span class="groupHeader">
                     <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
