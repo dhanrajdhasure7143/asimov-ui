@@ -74,7 +74,7 @@ export class OverviewComponent implements OnInit {
       };
   }
 
-  onChangePlan() {
+  onResubscribe(rowData) {
     this.router.navigate(["/pages/subscriptions/plan"], {
       queryParams: { index: 4 },
     });
@@ -126,18 +126,18 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  subscriptionCancel() {
+  subscriptionCancel(item) {
     this.confirmationService.confirm({
       message: "Do you really want to cancel your subscription?",
       header: "Are you sure?",
       key: "positionDialog",
       accept: (result) => {
         this.spinner.show();
-        this.api.cancelSubscription(this.result[0]).subscribe((res) => {
+        this.api.cancelSubscription(item).subscribe((res) => {
           this.spinner.hide();
           if (res == null) {
             this.toastService.showSuccess(this.toastMessages.cancelSubscription,'response');
-            this.getCurrentPlan()
+            this.getAllSubscrptions()
           }
         },err=>{
           this.toastService.showError(this.toastMessages.cancelErr);
