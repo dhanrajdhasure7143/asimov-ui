@@ -190,7 +190,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
-    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled
+    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
   }
 
   botdelete(bot) {
@@ -954,10 +954,14 @@ importBot(){
   }
 
   downloadEncryptedData(encryptedData): void {
+    let envName = environment.environmentName
+    let sub_envName = localStorage.getItem("tenantSwitchName")?localStorage.getItem("tenantSwitchName"):"Production";
+    let company = localStorage.getItem("company")?localStorage.getItem("company"):""
     const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
     const downloadLink = document.createElement('a');
     downloadLink.href = window.URL.createObjectURL(blob);
-    downloadLink.download = this.bot_toExport.botName+'.txt'; // Set the desired filename
+    // downloadLink.download = this.bot_toExport.botName+"_"+company+"_"+sub_envName+"_"+envName+'.txt'; // Set the desired filename
+    downloadLink.download = this.bot_toExport.botName+"_"+envName+"_"+company+"_"+sub_envName+'.txt'; // Set the desired filename
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
@@ -1017,19 +1021,19 @@ importBot(){
         // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
         // req_body["department"]=response.department;
         req_body["botData"]  = this.import_BotData;
-        console.log(JSON.stringify(this.import_BotData))
         // let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
         let req_payload= this.import_BotData;
-      (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
-        this.spinner.hide();
-        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
-        this.resetImportBotForm();
-        this.getallbots();
-      },err=>{
-        this.spinner.hide();
-        this.resetImportBotForm();
-        this.toastService.showError(this.toastMessages.botConfigError);
-      })
+        this.getRplacedTaskIds(req_payload);
+      // (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
+      //   this.spinner.hide();
+      //   this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+      //   this.resetImportBotForm();
+      //   this.getallbots();
+      // },err=>{
+      //   this.spinner.hide();
+      //   this.resetImportBotForm();
+      //   this.toastService.showError(this.toastMessages.botConfigError);
+      // })
     },err=>{
       this.toastService.showError("Failed to import bot");
       this.spinner.hide();
@@ -1070,6 +1074,72 @@ importBot(){
       this.file_error = "";
       this.importcat = "";
     }
+  }
+
+  getRplacedTaskIds(botData){
+    console.log("botData",botData)
+    let task_list=[]
+    this.rest.toolSet().subscribe((response:any)=>{
+      console.log(response)
+
+      response.Advanced.forEach(element => {
+        element.taskList.forEach(item => {
+        task_list.push(item)
+        });
+      });
+      response.General.forEach(element => {
+        element.taskList.forEach(item => {
+          task_list.push(item)
+        });
+      });
+      console.log("totaltask_list",task_list);
+      // console.log("botData",botData)
+       let generatedPyload :any= this.generateImportPayload(task_list,botData)
+       setTimeout(() => {
+          console.log("generatedPyload",generatedPyload)
+          console.log("generatedPyload",JSON.stringify(generatedPyload))
+      //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
+        this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
+        this.spinner.hide();
+        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        this.resetImportBotForm();
+        this.getallbots();
+      },err=>{
+        this.spinner.hide();
+        this.resetImportBotForm();
+        this.toastService.showError(this.toastMessages.botConfigError);
+      })
+       }, 1000);
+    })
+  }
+
+  generateImportPayload(task_list,botData){
+    let depractedTask = task_list.filter(item =>{return item.name == "Deprecated" });
+  //  console.log("depractedTask",depractedTask)
+  botData.tasks.map(element => {
+      task_list.forEach(item => {
+        if(element.isConnectionManagerTask){
+          
+          let splitValue=element.nodeId.split("__")
+              element["taskName"] = depractedTask[0].name;
+              element["tMetaId"] = Number(depractedTask[0].taskId);
+              element["attributes"] = [];
+              element["nodeId"] = "Developer __"+splitValue[1]
+              element["taskConfiguration"] = "null"
+              element["isConnectionManagerTask"] = false
+              element["actionUUID"] = "null"
+          
+          } else{ 
+              if(element.taskName == item.name){
+                element.tMetaId = Number(item.taskId)
+              }
+          }
+      });
+    });
+    // setTimeout(() => {
+    //   console.log(JSON.stringify(botData))
+    // }, 1000);
+    return botData
   }
 
 }

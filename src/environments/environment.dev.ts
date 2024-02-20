@@ -45,6 +45,7 @@ export const environment = {
     isCopilotEnable : true,
     isRPAConfigurationsImportEnabled : true,
     isSubscrptionEnabled : true,
-    isCustomerBots : true
+    isCustomerBots : true,
+    environmentName: "DEV"
   };
   

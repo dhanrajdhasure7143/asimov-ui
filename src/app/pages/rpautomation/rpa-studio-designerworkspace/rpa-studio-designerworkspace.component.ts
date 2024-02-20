@@ -576,7 +576,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified
+        isModified:element.isModified?element.isModified:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId))
       {
@@ -1071,6 +1071,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
+    if(node.selectedNodeTask == 'Deprecated') {
+      this.confirmationService.confirm({
+        header:'Task not found!',
+        message:'This task not found in toolset, Please check and add to work space',
+        acceptLabel:'Ok',
+        rejectVisible:false,
+        acceptButtonStyleClass:'btn bluebg-button',
+        defaultFocus:'none',
+        key: "designerWorkspace"
+       })
+      return;
+    }
     this.nodedata = node;
     this.form_change = false;
     this.isShowExpand_icon=false;
