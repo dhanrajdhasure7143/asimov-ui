@@ -78,6 +78,9 @@
         [show_search_field]="true"
         [search_fields]="table_searchFields"
         [dataKeyId]="'id'"
+        [screenTable]="'subscrption_overview'" 
+        (updateItem)="onResubscribe($event)"
+        (rejectItem)="subscriptionCancel($event)"
         >
     </app-dynamic-table>
     </div> 

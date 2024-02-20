@@ -283,8 +283,8 @@ export class columnList{
         {ColumnName: "amount",DisplayName: "Price",ShowGrid: true,ShowFilter: false,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "term",DisplayName: "Billing Cycle",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "nextBillingDate",DisplayName: "Next Billing Date",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "userId",DisplayName: "Receipt Email",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        // {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+        {ColumnName: "userId",DisplayName: "Receipt Email",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Active','Cancelled'],sort: true,status_icon:false},
+        {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:true},
+        {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 }
