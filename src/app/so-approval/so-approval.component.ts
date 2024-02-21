@@ -29,7 +29,7 @@ export class SoApprovalComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params: any) => {
       let tokenData: any = JSON.parse(Base64.decode(params.token));
-      console.log(tokenData)
+      // console.log(tokenData)
       this.tokenData = tokenData;
       this.tokenData["status"] = params.status;
       this.status = params.status;
@@ -74,7 +74,7 @@ export class SoApprovalComponent implements OnInit {
       .set("Timezone", timezone);
     this.http.get(environment.rpa_url + `/rpa-service/inbox`,{ headers })
       .subscribe((response: any) => {
-        console.log(response)
+        // console.log(response)
           this.updateApprovals(headers, response);
         },(err) => {
           this.loading = false;
@@ -85,10 +85,10 @@ export class SoApprovalComponent implements OnInit {
 
   updateApprovals(headers: any, approvals) {
     let filteredApprovals: any[] = [];
-    console.log(approvals)
+    // console.log(approvals)
     filteredApprovals = approvals.filter((item: any) => { return item.status == "Pending";});
-      this.approvalsList = filteredApprovals;
-    this.loading = false;
+    //   this.approvalsList = filteredApprovals;
+    // this.loading = false;
     if (approvals.length == 0) {
       this.loading = false;
       return;
@@ -97,20 +97,20 @@ export class SoApprovalComponent implements OnInit {
       each.status = this.status
       return each
     })
-    console.log(filteredApprovals)
-    // this.http.post(environment.rpa_url + `/rpa-service/update-approval-status`,filteredApprovals,{ headers })
-    //   .subscribe((response: any) => {
-    //       this.loading = false;
-    //       if (response.status) {
-    //         this.approvalsList = filteredApprovals;
-    //         Swal.fire("Success", response.status, "success");
-    //       } else {
-    //         Swal.fire("Error", "Unable to get update approvals", "error");
-    //       }
-    //     },(err) => {
-    //       this.loading = false;
-    //       Swal.fire("Error", "Unable to get update approvals", "error");
-    //     }
-      // );
+    // console.log(filteredApprovals)
+    this.http.post(environment.rpa_url + '/rpa-service/human-task-actions-list',filteredApprovals,{ headers })
+      .subscribe((response: any) => {
+          this.loading = false;
+          if (response.status) {
+            this.approvalsList = filteredApprovals;
+            Swal.fire("Success", response.status, "success");
+          } else {
+            Swal.fire("Error", "Unable to get update approvals", "error");
+          }
+        },(err) => {
+          this.loading = false;
+          Swal.fire("Error", "Unable to get update approvals", "error");
+        }
+      );
   }
 }
