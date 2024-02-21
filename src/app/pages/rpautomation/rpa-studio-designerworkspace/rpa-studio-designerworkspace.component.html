@@ -60,7 +60,7 @@
                 top: group.y,
                 height: group.isExpand? group.height : '60px',
                 width: group.isExpand? group.width : '60px',
-                'border-color': group.color,
+                'border-color': group.isExpand ? group.color : 'black',
                 'border-style': group.isExpand?'dotted':'',
                 'border-radius': !group.isExpand?'0.2em':'',
                 'background-image': !group.isExpand ? 'url(' + path + ')' : ''

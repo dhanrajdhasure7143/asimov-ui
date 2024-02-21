@@ -3026,10 +3026,24 @@ if (GroupData && GroupData.el) {
   }
 
   removeGroup(groupId: any) {
-    this.jsPlumbInstance.removeGroup(groupId);
-    let groupdata = this.groupsData.find((item: any) => item.id == groupId);
-    this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
-  }
+    // this.confirmationService.confirm({
+    //   header:'Are you sure?',
+    //   message:"Do you want to remove this micro bot from designer? This can't be undo.",
+    //   acceptLabel:'Yes',
+    //   rejectLabel:'No',
+    //   rejectButtonStyleClass: ' btn reset-btn',
+    //   acceptButtonStyleClass: 'btn bluebg-button',
+    //   defaultFocus: 'none',
+    //   rejectIcon: 'null',
+    //   acceptIcon: 'null',
+    //   key: "designerWorkspace",
+    // accept:() => {
+        this.jsPlumbInstance.removeGroup(groupId);
+        let groupdata = this.groupsData.find((item: any) => item.nodeId==groupId);
+        this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
+    // }
+  // })
+}
 
   onResizeEnd(event: any, groupId: String) {
     if (this.groupsData.find((item: any) => item.id == groupId) != undefined) {
