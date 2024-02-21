@@ -15,17 +15,23 @@
                 <thead class="bg-prime-header">
                 <tr class="bg-prime-header">
                   <th>S.No</th>
-                  <th>Approval Info</th> 
-                  <th>Approver Name</th>
-                  <th>Created At</th>
+                  <th>Process Name</th> 
+                  <th>Run Id</th> 
+                  <th>Task Name</th> 
+                  <th>Next Task (Upon Success)</th>
+                  <th>Next Task  (Upon Failure)</th>
+                  <!-- <th>Created At</th> -->
                 </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of approvalsList;let i=index">
                     <td>{{i+1}}</td>
-                    <td>{{item.approvalInfo?(item.approvalInfo):"-"}}</td>
-                    <td>{{item.approverName?(item.approverName):"-"}}</td>
-                    <td><span>{{item.createdAt?( item.createdAt |date:'MMM d, y HH:mm:ss'):'-'}}</span></td>
+                    <td>{{item.processName}}</td>
+                    <td>{{item.processRunId}}</td>
+                    <td>{{item.taskName}}</td>
+                    <td>{{item.nextSuccessTask}}</td>
+                    <td>{{item.nextFailureTask}}</td>
+                    <!-- <td><span>{{item.createdAt?( item.createdAt |date:'MMM d, y HH:mm:ss'):'-'}}</span></td> -->
                   </tr>
                 </tbody>
               </table>
