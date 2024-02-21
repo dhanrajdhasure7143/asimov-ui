@@ -89,8 +89,9 @@ export class SoApprovalComponent implements OnInit {
     filteredApprovals = approvals.filter((item: any) => { return item.status == "Pending";});
     //   this.approvalsList = filteredApprovals;
     // this.loading = false;
-    if (approvals.length == 0) {
+    if (filteredApprovals.length == 0) {
       this.loading = false;
+        Swal.fire("Info", "No pending tasks", "info");
       return;
     }
     filteredApprovals.map(each=>{
@@ -105,11 +106,11 @@ export class SoApprovalComponent implements OnInit {
             this.approvalsList = filteredApprovals;
             Swal.fire("Success", response.status, "success");
           } else {
-            Swal.fire("Error", "Unable to get update approvals", "error");
+            Swal.fire("Error", "Unable to update Pending tasks", "error");
           }
         },(err) => {
           this.loading = false;
-          Swal.fire("Error", "Unable to get update approvals", "error");
+          Swal.fire("Error", "Unable to update Pending tasks", "error");
         }
       );
   }
