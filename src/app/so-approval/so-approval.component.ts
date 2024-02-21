@@ -29,6 +29,7 @@ export class SoApprovalComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params: any) => {
       let tokenData: any = JSON.parse(Base64.decode(params.token));
+      // console.log(tokenData)
       this.tokenData = tokenData;
       this.tokenData["status"] = params.status;
       this.status = params.status;
@@ -38,9 +39,9 @@ export class SoApprovalComponent implements OnInit {
 
   loginUser() {
     this.loading = true;
-    let user = JSON.parse(this.tokenData.loggedUser);
-    this.http.post(environment.idm_url + "/api/login/beta/token", { userId: user.loggedUser,}).subscribe((response: any) => {
-          this.getTenantBasedAccessToken(response, user);
+    this.tokenData.emailId = "ranjith.sigiri@epsoftinc.com";
+    this.http.post(environment.idm_url + "/api/login/beta/token", { userId: this.tokenData.emailId,}).subscribe((response: any) => {
+          this.getTenantBasedAccessToken(response);
           //this.getApprovals(response);
     },(err) => {
           this.loading = false;
@@ -49,13 +50,13 @@ export class SoApprovalComponent implements OnInit {
       );
   }
 
-  getTenantBasedAccessToken(authToken: any, user: any) {
+  getTenantBasedAccessToken(authToken: any,) {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const headers = new HttpHeaders()
       .set("Authorization", `Bearer ${authToken.accessToken}`)
       .set("Refresh-Token", authToken.refreshToken)
       .set("Timezone", timezone);
-    this.http.get(environment.idm_url + "/api/login/beta/newAccessToken?tenant_id=" +user.tenantId,{ headers })
+    this.http.get(environment.idm_url + "/api/login/beta/newAccessToken?tenant_id=" +this.tokenData.tenantId,{ headers })
       .subscribe((authResponse: any) => {
           this.getApprovals(authResponse, authToken.refreshToken);
         },(err) => {
@@ -71,45 +72,45 @@ export class SoApprovalComponent implements OnInit {
       .set("Authorization", `Bearer ${authToken.accessToken}`)
       .set("Refresh-Token", refreshToken)
       .set("Timezone", timezone);
-    this.http.get(environment.rpa_url + `/rpa-service/rpa-inbox/${this.tokenData.toUser}`,{ headers })
+    this.http.get(environment.rpa_url + `/rpa-service/inbox`,{ headers })
       .subscribe((response: any) => {
-          this.updateApprovals(headers, response["data"]);
+        // console.log(response)
+          this.updateApprovals(headers, response);
         },(err) => {
           this.loading = false;
-          Swal.fire("Error", "Unable to get pending approvals", "error");
+          Swal.fire("Error", "Unable to get pending tasks", "error");
         }
       );
   }
 
-  updateApprovals(headers: any, approvals: any[]) {
+  updateApprovals(headers: any, approvals) {
     let filteredApprovals: any[] = [];
-    filteredApprovals = approvals.filter((item: any) => {
-      if (
-        item.status == "Pending" &&
-        item.botId == this.tokenData.botId &&
-        item.runId == this.tokenData.runId
-      ) {
-        item["modifiedBy"] = this.tokenData.toUser;
-        item["status"] = this.tokenData.status;
-        return item;
-      }
-    });
+    // console.log(approvals)
+    filteredApprovals = approvals.filter((item: any) => { return item.status == "Pending";});
+    //   this.approvalsList = filteredApprovals;
+    // this.loading = false;
     if (filteredApprovals.length == 0) {
       this.loading = false;
+        Swal.fire("Info", "No pending tasks", "info");
       return;
     }
-    this.http.post(environment.rpa_url + `/rpa-service/update-approval-status`,filteredApprovals,{ headers })
+    filteredApprovals.map(each=>{
+      each.status = this.status
+      return each
+    })
+    // console.log(filteredApprovals)
+    this.http.post(environment.rpa_url + '/rpa-service/human-task-actions-list',filteredApprovals,{ headers })
       .subscribe((response: any) => {
           this.loading = false;
           if (response.status) {
             this.approvalsList = filteredApprovals;
             Swal.fire("Success", response.status, "success");
           } else {
-            Swal.fire("Error", "Unable to get update approvals", "error");
+            Swal.fire("Error", "Unable to update Pending tasks", "error");
           }
         },(err) => {
           this.loading = false;
-          Swal.fire("Error", "Unable to get update approvals", "error");
+          Swal.fire("Error", "Unable to update Pending tasks", "error");
         }
       );
   }
