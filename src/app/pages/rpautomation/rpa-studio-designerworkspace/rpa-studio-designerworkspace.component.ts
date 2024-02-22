@@ -883,6 +883,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //   ]
   // }
 
+  microBotData:any
+
   onDrop(event: DndDropEvent, e: any) {
     console.log(event)
 
@@ -909,11 +911,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       console.log(event)
       const id = event.data.id;
       this.rest.fetchMicroBot(id).subscribe((microbotData: any) => {
-          console.log("Microbot fetched:", microbotData);
+          // console.log("Microbot fetched:",microbotData);
           this.isMicroBot = microbotData.isMicroBot;
-          let microResponse = microbotData;
+          this.microBotData  = microbotData
+
+          let idMap:any={}
+           microbotData.groups[0].nodeIds.forEach(element => {
+            idMap[element]= this.idGenerator()
+          });
+          // this.microBotData.sequences.forEach(element => {
+          //   element.sequenceName = "_jsplumb_c_"+Math.floor(100000 + Math.random() * 900000);
+          // });
+          this.microBotData.tasks.forEach(element => {
+            let splitValue = element.nodeId.split("__");
+            element.nodeId= splitValue[0]+"__"+idMap[splitValue[1]]
+          });
+
+          this.replaceUUIDs(this.microBotData, idMap);
+          setTimeout(() => {
+          console.log(this.microBotData)
           let microBotTasks=[];
-          microResponse.tasks.forEach((item, i) => {
+          this.microBotData.tasks.forEach((item, i) => {
               const dropCoordinates1 = {
                   x: (i*80)+mousePos.x + "px",
                   y: mousePos.y + "px",
@@ -949,14 +967,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               }, 500);
           });
           setTimeout(() => {
-              this.addconnections(microResponse.sequences);
+              this.addconnections(this.microBotData.sequences);
           }, 500);
-          this.addGroupOnLoad(microResponse.groups[0], dropCoordinates, microBotTasks, microResponse.botName);
+          this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData.botName);
           // });
+        }, 1000);
+
       },err=>{
         this.spinner.hide();
 
       });
+
     }else{
     if (event.data.botId != undefined) {
       this.loadPredefinedBot(event.data.botId, dropCoordinates);
@@ -981,6 +1002,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
   }
     this.validateBotNodes();
+  }
+
+  replaceUUIDs(obj: any, idMap: { [key: string]: string }) {
+    if (obj !== null && typeof obj === 'object') {
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (typeof obj[key] === 'string' && idMap.hasOwnProperty(obj[key])) {
+            obj[key] = idMap[obj[key]]; // Replace UUID with corresponding ID
+          } else if (typeof obj[key] === 'object') {
+            this.replaceUUIDs(obj[key], idMap); // Recursively search for UUIDs
+          }
+        }
+      }
+    }
+  
   }
 
   addStartStopNodes(){
@@ -3025,25 +3061,47 @@ if (GroupData && GroupData.el) {
     }, 500);
   }
 
-  removeGroup(groupId: any) {
-    // this.confirmationService.confirm({
-    //   header:'Are you sure?',
-    //   message:"Do you want to remove this micro bot from designer? This can't be undo.",
-    //   acceptLabel:'Yes',
-    //   rejectLabel:'No',
-    //   rejectButtonStyleClass: ' btn reset-btn',
-    //   acceptButtonStyleClass: 'btn bluebg-button',
-    //   defaultFocus: 'none',
-    //   rejectIcon: 'null',
-    //   acceptIcon: 'null',
-    //   key: "designerWorkspace",
-    // accept:() => {
-        this.jsPlumbInstance.removeGroup(groupId);
-        let groupdata = this.groupsData.find((item: any) => item.nodeId==groupId);
-        this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
-    // }
-  // })
-}
+  removeGroup(group) {
+    console.log(group)
+    if(group.isMicroBot){
+        this.confirmationService.confirm({
+          header:'Are you sure?',
+          message:"Do you want to remove this micro bot from designer? This can't be undo.",
+          acceptLabel:'Yes',
+          rejectLabel:'No',
+          rejectButtonStyleClass: ' btn reset-btn',
+          acceptButtonStyleClass: 'btn bluebg-button',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
+          key: "designerWorkspace",
+      accept:() => {
+            this.collectGroupIds(group.id).forEach(element => {
+              let node = this.nodes.find((item: any) => item.id==element);
+              this.nodes.splice(this.nodes.indexOf(node), 1);
+              // this.nodes.splice(this.nodes.indexOf(node), 1);
+              this.jsPlumbInstance.remove(node.id);
+              let nodeId = node.name + "__" + node.id;
+              let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
+              if (task != undefined) {
+                this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
+              }
+            });
+            setTimeout(() => {
+              let groupdata = this.groupsData.find((item: any) => item.nodeId==group.id);
+              this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
+              this.jsPlumbInstance.removeGroup(group.id);
+            }, 500);
+
+            // this.re_ArrangeNodes()
+        }
+      })
+    }else{
+      this.jsPlumbInstance.removeGroup(group.id);
+      let groupdata = this.groupsData.find((item: any) => item.nodeId==group.id);
+      this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
+    }
+  }
 
   onResizeEnd(event: any, groupId: String) {
     if (this.groupsData.find((item: any) => item.id == groupId) != undefined) {
@@ -3632,7 +3690,19 @@ if (GroupData && GroupData.el) {
       });
     });
 
-    return this.removeDuplicates(connections);
+    let finalValue = this.removeDuplicates(connections);
+    finalValue.forEach(sequence => {
+      // Check if sourceTaskId exists in nodeIds
+      if (!groupNodesId.includes(sequence.sourceTaskId)) {
+          sequence.sourceTaskId = null;
+      }
+      
+      // Check if targetTaskId exists in nodeIds
+      if (!groupNodesId.includes(sequence.targetTaskId)) {
+          sequence.targetTaskId = null;
+      }
+  });
+    return finalValue
   }
 
   removeDuplicates(sequences) {
@@ -3682,7 +3752,6 @@ if (GroupData && GroupData.el) {
   }
 
   addTasksToGroups1(gId,nodes) {
-    setTimeout(() => {
         setTimeout(() => {
           nodes.forEach(item => {
             let nodeElement: any = document.getElementById(item.id);
@@ -3700,7 +3769,6 @@ if (GroupData && GroupData.el) {
         //     this.re_ArrangeNodes();
         //   }, 1000);
         // });
-    });
   }
 
   refreshMicroBotsList() {

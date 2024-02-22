@@ -68,7 +68,7 @@
               <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
 
               <div *ngIf="!group.isExpand">
-                <span class="node-delete" (click)="removeGroup(group.id)">
+                <span class="node-delete" (click)="removeGroup(group)">
                   <i class="ri-close-circle-fill"></i>
                 </span>
                 <div class="row">
@@ -89,7 +89,7 @@
               <div *ngIf="group.isExpand" class="groupHeader">
                 <!-- <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{group.groupName}}</span> -->
                 <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 25 ? (group.groupName | slice:0:25) + '...' : group.groupName }}</span>
-                <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
+                <span class="groupTitle clickable" (click)="removeGroup(group)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
                 </span>
                 <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false && !group.isMicroBot">
