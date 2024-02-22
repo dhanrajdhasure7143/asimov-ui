@@ -29,7 +29,7 @@ export class SoApprovalComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params: any) => {
       let tokenData: any = JSON.parse(Base64.decode(params.token));
-      // console.log(tokenData)
+      console.log(tokenData)
       this.tokenData = tokenData;
       this.tokenData["status"] = params.status;
       this.status = params.status;
@@ -39,7 +39,6 @@ export class SoApprovalComponent implements OnInit {
 
   loginUser() {
     this.loading = true;
-    this.tokenData.emailId = "ranjith.sigiri@epsoftinc.com";
     this.http.post(environment.idm_url + "/api/login/beta/token", { userId: this.tokenData.emailId,}).subscribe((response: any) => {
           this.getTenantBasedAccessToken(response);
           //this.getApprovals(response);
@@ -58,6 +57,7 @@ export class SoApprovalComponent implements OnInit {
       .set("Timezone", timezone);
     this.http.get(environment.idm_url + "/api/login/beta/newAccessToken?tenant_id=" +this.tokenData.tenantId,{ headers })
       .subscribe((authResponse: any) => {
+          console.log("authResponse"+authResponse);
           this.getApprovals(authResponse, authToken.refreshToken);
         },(err) => {
           this.loading = false;
@@ -85,10 +85,7 @@ export class SoApprovalComponent implements OnInit {
 
   updateApprovals(headers: any, approvals) {
     let filteredApprovals: any[] = [];
-    // console.log(approvals)
     filteredApprovals = approvals.filter((item: any) => { return item.status == "Pending";});
-    //   this.approvalsList = filteredApprovals;
-    // this.loading = false;
     if (filteredApprovals.length == 0) {
       this.loading = false;
         Swal.fire("Info", "No pending tasks", "info");
@@ -98,13 +95,15 @@ export class SoApprovalComponent implements OnInit {
       each.status = this.status
       return each
     })
-    // console.log(filteredApprovals)
+    console.log(filteredApprovals)
+    var _self= this
     this.http.post(environment.rpa_url + '/rpa-service/human-task-actions-list',filteredApprovals,{ headers })
       .subscribe((response: any) => {
           this.loading = false;
           if (response.status) {
             this.approvalsList = filteredApprovals;
-            Swal.fire("Success", response.status, "success");
+            let status= "List of tasks "+_self.status+" successfully!";
+            Swal.fire("Success", status, "success");
           } else {
             Swal.fire("Error", "Unable to update Pending tasks", "error");
           }
