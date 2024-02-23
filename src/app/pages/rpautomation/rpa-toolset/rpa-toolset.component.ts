@@ -78,14 +78,11 @@ export class RpaToolsetComponent implements OnInit {
   deleteMicroBot(microBot: any) {
     this.microBotToDelete = microBot;
     console.log("Deleting micro bot:", microBot);
-     this.rest.checkMicroBotStatus(microBot.id).subscribe(
+     this.rest.deleteMicroBot(microBot.id).subscribe(
       (data: any) => {
-        if (data.published) {
-          this.messageService.add({severity:'error', summary:'Warning', detail:'This Micro Bot is published. It cannot be deleted.'});      
+        if (data.usedInOtherBots) {
+          this.messageService.add({severity:'error', summary:'Warning', detail:`This Micro Bot is used in the following bots: ${data.usedInOtherBots.join(', ')}`});      
            }
-       else if (data.usedInOtherBots) {
-          this.messageService.add({severity:'error', summary:'Warning', detail:`This Micro Bot is used in the following bots: ${data.usedInOtherBots.join(', ')}`});
-       }
       else{
       this.confirmationService.confirm({   
         header: 'Are you sure?',
@@ -101,7 +98,6 @@ export class RpaToolsetComponent implements OnInit {
         accept: () => {
           console.log("User confirmed deletion...");
           this.deleteMicroBotFromList();
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Micro Bot deleted successfully' });
         }
       })
     }
@@ -109,11 +105,9 @@ export class RpaToolsetComponent implements OnInit {
     }
     deleteMicroBotFromList() {
       const index = this.filteredMicroBotsList.indexOf(this.microBotToDelete);
-      console.log("Index to delete:", index);
       if (index !== -1) {
         this.filteredMicroBotsList.splice(index, 1);
-        console.log("Micro bot deleted from list.");
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Micro Bot deleted successfully' });
       }
-      console.log("Updated filteredMicroBotsList:", this.filteredMicroBotsList);
     }
 }

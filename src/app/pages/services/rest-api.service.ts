@@ -1884,7 +1884,7 @@ getCustomTasksbyId(id : any){
   return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
 }
 
-checkMicroBotStatus(microBotId: string) {
+deleteMicroBot(microBotId: string) {
   return this.http.get('https://dummyjson.com/products/1');
 }
 }
