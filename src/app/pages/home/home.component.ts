@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
   freetrail: boolean;
   expiry: any;
   _params:any={};
-  
+  highestExpireIn:any;
+  showWarningPopup:boolean;
   constructor(private router: Router, 
     private dt:DataTransferService, 
     private rest_api: RestApiService, 
@@ -43,6 +44,9 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.rest_api.getUserRole(2).subscribe(res=>{
+    this.userRole=res.message;
+    });
         // Disable service worker
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -67,19 +71,19 @@ export class HomeComponent implements OnInit {
     // })
 
     //  --- Redirection to copilot ---
-    if(environment.isCopilotEnable)
-        this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
-    if(!environment.isCopilotEnable)
-      this.rest_api.getDashBoardsList().subscribe((res:any)=>{
-      let dashbordlist:any=res.data;
-      let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
-      if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
-        this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
-      }else{
-        const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
-        this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
-      }
-    })
+    // if(environment.isCopilotEnable)
+    //     this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
+    // if(!environment.isCopilotEnable)
+    //   this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+    //   let dashbordlist:any=res.data;
+    //   let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+    //   if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+    //     this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
+    //   }else{
+    //     const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+    //     this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+    //   }
+    // })
   }
 
   navigateToModule(){
@@ -100,6 +104,33 @@ export class HomeComponent implements OnInit {
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
       // }  
+      const subscriptions = data as Array<{ highestExpireIn: number }>;
+      this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
+      console.log("highestExpireIn",this.highestExpireIn);
+      localStorage.setItem('highestExpireIn', this.highestExpireIn ? 'true' : 'false');
+      if (this.highestExpireIn) {
+        if (this.userRole.includes('System Admin')) {
+            this.showWarningPopup = true;
+            // this.router.navigate(["/pages/subscriptions"], { queryParams: { index: 0 } });
+        } else if (this.userRole.includes('Process Owner')) {
+            this.showWarningPopup = true;
+        }
+    } else {
+        if(environment.isCopilotEnable)
+        this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
+          if(!environment.isCopilotEnable)
+            this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+            let dashbordlist:any=res.data;
+            let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+            if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+              this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
+            }else{
+              const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+              this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+            }
+          })
+      }
+      
     this.rest_api.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
       this.plansList = data
       if(this.plansList.length > 1){
@@ -124,6 +155,14 @@ export class HomeComponent implements OnInit {
     }
   })
 })
+}
+
+onResubscribe(){
+  this.router.navigate(["/pages/subscriptions"], { queryParams: { index: 0 } });
+}
+
+onClickLogout(){
+  this.showWarningPopup=false
 }
 
 }
