@@ -72,9 +72,6 @@
                   <i class="ri-close-circle-fill"></i>
                 </span>
                 <div class="row">
-                  <!-- <span class="clickable" (click)="onExpandCollapseGroup(group)">
-                    <i class="pi pi-angle-down"></i>
-                  </span> -->
                   <span class="clickable" id="arrow-button" (click)="onExpandCollapseGroup(group)">
                     <i class="pi pi-arrow-circle-down"></i>
                   </span>
@@ -101,7 +98,7 @@
                   <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
                   <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
                 </span>
-                <span class="groupTitle clickable" (click)="onExpandCollapseGroup(group)" *ngIf="group.edit == false">
+                <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onExpandCollapseGroup(group)">
                   <i class="pi pi-angle-up"></i>
                   <!-- <i class="pi pi-angle-down"></i> -->
                 </span>

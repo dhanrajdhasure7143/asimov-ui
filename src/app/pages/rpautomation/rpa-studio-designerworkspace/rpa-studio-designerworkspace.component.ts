@@ -2332,6 +2332,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: item.width,
         edit: false,
         color: item.color,
+        isExpand : item.isMicroBot? false: true
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -3088,7 +3089,7 @@ if (GroupData && GroupData.el) {
               }
             });
             setTimeout(() => {
-              let groupdata = this.groupsData.find((item: any) => item.nodeId==group.id);
+              let groupdata = this.groupsData.find((item: any) => item.id==group.id);
               this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
               this.jsPlumbInstance.removeGroup(group.id);
             }, 500);
@@ -3097,9 +3098,12 @@ if (GroupData && GroupData.el) {
         }
       })
     }else{
+      console.log(group)
+      console.log(this.groupsData)
       this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.nodeId==group.id);
-      this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
+      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
+      console.log(groupdata)
+      // this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
     }
   }
 
@@ -3113,6 +3117,7 @@ if (GroupData && GroupData.el) {
   }
 
   getGroupsInfo() {
+    console.log("this.groupsData",this.groupsData)
     return [...this.groupsData.map((item: any) => {
         let tempGroupData = { ...{}, ...item };
         let connectedNodes = this.jsPlumbInstance.getGroup(item.id).getMembers();
@@ -3458,7 +3463,7 @@ if (GroupData && GroupData.el) {
     // console.log(this.groupsData.find((group: any) => group.id == groupData.id))
     // this.groupsData[0]['height'] = "100px";
     // this.groupsData[0]['width'] = "90px";
-
+  if(groupData.isMicroBot){
     groupData.nodeIds.forEach(id=>{
       this.nodes.forEach(element => {
         if(id == element.id)
@@ -3467,13 +3472,14 @@ if (GroupData && GroupData.el) {
     })
     groupData.isExpand = false;
     this.jsPlumbInstance.collapseGroup(groupData.groupId);
-    this.re_ArrangeNodes();
     setTimeout(() => {
       groupData.nodeIds.forEach(element => {
         // If the group is collapsed, hide the node
-        // document.getElementById(element).style.display = 'none';
+        document.getElementById(element).style.display = 'none';
     });
+    this.re_ArrangeNodes();
     }, 500);
+  }
   }
 
   
@@ -3564,15 +3570,35 @@ if (GroupData && GroupData.el) {
 
   publishGroup(group:any) {
     // this.generatePayload("","",group);
+    console.log("publish Bot Payload",group)
     // console.log(`Publishing group with ID: ${group.id}`);
     this.spinner.show();
     let payload = this.generateMicroBotPayload(group);
-  console.log(payload)
+  console.log(payload,this.groupsData)
   console.log("micro bot payload---",JSON.stringify(payload));
+
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
       this.spinner.hide();
       if (response.errorMessage == undefined) {
         this.toastService.showSuccess('Microbot published successfully!', 'response');
+        console.log(this.groupsData)
+        this.groupsData.map((item: any) =>{ 
+          if(item.id == group.id) {
+          item.isMicroBot = true
+          item.isExpand = false
+          }
+        })
+        this.collectGroupIds(group.id).forEach(element => {
+          if (group && !group.isExpand) {
+            document.getElementById(element).style.display = 'none';
+        } else {
+            document.getElementById(element).style.display = 'block'; // or 'inline' or any other appropriate value
+        }
+        });
+        setTimeout(() => {
+          this.jsPlumbInstance.collapseGroup(group.id)
+          this.re_ArrangeNodes();          
+        }, 500);
         this.refreshMicroBotsList();
           this.isMicroBot = true;
       } else{
@@ -3702,6 +3728,7 @@ if (GroupData && GroupData.el) {
           sequence.targetTaskId = null;
       }
   });
+  console.log(finalValue)
     return finalValue
   }
 
@@ -3779,19 +3806,23 @@ if (GroupData && GroupData.el) {
   
   collapseAllgroups(){
     this.groupsData.forEach(group => {group.id
+      if(group.isMicroBot){
         this.jsPlumbInstance.collapseGroup(group.id);
         group.isExpand = false;
         this.collectGroupIds(group.id).forEach(element => {
             // If the group is collapsed, hide the node
             // document.getElementById(element).style.display = 'none';
         });
+      }
       });
   }
 
   toggleAllgroups(){
     this.groupsData.forEach(group => {group.id
-        this.jsPlumbInstance.toggleGroup(group.id)
-        group.isExpand = !group.isExpand
+      if(group.isMicroBot){
+          this.jsPlumbInstance.toggleGroup(group.id)
+          group.isExpand = !group.isExpand
+      }
       });
   }
 
@@ -3804,7 +3835,7 @@ if (GroupData && GroupData.el) {
   }
 
   getMicroBotGroupsInfo(selectedgroup) {
-    let _selectedGroup = this.groupsData.filter((item: any) =>{ return item.id == selectedgroup.id})  
+    let _selectedGroup = this.groupsData.filter((item: any) =>{ return item.id == selectedgroup.id}) 
     console.log("_selectedGroup",_selectedGroup);
     
     return [..._selectedGroup.map((item: any) => {
