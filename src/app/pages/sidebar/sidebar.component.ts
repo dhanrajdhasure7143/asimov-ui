@@ -33,6 +33,8 @@ export class SidebarComponent implements OnInit {
   isCopilotEnable:boolean = false;
   dashboardDetails:any={};
   isCustomerBots:boolean = false;
+  isSideMenuDisabled: boolean = false;
+  highestExpireIn:any;
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
@@ -155,8 +157,10 @@ export class SidebarComponent implements OnInit {
 getexpiryInfo(){
   this.rest_service.expiryInfo().subscribe(data => {
     this.expiry = data.Expiresin;
-
-  })
+    const subscriptions = data as Array<{ highestExpireIn: number }>;
+    this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
+    this.isSideMenuDisabled = this.highestExpireIn;
+  });
 }
 
 // onClickScreen(screen:any){

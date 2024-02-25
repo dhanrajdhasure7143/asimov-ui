@@ -16,3 +16,17 @@
     width: calc(100% - 50px);
     overflow: auto;
 }
+
+.subcriptionExpiry {
+    display: inline-block;
+    padding: 6px 20px;
+    background-color: #098de6;
+    color: black;
+    border-radius: 2px;
+    cursor: pointer; 
+  }
+  
+  .subcriptionExpiry:hover {
+    color: #fff;
+  }
+  
