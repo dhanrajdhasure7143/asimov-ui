@@ -1326,7 +1326,7 @@ getProgrmaDetailsById(programid){
   }
 
   expiryInfo():Observable<any>{
-     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/ExpiryInfo')
   }
   getWhiteListedDomain(domain):Observable<any>{
     return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
@@ -1882,5 +1882,9 @@ deleteCustomTasksbyId(id:any){
 
 getCustomTasksbyId(id : any){
   return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
+}
+
+deleteMicroBot(microBotId: string) {
+  return this.http.get('https://dummyjson.com/products/1');
 }
 }
