@@ -3579,7 +3579,7 @@ if (GroupData && GroupData.el) {
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.code == 4200) {
+      if (response.errorMessage == undefined) {
         this.toastService.showSuccess('Microbot published successfully!', 'response');
         console.log(this.groupsData)
         this.groupsData.map((item: any) =>{ 
@@ -3602,7 +3602,7 @@ if (GroupData && GroupData.el) {
         this.refreshMicroBotsList();
           this.isMicroBot = true;
       } else{
-        this.toastService.showError(this.toastMessages.saveError);
+        this.toastService.showError('Error occurred while saving micro bot!');
       }
     },error => {
       this.spinner.hide();
