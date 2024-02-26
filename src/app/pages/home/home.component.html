@@ -36,10 +36,6 @@
     <ng-container *ngIf="this.userRole.includes('Process Owner')">
         <p>There is no longer any subscription for you! To resubscribe, please contact your system admin.</p>
     </ng-container>
-    <!-- <button *ngIf="this.userRole.includes('Process Owner')" class="btn btn-primary" style="float: right;" (click)="onClickLogout()">OK</button> -->
-    <button *ngIf="this.userRole.includes('System Admin')" class="btn btn-primary" style="float: right;"
-        (click)="onResubscribe()">OK</button>
-    <span style="float: right;">
-        <a *ngIf="this.userRole.includes('Process Owner')" class="subcriptionExpiry" href="#">OK</a>
-    </span>
+    <button *ngIf="this.userRole.includes('Process Owner')" class="btn btn-primary" style="float: right;" (click)="onClickLogout()">OK</button>
+    <button *ngIf="this.userRole.includes('System Admin')" class="btn btn-primary" style="float: right;" (click)="onResubscribe()">OK</button>
 </p-dialog>

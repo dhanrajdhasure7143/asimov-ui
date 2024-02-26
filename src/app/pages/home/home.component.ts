@@ -4,6 +4,7 @@ import { DataTransferService } from "../services/data-transfer.service";
 import { PagesHints } from '../model/pages.model';
 import { RestApiService } from '../services/rest-api.service';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/services';
 
 
 @Component({
@@ -36,7 +37,9 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, 
     private dt:DataTransferService, 
     private rest_api: RestApiService, 
-    private route: ActivatedRoute) 
+    private route: ActivatedRoute,
+    private authService: AuthenticationService
+    ) 
     {
       this.route.queryParams.subscribe(params => {
         this._params = params
@@ -44,9 +47,6 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.rest_api.getUserRole(2).subscribe(res=>{
-    this.userRole=res.message;
-    });
         // Disable service worker
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -96,6 +96,8 @@ export class HomeComponent implements OnInit {
 
   getAllPlans() {
     this.tenantId = localStorage.getItem('tenantName');
+    this.rest_api.getUserRole(2).subscribe(res=>{
+      this.userRole=res.message;
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data.Expiresin;
       this.expiry = 1;
@@ -104,15 +106,10 @@ export class HomeComponent implements OnInit {
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
       // }  
-      // const subscriptions = data as Array<{ highestExpireIn: number }>;
-      // this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
-      // console.log("highestExpireIn",this.highestExpireIn);
-      // localStorage.setItem('highestExpireIn', this.highestExpireIn ? 'true' : 'false');
       this.highestExpireIn = data.expiresIn === 0;
       if (this.highestExpireIn) {
         if (this.userRole.includes('System Admin')) {
             this.showWarningPopup = true;
-            // this.router.navigate(["/pages/subscriptions"], { queryParams: { index: 0 } });
         } else if (this.userRole.includes('Process Owner')) {
             this.showWarningPopup = true;
         }
@@ -156,6 +153,7 @@ export class HomeComponent implements OnInit {
     }
   })
 })
+});
 }
 
 onResubscribe(){
@@ -163,7 +161,8 @@ onResubscribe(){
 }
 
 onClickLogout(){
-  this.showWarningPopup=false
+  this.authService.logout();
+  this.router.navigate(['/redirect']);
 }
 
 }
