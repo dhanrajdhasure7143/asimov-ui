@@ -718,5 +718,6 @@ export class DynamicDashboardComponent implements OnInit {
       console.log(event)
       this.showOverlay = event
       this.getDashBoardData(this._paramsData.dashboardId,true);
+      this.getTable();
     }
 }

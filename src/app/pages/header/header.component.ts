@@ -73,7 +73,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isPassword : boolean;
   isChatOpen:boolean=false;
   isChatEnable:boolean= false;
-
+  highestExpireIn:any;
+  tenantSwitchDropdown:boolean = false;
   constructor(
     private router: Router,
     public page_obj: PagesComponent,
@@ -147,6 +148,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getTenantLists();
     this.navigationTenantName = localStorage.getItem("tenantSwitchName")
     this.isChatEnable = environment.isChatEnable? environment.isChatEnable : false;
+    this.getexpiryInfo();
   }
 
   loopTrackBy(index, term) {
@@ -416,4 +418,11 @@ chatClick(){
   this.isChatOpen = true;
 }
 
+getexpiryInfo(){
+  this.rest_api.expiryInfo().subscribe(data => {
+    // const subscriptions = data as Array<{ highestExpireIn: number }>;
+    // this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
+    this.tenantSwitchDropdown = data.expiresIn === 0;
+  })
+}
 }

@@ -4082,3 +4082,8 @@ padding: 0px 30px;}
 .mat-drawer .mat-drawer-inner-container .toolset{
   overflow: hidden !important;
 }
+
+.subcriptionExpiry.disabled {
+  opacity: 0.5; 
+  pointer-events: none;
+}

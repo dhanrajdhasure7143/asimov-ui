@@ -75,10 +75,13 @@ export class DynamicTableComponent implements OnInit {
     Failed:"#FE665D",
     New:'#3CA4F3',
     Started:'#4BD963',
-    Stopped:"#FE665D"
+    Stopped:"#FE665D",
+    Cancelled:"#B91C1C"
   };
   searchValue: string;
-  @ViewChild("dt1",{static:true}) table:Table
+  @ViewChild("dt1",{static:true}) table:Table;
+  @ViewChild('op', {static: false}) model;
+
   constructor(private route:ActivatedRoute,private dt: DataTransferService) {}
 
   ngOnInit(): void {
@@ -178,5 +181,19 @@ export class DynamicTableComponent implements OnInit {
 
   openEzAsk_Chat(rowData:any){
     this.openEzAsk.emit(rowData);
+  }
+
+  onManageClick(event){
+    this.model.hide();
+    setTimeout(() => {
+      this.model.show(event);
+    }, 300);
+  }
+  onCancelSubscribtion(rowData){
+    console.log(rowData)
+    this.rejectItem.emit(rowData)
+  }
+  onResubscribe(rowData){
+    this.updateItem.emit(rowData);
   }
 }

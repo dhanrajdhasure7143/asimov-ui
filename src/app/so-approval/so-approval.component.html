@@ -1,0 +1,47 @@
+<mat-toolbar class="ep-header-white ep-header-new">
+    <div class="header-logdiv">
+        <span class="headerlogo">
+            <img src="assets/images-n/common/headerimg/EZFlow-White-logo.svg" alt="EZFlow-Logo"
+                class="header-logosize" />
+        </span>
+    </div>
+</mat-toolbar>
+
+<div class="container-fluid approval-newscreen-body">
+    <div *ngIf="approvalsList.length>0" class="h4 text-center text-success py-3">{{tokenData.status}} Successfully</div>
+    <div class="row">
+        <div class="col-md-12 approval-table-div">
+            <table class="table approvals-table">
+                <thead class="bg-prime-header">
+                <tr class="bg-prime-header">
+                  <th>S.No</th>
+                  <th>Process Name</th> 
+                  <th>Run Id</th> 
+                  <th>Task Name</th> 
+                  <th>Next Task (Upon Success)</th>
+                  <th>Next Task  (Upon Failure)</th>
+                  <!-- <th>Created At</th> -->
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of approvalsList;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.processName}}</td>
+                    <td>{{item.processRunId}}</td>
+                    <td>{{item.taskName}}</td>
+                    <td>{{item.nextSuccessTask}}</td>
+                    <td>{{item.nextFailureTask}}</td>
+                    <!-- <td><span>{{item.createdAt?( item.createdAt |date:'MMM d, y HH:mm:ss'):'-'}}</span></td> -->
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="approvalsList.length==0" class="text-center h6 py-2">No Items Found</div>
+        </div>
+    </div>
+</div>
+
+<div class="spinoverlay" *ngIf="loading">
+    <div class="spincenter">
+        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" alt=""/>
+    </div>
+  </div>

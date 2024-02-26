@@ -1018,7 +1018,8 @@ importBot(){
         // req_body["department"]=response.department;
         req_body["botData"]  = this.import_BotData;
         console.log(JSON.stringify(this.import_BotData))
-        let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
+        // let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
+        let req_payload= this.import_BotData;
       (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
         this.spinner.hide();
         this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
