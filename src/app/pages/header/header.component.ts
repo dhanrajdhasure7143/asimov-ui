@@ -209,6 +209,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rest_api.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
       if (res) {
+        localStorage.setItem("company",this.retrieveResonse.company)
         this.user_details = this.retrieveResonse;
         // this.getAllNotifications(); \\ enable to show notification in header
         // this.getNotificationsList(); \\ enable to show notification in header
