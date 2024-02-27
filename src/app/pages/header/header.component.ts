@@ -420,9 +420,8 @@ chatClick(){
 }
 
 getexpiryInfo(){
+  if(environment.isSubscrptionEnabled)
   this.rest_api.expiryInfo().subscribe(data => {
-    // const subscriptions = data as Array<{ highestExpireIn: number }>;
-    // this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
     this.tenantSwitchDropdown = data.expiresIn === 0;
   })
 }
