@@ -155,13 +155,11 @@ export class SidebarComponent implements OnInit {
 }
 
 getexpiryInfo(){
-  this.rest_service.expiryInfo().subscribe(data => {
-    this.expiry = data.Expiresin;
-    // const subscriptions = data as Array<{ highestExpireIn: number }>;
-    // this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
-    // this.isSideMenuDisabled = this.highestExpireIn;
-    this.isSideMenuDisabled = data.expiresIn === 0;
-  });
+  if(environment.isSubscrptionEnabled)
+    this.rest_service.expiryInfo().subscribe(data => {
+      this.expiry = data.Expiresin;
+      this.isSideMenuDisabled = data.expiresIn === 0;
+    });
 }
 
 // onClickScreen(screen:any){
