@@ -2332,7 +2332,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: item.width,
         edit: false,
         color: item.color,
-        isExpand : item.isMicroBot? false: true
+        isExpand : item.isMicroBot? false: true,
+        isMicroBot: item.isMicroBot? true:false
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
