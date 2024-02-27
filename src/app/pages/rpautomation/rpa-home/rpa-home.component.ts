@@ -1056,6 +1056,7 @@ importBot(){
     this.resetImportBotForm();
     this.importBotForm.get("botName").setValue('')
     this.importBot_overlay= false;
+    this.import_BotData = null
   }
 
   openModal() {
@@ -1141,7 +1142,7 @@ importBot(){
   generateImportPayload(task_list,botData){
     // console.log(botData)
     let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
-    let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Deprecated" });
+    let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
   //  console.log("depractedTask",depractedTask)
   // let array=[]
   botData.tasks.map(element => {
