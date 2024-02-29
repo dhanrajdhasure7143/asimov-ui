@@ -333,12 +333,13 @@
                     </a>
                 </span>
                         <span *ngIf="screenTable=='subscrption_overview'" class="option-btn">
-                            <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" (click)="onManageClick($event)">
-                            <p-overlayPanel #op>
+                            <!-- <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" (click)="onManageClick($event)"> -->
+                            <i class="pi pi-ellipsis-h" (click)="onManageClick($event)"></i>
+                            <p-overlayPanel styleClass="overview-items" #op>
                                 <ng-template pTemplate>
                                     <div class="docritclk">
-                                        <div class="" (click)="onResubscribe(rowData)">Resubscribe</div>
-                                        <div (click)="onCancelSubscribtion(rowData)">Cancel</div>
+                                        <div class="overview"> <a class="overview-button" (click)="onResubscribe(rowData)"> Resubscribe </a> </div>
+                                        <div class="overview"> <a class="overview-button" (click)="onCancelSubscribtion(rowData)"> Cancel </a> </div>
                                     </div>
                                 </ng-template>
                             </p-overlayPanel>
