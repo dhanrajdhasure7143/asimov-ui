@@ -3082,7 +3082,7 @@ if (GroupData && GroupData.el) {
               let node = this.nodes.find((item: any) => item.id==element);
               this.nodes.splice(this.nodes.indexOf(node), 1);
               // this.nodes.splice(this.nodes.indexOf(node), 1);
-              this.jsPlumbInstance.remove(node.id);
+              this.jsPlumbInstance.remove(group.id);
               let nodeId = node.name + "__" + node.id;
               let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
               if (task != undefined) {
