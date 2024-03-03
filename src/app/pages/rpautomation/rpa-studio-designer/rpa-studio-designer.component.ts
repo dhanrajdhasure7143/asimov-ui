@@ -11,7 +11,6 @@ import { ConfirmationService } from 'primeng/api';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { DataTransferService } from '../../services/data-transfer.service';
-import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
@@ -52,7 +51,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isOpenSideOverlay:boolean=false;
   params:any={};
   executionMode:boolean=false;
-  isMicroBotComponent:boolean=false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -85,7 +83,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.getAllCategories();
     // this.getPredefinedBots();
     setTimeout(() => {
-      this.isMicroBotComponent = environment.isMicroBot
     this.getAllEnvironments();
     }, 1000);
   }
