@@ -40,11 +40,11 @@ import { toastMessages } from "src/app/shared/model/toast_messages";
 import { Location } from "@angular/common";
 
 @Component({
-  selector: "app-rpa-studio-designerworkspace",
-  templateUrl: "./rpa-studio-designerworkspace.component.html",
-  styleUrls: ["./rpa-studio-designerworkspace.component.css"],
+  selector: 'app-rpa-microbot-designerworkspace',
+  templateUrl: './rpa-microbot-designerworkspace.component.html',
+  styleUrls: ['./rpa-microbot-designerworkspace.component.css']
 })
-export class RpaStudioDesignerworkspaceComponent implements OnInit {
+export class RpaMicrobotDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
   @Input("index") public index: any;
   @Input("toolsetItems") public toolset: any[];
@@ -757,8 +757,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let self = this;
     var delconn = false;
     connection.addOverlay([
-      "Label",
-      {
+      "Label",{
         label:
           "<span style='padding:10px'><i class='text-danger fa fa-times' style=' padding: 5px; background: white; cursor: pointer;'></i></span>",
         location: 0.5,
@@ -774,7 +773,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             conn[0].removeOverlay("label" + conn[0].id);
             setTimeout(() => {
               self.jsPlumbInstance.deleteConnection(conn[0]);
-
               self.delconn = false;
             }, 100);
           },
@@ -787,10 +785,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       connection.getOverlay("label" + conn.id).setVisible(true);
     });
     if (
-      self.jsPlumbInstance
-        .getAllConnections()
-        .find(
-          (item) =>
+      self.jsPlumbInstance.getAllConnections().find((item) =>
             item.sourceId == connection.sourceId &&
             item.targetId == connection.targetId
         ) != undefined
@@ -798,8 +793,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       connection.bind("mouseout", function (conn) {
         setTimeout(() => {
           if (!delconn) {
-            if(conn)
-            {
+            console.log("conn", conn);
+            if(conn){
               conn?.getOverlay("label" + conn.id)?.setVisible(false)??console.log("no connections");
             }
           }
@@ -1203,22 +1198,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         var groups:any[]=[]
         groups = this.jsPlumbInstance.getGroups();
         // Iterate over each group
-        // console.log("groups",groups)
+        console.log("groups",groups)
         groups.forEach((group)=> {
-          // console.log("group",group)
             // Check if the group contains the node
             let connectedNodes = this.collectGroupIds(group.id);
-            // console.log(connectedNodes);
-            // console.log(connectedNodes.includes(node.id), node.id, connectedNodes);
             if (connectedNodes.includes(node.id)) {
               // Remove the node from the group
               console.log("accepted", group.id, node.id)
-              this.jsPlumbInstance.removeFromGroup(group.id, node.id);
-              const index = this.groupsData.findIndex((g) => g.groupId === group.id);
-              if (index !== -1) {
-                this.groupsData.splice(index, 1);
-                console.log(this.groupsData);
-              }
+              // this.jsPlumbInstance.removeFromGroup(node.id, group.id);
+                group.remove(node.id);
             }
         });
 
@@ -2978,101 +2966,102 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   addGroup() {
-    var selectedNodeIds =[]
-    this.nodes.forEach(item =>{
-      if(item.isSelected){
-        selectedNodeIds.push(item.id)
+//     var selectedNodeIds =[]
+//     this.nodes.forEach(item =>{
+//       if(item.isSelected){
+//         selectedNodeIds.push(item.id)
 
-      }
-    })
-    console.log(this.nodes)
-    // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
+//       }
+//     })
+//     console.log(this.nodes)
+//     // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
+//     let GroupData: any = {
+//       id: this.idGenerator(),
+//       el: undefined,
+//       groupName: this.groupForm.get('groupName').value,
+//       description: this.groupForm.get('groupDescription').value,
+//       edit: false,
+//       color: "#4AB0F5",
+//       isExpand:true,
+//       // cssClass: "custom-group-class",
+//       // endpoint:{ type:"Dot", options:{ radius:3 } }
+//     };
+
+//     this.groupsData.push(GroupData);
+
+//     setTimeout(() => {
+//       let element: any = document.getElementById(GroupData.id);
+//       console.log(element)
+
+//       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
+//       this.jsPlumbInstance.addGroup(this.groupsData.find((item: any) => item.id == GroupData.id));
+
+//       // let groupIds: any = [];
+//       // groupIds = this.groupsData.map((item: any) => {
+//       //   return item.id;
+//       // });
+//       // console.log(this.groupsData)
+//       // this.jsPlumbInstance.draggable(groupIds, {
+//       //   containment: true,
+//       // });
+//     // Add elements to the group
+//     // this.jsPlumbInstance.addToGroup(group, "element1");
+//     var selectedNodes = selectedNodeIds.map(function (id) {
+//       return document.getElementById(id);
+//     });
+  
+//     // Calculate the average position of selected nodes
+//     var averagePosition = this.calculateAveragePosition(selectedNodes);
+//     var dimensions = this.calculateGroupDimensions(selectedNodes);
+//     setTimeout(() => {
+// // Check if the group was successfully created
+// if (GroupData && GroupData.el) {
+//   // Move the group to the average position of the selected nodes
+//   // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
+//   GroupData.el.style.width = dimensions.width + "px";
+//   GroupData.el.style.height = dimensions.height + "px";
+//   this.groupsData.find((item: any) => item.id == GroupData.id).el.style.width = dimensions.width + "px" ;
+//   this.groupsData.find((item: any) => item.id == GroupData.id).el.style.height = dimensions.height + "px";
+//   this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
+
+// } else {
+//   console.error("Failed to create the group or group is undefined.");
+// }
+      
+//     }, 1000);
+
+//     setTimeout(() => {
+    
+//       selectedNodeIds.forEach((node: any) => {
+//         let nodeElement: any = document.getElementById(node);
+//         var position = this.calculateRelativePosition(nodeElement, averagePosition);
+//         setTimeout(() => {
+//           this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
+//           console.log("testing")   
+               
+//         }, 1500);
+//       });
+//         this.jsPlumbInstance.repaintEverything();
+//     }, 500);
+//     });
+  
+//     this.showGroup_Overlay = false;
+//     this.groupForm.reset();
+
+
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
       groupName: this.groupForm.get('groupName').value,
       description: this.groupForm.get('groupDescription').value,
+      x: "10px",
+      y: "20px",
+      height: "150px",
+      width: "250px",
       edit: false,
       color: "#4AB0F5",
       isExpand:true,
-      // cssClass: "custom-group-class",
-      // endpoint:{ type:"Dot", options:{ radius:3 } }
     };
-
-    this.groupsData.push(GroupData);
-
-    setTimeout(() => {
-      let element: any = document.getElementById(GroupData.id);
-      console.log(element)
-
-      this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
-      this.jsPlumbInstance.addGroup(this.groupsData.find((item: any) => item.id == GroupData.id));
-
-      // let groupIds: any = [];
-      // groupIds = this.groupsData.map((item: any) => {
-      //   return item.id;
-      // });
-      // console.log(this.groupsData)
-      // this.jsPlumbInstance.draggable(groupIds, {
-      //   containment: true,
-      // });
-    // Add elements to the group
-    // this.jsPlumbInstance.addToGroup(group, "element1");
-    var selectedNodes = selectedNodeIds.map(function (id) {
-      return document.getElementById(id);
-    });
-  
-    // Calculate the average position of selected nodes
-    var averagePosition = this.calculateAveragePosition(selectedNodes);
-    var dimensions = this.calculateGroupDimensions(selectedNodes);
-    setTimeout(() => {
-// Check if the group was successfully created
-if (GroupData && GroupData.el) {
-  // Move the group to the average position of the selected nodes
-  // this.jsPlumbInstance.setPosition(GroupData.el, averagePosition); // enable this postions working fine
-  GroupData.el.style.width = dimensions.width + "px";
-  GroupData.el.style.height = dimensions.height + "px";
-  this.groupsData.find((item: any) => item.id == GroupData.id).el.style.width = dimensions.width + "px" ;
-  this.groupsData.find((item: any) => item.id == GroupData.id).el.style.height = dimensions.height + "px";
-  this.jsPlumbInstance.setPosition(GroupData.el, this.calculateAdjustedPosition(averagePosition, dimensions));
-
-} else {
-  console.error("Failed to create the group or group is undefined.");
-}
-      
-    }, 1000);
-
-    setTimeout(() => {
-    
-      selectedNodeIds.forEach((node: any) => {
-        let nodeElement: any = document.getElementById(node);
-        var position = this.calculateRelativePosition(nodeElement, averagePosition);
-        setTimeout(() => {
-          this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
-          console.log("testing")   
-               
-        }, 1500);
-      });
-        this.jsPlumbInstance.repaintEverything();
-    }, 500);
-    });
-  
-    this.showGroup_Overlay = false;
-    this.groupForm.reset();
-
-    return
-
-    // let GroupData: any = {
-    //   id: this.idGenerator(),
-    //   el: undefined,
-    //   groupName: "Activity Group",
-    //   x: "10px",
-    //   y: "20px",
-    //   height: "150px",
-    //   width: "250px",
-    //   edit: false,
-    //   color: "black",
-    // };
     this.groupsData.push(GroupData);
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
@@ -3087,6 +3076,8 @@ if (GroupData && GroupData.el) {
       this.jsPlumbInstance.draggable(groupIds, {
         containment: true,
       });
+          this.showGroup_Overlay = false;
+           this.groupForm.reset();
     }, 500);
   }
 

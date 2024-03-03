@@ -64,7 +64,8 @@
                 'border-style': group.isExpand?'dotted':'',
                 'border-radius': !group.isExpand?'0.2em':'',
                 'background-image': !group.isExpand ? 'url(' + path + ')' : ''
-              }" class="groupElement" (mouseenter)="group.showPublishButton = !group.isExpand" (mouseleave)="group.showPublishButton = false">
+              }" class="groupElement" (mouseenter)="group.showPublishButton = !group.isExpand" (mouseleave)="group.showPublishButton = false" 
+              [pTooltip]="!group.isExpand ? group.description:''">
               <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
 
               <div *ngIf="!group.isExpand">
@@ -96,6 +97,7 @@
                   <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
                   <!-- <i class="pi pi-cloud-upload" [ngClass]="{'disabled-icon': isMicroBot}" [attr.disabled]="isMicroBot ? true : null" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i> -->
                   <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <i class="pi pi-info-circle" style="font-size: 1rem" [pTooltip]="group.description"></i>
                   <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
                 </span>
                 <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onExpandCollapseGroup(group)">

@@ -47,7 +47,8 @@ export const environment = {
   isCopilotEnable : true,
   isRPAConfigurationsImportEnabled : true,
   isSubscrptionEnabled : false,
-  isCustomerBots : false
+  isCustomerBots : false,
+  isMicroBot:true
 };
 
 /*
