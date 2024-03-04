@@ -190,7 +190,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
-    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled
+    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
   }
 
   botdelete(bot) {
@@ -807,7 +807,8 @@ importBot(){
 
 
   updateNodeIds(payload, botDetails){
-    
+    // console.log(payload,"Payload")
+    // console.log(botDetails,"botDetails")
     payload.tasks.forEach((item:any, index)=>{
       let nodeId=payload.tasks[index].nodeId;
       if(item.inSeqId.split("_")[0]=="START"){
@@ -824,6 +825,13 @@ importBot(){
         payload.tasks[index].nodeId=nodeSplitId[0]+"__"+newNodeId;
         if(payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID).inSeqId=newNodeId;
         if(payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID).outSeqId=newNodeId;
+          let ifTasks= payload.tasks.find((taskItem:any)=>taskItem.taskName =="If")
+          // console.log(ifTasks,ifTasks.attributes.find((attr:any)=>attr.attrValue==actualNodeID))
+          if(ifTasks !=undefined){
+            // console.log(ifTasks)
+          if(ifTasks?.attributes?.find((attr:any)=>attr.attrValue==actualNodeID))
+            payload.tasks.find((taskItem:any)=>taskItem.taskName =="If").attributes.find((attr:any)=>attr.attrValue==actualNodeID).attrValue = newNodeId
+          }
         payload.sequences.forEach((item, index2)=>{
           if(item.sourceTaskId.split("_")[0]=="START"){
             payload.sequences[index2].sourceTaskId="START_"+botDetails.botName
@@ -841,6 +849,7 @@ importBot(){
       }
 
     });
+    // console.log(payload)
     return payload;
   }
 
@@ -921,15 +930,17 @@ importBot(){
           delete item.version;
           delete item.botId;
           delete item.versionNew;
-          item.attributes=item.attributes.map((attrItem)=>{
-            delete attrItem.botTaskId;
-            delete attrItem.attrId;
-            delete attrItem.botId;
-            // if(!this.isConfigurationEnable){
-            //   attrItem.attrValue="";
-            // }
-            return attrItem;
-          })
+          if(item.taskName != "If"){
+            item.attributes=item.attributes.map((attrItem)=>{
+              delete attrItem.botTaskId;
+              delete attrItem.attrId;
+              delete attrItem.botId;
+              // if(!this.isConfigurationEnable){
+              //   attrItem.attrValue="";
+              // }
+              return attrItem;
+            })
+          }
           return item;
         })],
         sequences:[...response.sequences.map((item:any)=>{
@@ -947,6 +958,7 @@ importBot(){
         startStopCoordinate:response.startStopCoordinate   
       };
       // this.downloadJson(botDetails)
+      console.log(botDetails)
        this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
     } else {
 
@@ -954,10 +966,14 @@ importBot(){
   }
 
   downloadEncryptedData(encryptedData): void {
+    let envName = environment.environmentName
+    let sub_envName = localStorage.getItem("tenantSwitchName")?localStorage.getItem("tenantSwitchName"):"Production";
+    let company = localStorage.getItem("company")?localStorage.getItem("company"):""
     const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
     const downloadLink = document.createElement('a');
     downloadLink.href = window.URL.createObjectURL(blob);
-    downloadLink.download = this.bot_toExport.botName+'.txt'; // Set the desired filename
+    // downloadLink.download = this.bot_toExport.botName+"_"+company+"_"+sub_envName+"_"+envName+'.txt'; // Set the desired filename
+    downloadLink.download = this.bot_toExport.botName+"_"+envName+"_"+company+"_"+sub_envName+'.txt'; // Set the desired filename
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
@@ -1017,19 +1033,19 @@ importBot(){
         // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
         // req_body["department"]=response.department;
         req_body["botData"]  = this.import_BotData;
-        console.log(JSON.stringify(this.import_BotData))
         // let req_payload= this.crypto.encrypt(JSON.stringify(this.import_BotData));
         let req_payload= this.import_BotData;
-      (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
-        this.spinner.hide();
-        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
-        this.resetImportBotForm();
-        this.getallbots();
-      },err=>{
-        this.spinner.hide();
-        this.resetImportBotForm();
-        this.toastService.showError(this.toastMessages.botConfigError);
-      })
+        this.getRplacedTaskIds(req_payload);
+      // (await this.rest.importBotwithEncryptedData(req_payload)).subscribe((response:any)=>{
+      //   this.spinner.hide();
+      //   this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+      //   this.resetImportBotForm();
+      //   this.getallbots();
+      // },err=>{
+      //   this.spinner.hide();
+      //   this.resetImportBotForm();
+      //   this.toastService.showError(this.toastMessages.botConfigError);
+      // })
     },err=>{
       this.toastService.showError("Failed to import bot");
       this.spinner.hide();
@@ -1040,6 +1056,7 @@ importBot(){
     this.resetImportBotForm();
     this.importBotForm.get("botName").setValue('')
     this.importBot_overlay= false;
+    this.import_BotData = null
   }
 
   openModal() {
@@ -1071,6 +1088,114 @@ importBot(){
       this.importcat = "";
     }
   }
+
+  getRplacedTaskIds(botData){
+    console.log("botData",botData)
+    let task_list=[]
+    this.rest.toolSet().subscribe((response:any)=>{
+      console.log("response",response)
+
+      // response.Advanced.forEach(element => {
+      //   element.taskList.forEach(item => {
+      //   task_list.push(item)
+      //   });
+      // });
+      // response.General.forEach(element => {
+      //   element.taskList.forEach(item => {
+      //     task_list.push(item)
+      //   });
+      // });
+
+      response.Advanced.forEach(element => {
+        // element.taskList.forEach(item => {
+        task_list.push(element)
+        // });
+      });
+      response.General.forEach(element => {
+        // element.taskList.forEach(item => {
+          task_list.push(element)
+        // });
+      });
+      console.log("totaltask_list",task_list);
+      // console.log("botData",botData)
+       let generatedPyload :any= this.generateImportPayload(task_list,botData)
+      //  console.log("generatedPyload",generatedPyload)
+      //  return
+       setTimeout(() => {
+          console.log("generatedPyload",generatedPyload)
+          // console.log("generatedPyload",JSON.stringify(generatedPyload))
+      //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
+        this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
+        this.spinner.hide();
+        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        this.resetImportBotForm();
+        this.getallbots();
+      },err=>{
+        this.spinner.hide();
+        this.resetImportBotForm();
+        this.toastService.showError(this.toastMessages.botConfigError);
+      })
+       }, 1000);
+    })
+  }
+
+  generateImportPayload(task_list,botData){
+    // console.log(botData)
+    let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
+    let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
+  //  console.log("depractedTask",depractedTask)
+  // let array=[]
+  botData.tasks.map(element => {
+    let splitValue=element.nodeId.split("__");
+    let filteredTasks:any ={};
+    filteredTasks = task_list.find(item =>{return splitValue[0] == item.name });
+    // console.log("filteredTasks",filteredTasks)
+    let tasks:any={};
+    if(this.hasData(filteredTasks)){
+    tasks = filteredTasks.taskList.find(item =>{return item.name == element.taskName });
+    if(this.hasData(tasks)){
+        if(element.isConnectionManagerTask && tasks.name != element.taskName){
+              element["taskName"] = depractedTask.name;
+              element["tMetaId"] = Number(depractedTask.taskId);
+              element["attributes"] = [];
+              element["nodeId"] = "Developer __"+splitValue[1]
+              element["taskConfiguration"] = "null"
+              element["isConnectionManagerTask"] = false
+              element["actionUUID"] = "null"
+          } else{ 
+              if(element.taskName == tasks.name){
+                element.tMetaId = Number(tasks.taskId)
+              }
+          }
+        }else{
+              element["taskName"] = depractedTask.name;
+              element["tMetaId"] = Number(depractedTask.taskId);
+              element["attributes"] = [];
+              element["nodeId"] = "Developer __"+splitValue[1]
+              element["taskConfiguration"] = "null"
+              element["isConnectionManagerTask"] = false
+              element["actionUUID"] = "null"
+        }
+      }else{
+        element["taskName"] = depractedTask.name;
+        element["tMetaId"] = Number(depractedTask.taskId);
+        element["attributes"] = [];
+        element["nodeId"] = "Developer __"+splitValue[1]
+        element["taskConfiguration"] = "null"
+        element["isConnectionManagerTask"] = false
+        element["actionUUID"] = "null"
+      }
+    });
+    // setTimeout(() => {
+    //   console.log(JSON.stringify(botData))
+    // }, 1000);
+    return botData
+  }
+
+  hasData(task): boolean {
+    if(task != undefined) return Object.keys(task).length > 0;
+    else return false
+}
 
 }
 

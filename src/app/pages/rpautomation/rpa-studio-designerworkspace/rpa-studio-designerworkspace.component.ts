@@ -595,9 +595,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified,
-        isSelected:false,
-        isHide:false
+        isModified:element.isModified?element.isModified:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId)){
         let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
@@ -1264,6 +1262,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
+    if(node.selectedNodeTask == 'Corrupted') {
+      this.confirmationService.confirm({
+        header:'Task not found!',
+        message:'This task is corrupted, Please add right one.',
+        acceptLabel:'Ok',
+        rejectVisible:false,
+        acceptButtonStyleClass:'btn bluebg-button',
+        defaultFocus:'none',
+        key: "designerWorkspace"
+       })
+      return;
+    }
     this.nodedata = node;
     this.form_change = false;
     this.isShowExpand_icon=false;

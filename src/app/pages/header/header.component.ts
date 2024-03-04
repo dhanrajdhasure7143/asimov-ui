@@ -209,6 +209,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rest_api.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
       if (res) {
+        localStorage.setItem("company",this.retrieveResonse.company)
         this.user_details = this.retrieveResonse;
         // this.getAllNotifications(); \\ enable to show notification in header
         // this.getNotificationsList(); \\ enable to show notification in header
@@ -419,9 +420,8 @@ chatClick(){
 }
 
 getexpiryInfo(){
+  if(environment.isSubscrptionEnabled)
   this.rest_api.expiryInfo().subscribe(data => {
-    // const subscriptions = data as Array<{ highestExpireIn: number }>;
-    // this.highestExpireIn = subscriptions.some(subscription => subscription.highestExpireIn === 0);
     this.tenantSwitchDropdown = data.expiresIn === 0;
   })
 }

@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
 
   pi_url: "https://ezflow.dev.epsoftinc.com/prcintel",
   bps_url: "https://ezflow.dev.epsoftinc.com/bpstudio",
@@ -46,6 +46,7 @@ export const environment = {
   isRPAConfigurationsImportEnabled : true,
   isSubscrptionEnabled : true,
   isCustomerBots : true,
-  //
+  environmentName: "DEV",
+  // Boolean check for micro bot to load components based oncondition {if true loading rpa-microbot-designer-workspace / If false loading rpa-studio-designerworkspace}
   isMicroBot:true
 };
