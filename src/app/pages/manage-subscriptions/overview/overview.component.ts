@@ -111,10 +111,17 @@ export class OverviewComponent implements OnInit {
       this.table_searchFields=["planname","plan","amount","term","nextBillingDate","userId","status"]
       this.tableData = response;
       this.tableData.forEach(element => {
-        element['planname'] = element.planEntity.nickName
-        element['plan'] = 'Predefined Bots'
-        element['amount'] = element.planEntity.amount
-        element['term'] = element.planEntity.term
+        if (element.planEntity) {
+          element['planname'] = element.planEntity.nickName;
+          element['plan'] = 'Predefined Bots';
+          element['amount'] = element.planEntity.amount;
+          element['term'] = element.planEntity.term;
+        } else {
+          element['planname'] = '-';
+          element['plan'] = '-';
+          element['amount'] = "-";
+          element['term'] = "-";
+        }
 
       });
       this.result = this.tableData.filter((obj) => {

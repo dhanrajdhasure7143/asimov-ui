@@ -4087,3 +4087,7 @@ padding: 0px 30px;}
   opacity: 0.5; 
   pointer-events: none;
 }
+
+.overview-items .p-overlaypanel-content {
+  padding: 5px 0px !important;
+}
