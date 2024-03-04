@@ -114,7 +114,21 @@ export class HomeComponent implements OnInit {
         } else if (this.userRole.includes('Process Owner')) {
             this.showWarningPopup = true;
         }
-     }       
+     } else {
+      if(environment.isCopilotEnable)
+      this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
+        if(!environment.isCopilotEnable)
+          this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+          let dashbordlist:any=res.data;
+          let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+          if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+            this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
+          }else{
+            const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+            this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+          }
+        })
+     }
   })
 
     this.rest_api.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
