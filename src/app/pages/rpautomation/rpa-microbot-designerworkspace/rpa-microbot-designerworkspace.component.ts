@@ -40,11 +40,11 @@ import { toastMessages } from "src/app/shared/model/toast_messages";
 import { Location } from "@angular/common";
 
 @Component({
-  selector: "app-rpa-studio-designerworkspace",
-  templateUrl: "./rpa-studio-designerworkspace.component.html",
-  styleUrls: ["./rpa-studio-designerworkspace.component.css"],
+  selector: 'app-rpa-microbot-designerworkspace',
+  templateUrl: './rpa-microbot-designerworkspace.component.html',
+  styleUrls: ['./rpa-microbot-designerworkspace.component.css']
 })
-export class RpaStudioDesignerworkspaceComponent implements OnInit {
+export class RpaMicrobotDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
   @Input("index") public index: any;
   @Input("toolsetItems") public toolset: any[];
@@ -595,7 +595,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified?element.isModified:false
+        isModified:element.isModified,
+        isSelected:false,
+        isHide:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId)){
         let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
@@ -1262,18 +1264,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
-    if(node.selectedNodeTask == 'Corrupted') {
-      this.confirmationService.confirm({
-        header:'Task not found!',
-        message:'This task is corrupted, Please add right one.',
-        acceptLabel:'Ok',
-        rejectVisible:false,
-        acceptButtonStyleClass:'btn bluebg-button',
-        defaultFocus:'none',
-        key: "designerWorkspace"
-       })
-      return;
-    }
     this.nodedata = node;
     this.form_change = false;
     this.isShowExpand_icon=false;
@@ -3142,11 +3132,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       })
     }else{
-      console.log(group)
-      console.log(this.groupsData)
-      this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
-      console.log(groupdata)
+      this.removeGroupObject(group)
     }
   }
 

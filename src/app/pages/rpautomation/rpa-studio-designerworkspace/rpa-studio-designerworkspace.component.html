@@ -1,7 +1,7 @@
 <div [id]="dragareaid">
   <div  class="studio_main">
-    <div class="studio_main_desginer">
-      <div class="drag-area" [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
+    <div class="studio_main_desginer" >
+      <div class="drag-area" id="group" #group [id]="'dnd_'+dragareaid" dndDropzone  (dndDrop)="onDrop($event, $event)" (click)="closemenu()" [ngClass]="{
           workspace: disable,
           dndDropzoneDisabled: false,
           lightTheme: lightTheme
@@ -13,7 +13,7 @@
                 left: node.x,
                 top: node.y,
                 'background-image': 'url(' + node.path + ')'
-              }">
+              }" [ngClass]="node.isSelected?'nodeActive':''">
               <!--Node close button-->
               <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
                 <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
@@ -54,23 +54,55 @@
           </ng-container>
           <!--Added Grouping Task in RPA Designer-->
           <ng-container *ngFor="let group of groupsData; let i = index">
-            <div [id]="group.id" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, group.id)"
+            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="!group.isExpand?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
               [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
                 left: group.x,
                 top: group.y,
-                height: group.height,
-                width: group.width,
-                'border-color': group.color
-              }" class="groupElement">
-              <div class="groupHeader">
-                <span class="groupTitle" *ngIf="group.edit == false">{{
-                  group.groupName
-                  }}</span>
-                <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit == false">
+                height: group.isExpand? group.height : '60px',
+                width: group.isExpand? group.width : '60px',
+                'border-color': group.isExpand ? group.color : 'black',
+                'border-style': group.isExpand?'dotted':'',
+                'border-radius': !group.isExpand?'0.2em':'',
+                'background-image': !group.isExpand ? 'url(' + path + ')' : ''
+              }" class="groupElement" (mouseenter)="group.showPublishButton = !group.isExpand" (mouseleave)="group.showPublishButton = false" 
+              [pTooltip]="!group.isExpand ? group.description:''">
+              <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
+
+              <div *ngIf="!group.isExpand">
+                <span class="node-delete" (click)="removeGroup(group)">
+                  <i class="ri-close-circle-fill"></i>
+                </span>
+                <div class="row">
+                  <span class="clickable" id="arrow-button" (click)="onExpandCollapseGroup(group)">
+                    <i class="pi pi-arrow-circle-down"></i>
+                  </span>
+                  <!-- <span class="groupHeader">
+                    <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
+                    <button *ngIf="!group.isExpand" class="publishButton" (click)="publishGroup(group)">Publish</button>
+                  </span> -->
+                </div>
+                <div class="groupName">{{ group.groupName }}</div>
+              </div>
+              
+              <div *ngIf="group.isExpand" class="groupHeader">
+                <!-- <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{group.groupName}}</span> -->
+                <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 25 ? (group.groupName | slice:0:25) + '...' : group.groupName }}</span>
+                <span class="groupTitle clickable" (click)="removeGroup(group)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
                 </span>
-                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false">
+                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false && !group.isMicroBot">
                   <i class="ri-pencil-line text-primary"></i>
+                </span>
+                <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
+                  <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
+                  <!-- <i class="pi pi-cloud-upload" [ngClass]="{'disabled-icon': isMicroBot}" [attr.disabled]="isMicroBot ? true : null" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i> -->
+                  <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <i class="pi pi-info-circle" style="font-size: 1rem" [pTooltip]="group.description"></i>
+                  <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
+                </span>
+                <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onExpandCollapseGroup(group)">
+                  <i class="pi pi-angle-up"></i>
+                  <!-- <i class="pi pi-angle-down"></i> -->
                 </span>
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
                   <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
@@ -81,8 +113,9 @@
                     class="custom-color-picker" />
                   &nbsp;
                 </span>
-                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
-                    class="ri-check-line"></i></span>
+                <!-- <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
+                    class="ri-check-line"></i></span> -->
+                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true && group.groupName.trim() !== ''" (click)="group.edit = false"><i class="ri-check-line"></i></span>
               </div>
             </div>
           </ng-container>
@@ -351,6 +384,28 @@
   [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version" (closeEvent)="closeLogsOverlay()"></app-rpa-so-logs>
 </div>
 
+<div *ngIf="showGroup_Overlay" class="overlay">
+  <p-dialog header="Action Items Grouping" [(visible)]="showGroup_Overlay" [modal]="true" [style]="{width: '30vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
+    <form [formGroup]="groupForm" (ngSubmit)="addGroup()">
+      <div class="p-field">
+        <label for="groupName">Group Name <span class="star">*</span></label>
+        <input id="groupName" type="text" formControlName="groupName" class="form-control" autocomplete="off">
+        <div *ngIf="groupForm.get('groupName').hasError('required') && groupForm.get('groupName').touched" class="required">
+          Group Name is required.
+        </div>
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="groupDescription">Group Description <span class="star">*</span></label>
+        <textarea id="groupDescription" formControlName="groupDescription" class="form-control"></textarea>
+        <div *ngIf="groupForm.get('groupDescription').hasError('required') && groupForm.get('groupDescription').touched" class="required">
+          Group Description is required.
+        </div>
+      </div>
+      <button style="float: right; margin-top: 15px;" class="btn btn-primary" [disabled]="groupForm.invalid" type="submit">Group</button>
+    </form>
+  </p-dialog>
+</div>
 
 
 

@@ -46,5 +46,7 @@ export const environment = {
   isRPAConfigurationsImportEnabled : true,
   isSubscrptionEnabled : true,
   isCustomerBots : true,
-  environmentName: "DEV"
+  environmentName: "DEV",
+  // Boolean check for micro bot to load components based oncondition {if true loading rpa-microbot-designer-workspace / If false loading rpa-studio-designerworkspace}
+  isMicroBot:true
 };

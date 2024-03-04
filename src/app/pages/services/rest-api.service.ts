@@ -1864,10 +1864,17 @@ importBotwithEncryptedData(body){
   return this.http.post("/rpa-service/import-bot", body);
 }
 
+saveMicroBot(body){
+  return this.http.post("/rpa-service/save-micro-bot",body,{responseType: "text" })
+}
+
 getMicroBots(){
   return this.http.get<any[]>("/rpa-service/microbots-list");
 }
 
+fetchMicroBot(id:any){
+  return this.http.get("/rpa-service/fetch-microbot/"+id)
+}
 createSdkCustomTasks(data : any){
   return this.http.post('/rpa-service/sdk-custom/create-sdk-task', data)
 }
