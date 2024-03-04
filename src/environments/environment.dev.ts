@@ -46,6 +46,8 @@ export const environment = {
     isRPAConfigurationsImportEnabled : true,
     isSubscrptionEnabled : true,
     isCustomerBots : true,
-    environmentName: "DEV"
+    environmentName: "DEV",
+    isMicroBot:true
+
   };
   
