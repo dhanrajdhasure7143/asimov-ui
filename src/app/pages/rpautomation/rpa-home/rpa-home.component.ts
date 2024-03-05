@@ -132,6 +132,9 @@ export class RpaHomeComponent implements OnInit {
   import_BotData:any;
   importBot_overlay:boolean = false;
   filteredEnvironments:any=[];
+  forTask:any[]=[];
+  multiAssigTask:any[]=[];
+  listTasks:any[]=[];
 
   constructor(
     private rest: RestApiService,
@@ -807,8 +810,6 @@ importBot(){
 
 
   updateNodeIds(payload, botDetails){
-    // console.log(payload,"Payload")
-    // console.log(botDetails,"botDetails")
     payload.tasks.forEach((item:any, index)=>{
       let nodeId=payload.tasks[index].nodeId;
       if(item.inSeqId.split("_")[0]=="START"){
@@ -825,13 +826,27 @@ importBot(){
         payload.tasks[index].nodeId=nodeSplitId[0]+"__"+newNodeId;
         if(payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID).inSeqId=newNodeId;
         if(payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID).outSeqId=newNodeId;
-          let ifTasks= payload.tasks.find((taskItem:any)=>taskItem.taskName =="If")
-          // console.log(ifTasks,ifTasks.attributes.find((attr:any)=>attr.attrValue==actualNodeID))
-          if(ifTasks !=undefined){
-            // console.log(ifTasks)
-          if(ifTasks?.attributes?.find((attr:any)=>attr.attrValue==actualNodeID))
-            payload.tasks.find((taskItem:any)=>taskItem.taskName =="If").attributes.find((attr:any)=>attr.attrValue==actualNodeID).attrValue = newNodeId
-          }
+          
+        let ifTasks =[];
+        ifTasks = payload.tasks.filter((taskItem:any)=>taskItem.taskName =="If")
+        if(ifTasks.length>0){
+          ifTasks.forEach((ifItem:any)=>{
+            if(ifItem.attributes.find((attr:any)=>attr.attrValue==actualNodeID)){
+              ifItem.attributes.find((attr:any)=>attr.attrValue==actualNodeID).attrValue = newNodeId
+            }
+            ifItem.attributes.forEach((attrItem:any) => {
+              let name: string = attrItem.attrValue;
+              if (name.includes("STOP")) {
+                attrItem.attrValue = "STOP_" + botDetails.botName;
+              }
+            });
+          });
+        }
+
+        //   if(ifTasks !=undefined){
+        //   if(ifTasks?.attributes?.find((attr:any)=>attr.attrValue==actualNodeID))
+        //     payload.tasks.find((taskItem:any)=>taskItem.taskName =="If").attributes.find((attr:any)=>attr.attrValue==actualNodeID).attrValue = newNodeId
+        // }
         payload.sequences.forEach((item, index2)=>{
           if(item.sourceTaskId.split("_")[0]=="START"){
             payload.sequences[index2].sourceTaskId="START_"+botDetails.botName
@@ -849,7 +864,6 @@ importBot(){
       }
 
     });
-    // console.log(payload)
     return payload;
   }
 
@@ -919,6 +933,7 @@ importBot(){
   }
 
   removeUnusedData(response){
+    console.log("response",response)
     if(response.errorMessage==undefined){
       let botDetails:any={
         botName:response.botName,
@@ -958,7 +973,6 @@ importBot(){
         startStopCoordinate:response.startStopCoordinate   
       };
       // this.downloadJson(botDetails)
-      console.log(botDetails)
        this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
     } else {
 
@@ -988,7 +1002,6 @@ importBot(){
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
         const content = event.target?.result as string;
-        console.log('File content:', content);
       };
       reader.onerror = (event: ProgressEvent<FileReader>) => {
         console.error('Error reading file.');
@@ -997,7 +1010,6 @@ importBot(){
       reader.onload = (e) => {
         // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
         this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
-        console.log(this.import_BotData)
         // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
       }
@@ -1017,6 +1029,7 @@ importBot(){
     this.spinner.show();
     let req_body:any={};
     this.rest.createBot(basicBotDetails).subscribe(async (response:any)=>{
+      this.importBot_overlay= false;
       this.import_BotData=this.updateNodeIds(this.import_BotData, basicBotDetails);
       this.finaldataobjects = [...this.import_BotData.tasks]
       let start=this.finaldataobjects.find((item:any)=>item.inSeqId.split("_")[0]=="START")?.inSeqId??undefined;
@@ -1027,7 +1040,6 @@ importBot(){
       this.import_BotData["botName"]=this.importBotForm.get("botName").value;
       this.import_BotData["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
       this.import_BotData["tasks"]=[...this.final_tasks];
-      this.importBot_overlay= false;
         // req_body["botId"]=response.botId;
         // req_body["botName"]=this.importBotForm.get("botName").value;
         // req_body["envIds"]=[parseInt(this.importBotForm.get("environmentId").value)];
@@ -1089,43 +1101,51 @@ importBot(){
     }
   }
 
-  getRplacedTaskIds(botData){
-    console.log("botData",botData)
+ async getRplacedTaskIds(botData){
     let task_list=[]
-    this.rest.toolSet().subscribe((response:any)=>{
-      console.log("response",response)
+    this.rest.toolSet().subscribe(async (response:any)=>{
 
       // response.Advanced.forEach(element => {
       //   element.taskList.forEach(item => {
       //   task_list.push(item)
       //   });
       // });
-      // response.General.forEach(element => {
-      //   element.taskList.forEach(item => {
-      //     task_list.push(item)
-      //   });
-      // });
+      await response.General.forEach(element => {
+        task_list.push(element)
+        if(element.name == "Developer "){
+            element.taskList.forEach(item => {
+            if(item.name == "For"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.forTask = res
+              })
+            }
+            if(item.name == "Multi Assign"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.multiAssigTask = res
+              })
+            }
+            if(item.name == "List"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.listTasks = res
+              })
+            }
+          });
+        }
+      });
 
       response.Advanced.forEach(element => {
-        // element.taskList.forEach(item => {
         task_list.push(element)
-        // });
       });
-      response.General.forEach(element => {
-        // element.taskList.forEach(item => {
-          task_list.push(element)
-        // });
-      });
-      console.log("totaltask_list",task_list);
-      // console.log("botData",botData)
-       let generatedPyload :any= this.generateImportPayload(task_list,botData)
-      //  console.log("generatedPyload",generatedPyload)
+      // response.General.forEach(element => {
+          // task_list.push(element)
+      // });
       //  return
-       setTimeout(() => {
-          console.log("generatedPyload",generatedPyload)
-          // console.log("generatedPyload",JSON.stringify(generatedPyload))
+       setTimeout(async () => {
+        let generatedPyload :any= await this.generateImportPayload(task_list,botData)
+
+          // console.log("generatedPyload",JSON.stringify(generatedPyload));
       //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
-        this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
+      this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
         this.spinner.hide();
         this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
         this.resetImportBotForm();
@@ -1140,20 +1160,16 @@ importBot(){
   }
 
   generateImportPayload(task_list,botData){
-    // console.log(botData)
     let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
     let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
-  //  console.log("depractedTask",depractedTask)
-  // let array=[]
   botData.tasks.map(element => {
     let splitValue=element.nodeId.split("__");
     let filteredTasks:any ={};
     filteredTasks = task_list.find(item =>{return splitValue[0] == item.name });
-    // console.log("filteredTasks",filteredTasks)
     let tasks:any={};
     if(this.hasData(filteredTasks)){
     tasks = filteredTasks.taskList.find(item =>{return item.name == element.taskName });
-    if(this.hasData(tasks)){
+        if(this.hasData(tasks)){
         if(element.isConnectionManagerTask && tasks.name != element.taskName){
               element["taskName"] = depractedTask.name;
               element["tMetaId"] = Number(depractedTask.taskId);
@@ -1164,6 +1180,30 @@ importBot(){
               element["actionUUID"] = "null"
           } else{ 
               if(element.taskName == tasks.name){
+                if(element.taskName == "For"){
+                  element.attributes.forEach(item1 => {
+                    this.forTask.forEach(item2 => {
+                      if(item1.metaAttrValue == item2.name)
+                        item1.metaAttrId = item2.id
+                    });
+                  });
+                }
+                if(element.taskName == "Multi Assign"){
+                   element.attributes.forEach(item1 => {
+                     this.multiAssigTask.forEach(item2 => {
+                       if(item1.metaAttrValue == item2.name)
+                         item1.metaAttrId = item2.id
+                     });
+                   });
+                 }
+                 if(element.taskName == "List"){
+                  element.attributes.forEach(item1 => {
+                    this.listTasks.forEach(item2 => {
+                      if(item1.metaAttrValue == item2.name)
+                        item1.metaAttrId = item2.id
+                    });
+                  });
+                }
                 element.tMetaId = Number(tasks.taskId)
               }
           }
@@ -1186,9 +1226,6 @@ importBot(){
         element["actionUUID"] = "null"
       }
     });
-    // setTimeout(() => {
-    //   console.log(JSON.stringify(botData))
-    // }, 1000);
     return botData
   }
 
