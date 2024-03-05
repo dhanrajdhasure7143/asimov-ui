@@ -40,7 +40,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   approver_list:any[]=[];
   process_owner:any;
   process_name_error:boolean=false;
-  freetrail: string;
+  freetrail: string = "false"
   isLoading:boolean=false;
   isValidName:boolean=false;
   notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"CMMN",id:"cmmn"},{type:"DMN",id:"dmn"}];
@@ -124,7 +124,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }
     });
     this.getApproverList();
-    this.freetrail=localStorage.getItem('freetrail')
+    // this.freetrail=localStorage.getItem('freetrail')
   }
 
   loopTrackBy(index, term){
