@@ -132,6 +132,9 @@ export class RpaHomeComponent implements OnInit {
   import_BotData:any;
   importBot_overlay:boolean = false;
   filteredEnvironments:any=[];
+  forTask:any[]=[];
+  multiAssigTask:any[]=[];
+  listTasks:any[]=[];
 
   constructor(
     private rest: RestApiService,
@@ -807,8 +810,6 @@ importBot(){
 
 
   updateNodeIds(payload, botDetails){
-    // console.log(payload,"Payload")
-    // console.log(botDetails,"botDetails")
     payload.tasks.forEach((item:any, index)=>{
       let nodeId=payload.tasks[index].nodeId;
       if(item.inSeqId.split("_")[0]=="START"){
@@ -826,9 +827,7 @@ importBot(){
         if(payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.inSeqId==actualNodeID).inSeqId=newNodeId;
         if(payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID)) payload.tasks.find((taskItem:any)=>taskItem.outSeqId==actualNodeID).outSeqId=newNodeId;
           let ifTasks= payload.tasks.find((taskItem:any)=>taskItem.taskName =="If")
-          // console.log(ifTasks,ifTasks.attributes.find((attr:any)=>attr.attrValue==actualNodeID))
           if(ifTasks !=undefined){
-            // console.log(ifTasks)
           if(ifTasks?.attributes?.find((attr:any)=>attr.attrValue==actualNodeID))
             payload.tasks.find((taskItem:any)=>taskItem.taskName =="If").attributes.find((attr:any)=>attr.attrValue==actualNodeID).attrValue = newNodeId
           }
@@ -919,6 +918,7 @@ importBot(){
   }
 
   removeUnusedData(response){
+    console.log("response",response)
     if(response.errorMessage==undefined){
       let botDetails:any={
         botName:response.botName,
@@ -1089,10 +1089,10 @@ importBot(){
     }
   }
 
-  getRplacedTaskIds(botData){
+ async getRplacedTaskIds(botData){
     console.log("botData",botData)
     let task_list=[]
-    this.rest.toolSet().subscribe((response:any)=>{
+    this.rest.toolSet().subscribe(async (response:any)=>{
       console.log("response",response)
 
       // response.Advanced.forEach(element => {
@@ -1100,32 +1100,48 @@ importBot(){
       //   task_list.push(item)
       //   });
       // });
-      // response.General.forEach(element => {
-      //   element.taskList.forEach(item => {
-      //     task_list.push(item)
-      //   });
-      // });
+      await response.General.forEach(element => {
+        task_list.push(element)
+        if(element.name == "Developer "){
+            element.taskList.forEach(item => {
+            if(item.name == "For"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.forTask = res
+              })
+            }
+            if(item.name == "Multi Assign"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.multiAssigTask = res
+              })
+            }
+            if(item.name == "List"){
+              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
+                this.listTasks = res
+              })
+            }
+          });
+        }
+      });
 
       response.Advanced.forEach(element => {
-        // element.taskList.forEach(item => {
         task_list.push(element)
-        // });
       });
       response.General.forEach(element => {
-        // element.taskList.forEach(item => {
-          task_list.push(element)
-        // });
+          // task_list.push(element)
       });
       console.log("totaltask_list",task_list);
       // console.log("botData",botData)
-       let generatedPyload :any= this.generateImportPayload(task_list,botData)
       //  console.log("generatedPyload",generatedPyload)
       //  return
-       setTimeout(() => {
+       setTimeout(async () => {
+        let generatedPyload :any= await this.generateImportPayload(task_list,botData)
+
           console.log("generatedPyload",generatedPyload)
-          // console.log("generatedPyload",JSON.stringify(generatedPyload))
+          console.log("generatedPyload",JSON.stringify(generatedPyload));
+          // let payload = {"botName":"RTs","department":0,"categoryId":1,"tasks":[{"tMetaId":246,"taskName":"For","inSeqId":"c4bb46aa-3bbe-15e7-9632-652a3765fef7","outSeqId":"0b8b0196-410a-c63e-8dff-83102efb60e3","nodeId":"Developer __ee6b11c3-7083-6a92-e1e7-4ab9a3439272","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":976,"metaAttrValue":"initialization","attrValue":"i=0"},{"metaAttrId":977,"metaAttrValue":"condition","attrValue":"i<size_of(list)"},{"metaAttrId":978,"metaAttrValue":"increment","attrValue":"i++"},{"metaAttrId":1326,"metaAttrValue":"continueIfFails","attrValue":"true"}],"isConnectionManagerTask":false,"isModified":false,"x":"238px","y":"20px","taskSubCategoryId":null},{"tMetaId":244,"taskName":"Block Start","inSeqId":"ee6b11c3-7083-6a92-e1e7-4ab9a3439272","outSeqId":"62049d05-ab94-ff27-a2d4-b935ebe5c474","nodeId":"Developer __0b8b0196-410a-c63e-8dff-83102efb60e3","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"378px","y":"22px","taskSubCategoryId":null},{"tMetaId":245,"taskName":"Block End","inSeqId":"bad79e5f-0f8f-10f6-9d62-07102ca9b66b","outSeqId":"fa9219dd-8206-30ac-f6a3-717f27d202e2","nodeId":"Developer __a6bd7164-28a4-2c78-dcd3-e5dfd9f4e25b","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"1141px","y":"103px","taskSubCategoryId":null},{"tMetaId":401,"taskName":"List","inSeqId":"START_Test-098","outSeqId":"ee6b11c3-7083-6a92-e1e7-4ab9a3439272","nodeId":"Developer __c4bb46aa-3bbe-15e7-9632-652a3765fef7","taskConfiguration":null,"actionUUID":null,"attributes":[{"metaAttrId":953,"metaAttrValue":"list","attrValue":"[{\"value\":\"value1\",\"id\":1},{\"value\":\"value2\",\"id\":2},{\"value\":\"value3\",\"id\":3},{\"value\":\"value4\",\"id\":4}]"},{"metaAttrId":957,"metaAttrValue":"outputReference","attrValue":"list"}],"isConnectionManagerTask":false,"isModified":false,"x":"96px","y":"19px","taskSubCategoryId":null},{"tMetaId":35,"taskName":"Add","inSeqId":"0b8b0196-410a-c63e-8dff-83102efb60e3","outSeqId":"e12f34aa-2cfc-3fc5-d83e-5d4c3f9a2d3c","nodeId":"Arithmetic Operations__62049d05-ab94-ff27-a2d4-b935ebe5c474","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":143,"metaAttrValue":"input1Type","attrValue":"value"},{"metaAttrId":142,"metaAttrValue":"input1","attrValue":"12"},{"metaAttrId":145,"metaAttrValue":"input2Type","attrValue":"value"},{"metaAttrId":144,"metaAttrValue":"input2","attrValue":"12"},{"metaAttrId":146,"metaAttrValue":"output","attrValue":"add"}],"isConnectionManagerTask":false,"isModified":false,"x":"477px","y":"39px","taskSubCategoryId":null},{"tMetaId":246,"taskName":"For","inSeqId":"e12f34aa-2cfc-3fc5-d83e-5d4c3f9a2d3c","outSeqId":"4c6c6f66-e090-cccf-f7a3-8ae4acc8f084","nodeId":"Developer __e3373907-663b-bc05-6252-d5d5e5d3b30d","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":970,"metaAttrValue":"initialization","attrValue":"j=0"},{"metaAttrId":977,"metaAttrValue":"condition","attrValue":"j<size_of(list)"},{"metaAttrId":978,"metaAttrValue":"increment","attrValue":"j++"},{"metaAttrId":1326,"metaAttrValue":"continueIfFails","attrValue":"true"}],"isConnectionManagerTask":false,"isModified":false,"x":"702px","y":"44px","taskSubCategoryId":null},{"tMetaId":36,"taskName":"Subtract","inSeqId":"62049d05-ab94-ff27-a2d4-b935ebe5c474","outSeqId":"e3373907-663b-bc05-6252-d5d5e5d3b30d","nodeId":"Arithmetic Operations__e12f34aa-2cfc-3fc5-d83e-5d4c3f9a2d3c","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":148,"metaAttrValue":"input1Type","attrValue":"value"},{"metaAttrId":147,"metaAttrValue":"input1","attrValue":"15"},{"metaAttrId":150,"metaAttrValue":"input2Type","attrValue":"value"},{"metaAttrId":149,"metaAttrValue":"input2","attrValue":"15"},{"metaAttrId":151,"metaAttrValue":"output","attrValue":"sub"}],"isConnectionManagerTask":false,"isModified":false,"x":"571px","y":"42px","taskSubCategoryId":null},{"tMetaId":37,"taskName":"Multiply","inSeqId":"4c6c6f66-e090-cccf-f7a3-8ae4acc8f084","outSeqId":"bad79e5f-0f8f-10f6-9d62-07102ca9b66b","nodeId":"Arithmetic Operations__49458cc7-4677-f29f-bfc1-6781ed2a6bea","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":153,"metaAttrValue":"input1Type","attrValue":"value"},{"metaAttrId":152,"metaAttrValue":"input1","attrValue":"12"},{"metaAttrId":155,"metaAttrValue":"input2Type","attrValue":"value"},{"metaAttrId":154,"metaAttrValue":"input2","attrValue":"12"},{"metaAttrId":156,"metaAttrValue":"output","attrValue":"mul"}],"isConnectionManagerTask":false,"isModified":false,"x":"908px","y":"62px","taskSubCategoryId":null},{"tMetaId":244,"taskName":"Block Start","inSeqId":"e3373907-663b-bc05-6252-d5d5e5d3b30d","outSeqId":"49458cc7-4677-f29f-bfc1-6781ed2a6bea","nodeId":"Developer __4c6c6f66-e090-cccf-f7a3-8ae4acc8f084","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"806px","y":"57px","taskSubCategoryId":null},{"tMetaId":245,"taskName":"Block End","inSeqId":"a6bd7164-28a4-2c78-dcd3-e5dfd9f4e25b","outSeqId":"STOP_Test-098","nodeId":"Developer __fa9219dd-8206-30ac-f6a3-717f27d202e2","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"1255px","y":"113px","taskSubCategoryId":null},{"tMetaId":38,"taskName":"Divide","inSeqId":"49458cc7-4677-f29f-bfc1-6781ed2a6bea","outSeqId":"a6bd7164-28a4-2c78-dcd3-e5dfd9f4e25b","nodeId":"Arithmetic Operations__bad79e5f-0f8f-10f6-9d62-07102ca9b66b","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":158,"metaAttrValue":"input1Type","attrValue":"value"},{"metaAttrId":157,"metaAttrValue":"input1","attrValue":"50"},{"metaAttrId":160,"metaAttrValue":"input2Type","attrValue":"value"},{"metaAttrId":159,"metaAttrValue":"input2","attrValue":"10"},{"metaAttrId":162,"metaAttrValue":"mod","attrValue":"false"},{"metaAttrId":161,"metaAttrValue":"output","attrValue":"divide"}],"isConnectionManagerTask":false,"isModified":false,"x":"1021px","y":"74px","taskSubCategoryId":null}],"sequences":[{"sequenceName":"_jsplumb_c_1709554915990","sourceTaskId":"START_Test-098","targetTaskId":"c4bb46aa-3bbe-15e7-9632-652a3765fef7"},{"sequenceName":"_jsplumb_c_1709554917862","sourceTaskId":"c4bb46aa-3bbe-15e7-9632-652a3765fef7","targetTaskId":"ee6b11c3-7083-6a92-e1e7-4ab9a3439272"},{"sequenceName":"_jsplumb_c_1709554919844","sourceTaskId":"ee6b11c3-7083-6a92-e1e7-4ab9a3439272","targetTaskId":"0b8b0196-410a-c63e-8dff-83102efb60e3"},{"sequenceName":"_jsplumb_c_1709554922920","sourceTaskId":"0b8b0196-410a-c63e-8dff-83102efb60e3","targetTaskId":"62049d05-ab94-ff27-a2d4-b935ebe5c474"},{"sequenceName":"_jsplumb_c_1709554927420","sourceTaskId":"62049d05-ab94-ff27-a2d4-b935ebe5c474","targetTaskId":"e12f34aa-2cfc-3fc5-d83e-5d4c3f9a2d3c"},{"sequenceName":"_jsplumb_c_1709554934477","sourceTaskId":"e12f34aa-2cfc-3fc5-d83e-5d4c3f9a2d3c","targetTaskId":"e3373907-663b-bc05-6252-d5d5e5d3b30d"},{"sequenceName":"_jsplumb_c_1709554960922","sourceTaskId":"4c6c6f66-e090-cccf-f7a3-8ae4acc8f084","targetTaskId":"49458cc7-4677-f29f-bfc1-6781ed2a6bea"},{"sequenceName":"_jsplumb_c_1709554962954","sourceTaskId":"49458cc7-4677-f29f-bfc1-6781ed2a6bea","targetTaskId":"bad79e5f-0f8f-10f6-9d62-07102ca9b66b"},{"sequenceName":"_jsplumb_c_1709554964980","sourceTaskId":"bad79e5f-0f8f-10f6-9d62-07102ca9b66b","targetTaskId":"a6bd7164-28a4-2c78-dcd3-e5dfd9f4e25b"},{"sequenceName":"_jsplumb_c_1709554970772","sourceTaskId":"a6bd7164-28a4-2c78-dcd3-e5dfd9f4e25b","targetTaskId":"fa9219dd-8206-30ac-f6a3-717f27d202e2"},{"sequenceName":"_jsplumb_c_1709554972860","sourceTaskId":"fa9219dd-8206-30ac-f6a3-717f27d202e2","targetTaskId":"STOP_Test-098"},{"sequenceName":"_jsplumb_c_1709554978569","sourceTaskId":"e3373907-663b-bc05-6252-d5d5e5d3b30d","targetTaskId":"4c6c6f66-e090-cccf-f7a3-8ae4acc8f084"}],"envIds":[393],"versionType":"","botType":0,"botMainSchedulerEntity":null,"comments":"","executionMode":"v2","startStopCoordinate":"{\"startTaskX\":\"2px\",\"startTaskY\":\"9px\",\"stopTaskX\":\"1359px\",\"stopTaskY\":\"117px\",\"startNodeId\":\"START_ForAction_Check\",\"stopNodeId\":\"STOP_ForAction_Check\"}","botId":6489}
       //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
-        this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
+        // let payload= {"botName":"testMulti","department":0,"categoryId":1,"tasks":[{"tMetaId":245,"taskName":"Block End","inSeqId":"ac2242ac-c87c-cf0a-99a6-a8128d2562b8","outSeqId":"STOP_testMulti","nodeId":"Developer __682ecdd1-7295-2a72-32f7-68e0b556b590","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"773px","y":"51px","taskSubCategoryId":null},{"tMetaId":244,"taskName":"Block Start","inSeqId":"7e0bb10f-a879-5e97-95e6-e876527ec2bf","outSeqId":"38a63d6f-91bc-2b6e-bdb6-35d5ad3a450d","nodeId":"Developer __656752f6-32a5-2744-7ad5-59ea9599f8b8","taskConfiguration":"null","actionUUID":"null","attributes":[],"isConnectionManagerTask":false,"isModified":false,"x":"392px","y":"31px","taskSubCategoryId":null},{"tMetaId":32,"taskName":"Output Box","inSeqId":"38a63d6f-91bc-2b6e-bdb6-35d5ad3a450d","outSeqId":"682ecdd1-7295-2a72-32f7-68e0b556b590","nodeId":"General__ac2242ac-c87c-cf0a-99a6-a8128d2562b8","taskConfiguration":"null","actionUUID":"null","attributes":[{"metaAttrId":135,"metaAttrValue":"input","attrValue":"addData"},{"metaAttrId":263,"metaAttrValue":"inputType","attrValue":"Text"}],"isConnectionManagerTask":false,"isModified":false,"x":"636px","y":"60px","taskSubCategoryId":null},{"tMetaId":401,"taskName":"List","inSeqId":"START_testMulti","outSeqId":"7e0bb10f-a879-5e97-95e6-e876527ec2bf","nodeId":"Developer __a82435a5-1f6e-3976-8e1c-83949b9d9ab1","taskConfiguration":null,"actionUUID":null,"attributes":[{"metaAttrId":953,"metaAttrValue":"list","attrValue":"[{\"value\":\"one\",\"id\":1},{\"value\":\"two\",\"id\":2},{\"value\":\"three\",\"id\":3}]"},{"metaAttrId":957,"metaAttrValue":"outputReference","attrValue":"listData"}],"isConnectionManagerTask":false,"isModified":false,"x":"146px","y":"19px","taskSubCategoryId":null},{"tMetaId":415,"taskName":"Multi Assign","inSeqId":"a82435a5-1f6e-3976-8e1c-83949b9d9ab1","outSeqId":"656752f6-32a5-2744-7ad5-59ea9599f8b8","nodeId":"Developer __7e0bb10f-a879-5e97-95e6-e876527ec2bf","taskConfiguration":null,"actionUUID":null,"attributes":[{"metaAttrId":1327,"metaAttrValue":"multiAssign","attrValue":"[{\"output\":\"output\",\"assignment\":\"create_dictionary()\",\"id\":1},{\"output\":\"output\",\"assignment\":\"size_of(listData)\",\"id\":2}]"},{"metaAttrId":1488,"metaAttrValue":"isExceptionRequired","attrValue":"true"}],"isConnectionManagerTask":false,"isModified":false,"x":"261px","y":"27px","taskSubCategoryId":null},{"tMetaId":415,"taskName":"Multi Assign","inSeqId":"656752f6-32a5-2744-7ad5-59ea9599f8b8","outSeqId":"ac2242ac-c87c-cf0a-99a6-a8128d2562b8","nodeId":"Developer __38a63d6f-91bc-2b6e-bdb6-35d5ad3a450d","taskConfiguration":null,"actionUUID":null,"attributes":[{"metaAttrId":962,"metaAttrValue":"multiAssign","attrValue":"[{\"output\":\"addData\",\"assignment\":\"create_dictionary()\",\"id\":1},{\"output\":\"addData\",\"assignment\":\"size_of(outFileData)\",\"id\":2}]"},{"metaAttrId":1481,"metaAttrValue":"isExceptionRequired","attrValue":"true"}],"isConnectionManagerTask":false,"isModified":false,"x":"494px","y":"36px","taskSubCategoryId":null}],"sequences":[{"sequenceName":"_jsplumb_c_1709554349394","sourceTaskId":"START_testMulti","targetTaskId":"a82435a5-1f6e-3976-8e1c-83949b9d9ab1"},{"sequenceName":"_jsplumb_c_1709554373115","sourceTaskId":"7e0bb10f-a879-5e97-95e6-e876527ec2bf","targetTaskId":"656752f6-32a5-2744-7ad5-59ea9599f8b8"},{"sequenceName":"_jsplumb_c_1709554375202","sourceTaskId":"656752f6-32a5-2744-7ad5-59ea9599f8b8","targetTaskId":"38a63d6f-91bc-2b6e-bdb6-35d5ad3a450d"},{"sequenceName":"_jsplumb_c_1709554379211","sourceTaskId":"38a63d6f-91bc-2b6e-bdb6-35d5ad3a450d","targetTaskId":"ac2242ac-c87c-cf0a-99a6-a8128d2562b8"},{"sequenceName":"_jsplumb_c_1709554381741","sourceTaskId":"ac2242ac-c87c-cf0a-99a6-a8128d2562b8","targetTaskId":"682ecdd1-7295-2a72-32f7-68e0b556b590"},{"sequenceName":"_jsplumb_c_1709554385063","sourceTaskId":"682ecdd1-7295-2a72-32f7-68e0b556b590","targetTaskId":"STOP_testMulti"},{"sequenceName":"_jsplumb_c_1709554388223","sourceTaskId":"a82435a5-1f6e-3976-8e1c-83949b9d9ab1","targetTaskId":"7e0bb10f-a879-5e97-95e6-e876527ec2bf"}],"envIds":[393],"versionType":"","botType":0,"botMainSchedulerEntity":null,"comments":"","executionMode":"v2","startStopCoordinate":"{\"startTaskX\":\"2px\",\"startTaskY\":\"9px\",\"stopTaskX\":\"939px\",\"stopTaskY\":\"32px\",\"startNodeId\":\"START_MultiAssign_Check\",\"stopNodeId\":\"STOP_MultiAssign_Check\"}","botId":6491}
+      this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
         this.spinner.hide();
         this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
         this.resetImportBotForm();
@@ -1140,7 +1156,7 @@ importBot(){
   }
 
   generateImportPayload(task_list,botData){
-    // console.log(botData)
+    console.log(botData)
     let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
     let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
   //  console.log("depractedTask",depractedTask)
@@ -1149,11 +1165,10 @@ importBot(){
     let splitValue=element.nodeId.split("__");
     let filteredTasks:any ={};
     filteredTasks = task_list.find(item =>{return splitValue[0] == item.name });
-    // console.log("filteredTasks",filteredTasks)
     let tasks:any={};
     if(this.hasData(filteredTasks)){
     tasks = filteredTasks.taskList.find(item =>{return item.name == element.taskName });
-    if(this.hasData(tasks)){
+        if(this.hasData(tasks)){
         if(element.isConnectionManagerTask && tasks.name != element.taskName){
               element["taskName"] = depractedTask.name;
               element["tMetaId"] = Number(depractedTask.taskId);
@@ -1164,6 +1179,31 @@ importBot(){
               element["actionUUID"] = "null"
           } else{ 
               if(element.taskName == tasks.name){
+                if(element.taskName == "For"){
+                  element.attributes.forEach(item1 => {
+                    this.forTask.forEach(item2 => {
+                      if(item1.metaAttrValue == item2.name)
+                        item1.metaAttrId = item2.id
+                    });
+                  });
+                }
+                if(element.taskName == "Multi Assign"){
+                   element.attributes.forEach(item1 => {
+                     this.multiAssigTask.forEach(item2 => {
+                       if(item1.metaAttrValue == item2.name)
+                         item1.metaAttrId = item2.id
+                     });
+                   });
+                 }
+                 if(element.taskName == "List"){
+                  element.attributes.forEach(item1 => {
+                    this.listTasks.forEach(item2 => {
+                      if(item1.metaAttrValue == item2.name)
+                        item1.metaAttrId = item2.id
+                    });
+                  });
+                }
+                  console.log("testing..................",element,this.forTask)
                 element.tMetaId = Number(tasks.taskId)
               }
           }
