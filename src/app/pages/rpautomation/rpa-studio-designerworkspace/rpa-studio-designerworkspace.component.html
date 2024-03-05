@@ -13,7 +13,7 @@
                 left: node.x,
                 top: node.y,
                 'background-image': 'url(' + node.path + ')'
-              }" [ngClass]="node.isSelected?'nodeActive':''">
+              }">
               <!--Node close button-->
               <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
                 <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
