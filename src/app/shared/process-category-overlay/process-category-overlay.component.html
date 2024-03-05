@@ -107,7 +107,7 @@
                             class='required'> notation type required </span>
                         </div>
                     </div>
-                    <div *ngIf="isBpmnModule && freetrail=='false'">
+                    <div *ngIf="isBpmnModule">
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control">Process Owner<span class="star">*</span></label>
                             <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
