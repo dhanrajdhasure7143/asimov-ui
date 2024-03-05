@@ -933,6 +933,7 @@ importBot(){
   }
 
   removeUnusedData(response){
+    console.log("response",response)
     if(response.errorMessage==undefined){
       let botDetails:any={
         botName:response.botName,
