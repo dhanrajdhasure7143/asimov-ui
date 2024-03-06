@@ -42,10 +42,10 @@ export class OverviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCurrentPlan();
-    this.getAllPaymentmodes();
+    // this.getCurrentPlan();
+    // this.getAllPaymentmodes();
     this.getAllSubscrptions();
-    this.getBillingInfo();
+    // this.getBillingInfo();
   }
 
   getCurrentPlan() {

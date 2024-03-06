@@ -40,5 +40,9 @@ export const environment = {
   isRPAConfigurationsImportEnabled : false,
   isSubscrptionEnabled : false,
   isCustomerBots : false,
-  environmentName: "PROD"
+  environmentName: "PROD",
+  
+  paymentSuccessURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  paymentFailuerURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 };

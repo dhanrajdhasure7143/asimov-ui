@@ -1,0 +1,86 @@
+.label-control {
+    font-weight: 800;
+    color: black;
+}
+
+.form-control {
+    height: 45px !important;
+}
+
+.bot-plans{
+    margin: 10px 0 0 0;
+    min-height : 240px;
+    max-height : max-content;
+}
+
+.circle {
+    width: 75px;
+    height: 75px;
+    line-height: 65px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    margin: 0 auto 10px;
+}
+.circle-color{
+    border: 1px solid #098de6;
+}
+.selected-circle{
+    border: 2px solid #97ce20;
+}
+
+.line {
+    height: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #098de6;
+    width: 70px;
+    margin: 10px 0 0 75px;
+}
+
+.description-box{
+    max-height: max-content;
+    width: auto;
+    max-width: max-content;
+    border-radius: 10px;
+    border: 1px solid #098de6;
+    margin: 10px;
+    padding: 10px;
+}
+.bot-details{
+    padding: 10px;
+}
+
+.bot-details:hover{
+    -webkit-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 10px -4px rgba(0, 0, 0, 0.75);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.contact:hover{
+    border: 1px solid #098de6 !important;
+    background-color: #fff !important;
+    color: #098de6 !important;
+}
+
+.plans-button{
+    width: 100px;
+    height: 50px;
+    border: 1px solid #ced4da !important;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.selected{
+    background-color: #97ce20 !important;
+    color: #fff !important;
+}
+.bots-list{
+    height: calc(100vh - 380px) !important; 
+    box-sizing: border-box; 
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

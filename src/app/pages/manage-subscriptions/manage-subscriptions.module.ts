@@ -41,12 +41,15 @@ import { OverviewComponent } from './overview/overview.component';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { SubscriptionPlanComponent } from './subscription-plan/subscription-plan.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent],
+     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent, SubscriptionPlanComponent],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,
@@ -57,12 +60,13 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     MatInputModule,
     MatTabsModule,
     ReactiveFormsModule,FormsModule,MatSliderModule,
-    MatFormFieldModule,NgxPaginationModule,
+    MatFormFieldModule,
     ModalModule.forRoot(),
     NgbModule,NgxSpinnerModule,
     PrimengCustomModule,
     Ng2TelInputModule,
-    SharedModule
+    SharedModule,
+    NgxStripeModule.forRoot(environment.stripeKey)
   ],
 
   providers:[
