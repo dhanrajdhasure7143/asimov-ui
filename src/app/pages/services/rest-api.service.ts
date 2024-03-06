@@ -1894,4 +1894,18 @@ getCustomTasksbyId(id : any){
 deleteMicroBot(microBotId: string) {
   return this.http.get('https://dummyjson.com/products/1');
 }
+
+loadPredefinedBots(): Observable<any>{
+  return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
+}
+
+getCheckoutScreen(body){
+  return this.http.post("/subscriptionservice/v1/stripe/create-checkout-session",body)
+}
+
+sendEmailEntrepricePlan(userId:string){
+  let headers = new HttpHeaders({});
+  return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+}
+
 }

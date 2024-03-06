@@ -50,7 +50,10 @@ export const environment = {
   isCustomerBots : false,
   environmentName: "QA",
   // Boolean check for micro bot to load components based oncondition {if true loading rpa-microbot-designer-workspace / If false loading rpa-studio-designerworkspace}
-  isMicroBot:true
+  isMicroBot:true,
+  paymentSuccessURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  paymentFailuerURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 };
 
 /*
