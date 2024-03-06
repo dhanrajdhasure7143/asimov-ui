@@ -1,1 +1,82 @@
-<p>subscription-plan works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-md-12">
+            <div class="logo">
+                <img style="width:170px !important; margin: 10px;" src="assets/images/EZFlow.png" alt="EZFlow">
+            </div>
+        </div> -->
+        <div class="col-md-3" style="padding-left: 50px; padding-right: 0px;" *ngIf="!isReview_order">
+            <div class="col-md-12" style="margin: 10px 0 0 0">
+                <div class="text-center">
+                    <h4 class="label-control">Enterprise Plan</h4>
+                </div>
+                <div class="d-flex" style="margin-top: 40px; display: flex !important;">
+                    <img src="../../../../assets/images-n/co-pilot/copilot.svg" width="40px" height="40px" alt="" style="position: relative; top: 8px;">
+                    <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise Level Planning? </div>
+                </div>
+                </div>
+                <div class="col-md-12" style="margin: 20px 0 0 10px;">
+                    <ul style="list-style-type:square;">
+                        <li class="label-control" *ngFor="let item of plans">{{item}}</li>
+                    </ul>
+                </div>
+                <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
+            </div>
+        </div>
+        <div class="col-md-9" style="padding-right: 50px;">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h4 class="label-control">Predefined Bots</h4>
+            </div>
+            <div class="col-md-12" class="bots-list">
+                <div class="row">
+                    <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
+                        <div class="bot-details" style="width: 290px;">
+                            <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                                <img src="./../../../../assets/images-n/common/MicroBot_New.jpg" alt="" width="40px" height="40px">
+                            </div>
+                            <div class="label-control text-center"> {{plan.name}} </div>
+                            <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.priceCollection">  
+                                <span> USD {{detail.unitAmount}} per {{detail.tiersMode}}</span>
+                                <!-- <span *ngIf="detail.nickname == 'yearly'"> USD {{detail.unitAmount}} / {{detail.nickname}}</span> -->
+                             </div>
+                             <div style="display: flex !important;">
+                                <div class="col-md-12 text-center">
+                                        <div>
+                                            <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
+                                            <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
+                                        </div>
+                                    <!-- </div> -->
+                                </div>
+                             </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="description-box" *ngIf="selectedPlanIndex === i">
+                                <span> {{ plan.description }} </span>
+                                <ul style="list-style-type:none;">
+                                    <li *ngFor="let item of plan.features"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item }} </li>
+                                </ul>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
+                <!-- <span [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span> -->
+                <!-- <span [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span> -->
+                <button [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </button>
+                <button [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </button>
+            </div>
+            <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
+                <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed (USD {{totalAmount}}) </button>
+                <!-- <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button> -->
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+  </ngx-spinner>

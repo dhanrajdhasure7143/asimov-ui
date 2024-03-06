@@ -1900,7 +1900,7 @@ loadPredefinedBots(): Observable<any>{
 }
 
 getCheckoutScreen(body){
-  return this.http.post("/subscriptionservice/v1/stripe/create-checkout-session",body)
+  return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
 }
 
 sendEmailEntrepricePlan(userId:string){
