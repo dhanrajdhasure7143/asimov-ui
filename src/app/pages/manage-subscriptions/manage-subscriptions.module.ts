@@ -42,12 +42,13 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { SubscrptionComponent } from './subscrption/subscrption.component';
+import { SubscriptionPlanComponent } from './subscription-plan/subscription-plan.component';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent, SubscrptionComponent],
+     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent, SubscrptionComponent, SubscriptionPlanComponent],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,
