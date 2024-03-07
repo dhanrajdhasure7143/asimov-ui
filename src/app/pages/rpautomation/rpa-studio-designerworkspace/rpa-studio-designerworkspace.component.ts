@@ -242,8 +242,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.required],
-      groupDescription: ['', Validators.required],
+      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$')])],
+      groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
     });
   }
 
@@ -2354,7 +2354,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         edit: false,
         color: item.color,
         isExpand : item.isMicroBot? false: true,
-        isMicroBot: item.isMicroBot? true:false
+        isMicroBot: item.isMicroBot? true:false,
+        description: item.description? item.description: "",
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -3623,6 +3624,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   publishGroup(group:any) {
     // this.generatePayload("","",group);
+    if(this.collectGroupIds(group.id).length == 0){
+      this.toastService.showError('Please add tasks to the group!');
+      return;
+    }
     console.log("publish Bot Payload",group)
     // console.log(`Publishing group with ID: ${group.id}`);
     this.spinner.show();
