@@ -61,14 +61,15 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnChanges(){
     if (this.isupdateform) {
+      console.log(this.updatetaskDetails)
       this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
-      if(this.updatetaskDetails.executablePath != null){
+      if(this.updatetaskDetails.executablePath){
         this.customTaskForm.get("selectedCategory").setValue("Path");
         this.radioChange("Path")
       }
-      if(this.updatetaskDetails.code != null){
+      if(this.updatetaskDetails.code){
         this.customTaskForm.get("selectedCategory").setValue("Code");
         this.radioChange("Code")
       }
