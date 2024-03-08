@@ -61,7 +61,6 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnChanges(){
     if (this.isupdateform) {
-      console.log(this.updatetaskDetails)
       this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
