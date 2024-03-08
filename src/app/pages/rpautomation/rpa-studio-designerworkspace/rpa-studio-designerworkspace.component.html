@@ -86,11 +86,12 @@
               
               <div *ngIf="group.isExpand" class="groupHeader">
                 <!-- <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{group.groupName}}</span> -->
-                <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 25 ? (group.groupName | slice:0:25) + '...' : group.groupName }}</span>
+                <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 15 ? (group.groupName | slice:0:15) + '...' : group.groupName }}</span>
                 <span class="groupTitle clickable" (click)="removeGroup(group)" *ngIf="group.edit == false">
                   <i class="ri-delete-bin-line text-danger"></i>
                 </span>
-                <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false && !group.isMicroBot">
+                <!-- <span class="groupTitle clickable" (click)="group.edit = true" *ngIf="group.edit == false && !group.isMicroBot"> -->
+                <span class="groupTitle clickable" (click)="openGroupEditDialog(group)" *ngIf="group.edit == false && !group.isMicroBot">
                   <i class="ri-pencil-line text-primary"></i>
                 </span>
                 <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
@@ -100,7 +101,7 @@
                   <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
                 </span>
                 <span class=" groupTitle clickable" *ngIf="group.edit == false">
-                  <i class="pi pi-info-circle" style="font-size: 1rem" [pTooltip]="group.description"></i>
+                  <i class="pi pi-info-circle" style="font-size: 0.9rem" [pTooltip]="group.description"></i>
                 </span>
                 <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onExpandCollapseGroup(group)">
                   <i class="pi pi-angle-up"></i>
@@ -109,12 +110,12 @@
                 <span class="groupTitle clickable" *ngIf="group.edit == true">
                   <input type="text" (keyup)="group.groupName = $event.target.value" [value]="group.groupName" />
                 </span>
-                <span class="groupTitle clickable" *ngIf="group.edit == true">
+                <!-- <span class="groupTitle clickable" *ngIf="group.edit == true">
                   &nbsp;
                   <input type="color" (change)="group.color = $event.target.value" [value]="group.color"
                     class="custom-color-picker" />
                   &nbsp;
-                </span>
+                </span> -->
                 <!-- <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true" (click)="group.edit = false"><i
                     class="ri-check-line"></i></span> -->
                 <span class="text-suuccess groupTitle clickable" *ngIf="group.edit == true && group.groupName.trim() !== ''" (click)="group.edit = false"><i class="ri-check-line"></i></span>
@@ -387,8 +388,8 @@
 </div>
 
 <div *ngIf="showGroup_Overlay" class="overlay">
-  <p-dialog header="Action Items Grouping" [(visible)]="showGroup_Overlay" [modal]="true" [style]="{width: '30vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
-    <form [formGroup]="groupForm" (ngSubmit)="addGroup()">
+  <p-dialog header="{{ dialogHeader }}" [(visible)]="showGroup_Overlay" [modal]="true" [style]="{width: '30vw'}" [resizable]="false" (visibleChange)="onDialogClose($event)">
+    <form [formGroup]="groupForm" (ngSubmit)="isEditing ? updateGroup() : addGroup()">
       <div class="p-field">
         <label for="groupName">Group Name <span class="star">*</span></label>
         <input id="groupName" type="text" maxlength="51" formControlName="groupName" class="form-control" autocomplete="off">
@@ -418,7 +419,7 @@
           Only alphabets & space between words are allowed.
         </span> -->
       </div>
-      <button style="float: right; margin-top: 15px;" class="btn bluebg-button" [disabled]="groupForm.invalid" type="submit">Group</button>
+      <button style="float: right; margin-top: 15px;" class="btn bluebg-button" [disabled]="groupForm.invalid" type="submit">{{ submitButtonText }}</button>
     </form>
   </p-dialog>
 </div>

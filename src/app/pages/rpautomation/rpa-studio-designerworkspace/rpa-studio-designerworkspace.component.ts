@@ -176,7 +176,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   showPublishButton: boolean = false;
   isMicroBot: boolean = false;
   microBotNodes_list:any[]=[];
-
+  isEditing = false;
+  dialogHeader:any;
+  submitButtonText:any;
+  editGroupData: any;
 
   constructor(
     private rest: RestApiService,
@@ -3501,10 +3504,33 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   onOpenGroupOverlay(){
+      this.isEditing = false;
+      this.dialogHeader = 'Action Items Grouping';
+      this.submitButtonText = 'Group';
+      this.showGroup_Overlay = true;
+  }
+
+  openGroupEditDialog(group: any) {
+    this.editGroupData = group;
+    if (this.groupForm.controls['groupName'] && this.groupForm.controls['groupDescription']) {
+      this.groupForm.setValue({
+        groupName: group.groupName,
+        groupDescription: group.description
+      });
+    } else {
+      this.toastService.showError('Group Name and Description are missing.');
+    }
+    this.isEditing = true;
+    this.dialogHeader = 'Update Group Details';
+    this.submitButtonText = 'Update';
     this.showGroup_Overlay = true;
-    // this.addGroup()
-
-
+  }
+  
+  updateGroup() {
+      this.editGroupData.groupName = this.groupForm.get('groupName').value;
+      this.editGroupData.description = this.groupForm.get('groupDescription').value;
+      this.showGroup_Overlay = false;
+      this.groupForm.reset();
   }
   
   onDialogClose(isVisible: boolean) {
