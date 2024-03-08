@@ -176,7 +176,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   showPublishButton: boolean = false;
   isMicroBot: boolean = false;
   microBotNodes_list:any[]=[];
-
+  isEditing = false;
+  dialogHeader:any;
+  submitButtonText:any;
+  editGroupData: any;
 
   constructor(
     private rest: RestApiService,
@@ -242,8 +245,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.required],
-      groupDescription: ['', Validators.required],
+      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$')])],
+      groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
     });
   }
 
@@ -2354,7 +2357,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         edit: false,
         color: item.color,
         isExpand : item.isMicroBot? false: true,
-        isMicroBot: item.isMicroBot? true:false
+        isMicroBot: item.isMicroBot? true:false,
+        description: item.description? item.description: "",
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -3500,10 +3504,33 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   onOpenGroupOverlay(){
+      this.isEditing = false;
+      this.dialogHeader = 'Action Items Grouping';
+      this.submitButtonText = 'Group';
+      this.showGroup_Overlay = true;
+  }
+
+  openGroupEditDialog(group: any) {
+    this.editGroupData = group;
+    if (this.groupForm.controls['groupName'] && this.groupForm.controls['groupDescription']) {
+      this.groupForm.setValue({
+        groupName: group.groupName,
+        groupDescription: group.description
+      });
+    } else {
+      this.toastService.showError('Group Name and Description are missing.');
+    }
+    this.isEditing = true;
+    this.dialogHeader = 'Update Group Details';
+    this.submitButtonText = 'Update';
     this.showGroup_Overlay = true;
-    // this.addGroup()
-
-
+  }
+  
+  updateGroup() {
+      this.editGroupData.groupName = this.groupForm.get('groupName').value;
+      this.editGroupData.description = this.groupForm.get('groupDescription').value;
+      this.showGroup_Overlay = false;
+      this.groupForm.reset();
   }
   
   onDialogClose(isVisible: boolean) {
@@ -3623,6 +3650,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   publishGroup(group:any) {
     // this.generatePayload("","",group);
+    if(this.collectGroupIds(group.id).length == 0){
+      this.toastService.showError('Please add tasks to the group!');
+      return;
+    }
     console.log("publish Bot Payload",group)
     // console.log(`Publishing group with ID: ${group.id}`);
     this.spinner.show();

@@ -225,8 +225,8 @@
 
 
 .groupTitle{
-  
   background-color: white;
+  padding-right: 4px;
 }
 
 ::ng-deep
