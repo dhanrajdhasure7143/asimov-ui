@@ -3662,8 +3662,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   console.log("micro bot payload---",JSON.stringify(payload));
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
+      let parsedResponce = JSON.parse(response)
       this.spinner.hide();
-      if (response.errorMessage == undefined) {
+      if(parsedResponce.errorCode == 3008){
+        this.toastService.showError(parsedResponce.errorMessage);
+        return
+      }
+      if (parsedResponce.code == 4200) {
         this.toastService.showSuccess('Microbot published successfully!', 'response');
         console.log(this.groupsData)
         this.groupsData.map((item: any) =>{ 
@@ -3686,7 +3691,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.refreshMicroBotsList();
           this.isMicroBot = true;
       } else{
-        this.toastService.showError('Error occurred while saving micro bot!');
+        this.toastService.showError(this.toastMessages.saveError);
       }
     },error => {
       this.spinner.hide();
