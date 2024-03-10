@@ -1326,7 +1326,7 @@ getProgrmaDetailsById(programid){
   }
 
   expiryInfo():Observable<any>{
-     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/ExpiryInfo')
   }
   getWhiteListedDomain(domain):Observable<any>{
     return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
@@ -1864,6 +1864,17 @@ importBotwithEncryptedData(body){
   return this.http.post("/rpa-service/import-bot", body);
 }
 
+saveMicroBot(body){
+  return this.http.post("/rpa-service/save-micro-bot",body,{responseType: "text" })
+}
+
+getMicroBots(){
+  return this.http.get<any[]>("/rpa-service/microbots-list");
+}
+
+fetchMicroBot(id:any){
+  return this.http.get("/rpa-service/fetch-microbot/"+id)
+}
 createSdkCustomTasks(data : any){
   return this.http.post('/rpa-service/sdk-custom/create-sdk-task', data)
 }
@@ -1879,4 +1890,22 @@ deleteCustomTasksbyId(id:any){
 getCustomTasksbyId(id : any){
   return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
 }
+
+deleteMicroBot(microBotId: string) {
+  return this.http.get('https://dummyjson.com/products/1');
+}
+
+loadPredefinedBots(): Observable<any>{
+  return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
+}
+
+getCheckoutScreen(body){
+  return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
+}
+
+sendEmailEntrepricePlan(userId:string){
+  let headers = new HttpHeaders({});
+  return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+}
+
 }

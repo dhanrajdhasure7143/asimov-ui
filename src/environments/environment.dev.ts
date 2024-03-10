@@ -45,6 +45,11 @@ export const environment = {
     isCopilotEnable : true,
     isRPAConfigurationsImportEnabled : true,
     isSubscrptionEnabled : true,
-    isCustomerBots : true
+    isCustomerBots : true,
+    environmentName: "DEV",
+    isMicroBot:true,
+    paymentSuccessURL: "https://eziap.dev.epsoftinc.com/#/pages/home",
+    paymentFailuerURL: "https://eziap.dev.epsoftinc.com/#/pages/home",
+    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
   };
   

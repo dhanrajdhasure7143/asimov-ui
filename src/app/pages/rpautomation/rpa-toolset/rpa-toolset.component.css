@@ -18,8 +18,8 @@
 }
 .left-panel-header{
   padding: 10px 10px;
-  min-height: 20px;
-  background-color: #098de6!important;
+  min-height: 5px;
+  /* background-color: #098de6!important; */
   width: 100%;
   font-weight: 600 !important;
   color: white !important;
@@ -174,36 +174,42 @@
   top: 14px;
 }
 
-.actionsheaderdiv {
+/* .actionsheaderdiv {
   position: relative;
   display: flex;
   align-items: center;
-}
+  background-color: #098de6!important;
+  height: 70px;
+} */
 
 .toolset-mainheader {
   padding: 5px 10px 4px 10px;
-}
-.actionsheaderdiv img.testplus1 {
-  width: 12px;
-  height: 12px;
 }
 .actionsheaderdiv img.testplus {
   margin-right: 12px !important;
   opacity: 0.5;
 }
-.toolset-close {
-  width: 10%;
+/* .toolset-close {
+   width: 10%;
+  text-align: end;
+  margin: 0px;
+  float: right; 
+  
+}  */
+.textplus{
+  height: 35px;
+  width:28px;
+  /* margin-top:43px;
+  background-color:white ;
+  width: 10%; */
   text-align: end;
   margin: 0px;
   float: right;
-}
-.textplus{
-  height:22px;
-  width:22px;
-  margin-top: -3px;
+  margin-right: -260px;
+  margin-bottom: -32px;
 }
 .dragicons {
-  padding: 0px 5px 0px 12px;
+  padding: 6px 5px 0px 12px;
   white-space: nowrap;
   height: calc(100% - 95px);
   overflow: hidden auto; 
@@ -219,4 +225,81 @@ span.con-text {
   display: flex;
   align-items: center;
   padding: 3px 6px;
+}
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; 
+  background-color: #098de6!important;
+}
+
+.left-panel-header .p-tabview-title {
+  font-size: 15px; 
+  color: white; 
+  font-weight: 600;
+  height: 35px;
+}
+
+.toolset-close {
+  cursor: pointer;
+ 
+}
+
+.custom-header .left-panel-header {
+  width: auto !important;
+  padding: 10px !important; 
+  background-color: #098de6!important;
+}
+.p-tabview-nav-container {
+  height: 54px;
+  margin-bottom: 8px;
+}
+.p-tabview-nav{
+  height: 20px;
+}
+
+.micro-bot-image{
+  width: 20px;
+}
+
+/* #dragicons2{
+ li{
+  padding:3px;
+ }
+} */
+
+.dragicons ul li {
+  margin-bottom: 8px; 
+  border-bottom: 1px solid #e9e9e9;
+  /* padding-bottom: 8px; */
+  padding: 5px;
+}
+
+.content-container{
+  /* height: 383px; */
+  overflow-y: auto;
+  height: calc(100vh - 270px);
+}
+
+.micro-bot-item:hover {
+  background-color: #e0f0fa; 
+  cursor: pointer; 
+}
+
+.micro-bot-item {
+  position: relative; 
+}
+
+.delete-icon {
+  position: absolute; 
+  top: 6px; 
+  right: 6px; 
+  cursor: pointer;
+  display: none; 
+  height: 17px;
+}
+
+.micro-bot-item:hover .delete-icon {
+  display: inline; 
 }

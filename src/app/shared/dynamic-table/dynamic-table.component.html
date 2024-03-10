@@ -1,7 +1,7 @@
 <div class="">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields"
         [reorderableColumns]="true" [(selection)]="selectedItem" [scrollable]="true"
-        [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">
+        [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">      
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <!-- <p-multiSelect *ngIf="show_column_filter" [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
@@ -73,7 +73,7 @@
                 <td style="flex: 0 0 2rem;" *ngIf="checkBoxShow" class="checkboxth">
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
-                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" [style]="col.width">
+                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid" alignFrozen="right" pFrozenColumn [frozen]="col.ColumnName=='action' && col.freeze" [style]="col.width">                    
                     <span *ngIf="col.ColumnName!='action' && col.ColumnName != 'percentageComplete'">
                             <div class="d-flex align-items-center">
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
@@ -332,6 +332,18 @@
                             <img src="../../../assets/images-n/gridicons/delete-hover.svg" alt="Delete" class="testplus hover-icon">
                     </a>
                 </span>
+                        <span *ngIf="screenTable=='subscrption_overview'" class="option-btn">
+                            <!-- <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" (click)="onManageClick($event)"> -->
+                            <i class="pi pi-ellipsis-h" (click)="onManageClick($event)"></i>
+                            <p-overlayPanel styleClass="overview-items" #op>
+                                <ng-template pTemplate>
+                                    <div class="docritclk">
+                                        <div class="overview"> <a class="overview-button" (click)="onResubscribe(rowData)"> Resubscribe </a> </div>
+                                        <div class="overview"> <a class="overview-button" (click)="onCancelSubscribtion(rowData)"> Cancel </a> </div>
+                                    </div>
+                                </ng-template>
+                            </p-overlayPanel>
+                        </span>
                         </div>
                     </span>
                 </td>

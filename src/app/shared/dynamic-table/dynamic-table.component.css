@@ -110,3 +110,26 @@ span.testtooltip:before {
     /* visibility: hidden; */
     cursor: no-drop;
 }
+
+.overview:hover{
+    cursor: pointer;
+    background-color: #e9ecef;
+}
+
+.docritclk {
+    height: 70px;
+    width: 120px;
+}
+
+.overview{
+    height: 35px;
+    display: block;
+    text-align: center;
+
+}
+
+.overview-button{
+    top: 7px;
+    position: relative;
+    color: #495057 !important;
+}

@@ -54,6 +54,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { Rpa_Hints } from './model/RPA-Hints';
 import { RpaSdkComponent } from './rpa-sdk/rpa-sdk.component';
 import { RpaSdkFormComponent } from './forms/rpa-sdk-form/rpa-sdk-form.component';
+import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerworkspace/rpa-microbot-designerworkspace.component';
  
 
 @NgModule({
@@ -83,7 +84,8 @@ import { RpaSdkFormComponent } from './forms/rpa-sdk-form/rpa-sdk-form.component
     RpaActionItemsComponent,
     RpaApprovalsComponent,
     RpaSdkComponent,
-    RpaSdkFormComponent
+    RpaSdkFormComponent,
+    RpaMicrobotDesignerworkspaceComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,

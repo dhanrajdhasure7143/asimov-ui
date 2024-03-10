@@ -27,13 +27,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { SharedModule } from './shared/shared.module';
 import { ToastModule } from "primeng/toast";
 import { toastMessages } from './shared/model/toast_messages';
+import { SoApprovalComponent } from './so-approval/so-approval.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RedirectionComponent,
-    ApprovalsComponent
+    ApprovalsComponent,
+    SoApprovalComponent
   ],
 
   imports: [

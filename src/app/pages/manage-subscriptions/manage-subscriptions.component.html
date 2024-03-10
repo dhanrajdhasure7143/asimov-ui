@@ -3,177 +3,15 @@
   <div class="maincont-contentarea">
     <div class="row main-content-head">
       <h3>
-        <label id="popup_title">
+        <!-- <label id="popup_title">
             <a routerLink="/pages/home" class="imageBox">
               <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
               <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
             </a>
-        </label>
+        </label> -->
         <span class="title_text">Manage Subscriptions</span>
       </h3>
     </div>
-    <!-- <section class="tp-section">
-          <mat-nav-list class="">
-            <a
-              mat-list-item
-              class="link"
-              id="currentplan"
-              (click)="hightlight('currentplan', null)"
-              [matTooltip]="!obj.sideBarOpen ? 'Current Plan' : ''"
-              matTooltipClass="sidebarTooltip"
-              matTooltipPosition="right"
-            >
-              <span class="side-icon">
-                <span class="active-img" id="eiap-home-icon-active">
-                  <img
-                    src="../../../assets/images/subscription/CurrentPlan3.svg"
-                  />
-                </span>
-                <span class="hover-img" id="eiap-home-icon-white">
-                  <img
-                    src="../../../assets/images/subscription/CurrentPlan3.svg"
-                  />
-                </span>
-                <span class="default-img" id="eiap-home-icon-gray">
-                  <img
-                    src="../../../assets/images/subscription/CurrentPlan3.svg"
-                  />
-                </span>
-              </span>
-              <span class="side-menu-font">Current Plan</span>
-            </a>
-            <a
-              mat-list-item
-              class="link"
-              id="paymentmethods"
-              (click)="hightlight('paymentmethods', null)"
-              [matTooltip]="!obj.sideBarOpen ? 'Payment Methods' : ''"
-              matTooltipClass="sidebarTooltip"
-              matTooltipPosition="right"
-            >
-              <span class="side-icon">
-                <span class="active-img" id="eiap-home-icon-active">
-                  <img
-                    src="../../../assets/images/subscription/PaymentMethods1.svg"
-                  />
-                </span>
-                <span class="hover-img" id="eiap-home-icon-white">
-                  <img
-                    src="../../../assets/images/subscription/PaymentMethods1.svg"
-                  />
-                </span>
-                <span class="default-img" id="eiap-home-icon-gray">
-                  <img
-                    src="../../../assets/images/subscription/PaymentMethods1.svg"
-                  />
-                </span>
-              </span>
-              <span class="side-menu-font">Payment Methods</span>
-            </a>
-            <a mat-list-item class="link" id="eiap-home" (click)="hightlight('billing',null)"
-                        [matTooltip]=" !obj.sideBarOpen ? 'Billing Address' : ''" matTooltipClass="sidebarTooltip"
-                        matTooltipPosition="right">
-                        <span class="side-icon">
-                            <span class="active-img" id="eiap-home-icon-active">
-                                <img src="../../../assets/images/dashboard_icons/default-arrows/Dashboard.svg">
-                            </span>
-                            <span class="hover-img" id="eiap-home-icon-white">
-                                <img src="../../../assets/images/dashboard_icons/white-icons/Dashboard.svg">
-                            </span>
-                            <span class="default-img" id="eiap-home-icon-gray">
-                                <img src="../../../assets/images/dashboard_icons/grey-icons/Dashboard.svg">
-                            </span>
-                        </span>
-
-                        <span class="side-menu-font">Billing Address</span>
-
-                    </a>
-            <a
-              mat-list-item
-              class="link"
-              id="paymenthistory"
-              (click)="hightlight('paymenthistory', null)"
-              [matTooltip]="!obj.sideBarOpen ? 'Payment History' : ''"
-              matTooltipClass="sidebarTooltip"
-              matTooltipPosition="right"
-            >
-              <span class="side-icon">
-                <span class="active-img" id="eiap-home-icon-active">
-                  <img
-                    src="../../../assets/images/subscription/PaymentHistory2.svg"
-                  />
-                </span>
-                <span class="hover-img" id="eiap-home-icon-white">
-                  <img
-                    src="../../../assets/images/subscription/PaymentHistory2.svg"
-                  />
-                </span>
-                <span class="default-img" id="eiap-home-icon-gray">
-                  <img
-                    src="../../../assets/images/subscription/PaymentHistory2.svg"
-                  />
-                </span>
-              </span>
-
-              <span class="side-menu-font">Payment History</span>
-            </a>
-
-            <a
-              mat-list-item
-              class="link"
-              id="order"
-              (click)="hightlight('order', null)"
-              [matTooltip]="!obj.sideBarOpen ? 'Order Details' : ''"
-              matTooltipClass="sidebarTooltip"
-              matTooltipPosition="right"
-            >
-              <span class="side-icon">
-                <span class="active-img" id="eiap-home-icon-active">
-                  <img
-                    src="../../../assets/images/subscription/OrderDetails1.svg"
-                  />
-                </span>
-                <span class="hover-img" id="eiap-home-icon-white">
-                  <img
-                    src="../../../assets/images/subscription/OrderDetails1.svg"
-                  />
-                </span>
-                <span class="default-img" id="eiap-home-icon-gray">
-                  <img
-                    src="../../../assets/images/subscription/OrderDetails1.svg"
-                  />
-                </span>
-              </span>
-
-              <span class="side-menu-font">Order Details</span>
-            </a>
-          </mat-nav-list>
-        </section> 
-        <div class="col subscription-content-area">
-        <div class="section one" id="section1" *ngIf="currentplansection">
-          <app-currentplan></app-currentplan>
-        </div>
-        <div
-          class="section one"
-          style="overflow: scroll; height: 100%"
-          id="section1"
-          *ngIf="paymentmethodssection"
-        >
-          <app-payment-methods></app-payment-methods>
-        </div>
-        <div class="section one" id="section1" *ngIf="billingaddresssection">
-                <app-billing-address></app-billing-address>
-            </div>
-        <div class="section one" id="section1" *ngIf="paymenthistorysection">
-          <app-payment-history></app-payment-history>
-        </div>
-        <div class="section one" id="section1" *ngIf="orderdetailssection">
-          <app-order-details></app-order-details>
-        </div>
-      </div> 
-    </div>
-</div> -->
-
     <div class="main-content-body tablist-cont">
       <div id="" class="tabs_screen subscrip_tabs h-100">
         <p-tabView #tabView [(activeIndex)]="activeIndex" styleClass="tabview-custom" (onChange)="handleChange($event,tabView)"  >
@@ -219,7 +57,8 @@
               <span class="tab_title">Package Options</span>
             </ng-template>
             <span *ngIf="check_tab == 4" >
-              <app-currentplan></app-currentplan>
+              <!-- <app-currentplan></app-currentplan> -->
+              <app-subscription-plan></app-subscription-plan>
             </span>
           </p-tabPanel>
         </p-tabView>

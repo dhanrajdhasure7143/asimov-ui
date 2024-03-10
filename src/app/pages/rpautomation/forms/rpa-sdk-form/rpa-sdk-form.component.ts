@@ -64,11 +64,11 @@ export class RpaSdkFormComponent implements OnInit {
       this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
-      if(this.updatetaskDetails.executablePath != null){
+      if(this.updatetaskDetails.executablePath){
         this.customTaskForm.get("selectedCategory").setValue("Path");
         this.radioChange("Path")
       }
-      if(this.updatetaskDetails.code != null){
+      if(this.updatetaskDetails.code){
         this.customTaskForm.get("selectedCategory").setValue("Code");
         this.radioChange("Code")
       }
@@ -89,9 +89,17 @@ export class RpaSdkFormComponent implements OnInit {
     if(event == "Path"){
       this.showPathField = true;
       this.showCodeField = false
+      this.customTaskForm.get('executablePath').setValidators([Validators.required]);
+      this.customTaskForm.get('executablePath').updateValueAndValidity();
+      this.customTaskForm.get('code').clearValidators();
+      this.customTaskForm.get('code').updateValueAndValidity();
     } else {
       this.showPathField = false;
       this.showCodeField = true
+      this.customTaskForm.get('code').setValidators([Validators.required]);
+      this.customTaskForm.get('code').updateValueAndValidity();
+      this.customTaskForm.get('executablePath').clearValidators();
+      this.customTaskForm.get('executablePath').updateValueAndValidity();
     }
   }
 

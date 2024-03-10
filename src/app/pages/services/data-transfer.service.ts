@@ -166,4 +166,11 @@ setScreenList(module:any){
   triggerReset(){ 
     this.resetTableSearchSubject.next(true);
   }
+  
+  private _microBotsList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public readonly microBotsList$: Observable<any[]> = this._microBotsList.asObservable();
+
+  updateMicroBotsList(newList: any[]) {
+    this._microBotsList.next(newList);
+  }
 }

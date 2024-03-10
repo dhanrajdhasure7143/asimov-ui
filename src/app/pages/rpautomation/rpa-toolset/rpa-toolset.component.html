@@ -1,73 +1,79 @@
-
-    
-  
-  
-    <div class="toolset" >
-      <div id="search">
-        <div class="actionsheaderdiv">
-          <span class="left-panel-header">
-            Toolset & Actions
-            <button type="button" class="toolset-close" (click)="closeToolsetEvent()" aria-label="Close">
-              <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close-circle-white.svg" class="textplus"></span>
-            </button>
-          </span>
-          
-          
-        </div>
-        <div class="toolset-mainheader" *ngIf="true" >
-        
-         
-          <div class="search-content">
-
-         
-
-            <input type="text" *ngIf="true" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
-                class="search form-control" autocomplete="off">
-            <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="testplus1">
-          </div> 
-          <!-- <span (click)="search=false" class="toolset-search-close"><i class="fa fa-times"></i></span> -->
-        </div>
-        <button  *ngIf="false" (click)="search=true" class="border toolset-search-button">
-          <span  class="text-primary">
-            <i class="fa fa-search"></i>
-          </span>
-        </button>
-      </div>
-        <div id="dragicons" class="dragicons">
-    
-       
-        <div #section class="section">
-            <mat-accordion  multi>
-          <div class="nodes rpa-dragicon" placement="bottom" *ngFor="let node of templateNodes | tasksearch:userFilter.name">
-    
-              <mat-expansion-panel  [expanded]="node.expanded" style="padding-right:15px;">
-                  <mat-expansion-panel-header [id]="node.name">
-                    <mat-panel-title>
+<div class="toolset"> 
+  <div class="actionsheaderdiv">
+        <button type="button" class="toolset-close" (click)="closeToolsetEvent()" aria-label="Close">
+              <span aria-hidden="true"><img src="../../../../../assets/images-n/projects/close-circle-line.svg"  class="textplus"></span>
+        </button> 
+    <div class="p-tabview p-tabview-custom">  
+      <p-tabView class="left-panel-header" (onChange)="onTabChange($event)">
+        <p-tabPanel header="Toolset & Actions">
+          <div id="search"  *ngIf="!isMicroBotsTabActive" class="scrollable-content">
+            <div class="toolset-mainheader">
+              <div class="search-content">
+                <input type="text" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
+                  class="search form-control" autocomplete="off">
+                <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="testplus1">
+              </div>
+            </div>
+            <div #section class="section content-container">
+              <mat-accordion multi>
+                <div class="nodes rpa-dragicon" placement="bottom"
+                  *ngFor="let node of templateNodes | tasksearch:userFilter.name">
+                  <mat-expansion-panel [expanded]="node.expanded" style="padding-right:15px;">
+                    <mat-expansion-panel-header [id]="node.name">
+                      <mat-panel-title>
                         <span class="nodename pull-left">
-                            {{node.name}}
-                          </span>
-                         
-                    </mat-panel-title>
-                  
-                  </mat-expansion-panel-header>
-                  <div *ngFor="let taskdata  of (node | task) ">
-                    <div  *ngIf="taskdata.visibulity!=false" class="toolset-con" [dndDraggable]="taskdata">
+                          {{node.name}}
+                        </span>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let taskdata  of (node | task) ">
+                      <div *ngIf="taskdata.visibulity!=false" class="toolset-con" [dndDraggable]="taskdata">
                         <span class="taskname">
-                          <img [src]="taskdata.path" class="con-img" /> 
-                        <span class="con-text">{{taskdata.selectedNodeTask}}</span>
-                      </span>
+                          <img [src]="taskdata.path" class="con-img" />
+                          <span class="con-text">{{taskdata.selectedNodeTask}}</span>
+                        </span>
                         <br>
+                      </div>
                     </div>
-                  </div>
-                </mat-expansion-panel>
-              
+                  </mat-expansion-panel>
+                </div>
+              </mat-accordion>
+            </div>
           </div>
-        </mat-accordion>
- 
-        </div>
-     
+        </p-tabPanel>
+      
+        <p-tabPanel header="Micro Bots">
+          <div id="search">
+            <div class="toolset-mainheader">
+              <div class="search-content">
+                <input type="text" [(ngModel)]="microBotsUserFilter.name" name="node" placeholder="Search"
+                  class="search form-control" autocomplete="off">
+                <img src="../../../../assets/images-n/dashboard/search.svg" alt="" class="testplus1">
+              </div>
+            </div>
+          </div>
+          <div id="dragicons2" class="dragicons content-container" *ngIf="isMicroBotsTabActive">
+            <ul>
+              <li style="list-style-type: none;" *ngFor="let microBot of filteredMicroBotsList" [dndDraggable]="microBot"  
+              class="micro-bot-item" (mouseenter)="showDeleteIcon(microBot)" (mouseleave)="hideDeleteIcon(microBot)">
+                <img src="../../../../assets/images/robot.png" alt="{{ microBot.name }}" class="micro-bot-image"> &nbsp;
+                {{ microBot.microBotName }}
+                <img [src]="microBot.hover ? '../../../../assets/images-n/gridicons/delete-hover.svg' : '../../../../assets/images-n/gridicons/delete-default.svg'" alt="Delete" class="delete-icon" (mouseenter)="microBot.hover = true" 
+                (mouseleave)="microBot.hover = false" (click)="deleteMicroBot(microBot)" *ngIf="microBot.showDeleteIcon" pTooltip="Delete" tooltipPosition="top">
+              </li>
+            </ul>
+          </div>
+          <p-toast></p-toast>
+        </p-tabPanel>
+      </p-tabView>
       </div>
+   </div>
+</div>
 
-    </div>
-  
-
+<p-confirmDialog #cd2 [style]="{width: '30vw'}" key="positionDialog3" position="center" [baseZIndex]="10000"
+ rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+   <ng-template pTemplate="footer">
+      <button type="button" pButton class="btn reset-btn" label="No" (click)="cd2.reject()"></button>
+      <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd2.accept()"></button>
+   </ng-template>
+</p-confirmDialog>

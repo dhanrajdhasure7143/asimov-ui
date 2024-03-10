@@ -5,10 +5,12 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RedirectionComponent } from './rediraction/redirection.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
+import { SoApprovalComponent } from './so-approval/so-approval.component';
 
 const routes: Routes = [
   { path:'', redirectTo:"login", pathMatch:"full" },
   {path:'approvals', component:ApprovalsComponent},
+  {path:'soapprovals', component:SoApprovalComponent},
   { path: 'login', component: LoginComponent },
   { path: 'redirect', component: RedirectionComponent },
   { path: 'pages', loadChildren: () => import('src/app/pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },

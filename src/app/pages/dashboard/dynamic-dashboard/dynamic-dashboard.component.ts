@@ -703,28 +703,21 @@ export class DynamicDashboardComponent implements OnInit {
     this.showOverlay = false;
   }
 
-  toggleConfigureDropdown(e) {
-    setTimeout(() => {
-      this.showWidgetValue = true;
-      // Toggle the visibility of the Configure dropdown
-      this.showTableData = true;
-      this.configuration_id = this.selected_widget.id?this.selected_widget.id: this.selected_widget.childId;
-    }, 100);
-    }
-
     viewProcessInfo() {
       this.showOverlay = true;
       this.isfromDashBoard = true; 
     }
 
     closeOverlay(event) {
-      this.processInfo = event;
+      console.log(event)
+      // this.processInfo = event;
       this.showOverlay = false;
-      console.log(this.showTableData);
     }
 
     onCustomEvent(event){
+      console.log(event)
       this.showOverlay = event
-      this.getDashBoardData(this._paramsData.dashboardId,false);
+      this.getDashBoardData(this._paramsData.dashboardId,true);
+      this.getTable();
     }
 }

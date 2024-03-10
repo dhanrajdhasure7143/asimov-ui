@@ -1,5 +1,5 @@
 <!-- <div *ngIf="expiry>=0" class="nav-main"> -->
-  <div class="nav-main">
+  <div class="nav-main subcriptionExpiry" [class.disabled]="isSideMenuDisabled">
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
         <span *ngIf="isCopilotEnable" >

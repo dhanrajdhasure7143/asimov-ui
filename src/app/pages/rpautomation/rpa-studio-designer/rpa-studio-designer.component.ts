@@ -10,6 +10,7 @@ import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworks
 import { ConfirmationService } from 'primeng/api';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { DataTransferService } from '../../services/data-transfer.service';
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
@@ -60,7 +61,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     private changeDecoratorRef:ChangeDetectorRef,
     private confirmationService:ConfirmationService,
     private toastService: ToasterService,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private dt:DataTransferService
     ) { }
 
   ngOnInit() {
@@ -79,7 +81,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.getToolsetItems();
     // this.getAllBots();
     this.getAllCategories();
-    this.getPredefinedBots();
+    // this.getPredefinedBots();
     setTimeout(() => {
     this.getAllEnvironments();
     }, 1000);
@@ -407,17 +409,18 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     return this.current_instance.filteredEnvironments.filter((item:any)=>item.check==true);
   }
 
+  //  Enable below code for predefined Bot feature in RPA Designer 
   getPredefinedBots() {
-    this.spinner.show()
+    // this.spinner.show()
     this.rest.getpredefinedbots().subscribe((response:any)=>{
       // this.spinner.hide()
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
-      else
-      this.toastService.showError(response.errorMessage);
+      // else
+      // this.toastService.showError(response.errorMessage);
     },(err:any)=>{
       this.spinner.hide();
-      this.toastService.showError(this.toastMessages.preDefineBotErr);
+      // this.toastService.showError(this.toastMessages.preDefineBotErr);
     })
   }
 

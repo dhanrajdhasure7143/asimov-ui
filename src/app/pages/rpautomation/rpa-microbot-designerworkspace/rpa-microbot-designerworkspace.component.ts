@@ -40,11 +40,11 @@ import { toastMessages } from "src/app/shared/model/toast_messages";
 import { Location } from "@angular/common";
 
 @Component({
-  selector: "app-rpa-studio-designerworkspace",
-  templateUrl: "./rpa-studio-designerworkspace.component.html",
-  styleUrls: ["./rpa-studio-designerworkspace.component.css"],
+  selector: 'app-rpa-microbot-designerworkspace',
+  templateUrl: './rpa-microbot-designerworkspace.component.html',
+  styleUrls: ['./rpa-microbot-designerworkspace.component.css']
 })
-export class RpaStudioDesignerworkspaceComponent implements OnInit {
+export class RpaMicrobotDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
   @Input("index") public index: any;
   @Input("toolsetItems") public toolset: any[];
@@ -176,10 +176,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   showPublishButton: boolean = false;
   isMicroBot: boolean = false;
   microBotNodes_list:any[]=[];
-  isEditing = false;
-  dialogHeader:any;
-  submitButtonText:any;
-  editGroupData: any;
+
 
   constructor(
     private rest: RestApiService,
@@ -245,8 +242,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$')])],
-      groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      groupName: ['', Validators.required],
+      groupDescription: ['', Validators.required],
     });
   }
 
@@ -598,7 +595,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified?element.isModified:false
+        isModified:element.isModified,
+        isSelected:false,
+        isHide:false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId)){
         let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
@@ -1265,18 +1264,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
-    if(node.selectedNodeTask == 'Corrupted') {
-      this.confirmationService.confirm({
-        header:'Task not found!',
-        message:'This task is corrupted, Please add right one.',
-        acceptLabel:'Ok',
-        rejectVisible:false,
-        acceptButtonStyleClass:'btn bluebg-button',
-        defaultFocus:'none',
-        key: "designerWorkspace"
-       })
-      return;
-    }
     this.nodedata = node;
     this.form_change = false;
     this.isShowExpand_icon=false;
@@ -2357,8 +2344,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         edit: false,
         color: item.color,
         isExpand : item.isMicroBot? false: true,
-        isMicroBot: item.isMicroBot? true:false,
-        description: item.description? item.description: "",
+        isMicroBot: item.isMicroBot? true:false
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -3146,11 +3132,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       })
     }else{
-      console.log(group)
-      console.log(this.groupsData)
-      this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
-      console.log(groupdata)
+      this.removeGroupObject(group)
     }
   }
 
@@ -3504,33 +3486,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   // }
 
   onOpenGroupOverlay(){
-      this.isEditing = false;
-      this.dialogHeader = 'Action Items Grouping';
-      this.submitButtonText = 'Group';
-      this.showGroup_Overlay = true;
-  }
-
-  openGroupEditDialog(group: any) {
-    this.editGroupData = group;
-    if (this.groupForm.controls['groupName'] && this.groupForm.controls['groupDescription']) {
-      this.groupForm.setValue({
-        groupName: group.groupName,
-        groupDescription: group.description
-      });
-    } else {
-      this.toastService.showError('Group Name and Description are missing.');
-    }
-    this.isEditing = true;
-    this.dialogHeader = 'Update Group Details';
-    this.submitButtonText = 'Update';
     this.showGroup_Overlay = true;
-  }
-  
-  updateGroup() {
-      this.editGroupData.groupName = this.groupForm.get('groupName').value;
-      this.editGroupData.description = this.groupForm.get('groupDescription').value;
-      this.showGroup_Overlay = false;
-      this.groupForm.reset();
+    // this.addGroup()
+
+
   }
   
   onDialogClose(isVisible: boolean) {
@@ -3650,10 +3609,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   publishGroup(group:any) {
     // this.generatePayload("","",group);
-    if(this.collectGroupIds(group.id).length == 0){
-      this.toastService.showError('Please add tasks to the group!');
-      return;
-    }
     console.log("publish Bot Payload",group)
     // console.log(`Publishing group with ID: ${group.id}`);
     this.spinner.show();
@@ -3662,13 +3617,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   console.log("micro bot payload---",JSON.stringify(payload));
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
-      let parsedResponce = JSON.parse(response)
       this.spinner.hide();
-      if(parsedResponce.errorCode == 3008){
-        this.toastService.showError(parsedResponce.errorMessage);
-        return
-      }
-      if (parsedResponce.code == 4200) {
+      if (response.errorMessage == undefined) {
         this.toastService.showSuccess('Microbot published successfully!', 'response');
         console.log(this.groupsData)
         this.groupsData.map((item: any) =>{ 
@@ -3691,7 +3641,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.refreshMicroBotsList();
           this.isMicroBot = true;
       } else{
-        this.toastService.showError(this.toastMessages.saveError);
+        this.toastService.showError('Error occurred while saving micro bot!');
       }
     },error => {
       this.spinner.hide();
