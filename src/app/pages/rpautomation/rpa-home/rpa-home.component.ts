@@ -863,6 +863,7 @@ importBot(){
         })
         payload.groups.forEach(async (g_item, index3)=>{
           g_item.groupId= this.idGenerator();
+          g_item.isMicroBot = false;
           await g_item.nodeIds.forEach(g_nodeId => {
             if(g_nodeId === actualNodeID){
               console.log("....................",g_nodeId,actualNodeID,g_item,newNodeId)
