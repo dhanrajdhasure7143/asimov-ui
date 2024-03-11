@@ -641,7 +641,6 @@ export class RpaHomeComponent implements OnInit {
   }
 
   filterEnvironments(event){
-    console.log(event)
     this.importBotForm.get("environmentId").setValue("");
     this.filteredEnvironments=this.environments.filter(item=>item.categoryId==event.value);
   }
@@ -866,7 +865,6 @@ importBot(){
           g_item.isMicroBot = false;
           await g_item.nodeIds.forEach(g_nodeId => {
             if(g_nodeId === actualNodeID){
-              console.log("....................",g_nodeId,actualNodeID,g_item,newNodeId)
               g_item.nodeIds.push(newNodeId);
               g_item.nodeIds = g_item.nodeIds.filter((nodeId: string) => nodeId !== actualNodeID);
             }
@@ -945,7 +943,6 @@ importBot(){
   }
 
   removeUnusedData(response){
-    console.log("response",response)
     if(response.errorMessage==undefined){
       let botDetails:any={
         botName:response.botName,
@@ -985,7 +982,6 @@ importBot(){
         executionMode:response.executionMode,
         startStopCoordinate:response.startStopCoordinate   
       };
-      console.log("botDetails",botDetails)
       // this.downloadJson(botDetails)
        this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
     } else {
