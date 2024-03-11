@@ -867,6 +867,7 @@ importBot(){
             if(g_nodeId === actualNodeID){
               console.log("....................",g_nodeId,actualNodeID,g_item,newNodeId)
               g_item.nodeIds.push(newNodeId);
+              g_item.nodeIds = g_item.nodeIds.filter((nodeId: string) => nodeId !== actualNodeID);
             }
           });
           
