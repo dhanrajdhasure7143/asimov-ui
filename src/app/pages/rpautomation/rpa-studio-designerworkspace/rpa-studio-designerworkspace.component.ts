@@ -577,6 +577,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           item.nodeIds.forEach((node: any) => {
             let nodeElement: any = document.getElementById(node);
             let groupElement: any = document.getElementById(item.groupId);
+            if(nodeElement)
             this.jsPlumbInstance.addToGroup(item.groupId, nodeElement);
           });
         }

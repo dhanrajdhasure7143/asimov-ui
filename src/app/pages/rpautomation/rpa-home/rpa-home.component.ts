@@ -861,6 +861,16 @@ importBot(){
             payload.sequences[index2].targetTaskId=newNodeId;
           }
         })
+        payload.groups.forEach(async (g_item, index3)=>{
+          g_item.groupId= this.idGenerator();
+          await g_item.nodeIds.forEach(g_nodeId => {
+            if(g_nodeId === actualNodeID){
+              console.log("....................",g_nodeId,actualNodeID,g_item,newNodeId)
+              g_item.nodeIds.push(newNodeId);
+            }
+          });
+          
+        })
       }
 
     });
@@ -940,6 +950,7 @@ importBot(){
         // botDescription:response.description,
         department:response.department,
         categoryId:response.categoryId,
+        groups:response.groups?response.groups:[],
         tasks:[...response.tasks.map((item:any)=>{
           delete item.botTId;
           delete item.version;
@@ -972,6 +983,7 @@ importBot(){
         executionMode:response.executionMode,
         startStopCoordinate:response.startStopCoordinate   
       };
+      console.log("botDetails",botDetails)
       // this.downloadJson(botDetails)
        this.downloadEncryptedData(this.crypto.encrypt(JSON.stringify(botDetails)));
     } else {
@@ -1141,10 +1153,12 @@ importBot(){
       // });
       //  return
        setTimeout(async () => {
-        let generatedPyload :any= await this.generateImportPayload(task_list,botData)
+        let generatedPyload :any= await this.generateImportPayload(task_list,botData);
+        console.log("generatedPyload",generatedPyload)
 
           // console.log("generatedPyload",JSON.stringify(generatedPyload));
       //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
+
       this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
         this.spinner.hide();
         this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
@@ -1170,7 +1184,23 @@ importBot(){
     if(this.hasData(filteredTasks)){
     tasks = filteredTasks.taskList.find(item =>{return item.name == element.taskName });
         if(this.hasData(tasks)){
-        if(element.isConnectionManagerTask && tasks.name != element.taskName){
+          if(element.taskName == "Database Connection"){
+            element["taskName"] = depractedTask.name;
+            element["tMetaId"] = Number(depractedTask.taskId);
+            element["attributes"] = [];
+            element["nodeId"] = "Developer __"+splitValue[1]
+            element["taskConfiguration"] = "null"
+            element["isConnectionManagerTask"] = false
+            element["actionUUID"] = "null"
+          }else if(element.taskName == "Login Mail"){
+            element["taskName"] = depractedTask.name;
+            element["tMetaId"] = Number(depractedTask.taskId);
+            element["attributes"] = [];
+            element["nodeId"] = "Developer __"+splitValue[1]
+            element["taskConfiguration"] = "null"
+            element["isConnectionManagerTask"] = false
+            element["actionUUID"] = "null"
+          } else if(element.isConnectionManagerTask && tasks.name != element.taskName){
               element["taskName"] = depractedTask.name;
               element["tMetaId"] = Number(depractedTask.taskId);
               element["attributes"] = [];
