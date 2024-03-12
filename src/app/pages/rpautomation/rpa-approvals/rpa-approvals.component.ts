@@ -65,8 +65,8 @@ export class RpaApprovalsComponent implements OnInit {
             item["approverConvertedName"]=item.approverName.split("@")[0];
           item["createdBy"]=this.dt.get_username_by_email(this.users_list,item.createdBy);
           item["modifiedBy"]=this.dt.get_username_by_email(this.users_list,item.modifiedBy);
-          item["createdAt"]=item.createdAt?new Date(item.createdAt):'';
-          item["modfiedAt"]=item.modfiedAt?new Date(item.modfiedAt):'';
+          item["createdAt"]=item.createdAt?new Date(item.createdAt):null;
+          item["modfiedAt"]=item.modfiedAt?new Date(item.modfiedAt):null;
           return item;
         });
       }
