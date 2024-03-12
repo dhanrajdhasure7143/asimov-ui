@@ -135,6 +135,9 @@ paymentPlan() {
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
         this.spinner.hide();
+        this.rest.getCheckout().subscribe(res=>{
+          console.log(res,"res....................")
+        });
         return this.stripeService.redirectToCheckout({ sessionId: session.id });
       })
     ).subscribe(
