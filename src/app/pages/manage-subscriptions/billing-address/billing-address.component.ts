@@ -66,7 +66,7 @@ export class BillingAddressComponent implements OnInit {
     this.getCountries();
     this.getBillingInfo();
   }
-
+  
   getCountries() {
     this.countryInfo = Country.getAllCountries();
   }
