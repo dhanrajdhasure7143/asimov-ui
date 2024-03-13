@@ -178,7 +178,9 @@ button span {
   height: 40px;
   background: #2196f3;
   color: #fff;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 ul.historydiv {
   list-style-type: none;
