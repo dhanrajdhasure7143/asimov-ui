@@ -949,7 +949,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               node.isSelected = false
               node.action_uid = null
               node.tasks = []
-              node.path = this.toolset.find((data) => data.name == nodename).path
+              const toolsetData = this.toolset.find((data) => data.name === nodename);
+              const taskWithIcon = toolsetData.tasks.find(task => task.taskIcon !== "null" && task.taskIcon !== '' && task.taskId == item.tMetaId);
+              node.path = taskWithIcon ? `data:image/png;base64,${taskWithIcon.taskIcon}` : toolsetData.path;
               node.selectedNodeId = item.tMetaId
               node.isConnectionManagerTask = item.isConnectionManagerTask
               const nodeWithCoordinates = Object.assign({}, node, dropCoordinates1);
