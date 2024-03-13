@@ -1909,8 +1909,4 @@ sendEmailEntrepricePlan(userId:string){
   return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
 }
 
-getCheckout(){
-  return this.http.post("/subscriptionservice/v1/stripe/webhook","")
-}
-
 }
