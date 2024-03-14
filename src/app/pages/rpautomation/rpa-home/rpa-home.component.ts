@@ -132,9 +132,8 @@ export class RpaHomeComponent implements OnInit {
   import_BotData:any;
   importBot_overlay:boolean = false;
   filteredEnvironments:any=[];
-  forTask:any[]=[];
-  multiAssigTask:any[]=[];
-  listTasks:any[]=[];
+  taskAttributes:any[]=[];
+  tasksList_ForAttribute:any[]=["For","Assign","List","Multi Assign","List To HTML Table","Json To List","Read Columns","Dictionary","If","Clone Excel","Add Column Header","File Search","Get Folders","Get site ID","Creat Folder","Get Driver ID","Copy File","Create Raw folder","Get Text","Clone Excel"];
 
   constructor(
     private rest: RestApiService,
@@ -1112,7 +1111,9 @@ importBot(){
   }
 
  async getRplacedTaskIds(botData){
-    let task_list=[]
+  console.log(botData)
+    let task_list=[];
+    this.taskAttributes=[];
     this.rest.toolSet().subscribe(async (response:any)=>{
 
       // response.Advanced.forEach(element => {
@@ -1120,27 +1121,24 @@ importBot(){
       //   task_list.push(item)
       //   });
       // });
-      await response.General.forEach(element => {
+      await response.General.forEach((element) => {
         task_list.push(element)
-        if(element.name == "Developer "){
+        // if(element.name == "Developer "){
+          // botData.tasks.forEach(item_task => {
             element.taskList.forEach(item => {
-            if(item.name == "For"){
-              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
-                this.forTask = res
-              })
-            }
-            if(item.name == "Multi Assign"){
-              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
-                this.multiAssigTask = res
-              })
-            }
-            if(item.name == "List"){
-              this.rest.attribute(Number(item.taskId),null).subscribe((res:any)=>{
-                this.listTasks = res
-              })
-            }
+              // if(item_task.taskName == item.name){
+                this.tasksList_ForAttribute.forEach(async (each, i) => {
+                  if (item.name === each) {
+                    await this.rest.attribute(Number(item.taskId), null).subscribe((res: any) => {
+                      let obj = { "taskName": item.name, "attributes": res };
+                      this.taskAttributes.push(obj);
+                    });
+                  }
+                });
+              // }
           });
-        }
+        // }
+        // })
       });
 
       response.Advanced.forEach(element => {
@@ -1208,30 +1206,20 @@ importBot(){
               element["actionUUID"] = "null"
           } else{ 
               if(element.taskName == tasks.name){
-                if(element.taskName == "For"){
-                  element.attributes.forEach(item1 => {
-                    this.forTask.forEach(item2 => {
-                      if(item1.metaAttrValue == item2.name)
-                        item1.metaAttrId = item2.id
+                this.tasksList_ForAttribute.forEach(each => {
+                  if(element.taskName == each){
+                    element.attributes.forEach(item1 => {
+                      this.taskAttributes.forEach(item2 => {
+                        if(item2.taskName == element.taskName){
+                          item2.attributes.forEach(item3 => {
+                            if(item1.metaAttrValue == item3.name)
+                              item1.metaAttrId = item3.id
+                          });
+                        }
+                      })
                     });
-                  });
-                }
-                if(element.taskName == "Multi Assign"){
-                   element.attributes.forEach(item1 => {
-                     this.multiAssigTask.forEach(item2 => {
-                       if(item1.metaAttrValue == item2.name)
-                         item1.metaAttrId = item2.id
-                     });
-                   });
-                 }
-                 if(element.taskName == "List"){
-                  element.attributes.forEach(item1 => {
-                    this.listTasks.forEach(item2 => {
-                      if(item1.metaAttrValue == item2.name)
-                        item1.metaAttrId = item2.id
-                    });
-                  });
-                }
+                  }
+                })
                 element.tMetaId = Number(tasks.taskId)
               }
           }
