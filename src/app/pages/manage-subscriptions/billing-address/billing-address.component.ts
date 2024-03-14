@@ -5,8 +5,6 @@ import { Country, State, City }  from 'country-state-city';
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
-import { length } from "@amcharts/amcharts4/.internal/core/utils/Iterator";
-
 @Component({
   selector: "app-billing-address",
   templateUrl: "./billing-address.component.html",
