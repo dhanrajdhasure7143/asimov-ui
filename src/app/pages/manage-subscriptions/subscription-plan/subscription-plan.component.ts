@@ -93,6 +93,10 @@ export class SubscriptionPlanComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit(){
+    this.userEmail = localStorage.getItem('ProfileuserId');
+  }
+
 showDescription(index: number) {
   this.selectedPlanIndex = index;
   this.showArrowRight = false;
