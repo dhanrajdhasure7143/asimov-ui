@@ -4018,7 +4018,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       });
       this.onFormSubmitMicroBot(obj, false,selectedNode,selectedTask);
     });
-    this.spinner.hide();   
+    this.spinner.hide();
   }
 
   async onFormSubmitMicroBot(event: any, notifierflag: boolean,selectedNode,selectedTask) {
