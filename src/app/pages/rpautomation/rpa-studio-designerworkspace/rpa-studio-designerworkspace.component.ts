@@ -3869,7 +3869,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       this.addTasksToGroups1(GroupData.id,nodes);
       console.log(this.nodes)
-    }, 1000);
+    }, 250);
   }
 
   addTasksToGroups1(gId,nodes) {
@@ -3881,7 +3881,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.re_ArrangeNodes();
             }, 50);
           });
-        }, 1000);
+        }, 500);
         // nodesIds.forEach((node: any) => {
         //   let nodeElement: any = document.getElementById("840ddcbc-b0e6-3d36-6922-c880c0379088");
         //   this.jsPlumbInstance.addToGroup(gId, nodeElement);
@@ -4018,9 +4018,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       });
       this.onFormSubmitMicroBot(obj, false,selectedNode,selectedTask);
     });
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 2000);    
+    this.spinner.hide();   
   }
 
   async onFormSubmitMicroBot(event: any, notifierflag: boolean,selectedNode,selectedTask) {
