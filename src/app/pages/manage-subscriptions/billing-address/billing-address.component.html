@@ -37,7 +37,6 @@
                     class="required">Email Required</span>
                 <span *ngIf="billingForm.controls['email'].hasError('pattern')" class="required">Enter Correct Email
                     Address</span>
-
             </div>
 
             <div class="form-group col-md-6 pl-0">
@@ -152,10 +151,7 @@
                 (onClick)="saveBillingInfo()"></p-button>
         </div> -->
     </form>
-    <!-- <div class="row justify-content-end">
+    <div class="row justify-content-end">
         <button  [disabled]="!(billingForm.valid && (billingForm.touched ||  billingForm.dirty))" (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button>
-    </div> -->
-    <div class="save-btn" id="save-btn">
-        <button  [disabled]="!(billingForm.valid && (billingForm.touched ||  billingForm.dirty))" (click)="saveBillingInfo()" class="btn bluebg-button save-btn">{{editButton?'Update':'Save'}}</button>
     </div>
 </div>

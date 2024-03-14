@@ -21,6 +21,7 @@ export class BillingAddressComponent implements OnInit {
   billingInfo: any = [];
   countryName: any;
   stateName: any;
+  cityName: any;
   activeIndex: any;
   id: any;
   editButton: boolean;
@@ -32,17 +33,8 @@ export class BillingAddressComponent implements OnInit {
   errorMessage: string;
   errorMessage1: string;
   errorMessage2: string;
-  billingData: any;
-  email: any;
-  postalCode: void;
-  addressLine1: any;
-  addressLine2: any;
-  name: any;
-  country: any;
-  state: any;
-  city: any;
-  phone: any;
-  cityName: any;
+  billingData: any; 
+  billingAddress: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -98,7 +90,7 @@ export class BillingAddressComponent implements OnInit {
     } 
     
     if (matchingState) {
-      this.stateName = ''; // If a matching state is found, clear the dynamically entered state name
+      this.stateName = matchingState.name;
       this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
       this.errorMessage1='';
     }
@@ -110,7 +102,7 @@ export class BillingAddressComponent implements OnInit {
       this.cityName = cityValue;
       this.cityInfo.push({ name: cityValue, countryCode: this.phnCountryCode }); // Add the city to the cityInfo array
     }else {
-      this.cityName = ''; // If a matching city is found, clear the dynamically entered city name
+      this.cityName = matchingCity.name;
     }
     if (cityValue) {
       this.errorMessage2 = '';
@@ -120,73 +112,64 @@ export class BillingAddressComponent implements OnInit {
   saveBillingInfo() {
     this.spinner.show();
     let payload = this.billingForm.value;
-    // payload.country = this.billingForm.get('country').value;
-    // payload.state =  this.billingForm.get('state').value;
-    // payload.city = this.billingForm.get('city').value;
-  //  if(!this.editButton) { 
-  //   this.api.saveBillingInfo(payload).subscribe((data) => {
-  //   if (data) {
-  //     this.billingInfo = data;
-  //     this.editButton = true;
-  //     this.spinner.hide();
-  //     this.id = this.billingInfo.id;
-  //     this.toastService.showSuccess("Saved successfully!",'response');
-  //     this.billingForm.reset();
-  //     this.getBillingInfo();
-  //     this.spinner.hide();
-  //   }
-  // },(err) => {
-  //   this.toastService.showError("Please save again!");
-  //  this.spinner.hide();
-  // })}
-  //   else {
-  //     this.editButton = true;
-  //     this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
-  //       if (data) {
-  //         this.toastService.showSuccess("Updated successfully!",'response');
-  //         this.billingForm.reset();
-  //         this.getBillingInfo();
-  //         this.spinner.hide();
-  //       }
-  //     }),(err) => {
-  //         this.toastService.showError("Please update again!");
-  //        this.spinner.hide();
-  //       };
-    // }
+    payload.country = this.billingForm.get('country').value;
+    payload.state =  this.billingForm.get('state').value;
+    payload.city = this.billingForm.get('city').value;
+   if(!this.editButton) { 
+    this.api.saveBillingInfo(payload).subscribe((data) => {
+    if (data) {
+      this.billingInfo = data;
+      this.editButton = true;
+      this.spinner.hide();
+      this.id = this.billingInfo.id;
+      this.toastService.showSuccess("Saved successfully!",'response');
+      this.billingForm.reset();
+      this.getBillingInfo();
+      this.spinner.hide();
+    }
+  },(err) => {
+    this.toastService.showError("Please save again!");
+   this.spinner.hide();
+  })}
+    else {
+      this.editButton = true;
+      this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
+        if (data) {
+          this.toastService.showSuccess("Updated successfully!",'response');
+          this.billingForm.reset();
+          this.getBillingInfo();
+          this.spinner.hide();
+        }
+      }),(err) => {
+          this.toastService.showError("Please update again!");
+         this.spinner.hide();
+        };
+    }
 }
 
   getBillingInfo() {
     this.spinner.show();
     this.api.getBillingInfo().subscribe((data:any) => {
-      console.log("billing data:",data);
       this.spinner.hide();
       if(data){
-        this.billingData = data;
-        this.name = this.billingData.customerDefaultPaymentMethod.billingDetails.name;
-        this.email = this.billingData.customerDefaultPaymentMethod.billingDetails.email;
-        this.postalCode = this.billingData.customerDefaultPaymentMethod.billingDetails.address.postalCode;
-        this.addressLine1 = this.billingData.customerDefaultPaymentMethod.billingDetails.address.line1;
-        this.addressLine2 = this.billingData.customerDefaultPaymentMethod.billingDetails.address.line2;
-        this.country = this.billingData.customerDefaultPaymentMethod.billingDetails.address.country;
-        this.state = this.billingData.customerDefaultPaymentMethod.billingDetails.address.state;
-        this.city = this.billingData.customerDefaultPaymentMethod.billingDetails.address.city;
-        this.phone = this.billingData.customerDefaultPaymentMethod.billingDetails.phone;
+        this.billingData = data.customerDefaultPaymentMethod.billingDetails;
+        this.billingAddress = data.customerDefaultPaymentMethod.billingDetails.address;
         setTimeout(()=>{
           this.billingForm.get("country").setValue(this.countryName);
           this.billingForm.get("state").setValue(this.stateName);
           this.billingForm.get("city").setValue(this.cityName);
         },300);
-        this.billingForm.get("name").setValue(this.name);
-        this.billingForm.get("email").setValue(this.email);
-        this.billingForm.get("postalcode").setValue(this.postalCode);
-        this.billingForm.get("addressLine1").setValue(this.addressLine1);
-        this.billingForm.get("addressLine2").setValue(this.addressLine2);
-        this.billingForm.get("phoneNumber").setValue(this.phone);
-        this.onChangeCountry(this.country);
-        this.onChangeState(this.state);
-        this.onChangeCity(this.city);
+        this.billingForm.get("name").setValue(this.billingData["name"]);
+        this.billingForm.get("email").setValue(this.billingData["email"]);
+        this.billingForm.get("postalcode").setValue(this.billingAddress["postalCode"]);
+        this.billingForm.get("addressLine1").setValue(this.billingAddress["line1"]);
+        this.billingForm.get("addressLine2").setValue(this.billingAddress["line2"]);
+        // this.billingForm.get("phoneNumber").setValue(this.billingAddress.["phone"]);
+        this.onChangeCountry(this.billingAddress.country);
+        this.onChangeState(this.billingAddress.state);
+        this.onChangeCity(this.billingAddress.city);
         this.editButton=true;
-        // this.id=data.id;
+        this.id=data.id;
       }
       },
       (err) => {
