@@ -54,37 +54,37 @@
           </ng-container>
           <!--Added Grouping Task in RPA Designer-->
           <ng-container *ngFor="let group of groupsData; let i = index">
-            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="!group.isExpand?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
+            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="group.collapsed?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
               [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{
                 left: group.x,
                 top: group.y,
-                height: group.isExpand? group.height : '60px',
-                width: group.isExpand? group.width : '60px',
-                'border-color': group.isExpand ? group.color : 'black',
-                'border-style': group.isExpand?'dotted':'',
-                'border-radius': !group.isExpand?'0.2em':'',
-                'background-image': !group.isExpand ? 'url(' + path + ')' : ''
-              }" class="groupElement" (mouseenter)="group.showPublishButton = !group.isExpand" (mouseleave)="group.showPublishButton = false" 
-              [pTooltip]="!group.isExpand ? group.description:''">
-              <!-- 'border': isExpand?'':'2px solid #d7eaff', -->
+                height: !group.collapsed? group.height : '60px',
+                width: !group.collapsed? group.width : '60px',
+                'border-color': !group.collapsed ? group.color : 'black',
+                'border-style': !group.collapsed?'dotted':'',
+                'border-radius': group.collapsed?'0.2em':'',
+                'background-image': group.collapsed ? 'url(' + path + ')' : ''
+              }" class="groupElement" (mouseenter)="group.showPublishButton = group.collapsed" (mouseleave)="group.showPublishButton = false" 
+              [pTooltip]="group.collapsed ? group.description:''">
+              <!-- 'border': collapsed?'':'2px solid #d7eaff', -->
 
-              <div *ngIf="!group.isExpand">
+              <div *ngIf="group.collapsed">
                 <span class="node-delete" (click)="removeGroup(group)">
                   <i class="ri-close-circle-fill"></i>
                 </span>
                 <div class="row">
-                  <span class="clickable" id="arrow-button" (click)="onExpandCollapseGroup(group)">
+                  <span class="clickable" id="arrow-button" (click)="onExpandGroup(group,i)">
                     <i class="pi pi-arrow-circle-down"></i>
                   </span>
                   <!-- <span class="groupHeader">
                     <button *ngIf="group.showPublishButton" class="publishButton" (click)="publishGroup(group)">Publish</button>
-                    <button *ngIf="!group.isExpand" class="publishButton" (click)="publishGroup(group)">Publish</button>
+                    <button *ngIf="!group.collapsed" class="publishButton" (click)="publishGroup(group)">Publish</button>
                   </span> -->
                 </div>
                 <div class="groupName">{{ group.groupName }}</div>
               </div>
               
-              <div *ngIf="group.isExpand" class="groupHeader">
+              <div *ngIf="!group.collapsed" class="groupHeader">
                 <!-- <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{group.groupName}}</span> -->
                 <span class="groupTitle" style="align-items: center;" *ngIf="group.edit == false">{{ group.groupName.length > 15 ? (group.groupName | slice:0:15) + '...' : group.groupName }}</span>
                 <span class="groupTitle clickable" (click)="removeGroup(group)" *ngIf="group.edit == false">
@@ -97,13 +97,13 @@
                 <span class="groupHeader groupTitle clickable" *ngIf="group.edit == false">
                   <!-- <button class="publishButton" (click)="publishGroup(group)">Publish</button> -->
                   <!-- <i class="pi pi-cloud-upload" [ngClass]="{'disabled-icon': isMicroBot}" [attr.disabled]="isMicroBot ? true : null" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i> -->
-                  <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group)"></i>
+                  <i *ngIf="!group.isMicroBot" class="pi pi-cloud-upload" style="color: #4ab0f5;" pTooltip="Publish" (click)="publishGroup(group,i)"></i>
                   <!-- <i *ngIf="isMicroBot" class="pi pi-cloud-upload disabled-icon" style="color: #4ab0f5;" pTooltip="Publish"></i> -->
                 </span>
                 <span class=" groupTitle clickable" *ngIf="group.edit == false">
                   <i class="pi pi-info-circle" style="font-size: 0.9rem" [pTooltip]="group.description"></i>
                 </span>
-                <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onExpandCollapseGroup(group)">
+                <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onCollapseGroup(group,i)">
                   <i class="pi pi-angle-up"></i>
                   <!-- <i class="pi pi-angle-down"></i> -->
                 </span>
