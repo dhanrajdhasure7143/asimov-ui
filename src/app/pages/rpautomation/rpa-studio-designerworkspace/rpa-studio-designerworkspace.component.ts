@@ -949,7 +949,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               node.isSelected = false
               node.action_uid = null
               node.tasks = []
-              node.path = this.toolset.find((data) => data.name == nodename).path
+              const toolsetData = this.toolset.find((data) => data.name === nodename);
+              const taskWithIcon = toolsetData.tasks.find(task => task.taskIcon !== "null" && task.taskIcon !== '' && task.taskId == item.tMetaId);
+              node.path = taskWithIcon ? `data:image/png;base64,${taskWithIcon.taskIcon}` : toolsetData.path;
               node.selectedNodeId = item.tMetaId
               node.isConnectionManagerTask = item.isConnectionManagerTask
               const nodeWithCoordinates = Object.assign({}, node, dropCoordinates1);
@@ -3867,7 +3869,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       this.addTasksToGroups1(GroupData.id,nodes);
       console.log(this.nodes)
-    }, 1000);
+    }, 250);
   }
 
   addTasksToGroups1(gId,nodes) {
@@ -3879,7 +3881,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.re_ArrangeNodes();
             }, 50);
           });
-        }, 1000);
+        }, 500);
         // nodesIds.forEach((node: any) => {
         //   let nodeElement: any = document.getElementById("840ddcbc-b0e6-3d36-6922-c880c0379088");
         //   this.jsPlumbInstance.addToGroup(gId, nodeElement);

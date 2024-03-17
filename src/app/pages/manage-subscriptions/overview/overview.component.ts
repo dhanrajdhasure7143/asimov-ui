@@ -108,27 +108,27 @@ export class OverviewComponent implements OnInit {
     this.table_columns= this.columns.subscrption_overview
     this.api.listofsubscriptions().subscribe((response) => {
       console.log(response)
-      this.table_searchFields=["planname","plan","amount","term","nextBillingDate","userId","status"]
-      this.tableData = response;
-      this.tableData.forEach(element => {
-        if (element.planEntity) {
-          element['planname'] = element.planEntity.nickName;
-          element['plan'] = 'Predefined Bots';
-          element['amount'] = element.planEntity.amount;
-          element['term'] = element.planEntity.term;
-        } else {
-          element['planname'] = '-';
-          element['plan'] = '-';
-          element['amount'] = "-";
-          element['term'] = "-";
-        }
+      this.table_searchFields=["planname","plan","amount","term","nextBilling","customerMailId","status"]
+      let data  = response.data;
+      console.log(data)
+      data.forEach(item => {
+        item.subscriptionRespsonse.forEach(element => {
+          this.tableData.push(element);
+        });
+      });
 
+      this.tableData.forEach(element => {
+        element["currentPeriodStart"] = new Date(element.currentPeriodStart).toDateString()
+        element["nextBilling"] = new Date(element.nextBilling).toDateString();
+        element["amount"] = "$ "+element.total_amount;
+        element["status"] = element.status[0].toUpperCase() + element.status.slice(1);
+        // element["nextBillingDate"] = moment(element.nextBillingDate).format("MMMM DD [,] yy")
       });
       this.result = this.tableData.filter((obj) => {
         return obj.status == "Active";
       });
-      this.due_timestamp = moment(this.result.createdAt).add(1, "years").format("MMMM DD [,] yy")
-      this.due_timestamp1 = moment(this.result.createdAt).add(1, "months").format("MMMM DD [,] yy")
+      // this.due_timestamp = moment(this.result.createdAt).add(1, "years").format("MMMM DD [,] yy")
+      // this.due_timestamp1 = moment(this.result.createdAt).add(1, "months").format("MMMM DD [,] yy")
       this.spinner.hide();
     });
   }
