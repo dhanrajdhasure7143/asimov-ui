@@ -875,7 +875,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           setTimeout(() => {
               this.addconnections(this.microBotData.sequences);
           }, 500);
-          this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData.botName);
+          this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData);
           // });
         }, 1000);
 
@@ -1867,7 +1867,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       connections.push(nodeconn);
     });
-    this.collapseAllgroups(false);
+    this.collapseAllgroups(true);
     return connections;
   }
 
@@ -2266,10 +2266,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
         // anchor:"TopLeft",
-        orphan: true,
+        // orphan: true,
         endpoint:[ "Dot", { radius:4 } ],
         droppable: item.isMicroBot? false: true,
-        dropOverride:false
+        dropOverride:false,
+        microBotId: item.microBotId? item.microBotId: null,
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -2501,6 +2502,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   get_coordinates() {
+    // this.toggleAllgroups()
     let container = document.getElementById('dnd_'+this.dragareaid); // Replace 'container' with the ID of your scrollable container
       this.nodes.forEach((data,index) => {
         let p: any = $("#" + data.id).first();
@@ -3565,6 +3567,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           item.isMicroBot = true
           item.collapsed = true
           item.droppable= false
+          item["microBotId"]= parsedResponce.microBotId? parsedResponce.microBotId: null
           }
         })
         this.onCollapseGroup(group,index)
@@ -3671,11 +3674,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     );
   }
 
-  addGroupOnLoad(item,dropCoordinates,nodes,botName){
+  addGroupOnLoad(item,dropCoordinates,nodes,botData){
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
-      groupName: botName,
+      groupName: botData.botName,
       x: dropCoordinates.x,
       y: dropCoordinates.y,
       height: item.height,
@@ -3684,8 +3687,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       color: "#4AB0F5",
       collapsed: false,
       isMicroBot: true,
-      description: item.description
-      // endpoint:{ type:"Dot", options:{ radius:3 } }
+      description: item.description,
+      microBotId: botData.id,
+      endpoint:[ "Dot", { radius:4 } ],
+      droppable: false,
+      dropOverride:false
     };
     this.groupsData.push(GroupData);
     console.log(this.groupsData)
@@ -3756,6 +3762,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if(group.isMicroBot){
           this.jsPlumbInstance.toggleGroup(group.id)
           group.collapsed = !group.collapsed
+          if(!group.collapsed)
+          this.collectGroupIds(group.id).forEach(element => {
+            document.getElementById(element).style.display = 'block';
+          });
       }
       });
   }
