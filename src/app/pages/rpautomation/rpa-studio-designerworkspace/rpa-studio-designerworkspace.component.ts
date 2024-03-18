@@ -2266,7 +2266,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
         // anchor:"TopLeft",
-        // orphan: true,
+        orphan: true,
         endpoint:[ "Dot", { radius:4 } ],
         droppable: item.isMicroBot? false: true,
         dropOverride:false,
@@ -3707,6 +3707,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       microBotId: botData.id,
       endpoint:[ "Dot", { radius:4 } ],
       droppable: false,
+      orphan:true,
       dropOverride:false
     };
     this.groupsData.push(GroupData);
