@@ -1116,6 +1116,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 group.remove(node.id);
             }
         });
+        this.re_ArrangeNodes();
 
         // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
         //   if (group.contains(nodeId)) { // Check if the group contains the node
@@ -3462,7 +3463,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
     }
-  }, 500);
+  }, 100);
   }
 
   onExpandGroup(group,index){
@@ -3766,7 +3767,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if(value){
           this.collectGroupIds(group.id).forEach(element => {
               // If the group is collapsed, hide the node
-              document.getElementById(element).style.display = 'none';
+              let node = document.getElementById(element);
+              if (node !== null) {
+                  node.style.display = "none";
+              }
           });
         }
         this.re_ArrangeNodes();
@@ -3781,7 +3785,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           group.collapsed = !group.collapsed
           if(!group.collapsed)
           this.collectGroupIds(group.id).forEach(element => {
-            document.getElementById(element).style.display = 'block';
+        let node = document.getElementById(element);
+        if (node !== null) {
+            node.style.display = 'block';
+        }
           });
       }
       });
