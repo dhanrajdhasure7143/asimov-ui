@@ -1713,9 +1713,9 @@ updateBillingInfo(id,data){
   return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
 }
 
-getBillingInfo(){
-  return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
-}
+// getBillingInfo(){
+//   return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
+// }
 
 createDashBoard(body){
   return this.http.post('/platform-service/dashboard/createDashboard',body);
@@ -1909,4 +1909,7 @@ sendEmailEntrepricePlan(userId:string){
   return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
 }
 
+getBillingInfo(){
+  return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
+}
 }
