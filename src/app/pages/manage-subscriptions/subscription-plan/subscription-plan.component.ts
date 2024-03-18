@@ -26,7 +26,7 @@ export class SubscriptionPlanComponent implements OnInit {
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly";
+  planType="Yearly";
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
@@ -36,7 +36,14 @@ export class SubscriptionPlanComponent implements OnInit {
   log_data:any={}
   isRegistered : boolean = false;
   totalAmount : number = 0;
-  selectedPlan: string = '';
+  selectedPlan: string = 'Yearly';
+  showDescriptionFlag: boolean = false;
+  booleanString: boolean = false;
+  booleanValue: boolean = true;
+  visibleBotInfo:boolean = false;
+  selectedBot: any={};
+  selectedInterval: boolean = true;
+
   constructor( private spinner : LoaderService,
     private router: Router,
     private rest: RestApiService,
@@ -180,6 +187,7 @@ sendEmailEnterPrisePlan(){
 }
 
 onSelectPredefinedBot(plan, index) {
+  this.showDescriptionFlag = true;
   this.selectedPlans = [];
   this.botPlans[index].isSelected = !this.botPlans[index].isSelected;
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
@@ -233,5 +241,25 @@ readValue(value){
     });
     console.log(this.totalAmount);
   }
-  
+
+  showDialog() {
+    this.visibleBotInfo = true;
+  }
+
+  openDetailsDialog(plan: any) {
+    this.selectedBot = plan;
+    this.visibleBotInfo = true;
+  }
+
+  closeDialog() {
+      this.visibleBotInfo = false;
+  }
+   
+  toggleChanged() {
+    if (this.selectedInterval) {
+      this.planSelection('Yearly');
+    } else {
+      this.planSelection('Monthly');
+    }
+  }
 }
