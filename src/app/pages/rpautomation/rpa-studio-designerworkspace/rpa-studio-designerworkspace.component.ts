@@ -3082,8 +3082,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       console.log(group)
       console.log(this.groupsData)
       this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
-      console.log(groupdata)
+      let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
+      if (groupIndex !== -1) {
+        this.groupsData.splice(groupIndex, 1);
+      }
     }
   }
 
