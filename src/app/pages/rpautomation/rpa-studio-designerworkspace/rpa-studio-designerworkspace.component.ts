@@ -3060,7 +3060,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     }else{
       this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
+      let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
+      if (groupIndex !== -1) {
+        this.groupsData.splice(groupIndex, 1);
+      }
     }
   }
 
@@ -3619,6 +3622,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     }
 
+    let nodesIds=this.collectGroupIds(group.id);
+    let microBot_TasksList=[]
+
+    // nodesIds.forEach(node => {
+    //   final_tasks.forEach(element => {
+    //     let id= element.nodeId.split("__")[1];
+    //     if(id == node){
+    //       element.attributes=[]
+    //       microBot_TasksList.push(element)
+    //     }
+    //   });
+    // });
+
       let _microBot_payload = {
         id:"",
         botName: group.groupName,
@@ -3712,7 +3728,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       this.addTasksToGroups1(GroupData.id,nodes);
       console.log(this.nodes)
-    }, 1000);
+    }, 250);
   }
 
   addTasksToGroups1(gId,nodes) {
@@ -3724,7 +3740,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.re_ArrangeNodes();
             }, 50);
           });
-        }, 1000);
+        }, 500);
         // nodesIds.forEach((node: any) => {
         //   let nodeElement: any = document.getElementById("840ddcbc-b0e6-3d36-6922-c880c0379088");
         //   this.jsPlumbInstance.addToGroup(gId, nodeElement);
