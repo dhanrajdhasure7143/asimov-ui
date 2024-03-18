@@ -807,82 +807,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public removeItem(item: any, list: any[]): void {
     list.splice(list.indexOf(item), 1);
   }
-  // dragData={
-  //   "versionType": "",
-  //   "comments": "",
-  //   "version": 2,
-  //   "botId": "6346",
-  //   "botName": "GroupTest",
-  //   "botType": 0,
-  //   "microBot":true,
-  //   "tasks": [
-
-  //     {
-  //       "botTId": 54351,
-  //       "botId": 6291,
-  //       "tMetaId": 36,
-  //       "name": "Add",
-  //       "inSeqId": 0,
-  //       "outSeqId": "f4d94a07-fd2b-54b6-9379-cab9143f9b99",
-  //       "version": 2,
-  //       "versionNew": "1",
-  //       "nodeId": "Arithmetic Operations__e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
-  //       "taskConfiguration": "null",
-  //       "actionUUID": "null",
-  //       "attributes": [],
-  //       "isConnectionManagerTask": false,
-  //       "isModified": false,
-  //       "x": "27px",
-  //       "y": "38px",
-  //       "taskSubCategoryId": null
-  //     },
-  //     {
-  //       "botTId": 54352,
-  //       "botId": 6291,
-  //       "tMetaId": 37,
-  //       "name": "Multiply",
-  //       "inSeqId": "e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
-  //       "outSeqId": 0,
-  //       "version": 2,
-  //       "versionNew": "1",
-  //       "nodeId": "Arithmetic Operations__f4d94a07-fd2b-54b6-9379-cab9143f9b99",
-  //       "taskConfiguration": "null",
-  //       "actionUUID": "null",
-  //       "attributes": [],
-  //       "isConnectionManagerTask": false,
-  //       "isModified": false,
-  //       "x": "149px",
-  //       "y": "38px",
-  //       "taskSubCategoryId": null
-  //     }
-   
-  //   ],
-  //   "groups": [
-  //     {
-  //       "id": 20348,
-  //       "groupName": "Activity Group",
-  //       "x": "305px",
-  //       "y": "60.96875px",
-  //       "height": "150px",
-  //       "width": "250px",
-  //       "color": "black",
-  //       "isExpand":false,
-  //       "showPublishButton": true,
-  //       "groupId": "3c79dead-e9d1-a049-103a-c7581ee7967a",
-  //       "nodeIds": [
-  //         "f4d94a07-fd2b-54b6-9379-cab9143f9b99",
-  //         "e8851c0c-8eed-3d32-3c15-cc20d7cf3764"
-  //       ]
-  //     }
-  //   ],
-  //   "sequences": [
-  //     {
-  //       "sequenceName": "_jsplumb_c_1707229397418",
-  //       "sourceTaskId": "e8851c0c-8eed-3d32-3c15-cc20d7cf3764",
-  //       "targetTaskId": "f4d94a07-fd2b-54b6-9379-cab9143f9b99"
-  //     },
-  //   ]
-  // }
 
   microBotData:any
 
@@ -2362,6 +2286,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         isExpand : item.isMicroBot? false: true,
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
+        endpoint:[ "Dot", { radius:4 } ],
+        droppable: item.isMicroBot? false: true,
+        dropOverride:false
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -3078,6 +3005,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       edit: false,
       color: "#4AB0F5",
       isExpand:true,
+      endpoint:[ "Dot", { radius:4 } ],
+      droppable: true,
+      dropOverride:false
     };
     this.groupsData.push(GroupData);
     setTimeout(() => {
@@ -3152,8 +3082,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       console.log(group)
       console.log(this.groupsData)
       this.jsPlumbInstance.removeGroup(group.id);
-      let groupdata = this.groupsData.find((item: any) => item.id==group.id);
-      console.log(groupdata)
+      let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
+      if (groupIndex !== -1) {
+        this.groupsData.splice(groupIndex, 1);
+      }
     }
   }
 
@@ -3678,6 +3610,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if(item.id == group.id) {
           item.isMicroBot = true
           item.isExpand = false
+          item.droppable = false
           }
         })
         this.collectGroupIds(group.id).forEach(element => {
@@ -3742,15 +3675,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let nodesIds=this.collectGroupIds(group.id);
     let microBot_TasksList=[]
 
-    nodesIds.forEach(node => {
-      final_tasks.forEach(element => {
-        let id= element.nodeId.split("__")[1];
-        if(id == node){
-          element.attributes=[]
-          microBot_TasksList.push(element)
-        }
-      });
-    });
+    // nodesIds.forEach(node => {
+    //   final_tasks.forEach(element => {
+    //     let id= element.nodeId.split("__")[1];
+    //     if(id == node){
+    //       element.attributes=[]
+    //       microBot_TasksList.push(element)
+    //     }
+    //   });
+    // });
 
       let _microBot_payload = {
         id:"",
