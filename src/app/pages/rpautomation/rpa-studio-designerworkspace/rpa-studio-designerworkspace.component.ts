@@ -170,7 +170,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   showGroup_Overlay: boolean = false;
   groupName: string = '';
   groupForm: FormGroup;
-  path: string = "/assets/images-n/MicroBot_New.jpg";
+  path: string = "/assets/images-n/Micro-bot.png";
   showPublishButton: boolean = false;
   isMicroBot: boolean = false;
   microBotNodes_list:any[]=[];
