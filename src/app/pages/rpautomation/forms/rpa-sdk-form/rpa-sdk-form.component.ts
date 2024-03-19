@@ -40,13 +40,17 @@ export class RpaSdkFormComponent implements OnInit {
     ) {
 
       this.customTaskForm=this.formBuilder.group({
-        inputReference:["",Validators.compose([Validators.required])],
         customTaskName:["",Validators.compose([Validators.required])],
         languageType:["",Validators.compose([Validators.required])],
-        selectedCategory:["",Validators.compose([Validators.required])],
-        executablePath:[""],
+        executablePath:["",Validators.compose([Validators.required])],
+        //temporarly commenting the selectedCategory as it is not in use for now.
+        // selectedCategory:["",Validators.compose([Validators.required])],
+        // executablePath:[""],
         code:[""],
-        outputReference:["",Validators.compose([Validators.required])]
+
+        // temporarly commenting the input and output reference fields as it is not in use for now.
+        // inputReference:["",Validators.compose([Validators.required])],
+        // outputReference:["",Validators.compose([Validators.required])]
     })
 
       this.Credupdateflag=false;
@@ -61,20 +65,24 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnChanges(){
     if (this.isupdateform) {
-      this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
-      if(this.updatetaskDetails.executablePath){
-        this.customTaskForm.get("selectedCategory").setValue("Path");
-        this.radioChange("Path")
-      }
-      if(this.updatetaskDetails.code){
-        this.customTaskForm.get("selectedCategory").setValue("Code");
-        this.radioChange("Code")
-      }
+      this.customTaskForm.get("executablePath").setValue("Path");
+      // temporarly commenting the if and else condition as it is not in use for now.
+      // if(this.updatetaskDetails.executablePath){
+      //   this.customTaskForm.get("selectedCategory").setValue("Path");
+      //   this.radioChange("Path")
+      // }
+      // if(this.updatetaskDetails.code){
+      //   this.customTaskForm.get("selectedCategory").setValue("Code");
+      //   this.radioChange("Code")
+      // }
       this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath)
       this.customTaskForm.get("code").setValue(this.updatetaskDetails.code)
-      this.customTaskForm.get("outputReference").setValue(this.updatetaskDetails.outputReference)
+
+      // temporarly commenting the input and output reference fields as it is not in use for now.
+      // this.customTaskForm.get("inputReference").setValue(this.updatetaskDetails.inputReference)
+      // this.customTaskForm.get("outputReference").setValue(this.updatetaskDetails.outputReference)
     }
   }
  
