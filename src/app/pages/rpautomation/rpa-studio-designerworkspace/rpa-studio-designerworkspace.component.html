@@ -123,7 +123,7 @@
             </div>
           </ng-container>
           <!--Show bot Image when no nodes in designer-->
-          <div *ngIf="nodes.length == 0" class="dragactionsdiv">
+          <div *ngIf="nodes.length == 0 && groupsData.length == 0" class="dragactionsdiv">
             <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
             <span>Drag an action here...</span>
           </div>

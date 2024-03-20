@@ -620,7 +620,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           name: "START",
           selectedNodeTask: "",
           selectedNodeId: "",
-          path: "/assets/images/RPA/Stop.png",
+          path: "/assets/images/RPA/Start.png",
           x:"",
           y:""
         };
