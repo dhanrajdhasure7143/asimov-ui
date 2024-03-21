@@ -347,3 +347,32 @@
   color:black;
   font-weight: bold;
 }
+.resize-handle-top,
+.resize-handle-bottom {
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  cursor: row-resize;
+}
+.resize-handle-top {
+  top: 0;
+}
+.resize-handle-bottom {
+  bottom: 0;
+}
+.resize-handle-left,
+.resize-handle-right {
+  position: absolute;
+  height: 100%;
+  cursor: col-resize;
+  width: 5px;
+}
+.resize-handle-left {
+  left: 0;
+}
+.resize-handle-right {
+  right: 0;
+}
+.groupElement{
+  cursor: pointer;
+}
