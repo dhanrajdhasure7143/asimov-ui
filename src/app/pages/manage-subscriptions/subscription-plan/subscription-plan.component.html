@@ -39,9 +39,19 @@
                         <div class="bot-details" [ngClass]="{'gray-background': (selectedPlan=== 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan=== 'Yearly' && plan.isYearlySubscribed) }" style="width: 390px;" (mouseenter)="showDescription(i)" (mouseleave)="hideDescription()">
                             <div class="details-container">
                                 <div class="details-left">
-                                    <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                                    <!-- <div *ngIf="!((selectedPlan=== 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan=== 'Yearly' && plan.isYearlySubscribed))" class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                                        <img src="./../../../../assets/Micro_bot_new.png" alt="" width="40px" height="40px">
+                                    </div> -->
+                                     
+                                    <div  
+                                        class="circle text-center" 
+                                        style="cursor: pointer;" 
+                                        (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" 
+                                        [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}"
+                                    >
                                         <img src="./../../../../assets/Micro_bot_new.png" alt="" width="40px" height="40px">
                                     </div>
+
                                     <div class="label-control text-center"> {{plan.name}} </div>
                                     <!-- <div *ngIf="plan.doPlanDisabled" class="text-center" style="background-color: rgb(62, 147, 226); color: white;">Purchsed Plan</div> -->
                                     <!-- <div *ngIf="true" class="text-center" style="background-color: rgb(36, 233, 69); color: white;">Purchsed Plan</div> -->
@@ -49,13 +59,13 @@
                                         <!-- <span *ngIf="detail.isPlanSubscribed" style="background-color: green;">Purchased {{plan.id}}</span>  -->
                                         <span *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' ">
                                             <span *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'month' && selectedPlan === 'Monthly'">
-                                                <div *ngIf="true" class="text-center" style="background-color: rgb(36, 233, 69); color: white;">Active Plan</div>
+                                                <div *ngIf="true" class="text-center" class="active-plan">Active Plan</div>
                                             </span>
                                             <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}</b> per {{detail.tiersMode}}
                                         </span>
                                         <span *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
                                             <span *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'year' && selectedPlan === 'Yearly'">
-                                                <div *ngIf="true" class="text-center" style="background-color: rgb(36, 233, 69); color: white;">Active Plan</div>
+                                                <div *ngIf="true" class="text-center" class="active-plan">Active Plan</div>
                                             </span>
                                             <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}</b> per {{detail.tiersMode}}
                                         </span>
