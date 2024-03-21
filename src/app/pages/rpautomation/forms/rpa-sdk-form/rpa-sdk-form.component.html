@@ -14,7 +14,8 @@
                     class="required"> Task Name Required
                 </span>
             </div>
-            <div class="col-md-12 p-0 form-group">
+            <!-- temporarly commenting the input and output reference fields as it is not in use for now -->
+            <!-- <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Input Reference <span class="star">*</span></label>
                 <input type="text" maxlength="51" class="form-control data" formControlName="inputReference" 
                 value="" placeholder="Enter Input Reference">
@@ -31,7 +32,7 @@
                  *ngIf="(customTaskForm.get('outputReference').invalid && customTaskForm.get('outputReference').touched) && !customTaskForm.controls['outputReference'].hasError('pattern') && !customTaskForm.controls['outputReference'].hasError('maxlength')"
                  class="required"> Output Reference Required
                 </span>
-            </div>
+            </div> -->
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Language Type <span class="star">*</span></label>
                 <!-- <input type="text" maxlength="51" class="form-control data" formControlName="languageType" #userName -->
@@ -42,11 +43,22 @@
                 class="required"> Language Type Required
                 </span>
             </div>
-            <div class="col-md-12 p-0 form-group" *ngFor="let category of categories">
+            <!-- temporarly commenting radio button as it is not in use for now. -->
+            <!-- <div class="col-md-12 p-0 form-group" *ngFor="let category of categories">
                     <p-radioButton [style]="{'width':'100%'}" [value]="category.name" formControlName="selectedCategory" (click)="radioChange(category.name)" ></p-radioButton>
                     <label class="ml-2">{{ category.name }}</label>
+            </div> -->
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
+                <input type="text" maxlength="250" class="form-control data" formControlName="executablePath" 
+                value="" placeholder="Enter Executable Path">
+                <span
+                *ngIf="(customTaskForm.get('executablePath').invalid && customTaskForm.get('executablePath').touched) && !customTaskForm.controls['executablePath'].hasError('pattern') && !customTaskForm.controls['executablePath'].hasError('maxlength')"
+                class="required"> Executable Path Required
+                </span>
             </div>
-            <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
+            <!-- temporarly commenting radio button condtional fields as it is not in use for now. -->
+            <!-- <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
                 <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
                 <input type="text" maxlength="250" class="form-control data" formControlName="executablePath" 
                 value="" placeholder="Enter Executable Path">
@@ -57,14 +69,14 @@
             </div>
             <div class="col-md-12 p-0 form-group" *ngIf="showCodeField">
                 <label class="label-control" for="userName"> Code Editor <span class="star">*</span></label>
-                <!-- <input type="text" maxlength="51" class="form-control data" formControlName="code" #userName
-                value="" placeholder="Enter Email"> -->
+                <input type="text" maxlength="51" class="form-control data" formControlName="code" #userName
+                value="" placeholder="Enter Email">
                 <textarea name="" id="" cols="30" rows="10" class="form-control data" placeholder="Enter Code Editor" formControlName="code"></textarea>
                 <span
                 *ngIf="(customTaskForm.get('code').invalid && customTaskForm.get('code').touched) && !customTaskForm.controls['code'].hasError('pattern') && !customTaskForm.controls['code'].hasError('maxlength')"
                 class="required"> Code Editor Required
                 </span>
-            </div>
+            </div> -->
         </form>
         <div class="createform-footer">
             <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
