@@ -3547,12 +3547,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   publishGroup(group:any,index) {
-    // this.generatePayload("","",group);
-    if(this.collectGroupIds(group.id).length == 0){
+
+    let groupNodes = [] = this.collectGroupIds(group.id);
+
+    if(groupNodes.length == 0){
       this.toastService.showError('Please add tasks to the group!');
       return;
     }
-    // console.log(`Publishing group with ID: ${group.id}`);
+    if(groupNodes.includes('START_'+this.finalbot.botName)){
+      this.toastService.showError('Please remove start task from group');
+      return;
+    }
+    if(groupNodes.includes('STOP_'+this.finalbot.botName)){
+      this.toastService.showError('Please remove stop task from group');
+      return;
+    }
     this.spinner.show();
     let payload = this.generateMicroBotPayload(group);
   console.log(payload,this.groupsData)

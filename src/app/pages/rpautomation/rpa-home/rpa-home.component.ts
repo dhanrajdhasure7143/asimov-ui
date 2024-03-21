@@ -134,6 +134,7 @@ export class RpaHomeComponent implements OnInit {
   filteredEnvironments:any=[];
   taskAttributes:any[]=[];
   tasksList_ForAttribute:any[]=["For","Assign","List","Multi Assign","List To HTML Table","Json To List","Read Columns","Dictionary","If","Clone Excel","Add Column Header","File Search","Get Folders","Get site ID","Creat Folder","Get Driver ID","Copy File","Create Raw folder","Get Text","Clone Excel"];
+  error_message:boolean = false;
 
   constructor(
     private rest: RestApiService,
@@ -1018,11 +1019,30 @@ importBot(){
       reader.readAsText(file);
       reader.onload = (e) => {
         // this.import_BotData  = this.crypto.decrypt(JSON.parse(reader.result.toString()));
+        this.error_message= true
         this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
+        this.error_message= false;
         // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
       }
     }
+  }
+
+  importbotData(){
+    this.confirmationService.confirm({
+      header: "Are you sure?",
+      message: 'Please ensure that you are importing it into the appropriate tenant?',
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.importEncryptedBotData();
+      },
+    });
   }
 
   importEncryptedBotData(){
@@ -1077,37 +1097,19 @@ importBot(){
     this.resetImportBotForm();
     this.importBotForm.get("botName").setValue('')
     this.importBot_overlay= false;
-    this.import_BotData = null
+    this.import_BotData = null;
+    this.error_message = false;
   }
 
   openModal() {
-    if (this.freetrail == 'true') {
-      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
-        this.confirmationService.confirm({
-          message: 'You have limited access to this product. Please contact the EZFlow support team for more details.',
-          header: 'Error',
-          rejectVisible: false,
-          acceptLabel: "Ok",
-          acceptButtonStyleClass: 'btn bluebg-button',
-          defaultFocus: 'none',
-          acceptIcon: 'null',
-          accept: () => {},
-        });
-      }
-      else {
-        this.importfile = "";
-        this.file_error = "";
-        this.importcat = "";
-        this.importBot_overlay = true;
-      }
-    }else {
       this.resetImportBotForm();
       this.importBotForm.get("botName").setValue('');
+      this.import_BotData = null;
       this.importBot_overlay = true;
       this.importfile = "";
       this.file_error = "";
-      this.importcat = "";
-    }
+      this.importcat = "";  
+      this.error_message = false;
   }
 
  async getRplacedTaskIds(botData){
