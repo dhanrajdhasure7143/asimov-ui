@@ -52,7 +52,8 @@
     padding: 10px;
     position: relative;
     display: flex;
-    
+    justify-content: center;
+    align-items: center;
 }
 
 .bot-details:hover{
@@ -98,10 +99,11 @@
 
 .bot-details:hover {
     cursor: pointer;
-    border: 2px solid #098de6;
+    border: 1px solid #098de6;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0px 1px 10px -4px rgba(0, 0, 0, 0.75);
+    transition: 0.1s border ;
 }
 
 .bot-plans-container {
@@ -249,3 +251,8 @@
     border-radius: 5%;
     border: 5px solid #098de6;
   }
+
+  .gray-background {
+    background-color: #f1ebeb;
+    border-radius: 10px;
+}
