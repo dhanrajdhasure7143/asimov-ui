@@ -189,9 +189,13 @@
     transform: translateX(20px);
   }
 
-    .details-right {
-        float: right;
-    }
+  .details-right {
+    display: flex;
+    float: right;
+    align-items: right;
+    justify-content: right;
+    position: relative;
+  }
 
 .dialog-container {
     display: flex;
@@ -257,11 +261,14 @@
   }
 
   .gray-background {
-    background-color: #f1ebeb;
+    background-color: rgb(224 224 224);
     border-radius: 10px;
     }
 
    .active-plan{
+    align-items: center;
+    justify-content: center;
+    padding: 2px 10px 2px 10px;
     background-color: rgb(7 177 35); 
     color: white;
     border-radius: 3px;
