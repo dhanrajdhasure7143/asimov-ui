@@ -59,27 +59,27 @@
                                             <div *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'month' && selectedPlan === 'Monthly'">
                                                 <span *ngIf="true" class="active-plan">Active Plan</span>
                                             </div>
-                                            <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}</b> per {{detail.tiersMode}}
+                                            <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}/</b><b>{{detail.tiersMode}}</b>
                                         </div>
                                         <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
                                             <div *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'year' && selectedPlan === 'Yearly'">
                                                 <span *ngIf="true" class="active-plan">Active Plan</span>
                                             </div>
-                                            <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}</b> per {{detail.tiersMode}}
+                                            <b style="font-size: 1.5rem;">$ {{detail.unitAmount}}/</b><b>{{detail.tiersMode}}</b>
                                         </div>
                                     </div>
-                                </div>
+                                </div>      
                             </div>
                             
                             <div class="description-box" *ngIf="selectedPlanIndex === i">
                                 <span> {{ plan.description }} </span>
                                 <ul style="list-style-type:none;">
                                     <li *ngFor="let item of plan.features"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 4px;"> </i> {{ item }} </li>
-                                </ul>
-                                <div class="details-right">
-                                    <button (click)="openDetailsDialog(plan)" class="btn btn-link">View Details</button>
-                                </div>
+                                </ul>   
                             </div>
+                            <div class="details-right">
+                                <button (click)="openDetailsDialog(plan)" class="btn btn-link"><b>View Details</b></button>
+                            </div>    
                         </div>                         
                     </div>
                 </div>
